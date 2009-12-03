@@ -401,24 +401,25 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 
   bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
 
-  // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
-  if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
-    return TRUE;
-  }
-
-  // 「さしおさえ」状態のポケモンは、アイテムハンドラを呼び出さない？
-  // @todo これについては仕様の再確認が必要か
-  if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) && (factor->factorType == BTL_EVENT_FACTOR_ITEM) ){
-    return TRUE;
-  }
-
-  // 「マジックルーム」発動状態なら、装備アイテムハンドラを呼び出さない
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) )
+  // とくせいハンドラ
+  if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI )
   {
-    if( factor->factorType == BTL_EVENT_FACTOR_ITEM ){
+    if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){  // 「いえき」状態のポケモンは呼び出さない
       return TRUE;
     }
   }
+
+  // アイテムハンドラ
+  if( factor->factorType == BTL_EVENT_FACTOR_ITEM )
+  {
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) ){  // 「マジックルーム」発動状態なら呼び出さない
+      return TRUE;
+    }
+    if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){  // 「さしおさえ」状態のポケモンは呼び出さない
+      return TRUE;
+    }
+  }
+
 
   // スキップチェックハンドラが登録されていたら判断させる
   {
@@ -427,7 +428,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     {
       if( fp->skipCheckHandler != NULL ){
         if( factor->skipCheckHandler( factor, factor->factorType, eventID, factor->subID, factor->pokeID) ){
-          return FALSE;
+          return TRUE;
         }
       }
     }

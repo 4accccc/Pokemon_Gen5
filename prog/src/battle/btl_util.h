@@ -93,27 +93,30 @@ typedef struct  {
     struct {
       u32  type_turn : 4;   ///< ターン数型
       u32  count     : 6;   ///< 有効ターン数
-      u32  param     : 16;  ///< パラメータ16bit
-      u32  _1        : 6;
+      u32  param     : 16;  ///< 汎用パラメータ16bit
+      u32  flag      : 1;   ///< 汎用フラグ 1bit
+      u32  _1        : 5;
     }turn;
     struct {
       u32  type_poke : 4;   ///< ポケ依存型
       u32  ID        : 6;   ///< 対象ポケID
-      u32  param     : 16;  ///< パラメータ16bit
-      u32  _2        : 6;
+      u32  param     : 16;  ///< 汎用パラメータ16bit
+      u32  flag      : 1;   ///< 汎用フラグ 1bit
+      u32  _2        : 5;
     }poke;
     struct {
       u32  type_perm : 4;   ///< 永続型
       u32  count_max : 6;   ///< ターンカウントアップ最大数
-      u32  param     : 16;  ///< パラメータ16bit
-      u32  _3        : 6;
+      u32  param     : 16;  ///< 汎用パラメータ16bit
+      u32  flag      : 1;   ///< 汎用フラグ 1bit
+      u32  _3        : 5;
     }permanent;
     struct {
       u32 type_poketurn : 4;  ///< ターン数・ポケ依存混合型
       u32 count         : 6;  ///< 有効ターン数
       u32 pokeID        : 6;  ///< 対象ポケID
-      u32 param         : 16; ///< パラメータ16bit
-      u32 _4            : 1;
+      u32 param         : 16; ///< 汎用パラメータ16bit
+      u32 flag          : 1;  ///< 汎用フラグ 1bit
     }poketurn;
   };
 
@@ -273,26 +276,7 @@ static inline u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont )
   return 0;
 }
 /*
- *  設定パラメータを取得
- */
-static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
-{
-  if( cont.type == WAZASICK_CONT_PERMANENT ){
-    return cont.permanent.param;
-  }
-  if( cont.type == WAZASICK_CONT_POKE ){
-    return cont.poke.param;
-  }
-  if( cont.type == WAZASICK_CONT_POKETURN ){
-    return cont.poketurn.param;
-  }
-  if( cont.type == WAZASICK_CONT_TURN ){
-    return cont.turn.param;
-  }
-  return 0;
-}
-/*
- *  パラメータだけ設定し直し
+ *  汎用パラメータを設定
  */
 static inline void BPP_SICKCONT_AddParam( BPP_SICK_CONT* cont, u16 param )
 {
@@ -312,6 +296,66 @@ static inline void BPP_SICKCONT_AddParam( BPP_SICK_CONT* cont, u16 param )
     cont->turn.param = param;
     return;
   }
+}
+/*
+ *  設定した汎用パラメータを取得
+ */
+static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
+{
+  if( cont.type == WAZASICK_CONT_PERMANENT ){
+    return cont.permanent.param;
+  }
+  if( cont.type == WAZASICK_CONT_POKE ){
+    return cont.poke.param;
+  }
+  if( cont.type == WAZASICK_CONT_POKETURN ){
+    return cont.poketurn.param;
+  }
+  if( cont.type == WAZASICK_CONT_TURN ){
+    return cont.turn.param;
+  }
+  return 0;
+}
+/*
+ *  汎用フラグセット
+ */
+static inline void BPP_SICKCONT_SetFlag( BPP_SICK_CONT* cont, BOOL flag )
+{
+  if( cont->type == WAZASICK_CONT_PERMANENT ){
+    cont->permanent.flag = flag;
+    return;
+  }
+  if( cont->type == WAZASICK_CONT_POKE ){
+    cont->poke.flag = flag;
+    return;
+  }
+  if( cont->type == WAZASICK_CONT_POKETURN ){
+    cont->poketurn.flag = flag;
+    return;
+  }
+  if( cont->type == WAZASICK_CONT_TURN ){
+    cont->turn.flag = flag;
+    return;
+  }
+}
+/*
+ *  汎用フラグ取得
+ */
+static inline BOOL BPP_SICKCONT_GetFlag( BPP_SICK_CONT cont )
+{
+  if( cont.type == WAZASICK_CONT_PERMANENT ){
+    return cont.permanent.flag;
+  }
+  if( cont.type == WAZASICK_CONT_POKE ){
+    return cont.poke.flag;
+  }
+  if( cont.type == WAZASICK_CONT_POKETURN ){
+    return cont.poketurn.flag;
+  }
+  if( cont.type == WAZASICK_CONT_TURN ){
+    return cont.turn.flag;
+  }
+  return 0;
 }
 
 

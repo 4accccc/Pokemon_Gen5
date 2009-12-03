@@ -3463,14 +3463,23 @@ static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SimetukeBand( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_SimetukeBand },
+    { BTL_EVENT_ADD_SICK,     handler_SimetukeBand },   // 状態異常パラメータチェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
+// 状態異常パラメータチェックハンドラ
 static void handler_SimetukeBand( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BPP_SICK_CONT cont;
 
+    cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
+    BPP_SICKCONT_SetFlag( &cont, TRUE );
+    BTL_Printf("しめつけるよ\n");
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -3591,8 +3600,6 @@ static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
-
-
 
 //------------------------------------------------------------------------------
 /**

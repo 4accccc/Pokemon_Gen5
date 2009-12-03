@@ -8600,7 +8600,6 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
-
 }
 //----------------------------------------------------------------------------------
 /**

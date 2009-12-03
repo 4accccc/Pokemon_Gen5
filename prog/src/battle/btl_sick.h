@@ -13,8 +13,6 @@
 #include "btl_pokeparam.h"
 
 
-extern void BTL_SICK_AddProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick );
-
 extern void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
 extern BOOL BTL_SICK_MakeSickDamageMsg( BTL_HANDEX_STR_PARAMS* strParam, const BTL_POKEPARAM* bpp, WazaSick sickID );
 extern int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem );

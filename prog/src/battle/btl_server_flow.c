@@ -4527,8 +4527,6 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
   fSucceed = addsick_core( wk, target, attacker, sick, sickCont, fAlmost );
   if( fSucceed )
   {
-    BTL_SICK_AddProc( wk, target, sick );
-
     if( fDefaultMsgEnable ){
       BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
       handexSub_putString( wk, &wk->strParam );

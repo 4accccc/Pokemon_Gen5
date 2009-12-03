@@ -440,6 +440,91 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
   ms_set_default( buf, strID, args );
 }
 
+//--------------------------------------------------------------
+/**
+ *  タグ種類（gmm）
+ */
+//--------------------------------------------------------------
+typedef enum {
+  TAGIDX_TRAINER_NAME  = 0,
+  TAGIDX_POKE_NAME     = 1,
+  TAGIDX_POKE_NICKNAME = 2,
+  TAGIDX_POKE_TYPE     = 3,
+  TAGIDX_TOKUSEI_NAME  = 6,
+  TAGIDX_WAZA_NAME     = 7,
+  TAGIDX_ITEM_NAME     = 9,
+  TAGIDX_POKE_NICKNAME_TRUTH = 12,
+  TAGIDX_TRAINER_TYPE  = 14,
+}TagIndexType;
+
+static const STRCODE* seekNextTag( const STRCODE* sp, PrintSysTagGroup* tagGroup, u16* tagIndex, u8* argIndex )
+{
+  if( sp != NULL )
+  {
+    STRCODE EOMCode, TAGCode;
+
+    EOMCode = GFL_STR_GetEOMCode();
+    TAGCode = PRINTSYS_GetTagStartCode();
+    while( (*sp) != EOMCode )
+    {
+        if( *sp == TAGCode )
+        {
+          if( PRINTSYS_IsWordSetTagGroup(sp) )
+          {
+            *argIndex = PRINTSYS_GetTagParam( sp, 0 );
+            *tagGroup = PRINTSYS_GetTagGroup( sp );
+            *tagIndex = PRINTSYS_GetTagIndex( sp );
+            return PRINTSYS_SkipTag( sp );
+          }
+          else{
+            sp = PRINTSYS_SkipTag( sp );
+          }
+        }
+        else{
+          ++sp;
+        }
+    }
+    return NULL;
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 文字列中に含まれるポケモン名タグの数を返す
+ *
+ * @param   buf
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 searchPokeTagCount( const STRBUF* buf )
+{
+  const STRCODE* sp = GFL_STR_GetStringCodePointer( buf );
+  PrintSysTagGroup tagGroup;
+  u16 tagIdx;
+  u8  argIdx;
+  u8 count = 0;
+
+  while( sp )
+  {
+    sp = seekNextTag( sp, &tagGroup, &tagIdx, &argIdx );
+    if( sp )
+    {
+      if( tagGroup == PRINTSYS_TAGGROUP_WORD )
+      {
+        if( (tagIdx == TAGIDX_POKE_NAME)
+        ||  (tagIdx == TAGIDX_POKE_NICKNAME)
+        ||  (tagIdx == TAGIDX_POKE_NICKNAME_TRUTH)
+        ){
+          ++count;
+        }
+      }
+    }
+  }
+  return count;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 文字列中のタブIDから必要な情報を判別してWORDSETに登録する
@@ -451,17 +536,6 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 //----------------------------------------------------------------------------------
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 {
-  enum {
-    TAGIDX_TRAINER_NAME = 0,
-    TAGIDX_POKE_NAME = 1,
-    TAGIDX_POKE_NICKNAME = 2,
-    TAGIDX_POKE_TYPE = 3,
-    TAGIDX_TOKUSEI_NAME = 6,
-    TAGIDX_WAZA_NAME = 7,
-    TAGIDX_ITEM_NAME = 9,
-    TAGIDX_POKE_NICKNAME_TRUTH = 12,
-    TAGIDX_TRAINER_TYPE = 14,
-  };
   const STRCODE* sp = GFL_STR_GetStringCodePointer( buf );
   STRCODE eomCode, tagCode;
   u8  argIdxDec = 0;
@@ -559,10 +633,6 @@ static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
-
-//  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-
-
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 //--------------------------------------------------------------

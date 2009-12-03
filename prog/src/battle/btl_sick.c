@@ -28,22 +28,6 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem );
 
 
 
-//=============================================================================================
-/**
- * 状態異常化させられた時の処理
- *
- * @param   bpp
- * @param   sick
- */
-//=============================================================================================
-void BTL_SICK_AddProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, WazaSick sick )
-{
-  switch( sick ){
-  case WAZASICK_SASIOSAE:
-    BTL_HANDLER_ITEM_Remove( bpp );
-    break;
-  }
-}
 
 
 
@@ -182,7 +166,12 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
     WazaID waza = BPP_SICKCONT_GetParam( cont );
 
     param->pokeID = pokeID;
-    param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+    if( BPP_SICKCONT_GetFlag(cont) ){ // フラグONなら２倍（しめつけバンド対応）
+      BTL_Printf("しめつけバンド効果でバインドダメージ２倍\n");
+      param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+    }else{
+      param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+    }
 
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Bind );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
