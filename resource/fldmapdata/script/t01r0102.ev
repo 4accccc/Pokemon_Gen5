@@ -45,11 +45,10 @@ _EVENT_DATA_END
 /************************************************************/
 EVENT_START	ev_scene_t01r0102_gamestart
 
-	//【仮】手紙を読む。特殊なウィンドウを表示するか検討中091002
+	//手紙を読む
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_SYSWIN_MSG_DOWN( msg_t01r0102_letter_01 )
-	_AB_KEYWAIT()
-	_SYSWIN_CLOSE()
+	_SPWIN_MSG( msg_t01r0102_letter_01, 4, 2, SPWIN_LETTER )
+	_MSGWIN_CLOSE()
 
 	//ライバル：一歩前へ
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_move_01 )
