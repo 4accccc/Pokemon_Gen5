@@ -1,12 +1,18 @@
 //======================================================================
-//                hiden
+//
+//
+//                hiden.ev
+//
+//  フィールドわざ用スクリプト
+//
+//  ※イベント起動システムではなく、メニューなどのプログラムから直接呼ばれている。
+//
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/script/msg_hiden.h"
-  //.include  "zone_hiden.h"
+  .include  "msg_hiden.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,21 +29,13 @@ _EVENT_DATA ev_hiden_iaigiri
 _EVENT_DATA ev_hiden_iaigiri_menu
 _EVENT_DATA ev_hiden_takinobori
 _EVENT_DATA ev_hiden_takinobori_menu
+_EVENT_DATA ev_hiden_flash_menu
+_EVENT_DATA ev_hiden_teleport_menu
+_EVENT_DATA ev_hiden_anawohoru_menu
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
 /**************************************************************/
 //ev_hiden_flag_change:
 //  _END
@@ -57,9 +55,6 @@ EVENT_START ev_hiden_kairiki
     IF $SCWK_ANSWER == 6 THEN
       _CALL ev_hiden_kairiki_ng
     ELSE
-//    バッジチェック
-//    _SYS_FLAG_BADGE_GET    BADGE_ID_C02, SCWK_ANSWER
-//    _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_kairiki_ng
       _SYSWIN_MSG_DOWN( msg_kairiki_01 )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
@@ -142,9 +137,6 @@ EVENT_START ev_hiden_naminori
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_naminori_ng
   ELSE
-    //バッジチェック
-//  _SYS_FLAG_BADGE_GET    BADGE_ID_C05, SCWK_ANSWER
-//  _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_naminori_ng
     
     //ペアチェック
 //  _SYS_FLAG_PAIR_GET    SCWK_ANSWER
@@ -220,9 +212,6 @@ EVENT_START ev_hiden_iaigiri
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_iaigiri_ng
   ELSE
-    //バッジチェック
-//  _SYS_FLAG_BADGE_GET BADGE_ID_C04, SCWK_ANSWER
-//  _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_iaigiri_ng
       _SYSWIN_MSG_DOWN( msg_iai_01 )
     _YES_NO_WIN( SCWK_ANSWER )
     
@@ -309,9 +298,6 @@ EVENT_START ev_hiden_takinobori
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_takinobori_ng
   ELSE
-    //バッジチェック
-//  _SYS_FLAG_BADGE_GET		BADGE_ID_C08, SCWK_ANSWER
-//  _IFVAL_JUMP		SCWK_ANSWER,EQ,0, ev_hiden_takinobori_ng
     
       _SYSWIN_MSG_DOWN( msg_taki_01 )
 	  _YES_NO_WIN( SCWK_ANSWER )
@@ -361,3 +347,52 @@ EVENT_START ev_hiden_takinobori_menu
 //	_GET_NOW_ZONE_ID	SCWK_TEMP0
 //	_FNOTE_DATA_MAKE	FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
 EVENT_END
+
+
+/**************************************************************/
+/*							フラッシュ								*/
+/**************************************************************/
+EVENT_START ev_hiden_flash_menu
+	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+	_SYSWIN_MSG_DOWN( msg_flash_01 )
+	_SYSWIN_CLOSE()
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
+  
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+
+EVENT_END
+
+/**************************************************************/
+/*							テレポート								*/
+/**************************************************************/
+EVENT_START ev_hiden_teleport_menu
+	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+	_SYSWIN_MSG_DOWN( msg_teleport_01 )
+	_SYSWIN_CLOSE()
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
+  
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+
+EVENT_END
+
+/**************************************************************/
+/*							あなをほる								*/
+/**************************************************************/
+EVENT_START ev_hiden_anawohoru_menu
+	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+	_SYSWIN_MSG_DOWN( msg_anawohoru_01 )
+	_SYSWIN_CLOSE()
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
+  
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+
+EVENT_END
+
+
+
