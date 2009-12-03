@@ -812,3 +812,6 @@ typedef void (*WIHDWCBeaconGetFunc) (WMBssDesc* pBss);
 
 extern void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc);
 
+extern void HW_Main(void);
+extern void WH_StepScan(void);
+

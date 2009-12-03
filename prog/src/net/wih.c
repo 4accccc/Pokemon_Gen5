@@ -537,7 +537,7 @@ typedef struct{
 	// 乱数用
 	u32 sRand;
 
-  
+  int startScan;
   
 	u32 SendSizeMax;
 	u32 ConnectNumMax;
@@ -1558,6 +1558,7 @@ static void WH_StateOutStartScan(void *arg)
 	int state = cb->state;
 
   _pWmInfo->beaconScanNum++;  //回数を数える
+  _pWmInfo->startScan=0;
 
 	// スキャンコマンドに失敗した場合
 	if (cb->errcode != WM_ERRCODE_SUCCESS)
@@ -1651,10 +1652,13 @@ static void WH_StateOutStartScan(void *arg)
 		NET_PRINT("スキャン失敗\n");
 		return;
 	}
+  
+  _pWmInfo->startScan=5;
+    
 	// チャンネルを変更して再スキャンを開始します。
-	if (!WH_StateInStartScan()) {
-		WH_ChangeSysState(WH_SYSSTATE_ERROR);
-	}
+//	if (!WH_StateInStartScan()) {
+	//	WH_ChangeSysState(WH_SYSSTATE_ERROR);
+//	}
 }
 
 /* ----------------------------------------------------------------------
@@ -1677,7 +1681,11 @@ BOOL WH_EndScan(void)
 	{
 		return FALSE;
 	}
-
+  if(_pWmInfo->startScan!=0){
+    OS_TPrintf("----%d\n",_pWmInfo->startScan);
+    _pWmInfo->startScan=0;
+    return FALSE;
+  }
 	_pWmInfo->sAutoConnectFlag = FALSE;
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
 	return TRUE;
@@ -3451,6 +3459,37 @@ BOOL WH_StepDS(const void *data)
 
 	return TRUE;
 }
+
+
+/* ----------------------------------------------------------------------
+   Name:        WH_StepDS
+   Description: データシェアリングの同期を1つ進めます。
+                毎フレーム通信するなら、この関数も毎フレーム呼ぶ必要が
+                あります。
+   Arguments:   data - 送信するデータ
+   Returns:     成功すれば真。
+   ---------------------------------------------------------------------- */
+void WH_StepScan(void)
+{
+  if(_pWmInfo){
+    if( _pWmInfo->startScan){
+      if (_pWmInfo->sSysState != WH_SYSSTATE_SCANNING){
+        _pWmInfo->startScan=0;
+      }
+      else{
+        _pWmInfo->startScan--;
+      }
+      if(_pWmInfo->startScan==0){
+        if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
+          if (!WH_StateInStartScan()) {
+            WH_ChangeSysState(WH_SYSSTATE_ERROR);
+          }
+        }
+      }
+    }
+	}
+}
+
 
 
 /**************************************************************************

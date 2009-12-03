@@ -984,6 +984,7 @@ static void _stateProcess(u16 bitmap)
 	int state = WH_GetSystemState();
 	GFL_NETWL* pNetWL = _pNetWL;
 
+
 	_funcBconDataChange();      // ビーコンの中身を書き換え中
 	if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
 		pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
@@ -1037,7 +1038,8 @@ static void _stateProcess(u16 bitmap)
 	default:
 		break;
 	}
-
+//  HW_Main();
+  
 }
 
 //-------------------------------------------------------------
@@ -1064,6 +1066,7 @@ void GFI_NET_MLProcess(u16 bitmap)
 	if(_pNetWL && GFL_NET_WLIsChildStateScan() ){
 		_WLParentBconCheck();
 	}
+  WH_StepScan();
 }
 
 //-------------------------------------------------------------
