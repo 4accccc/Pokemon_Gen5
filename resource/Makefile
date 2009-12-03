@@ -107,7 +107,8 @@ SUBDIRS	=	wmi \
 			field_wfbc_data \
 			mail \
 			season_display \
-			zukan_gra
+			zukan_gra \
+			demo3d
 
 include $(RESOURCE_MACRO)
 
