@@ -16,13 +16,14 @@
 #include "arc/message.naix"
 #include "msg/msg_place_name.h"
 #include "system/bmp_oam.h"
+#include "pm_define.h"
 
 
 //===================================================================================
 // ■ 定数・マクロ
 //=================================================================================== 
 // 最大文字数
-#define MAX_NAME_LENGTH (16)
+#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE)
 
 // 絶対値に変換する
 #define ABS( n ) ( ((n)<0)? -(n) : (n) )
@@ -61,8 +62,7 @@
 #define	ARC_DATA_ID_MAX (29) // アーカイブ内データIDの最大値
 
 //-----
-// BG
-//-----
+// BG //-----
 #define NULL_CHAR_NO       ( 0)								// NULLキャラ番号
 #define	BMPWIN_WIDTH_CHAR  (32)								// ウィンドウ幅(キャラクタ単位)
 #define BMPWIN_HEIGHT_CHAR ( 2)								// ウィンドウ高さ(キャラクタ単位)
