@@ -232,7 +232,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	ƒJƒƒ‰ˆÊ’u
 //=====================================
-static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//ˆÊ’u
+static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 0 ) };	//ˆÊ’u
 static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//ã•ûŒü
 static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ƒ^[ƒQƒbƒg
 
@@ -244,7 +244,7 @@ static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ƒ^[ƒQƒbƒ
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 0	//Ë‰e
+#if 1	//Ë‰e
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
@@ -786,12 +786,15 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GRAPHIC_G3D_TEXSIZE,
 			GFL_G3D_VMANLNK, GRAPHIC_G3D_PLTSIZE, 0, heapID, Graphic_3d_SetUp );
 
+  // ƒJƒƒ‰¶¬
 	p_wk->p_camera = GRAPHIC_G3D_CAMERA_Create( &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
   
-  // @TODO : ƒJƒƒ‰İ’è
+  // ƒJƒƒ‰İ’è
   {
-    fx32 far = FX32_ONE * 4096;
+    fx32 far = FX32_ONE * 2048;   ///< Å‘å’l
+    fx32 near = FX32_CONST(0.1);  ///< Å’á’l
     GFL_G3D_CAMERA_SetFar( p_wk->p_camera, &far );
+    GFL_G3D_CAMERA_SetNear( p_wk->p_camera, &near );
   }
 
   // ƒ‰ƒCƒgì¬

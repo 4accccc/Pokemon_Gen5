@@ -44,6 +44,8 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "demo3d_restbl.h"
+
 //外部公開
 #include "demo/demo3d.h"
 
@@ -53,14 +55,12 @@
 #include "msg/msg_mictest.h"  // GMM
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
-#include "arc/debug_obata.naix"
-
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
 //#define DEMO3D_INFOWIN
-#define DEMO3D_TOUCHBAR
-#define DEMO3D_TASKMENU
+//#define DEMO3D_TOUCHBAR
+//#define DEMO3D_TASKMENU
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -71,7 +71,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  DEMO3D_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+  DEMO3D_HEAP_SIZE = 0x100000,  ///< ヒープサイズ
 };
 
 
@@ -169,6 +169,8 @@ typedef struct
 #endif	//DEMO3D_PRINT_TOOL
   
   ICA_ANIME                *ica_anime;
+  GFL_G3D_UTIL* g3d_util;
+  u16 unit_idx[3]; //@TODO
 
 } DEMO3D_MAIN_WORK;
 
@@ -450,6 +452,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  */
 //=============================================================================
 
+#include "arc/debug_obata.naix"
 #define ICA_BUFF_SIZE (10)
 //-----------------------------------------------------------------------------
 /**
@@ -463,9 +466,36 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 {
   // icaデータをロード
-  wk->ica_anime = ICA_ANIME_CreateStreamingAlloc( heapID,
-      ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, ICA_BUFF_SIZE );
+  wk->ica_anime = Demo3D_RESTBL_CreatICACamera( heapID, ICA_BUFF_SIZE );
 
+  // 3D管理ユーティリティーの生成
+  wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
+
+  // ユニット追加
+  {
+    int i;
+    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    {
+      const GFL_G3D_UTIL_SETUP* setup = Demo3D_RESTBL_GetG3DUtilSetup( i );
+
+      wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );
+    }
+  }
+  
+  // アニメーション有効化
+  {
+    int i;
+    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    {
+      int j;
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      for( j=0; j<anime_count; j++ )
+      {
+        GFL_G3D_OBJECT_EnableAnime( obj, j );
+      }
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -481,6 +511,18 @@ static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk )
 { 
   // ICA破棄
   ICA_ANIME_Delete( wk->ica_anime );
+
+  // ユニット破棄
+  {
+    int i;
+    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    {
+      GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
+    }
+  }
+  
+  // 3D管理ユーティリティーの破棄
+  GFL_G3D_UTIL_Delete( wk->g3d_util );
 }
 
 //-----------------------------------------------------------------------------
@@ -496,18 +538,54 @@ static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
 {
   GFL_G3D_CAMERA* p_camera;
   BOOL is_loop;
+  GFL_G3D_OBJSTATUS status;
+
+  // ステータス初期化
+  VEC_Set( &status.trans, 0, 0, 0 );
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  MTX_Identity33( &status.rotate );
 
   p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
 
   ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
+  
+  // アニメーション更新
+  {
+    int i;
+    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    {
+      int j;
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      for( j=0; j<anime_count; j++ )
+      {
+        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
+      }
+    }
+  }
 
+  // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
-
+  {
+    int i;
+    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    {
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+      GFL_G3D_DRAW_DrawObject( obj, &status );
+    }
+  }
 	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );
   
-  is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+  //@TODO Aを押すとカメラを加算
+#if PM_DEBUG
+  is_loop = FALSE;
+//  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+#endif
+  {
+    is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+  }
 
-  HOSAKA_Printf("frame=%d \n", ICA_ANIME_GetNowFrame( wk->ica_anime ) );
+  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // ループ検出で終了
   return is_loop;
