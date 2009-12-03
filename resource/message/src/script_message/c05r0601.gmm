@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:58:47"/>
+	<create user="matsumiya" host="W00207" date="2009-12-03T22:10:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_man3_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05r0601_man3_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その１
@@ -304,7 +304,7 @@
 不思議な　漢方薬は　どうだい？</language>
 	</row>
 
-	<row id="msg_c05r0601_woman3_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_woman3_01" text-color="#000000,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・上記OBJに隣接</comment>
@@ -319,7 +319,7 @@
 ポケモンも　ちょっと　苦手にしてるよ</language>
 	</row>
 
-	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_woman2_01">
 		<comment>♀
 ・仮メッセージ
 ・売り子その２</comment>
@@ -330,7 +330,7 @@
 なんでも　みていってくださいね</language>
 	</row>
 
-	<row id="msg_c05r0601_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_badman_01">
 		<comment>♂
 ・仮メッセージ
 ・売り子その３</comment>
@@ -341,7 +341,7 @@
 今日は　お買い得だよ！</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_sunglasses_01">
 		<comment>♂
 ・仮メッセージ
 ・売り子その４</comment>
@@ -352,9 +352,9 @@
 なんでも　かってけー！</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">なんていうか　なんていうか
 こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
@@ -364,9 +364,32 @@
 エネルギーを　感じちゃうね</language>
 	</row>
 
-	<row id="msg_c05r0601_nurse_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_trainerw_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・WHITEver</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">なんでも　ゆにゅう　して
+きっと　べんりな　まちが　あるわ</language>
+		<language name="JPN_KANJI" width="256">なんでも　輸入して
+いつでも　モノが　そろっている[BE:00:ページ切り替え（行送り）]
+きっと　便利な　街が　あるわ</language>
+	</row>
+
+	<row id="msg_c05r0601_trainerw_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・BLACKver</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">いろいろ　ゆしゅつを　していて
+きっと　ゆったりとした[BE:00:ページ切り替え（行送り）]
+きせつを　だいじにする　まちが　あるわ</language>
+		<language name="JPN_KANJI" width="256">いろいろ　輸出を　していて
+きっと　ゆったりとした[BE:00:ページ切り替え（行送り）]
+季節を　大事にする　街が　あるわ</language>
+	</row>
+
+	<row id="msg_c05r0601_nurse_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>♀
+・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
 		<language name="JPN" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
 とおい　ちほうの
@@ -376,14 +399,68 @@
 珍しい　品物も　手に入るわ！</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_nurse_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・WHITEver</comment>
+		<attribute name="キャラ指定">NURSE</attribute>
+		<language name="JPN" width="256">きせつごとの　やさいを
+みているだけでも　たのしくなっちゃう[BE:01:ページ切り替え（クリア）]
+だって　きせつが　かわると
+やさいの　いろあいも　かわるのよ！</language>
+		<language name="JPN_KANJI" width="256">季節ごとの　野菜を
+みているだけでも　心　躍るの！[BE:01:ページ切り替え（クリア）]
+だって　季節が　変わると
+野菜の　色あいも　変わるのよ！</language>
+	</row>
+
+	<row id="msg_c05r0601_nurse_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・BLACKver</comment>
+		<attribute name="キャラ指定">NURSE</attribute>
+		<language name="JPN" width="256">いつ　きても
+あらゆる　きせつの　やさいが[BE:00:ページ切り替え（行送り）]
+そろっているのって　すごいよね</language>
+		<language name="JPN_KANJI" width="256">いつ　来ても
+あらゆる　季節の　野菜が[BE:00:ページ切り替え（行送り）]
+そろっているのって　すごいよね</language>
+	</row>
+
+	<row id="msg_c05r0601_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">せかいが　うみで　つながるかぎり
 この　いちばには　なんでも　そろう！</language>
 		<language name="JPN_KANJI" width="256">世界が　海で　つながるかぎり
 この　マーケットには　なんでも　そろう！</language>
+	</row>
+
+	<row id="msg_c05r0601_workman_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITEver</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">ホドモエから　はこばれた　にもつが
+どこかの　まちに　とどく……[BE:01:ページ切り替え（クリア）]
+せかいって　こうやって
+どこかに　つながっているんだよな</language>
+		<language name="JPN_KANJI" width="256">ホドモエから　運ばれた　荷物が
+どこかの　まちに　届く……[BE:01:ページ切り替え（クリア）]
+世界って　こうやって
+どこかに　つながっているんだよな</language>
+	</row>
+
+	<row id="msg_c05r0601_workman_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">どこかの　まちから　はこばれた
+にもつが　ホドモエに　とどく……[BE:01:ページ切り替え（クリア）]
+せかいって　こうやって
+どこかに　つながっているんだよな</language>
+		<language name="JPN_KANJI" width="256">どこかの　まちから　運ばれた
+荷物が　ホドモエに　届く……[BE:01:ページ切り替え（クリア）]
+世界って　こうやって
+どこかに　つながっているんだよな</language>
 	</row>
 
 	<flowchart-group-list>
