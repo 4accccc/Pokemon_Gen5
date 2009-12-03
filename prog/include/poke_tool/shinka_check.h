@@ -20,14 +20,17 @@ typedef enum{
   SHINKA_PARAM_MONS      //進化ポケモン
 }SHINKA_PARAM;
 
-typedef enum{ 
+typedef enum{
   SHINKA_COND_LEVELUP = 0,  //レベルアップによる進化
   SHINKA_COND_TUUSHIN,      //通信による進化
   SHINKA_COND_ITEM,         //アイテムによる進化
   SHINKA_COND_ITEM_CHECK,   //アイテムによる進化（かわらずのいしを装備していてもチェックはする）
+
+  SHINKA_COND_MAX,
+  SHINKA_COND_START = 0,
 }SHINKA_COND;
 
-extern  u16	        SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_COND cond, u16 param,
+extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_COND cond, u16 param,
                                   SHINKA_COND *shinka_cond, HEAPID heapID );
 extern  ARCHANDLE*  SHINKA_GetArcHandle( HEAPID heapID );
 extern  u16         SHINKA_GetParamByHandle( ARCHANDLE* handle, int mons_no, int index, SHINKA_PARAM param );
