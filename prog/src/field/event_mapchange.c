@@ -108,6 +108,11 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	FIELDMAP_WORK * fieldmap;
 	switch (*seq) {
 	case 0:
+		// VRAM‘SƒNƒŠƒA
+		GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+		MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+		(void)GX_DisableBankForLCDC();
+
 		switch(game_init_work->mode){
 		case GAMEINIT_MODE_FIRST:
       SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
@@ -179,7 +184,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 3:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-		GMEVENT_CallEvent(event,EVENT_FieldBrightIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+		//GMEVENT_CallEvent(event,EVENT_FieldBrightIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 4:
