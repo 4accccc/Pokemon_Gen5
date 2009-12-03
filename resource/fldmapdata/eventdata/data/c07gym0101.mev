@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/01 12:29:26
+#save date:2009/12/03 19:36:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -396,7 +396,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+11
 #event number: 0
 #Pos Event Label
 C07GYM0101_SWITCH_02
@@ -446,6 +446,142 @@ LOCALWORK15
 EVENTDATA_POSTYPE_GRID
 #position
 -8 96 -216
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_01
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_01
+#Pos Check Type
+POS_CHECK_TYPE_UP
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -712
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_02
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_02
+#Pos Check Type
+POS_CHECK_TYPE_LEFT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 -600
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_03
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_03
+#Pos Check Type
+POS_CHECK_TYPE_LEFT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+728 48 -456
+#size
+1 1
+#event number: 6
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_04
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 48 -376
+#size
+1 1
+#event number: 7
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_05
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_05
+#Pos Check Type
+POS_CHECK_TYPE_LEFT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 96 -360
+#size
+1 1
+#event number: 8
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_06
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_06
+#Pos Check Type
+POS_CHECK_TYPE_RIGHT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 96 -296
+#size
+1 1
+#event number: 9
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_07
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_07
+#Pos Check Type
+POS_CHECK_TYPE_LEFT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 96 -264
+#size
+1 1
+#event number: 10
+#Pos Event Label
+POS_C07GYM0101_ZIMEN_08
+#Pos Script Name
+SCRID_POS_C07GYM0101_ZIMEN_08
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 96 -216
 #size
 1 1
 #Map Event List Data End
