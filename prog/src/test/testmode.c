@@ -690,6 +690,11 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 {
   TESTMODE_WORK *work = mywk;
 
+	// 輝度フェードアウト
+	GFL_FADE_SetMasterBrightReq(
+			GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+			16, 16, 0);
+
   //処理分岐
   switch( work->nextAction_ )
   {
