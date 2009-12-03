@@ -27,7 +27,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 5 )
+#define	TOP_MENU_SIZ	( 6 )
 
 typedef struct {
 	u32	main_seq;
@@ -46,6 +46,7 @@ typedef struct {
 	GAMEDATA * gamedata;
 
 	BOX2_GFL_PROC_PARAM	box_data;
+	void * bb_party;
 
 	COMMANDDEMO_DATA	cdemo_data;
 
@@ -60,6 +61,7 @@ enum {
 	MAIN_SEQ_BOX_CALL2,
 	MAIN_SEQ_BOX_CALL3,
 	MAIN_SEQ_BOX_CALL4,
+	MAIN_SEQ_BOX_CALL5,
 	MAIN_SEQ_MOVIE_CALL,
 
 	MAIN_SEQ_END,
@@ -138,6 +140,7 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 	wk->main_seq  = MAIN_SEQ_INIT;
 	wk->heapID    = HEAPID_NAKAHIRO_DEBUG;
 	wk->gamedata	= GAMEDATA_Create( wk->heapID );
+	wk->bb_party  = NULL;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -184,6 +187,14 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_END:
+		if( wk->bb_party != NULL ){
+			BATTLE_BOX_SAVE * sv;
+			sv = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(wk->gamedata) );
+			GFL_OVERLAY_Load( FS_OVERLAY_ID(box) );
+			BATTLE_BOX_SAVE_SetPokeParty( sv, wk->bb_party );
+			GFL_OVERLAY_Unload( FS_OVERLAY_ID(box) );
+			GFL_HEAP_FreeMemory( wk->bb_party );
+		}
 		OS_Printf( "nakahiroデバッグ処理終了しました\n" );
 	  return GFL_PROC_RES_FINISH;
 
@@ -238,6 +249,26 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->box_data.callMode  = BOX_MODE_ITEM;
 		SetBoxPoke( wk );
 		SetPartyPoke( wk );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case MAIN_SEQ_BOX_CALL5:
+		{
+			BATTLE_BOX_SAVE * sv;
+			sv = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(wk->gamedata) );
+			GFL_OVERLAY_Load( FS_OVERLAY_ID(box) );
+			wk->bb_party = BATTLE_BOX_SAVE_MakePokeParty( sv, wk->heapID );
+			GFL_OVERLAY_Unload( FS_OVERLAY_ID(box) );
+		}
+		wk->box_data.gamedata  = wk->gamedata;
+		wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
+		wk->box_data.pokeparty = wk->bb_party;
+		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
+		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
+		wk->box_data.callMode  = BOX_MODE_BATTLE;
+		SetBoxPoke( wk );
+//		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
@@ -385,6 +416,7 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
     PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
 		if( i == 40 ){
 	    PP_Put( pp, ID_PARA_tamago_flag, 1 );
+	    PP_Put( pp, ID_PARA_form_no, 0 );
 		}
 		ppp = PP_GetPPPPointerConst( pp );
 		if( BOXDAT_PutPokemon( wk->box_data.sv_box, ppp ) == FALSE ){

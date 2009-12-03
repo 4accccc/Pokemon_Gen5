@@ -590,28 +590,6 @@ static void ClearScreen( PRINT_UTIL * util )
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		文字列表示（バッファ指定）
- *
- * @param		win		BMPWIN
- * @param		str		文字列バッファ
- * @param		x			Ｘ座標
- * @param		y			Ｙ座標
- * @param		font	フォント
- * @param		col		カラー
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void StrPrintCore(
-							BOX2_APP_WORK * appwk, u32 winID, STRBUF * str,
-							u32 x, u32 y, GFL_FONT * font, PRINTSYS_LSB col )
-{
-	PRINT_UTIL_PrintColor( &appwk->win[winID], appwk->que, x, y, str, font, col );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1449,17 +1427,23 @@ void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
  * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
+ *
+ * @li	バトルボックスの場合は「バトルボックス」
  */
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
 {
-	PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
+	if( syswk->dat->callMode == BOX_MODE_BATTLE ){
+		PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_03 );
+	}else{
+		PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
+	}
 	ButtonBgFrmMake2( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, syswk->app->win[BOX2BMPWIN_ID_TEMOCHI].win );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＢＧウィンドウフレーム作成：「ポケモンいどう」
+ * @brief		ＢＧウィンドウフレーム作成：「ボックスリスト」
  *
  * @param		appwk		ボックス画面アプリワーク
  *
@@ -1890,6 +1874,7 @@ static void PokeMoveButtonPut( BOX2_SYS_WORK * syswk, u32 winID, u32 strID )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
 {
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
@@ -1898,7 +1883,7 @@ void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
 		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
 	}
 }
-
+*/
 
 
 
@@ -2650,6 +2635,10 @@ void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
 
 	case BOX2MAIN_ERR_CODE_BATTLE:		// 戦えるポケモンがいなくなる
 		str = msg_boxmes_06_03;
+		break;
+
+	case BOX2MAIN_ERR_CODE_EGG:				// タマゴはえらべない（バトルボックス専用）
+		str = msg_boxmes_06_07;
 		break;
 	}
 

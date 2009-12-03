@@ -643,6 +643,7 @@ enum {
 	BOX2MAIN_ERR_CODE_BOXMAX,			// ボックスがいっぱい
 	BOX2MAIN_ERR_CODE_MAIL,				// メールを持っている
 	BOX2MAIN_ERR_CODE_BATTLE,			// 戦えるポケモンがいなくなる
+	BOX2MAIN_ERR_CODE_EGG,				// タマゴはえらべない（バトルボックス専用）
 };
 
 
@@ -862,7 +863,6 @@ extern u8 BOX2MAIN_GetBoxMoveTrayNum( BOX2_SYS_WORK * syswk, s8 mv );
 
 
 
-#if 1
 //============================================================================================
 //	システム関連
 //============================================================================================
@@ -2301,19 +2301,7 @@ extern int BOX2MAIN_VFuncPartyFrameMove( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPartyFrmRight( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 手持ちポケモンフレームを左へ
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPartyFrmLeft( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncPartyFrmRight( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2743,5 +2731,4 @@ extern int BOX2MAIN_VFuncTrayIconScrollDown( BOX2_SYS_WORK * syswk );
 extern int BOX2MAIN_VFuncTrayIconScrollUpJump( BOX2_SYS_WORK * syswk );
 extern int BOX2MAIN_VFuncTrayIconScrollDownJump( BOX2_SYS_WORK * syswk );
 
-
-#endif
+extern int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk );

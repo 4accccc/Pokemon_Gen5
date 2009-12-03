@@ -11,6 +11,7 @@
 
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/pokeparty.h"
 
 
 //======================================================================
@@ -45,12 +46,37 @@ extern void BATTLE_BOX_SAVE_InitWork(BATTLE_BOX_SAVE * musSave);
 //----------------------------------------------------------
 extern BATTLE_BOX_SAVE* BATTLE_BOX_SAVE_GetBattleBoxSave( SAVE_CONTROL_WORK *sv );
 
+extern void BATTLE_BOX_SAVE_SetPPP( BATTLE_BOX_SAVE * btlBoxSave, const u32 boxIdx, const u32 idx, const POKEMON_PASO_PARAM * ppp );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		バトルボックスのセーブデータからPOEPARTYを作成
+ *
+ * @param		sv				バトルボックスのセーブデータ
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	作成したデータ
+ */
+//--------------------------------------------------------------------------------------------
+extern POKEPARTY * BATTLE_BOX_SAVE_MakePokeParty( BATTLE_BOX_SAVE * sv, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		POEPARTYをバトルボックスのセーブデータに設定
+ *
+ * @param		sv				バトルボックスのセーブデータ
+ * @param		party			POKEPARTY
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BATTLE_BOX_SAVE_SetPokeParty( BATTLE_BOX_SAVE * sv, POKEPARTY * party );
 
 //----------------------------------------------------------
 //  PPP取得
 //----------------------------------------------------------
-POKEMON_PASO_PARAM* BATTLE_BOX_SAVE_GetPPP( BATTLE_BOX_SAVE *btlBoxSave , const u32 boxIdx , const u32 idx );
+extern POKEMON_PASO_PARAM* BATTLE_BOX_SAVE_GetPPP( BATTLE_BOX_SAVE *btlBoxSave , const u32 boxIdx , const u32 idx );
 //----------------------------------------------------------
 //  ボックス名取得
 //----------------------------------------------------------
-STRCODE* BATTLE_BOX_SAVE_GetBoxName( BATTLE_BOX_SAVE *btlBoxSave , const u32 boxIdx );
+extern STRCODE* BATTLE_BOX_SAVE_GetBoxName( BATTLE_BOX_SAVE *btlBoxSave , const u32 boxIdx );

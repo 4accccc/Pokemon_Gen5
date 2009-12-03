@@ -10,7 +10,7 @@
 //============================================================================================
 #pragma	once
 
-#include "savedata/box_savedata.h"
+#include "savedata/battle_box_save.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/config.h"
 #include "gamesystem/game_data.h"

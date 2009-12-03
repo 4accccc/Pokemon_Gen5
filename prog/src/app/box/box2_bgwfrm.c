@@ -165,25 +165,28 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 	BOX2BMP_PokeMenuBgFrmWkMake( appwk );				// メニュー
 	InitTouchBar( syswk );											// タッチバー
 
-	BOX2BMP_TemochiButtonBgFrmWkMake( syswk );	//「てもちポケモン」
+	BOX2BMP_TemochiButtonBgFrmWkMake( syswk );	//「てもちポケモン」or「バトルボックス」
 	BOX2BMP_BoxListButtonBgFrmWkMake( syswk );	//「ボックスリスト」
 
 	// 手持ちポケモンフレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, GFL_BG_FRAME1_M, PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY );
-	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, NARC_box_gra_box_poke_bg2_lz_NSCR );
-
-
-
-
+	if( syswk->dat->callMode == BOX_MODE_BATTLE ){
+		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, NARC_box_gra_box_poke_bg_lz_NSCR );
+	}else{
+		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, NARC_box_gra_box_poke_bg2_lz_NSCR );
+	}
 
 	// マーキングフレーム
-//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME0_M, MARKING_FRM_SX, MARKING_FRM_SY );
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
+
+
+
+
+
+
+
 	// ボックス移動フレーム
-//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME0_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
-
-
 
 	if( syswk->dat->callMode == BOX_MODE_AZUKERU ){
 		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME0_M, BOXMV_PTOUT_FRM_SX, BOXMV_PTOUT_FRM_SY );
@@ -577,6 +580,17 @@ BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk )
 	return FALSE;
 }
 
+// 手持ちポケモンフレームが左にあるか
+BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk )
+{
+	s8	x, y;
+
+	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &x, &y );
+	if( x == WINFRM_PARTYPOKE_LX && y == WINFRM_PARTYPOKE_PY ){
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 //============================================================================================

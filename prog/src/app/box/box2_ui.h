@@ -37,6 +37,9 @@ enum {
 	BOX2UI_INIT_ID_WALLPAPER_CHG,		// 壁紙変更
 
 	BOX2UI_INIT_ID_BOXJUMP_MAIN,		// ボックスジャンプ
+
+	BOX2UI_INIT_ID_BATTLEBOX_MAIN,		// バトルボックス・メイン
+	BOX2UI_INIT_ID_BATTLEBOX_PARTY,		// バトルボックス・パーティ操作メイン
 };
 
 // ボタンＩＤ
@@ -102,6 +105,38 @@ enum {
 	BOX2UI_ARRANGE_PTGT_BOXLIST,	// 39: ボックスリスト
 	BOX2UI_ARRANGE_PTGT_STTUS,		// 40: ステータス
 	BOX2UI_ARRANGE_PTGT_RET,			// 41: 戻る
+
+	// バトルボックス・メイン操作
+	BOX2UI_BATTLEBOX_MAIN_POKE1 = 0,	// 00: ポケモン
+	BOX2UI_BATTLEBOX_MAIN_NAME = BOX2UI_BATTLEBOX_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: ボックス名
+	BOX2UI_BATTLEBOX_MAIN_LEFT,			// 31: トレイ切り替え矢印・左
+	BOX2UI_BATTLEBOX_MAIN_RIGHT,		// 32: トレイ切り替え矢印・右
+	BOX2UI_BATTLEBOX_MAIN_PARTY,		// 33: バトルボックス
+	BOX2UI_BATTLEBOX_MAIN_RETURN1,	// 34: 戻る１
+	BOX2UI_BATTLEBOX_MAIN_RETURN2,	// 35: 戻る２
+
+	BOX2UI_BATTLEBOX_MAIN_GET,			// 36: いどうする
+	BOX2UI_BATTLEBOX_MAIN_STATUS,		// 37: ようすをみる
+	BOX2UI_BATTLEBOX_MAIN_ITEM,			// 38: もちもの
+	BOX2UI_BATTLEBOX_MAIN_CLOSE,		// 39: やめる
+
+	// バトルボックス・パーティ操作
+	BOX2UI_BATTLEBOX_PARTY_POKE1 = 0,	// 00: 手持ちポケモン
+	BOX2UI_BATTLEBOX_PARTY_POKE2,
+	BOX2UI_BATTLEBOX_PARTY_POKE3,
+	BOX2UI_BATTLEBOX_PARTY_POKE4,
+	BOX2UI_BATTLEBOX_PARTY_POKE5,
+	BOX2UI_BATTLEBOX_PARTY_POKE6,
+
+	BOX2UI_BATTLEBOX_PARTY_BOXLIST,		// 06:「ボックスリスト」
+	BOX2UI_BATTLEBOX_PARTY_RETURN1,		// 07: 戻る１
+	BOX2UI_BATTLEBOX_PARTY_RETURN2,		// 08: 戻る２
+
+	BOX2UI_BATTLEBOX_PARTY_GET,				// 09: いどうする
+	BOX2UI_BATTLEBOX_PARTY_STATUS,		// 10: ようすをみる
+	BOX2UI_BATTLEBOX_PARTY_ITEM,			// 11: もちもの
+	BOX2UI_BATTLEBOX_PARTY_CLOSE,			// 12: やめる
+
 
 	// ボックステーマ変更
 	BOX2UI_BOXTHEMA_MENU1 = 0,		// 00: ジャンプする
@@ -432,7 +467,7 @@ extern void BOX2UI_CursorMoveVFuncWorkSet( BOX2_APP_WORK * appwk, int now_pos, i
  * @retval	"FALSE = 起動不可"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2UI_YStatusButtonCheck( BOX2_SYS_WORK * syswk );
+//extern BOOL BOX2UI_YStatusButtonCheck( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -482,3 +517,7 @@ extern u32 BOX2UI_HitCheckTrayIcon( u32 x, u32 y );
 
 extern BOOL BOX2UI_HitCheckPartyFrameLeft(void);
 
+
+extern u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk );
+
+extern u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk );

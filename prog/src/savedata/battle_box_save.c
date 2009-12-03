@@ -81,6 +81,73 @@ BATTLE_BOX_SAVE* BATTLE_BOX_SAVE_GetBattleBoxSave( SAVE_CONTROL_WORK *sv )
 
 
 //======================================================================
+//	設定
+//======================================================================
+
+//----------------------------------------------------------
+//  PPPセット
+//----------------------------------------------------------
+void BATTLE_BOX_SAVE_SetPPP( BATTLE_BOX_SAVE * btlBoxSave, const u32 boxIdx, const u32 idx, const POKEMON_PASO_PARAM * ppp )
+{
+	btlBoxSave->ppp[boxIdx][idx] = *ppp;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		バトルボックスのセーブデータからPOEPARTYを作成
+ *
+ * @param		sv				バトルボックスのセーブデータ
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	作成したデータ
+ */
+//--------------------------------------------------------------------------------------------
+POKEPARTY * BATTLE_BOX_SAVE_MakePokeParty( BATTLE_BOX_SAVE * sv, HEAPID heapID )
+{
+	POKEMON_PASO_PARAM * ppp;
+	POKEMON_PARAM * pp;
+	POKEPARTY * party;
+	u32	i;
+
+	party = PokeParty_AllocPartyWork( heapID );
+	PokeParty_Init( party, TEMOTI_POKEMAX );
+
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
+		ppp = BATTLE_BOX_SAVE_GetPPP( sv, 0, i );
+		if( PPP_Get( ppp, ID_PARA_poke_exist, NULL ) == 0 ){
+			break;
+		}
+		pp = PP_CreateByPPP( ppp, GFL_HEAP_LOWID(heapID) );
+		PokeParty_Add( party, pp );
+		GFL_HEAP_FreeMemory( pp );
+	}
+
+	return party;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		POEPARTYをバトルボックスのセーブデータに設定
+ *
+ * @param		sv				バトルボックスのセーブデータ
+ * @param		party			POKEPARTY
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BATTLE_BOX_SAVE_SetPokeParty( BATTLE_BOX_SAVE * sv, POKEPARTY * party )
+{
+	POKEMON_PARAM * pp;
+	u32	i;
+
+	for( i=0; i<PokeParty_GetPokeCount(party); i++ ){
+		pp = PokeParty_GetMemberPointer( party, i );
+		BATTLE_BOX_SAVE_SetPPP( sv, 0, i, PP_GetPPPPointerConst(pp) );
+	}
+}
+
+
+//======================================================================
 //	取得系
 //======================================================================
 

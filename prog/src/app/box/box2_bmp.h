@@ -241,7 +241,7 @@ extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk );
+//extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk );
 
 
 //--------------------------------------------------------------------------------------------
@@ -394,16 +394,6 @@ extern void BOX2BMP_WallPaperNameWrite( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「ボックスいどう」ボタン作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk );
 
 
 
