@@ -264,7 +264,7 @@ GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
  * @retval	none
  */
 //--------------------------------------------------------------
-void SCRIPT_CallScript( GMEVENT *event,
+SCRIPT_WORK * SCRIPT_CallScript( GMEVENT *event,
 	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID temp_heapID )
 {
 	GMEVENT *sc_event;
@@ -274,6 +274,8 @@ void SCRIPT_CallScript( GMEVENT *event,
       GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk);
 	sc_event = FldScript_CreateControlEvent( sc );
 	GMEVENT_CallEvent( event, sc_event );
+
+  return sc;
 }
 
 //--------------------------------------------------------------
@@ -943,8 +945,11 @@ u16 SCRIPT_GetEventWorkValue( SCRIPT_WORK *sc, GAMEDATA *gdata, u16 work_no )
 BOOL SCRIPT_SetEventWorkValue(
 	SCRIPT_WORK *sc, u16 work_no, u16 value )
 {
-  GAMEDATA * gdata = GAMESYSTEM_GetGameData( sc->gsys );
-	u16* res = SCRIPT_GetEventWork( sc, gdata, work_no );
+  GAMEDATA * gdata;
+	u16* res;
+  GF_ASSERT(sc->magic_no == SCRIPT_MAGIC_NO);
+  gdata = GAMESYSTEM_GetGameData( sc->gsys );
+	res = SCRIPT_GetEventWork( sc, gdata, work_no );
 	if( res == NULL ){ return FALSE; }
 	*res = value;
 	return TRUE;
@@ -1012,6 +1017,7 @@ BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
 //--------------------------------------------------------------
 void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 )
 {
+  GF_ASSERT(sc->magic_no == SCRIPT_MAGIC_NO);
   SCRIPT_SetEventWorkValue( sc, SCWK_PARAM0, prm0 );
   SCRIPT_SetEventWorkValue( sc, SCWK_PARAM1, prm1 );
   SCRIPT_SetEventWorkValue( sc, SCWK_PARAM2, prm2 );

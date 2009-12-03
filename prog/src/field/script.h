@@ -67,7 +67,7 @@ extern GMEVENT * SCRIPT_SetEventScript(
  * @retval	none
  */
 //--------------------------------------------------------------
-extern void SCRIPT_CallScript( GMEVENT *event,
+extern SCRIPT_WORK * SCRIPT_CallScript( GMEVENT *event,
 	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID temp_heapID );
 
 //--------------------------------------------------------------
