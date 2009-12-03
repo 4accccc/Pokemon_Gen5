@@ -678,7 +678,7 @@ static const FLDEFF_TASK_HEADER DATA_namipokeTaskHeader =
 //--------------------------------------------------------------
 /**
  * 波乗りポケモンエフェクト　初期化
- * @param	fectrl		FLDEFF_CTRL *
+ * @param	fectrl FLDEFF_CTRL *
  * @param heapID HEAPID
  * @retval	void*	エフェクト使用ワーク
  */
