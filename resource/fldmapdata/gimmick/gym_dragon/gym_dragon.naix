@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_dragon.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-12-04T22:10:14
+ *****************************************************************************/
+
+#ifndef NARC_GYM_DRAGON_NAIX_
+#define NARC_GYM_DRAGON_NAIX_
+
+enum {
+	NARC_gym_dragon_ue_migi_nsbmd = 0,
+	NARC_gym_dragon_arm_01_nsbmd = 1
+};
+
+/* NARC_GYM_DRAGON_NAIX_ */
+#endif
