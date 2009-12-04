@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	sogabe nishino ohmura
+USERS	=	ohmura megumi_mizutani
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -68,7 +68,7 @@ do-build: $(COPY_DIR)$(notdir $(NMCFILE))
 
 do-build: $(COPY_DIR)$(notdir $(NCLFILE))
 %.ncl: $(RES_DIR)%.ncl
-	ruby $(SCRIPT_DIR)nclinkrw.rb $< $(COPY_DIR)
+	cp $< $(COPY_DIR)
 
 endif
 
