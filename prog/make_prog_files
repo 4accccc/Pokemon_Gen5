@@ -225,7 +225,9 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_flg.c \
         debug/debug_hudson.c \
    		debug/debug_str_conv.c \
-        field/ev_time.c
+        field/ev_time.c \
+        field/pleasure_boat_st.c \
+        field/scrcmd_pl_boat_init.c
 
 
 #================================================
