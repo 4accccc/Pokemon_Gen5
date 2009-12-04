@@ -3,7 +3,7 @@
  * @file    itemmenu.h
  * @brief   ƒAƒCƒeƒ€ƒƒjƒ…[
  * @author  k.ohno
- * @author	genya hosaka (ˆøŒp)
+ * @author  genya hosaka (ˆøŒp)
  * @date    2009.06.30
  */
 //============================================================================================
@@ -873,6 +873,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(pWork->ret_item == ITEM_TOMODATITETYOU){
       pWork->ret_code = BAG_NEXTPROC_FRIENDNOTE;  //‚Æ‚à‚¾‚¿Žè’ 
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if(pWork->ret_item == ITEM_ANANUKENOHIMO){
+      pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  //‚ ‚È‚Ê‚¯‚Ìƒqƒ‚
       _CHANGE_STATE(pWork,NULL);
     }
     else if(pWork->ret_item == ITEM_PARESUHEGOO){

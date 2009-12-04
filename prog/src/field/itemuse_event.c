@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	  itemuse_proc.c
- * @brief	  フィールドに関連したアイテムの使用処理
- * @author	k.ohno
- * @date	  09.08.04
+ * @file    itemuse_proc.c
+ * @brief   フィールドに関連したアイテムの使用処理
+ * @author  k.ohno
+ * @date    09.08.04
  */
 //============================================================================================
 #include "gflib.h"
@@ -14,40 +14,42 @@
 
 //=============================================================================
 /**
- *	共通
+ *  共通
  */
 //=============================================================================
 //-------------------------------------
-///	共通呼び出し用テーブル
+/// 共通呼び出し用テーブル
 //=====================================
-static ItemUseEventFunc * const Event_ItemUse[ EVENT_ITEMUSE_CALL_MAX ]	=
-{	
-	&EVENT_CycleUse,
-	&EVENT_PalaceJumpUse,
+static ItemUseEventFunc * const Event_ItemUse[ EVENT_ITEMUSE_CALL_MAX ] =
+{ 
+  &EVENT_CycleUse,
+  &EVENT_PalaceJumpUse,
+  &EVENT_ChangeMapByAnanukenohimo,
 };
 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	共通呼び出し
+ *  @brief  共通呼び出し
  *
- *	@param	EVENT_ITEMUSE_CALL_TYPE type	呼び出すアイテム
- *	@param	*gsys				ゲームシステム
- *	@param	*field_wk		フィールド
+ *  @param  EVENT_ITEMUSE_CALL_TYPE type  呼び出すアイテム
+ *  @param  *gsys       ゲームシステム
+ *  @param  *field_wk   フィールド
  *
- *	@return	イベント
+ *  @return イベント
  */
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_FieldItemUse( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
-{	
-	GF_ASSERT( type < EVENT_ITEMUSE_CALL_MAX );
-	return Event_ItemUse[ type ]( field_wk, gsys );
+{ 
+  GF_ASSERT( type < EVENT_ITEMUSE_CALL_MAX );
+  OS_Printf("event type = %d\n", type);
+  return Event_ItemUse[ type ]( field_wk, gsys );
 }
 
 
 //=============================================================================
 /**
- *	個別呼び出し
+ *  個別呼び出し
  */
 //=============================================================================
 typedef struct{
@@ -73,10 +75,10 @@ static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
 //------------------------------------------------------------------
 GMEVENT * EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 {
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, CycleEvent, sizeof(CYCLEUSE_STRUCT));
-	CYCLEUSE_STRUCT * pCy = GMEVENT_GetEventWork(event);
-	pCy->gameSys = gsys;
-	return event;
+  GMEVENT * event = GMEVENT_Create(gsys, NULL, CycleEvent, sizeof(CYCLEUSE_STRUCT));
+  CYCLEUSE_STRUCT * pCy = GMEVENT_GetEventWork(event);
+  pCy->gameSys = gsys;
+  return event;
 }
 
 
@@ -94,16 +96,16 @@ GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
   ZONEID jump_zone;
   
   if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
-  	pos.x = 184 << FX32_SHIFT;
-  	pos.y = 0;
-  	pos.z = 184 << FX32_SHIFT;
-  	jump_zone = ZONE_ID_UNION;   //こちらに飛ぶのはデバッグです
+    pos.x = 184 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 184 << FX32_SHIFT;
+    jump_zone = ZONE_ID_UNION;   //こちらに飛ぶのはデバッグです
   }
   else{
-  	pos.x = 760 << FX32_SHIFT;
-  	pos.y = 0;
-  	pos.z = 234 << FX32_SHIFT;
-  	jump_zone = ZONE_ID_PALACE01;
+    pos.x = 760 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 234 << FX32_SHIFT;
+    jump_zone = ZONE_ID_PALACE01;
   }
   return EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0);
 }

@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	  itemuse_event.h
- * @brief	  フィールドに関連したアイテムの使用処理
- * @author	k.ohno
- * @date	  09.08.04
+ * @file    itemuse_event.h
+ * @brief   フィールドに関連したアイテムの使用処理
+ * @author  k.ohno
+ * @date    09.08.04
  */
 //============================================================================================
 
@@ -18,18 +18,19 @@ typedef GMEVENT* (ItemUseEventFunc)(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 
 //=============================================================================
 /**
- *	共通
+ *  共通
  */
 //=============================================================================
 //-------------------------------------
-///	アイテム使用テーブル
+/// アイテム使用テーブル
 //=====================================
 typedef enum
-{	
-	EVENT_ITEMUSE_CALL_CYCLE,
-	EVENT_ITEMUSE_CALL_PALACEJUMP,
+{ 
+  EVENT_ITEMUSE_CALL_CYCLE,
+  EVENT_ITEMUSE_CALL_PALACEJUMP,
+  EVENT_ITEMUSE_CALL_ANANUKENOHIMO,
 
-	EVENT_ITEMUSE_CALL_MAX,
+  EVENT_ITEMUSE_CALL_MAX,
 }EVENT_ITEMUSE_CALL_TYPE;
 
 //共通呼び出し
@@ -37,7 +38,7 @@ extern GMEVENT * EVENT_FieldItemUse( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK 
 
 //=============================================================================
 /**
- *	個別呼び出し
+ *  個別呼び出し
  */
 //=============================================================================
 
