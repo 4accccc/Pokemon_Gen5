@@ -273,6 +273,7 @@ static const GFL_DISP_VRAM VramTbl = {
 	GX_VRAM_TEX_0_A,							// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_01_FG					// テクスチャパレットスロット
 */
+/*
 	GX_VRAM_BG_128_D,							// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
 
@@ -290,6 +291,24 @@ static const GFL_DISP_VRAM VramTbl = {
 
 	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K		// サブOBJマッピングモード
+*/
+	GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
+
+	GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+	GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_SUB_OBJ_128_D,					// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,		// サブ2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_TEX_NONE,							// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,					// テクスチャパレットスロット
+
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
 };
 
 // トレイエリア範囲データ
@@ -3493,8 +3512,13 @@ void BOX2MAIN_PokeInfoOff( BOX2_SYS_WORK * syswk )
 {
 	u32	i;
 
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA, FALSE );	// ポケグラオフ
-//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );	// ポケグラオフ
+	// ポケグラオフ
+	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA] != NULL ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA, FALSE );
+	}
+	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA2] != NULL ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );
+	}
 	
 	// タイプアイコンオフ
 	for( i=BOX2OBJ_ID_TYPEICON; i<BOX2OBJ_ID_TYPEICON+POKETYPE_MAX; i++ ){

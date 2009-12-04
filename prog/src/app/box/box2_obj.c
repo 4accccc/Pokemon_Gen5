@@ -504,7 +504,7 @@ static void ClactInit( BOX2_APP_WORK * appwk )
 
 			BOX2MAIN_CHRRES_MAX+FNTOAM_CHR_MAX,	// 登録できるキャラデータ数
 			BOX2MAIN_PALRES_MAX,								// 登録できるパレットデータ数
-			BOX2MAIN_CELRES_MAX,								// 登録できるセルアニメパターン数
+			BOX2MAIN_CELRES_MAX+FNTOAM_CHR_MAX,	// 登録できるセルアニメパターン数
 			0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
 
 		  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
@@ -2158,7 +2158,7 @@ extern u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, in
 	// フォルムとレアが必要！
 	*chrRes = POKE2DGRA_OBJ_CGR_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 	*palRes = POKE2DGRA_OBJ_PLTT_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
-	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 
   GFL_ARC_CloseDataHandle( ah );
 
@@ -2171,23 +2171,24 @@ extern u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, in
 	u32 * chrRes;
 	u32 * palRes;
 	u32 * celRes;
+	u32	oldID;
 	u16	pal;
 	BOOL	fast;
 
-//	if( syswk->app->pokegra_swap == 0 ){
+	if( syswk->app->pokegra_swap == 0 ){
 		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA];
 		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA];
 		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA];
 		pal = PALNUM_POKEGRA1_S * 0x20;
-/*
+		oldID = id + 1;
 	}else{
 		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA2];
 		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA2];
 		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA2];
 		pal = PALNUM_POKEGRA2_S * 0x20;
+		oldID = id;
 		id += 1;
 	}
-*/
 
 	if( syswk->app->clwk[id] != NULL ){
 		GFL_CLACT_WK_Remove( syswk->app->clwk[id] );
@@ -2198,22 +2199,22 @@ extern u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, in
 
 	ah = POKE2DGRA_OpenHandle( HEAPID_BOX_APP );
 
-/*
-	// フォルムとレアが必要！
-	*chrRes = POKE2DGRA_OBJ_CGR_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
-	*palRes = POKE2DGRA_OBJ_PLTT_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
-	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
-*/
 	fast = PPP_FastModeOn( info->ppp );
 	*chrRes = POKE2DGRA_OBJ_CGR_RegisterPPP( ah, info->ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 	*palRes = POKE2DGRA_OBJ_PLTT_RegisterPPP( ah, info->ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
-	*celRes = POKE2DGRA_OBJ_CELLANM_RegisterPPP( info->ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+	*celRes = POKE2DGRA_OBJ_CELLANM_RegisterPPP( info->ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 	PPP_FastModeOff( info->ppp, fast );
 
   GFL_ARC_CloseDataHandle( ah );
 
 	syswk->app->clwk[id] = ClactWorkCreate( syswk->app, &ClactParamTbl[id] );
 	BOX2OBJ_Vanish( syswk->app, id, TRUE );
+
+	if( syswk->app->clwk[oldID] != NULL ){
+		BOX2OBJ_Vanish( syswk->app, oldID, FALSE );
+	}
+
+	syswk->app->pokegra_swap ^= 1;
 }
 
 
@@ -2246,8 +2247,8 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 
 	appwk->celRes[BOX2MAIN_CELRES_TYPEICON] = GFL_CLGRP_CELLANIM_Register(
 																							ah,
-																							APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K),
-																							APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K),
+																							APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_128K),
+																							APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_128K),
 																							HEAPID_BOX_APP );
 
   appwk->palRes[BOX2MAIN_PALRES_TYPEICON] = GFL_CLGRP_PLTT_Register(
@@ -2256,13 +2257,13 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 
 	appwk->chrRes[BOX2MAIN_CHRRES_POKEMARK] = GFL_CLGRP_CGR_Register(
 																							ah,
-																							APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_32K),
+																							APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
 																							FALSE, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 
 	appwk->celRes[BOX2MAIN_CELRES_POKEMARK] = GFL_CLGRP_CELLANIM_Register(
 																							ah,
-																							APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_32K),
-																							APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_32K),
+																							APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
+																							APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
 																							HEAPID_BOX_APP );
 
   appwk->palRes[BOX2MAIN_PALRES_POKEMARK] = GFL_CLGRP_PLTT_Register(
@@ -2271,13 +2272,13 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 
 	appwk->chrRes[BOX2MAIN_CHRRES_POKERUSICON] = GFL_CLGRP_CGR_Register(
 																								ah,
-																								APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_32K),
+																								APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
 																								FALSE, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 
 	appwk->celRes[BOX2MAIN_CELRES_POKERUSICON] = GFL_CLGRP_CELLANIM_Register(
 																								ah,
-																								APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_32K),
-																								APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_32K),
+																								APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
+																								APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
 																								HEAPID_BOX_APP );
 
   appwk->palRes[BOX2MAIN_PALRES_POKERUSICON] = GFL_CLGRP_PLTT_Register(
