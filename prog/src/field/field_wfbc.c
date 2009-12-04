@@ -60,7 +60,7 @@ static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] =
 //=====================================
 typedef struct 
 {
-  u32 patch[FIELD_WFBC_BLOCK_PATCH_MAX];
+  u32 patch[FIELD_WFBC_BLOCK_PATCH_MAX+1];
 } FIELD_WFBC_BLOCK_PATCH;
 
 //-------------------------------------
@@ -302,7 +302,7 @@ int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIE
     TOMOYA_Printf( "block_tag %d\n", block_tag );
     TOMOYA_Printf( "block_x=%d  block_z=%d\n", block_x, block_z );
     
-    GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
+    GF_ASSERT( score <= FIELD_WFBC_BLOCK_PATCH_MAX );
 
     // g3Dmapローカルのグリッド座標を求める
     local_grid_x = FIELD_WFBC_BLOCK_TO_GRID_X( block_x ) % 32;
