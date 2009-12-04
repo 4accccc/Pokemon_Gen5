@@ -1,5 +1,5 @@
 #include <nitro.h>
-#include "nitrowifidummy.h"
+#include "net/nitrowifidummy.h"
 
 static char ca_name[] = "JP, Tokyo, Minato-ku, bfs, pokemon-ds.basementfactorysystems.com";
 

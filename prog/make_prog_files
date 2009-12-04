@@ -916,7 +916,10 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #LIB=>          libdwcgsghttp.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
-							libdpw/dpw_tr.c
+							libdpw/dpw_tr.c \
+							net/pdw_ca.c \
+							net/nhttp_rap.c
+
 
 
 # WIFIƒƒOƒCƒ“
@@ -965,8 +968,6 @@ SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
 # GAMESYNC
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_GAMESYNC   = net_app/gsync/gsync_menu.c \
-									net_app/gsync/pdw_ca.c \
-									net_app/gsync/nhttp_rap.c \
 									net_app/gsync/gsync_message.c \
 									net_app/gsync/gsync_disp.c \
 									net_app/gsync/gsync_state.c

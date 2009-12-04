@@ -543,14 +543,71 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
   return( TRUE );
 }
 
+
+
+
+
+
+#if 1
 //--------------------------------------------------------------
 /**
- * GTSNegoメニュー呼びだし
+ * @brief   デバッグ ポケモンをセーブデータに入れる
  * @param wk  DEBUG_MENU_EVENT_WORK*
  * @retval  BOOL  TRUE=イベント継続
  */
 //--------------------------------------------------------------
+#include "savedata/dreamworld_data.h"
+#include "savedata/mystatus.h"
+#include "savedata/mystatus_local.h"
+#include "savedata/record.h"
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  {
+    DREAMWORLD_SAVEDATA *pdw = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_DREAMWORLD);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+    POKEPARTY *party = GAMEDATA_GetMyPokemon(gamedata);
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, 0);
+    POKEMON_PASO_PARAM  *ppp = PP_GetPPPPointer( pp );
+    
+    OS_TPrintf("before monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
+    DREAMWORLD_SV_SetSleepPokemon(pdw, pp);
+    
+//    pp = DREAMWORLD_SV_GetSleepPokemon(pdw);
+  //  OS_TPrintf("after monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
 
+    {//Myステータス
+      MYSTATUS* pMy = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(wk->gmSys));
+      
+      OS_TPrintf("before myst gold=%d,  id=%d, sex=%d\n",pMy->gold,  pMy->id, pMy->sex);
+      pMy->gold = 511;
+      pMy->id = 88776655;
+      pMy->sex = 0;
+      OS_TPrintf("after myst gold=%d,  id=%d, sex=%d\n",pMy->gold, pMy->id, pMy->sex);
+    }
+
+    {//レコード
+      long* rec = (long*)SaveData_GetRecord(SaveControl_GetPointer());
+      
+      OS_TPrintf("before record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
+      rec[RECID_CAPTURE_POKE] = 7896;
+      rec[RECID_FISHING_SUCCESS] = 3;
+      OS_TPrintf("after record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
+    }
+  }
+  
+ // GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpEasy( wk->gmSys, wk->heapID ) );
+  return( FALSE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief     CGearの絵をROMから読み出しセーブ領域に入れる
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval    BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+#else
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   ARCHANDLE* p_handle;
@@ -597,7 +654,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   return( FALSE );
 }
-
+#endif
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し 数値入力　

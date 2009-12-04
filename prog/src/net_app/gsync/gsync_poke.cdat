@@ -1,0 +1,6 @@
+
+
+
+#define _POKEMON_CELLX ( 128 )
+#define _POKEMON_CELLY ( 128 )
+

@@ -81,4 +81,5 @@ extern void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_SettingSubBgControl(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_LevelInputInit(GSYNC_DISP_WORK* pWork);
 extern TOUCHBAR_WORK* GSYNC_DISP_GetTouchWork(GSYNC_DISP_WORK* pWork);
+extern void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp);
 

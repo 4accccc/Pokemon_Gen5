@@ -186,6 +186,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     }
     break;
   case _GAMESYNC_MAINPROC:
+    dbw->selectType=GSYNC_CALLTYPE_BOXSET;  //@todo ポケモンセット後のテスト中
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, dbw);
     (*seq)++;
     break;

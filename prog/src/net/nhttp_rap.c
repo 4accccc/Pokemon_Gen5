@@ -7,7 +7,7 @@
  */
 //=============================================================================
 
-#include "nhttp_rap.h"
+#include "net/nhttp_rap.h"
 #include "net_app/gsync.h"
 #include "net/dwc_rapcommon.h"
 
@@ -24,8 +24,6 @@
 #include "savedata/wifilist.h"
 #include "msg/msg_d_ohno.h"
 
-
-FS_EXTERN_OVERLAY(dpw_common);
 
 
 static G_SYNC_WORK* _pWork;
@@ -273,7 +271,6 @@ void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
 NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID)
 {
   NHTTP_RAP_WORK* pWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(NHTTP_RAP_WORK) );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
   return pWork;
 }
@@ -282,7 +279,6 @@ NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID)
 void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 {
   GFL_HEAP_FreeMemory(pWork);
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 }
 
 

@@ -23,13 +23,13 @@
 //----------------------------------------------------------
 
 struct _DREAMWORLD_SAVEDATA {
-  POKEMON_PASO_PARAM ppp;   ///< 眠るポケモン
+  POKEMON_PARAM pp;   ///< 眠るポケモン
   u8 recv_flag[DREAM_WORLD_DATA_MAX_EVENT / 8];		//256 * 8 = 2048 bit
   u16 categoryType;    //カテゴリID						2byte			夢の結果データのカテゴリ（イベントなのか、アイテムなのか、エンカウントなのか）
   DREAM_WORLD_TREAT_DATA treat;  //ご褒美データ 
 	DREAM_WORLD_FURNITUREDATA furnitureID[DREAM_WORLD_DATA_MAX_FURNITURE];  //9	配信家具
   u8 pokemoStatus;        //8	送信したポケモン						1byte			送信したポケモンの状態を受け取る
-  u8 padding;
+  u8 pokemonIn;  ///ppにポケモンが入っているかどうか
 };
 
 
@@ -80,9 +80,9 @@ void DREAMWORLD_SV_Init(DREAMWORLD_SAVEDATA* pSV)
  * @return	POKEMON_PASO_PARAM
  */
 //--------------------------------------------------------------------------------------------
-POKEMON_PASO_PARAM* DREAMWORLD_SV_GetSleepPokemon(DREAMWORLD_SAVEDATA* pSV)
+POKEMON_PARAM* DREAMWORLD_SV_GetSleepPokemon(DREAMWORLD_SAVEDATA* pSV)
 {
-  return &pSV->ppp;
+  return &pSV->pp;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -93,10 +93,35 @@ POKEMON_PASO_PARAM* DREAMWORLD_SV_GetSleepPokemon(DREAMWORLD_SAVEDATA* pSV)
  * @param	  POKEMON_PASO_PARAM*
  */
 //--------------------------------------------------------------------------------------------
-void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PASO_PARAM* ppp)
+void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PARAM* pp)
 {
-  GFL_STD_MemCopy(ppp,&pSV->ppp,POKETOOL_GetPPPWorkSize());
+  GFL_STD_MemCopy(pp,&pSV->pp,POKETOOL_GetWorkSize());
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   寝てるポケモンをセットしたらフラグをON
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  ポケモンセット時はTRUE
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetSleepPokemonFlg(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg)
+{
+  pSV->pokemonIn = bFlg;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   寝てるポケモンをセットしたかどうか確認
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	ポケモンセット時はTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->pokemonIn;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

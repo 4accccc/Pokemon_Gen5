@@ -155,7 +155,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     {//DreamWorld関連
       DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
       pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
     }
     {//Myステータス
       MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);

@@ -16,6 +16,12 @@
 #include "net_app/gtsnego.h"
 
 
+typedef enum{
+  GSYNC_CALLTYPE_INFO,
+  GSYNC_CALLTYPE_BOXSET,
+} GSYNC_CALLTYPE_ENUM;
+
+
 typedef struct _EVENT_GSYNC_WORK EVENT_GSYNC_WORK;
 
 struct _EVENT_GSYNC_WORK{
@@ -26,6 +32,8 @@ struct _EVENT_GSYNC_WORK{
   BOOL isEndProc;
   int selectType;
   BOOL push;
+  u16 boxNo;
+  u16 boxIndex;
   EVENT_GTSNEGO_WORK aLoginWork;
 };
 

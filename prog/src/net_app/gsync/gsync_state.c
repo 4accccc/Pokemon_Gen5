@@ -13,7 +13,7 @@
 #include "libdpw/dwci_ghttp.h"
 #include "net_app/gsync.h"
 #include <nitroWiFi/nhttp.h>
-#include "nitrowifidummy.h"
+#include "net/nitrowifidummy.h"
 
 #include "system/main.h"  //HEAPID
 #include "message.naix"
@@ -28,8 +28,9 @@
 #include "savedata/wifilist.h"
 #include "msg/msg_d_ohno.h"
 #include "gsync_local.h"
-#include "nhttp_rap.h"
+#include "net/nhttp_rap.h"
 #include "../../field/event_gsync.h"
+#include "savedata/dreamworld_data.h"
 
 #define _TWLDWC_HTTP (1)
 
@@ -77,14 +78,15 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc* state, int line);
 
 struct _G_SYNC_WORK {
   HEAPID heapID;
-
+  POKEMON_PARAM* pp;
   NHTTP_RAP_WORK* pNHTTPRap;
   GSYNC_DISP_WORK* pDispWork;  // 描画系
   GSYNC_MESSAGE_WORK* pMessageWork; //メッセージ系
   APP_TASKMENU_WORK* pAppTask;
-    
+  BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
-
+  u16 trayno;
+  u16 indexno;
   StateFunc* state;      ///< ハンドルのプログラム状態
   vu32 count;
   int req;
@@ -189,26 +191,108 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   眠るエフェクト中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _upeffectLoop(G_SYNC_WORK* pWork)
+{
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   眠るエフェクト開始
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _upeffectStart(G_SYNC_WORK* pWork)
+{
+  GSYNC_DISP_PokemonIconCreate(pWork->pDispWork, PP_GetPPPPointer(pWork->pp));
+  _CHANGE_STATE(_ghttpKeyWait);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンを眠るエリアに移動
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _BoxPokeMove(G_SYNC_WORK* pWork)
+{
+  POKEMON_PASO_PARAM* ppp;
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  GF_ASSERT(DREAMWORLD_SV_GetSleepPokemonFlg(pDream)==FALSE);
+  
+  if(pWork->pp){
+    GFL_HEAP_FreeMemory(pWork->pp);
+  }
+  
+  ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
+  GF_ASSERT(ppp);
+  if(ppp){
+    POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
+    DREAMWORLD_SV_SetSleepPokemon(pDream, pp);
+    pWork->pp = pp;
+    BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
+  }
+  _CHANGE_STATE(_upeffectStart);
+
+}
+
+FS_EXTERN_OVERLAY(dpw_common);
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   PROC初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
 static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GSYNC_WORK* pParent = pwk;
   G_SYNC_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(G_SYNC_WORK), HEAPID_PROC );
     
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x38000 );
   GFL_STD_MemClear(pWork, sizeof(G_SYNC_WORK));
 
   pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC);
   pWork->pSaveData = pParent->ctrl;
   pWork->heapID = HEAPID_GAMESYNC;
+  pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
 
+#if PM_DEBUG
+  pParent->boxNo=0;
+  pParent->boxIndex=0;
+#endif
+  pWork->trayno = pParent->boxNo;
+  pWork->indexno = pParent->boxIndex;
+  
   pWork->pDispWork = GSYNC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = GSYNC_MESSAGE_Init(pWork->heapID, NARC_message_gsync_dat);
 
-  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+  
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-  
-  _CHANGE_STATE(_ghttpKeyWait);
+  switch(pParent->selectType){
+  case  GSYNC_CALLTYPE_INFO:
+    _CHANGE_STATE(_ghttpKeyWait);
+    break;
+  case GSYNC_CALLTYPE_BOXSET:
+    _CHANGE_STATE(_BoxPokeMove);
+    break;
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -241,6 +325,9 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 
   GSYNC_MESSAGE_End(pWork->pMessageWork);
   GSYNC_DISP_End(pWork->pDispWork);
+  if(pWork->pp){
+    GFL_HEAP_FreeMemory(pWork->pp);
+  }
 
 
   NHTTP_RAP_End(pWork->pNHTTPRap);
@@ -248,6 +335,7 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   GFL_PROC_FreeWork(proc);
 
   GFL_HEAP_DeleteHeap(HEAPID_GAMESYNC);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
   return GFL_PROC_RES_FINISH;
 }
 

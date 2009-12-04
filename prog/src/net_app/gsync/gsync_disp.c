@@ -24,6 +24,7 @@
 #include "print/global_font.h"
 #include "font/font.naix"
 #include "print/str_tool.h"
+#include "pokeicon/pokeicon.h"
 
 #include "system/bmp_menuwork.h"
 #include "system/bmp_winframe.h"
@@ -38,22 +39,39 @@
 #include "gsync_local.h"
 #include "msg/msg_gtsnego.h"
 #include "gsync.naix"
+#include "box_gra.naix"
+
+#include "gsync_poke.cdat"
+
+#define _OBJPLT_POKEICON_OFFSET (0)
 
 FS_EXTERN_OVERLAY(ui_common);
 
 typedef enum
 {
-  PLT_NEGOOBJ,  
+  PLT_NEGOOBJ,
+  PLT_HANDOBJ,
+  PLT_POKEICON,
   PLT_RESOURCE_MAX,
   CHAR_NEGOOBJ = PLT_RESOURCE_MAX,
+  CHAR_HANDOBJ,
+  CHAR_SELECT_POKE,
   CHAR_RESOURCE_MAX,
   ANM_NEGOOBJ = CHAR_RESOURCE_MAX,
+  ANM_HANDOBJ,
+  ANM_POKEICON,
   ANM_RESOURCE_MAX,
   CEL_RESOURCE_MAX,
 } _CELL_RESOURCE_TYPE;
 
 
-#define _CELL_DISP_NUM (12)
+typedef enum
+{
+  CELL_CUR_POKE_PLAYER,
+    _CELL_DISP_NUM,
+} _CELL_WK_ENUM;
+
+//#define _CELL_DISP_NUM (12)
 
 struct _GSYNC_DISP_WORK {
 	u32 subchar;
@@ -137,7 +155,7 @@ GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id)
   GX_DispOn();
 
   GFL_BG_Init(pWork->heapID);
-  GFL_CLACT_SYS_Create(	&_CLSYS_Init, &_defVBTbl, pWork->heapID );
+  GFL_CLACT_SYS_Create(	&GFL_CLSYSINIT_DEF_CONSCREEN, &_defVBTbl, pWork->heapID );
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
 
   GFL_DISP_SetBank( &_defVBTbl );
@@ -151,6 +169,7 @@ GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id)
   _TOUCHBAR_Init(pWork);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
   
   return pWork;
 }
@@ -334,12 +353,29 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
         p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0, 0, 3, pWork->heapID  );
     pWork->cellRes[ANM_NEGOOBJ] =
       GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
+        p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_box_m_obj_NANR , pWork->heapID  );
 */
     
     GFL_ARC_CloseDataHandle(p_handle);
 	}
+#if 1
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
+    
+    pWork->cellRes[CHAR_HANDOBJ] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_box_gra_box_m_obj_lz_NCGR ,
+                              TRUE , CLSYS_DRAW_MAX , pWork->heapID );
+    pWork->cellRes[PLT_HANDOBJ] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_box_gra_box_m_obj2_NCLR , CLSYS_DRAW_MAX ,    0, 0, 3, pWork->heapID  );
+    pWork->cellRes[ANM_HANDOBJ] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_box_gra_box_m_obj_NCER, NARC_box_gra_box_m_obj_NANR , pWork->heapID  );
 
+    GFL_ARC_CloseDataHandle(p_handle);
+	}
+#endif
+  
 }
 
 
@@ -409,10 +445,28 @@ static void _TOUCHBAR_Init(GSYNC_DISP_WORK* pWork)
   pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBARWORKをえる
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
 TOUCHBAR_WORK* GSYNC_DISP_GetTouchWork(GSYNC_DISP_WORK* pWork)
 {
   return pWork->pTouchWork;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	→設定
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
 
 
 static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight)
@@ -441,6 +495,14 @@ static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	→開放
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
 static void _ArrowRelease(GSYNC_DISP_WORK* pWork)
 {
   int i=0;
@@ -450,6 +512,73 @@ static void _ArrowRelease(GSYNC_DISP_WORK* pWork)
       GFL_CLACT_WK_Remove(pWork->curIcon[i]);
       pWork->curIcon[i]=NULL;
     }
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンリソースの作成
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+static void _CreatePokeIconResource(GSYNC_DISP_WORK* pWork)
+{
+  int line,i;
+  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+  pWork->cellRes[PLT_POKEICON] =
+    GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
+                                 POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB ,
+                                 _OBJPLT_POKEICON_OFFSET , pWork->heapID  );
+  pWork->cellRes[ANM_POKEICON] =
+    GFL_CLGRP_CELLANIM_Register( arcHandlePoke ,
+                                 POKEICON_GetCellSubArcIndex() , POKEICON_GetAnmArcIndex(), pWork->heapID  );
+  
+  GFL_ARC_CloseDataHandle(arcHandlePoke);
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンアイコンCreate
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp)
+{
+  _CreatePokeIconResource(pWork);
+
+
+  {
+    GFL_CLWK_DATA cellInitData;
+    ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+
+    pWork->cellRes[CHAR_SELECT_POKE] =
+      GFL_CLGRP_CGR_Register( arcHandlePoke , POKEICON_GetCgxArcIndex(ppp) ,
+                              FALSE , CLSYS_DRAW_MAX , pWork->heapID );
+
+    cellInitData.pos_x = _POKEMON_CELLX;
+    cellInitData.pos_y = _POKEMON_CELLY;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 1;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[CELL_CUR_POKE_PLAYER] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SELECT_POKE],
+                                                                pWork->cellRes[PLT_POKEICON],
+                                                                pWork->cellRes[ANM_POKEICON],
+                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_PLAYER], TRUE );
+    GFL_CLACT_WK_SetPlttOffs( pWork->curIcon[CELL_CUR_POKE_PLAYER] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+    GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
 }
 
