@@ -286,8 +286,7 @@ static GMEVENT_RESULT fieldBattleEvent(
   case 7:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;

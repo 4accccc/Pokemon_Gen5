@@ -119,14 +119,12 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
       FIELD_STATUS* fstatus; 
       fstatus = GAMEDATA_GetFieldStatus( gamedata );
       if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
-      { // 輝度フェード
-        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
-                                       FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+      { // 季節フェード
+        fade_event = EVENT_FieldFadeIn_Season(gsys, fieldmap);
       }
       else
       { // クロスフェード
-        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
-                                       FIELD_FADE_CROSS, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+        fade_event = EVENT_FieldFadeIn_Cross(gsys, fieldmap);
       }
       GMEVENT_CallEvent( event, fade_event );
     }
@@ -157,8 +155,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_CLOSEANIME_START:
     if (fdaw->ctrl == NULL)
-    { /* エラーよけ、ドアがない場合 */
-      *seq = SEQ_DOOROUT_END;
+    { /* エラーよけ、ドアがない場合 */ *seq = SEQ_DOOROUT_END;
     }
     else
     { //ドアを閉じるアニメ適用
@@ -283,13 +280,11 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
       fstatus = GAMEDATA_GetFieldStatus( gamedata );
       if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
       { // 輝度フェード
-        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-                                        FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+        fade_event = EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT);
       }
       else
       { // クロスフェード
-        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-                                        FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+        fade_event = EVENT_FieldFadeOut_Cross(gsys, fieldmap);
       }
       GMEVENT_CallEvent( event, fade_event );
     }

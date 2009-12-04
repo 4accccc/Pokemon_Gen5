@@ -463,8 +463,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
   case SEQ_FLD_FADEOUT:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(wk->param->gsys, wk->param->field_wk, 
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(wk->param->gsys, wk->param->field_wk, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_FLD_CLOSE;
@@ -487,8 +486,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 		PROCLINK_CALLBACK_Open( &wk->callback );
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(wk->param->gsys, wk->param->field_wk, 
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(wk->param->gsys, wk->param->field_wk, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
 	 	*seq = SEQ_JUNCTION;

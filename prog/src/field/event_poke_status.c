@@ -104,8 +104,7 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
 	case SEQ_FADE_OUT: //// フェードアウト
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(gsys, psw->fieldmap,  
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, psw->fieldmap,  FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_FIELDMAP_CLOSE;
@@ -125,8 +124,7 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
 	case SEQ_FADE_IN: //// フェードイン
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, psw->fieldmap,  
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, psw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_END;
@@ -234,8 +232,7 @@ static GMEVENT_RESULT EVENT_FUNC_WazaSelect(GMEVENT * event, int * seq, void * w
 	case SEQ_FADE_OUT: //// フェードアウト
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(gsys, wsw->fieldmap,  
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, wsw->fieldmap,  FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_FIELDMAP_CLOSE;
@@ -255,8 +252,7 @@ static GMEVENT_RESULT EVENT_FUNC_WazaSelect(GMEVENT * event, int * seq, void * w
 	case SEQ_FADE_IN: //// フェードイン
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, wsw->fieldmap,  
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, wsw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_END;

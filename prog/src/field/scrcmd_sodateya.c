@@ -429,7 +429,7 @@ static GMEVENT_RESULT EVENT_FUNC_SodatePokeSelect(GMEVENT * event, int * seq, vo
 	switch( *seq ) 
   {
 	case SEQ_FADE_OUT: //// フェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, psw->fieldmap, 0, FIELD_FADE_WAIT));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys, psw->fieldmap, FIELD_FADE_WAIT));
     *seq = SEQ_FIELDMAP_CLOSE;
 		break;
 	case SEQ_FIELDMAP_CLOSE: //// フィールドマップ終了
@@ -448,8 +448,7 @@ static GMEVENT_RESULT EVENT_FUNC_SodatePokeSelect(GMEVENT * event, int * seq, vo
 	case SEQ_FADE_IN: //// フェードイン
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, psw->fieldmap, 
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, psw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     *seq = SEQ_END;

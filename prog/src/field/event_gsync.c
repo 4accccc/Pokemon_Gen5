@@ -90,8 +90,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_FADE_START:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(gsys, dbw->fieldmap, 
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
@@ -151,8 +150,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, dbw->fieldmap, 
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
@@ -169,8 +167,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_FADEOUT_IRCBATTLE:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(gsys, dbw->fieldmap, 
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq)++;

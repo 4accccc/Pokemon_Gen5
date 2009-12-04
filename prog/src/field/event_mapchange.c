@@ -188,13 +188,17 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	case 3:
     {
       GMEVENT* fade_event;
-      FIELD_FADE_SEASON_FLAG season_flag;
       FIELD_STATUS* fstatus;
       fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) ){ season_flag = FIELD_FADE_SEASON_ON; }
-      else{ season_flag = FIELD_FADE_SEASON_OFF; }
-      fade_event = EVENT_FieldFadeIn(gsys, fieldmap, FIELD_FADE_BLACK, season_flag, FIELD_FADE_WAIT);
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
+      {
+        fade_event = EVENT_FieldFadeIn_Season(gsys, fieldmap);
+      }
+      else
+      { 
+        fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
+      }
       GMEVENT_CallEvent(event, fade_event);
     }
 		(*seq) ++;
@@ -263,8 +267,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 		//フィールドマップをフェードアウト
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut(gew->gsys, gew->fieldmap, 
-                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gew->gsys, gew->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
 		//通信が動いている場合は終了させる

@@ -153,13 +153,11 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
       fstatus = GAMEDATA_GetFieldStatus( gamedata );
       if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
       { // 輝度フェード
-        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-                                        FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+        fade_event = EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT);
       }
       else
       { // クロスフェード
-        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-                                        FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+        fade_event = EVENT_FieldFadeOut_Cross(gsys, fieldmap);
       }
       GMEVENT_CallEvent( event, fade_event );
     }
@@ -240,13 +238,11 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
         fstatus = GAMEDATA_GetFieldStatus( gamedata );
         if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
         { // 輝度フェード
-          fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-              FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+          fade_event = EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT);
         }
         else
         { // クロスフェード
-          fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
-              FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+          fade_event = EVENT_FieldFadeOut_Cross(gsys, fieldmap);
         }
         GMEVENT_CallEvent( event, fade_event );
       }

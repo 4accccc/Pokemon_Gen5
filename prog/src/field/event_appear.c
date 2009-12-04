@@ -204,10 +204,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
     }
     { // フェードイン
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                      FIELD_FADE_BLACK, 
-                                      FIELD_FADE_SEASON_OFF, 
-                                      FIELD_FADE_NO_WAIT );
+      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -265,10 +262,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                      FIELD_FADE_WHITE, 
-                                      FIELD_FADE_SEASON_OFF,
-                                      FIELD_FADE_NO_WAIT );
+      fade_event = EVENT_FieldFadeIn_White( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -333,10 +327,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                      FIELD_FADE_BLACK, 
-                                      FIELD_FADE_SEASON_OFF, 
-                                      FIELD_FADE_NO_WAIT );
+      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -402,10 +393,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                      FIELD_FADE_BLACK, 
-                                      FIELD_FADE_SEASON_OFF, 
-                                      FIELD_FADE_NO_WAIT );
+      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加

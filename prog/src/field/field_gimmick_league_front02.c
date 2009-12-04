@@ -325,10 +325,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   case 1:
     {
       GMEVENT* new_event;
-      new_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,
-                                     FIELD_FADE_BLACK, 
-                                     FIELD_FADE_SEASON_OFF, 
-                                     FIELD_FADE_WAIT );
+      new_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent( event, new_event );
     }
     ++(*seq);
