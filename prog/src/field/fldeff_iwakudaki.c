@@ -26,7 +26,7 @@ typedef enum{
   ANIME_NUM
 } ANIME_INDEX;
 
-u32 dat_id[ANIME_NUM] =
+static u32 dat_id[ANIME_NUM] =
 {
   NARC_fldeff_iwakudaki_nsbca,
   NARC_fldeff_iwakudaki_nsbtp,

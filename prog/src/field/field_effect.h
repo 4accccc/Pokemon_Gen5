@@ -37,6 +37,7 @@ typedef enum
   FLDEFF_PROCID_NAMIPOKE_EFFECT, ///<波乗りポケモンエフェクト
   FLDEFF_PROCID_IWAKUDAKI, ///<岩砕き
   FLDEFF_PROCID_D06DENKI, ///<D06電気洞窟
+  FLDEFF_PROCID_IAIGIRI, ///<居合い切り
 
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
