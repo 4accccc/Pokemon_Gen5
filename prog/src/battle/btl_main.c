@@ -429,6 +429,28 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
   #endif
 }
 
+/**
+ *  セットアップパラメータからバッグモードを決定
+ */
+static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
+{
+  switch( setup->competitor ){
+  case BTL_COMPETITOR_WILD:
+    return BBAG_MODE_NORMAL;
+
+  case BTL_COMPETITOR_TRAINER:
+    return BBAG_MODE_NORMAL;
+
+  case BTL_COMPETITOR_SUBWAY:
+    return BBAG_MODE_SHOOTER;
+
+  case BTL_COMPETITOR_COMM:
+    return BBAG_MODE_SHOOTER;
+  }
+
+  return BBAG_MODE_NORMAL;
+}
+
 //--------------------------------------------------------------------------
 /**
  * スタンドアローン／シングルバトル
@@ -436,17 +458,10 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 //--------------------------------------------------------------------------
 static BOOL setup_alone_single( int* seq, void* work )
 {
-  enum {
-    #ifdef DEBUG_ONLY_FOR_taya
-    BAG_MODE = BBAG_MODE_NORMAL,
-    #else
-     BAG_MODE = BBAG_MODE_NORMAL,
-   #endif
-  };
-
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 bagMode = checkBagMode( sp );
 
   wk->numClients = 2;
   wk->myClientID = 0;
@@ -467,7 +482,7 @@ static BOOL setup_alone_single( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
   wk->ImServer = TRUE;
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
@@ -475,10 +490,10 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   // Client 作成
   wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
-       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, bagMode, wk->heapID );
 
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle,
-    1, 1, BTL_THINKER_AI, BAG_MODE, wk->heapID );
+    1, 1, BTL_THINKER_AI, bagMode, wk->heapID );
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -547,13 +562,10 @@ static BOOL cleanup_common( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_alone_double( int* seq, void* work )
 {
-  enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
-  };
-
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 bagMode = checkBagMode( sp );
 
   wk->myClientID = 0;
   wk->numClients = 2;
@@ -577,16 +589,16 @@ static BOOL setup_alone_double( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_THINKER_UI, bagMode, wk->heapID );
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+    BTL_THINKER_AI, bagMode, wk->heapID );
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -633,12 +645,10 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_alone_triple( int* seq, void* work )
 {
-  enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
-  };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 bagMode = checkBagMode( sp );
 
   wk->myClientID = 0;
   wk->numClients = 2;
@@ -663,16 +673,16 @@ static BOOL setup_alone_triple( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_THINKER_UI, bagMode, wk->heapID );
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
-    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+    BTL_THINKER_AI, bagMode, wk->heapID );
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -698,12 +708,10 @@ static BOOL setup_alone_triple( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_alone_rotation( int* seq, void* work )
 {
-  enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
-  };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 bagMode = checkBagMode( sp );
 
   wk->myClientID = 0;
   wk->numClients = 2;
@@ -728,16 +736,16 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
 
   // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_THINKER_UI, bagMode, wk->heapID );
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+    BTL_THINKER_AI, bagMode, wk->heapID );
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -1124,20 +1132,17 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq )
 {
-  enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
-  };
-
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
   if( wk->ImServer )
   {
-    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+        netID, 1, BTL_THINKER_UI, bagMode, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
     BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, 1 );
   }
@@ -1145,7 +1150,7 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
   else
   {
     wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+    BTL_THINKER_UI, bagMode, wk->heapID  );
   }
 
   return TRUE;
@@ -1162,12 +1167,9 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
 //----------------------------------------------------------------------------------
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq )
 {
-  enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
-  };
-
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
   if( wk->ImServer )
@@ -1176,11 +1178,11 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
 
     numCoverPos = (sp->multiMode==0)? 2 : 1;
 
-    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
     BTL_Printf("myClientID=%d\n", netID);
     wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+        netID, numCoverPos, BTL_THINKER_UI, bagMode, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, numCoverPos );
 
     for(i=0; i<wk->numClients; ++i)
@@ -1198,7 +1200,7 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     numCoverPos = (sp->multiMode==0)? 2 : 1;
 
     wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+        netID, numCoverPos, BTL_THINKER_UI, bagMode, wk->heapID  );
 
   }
   return TRUE;
@@ -1216,20 +1218,20 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
 static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int* seq )
 {
   enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
     NUM_COVERPOS = 3,
   };
 
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
   if( wk->ImServer )
   {
-    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, NUM_COVERPOS, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+        netID, NUM_COVERPOS, BTL_THINKER_UI, bagMode, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, NUM_COVERPOS );
     BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, NUM_COVERPOS );
   }
@@ -1237,7 +1239,7 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   else
   {
     wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, NUM_COVERPOS,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+    BTL_THINKER_UI, bagMode, wk->heapID  );
   }
 
   return TRUE;
