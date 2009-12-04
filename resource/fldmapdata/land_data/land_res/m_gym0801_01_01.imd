@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-03T20:53:04" source="m_gym0801_01_01.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-12-04T17:02:25" source="01_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="iwao_kazumasa" host="W00203" date="2009-12-03T20:53:04" source="m_gym0801_01_01.mb"/>
+<original_create user="tanoue_reiko" host="W00192" date="2009-12-04T17:02:25" source="01_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,26 +30,12 @@
 <box_test pos_scale="7" xyz="-2.000000 -0.375000 -2.000000" whd="4.000000 0.375000 4.000000"/>
 
 <tex_image_array size="2">
-	<tex_image index="0" name="chip_yuka"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="chip_yuka_pl"
-		path="C:/home/wb_data3d/field/in00/chip/tex/chip_yuka.tga"
-	>
-		<bitmap size="32">
-			ffff ffff aaab eaaa 555b e555 555b e555
-			555b e555 a95b e56a a95b e56a a95b e56a
-			a95b e56a a95b e56a a95b e56a 555b e555
-			555b e555 555b e555 aaab eaaa ffff ffff
-		</bitmap>
-	</tex_image>
-	<tex_image index="1" name="d0_miz"
+	<tex_image index="0" name="gym10_miz"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
-		palette_name="d0_miz_pl"
-		path="C:/home/wb_data3d/field/in00/chip/tex/d0_miz.tga"
+		palette_name="gym10_miz_pl"
+		path="C:/home/wb_data3d/field/in31/map/tex/gym10_miz.tga"
 	>
 		<bitmap size="1024">
 			1111 1111 1111 4000 4224 4444 0000 6000
@@ -182,20 +168,34 @@
 			1110 7777 1177 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
+	<tex_image index="1" name="gym9_yuka"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="gym9_yuka_pl"
+		path="C:/home/wb_data3d/field/in31/map/tex/gym9_yuka.tga"
+	>
+		<bitmap size="32">
+			ffff ffff aaab eaaa 555b e555 555b e555
+			555b e555 a95b e56a a95b e56a a95b e56a
+			a95b e56a a95b e56a a95b e56a 555b e555
+			555b e555 555b e555 aaab eaaa ffff ffff
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="2">
-	<tex_palette index="0" name="chip_yuka_pl" color_size="4">
-		6739 6739 5ef7 5ad6
-	</tex_palette>
-	<tex_palette index="1" name="d0_miz_pl" color_size="16">
+	<tex_palette index="0" name="gym10_miz_pl" color_size="16">
 		4185 3d65 45a6 4186 45a5 41a5 3d85 4165
 		4166 3d66 4585 49c6 4184 41a6 45c5 41a4
+	</tex_palette>
+	<tex_palette index="1" name="gym9_yuka_pl" color_size="4">
+		6739 6739 5ef7 5ad6
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="2">
-	<material index="0" name="chip_yuka"
+	<material index="0" name="gym10_miz_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -219,7 +219,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="d0_miz"
+	<material index="1" name="gym9_yuka_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -381,8 +381,8 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.706299"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
