@@ -394,28 +394,69 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
+ * @todo
+ * ずかんフラグを正確にセットするためにはPOKEMON_PARAMが必要だが、
+ * 存在しないのでコマンド内部で生成している。
+ * POKEMON_PARAM依存のものをスクリプトが指定しないような仕組みが必要。
+ *
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK* work = wk;
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
-  const ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
   u16 set_mode = SCRCMD_GetVMWorkValue( core, work ); // 引数1
   u16 monsno = SCRCMD_GetVMWorkValue( core, work ); // 引数2
 
+  POKEMON_PARAM * pp = PP_Create( monsno, 1, PTL_SETUP_ID_AUTO, heap_id );
   switch( set_mode )
   {
   case ZUKANCTRL_MODE_SEE:  // 見た
-    // @todo フラグセット
+    ZUKANSAVE_SetPokeSee( zukan, pp );
     break;
   case ZUKANCTRL_MODE_GET:  // 捕まえた
-    // @todo フラグセット
+    GF_ASSERT(0); //ポケモンゲットには対応しない。システムで行うべき。
     break;
   default:
     OS_Printf( "==============================================================\n" );
     OS_Printf( "スクリプト: 図鑑セットコマンドに指定する引数に誤りがあります。\n" );
     OS_Printf( "==============================================================\n" );
+    break;
+  } 
+  GFL_HEAP_FreeMemory( pp );
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief   図鑑フラグの取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZukanFlag( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = wk;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+  const ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  u16 get_mode = SCRCMD_GetVMWorkValue( core, work ); // 引数1
+  u16 monsno = SCRCMD_GetVMWorkValue( core, work ); // 引数2
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+
+  switch( get_mode )
+  {
+  case ZUKANCTRL_MODE_SEE:  // 見た
+    *ret_wk = ZUKANSAVE_GetPokeSeeFlag( zukan, monsno );
+    break;
+  case ZUKANCTRL_MODE_GET:  // 捕まえた
+    *ret_wk = ZUKANSAVE_GetPokeGetFlag( zukan, monsno );
+    break;
+  default:
+    GF_ASSERT(0);
+    *ret_wk = FALSE;
     break;
   } 
   return VMCMD_RESULT_CONTINUE;

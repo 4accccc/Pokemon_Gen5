@@ -14,6 +14,8 @@
 //======================================================================
 
 extern VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetParamEXP( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk );
 

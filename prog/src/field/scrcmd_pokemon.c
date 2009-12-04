@@ -55,6 +55,27 @@
 static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * work);
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/// ツール関数：指定位置の手持ちポケモンを取得する
+//--------------------------------------------------------------
+static POKEMON_PARAM * getTemotiPP( SCRCMD_WORK * work, u16 pos )
+{
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+  u32 max = PokeParty_GetPokeCount( party );
+  POKEMON_PARAM * pp;
+
+  if (pos >= max)
+  {
+    GF_ASSERT_MSG(0, "Temoti Pos %d over max(%d)!!\n", pos, max);
+    pos = 0;
+  }
+  pp = PokeParty_GetMemberPointer( party, pos );
+  return pp;
+}
+
+//======================================================================
 //  ポケモン関連
 //======================================================================
 //--------------------------------------------------------------
@@ -94,6 +115,24 @@ VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 「めざめるパワー」のタイプを取得する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
+  u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
+  POKEMON_PARAM * pp = getTemotiPP( wk, pos );
+  *ret_wk = POKETOOL_GetMezaPa_Type( pp );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * 手持ちポケモン回復
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
@@ -106,6 +145,32 @@ VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk )
   POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
 
   STATUS_RCV_PokeParty_RecoverAll( party );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンの努力値チェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetParamEXP( VMHANDLE *core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
+  u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
+  POKEMON_PARAM * pp = getTemotiPP( wk, pos );
+  u16 exp = 0;
+
+  exp += PP_Get( pp, ID_PARA_hp_exp, NULL );
+  exp += PP_Get( pp, ID_PARA_pow_exp, NULL );
+  exp += PP_Get( pp, ID_PARA_def_exp, NULL );
+  exp += PP_Get( pp, ID_PARA_agi_exp, NULL );
+  exp += PP_Get( pp, ID_PARA_spepow_exp, NULL );
+  exp += PP_Get( pp, ID_PARA_spedef_exp, NULL );
+  *ret_wk = exp;
 
   return VMCMD_RESULT_CONTINUE;
 }

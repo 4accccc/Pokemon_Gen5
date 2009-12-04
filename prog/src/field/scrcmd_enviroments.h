@@ -30,6 +30,7 @@ extern VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk );
 extern VMCMD_RESULT EvCmdGetMySex( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetZukanFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetCGearFlag( VMHANDLE *core, void *wk );
 
