@@ -2374,10 +2374,10 @@
 		/* not used  2406(0x0966) */
 		/* not used  2407(0x0967) */
 		/* not used  2408(0x0968) */
-		/* not used  2409(0x0969) */
-		/* not used  2410(0x096a) */
-		/* not used  2411(0x096b) */
-		/* not used  2412(0x096c) */
+#define SYS_FLAG_BIGFOUR_GHOSTWIN         2409 /* 0x0969 四天王(ゴースト)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_EVILWIN          2410 /* 0x096a 四天王(悪)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_FIGHTWIN         2411 /* 0x096b 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_ESPWIN           2412 /* 0x096c 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 		/* not used  2413(0x096d) */
 		/* not used  2414(0x096e) */
 		/* not used  2415(0x096f) */
