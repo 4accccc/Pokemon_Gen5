@@ -2805,9 +2805,17 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
 {
   dst->playerStatus = NULL;
 
-  dst->trainerID = trData->tr_id;
-  dst->trainerType = trData->tr_type;
-  dst->name = trData->name;
+  if( trData )
+  {
+    dst->trainerID = trData->tr_id;
+    dst->trainerType = trData->tr_type;
+    dst->name = trData->name;
+  }
+  else{
+    dst->trainerID = TRID_NULL;
+    dst->trainerType = 0;
+    dst->name = NULL;
+  }
 }
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 {

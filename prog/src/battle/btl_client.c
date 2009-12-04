@@ -85,6 +85,7 @@ struct _BTL_CLIENT {
   u8                frontPokeEmpty[ BTL_POSIDX_MAX ];       ///< 担当している戦闘位置にもう出せない時にTRUEにする
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
   u8                procPokeIdx;    ///< 処理中ポケモンインデックス
+  s8                prevPokeIdx;    ///< 前回の処理ポケモンインデックス
   u8                checkedPokeCnt; ///< アクション指示したポケモン数（スキップ状態を勘案）
   BtlPokePos        basePos;        ///< 戦闘ポケモンの位置ID
 
@@ -547,6 +548,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
 {
   wk->procPokeIdx = 0;
+  wk->prevPokeIdx = -1;
   wk->checkedPokeCnt = 0;
 
   setup_pokesel_param_change( wk, &wk->pokeSelParam );
@@ -575,12 +577,27 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
 
   case 1:
-    BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+    // 「○○はどうする？」表示
+    if( wk->prevPokeIdx != wk->procPokeIdx )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      wk->prevPokeIdx = wk->procPokeIdx;
+    }
     (*seq)++;
     break;
-
+    // アクション選択開始
   case 2:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
+      BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
     switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
 
     // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
@@ -597,7 +614,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // 「どうぐ」を選んだ
     case BTL_ACTION_ITEM:
-//      (*seq) = SEQ_CHECK_ITEM;
       SelActProc_Set( wk, selact_Item );
       break;
 
@@ -609,7 +625,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
         BTL_Printf("「にげる」を選びました\n");
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
         SelActProc_Set( wk, selact_Escape );
-//        (*seq) = SEQ_CHECK_ESCAPE;
       // ２体目以降は「もどる」として処理
       }else{
         BTL_POKEPARAM* bpp;
@@ -622,7 +637,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
             wk->checkedPokeCnt--;
             wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
             SelActProc_Set( wk, selact_Root );
-//          (*seq) = SEQ_CHECK_UNSEL_ACTION;
             return FALSE;
           }
         }
