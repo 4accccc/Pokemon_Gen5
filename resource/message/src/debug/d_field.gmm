@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-12-01T13:25:33"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-12-04T13:12:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -817,6 +817,21 @@ res(0x[2:07:８桁:3])</language>
 	<row id="DEBUG_FIELD_SEASON_DISPLAY">
 		<language name="JPN" width="160">きせつひょうじ</language>
 		<language name="JPN_KANJI" width="160">季節表示</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ANAWOHORU">
+		<language name="JPN" width="160">あなをほる</language>
+		<language name="JPN_KANJI" width="160">穴を掘る</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ANANUKENOHIMO">
+		<language name="JPN" width="160">あなぬけのヒモ</language>
+		<language name="JPN_KANJI" width="160">穴抜けのヒモ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_TELEPORT">
+		<language name="JPN" width="160">テレポート</language>
+		<language name="JPN_KANJI" width="160">テレポート</language>
 	</row>
 
 	<flowchart-group-list>
