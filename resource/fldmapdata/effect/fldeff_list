@@ -37,6 +37,7 @@ G3D_FE_ANMICA = shibuki01.ica \
   taki_start_f.ica \
   taki_start_s.ica \
   iwakudaki.ica \
+  iaigiri.ica \
   $(EFFENC_WATER)freshwater_in.ica \
   $(EFFENC_WATER)freshwater_out.ica \
   $(EFFENC_SEA)sea_out.ica \
@@ -52,6 +53,7 @@ G3D_FE_ANMICA = shibuki01.ica \
 #---------------------------------------------------------------
 G3D_FE_ANMIMA = taki_land.ima \
   iwakudaki.ima \
+  iaigiri.ima \
   $(EFFENC_BIRD)bird_shadow.ima
 
 #---------------------------------------------------------------
@@ -72,7 +74,8 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_LGRASS)long_grass_wi.ita \
   $(EFFENC_BIRD)bird_shadow.ita \
   $(EFFENC_CAVE)soil_smoke.ita \
-  iwakudaki.ita
+  iwakudaki.ita \
+  iaigiri.ita
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　ivaアニメ定義
@@ -136,7 +139,8 @@ G3D_FE_MDL = kage.imd \
   $(EFF_D06DENKI)d6_ishi_big01.imd \
   $(EFF_D06DENKI)d6_ishi_mini01.imd \
   $(EFF_D06DENKI)d6_yuka_biri01.imd \
-  $(EFF_D06DENKI)d6_ishikage01.imd
+  $(EFF_D06DENKI)d6_ishikage01.imd \
+  iaigiri.imd
 
 
 #---------------------------------------------------------------
