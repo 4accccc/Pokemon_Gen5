@@ -114,6 +114,9 @@ init_flags:
 	_FLAG_SET( FV_D03R0101_RIVAL_02 )
 	_FLAG_SET( FV_D03R0101_CHAMPION_01 )
 	
+	//R10：ライバル・POSイベント後非表示
+	_FLAG_SET( FV_R10_RIVAL_01 )
+	
 	_RET
 
 //=====================================================================

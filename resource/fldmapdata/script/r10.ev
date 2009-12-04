@@ -30,8 +30,8 @@ _EVENT_DATA_END
 EVENT_START   ev_pos_r10_rival_01
 	
 	//OBJ作成
-	//_FLAG_RESET(FV_R10_RIVAL_01)
-	//_OBJ_ADD( R10_RIVAL_01 )
+	_FLAG_RESET( FV_R10_RIVAL_01 )
+	_OBJ_ADD( R10_RIVAL_01 )
 	
 	//ライバルかけよって来る
 	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_come )
@@ -60,11 +60,11 @@ EVENT_START   ev_pos_r10_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//OBJ削除
-	//_OBJ_DEL( R10_RIVAL_01 )
+	_OBJ_DEL( R10_RIVAL_01 )
 	
 	//==================================//
 	//バニッシュフラグ操作
-	//_FLAG_SET(FV_R10_RIVAL_01)
+	_FLAG_SET( FV_R10_RIVAL_01 )
 
 	//フラグ操作
 	$WK_SCENE_R10 = 1
