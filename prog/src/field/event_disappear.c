@@ -196,6 +196,8 @@ GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent,
  * @brief 退場イベント処理関数( 流砂 )
  */
 //------------------------------------------------------------------------------------------
+#define SAND_ANM_IDX (0)  // 流砂のアニメ番号
+
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* wk )
 {
   EVENT_WORK*     work = (EVENT_WORK*)wk;
@@ -243,13 +245,26 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
         work->bmSandStream = FIELD_BMODEL_Create( man, objst[0] );        // 複製
         G3DMAPOBJST_changeViewFlag( objst[0], FALSE );                    // 消去
         FIELD_BMODEL_MAN_EntryBuildModel( man, work->bmSandStream );      // 登録
-        FIELD_BMODEL_SetAnime( work->bmSandStream, 0, BMANM_REQ_START );  // 再生
+        FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );  // 再生
       }
+      else
+      {
+        work->bmSandStream = NULL;
+      }
+      GFL_HEAP_FreeMemory( objst );
     }
     ++( *seq );
     break;
   // タスク終了待ち&砂埃
   case 2:
+    // 流砂アニメが終了したら再生する
+    if( work->bmSandStream )
+    {
+      if( FIELD_BMODEL_GetAnimeStatus( work->bmSandStream, SAND_ANM_IDX ) )  // if(停止中)
+      {
+        FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );
+      }
+    }
     { // 向きを変える
       int key = GFL_UI_KEY_GetCont();
       if( key & PAD_KEY_UP )    MMDL_SetAcmd( mmdl, AC_STAY_WALK_U_4F );
@@ -315,6 +330,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       FLDMAPPER*     mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
       FIELD_BMODEL_MAN* man = FLDMAPPER_GetBuildModelManager( mapper );
       FIELD_BMODEL_MAN_releaseBuildModel( man, work->bmSandStream );
+      FIELD_BMODEL_Delete( work->bmSandStream );
     }
     return GMEVENT_RES_FINISH;
   }

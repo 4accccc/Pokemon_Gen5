@@ -906,6 +906,19 @@ static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
   }
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL BMINFO_isSandStream(const BMINFO * bmInfo)
+{
+  switch (bmInfo->prog_id)
+  {
+  case BM_PROG_ID_SANDSTREAM:
+    return TRUE;
+  default:
+    return FALSE;
+  }
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -1598,6 +1611,8 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
 //============================================================================================
 static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor
 (const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream
+(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1619,6 +1634,7 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
       if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(man, obj) == FALSE) continue;
       break;
     case BM_SEARCH_ID_SANDSTREAM:
+      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream(man, obj) == FALSE) continue;
       break;
     case BM_SEARCH_ID_NULL:
     default:
@@ -1648,6 +1664,17 @@ static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(const FIELD_BMODEL_MAN * man, con
   entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
   return BMINFO_isDoor(&man->bmInfo[entryNo]);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
+{
+  u8 entryNo;
+  GF_ASSERT( G3DMAPOBJST_exists(obj) );
+  entryNo = obj->objSt->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  return BMINFO_isSandStream(&man->bmInfo[entryNo]);
 }
 
 //------------------------------------------------------------------
