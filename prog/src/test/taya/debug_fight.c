@@ -137,6 +137,7 @@ typedef enum {
   SELITEM_LOAD,
   SELITEM_MSGSPEED,
   SELITEM_WAZAEFF,
+  SELITEM_SUBWAYMODE,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -175,6 +176,9 @@ enum {
   LAYOUT_LABEL_MSGSPEED_X = 144,
   LAYOUT_LABEL_WAZAEFF_X  = 144,
 
+  LAYOUT_LABEL_SUBWAY_X = 144,
+  LAYOUT_LABEL_SUBWAY_Y = LAYOUT_PARAM_LINE_Y3,
+
   LAYOUT_CRIPMARK_OX = 240,
   LAYOUT_CRIPMARK_OY = 4,
   LAYOUT_CRIPMARK_WIDTH = 12,
@@ -196,6 +200,7 @@ static const struct {
   { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1 },
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1 },
   { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2 },
+  { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y },
 
   { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
   { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
@@ -241,7 +246,7 @@ static const struct {
   { SELITEM_BTL_TYPE,   LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1 },
   { SELITEM_MSGSPEED,   LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1 },
   { SELITEM_WAZAEFF,    LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2 },
-
+  { SELITEM_SUBWAYMODE, LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y },
 
   { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
@@ -289,6 +294,7 @@ typedef struct {
   u8  weather;
   u8  msgSpeed;
   u8  fWazaEff : 1;
+  u8  fSubway : 1;
   u8  dmy : 7;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
@@ -353,6 +359,7 @@ static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
@@ -650,6 +657,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->weather  = BTL_WEATHER_NONE;
   saveData->msgSpeed = MSGSPEED_FAST;
   saveData->fWazaEff = 0;
+  saveData->fSubway = 0;
 
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
@@ -774,6 +782,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_WAZAEFF:
     save->fWazaEff ^= 1;
     break;
+
+  case SELITEM_SUBWAYMODE:
+    save->fSubway ^= 1;
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -872,11 +884,12 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         printItem_Poke( wk, itemID, wk->strbuf );
       }else{
         switch( itemID ){
-        case SELITEM_BTL_TYPE:  printItem_BtlType( wk, wk->strbuf ); break;
-        case SELITEM_MSGSPEED:  printItem_MsgSpeed( wk, wk->strbuf ); break;
-        case SELITEM_WAZAEFF:   printItem_WazaEff( wk, wk->strbuf ); break;
-        case SELITEM_SAVE:      printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
-        case SELITEM_LOAD:      printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
+        case SELITEM_BTL_TYPE:    printItem_BtlType( wk, wk->strbuf ); break;
+        case SELITEM_MSGSPEED:    printItem_MsgSpeed( wk, wk->strbuf ); break;
+        case SELITEM_WAZAEFF:     printItem_WazaEff( wk, wk->strbuf ); break;
+        case SELITEM_SUBWAYMODE:  printItem_SubwayMode( wk, wk->strbuf ); break;
+        case SELITEM_SAVE:        printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
+        case SELITEM_LOAD:        printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
 
         default:
           GFL_STR_ClearBuffer( wk->strbuf );
@@ -910,6 +923,10 @@ static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_WAZAEFF_ON+wk->saveData.fWazaEff, buf );
+}
+static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+wk->saveData.fSubway, buf );
 }
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
@@ -1010,9 +1027,11 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
       { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_SAVE,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
       { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_WAZAEFF,       SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
-      { SELITEM_WAZAEFF,       SELITEM_MSGSPEED,      SELITEM_SAVE,          SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
+      { SELITEM_WAZAEFF,       SELITEM_MSGSPEED,      SELITEM_SUBWAYMODE,    SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
+      { SELITEM_SUBWAYMODE,    SELITEM_WAZAEFF,       SELITEM_SAVE,          SELITEM_SAVE,        SELITEM_SAVE },
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
+  /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,          Left-Item */
     };
 
     u32 nextItem = SELITEM_NULL, i;
@@ -1290,6 +1309,9 @@ FS_EXTERN_OVERLAY(battle);
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
+      }
+      if( wk->saveData.fSubway ){
+        BTL_SETUP_SetSubwayMode( &wk->setupParam );
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
