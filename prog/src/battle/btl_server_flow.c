@@ -268,7 +268,6 @@ static inline BTL_POKEPARAM* TargetPokeRec_GetNext( TARGET_POKE_REC* rec );
 static inline void TargetPokeRec_Remove( TARGET_POKE_REC* rec, BTL_POKEPARAM* bpp );
 static inline u32 TargetPokeRec_GetDamage( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bpp );
 static inline BTL_POKEPARAM* TargetPokeRec_Get( const TARGET_POKE_REC* rec, u32 idx );
-static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, u32 start_idx );
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec );
 static inline u32 TargetPokeRec_GetCountMax( const TARGET_POKE_REC* rec );
 static inline BOOL TargetPokeRec_IsTargetRemoved( const TARGET_POKE_REC* rec );
@@ -1833,28 +1832,12 @@ static inline BTL_POKEPARAM* TargetPokeRec_Get( const TARGET_POKE_REC* rec, u32 
   }
   return NULL;
 }
-// 指定ポケモンと同チームのポケモン位置インデックスを返す（見つからなければ-1）
-static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, u32 start_idx )
-{
-  u8 pokeID1, pokeID2, i;
-
-  pokeID1 = BPP_GetID( pp );
-  for(i=start_idx; i<rec->count; ++i)
-  {
-    pokeID2 = BPP_GetID( rec->pp[i] );
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID1, pokeID2) )
-    {
-      return i;
-    }
-  }
-  return -1;
-}
 // ポケモン総数を返す
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec )
 {
   return rec->count;
 }
-// このターンに記録されたポケモン総数を返す
+// 初期化後、記録されたポケモン総数を返す
 static inline u32 TargetPokeRec_GetCountMax( const TARGET_POKE_REC* rec )
 {
   return rec->countMax;
@@ -1922,6 +1905,13 @@ static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec )
       TargetPokeRec_Remove( rec, bpp );
     }
   }
+}
+/**
+ *  当ターンの計算後素早さ順でソート（当ターンに行動していないポケは素の素早さ）
+ */
+static void TargetPokeRec_SortByAgility( TARGET_POKE_REC* rec )
+{
+
 }
 
 

@@ -1,6 +1,6 @@
 //=============================================================================================
 /**
- * @file    btl_pokeset.h
+ * @file    btl_pokeset.C
  * @brief   ポケモンWB バトルシステム 特定目的のポケモンパラメータセット管理
  * @author  taya
  *
@@ -15,9 +15,9 @@
  *
  *  @return u32 コピーしたポケモン数
  */
-u32 BTL_POKESET_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bpp, TARGET_POKE_REC* dst )
+u32 BTL_POKESET_CopyFriends( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst )
 {
-  BTL_POKEPARAM* bpp;
+  BTL_POKEPARAM* member;
   u32 max, i;
   u8 ID1, ID2;
 
@@ -27,10 +27,10 @@ u32 BTL_POKESET_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bp
   max = BTL_POKESET_GetCount( rec );
   for(i=0; i<max; ++i)
   {
-    bpp = BTL_POKESET_Get( rec, i );
-    ID2 = BPP_GetID( bpp );
+    member = BTL_POKESET_Get( rec, i );
+    ID2 = BPP_GetID( member );
     if( BTL_MAINUTIL_IsFriendPokeID(ID1, ID2) ){
-      BTL_POKESET_Add( dst, bpp );
+      BTL_POKESET_Add( dst, member );
     }
   }
   return BTL_POKESET_GetCount( dst );
@@ -40,9 +40,9 @@ u32 BTL_POKESET_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bp
  *
  *  @return u32 コピーしたポケモン数
  */
-u32 BTL_POKESET_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bpp, TARGET_POKE_REC* dst )
+u32 BTL_POKESET_CopyEnemys( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst )
 {
-  BTL_POKEPARAM* bpp;
+  BTL_POKEPARAM* member;
   u32 max, i;
   u8 ID1, ID2;
 
@@ -52,10 +52,10 @@ u32 BTL_POKESET_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bpp
   max = BTL_POKESET_GetCount( rec );
   for(i=0; i<max; ++i)
   {
-    bpp = BTL_POKESET_Get( rec, i );
-    ID2 = BPP_GetID( bpp );
+    member = BTL_POKESET_Get( rec, i );
+    ID2 = BPP_GetID( member );
     if( !BTL_MAINUTIL_IsFriendPokeID(ID1, ID2) ){
-      BTL_POKESET_Add( dst, bpp );
+      BTL_POKESET_Add( dst, member );
     }
   }
   return BTL_POKESET_GetCount( dst );
@@ -63,13 +63,13 @@ u32 BTL_POKESET_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* bpp
 /**
  *  死んでるポケモンを削除
  */
-void BTL_POKESET_RemoveDeadPokemon( TARGET_POKE_REC* rec )
+void BTL_POKESET_RemoveDeadPokemon( BTL_POKESET* rec )
 {
   BTL_POKEPARAM* bpp;
 
-  BTL_POKESET_GetStart( rec );
+  BTL_POKESET_SeekStart( rec );
 
-  while( (bpp = BTL_POKESET_GetNext(rec)) != NULL )
+  while( (bpp = BTL_POKESET_SeekNext(rec)) != NULL )
   {
     if( BPP_IsDead(bpp) ){
       BTL_POKESET_Remove( rec, bpp );
@@ -80,7 +80,7 @@ void BTL_POKESET_RemoveDeadPokemon( TARGET_POKE_REC* rec )
 /**
  *  当ターンの計算後素早さ順でソート（当ターンに行動していないポケは素の素早さ）
  */
-void BTL_POKESET_SortByAgility( TARGET_POKE_REC* rec )
+void BTL_POKESET_SortByAgility( BTL_POKESET* rec )
 {
 
 }
