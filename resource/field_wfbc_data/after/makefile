@@ -34,9 +34,13 @@ XLSFILE = ../wb_wfbc.xls
 TABFILE = wb_wfbc.txt
 BLOCK_WF_FILE = wb_wfbc_block_wf.txt
 BLOCK_BC_FILE = wb_wfbc_block_bc.txt
+POS_WF_FILE = wb_wfbc_pos_wf.txt
+POS_BC_FILE = wb_wfbc_pos_bc.txt
 
 BLOCK_WF_BIN = wb_wfbc_block_wf.block
 BLOCK_BC_BIN = wb_wfbc_block_bc.block
+POS_WF_BIN = wb_wfbc_block_wf.pos
+POS_BC_BIN = wb_wfbc_block_bc.pos
 
 
 
@@ -101,15 +105,21 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 1 -s tab $(XLSFILE)
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(BLOCK_WF_FILE) -p 4 -s tab $(XLSFILE)
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(BLOCK_BC_FILE) -p 3 -s tab $(XLSFILE)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(POS_WF_FILE) -p 6 -s tab $(XLSFILE)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(POS_BC_FILE) -p 5 -s tab $(XLSFILE)
 	#コンバート
 	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER) $(OUTPUT_HEADER)
 
 	perl wfbc_block_conv.pl $(BLOCK_WF_FILE) $(LAND_DATA_PATCH)  $(BLOCK_WF_BIN)
 	perl wfbc_block_conv.pl $(BLOCK_BC_FILE) $(LAND_DATA_PATCH)  $(BLOCK_BC_BIN)
 
+	perl wfbc_peoplepos_conv.pl $(POS_WF_FILE) $(POS_WF_BIN)
+	perl wfbc_peoplepos_conv.pl $(POS_BC_FILE) $(POS_BC_BIN)
+
 	-ls *.bin > $(LIST_FILE)
 	-ls *.block >> $(LIST_FILE)
 	-ls *.evp >> $(LIST_FILE)
+	-ls *.pos >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -127,6 +137,7 @@ clean:
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
+	rm -f *.pos
 	rm -f *.block
 	rm -f *.bin
 	rm -f *.txt

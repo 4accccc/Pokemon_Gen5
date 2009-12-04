@@ -125,15 +125,6 @@ typedef struct
 } FIELD_WFBC_CORE;
 
 
-//-------------------------------------
-///	人物配置情報
-//=====================================
-typedef struct
-{
-  u16 gx;
-  u16 gz;
-} FIELD_WFBC_CORE_PEOPLE_POS;
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -181,9 +172,6 @@ extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* 
 // mapmode == field_status_local.h MAPMODE
 // 戻り値は、GFL_HEAP_Freeをしてください。
 extern MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, u32 mapmode, HEAPID heapID );
-
-// 位置情報の取得
-extern void FIELD_WFBC_CORE_GetPeoplePos( int index, FIELD_WFBC_CORE_TYPE type, FIELD_WFBC_CORE_PEOPLE_POS* p_buff );
 
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数
@@ -297,6 +285,48 @@ extern void FIELD_WFBC_PEOPLE_DATA_Load( FIELD_WFBC_PEOPLE_DATA_LOAD* p_wk, u32 
 // 情報の取得
 extern const FIELD_WFBC_PEOPLE_DATA* FIELD_WFBC_PEOPLE_DATA_GetData( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk );
 extern u32 FIELD_WFBC_PEOPLE_DATA_GetLoadNpcID( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk );
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					WFBC人物位置情報へのアクセス
+*/
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *					定数宣言
+*/
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+/**
+ *					構造体宣言
+*/
+//-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	人物配置情報
+//=====================================
+typedef struct
+{
+  u8 gx;
+  u8 gz;
+} FIELD_WFBC_CORE_PEOPLE_POS;
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					プロトタイプ宣言
+*/
+//-----------------------------------------------------------------------------
+
+extern FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_Create( FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader, FIELD_WFBC_CORE_TYPE type, HEAPID heapID );
+extern void FIELD_WFBC_PEOPLE_POS_Delete( FIELD_WFBC_CORE_PEOPLE_POS* p_wk );
+
+extern const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexData( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index );
+
+
+
 
 
 

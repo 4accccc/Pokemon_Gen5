@@ -64,7 +64,9 @@ enum {
 	NARC_field_wfbc_data_wb_wfbc_block_bc_block = 50,
 	NARC_field_wfbc_data_wb_wfbc_block_wf_block = 51,
 	NARC_field_wfbc_data_bc_block_event_evp = 52,
-	NARC_field_wfbc_data_wf_block_event_evp = 53
+	NARC_field_wfbc_data_wf_block_event_evp = 53,
+	NARC_field_wfbc_data_wb_wfbc_block_bc_pos = 54,
+	NARC_field_wfbc_data_wb_wfbc_block_wf_pos = 55
 };
 
 /* NARC_FIELD_WFBC_DATA_NAIX_ */

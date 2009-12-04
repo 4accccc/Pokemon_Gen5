@@ -14,6 +14,7 @@
 #include "gflib.h"
 
 #include "arc/arc_def.h"
+#include "arc/field_wfbc_data.naix"
 
 #include "system/gfl_use.h"
 
@@ -46,61 +47,6 @@ static const MMDL_HEADER sc_DEFAULT_HEADER =
 	0,		///<Z方向移動制限
 };
 
-
-// 人物出現位置
-static const FIELD_WFBC_CORE_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FIELD_WFBC_PEOPLE_MAX ] = 
-{
-  // BLACK CITY
-  {
-    { 23,12 },
-    { 27,32 },
-    { 31,24 },
-    { 35,29 },
-    { 39,17 },
-    { 43,16 },
-    { 47,28 },
-    { 51,12 },
-    { 55,20 },
-    { 59,30 },
-
-    { 24,13 },
-    { 28,33 },
-    { 32,25 },
-    { 36,30 },
-    { 40,18 },
-    { 44,17 },
-    { 48,29 },
-    { 52,13 },
-    { 56,21 },
-    { 60,31 },
-  },
-  
-
-  // White Forest
-  {
-    { 23,12 },
-    { 27,32 },
-    { 31,24 },
-    { 35,29 },
-    { 39,17 },
-    { 43,16 },
-    { 47,28 },
-    { 51,12 },
-    { 55,20 },
-    { 59,30 },
-
-    { 24,13 },
-    { 28,33 },
-    { 32,25 },
-    { 36,30 },
-    { 40,18 },
-    { 44,17 },
-    { 48,29 },
-    { 52,13 },
-    { 56,21 },
-    { 60,31 },
-  },
-};
 
 //-----------------------------------------------------------------------------
 /**
@@ -545,6 +491,7 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
   const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
   const FIELD_WFBC_CORE_PEOPLE* cp_people_array;
+  FIELD_WFBC_CORE_PEOPLE_POS* p_pos;
   
   GF_ASSERT( cp_wk );
 
@@ -569,7 +516,11 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
 
   p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(MMDL_HEADER) * num );
 
+  // ローダー生成
   p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, heapID );
+
+  // 位置情報を読み込み
+  p_pos = FIELD_WFBC_PEOPLE_POS_Create( p_people_loader, cp_wk->type, heapID );
   
   count = 0;
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
@@ -591,34 +542,19 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
         p_buff[count].event_id    = cp_people_data->script_bc;
       }
 
-      MMDLHEADER_SetGridPos( &p_buff[count], sc_WFBC_PEOPLE_POS[cp_wk->type][i].gx, sc_WFBC_PEOPLE_POS[cp_wk->type][i].gz, 0 );
+      MMDLHEADER_SetGridPos( &p_buff[count], p_pos[i].gx, p_pos[i].gz, 0 );
       
 
       count ++;
     }
   }
 
+
+  FIELD_WFBC_PEOPLE_POS_Delete( p_pos );
+
   GFL_HEAP_FreeMemory( p_people_loader );
 
   return p_buff;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物位置を取得する
- *
- *	@param	index   インデックス
- *	@param  type    マップのタイプ
- *	@param	p_buff  位置格納先
- */
-//-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_GetPeoplePos( int index, FIELD_WFBC_CORE_TYPE type, FIELD_WFBC_CORE_PEOPLE_POS* p_buff )
-{
-  GF_ASSERT(p_buff);
-  GF_ASSERT( index < FIELD_WFBC_PEOPLE_MAX );
-  GF_ASSERT( type < FIELD_WFBC_CORE_TYPE_MAX );
-
-  *p_buff = sc_WFBC_PEOPLE_POS[type][index];
 }
 
 
@@ -887,6 +823,53 @@ u32 FIELD_WFBC_PEOPLE_DATA_GetLoadNpcID( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_w
 }
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物位置情報を読み込む
+ *
+ *  @param  p_loader  人物ローダーを使う
+ *  @param  type      タイプ
+ *	@param	heapID    ヒープID
+ *
+ *	@return 位置情報
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_Create( FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader, FIELD_WFBC_CORE_TYPE type, HEAPID heapID )
+{
+  return GFL_ARC_LoadDataAllocByHandle( p_loader->p_handle, NARC_field_wfbc_data_wb_wfbc_block_bc_pos + type, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物位置情報の破棄
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_PEOPLE_POS_Delete( FIELD_WFBC_CORE_PEOPLE_POS* p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  インデックスの位置情報を返す
+ *
+ *	@param	cp_wk ワーク
+ *	@param	index インデックス
+ *
+ *	@return 位置情報
+ */
+//-----------------------------------------------------------------------------
+const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexData( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index )
+{
+  GF_ASSERT( cp_wk );
+  GF_ASSERT( index < FIELD_WFBC_PEOPLE_MAX );
+
+  return &cp_wk[index];
+}
 
 
 
