@@ -30,7 +30,7 @@
   DEF_CMD( EvCmdCall,  EV_SEQ_CALL )
   DEF_CMD( EvCmdRet,  EV_SEQ_RET )
   DEF_CMD( EvCmdDebugPrintWk,  EV_SEQ_DEBUG_PRINT_WK )
-  NO_CMD()
+  DEF_CMD( EvCmdDebugAssert,  EV_SEQ_DEBUG_ASSERT )
   
   //”»’è‰‰ŽZ—p–½—ß
   DEF_CMD( EvCmdPushValue,  EV_SEQ_PUSH_VALUE )

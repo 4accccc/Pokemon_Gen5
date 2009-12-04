@@ -448,6 +448,22 @@ VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
   OS_Printf( "EvCmdDebugPrintWk: %d\n", val );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT  EvCmdDebugAssert( VMHANDLE * core, void *wk )
+{
+  u16 val1 = VMCMD_Pop( core );
+  u16 val2 = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第1引数
+  GF_ASSERT_MSG( val1 == TRUE, "スクリプトレベルのAssertです！\n" ) 
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //======================================================================
 //  データロード・ストア関連
