@@ -19,28 +19,12 @@ static const GFL_G3D_UTIL_RES res_table_houou[] =
 {
   { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbca, GFL_G3D_UTIL_RESARC },
-//  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbta, GFL_G3D_UTIL_RESARC },
 };
-
-
-static const GFL_G3D_UTIL_RES res_table_bridge[] = 
-{
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_bridge_test_nsbmd, GFL_G3D_UTIL_RESARC },
-//  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbca, GFL_G3D_UTIL_RESARC },
-//  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbta, GFL_G3D_UTIL_RESARC },
-};
-static const GFL_G3D_UTIL_RES res_table_sky[] = 
-{
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_sky_test_nsbmd, GFL_G3D_UTIL_RESARC },
-//  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbca, GFL_G3D_UTIL_RESARC },
-//  { ARCID_OBATA_DEBUG, NARC_debug_obata_houou_test_nsbta, GFL_G3D_UTIL_RESARC },
-};
-
-
 static const GFL_G3D_UTIL_ANM anm_table_houou[] = 
 {
   { 1, 0 },
-//  { 2, 0 },
+  { 2, 0 },
 };
 static const GFL_G3D_UTIL_OBJ obj_table_houou[] = 
 {
@@ -53,37 +37,10 @@ static const GFL_G3D_UTIL_OBJ obj_table_houou[] =
   },
 }; 
 
-
-static const GFL_G3D_UTIL_OBJ obj_table_bridge[] = 
-{
-  {
-    0,                         // モデルリソースID
-    0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
-    NULL,
-    0,
-  },
-}; 
-static const GFL_G3D_UTIL_OBJ obj_table_sky[] = 
-{
-  {
-    0,                         // モデルリソースID
-    0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
-    NULL,
-    0,
-//    anm_table_houou,           // アニメテーブル(複数指定のため)
-//    NELEMS(anm_table_houou),   // アニメリソース数
-  },
-}; 
-
-
 // セットアップ番号
 enum
 {
   SETUP_INDEX_HOUOU,
-  SETUP_INDEX_BRIDGE,
-  SETUP_INDEX_SKY,
   SETUP_INDEX_MAX
 };
 
@@ -91,8 +48,6 @@ enum
 static const GFL_G3D_UTIL_SETUP setup[] =
 {
   { res_table_houou, NELEMS(res_table_houou), obj_table_houou, NELEMS(obj_table_houou) },
-  { res_table_bridge, NELEMS(res_table_bridge), obj_table_bridge, NELEMS(obj_table_bridge) },
-  { res_table_sky, NELEMS(res_table_sky), obj_table_sky, NELEMS(obj_table_sky) },
 };
 
 
@@ -130,19 +85,19 @@ static void Draw( PROC_WORK* work );
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-  PROC_WORK* work = NULL;
+	PROC_WORK* work = NULL;
 
   // ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OBATA_DEBUG, 0x150000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OBATA_DEBUG, 0x100000 );
 
-  // ワークを作成
-  work = GFL_PROC_AllocWork( proc, sizeof( PROC_WORK ), HEAPID_OBATA_DEBUG );
+	// ワークを作成
+	work = GFL_PROC_AllocWork( proc, sizeof( PROC_WORK ), HEAPID_OBATA_DEBUG );
 
   // 初期化処理
   DEBUG_OBATA_DEMO_TEST_Init( HEAPID_OBATA_DEBUG );
   Initialize( work );
 
-  return GFL_PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 
@@ -153,7 +108,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init( GFL_PROC* proc, 
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-  PROC_WORK* work = mywk;
+	PROC_WORK* work = mywk;
   BOOL end = FALSE;
 
   switch( *seq )
@@ -181,21 +136,21 @@ static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main( GFL_PROC* proc, 
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_End( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-  PROC_WORK* work = mywk;
+	PROC_WORK* work = mywk;
 
   // 終了処理
   ICA_ANIME_Delete( work->icaAnime );
   Finalize( work );
 
-  // ワークを破棄
-  GFL_PROC_FreeWork( proc );
+	// ワークを破棄
+	GFL_PROC_FreeWork( proc );
 
   DEBUG_OBATA_DEMO_TEST_Exit();
 
   // ヒープを破棄
   GFL_HEAP_DeleteHeap( HEAPID_OBATA_DEBUG );
 
-  return GFL_PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 } 
 
 
@@ -206,9 +161,9 @@ static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_End( GFL_PROC* proc, i
 //============================================================================================
 const GFL_PROC_DATA DebugObataDemoTestMainProcData = 
 {
-  DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init,
-  DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main,
-  DEBUG_OBATA_DEMO_TEST_MainProcFunc_End,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_End,
 };
 
 
@@ -262,8 +217,6 @@ static void Initialize( PROC_WORK* work )
     VecFx32 target = { 0, 0, 0 };
     work->camera   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, HEAPID_OBATA_DEBUG );
   }
-
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -304,8 +257,6 @@ static BOOL Main( PROC_WORK* work )
   return FALSE;
 }
 
-
-static fx32 test_far = FX32_ONE * 4096;
 //--------------------------------------------------------------------------------------------
 /**
  * @breif 描画
@@ -327,15 +278,9 @@ static void Draw( PROC_WORK* work )
 
   // TEMP: カメラ設定
   {
-    if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){
-      test_far -= FX32_ONE * 0x100;
-    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
-      test_far += FX32_ONE * 0x100;
-    }
-    GFL_G3D_CAMERA_SetFar( work->camera, &test_far );
-
+    fx32 far = FX32_ONE * 4096;
+    GFL_G3D_CAMERA_SetFar( work->camera, &far );
   }
-
 
   // アニメーション更新
   {
