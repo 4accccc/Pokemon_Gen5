@@ -81,7 +81,7 @@ extern void MonolithTool_Panel_Focus(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR pan
 extern void MonolithTool_Panel_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], 
   int panel_max, int focus_no, FADEREQ req);
 
-extern void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, COMMON_RESOURCE_INDEX res_index, int act_x, int act_y, int bmp_size_x, int bmp_size_y, u32 msg_id);
+extern void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, COMMON_RESOURCE_INDEX res_index, int act_x, int act_y, int bmp_size_x, int bmp_size_y, u32 msg_id, WORDSET *wordset);
 extern void MonolithTool_Bmpoam_Delete(MONOLITH_BMPSTR *bmpstr);
 extern BOOL MonolithTool_Bmpoam_TransUpdate(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr);
 

@@ -164,6 +164,10 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
   
   _Title_PanelUpdate(appwk, mtw);
 
+  if(appwk->force_finish == TRUE){
+    return GFL_PROC_RES_FINISH;
+  }
+
   switch(*seq){
   case 0:
     tp_ret = GFL_UI_TP_HitTrg(TitlePanelRect);
@@ -186,7 +190,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       }
       else if(repeat & PAD_KEY_DOWN){
         mtw->cursor_pos++;
-        if(mtw->cursor_pos > MONOLITH_MENU_END){
+        if(mtw->cursor_pos >= TITLE_PANEL_MAX){
           mtw->cursor_pos = 0;
         }
         MonolithTool_Panel_Focus(
@@ -195,7 +199,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       else if(repeat & PAD_KEY_UP){
         mtw->cursor_pos--;
         if(mtw->cursor_pos < 0){
-          mtw->cursor_pos = MONOLITH_MENU_END;
+          mtw->cursor_pos = TITLE_PANEL_MAX - 1;
         }
         MonolithTool_Panel_Focus(
           appwk, mtw->panel, TITLE_PANEL_MAX, mtw->cursor_pos, FADE_SUB_OBJ);

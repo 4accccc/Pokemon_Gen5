@@ -770,14 +770,21 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
     {
       const MISSION_TYPEDATA_ITEM *d_item = (void*)mdata->cdata.data;
       
-      WORDSET_RegisterPlaceName( wordset, 0, d_item->item_no );
+      WORDSET_RegisterItemName( wordset, 0, d_item->item_no );
       
       _Wordset_Strcode(wordset, 1, mdata->exwork.item.target_info.name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
     break;
   case MISSION_TYPE_OCCUR:       //発生(エンカウント)
+    break;
   case MISSION_TYPE_PERSONALITY: //性格
+    {
+      const MISSION_TYPEDATA_PERSONALITY *d_per = (void*)mdata->cdata.data;
+      
+      WORDSET_RegisterNumber(wordset, 0, d_per->num, 3, 
+        STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    }
     break;
   }
   

@@ -143,7 +143,9 @@ typedef struct{
   MONOLITH_COMMON_WORK *common;     ///<モノリス全画面共用ワークへのポインタ
   MONOLITH_TOOL_WORK tool;          ///<共有ツールで使用するワーク
   u8 next_menu_index;     ///<APP Proc終了時に次の画面のメニューIndexをセットする
-  u8 padding[3];
+  u8 up_proc_finish;      ///<TRUE:上画面PROC終了リクエスト
+  u8 force_finish;        ///<TRUE:モノリス所有者が居なくなった為、強制終了
+  u8 padding;
 }MONOLITH_APP_PARENT;
 
 
@@ -155,3 +157,4 @@ extern const GFL_PROC_DATA MonolithAppProc_Up_PalaceMap;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Title;
 extern const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;
+extern const GFL_PROC_DATA MonolithAppProc_Down_Status;

@@ -20,7 +20,7 @@
 //  定数定義
 //==============================================================================
 ///パネル「受ける」Y座標
-#define PANEL_RECEIVE_Y   (0x11*8)
+#define PANEL_RECEIVE_Y   (0x12*8)
 
 //==============================================================================
 //  構造体定義
@@ -237,27 +237,42 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
-  int tp_ret;
   
   _TownIcon_AllUpdate(mmw, appwk);
   _Msselect_PanelUpdate(appwk, mmw);
   _Msselect_CancelIconUpdate(mmw);
 
+  if(appwk->force_finish == TRUE){
+    return GFL_PROC_RES_FINISH;
+  }
+  
   switch(*seq){
   case 0:
-    tp_ret = GFL_UI_TP_HitTrg(TownTouchRect);
-    if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + INTRUDE_TOWN_MAX){
-      OS_TPrintf("街選択 %d\n", tp_ret);
-      appwk->common->mission_select_town = tp_ret;
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int tp_ret = GFL_UI_TP_HitTrg(TownTouchRect);
+
+      if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + INTRUDE_TOWN_MAX){
+        OS_TPrintf("街選択 %d\n", tp_ret);
+        appwk->common->mission_select_town = tp_ret;
+      }
+      else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
+        OS_TPrintf("「受ける」選択\n");
+        MonolithTool_Panel_Flash(appwk, &mmw->panel, 1, 0, FADE_SUB_OBJ);
+        (*seq)++;
+      }
+      else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
+        OS_TPrintf("キャンセル選択\n");
+        (*seq)++;
+      }
     }
-    else if(tp_ret == TOUCH_RECEIVE){
-      OS_TPrintf("「受ける」選択\n");
+    break;
+  case 1:
+    if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+      appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      return GFL_PROC_RES_FINISH;
     }
-    else if(tp_ret == TOUCH_CANCEL){
-      OS_TPrintf("キャンセル選択\n");
-    }
-    
-    return GFL_PROC_RES_CONTINUE;
+    break;
   }
   
   return GFL_PROC_RES_CONTINUE;

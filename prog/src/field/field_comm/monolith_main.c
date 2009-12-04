@@ -52,6 +52,8 @@ static GFL_PROC_RESULT MonolithProc_Main(GFL_PROC * proc, int * seq, void * pwk,
 static GFL_PROC_RESULT MonolithProc_End(GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static void _Setup_VramSetting(void);
 static void _Setup_VramExit(void);
+static void _Setup_LibSetting(void);
+static void _Setup_LibExit(void);
 static void _Setup_PaletteSetting(MONOLITH_SETUP *setup);
 static void _Setup_PaletteExit(MONOLITH_SETUP *setup);
 static void _Setup_BGFrameSetting(void);
@@ -174,6 +176,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 	monosys->setup.hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
   {
     _Setup_VramSetting();
+    _Setup_LibSetting();
     _Setup_PaletteSetting(&monosys->setup);
     _Setup_BGFrameSetting();
     _Setup_BGGraphicLoad(&monosys->setup);
@@ -208,35 +211,55 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   MONOLITH_SYSTEM *monosys = mywk;
+  MONOLITH_PARENT_WORK *parent = pwk;
   enum{
-    SEQ_PROC_SET,
     SEQ_PROC_MAIN,
     SEQ_FINISH,
   };
   
   switch(*seq){
-  case SEQ_PROC_SET:
-    if(monosys->proc_up_occ == FALSE){
-      GFL_PROC_LOCAL_CallProc(monosys->procsys_up, NO_OVERLAY_ID, 
-        MonolithProcTbl[monosys->menu_index].proc_up, &monosys->app_parent);
-      monosys->proc_up_occ = TRUE;
-    }
-    if(monosys->proc_down_occ == FALSE){
-      GFL_PROC_LOCAL_CallProc(monosys->procsys_down, NO_OVERLAY_ID, 
-        MonolithProcTbl[monosys->menu_index].proc_down, &monosys->app_parent);
-      monosys->proc_down_occ = TRUE;
+  case SEQ_PROC_MAIN:
+    //モノリス所有者が切断状態になったらモノリス画面を終了させる
+    if(GFL_NET_IsConnectMember(parent->palace_area) == FALSE){
+      monosys->app_parent.force_finish = TRUE;
     }
     
-    (*seq)++;
-    break;
-  case SEQ_PROC_MAIN:
+    if(monosys->app_parent.force_finish == FALSE){
+      //上下、各PROCが無い場合は次のPROCを生成
+      if(monosys->proc_up_occ == FALSE){
+        GFL_PROC_LOCAL_CallProc(monosys->procsys_up, NO_OVERLAY_ID, 
+          MonolithProcTbl[monosys->menu_index].proc_up, &monosys->app_parent);
+        monosys->proc_up_occ = TRUE;
+      }
+      if(monosys->proc_down_occ == FALSE){
+        GFL_PROC_LOCAL_CallProc(monosys->procsys_down, NO_OVERLAY_ID, 
+          MonolithProcTbl[monosys->menu_index].proc_down, &monosys->app_parent);
+        monosys->proc_down_occ = TRUE;
+      }
+    }
+
     {
       GFL_PROC_MAIN_STATUS up_status, down_status;
       
-      down_status = GFL_PROC_LOCAL_Main(monosys->procsys_down);//下画面が主導権を握るので下から処理
+      //下画面が主導権を握るので下から処理
+      down_status = GFL_PROC_LOCAL_Main(monosys->procsys_down);
+      if(monosys->app_parent.next_menu_index == MONOLITH_MENU_END){
+        monosys->app_parent.up_proc_finish = TRUE;
+      }
+      else if(monosys->menu_index != monosys->app_parent.next_menu_index
+          && MonolithProcTbl[monosys->menu_index].proc_up 
+          != MonolithProcTbl[monosys->app_parent.next_menu_index].proc_up){
+        //下画面PROCが次のPROCへ行こうとしていて上画面のPROCが今と一致していないのであれば
+        //上画面PROCに対してFINISHを知らせる
+        monosys->app_parent.up_proc_finish = TRUE;
+      }
+      
+      //上画面PROC実行
       up_status = GFL_PROC_LOCAL_Main(monosys->procsys_up);
+      
       if(up_status != GFL_PROC_MAIN_VALID || down_status != GFL_PROC_MAIN_VALID){
-        if(monosys->app_parent.next_menu_index == MONOLITH_MENU_END){
+        if(monosys->app_parent.force_finish == TRUE 
+            || monosys->app_parent.next_menu_index == MONOLITH_MENU_END){
           OS_TPrintf("モノリス画面終了待ち up=%d, down=%d\n", up_status, down_status);
           if(up_status == GFL_PROC_MAIN_NULL && down_status == GFL_PROC_MAIN_NULL){
             (*seq)++;
@@ -246,11 +269,11 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
           monosys->menu_index = monosys->app_parent.next_menu_index;
           if(up_status != GFL_PROC_MAIN_VALID){
             monosys->proc_up_occ = FALSE;
+            monosys->app_parent.up_proc_finish = FALSE;
           }
           if(down_status != GFL_PROC_MAIN_VALID){
             monosys->proc_down_occ = FALSE;
           }
-          (*seq) = SEQ_PROC_SET;
         }
       }
     }
@@ -290,6 +313,7 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
   _Setup_MessageExit(&monosys->setup);
   _Setup_BGFrameExit();
   _Setup_PaletteExit(&monosys->setup);
+  _Setup_LibExit();
   _Setup_VramExit();
 
 	GFL_ARC_CloseDataHandle(monosys->setup.hdl);
@@ -331,6 +355,26 @@ static void _Setup_VramSetting(void)
 static void _Setup_VramExit(void)
 {
   GFL_BG_Exit();
+}
+
+//--------------------------------------------------------------
+/**
+ * GFLIB関連の初期設定
+ */
+//--------------------------------------------------------------
+static void _Setup_LibSetting(void)
+{
+  GFL_BMPWIN_Init( HEAPID_MONOLITH );
+}
+
+//--------------------------------------------------------------
+/**
+ * GFLIB関連の破棄処理
+ */
+//--------------------------------------------------------------
+static void _Setup_LibExit(void)
+{
+  GFL_BMPWIN_Exit();
 }
 
 //--------------------------------------------------------------

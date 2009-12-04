@@ -70,13 +70,13 @@ static const BMPOAM_ACT_DATA BmpOamHead_Panel = {
 //--------------------------------------------------------------
 //パネルカラーアニメ設定
 enum{
-  PANEL_COLOR_START = 2,      ///<パネルカラーアニメ開始位置
-  PANEL_COLOR_END = 4,        ///<パネルカラーアニメ終端位置
+  PANEL_COLOR_START = 1,      ///<パネルカラーアニメ開始位置
+  PANEL_COLOR_END = 3,        ///<パネルカラーアニメ終端位置
   PANEL_COLOR_NUM = PANEL_COLOR_END - PANEL_COLOR_START + 1,  ///<パネルカラーアニメのカラー数
   
   PANEL_COLOR_FADE_ADD_EVY = 0x0080,    ///<EVY加算値(下位8ビット小数)
   
-  PANEL_COLOR_FLASH_WAIT = 4,     ///<フラッシュのウェイト
+  PANEL_COLOR_FLASH_WAIT = 3,     ///<フラッシュのウェイト
   PANEL_COLOR_FLASH_COUNT = 2,    ///<フラッシュ回数
 };
 
@@ -372,9 +372,12 @@ void MonolithTool_Panel_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], i
  * @param   bmp_size_x		BMPサイズX(キャラクタ単位)
  * @param   bmp_size_y		BMPサイズY(キャラクタ単位)
  * @param   msg_id		    メッセージID
+ * @param   wordset       WORDSETが不必要な場合はNULL指定
+ * 
+ * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
  */
 //==================================================================
-void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, COMMON_RESOURCE_INDEX res_index, int act_x, int act_y, int bmp_size_x, int bmp_size_y, u32 msg_id)
+void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, COMMON_RESOURCE_INDEX res_index, int act_x, int act_y, int bmp_size_x, int bmp_size_y, u32 msg_id, WORDSET *wordset)
 {
   CLSYS_DEFREND_TYPE defrend_type;
   BMPOAM_ACT_DATA bmpoam_head = BmpOamHead_Str;
@@ -402,7 +405,15 @@ void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, CO
   
   //文字描画
   strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_id );
-  PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle );
+  if(wordset != NULL){
+    STRBUF *expand_str = GFL_STR_CreateBuffer(128, HEAPID_MONOLITH);
+    WORDSET_ExpandStr(wordset, expand_str, strbuf );
+    PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, expand_str, setup->font_handle );
+    GFL_STR_DeleteBuffer(expand_str);
+  }
+  else{
+    PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle );
+  }
   GFL_STR_DeleteBuffer(strbuf);
   
   //内部フラグセット

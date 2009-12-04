@@ -120,7 +120,8 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：PERSONALITY
 typedef struct{
-  u16 padding[3];
+  u16 num;                ///<話しかけられる回数
+  u16 padding[2];
 }MISSION_TYPEDATA_PERSONALITY;
 
 

@@ -13,6 +13,7 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
+#include "intrude_work.h"
 #include "monolith.naix"
 
 
@@ -101,8 +102,19 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Init(GFL_PROC * proc, int * seq, vo
   _Setup_BGFrameSetting();
   _Setup_BGGraphicLoad(appwk->setup);
   //OBJ
+  {
+    MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
+
+    STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
+
+  	GFL_STR_SetStringCodeOrderLength(
+  	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
+    WORDSET_RegisterWord(appwk->setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
+
+    GFL_STR_DeleteBuffer(strbuf);
+  }
   MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_title, COMMON_RESOURCE_INDEX_UP, 
-    128, 12, 30, 2, msg_mono_title_000);
+    128, 12, 30, 2, msg_mono_title_000, appwk->setup->wordset);
   _TownIcon_AllCreate(mpw, appwk);
   
   return GFL_PROC_RES_FINISH;
@@ -123,6 +135,10 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Main( GFL_PROC * proc, int * seq, v
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PALACEMAP_WORK *mpw = mywk;
   int tp_ret;
+  
+  if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
+    return GFL_PROC_RES_FINISH;
+  }
   
   MonolithTool_Bmpoam_TransUpdate(appwk->setup, &mpw->bmpstr_title);
   _TownIcon_AllUpdate(mpw, appwk);

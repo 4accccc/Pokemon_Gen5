@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-11-20T15:37:09"/>
+	<create user="matsuda" host="W00142" date="2009-12-04T11:48:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1330" top="323" right="2029" bottom="942" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="119" right="2002" bottom="747" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="2052" top="258" right="2525" bottom="882" visible="yes"/>
-		<band id="0" index="0" style="0000" width="524"/>
+		<tag-palette left="807" top="258" right="1280" bottom="882" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="691"/>
-		<band id="3" index="3" style="0000" width="691"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -513,17 +513,17 @@
 	</row>
 
 	<row id="plc_mism_04_01">
-		<comment>大きさ</comment>
-		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<comment>属性</comment>
+		<language name="JPN" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -533,17 +533,17 @@
 	</row>
 
 	<row id="plc_mism_04_02">
-		<comment>大きさ</comment>
-		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<comment>属性</comment>
+		<language name="JPN" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -553,17 +553,17 @@
 	</row>
 
 	<row id="plc_mism_04_03">
-		<comment>大きさ</comment>
-		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<comment>属性</comment>
+		<language name="JPN" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
-[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -573,6 +573,26 @@
 	</row>
 
 	<row id="plc_mism_04_04">
+		<comment>属性</comment>
+		<language name="JPN" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
+
+せいげんじかん　[2:02:３桁:2]びょう
+
+かくとくポイント
+１い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
+３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
+ｘｘｘｘへ　いけ！
+
+せいげんじかん　[2:02:３桁:2]びょう
+
+かくとくポイント
+１い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
+３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
+	</row>
+
+	<row id="plc_mism_05_01">
 		<comment>大きさ</comment>
 		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
 [1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
@@ -592,38 +612,18 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_05_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>属性</comment>
-		<language name="JPN" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+	<row id="plc_mism_05_02">
+		<comment>大きさ</comment>
+		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
-
-せいげんじかん　[2:02:３桁:2]びょう
-
-かくとくポイント
-１い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
-３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-	</row>
-
-	<row id="plc_mism_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>属性</comment>
-		<language name="JPN" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
-
-せいげんじかん　[2:02:３桁:2]びょう
-
-かくとくポイント
-１い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
-３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -632,18 +632,18 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_05_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>属性</comment>
-		<language name="JPN" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+	<row id="plc_mism_05_03">
+		<comment>大きさ</comment>
+		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -652,18 +652,18 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_05_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>属性</comment>
-		<language name="JPN" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+	<row id="plc_mism_05_04">
+		<comment>大きさ</comment>
+		<language name="JPN" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]の
-ｘｘｘｘへ　いけ！
+		<language name="JPN_KANJI" width="256">ぜんいんで　パレスに　おちている
+[1:09:どうぐ名:0]を　[2:01:２桁:1]こ　あつめよ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
