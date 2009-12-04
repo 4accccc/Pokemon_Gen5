@@ -27,7 +27,7 @@
 
 // リフト座標
 #define LIFT_POS_X_GRID (30)
-#define LIFT_POS_Z_GRID (43)
+#define LIFT_POS_Z_GRID (81)
 #define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 #define LIFT_POS_Y (2 << FX32_SHIFT)
 #define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
@@ -313,11 +313,18 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   {
   // アニメ開始
   case 0:
-    {
+    { // アニメデータ読み込み
       HEAPID heap_id;
       heap_id = FIELDMAP_GetHeapID( work->fieldmap );
       work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
                                                NARC_league_front_pl_ele_01_ica_bin );
+    }
+    { // 自機座標初期化
+      FIELD_PLAYER* player;
+      VecFx32 pos;
+      VEC_Set( &pos, LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z );
+      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+      FIELD_PLAYER_SetPos( player, &pos );
     }
     ++(*seq);
     break;

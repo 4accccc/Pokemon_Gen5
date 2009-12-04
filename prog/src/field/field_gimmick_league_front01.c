@@ -28,8 +28,8 @@
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  // ギミックデータのアーカイブID
 
 // リフト座標
-#define LIFT_POS_X_GRID (30)
-#define LIFT_POS_Z_GRID (43)
+#define LIFT_POS_X_GRID (32)
+#define LIFT_POS_Z_GRID (42)
 #define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 #define LIFT_POS_Y (2 << FX32_SHIFT)
 #define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
@@ -396,7 +396,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     {
       GMEVENT* next_event;
       next_event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( work->gsys, work->fieldmap );
-      GMEVENT_CallEvent( event, next_event );
+      GMEVENT_ChangeEvent( event, next_event );
     }
     ++(*seq);
     break;
