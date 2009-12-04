@@ -55,7 +55,7 @@
 #define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
                                     /** @TODO ポケモンリストが正規になったらいらなくなる */
 
-#define STANDBY_FADE        ( 8 )
+#define STANDBY_FADE        ( 12 )
 #define STANDBY_FADE_COLOR  ( 0x0842 )
 
 //PP表示用カラー定義
@@ -991,7 +991,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 );
       }
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x2002, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
