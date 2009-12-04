@@ -425,6 +425,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_single );
       break;
     case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
+    case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_single );
       break;
     case BTL_COMPETITOR_COMM:
@@ -441,6 +442,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
       break;
 
     case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
+    case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
       break;
 
@@ -455,7 +457,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
 
   case BTL_RULE_TRIPLE:
     // ゲーム内トレーナー
-    if( competitor == BTL_COMPETITOR_TRAINER){
+    if( competitor != BTL_COMPETITOR_COMM ){
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_triple );
     // 通信対戦
     }else{
@@ -465,7 +467,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
 
   case BTL_RULE_ROTATION:
     // ゲーム内トレーナー
-    if( competitor == BTL_COMPETITOR_TRAINER){
+    if( competitor != BTL_COMPETITOR_COMM ){
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
     // 通信対戦
     }else{
@@ -1125,7 +1127,7 @@ static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
 
-      u16 strID = (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER)?
+      u16 strID = (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)?
                       BTL_STRID_STD_Encount_NPC1 : BTL_STRID_STD_Encount_Player1;
 
 
@@ -1699,6 +1701,7 @@ static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount )
     return ( pokeCount == 1 )? BTL_STRID_STD_Encount_Wild1 : BTL_STRID_STD_Encount_Wild2;
 
   case BTL_COMPETITOR_TRAINER:
+  case BTL_COMPETITOR_SUBWAY:
     if( pokeCount == 1 ){
       return BTL_STRID_STD_PutSingle_NPC;
     }else if( pokeCount == 2 ){

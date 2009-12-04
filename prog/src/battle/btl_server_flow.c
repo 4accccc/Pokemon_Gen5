@@ -6408,10 +6408,8 @@ static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaS
 //----------------------------------------------------------------------------------
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
 {
-  BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
-  if( (competitor == BTL_COMPETITOR_WILD)
-  ||  (competitor == BTL_COMPETITOR_TRAINER)
-  ){
+  if( BTL_MAIN_IsExpSeqEnable(wk->mainModule) )
+  {
     u8 deadPokeID = BPP_GetID( deadPoke );
     if( BTL_MAINUTIL_PokeIDtoSide(deadPokeID) == BTL_SIDE_2ND )
     {

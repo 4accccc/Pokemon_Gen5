@@ -1386,6 +1386,24 @@ BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk )
 {
   return wk->fWazaEffEnable;
 }
+//=============================================================================================
+/**
+ * 経験値取得シーケンスが有効な対戦かどうか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
+{
+  if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+  ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //=============================================================================================
 /**
@@ -2928,6 +2946,7 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
 void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
 {
   GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_COMM);
+  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY);
   {
     BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
     BPP_ReflectByPP( bpp );
@@ -2942,8 +2961,9 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
 //----------------------------------------------------------------------------------
 static void reflectPartyData( BTL_MAIN_MODULE* wk )
 {
-  if( wk->setupParam->competitor != BTL_COMPETITOR_COMM )
-  {
+  if( (wk->setupParam->competitor != BTL_COMPETITOR_COMM)
+  &&  (wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY)
+  ){
     POKEPARTY* srcParty;
 
     srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
