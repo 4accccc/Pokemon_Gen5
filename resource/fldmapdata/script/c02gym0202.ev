@@ -102,14 +102,12 @@ ev_leader2_btl:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
-		
-
+	
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
 	//ほれぼれ　するような
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_02 )
