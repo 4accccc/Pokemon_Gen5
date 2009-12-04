@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_INIT_H01R0101 (1)
+#define SCRID_BG_H01R0101_BOARD_01 (2)
 
 #endif //_H01R0101_DEF_H_

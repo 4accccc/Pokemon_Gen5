@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c08r0701_policeman_01
 _EVENT_DATA    ev_pos_c08r0701_policeman_01
+_EVENT_DATA		ev_bg_c08r0701_board_01
 _EVENT_DATA_END
 
 
@@ -47,3 +48,12 @@ EVENT_END
 _ANIME_LABEL	anm_C08R0701_stoper_01
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*  電光掲示板のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_c08r0701_board_01
+
+	_LOOK_ELBOARD( 90 )
+
+EVENT_END
