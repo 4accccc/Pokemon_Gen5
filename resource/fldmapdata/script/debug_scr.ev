@@ -32,6 +32,7 @@ _EVENT_DATA   ev_debug_iwasawa
 _EVENT_DATA   ev_debug_nozomu
 _EVENT_DATA   ev_debug_tomoya
 _EVENT_DATA   ev_debug_obata
+_EVENT_DATA   ev_debug_hosaka
 _EVENT_DATA_END
 
 
@@ -51,15 +52,61 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
-  _RESERVE_SCRIPT( SCRID_PC )
-  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_sample )
-  //_OBJ_ANIME_WAIT()
-EVENT_END
+  //_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+  //_ASM_BGM_STOP
+  _ASM_BGM_PLAY SEQ_BGM_E_SUPPORT
 
-_ANIME_LABEL  anm_sample
-  _ANIME_DATA AC_WALK_L_4F, 1
-  _ANIME_DATA AC_WALK_R_4F, 1
-  _ANIME_DATA ACMD_END, 0
+  _GET_MEZAMERU_POWER_TYPE( SCWK_ANSWER , 0 )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+  _GET_TEMOTI_PARAM_EXP( SCWK_ANSWER, 0 )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+  _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_PIKATYUU )
+
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+  _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_PIKATYUU )
+
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_PIKATYUU, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_MUSYAANA, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_MUSYAANA, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//Ｎ城出現デモ（テスト）
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//やめる（テスト）
+	//メニュー表示
+	_BMPMENU_START()
+
+	IF $SCWK_ANSWER == 0 THEN
+		//Ｎ城出現デモのデバッグ処理（テスト）
+		
+		//ここにワーク操作など、確認したいイベントの発動条件を記述します。
+		_SE_PLAY( SEQ_SE_KAIDAN )
+		_SE_WAIT()
+	ENDIF
+
+  _BGM_FADEOUT( 0, 30 )
+  _BGM_STOP()
+  _BGM_NOW_MAP_RECOVER()
+  //_END_EVENT_BGM()
+EVENT_END
 
 
 /************************************************************/
@@ -133,4 +180,18 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_obata
 EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_hosaka
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+  _DEMO_SCENE( 0 )
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+EVENT_END
+
 

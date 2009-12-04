@@ -2520,6 +2520,41 @@
   .short  EV_SEQ_BGM_NOW_MAP_RECOVER
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _START_EVENT_BGM
+ * @brief スクリプト簡易マクロ：イベントBGM開始
+ * @param bgmno
+ *
+ * @note
+ * 内部的には _BGM_STOP()と_BGM_PLAY()を続けて呼んでいる
+ */
+//--------------------------------------------------------------
+#define _START_EVENT_BGM( bgmno ) \
+    _ASM_START_EVENT_BGM bgmno
+
+  .macro _ASM_START_EVENT_BGM bgmno
+  _ASM_BGM_STOP
+  _ASM_BGM_PLAY \bgmno
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _END_EVENT_BGM
+ * @brief スクリプト簡易マクロ：イベントBGM終了
+ *
+ * @note
+ * 内部的には、_BGM_FADEOUT(0,30)→_BGM_STOP() →_BGM_NOW_MAP_RECOVER()を続けて呼んでいる
+ */
+//--------------------------------------------------------------
+#define _END_EVENT_BGM() \
+    _ASM_END_EVENT_BGM
+
+  .macro  _ASM_END_EVENT_BGM
+  _ASM_BGM_FADEOUT  0, 30
+  _ASM_BGM_STOP
+  _ASM_BGM_NOW_MAP_RECOVER
+  .endm
 
 //======================================================================
 //  サウンド ISS
@@ -3601,6 +3636,24 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_ZUKAN_FLAG
+ * @brief ずかんフラグを取得する
+ * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
+ * @param monsno    取得対象ポケモンのナンバー
+ */
+//--------------------------------------------------------------
+#define _GET_ZUKAN_FLAG( zukan_count_type, monsno, ret_wk ) \
+    _ASM_GET_ZUKAN_FLAG zukan_count_type, monsno, ret_wk
+
+    .macro _ASM_GET_ZUKAN_FLAG zukan_count_type, monsno, ret_wk
+    .short  EV_SEQ_GET_ZUKAN_FLAG
+    .short  \zukan_count_type
+    .short  \monsno
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_BADGE_FLAG
  * @brief バッジフラグの取得
  * @param ret_wk    結果を受けるワーク
@@ -4111,6 +4164,42 @@
   .short  \waza_pos
   .short  \waza_id
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_MEZAMERU_POWER_TYPE
+ * @brief 「めざめるパワー」のタイプを取得する
+ * @param ret_wk    チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @retval  PokeType  ポケモンのタイプ指定（prog/include/poke_tool/poketype_def.h参照）
+ */
+//--------------------------------------------------------------
+#define _GET_MEZAMERU_POWER_TYPE( ret_wk, pos ) \
+    _ASM_GET_MEZAMERU_POWER_TYPE ret_wk, pos
+
+  .macro  _ASM_GET_MEZAMERU_POWER_TYPE ret_wk, pos
+  .short  EV_SEQ_GET_MEZAMERU_POWER_TYPE
+  .short  \ret_wk
+  .short  \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_TEMOTI_PARAM_EXP
+ * @brief 手持ちポケモンの努力値合計を受け取る
+ * @param ret_wk    チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ */
+//--------------------------------------------------------------
+#define _GET_TEMOTI_PARAM_EXP( ret_wk , pos ) \
+    _ASM_GET_TEMOTI_PARAM_EXP ret_wk , pos
+
+  .macro  _ASM_GET_TEMOTI_PARAM_EXP ret_wk , pos
+  .short  EV_SEQ_GET_PARAM_EXP
+  .short  \ret_wk
+  .short  \pos
+  .endm
+
 
 //======================================================================
 // お金
@@ -5190,6 +5279,13 @@
 #define _FIELD_COMM_EXIT_EVENT_CALL( ret_wk )  \
     _ASM_FIELD_COMM_EXIT_EVENT_CALL  ret_wk
 
+//======================================================================
+//
+//
+//    カメラ操作関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * カメラ操作開始
@@ -5295,6 +5391,14 @@
   .short  EV_SEQ_INTRUDE_MINIMONO_SETTING
   .endm
 
+
+//======================================================================
+//
+//
+//    侵入関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 侵入コマンド　ミッション開始
@@ -5339,6 +5443,13 @@
   .short  EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ
   .endm
 
+//======================================================================
+//
+//
+//  カットイン関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * フィールドカットイン
@@ -5433,6 +5544,14 @@
   .short  \add_time
   .endm
 
+
+//======================================================================
+//
+//
+//  マップフェード関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * マップフェードブラックイン
@@ -5489,7 +5608,22 @@
   .short EV_SEQ_MAP_FADE_CHECK
   .endm
   
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_SCENE
+ * @brief デモ呼び出し
+ * @param demo_no   デモID指定ナンバー
+ */
+//--------------------------------------------------------------
+#define _DEMO_SCENE( demo_no )  \
+    _ASM_DEMO_SCENE demo_no
 
+  .macro  _ASM_DEMO_SCENE demo_no
+  .short  EV_SEQ_DEMO_SCENE
+  .short  \demo_no
+  .endm
 
 
   
