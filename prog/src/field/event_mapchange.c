@@ -67,7 +67,9 @@ static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys );
 static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req );
 
 static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
+static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
+
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req );
 
@@ -1202,10 +1204,10 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
+  MAPCHG_loadMMdlWFBC( gamedata, &loc );
 
   //フィールド技　マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, &loc );
-  
 }
 
 //--------------------------------------------------------------
@@ -1220,6 +1222,47 @@ static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req )
     MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
     const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
     MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count, evwork );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCのモデルを読み込む
+ */
+//-----------------------------------------------------------------------------
+static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
+{
+  if( ZONEDATA_IsWfbc( loc->zone_id ) )
+  {
+    const FIELD_WFBC_CORE* cp_wfbc;
+    const FIELD_STATUS* cp_fs = GAMEDATA_GetFieldStatus( gamedata );
+    MAPMODE mapmode = FIELD_STATUS_GetMapMode( cp_fs );
+    MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+    MMDL_HEADER*p_header;
+    u32  count;
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
+
+
+    if( mapmode == MAPMODE_NORMAL )
+    {
+      cp_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
+    }
+    else
+    {
+      cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
+    }
+    p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
+
+    count = FIELD_WFBC_CORE_GetPeopleNum( cp_wfbc, mapmode );
+
+
+    // 
+    if( p_header && (count > 0) )
+    {
+      TOMOYA_Printf( "WFBC MMDL SetUp\n" );
+		  MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
+      GFL_HEAP_FreeMemory( p_header );
+    }
   }
 }
 

@@ -19,6 +19,7 @@ extern "C"{
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
 #include "field/field_wfbc_people_def.h"
+#include "field/fldmmdl.h"
 
 #include "savedata/mystatus.h"
 
@@ -83,7 +84,6 @@ typedef enum
 //-------------------------------------
 /// 機嫌
 //=====================================
-#define FIELD_WFBC_MOOD_DEFAULT ( 50 )  // @TODO 後々は、エクセルデータから
 #define FIELD_WFBC_MOOD_MAX     ( 100 ) // 最大値
 #define FIELD_WFBC_MOOD_ADD_INTOWN  ( 3 ) // 街に訪れると足される値
 #define FIELD_WFBC_MOOD_ADD_TALK    ( 10 )  // 話をすると1日1回足される値
@@ -124,6 +124,16 @@ typedef struct
   FIELD_WFBC_CORE_PEOPLE back_people[FIELD_WFBC_PEOPLE_MAX];
 } FIELD_WFBC_CORE;
 
+
+//-------------------------------------
+///	人物配置情報
+//=====================================
+typedef struct
+{
+  u16 gx;
+  u16 gz;
+} FIELD_WFBC_CORE_PEOPLE_POS;
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -155,7 +165,7 @@ extern void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk );
 // データの有無   不正データの場合、FALSEを返します。
 extern BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk );
 // 人の数を返す
-extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk );
+extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmode );
 // 機嫌値でソートする
 // ソートに使用するテンポラリワークを生成するためのheapIDです。
 extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
@@ -167,6 +177,13 @@ extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 extern void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_people );
 // 人を探す
 extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id );
+// データから、MMDLヘッダーを生成
+// mapmode == field_status_local.h MAPMODE
+// 戻り値は、GFL_HEAP_Freeをしてください。
+extern MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, u32 mapmode, HEAPID heapID );
+
+// 位置情報の取得
+extern void FIELD_WFBC_CORE_GetPeoplePos( int index, FIELD_WFBC_CORE_TYPE type, FIELD_WFBC_CORE_PEOPLE_POS* p_buff );
 
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数
@@ -174,7 +191,6 @@ extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* 
 //ワークのクリア
 extern void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk );
 //整合性チェック 
-//@TODO　最終的には、対応する人の情報ももらって、整合性をあわせる
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。
 extern void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk );

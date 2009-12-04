@@ -60,9 +60,6 @@ typedef enum
   RMM_RIGHT_BOTTOM,
 }RANDOM_MAP_MAPPOS;
 
-static void FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , VecFx32* p_pos );
-static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft );
-static const u32 FieldFuncRandom_GetBilduingResId( u32 cyty_type, const u8 height );
 
 BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
@@ -115,188 +112,31 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
 			//>>GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
-			//配置オブジェクト設定
-			if( fileHeader->positionOffset != fileHeader->endPos )
-			{
-        FIELD_WFBC* p_wfbc = FLD_G3D_MAP_EXWORK_GetWFBCWork( p_exwork );
-        u16 level = FIELD_WFBC_GetPeopleNum( p_wfbc );
-        u16 cyty_type = FIELD_WFBC_GetType(  p_wfbc );
 
-				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
-				PositionSt* objStatus = (PositionSt*)&layout->posData;
-				GFL_G3D_MAP_GLOBALOBJ_ST status;
-				int i, count = layout->count;
-        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
-        const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
-        VecFx32 pos;
-        u8 x,z;
-        fx32 top,left;
-        u8  idxTop,idxLeft;
-
-        FieldFuncRandom_CheckMapPos( g3Dmap , &pos );
-
-        //top = pos.z - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
-        //left = pos.x - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);
-        top = -(144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
-        left = -(144<<FX32_SHIFT);
-        
-        switch(mapIndex)
-        {
-        case RMM_LEFT_TOP:
-          idxTop = 0;
-          idxLeft = 0;
-          break;
-
-        case RMM_RIGHT_TOP:
-          idxTop = 0;
-          idxLeft = 3;
-          break;
-
-        case RMM_LEFT_BOTTOM:
-          idxTop = 3;
-          idxLeft = 0;
-          break;
-
-        case RMM_RIGHT_BOTTOM:
-          idxTop = 3;
-          idxLeft = 3;
-          break;
-        }
-        i=0;
-				for( x=0; x<3; x++ )
-				{
-  				for( z=0; z<3; z++ )
-  				{
-            u8 height_base = FieldFuncRandom_GetBilduingHeight(idxTop+z,idxLeft+x);
-            s8 height = height_base + level - 10;
-            if( height_base > 5 )
-            {
-              if( height > 10 )
-              {
-                height = 10;
-              }
-            }
-            else if( height_base > 0 )
-            {
-              height = height_base;
-            }
-            
-            if( height > 0 )
-            {
-              const u32 resId = FieldFuncRandom_GetBilduingResId( cyty_type, height );
-              PositionSt objStatus;
-              objStatus.resourceID = resId;
-              objStatus.rotate = 0;
-              objStatus.billboard = 0;
-              objStatus.xpos = left+FX32_CONST( x*172.0f );
-              objStatus.ypos = 0;
-              objStatus.zpos = - (top+FX32_CONST( z*172.0f)); // ResistMapObject内で-反転されるので
-              //OS_TPrintf( "x=%d z=%d  pos x[%d] z[%d] \n", x, z, FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos) );
-              FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, i );
-  					  i++;
-  					}
-          }
-        }
-			}
-
-      // 地面を配置
       {
-#if 0
-        static const u8 GroundMapData[ 4 ][ 16 ] = 
-        {
-          // マップインデックス00
-          {
-            0xff,0xff,0xff,0xff,
-            0xff,0x00,0x00,0x00,
-            0xff,0x00,0x00,0x00,
-            0xff,0x00,0x00,0x00,
-          },
-          // マップインデックス01
-          {
-            0xff,0xff,0xff,0xff,
-            0x00,0x00,0xff,0xff,
-            0x00,0x00,0x00,0xff,
-            0x00,0x00,0x00,0xff,
-          },
-          // マップインデックス02
-          {
-            0xff,0x00,0x00,0x00,
-            0xff,0x00,0xff,0x00,
-            0xff,0xff,0x00,0x00,
-            0xff,0xff,0xff,0xff,
-          },
-          // マップインデックス03
-          {
-            0x00,0xff,0x00,0xff,
-            0x00,0x00,0x00,0xff,
-            0x00,0x00,0x00,0xff,
-            0xff,0xff,0xff,0xff,
-          },
-        };
-#else
-        static const u8 GroundMapData[ 4 ][ 16 ] = 
-        {
-          // マップインデックス00
-          {
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0x00,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-          },
-          // マップインデックス01
-          {
-            0xff,0x02,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-          },
-          // マップインデックス02
-          {
-            0xff,0xff,0xff,0xff,    
-            0xff,0xff,0x01,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-          },
-          // マップインデックス03
-          {
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-            0xff,0xff,0xff,0xff,
-          },
-        };
-#endif
         int i, j;
-        int index;
-        const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
-        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
-        int count = 10;
+        int block_x, block_z;
+        int count;
+        int score;
+        FIELD_BMODEL_MAN* p_bm = FLD_G3D_MAP_EXWORK_GetBModelMan( p_exwork );
+        NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
+        int map_index = FLD_G3D_MAP_EXWORK_GetMapIndex( p_exwork );
+        FIELD_WFBC* p_wfbc = FLD_G3D_MAP_EXWORK_GetWFBCWork( p_exwork );
+        HEAPID heapID = FLD_G3D_MAP_EXWORK_GetHeapID( p_exwork );
 
+        TOMOYA_Printf( "\nmapindex %d setup start\n", map_index );
         
-        //マップインデックスの地面を配置 
-        for( i=0; i<4; i++ )
+        block_x = (map_index % 2) * (FIELD_WFBC_BLOCK_SIZE_X/2);
+        block_z = (map_index / 2) * (FIELD_WFBC_BLOCK_SIZE_Z/2);
+
+        score = FIELD_WFBC_GetPeopleNum( p_wfbc );
+        
+        count = 0;
+        for( i=0; i<(FIELD_WFBC_BLOCK_SIZE_Z/2); i++ )
         {
-          for( j=0; j<4; j++ )
+          for( j=0; j<(FIELD_WFBC_BLOCK_SIZE_X/2); j++ )
           {
-            index = (i * 4) + j;
-            
-            if( GroundMapData[ mapIndex ][ index ] != 0xff )
-            {
-              // 追加パッチを当てる
-              FIELD_DATA_PATCH* p_patch;
-				      NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
-
-              p_patch = FIELD_DATA_PATCH_Create( GroundMapData[ mapIndex ][ index ] + (3*GFUser_GetPublicRand(3)), GFL_HEAP_LOWID(heapID) );
-
-              // アトリビュート上書き
-              FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, j*8, i*8 );
-
-              // 配置上書き
-              count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, bm, g3Dmap, count, j*8, i*8 );
-
-              // パッチ情報破棄
-              FIELD_DATA_PATCH_Delete( p_patch );
-  					}
+            count = FIELD_WFBC_SetUpBlock( p_wfbc, p_attr, p_bm, g3Dmap, count, block_x + j, block_z + i, score, heapID );
           }
         }
       }
@@ -392,57 +232,5 @@ void FieldGetAttr_RandomGenerate( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* ma
 
 	attrInfo->mapAttrCount = 1;
 }
-
-
-//MAPの位置をチェック
-static void FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , VecFx32* p_pos )
-{
-  GFL_G3D_MAP_GetTrans( g3Dmap , p_pos );
-  OS_Printf("[%f:%f:%f]\n",FX_FX32_TO_F32(p_pos->x),FX_FX32_TO_F32(p_pos->y),FX_FX32_TO_F32(p_pos->z));
-}
-
-static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft )
-{
-#if 0
-  static const u8 idxArr[6][6] =
-  {
-    {1,3,6,5,4,2},
-    {2,5,7,8,6,3},
-    {4,7,10,9,7,5},
-    {3,6,8,10,6,4},
-    {2,4,5,6,5,3},
-    {1,2,4,3,2,1},
-  };
-#else
-  static const u8 idxArr[6][6] =
-  {
-    {0,0,0,0,0,0},
-    {0,8,0,0,8,0},
-    {0,0,10,7,0,0},
-    {0,0,7,10,0,0},
-    {0,8,0,0,8,0},
-    {0,0,0,0,0,0},
-  };
-#endif
-
-  GF_ASSERT( idxTop < 6 );
-  GF_ASSERT( idxLeft < 6 );
-  
-  return idxArr[idxTop][idxLeft];
-}
-
-static const u32 FieldFuncRandom_GetBilduingResId( u32 cyty_type, const u8 height )
-{
-  if( cyty_type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
-  {
-    return NARC_output_buildmodel_outdoor_bc_build_01_nsbmd + height-1;
-  }
-  else
-  {
-    return NARC_output_buildmodel_outdoor_wf_tree_01_nsbmd + height-1;
-  }
-  
-}
-
 
 

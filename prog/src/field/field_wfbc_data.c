@@ -17,14 +17,90 @@
 
 #include "system/gfl_use.h"
 
-
 #include "field/field_wfbc_data.h"
+
+#include "field_status_local.h"
 
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	人物基本情報
+//=====================================
+static const MMDL_HEADER sc_DEFAULT_HEADER = 
+{
+	0,		///<識別ID
+	0,	  ///<表示するOBJコード
+	0,	  ///<動作コード
+	0,	  ///<イベントタイプ
+	0,	  ///<イベントフラグ
+	0,	  ///<イベントID
+	0,		///<指定方向
+	0,		///<指定パラメタ 0
+	0,		///<指定パラメタ 1
+	0,		///<指定パラメタ 2
+	0,		///<X方向移動制限
+	0,		///<Z方向移動制限
+};
+
+
+// 人物出現位置
+static const FIELD_WFBC_CORE_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FIELD_WFBC_PEOPLE_MAX ] = 
+{
+  // BLACK CITY
+  {
+    { 23,12 },
+    { 27,32 },
+    { 31,24 },
+    { 35,29 },
+    { 39,17 },
+    { 43,16 },
+    { 47,28 },
+    { 51,12 },
+    { 55,20 },
+    { 59,30 },
+
+    { 24,13 },
+    { 28,33 },
+    { 32,25 },
+    { 36,30 },
+    { 40,18 },
+    { 44,17 },
+    { 48,29 },
+    { 52,13 },
+    { 56,21 },
+    { 60,31 },
+  },
+  
+
+  // White Forest
+  {
+    { 23,12 },
+    { 27,32 },
+    { 31,24 },
+    { 35,29 },
+    { 39,17 },
+    { 43,16 },
+    { 47,28 },
+    { 51,12 },
+    { 55,20 },
+    { 59,30 },
+
+    { 24,13 },
+    { 28,33 },
+    { 32,25 },
+    { 36,30 },
+    { 40,18 },
+    { 44,17 },
+    { 48,29 },
+    { 52,13 },
+    { 56,21 },
+    { 60,31 },
+  },
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -281,22 +357,32 @@ BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk )
  *	@brief  人の数を返す
  *
  *	@param	cp_wk   ワーク
+ *	@param  mapmode MAPMODE 進入か通常か
  *
  *	@return 人の数
  */
 //-----------------------------------------------------------------------------
-u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk )
+u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmode )
 {
   int i;
   int num;
+  const FIELD_WFBC_CORE_PEOPLE* cp_people_array;
   GF_ASSERT( cp_wk );
 
+  if( mapmode == MAPMODE_NORMAL )
+  { 
+    cp_people_array = cp_wk->people;
+  }
+  else
+  {
+    cp_people_array = cp_wk->back_people;
+  }
 
   num = 0;
 
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
   {
-    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_wk->people[i] ) )
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_people_array[i] ) )
     {
       num ++;
     }
@@ -438,6 +524,103 @@ FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u
 
   return NULL;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC情報から、MMDLヘッダーを生成する
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	heapID    ヒープID
+ *
+ *	@retval 動作モデルヘッダーテーブル
+ *	@retval NULL  人物はいない
+ */
+//-----------------------------------------------------------------------------
+MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, u32 mapmode, HEAPID heapID )
+{
+  u32 count;
+  u32 num;
+  MMDL_HEADER* p_buff;
+  int i;
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  const FIELD_WFBC_CORE_PEOPLE* cp_people_array;
+  
+  GF_ASSERT( cp_wk );
+
+  heapID = GFL_HEAP_LOWID( heapID );
+
+  num = FIELD_WFBC_CORE_GetPeopleNum( cp_wk, mapmode );
+
+  if( num == 0 )
+  {
+    return NULL;
+  }
+
+  if( mapmode == MAPMODE_NORMAL )
+  {
+    cp_people_array = cp_wk->people;
+  }
+  else
+  {
+    cp_people_array = cp_wk->back_people;
+  }
+
+
+  p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(MMDL_HEADER) * num );
+
+  p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, heapID );
+  
+  count = 0;
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_people_array[i] ) )
+    {
+      // 人物として登録
+      p_buff[count] = sc_DEFAULT_HEADER;
+
+      FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] ) );
+      cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+      p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] );
+      p_buff[count].obj_code    = cp_people_data->objid;
+      p_buff[count].move_code   = MV_RND;
+      if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+        p_buff[count].event_id    = cp_people_data->script_wf;
+      }else{
+        p_buff[count].event_id    = cp_people_data->script_bc;
+      }
+
+      MMDLHEADER_SetGridPos( &p_buff[count], sc_WFBC_PEOPLE_POS[cp_wk->type][i].gx, sc_WFBC_PEOPLE_POS[cp_wk->type][i].gz, 0 );
+      
+
+      count ++;
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_people_loader );
+
+  return p_buff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物位置を取得する
+ *
+ *	@param	index   インデックス
+ *	@param  type    マップのタイプ
+ *	@param	p_buff  位置格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_GetPeoplePos( int index, FIELD_WFBC_CORE_TYPE type, FIELD_WFBC_CORE_PEOPLE_POS* p_buff )
+{
+  GF_ASSERT(p_buff);
+  GF_ASSERT( index < FIELD_WFBC_PEOPLE_MAX );
+  GF_ASSERT( type < FIELD_WFBC_CORE_TYPE_MAX );
+
+  *p_buff = sc_WFBC_PEOPLE_POS[type][index];
+}
+
 
 
 

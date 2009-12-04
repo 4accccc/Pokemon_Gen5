@@ -186,7 +186,7 @@ int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_B
 
     TOMOYA_Printf( "bmodel idx = %d\n", regist.resourceID );
     TOMOYA_Printf( "regist pos x=%d z=%d\n", FX_Whole( regist.xpos ), FX_Whole( regist.zpos ) );
-    FIELD_BMODEL_MAN_ResistAllMapObjects( p_bmodel, g3Dmap, &regist, count_start + i);
+    FIELD_BMODEL_MAN_ResistMapObject( p_bmodel, g3Dmap, &regist, count_start + i);
   }
 
   return count_start + cp_3dmd->count;

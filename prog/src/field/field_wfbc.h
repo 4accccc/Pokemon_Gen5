@@ -16,6 +16,10 @@
 extern "C"{
 #endif
 
+#include <gflib.h>
+
+#include "map/dp3format.h"
+
 #include "field_g3d_mapper.h"
 
 #include "field/field_wfbc_data.h"
@@ -24,6 +28,7 @@ extern "C"{
 #include "debug/debugwin_sys.h"
 
 #include "field_status_local.h"
+#include "field_buildmodel.h"
 
 #include "fldmmdl.h"
 
@@ -45,6 +50,15 @@ typedef enum
 
 } FIELD_WFBC_PEOPLE_STATUS;
 
+
+
+//-------------------------------------
+///	ブロック配置情報
+//=====================================
+#define FIELD_WFBC_BLOCK_SIZE_X     (8)
+#define FIELD_WFBC_BLOCK_SIZE_Z     (8)
+#define FIELD_WFBC_BLOCK_TO_GRID_X(x)  ((x) * 8)
+#define FIELD_WFBC_BLOCK_TO_GRID_Z(z)  ((z) * 8)
 
 //-----------------------------------------------------------------------------
 /**
@@ -87,13 +101,8 @@ extern FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk );
 // 動作タイプ
 extern MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk );
 
-// WFの高さ情報
-
-// BCの高さ情報
-
-// 人物情報
-// 戻り値は、GFL_HEAP_Freeをしてください。
-extern MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID );
+// ブロック配置情報
+extern int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, u32 score, HEAPID heapID );
 
 // イベントデータの書換え
 extern void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID );

@@ -388,8 +388,6 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork );
 
 static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
-static void zoneChange_SetMMdlZoneWFBC( GAMEDATA *gdata,
-		FIELDMAP_WORK* fieldWork, u32 zone_id );
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
@@ -2380,7 +2378,6 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK();
 	//新規ゾーンに配置する動作モデルセット
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
-  zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, new_zone_id );
 	
   SET_CHECK();
 	//BGM切り替え
@@ -2455,41 +2452,6 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
 		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count, evwork );
 	}
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  WFBC用の人配置
- */
-//-----------------------------------------------------------------------------
-static void zoneChange_SetMMdlZoneWFBC( GAMEDATA *gdata,
-		FIELDMAP_WORK* fieldWork, u32 zone_id )
-{
-  if( zone_id != ZONE_ID_BCWFTEST )
-  {
-    return ;
-  }
-  
-  {
-    FIELD_WFBC* p_wfbc;
-    MMDL_HEADER* p_header;
-    u32 count;
-    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
-    MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
-
-    p_wfbc    = FLDMAPPER_GetWfbcWork( fieldWork->g3Dmapper );
-    p_header  = FIELD_WFBC_MMDLHeaderCreateHeapLo( p_wfbc, fieldWork->heapID );
-    count     = FIELD_WFBC_GetPeopleNum( p_wfbc );
-    
-    if( p_header && (count > 0) )
-    {
-      TOMOYA_Printf( "WFBC MMDL SetUp\n" );
-		  MMDLSYS_SetMMdl( fmmdlsys, p_header, zone_id, count, evwork );
-
-
-      GFL_HEAP_FreeMemory( p_header );
-    }
-  }
 }
 
 //--------------------------------------------------------------
@@ -2621,14 +2583,23 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
   FIELD_WFBC_CORE* p_core;
   FIELD_WFBC* p_wfbc;
   EVENTDATA_SYSTEM* p_evdata;
+  FIELD_STATUS* p_fs =  GAMEDATA_GetFieldStatus( gdata );
+  MAPMODE mapmode = 0;
   
   if( ZONEDATA_IsWfbc( fieldWork->map_id ) )
   {
-    p_core = GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata );
     
     // WFBC街情報を設定
-    // @TODO　後々は、パレス接続先の人の街情報を設定する
-    FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, MAPMODE_NORMAL );
+    mapmode = FIELD_STATUS_GetMapMode( p_fs );
+    if( mapmode == MAPMODE_NORMAL )
+    {
+      p_core = GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata );
+    }
+    else
+    {
+      p_core = GAMEDATA_GetWFBCCoreData( fieldWork->gamedata, GAMEDATA_WFBC_ID_COMM );
+    }
+    FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, mapmode );
 
     // 
     p_wfbc = FLDMAPPER_GetWfbcWork( fieldWork->g3Dmapper );
@@ -2637,13 +2608,9 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     // イベントの設定
     FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, fieldWork->heapID );
     
-    // WFBCの人を配置
-    zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
-    
-
     // カメラのセットアップ
     {
-      u32 people_num = FIELD_WFBC_CORE_GetPeopleNum( p_core );
+      u32 people_num = FIELD_WFBC_CORE_GetPeopleNum( p_core, mapmode );
       u32 camera_type = 22;
       if( people_num >= 5 )
       {

@@ -18,6 +18,7 @@
 #include "arc/fieldmap/eventdata.naix"
 
 #include "field_wfbc.h"
+#include "land_data_patch.h"
 
 #include "eventdata_local.h"
 
@@ -28,95 +29,11 @@
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
-///	人物基本情報
-//=====================================
-static const MMDL_HEADER sc_DEFAULT_HEADER = 
-{
-	0,		///<識別ID
-	0,	  ///<表示するOBJコード
-	0,	  ///<動作コード
-	0,	  ///<イベントタイプ
-	0,	  ///<イベントフラグ
-	0,	  ///<イベントID
-	0,		///<指定方向
-	0,		///<指定パラメタ 0
-	0,		///<指定パラメタ 1
-	0,		///<指定パラメタ 2
-	0,		///<X方向移動制限
-	0,		///<Z方向移動制限
-};
-
-
-//-------------------------------------
-///	人物配置情報
-//=====================================
-typedef struct
-{
-  u16 gx;
-  u16 gz;
-} WFBC_PEOPLE_POS;
-static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FIELD_WFBC_PEOPLE_MAX ] = 
-{
-  // BLACK CITY
-  {
-    { 23,12 },
-    { 27,32 },
-    { 31,24 },
-    { 35,29 },
-    { 39,17 },
-    { 43,16 },
-    { 47,28 },
-    { 51,12 },
-    { 55,20 },
-    { 59,30 },
-
-    { 24,13 },
-    { 28,33 },
-    { 32,25 },
-    { 36,30 },
-    { 40,18 },
-    { 44,17 },
-    { 48,29 },
-    { 52,13 },
-    { 56,21 },
-    { 60,31 },
-  },
-  
-
-  // White Forest
-  {
-    { 23,12 },
-    { 27,32 },
-    { 31,24 },
-    { 35,29 },
-    { 39,17 },
-    { 43,16 },
-    { 47,28 },
-    { 51,12 },
-    { 55,20 },
-    { 59,30 },
-
-    { 24,13 },
-    { 28,33 },
-    { 32,25 },
-    { 36,30 },
-    { 40,18 },
-    { 44,17 },
-    { 48,29 },
-    { 52,13 },
-    { 56,21 },
-    { 60,31 },
-  },
-};
-
-
-//-------------------------------------
 ///	ブロック配置情報
 //=====================================
-#define FIELD_WFBC_BLOCK_SIZE_X     (8)
-#define FIELD_WFBC_BLOCK_SIZE_Z     (8)
 #define FIELD_WFBC_BLOCK_PATCH_MAX  (20)
 #define FIELD_WFBC_BLOCK_NONE  (0xff)
+
 static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] = 
 {
   NARC_field_wfbc_data_wb_wfbc_block_bc_block,
@@ -152,7 +69,7 @@ typedef struct
 typedef struct 
 {
   // 各グリッド位置のブロック情報
-  u8 block_data[FIELD_WFBC_BLOCK_SIZE_X][FIELD_WFBC_BLOCK_SIZE_Z];
+  u8 block_data[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X];
 
   // パッチ情報
   FIELD_WFBC_BLOCK_PATCH patch[]; 
@@ -235,7 +152,7 @@ static const FIELD_WFBC_PEOPLE* WFBC_GetConstPeople( const FIELD_WFBC* cp_wk, u3
 ///	FIELD_WFBC_PEOPLE
 //=====================================
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people );
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data );
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data );
 static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_CORE_PEOPLE* p_core );
 
 
@@ -355,58 +272,64 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  動作モデル情報を取得
+ *	@brief  配置ブロックの設定
  *
  *	@param	cp_wk     ワーク
- *	@param	heapID    ヒープID
+ *	@param  p_attr    アトリビュート
+ *	@param	p_bm      buildmodel
+ *	@param	g3Dmap    マップブロック管理
+ *	@param  build_count 配置モデルカウント
+ *	@param	block_x   ブロックｘインデックス
+ *	@param	block_z   ブロックｚインデックス
+ *	@param  score     ブロックスコア
+ *	@param	heapID    ヒープID 
  *
- *	@retval 動作モデルヘッダーテーブル
- *	@retval NULL  人物はいない
+ *	@retval build_count 追加後
  */
 //-----------------------------------------------------------------------------
-MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID )
+int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, u32 score, HEAPID heapID )
 {
-  u32 count;
-  u32 num;
-  MMDL_HEADER* p_buff;
-  int i;
+  u32 block_tag;
+  const FIELD_WFBC_BLOCK_PATCH* cp_patch_data;
+  FIELD_DATA_PATCH* p_patch;
+  u32 local_grid_x, local_grid_z;
+
+  block_tag = cp_wk->p_block->block_data[ block_z ][ block_x ];
   
-  GF_ASSERT( cp_wk );
-
-  num = WFBC_GetPeopleNum( cp_wk );
-
-  if( num == 0 )
+  if( block_tag != FIELD_WFBC_BLOCK_NONE )
   {
-    return NULL;
+    TOMOYA_Printf( "block_tag %d\n", block_tag );
+    TOMOYA_Printf( "block_x=%d  block_z=%d\n", block_x, block_z );
+    
+    GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
+
+    // g3Dmapローカルのグリッド座標を求める
+    local_grid_x = FIELD_WFBC_BLOCK_TO_GRID_X( block_x ) % 32;
+    local_grid_z = FIELD_WFBC_BLOCK_TO_GRID_Z( block_z ) % 32;
+    TOMOYA_Printf( "local_grid_x %d\n", local_grid_x );
+    TOMOYA_Printf( "local_grid_z %d\n", local_grid_z );
+
+    TOMOYA_Printf( "build_count %d\n", build_count );
+    
+    // 設定
+    cp_patch_data = &cp_wk->p_block->patch[ block_tag ];
+
+    // パッチ情報読み込み
+    p_patch = FIELD_DATA_PATCH_Create( cp_patch_data->patch[ score ], GFL_HEAP_LOWID(heapID) );
+
+    // アトリビュートのオーバーライト
+    FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, local_grid_x, local_grid_z );
+
+    // 配置上書き
+    build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+
+    // パッチ情報破棄
+    FIELD_DATA_PATCH_Delete( p_patch );
   }
 
-  p_buff = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(MMDL_HEADER) * num );
-  
-  count = 0;
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
-  {
-    if( cp_wk->p_people[i].status == FIELD_WFBC_PEOPLE_STATUS_NORMAL )
-    {
-      // 人物として登録
-      p_buff[count] = sc_DEFAULT_HEADER;
-
-      p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->p_people[i].people_local);
-      p_buff[count].obj_code    = cp_wk->p_people[i].people_data.objid;
-      p_buff[count].move_code   = MV_RND;
-      if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
-        p_buff[count].event_id    = cp_wk->p_people[i].people_data.script_wf;
-      }else{
-        p_buff[count].event_id    = cp_wk->p_people[i].people_data.script_bc;
-      }
-      
-      MMDLHEADER_SetGridPos( &p_buff[count], cp_wk->p_people[i].gx, cp_wk->p_people[i].gz, 0 );
-
-      count ++;
-    }
-  }
-
-  return p_buff;
+  return build_count;
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -479,6 +402,7 @@ void FIELD_WFBC_Clear( FIELD_WFBC* p_wk )
 void FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_core )
 {
   int index;
+  FIELD_WFBC_CORE_PEOPLE_POS pos;
 
   GF_ASSERT( p_wk );
   // 空いているワークを取得
@@ -488,7 +412,8 @@ void FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_co
   FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, cp_core->npc_id );
   
   // 人情報をセットアップ
-  WFBC_PEOPLE_SetUp( &p_wk->p_people[index], cp_core, &sc_WFBC_PEOPLE_POS[ p_wk->type ][ index ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
+  FIELD_WFBC_CORE_GetPeoplePos( index, p_wk->type, &pos );
+  WFBC_PEOPLE_SetUp( &p_wk->p_people[index], cp_core, &pos, FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
 
   // セーブデータに反映
   WFBC_UpdateCore( p_wk );
@@ -767,6 +692,7 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
 {
   int i;
   BOOL result;
+  FIELD_WFBC_CORE_PEOPLE_POS pos;
 
   GF_ASSERT( p_wk );
   GF_ASSERT( p_wk->p_people );
@@ -791,7 +717,8 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
       {
         // NPC情報読み込み
         FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->people[i].npc_id );
-        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
+        FIELD_WFBC_CORE_GetPeoplePos( i, p_wk->type, &pos );
+        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->people[i], &pos, FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
       }
     }
     else
@@ -800,7 +727,8 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
       {
         // NPC情報読み込み
         FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->back_people[i].npc_id );
-        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->back_people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
+        FIELD_WFBC_CORE_GetPeoplePos( i, p_wk->type, &pos );
+        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->back_people[i], &pos, FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
       }
     }
   }
@@ -973,7 +901,7 @@ static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people )
  *	@param  cp_data     データ
  */
 //-----------------------------------------------------------------------------
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data )
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data )
 {
   BOOL result;
   
@@ -1076,7 +1004,7 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 {
   FIELD_WFBC_CORE* p_wk = userWork;
-  u16 level = FIELD_WFBC_CORE_GetPeopleNum( p_wk );
+  u16 level = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_NORMAL );
   DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
 }
 
