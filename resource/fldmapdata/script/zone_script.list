@@ -1,29 +1,81 @@
 #自動生成ファイル zone_script.list 先頭
 SCRIPTFILES += \
-	t01.ev \
-	sp_t01.ev \
-	r01.ev \
-	sp_r01.ev \
-	t02.ev \
-	sp_t02.ev \
-	r02.ev \
-	sp_r02.ev \
+	bc10.ev \
+	sp_bc10.ev \
+	bc10pcr0101.ev \
+	sp_bc10pcr0101.ev \
+	bc10r0101.ev \
+	sp_bc10r0101.ev \
+	bc10r0201.ev \
+	sp_bc10r0201.ev \
+	bc10r0301.ev \
+	sp_bc10r0301.ev \
+	bc10r0401.ev \
+	sp_bc10r0401.ev \
+	bc10r0402.ev \
+	sp_bc10r0402.ev \
+	bc10r0403.ev \
+	sp_bc10r0403.ev \
+	bcwftest.ev \
+	sp_bcwftest.ev \
 	c01.ev \
 	sp_c01.ev \
-	d01.ev \
-	sp_d01.ev \
-	r03.ev \
-	sp_r03.ev \
+	c01gym0101.ev \
+	sp_c01gym0101.ev \
+	c01pc0101.ev \
+	sp_c01pc0101.ev \
+	c01r0101.ev \
+	sp_c01r0101.ev \
+	c01r0102.ev \
+	sp_c01r0102.ev \
+	c01r0201.ev \
+	sp_c01r0201.ev \
+	c01r0202.ev \
+	sp_c01r0202.ev \
+	c01r0301.ev \
+	sp_c01r0301.ev \
+	c01r0302.ev \
+	sp_c01r0302.ev \
+	c01r0401.ev \
+	sp_c01r0401.ev \
+	c01r0402.ev \
+	sp_c01r0402.ev \
+	c01r0501.ev \
+	sp_c01r0501.ev \
 	c02.ev \
 	sp_c02.ev \
-	d02.ev \
-	sp_d02.ev \
-	h01.ev \
-	sp_h01.ev \
-	h01p01.ev \
-	sp_h01p01.ev \
+	c02gym0101.ev \
+	sp_c02gym0101.ev \
+	c02gym0102.ev \
+	sp_c02gym0102.ev \
+	c02gym0201.ev \
+	sp_c02gym0201.ev \
+	c02gym0202.ev \
+	sp_c02gym0202.ev \
+	c02gym0203.ev \
+	sp_c02gym0203.ev \
+	c02pc0101.ev \
+	sp_c02pc0101.ev \
+	c02r0101.ev \
+	sp_c02r0101.ev \
+	c02r0201.ev \
+	sp_c02r0201.ev \
+	c02r0301.ev \
+	sp_c02r0301.ev \
+	c02r0401.ev \
+	sp_c02r0401.ev \
+	c02r0501.ev \
+	sp_c02r0501.ev \
+	c02r0601.ev \
+	sp_c02r0601.ev \
+	c02r0701.ev \
+	sp_c02r0701.ev \
 	c03.ev \
 	sp_c03.ev \
+	c03gym0101.ev \
+	sp_c03gym0101.ev \
+	c03p01.ev \
+	sp_c03p01.ev \
 	c03p02.ev \
 	sp_c03p02.ev \
 	c03p03.ev \
@@ -48,170 +100,20 @@ SCRIPTFILES += \
 	sp_c03p12.ev \
 	c03p13.ev \
 	sp_c03p13.ev \
-	t01r0101.ev \
-	sp_t01r0101.ev \
-	t01r0102.ev \
-	sp_t01r0102.ev \
-	t01r0201.ev \
-	sp_t01r0201.ev \
-	t01r0202.ev \
-	sp_t01r0202.ev \
-	t01r0301.ev \
-	sp_t01r0301.ev \
-	t01r0302.ev \
-	sp_t01r0302.ev \
-	t01r0401.ev \
-	sp_t01r0401.ev \
-	t02pc0101.ev \
-	sp_t02pc0101.ev \
-	t02r0101.ev \
-	sp_t02r0101.ev \
-	t02r0102.ev \
-	sp_t02r0102.ev \
-	t02r0201.ev \
-	sp_t02r0201.ev \
-	t02r0202.ev \
-	sp_t02r0202.ev \
-	t02r0301.ev \
-	sp_t02r0301.ev \
-	t02r0302.ev \
-	sp_t02r0302.ev \
-	t02r0401.ev \
-	sp_t02r0401.ev \
-	r02r0101.ev \
-	sp_r02r0101.ev \
-	palacetest.ev \
-	sp_palacetest.ev \
-	r04.ev \
-	sp_r04.ev \
-	c04.ev \
-	sp_c04.ev \
-	d03.ev \
-	sp_d03.ev \
-	r05.ev \
-	sp_r05.ev \
-	r16.ev \
-	sp_r16.ev \
-	h02.ev \
-	sp_h02.ev \
-	c05.ev \
-	sp_c05.ev \
-	r06.ev \
-	sp_r06.ev \
-	d05.ev \
-	sp_d05.ev \
-	r07.ev \
-	sp_r07.ev \
-	c06.ev \
-	sp_c06.ev \
-	r08.ev \
-	sp_r08.ev \
-	d06.ev \
-	sp_d06.ev \
-	d07.ev \
-	sp_d07.ev \
-	d08.ev \
-	sp_d08.ev \
-	c07.ev \
-	sp_c07.ev \
-	r09.ev \
-	sp_r09.ev \
-	h03.ev \
-	sp_h03.ev \
-	c08.ev \
-	sp_c08.ev \
-	r10.ev \
-	sp_r10.ev \
-	r11.ev \
-	sp_r11.ev \
-	r12.ev \
-	sp_r12.ev \
-	h04.ev \
-	sp_h04.ev \
-	t03.ev \
-	sp_t03.ev \
-	r13.ev \
-	sp_r13.ev \
-	r14.ev \
-	sp_r14.ev \
-	t04.ev \
-	sp_t04.ev \
-	r15.ev \
-	sp_r15.ev \
-	d10.ev \
-	sp_d10.ev \
-	d13.ev \
-	sp_d13.ev \
-	w17.ev \
-	sp_w17.ev \
-	r18.ev \
-	sp_r18.ev \
-	gt.ev \
-	sp_gt.ev \
-	d01r0101.ev \
-	sp_d01r0101.ev \
-	d01r0201.ev \
-	sp_d01r0201.ev \
-	d02r0101.ev \
-	sp_d02r0101.ev \
-	d04r0101.ev \
-	sp_d04r0101.ev \
-	d04r0201.ev \
-	sp_d04r0201.ev \
-	d04r0301.ev \
-	sp_d04r0301.ev \
-	d04r0401.ev \
-	sp_d04r0401.ev \
-	d04r0501.ev \
-	sp_d04r0501.ev \
-	d04r0601.ev \
-	sp_d04r0601.ev \
-	d06r0101.ev \
-	sp_d06r0101.ev \
-	d06r0201.ev \
-	sp_d06r0201.ev \
-	d06r0301.ev \
-	sp_d06r0301.ev \
-	bcwftest.ev \
-	sp_bcwftest.ev \
-	c01r0101.ev \
-	sp_c01r0101.ev \
-	c01r0102.ev \
-	sp_c01r0102.ev \
-	c01r0201.ev \
-	sp_c01r0201.ev \
-	c01r0202.ev \
-	sp_c01r0202.ev \
-	c01r0301.ev \
-	sp_c01r0301.ev \
-	c01r0302.ev \
-	sp_c01r0302.ev \
-	c01r0401.ev \
-	sp_c01r0401.ev \
-	c01r0402.ev \
-	sp_c01r0402.ev \
-	c01gym0101.ev \
-	sp_c01gym0101.ev \
-	c01pc0101.ev \
-	sp_c01pc0101.ev \
-	c01r0501.ev \
-	sp_c01r0501.ev \
-	c02r0101.ev \
-	sp_c02r0101.ev \
-	c02r0201.ev \
-	sp_c02r0201.ev \
-	c02r0301.ev \
-	sp_c02r0301.ev \
-	c02r0401.ev \
-	sp_c02r0401.ev \
-	c02r0501.ev \
-	sp_c02r0501.ev \
-	c02r0601.ev \
-	sp_c02r0601.ev \
-	c02gym0101.ev \
-	sp_c02gym0101.ev \
-	c02pc0101.ev \
-	sp_c02pc0101.ev \
+	c03p14.ev \
+	sp_c03p14.ev \
+	c03p15.ev \
+	sp_c03p15.ev \
+	c03p16.ev \
+	sp_c03p16.ev \
+	c03p17.ev \
+	sp_c03p17.ev \
+	c03p18.ev \
+	sp_c03p18.ev \
+	c03p19.ev \
+	sp_c03p19.ev \
+	c03pc0101.ev \
+	sp_c03pc0101.ev \
 	c03r0101.ev \
 	sp_c03r0101.ev \
 	c03r0201.ev \
@@ -222,40 +124,84 @@ SCRIPTFILES += \
 	sp_c03r0302.ev \
 	c03r0303.ev \
 	sp_c03r0303.ev \
-	c03pc0101.ev \
-	sp_c03pc0101.ev \
-	c03gym0101.ev \
-	sp_c03gym0101.ev \
-	d03r0101.ev \
-	sp_d03r0101.ev \
+	c03r0401.ev \
+	sp_c03r0401.ev \
+	c03r0402.ev \
+	sp_c03r0402.ev \
+	c03r0501.ev \
+	sp_c03r0501.ev \
+	c03r0502.ev \
+	sp_c03r0502.ev \
+	c03r0601.ev \
+	sp_c03r0601.ev \
+	c03r0701.ev \
+	sp_c03r0701.ev \
+	c03r0801.ev \
+	sp_c03r0801.ev \
+	c04.ev \
+	sp_c04.ev \
+	c04gym0101.ev \
+	sp_c04gym0101.ev \
+	c04p01.ev \
+	sp_c04p01.ev \
+	c04pc0101.ev \
+	sp_c04pc0101.ev \
 	c04r0101.ev \
 	sp_c04r0101.ev \
 	c04r0102.ev \
 	sp_c04r0102.ev \
+	c04r0103.ev \
+	sp_c04r0103.ev \
+	c04r0104.ev \
+	sp_c04r0104.ev \
+	c04r0105.ev \
+	sp_c04r0105.ev \
+	c04r0106.ev \
+	sp_c04r0106.ev \
+	c04r0107.ev \
+	sp_c04r0107.ev \
+	c04r0108.ev \
+	sp_c04r0108.ev \
+	c04r0109.ev \
+	sp_c04r0109.ev \
+	c04r0110.ev \
+	sp_c04r0110.ev \
+	c04r0111.ev \
+	sp_c04r0111.ev \
 	c04r0201.ev \
 	sp_c04r0201.ev \
+	c04r0202.ev \
+	sp_c04r0202.ev \
+	c04r0203.ev \
+	sp_c04r0203.ev \
 	c04r0301.ev \
 	sp_c04r0301.ev \
 	c04r0302.ev \
 	sp_c04r0302.ev \
+	c04r0303.ev \
+	sp_c04r0303.ev \
 	c04r0401.ev \
 	sp_c04r0401.ev \
 	c04r0501.ev \
 	sp_c04r0501.ev \
-	c04pc0101.ev \
-	sp_c04pc0101.ev \
-	c04gym0101.ev \
-	sp_c04gym0101.ev \
 	c04r0601.ev \
 	sp_c04r0601.ev \
 	c04r0701.ev \
 	sp_c04r0701.ev \
 	c04r0801.ev \
 	sp_c04r0801.ev \
-	d05r0101.ev \
-	sp_d05r0101.ev \
-	d05r0201.ev \
-	sp_d05r0201.ev \
+	c04r0901.ev \
+	sp_c04r0901.ev \
+	c04r1001.ev \
+	sp_c04r1001.ev \
+	c05.ev \
+	sp_c05.ev \
+	c05gym0101.ev \
+	sp_c05gym0101.ev \
+	c05gym0201.ev \
+	sp_c05gym0201.ev \
+	c05pc0101.ev \
+	sp_c05pc0101.ev \
 	c05r0101.ev \
 	sp_c05r0101.ev \
 	c05r0201.ev \
@@ -268,10 +214,16 @@ SCRIPTFILES += \
 	sp_c05r0501.ev \
 	c05r0601.ev \
 	sp_c05r0601.ev \
-	c05pc0101.ev \
-	sp_c05pc0101.ev \
-	c05gym0101.ev \
-	sp_c05gym0101.ev \
+	c05r0701.ev \
+	sp_c05r0701.ev \
+	c06.ev \
+	sp_c06.ev \
+	c06gym0101.ev \
+	sp_c06gym0101.ev \
+	c06gym0201.ev \
+	sp_c06gym0201.ev \
+	c06pc0101.ev \
+	sp_c06pc0101.ev \
 	c06r0101.ev \
 	sp_c06r0101.ev \
 	c06r0201.ev \
@@ -282,10 +234,12 @@ SCRIPTFILES += \
 	sp_c06r0401.ev \
 	c06r0501.ev \
 	sp_c06r0501.ev \
-	c06pc0101.ev \
-	sp_c06pc0101.ev \
-	c06gym0101.ev \
-	sp_c06gym0101.ev \
+	c07.ev \
+	sp_c07.ev \
+	c07gym0101.ev \
+	sp_c07gym0101.ev \
+	c07pc0101.ev \
+	sp_c07pc0101.ev \
 	c07r0101.ev \
 	sp_c07r0101.ev \
 	c07r0201.ev \
@@ -294,10 +248,14 @@ SCRIPTFILES += \
 	sp_c07r0301.ev \
 	c07r0401.ev \
 	sp_c07r0401.ev \
-	c07pc0101.ev \
-	sp_c07pc0101.ev \
-	c07gym0101.ev \
-	sp_c07gym0101.ev \
+	c08.ev \
+	sp_c08.ev \
+	c08gym0101.ev \
+	sp_c08gym0101.ev \
+	c08pc0101.ev \
+	sp_c08pc0101.ev \
+	c08pc0801.ev \
+	sp_c08pc0801.ev \
 	c08r0101.ev \
 	sp_c08r0101.ev \
 	c08r0102.ev \
@@ -314,10 +272,64 @@ SCRIPTFILES += \
 	sp_c08r0401.ev \
 	c08r0402.ev \
 	sp_c08r0402.ev \
-	c08gym0101.ev \
-	sp_c08gym0101.ev \
-	c08pc0801.ev \
-	sp_c08pc0801.ev \
+	c08r0501.ev \
+	sp_c08r0501.ev \
+	c08r0601.ev \
+	sp_c08r0601.ev \
+	c08r0701.ev \
+	sp_c08r0701.ev \
+	c09.ev \
+	sp_c09.ev \
+	c09p01.ev \
+	sp_c09p01.ev \
+	c09p02.ev \
+	sp_c09p02.ev \
+	c09r0101.ev \
+	sp_c09r0101.ev \
+	c09r0201.ev \
+	sp_c09r0201.ev \
+	c09r0301.ev \
+	sp_c09r0301.ev \
+	c09r0401.ev \
+	sp_c09r0401.ev \
+	c09r0501.ev \
+	sp_c09r0501.ev \
+	c09r0601.ev \
+	sp_c09r0601.ev \
+	c11.ev \
+	sp_c11.ev \
+	c11r0101.ev \
+	sp_c11r0101.ev \
+	closseum.ev \
+	sp_closseum.ev \
+	closseum02.ev \
+	sp_closseum02.ev \
+	d01.ev \
+	sp_d01.ev \
+	d01r0101.ev \
+	sp_d01r0101.ev \
+	d01r0201.ev \
+	sp_d01r0201.ev \
+	d02.ev \
+	sp_d02.ev \
+	d02r0101.ev \
+	sp_d02r0101.ev \
+	d03.ev \
+	sp_d03.ev \
+	d03r0101.ev \
+	sp_d03r0101.ev \
+	d04r0101.ev \
+	sp_d04r0101.ev \
+	d04r0201.ev \
+	sp_d04r0201.ev \
+	d04r0301.ev \
+	sp_d04r0301.ev \
+	d04r0401.ev \
+	sp_d04r0401.ev \
+	d04r0501.ev \
+	sp_d04r0501.ev \
+	d04r0601.ev \
+	sp_d04r0601.ev \
 	d04r0701.ev \
 	sp_d04r0701.ev \
 	d04r0801.ev \
@@ -372,46 +384,22 @@ SCRIPTFILES += \
 	sp_d04r3301.ev \
 	d04r3401.ev \
 	sp_d04r3401.ev \
-	c09.ev \
-	sp_c09.ev \
-	r08r0101.ev \
-	sp_r08r0101.ev \
-	r06r0101.ev \
-	sp_r06r0101.ev \
-	r04r0101.ev \
-	sp_r04r0101.ev \
-	r04r0201.ev \
-	sp_r04r0201.ev \
-	r04r0202.ev \
-	sp_r04r0202.ev \
-	union.ev \
-	sp_union.ev \
-	closseum.ev \
-	sp_closseum.ev \
-	closseum02.ev \
-	sp_closseum02.ev \
-	t03r0101.ev \
-	sp_t03r0101.ev \
-	t03r0201.ev \
-	sp_t03r0201.ev \
-	t03r0301.ev \
-	sp_t03r0301.ev \
-	t03r0401.ev \
-	sp_t03r0401.ev \
-	t03pc0101.ev \
-	sp_t03pc0101.ev \
-	t04r0101.ev \
-	sp_t04r0101.ev \
-	t05r0101.ev \
-	sp_t05r0101.ev \
-	t05r0201.ev \
-	sp_t05r0201.ev \
-	t05r0301.ev \
-	sp_t05r0301.ev \
-	d12.ev \
-	sp_d12.ev \
-	c11.ev \
-	sp_c11.ev \
+	d05.ev \
+	sp_d05.ev \
+	d05r0101.ev \
+	sp_d05r0101.ev \
+	d05r0201.ev \
+	sp_d05r0201.ev \
+	d06.ev \
+	sp_d06.ev \
+	d06r0101.ev \
+	sp_d06r0101.ev \
+	d06r0201.ev \
+	sp_d06r0201.ev \
+	d06r0301.ev \
+	sp_d06r0301.ev \
+	d07.ev \
+	sp_d07.ev \
 	d07r0101.ev \
 	sp_d07r0101.ev \
 	d07r0201.ev \
@@ -424,206 +412,12 @@ SCRIPTFILES += \
 	sp_d07r0501.ev \
 	d07r0601.ev \
 	sp_d07r0601.ev \
-	r03r0101.ev \
-	sp_r03r0101.ev \
-	r03r0201.ev \
-	sp_r03r0201.ev \
-	c02r0701.ev \
-	sp_c02r0701.ev \
-	c04r0303.ev \
-	sp_c04r0303.ev \
-	d10r0101.ev \
-	sp_d10r0101.ev \
 	d07r0701.ev \
 	sp_d07r0701.ev \
-	d11r0101.ev \
-	sp_d11r0101.ev \
-	d11r0201.ev \
-	sp_d11r0201.ev \
-	d11r0301.ev \
-	sp_d11r0301.ev \
-	r16r0101.ev \
-	sp_r16r0101.ev \
-	r15r0101.ev \
-	sp_r15r0101.ev \
-	r15r0201.ev \
-	sp_r15r0201.ev \
-	r14r0101.ev \
-	sp_r14r0101.ev \
-	r09r0101.ev \
-	sp_r09r0101.ev \
-	r09r0201.ev \
-	sp_r09r0201.ev \
-	c08pc0101.ev \
-	sp_c08pc0101.ev \
-	c08r0501.ev \
-	sp_c08r0501.ev \
-	c08r0601.ev \
-	sp_c08r0601.ev \
-	c08r0701.ev \
-	sp_c08r0701.ev \
-	r13r0101.ev \
-	sp_r13r0101.ev \
-	r13r0201.ev \
-	sp_r13r0201.ev \
-	d12r0101.ev \
-	sp_d12r0101.ev \
-	r11r0101.ev \
-	sp_r11r0101.ev \
-	r11r0201.ev \
-	sp_r11r0201.ev \
-	r12r0101.ev \
-	sp_r12r0101.ev \
-	r12r0201.ev \
-	sp_r12r0201.ev \
-	t04r0201.ev \
-	sp_t04r0201.ev \
-	t04r0301.ev \
-	sp_t04r0301.ev \
-	r03r0301.ev \
-	sp_r03r0301.ev \
-	r03r0302.ev \
-	sp_r03r0302.ev \
-	r03r0303.ev \
-	sp_r03r0303.ev \
-	d13r0101.ev \
-	sp_d13r0101.ev \
-	r18r0101.ev \
-	sp_r18r0101.ev \
-	r07r0101.ev \
-	sp_r07r0101.ev \
-	c04r0901.ev \
-	sp_c04r0901.ev \
-	c05r0701.ev \
-	sp_c05r0701.ev \
-	t04r0102.ev \
-	sp_t04r0102.ev \
-	c04r1001.ev \
-	sp_c04r1001.ev \
-	r06r0201.ev \
-	sp_r06r0201.ev \
-	r06r0202.ev \
-	sp_r06r0202.ev \
-	r06r0203.ev \
-	sp_r06r0203.ev \
-	r09r0301.ev \
-	sp_r09r0301.ev \
-	r09r0302.ev \
-	sp_r09r0302.ev \
-	r09r0303.ev \
-	sp_r09r0303.ev \
-	t05.ev \
-	sp_t05.ev \
-	c04p01.ev \
-	sp_c04p01.ev \
-	d09r0101.ev \
-	sp_d09r0101.ev \
-	d09r0201.ev \
-	sp_d09r0201.ev \
-	r10r0101.ev \
-	sp_r10r0101.ev \
-	c09p01.ev \
-	sp_c09p01.ev \
-	c09p02.ev \
-	sp_c09p02.ev \
-	c09r0101.ev \
-	sp_c09r0101.ev \
-	c09r0201.ev \
-	sp_c09r0201.ev \
-	n01r0101.ev \
-	sp_n01r0101.ev \
+	d08.ev \
+	sp_d08.ev \
 	d08r0101.ev \
 	sp_d08r0101.ev \
-	c04r0202.ev \
-	sp_c04r0202.ev \
-	palace01.ev \
-	sp_palace01.ev \
-	palace02.ev \
-	sp_palace02.ev \
-	c02gym0201.ev \
-	sp_c02gym0201.ev \
-	c02gym0202.ev \
-	sp_c02gym0202.ev \
-	c02gym0203.ev \
-	sp_c02gym0203.ev \
-	c09r0301.ev \
-	sp_c09r0301.ev \
-	c09r0401.ev \
-	sp_c09r0401.ev \
-	c09r0501.ev \
-	sp_c09r0501.ev \
-	c09r0601.ev \
-	sp_c09r0601.ev \
-	r08r0102.ev \
-	sp_r08r0102.ev \
-	r08r0201.ev \
-	sp_r08r0201.ev \
-	h01r0101.ev \
-	sp_h01r0101.ev \
-	h01r0201.ev \
-	sp_h01r0201.ev \
-	c03r0401.ev \
-	sp_c03r0401.ev \
-	c03r0402.ev \
-	sp_c03r0402.ev \
-	c03r0501.ev \
-	sp_c03r0501.ev \
-	c03r0502.ev \
-	sp_c03r0502.ev \
-	c03r0601.ev \
-	sp_c03r0601.ev \
-	r10r0201.ev \
-	sp_r10r0201.ev \
-	r10r0301.ev \
-	sp_r10r0301.ev \
-	r10r0401.ev \
-	sp_r10r0401.ev \
-	r10r0501.ev \
-	sp_r10r0501.ev \
-	r10r0601.ev \
-	sp_r10r0601.ev \
-	r10r0701.ev \
-	sp_r10r0701.ev \
-	r10r0801.ev \
-	sp_r10r0801.ev \
-	r10r0901.ev \
-	sp_r10r0901.ev \
-	d09r0301.ev \
-	sp_d09r0301.ev \
-	d09r0401.ev \
-	sp_d09r0401.ev \
-	d09r0501.ev \
-	sp_d09r0501.ev \
-	d09r0601.ev \
-	sp_d09r0601.ev \
-	d09r0701.ev \
-	sp_d09r0701.ev \
-	d09r0801.ev \
-	sp_d09r0801.ev \
-	d09r0901.ev \
-	sp_d09r0901.ev \
-	h05.ev \
-	sp_h05.ev \
-	c02gym0102.ev \
-	sp_c02gym0102.ev \
-	d09.ev \
-	sp_d09.ev \
-	plc04.ev \
-	sp_plc04.ev \
-	plc05.ev \
-	sp_plc05.ev \
-	plc06.ev \
-	sp_plc06.ev \
-	plc07.ev \
-	sp_plc07.ev \
-	plc08.ev \
-	sp_plc08.ev \
-	plt03.ev \
-	sp_plt03.ev \
-	plt04.ev \
-	sp_plt04.ev \
-	plc10.ev \
-	sp_plc10.ev \
 	d08r0201.ev \
 	sp_d08r0201.ev \
 	d08r0301.ev \
@@ -640,6 +434,102 @@ SCRIPTFILES += \
 	sp_d08r0801.ev \
 	d08r0901.ev \
 	sp_d08r0901.ev \
+	d08r1001.ev \
+	sp_d08r1001.ev \
+	d09.ev \
+	sp_d09.ev \
+	d09r0101.ev \
+	sp_d09r0101.ev \
+	d09r0201.ev \
+	sp_d09r0201.ev \
+	d09r0301.ev \
+	sp_d09r0301.ev \
+	d09r0401.ev \
+	sp_d09r0401.ev \
+	d09r0501.ev \
+	sp_d09r0501.ev \
+	d09r0601.ev \
+	sp_d09r0601.ev \
+	d09r0701.ev \
+	sp_d09r0701.ev \
+	d09r0801.ev \
+	sp_d09r0801.ev \
+	d09r0901.ev \
+	sp_d09r0901.ev \
+	d09r1001.ev \
+	sp_d09r1001.ev \
+	d09r1101.ev \
+	sp_d09r1101.ev \
+	d09r1201.ev \
+	sp_d09r1201.ev \
+	d09r1301.ev \
+	sp_d09r1301.ev \
+	d09r1401.ev \
+	sp_d09r1401.ev \
+	d09r1501.ev \
+	sp_d09r1501.ev \
+	d10.ev \
+	sp_d10.ev \
+	d10r0101.ev \
+	sp_d10r0101.ev \
+	d10r0201.ev \
+	sp_d10r0201.ev \
+	d10r0301.ev \
+	sp_d10r0301.ev \
+	d10r0401.ev \
+	sp_d10r0401.ev \
+	d10r0501.ev \
+	sp_d10r0501.ev \
+	d10r0601.ev \
+	sp_d10r0601.ev \
+	d11r0101.ev \
+	sp_d11r0101.ev \
+	d11r0201.ev \
+	sp_d11r0201.ev \
+	d11r0301.ev \
+	sp_d11r0301.ev \
+	d12.ev \
+	sp_d12.ev \
+	d12r0101.ev \
+	sp_d12r0101.ev \
+	d13.ev \
+	sp_d13.ev \
+	d13r0101.ev \
+	sp_d13r0101.ev \
+	gt.ev \
+	sp_gt.ev \
+	h01.ev \
+	sp_h01.ev \
+	h01p01.ev \
+	sp_h01p01.ev \
+	h01r0101.ev \
+	sp_h01r0101.ev \
+	h01r0201.ev \
+	sp_h01r0201.ev \
+	h02.ev \
+	sp_h02.ev \
+	h03.ev \
+	sp_h03.ev \
+	h04.ev \
+	sp_h04.ev \
+	h04r0101.ev \
+	sp_h04r0101.ev \
+	h04r0201.ev \
+	sp_h04r0201.ev \
+	h04r0301.ev \
+	sp_h04r0301.ev \
+	h04r0401.ev \
+	sp_h04r0401.ev \
+	h04r0501.ev \
+	sp_h04r0501.ev \
+	h04r0601.ev \
+	sp_h04r0601.ev \
+	h04r0701.ev \
+	sp_h04r0701.ev \
+	h05.ev \
+	sp_h05.ev \
+	n01r0101.ev \
+	sp_n01r0101.ev \
 	n01r0201.ev \
 	sp_n01r0201.ev \
 	n01r0202.ev \
@@ -668,6 +558,70 @@ SCRIPTFILES += \
 	sp_n01r0501.ev \
 	n01r0502.ev \
 	sp_n01r0502.ev \
+	palace01.ev \
+	sp_palace01.ev \
+	palace02.ev \
+	sp_palace02.ev \
+	palacetest.ev \
+	sp_palacetest.ev \
+	plc04.ev \
+	sp_plc04.ev \
+	plc05.ev \
+	sp_plc05.ev \
+	plc06.ev \
+	sp_plc06.ev \
+	plc07.ev \
+	sp_plc07.ev \
+	plc08.ev \
+	sp_plc08.ev \
+	plc10.ev \
+	sp_plc10.ev \
+	plt03.ev \
+	sp_plt03.ev \
+	plt04.ev \
+	sp_plt04.ev \
+	r01.ev \
+	sp_r01.ev \
+	r02.ev \
+	sp_r02.ev \
+	r02r0101.ev \
+	sp_r02r0101.ev \
+	r03.ev \
+	sp_r03.ev \
+	r03r0101.ev \
+	sp_r03r0101.ev \
+	r03r0201.ev \
+	sp_r03r0201.ev \
+	r03r0301.ev \
+	sp_r03r0301.ev \
+	r03r0302.ev \
+	sp_r03r0302.ev \
+	r03r0303.ev \
+	sp_r03r0303.ev \
+	r04.ev \
+	sp_r04.ev \
+	r04r0101.ev \
+	sp_r04r0101.ev \
+	r04r0201.ev \
+	sp_r04r0201.ev \
+	r04r0202.ev \
+	sp_r04r0202.ev \
+	r05.ev \
+	sp_r05.ev \
+	r06.ev \
+	sp_r06.ev \
+	r06r0101.ev \
+	sp_r06r0101.ev \
+	r06r0201.ev \
+	sp_r06r0201.ev \
+	r06r0202.ev \
+	sp_r06r0202.ev \
+	r06r0203.ev \
+	sp_r06r0203.ev \
+	r07.ev \
+	sp_r07.ev \
+	r07r0101.ev \
+	sp_r07r0101.ev \
 	r07r0102.ev \
 	sp_r07r0102.ev \
 	r07r0103.ev \
@@ -676,119 +630,169 @@ SCRIPTFILES += \
 	sp_r07r0104.ev \
 	r07r0105.ev \
 	sp_r07r0105.ev \
-	c05gym0201.ev \
-	sp_c05gym0201.ev \
-	c06gym0201.ev \
-	sp_c06gym0201.ev \
-	c04r0203.ev \
-	sp_c04r0203.ev \
-	c04r0103.ev \
-	sp_c04r0103.ev \
-	c04r0104.ev \
-	sp_c04r0104.ev \
-	c04r0105.ev \
-	sp_c04r0105.ev \
-	c04r0106.ev \
-	sp_c04r0106.ev \
-	c04r0107.ev \
-	sp_c04r0107.ev \
-	c04r0108.ev \
-	sp_c04r0108.ev \
-	c04r0109.ev \
-	sp_c04r0109.ev \
-	c04r0110.ev \
-	sp_c04r0110.ev \
-	c04r0111.ev \
-	sp_c04r0111.ev \
-	d09r1001.ev \
-	sp_d09r1001.ev \
-	d09r1101.ev \
-	sp_d09r1101.ev \
-	d09r1201.ev \
-	sp_d09r1201.ev \
-	d09r1301.ev \
-	sp_d09r1301.ev \
-	d09r1401.ev \
-	sp_d09r1401.ev \
-	d09r1501.ev \
-	sp_d09r1501.ev \
+	r08.ev \
+	sp_r08.ev \
+	r08r0101.ev \
+	sp_r08r0101.ev \
+	r08r0102.ev \
+	sp_r08r0102.ev \
+	r08r0201.ev \
+	sp_r08r0201.ev \
+	r09.ev \
+	sp_r09.ev \
+	r09r0101.ev \
+	sp_r09r0101.ev \
+	r09r0201.ev \
+	sp_r09r0201.ev \
 	r09r0202.ev \
 	sp_r09r0202.ev \
-	c03p01.ev \
-	sp_c03p01.ev \
-	c03p14.ev \
-	sp_c03p14.ev \
-	c03p15.ev \
-	sp_c03p15.ev \
-	c03p16.ev \
-	sp_c03p16.ev \
-	c03p17.ev \
-	sp_c03p17.ev \
-	c03p18.ev \
-	sp_c03p18.ev \
-	d10r0201.ev \
-	sp_d10r0201.ev \
-	d10r0301.ev \
-	sp_d10r0301.ev \
-	d10r0401.ev \
-	sp_d10r0401.ev \
-	d10r0501.ev \
-	sp_d10r0501.ev \
-	d10r0601.ev \
-	sp_d10r0601.ev \
+	r09r0301.ev \
+	sp_r09r0301.ev \
+	r09r0302.ev \
+	sp_r09r0302.ev \
+	r09r0303.ev \
+	sp_r09r0303.ev \
+	r10.ev \
+	sp_r10.ev \
+	r10r0101.ev \
+	sp_r10r0101.ev \
+	r10r0201.ev \
+	sp_r10r0201.ev \
+	r10r0301.ev \
+	sp_r10r0301.ev \
+	r10r0401.ev \
+	sp_r10r0401.ev \
+	r10r0501.ev \
+	sp_r10r0501.ev \
+	r10r0601.ev \
+	sp_r10r0601.ev \
+	r10r0701.ev \
+	sp_r10r0701.ev \
+	r10r0801.ev \
+	sp_r10r0801.ev \
+	r10r0901.ev \
+	sp_r10r0901.ev \
+	r11.ev \
+	sp_r11.ev \
+	r11r0101.ev \
+	sp_r11r0101.ev \
+	r11r0201.ev \
+	sp_r11r0201.ev \
+	r12.ev \
+	sp_r12.ev \
+	r12r0101.ev \
+	sp_r12r0101.ev \
+	r12r0201.ev \
+	sp_r12r0201.ev \
+	r13.ev \
+	sp_r13.ev \
+	r13r0101.ev \
+	sp_r13r0101.ev \
+	r13r0201.ev \
+	sp_r13r0201.ev \
+	r14.ev \
+	sp_r14.ev \
+	r14r0101.ev \
+	sp_r14r0101.ev \
 	r14r0201.ev \
 	sp_r14r0201.ev \
 	r14r0301.ev \
 	sp_r14r0301.ev \
+	r15.ev \
+	sp_r15.ev \
+	r15r0101.ev \
+	sp_r15r0101.ev \
+	r15r0201.ev \
+	sp_r15r0201.ev \
+	r16.ev \
+	sp_r16.ev \
+	r16r0101.ev \
+	sp_r16r0101.ev \
 	r16r0201.ev \
 	sp_r16r0201.ev \
 	r16r0301.ev \
 	sp_r16r0301.ev \
-	d08r1001.ev \
-	sp_d08r1001.ev \
-	c03r0701.ev \
-	sp_c03r0701.ev \
-	c03r0801.ev \
-	sp_c03r0801.ev \
-	c03p19.ev \
-	sp_c03p19.ev \
-	h04r0101.ev \
-	sp_h04r0101.ev \
-	h04r0201.ev \
-	sp_h04r0201.ev \
-	h04r0301.ev \
-	sp_h04r0301.ev \
-	h04r0401.ev \
-	sp_h04r0401.ev \
-	h04r0501.ev \
-	sp_h04r0501.ev \
-	h04r0601.ev \
-	sp_h04r0601.ev \
-	h04r0701.ev \
-	sp_h04r0701.ev \
-	bc10.ev \
-	sp_bc10.ev \
-	bc10r0101.ev \
-	sp_bc10r0101.ev \
-	bc10r0201.ev \
-	sp_bc10r0201.ev \
-	bc10r0301.ev \
-	sp_bc10r0301.ev \
-	bc10r0401.ev \
-	sp_bc10r0401.ev \
-	bc10r0402.ev \
-	sp_bc10r0402.ev \
-	bc10r0403.ev \
-	sp_bc10r0403.ev \
-	bc10pcr0101.ev \
-	sp_bc10pcr0101.ev \
+	r18.ev \
+	sp_r18.ev \
+	r18r0101.ev \
+	sp_r18r0101.ev \
+	t01.ev \
+	sp_t01.ev \
+	t01r0101.ev \
+	sp_t01r0101.ev \
+	t01r0102.ev \
+	sp_t01r0102.ev \
+	t01r0201.ev \
+	sp_t01r0201.ev \
+	t01r0202.ev \
+	sp_t01r0202.ev \
+	t01r0301.ev \
+	sp_t01r0301.ev \
+	t01r0302.ev \
+	sp_t01r0302.ev \
+	t01r0401.ev \
+	sp_t01r0401.ev \
+	t02.ev \
+	sp_t02.ev \
+	t02pc0101.ev \
+	sp_t02pc0101.ev \
+	t02r0101.ev \
+	sp_t02r0101.ev \
+	t02r0102.ev \
+	sp_t02r0102.ev \
+	t02r0201.ev \
+	sp_t02r0201.ev \
+	t02r0202.ev \
+	sp_t02r0202.ev \
+	t02r0301.ev \
+	sp_t02r0301.ev \
+	t02r0302.ev \
+	sp_t02r0302.ev \
+	t02r0401.ev \
+	sp_t02r0401.ev \
+	t03.ev \
+	sp_t03.ev \
+	t03pc0101.ev \
+	sp_t03pc0101.ev \
+	t03r0101.ev \
+	sp_t03r0101.ev \
+	t03r0201.ev \
+	sp_t03r0201.ev \
+	t03r0301.ev \
+	sp_t03r0301.ev \
+	t03r0401.ev \
+	sp_t03r0401.ev \
+	t04.ev \
+	sp_t04.ev \
+	t04r0101.ev \
+	sp_t04r0101.ev \
+	t04r0102.ev \
+	sp_t04r0102.ev \
+	t04r0201.ev \
+	sp_t04r0201.ev \
+	t04r0301.ev \
+	sp_t04r0301.ev \
+	t05.ev \
+	sp_t05.ev \
+	t05r0101.ev \
+	sp_t05r0101.ev \
+	t05r0201.ev \
+	sp_t05r0201.ev \
+	t05r0301.ev \
+	sp_t05r0301.ev \
+	union.ev \
+	sp_union.ev \
+	w17.ev \
+	sp_w17.ev \
 	wc10.ev \
 	sp_wc10.ev \
-	wc10r0101.ev \
-	sp_wc10r0101.ev \
 	wc10pcr0101.ev \
 	sp_wc10pcr0101.ev \
-	c11r0101.ev \
-	sp_c11r0101.ev \
+	wc10r0101.ev \
+	sp_wc10r0101.ev \
+	c03r0901.ev \
+	sp_c03r0901.ev \
+	c09p03.ev \
+	sp_c09p03.ev \
 
 #自動生成ファイル zone_script.list 末尾
