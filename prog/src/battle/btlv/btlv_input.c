@@ -55,6 +55,7 @@
 #define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
                                     /** @TODO ポケモンリストが正規になったらいらなくなる */
 
+#define STANDBY_PAL        ( 0x2002 )
 #define STANDBY_FADE        ( 12 )
 #define STANDBY_FADE_COLOR  ( 0x0842 )
 
@@ -971,7 +972,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     else
     {
@@ -991,7 +992,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 );
       }
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x2002, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
@@ -1269,7 +1270,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -1629,7 +1630,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -1677,7 +1678,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
