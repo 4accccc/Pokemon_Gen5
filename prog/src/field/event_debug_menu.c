@@ -167,6 +167,9 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
 
 
 //======================================================================
@@ -218,6 +221,9 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{	DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
+  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, 
+  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
+  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
 };
 
 
@@ -3645,5 +3651,47 @@ static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
 
   GMEVENT_ChangeEvent( parent, DEBUG_EVENT_FLDMENU_SeasonDispSelect( gsys, heap_id ) );
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  あなぬけのヒモ
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT*      parent = wk->gmEvent;
+  GAMESYS_WORK* gsys = wk->gmSys;
+
+  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByAnanukenohimo( gsys ) );
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  あなをほる
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT*      parent = wk->gmEvent;
+  GAMESYS_WORK* gsys = wk->gmSys;
+
+  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByAnawohoru( gsys ) );
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テレポート
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT*      parent = wk->gmEvent;
+  GAMESYS_WORK* gsys = wk->gmSys;
+
+  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByTeleport( gsys ) );
   return TRUE;
 }

@@ -360,8 +360,9 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
     { // タスクの終了待ち
       FIELD_TASK_MAN* man;
       man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )  // if(全タスク終了)
       {
+        PMSND_PlaySE( SEQ_SE_KAIDAN ); //「ザッザッザッ」
         ++( *seq );
       }
     }
@@ -380,6 +381,8 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
 //------------------------------------------------------------------------------------------
 /**
  * @brief 退場イベント処理関数( あなをほる )
+ *
+ * @todo 砂煙SEの再生
  */
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
@@ -423,8 +426,9 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
     { // タスクの終了待ち
       FIELD_TASK_MAN* man;
       man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )  // if(全タスク終了)
       {
+        PMSND_PlaySE( SEQ_SE_KAIDAN ); //「ザッザッザッ」
         ++( *seq );
       }
     }
