@@ -19,5 +19,16 @@
  * @return 移動床イベント
  */
 //---------------------------------------------------------------------------------------------
-GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent, 
-                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent, 
+                                           GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief 水流アトリビュート判定
+ *
+ * @param attrval アトリビュート
+ *
+ * @return 指定したアトリビュートが水流なら TRUE, そうでないなら FALSE
+ */
+//---------------------------------------------------------------------------------------------
+extern BOOL CheckAttributeIsCurrent( MAPATTR_VALUE attrval );

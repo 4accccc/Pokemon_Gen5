@@ -91,6 +91,7 @@
 #include "pleasure_boat.h"    //for PL_BOAT_
 
 #include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay
+#include "event_current.h" // for EVENT_PlayerMoveOnCurrent
 
 #include "field_status_local.h" //FIELD_STATUS_GetReservedScript
 
@@ -1283,6 +1284,10 @@ static GMEVENT * checkAttribute(EV_REQUEST * req, FIELDMAP_WORK *fieldWork )
   if( CheckAttributeIsAutoWay(attrval) )
   { // ˆÚ“®°
     return EVENT_PlayerMoveOnAutoWay( NULL, req->gsys, fieldWork );
+  }
+  else if( CheckAttributeIsCurrent(attrval) )
+  { // …—¬
+    return EVENT_PlayerMoveOnCurrent( NULL, req->gsys, fieldWork );
   }
   return NULL;
 }

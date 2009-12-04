@@ -51,10 +51,10 @@ typedef struct
 //---------------------------------------------------------------------------------------------
 static const CURRENT_DATA current[] = 
 {
-  {MATTR_CURRENT_LEFT,   AC_WALK_L_3F, DIR_LEFT},  //右水流・海
-  {MATTR_CURRENT_RIGHT,  AC_WALK_R_3F, DIR_RIGHT}, //左水流・海
-  {MATTR_CURRENT_UP,     AC_WALK_U_3F, DIR_UP},    //上水流・海
-  {MATTR_CURRENT_DOWN,   AC_WALK_D_3F, DIR_DOWN},  //下水流・海
+  {MATTR_CURRENT_LEFT,   AC_WALK_L_2F, DIR_LEFT},  //右水流・海
+  {MATTR_CURRENT_RIGHT,  AC_WALK_R_2F, DIR_RIGHT}, //左水流・海
+  {MATTR_CURRENT_UP,     AC_WALK_U_2F, DIR_UP},    //上水流・海
+  {MATTR_CURRENT_DOWN,   AC_WALK_D_2F, DIR_DOWN},  //下水流・海
 };
 
 //---------------------------------------------------------------------------------------------
@@ -269,6 +269,20 @@ GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent,
   return event;
 } 
 
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief 水流アトリビュート判定
+ *
+ * @param attrval アトリビュート
+ *
+ * @return 指定したアトリビュートが水流なら TRUE, そうでないなら FALSE
+ */
+//---------------------------------------------------------------------------------------------
+BOOL CheckAttributeIsCurrent( MAPATTR_VALUE attrval )
+{
+  return IsCurrent( attrval );
+}
+
 
 //=============================================================================================
 // ■非公開関数のプロトタイプ宣言
@@ -395,17 +409,26 @@ static void SplashCheck( EVENT_WORK* work )
 {
   if( work->rock )
   {
-    FLDEFF_TASK *task;
     FLDEFF_CTRL *fectrl;
+    FLDEFF_PROCID proc_id;
     NAMIPOKE_EFFECT_TYPE type;
-    FIELD_PLAYER_GRID *gjiki;
-    
-    fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
-    gjiki  = FIELDMAP_GetPlayerGrid( work->fieldmap );
-    type   = NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH;
-    task   = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
-    FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
-    FLDEFF_NAMIPOKE_EFFECT_SetEffect( fectrl, type, task );
+    VecFx32 pos;
+
+    fectrl  = FIELDMAP_GetFldEffCtrl( work->fieldmap );
+    proc_id = FLDEFF_PROCID_NAMIPOKE_EFFECT;
+
+    // エフェクト登録
+    if( FLDEFF_CTRL_CheckRegistEffect( fectrl, proc_id ) == FALSE )
+    {
+      FLDEFF_CTRL_RegistEffect( fectrl, &proc_id, 1 );
+    }
+    // エフェクトを表示
+    type = NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH;
+    FIELD_PLAYER_GetPos( work->player, &pos );
+    FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( fectrl, type, &pos );
+
+    // ジャンプ終了
+    work->rock = NULL;
   }
 }
 
