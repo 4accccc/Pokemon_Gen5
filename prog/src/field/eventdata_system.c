@@ -85,23 +85,6 @@ struct _EVDATA_SYS {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef struct {
-
-  u8 bg_count;
-  u8 npc_count;
-  u8 connect_count;
-  u8 pos_count;
-
-  u32 buf[];  ///<データ　TalkBG NPC CONNECT POS の順に格納
-
-}EVENTDATA_TABLE;
-
-typedef struct {
-  u16 zone_id;
-  const EVENTDATA_TABLE * table;
-}EVENTDATA_TOTAL_TABLES;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 
 #include "arc/fieldmap/zone_id.h"
 
@@ -204,6 +187,95 @@ void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
 void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
 {
   return &evdata->spscr_buffer;
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーから、BGTALKイベント取得
+ *
+ *	@param	cp_header   ヘッダー
+ *
+ *	@return ポインタ
+ */
+//-----------------------------------------------------------------------------
+const BG_TALK_DATA* EVENTDATA_SYS_HEADER_GetTalkBgEvent( const EVENTDATA_TABLE* cp_header )
+{
+  u32 addr;
+  
+  GF_ASSERT( cp_header );
+
+  addr = (u32)(&cp_header->buf[0]);
+  
+  return (const BG_TALK_DATA*)addr;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーから、MMDLイベント取得
+ *
+ *	@param	cp_header   ヘッダー
+ *
+ *	@return ポインタ
+ */
+//-----------------------------------------------------------------------------
+const MMDL_HEADER* EVENTDATA_SYS_HEADER_GetMmdlEvent( const EVENTDATA_TABLE* cp_header )
+{
+  u32 addr;
+  
+  GF_ASSERT( cp_header );
+
+  addr = (u32)(&cp_header->buf[0]);
+  addr += sizeof(BG_TALK_DATA) * cp_header->bg_count;
+  
+  return (const MMDL_HEADER*)addr;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーから、接続イベント取得
+ *
+ *	@param	cp_header   ヘッダー
+ *
+ *	@return ポインタ
+ */
+//-----------------------------------------------------------------------------
+const CONNECT_DATA* EVENTDATA_SYS_HEADER_GetConnectEvent( const EVENTDATA_TABLE* cp_header )
+{
+  u32 addr;
+  
+  GF_ASSERT( cp_header );
+
+  addr = (u32)(&cp_header->buf[0]);
+  addr += sizeof(BG_TALK_DATA) * cp_header->bg_count;
+  addr += sizeof(MMDL_HEADER) * cp_header->npc_count;
+  
+  return (const CONNECT_DATA*)addr;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーから、POSイベント取得
+ *
+ *	@param	cp_header   ヘッダー
+ *
+ *	@return ポインタ
+ */
+//-----------------------------------------------------------------------------
+const POS_EVENT_DATA* EVENTDATA_SYS_HEADER_GetPosEvent( const EVENTDATA_TABLE* cp_header )
+{
+  u32 addr;
+  
+  GF_ASSERT( cp_header );
+
+  addr = (u32)(&cp_header->buf[0]);
+  addr += sizeof(BG_TALK_DATA) * cp_header->bg_count;
+  addr += sizeof(MMDL_HEADER) * cp_header->npc_count;
+  addr += sizeof(CONNECT_DATA) * cp_header->connect_count;
+  
+  return (const POS_EVENT_DATA*)addr;
 }
 
 
@@ -322,6 +394,8 @@ u32 EVENTDATA_SYS_AddConnectEvent( EVENTDATA_SYSTEM * evdata, const CONNECT_DATA
   GF_ASSERT( evdata );
   GF_ASSERT( cp_data );
 
+  index = evdata->connect_count;
+
   if( evdata->connect_max > evdata->connect_count )
   {
     // 追加
@@ -334,8 +408,6 @@ u32 EVENTDATA_SYS_AddConnectEvent( EVENTDATA_SYSTEM * evdata, const CONNECT_DATA
     GF_ASSERT( 0 );
     return 0;
   }
-
-  index = evdata->connect_count;
 
   // 追加
   p_event = (CONNECT_DATA*)evdata->connect_data;
@@ -508,28 +580,28 @@ static void loadEventDataTableExact(EVENTDATA_SYSTEM * evdata, u16 zone_id, u16 
   ofs += 4;
 
   // それぞれのイベント数がオーバーしてないかチェック
-  GF_ASSERT( table->bg_count < bg_num );
-  GF_ASSERT( table->npc_count < mmdl_num );
-  GF_ASSERT( table->connect_count < connect_num );
-  GF_ASSERT( table->pos_count < pos_num );
+  GF_ASSERT( table->bg_count <= bg_num );
+  GF_ASSERT( table->npc_count <= mmdl_num );
+  GF_ASSERT( table->connect_count <= connect_num );
+  GF_ASSERT( table->pos_count <= pos_num );
 
   // BGイベント
   GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->bg_count * sizeof(BG_TALK_DATA), &buf[ofs]);
   evdata->bg_count = table->bg_count;
   evdata->bg_data = (const BG_TALK_DATA*)&buf[ofs];
-  ofs += sizeof(BG_TALK_DATA) * table->bg_count;
+  ofs += sizeof(BG_TALK_DATA) * bg_num;
 
   // MMDLイベント
   GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->npc_count * sizeof(MMDL_HEADER), &buf[ofs]);
   evdata->npc_count = table->npc_count;
   evdata->npc_data = (const MMDL_HEADER*)&buf[ofs];
-  ofs += sizeof(MMDL_HEADER) * table->npc_count;
+  ofs += sizeof(MMDL_HEADER) * mmdl_num;
 
   // CONNECTイベント
   GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->connect_count * sizeof(CONNECT_DATA), &buf[ofs]);
   evdata->connect_count = table->connect_count;
   evdata->connect_data = (const CONNECT_DATA*)&buf[ofs];
-  ofs += sizeof(CONNECT_DATA) * table->connect_count;
+  ofs += sizeof(CONNECT_DATA) * connect_num;
 
   // POSイベント
   GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->pos_count * sizeof(POS_EVENT_DATA), &buf[ofs]);
@@ -913,7 +985,7 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 //------------------------------------------------------------------
 /// 向きにあったPosCheckCodeを取得する
 //------------------------------------------------------------------
-u16 getPosCheckCode( u16 dir )
+static u16 getPosCheckCode( u16 dir )
 {
   switch (dir) {
   case DIR_UP:

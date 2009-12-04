@@ -76,16 +76,14 @@ typedef struct
 } FIELD_WFBC_BLOCK_DATA;
 
 
-#if 0
 //-------------------------------------
 ///	イベント起動情報
 //=====================================
 typedef struct 
 {
   // 条件
-  u32 if_para[];
+  u32 if_para;
 } FIELD_WFBC_EVENT_IF;
-#endif
 
 
 //-------------------------------------
@@ -343,18 +341,74 @@ int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIE
 void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID )
 {
   u16 bg_num, npc_num, connect_num, pos_num;
+  int i;
+  FIELD_WFBC_EVENT_IF* p_event_if;
+  int add_connect_num;
+  u32 load_size;
+  EVENTDATA_TABLE* p_eventdata;
+  const CONNECT_DATA* cp_connect;
+  static const u32 sc_EVIF[ FIELD_WFBC_CORE_TYPE_MAX ] = 
+  {
+    NARC_field_wfbc_data_bc_block_event_evp,
+    NARC_field_wfbc_data_wf_block_event_evp,
+  };
+  static const u32 sc_EVDATA[ FIELD_WFBC_CORE_TYPE_MAX ] = 
+  {
+    NARC_eventdata_bc_block_event_bin,
+    NARC_eventdata_wf_block_event_bin,
+  };
+  u32 score;
 
+  // 今の人の数
+  score = FIELD_WFBC_GetPeopleNum( cp_wk );
+  
+
+  // 今のイベント数
   bg_num      = EVENTDATA_GetBgEventNum(p_evdata);
   npc_num     = EVENTDATA_GetNpcEventNum(p_evdata);
   connect_num = EVENTDATA_GetConnectEventNum(p_evdata);
   pos_num     = EVENTDATA_GetPosEventNum(p_evdata);
 
-  bg_num      ++;
-  npc_num     ++;
-  connect_num ++;
-  pos_num     ++;
+  // 拡張イベント情報を取得
+  load_size = GFL_ARC_GetDataSizeByHandle( cp_wk->p_handle, sc_EVIF[ cp_wk->type ] );
+  p_event_if = GFL_ARC_LoadDataAllocByHandle( cp_wk->p_handle, sc_EVIF[ cp_wk->type ], GFL_HEAP_LOWID(heapID) );
+  p_eventdata = GFL_ARC_UTIL_Load( ARCID_FLD_EVENTDATA, sc_EVDATA[ cp_wk->type ], FALSE, GFL_HEAP_LOWID(heapID) );
   
+  // データサイズから、追加接続ポイントの数をチェック
+  add_connect_num = load_size / sizeof(FIELD_WFBC_EVENT_IF);
+  connect_num += add_connect_num;
+  
+  // 接続ポイントのエリアを増やしつつ再読み込み
   EVENTDATA_SYS_ReloadEventDataEx( p_evdata, bg_num, npc_num, connect_num, pos_num );
+
+  // 接続情報の追加処理
+  cp_connect = EVENTDATA_SYS_HEADER_GetConnectEvent( p_eventdata );
+  // 足しこむ
+  for( i=0; i<add_connect_num; i++ )
+  {
+    if(score > p_event_if[i].if_para)
+    {
+#ifdef PM_DEBUG
+      {
+        const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cp_connect[i].pos_buf;
+        TOMOYA_Printf( "link zone_id %d\n", cp_connect[i].link_zone_id );
+        TOMOYA_Printf( "link door_id %d\n", cp_connect[i].link_exit_id );
+        TOMOYA_Printf( "exit_dir %d\n", cp_connect[i].exit_dir );
+        TOMOYA_Printf( "exit_type %d\n", cp_connect[i].exit_type );
+        TOMOYA_Printf( "pos_x %d\n", cp_pos->x );
+        TOMOYA_Printf( "pos_z %d\n", cp_pos->z );
+        TOMOYA_Printf( "siz_x %d\n", cp_pos->sizex );
+        TOMOYA_Printf( "siz_z %d\n", cp_pos->sizez );
+      }
+#endif // PM_DEBUG
+      
+      // 追加
+      EVENTDATA_SYS_AddConnectEvent( p_evdata, &cp_connect[i] );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_event_if );
+  GFL_HEAP_FreeMemory( p_eventdata );
 }
 
 

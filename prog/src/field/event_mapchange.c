@@ -1249,7 +1249,9 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
     }
     else
     {
-      cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
+      // @TODO 最終的には、通信相手のデータに変更
+      //cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
+      cp_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
     }
     p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
 

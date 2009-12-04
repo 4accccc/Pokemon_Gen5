@@ -14,12 +14,16 @@
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-struct _EVENTDATA_HEADER {
-	u32 bg_count;
-	u32 obj_count;
-	u32 connect_count;
-	u32 pos_count;
-};
+typedef struct {
+
+  u8 bg_count;
+  u8 npc_count;
+  u8 connect_count;
+  u8 pos_count;
+
+  u32 buf[];  ///<データ　TalkBG NPC CONNECT POS の順に格納
+
+}EVENTDATA_TABLE;
 
 
 //------------------------------------------------------------------
@@ -124,6 +128,13 @@ struct _POS_EVENT_DATA{
 };
 
 
+//------------------------------------------------------------------
+//  各イベントデータの取得関数
+//------------------------------------------------------------------
+extern const BG_TALK_DATA* EVENTDATA_SYS_HEADER_GetTalkBgEvent( const EVENTDATA_TABLE* cp_header );
+extern const MMDL_HEADER* EVENTDATA_SYS_HEADER_GetMmdlEvent( const EVENTDATA_TABLE* cp_header );
+extern const CONNECT_DATA* EVENTDATA_SYS_HEADER_GetConnectEvent( const EVENTDATA_TABLE* cp_header );
+extern const POS_EVENT_DATA* EVENTDATA_SYS_HEADER_GetPosEvent( const EVENTDATA_TABLE* cp_header );
 
 //------------------------------------------------------------------
 //  イベントデータ　を　後から追加設定するための関数

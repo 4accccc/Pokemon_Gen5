@@ -54,7 +54,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--96 0 96
+-72 0 152
 #size
 1 1
 #Map Event List Data End

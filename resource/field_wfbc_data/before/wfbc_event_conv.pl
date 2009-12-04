@@ -168,8 +168,8 @@ for( $i=0; $i<2; $i++ )
       print( FILEOUT "#Pos Type\r\n" );
       print( FILEOUT "EVENTDATA_POSTYPE_GRID\r\n" );
       print( FILEOUT "#position\r\n" );
-      $pos_x = ($EVENT_DATA_BC[ $data_index + $PARA_GRID_X ] - 16) * 16;
-      $pos_z = -($EVENT_DATA_BC[ $data_index + $PARA_GRID_Z ] - 16) * 16;
+      $pos_x = ((($EVENT_DATA_BC[ $data_index + $PARA_GRID_X ] - 16) * 16) + 8);
+      $pos_z = -((($EVENT_DATA_BC[ $data_index + $PARA_GRID_Z ] - 16) * 16) + 8);
       print( FILEOUT $pos_x." 0 ".$pos_z."\r\n" );
       print( FILEOUT "#size\r\n" );
       $size_x = $EVENT_DATA_BC[ $data_index + $PARA_SIZE_X ];
