@@ -9,5 +9,8 @@
 #ifndef ZONE_D04R0601_EVC_H
 #define ZONE_D04R0601_EVC_H
 
+#define D04R0601_SAGE1_01                  0
+#define D04R0601_CHAMPION_01               1
+#define D04R0601_RIVAL_01                  2
 
 #endif //ZONE_D04R0601_EVC_H

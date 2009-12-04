@@ -11,5 +11,6 @@
 #ifndef ZONE_D04R0201_EVC_H
 #define ZONE_D04R0201_EVC_H
 
+#define D04R0201_BACKPACKERW_01            0
 
 #endif //ZONE_D04R0201_EVC_H

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0601.h"
-  //.include  "d04r0601.h"
+  .include  "d04r0601.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,9 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d04r0601
+_EVENT_DATA		ev_pos_d04r0601_event_01
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -30,9 +29,378 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		D04R0601　遺跡イベントPOS							  */
 /**************************************************************/
-ev_d04r0601:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_pos_d04r0601_event_01
 
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
+
+	//自機の位置取得
+	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+	
+	//X軸が4の場合
+	IF $LWK_HERO_X == 4 THEN
+	
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_4turearuki )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が5の場合
+	ELSIF $LWK_HERO_X == 5 THEN
+
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_5tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_5turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_5turearuki )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が6の場合
+	ELSIF $LWK_HERO_X == 6 THEN
+
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_6tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_6turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_6turearuki )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が7の場合
+	ELSIF $LWK_HERO_X == 7 THEN
+
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_7tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_7turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_7turearuki )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が8の場合
+	ELSIF $LWK_HERO_X == 8 THEN
+
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_8tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_8turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_8turearuki )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が9の場合
+	ELSE
+
+		//ライバル：自機に気付いて近づく
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_9tikaduku )
+		_OBJ_ANIME_WAIT()
+		
+		//……　こっちだ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
+		_BALLOONWIN_CLOSE()		
+		
+		//ライバル：自機を連れ歩き
+		_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_9turearuki )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_9turearuki )
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
+
+	//おそろいの　ようですね　わざわざ　こんなところまで
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_01w, msg_d04r0601_sage1_01b, D04R0601_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_CLOSE()
+		
+	//ゲーチス：一歩前へ
+	_OBJ_ANIME( D04R0601_SAGE1_01, anm_sage1_mae )
+	_OBJ_ANIME_WAIT()
+		
+	//イッシュの　でんせつは　ごぞんじ　なの　でしょう
+	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_02 , D04R0601_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//そのご　あらそいを　おさめた
+	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_01 , D04R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+		
+	//つごうの　いいことを　そもそも　ここに　あったのは
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_03w, msg_d04r0601_sage1_03b, D04R0601_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_CLOSE()
+		
+	//では　われわれを　あざける……　ただ　そのためだけに
+	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_02 , D04R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//まさか　しんせつですよ　しんせつ
+	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_04 , D04R0601_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ゲーチス：自機を押しのけて去る
+	_OBJ_ANIME( D04R0601_SAGE1_01, anm_sage1_saru )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_osareru )
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_ou )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲーチスOBJを消す
+	_OBJ_DEL( D04R0601_SAGE1_01 )
+
+	//３ｖｓ１だぜ　なんとか　ならないのかよ
+	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_02 , D04R0601_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンピオン：ライバルのほうを見る
+	_OBJ_ANIME( D04R0601_CHAMPION_01, anm_champion_miru )
+	_OBJ_ANIME_WAIT()
+
+	//きゃつは　つよい……　ストーンを　さがしていた
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_champion_03w, msg_d04r0601_champion_03b, D04R0601_CHAMPION_01, WIN_NONE )
+	_BALLOONWIN_CLOSE()
+	
+	//……じいさん　ここに　いても　なにもないんだろ
+	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_03 , D04R0601_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//……ああ　そうだな
+	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_04 , D04R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//画面暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+		
+	//========================================/
+	
+	//D04遺跡イベント終了
+	$WK_SCENE_D04R0601 = 1
+	
+	//D04遺跡イベントバニシュフラグ
+	_FLAG_SET( FV_D04R0601_EVENT_01 )
+
+	//D03R0101のイベント開始
+	$WK_SCENE_D03R0101 = 3
+
+	//D03R0101のバニシュフラグリセット
+	_FLAG_RESET( FV_D03R0101_RIVAL_02 )
+	_FLAG_RESET( FV_D03R0101_CHAMPION_01 )
+		
+	//========================================/
+
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：自機に近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_4tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_5tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_6tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_7tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_8tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_9tikaduku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：連れ歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_4turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_5turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_6turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_7turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_8turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_rival_9turearuki
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	自機：連れ歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_4turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_5turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_6turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_7turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_8turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_9turearuki
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ゲーチス：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_mae
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ゲーチス：自機を押しのけて去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_saru
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	自機：押される
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_osareru
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：追う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_ou
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チャンピオン：見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champion_miru
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0

@@ -75,7 +75,7 @@ _TALK_OBJ_START()
 		//============フラグワーク操作============//
 		
 		//サングラスのおいしいみずイベント終了
-		_FLAG_SET( FV_D03R0101_SUNGLASSES_01 )		
+		_FLAG_SET( FV_D03R0101_SUNGLASSES_01 )
 		
 		//========================================//
 		
@@ -108,6 +108,7 @@ EVENT_END
 /**************************************************************/
 /*		ＰＯＳプラズマ団イベント D03R0101イベントスクリプト	  */
 /**************************************************************/
+//WK_SCENE_D03R0101=1の時に起動します。
 EVENT_START		ev_pos_d03r0101_event_01
 
 	//ローカル変数を定義
@@ -121,34 +122,65 @@ EVENT_START		ev_pos_d03r0101_event_01
 	//自機位置座標取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
-	//X軸がならば
-	IF $LWK_HERO_X == 0 THEN
+	//X軸が82ならば
+	IF $LWK_HERO_X == 82 THEN
 	
 		//ライバル：自機に近づく
-		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_come )
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_82come )
 		_OBJ_ANIME_WAIT()
 		
 		//共通処理
 		_CALL d03r0101_rival_talk
 	
-	//X軸がならば
-	ELSIF $LWK_HERO_X == 1 THEN
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_82dush )
+		_OBJ_ANIME_WAIT()
 	
-	//X軸がならば
-	ELSIF $LWK_HERO_X == 2 THEN
+	//X軸が83ならば
+	ELSIF $LWK_HERO_X == 83 THEN
+
+		//ライバル：自機に近づく
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_83come )
+		_OBJ_ANIME_WAIT()
+		
+		//共通処理
+		_CALL d03r0101_rival_talk
 	
-	//X軸がならば
-	ELSIF $LWK_HERO_X == 3 THEN
-	
-	//X軸がならば
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_83dush )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が84ならば
 	ELSE
+
+		//ライバル：自機に近づく
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_84come )
+		_OBJ_ANIME_WAIT()
+		
+		//共通処理
+		_CALL d03r0101_rival_talk
 	
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_84dush )
+		_OBJ_ANIME_WAIT()
 	
 	ENDIF
 
 	//ライバルオブジェ消す
 	_OBJ_DEL( D03R0101_RIVAL_01 )
 
+	//========================================/
+	
+	//ライバルのバニシュフラグセット
+	_FLAG_SET( FV_D03R0101_RIVAL_01 )
+
+	//ライバルＰＯＳイベント終了
+	$WK_SCENE_D03R0101 = 2
+	
+	//サングラスＰＯＳイベント開始
+	$WK_SCENE_D04R0101 = 1
+	
+	//========================================/
 
 EVENT_END
 
@@ -170,22 +202,57 @@ d03r0101_rival_talk:
 _RET
 
 //--------------------------------------------------------------------
-//ライバル：気付く
+//		ライバル：気付く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_kiduku
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//ライバル：近づく
+//		ライバル：近づく
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_come
-	_ANIME_DATA	AC_STAY_WALK_U_8F,4
-	_ANIME_DATA	AC_WALK_U_4F,12
+_ANIME_LABEL	anm_rival_82come
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_83come
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_84come
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//		ライバル：遺跡へ走る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_82dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_U_2F,4
+	_ANIME_DATA	AC_WALK_L_4F,4
+	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_83dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_U_2F,4
+	_ANIME_DATA	AC_WALK_L_4F,5
+	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_84dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_U_2F,4
+	_ANIME_DATA	AC_WALK_L_4F,6
+	_ANIME_DATA	AC_WALK_U_4F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//ライバル：上を向く
+//		ライバル：上を向く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_up
 	_ANIME_DATA	AC_DIR_U,1
@@ -202,7 +269,11 @@ EVENT_END
 /**************************************************************/
 /*			ライバル・チャンピオン	シーンチェンジイベント	  */
 /**************************************************************/
+//WK_SCENE_D03R0101=3の時に起動します。
 EVENT_START		ev_scene_d03r0101_plasmaevent_01
+
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
 
 	//……はああ！　なんていうか　やるせねーな
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_03 , D03R0101_RIVAL_02 )
@@ -236,8 +307,20 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	//……オレ　もういちど　このなかを　さがす
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_05 , D03R0101_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
+
+	//========================================/
 	
+	//チャンピオンバニシュフラグセット
+	_FLAG_SET( FV_D03R0101_CHAMPION_01 )
+
+	//プラズマ団イベント終了
+	$WK_SCENE_D03R0101 = 4
+
+	//========================================/
+
 EVENT_END
+
+
 
 //--------------------------------------------------------------------
 //チャンピオン：そらをとぶ
