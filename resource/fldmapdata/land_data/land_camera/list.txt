@@ -242,3 +242,5 @@
 "market03.bin"
 "market04.bin"
 "market05.bin"
+"champ02.bin"
+"leagin03.bin"

@@ -306,6 +306,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/white02_09.3dppack \
 	$(DIR_OUTPUT)/white02_08.3dppack \
 	$(DIR_OUTPUT)/white03_09.3dppack \
+	$(DIR_OUTPUT)/leagin03_00_00.3dppack \
+	$(DIR_OUTPUT)/leagin03_00_01.3dppack \
+	$(DIR_OUTPUT)/leagin03_01_00.3dppack \
+	$(DIR_OUTPUT)/leagin03_01_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -656,6 +660,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0801_01_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0801_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0801_01_01.3dppack \
+	$(DIR_OUTPUT)/m_champ02_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

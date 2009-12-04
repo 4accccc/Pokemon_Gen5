@@ -254,7 +254,9 @@ enum {
 	NARC_map_matrix_market02_mat_bin = 240,
 	NARC_map_matrix_market03_mat_bin = 241,
 	NARC_map_matrix_market04_mat_bin = 242,
-	NARC_map_matrix_market05_mat_bin = 243
+	NARC_map_matrix_market05_mat_bin = 243,
+	NARC_map_matrix_champ02_mat_bin = 244,
+	NARC_map_matrix_leagin03_mat_bin = 245
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

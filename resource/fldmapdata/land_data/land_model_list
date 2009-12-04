@@ -306,6 +306,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/white02_09.nsbmd \
 	$(DIR_TEMP)/white02_08.nsbmd \
 	$(DIR_TEMP)/white03_09.nsbmd \
+	$(DIR_TEMP)/leagin03_00_00.nsbmd \
+	$(DIR_TEMP)/leagin03_00_01.nsbmd \
+	$(DIR_TEMP)/leagin03_01_00.nsbmd \
+	$(DIR_TEMP)/leagin03_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -656,6 +660,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gym0801_01_00.nsbmd \
 	$(DIR_TEMP)/m_gym0801_00_01.nsbmd \
 	$(DIR_TEMP)/m_gym0801_01_01.nsbmd \
+	$(DIR_TEMP)/m_champ02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
