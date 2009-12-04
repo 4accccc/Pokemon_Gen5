@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2009-12-03T22:02:33" source="d4shill01.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="121"
+	tool_start_frame="0"
+	tool_end_frame="120"
+	compress_material="on" material_size="4 4"
+/>
+
+<tex_pattern_list_data image_size="4" palette_size="4">
+	<image_name index="0" name="d4shill_b.1"/>
+	<image_name index="1" name="d4shill_b.2"/>
+	<image_name index="2" name="d4shill_b.3"/>
+	<image_name index="3" name="d4shill_b.4"/>
+	<palette_name index="0" name="d4shill_b.1_pl"/>
+	<palette_name index="1" name="d4shill_b.2_pl"/>
+	<palette_name index="2" name="d4shill_b.3_pl"/>
+	<palette_name index="3" name="d4shill_b.4_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="31">
+		0 4 8 12 16 20 24 28 32 36
+		40 44 48 52 0 41 45 49 53 57
+		61 65 69 73 77 81 85 89 93 97
+		101
+	</frame_idx>
+	<image_idx size="31">
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 3 3 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		3
+	</image_idx>
+	<palette_idx size="31">
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 3 3 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		3
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="s_up" data_size="14" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="s_down" data_size="17" data_head="14"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
