@@ -63,7 +63,7 @@ extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
 #endif
 
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
-
+extern void FIELDMAP_InitBGMode( void );
 //======================================================================
 //  画面フェード
 //======================================================================
@@ -542,9 +542,17 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
       int start, end;
       if ( wk->fade_io == FADE_IN )
       {
+        //フェードインのときはＢＧ初期化する
+        
         start = 16;
         end = 0;
-        //フェードインのときはＢＧ初期化する
+        
+        // BGモード設定と表示設定の復帰
+        {
+          int mv = GFL_DISP_GetMainVisible();
+          FIELDMAP_InitBGMode();
+          GFL_DISP_GX_SetVisibleControlDirect( mv );
+        }
         FIELDMAP_InitBG(wk->fieldmap);
       }
       else
