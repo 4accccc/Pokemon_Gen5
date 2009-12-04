@@ -318,6 +318,9 @@ static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
     GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
+
+		// サブ画面輝度復帰
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -2);
     ++ *seq;
     break;
 
@@ -328,29 +331,29 @@ static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
 		} else {
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
 
-			// サブ画面輝度復帰
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -8);
+			//VRAMクリア
+			GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+			MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_VRAM_D_SIZE);
+			(void)GX_DisableBankForLCDC();
+
+			// メインBGへの割り当て復帰(fieldmap.cと整合性をとること)
+			GX_SetBankForBG(GX_VRAM_LCDC_D);	
 			++ *seq;
 		}
 		break;
 
 	case 2:	// クロスフェードEND
-		//VRAMクリア
-		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-		MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_VRAM_D_SIZE);
-		(void)GX_DisableBankForLCDC();
-
-		// メインBGへの割り当て復帰(fieldmap.cと整合性をとること)
-		GX_SetBankForBG(GX_VRAM_LCDC_D);	
-
-		OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
-
+		//OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
     // BGモード設定と表示設定の復帰
     {
       int mv = GFL_DISP_GetMainVisible();
       FIELDMAP_InitBGMode();
       GFL_DISP_GX_SetVisibleControlDirect( mv );
     }
+		++ *seq;
+		break;
+
+	case 3:	// クロスフェードEND
 		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
 	} 
