@@ -21,7 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0201_startlift_01
 _EVENT_DATA    ev_scene_c05gym0201_gymback_01
-_EVENT_DATA    ev_c05gym0201_guide_01
+_EVENT_DATA    ev_c05gym0201_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA_END
 
@@ -90,11 +90,11 @@ EVENT_END
 /************************************************************/
 /*						ジムガイド							*/
 /************************************************************/
-EVENT_START	ev_c05gym0201_guide_01
+EVENT_START	ev_c05gym0201_sunglasses_01
 	_TALK_OBJ_START()
 
 	//バッジフラグ取得
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
 
 	//バッジフラグで分岐
 	IF $SCWK_TEMP0 == 0 THEN
@@ -110,7 +110,7 @@ EVENT_START	ev_c05gym0201_guide_01
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
-			_FLAG_SET( FE_C04GYM_ITEM )			//アイテム入手フラグをセット
+			_FLAG_SET( FE_C05GYM_ITEM )			//アイテム入手フラグをセット
 
 		ELSE
 			//入手済みならメッセージのみ

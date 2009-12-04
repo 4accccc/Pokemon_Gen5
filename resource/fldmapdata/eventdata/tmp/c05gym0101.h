@@ -21,15 +21,15 @@
 #define C05GYM0101_LIFT_02U               10
 #define C05GYM0101_LIFT_03D               11
 #define C05GYM0101_LIFT_03U               12
-#define TR_DUMMY_01                       13
-#define TR_DUMMY_02                       14
-#define C05GYM0101_WORKMAN_03             15
+#define TR_WORKER2_13                     13
+#define TR_OL_03                          14
+#define TR_BUSINESS1_04                   15
 #define C05GYM0101_STOPPER_01             16
-#define C05GYM0101_WORKMAN_04             17
+#define TR_WORKER2_14                     17
 #define C05GYM0101_EXITLIFT_00D           18
 #define C05GYM0101_EXITLIFT_00U           19
 #define C05GYM0101_DUMMY_00               20
 #define C05GYM0101_DUMMY_01               21
-#define C05GYM0101_WORKMAN_00             22
+#define TR_WORKER2_12                     22
 
 #endif //ZONE_C05GYM0101_EVC_H

@@ -50,21 +50,24 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//カメラ操作　ゲーヂス中心に
 	
-	//ゲーヂスの演説
+	//ゲーヂスの演説　
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
-	_BALLOONWIN_CLOSE()
 	
-	//群集反応
+	//群集反応	サブウィンドウ表示
+	_SUBWIN_MSG( msg_c08_crowd1_01 , 10 , 15 , 1 ) 
+	_TIME_WAIT( 30 )
+	_BALLOONWIN_CLOSE() //バルーン削除 即次へ
+	_SUBWIN_CLOSE( 1 )	
+	
 	/*
-	_SUBWIN_MSG( msg_c08_crowd1_01 , 10 , 10 , 1 )
-	_SUBWIN_MSG( msg_c08_crowd2_01 , 15 , 15 , 2 )
+	_SUBWIN_MSG( msg_c08_crowd2_01 , 5 , 5 , 2 )
 	_SUBWIN_CLOSE( 1 )
-	_SUBWIN_MSG( msg_c08_crowd3_01 , 20 , 20 , 3 )
+	_SUBWIN_MSG( msg_c08_crowd3_01 , 5 , 5 , 3 )
 	_SUBWIN_CLOSE( 2 )
 	_SUBWIN_CLOSE( 3 )
 	*/
 	
-	//ゲーヂスの演説
+	//ゲーヂスの演説その２
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
@@ -198,6 +201,7 @@ EVENT_START   ev_c08_gentleman_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c08_gentleman_01w , msg_c08_gentleman_01b , C08_GENTLEMAN_01 , WIN_NONE)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 
@@ -209,6 +213,7 @@ EVENT_START   ev_c08_fighterm_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c08_fighterm_01w , msg_c08_fighterm_01b , C08_FIGHTERM_01 , WIN_NONE)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 
@@ -220,6 +225,7 @@ EVENT_START   ev_c08_boy2_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c08_boy2_01w , msg_c08_boy2_01b , C08_BOY2_01 , WIN_NONE)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 
@@ -231,6 +237,7 @@ EVENT_START   ev_c08_woman1_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c08_woman1_01w , msg_c08_woman1_01b , C08_WOMAN1_01 , WIN_NONE)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 
@@ -242,5 +249,6 @@ EVENT_START   ev_c08_iss_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c08_iss_01w , msg_c08_iss_01b , C08_ISS_01 , WIN_NONE)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
