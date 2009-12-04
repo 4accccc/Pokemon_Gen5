@@ -100,9 +100,8 @@ static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys)
  * @retval  GMEVENT_RESULT		
  * 
  * 以下の処理を行います。
- * １．親にミッション番号リクエスト
- * ２．ミッション番号受信待ち
- * ３．ミッションメッセージ表示
+ * １．親にミッション選択候補リストをリクエスト
+ * ２．ミッション選択候補リスト受信待ち
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, void * work )
@@ -125,6 +124,10 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   switch( *seq ){
   case SEQ_INIT:
     MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
+    if(GFL_NET_GetConnectNum() <= 1){
+      OS_TPrintf("ミッションリスト：一人のため、受信はしない\n");
+      return GMEVENT_RES_FINISH;  //自分一人の時はこのままFINISH
+    }
     (*seq)++;
     //break;
   case SEQ_LIST_REQ:
@@ -133,7 +136,8 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     }
     break;
   case SEQ_LIST_RECEIVE_WAIT:
-    if(MISSION_MissionList_CheckOcc(&intcomm->mission, Intrude_GetPalaceArea(intcomm)) == TRUE){
+    if(MISSION_MissionList_CheckOcc(
+        &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
       return GMEVENT_RES_FINISH;
     }
     break;

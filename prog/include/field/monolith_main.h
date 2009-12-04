@@ -23,7 +23,8 @@ typedef struct{
   MISSION_DATA mdata;           ///<実行しているミッション
   
   u8 palace_area;
-  u8 padding[3];
+  u8 list_occ;                  ///<TRUE:ミッション一覧受信済み FALSE:未受信(通信相手が居ない)
+  u8 padding[2];
 }MONOLITH_PARENT_WORK;
 
 

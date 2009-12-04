@@ -688,15 +688,14 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
 /**
  * ミッション選択候補リストが有効かどうかチェック
  *
- * @param   mission		
- * @param   palace_area		
+ * @param   list		
  *
  * @retval  BOOL		TRUE:有効　FALSE:無効
  */
 //==================================================================
-BOOL MISSION_MissionList_CheckOcc(MISSION_SYSTEM *mission, int palace_area)
+BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list)
 {
-  if(mission->list[palace_area].accept_netid != INTRUDE_NETID_NULL){
+  if(list->accept_netid != INTRUDE_NETID_NULL){
     return TRUE;
   }
   return FALSE;

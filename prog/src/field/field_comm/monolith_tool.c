@@ -113,9 +113,12 @@ static const BMPOAM_ACT_DATA BmpOamHead_Str = {
  * @param   size		    パネルサイズ
  * @param   y		        Y座標(中心)
  * @param   msg_id      メッセージID
+ * @param   wordset       WORDSETが不必要な場合はNULL指定
+ * 
+ * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
  */
 //==================================================================
-void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id)
+void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset)
 {
   CLSYS_DEFREND_TYPE defrend_type;
   GFL_CLWK_DATA head = ActHead_Panel;
@@ -155,7 +158,15 @@ void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_
   
   //文字描画
   strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_id );
-  PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle );
+  if(wordset != NULL){
+    STRBUF *expand_str = GFL_STR_CreateBuffer(128, HEAPID_MONOLITH);
+    WORDSET_ExpandStr( wordset, expand_str, strbuf );
+    PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, expand_str, setup->font_handle );
+    GFL_STR_DeleteBuffer(expand_str);
+  }
+  else{
+    PRINTSYS_PrintQue( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle );
+  }
   GFL_STR_DeleteBuffer(strbuf);
   
   //内部フラグセット

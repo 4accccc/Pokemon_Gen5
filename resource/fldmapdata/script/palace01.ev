@@ -45,7 +45,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START	ev_recover_palace01
   //連結マップセッティング
-  _INTRUDE_CONNECT_MAP_SETTING()
+//  _INTRUDE_CONNECT_MAP_SETTING()
 INIT_EVENT_END
 
 /**************************************************************/
@@ -62,13 +62,13 @@ EVENT_START ev_palace01_monolith
   //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
   _INTRUDE_MISSION_CHOICE_LIST_REQ()
   
-  _BLACK_OUT()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
 
   _CALL_MONOLITH_PROC()
 
   _FIELD_OPEN()
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 EVENT_END

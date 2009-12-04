@@ -70,7 +70,7 @@ typedef struct{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id);
+extern void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset);
 extern void MonolithTool_Panel_Delete(PANEL_ACTOR *panel);
 extern BOOL MonolithTool_Panel_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel);
 

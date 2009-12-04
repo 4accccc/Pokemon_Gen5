@@ -12,15 +12,23 @@
 #include "monolith_common.h"
 #include "arc_def.h"
 #include "monolith_tool.h"
+#include "intrude_mission.h"
 #include "msg/msg_monolith.h"
-#include "system/wipe.h"
 
 
 //==============================================================================
 //  定数定義
 //==============================================================================
 ///パネル数
-#define TITLE_PANEL_MAX     (5)
+enum{
+  TITLE_PANEL_MISSION,
+  TITLE_PANEL_STATUS,
+  TITLE_PANEL_RECORD,
+  TITLE_PANEL_POWER,
+  TITLE_PANEL_CANCEL,
+  
+  TITLE_PANEL_MAX,
+};
 
 //==============================================================================
 //  構造体定義
@@ -74,7 +82,7 @@ static const u32 TitlePanelTblY[] = {
   TITLE_PANEL_Y_CANCEL,
 };
 
-///パネルタッチデータ
+///パネルタッチデータ   ※TITLE_PANEL_MISSION等と並びを同じにしておくこと！
 static const GFL_UI_TP_HITTBL TitlePanelRect[] = {
   {//TITLE_PANEL_Y_MISSION
     TITLE_PANEL_Y_MISSION - PANEL_CHARSIZE_Y/2*8,
@@ -137,11 +145,6 @@ static GFL_PROC_RESULT MonolithTitleProc_Init(GFL_PROC * proc, int * seq, void *
   GFL_STD_MemClear(mtw, sizeof(MONOLITH_TITLE_WORK));
   
   _Title_PanelCreate(appwk, mtw);
-
-  if(GXS_GetMasterBrightness() != 0){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, 
-      WIPE_DEF_DIV, WIPE_DEF_SYNC, GFL_HEAP_LOWID(HEAPID_MONOLITH));
-  }
   
   return GFL_PROC_RES_FINISH;
 }
@@ -185,7 +188,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
         (*seq)++;
       }
       else if(trg & PAD_BUTTON_CANCEL){
-        mtw->cursor_pos = MONOLITH_MENU_END;
+        mtw->cursor_pos = TITLE_PANEL_CANCEL;
         (*seq)++;
       }
       else if(repeat & PAD_KEY_DOWN){
@@ -207,6 +210,11 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     }
     break;
   case 1:
+    if(mtw->cursor_pos == TITLE_PANEL_MISSION && appwk->parent->list_occ == FALSE){
+      OS_TPrintf("ミッション選択候補リストが未受信\n");
+      (*seq)--;
+      break;
+    }
     MonolithTool_Panel_Flash(appwk, mtw->panel, TITLE_PANEL_MAX, mtw->cursor_pos, FADE_SUB_OBJ);
     (*seq)++;
     break;
@@ -262,7 +270,8 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   
   for(i = 0; i < TITLE_PANEL_MAX; i++){
     MonolithTool_Panel_Create(appwk->setup, &mtw->panel[i], 
-      COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, TitlePanelTblY[i], msg_mono_title_001 + i);
+      COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, TitlePanelTblY[i], msg_mono_title_001 + i,
+      NULL);
   }
   
   MonolithTool_Panel_Focus(appwk, mtw->panel, TITLE_PANEL_MAX, 0, FADE_SUB_OBJ);

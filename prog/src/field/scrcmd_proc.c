@@ -44,6 +44,7 @@
 #include "field_comm\intrude_main.h"
 #include "field/field_comm/intrude_work.h"
 #include "field/monolith_main.h"
+#include "field\field_comm\intrude_mission.h"
 
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
@@ -290,16 +291,20 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   
   parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
 
-  if(intcomm != NULL){
+  if(intcomm != NULL 
+      && MISSION_MissionList_CheckOcc(
+      &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
     palace_area = Intrude_GetPalaceArea(intcomm);
     list = Intrude_GetChoiceList(intcomm, palace_area);
     mdata = Intrude_GetExecuteMissionData(intcomm);
     parent->list = *list;
     parent->mdata = *mdata;
+    parent->list_occ = TRUE;
   }
   else{
     OS_TPrintf("MonolithProc Call intcomm NULL!!\n");
     palace_area = 0;
+    parent->list_occ = FALSE;
   }
 
   parent->gsys = gsys;

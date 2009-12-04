@@ -15,6 +15,7 @@
 #include "msg/msg_monolith.h"
 #include "mission_types.h"
 #include "intrude_mission.h"
+#include "intrude_work.h"
 
 #include "monolith.naix"
 
@@ -48,7 +49,7 @@ enum{
   BMPWIN_POS_POWER_BALANCE_X = 4,
   BMPWIN_POS_POWER_BALANCE_Y = BMPWIN_POS_NICKNAME_Y + 4,
   BMPWIN_POS_POWER_BALANCE_SIZE_X = 32 - BMPWIN_POS_POWER_BALANCE_X,
-  BMPWIN_POS_POWER_BALANCE_SIZE_Y = 5,
+  BMPWIN_POS_POWER_BALANCE_SIZE_Y = 4,
   
   BMPWIN_POS_USE_POWER_X = BMPWIN_POS_POWER_BALANCE_X,
   BMPWIN_POS_USE_POWER_Y = 15,
@@ -68,8 +69,8 @@ enum{
 typedef struct{
   GFL_BMPWIN *bmpwin[BMPWIN_MAX];
   PRINT_UTIL print_util[BMPWIN_MAX];
-  u8 view_town;                         ///<ミッション説明を表示中の街番号
-  u8 padding[3];
+  PANEL_ACTOR panel_title;
+  GFL_CLWK *act_cancel;
 }MONOLITH_STATUS_WORK;
 
 
@@ -87,7 +88,12 @@ static void _Setup_BGFrameExit(void);
 static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw);
 static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw);
-static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw, int select_town);
+static void _Setup_TitlePanel_Create(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw);
+static void _Setup_TitlePanel_Delete(MONOLITH_STATUS_WORK *msw);
+static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw);
+static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw);
+static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw);
+static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw);
 
 
 //==============================================================================
@@ -100,16 +106,15 @@ const GFL_PROC_DATA MonolithAppProc_Down_Status = {
   MonolithStatusProc_End,
 };
 
-///街番号からミッションタイプを取得するテーブル
-static const u32 TownNo_to_Type[] = {
-  MISSION_TYPE_PERSONALITY, ///<性格
-  MISSION_TYPE_VICTORY,     ///<勝利(LV)
-  MISSION_TYPE_OCCUR,       ///<発生(エンカウント)
-  MISSION_TYPE_SKILL,       ///<技
-  MISSION_TYPE_SIZE,        ///<大きさ
-  MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_ITEM,        ///<道具
-  MISSION_TYPE_ATTRIBUTE,   ///<属性
+///タッチ範囲テーブル
+static const GFL_UI_TP_HITTBL StatusTouchRect[] = {
+  {
+    CANCEL_POS_Y - CANCEL_TOUCH_RANGE_HALF,
+    CANCEL_POS_Y + CANCEL_TOUCH_RANGE_HALF,
+    CANCEL_POS_X - CANCEL_TOUCH_RANGE_HALF,
+    CANCEL_POS_X + CANCEL_TOUCH_RANGE_HALF,
+  },
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
 
@@ -142,8 +147,12 @@ static GFL_PROC_RESULT MonolithStatusProc_Init(GFL_PROC * proc, int * seq, void 
   _Setup_BGFrameSetting();
   _Setup_BGGraphicLoad(appwk->setup);
   _Setup_BmpWin_Create(appwk->setup, msw);
+  //OBJ
+  _Setup_TitlePanel_Create(appwk, msw);
+  _Status_CancelIconCreate(appwk, msw);
   
-  msw->view_town = 0xff;  //初回の描画を通す為に存在しない街番号を設定
+  //メッセージ描画
+  _Write_Status(appwk, appwk->setup, msw);
   
   return GFL_PROC_RES_FINISH;
 }
@@ -164,27 +173,32 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
 	MONOLITH_STATUS_WORK *msw = mywk;
   int tp_ret;
   int i;
-  int print_finish_count = 0;
 
   if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
   
   for(i = 0; i < BMPWIN_MAX; i++){
-    if(PRINT_UTIL_Trans(&msw->print_util[i], appwk->setup->printQue) == TRUE){
-      print_finish_count++;
-    }
+    PRINT_UTIL_Trans(&msw->print_util[i], appwk->setup->printQue);
   }
-  if(print_finish_count == BMPWIN_MAX){
-    if(msw->view_town != appwk->common->mission_select_town){
-      _Write_Status(appwk, appwk->setup, msw, appwk->common->mission_select_town);
-      msw->view_town = appwk->common->mission_select_town;
-    }
-  }
+  MonolithTool_Panel_TransUpdate(appwk->setup, &msw->panel_title);
+  _Status_CancelIconUpdate(msw);
   
   switch(*seq){
   case 0:
-    return GFL_PROC_RES_CONTINUE;
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int tp_ret = GFL_UI_TP_HitTrg(StatusTouchRect);
+
+      if(tp_ret != GFL_UI_TP_HIT_NONE || (trg & PAD_BUTTON_CANCEL)){
+        OS_TPrintf("キャンセル選択\n");
+        (*seq)++;
+      }
+    }
+    break;
+  case 1:
+    appwk->next_menu_index = MONOLITH_MENU_END;
+    return GFL_PROC_RES_FINISH;
   }
   
   return GFL_PROC_RES_CONTINUE;
@@ -204,6 +218,10 @@ static GFL_PROC_RESULT MonolithStatusProc_End( GFL_PROC * proc, int * seq, void 
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_STATUS_WORK *msw = mywk;
+  
+  //OBJ
+  _Status_CancelIconDelete(msw);
+  _Setup_TitlePanel_Delete(msw);
   
   //BG
   _Setup_BmpWin_Exit(msw);
@@ -339,6 +357,42 @@ static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw)
 
 //--------------------------------------------------------------
 /**
+ * タイトルパネル作成
+ *
+ * @param   appwk		
+ * @param   msw		
+ */
+//--------------------------------------------------------------
+static void _Setup_TitlePanel_Create(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw)
+{
+  MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
+
+  STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
+
+	GFL_STR_SetStringCodeOrderLength(
+	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
+  WORDSET_RegisterWord(appwk->setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
+
+  GFL_STR_DeleteBuffer(strbuf);
+
+  MonolithTool_Panel_Create(appwk->setup, &msw->panel_title, 
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 12, msg_mono_title_000, appwk->setup->wordset);
+}
+
+//--------------------------------------------------------------
+/**
+ * タイトルパネル削除
+ *
+ * @param   msw		
+ */
+//--------------------------------------------------------------
+static void _Setup_TitlePanel_Delete(MONOLITH_STATUS_WORK *msw)
+{
+  MonolithTool_Panel_Delete(&msw->panel_title);
+}
+
+//--------------------------------------------------------------
+/**
  * ミッション説明描画
  *
  * @param   appwk		
@@ -347,34 +401,103 @@ static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw)
  * @param   select_town		
  */
 //--------------------------------------------------------------
-static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw, int select_town)
+static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw)
 {
-  STRBUF *str_type, *str_explain, *expand_explain;
-  u32 explain_msgid;
-  const MISSION_DATA *mdata;
+  STRBUF *strbuf, *expand_strbuf;
+  const OCCUPY_INFO *occupy;
   
-  expand_explain = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
+  occupy = Intrude_GetOccupyInfo(appwk->parent->intcomm, appwk->parent->palace_area);
+  
+  strbuf = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
+  expand_strbuf = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
 
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(msw->bmpwin[BMPWIN_TYPE]), 0x0000);
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(msw->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
-
-  mdata = &appwk->parent->list.md[TownNo_to_Type[select_town]];
-  explain_msgid = mdata->cdata.msg_id_contents_monolith;
+  //モノリスレベル
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_000, strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, occupy->intrude_level + 1, 3, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT); // level + 1 = 表示を1origin化
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_LEVEL], setup->printQue, 
+    0, 0, expand_strbuf, setup->font_handle);
   
-  str_type = GFL_MSG_CreateString(setup->mm_monolith, 
-    msg_mono_mistype_000 + TownNo_to_Type[select_town]);
-  str_explain = GFL_MSG_CreateString(setup->mm_mission_mono, explain_msgid);
+  //通称
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_001, strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_NICKNAME], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
   
-  MISSIONDATA_Wordset(appwk->parent->intcomm, mdata, setup->wordset, HEAPID_MONOLITH);
-  WORDSET_ExpandStr(setup->wordset, expand_explain, str_explain );
-
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TYPE], setup->printQue, 
-    0, 4, str_type, setup->font_handle);
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-    0, 0, expand_explain, setup->font_handle);
+  //パワーバランス
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_002, strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_POWER_BALANCE], setup->printQue, 
+    0, 8, strbuf, setup->font_handle);
+  //パワーバランス：WHITE
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_003, strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, 560, 4, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_POWER_BALANCE], setup->printQue, 
+    14*8, 0, expand_strbuf, setup->font_handle);
+  //パワーバランス：BLACK
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_004, strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, 70, 4, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_POWER_BALANCE], setup->printQue, 
+    14*8, 16, expand_strbuf, setup->font_handle);
   
-  GFL_STR_DeleteBuffer(str_type);
-  GFL_STR_DeleteBuffer(str_explain);
-  GFL_STR_DeleteBuffer(expand_explain);
+  //使えるパワーの数
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_005, strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, 99, 3, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_USE_POWER], setup->printQue, 
+    0, 0, expand_strbuf, setup->font_handle);
+  
+  //滞在時間
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_006, strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, 99, 3, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(setup->wordset, 1, 99, 2, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TIME], setup->printQue, 
+    0, 0, expand_strbuf, setup->font_handle);
+  
+  GFL_STR_DeleteBuffer(strbuf);
+  GFL_STR_DeleteBuffer(expand_strbuf);
 }
 
+//==================================================================
+/**
+ * キャンセルアイコン生成
+ *
+ * @param   appwk		
+ * @param   msw		
+ */
+//==================================================================
+static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw)
+{
+  msw->act_cancel = MonolithTool_CancelIcon_Create(appwk->setup);
+}
+
+//==================================================================
+/**
+ * キャンセルアイコン削除
+ *
+ * @param   msw		
+ */
+//==================================================================
+static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
+{
+  MonolithTool_CancelIcon_Delete(msw->act_cancel);
+}
+
+//==================================================================
+/**
+ * キャンセルアイコン更新処理
+ *
+ * @param   msw		
+ */
+//==================================================================
+static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
+{
+  MonolithTool_CancelIcon_Update(msw->act_cancel);
+}

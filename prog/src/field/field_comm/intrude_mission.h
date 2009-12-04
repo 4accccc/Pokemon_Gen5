@@ -32,7 +32,7 @@ extern BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_ne
 extern s32 MISSION_GetPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result);
 extern BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int accept_netid, int palace_area);
-extern BOOL MISSION_MissionList_CheckOcc(MISSION_SYSTEM *mission, int palace_area);
+extern BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list);
 extern void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list);
 extern void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata, WORDSET *wordset, HEAPID temp_heap_id);
 

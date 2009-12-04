@@ -417,7 +417,7 @@ static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT
 static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw)
 {
   MonolithTool_Panel_Create(appwk->setup, &mmw->panel, 
-    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_000);
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_000, NULL);
   MonolithTool_Panel_Focus(appwk, &mmw->panel, 1, 0, FADE_SUB_OBJ);
 }
 

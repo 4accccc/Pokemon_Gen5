@@ -16,6 +16,7 @@
 #include "system/gfl_use.h"
 #include "message.naix"
 #include "font/font.naix" //NARC_font_large_gftr
+#include "system/wipe.h"
 
 
 
@@ -85,16 +86,16 @@ static const struct{
     &MonolithAppProc_Down_MissionSelect,
   },
   {//MONOLITH_MENU_STATUS
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Up_PalaceMap,
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Down_MonolithStatus,
+    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Down_Status,
   },
   {//MONOLITH_MENU_RECORD
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Up_PalaceMap,
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Down_Record,
+    &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Down_Status, //MonolithAppProc_Down_Record,
   },
   {//MONOLITH_MENU_POWER
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Up_PowerExplain,
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Down_PowerSelect,
+    &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PowerExplain,
+    &MonolithAppProc_Down_Status, //MonolithAppProc_Down_PowerSelect,
   },
 };
 
@@ -213,14 +214,29 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
   MONOLITH_SYSTEM *monosys = mywk;
   MONOLITH_PARENT_WORK *parent = pwk;
   enum{
+    SEQ_INIT,
+    SEQ_INIT_WAIT,
     SEQ_PROC_MAIN,
+    SEQ_END,
+    SEQ_END_WAIT,
     SEQ_FINISH,
   };
   
   switch(*seq){
+  case SEQ_INIT:
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, 
+      WIPE_DEF_DIV, WIPE_DEF_SYNC, GFL_HEAP_LOWID(HEAPID_MONOLITH));
+    (*seq)++;
+    break;
+  case SEQ_INIT_WAIT:
+    if(WIPE_SYS_EndCheck() == TRUE){
+      (*seq)++;
+    }
+    break;
   case SEQ_PROC_MAIN:
     //ƒ‚ƒmƒŠƒXŠ—LŽÒ‚ªØ’fó‘Ô‚É‚È‚Á‚½‚çƒ‚ƒmƒŠƒX‰æ–Ê‚ðI—¹‚³‚¹‚é
-    if(GFL_NET_IsConnectMember(parent->palace_area) == FALSE){
+    if(parent->palace_area != GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(parent->gsys))
+        && GFL_NET_IsConnectMember(parent->palace_area) == FALSE){
       monosys->app_parent.force_finish = TRUE;
     }
     
@@ -276,6 +292,16 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
           }
         }
       }
+    }
+    break;
+  case SEQ_END:
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, 
+      WIPE_DEF_DIV, WIPE_DEF_SYNC, GFL_HEAP_LOWID(HEAPID_MONOLITH));
+    (*seq)++;
+    break;
+  case SEQ_END_WAIT:
+    if(WIPE_SYS_EndCheck() == TRUE){
+      (*seq)++;
     }
     break;
   case SEQ_FINISH:
