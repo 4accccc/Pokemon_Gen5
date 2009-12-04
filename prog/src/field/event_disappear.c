@@ -25,6 +25,8 @@
 #include "field_task_player_trans.h"
 #include "field_task_player_drawoffset.h"
 #include "field_task_fade.h"
+#include "field_buildmodel.h"
+#include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
 
 
 //==========================================================================================
@@ -44,7 +46,10 @@ typedef struct
   int                    frame;   // フレーム数カウンタ
   FIELDMAP_WORK*      fieldmap;   // 動作フィールドマップ
   FIELD_CAMERA_MODE cameraMode;   // イベント開始時のカメラモード
-  VecFx32        sandStreamPos;   // 流砂中心部の位置( 流砂イベントのみ使用 )
+
+  // 流砂イベント
+  VecFx32      sandStreamPos;  // 流砂中心部の位置
+  FIELD_BMODEL* bmSandStream;  // 流砂の配置モデル
 
 } EVENT_WORK;
 
@@ -84,9 +89,10 @@ GMEVENT* EVENT_DISAPPEAR_FallInSand(
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_FallInSand, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap  = fieldmap;
-  work->frame     = 0;
+  work               = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap     = fieldmap;
+  work->frame        = 0;
+  work->bmSandStream = NULL;
   VEC_Set( &work->sandStreamPos, stream_pos->x, stream_pos->y, stream_pos->z );
 
   // 作成したイベントを返す
@@ -217,8 +223,33 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     work->frame = 0;
     ++( *seq );
     break;
-  // タスク終了待ち&砂埃
+  // 流砂アニメーション開始
   case 1:
+    {
+      FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
+      FIELD_BMODEL_MAN* man = FLDMAPPER_GetBuildModelManager( mapper );
+      G3DMAPOBJST** objst;
+      u32 objnum;
+      FLDHIT_RECT rect;
+      // 配置モデル(流砂)を検索
+      rect.left   = work->sandStreamPos.x - (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
+      rect.right  = work->sandStreamPos.x + (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
+      rect.top    = work->sandStreamPos.z - (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
+      rect.bottom = work->sandStreamPos.z + (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
+      objst = FIELD_BMODEL_MAN_CreateObjStatusList( man, &rect, BM_SEARCH_ID_SANDSTREAM, &objnum ); 
+      // 配置モデルを複製し, アニメーション再生
+      if( objst[0] )
+      {
+        work->bmSandStream = FIELD_BMODEL_Create( man, objst[0] );        // 複製
+        G3DMAPOBJST_changeViewFlag( objst[0], FALSE );                    // 消去
+        FIELD_BMODEL_MAN_EntryBuildModel( man, work->bmSandStream );      // 登録
+        FIELD_BMODEL_SetAnime( work->bmSandStream, 0, BMANM_REQ_START );  // 再生
+      }
+    }
+    ++( *seq );
+    break;
+  // タスク終了待ち&砂埃
+  case 2:
     { // 向きを変える
       int key = GFL_UI_KEY_GetCont();
       if( key & PAD_KEY_UP )    MMDL_SetAcmd( mmdl, AC_STAY_WALK_U_4F );
@@ -264,7 +295,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     }
     break;
   // タスクの終了待ち
-  case 2:
+  case 3:
     { 
       FIELD_TASK_MAN* man;
       man = FIELDMAP_GetTaskManager( work->fieldmap );
@@ -274,12 +305,17 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       }
     }
     break;
-  // カメラモードの復帰
-  case 3:
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
-    break;
+  // 終了
   case 4:
+    // カメラモードの復帰
+    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    // 登録した配置モデルを消去
+    if( work->bmSandStream )
+    {
+      FLDMAPPER*     mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
+      FIELD_BMODEL_MAN* man = FLDMAPPER_GetBuildModelManager( mapper );
+      FIELD_BMODEL_MAN_releaseBuildModel( man, work->bmSandStream );
+    }
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

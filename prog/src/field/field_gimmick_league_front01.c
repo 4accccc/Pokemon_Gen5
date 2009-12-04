@@ -8,15 +8,31 @@
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "fieldmap.h"
 #include "field_gimmick_league_front01.h"
-#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
-#include "arc/league_front.naix"  // for NARC_xxxx
+#include "gamesystem/game_event.h"
+#include "gamesystem/gamesystem.h"
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK
+#include "system/ica_anime.h"  // for ICA_ANIME
+#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
+#include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
+#include "fld_exp_obj.h"  // for FLD_EXP_OBJ
+#include "arc/league_front.naix"  // for NARC_xxxx
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C09P02
+#include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
+#include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
+#include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
 
 
 //==========================================================================================
 // ■定数
 //==========================================================================================
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  // ギミックデータのアーカイブID
+
+// リフト座標
+#define LIFT_POS_X_GRID (30)
+#define LIFT_POS_Z_GRID (43)
+#define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIFT_POS_Y (2 << FX32_SHIFT)
+#define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 
 // ギミックワークのデータインデックス
 typedef enum{
@@ -33,25 +49,41 @@ typedef enum{
 // リソース
 //----------
 typedef enum{
-  RES_LIFT_NSBMD,  // リフトのモデル
-  RES_LIFT_NSBTA,  // リフトのテクスチャアニメーション
+  RES_LIFT_NSBMD,          // リフトのモデル
+  RES_LIFT_NSBTA_ALL,      // 四天王(全員)　　を倒した時のita
+  RES_LIFT_NSBTA_KAKUTOU,  // 四天王(格闘)　　を倒した時のita
+  RES_LIFT_NSBTA_AKU,      // 四天王(悪)　　　を倒した時のita
+  RES_LIFT_NSBTA_GHOST,    // 四天王(ゴースト)を倒した時のita
+  RES_LIFT_NSBTA_ESPER,    // 四天王(エスパー)を倒した時のita
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
   {ARCID, NARC_league_front_pl_ele_00_nsbmd,    GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_ele_00_00_nsbta, GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_00_01_nsbta, GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_00_02_nsbta, GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_00_03_nsbta, GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_00_04_nsbta, GFL_G3D_UTIL_RESARC},
 }; 
 //------------------------
 // アニメーション(リフト)
 //------------------------
 typedef enum{
-  LIFT_ANM_TA,  // テクスチャアニメーション
+  LIFT_ANM_ALL,     // 四天王(全員)　　を倒した時のita
+  LIFT_ANM_KAKUTOU, // 四天王(格闘)　　を倒した時のita 
+  LIFT_ANM_AKU,     // 四天王(悪)　　　を倒した時のita
+  LIFT_ANM_GHOST,   // 四天王(ゴースト)を倒した時のita
+  LIFT_ANM_ESPER,   // 四天王(エスパー)を倒した時のita
   LIFT_ANM_NUM
 } LIFT_ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
 {
-  {RES_LIFT_NSBTA, 0},
+  {RES_LIFT_NSBTA_ALL, 0},
+  {RES_LIFT_NSBTA_KAKUTOU, 0},
+  {RES_LIFT_NSBTA_AKU, 0},
+  {RES_LIFT_NSBTA_GHOST, 0},
+  {RES_LIFT_NSBTA_ESPER, 0},
 }; 
 //-------------
 // オブジェクト
@@ -161,7 +193,12 @@ void LEAGUE_FRONT_01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void LEAGUE_FRONT_01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
-  LF01WORK* work = (LF01WORK*)Load( fieldmap, GIMMICKWORK_DATA_WORK_ADRS );
+  // 拡張オブジェクトのアニメ再生
+  {
+    FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+    exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+    FLD_EXP_OBJ_PlayAnime( exobj_cnt );
+  } 
 }
 
 
@@ -234,6 +271,20 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
   // 拡張オブジェクトのユニットを追加
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_GIMMICK], UNIT_GIMMICK );
+
+  // リフトのアニメーション初期化
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ALL,     TRUE );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_KAKUTOU, FALSE );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_AKU,     FALSE );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_GHOST,   FALSE );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ESPER,   FALSE );
+
+  // リフトの座標を初期化
+  {
+    GFL_G3D_OBJSTATUS* objstatus;
+    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
+    VEC_Set( &objstatus->trans, LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z );
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -258,4 +309,129 @@ static void LoadGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 static void SaveGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 {
+}
+
+
+//==========================================================================================
+// ■ イベント
+//==========================================================================================
+typedef struct
+{
+  GAMESYS_WORK* gsys;
+  FIELDMAP_WORK* fieldmap;
+  ICA_ANIME* liftAnime;  // リフトの移動アニメーション
+
+} LIFTDOWN_EVENTWORK;
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト降下イベント処理
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
+{
+  LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
+
+  switch( *seq )
+  {
+  // アニメ開始
+  case 0:
+    {
+      HEAPID heap_id;
+      heap_id = FIELDMAP_GetHeapID( work->fieldmap );
+      work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
+                                               NARC_league_front_pl_ele_00_ica_bin );
+    }
+    ++(*seq);
+    break;
+  // アニメ終了待ち
+  case 1:
+    // 自機, リフトの座標を更新
+    {
+      VecFx32 trans, pos;
+      FIELD_PLAYER* player;
+      GFL_G3D_OBJSTATUS* lift_status;
+      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+      // リフト
+      ICA_ANIME_GetTranslate( work->liftAnime, &trans );
+      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+      lift_status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
+      lift_status->trans.y = trans.y;
+      // 自機
+      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+      FIELD_PLAYER_GetPos( player, &pos );
+      pos.y = trans.y;
+      FIELD_PLAYER_SetPos( player, &pos );
+    }
+    // アニメーション更新
+    if( ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE ) )  // if(アニメ終了)
+    { 
+      ICA_ANIME_Delete( work->liftAnime );
+      ++(*seq); 
+    }
+    break;
+  // フェードアウト
+  case 2:
+    {
+      GMEVENT* new_event;
+      new_event = EVENT_FieldFadeOut( work->gsys, work->fieldmap,
+                                      FIELD_FADE_BLACK, 
+                                      FIELD_FADE_WAIT );
+      GMEVENT_CallEvent( event, new_event );
+    }
+    ++(*seq);
+    break;
+  // マップチェンジ
+  case 3:
+    {
+      GMEVENT* new_event;
+      VecFx32 pos;
+      VEC_Set( &pos, 0, 0, 0 );
+      new_event = EVENT_ChangeMapPosNoFade( work->gsys, work->fieldmap, 
+                                            ZONE_ID_C09P02, &pos, DIR_DOWN );
+      GMEVENT_CallEvent( event, new_event );
+    }
+    ++(*seq);
+    break;
+  // 次のイベントへ切り替え
+  case 4:
+    {
+      GMEVENT* next_event;
+      next_event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( work->gsys, work->fieldmap );
+      GMEVENT_CallEvent( event, next_event );
+    }
+    ++(*seq);
+    break;
+  // 終了
+  case 5:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト降下イベントを作成する
+ * 
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
+ *
+ * @return リフト降下イベント
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT* LEAGUE_FRONT_01_GIMMICK_GetLiftDownEvent( GAMESYS_WORK* gsys, 
+                                                   FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT* event;
+  LIFTDOWN_EVENTWORK* evwork;
+  LF01WORK* gmkwork = (LF01WORK*)Load( fieldmap, GIMMICKWORK_DATA_WORK_ADRS );
+
+  // 生成
+  event = GMEVENT_Create( gsys, NULL, LiftDownEvent, sizeof(LIFTDOWN_EVENTWORK) );
+  // 初期化
+  evwork = GMEVENT_GetEventWork( event );
+  evwork->gsys      = gsys;
+  evwork->fieldmap  = fieldmap;
+  evwork->liftAnime = NULL;
+  return event;
 }

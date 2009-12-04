@@ -114,7 +114,22 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_FADEIN:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+    { // フェードイン
+      GMEVENT* fade_event;
+      FIELD_STATUS* fstatus; 
+      fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+      { // 輝度フェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
+                                       FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+      }
+      else
+      { // クロスフェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
+                                       FIELD_FADE_CROSS, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+      }
+      GMEVENT_CallEvent( event, fade_event );
+    }
     if (fdaw->ctrl == NULL)
     { /* エラーよけ、ドアがない場合 */
       *seq = SEQ_DOOROUT_PLAYER_STEP;
@@ -262,7 +277,22 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
       FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, fdaw->loc_req.zone_id );
     }
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
+    { // フェードアウト
+      GMEVENT* fade_event;
+      FIELD_STATUS* fstatus; 
+      fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+      { // 輝度フェード
+        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+                                        FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      }
+      else
+      { // クロスフェード
+        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+                                        FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+      }
+      GMEVENT_CallEvent( event, fade_event );
+    }
     *seq = SEQ_DOORIN_END;
     break;
 

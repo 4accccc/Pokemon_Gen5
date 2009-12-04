@@ -74,7 +74,12 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq)++;
     break;
   case 1:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, cbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut(gsys, cbw->fieldmap, 
+                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     (*seq)++;
     break;
   case 2:
@@ -124,7 +129,12 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     break;
   case 8:
     OS_TPrintf("_FIELD_FADEIN\n");
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, cbw->fieldmap, 0, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn(gsys, cbw->fieldmap, 
+                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     (*seq) ++;
     break;
   case 9:

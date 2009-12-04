@@ -91,6 +91,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   EVENT_WORK* work;
   EXIT_TYPE exit_type;
 
+
   // イベントテーブル
   const GMEVENT_FUNC eventFuncTable[] = {
     EVENT_FUNC_EntranceOut_ExitTypeNone,   //EXIT_TYPE_NONE
@@ -116,7 +117,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
     EVENTDATA_SYSTEM*   evdata = GAMEDATA_GetEventData( gdata );
     const CONNECT_DATA* cnct   = EVENTDATA_GetConnectByID( evdata, location.exit_id );
     exit_type                  = CONNECTDATA_GetExitType( cnct );
-  }
+  } 
 
   // イベント作成
   event = GMEVENT_Create( gsys, parent, eventFuncTable[ exit_type ], sizeof( EVENT_WORK ) );
@@ -154,7 +155,21 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+    { // フェードイン
+      GMEVENT* fade_event;
+      FIELD_STATUS* fstatus; 
+      fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+      { // 輝度フェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
+                                       FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+      }
+      else
+      { // クロスフェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, FIELD_FADE_CROSS, 0, 0);
+      }
+      GMEVENT_CallEvent( event, fade_event );
+    }
     ++ *seq;
     break;
   case 1:
@@ -222,7 +237,21 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
     ++ *seq;
     break;
   case 1: // 画面・BGMフェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+    { // フェードイン
+      GMEVENT* fade_event;
+      FIELD_STATUS* fstatus; 
+      fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+      { // 輝度フェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, 
+                                       FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, FIELD_FADE_WAIT);
+      }
+      else
+      { // クロスフェード
+        fade_event = EVENT_FieldFadeIn(gsys, fieldmap, FIELD_FADE_CROSS, 0, 0);
+      }
+      GMEVENT_CallEvent( event, fade_event );
+    }
     { // 現在のBGMがダンジョンISS ==> BGMフェードイン
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );

@@ -24,7 +24,7 @@
 #include "sound/bgm_info.h"
 #include "../../resource/sound/bgm_info/iss_type.h"
 #include "event_disappear.h"  // for EVENT_DISAPPEAR_xxxx
-
+#include "field_status_local.h"  // for FIELD_STATUS_
 
 //=======================================================================================
 /**
@@ -147,7 +147,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
       FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
     }
-		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
+    { // フェードアウト
+      GMEVENT* fade_event;
+      FIELD_STATUS* fstatus; 
+      fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+      { // 輝度フェード
+        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+                                        FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      }
+      else
+      { // クロスフェード
+        fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+                                        FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+      }
+      GMEVENT_CallEvent( event, fade_event );
+    }
     ++ *seq;
     break;
   case 1:
@@ -219,7 +234,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     if( PMSND_CheckFadeOnBGM() != TRUE )
     { 
       PMSND_PlaySE( SEQ_SE_KAIDAN );    // SE
-      GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT));  // 画面フェードアウト
+      { // フェードアウト
+        GMEVENT* fade_event;
+        FIELD_STATUS* fstatus; 
+        fstatus = GAMEDATA_GetFieldStatus( gamedata );
+        if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
+        { // 輝度フェード
+          fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+              FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+        }
+        else
+        { // クロスフェード
+          fade_event = EVENT_FieldFadeOut(gsys, fieldmap, 
+              FIELD_FADE_CROSS, FIELD_FADE_WAIT);
+        }
+        GMEVENT_CallEvent( event, fade_event );
+      }
       ++ *seq;
     }
     break;

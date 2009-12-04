@@ -203,8 +203,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
       MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
     }
     { // フェードイン
-      GMEVENT* fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                               FIELD_FADE_BLACK, FIELD_FADE_NO_WAIT );
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
+                                      FIELD_FADE_BLACK, 
+                                      FIELD_FADE_SEASON_OFF, 
+                                      FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -261,8 +264,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
-      GMEVENT* fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                               FIELD_FADE_WHITE, FIELD_FADE_NO_WAIT );
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
+                                      FIELD_FADE_WHITE, 
+                                      FIELD_FADE_SEASON_OFF,
+                                      FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -326,8 +332,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
-      GMEVENT* fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                               FIELD_FADE_BLACK, FIELD_FADE_NO_WAIT );
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
+                                      FIELD_FADE_BLACK, 
+                                      FIELD_FADE_SEASON_OFF, 
+                                      FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加
@@ -392,8 +401,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     { // フェードイン
-      GMEVENT* fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
-                                               FIELD_FADE_BLACK, FIELD_FADE_NO_WAIT );
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn( work->gsys, work->fieldmap,  
+                                      FIELD_FADE_BLACK, 
+                                      FIELD_FADE_SEASON_OFF, 
+                                      FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
     { // タスクの追加

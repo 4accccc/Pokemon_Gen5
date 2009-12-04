@@ -25,19 +25,31 @@
  */
 //------------------------------------------------------------------
 typedef enum {
-	FIELD_FADE_BLACK = 0,
-	FIELD_FADE_WHITE,
+	FIELD_FADE_BLACK,  // 輝度フェード(ブラック)
+	FIELD_FADE_WHITE,  // 輝度フェード(ホワイト)
+  FIELD_FADE_CROSS,  // クロスフェード
 } FIELD_FADE_TYPE;
 
 //------------------------------------------------------------------
 /**
- * @brief	イベントでのフェード完了待ちの有無指定
+ * @brief	イベントでの季節表示の有無指定フラグ
+ */
+//------------------------------------------------------------------
+typedef enum{
+  FIELD_FADE_SEASON_ON,   // 季節表示を許可する
+  FIELD_FADE_SEASON_OFF,  // 季節表示を許可しない
+} FIELD_FADE_SEASON_FLAG;
+
+//------------------------------------------------------------------
+/**
+ * @brief	輝度フェードの完了待ちフラグ
  */
 //------------------------------------------------------------------
 typedef enum{
   FIELD_FADE_WAIT,    // フェード完了を待つ
   FIELD_FADE_NO_WAIT, // フェード完了を待たない
 } FIELD_FADE_WAIT_TYPE;
+
 
 //============================================================================================
 //============================================================================================
@@ -47,11 +59,12 @@ typedef enum{
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
- * @param wait      フェード完了を待つかどうか
+ * @param wait      フェード完了を待つかどうか(輝度フェード時のみ有効)
  * @return	GMEVENT	生成したイベントへのポインタ*/
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                     FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                                     FIELD_FADE_TYPE type, 
+                                     FIELD_FADE_WAIT_TYPE wait );
 
 //------------------------------------------------------------------
 /**
@@ -59,36 +72,35 @@ extern GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldma
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap  フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
- * @param wait      フェード完了を待つかどうか
+ * @param season    季節表示を許可するかどうか(輝度フェード時のみ有効)
+ * @param wait      フェード完了を待つかどうか(輝度フェード時のみ有効)
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                    FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                                    FIELD_FADE_TYPE type, 
+                                    FIELD_FADE_SEASON_FLAG season,
+                                    FIELD_FADE_WAIT_TYPE wait );
 
 //------------------------------------------------------------------
 /**
  * @brief	クロスフェードアウトイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
- * @param wait      フェード完了を待つかどうか
- * @return	GMEVENT	生成したイベントへのポインタ
+ * @return GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                      FIELD_FADE_WAIT_TYPE wait );
+extern GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap );
 
 //------------------------------------------------------------------
 /**
  * @brief	クロスフェードインイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap  フィールドマップワークへのポインタ
- * @param wait      フェード完了を待つかどうか
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                     FIELD_FADE_WAIT_TYPE wait );
+extern GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap );
 
 //------------------------------------------------------------------
 /**
@@ -127,7 +139,8 @@ extern GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * field
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                       FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                                       FIELD_FADE_TYPE type, 
+                                       FIELD_FADE_WAIT_TYPE wait );
 
 //------------------------------------------------------------------
 /**
@@ -135,12 +148,16 @@ extern GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * field
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap  フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
+ * @param season    季節表示を許可するかどうか
  * @param wait      フェード完了を待つかどうか
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                    FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                                      FIELD_FADE_TYPE type, 
+                                      FIELD_FADE_SEASON_FLAG season, 
+                                      FIELD_FADE_WAIT_TYPE wait );
+
 
 //------------------------------------------------------------------
 /**

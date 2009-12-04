@@ -85,7 +85,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
 
   switch (*seq) {
   case _FIELD_FADEOUT:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, 0, FIELD_FADE_WAIT));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq)++;
     break;
   case _FIELD_CLOSE:
@@ -147,7 +147,8 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0, FIELD_FADE_WAIT));
+    GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, dbw->fieldmap, 
+                      FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _FIELD_END:

@@ -102,7 +102,12 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
 	switch( *seq ) 
   {
 	case SEQ_FADE_OUT: //// フェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, psw->fieldmap, 0, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut(gsys, psw->fieldmap,  
+                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     *seq = SEQ_FIELDMAP_CLOSE;
 		break;
 	case SEQ_FIELDMAP_CLOSE: //// フィールドマップ終了
@@ -118,7 +123,12 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
     *seq = SEQ_FADE_IN;
 		break;
 	case SEQ_FADE_IN: //// フェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, psw->fieldmap, 0, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn(gsys, psw->fieldmap,  
+                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     *seq = SEQ_END;
 		break;
 	case SEQ_END: //// イベント終了
@@ -222,7 +232,12 @@ static GMEVENT_RESULT EVENT_FUNC_WazaSelect(GMEVENT * event, int * seq, void * w
 	switch( *seq ) 
   {
 	case SEQ_FADE_OUT: //// フェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, wsw->fieldmap, 0, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut(gsys, wsw->fieldmap,  
+                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     *seq = SEQ_FIELDMAP_CLOSE;
 		break;
 	case SEQ_FIELDMAP_CLOSE: //// フィールドマップ終了
@@ -238,7 +253,12 @@ static GMEVENT_RESULT EVENT_FUNC_WazaSelect(GMEVENT * event, int * seq, void * w
     *seq = SEQ_FADE_IN;
 		break;
 	case SEQ_FADE_IN: //// フェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, wsw->fieldmap, 0, FIELD_FADE_WAIT));
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn(gsys, wsw->fieldmap,  
+                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     *seq = SEQ_END;
 		break;
 	case SEQ_END: //// イベント終了
