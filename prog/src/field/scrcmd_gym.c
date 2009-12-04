@@ -487,3 +487,21 @@ VMCMD_RESULT EvCmdGymIce_WallAnm( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * 氷ジムギミック　レール切り替え
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymIce_ChgRail( VMHANDLE *core, void *wk )
+{
+  u16 idx;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  idx = VMGetU16( core );
+  GYM_ICE_ChangeRailMap(gsys, idx);
+
+  return VMCMD_RESULT_CONTINUE;
+}

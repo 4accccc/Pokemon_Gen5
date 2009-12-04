@@ -35,3 +35,4 @@ extern VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGymIce_SwAnm( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymIce_WallAnm( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymIce_ChgRail( VMHANDLE *core, void *wk );
