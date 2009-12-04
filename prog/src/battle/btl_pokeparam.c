@@ -1755,16 +1755,16 @@ void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
  *
  */
 //=============================================================================================
-void BPP_TurnCheck( BTL_POKEPARAM* pp )
+void BPP_TurnCheck( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
+  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
 
-  if( pp->turnCount < BTL_TURNCOUNT_MAX )
+  if( bpp->turnCount < BTL_TURNCOUNT_MAX )
   {
-    pp->turnCount++;
+    bpp->turnCount++;
   }
 
-  dmgrecFwdTurn( pp );
+  dmgrecFwdTurn( bpp );
 }
 //=============================================================================================
 /**

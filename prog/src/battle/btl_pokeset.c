@@ -63,12 +63,11 @@ u32 BTL_POKESET_CopyEnemys( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BT
 /**
  *  死んでるポケモンを削除
  */
-void BTL_POKESET_RemoveDeadPokemon( BTL_POKESET* rec )
+void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec )
 {
   BTL_POKEPARAM* bpp;
 
   BTL_POKESET_SeekStart( rec );
-
   while( (bpp = BTL_POKESET_SeekNext(rec)) != NULL )
   {
     if( BPP_IsDead(bpp) ){
@@ -80,8 +79,37 @@ void BTL_POKESET_RemoveDeadPokemon( BTL_POKESET* rec )
 /**
  *  当ターンの計算後素早さ順でソート（当ターンに行動していないポケは素の素早さ）
  */
-void BTL_POKESET_SortByAgility( BTL_POKESET* rec )
+void BTL_POKESET_SortByAgility( BTL_POKESET* set, BTL_SVFLOW_WORK* flowWk )
 {
+  u32 i, j;
+
+  for(i=0; i<set->count; ++i){
+    set->sortWork[i] = BTL_SVFTOOL_CalcAgility( flowWk, set->bpp[i] );
+  }
+
+  for(i=0; i<set->count; ++i)
+  {
+    for(j=i+1; j<set->count; ++j)
+    {
+      if( (set->sortWork[j] > set->sortWork[i])
+      ||  ((set->sortWork[j] == set->sortWork[i]) && GFL_STD_MtRand(2)) // 素早さ一致ならランダム
+      ){
+        BTL_POKEPARAM* tmpBpp;
+        u16            tmpDmg;
+        u16            tmpAgi;
+
+        tmpBpp = set->bpp[i];
+        tmpDmg = set->damage[i];
+        tmpAgi = set->sortWork[i];
+        set->bpp[i]      = set->bpp[j];
+        set->damage[i]   = set->damage[j];
+        set->sortWork[i] = set->sortWork[j];
+        set->bpp[j]      = tmpBpp;
+        set->damage[j]   = tmpDmg;
+        set->sortWork[j] = tmpAgi;
+      }
+    }
+  }
 
 }
 

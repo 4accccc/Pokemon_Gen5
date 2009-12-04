@@ -22,20 +22,22 @@ typedef struct {
 
   BTL_POKEPARAM*  bpp[ BTL_POS_MAX ];
   u16             damage[ BTL_POS_MAX ];
+  u16             sortWork[ BTL_POS_MAX ];
   u8              count;
   u8              countMax;
   u8              getIdx;
 }BTL_POKESET;
 
 
+typedef BTL_POKESET  TARGET_POKE_REC;
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec );
 extern u32 BTL_POKESET_CopyFriends( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
 extern u32 BTL_POKESET_CopyEnemys( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
-extern void BTL_POKESET_RemoveDeadPokemon( BTL_POKESET* rec );
-
+extern void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec );
+extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec, BTL_SVFLOW_WORK* flowWk );
 
 
 /**
@@ -159,7 +161,7 @@ static inline u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec )
 /**
  *  本来は１体以上いたハズのターゲットが現在は0になってしまったケースをチェック
  */
-static inline BOOL BTL_POKESET_IsTargetRemoved( const BTL_POKESET* rec )
+static inline BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
 {
   return (rec->countMax > 0) && (rec->count == 0);
 }
