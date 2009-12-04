@@ -1943,7 +1943,7 @@ static GMEVENT * checkSubScreenEvent(
 		{
 			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
 			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
-			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no){
+			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no || GAME_COMM_NO_DEBUG_SCANONLY == no){
 				GameCommSys_ExitReq(gcsp);
 			}
 			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)||

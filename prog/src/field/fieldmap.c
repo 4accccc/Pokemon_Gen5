@@ -2673,6 +2673,7 @@ GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm)
   case GAME_COMM_NO_NULL:                  //何も起動していない状態
   case GAME_COMM_NO_FIELD_BEACON_SEARCH:   //フィールド上でビーコンサーチ
   case GAME_COMM_NO_INVASION:              //侵入
+  case GAME_COMM_NO_DEBUG_SCANONLY:        //デバッグ用スキャンのみ
     return comm_no;
   }
   GF_ASSERT_MSG(0, "comm_no = %d\n", comm_no); //フィールドで上記通信以外はありえない
