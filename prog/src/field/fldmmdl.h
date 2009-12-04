@@ -229,6 +229,8 @@ typedef enum
 	MMDL_MOVEHITBIT_OBJ=(1<<2),///<OBJ同士の衝突
 	MMDL_MOVEHITBIT_HEIGHT=(1<<3),///<高低差によるヒット
 	MMDL_MOVEHITBIT_OUTRANGE=(1<<4),///<範囲外ヒット
+  
+  MMDL_MOVEHITBIT_BITMAX = (5), ///<使用しているビット最大
 }MMDL_MOVEHITBIT;
 
 //--------------------------------------------------------------

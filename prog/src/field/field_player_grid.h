@@ -68,6 +68,7 @@ extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki );
 extern u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key );
 
 extern BOOL FIELD_PLAYER_GRID_CheckUnderForceMove( FIELD_PLAYER *fld_player );
+extern BOOL FIELD_PLAYER_GRID_CheckOzeFallOut( FIELD_PLAYER *fld_player );
 extern FIELD_PLAYER * FIELD_PLAYER_GRID_GetFieldPlayer(
     FIELD_PLAYER_GRID *gjiki );
 extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );

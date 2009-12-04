@@ -241,22 +241,38 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
   
   fld_player->move_state = PLAYER_MOVE_STATE_OFF;
   
-  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
-    if( FIELD_PLAYER_GRID_CheckUnderForceMove(fld_player) == TRUE ){
+  //グリッド限定　各種強制移動チェック
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
+    //足元強制移動チェック
+    if( FIELD_PLAYER_GRID_CheckUnderForceMove(fld_player) == TRUE )
+    {
+      fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      return;
+    }
+    
+    //尾瀬落下チェック
+    if( FIELD_PLAYER_GRID_CheckOzeFallOut(fld_player) == TRUE )
+    {
       fld_player->move_state = PLAYER_MOVE_STATE_ON;
       return;
     }
   }
 
-  if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //動作中
-    switch( value ){
+  if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ) //動作中
+  {
+    switch( value )
+    {
     case PLAYER_MOVE_VALUE_STOP:
       break;
     case PLAYER_MOVE_VALUE_WALK:
-      if( state == PLAYER_MOVE_STATE_OFF ||
-          state == PLAYER_MOVE_STATE_END ){
+      if( state == PLAYER_MOVE_STATE_OFF || state == PLAYER_MOVE_STATE_END )
+      {
         fld_player->move_state = PLAYER_MOVE_STATE_START;
-      }else{
+      }
+      else
+      {
         fld_player->move_state = PLAYER_MOVE_STATE_ON;
       }
       break;
@@ -264,16 +280,18 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
       fld_player->move_state = PLAYER_MOVE_STATE_ON;
       break;
     }
-    
     return;
   }
   
-  if( MMDL_CheckEndAcmd(fmmdl) == TRUE ){ //動作終了
-    switch( value ){
+  if( MMDL_CheckEndAcmd(fmmdl) == TRUE ) //動作終了
+  {
+    switch( value )
+    {
     case PLAYER_MOVE_VALUE_STOP:
       break;
     case PLAYER_MOVE_VALUE_WALK:
-      switch( state ){
+      switch( state )
+      {
       case PLAYER_MOVE_STATE_OFF:
         break;
       case PLAYER_MOVE_STATE_END:
@@ -284,7 +302,8 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
       }
       break;
     case PLAYER_MOVE_VALUE_TURN:
-      switch( state ){
+      switch( state )
+      {
       case PLAYER_MOVE_STATE_OFF:
         break;
       case PLAYER_MOVE_STATE_END:
@@ -295,7 +314,6 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
       }
       break;
     }
-
     return;
   }
 }
