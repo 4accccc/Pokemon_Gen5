@@ -669,15 +669,15 @@
   DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
   DEF_CMD( EvCmdPlBoat_AddTime, EV_SEQ_PL_BOAT_ADD_TIME )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPlBoat_GetRoomInfo, EV_SEQ_PL_BOAT_GET_ROOM_INFO )
+  DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
   NO_CMD()
   NO_CMD()
 
   // 氷ジム
   DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
   DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
-  NO_CMD()
+  DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
   NO_CMD()
 
   // マップフェード
