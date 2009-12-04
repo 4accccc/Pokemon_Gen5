@@ -2144,9 +2144,7 @@ extern int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncGetPokeMove( BOX2_SYS_WORK * syswk );
-
-extern int BOX2MAIN_VFuncGetPokeMove2( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncGetPokeMove( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2518,7 +2516,7 @@ extern int BOX2MAIN_VFuncCursorMove( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncMenuOpenKey( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncMenuMove( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2530,7 +2528,7 @@ extern int BOX2MAIN_VFuncMenuOpenKey( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncMenuOpenKeyArrange( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncMenuOpenKeyArrange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2542,7 +2540,7 @@ extern int BOX2MAIN_VFuncMenuOpenKeyArrange( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncMenuCloseKey( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncMenuCloseKey( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2554,7 +2552,7 @@ extern int BOX2MAIN_VFuncMenuCloseKey( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncMenuCloseKeyArrange( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncMenuCloseKeyArrange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
