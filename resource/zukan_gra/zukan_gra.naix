@@ -1,14 +1,14 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: zukan_gra_info.naix
+	File: zukan_gra.naix
 
 	This file was created by NINTENDO TWL-System Archiver.
 
 
  *****************************************************************************/
 
-#ifndef NARC_ZUKAN_GRA_INFO_NAIX_
-#define NARC_ZUKAN_GRA_INFO_NAIX_
+#ifndef NARC_ZUKAN_GRA_NAIX_
+#define NARC_ZUKAN_GRA_NAIX_
 
 enum {
 	NARC_zukan_gra_info_zukan_bgu_NCLR = 0,
@@ -17,5 +17,5 @@ enum {
 	NARC_zukan_gra_info_setumei_bgu_NSCR = 3
 };
 
-/* NARC_ZUKAN_GRA_INFO_NAIX_ */
+/* NARC_ZUKAN_GRA_NAIX_ */
 #endif

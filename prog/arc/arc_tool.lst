@@ -230,5 +230,5 @@
   ARCID_LAND_DATA_PATCH	"fieldmap/field_landdata_patch.narc"	#land_dataの上書き情報
   ARCID_LEAGUE_FRONT_GIMMICK "league_front.narc"  # ポケモンリーグ フロントギミック
   ARCID_GRID_CAMERA_SCENE	"fieldmap/grid_camera_scene.narc"	#gridマップのカメラシーン
-  ARCID_ZUKAN_GRA_INFO "zukan_gra_info.narc"  # ポケモン図鑑の詳細画面
+  ARCID_ZUKAN_GRA "zukan_gra.narc"  # 図鑑グラフィック
   ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
