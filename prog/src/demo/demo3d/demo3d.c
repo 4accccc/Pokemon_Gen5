@@ -44,7 +44,7 @@
 //アーカイブ
 #include "arc_def.h"
 
-#include "demo3d_restbl.h"
+#include "demo3d_data.h"
 
 //外部公開
 #include "demo/demo3d.h"
@@ -73,6 +73,9 @@ enum
 { 
   DEMO3D_HEAP_SIZE = 0x100000,  ///< ヒープサイズ
 };
+
+//@TODO 3という約束になっていたので3。ちゃんと作れば対応可能
+#define UNIT_MAX (3) ///< 使用ユニットの最大値
 
 
 //-------------------------------------
@@ -168,9 +171,11 @@ typedef struct
 	u32												seq;
 #endif	//DEMO3D_PRINT_TOOL
   
+  DEMO3D_ID                demo_id;
+  u32                      start_frame;
   ICA_ANIME                *ica_anime;
   GFL_G3D_UTIL* g3d_util;
-  u16 unit_idx[3]; //@TODO
+  u16 unit_idx[ UNIT_MAX ]; 
 
 } DEMO3D_MAIN_WORK;
 
@@ -277,7 +282,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_STD_MemClear( wk, sizeof(DEMO3D_MAIN_WORK) );
 
   // 初期化
-  wk->heapID = HEAPID_UI_DEBUG;
+  wk->heapID    = HEAPID_UI_DEBUG;
+  wk->demo_id     = param->demo_id;
+  wk->start_frame = param->start_frame;
 	
 	//描画設定初期化
 	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
@@ -466,7 +473,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 {
   // icaデータをロード
-  wk->ica_anime = Demo3D_RESTBL_CreatICACamera( heapID, ICA_BUFF_SIZE );
+  wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
 
   // 3D管理ユーティリティーの生成
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
@@ -474,10 +481,13 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
   // ユニット追加
   {
     int i;
-    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
-      const GFL_G3D_UTIL_SETUP* setup = Demo3D_RESTBL_GetG3DUtilSetup( i );
+      const GFL_G3D_UTIL_SETUP* setup;
 
+      setup = Demo3D_DATA_GetG3DUtilSetup( wk->demo_id, i );
+
+      GF_ASSERT( wk->unit_idx[i] < UNIT_MAX );
       wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );
     }
   }
@@ -485,11 +495,17 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
   // アニメーション有効化
   {
     int i;
-    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       int j;
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      GFL_G3D_OBJ* obj;
+      int anime_count;
+      
+      obj         = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+      anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      
+      GF_ASSERT( wk->unit_idx[i] < UNIT_MAX );
+
       for( j=0; j<anime_count; j++ )
       {
         GFL_G3D_OBJECT_EnableAnime( obj, j );
@@ -500,7 +516,7 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  グラフィック 開放
  *
  *	@param	DEMO3D_MAIN_WORK* wk 
  *
@@ -515,7 +531,7 @@ static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk )
   // ユニット破棄
   {
     int i;
-    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
     }
@@ -552,7 +568,7 @@ static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
   // アニメーション更新
   {
     int i;
-    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       int j;
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
@@ -568,7 +584,7 @@ static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
   {
     int i;
-    for( i=0; i<Demo3D_RESTBL_GetUnitMax(); i++ )
+    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
       GFL_G3D_DRAW_DrawObject( obj, &status );

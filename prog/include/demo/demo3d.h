@@ -9,6 +9,7 @@
  */
 //============================================================================
 #pragma once
+
 //	lib
 #include <gflib.h>
 
@@ -28,6 +29,19 @@ extern const GFL_PROC_DATA Demo3DProcData;
  */
 //=============================================================================
 
+//--------------------------------------------------------------
+///	デモID
+//==============================================================
+// ※rubyのコンバータでフォルダ名をIDに変換しているので、resource/demo3d 以下のフォルダ名と一致させること。
+// @TODO コンバータから吐き出し?
+typedef enum
+{ 
+  DEMO3D_ID_NULL = 0,
+  DEMO3D_ID_C_CRUISER, ///< 遊覧船
+
+  DEMO3D_ID_MAX,
+} DEMO3D_ID;
+
 //=============================================================================
 /**
  *								構造体定義
@@ -36,10 +50,13 @@ extern const GFL_PROC_DATA Demo3DProcData;
 //-------------------------------------
 ///	PROCに渡す引数
 //=====================================
-typedef struct
-{	
-	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
-}DEMO3D_PARAM;
+typedef struct {	
+  // [IN]
+  DEMO3D_ID   demo_id;      ///< デモID
+  u32         start_frame;  ///< デモ開始フレーム
+// GAMESYS_WORK	*gamesys;	  ///< ゲームシステム
+  // [OUT]
+} DEMO3D_PARAM;
 
 FS_EXTERN_OVERLAY(demo3d);
 

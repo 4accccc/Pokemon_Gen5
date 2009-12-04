@@ -21,7 +21,7 @@ static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 // メニューリスト
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
-	{L"デモエンジン",TESTMODE_ITEM_SelectDemo3D },
+	{L"3Dデモさいせい",TESTMODE_ITEM_SelectDemo3D },
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -34,14 +34,16 @@ static TESTMODE_MENU_LIST menuHosaka[] =
  */
 //=============================================================================
 
-// 3Dデモエンジン
-#include "debug_3d_demo.h"
+// 3Dデモ再生アプリ
 #include "demo/demo3d.h"
-FS_EXTERN_OVERLAY(debug_hosaka);
 static BOOL TESTMODE_ITEM_SelectDemo3D( TESTMODE_WORK *work, const int idx )
 {
-//  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(debug_hosaka), &Debug3DDemoProcData, NULL );
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(demo3d), &Demo3DProcData, NULL );
+  DEMO3D_PARAM* initParam;
+  
+  initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(DEMO3D_PARAM) );
+  initParam->demo_id = DEMO3D_ID_C_CRUISER;
+  initParam->start_frame = 1000; //@TODO
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(demo3d), &Demo3DProcData, initParam );
   return TRUE;
 }
 
