@@ -51,10 +51,10 @@ typedef struct
 //---------------------------------------------------------------------------------------------
 static const CURRENT_DATA current[] = 
 {
-  {MATTR_CURRENT_LEFT,   AC_WALK_L_2F, DIR_LEFT},  //右水流・海
-  {MATTR_CURRENT_RIGHT,  AC_WALK_R_2F, DIR_RIGHT}, //左水流・海
-  {MATTR_CURRENT_UP,     AC_WALK_U_2F, DIR_UP},    //上水流・海
-  {MATTR_CURRENT_DOWN,   AC_WALK_D_2F, DIR_DOWN},  //下水流・海
+  {MATTR_CURRENT_LEFT,   AC_WALK_L_3F, DIR_LEFT},  //右水流・海
+  {MATTR_CURRENT_RIGHT,  AC_WALK_R_3F, DIR_RIGHT}, //左水流・海
+  {MATTR_CURRENT_UP,     AC_WALK_U_3F, DIR_UP},    //上水流・海
+  {MATTR_CURRENT_DOWN,   AC_WALK_D_3F, DIR_DOWN},  //下水流・海
 };
 
 //---------------------------------------------------------------------------------------------
@@ -112,8 +112,8 @@ typedef struct
 //---------------------------------------------------------------------------------------------
 static const ROCK_DATA rock[] = 
 {
-  {MATTR_JUMP_RIGHT, AC_JUMP_L_3G_24F},  //右方向へジャンプ移動
-  {MATTR_JUMP_LEFT,  AC_JUMP_R_3G_24F},  //左方向へジャンプ移動
+  {MATTR_JUMP_RIGHT, AC_JUMP_R_3G_24F},  //右方向へジャンプ移動
+  {MATTR_JUMP_LEFT,  AC_JUMP_L_3G_24F},  //左方向へジャンプ移動
   {MATTR_JUMP_UP,    AC_JUMP_U_3G_24F},  //上方向へジャンプ移動
   {MATTR_JUMP_DOWN,  AC_JUMP_D_3G_24F},  //下方向へジャンプ移動
 };
