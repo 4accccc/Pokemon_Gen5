@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-14T18:43:11"/>
+	<create user="taya" host="W00146" date="2009-12-01T12:04:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -234,7 +239,7 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
-			<tag entry="04" japanese="X加算" english="X加算" view="EP">
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
 				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
 				<comment language="japanese">描画X座標を加算します。
 使用は許可制です。</comment>
@@ -598,6 +603,11 @@
 	<row id="search_abc_51">
 		<language name="JPN" width="216">きんそくおん</language>
 		<language name="JPN_KANJI" width="216">きんそくおん</language>
+	</row>
+
+	<row id="search_abc_52">
+		<language name="JPN" width="216">きんちようかん</language>
+		<language name="JPN_KANJI" width="216">きんちようかん</language>
 	</row>
 
 	<flowchart-group-list>
