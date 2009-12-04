@@ -123,6 +123,7 @@ typedef struct {
   //↑変化がないパラメータ　
 
   //↓毎回変化する可能性があるパラメータ
+  FIELDMAP_WORK * fieldWork;
   FIELD_PLAYER * field_player;
 	PLAYER_MOVE_STATE player_state;
   PLAYER_MOVE_VALUE player_value;
@@ -195,7 +196,8 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 
 static GMEVENT* checkPosEvent( EV_REQUEST* req );
-static GMEVENT* checkPosEvent_direction( EV_REQUEST * req, u16 dir );
+static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir );
+static GMEVENT* checkPosEvent_OnlyDirection( EV_REQUEST * req );
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 
 //-----------------------------------------------------------------------------
@@ -321,7 +323,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   if (req.stepRequest )
   {
-    event = checkPosEvent_direction( &req, req.player_dir );
+    //POSイベント：向き指定ありをチェック
+    event = checkPosEvent_OnlyDirection( &req );
     if (event)
     {
       return event;
@@ -574,6 +577,303 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
 
 //--------------------------------------------------------------
 /**
+ * イベント起動チェック と, イベント生成時の処理
+ * @param	gsys GAMESYS_WORK
+ * @param work FIELDMAP_WORK
+ * @retval GMEVENT NULL=イベント無し
+ */
+//--------------------------------------------------------------
+GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
+{
+	GMEVENT *event;
+	FIELD_PLACE_NAME *place_name_sys;
+	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
+  BOOL eff_delete_flag;
+
+  //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
+  EFFECT_ENC_CheckObjHit( encount );
+
+	// イベント起動チェック
+	event = FIELD_EVENT_CheckNormal( gsys, work, &eff_delete_flag );
+
+	// イベント生成時の処理
+	if( event != NULL )
+	{
+    if (eff_delete_flag)
+    {
+      EFFECT_ENC_EffectDelete( encount );
+    }
+		// 地名表示ウィンドウを消去
+		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
+		FIELD_PLACE_NAME_Hide( place_name_sys );
+	}
+
+	return event;
+}
+
+//======================================================================
+/**
+ * イベント起動チェック：ユニオンorコロシアム
+ *
+ * @param   gsys		
+ * @param   work		
+ *
+ * @retval  GMEVENT *		
+ */
+//======================================================================
+GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
+{
+  EV_REQUEST req;
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldWork = work;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
+  
+  setupRequest( &req, gsys, fieldWork );
+
+  if(unisys == NULL){
+    //ユニオン終了
+    VecFx32 pos;
+    pos.x = 104 << FX32_SHIFT;
+    pos.y = 48;
+    pos.z = 88 << FX32_SHIFT;
+    return EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_C01PC0101, &pos, 0);
+  }
+  
+  if(UnionMain_GetFinishReq(unisys) == TRUE){
+    if(UnionMain_GetFinishExe(unisys) == FALSE){
+      //ユニオン終了処理開始
+      GameCommSys_ExitReq(game_comm);
+    }
+    return NULL;
+  }
+  
+  //デバッグ用チェック
+#ifdef  PM_DEBUG
+  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
+  if (event != NULL) {
+    return event;
+  }
+#endif //debug
+  
+//☆☆☆一歩移動チェックがここから
+  //座標イベントチェック
+  if( req.moveRequest )
+  {
+    GMEVENT * event = checkPosEvent_core( &req, DIR_NOT );
+    if ( event != NULL )
+    {
+      return event;
+    }
+
+#if 0
+   //座標接続チェック
+    event = checkExit(&req, fieldWork, req.now_pos);
+    if( event != NULL ){
+      return event;
+    }
+#endif
+  }
+
+//☆☆☆自機状態イベントチェックがここから
+    /* 今はない */
+
+//☆☆☆会話チェック
+
+	///通信用会話処理(仮
+  {
+    //通信イベント発生チェック
+    event = UnionEvent_CommCheck( gsys, fieldWork );
+    if(event != NULL){
+      return event;
+    }
+    
+    //通信話しかけイベント発生チェック
+    if(req.talkRequest){
+      event = UnionEvent_TalkCheck( gsys, fieldWork );
+      if(event != NULL){
+        return event;
+      }
+    }
+  }
+
+  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
+  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+		if(WIPE_SYS_EndCheck()){
+      return EVENT_FieldCommErrorProc(gsys, fieldWork);
+    }
+  }
+
+	//メニュー起動チェック
+	if( req.menuRequest ){
+		if(WIPE_SYS_EndCheck()){
+  			return EVENT_UnionMapMenu( gsys, fieldWork, req.heapID );
+		}
+	}
+
+	return NULL;
+}
+
+
+//======================================================================
+/**
+ * イベント起動チェック：ノーグリッドマップ
+ *
+ *	@param	gsys
+ *	@param	work 
+ *
+ *	@return
+ */
+//======================================================================
+GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
+{
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldmap_work;
+	FIELD_PLACE_NAME *place_name_sys;
+
+	// イベント起動チェック
+	event = eventCheckNoGrid( gsys, work );
+
+	// イベント生成時の処理
+	if( event != NULL )
+	{
+		// 地名表示ウィンドウを消去
+		fieldmap_work   = (FIELDMAP_WORK*)GAMESYSTEM_GetFieldMapWork( gsys );
+		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
+		FIELD_PLACE_NAME_Hide( place_name_sys );
+	}
+
+	return event;
+}
+
+
+//======================================================================
+/**
+ *	@brief  イベント起動チェック：ハイブリッドマップ
+ */
+//======================================================================
+GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
+{
+	FIELDMAP_WORK *fieldWork = work;
+  u32 base_system;
+  GMEVENT * event;
+  
+  // 現在のBaseシステムを取得 
+  base_system = FIELDMAP_GetBaseSystemType( fieldWork );
+  
+  if( base_system == FLDMAP_BASESYS_GRID )
+  {
+    event = FIELD_EVENT_CheckNormal_Wrap( gsys, work );
+  }
+  else
+  {
+    event = FIELD_EVENT_CheckNoGrid( gsys, work );
+  }
+
+  return event;
+}
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 判定用パラメータの生成
+ *
+ *
+ * 現状チェックごとに生成しているが実はほとんどの値は初期化時に一度だけでもいいのかも。
+ */
+//--------------------------------------------------------------
+static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork)
+{
+  GFL_STD_MemClear( req, sizeof(EV_REQUEST) );
+  req->heapID = FIELDMAP_GetHeapID(fieldWork);
+  req->gsys = gsys;
+  req->gamedata = GAMESYSTEM_GetGameData(gsys);
+	req->evdata = GAMEDATA_GetEventData(req->gamedata);
+  req->map_id = FIELDMAP_GetZoneID(fieldWork);
+
+  req->key_trg = GFL_UI_KEY_GetTrg();
+  req->key_cont = GFL_UI_KEY_GetCont();
+
+  req->fieldWork = fieldWork;
+  req->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  //自機動作ステータス更新
+  FIELD_PLAYER_UpdateMoveStatus( req->field_player );
+  //自機の動作状態を取得
+  req->player_value = FIELD_PLAYER_GetMoveValue( req->field_player );
+  req->player_state = FIELD_PLAYER_GetMoveState( req->field_player );
+  {
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+    req->player_dir = MMDL_GetDirDisp( fmmdl );
+    req->now_pos = MMDL_GetVectorPosAddress( fmmdl );
+  }
+  req->reserved_scr_id = FIELD_STATUS_GetReserveScript( GAMEDATA_GetFieldStatus(req->gamedata) );
+  
+  // アトリビュート取得
+  req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );
+
+  if (req->player_state == PLAYER_MOVE_STATE_END || req->player_state == PLAYER_MOVE_STATE_OFF )
+  {
+    req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
+
+    req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
+
+    //作成中だと止まったりするので、一時的に入力不可にします
+    req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
+  }
+  
+  req->moveRequest = 0;
+
+  if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
+    req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
+  }
+
+  req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
+
+  if( req->moveRequest ){
+    IWASAWA_Printf( "Req->MoveRequst\n");
+  }else if( req->stepRequest ) {
+    IWASAWA_Printf( "Req->StepRequst\n");
+  }
+  if ( ( (req->player_dir == DIR_UP) && (req->key_cont & PAD_KEY_UP) )
+      || ( (req->player_dir == DIR_DOWN) && (req->key_cont & PAD_KEY_DOWN) )
+      || ( (req->player_dir == DIR_LEFT) && (req->key_cont & PAD_KEY_LEFT) )
+      || ( (req->player_dir == DIR_RIGHT) && (req->key_cont & PAD_KEY_RIGHT) )
+     )
+  {
+    req->pushRequest = TRUE;
+  }
+  else 
+  {
+    req->pushRequest = FALSE;
+  }
+
+
+  req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
+  if (req->debugRequest)
+  {
+    req->talkRequest = FALSE;
+    //req->menuRequest = FALSE;
+    req->stepRequest = FALSE;
+    req->moveRequest = FALSE;
+    req->pushRequest = FALSE;
+    req->convRequest = FALSE;
+  }
+    
+}
+
+
+//======================================================================
+//
+//
+//  イベント起動チェック：POSイベント関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
  * @brief POSイベントチェック
  *
  * @param req EV_REQUEST
@@ -608,7 +908,7 @@ static GMEVENT* checkPosEvent( EV_REQUEST* req )
     return NULL;
   }
   // 通常POSイベントチェック
-  return checkPosEvent_direction( req, DIR_NOT );
+  return checkPosEvent_core( req, DIR_NOT );
 }
 //--------------------------------------------------------------
 /**
@@ -618,19 +918,54 @@ static GMEVENT* checkPosEvent( EV_REQUEST* req )
  * @return 起動したPOSイベント
  */
 //--------------------------------------------------------------
-static GMEVENT* checkPosEvent_direction( EV_REQUEST * req, u16 dir )
+static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir )
 {
   u16 id;
   VecFx32 pos;
   EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata ); 
   FIELD_PLAYER_GetPos( req->field_player, &pos );
-  id = EVENTDATA_CheckPosEvent( req->evdata, evwork, &pos, DIR_NOT ); 
+  id = EVENTDATA_CheckPosEvent( req->evdata, evwork, &pos, dir ); 
   if( id != EVENTDATA_ID_NONE ) 
   { //座標イベント起動
     GMEVENT* event = SCRIPT_SetEventScript( req->gsys, id, NULL, req->heapID );
     return event;
   } 
   return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief POSイベントチェック：向き指定あり
+ * @param req EV_REQUEST
+ * @return 起動したPOSイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
+{
+  GMEVENT * event;
+  FIELD_PLAYER_GRID * fpg;
+  u16 next_dir;
+
+  //現在の向きに適合するイベントの有無をチェック
+  event = checkPosEvent_core( req, req->player_dir );
+  if (event)
+  {
+    return event;
+  }
+
+  //fpg = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( FIELDMAP_GetMapCtrlWork( req->fieldWork ) );
+  fpg = FIELDMAP_GetPlayerGrid( req->fieldWork );
+  if ( fpg == NULL )
+  {
+    return NULL;
+  }
+  next_dir = FIELD_PLAYER_GRID_GetKeyDir( fpg, req->key_cont );
+  if ( next_dir == req->player_dir )
+  {
+    return NULL;
+  }
+  //現在の向き意外に、キーの先読みで自機が向く方向もチェック
+  return checkPosEvent_core( req, next_dir );
 }
 
 //--------------------------------------------------------------
@@ -707,293 +1042,6 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
   }
 
   return NULL;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動チェック と, イベント生成時の処理
- * @param	gsys GAMESYS_WORK
- * @param work FIELDMAP_WORK
- * @retval GMEVENT NULL=イベント無し
- */
-//--------------------------------------------------------------
-GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
-{
-	GMEVENT *event;
-	FIELD_PLACE_NAME *place_name_sys;
-	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
-  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
-  BOOL eff_delete_flag;
-
-  //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
-  EFFECT_ENC_CheckObjHit( encount );
-
-	// イベント起動チェック
-	event = FIELD_EVENT_CheckNormal( gsys, work, &eff_delete_flag );
-
-	// イベント生成時の処理
-	if( event != NULL )
-	{
-    if (eff_delete_flag)
-    {
-      EFFECT_ENC_EffectDelete( encount );
-    }
-		// 地名表示ウィンドウを消去
-		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
-		FIELD_PLACE_NAME_Hide( place_name_sys );
-	}
-
-	return event;
-}
-
-//==================================================================
-/**
- * イベント起動チェック：ユニオンorコロシアム
- *
- * @param   gsys		
- * @param   work		
- *
- * @retval  GMEVENT *		
- */
-//==================================================================
-GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
-{
-  EV_REQUEST req;
-	GMEVENT *event;
-	FIELDMAP_WORK *fieldWork = work;
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
-  
-  setupRequest( &req, gsys, fieldWork );
-
-  if(unisys == NULL){
-    //ユニオン終了
-    VecFx32 pos;
-    pos.x = 104 << FX32_SHIFT;
-    pos.y = 48;
-    pos.z = 88 << FX32_SHIFT;
-    return EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_C01PC0101, &pos, 0);
-  }
-  
-  if(UnionMain_GetFinishReq(unisys) == TRUE){
-    if(UnionMain_GetFinishExe(unisys) == FALSE){
-      //ユニオン終了処理開始
-      GameCommSys_ExitReq(game_comm);
-    }
-    return NULL;
-  }
-  
-  //デバッグ用チェック
-#ifdef  PM_DEBUG
-  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
-  if (event != NULL) {
-    return event;
-  }
-#endif //debug
-  
-//☆☆☆一歩移動チェックがここから
-  //座標イベントチェック
-  if( req.moveRequest )
-  {
-    GMEVENT * event = checkPosEvent_direction( &req, DIR_NOT );
-    if ( event != NULL )
-    {
-      return event;
-    }
-
-#if 0
-   //座標接続チェック
-    event = checkExit(&req, fieldWork, req.now_pos);
-    if( event != NULL ){
-      return event;
-    }
-#endif
-  }
-
-//☆☆☆自機状態イベントチェックがここから
-    /* 今はない */
-
-//☆☆☆会話チェック
-
-	///通信用会話処理(仮
-  {
-    //通信イベント発生チェック
-    event = UnionEvent_CommCheck( gsys, fieldWork );
-    if(event != NULL){
-      return event;
-    }
-    
-    //通信話しかけイベント発生チェック
-    if(req.talkRequest){
-      event = UnionEvent_TalkCheck( gsys, fieldWork );
-      if(event != NULL){
-        return event;
-      }
-    }
-  }
-
-  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
-  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
-		if(WIPE_SYS_EndCheck()){
-      return EVENT_FieldCommErrorProc(gsys, fieldWork);
-    }
-  }
-
-	//メニュー起動チェック
-	if( req.menuRequest ){
-		if(WIPE_SYS_EndCheck()){
-  			return EVENT_UnionMapMenu( gsys, fieldWork, req.heapID );
-		}
-	}
-
-	return NULL;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- * イベント起動チェック：ノーグリッドマップ
- *
- *	@param	gsys
- *	@param	work 
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
-{
-	GMEVENT *event;
-	FIELDMAP_WORK *fieldmap_work;
-	FIELD_PLACE_NAME *place_name_sys;
-
-	// イベント起動チェック
-	event = eventCheckNoGrid( gsys, work );
-
-	// イベント生成時の処理
-	if( event != NULL )
-	{
-		// 地名表示ウィンドウを消去
-		fieldmap_work   = (FIELDMAP_WORK*)GAMESYSTEM_GetFieldMapWork( gsys );
-		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
-		FIELD_PLACE_NAME_Hide( place_name_sys );
-	}
-
-	return event;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  イベント起動チェック：ハイブリッドマップ
- */
-//-----------------------------------------------------------------------------
-GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
-{
-	FIELDMAP_WORK *fieldWork = work;
-  u32 base_system;
-  GMEVENT * event;
-  
-  // 現在のBaseシステムを取得 
-  base_system = FIELDMAP_GetBaseSystemType( fieldWork );
-  
-  if( base_system == FLDMAP_BASESYS_GRID )
-  {
-    event = FIELD_EVENT_CheckNormal_Wrap( gsys, work );
-  }
-  else
-  {
-    event = FIELD_EVENT_CheckNoGrid( gsys, work );
-  }
-
-  return event;
-}
-
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-/**
- * @brief 判定用パラメータの生成
- *
- *
- * 現状チェックごとに生成しているが実はほとんどの値は初期化時に一度だけでもいいのかも。
- */
-//--------------------------------------------------------------
-static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork)
-{
-  GFL_STD_MemClear( req, sizeof(EV_REQUEST) );
-  req->heapID = FIELDMAP_GetHeapID(fieldWork);
-  req->gsys = gsys;
-  req->gamedata = GAMESYSTEM_GetGameData(gsys);
-	req->evdata = GAMEDATA_GetEventData(req->gamedata);
-  req->map_id = FIELDMAP_GetZoneID(fieldWork);
-
-  req->key_trg = GFL_UI_KEY_GetTrg();
-  req->key_cont = GFL_UI_KEY_GetCont();
-
-  req->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
-  //自機動作ステータス更新
-  FIELD_PLAYER_UpdateMoveStatus( req->field_player );
-  //自機の動作状態を取得
-  req->player_value = FIELD_PLAYER_GetMoveValue( req->field_player );
-  req->player_state = FIELD_PLAYER_GetMoveState( req->field_player );
-  {
-    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req->field_player );
-    req->player_dir = MMDL_GetDirDisp( fmmdl );
-    req->now_pos = MMDL_GetVectorPosAddress( fmmdl );
-  }
-  req->reserved_scr_id = FIELD_STATUS_GetReserveScript( GAMEDATA_GetFieldStatus(req->gamedata) );
-  
-  // アトリビュート取得
-  req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );
-
-  if (req->player_state == PLAYER_MOVE_STATE_END || req->player_state == PLAYER_MOVE_STATE_OFF )
-  {
-    req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
-
-    req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
-
-    //作成中だと止まったりするので、一時的に入力不可にします
-    req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
-  }
-  
-  req->moveRequest = 0;
-
-  if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
-    req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
-  }
-
-  req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
-
-  if( req->moveRequest ){
-    IWASAWA_Printf( "Req->MoveRequst\n");
-  }else if( req->stepRequest ) {
-    IWASAWA_Printf( "Req->StepRequst\n");
-  }
-  if ( ( (req->player_dir == DIR_UP) && (req->key_cont & PAD_KEY_UP) )
-      || ( (req->player_dir == DIR_DOWN) && (req->key_cont & PAD_KEY_DOWN) )
-      || ( (req->player_dir == DIR_LEFT) && (req->key_cont & PAD_KEY_LEFT) )
-      || ( (req->player_dir == DIR_RIGHT) && (req->key_cont & PAD_KEY_RIGHT) )
-     )
-  {
-    req->pushRequest = TRUE;
-  }
-  else 
-  {
-    req->pushRequest = FALSE;
-  }
-
-
-  req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
-  if (req->debugRequest)
-  {
-    req->talkRequest = FALSE;
-    //req->menuRequest = FALSE;
-    req->stepRequest = FALSE;
-    req->moveRequest = FALSE;
-    req->pushRequest = FALSE;
-    req->convRequest = FALSE;
-  }
-    
 }
 
 //======================================================================
@@ -1678,37 +1726,6 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 
 
-#if 0
-  { //波乗りテスト
-
-    if( req.player_state == PLAYER_MOVE_STATE_END ||
-        req.player_state == PLAYER_MOVE_STATE_OFF )
-    {
-#if 0
-      if( req.key_trg & PAD_BUTTON_SELECT ){
-        event = checkEvent_PlayerNaminoriStart( &req, gsys, fieldWork );
-        if( event != NULL ){
-          return event;
-       }
-      }
-#endif         
-      #ifdef PM_DEBUG
-      if( !(req.debugRequest) ){
-        event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
-        if( event != NULL ){
-         return event;
-       }
-      }
-      #else
-      event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
-      if( event != NULL ){
-        return event;
-      }
-      #endif
-    }
-  }
-#endif
-  
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
@@ -2148,79 +2165,11 @@ static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
 {
   return FALSE;
 }
+
 //======================================================================
 //  便利ボタンイベント
 //======================================================================
-#if 0 //Yボタンを便利メニューに置き換えたため不要。後で消しますnagihashi
-typedef struct
-{
-  GAMESYS_WORK *gsys;
-  FIELDMAP_WORK *fieldWork;
-}EVWORK_CONVBTN;
 
-static GMEVENT_RESULT event_ConvenienceButton(
-    GMEVENT *event, int *seq, void *wk )
-{
-  //仮 自転車テスト
-  EVWORK_CONVBTN *work = wk;
-  FIELD_PLAYER *fld_player;
-  FIELDMAP_CTRL_GRID *gridMap;
-  FIELD_PLAYER_GRID *gjiki;
-  PLAYER_MOVE_FORM form;
-  
-  gridMap = FIELDMAP_GetMapCtrlWork( work->fieldWork );
-  gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
-  
-  fld_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
-  form = FIELD_PLAYER_GetMoveForm( fld_player );
-  
-  switch( form ){
-  case PLAYER_MOVE_FORM_NORMAL:
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
-    break;
-  case PLAYER_MOVE_FORM_CYCLE:
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
-    break;
-  default:
-    GF_ASSERT( 0 ); //歩行,自転車ではないのにイベントが実行されている
-  }
-  
-  return GMEVENT_RES_FINISH;
-} 
-
-static GMEVENT * eventSet_ConvenienceButton( const EV_REQUEST *req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-  GMEVENT *event;
-  EVWORK_CONVBTN *work;
-  GF_ASSERT( fieldWork != NULL );
-  event = GMEVENT_Create(
-      gsys, NULL, event_ConvenienceButton, sizeof(EVWORK_CONVBTN) );
-  work = GMEVENT_GetEventWork( event );
-  work->gsys = gsys;
-  work->fieldWork = fieldWork;
-  return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-  { //イベントチェック
-  }
-  
-  { //イベント発行
-    GMEVENT *event;
-    event = eventSet_ConvenienceButton( req, gsys, fieldWork );
-    return( event );
-  }
-}
-#endif
 //======================================================================
 //  波乗りイベント
 //======================================================================
