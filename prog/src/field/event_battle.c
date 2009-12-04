@@ -206,7 +206,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     // 戦闘用ＢＧＭセット
     switch ( FIELD_SOUND_GetBGMPushCount( fsnd ) )
     {
-    case FSND_PUSHCOUNT_NONE: 
+    case FSND_PUSHCOUNT_NONE:
       //通常フィールドBGM階層をPush
       FIELD_SOUND_PushBGM( fsnd );
       break;
@@ -349,19 +349,20 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
     RES_ERR,
   };
 
-  static const u8 result_table[6][3] = {
-    //野生        トレーナー  通信
-    { RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_LOSE
-    { RES_WIN,    RES_WIN,    RES_WIN },    //BTL_RESULT_WIN
-    { RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_DRAW
-    { RES_WIN,    RES_ERR,    RES_LOSE },   //BTL_RESULT_RUN
-    { RES_WIN,    RES_ERR,    RES_WIN },    //BTL_RESULT_RUN_ENEMY
-    { RES_WIN,    RES_ERR,    RES_ERR },    //BTL_RESULT_CAPTURE
+  static const u8 result_table[ BTL_RESULT_MAX ][ BTL_COMPETITOR_MAX ] = {
+    //野生        トレーナー  サブウェイ  通信
+    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_LOSE
+    { RES_WIN,    RES_WIN,    RES_WIN,    RES_WIN  },   //BTL_RESULT_WIN
+    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_DRAW
+    { RES_WIN,    RES_ERR,    RES_LOSE,   RES_LOSE },   //BTL_RESULT_RUN
+    { RES_WIN,    RES_ERR,    RES_WIN,    RES_WIN  },   //BTL_RESULT_RUN_ENEMY
+    { RES_WIN,    RES_ERR,    RES_ERR,    RES_ERR  },   //BTL_RESULT_CAPTURE
   };
 
   SDK_COMPILER_ASSERT( BTL_COMPETITOR_WILD == 0 );
   SDK_COMPILER_ASSERT( BTL_COMPETITOR_TRAINER == 1 );
-  SDK_COMPILER_ASSERT( BTL_COMPETITOR_COMM == 2 );
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_SUBWAY == 2 );
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_COMM == 3 );
   SDK_COMPILER_ASSERT( BTL_RESULT_CAPTURE == 5 );
 
   u8 lose_flag;

@@ -1270,7 +1270,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     }
   }
 // 全く同じプライオリティ値があったらランダムシャッフル
-// @@@ 未実装
+// @todo 未実装
 
 //
 

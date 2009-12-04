@@ -2691,7 +2691,7 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
       else
       {
         u8  clientID = args[0];
-        u8  fNPC = (BTL_MAIN_GetClientTrainerID(wk->mainModule, clientID) != TRID_NULL);
+        u8  fNPC = BTL_MAIN_IsClientNPC( wk->mainModule, clientID );
         u16 strID;
 
         if( dir == BTL_ROTATEDIR_L ){

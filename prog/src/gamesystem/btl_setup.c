@@ -152,7 +152,7 @@ static void setup_common_situation( BTL_FIELD_SITUATION* sit )
   sit->bgAttr = BATTLE_BG_ATTR_LAWN;
   sit->timeZone = TIMEZONE_MORNING;
   sit->season = PMSEASON_SPRING;
-  sit->weather = BTL_WEATHER_NONE; 
+  sit->weather = BTL_WEATHER_NONE;
 }
 
 /*
@@ -163,7 +163,7 @@ static void setup_common_situation( BTL_FIELD_SITUATION* sit )
 static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
-  tr_data->name = 	GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+  tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
 
   return tr_data;
 }
@@ -175,7 +175,7 @@ static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
  */
 static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data )
 {
-	GFL_STR_DeleteBuffer( tr_data->name );
+  GFL_STR_DeleteBuffer( tr_data->name );
 
   GFL_HEAP_FreeMemory( tr_data );
 }
@@ -204,7 +204,7 @@ static void setup_player_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEA
 
   dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
   PokeParty_Copy( GAMEDATA_GetMyPokemon( gameData ), dst->partyPlayer );
-  
+
   dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
   tr_data = dst->tr_data[BTL_CLIENT_PLAYER];
 
@@ -250,8 +250,8 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
  * @param   gameData
  * @param   heapID
  * @param   rule
- * @param   partyEnemy 
- * @param   sit 
+ * @param   partyEnemy
+ * @param   sit
  *
  * @li  内部でメモリの確保を行います。
  *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
@@ -271,8 +271,6 @@ void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
 
   bp->competitor = BTL_COMPETITOR_WILD;
   bp->rule = rule;
-
-  bp->trID = TRID_NULL;
 }
 
 //=============================================================================================
@@ -301,8 +299,6 @@ static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = rule;
-
-//  dst->trID = trID;
 }
 
 //=============================================================================================
@@ -330,7 +326,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   sit.bgAttr = BATTLE_BG_ATTR_NORMAL_GROUND;
 
   setup_common( dst, gameData, &sit );
-  setup_player_param( dst, gameData, heapID ); 
+  setup_player_param( dst, gameData, heapID );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = rule;
@@ -339,8 +335,6 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   dst->commMode = commMode;
   dst->netID = GFL_NET_GetNetID( netHandle );
   dst->multiMode = multi;
-
-  dst->trID = TRID_NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -354,7 +348,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
  * @param   dst
  * @param   gameData
  * @param   partyEnemy
- * @param   sit 
+ * @param   sit
  * @param   trID
  *
  * @li  内部でメモリの確保を行います。
@@ -367,8 +361,6 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_Trainer( dst, gameData, BTL_RULE_SINGLE, sit, heapID );
 
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
-
-  dst->trID = trID; //@todo
 }
 
 //=============================================================================================
@@ -389,9 +381,8 @@ void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
-  
+
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
-  dst->trID = trID; //@todo
 }
 //=============================================================================================
 /**
@@ -412,7 +403,6 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_TRIPLE, sit, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
-  dst->trID = trID; //@todo
 }
 
 //=============================================================================================
@@ -434,7 +424,6 @@ void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_ROTATION, sit, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
-  dst->trID = trID; //@todo
 }
 
 //=============================================================================================
@@ -456,10 +445,9 @@ void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID tr_id0, TrainerID tr_id1, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
-  
+
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
-  dst->trID = tr_id0; //@todo
 }
 
 //=============================================================================================
@@ -481,11 +469,10 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID partner, TrainerID tr_id0, TrainerID tr_id1, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
-  
+
   setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->partyPartner, partner, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
-  dst->trID = tr_id0; //@todo
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -588,3 +575,15 @@ void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_CommTrainer( dst, gameData, BTL_RULE_ROTATION, FALSE, netHandle, commMode, heapID );
 }
+
+
+/*
+ *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え
+ */
+void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
+{
+  if( dst->competitor == BTL_COMPETITOR_TRAINER ){
+    dst->competitor = BTL_COMPETITOR_SUBWAY;
+  }
+}
+

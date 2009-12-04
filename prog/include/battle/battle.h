@@ -48,8 +48,11 @@ typedef enum {
 typedef enum {
 
   BTL_COMPETITOR_WILD,    ///< 野生
-  BTL_COMPETITOR_TRAINER,   ///< ゲーム内トレーナー
+  BTL_COMPETITOR_TRAINER, ///< ゲーム内トレーナー
+  BTL_COMPETITOR_SUBWAY,  ///< バトルサブウェイトレーナー
   BTL_COMPETITOR_COMM,    ///< 通信対戦
+
+  BTL_COMPETITOR_MAX,
 
 }BtlCompetitor;
 
@@ -100,6 +103,8 @@ typedef enum {
   BTL_RESULT_RUN_ENEMY,   ///< 相手が逃げた（野生のみ）
   BTL_RESULT_CAPTURE,     ///< 捕まえた（野生のみ）
 
+  BTL_RESULT_MAX,
+
 }BtlResult;
 
 typedef enum{
@@ -120,7 +125,7 @@ typedef struct {
   BtlBgType   bgType;
   BtlBgAttr   bgAttr;
   BtlWeather  weather;
-  
+
   TIMEZONE    timeZone;
   u8          season;
 }BTL_FIELD_SITUATION;
@@ -132,21 +137,21 @@ typedef struct {
 //-----------------------------------------------------------------------------------
 typedef struct {
   u32     tr_id;
-  u32	    tr_type;					//トレーナー分類
+  u32     tr_type;          //トレーナー分類
   u32     ai_bit;
- 	u16			use_item[4];      //使用道具
+  u16     use_item[4];      //使用道具
 
   STRBUF*   name; //トレーナー名
 
   //バトルサブウェイ他 Wifi-DLトレーナーとの対戦時にのみ必要
-  PMS_DATA	win_word;   //戦闘終了時勝利メッセージ
-  PMS_DATA	lose_word;  //戦闘終了時負けメッセージ
+  PMS_DATA  win_word;   //戦闘終了時勝利メッセージ
+  PMS_DATA  lose_word;  //戦闘終了時負けメッセージ
 
 }BSP_TRAINER_DATA;
 
 //-----------------------------------------------------------------------------------
 /**
- *  バトルセットアップパラメータ 
+ *  バトルセットアップパラメータ
  */
 //-----------------------------------------------------------------------------------
 typedef struct {
@@ -166,13 +171,13 @@ typedef struct {
   u8              commPos;    ///< 通信対戦なら自分の立ち位置（非通信時は無視）
   u8              netID;      ///< NetID
   u8              multiMode;  ///< ダブルの時、１だとマルチバトル。
+  u8              fExpDisable;///< TRUEだと経験値取得を行わない
 
   //対戦データ
   POKEPARTY*      partyPlayer;  ///< プレイヤーのパーティ
   POKEPARTY*      partyPartner; ///< 2vs2時の味方AI（不要ならnull）
   POKEPARTY*      partyEnemy1;  ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
   POKEPARTY*      partyEnemy2;  ///< 2vs2時の２番目敵AI用（不要ならnull）
-  TrainerID       trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
 
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM]; //トレーナーデータ
 

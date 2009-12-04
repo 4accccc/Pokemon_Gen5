@@ -73,7 +73,9 @@ struct _BTL_POKE_CONTAINER {
 
 typedef struct {
   MYSTATUS*   playerStatus;
-  u32         trainerID;
+  u16         trainerType;
+  u16         trainerID;
+  STRBUF*     name;
 }BTL_TRAINER_DATA;
 
 struct _BTL_MAIN_MODULE {
@@ -162,7 +164,7 @@ static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty );
 static void trainerParam_Init( BTL_MAIN_MODULE* wk );
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
 static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData );
-static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, u32 trainerID );
+static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAINER_DATA* trData );
 static void srcParty_Init( BTL_MAIN_MODULE* wk );
 static void srcParty_Quit( BTL_MAIN_MODULE* wk );
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
@@ -469,7 +471,7 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->ImServer = TRUE;
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
@@ -578,7 +580,7 @@ static BOOL setup_alone_double( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
@@ -664,7 +666,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
@@ -729,7 +731,7 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
@@ -2645,6 +2647,13 @@ u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
   return wk->myClientID;
 }
 
+u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
+{
+  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
+  pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
+  return BTL_MAIN_BtlPosToClientID( wk, pos );
+}
+
 
 //=============================================================================================
 /**
@@ -2727,10 +2736,14 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
     BTL_Printf("捕獲ポケ位置=%d, Index=%d\n", pos, posIdx );
   }
 }
-
-//---------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------
-
+//=============================================================================================
+/**
+ * おこずかいボーナス額の受け付け
+ *
+ * @param   wk
+ * @param   volume
+ */
+//=============================================================================================
 void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 {
   wk->bonusMoney += volume;
@@ -2738,34 +2751,6 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
     wk->bonusMoney = BTL_BONUS_MONEY_MAX;
   }
 }
-
-
-TrainerID BTL_MAIN_GetTrainerID( const BTL_MAIN_MODULE* wk )
-{
-  return wk->setupParam->trID;
-}
-
-u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
-{
-  const BTL_TRAINER_DATA* trData = &wk->trainerParam[ clientID ];
-  u16 type;
-
-  if( trData->playerStatus )
-  {
-    if( MyStatus_GetMySex( trData->playerStatus ) == PTL_SEX_FEMALE ){
-      type = TRTYPE_HEROINE;
-    }else{
-      type = TRTYPE_HERO;
-    }
-  }
-  else
-  {
-    type = TT_TrainerDataParaGet( trData->trainerID, ID_TD_tr_type );
-  }
-  return type;
-}
-
-
 
 //----------------------------------------------------------------------------------------------
 // トレーナーパラメータ関連
@@ -2785,33 +2770,41 @@ static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
   {
     if( wk->trainerParam[i].playerStatus ){
       GFL_HEAP_FreeMemory( wk->trainerParam[i].playerStatus );
+      GFL_HEAP_FreeMemory( wk->trainerParam[i].name );
     }
   }
 }
 static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData )
 {
   dst->playerStatus = MyStatus_AllocWork( heapID );
-  BTL_Printf("*** playerStatus=%p\n", dst->playerStatus );
   MyStatus_Copy( playerData, dst->playerStatus );
+
   dst->trainerID = TRID_NULL;
+  dst->trainerType = (MyStatus_GetMySex(dst->playerStatus) == PTL_SEX_MALE)? TRTYPE_HERO : TRTYPE_HEROINE;
+  dst->name = MyStatus_CreateNameString( dst->playerStatus, HEAPID_BTL_SYSTEM );
 }
-static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, u32 trainerID )
+static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAINER_DATA* trData )
 {
   dst->playerStatus = NULL;
-  dst->trainerID = trainerID;
-}
 
+  dst->trainerID = trData->tr_id;
+  dst->trainerType = trData->tr_type;
+  dst->name = trData->name;
+}
+BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  return ( wk->trainerParam[clientID].playerStatus == NULL );
+}
+// string x 2
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  BTL_Printf("ClientID=%d, trainerID=%d\n", clientID, wk->trainerParam[clientID].trainerID);
   return wk->trainerParam[clientID].trainerID;
 }
-
-u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
+// scu x 2
+u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
-  pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
-  return BTL_MAIN_BtlPosToClientID( wk, pos );
+  const BTL_TRAINER_DATA* trData = &wk->trainerParam[ clientID ];
+  return trData->trainerType;
 }
 
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )
@@ -2940,7 +2933,6 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
     BPP_ReflectByPP( bpp );
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * バトル内パーティデータを、結果としてセットアップパラメータに書き戻す
@@ -2976,7 +2968,6 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     srcParty_RefrectBtlParty( wk, clientID );
     srcParty = srcParty_Get( wk, clientID );
     PokeParty_Copy( srcParty, wk->setupParam->partyEnemy1 );
-
   }
 }
 

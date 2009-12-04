@@ -63,6 +63,12 @@ extern POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_
 extern void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit );
 
 
+/*
+ *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え
+ */
+extern void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst );
+
+
 ////////////////////////////////////////////////////////////////////////
 /*
  * BATTLE_SETUP_PARAM初期化ユーティリティ関数群

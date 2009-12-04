@@ -662,7 +662,6 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-      TrainerID  trID = BTL_MAIN_GetTrainerID( wk->mainModule );
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle_NPC, 2, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
