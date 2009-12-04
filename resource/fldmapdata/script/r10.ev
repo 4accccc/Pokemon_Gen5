@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r10.h"
-  //.include  "r10.h"
+  .include  "r10.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,86 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r10
+_EVENT_DATA    ev_pos_r10_rival_01
+_EVENT_DATA    ev_bg_r10_board_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*【仮】POS：ライバルがチャンピオンの事を心配する             */
+/**************************************************************/
+
+EVENT_START   ev_pos_r10_rival_01
+	
+	//OBJ作成
+	//_FLAG_RESET(FV_R10_RIVAL_01)
+	//_OBJ_ADD( R10_RIVAL_01 )
+	
+	//ライバルかけよって来る
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_come )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r10_player_turn )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_r10_black_01 , R10_RIVAL_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	
+	//はい
+	IF $SCWK_ANSWER == SCR_YES THEN
+	_BALLOONWIN_OBJMSG( msg_r10_black_02 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//いいえ
+	ELSE
+	_BALLOONWIN_OBJMSG( msg_r10_black_03 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	ENDIF
+	
+	//頼んだぞ！と言い残して退場
+	_BALLOONWIN_OBJMSG( msg_r10_black_04 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_bye )
+	_OBJ_ANIME_WAIT()
+	
+	//OBJ削除
+	//_OBJ_DEL( R10_RIVAL_01 )
+	
+	//==================================//
+	//バニッシュフラグ操作
+	//_FLAG_SET(FV_R10_RIVAL_01)
+
+	//フラグ操作
+	$WK_SCENE_R10 = 1
+	//==================================//
+	
+EVENT_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*看板01（10番道路用）                                        */
 /**************************************************************/
-//ev_r10_flag_change:
-//  _END
+EVENT_START  ev_bg_r10_board_01
+	_EASY_MSG( msg_r10_sign1_01 )
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r10:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル登場
+//--------------------------------------------------------------
 
+_ANIME_LABEL	anm_r10_rival_come
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r10_player_turn
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r10_rival_bye
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0

@@ -5,6 +5,7 @@
 #define _R10_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R10 (1)
+#define SCRID_POS_R10_RIVAL_01 (1)
+#define SCRID_BG_R10_BOARD_01 (2)
 
 #endif //_R10_DEF_H_

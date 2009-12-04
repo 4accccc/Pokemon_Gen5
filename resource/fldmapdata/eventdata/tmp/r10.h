@@ -12,5 +12,6 @@
 #ifndef ZONE_R10_EVC_H
 #define ZONE_R10_EVC_H
 
+#define R10_RIVAL_01                       0
 
 #endif //ZONE_R10_EVC_H

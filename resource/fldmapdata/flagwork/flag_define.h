@@ -615,7 +615,7 @@
 #define FV_D04R0101_CORN_01                591 /* 0x024f 道路のコーン（ストッパー） */
 #define FV_C03R0801_FUTAGO_01              592 /* 0x0250 遊覧船イベントの双子ちゃん１（左側） */
 #define FV_C03R0801_FUTAGO_02              593 /* 0x0251 遊覧船イベントの双子ちゃん２（右側） */
-		/* not used   594(0x0252) */
+#define FV_R10_RIVAL_01                    594 /* 0x0252 10番道路ライバル */
 		/* not used   595(0x0253) */
 		/* not used   596(0x0254) */
 		/* not used   597(0x0255) */
