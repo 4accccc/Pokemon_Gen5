@@ -30,6 +30,5 @@ extern VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk );
 
 

@@ -581,27 +581,3 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
   }
 }
 
-//======================================================================
-//
-//
-//    3Dデモ関連
-//
-//
-//======================================================================
-//--------------------------------------------------------------
-/**
- * @brief   デモ呼び出し
- * @param	core		仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- *
- * @todo  まだ仮コマンドに過ぎない。3Dデモ呼び出しが完成したら追加する
- *
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
-{
-  u16 demo_no = SCRCMD_GetVMWorkValue( core, wk );
-  return VMCMD_RESULT_SUSPEND;
-}
-
