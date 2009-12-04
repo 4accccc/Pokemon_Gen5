@@ -125,5 +125,51 @@ VMCMD_RESULT EvCmdPlBoat_AddTime( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 部屋の情報をセットする　　
+ * @note    2009年12月　現在はトレーナー戦闘フラグのセット以外は処理をスルーします
+ * @param   core          仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlBoat_SetRoomInfo( VMHANDLE *core, void *wk )
+{
+  u16 room_idx;
+  u16 info_kind;
+  u16 param;
+  u16 set_val;
 
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
+
+  room_idx = SCRCMD_GetVMWorkValue( core, work );
+  info_kind = VMGetU16( core );
+  param = VMGetU16( core );
+  set_val = SCRCMD_GetVMWorkValue( core, work );
+
+  switch(info_kind){
+  case PL_BOAT_ROOM_INFO_OBJ_CODE:
+  case PL_BOAT_ROOM_INFO_NPC_TYPE:
+  case PL_BOAT_ROOM_INFO_TR_ID:
+  case PL_BOAT_ROOM_INFO_MSG:
+    break;
+  case PL_BOAT_ROOM_INFO_BTL_FLG:
+    {
+      BOOL flg;
+      if ( set_val == PL_BOAT_TR_BTL_ALREADY ) flg = TRUE;
+      else flg = FALSE;
+
+      PL_BOAT_SetBtlFlg(*ptr, room_idx, flg);
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
