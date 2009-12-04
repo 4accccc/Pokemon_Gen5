@@ -71,10 +71,6 @@ typedef struct {
 extern const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel;
 
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-extern void DEBUG_ConvertAsciiToUTF16( const u8 * ascii, u32 size, u16 * utf16_buf );
-
-//--------------------------------------------------------------
 /*
  *  @brief  デバッグメニュー初期化
  */

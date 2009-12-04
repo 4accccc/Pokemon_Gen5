@@ -401,29 +401,6 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 
 //--------------------------------------------------------------
 /**
- * ZONE_ID->STRCODE
- * @param heapID  文字列バッファ確保用ヒープID
- * @param zoneID  文字列を取得したいzoneID
- * @retval  u16*  zoneID文字列が格納されたu16*(開放が必要
- */
-//--------------------------------------------------------------
-static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
-{
-  u16 *pStrBuf;
-  char name8[64];
-  
-  pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*64 );
-#if 0
-  ZONEDATA_DEBUG_GetZoneName( (char*)name8, zoneID );
-  DEBUG_ConvertAsciiToUTF16( name8, 64, pStrBuf );
-#endif
-  ZONEDATA_DEBUG_GetZoneName( name8, zoneID );
-  DEB_STR_CONV_SjisToStrcode( name8, pStrBuf, 64 );
-  return pStrBuf;
-}
-
-//--------------------------------------------------------------
-/**
  * Zone ID Name -> BMP_MENULIST_DATA 
  * @param heapID  テンポラリ文字列確保用heapID
  * @param zoneID  文字列を取得したいzoneID
@@ -434,11 +411,29 @@ static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
 static void DEBUG_SetSTRBUF_ZoneIDName(
     u32 heapID, u32 zoneID, STRBUF *strBuf )
 {
-  u16 *str = DEBUG_GetZoneNameUTF16( heapID, zoneID );
-  GFL_STR_SetStringCode( strBuf, str );
-  GFL_HEAP_FreeMemory( str );
+  u16 *pStrCode;
+  char name8[64];
+  
+  pStrCode = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*64 );
+
+  ZONEDATA_DEBUG_GetZoneName( name8, zoneID );
+  DEB_STR_CONV_SjisToStrcode( name8, pStrCode, 64 );
+  GFL_STR_SetStringCode( strBuf, pStrCode );
+
+  GFL_HEAP_FreeMemory( pStrCode );
 }
 
+static void setDebugZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf )
+{
+  u16 pStrCode[64];
+  
+  //pStrCode = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*64 );
+
+  DEB_STR_CONV_SjisToStrcode( &allName[ ZONEDATA_NAME_LENGTH * zoneID ], pStrCode, 64 );
+  GFL_STR_SetStringCode( strBuf, pStrCode );
+
+  //GFL_HEAP_FreeMemory( pStrCode );
+}
 //--------------------------------------------------------------
 /**
  * 何処でもジャンプ用BMP_MENULIST_DATAセット
@@ -451,6 +446,7 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
     GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   int id,max = ZONEDATA_GetZoneIDMax();
+  const char * nameAllBuf = ZONEDATA_GetAllZoneName( heapID );
   STRBUF *strBuf1 = GFL_STR_CreateBuffer( 64, heapID );
   STRBUF *strBuf2 = GFL_STR_CreateBuffer( 64, heapID );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
@@ -462,8 +458,8 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
     GFL_STR_ClearBuffer( strBuf1 );
     GFL_MSG_GetString( pMsgData,  str_id, strBuf1 );  // 地名文字列を取得
     GFL_STR_ClearBuffer( strBuf2 );
-    DEBUG_SetSTRBUF_ZoneIDName( heapID, id, strBuf2 );
-    //GFL_STR_AddCode( strBuf1, DEBUG_ASCIICODE_UTF16('+') );
+    setDebugZoneIDStr( nameAllBuf, id, strBuf2 );
+ //   DEBUG_SetSTRBUF_ZoneIDName( heapID, id, strBuf2 );
     GFL_STR_AddString( strBuf2, strBuf1 );
     FLDMENUFUNC_AddStringListData( list, strBuf2, id, heapID );
   }
@@ -471,6 +467,7 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
   GFL_MSG_Delete( pMsgData );
   GFL_HEAP_FreeMemory( strBuf1 );
   GFL_HEAP_FreeMemory( strBuf2 );
+  GFL_HEAP_FreeMemory( (void*)nameAllBuf );
 }
 
 //--------------------------------------------------------------
