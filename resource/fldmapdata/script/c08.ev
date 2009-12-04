@@ -29,8 +29,12 @@ _EVENT_DATA    ev_c08_iss_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/* POS：チャンピオンとジムリーダー                            */
+/* POS：【仮】チャンピオンとジムリーダー                       */
 /**************************************************************/
+
+//OBJ位置とアニメーションは仮
+//OBJ_DEL、FLAG_SETなどを行う必要あり
+//SUB_WINの処理が仮
 
 //ジム挑戦可能になるまで表示
 EVENT_START   ev_pos_c08_champions_01
@@ -54,44 +58,54 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
 	
 	//群集反応	サブウィンドウ表示
+	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_c08_crowd1_01 , 10 , 15 , 1 ) 
-	_TIME_WAIT( 30 )
-	_BALLOONWIN_CLOSE() //バルーン削除 即次へ
-	_SUBWIN_CLOSE( 1 )	
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c08_crowd2_01 , 5 , 20 , 2 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c08_crowd3_01 , 18 , 20 , 3 )
 	
-	/*
-	_SUBWIN_MSG( msg_c08_crowd2_01 , 5 , 5 , 2 )
+	//10フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 10 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 1 )
-	_SUBWIN_MSG( msg_c08_crowd3_01 , 5 , 5 , 3 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 2 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 3 )
-	*/
+	
 	
 	//ゲーヂスの演説その２
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
-	_BALLOONWIN_CLOSE()
 	
 	//群集反応
-	/*
+	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_c08_crowd1_02 , 15 , 15 , 4 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_c08_crowd3_02 , 20 , 20 , 5 )
+	
+	
+	//10フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 10 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 4 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 5 )
-	*/
 	
 	//ゲーヂスの演説
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_03 , C08_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
+	
 	//群集反応
-	/*
-	_SUBWIN_MSG( msg_c08_crowd1_03 , 10 , 10 , 6 )
-	_SUBWIN_MSG( msg_c08_crowd2_02 , 15 , 15 , 7 )
-	_SUBWIN_CLOSE( 6 )
-	_SUBWIN_MSG( msg_c08_crowd3_03 , 20 , 20 , 8 )
-	_SUBWIN_CLOSE( 7 )
-	_SUBWIN_CLOSE( 8 )
-	*/
+	_BALLOONWIN_OBJMSG( msg_c08_crowd1_03 , C08_OLDMAN_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_crowd2_02 , C08_MAN3_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_crowd3_03 , C08_WOMAN2_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//群集散ってゆくアニメーション
 	
