@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-26T12:42:27"/>
+	<create user="taya" host="W00146" date="2009-12-04T19:43:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,6 +365,10 @@
 		<language name="JPN" width="256">わざエフェクト</language>
 	</row>
 
+	<row id="DBGF_LABEL_SUBWAY">
+		<language name="JPN" width="256">サブウェイ</language>
+	</row>
+
 	<row id="DBGF_ITEM_SAVE">
 		<language name="JPN" width="256">セーブ</language>
 	</row>
@@ -443,6 +447,14 @@
 
 	<row id="DBGF_ITEM_WAZAEFF_OFF">
 		<language name="JPN" width="256">みない</language>
+	</row>
+
+	<row id="DBGF_ITEM_SUBWAY_OFF">
+		<language name="JPN" width="256">オフ</language>
+	</row>
+
+	<row id="DBGF_ITEM_SUBWAY_ON">
+		<language name="JPN" width="256">オン</language>
 	</row>
 
 	<row id="DBGF_BG_00">
