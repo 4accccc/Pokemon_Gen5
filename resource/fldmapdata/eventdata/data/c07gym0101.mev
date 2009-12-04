@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/03 19:36:16
+#save date:2009/12/04 11:07:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -505,7 +505,7 @@ POS_C07GYM0101_ZIMEN_04
 #Pos Script Name
 SCRID_POS_C07GYM0101_ZIMEN_04
 #Pos Check Type
-POS_CHECK_TYPE_NORMAL
+POS_CHECK_TYPE_DOWN
 #Event Trigger Work Name
 LOCALWORK10
 #Event Trigger Work Value
@@ -522,7 +522,7 @@ POS_C07GYM0101_ZIMEN_05
 #Pos Script Name
 SCRID_POS_C07GYM0101_ZIMEN_05
 #Pos Check Type
-POS_CHECK_TYPE_LEFT
+POS_CHECK_TYPE_UP
 #Event Trigger Work Name
 LOCALWORK10
 #Event Trigger Work Value
