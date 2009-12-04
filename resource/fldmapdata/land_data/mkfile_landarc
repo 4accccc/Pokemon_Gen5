@@ -75,6 +75,6 @@ clean:
 	-rm -f $(TARGET_ARC)
 	-rm -f $(TARGET_ARCIDX)
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-	-rm -f $(LAND_TEMP_LIST)
-	-rm -f $(LAND_DEPEND_LIST)
+	@-rm -f $(LAND_TEMP_LIST)
+	@-rm -f $(LAND_DEPEND_LIST)
 endif #CONVERTUSER
