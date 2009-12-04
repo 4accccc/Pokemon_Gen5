@@ -512,6 +512,34 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELDMAP_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+	switch (*seq) {
+  case 0:
+    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeOut( gsys, fieldmap ) );
+		(*seq)++;
+		break;
+  case 1:
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 2:
+    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeIn( gsys, fieldmap ) );
+		(*seq) ++;
+		break;
+  case 3:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work)
 {
 	MAPCHANGE_WORK * mcw = work;
@@ -799,6 +827,27 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	GMEVENT * event;
 
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys );
+
+	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
+		GF_ASSERT( 0 );
+		zone_id = 0;
+	}
+	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
+  mcw->exit_type = EXIT_TYPE_NONE;
+	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_QuickChangeMapDefaultPos(GAMESYS_WORK * gsys,
+		FIELDMAP_WORK * fieldmap, u16 zone_id)
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, DEBUG_EVENT_QuickMapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
   MAPCHANGE_WORK_init( mcw, gsys );
 

@@ -139,6 +139,26 @@ extern GMEVENT * EVENT_FlySkyBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fiel
 extern GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                     FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
 
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用 即時アウト
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT* DEBUG_EVENT_QuickFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap); 
+
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用 即時イン
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT* DEBUG_EVENT_QuickFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap); 
+
 
 //============================================================================================
 // ■フィールドマップの開始/終了

@@ -153,7 +153,7 @@ static GMEVENT_RESULT debugMenuZoneSelectEvent(
       
       {
         GMEVENT * mapchange_event;
-        mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
+        mapchange_event = DEBUG_EVENT_QuickChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
         GMEVENT_ChangeEvent( event, mapchange_event );
       }
     }

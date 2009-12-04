@@ -167,6 +167,19 @@ static GMEVENT_RESULT FieldCrossOutEvent(GMEVENT * event, int *seq, void * work)
 
 //------------------------------------------------------------------
 /**
+ * @brief デバッグ用 即時アウトイベント
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT QuickFadeOutEvent(GMEVENT * event, int *seq, void * work)
+{
+  GFL_FADE_SetMasterBrightReq( 
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      0, 16, -16 );
+  return GMEVENT_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	クロスフェードアウトイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
@@ -261,6 +274,26 @@ GMEVENT* EVENT_FlySkyBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
   few->wait_type = wait;
 
 	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用 即時アウト
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT* DEBUG_EVENT_QuickFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
+{
+	GMEVENT* event;
+	FADE_EVENT_WORK* few;
+
+  event = GMEVENT_Create(gsys, NULL, QuickFadeOutEvent, sizeof(FADE_EVENT_WORK));
+	few = GMEVENT_GetEventWork(event);
+  few->gsys     = gsys;
+  few->fieldmap = fieldmap;
+  return event;
 }
 
 
@@ -435,6 +468,30 @@ static GMEVENT_RESULT FlySkyBrightInEvent(GMEVENT * event, int *seq, void * work
 
 //------------------------------------------------------------------
 /**
+ * @brief デバッグ用 即時フェードイン
+ */ 
+//------------------------------------------------------------------
+static GMEVENT_RESULT QuickFadeInEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK* few = work;
+
+  GFL_FADE_SetMasterBrightReq(
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      16, 0, -16);
+
+  // BGモード設定と表示設定の復帰
+  {
+    int mv = GFL_DISP_GetMainVisible();
+    FIELDMAP_InitBGMode();
+    GFL_DISP_GX_SetVisibleControlDirect( mv );
+  }
+  FIELDMAP_InitBG(few->fieldmap);
+
+  return GMEVENT_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	クロスフェードインイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap  フィールドマップワークへのポインタ
@@ -534,6 +591,26 @@ GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
   few->wait_type = wait;
 
 	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用 即時アウト
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT* DEBUG_EVENT_QuickFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
+{
+	GMEVENT* event;
+  FADE_EVENT_WORK* few;
+
+  event = GMEVENT_Create(gsys, NULL, QuickFadeInEvent, sizeof(FADE_EVENT_WORK));
+	few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap = fieldmap;
+  return event;
 }
 
 

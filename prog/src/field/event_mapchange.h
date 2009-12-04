@@ -85,6 +85,18 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 /**
+ * @brief	マップ遷移イベント生成（デフォルト座標, フェード短縮版）
+ * @param	gsys		ゲームシステムへのポインタ
+ * @param	fieldmap	フィールドシステムへのポインタ
+ * @param	zone_id		遷移するマップのZONE指定
+ * @return	GMEVENT		生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_QuickChangeMapDefaultPos(GAMESYS_WORK * gsys,
+		FIELDMAP_WORK * fieldmap, u16 zone_id);
+
+//------------------------------------------------------------------
+/**
  * @brief	マップ遷移イベント生成（ 流砂 ）
  * @param	gsys		      ゲームシステムへのポインタ
  * @param	fieldmap	    フィールドシステムへのポインタ
