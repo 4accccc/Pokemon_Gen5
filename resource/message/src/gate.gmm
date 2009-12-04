@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-11-13T11:39:30"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-12-04T18:11:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="385" top="229" right="1090" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -350,127 +350,1092 @@
 	<row id="msg_gate_common_02_01">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/チャンピオン情報</comment>
-		<language name="JPN" width="256">英数字/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/1234567890</language>
-		<language name="JPN_KANJI" width="256">英数字/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/1234567890</language>
+		<language name="JPN" width="256">◇しんチャンピオン　たんじょう！　……</language>
+		<language name="JPN_KANJI" width="256">◇新チャンピオン　誕生！　……</language>
 	</row>
 
 	<row id="msg_gate_common_03_01">
 		<comment>各ゲート共通メッセージ
-・臨時ニュース/プラズマ団情報</comment>
-		<language name="JPN" width="256">記号/○●◎▽▼□■☆★×♪１２３４５６７８９０＜＞＊</language>
-		<language name="JPN_KANJI" width="256">記号/○●◎▽▼□■☆★×♪１２３４５６７８９０＜＞＊</language>
+・臨時ニュース/プラズマ団情報１</comment>
+		<language name="JPN" width="256">◇なぞの　しゅうだんが……</language>
+		<language name="JPN_KANJI" width="256">◇ナゾの　集団が･･････</language>
 	</row>
 
-	<row id="msg_gate_common_04_01">
+	<row id="msg_gate_common_jim_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
-・臨時ニュース/主人公情報</comment>
-		<language name="JPN" width="256">ひらがな/あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやいゆえおわをん</language>
-		<language name="JPN_KANJI" width="256">ひらがな/あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやいゆえおわをん</language>
+・臨時ニュース/主人公がジム1をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_common_05_01">
+	<row id="msg_gate_common_jim_02" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
-・一言CM</comment>
-		<language name="JPN" width="256">漢字/猿 凹 渦 靴 稼 拐 涯 垣 殻 潟 喝 褐 缶 頑 挟 矯 襟 隅 渓 蛍 嫌</language>
-		<language name="JPN_KANJI" width="256">漢字/猿 凹 渦 靴 稼 拐 涯 垣 殻 潟 喝 褐 缶 頑 挟 矯 襟 隅 渓 蛍 嫌</language>
+・臨時ニュース/主人公がジム2をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_01_01">
-		<comment>t02r02間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうA----------------------------/</language>
-		<language name="JPN_KANJI" width="256">情報A---------------------------/</language>
+	<row id="msg_gate_common_jim_03" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム3をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_02_01">
-		<comment>r03c02間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうB------------------------/</language>
-		<language name="JPN_KANJI" width="256">情報B----/</language>
+	<row id="msg_gate_common_jim_04" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム4をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_03_01">
-		<comment>d02h01間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうC--------/</language>
-		<language name="JPN_KANJI" width="256">情報C-----------------/</language>
+	<row id="msg_gate_common_jim_05" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム5をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_04_01">
-		<comment>h01c03間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうD------------------------------------/</language>
-		<language name="JPN_KANJI" width="256">情報D---------------------------------/</language>
+	<row id="msg_gate_common_jim_06" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム6をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_05_01">
-		<comment>r04d03間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうE----------------------/</language>
-		<language name="JPN_KANJI" width="256">情報E--------------------/</language>
+	<row id="msg_gate_common_jim_07" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム7をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_06_01">
-		<comment>r04c04間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうF------------------------/</language>
-		<language name="JPN_KANJI" width="256">情報F---/</language>
+	<row id="msg_gate_common_jim_08" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム8をクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンの　しょうねんが　ジムリーダーを　げきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウンの　少年が　ジムリーダーを　撃破!</language>
 	</row>
 
-	<row id="msg_gate_07_01">
-		<comment>c04r05間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうG------------/</language>
-		<language name="JPN_KANJI" width="256">情報G---------------------------/</language>
+	<row id="msg_gate_common_cm_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/月曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_08_01">
-		<comment>r09c08間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうH-----------------------------/</language>
-		<language name="JPN_KANJI" width="256">情報H-----------------------/</language>
+	<row id="msg_gate_common_cm_02" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/火曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_09_01">
-		<comment>c08r10間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256">じょうほうI---/</language>
-		<language name="JPN_KANJI" width="256">情報I-------------------/</language>
+	<row id="msg_gate_common_cm_03" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/水曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_10_01">
-		<comment>c08r11間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_gate_common_cm_04" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/木曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_11_01">
-		<comment>r13st間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_gate_common_cm_05" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/金曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_12_01">
-		<comment>r14WF間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_gate_common_cm_06" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/土曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_13_01">
-		<comment>r14BC間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_gate_common_cm_07" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>各ゲート共通メッセージ
+・一言cM/日曜</comment>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　ていきょう　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　　提供　ポケモンセンター</language>
 	</row>
 
-	<row id="msg_gate_14_01">
-		<comment>r16c04間にあるゲート用メッセージ
-・地域情報A</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報1</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報2</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報3</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報4</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報5</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報6</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報7</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報8</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c1_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+		<comment>c1についての地域情報9</comment>
+		<language name="JPN" width="256">◇サンヨウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報1</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報2</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報3</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報4</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報5</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報6</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報7</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報8</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c2_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c2についての地域情報9</comment>
+		<language name="JPN" width="256">◇シッポウシティは……</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報1</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報2</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報3</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報4</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報5</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報6</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報7</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報8</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c3_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c3についての地域情報9</comment>
+		<language name="JPN" width="256">◇ヒウンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報1</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報2</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報3</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報4</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報5</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報6</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報7</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報8</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c4_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c4についての地域情報9</comment>
+		<language name="JPN" width="256">◇ライモンシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ライモンシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報1</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報2</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報3</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報4</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報5</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報6</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報7</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報8</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c5_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c5についての地域情報9</comment>
+		<language name="JPN" width="256">◇ホドモエシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報1</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報2</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報3</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報4</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報5</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報6</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報7</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報8</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c6_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c6についての地域情報9</comment>
+		<language name="JPN" width="256">◇フキヨセシティは……</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報1</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報2</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報3</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報4</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報5</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報6</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報7</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報8</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c7_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c7についての地域情報9</comment>
+		<language name="JPN" width="256">◇セッカシティは……</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報1</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報2</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報3</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報4</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報5</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報6</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報7</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報8</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8w_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>c8wについての地域情報9</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報1</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報2</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報3</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報4</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報5</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報6</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報7</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報8</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_c8b_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>c8bについての地域情報9</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_tg_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報1</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報2</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報3</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報4</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報5</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報6</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報7</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報8</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_tg_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>tgについての地域情報9</comment>
+		<language name="JPN" width="256">◇トレインゲートは……</language>
+		<language name="JPN_KANJI" width="256">◇トレインゲートは……</language>
+	</row>
+
+	<row id="msg_gate_st_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報1</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報2</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報3</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報4</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報5</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報6</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報7</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報8</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_st_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>stについての地域情報9</comment>
+		<language name="JPN" width="256">◇stは……</language>
+		<language name="JPN_KANJI" width="256">◇stは……</language>
+	</row>
+
+	<row id="msg_gate_wf_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報1</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報2</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報3</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報4</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報5</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報6</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報7</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報8</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_wf_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>wfについての地域情報9</comment>
+		<language name="JPN" width="256">◇ホワイトフォレストは……</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは……</language>
+	</row>
+
+	<row id="msg_gate_bc_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報1</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報2</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報3</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報4</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報5</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報6</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報7</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報8</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_bc_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>bcについての地域情報9</comment>
+		<language name="JPN" width="256">◇ブラックシティは……</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは……</language>
+	</row>
+
+	<row id="msg_gate_d3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報1</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報2</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報3</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報4</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報5</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報6</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報7</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報8</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d3についての地域情報9</comment>
+		<language name="JPN" width="256">◇d3は……</language>
+		<language name="JPN_KANJI" width="256">◇d3は……</language>
+	</row>
+
+	<row id="msg_gate_d8_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報1</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報2</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報3</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報4</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報5</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報6</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報7</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報8</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d8_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d8についての地域情報9</comment>
+		<language name="JPN" width="256">◇d８は……</language>
+		<language name="JPN_KANJI" width="256">◇d８は……</language>
+	</row>
+
+	<row id="msg_gate_d10_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報1</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報2</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報3</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報4</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報5</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報6</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報7</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報8</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d10_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d10についての地域情報9</comment>
+		<language name="JPN" width="256">◇d10は……</language>
+		<language name="JPN_KANJI" width="256">◇d10は……</language>
+	</row>
+
+	<row id="msg_gate_d12_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報1</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報2</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報3</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報4</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報5</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報6</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報7</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報8</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d12_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>d12についての地域情報9</comment>
+		<language name="JPN" width="256">◇d12は……</language>
+		<language name="JPN_KANJI" width="256">◇d12は……</language>
+	</row>
+
+	<row id="msg_gate_d13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報1</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報2</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報3</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報4</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報5</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報6</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報7</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報8</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
+	</row>
+
+	<row id="msg_gate_d13_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>d13についての地域情報9</comment>
+		<language name="JPN" width="256">◇d13は……</language>
+		<language name="JPN_KANJI" width="256">◇d13は……</language>
 	</row>
 
 	<row id="msg_gate_sunny">
@@ -544,38 +1509,38 @@
 	</row>
 
 	<row id="msg_gate_cm_mon">
-		<language name="JPN" width="256">CMげつようび</language>
-		<language name="JPN_KANJI" width="256">CM月曜日</language>
+		<language name="JPN" width="256">cMげつようび</language>
+		<language name="JPN_KANJI" width="256">cM月曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_tue">
-		<language name="JPN" width="256">CMかようび</language>
-		<language name="JPN_KANJI" width="256">CM火曜日</language>
+		<language name="JPN" width="256">cMかようび</language>
+		<language name="JPN_KANJI" width="256">cM火曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_wed">
-		<language name="JPN" width="256">CMすいようび</language>
-		<language name="JPN_KANJI" width="256">CM水曜日</language>
+		<language name="JPN" width="256">cMすいようび</language>
+		<language name="JPN_KANJI" width="256">cM水曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_thu">
-		<language name="JPN" width="256">CMもくようび</language>
-		<language name="JPN_KANJI" width="256">CM木曜日</language>
+		<language name="JPN" width="256">cMもくようび</language>
+		<language name="JPN_KANJI" width="256">cM木曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_fri">
-		<language name="JPN" width="256">CMきんようび</language>
-		<language name="JPN_KANJI" width="256">CM金曜日</language>
+		<language name="JPN" width="256">cMきんようび</language>
+		<language name="JPN_KANJI" width="256">cM金曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_sat">
-		<language name="JPN" width="256">CMどようび</language>
-		<language name="JPN_KANJI" width="256">CM土曜日</language>
+		<language name="JPN" width="256">cMどようび</language>
+		<language name="JPN_KANJI" width="256">cM土曜日</language>
 	</row>
 
 	<row id="msg_gate_cm_sun">
-		<language name="JPN" width="256">CMにちようび</language>
-		<language name="JPN_KANJI" width="256">CM日曜日</language>
+		<language name="JPN" width="256">cMにちようび</language>
+		<language name="JPN_KANJI" width="256">cM日曜日</language>
 	</row>
 
 	<flowchart-group-list>
