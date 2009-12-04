@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_IsReleased</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_IsReleased<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>BOOL SOC_IsReleased ( int <var>s</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>s</var></td>
+    <td>リソースの解放を確認するソケット記述子。</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td><code>TRUE</code></td>
+    <td>ソケットのリソースは解放されています。</td>
+  </tr>
+  <tr>
+    <td><code>FALSE</code></td>
+    <td>ソケットはクローズ処理中かリソースの解放処理中です。あるいはソケット記述子の値が不正です。 ( s <= 0 )</td>
+  </tr>
+</table>
+
+<h2>説明</h2>
+
+<p>クローズ処理開始後( <code>SOC_Close</code> が成功した ) のソケットに対してリソースが解放されているか確認します。<br></p>
+<p><code> SOC_Close </code> の再呼び出しにより同様の確認ができますが、再呼び出し時に他のソケットがリソースを再利用している場合は<br>
+<code> SOC_Close </code>は誤ってソケットをクローズします。<br></p>
+
+<h2>参照</h2>
+
+<p>
+<code><a href="SOC_Close.html">SOC_Close</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/06/26 初版</P>
+</body>
+</html>

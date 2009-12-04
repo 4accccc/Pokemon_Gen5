@@ -1,0 +1,79 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Socket</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Socket<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>#define SOC_PF_INET      2   // ARPA Internet protocols
+
+#define SOC_SOCK_STREAM  1   // stream socket
+#define SOC_SOCK_DGRAM   2   // datagram socket</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Socket ( int <var>pf</var>, int <var>type</var>, int <var>protocol</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>pf</var></td>
+    <td>作成するソケットのプロトコルファミリーを指定します。 現時点では <var>pf</var> を <code>SOC_PF_INET</code> (IPv4インターネットプロトコル)にしてください。</td>
+  </tr>
+  <tr>
+    <td><var>type</var></td>
+    <td>作成するソケットの種類を指定します。TCPは<code>SOC_SOCK_STREAM</code> (ストリーム・ソケット) 、UDPは<code>SOC_SOCK_DGRAM</code> (データグラム・ソケット) を指定してください。</td>
+  </tr>
+  <tr>
+    <td><var>protocol</var></td>
+    <td>ソケットに用いるプロトコルを指定します。<var>protocol</var>が0の場合、指定したプロトコルファミリーとタイプに対するデフォルトのプロトコルが使われます。現時点では <var>protocol</var> を0にしてください。</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0以上</td>
+    <td>新しいソケット記述子。</td>
+  </tr>
+  <tr>
+    <td ><code>SOC_ENOMEM</code></td>
+    <td >メモリー不足。</td>
+  </tr>
+  <tr>
+    <td ><code>SOC_ENETRESET</code></td>
+    <td >ソケットライブラリが初期化されていません。</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p>バインドされていないソケットを作成し、ソケット記述子を返します。</p>
+
+<h2>参照</h2>
+<p><code><a href="SOC_Close.html">SOC_Close</a></code>,
+<code><a href="SOC_Bind.html">SOC_Bind</a></code>,
+<code><a href="SOC_Connect.html">SOC_Connect</a></code>,
+<code><a href="SOC_Listen.html">SOC_Listen</a></code>,
+<code><a href="SOC_Accept.html">SOC_Accept</a></code></p>
+
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値に<code>SOC_ENETRESET</code>を追加<BR>
+2005/09/13 初版</P>
+</body>
+</html>

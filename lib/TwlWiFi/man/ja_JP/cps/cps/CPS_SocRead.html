@@ -1,0 +1,54 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>CPS_SocRead</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CPS_SocRead<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/cps.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>u8 *CPS_SocRead(u32 *len);</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>len</var></td>
+    <td>受信バッファ内のデータの長さ。</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+<P>受信バッファ内のデータへのポインタ</P>
+
+<h2>説明</h2>
+
+<p>PING/UDP/TCPの受信を行います。<BR>
+	受信バッファ内のデータへのポインタと長さを返します。<BR>
+	TCP通信でバッファが空で接続が切断されている時は、<var>len</var>に0が設定されます。<BR>
+	注意して欲しいのは、このポインタは<var>rcvbuf</var>の中を指していると言うことです。<CODE>CPS_SocRead()</CODE>を実行しただけでは、データやデータポインタは変化しません。<CODE>CPS_SocRead()</CODE>を連続して実行すると、同じデータが返され続けます(長さは増加するかもしれない)。<BR>
+	次のデータに進むには<CODE><A href="CPS_SocConsume.html">CPS_SocConsume()</A></CODE>を実行します。<CODE>CPS_SocConsume()</CODE>では消費するデータ数を指定できるので、極端な話、1バイトづつ<CODE>CPS_SocConsume()</CODE>すれば、<CODE>CPS_SocRead()</CODE>で1バイトづつ処理できます。<CODE>CPS_SocGetChar()</CODE>はまさしくそういう実装になっています。ただし、現在の実装では<CODE>CPS_SocConsume()</CODE>は実際の<CODE>memmove</CODE>を伴うので、<var>rcvbuf</var>のサイズが大きな場合、少量づつCPS_SocConsume()するのは効率が悪くなります。アプリケーション側で充分なバッファを用意し、<CODE>CPS_SocRead()</CODE>で返された長さ分だけ転送し、それらを全部<CODE>CPS_SocConsume()</CODE>するようにするのが望ましい利用方法です。<BR>
+	受信バッファが空でないならブロックしません。空ならブロックします。</p>
+
+<h2>参照</h2>
+<P>
+<CODE><A href="CPS_SocConsume.html">CPS_SocConsume</A></CODE>, 
+<CODE><A href="CPS_SocGetChar.html">CPS_SocGetChar</A></CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+2005/10/21 初版</P>
+</body>
+</html>

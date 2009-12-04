@@ -1,0 +1,72 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlWiFi - SOC - libraries
+# File:     Makefile.common
+#
+# Copyright 2003-2008 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2008-09-26#$
+# $Rev: 1038 $
+# $Author: adachi_hiroaki $
+#----------------------------------------------------------------------------
+
+SUBDIRS			 =
+
+#----------------------------------------------------------------------------
+
+SRCDIR			= ../common/src
+
+SRCS			= socl_startup.c	\
+			  socl_command.c	\
+			  socl_create.c		\
+			  socl_listen_accept.c	\
+			  socl_bind.c		\
+			  socl_read.c		\
+			  socl_write.c		\
+			  socl_shutdown.c	\
+			  socl_close.c		\
+			  socl_cleanup.c	\
+			  socl_resolve.c	\
+			  socl_poll.c		\
+			  socl_const.c		\
+			  socl_misc.c		\
+			  socl_list.c		\
+			  soc.c
+
+SRCS			+= socl_ssl.c
+
+LINCLUDES		+= ../../wcm/common/include
+
+#----------------------------------------------------------------------------
+include	$(TWLWIFI_ROOT)/build/buildtools/commondefs
+
+INSTALL_TARGETS	= $(TARGETS)
+INSTALL_DIR		= $(TWIFI_INSTALL_LIBDIR)
+
+#----------------------------------------------------------------------------
+do-build:		$(TARGETS)
+
+ERRTABLE_H	= include/errtable.h
+
+LDIRT_CLEAN	= $(ERRTABLE_H)
+
+$(OBJDIR)/socl_misc.o: $(SRCDIR)/socl_misc.c
+
+$(SRCDIR)/socl_misc.c: $(ERRTABLE_H)
+
+$(ERRTABLE_H): $(TWIFI_ROOT)/include/nitroWiFi/socl.h
+	@mkdir -p include
+	@sed -e '/^\/\/ ERROR-CODE BEGINS/,/^\/\/ ERROR-CODE ENDS/!d' 	\
+		 -e '/SOC_/!d'												\
+		 -e 's/^.*SOC_\([A-Z]*\).*$$/{ SOC_\1, "\1" },/g' $< > $(@)_ && mv -f $(@)_ $(@) 2> /dev/null || sleep 1
+
+
+include	$(TWLWIFI_ROOT)/build/buildtools/modulerules
+
+#===== End of Makefile =====

@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Write, SOC_Send, SOC_SendTo</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Write<br>SOC_Send<br>SOC_SendTo<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Write  ( int <var>s</var>, const void* <var>buf</var>, int <var>len</var> );
+int SOC_Send   ( int <var>s</var>, const void* <var>buf</var>, int <var>len</var>, int <var>flags</var> );
+int SOC_SendTo ( int <var>s</var>, const void* <var>buf</var>, int <var>len</var>, int <var>flags</var>, const void* <var>sockTo</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td valign="top"><var>s</var></td>
+    <td>ソケット記述子。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>buf</var></td>
+    <td>送るメッセージが格納されるバッファへのポインタ。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>len</var></td>
+    <td>送られるメッセージの長さ(バイト)。メッセージが長すぎて使用しているプロトコルでは通らない場合、<code>SOC_Send()</code>は失敗し、データは伝達されません。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>flags</var></td>
+    <td>メッセージ伝達のタイプ。<var>flags</var> は、0か以下の値の論理ORをとったものです(ストリーム・ソケットのみ)。<table width="100%">
+      <tr>
+        <td valign="top"><code>SOC_MSG_DONTWAIT</code></td>
+        <td>非封鎖処理を実行します。リソースの空きがない場合は<code>SOC_EWOULDBLOCK</code>が返されます。</td>
+      </tr>
+    </table>
+<p><span class="warning">注意</span>：SOC_MSG_DONTWAIT のみのサポートとなっています。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><var>sockTo</var></td>
+    <td>終点アドレスを格納しているソケットアドレス構造体(<code><a href="SOCSockAddr.html">SOCSockAddr</a>,<a href="SOCSockAddrIn.html">SOCSockAddrIn</a></code>)へのポインタ。<br>
+データグラム・ソケットなら、<code>SOC_SendTo()</code>は <var>sockTo</var> によって指定されたアドレスへメッセージを送ります。ストリーム・ソケットなら、<var>sockTo</var> は無視されます。</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>1以上</td>
+    <td>送信したメッセージのバイト数。 ソケット記述子に<code>SOC_O_NONBLOCK</code>が設定された場合、返り値は<var>len</var>より小さいことがあります(ショート 
+    カウント)。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>失敗。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <var>s</var> < 0 か存在しないソケット)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EMSGSIZE</code></td>
+    <td>送信するには<var>len</var>で指定したサイズが大きすぎます。(<var>s</var>がデータグラム・ソケットの場合)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットライブラリが初期化されていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENOTCONN</code></td>
+    <td>接続されていません。</td>
+  </tr>
+  <tr>
+    <td> <code>SOC_EWOULDBLOCK</code></td>
+    <td>リソース不足です。(<var>s</var>が非封鎖ソケットか、<code>SOC_MSG_DONTWAIT</code>フラグが指定されている場合、送信バッファにメッセージをコピーする空きがありません。)</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p><code>SOC_Write()</code>, <code>SOC_Send()</code>, <code>SOC_SendTo()</code> は指定されたソケットを通してメッセージを送ります。</p>
+
+<p><code>SOC_Write()</code> は <var>flags</var> を設定しない以外は <code>SOC_Send()</code> と同等です。 </p>
+
+<p><code>SOC_Write()</code>, <code>SOC_Send()</code>, <code>SOC_SendTo()</code>は、非封鎖モードの呼び出しをしない限り、ソケットの送信バッファに空きがなければブロックします。</p>
+
+<p>封鎖モードの呼び出しは、データグラム・ソケット(UDP)の送信でも関数が返るまでに数百msの間ブロックすることがあります。注意して使用して下さい。</p>
+
+<h2>参照</h2>
+
+<p>
+<code><a href="SOCSockAddr.html">SOCSockAddr</a></code>,
+<code><a href="SOC_Fcntl.html">SOC_Fcntl</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値の修正、説明の修正<BR>
+2006/09/04 説明の追記<BR>
+2005/12/12 説明、返り値の記述変更<BR>
+2005/09/13 初版</P>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_IsNetworkAvailable</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_IsNetworkAvailable<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>BOOL SOC_IsNetworkAvailable ( void );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<p>なし。</p>
+
+<h2>返り値</h2>
+
+ネットワークが利用可能かを真偽値で返します。
+
+<h2>説明</h2>
+
+<p>ネットワークが利用可能かどうかを調べます。具体的には無線のリンクが確立しているかと、IP アドレスが確定しているかを併せて調べます。</p>
+<p>ネットワークが利用可能かどうか調べる方法として <code><a href="SOC_GetHostID.html">SOC_GetHostID</a></code> 関数の返値を調べる方法もありますが、<code> SOC_IsNetworkAvailable </code> 関数はノーウェイトで処理を返すという違いがある点に注意して下さい。while ループ内で連続して呼び出すような場合、<code><a href="SOC_GetHostID.html">SOC_GetHostID</a></code> 関数から単純に置き換えただけでは他のスレッドに処理が回らず正常に動作しない場合があります。</p>
+
+<h2>参照</h2>
+<p><code><a href="SOC_GetHostID.html">SOC_GetHostID</a></code></p>
+
+<H2>履歴</H2>
+<P>
+2008/01/11 初版</P>
+</body>
+</html>

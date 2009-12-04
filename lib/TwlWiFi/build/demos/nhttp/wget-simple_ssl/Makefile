@@ -15,7 +15,7 @@
 # $Rev: 1183 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
-TARGET_PLATFORM = TWL NITRO
+TARGET_PLATFORM = TWL
 TWL_ARCHGEN     = ALL
 TARGET_BIN	    = main.srl
 
@@ -24,7 +24,7 @@ SRCS		    = main.c test_cainfo.c
 LLIBRARIES	    = libnhttp$(TWIFI_LIBSUFFIX_EX).a
 #----------------------------------------------------------------------------
 
-include	$(TWLWIFI_ROOT)/build/buildtools/commondefs.demos
+include	$(TWLWIFI_ROOT)/build/buildtools/commondefs
 
 TWLWIFI_LIBNSSL =
 

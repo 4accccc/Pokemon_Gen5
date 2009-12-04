@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Connect</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Connect<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Connect ( int <var>s</var>, const void* <var>sockAddr</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>s</var></td>
+    <td>ソケット記述子。</td>
+  </tr>
+  <tr>
+    <td><var>sockAddr</var></td>
+    <td>相手アドレスを保持したソケットアドレス構造体(<code><a href="SOCSockAddr.html">SOCSockAddr</a>,<a href="SOCSockAddrIn.html">SOCSockAddrIn</a></code>)へのポインタ。 </td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0以上</td>
+    <td>成功。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINPROGRESS</code></td>
+    <td>接続が完了していません。(<var>s</var>が非封鎖モードのストリーム・ソケットの場合)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <var>s</var> < 0 か存在しないソケット)　または、ソケットがクローズ処理中です。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EISCONN</code></td>
+    <td>接続済みです。(<var>s</var>が封鎖モードのストリーム・ソケットの場合)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EMFILE</code></td>
+    <td>リソース不足です。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットライブラリが初期化されていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENOBUFS</code></td>
+    <td>リソース不足です。(<var>s</var>が非封鎖モードのストリーム・ソケットの場合)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ETIMEDOUT</code></td>
+    <td>接続タイムアウトが発生しました。(<var>s</var>がストリーム・ソケットの場合)</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p><var>sockAddr</var> で指定された先へ接続を試みます。<code><a href="SOC_Bind.html">SOC_Bind()</a></code> でローカルポートをバインドしていない場合、ソケットライブラリで使用されていないポートをバインドします。</p>
+<p>封鎖モードのストリーム・ソケット(TCP)は、接続が確立するか接続が失敗するまでブロックします。非封鎖モードの場合は <code>SOC_Connect()</code> は接続の結果を待たず返ります。</p>
+
+<p>データグラム・ソケットに対しては、<code>SOC_Connect()</code> はデータグラムの送受信相手を固定します。<BR>
+後続の <code><a href="SOC_Send.html">SOC_Send()</a></code >によって送信されるデータグラムは、すべて指定した相手アドレスに向けられます。また後続の<code><a href="SOC_Recv.html">SOC_Recv()</a></code>は設定した相手アドレスからのデータグラムだけを受け取ります。<BR>
+<var>sockAddr</var> の <code>port</code> フィールドと <code>addr</code> フィールドを 0 にすると相手アドレスをリセットします。</p>
+
+<h2>参照</h2>
+<p>
+<code><a href="SOC_Socket.html">SOC_Socket</a></code>
+<code><a href="SOC_Bind.html">SOC_Bind</a></code>,
+<code><a href="SOC_Recv.html">SOC_Recv</a></code>,
+<code><a href="SOC_Send.html">SOC_Send</a></code>,
+<code><a href="SOC_Fcntl.html">SOC_Fcntl</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値の修正、説明の修正<BR>
+2006/01/13 返値の修正<BR>
+2005/09/13 初版
+</P>
+</body>
+</html>

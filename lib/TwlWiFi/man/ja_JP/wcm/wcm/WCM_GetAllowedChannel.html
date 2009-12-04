@@ -1,0 +1,71 @@
+<!--DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"-->
+<!--==========================================================================
+  Project:  TwlWiFi - WCM - man
+  File:     WCM_GetAllowedChannel.html
+
+  Copyright 2005 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+
+  $Date:: 2008-07-16#$
+  $Rev: 814 $
+  $Author: okajima_manabu $
+ ==========================================================================-->
+<HTML>
+    <HEAD>
+        <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+        <META http-equiv="Content-Style-Type" content="text/css">
+        <TITLE>WCM_GetAllowedChannel</TITLE>
+        <LINK rel="stylesheet" href="../../css/twl.css">
+        <BASE target="main">
+    </HEAD>
+    <BODY>
+        <H1>WCM_GetAllowedChannel<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+
+        <H2>構文</H2>
+        <DL>
+            <DD>
+                <PRE><CODE>
+#include &lt;nitroWiFi/wcm.h&gt;
+
+u16  WCM_GetAllowedChannel( void );
+                </CODE></PRE>
+            </DD>
+        </DL>
+
+        <H2>説明</H2>
+        <P>
+            現在使用している無線デバイスの使用許可チャンネルリストを取得する同期関数です。
+        </P>
+
+        <H2>引数</H2>
+        <P>
+            ありません。
+        </P>
+
+        <H2>返り値</H2>
+        <P>
+            無線LANのチャンネル 1～14ch のうち、使用を許可されたチャンネル群のビットフィールドを返します。
+            最下位ビットから順に 1 チャンネル, 2 チャンネル……に対応します。
+            WCM_StartupAsync() を実行し無線機能が起動されている状態、もしくは WCM ライブラリが内部エラーを起こしている状態では
+            0(全チャンネル使用禁止) を返します。
+        </P>
+
+        <H2>参照</H2>
+        <P>
+            <CODE>
+                <A href="WCM_StartupAsync.html">WCM_StartupAsync</A>
+            </CODE>
+        </P>
+
+        <H2>履歴</H2>
+        <P>
+            2008/07/16 初版<BR>
+        </P>
+
+    </BODY>
+</HTML>

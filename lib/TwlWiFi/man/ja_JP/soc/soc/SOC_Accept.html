@@ -1,0 +1,93 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Accept</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Accept<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Accept ( int <var>s</var>, void* <var>sockAddr</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>s</var></td>
+    <td> <code>
+    <a href="SOC_Socket.html">SOC_Socket()</a></code>によって作成し、<code><a href="SOC_Bind.html">SOC_Bind()</a></code>によってアドレスをバインドし、<code><a href="SOC_Listen.html">SOC_Listen()</a></code>の呼び出しに成功したソケットを指定します。</td>
+  </tr>
+  <tr>
+    <td><var>sockAddr</var></td>
+    <td>接続を受け付けた相手の名前(アドレス)を記録するためのソケットアドレス構造体(<code><a href="SOCSockAddr.html">SOCSockAddr</a>,<a href="SOCSockAddrIn.html">SOCSockAddrIn</a></code>)へのポインタを指定します。<br>また、ソケットアドレスの<code>len</code>フィールドは適切に初期化してください。(例 <code>sizeof(SOCSockAddrIn)</code>)</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0以上</td>
+    <td>受け付けた接続のソケット記述子。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <code><var>s</var> < 0</code> か存在しないソケット)<BR>
+	あるいはソケットが接続処理中です。あるいはストリーム・ソケットではありません。<BR>
+	あるいはローカルポートがバインドされていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EMFILE</code></td>
+    <td>リソース不足です。(内部コマンドの作成に失敗しました)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットが初期化されていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENOMEM</code></td>
+    <td>リソース不足です。(ソケットの複製に失敗しました)</td>
+  </tr>
+  <tr>
+    <td> <code>SOC_EWOULDBLOCK</code></td>
+    <td>ソケットが非封鎖モードです。(封鎖モードでないと実行できません)</td>
+  </tr>
+
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p>接続キューから先頭の接続要求を取り出して、<var>s</var>で指定したソケットと同じパラメータ(タイプ、プロトコル、アドレスファミリー)のソケットを返します。元のソケット(<var>s</var>)は接続要求を受け付け続けられるようにそのまま残ります。</p>
+
+<p>現状、<code>SOC_Accept()</code>では下位モジュール(CPS)の仕様により、ソケット の作成から Bind、Listen、そしてAccept が同時に行われます。また接続キューは説明上の概念で、実際にはありません。</p>
+
+<p><code>SOC_Accept()</code>は封鎖モードのストリーム・ソケットに対してのみ実行できます。</p>
+
+<h2>参照</h2>
+
+<p>
+<code><a href="SOC_Socket.html">SOC_Socket</a></code>,
+<code><a href="SOC_Bind.html">SOC_Bind</a></code>,
+<code><a href="SOC_Connect.html">SOC_Connect</a></code>,
+<code><a href="SOC_Listen.html">SOC_Listen</a></code>,
+<code><a href="SOC_Fcntl.html">SOC_Fcntl</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値 <code>SOC_ETIMEDOUT</code>、<code>SOC_ENOBUF</code>、<code>SOC_EALREADY</code>を削除、引数の修正、説明の修正<BR>
+2006/01/13 返値の修正<BR>
+2005/09/13 初版</P>
+</body>
+</html>
