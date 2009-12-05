@@ -1,16 +1,26 @@
 #------------------------------------------------------------------------------
 #
+#
 # 配置モデルアーカイブ生成
 #		
+#
+# 2009.12 内部構造変更（動作は変わっていない）
 #
 #------------------------------------------------------------------------------
 KCODE = "SJIS"
 
 require "fileutils"
 
+#C形式ヘッダ読み込みのため
+require "#{ENV["PROJECT_ROOT"]}tools/headerdata.rb"
+
+
+class TooMuchSymbolError < Exception; end
 class SymbolRedefineError < Exception; end
 class AnimeIndexError < Exception; end
 
+
+BUILDMODEL_HEADER = "../../../prog/src/field/field_buildmodel.h"
 ANIME_INDEX_FILE  ="wkdir/buildmodel_anime.h"
 
 COL_FILENAME = 1
@@ -22,82 +32,110 @@ COL_SUBMODEL_Y = 12
 COL_SUBMODEL_Z = 13
 
 #------------------------------------------------------------------------------
+# 配置モデルデータを保持するクラス
 #------------------------------------------------------------------------------
-class SubModelPos
-  attr_reader :x, :y, :z
-  def initialize x, y, z
-    @x = Integer(x)
-    @y = Integer(y)
-    @z = Integer(z)
-  end
-end
+class BMData
+  attr_reader :sym, :anime_id, :prog, :submodel_id, :submodel_pos
 
-#------------------------------------------------------------------------------
-# 各配置モデルごとのアニメ指定IDのテーブルを生成する
-# IN: anm_dic   アニメデータの索引テーブル
-#     arr         配置モデルごとのアニメ指定ID（配置モデルと同じ並び順であることを想定）
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-def makeAnimeDictionary(anime_index_file)
-  anm_dic = Array.new
-  File.open(anime_index_file, "r"){|file|
-    file.each{|line|
-      if line =~/^#/ then
-        next
-      end
-      column = line.split
-      anm_dic << column[0].upcase
+  #------------------------------------------------------------------------------
+  # アニメIDの辞書生成
+  #------------------------------------------------------------------------------
+  def BMData.makeAnimeDictionary(anime_index_file)
+    anm_dic = Array.new
+    File.open(anime_index_file, "r"){|file|
+      file.each{|line|
+        if line =~/^#/ then
+          next
+        end
+        column = line.split
+        anm_dic << column[0].upcase
+      }
     }
-  }
-  return anm_dic
-end
-
-def getAnimeID(anm_dic, anime_name)
-  index = anm_dic.index(anime_name.upcase)
-  if anime_name == "×" then
-    index = 0xffff
-  elsif index == nil then
-    raise AnimeIndexError, "アニメ指定 #{anime_name} が見つかりませんでした"
+    return anm_dic
   end
-  return index
-end
-
-def getProgID(prog_name)
-  if prog_name == "×" then
-    return 0xffff
-  elsif prog_name =~/\d+/ then
-    return Integer(prog_name)
+  def BMData.readBuildModelHeader( filename )
+    bmdic = HeaderDataArray.new
+    bmdic.load( filename )
+    return bmdic
   end
-end
 
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-def makeIndexes(anm_arr, prog_arr, submodel_arr, pos_arr)
+  @@syms = Array.new
+  @@anm_dic = self.makeAnimeDictionary(ANIME_INDEX_FILE)
+  @@prog_dic = self.readBuildModelHeader( BUILDMODEL_HEADER )
 
-  output = ""
-  anm_arr.each_index{|idx|
-    output += [anm_arr[idx], prog_arr[idx], submodel_arr[idx]].pack("SSS")
-    output += [pos_arr[idx].x, pos_arr[idx].y, pos_arr[idx].z].pack("sss")
-  }
-  return output
-end
-
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-def makeSubmodelIDList(symbols, submodel_list)
-  submodel_ids = submodel_list.map{|name|
-    idx = symbols.index(name)
-    if name == "×" then
-      0xffff 
-    elsif idx == nil then
-      puts "従属モデル名#{name}が見つかりません！！"
-      0xffff
+  #------------------------------------------------------------------------------
+  #   初期化処理
+  #------------------------------------------------------------------------------
+  def initialize( sym, anime_id, prog, submodel, x, y, z )
+    if @@syms.index(sym) == nil then
+      @@syms << sym
     else
-      idx
+      raise SymbolRedefineError, "ファイル#{sym}が多重定義されています"
     end
-  }
-  return submodel_ids
+    if @@syms.length > 255 then
+      raise TooMuchSymbolError, "配置モデルの種類が制限値（255)を超えています！！"
+    end
+    @sym = sym
+    @anime_id = getAnimeID( anime_id )
+    @prog = getProgID( prog )
+    @submodel = submodel
+    @submodel_id = nil
+    @smx = Integer(x)
+    @smy = Integer(y)
+    @smz = Integer(z)
+  end
+
+  def dump()
+    #p self
+    output = ""
+    output += [ @anime_id, @prog, @submodel_id ].pack("SSS")
+    output += [ @smx, @smy, @smz ].pack("sss")
+  end
+  
+  #------------------------------------------------------------------------------
+  # 各配置モデルごとのアニメ指定IDのテーブルを生成する
+  # IN: anm_dic   アニメデータの索引テーブル
+  #     arr         配置モデルごとのアニメ指定ID（配置モデルと同じ並び順であることを想定）
+  #------------------------------------------------------------------------------
+  def getAnimeID(anime_name)
+    index = @@anm_dic.index(anime_name.upcase)
+    if anime_name == "×" then
+      index = 0xffff
+    elsif index == nil then
+      raise AnimeIndexError, "アニメ指定 #{anime_name} が見つかりませんでした"
+    end
+    return index
+  end
+
+  #------------------------------------------------------------------------------
+  # 従属モデル名→IDに変換
+  #------------------------------------------------------------------------------
+  def createSubModelID()
+    idx = @@syms.index(@submodel)
+    if @submodel == "×" then
+      @submodel_id = 0xffff 
+    elsif idx == nil then
+      p @@syms
+      puts "従属モデル名#{@submodel}が見つかりません！！"
+      @submodel_id = 0xffff
+    else
+      @submodel_id = idx
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  # プログラム指定IDの取得
+  #------------------------------------------------------------------------------
+  def getProgID(prog_name)
+    if prog_name == "×" then
+      return 0xffff
+    elsif prog_name =~/\d+/ then
+     return Integer(prog_name)
+    else
+      return Integer( @@prog_dic.search( "BM_PROG_ID_" + prog_name, @sym ) )
+    end
+  end
+
 end
 
 #------------------------------------------------------------------------------
@@ -113,68 +151,61 @@ ARC_FILE	=	ARGV[3]
 
 BIN_FILE  = ARGV[4]
 
-anm_dic = makeAnimeDictionary(ANIME_INDEX_FILE)
 
-input_file = File.open(INPUT_FILE, "r")
-dep_file = File.open(DEP_FILE, "w")
-arc_file = File.open(ARC_FILE, "w")
 
-dep_file.puts "#{DEP_SYMBOL}	=	\\\n"
+bmdata = Array.new
 
-check_list = Array.new
+#入力ファイル読み込み、BMDataの配列を生成する
+File.open(INPUT_FILE, "r"){|input_file|
+  input_file.gets
 
-syms = Array.new
-anime_ids = Array.new
-progs = Array.new
-submodels = Array.new
-submodel_pos = Array.new
+  input_file.each{|line|
+    column = line.split
+    if column.length < 2 then break end
+    bmdata << BMData.new( column[COL_FILENAME],
+                     column[COL_ANIME_IDX], column[COL_PROG_IDX], column[COL_SUBMODEL_IDX],
+                     column[COL_SUBMODEL_X], column[COL_SUBMODEL_Y], column[COL_SUBMODEL_Z] ) 
 
-input_file.gets
+  }
+}
 
-while line = input_file.gets
-	column = line.split
-	if column.length < 2 then break end
-  sym = column[COL_FILENAME]
-  if syms.index(sym) == nil then
-    syms << sym
-  else
-    raise SymbolRedefineError, "ファイル#{sym}が多重定義されています"
-  end
-	nsbmd_name = "#{sym}.nsbmd"
-	dep_file.puts "\t$(RESDIR)/#{nsbmd_name} \\\n"
-	arc_file.puts "\"nsbmdfiles/#{nsbmd_name}\""
-	imd_name = "imdfiles/#{sym}.imd"
-	check_list << imd_name unless FileTest.exists? imd_name
-  anime_ids << getAnimeID(anm_dic, column[COL_ANIME_IDX])
-  progs << getProgID(column[COL_PROG_IDX])
-  submodels << column[COL_SUBMODEL_IDX]
-  submodel_pos << SubModelPos.new( column[COL_SUBMODEL_X],
-                                  column[COL_SUBMODEL_Y],
-                                  column[COL_SUBMODEL_Z] ) 
-end
-
-if syms.length > 255 then
-  puts "配置モデルの種類が制限値（255)を超えています！！"
-  puts "プログラマに連絡してください。"
-  exit 1
-end
-
-submodel_ids = makeSubmodelIDList(syms, submodels)
-
-syms.each_index{|idx|
-#  printf("%-16s %04x, %04x %04x\n", syms[idx], anime_ids[idx], progs[idx], submodel_ids[idx])
+#バイナリファイル生成
+output = ""
+bmdata.each{|bm|
+  bm.createSubModelID()
+  output += bm.dump
 }
 bin_file = File.open(BIN_FILE, "wb")
-bin_file.write makeIndexes(anime_ids, progs, submodel_ids, submodel_pos)
+bin_file.write output
 bin_file.close
 
-dep_file.printf("\n")
-check_list.each{|item|
-	puts "\t@echo #{item}が存在しないため、ダミーファイルをコピーします"
-	FileUtils.cp "imdfiles/dummy_buildmodel.imd",item
+
+
+#アーカイブ対象ファイルを記述するファイルの名前
+File.open(ARC_FILE, "w"){|arc_file|
+  bmdata.each{|bm|
+    nsbmd_name = "#{bm.sym}.nsbmd"
+    arc_file.puts "\"nsbmdfiles/#{nsbmd_name}\""
+  }
+  arc_file.close
 }
 
-input_file.close
-dep_file.close
-arc_file.close
+#依存ファイル定義を記述するファイルの名前
+File.open(DEP_FILE, "w"){|dep_file|
+  dep_file.puts "#{DEP_SYMBOL}	=	\\\n"
+  bmdata.each{|bm|
+    nsbmd_name = "#{bm.sym}.nsbmd"
+    dep_file.puts "\t$(RESDIR)/#{nsbmd_name} \\\n"
+  }
+  dep_file.printf("\n")
+}
+
+#imdが存在しない場合、ダミーを生成する
+bmdata.each{|bm|
+	imd_name = "imdfiles/#{bm.sym}.imd"
+  unless FileTest.exists?( imd_name ) then
+    puts "\t@echo #{imd_name}が存在しないため、ダミーファイルをコピーします"
+    FileUtils.cp "imdfiles/dummy_buildmodel.imd",imd_name
+  end
+}
 
