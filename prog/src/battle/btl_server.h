@@ -29,7 +29,9 @@ typedef enum {
 }ServerCmdResult;
 
 
-extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID );
+extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, const GFL_STD_RandContext* randContext,
+  BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID );
+
 extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_Startup( BTL_SERVER* server );

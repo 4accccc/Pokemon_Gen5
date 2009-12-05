@@ -79,13 +79,13 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BTL_THINKER_UI = 0,
-  BTL_THINKER_AI,
+  BTL_CLIENT_TYPE_UI = 0,
+  BTL_CLIENT_TYPE_AI,
 
-  BTL_THINKER_TYPE_MAX,
-  BTL_THINKER_NONE = BTL_THINKER_TYPE_MAX,
+  BTL_CLIENT_TYPE_MAX,
+  BTL_CLIENT_TYPE_NONE = BTL_CLIENT_TYPE_MAX,
 
-}BtlThinkerType;
+}BtlClientType;
 
 //--------------------------------------------------------------
 /**
@@ -145,6 +145,7 @@ typedef enum {
   BTL_CHANGEMODE_IREKAE = 0,  ///<
   BTL_CHANGEMODE_KATINUKI,
 }BtlChangeMode;
+
 
 
 #endif

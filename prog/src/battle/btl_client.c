@@ -19,7 +19,9 @@
 #include "btl_action.h"
 #include "btl_field.h"
 #include "btl_pokeselect.h"
+#include "btl_rec.h"
 #include "btl_server_cmd.h"
+
 #include "app\b_bag.h"
 #include "btlv\btlv_core.h"
 
@@ -65,6 +67,7 @@ struct _BTL_CLIENT {
   BTL_POKE_CONTAINER*   pokeCon;
   const BTL_POKEPARAM*  procPoke;
   BTL_ACTION_PARAM*     procAction;
+  BTL_REC*              btlRec;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -251,7 +254,7 @@ static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type );
 
 BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
-  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, BtlBagMode bagMode,
+  GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlClientType clientType, BtlBagMode bagMode,
   HEAPID heapID )
 {
   BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
@@ -283,11 +286,20 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
   BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
+  if( wk->myType == BTL_CLIENT_TYPE_UI ){
+    wk->btlRec = BTL_REC_Create( heapID );
+  }else{
+    wk->btlRec = NULL;
+  }
+
   return wk;
 }
 
 void BTL_CLIENT_Delete( BTL_CLIENT* wk )
 {
+  if( wk->btlRec ){
+    BTL_REC_Delete( wk->btlRec );
+  }
   GFL_HEAP_FreeMemory( wk->cmdQue );
   BTL_ADAPTER_Delete( wk->adapter );
 
@@ -358,7 +370,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 {
   static const struct {
     BtlAdapterCmd   cmd;
-    ClientSubProc   procs[ BTL_THINKER_TYPE_MAX ];
+    ClientSubProc   procs[ BTL_CLIENT_TYPE_MAX ];
   }procTbl[] = {
 
     { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },

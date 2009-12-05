@@ -69,6 +69,12 @@ extern void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit );
 extern void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst );
 
 
+/*
+ *  @brief  セットアップ済みパラメータに録画バッファを生成
+ */
+extern void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID );
+
+
 ////////////////////////////////////////////////////////////////////////
 /*
  * BATTLE_SETUP_PARAM初期化ユーティリティ関数群

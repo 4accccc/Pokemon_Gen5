@@ -194,6 +194,8 @@ typedef struct {
   BtlResult   result;           ///< 勝敗結果
   u8          capturedPokeIdx;  ///< 捕獲したポケモンのメンバー内インデックス（partyEnemy1 内）
 
+  u8*         recBuffer;        ///< 録画データ生成先
+
 }BATTLE_SETUP_PARAM;
 
 

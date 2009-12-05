@@ -70,10 +70,12 @@ struct _BTL_SERVER {
   BTL_SVFLOW_WORK*      flowWork;
   SvflowResult          flowResult;
   BtlBagMode            bagMode;
+  GFL_STD_RandContext   randContext;
+
+
   u8          numClient;
   u8          quitStep;
   u32         escapeClientID;
-
 
   BTL_SERVER_CMD_QUE  queBody;
   BTL_SERVER_CMD_QUE* que;
@@ -112,15 +114,17 @@ static void ResetAdapterCmd( BTL_SERVER* server );
 /**
  * サーバ生成
  *
- * @param   mainModule  メインモジュールのハンドラ
- * @param   pokeCon     ポケモンデータコンテナハンドラ
- * @param   bagMode     バッグモード
- * @param   heapID      ヒープID
+ * @param   mainModule   メインモジュールのハンドラ
+ * @param   randContext  乱数コンテキスト（録画データ作成用にクライアントに通知する。乱数初期化は既に行われているのでサーバが行う必要は無い。）
+ * @param   pokeCon      ポケモンデータコンテナハンドラ
+ * @param   bagMode      バッグモード
+ * @param   heapID       ヒープID
  *
  * @retval  BTL_SERVER*
  */
 //=============================================================================================
-BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID )
+BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandContext* randContext,
+  BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID )
 {
   BTL_SERVER* sv = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER) );
 
@@ -134,6 +138,8 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* 
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
+  sv->randContext = *randContext;
+
 
   {
     int i;

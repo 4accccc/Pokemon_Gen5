@@ -51,7 +51,7 @@ typedef enum {
 extern BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon,
   BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos,
-  BtlThinkerType clientType, BtlBagMode bagMode,
+  BtlClientType clientType, BtlBagMode bagMode,
   HEAPID heapID );
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );

@@ -16,12 +16,19 @@
 
 #include "gamesystem/btl_setup.h"
 
+//------------------------------------------------------------
+//------------------------------------------------------------
+enum {
+  BTL_RECORD_BUFFER_SIZE = 4096,
+};
+
+
 ///プロトタイプ
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
+
 static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID );
 static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data );
-
 static void setup_common_situation( BTL_FIELD_SITUATION* sit );
 
 /*
@@ -88,6 +95,9 @@ void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
     if(bp->tr_data[i] != NULL){
       BSP_TRAINER_DATA_Delete( bp->tr_data[i]);
     }
+  }
+  if( bp->recBuffer ){
+    GFL_HEAP_FreeMemory( bp->recBuffer );
   }
 
   MI_CpuClear8(bp,sizeof(BATTLE_SETUP_PARAM));
@@ -219,6 +229,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->commPos = 0;
   dst->netID = 0;
   dst->multiMode = 0;
+  dst->recBuffer = NULL;
 
   dst->partyPlayer = NULL;
   dst->partyEnemy1 = NULL;
@@ -586,4 +597,14 @@ void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
     dst->competitor = BTL_COMPETITOR_SUBWAY;
   }
 }
+/*
+ *  @brief  録画用バッファを生成
+ */
+void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID )
+{
+  if( dst->recBuffer == NULL ){
+    dst->recBuffer = GFL_HEAP_AllocMemory( heapID, BTL_RECORD_BUFFER_SIZE );
+  }
+}
+
 

@@ -24,6 +24,11 @@ extern const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MOD
 extern BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID );
 
 /*------------------------------------------------------------------------------*/
+/* 共有乱数ルーチン                                                             */
+/*------------------------------------------------------------------------------*/
+extern u32 BTL_MAIN_GetRand( const BTL_MAIN_MODULE* wk, u32 pattern );
+
+/*------------------------------------------------------------------------------*/
 /* 通信情報                                                                     */
 /*------------------------------------------------------------------------------*/
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
