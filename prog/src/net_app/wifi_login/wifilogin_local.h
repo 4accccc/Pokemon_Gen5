@@ -32,8 +32,10 @@ extern void WIFILOGIN_MESSAGE_SystemMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork);
 extern void WIFILOGIN_MESSAGE_ErrorMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid,int no);
 
 
-extern WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id);
+extern WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id,BOOL bDreamWorld);
 extern void WIFILOGIN_DISP_Main(WIFILOGIN_DISP_WORK* pWork);
 extern void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork);
 extern void WIFILOGIN_DISP_SettingSubBgControl(WIFILOGIN_DISP_WORK* pWork);
+extern void WIFILOGIN_DISP_StartSmoke(WIFILOGIN_DISP_WORK* pWork);
+
 

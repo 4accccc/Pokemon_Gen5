@@ -13,7 +13,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
-#include "net_app/gtsnego.h"
+#include "net_app/wifi_login.h"
 
 
 typedef enum{
@@ -34,7 +34,7 @@ struct _EVENT_GSYNC_WORK{
   BOOL push;
   u16 boxNo;
   u16 boxIndex;
-  EVENT_GTSNEGO_WORK aLoginWork;
+  WIFILOGIN_PARAM aLoginWork;
 };
 
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);

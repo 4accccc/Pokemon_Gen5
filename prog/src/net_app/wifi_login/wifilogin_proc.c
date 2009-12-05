@@ -155,6 +155,7 @@ struct _WIFILOGIN_WORK {
   BOOL receive_ok;
   BOOL bInitMessage;
   BOOL bSaving;
+  BOOL bDreamWorld;
   SAVE_CONTROL_WORK* pSave;
   APP_TASKMENU_WORK* pAppTask;
   WIFILOGIN_DISP_WORK* pDispWork;  // •`‰æŒn
@@ -619,6 +620,9 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
   GFL_NET_StateWifiEnterLogin();
 
   WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0008);
+
+  WIFILOGIN_DISP_StartSmoke(pWork->pDispWork);
+
   _CHANGE_STATE(pWork,_connectingWait);
   
 }
@@ -921,7 +925,8 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     GFL_STD_MemClear(pWork, sizeof(WIFILOGIN_WORK));
     pWork->heapID = HEAPID_IRCBATTLE;
 
-    pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID);
+    pWork->bDreamWorld = pEv->bDreamWorld;
+    pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID,pEv->bDreamWorld);
     pWork->pMessageWork = WIFILOGIN_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat);
     pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
     pWork->pList = SaveData_GetWifiListData(
@@ -930,14 +935,12 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
           ((pEv->gsys))) ));
 
 
-		{
+		if(!pEv->bDreamWorld){
 			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
 			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
 		}
 
-
-
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
       pWork->dbw = pwk;
@@ -964,6 +967,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   WIFILOGIN_WORK* pWork = mywk;
+  WIFILOGIN_PARAM* pEv=pwk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
 
   StateFunc* state = pWork->state;
@@ -979,8 +983,9 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_DISP_Main(pWork->pDispWork);
   WIFILOGIN_MESSAGE_Main(pWork->pMessageWork);
 
-  
-	INFOWIN_Update();
+  if(!pEv->bDreamWorld){
+    INFOWIN_Update();
+  }
 
   return retCode;
 }
@@ -1000,7 +1005,9 @@ static GFL_PROC_RESULT WiFiLogin_ProcEnd( GFL_PROC * proc, int * seq, void * pwk
 
   GFL_PROC_FreeWork(proc);
 
-	INFOWIN_Exit();
+  if(!pEv->bDreamWorld){
+    INFOWIN_Exit();
+  }
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
 
 

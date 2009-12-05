@@ -37,13 +37,59 @@
 //#include "msg/msg_gtsnego.h"
 #include "wifi_login.naix"
 
+#include "gsync.naix"
+#include "../gsync/gsync_obj_NANR_LBLDEFS.h"
+
+typedef enum
+{
+  PLT_SMOKE,
+  PLT_RESOURCE_MAX,
+  CHAR_SMOKE = PLT_RESOURCE_MAX,
+  CHAR_RESOURCE_MAX,
+  ANM_SMOKE = CHAR_RESOURCE_MAX,
+  ANM_RESOURCE_MAX,
+  CEL_RESOURCE_MAX,
+} _CELL_RESOURCE_TYPE;
+
+typedef enum
+{
+  CELL_SMOKE1,
+  CELL_SMOKE2,
+  CELL_SMOKE3,
+  CELL_SMOKE4,
+  CELL_SMOKE5,
+  _CELL_DISP_NUM,
+} _CELL_WK_ENUM;
+
+
+#define MOVESMOKE_RANDX (2)
+#define MOVESMOKE_RANDY (3)
+
+#define MOVESMOKE_SLEEPX (3)
+#define MOVESMOKE_SLEEPY (2)
+
+#define MOVESMOKE_CREATE (50)
+
+
+typedef struct{
+  int rightleft;
+} MOVESMOKE;
+
+
 
 
 struct _WIFILOGIN_DISP_WORK {
 	u32 subchar;
   u32 mainchar;
+  BOOL bDreamWorld;
   HEAPID heapID;
 
+  GFL_CLUNIT	*cellUnit;
+  GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
+  u32 cellRes[CEL_RESOURCE_MAX];
+  GFL_CLWK* curIcon[_CELL_DISP_NUM];
+  MOVESMOKE moveSmoke[_CELL_DISP_NUM];
+  int smokeTimer;
 };
 
 static GFL_DISP_VRAM _defVBTbl = {
@@ -53,7 +99,6 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
@@ -64,7 +109,7 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
 
   GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_128K,
 
 };
 
@@ -73,13 +118,21 @@ static GFL_BG_SYS_HEADER BGsys_data = {
 };
 
 static void dispInit(WIFILOGIN_DISP_WORK* pWork);
+static void dispInitDream(WIFILOGIN_DISP_WORK* pWork);
+static void dispOamInit(WIFILOGIN_DISP_WORK* pWork);
+static void dispOamMain(WIFILOGIN_DISP_WORK* pWork);
+static void dispOamEnd(WIFILOGIN_DISP_WORK* pWork);
+static void	_VBlank( GFL_TCB *tcb, void *work );
+static void _moveSmoke(WIFILOGIN_DISP_WORK* pWork);
+
 static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork);
 
 
-WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id)
+WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, BOOL bDreamWorld)
 {
   WIFILOGIN_DISP_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(WIFILOGIN_DISP_WORK));
   pWork->heapID = id;
+  pWork->bDreamWorld = bDreamWorld;
 
 
   GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
@@ -94,17 +147,34 @@ WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id)
   GFL_DISP_SetBank( &_defVBTbl );
   GFL_BG_SetBGMode( &BGsys_data );
   settingSubBgControl(pWork);
-  dispInit(pWork);
-  
+  if(pWork->bDreamWorld){
+    dispOamInit(pWork);
+    dispInitDream(pWork);
+  }
+  else{
+    dispInit(pWork);
+  }
+
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+
   return pWork;
 }
 
 void WIFILOGIN_DISP_Main(WIFILOGIN_DISP_WORK* pWork)
 {
+  if(pWork->bDreamWorld){
+    dispOamMain(pWork);
+  }
 }
 
 void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
 {
+  if(pWork->bDreamWorld){
+    dispOamEnd(pWork);
+  }
+
+
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME2_S, 1, 0);
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
@@ -197,10 +267,9 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
 
 static void dispInit(WIFILOGIN_DISP_WORK* pWork)
 {
-	{
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN, pWork->heapID );
-
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN, pWork->heapID );
+  
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_conect_sub_NCGR,
@@ -226,6 +295,192 @@ static void dispInit(WIFILOGIN_DISP_WORK* pWork)
                                               pWork->heapID);
 
     GFL_ARC_CloseDataHandle(p_handle);
-	}
+}
+
+static void dispInitDream(WIFILOGIN_DISP_WORK* pWork)
+{
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_connect_NCLR,
+                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+    // サブ画面BG0キャラ転送
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gsync_connect_sub_NCGR,
+                                                                  GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_connect_sub_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+
+
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_connect_NCLR,
+                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
+    // サブ画面BG0キャラ転送
+    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gsync_connect_NCGR,
+                                                                  GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_connect_01_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+
+
+    pWork->cellRes[CHAR_SMOKE] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_gsync_gsync_obj_NCGR ,
+                              FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+    pWork->cellRes[PLT_SMOKE] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gsync_gsync_obj_NCLR , CLSYS_DRAW_MAIN ,    0, 0, 3, pWork->heapID  );
+    pWork->cellRes[ANM_SMOKE] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_gsync_gsync_obj_NCER, NARC_gsync_gsync_obj_NANR , pWork->heapID  );
+
+    GFL_ARC_CloseDataHandle(p_handle);
+
+  }
 
 }
+
+
+static void dispOamInit(WIFILOGIN_DISP_WORK* pWork)
+{
+
+  GFL_CLACT_SYS_Create(	&GFL_CLSYSINIT_DEF_DIVSCREEN, &_defVBTbl, pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
+  pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
+
+  
+}
+
+static void dispOamMain(WIFILOGIN_DISP_WORK* pWork)
+{
+  _moveSmoke(pWork);
+  GFL_CLACT_SYS_Main();
+}
+
+
+static void dispOamEnd(WIFILOGIN_DISP_WORK* pWork)
+{
+  int i=0;
+   
+  for(i = 0 ; i < _CELL_DISP_NUM ;i++){
+    if(pWork->curIcon[i]!=NULL){
+      GFL_CLACT_WK_Remove(pWork->curIcon[i]);
+      pWork->curIcon[i]=NULL;
+    }
+  }
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_SMOKE] );
+  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SMOKE] );
+  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_SMOKE] );
+  GFL_TCB_DeleteTask( pWork->g3dVintr );
+  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  GFL_CLACT_SYS_Delete();
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	煙をセット
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+static void _SetSmoke(WIFILOGIN_DISP_WORK* pWork,int x,int y)
+{
+  int i=0;
+
+
+  
+  for(i = 0 ; i < _CELL_DISP_NUM ;i++){
+
+    if(pWork->curIcon[i]==NULL){
+      GFL_CLWK_DATA cellInitData;
+
+      cellInitData.pos_x = x;
+      cellInitData.pos_y = y;
+      cellInitData.anmseq = NANR_gsync_obj_yume_1;
+      cellInitData.softpri = 0;
+      cellInitData.bgpri = 0;
+      pWork->curIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->cellRes[CHAR_SMOKE],
+                                               pWork->cellRes[PLT_SMOKE],
+                                               pWork->cellRes[ANM_SMOKE],
+                                               &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[i] , TRUE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[i], TRUE );
+      if(50 > GFUser_GetPublicRand(100)){
+        pWork->moveSmoke[i].rightleft = -1;
+      }
+      else{
+        pWork->moveSmoke[i].rightleft = 1;
+      }
+      break;
+    }
+  }
+}
+
+
+static void _moveSmoke(WIFILOGIN_DISP_WORK* pWork)
+{
+  int i;
+
+
+  if(pWork->smokeTimer==0){
+    return;
+  }
+  pWork->smokeTimer++;
+
+  if((pWork->smokeTimer % MOVESMOKE_CREATE) == 12){
+    if(30 > GFUser_GetPublicRand(100)){
+      _SetSmoke(pWork,128,190);
+    }
+  }
+
+  for(i = 0 ; i < _CELL_DISP_NUM ;i++){
+    if(pWork->curIcon[i]!=NULL){
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos( pWork->curIcon[i], &pos, CLSYS_DEFREND_MAIN );
+      if( pos.y < -40){
+        GFL_CLACT_WK_Remove(pWork->curIcon[i]);
+        pWork->curIcon[i]=NULL;
+      }
+      else{
+        if( (pWork->smokeTimer % MOVESMOKE_SLEEPY)==0 ){
+          pos.y -= GFUser_GetPublicRand(MOVESMOKE_RANDY);
+        }
+        if( (pWork->smokeTimer % MOVESMOKE_SLEEPX)==0 ){
+          pos.x += GFUser_GetPublicRand(MOVESMOKE_RANDX) * pWork->moveSmoke[i].rightleft ;
+        }
+        GFL_CLACT_WK_SetPos( pWork->curIcon[i], &pos, CLSYS_DEFREND_MAIN );
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * G3D VBlank処理
+ * @param TCB GFL_TCB
+ * @param work tcb work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void	_VBlank( GFL_TCB *tcb, void *work )
+{
+  WIFILOGIN_DISP_WORK *pWork=work;
+
+  GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+
+}
+
+void WIFILOGIN_DISP_StartSmoke(WIFILOGIN_DISP_WORK* pWork)
+{
+  pWork->smokeTimer=1;
+}
+

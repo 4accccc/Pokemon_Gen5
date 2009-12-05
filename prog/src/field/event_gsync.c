@@ -224,7 +224,7 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
   dbw->fieldmap = fieldmap;
   dbw->aLoginWork.gsys=gsys;
   dbw->aLoginWork.ctrl=dbw->ctrl;
-  dbw->aLoginWork.fieldmap = fieldmap;
+  dbw->aLoginWork.bDreamWorld = TRUE;
   return event;
 }
 

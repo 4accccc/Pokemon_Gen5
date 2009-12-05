@@ -95,7 +95,6 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
@@ -110,22 +109,6 @@ static GFL_DISP_VRAM _defVBTbl = {
 
 };
 
-//--------------------------------------------------------------
-///	セルアクター　初期化データ
-//--------------------------------------------------------------
-static const GFL_CLSYS_INIT _CLSYS_Init =
-{
-  0, 0,
-  0, 512,
-  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL,
-  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL, //通信アイコン部分
-  0,
-  100,
-  100,
-  100,
-  100,
-  16, 16,
-};
 
 
 static GFL_BG_SYS_HEADER BGsys_data = {
@@ -167,7 +150,7 @@ GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id)
 
 
   
-  _TOUCHBAR_Init(pWork);
+  //_TOUCHBAR_Init(pWork);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
@@ -444,7 +427,7 @@ static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y)
 
       cellInitData.pos_x = x;
       cellInitData.pos_y = y;
-      cellInitData.anmseq = 13;
+      cellInitData.anmseq = 0;
       cellInitData.softpri = 0;
       cellInitData.bgpri = 1;
       pWork->curIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,

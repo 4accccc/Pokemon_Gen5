@@ -78,6 +78,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
+	$(DIFFCOPY) gsync_obj_NANR_LBLDEFS.h  ../../prog/src/net_app/gsync/
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

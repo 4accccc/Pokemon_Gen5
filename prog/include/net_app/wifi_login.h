@@ -31,6 +31,7 @@ typedef struct
 {
   GAMESYS_WORK      *gsys;  //[in ]ゲームシステム
   SAVE_CONTROL_WORK *ctrl;  //[in ]セーブデータ
+  int bDreamWorld;          //[in ]ドリームワールドの時は背景変更
   WIFILOGIN_RESULT  result; //[out]終了方法
 } WIFILOGIN_PARAM;
 
