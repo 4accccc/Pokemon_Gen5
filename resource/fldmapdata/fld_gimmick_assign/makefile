@@ -97,6 +97,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 $(targetname).narc: fld_gimmick_assign.xls ../zonetable/zone_id.h
 	ruby assign.rb ../zonetable/zone_id.h fld_gimmick_assign.xls dst.bin
 	@nnsarc -i -cl -l -n $(targetname).narc dst.bin > arc_result.txt
+	$(NAIXCUT) $(targetname).naix
 endif
 
 make-verinfo:
