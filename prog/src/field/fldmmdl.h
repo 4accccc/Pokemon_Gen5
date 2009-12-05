@@ -301,6 +301,9 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_PCWOMAN, ///<PC姉
   MMDL_BLACT_ANMTBLNO_POKE_FLIP, ///<ポケモン　反転使用
   MMDL_BLACT_ANMTBLNO_POKE_NONFLIP, ///<ポケモン反転未使用
+  MMDL_BLACT_ANMTBLNO_FISHINGHERO, ///<釣り自機 new
+  MMDL_BLACT_ANMTBLNO_CUTINHERO, ///<カットイン自機 new
+  MMDL_BLACT_ANMTBLNO_YUREHERO, ///<尾瀬揺れ自機 new
 	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }MMDL_BLACT_ANMTBLNO;
 
@@ -326,13 +329,16 @@ typedef enum
   MMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
   MMDL_DRAWPROCNO_SWIMHERO, ///<波乗り自機専用
   MMDL_DRAWPROCNO_BLACTALWAYSANIME, //ビルボード汎用＋常にアニメ
-  MMDL_DRAWPROCNO_ITEMGET, //自機アイテムゲット
-  MMDL_DRAWPROCNO_PCAZUKE, //自機PC預け
-  MMDL_DRAWPROCNO_ONEANMLOOP, //１アニメループ
-  MMDL_DRAWPROCNO_PCWOMAN, //PC姉
-  MMDL_DRAWPROCNO_TPOKE, //連れ歩きポケモン
-  MMDL_DRAWPROCNO_TPOKE_FLY, //連れ歩きポケモン 縦揺れ付き
-  MMDL_DRAWPROCNO_MODEL, //ポリゴンモデル
+  MMDL_DRAWPROCNO_ITEMGET, ///<自機アイテムゲット
+  MMDL_DRAWPROCNO_PCAZUKE, ///<自機PC預け
+  MMDL_DRAWPROCNO_ONEANMLOOP, ///<１パターンアニメループ
+//  MMDL_DRAWPROCNO_ONEANM, ///<１パターンアニメ
+  MMDL_DRAWPROCNO_PCWOMAN, ///<PC姉
+  MMDL_DRAWPROCNO_TPOKE, ///<連れ歩きポケモン
+  MMDL_DRAWPROCNO_TPOKE_FLY, ///<連れ歩きポケモン 縦揺れ付き
+  MMDL_DRAWPROCNO_MODEL, ///<ポリゴンモデル
+  MMDL_DRAWPROCNO_FISHINGHERO, ///<釣り自機専用 new
+  MMDL_DRAWPROCNO_YUREHERO, ///<尾瀬揺れ自機 new
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -1076,6 +1082,7 @@ extern void MMDLSYS_DeleteDraw( MMDLSYS *fos );
 
 extern void MMDL_UpdateDraw( MMDL * mmdl );
 
+
 #ifndef MMDL_PL_NULL
 extern const OBJCODE_STATE * MMDL_TOOL_GetOBJCodeState( u16 code );
 extern const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *mmdl );
@@ -1086,6 +1093,11 @@ extern void * MMDL_DrawArcDataAlloc(
 		const MMDLSYS *fos, u32 datID, int fb );
 extern void MMDL_GetDrawVectorPos(
 		const MMDL * mmdl, VecFx32 *vec );
+
+//--------------------------------------------------------------
+//	fldmmdl_draw_0.c
+//--------------------------------------------------------------
+extern BOOL MMDL_DrawYureHero_SetAnimeFrame( MMDL *mmdl, u32 frame );
 
 //--------------------------------------------------------------
 //	fldmmdl_acmd.c

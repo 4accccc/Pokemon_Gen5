@@ -32,7 +32,7 @@
 #define EX_MOVEHITBIT(bit_no) (1<<(MMDL_MOVEHITBIT_BITMAX+bit_no))
 
 ///尾瀬ゆらゆら限界フレーム
-#define OZE_YURE_MAXFRAME (30*3) //三秒
+#define OZE_YURE_MAXFRAME (30*2) //三秒
 
 //--------------------------------------------------------------
 /// JIKI_MOVEBIT
@@ -47,8 +47,8 @@ typedef enum
   JIKI_MOVEBIT_UNDER_OFF   = (1<<1),
   ///一歩移動
   JIKI_MOVEBIT_STEP        = (1<<2),
-  ///尾瀬状態
-  JIKI_MOVEBIT_OZE         = (1<<3),
+  ///尾瀬ゆれ状態
+  JIKI_MOVEBIT_OZE_YURE    = (1<<3),
   ///尾瀬落下中
   JIKI_MOVEBIT_OZE_FALLOUT = (1<<4),
   ///最大
@@ -144,7 +144,8 @@ struct _TAG_FIELD_PLAYER_GRID
   u16 input_key_dir_x; //キー入力横方向
   u16 input_key_dir_z; //キー入力縦方向
   
-  u32 oze_yure_frame;
+  u16 oze_yure_frame;
+  u16 oze_anime_reset_flag;
 };
 
 //======================================================================
@@ -349,8 +350,8 @@ static void gjiki_OnMoveBitUnderOff( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OffMoveBitUnderOff( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OnMoveBitStep( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OffMoveBitStep( FIELD_PLAYER_GRID *gjiki );
-static void gjiki_SetMoveBitOze( FIELD_PLAYER_GRID *gjiki, BOOL on );
-static BOOL gjiki_CheckMoveBitOze( FIELD_PLAYER_GRID *gjiki );
+static void gjiki_SetMoveBitOzeYure( FIELD_PLAYER_GRID *gjiki, BOOL on );
+static BOOL gjiki_CheckMoveBitOzeYure( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_SetMoveBitOzeFallOut( FIELD_PLAYER_GRID *gjiki, BOOL on );
 static BOOL gjiki_CheckMoveBitOzeFallOut( FIELD_PLAYER_GRID *gjiki );
 
@@ -360,7 +361,7 @@ static BOOL gjiki_ControlUnder(
     FIELD_PLAYER_GRID *gjiki, u16 dir, BOOL debug );
 
 //尾瀬
-static void oze_InitParam( FIELD_PLAYER_GRID *gjiki );
+//static void oze_InitParam( FIELD_PLAYER_GRID *gjiki );
 static BOOL oze_IsOzeAttr( const MAPATTR_VALUE val );
 static BOOL oze_CheckAttrOzeMove( FIELD_PLAYER_GRID *gjiki, u16 dir );
 static BOOL oze_CheckAttrUnderOze( FIELD_PLAYER_GRID *gjiki );
@@ -368,6 +369,8 @@ static u16 oze_CheckAttrOzeFallOut( FIELD_PLAYER_GRID *gjiki );
 static u32 oze_HitCheckMove(
     FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, u16 dir, MAPATTR *attr );
 static BOOL oze_CheckFallOutEnd( FIELD_PLAYER_GRID *gjiki );
+static void oze_StartYureJiki( FIELD_PLAYER_GRID *gjiki );
+static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki );
 
 //parts
 static BOOL gjiki_GetAttr( FIELD_PLAYER_GRID *gjiki, u16 dir, MAPATTR *attr );
@@ -446,7 +449,7 @@ void FIELD_PLAYER_GRID_Move(
     FIELD_PLAYER_GRID *gjiki, int key_trg, int key_cont )
 {
   u16 dir;
-  JIKI_MOVEORDER set;
+  JIKI_MOVEORDER order;
   BOOL debug_flag = FALSE;
   
   dir = gjiki_GetInputKeyDir( gjiki, key_cont );
@@ -467,11 +470,11 @@ void FIELD_PLAYER_GRID_Move(
     return;
   }
   
-  set = gjiki_GetMoveOrder( gjiki, key_trg, key_cont, dir, debug_flag );
+  order = gjiki_GetMoveOrder( gjiki, key_trg, key_cont, dir, debug_flag );
   
-  gjiki_InitMoveStartCommon( gjiki, key_cont, set );
-  gjiki_SetMove( gjiki, set, key_trg, key_cont, dir, debug_flag );
-  gjiki_PlaySE( gjiki, set, dir );
+  gjiki_InitMoveStartCommon( gjiki, key_cont, order );
+  gjiki_SetMove( gjiki, order, key_trg, key_cont, dir, debug_flag );
+  gjiki_PlaySE( gjiki, order, dir );
 }
 
 //--------------------------------------------------------------
@@ -496,7 +499,7 @@ static void gjiki_InitMoveStartCommon(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック
+ * オーダーチェック
  * @param
  * @retval
  */
@@ -788,7 +791,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal( FIELD_PLAYER_GRID *gjiki,
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　停止中
+ * オーダーチェック　停止中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -823,7 +826,7 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Stop(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　移動中
+ * オーダーチェック　移動中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -902,7 +905,7 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　振り向き中
+ * オーダーチェック　振り向き中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -931,7 +934,7 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Turn(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　障害物ヒット中
+ * オーダーチェック　障害物ヒット中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1027,7 +1030,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze( FIELD_PLAYER_GRID *gjiki,
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　移動開始チェック　停止中
+ * 尾瀬　オーダーチェック　停止中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1054,7 +1057,6 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Stop(
         gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
     }
     
-    gjiki->oze_yure_frame = 0;
     return( gjikiOze_CheckMoveOrder_Yure(
           gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
   }
@@ -1064,7 +1066,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Stop(
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　移動開始チェック　移動中
+ * 尾瀬　オーダーチェック　移動中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1107,7 +1109,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Walk(
       {
         if( MAPATTR_GetHitchFlag(attr) == FALSE ) //移動可能
         {
-          gjiki_SetMoveBitOzeFallOut( gjiki, TRUE );
+          gjiki_SetMoveBitOzeFallOut( gjiki, TRUE ); //落下フラグON
           return( JIKI_MOVEORDER_OZE_FALLOUT_JUMP_START ); //落下
         }
       }
@@ -1119,7 +1121,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Walk(
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　移動開始チェック　揺れ中
+ * 尾瀬　オーダーチェック　揺れ中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1135,22 +1137,28 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
 {
   if( dir == DIR_NOT ) //何も押していない
   {
-    if( gjiki_CheckMoveBitOze(gjiki) == FALSE )
-    { //尾瀬状態に
-      oze_InitParam( gjiki );
+    if( gjiki_CheckMoveBitOzeYure(gjiki) == FALSE ){
+      oze_StartYureJiki( gjiki );
     }
     
+    if( gjiki->oze_anime_reset_flag == TRUE ){
+      if( MMDL_DrawYureHero_SetAnimeFrame(mmdl,gjiki->oze_yure_frame) ){
+        gjiki->oze_anime_reset_flag = FALSE;
+      }
+    }
+
     gjiki->oze_yure_frame++;
     
     if( gjiki->oze_yure_frame == OZE_YURE_MAXFRAME )
-    {
+    { //落下開始
+      oze_EndYureJiki( gjiki );
       gjiki_SetMoveBitOzeFallOut( gjiki, TRUE );
       return( JIKI_MOVEORDER_OZE_FALLOUT_JUMP_START );
     }
   }
   else //何か押した
-  {
-    //尾瀬関連はここで元に戻すか？
+  { 
+    oze_EndYureJiki( gjiki );
     return( gjikiOze_CheckMoveOrder_Walk(
       gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
   }
@@ -1160,7 +1168,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　移動開始チェック　落下開始　ジャンプ終了
+ * 尾瀬　オーダーチェック　落下開始　ジャンプ終了
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1185,7 +1193,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_WaitFallOutJump(
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　移動開始チェック　落下中
+ * 尾瀬　オーダーチェック　落下中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1266,7 +1274,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle( FIELD_PLAYER_GRID *gjiki,
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　停止中
+ * オーダーチェック　停止中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1300,7 +1308,7 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　移動中
+ * オーダーチェック　移動中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1380,7 +1388,7 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　振り向き中
+ * オーダーチェック　振り向き中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1409,7 +1417,7 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Turn(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　障害物ヒット中
+ * オーダーチェック　障害物ヒット中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1491,7 +1499,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim( FIELD_PLAYER_GRID *gjiki,
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　停止中
+ * オーダーチェック　停止中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1526,7 +1534,7 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Stop(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　移動中
+ * オーダーチェック　移動中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1585,7 +1593,7 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　振り向き中
+ * オーダーチェック　振り向き中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -1614,7 +1622,7 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Turn(
 
 //--------------------------------------------------------------
 /**
- * 移動開始チェック　障害物ヒット中
+ * オーダーチェック　障害物ヒット中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
  * @param key_trg キートリガ
@@ -2715,7 +2723,7 @@ static u32 gjiki_HitCheckMove(
 
 //--------------------------------------------------------------
 /**
- * 自機移動開始チェック
+ * 自機オーダーチェック
  * @param gjiki FIELD_PLAYER_GRID
  * @param dir 移動方向。DIR_UP等
  * @retval BOOL TRUE=移動可能 FALSE=移動不可
@@ -2919,33 +2927,33 @@ static void gjiki_OffMoveBitStep( FIELD_PLAYER_GRID *gjiki )
 
 //--------------------------------------------------------------
 /**
- * JIKI_MOVEBIT 尾瀬状態 セット
+ * JIKI_MOVEBIT 尾瀬ゆれ状態 セット
  * @param gjiki FIELD_PLAYER_GRID
  * @param on TRUE=尾瀬状態 FALSE=尾瀬フラグクリア
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjiki_SetMoveBitOze(
+static void gjiki_SetMoveBitOzeYure(
     FIELD_PLAYER_GRID *gjiki, BOOL on )
 {
   if( on == TRUE ){
-    gjiki_OnMoveBit( gjiki, JIKI_MOVEBIT_OZE );
+    gjiki_OnMoveBit( gjiki, JIKI_MOVEBIT_OZE_YURE );
   }else{
-    gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_OZE );
+    gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_OZE_YURE );
   }
 }
 
 //--------------------------------------------------------------
 /**
- * JIKI_MOVEBIT 尾瀬状態 セット
+ * JIKI_MOVEBIT 尾瀬ゆれ状態 チェック
  * @param gjiki FIELD_PLAYER_GRID
  * @param on TRUE=尾瀬状態 FALSE=尾瀬フラグクリア
  * @retval nothing
  */
 //--------------------------------------------------------------
-static BOOL gjiki_CheckMoveBitOze( FIELD_PLAYER_GRID *gjiki )
+static BOOL gjiki_CheckMoveBitOzeYure( FIELD_PLAYER_GRID *gjiki )
 {
-  if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_OZE) ){
+  if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_OZE_YURE) ){
     return( TRUE );
   }
   return( FALSE );
@@ -3300,6 +3308,7 @@ static BOOL gjiki_ControlUnder(
 //======================================================================
 //  尾瀬
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * 尾瀬状態にする
@@ -3311,6 +3320,7 @@ static BOOL gjiki_ControlUnder(
 static void oze_InitParam( FIELD_PLAYER_GRID *gjiki )
 {
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -3387,7 +3397,7 @@ static BOOL oze_CheckAttrUnderOze( FIELD_PLAYER_GRID *gjiki )
 
   gjiki_GetAttr( gjiki, DIR_NOT, &attr );
   val = MAPATTR_GetAttrValue( attr );
-
+  
   if( oze_IsOnlyOzeAttr(val) == TRUE ){
     return( TRUE );
   }
@@ -3397,7 +3407,7 @@ static BOOL oze_CheckAttrUnderOze( FIELD_PLAYER_GRID *gjiki )
 
 //--------------------------------------------------------------
 /**
- * 尾瀬　落下可能な方向を探す
+ * 尾瀬　尾瀬アトリビュート以外で落下可能な方向を探す。
  * @param gjiki FIELD_PLAYER_GRID
  * @retval u16 落下可能な方向 DIR_NOT=なし
  */
@@ -3420,7 +3430,7 @@ static u16 oze_CheckAttrOzeFallOut( FIELD_PLAYER_GRID *gjiki )
     if( ret == TRUE ){
       val = MAPATTR_GetAttrValue( attr );
       
-      if( oze_IsOnlyOzeAttr(val) == FALSE ){
+      if( oze_IsOzeAttr(val) == FALSE ){
         if( MAPATTR_GetHitchFlag(attr) == FALSE ){
           return( dir );
         }
@@ -3476,6 +3486,37 @@ static BOOL oze_CheckFallOutEnd( FIELD_PLAYER_GRID *gjiki )
   return( TRUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * 尾瀬ゆれ状態に
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void oze_StartYureJiki( FIELD_PLAYER_GRID *gjiki )
+{
+  gjiki_SetMoveBitOzeYure( gjiki, TRUE );
+  FIELD_PLAYER_ChangeDrawForm(
+    gjiki->fld_player, PLAYER_DRAW_FORM_YURE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 尾瀬ゆれ状態から元に戻す
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki )
+{
+  gjiki->oze_yure_frame = 0;
+  gjiki->oze_anime_reset_flag = FALSE;
+  gjiki_SetMoveBitOzeFallOut( gjiki, FALSE );
+      
+  gjiki_SetMoveBitOzeYure( gjiki, FALSE );
+  FIELD_PLAYER_ResetMoveForm( gjiki->fld_player );
+}
+
 //======================================================================
 //  FIELD_PLAYER_GRID参照
 //======================================================================
@@ -3501,6 +3542,33 @@ FIELD_PLAYER * FIELD_PLAYER_GRID_GetFieldPlayer( FIELD_PLAYER_GRID *gjiki )
 MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki )
 {
   return( FIELD_PLAYER_GetMMdl(gjiki->fld_player) );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 自機が特殊表示の場合は元に戻す。
+ * @param fld_player
+ * @retval nothing
+ * @note 今の所、該当箇所は尾瀬ゆれ状態のみ
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_CheckSpecialDrawForm(
+    FIELD_PLAYER *fld_player, BOOL menu_open_flag )
+{
+  FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+  FIELD_PLAYER_GRID *gjiki = FIELDMAP_GetPlayerGrid( fieldWork );
+  
+  if( gjiki_CheckMoveBitOzeYure(gjiki) == TRUE ){
+    u32 oze_yure_frame = gjiki->oze_yure_frame;
+    oze_EndYureJiki( gjiki );
+    //メニューオープン時は揺れフレームを維持
+    //オープン後、バッグ等、画面遷移の場合は自機ワークはクリアされる
+    if( menu_open_flag == TRUE ){
+      gjiki->oze_yure_frame = oze_yure_frame;
+      gjiki->oze_anime_reset_flag = TRUE;
+    }
+  }
 }
 
 //======================================================================
@@ -3532,4 +3600,3 @@ static BOOL gjiki_GetAttr(
   ret = MMDL_GetMapPosAttr( mmdl, &pos, attr );
   return( ret );
 }
-

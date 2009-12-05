@@ -73,6 +73,8 @@ extern FIELD_PLAYER * FIELD_PLAYER_GRID_GetFieldPlayer(
     FIELD_PLAYER_GRID *gjiki );
 extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );
 
+extern void FIELD_PLAYER_GRID_CheckSpecialDrawForm( FIELD_PLAYER *fld_player, BOOL menu_open_flag );
+
 //field_player_grid_event.c
 extern GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER *fld_player,
     int key_trg, int key_cont, PLAYER_EVENTBIT evbit );

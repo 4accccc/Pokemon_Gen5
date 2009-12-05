@@ -748,6 +748,153 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero =
 };
 
 //======================================================================
+//  釣り自機
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　釣り自機　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawFishingHero_Draw( MMDL *mmdl )
+{
+
+}
+
+//--------------------------------------------------------------
+/// 描画処理　釣り自機　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_FishingHero =
+{
+  DrawHero_Init,
+  DrawFishingHero_Draw,
+  DrawHero_Delete,
+  DrawHero_Delete,  //退避
+  DrawHero_Init,    //本当は復帰
+  DrawHero_GetBlActID,
+};
+
+//======================================================================
+//  ゆれ自機
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ゆれ自機　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawYureHero_Draw( MMDL *mmdl )
+{
+  u16 dir;
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  dir = blact_GetDrawDir( mmdl );
+
+  if( work->set_anm_dir != dir ){
+    u16 anm_id = dir;
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+    GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+    work->set_anm_dir = dir;
+  }
+  
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * ゆれ自機　アニメフレームセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL MMDL_DrawYureHero_SetAnimeFrame( MMDL *mmdl, u32 frame )
+{
+  u16 idx = 0;
+  DRAW_BLACT_WORK *work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return( FALSE );
+  }
+  
+  if( frame < 24 ){
+    if( frame < 6 ){
+      idx = 0;
+    }else if( frame < 12 ){
+      idx = 1;
+    }else if( frame < 18 ){
+      idx = 2;
+    }else{
+      idx = 3;
+    }
+  }else if( frame < 40 ){
+    if( frame < 28 ){
+      idx = 4;
+    }else if( frame < 32 ){
+      idx = 5;
+    }else if( frame < 36 ){
+      idx = 6;
+    }else{
+      idx = 7;
+    }
+  }else if( frame < 48 ){
+    if( frame < 42 ){
+      idx = 8;
+    }else if( frame < 44 ){
+      idx = 9;
+    }else if( frame < 46 ){
+      idx = 10;
+    }else{
+      idx = 11;
+    }
+  }else{
+    idx = 12;
+  }
+  
+  {
+    u16 now;
+    GFL_BBDACT_SYS *actSys;
+
+    actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+    now = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
+
+    if( now != idx ){
+      GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+    }
+  }
+  
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/// 描画処理　ゆれ自機　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_YureHero =
+{
+  DrawHero_Init,
+  DrawYureHero_Draw,
+  DrawHero_Delete,
+  DrawHero_Delete,  //退避
+  DrawHero_Init,    //本当は復帰
+  DrawHero_GetBlActID,
+};
+
+//======================================================================
 //  ビルボード　１パターンアニメループ
 //======================================================================
 //--------------------------------------------------------------
@@ -791,6 +938,73 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop =
   DrawBlAct_Init,    //本当は復帰
   DrawBlAct_GetBlActID,
 };
+
+//======================================================================
+//  ビルボード　１パターンアニメ
+//======================================================================
+#if 0
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　１パターンアニメ　描画　ループなし
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlAct_DrawOnePattern( MMDL *mmdl )
+{
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+#if 1  
+  {
+    u16 comm;
+
+    if( GFL_BBDACT_GetAnimeLastCommand(actSys,work->actID,&comm) == TRUE ){
+      int flag = TRUE;
+      
+      if( comm == GFL_BBDACT_ANMCOM_END ){
+        GFL_BBDACT_SetAnimeEnable( actSys, work->actID, FALSE );
+      }
+
+      if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
+        flag = FALSE;
+      }
+
+      GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
+    }else{
+      blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+    }
+  }
+#endif
+
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/// 描画処理 ビルボード　１パターンアニメ　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePattern =
+{
+  DrawBlAct_Init,
+  DrawBlAct_DrawOnePattern,
+  DrawBlAct_Delete,
+  DrawBlAct_Delete,  //本当は退避
+  DrawBlAct_Init,    //本当は復帰
+  DrawBlAct_GetBlActID,
+};
+#endif
 
 //======================================================================
 //  ビルボード　連れ歩きポケモンアニメ

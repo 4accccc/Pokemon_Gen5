@@ -66,6 +66,7 @@ typedef enum
   PLAYER_DRAW_FORM_ITEMGET, ///<自機アイテムゲット
   PLAYER_DRAW_FORM_SAVEHERO, ///<自機セーブ
   PLAYER_DRAW_FORM_PCHERO, ///<自機PC預け
+  PLAYER_DRAW_FORM_YURE, ///<自機ゆれ
   PLAYER_DRAW_FORM_MAX,
 }PLAYER_DRAW_FORM;
 
@@ -156,6 +157,8 @@ extern void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_CheckAttrNaminori(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
+extern void FIELD_PLAYER_CheckSpecialDrawForm(
+    FIELD_PLAYER *fld_player, BOOL menu_open_flag );
 extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );
 extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
 

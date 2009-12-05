@@ -25,9 +25,12 @@ extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_ItemGetHero;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop;
+//extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePattern;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActPCWoman;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_FishingHero;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_YureHero;
 
 //--------------------------------------------------------------
 //  fldmmdl_draw_1.c

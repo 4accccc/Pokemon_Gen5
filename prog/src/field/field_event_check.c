@@ -230,7 +230,7 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
  * @retval GMEVENT NULL=イベント無し
  */
 //--------------------------------------------------------------
-static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *eff_delete_flag )
+static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *eff_delete_flag, BOOL *menu_open_flag )
 {
 	
   EV_REQUEST req;
@@ -238,6 +238,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
 	FIELDMAP_WORK *fieldWork = work;
 
   *eff_delete_flag = FALSE;  //まずはリクエストなし
+  *menu_open_flag = FALSE;
+
   //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
 
@@ -543,7 +545,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){
-  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+      *menu_open_flag = TRUE;
+  	  return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
 		}
 	}
 	
@@ -589,13 +592,13 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELD_PLACE_NAME *place_name_sys;
 	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
-  BOOL eff_delete_flag;
+  BOOL eff_delete_flag,menu_open_flag;
 
   //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
   EFFECT_ENC_CheckObjHit( encount );
 
 	// イベント起動チェック
-	event = FIELD_EVENT_CheckNormal( gsys, work, &eff_delete_flag );
+	event = FIELD_EVENT_CheckNormal( gsys, work, &eff_delete_flag, &menu_open_flag );
 
 	// イベント生成時の処理
 	if( event != NULL )
@@ -607,6 +610,10 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 		// 地名表示ウィンドウを消去
 		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
 		FIELD_PLACE_NAME_Hide( place_name_sys );
+    
+    // 自機が特殊表示の場合は元に戻す
+    FIELD_PLAYER_CheckSpecialDrawForm(
+        FIELDMAP_GetFieldPlayer(fieldmap_work), menu_open_flag );
 	}
 
 	return event;

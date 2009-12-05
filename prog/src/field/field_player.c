@@ -1021,6 +1021,23 @@ BOOL FIELD_PLAYER_CheckAttrNaminori(
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * 自機が特殊表示の場合は元に戻す。
+ * @param fld_player
+ * @retval nothing
+ * @note 今の所、該当箇所は尾瀬ゆれ状態のみ
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_CheckSpecialDrawForm(
+    FIELD_PLAYER *fld_player, BOOL menu_open_flag )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    FIELD_PLAYER_GRID_CheckSpecialDrawForm( fld_player, menu_open_flag );
+  }
+}
+
 //======================================================================
 //	data
 //======================================================================
@@ -1056,6 +1073,7 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX] =
     {GETHERO,PLAYER_MOVE_FORM_MAX},
     {REPORTHERO,PLAYER_MOVE_FORM_MAX},
     {PCHERO,PLAYER_MOVE_FORM_MAX},
+    {HURAHERO,PLAYER_MOVE_FORM_MAX},
   },
   { //女主人公
     {HEROINE,PLAYER_MOVE_FORM_NORMAL},
@@ -1064,6 +1082,7 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX] =
     {GETHEROINE,PLAYER_MOVE_FORM_MAX},
     {REPORTHEROINE,PLAYER_MOVE_FORM_MAX},
     {PCHEROINE,PLAYER_MOVE_FORM_MAX},
+    {HURAHEROINE,PLAYER_MOVE_FORM_MAX},
   },
 };
 
