@@ -577,7 +577,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_stadium01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_stadium02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_tennis01_00_00.3dppack \
-	$(DIR_OUTPUT)/m_gstation01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gstation01_00_00.ngpack \
 	$(DIR_OUTPUT)/m_gstation02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_closseum02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_stadium03_00_00.3dppack \
@@ -667,6 +667,15 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0801_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0801_01_01.3dppack \
 	$(DIR_OUTPUT)/m_champ02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_football01_01_00.3dppack \
+	$(DIR_OUTPUT)/m_basket01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_seat01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_seat02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_soccer01_01_00.3dppack \
+	$(DIR_OUTPUT)/m_baseball01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_baseball01_01_00.3dppack \
+	$(DIR_OUTPUT)/m_baseball01_01_01.3dppack \
+	$(DIR_OUTPUT)/m_baseball01_00_01.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

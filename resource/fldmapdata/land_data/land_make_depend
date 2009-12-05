@@ -5201,13 +5201,13 @@ $(DIR_TEMP)/m_tennis01_00_00.nsbmd: $(DIR_RES)/m_tennis01_00_00.imd
 	@$(G3DCVTR) $(DIR_RES)/m_tennis01_00_00.imd -o $(DIR_TEMP)/m_tennis01_00_00.nsbmd
 
 #m_gstation01_00_00
-$(DIR_OUTPUT)/m_gstation01_00_00.3dppack: $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(DIR_RES)/m_gstation01_00_00.bin $(DIR_RES)/m_gstation01_00_00.3dmd
-	@echo create 3dppack m_gstation01_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(DIR_RES)/m_gstation01_00_00.bin $(DIR_RES)/m_gstation01_00_00.3dmd $(DIR_OUTPUT)/m_gstation01_00_00.3dppack WB
+$(DIR_OUTPUT)/m_gstation01_00_00.ngpack: $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(DIR_RES)/m_gstation01_00_00.3dmd
+	@echo create ngpack m_gstation01_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(DIR_RES)/m_gstation01_00_00.3dmd $(DIR_OUTPUT)/m_gstation01_00_00.ngpack NG
 
 $(DIR_TEMP)/m_gstation01_00_00.nsbmd: $(DIR_RES)/m_gstation01_00_00.imd
 	@echo create_nsbmd m_gstation01_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_gstation01_00_00.imd -o $(DIR_TEMP)/m_gstation01_00_00.nsbmd
+	@$(G3DCVTR) $(DIR_RES)/m_gstation01_00_00.imd -emdl -o $(DIR_TEMP)/m_gstation01_00_00.nsbmd
 
 #m_gstation02_00_00
 $(DIR_OUTPUT)/m_gstation02_00_00.3dppack: $(DIR_TEMP)/m_gstation02_00_00.nsbmd $(DIR_RES)/m_gstation02_00_00.bin $(DIR_RES)/m_gstation02_00_00.3dmd
@@ -6009,6 +6009,87 @@ $(DIR_OUTPUT)/m_champ02_00_00.3dppack: $(DIR_TEMP)/m_champ02_00_00.nsbmd $(DIR_R
 $(DIR_TEMP)/m_champ02_00_00.nsbmd: $(DIR_RES)/m_champ02_00_00.imd
 	@echo create_nsbmd m_champ02_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_champ02_00_00.imd -o $(DIR_TEMP)/m_champ02_00_00.nsbmd
+
+#m_football01_01_00
+$(DIR_OUTPUT)/m_football01_01_00.3dppack: $(DIR_TEMP)/m_football01_01_00.nsbmd $(DIR_RES)/m_football01_01_00.bin $(DIR_RES)/m_football01_01_00.3dmd
+	@echo create 3dppack m_football01_01_00
+	@$(BINLINKER) $(DIR_TEMP)/m_football01_01_00.nsbmd $(DIR_RES)/m_football01_01_00.bin $(DIR_RES)/m_football01_01_00.3dmd $(DIR_OUTPUT)/m_football01_01_00.3dppack WB
+
+$(DIR_TEMP)/m_football01_01_00.nsbmd: $(DIR_RES)/m_football01_01_00.imd
+	@echo create_nsbmd m_football01_01_00
+	@$(G3DCVTR) $(DIR_RES)/m_football01_01_00.imd -o $(DIR_TEMP)/m_football01_01_00.nsbmd
+
+#m_basket01_00_00
+$(DIR_OUTPUT)/m_basket01_00_00.3dppack: $(DIR_TEMP)/m_basket01_00_00.nsbmd $(DIR_RES)/m_basket01_00_00.bin $(DIR_RES)/m_basket01_00_00.3dmd
+	@echo create 3dppack m_basket01_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_basket01_00_00.nsbmd $(DIR_RES)/m_basket01_00_00.bin $(DIR_RES)/m_basket01_00_00.3dmd $(DIR_OUTPUT)/m_basket01_00_00.3dppack WB
+
+$(DIR_TEMP)/m_basket01_00_00.nsbmd: $(DIR_RES)/m_basket01_00_00.imd
+	@echo create_nsbmd m_basket01_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_basket01_00_00.imd -o $(DIR_TEMP)/m_basket01_00_00.nsbmd
+
+#m_seat01_00_00
+$(DIR_OUTPUT)/m_seat01_00_00.3dppack: $(DIR_TEMP)/m_seat01_00_00.nsbmd $(DIR_RES)/m_seat01_00_00.bin $(DIR_RES)/m_seat01_00_00.3dmd
+	@echo create 3dppack m_seat01_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_seat01_00_00.nsbmd $(DIR_RES)/m_seat01_00_00.bin $(DIR_RES)/m_seat01_00_00.3dmd $(DIR_OUTPUT)/m_seat01_00_00.3dppack WB
+
+$(DIR_TEMP)/m_seat01_00_00.nsbmd: $(DIR_RES)/m_seat01_00_00.imd
+	@echo create_nsbmd m_seat01_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_seat01_00_00.imd -o $(DIR_TEMP)/m_seat01_00_00.nsbmd
+
+#m_seat02_00_00
+$(DIR_OUTPUT)/m_seat02_00_00.3dppack: $(DIR_TEMP)/m_seat02_00_00.nsbmd $(DIR_RES)/m_seat02_00_00.bin $(DIR_RES)/m_seat02_00_00.3dmd
+	@echo create 3dppack m_seat02_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_seat02_00_00.nsbmd $(DIR_RES)/m_seat02_00_00.bin $(DIR_RES)/m_seat02_00_00.3dmd $(DIR_OUTPUT)/m_seat02_00_00.3dppack WB
+
+$(DIR_TEMP)/m_seat02_00_00.nsbmd: $(DIR_RES)/m_seat02_00_00.imd
+	@echo create_nsbmd m_seat02_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_seat02_00_00.imd -o $(DIR_TEMP)/m_seat02_00_00.nsbmd
+
+#m_soccer01_01_00
+$(DIR_OUTPUT)/m_soccer01_01_00.3dppack: $(DIR_TEMP)/m_soccer01_01_00.nsbmd $(DIR_RES)/m_soccer01_01_00.bin $(DIR_RES)/m_soccer01_01_00.3dmd
+	@echo create 3dppack m_soccer01_01_00
+	@$(BINLINKER) $(DIR_TEMP)/m_soccer01_01_00.nsbmd $(DIR_RES)/m_soccer01_01_00.bin $(DIR_RES)/m_soccer01_01_00.3dmd $(DIR_OUTPUT)/m_soccer01_01_00.3dppack WB
+
+$(DIR_TEMP)/m_soccer01_01_00.nsbmd: $(DIR_RES)/m_soccer01_01_00.imd
+	@echo create_nsbmd m_soccer01_01_00
+	@$(G3DCVTR) $(DIR_RES)/m_soccer01_01_00.imd -o $(DIR_TEMP)/m_soccer01_01_00.nsbmd
+
+#m_baseball01_00_00
+$(DIR_OUTPUT)/m_baseball01_00_00.3dppack: $(DIR_TEMP)/m_baseball01_00_00.nsbmd $(DIR_RES)/m_baseball01_00_00.bin $(DIR_RES)/m_baseball01_00_00.3dmd
+	@echo create 3dppack m_baseball01_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_baseball01_00_00.nsbmd $(DIR_RES)/m_baseball01_00_00.bin $(DIR_RES)/m_baseball01_00_00.3dmd $(DIR_OUTPUT)/m_baseball01_00_00.3dppack WB
+
+$(DIR_TEMP)/m_baseball01_00_00.nsbmd: $(DIR_RES)/m_baseball01_00_00.imd
+	@echo create_nsbmd m_baseball01_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_baseball01_00_00.imd -o $(DIR_TEMP)/m_baseball01_00_00.nsbmd
+
+#m_baseball01_01_00
+$(DIR_OUTPUT)/m_baseball01_01_00.3dppack: $(DIR_TEMP)/m_baseball01_01_00.nsbmd $(DIR_RES)/m_baseball01_01_00.bin $(DIR_RES)/m_baseball01_01_00.3dmd
+	@echo create 3dppack m_baseball01_01_00
+	@$(BINLINKER) $(DIR_TEMP)/m_baseball01_01_00.nsbmd $(DIR_RES)/m_baseball01_01_00.bin $(DIR_RES)/m_baseball01_01_00.3dmd $(DIR_OUTPUT)/m_baseball01_01_00.3dppack WB
+
+$(DIR_TEMP)/m_baseball01_01_00.nsbmd: $(DIR_RES)/m_baseball01_01_00.imd
+	@echo create_nsbmd m_baseball01_01_00
+	@$(G3DCVTR) $(DIR_RES)/m_baseball01_01_00.imd -o $(DIR_TEMP)/m_baseball01_01_00.nsbmd
+
+#m_baseball01_01_01
+$(DIR_OUTPUT)/m_baseball01_01_01.3dppack: $(DIR_TEMP)/m_baseball01_01_01.nsbmd $(DIR_RES)/m_baseball01_01_01.bin $(DIR_RES)/m_baseball01_01_01.3dmd
+	@echo create 3dppack m_baseball01_01_01
+	@$(BINLINKER) $(DIR_TEMP)/m_baseball01_01_01.nsbmd $(DIR_RES)/m_baseball01_01_01.bin $(DIR_RES)/m_baseball01_01_01.3dmd $(DIR_OUTPUT)/m_baseball01_01_01.3dppack WB
+
+$(DIR_TEMP)/m_baseball01_01_01.nsbmd: $(DIR_RES)/m_baseball01_01_01.imd
+	@echo create_nsbmd m_baseball01_01_01
+	@$(G3DCVTR) $(DIR_RES)/m_baseball01_01_01.imd -o $(DIR_TEMP)/m_baseball01_01_01.nsbmd
+
+#m_baseball01_00_01
+$(DIR_OUTPUT)/m_baseball01_00_01.3dppack: $(DIR_TEMP)/m_baseball01_00_01.nsbmd $(DIR_RES)/m_baseball01_00_01.bin $(DIR_RES)/m_baseball01_00_01.3dmd
+	@echo create 3dppack m_baseball01_00_01
+	@$(BINLINKER) $(DIR_TEMP)/m_baseball01_00_01.nsbmd $(DIR_RES)/m_baseball01_00_01.bin $(DIR_RES)/m_baseball01_00_01.3dmd $(DIR_OUTPUT)/m_baseball01_00_01.3dppack WB
+
+$(DIR_TEMP)/m_baseball01_00_01.nsbmd: $(DIR_RES)/m_baseball01_00_01.imd
+	@echo create_nsbmd m_baseball01_00_01
+	@$(G3DCVTR) $(DIR_RES)/m_baseball01_00_01.imd -o $(DIR_TEMP)/m_baseball01_00_01.nsbmd
 
 #C3_00_00
 $(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_RES)/C3_00_00.3dmd

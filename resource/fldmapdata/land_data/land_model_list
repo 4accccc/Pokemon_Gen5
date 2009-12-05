@@ -667,6 +667,15 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gym0801_00_01.nsbmd \
 	$(DIR_TEMP)/m_gym0801_01_01.nsbmd \
 	$(DIR_TEMP)/m_champ02_00_00.nsbmd \
+	$(DIR_TEMP)/m_football01_01_00.nsbmd \
+	$(DIR_TEMP)/m_basket01_00_00.nsbmd \
+	$(DIR_TEMP)/m_seat01_00_00.nsbmd \
+	$(DIR_TEMP)/m_seat02_00_00.nsbmd \
+	$(DIR_TEMP)/m_soccer01_01_00.nsbmd \
+	$(DIR_TEMP)/m_baseball01_00_00.nsbmd \
+	$(DIR_TEMP)/m_baseball01_01_00.nsbmd \
+	$(DIR_TEMP)/m_baseball01_01_01.nsbmd \
+	$(DIR_TEMP)/m_baseball01_00_01.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
