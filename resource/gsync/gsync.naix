@@ -14,17 +14,22 @@ enum {
 	NARC_gsync_connect_NCLR = 0,
 	NARC_gsync_connect_anm_NCLR = 1,
 	NARC_gsync_gsync_bg_NCLR = 2,
-	NARC_gsync_hand_obj2_NCLR = 3,
-	NARC_gsync_connect_NCGR = 4,
-	NARC_gsync_connect_sub_NCGR = 5,
-	NARC_gsync_gsync_bg_NCGR = 6,
-	NARC_gsync_hand_obj_NCGR = 7,
-	NARC_gsync_hand_obj_NCER = 8,
-	NARC_gsync_connect_01_NSCR = 9,
-	NARC_gsync_connect_sub_NSCR = 10,
-	NARC_gsync_downner_bg_NSCR = 11,
-	NARC_gsync_upper_bg_NSCR = 12,
-	NARC_gsync_hand_obj_NANR = 13
+	NARC_gsync_gsync_obj_NCLR = 3,
+	NARC_gsync_hand_obj2_NCLR = 4,
+	NARC_gsync_connect_NCGR = 5,
+	NARC_gsync_connect_sub_NCGR = 6,
+	NARC_gsync_gsync_bg_NCGR = 7,
+	NARC_gsync_gsync_obj_NCGR = 8,
+	NARC_gsync_hand_obj_NCGR = 9,
+	NARC_gsync_gsync_obj_NCER = 10,
+	NARC_gsync_hand_obj_NCER = 11,
+	NARC_gsync_connect_01_NSCR = 12,
+	NARC_gsync_connect_sub_NSCR = 13,
+	NARC_gsync_downner_bg_NSCR = 14,
+	NARC_gsync_downner_bg2_NSCR = 15,
+	NARC_gsync_upper_bg_NSCR = 16,
+	NARC_gsync_gsync_obj_NANR = 17,
+	NARC_gsync_hand_obj_NANR = 18
 };
 
 /* NARC_GSYNC_NAIX_ */
