@@ -376,32 +376,22 @@
 #cutinhero.imd
 ./mmdl_res/cutinhero.imd: ./mmdl_nchara/cutinhero.ncg ./mmdl_nchara/cutinhero.ncl
 	@echo convert ncg_imd cutinhero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cutinhero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cutinhero.ncg ./mmdl_res ./mmdl_res/ncg4x4cutinhero.imd 4 4 4
 
 #cutinheroine.imd
 ./mmdl_res/cutinheroine.imd: ./mmdl_nchara/cutinheroine.ncg ./mmdl_nchara/cutinheroine.ncl
 	@echo convert ncg_imd cutinheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cutinheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/cutinheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4cutinhero.imd 4 4 4
 
 #hurahero.imd
 ./mmdl_res/hurahero.imd: ./mmdl_nchara/hurahero.ncg ./mmdl_nchara/hurahero.ncl
 	@echo convert ncg_imd hurahero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hurahero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hurahero.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 12
 
 #huraheroine.imd
 ./mmdl_res/huraheroine.imd: ./mmdl_nchara/huraheroine.ncg ./mmdl_nchara/huraheroine.ncl
 	@echo convert ncg_imd huraheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/huraheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#fishhero.imd
-./mmdl_res/fishhero.imd: ./mmdl_nchara/fishhero.ncg ./mmdl_nchara/fishhero.ncl
-	@echo convert ncg_imd fishhero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishhero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#fishheroine.imd
-./mmdl_res/fishheroine.imd: ./mmdl_nchara/fishheroine.ncg ./mmdl_nchara/fishheroine.ncl
-	@echo convert ncg_imd fishheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/huraheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 12
 
 #leader1b.imd
 ./mmdl_res/leader1b.imd: ./mmdl_nchara/leader1b.ncg ./mmdl_nchara/leader1b.ncl

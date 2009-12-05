@@ -21,6 +21,8 @@
 #define PROC_POKE 10 //連れ歩きポケモン
 #define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
 #define PROC_MODEL 12 //ポリゴンモデル
+#define PROC_FISHINGHERO 13 //釣り自機専用
+#define PROC_YUREHERO 14 //尾瀬揺れ自機
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -114,6 +116,9 @@
 #define ANMID_PCWOMAN 12 //PC姉
 #define ANMID_POKE_FLIP 13 //ポケモン　反転使用
 #define ANMID_POKE_NONFLIP 14 //ポケモン　反転未使用
+#define ANMID_FISHINGHERO 15 //自機釣り
+#define ANMID_CUTINHERO 16 //カットイン自機
+#define ANMID_YUREHERO 17 //尾瀬揺れ自機
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
