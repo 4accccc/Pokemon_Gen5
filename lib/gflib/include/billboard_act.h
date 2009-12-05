@@ -261,6 +261,7 @@ inline void GFL_BBDACT_SetFrmIdxOn( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 a
 	GFL_BBDACT_SetAnimeFrmIdx( bbdActSys, actIdx, animeFrmIdx );
 	GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
 }
+extern BOOL	GFL_BBDACT_GetAnimeLastCommand( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16* comm );
 
 //	ìÆçÏä÷êîê›íË
 extern void	GFL_BBDACT_SetFunc( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, GFL_BBDACT_FUNC* func );
