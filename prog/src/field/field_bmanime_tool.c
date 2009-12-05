@@ -181,7 +181,6 @@ BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl)
 //------------------------------------------------------------------
 BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * se_no)
 {
-#if 1
   static const struct {
     u16 prog_id;
     u16 seID[BMANM_INDEX_MAX];
@@ -189,12 +188,17 @@ BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * 
     { BM_PROG_ID_DOOR_NORMAL, { SEQ_SE_FLD_20, SEQ_SE_FLD_21 } },
     { BM_PROG_ID_DOOR_AUTO,   { SEQ_SE_FLD_22, SEQ_SE_FLD_22 } },
     { BM_PROG_ID_BADGEGATE,   { SEQ_SE_FLD_20, SEQ_SE_FLD_21 } },
+    { BM_PROG_ID_PCELEVATOR,  { SEQ_SE_FLD_22, SEQ_SE_FLD_22 } },
   };
   int i;
   BM_PROG_ID id = FIELD_BMODEL_GetProgID( ctrl->entry );
 
   *se_no = 0;
-  GF_ASSERT( anm_idx < BMANM_INDEX_MAX );
+  if ( anm_idx >= BMANM_INDEX_MAX )
+  {
+    TAMADA_Printf( "anm_idx(%d) >= BMANM_INDEX_MAX\n", anm_idx );
+    return FALSE;
+  }
   for (i = 0; i < NELEMS(SeTbl); i++)
   {
     if (SeTbl[i].prog_id == id)
@@ -204,7 +208,6 @@ BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * 
       return TRUE;
     }
   }
-#endif
   return FALSE;
 }
 

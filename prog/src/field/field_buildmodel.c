@@ -900,6 +900,7 @@ static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
   case BM_PROG_ID_DOOR_AUTO:
   case BM_PROG_ID_DOOR_NORMAL:
   case BM_PROG_ID_BADGEGATE:
+  case BM_PROG_ID_PCELEVATOR:
     return TRUE;
   default:
     return FALSE;
@@ -917,6 +918,12 @@ static BOOL BMINFO_isSandStream(const BMINFO * bmInfo)
   default:
     return FALSE;
   }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL BMINFO_isPCElavator(const BMINFO * bmInfo)
+{
+  return (bmInfo->prog_id == BM_PROG_ID_PCELEVATOR );
 }
 
 //============================================================================================
