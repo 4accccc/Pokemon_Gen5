@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-25T14:41:33"/>
+	<create user="matsumiya" host="W00207" date="2009-12-05T13:23:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="166"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -340,6 +340,49 @@
 	</lock>
 
 
+	<row id="msg_kanamode_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>■かなモード/漢字モードの選択
+・黒バック</comment>
+		<language name="JPN" width="256">ゲームで　つかう　もじは
+ひらがな・カタカナに　しますか？▽
+それとも　漢字に　しますか？▼</language>
+		<language name="JPN_KANJI" width="256">ゲームで　つかう　もじは
+ひらがな・カタカナに　しますか？▽
+それとも　漢字に　しますか？▼</language>
+	</row>
+
+	<row id="msg_kanamode_window_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■かなモード/漢字モードの選択
+・選択肢</comment>
+		<language name="JPN" width="256">かな</language>
+		<language name="JPN_KANJI" width="256">かな</language>
+	</row>
+
+	<row id="msg_kanamode_window_02" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■かなモード/漢字モードの選択
+・選択肢</comment>
+		<language name="JPN" width="256">漢字</language>
+		<language name="JPN_KANJI" width="256">漢字</language>
+	</row>
+
+	<row id="msg_kanamode_02" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>■かなモード/漢字モードの選択
+・かなモード選択時
+・メッセージ表示後、画面切り替え</comment>
+		<language name="JPN" width="256">それでは　ゲームで　つかう　もじは
+ひらがな・カタカナだけを　つかいます▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_kanamode_03" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>■かなモード/漢字モードの選択
+・漢字モード選択時
+・メッセージ表示後、画面切り替え</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">それでは　ゲームで　使う　文字に
+漢字も　使います▼</language>
+	</row>
+
 	<row id="msg_intro_01">
 		<comment>■アララギ博士（女性）表示
 ・続けてmsg_intro_02</comment>
@@ -347,7 +390,7 @@
 ポケットモンスターの　せかいへ
 ようこそ！▼</language>
 		<language name="JPN_KANJI" width="256">ハーイ！▼
-ポケットモンスターの　せかいへ
+ポケットモンスターの　世界へ
 ようこそ！▼</language>
 	</row>
 
@@ -360,7 +403,7 @@
 ポケモンはかせ　と　よばれているわ▼</language>
 		<language name="JPN_KANJI" width="256">わたし　アララギと　いいます▼
 みんなからは
-ポケモンはかせ　と　よばれているわ▼</language>
+ポケモン博士　と　呼ばれているわ▼</language>
 	</row>
 
 	<row id="msg_intro_03">
@@ -371,10 +414,10 @@
 ポケットモンスター▼
 ちぢめて「ポケモン」とよばれる
 ふしぎな　いきものが　いるの▼</language>
-		<language name="JPN_KANJI" width="256">そう！　この　せかいには
+		<language name="JPN_KANJI" width="256">そう！　この　世界には
 ポケットモンスター▼
-ちぢめて「ポケモン」とよばれる
-ふしぎな　いきものが　いるの▼</language>
+ちぢめて「ポケモン」と呼ばれる
+不思議な　生き物が　いるの▼</language>
 	</row>
 
 	<row id="msg_intro_04">
@@ -395,21 +438,21 @@
 きずなを　ふかめる　ことね▼
 で　わたしは　ポケモンたちを
 けんきゅう　しているわけ▼</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　ちからを　ひめている
-ポケモンは　すがたかたちも▽
-くらしている　ばしょも　さまざま▼
+		<language name="JPN_KANJI" width="256">不思議な　力を　秘めている
+ポケモンは　姿かたちも▽
+暮らしている　場所も　さまざま▼
 そんな　ポケモンたちと
-わたしたち　にんげんは▽
-なかよく　くらしているの！▼
+わたしたち　人間は▽
+仲良く　暮らしているの！▼
 いっしょに　いることで
-おたがい　みたされたり▼
-ちからを　あわせ　たすけあい　
-たいへんな　しごとを　こなしたり▼
-なかでも　にんき　なのは
-ポケモンどうしを　たたかわせて▽
-きずなを　ふかめる　ことね▼
-で　わたしは　ポケモンたちを
-けんきゅう　しているわけ▼</language>
+お互い　満たされたり▼
+力を　合わせ　助け合い　
+大変な　仕事を　こなしたり▼
+なかでも　人気　なのは
+ポケモン同士を　闘わせて▽
+きずなを　深める　ことね▼
+で　私は　ポケモンたちを
+研究　しているわけ▼</language>
 	</row>
 
 	<row id="msg_intro_05">
@@ -418,9 +461,9 @@
 		<language name="JPN" width="256">さて　わたしの　はなしは
 これぐらいに　して……▼
 あなたのことを　おしえてくれるかな▼</language>
-		<language name="JPN_KANJI" width="256">さて　わたしの　はなしは
+		<language name="JPN_KANJI" width="256">さて　わたしの　話は
 これぐらいに　して……▼
-あなたのことを　おしえてくれるかな▼</language>
+あなたのことを　教えてくれるかな▼</language>
 	</row>
 
 	<row id="msg_intro_gender_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -429,8 +472,8 @@
 ・女の子選択→msg_intro_gender_03</comment>
 		<language name="JPN" width="256">あなたは　おとこのこ？
 それとも　おんなのこ？▼</language>
-		<language name="JPN_KANJI" width="256">あなたは　おとこのこ？
-それとも　おんなのこ？▼</language>
+		<language name="JPN_KANJI" width="256">あなたは　少年？
+それとも　少女？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -439,7 +482,7 @@
 ・はい　→msg_intro_name_01
 ・いいえ→msg_intro_gender_01</comment>
 		<language name="JPN" width="256">おとこのこ　なのね？▼</language>
-		<language name="JPN_KANJI" width="256">おとこのこ　なのね？▼</language>
+		<language name="JPN_KANJI" width="256">少年　なのね？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -448,27 +491,27 @@
 ・はい　→msg_intro_name_01
 ・いいえ→msg_intro_gender_01</comment>
 		<language name="JPN" width="256">おんなのこ　なのね？▼</language>
-		<language name="JPN_KANJI" width="256">おんなのこ　なのね？▼</language>
+		<language name="JPN_KANJI" width="256">少女　なのね？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>※グラフィックがないときの選択肢用</comment>
 		<language name="JPN" width="256">おとこのこ</language>
-		<language name="JPN_KANJI" width="256">おとこのこ</language>
+		<language name="JPN_KANJI" width="256">少年</language>
 	</row>
 
 	<row id="msg_intro_gender_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>※グラフィックがないときの選択肢用</comment>
 		<language name="JPN" width="256">おんなのこ</language>
-		<language name="JPN_KANJI" width="256">おんなのこ</language>
+		<language name="JPN_KANJI" width="256">少女</language>
 	</row>
 
 	<row id="msg_intro_name_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>■名前入力画面へ</comment>
-		<language name="JPN" width="256">なまえも　しりたいな
+		<language name="JPN" width="256">なまえも　しりたいな▼
 なまえを　おしえてくれない？▼</language>
-		<language name="JPN_KANJI" width="256">なまえも　しりたいな
-なまえを　おしえてくれない？▼</language>
+		<language name="JPN_KANJI" width="256">名前も　知りたいな▼
+名前を　教えてくれない？▼</language>
 	</row>
 
 	<row id="msg_intro_name_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -495,9 +538,9 @@
 		<comment>■
 ・続けてmsg_intro_07</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　いう　なまえ！
-すごく　すてき　だよね！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　いう　なまえ！
-すごく　すてき　だよね！▼</language>
+すごく　ステキ　だよね！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　いう　名前！
+すごく　ステキ　だよね！▼</language>
 	</row>
 
 	<row id="msg_intro_07">
@@ -516,16 +559,16 @@
 ポケットモンスターの　せかいへ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼
 いまから　あなただけの
-たびものがたりが　はじまります▼
-この　たびで　あなたは
-かずおおくの　ポケモン▽
-いろんな　かんがえの　ひとと▽
-であうでしょう！▼
-そうした　さまざまな　であいから
-あなただけの　たいせつな　ものを▽
+旅物語が　始まります▼
+この　旅で　あなたは
+数多くの　ポケモン▽
+いろんな　考えの　人と▽
+出会うでしょう！▼
+そうした　さまざまな　出会いから
+あなただけの　大切な　ものを▽
 ぜひ　みつけてほしいな！▼
 では　いきましょう！
-ポケットモンスターの　せかいへ！▼</language>
+ポケットモンスターの　世界へ！▼</language>
 	</row>
 
 	<row id="msg_intro_report_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -534,29 +577,31 @@
 ■以下の選択肢表示
 ・ぼうけんを　はじめる
 ・メニューに　もどる
-■1８文字以上表示</comment>
+■1８文字以上表示
+※セーブされたデータが漢字モードなら
+　漢字表示で</comment>
 		<language name="JPN" width="256">ちゅうい！
 べつの　ポケモンレポートが　かかれて　いますので
 これから　はじめる　ぼうけんは
 とちゅうで　レポートを　かくことができません
 それでも　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">ちゅうい！
-べつの　ポケモンレポートが　かかれて　いますので
-これから　はじめる　ぼうけんは
-とちゅうで　レポートを　かくことができません
+		<language name="JPN_KANJI" width="256">注意！
+別の　ポケモンレポートが　書かれていますので
+これから　始める　冒険は
+途中で　レポートを　書くことができません
 それでも　よろしいですか？</language>
 	</row>
 
 	<row id="msg_intro_report_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>■選択するとイントロ開始</comment>
 		<language name="JPN" width="256">ぼうけんを　はじめる</language>
-		<language name="JPN_KANJI" width="256">ぼうけんを　はじめる</language>
+		<language name="JPN_KANJI" width="256">冒険を始める</language>
 	</row>
 
 	<row id="msg_intro_report_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>■選択するとメニューに復帰</comment>
 		<language name="JPN" width="256">メニューに　もどる</language>
-		<language name="JPN_KANJI" width="256">メニューに　もどる</language>
+		<language name="JPN_KANJI" width="256">メニューに戻る</language>
 	</row>
 
 	<flowchart-group-list>
