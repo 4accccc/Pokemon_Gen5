@@ -424,3 +424,25 @@ const u32 APP_COMMON_GetHPBarBaseAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {
   return NARC_app_menu_common_hp_dodai_32k_NANR + mapping;
 }
+
+
+//--------------------------------------------------------------
+//ƒ|ƒPƒ‹ƒX
+//--------------------------------------------------------------
+u32 APP_COMMON_GetPokerusPltArcIdx( void )
+{
+  return NARC_app_menu_common_pokerus_NCLR;
+}
+u32 APP_COMMON_GetPokerusCharArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_pokerus_32k_NCGR + mapping;
+}
+u32 APP_COMMON_GetPokerusCellArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_pokerus_32k_NCER + mapping;
+}
+u32 APP_COMMON_GetPokerusAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_pokerus_32k_NANR + mapping;
+}
+

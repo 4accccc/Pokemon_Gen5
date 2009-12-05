@@ -599,24 +599,12 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //下画面共通パレット
   GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_d_NCLR , 
                     PALTYPE_MAIN_BG , PSTATUS_BG_PLT_MAIN*16*2 , 0 , work->heapId );
-  //BARパレット
-  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_menu_bar_NCLR , 
-                    PALTYPE_MAIN_BG , PSTATUS_BG_PLT_BAR*16*2 , 16*2 , work->heapId );
-  
   //下画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
                     PSTATUS_BG_PLATE , 0 , 0, FALSE , work->heapId );
   //下画面背景
   GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_p_st_scroll_d_NSCR , 
                     PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
-
-  //下画面バー
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_menu_bar_NCGR ,
-                    PSTATUS_BG_PARAM , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( archandle , NARC_p_status_gra_menu_bar_NSCR , 
-                    PSTATUS_BG_PARAM , 0 , 0, FALSE , work->heapId );
-  GFL_BG_ChangeScreenPalette( PSTATUS_BG_PARAM , 0 , 21 , 32 , 3 , PSTATUS_BG_PLT_BAR );
-
 
   //上画面共通パレット
   GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_NCLR , 
@@ -641,12 +629,6 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   work->cellRes[SCR_PLT_ICON_COMMON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM+1 , work->heapId  );
-  work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
-        NARC_p_status_gra_ball00_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_BALL*32 , 0 , 1 , work->heapId  );
-  work->cellRes[SCR_PLT_MARK] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
-        NARC_p_status_gra_p_st_mark_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_MARK*32 , 0 , 1 , work->heapId  );
   work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCLR , CLSYS_DRAW_MAIN , 
         PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
@@ -663,10 +645,6 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //キャラクタ
   work->cellRes[SCR_NCG_ICON] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[SCR_NCG_BALL] = GFL_CLGRP_CGR_Register( archandle , 
-        NARC_p_status_gra_ball00_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[SCR_NCG_MARK] = GFL_CLGRP_CGR_Register( archandle , 
-        NARC_p_status_gra_p_st_mark_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL] = GFL_CLGRP_CGR_Register( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[SCR_NCG_SKILL_CUR] = GFL_CLGRP_CGR_Register( archandle , 
@@ -677,10 +655,6 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   //セル・アニメ
   work->cellRes[SCR_ANM_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_obj_d_NCER , NARC_p_status_gra_p_st_obj_d_NANR, work->heapId  );
-  work->cellRes[SCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( archandle , 
-        NARC_p_status_gra_ball00_NCER , NARC_p_status_gra_ball00_NANR, work->heapId  );
-  work->cellRes[SCR_ANM_MARK] = GFL_CLGRP_CELLANIM_Register( archandle , 
-        NARC_p_status_gra_p_st_mark_NCER , NARC_p_status_gra_p_st_mark_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCER , NARC_p_status_gra_p_st_skill_plate_NANR, work->heapId  );
   work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
@@ -694,6 +668,16 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
     u8 i;
     //他のarcからの読み込み
     ARCHANDLE *archandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
+
+    //下画面バー
+    GFL_ARCHDL_UTIL_TransVramPalette( archandleCommon , APP_COMMON_GetBarPltArcIdx() , 
+                      PALTYPE_MAIN_BG , PSTATUS_BG_PLT_BAR*16*2 , 16*2 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( archandleCommon , APP_COMMON_GetBarCharArcIdx() ,
+                      PSTATUS_BG_PARAM , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( archandleCommon , APP_COMMON_GetBarScrnArcIdx() , 
+                      PSTATUS_BG_PARAM , 0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( PSTATUS_BG_PARAM , 0 , 21 , 32 , 3 , PSTATUS_BG_PLT_BAR );
+
 
     //hpバー描画色
     GFL_ARCHDL_UTIL_TransVramPalette( archandleCommon , NARC_app_menu_common_hp_bar_NCLR , 
@@ -740,6 +724,43 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
           APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
           APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), 
           work->heapId  );
+    //ポケルス
+    work->cellRes[SCR_PLT_POKERUSU] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetPokerusPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_POKERUSU*32 , 0 , 1 , work->heapId  );
+    work->cellRes[SCR_NCG_POKERUSU] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          APP_COMMON_GetPokerusCharArcIdx(APP_COMMON_MAPPING_128K) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[SCR_ANM_POKERUSU] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetPokerusCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetPokerusAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //マーク
+    work->cellRes[SCR_PLT_MARK] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetPokeMarkPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_MARK*32 , 0 , 1 , work->heapId  );
+    work->cellRes[SCR_NCG_MARK] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[SCR_ANM_MARK] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //状態異常
+    work->cellRes[SCR_PLT_ST_IJYOU] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetStatusIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_MARK*32 , 0 , 1 , work->heapId  );
+    work->cellRes[SCR_NCG_ST_IJYOU] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          APP_COMMON_GetStatusIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[SCR_ANM_ST_IJYOU] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetStatusIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetStatusIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //ボール
+    work->cellRes[SCR_PLT_BALL] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
+          APP_COMMON_GetBallPltArcIdx(1) , CLSYS_DRAW_MAIN , 
+          PSTATUS_OBJPLT_BALL*32 , 0 , 1 , work->heapId  );
+    work->cellRes[SCR_NCG_BALL] = GFL_CLGRP_CGR_Register( archandleCommon , 
+          APP_COMMON_GetBallCharArcIdx(1) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[SCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 
+          APP_COMMON_GetBallCellArcIdx(1,APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetBallAnimeArcIdx(1,APP_COMMON_MAPPING_128K), work->heapId  );
+
     
     GFL_ARC_CloseDataHandle(archandleCommon);
   }

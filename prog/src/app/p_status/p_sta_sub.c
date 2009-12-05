@@ -14,6 +14,8 @@
 #include "system/wipe.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "poke_tool/pokerus.h"
+#include "app/app_menu_common.h"
 
 #include "arc_def.h"
 
@@ -185,6 +187,8 @@ struct _PSTATUS_SUB_WORK
   
   GFL_CLWK    *clwkBall;
   GFL_CLWK    *clwkMark[SSMT_MAX];
+  GFL_CLWK    *clwkPokerus;
+  GFL_CLWK    *clwkStIjyou;
   
 
   //サブアクション用
@@ -438,7 +442,36 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
                 &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
       GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[i] , TRUE );
     }
-    
+  }
+  {
+    //ポケルス
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 236;
+    cellInitData.pos_y = 26;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.anmseq = 0;
+    subWork->clwkPokerus = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[SCR_NCG_POKERUSU],
+              work->cellRes[SCR_PLT_POKERUSU],
+              work->cellRes[SCR_ANM_POKERUSU],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkPokerus , FALSE );
+  }
+  {
+    //状態異常
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 241;
+    cellInitData.pos_y = 31;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.anmseq = 0;
+    subWork->clwkStIjyou = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[SCR_NCG_ST_IJYOU],
+              work->cellRes[SCR_PLT_ST_IJYOU],
+              work->cellRes[SCR_ANM_ST_IJYOU],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( subWork->clwkStIjyou , FALSE );
   }
 }
 
@@ -448,6 +481,8 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 void PSTATUS_SUB_TermCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
   u8 i;
+  GFL_CLACT_WK_Remove( subWork->clwkStIjyou );
+  GFL_CLACT_WK_Remove( subWork->clwkPokerus );
   for( i=0;i<SSMT_MAX;i++ )
   {
     GFL_CLACT_WK_Remove( subWork->clwkMark[i] );
@@ -495,6 +530,7 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
 {
   //MCSS
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
   GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinUpper );
   GFL_BMPWIN_MakeTransWindow_VBlank( subWork->bmpWinDown );
@@ -502,22 +538,18 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
   //ボールの更新
   {
     u32 ballIdx = PPP_Get( ppp , ID_PARA_get_ball , NULL );
-    if( ballIdx != 0 )
-    {
-      ballIdx--;
-    }
     {
       NNSG2dPaletteData *pltData;
-      void *pltRes = GFL_ARC_UTIL_LoadPalette( ARCID_P_STATUS , 
-                          NARC_p_status_gra_ball00_NCLR + ballIdx ,
+      void *pltRes = GFL_ARC_UTIL_LoadPalette( APP_COMMON_GetArcId() , 
+                          APP_COMMON_GetBallPltArcIdx(ballIdx) ,
                           &pltData , work->heapId );
       GFL_CLGRP_PLTT_Replace( work->cellRes[SCR_PLT_BALL] , pltData , 1 );
       GFL_HEAP_FreeMemory( pltRes );
     }
     {
       NNSG2dCharacterData *ncgData;
-      void *ncgRes = GFL_ARC_UTIL_LoadBGCharacter( ARCID_P_STATUS , 
-                          NARC_p_status_gra_ball00_NCGR + ballIdx ,
+      void *ncgRes = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() , 
+                          APP_COMMON_GetBallCharArcIdx(ballIdx) ,
                           FALSE , &ncgData , work->heapId );
       GFL_CLGRP_CGR_Replace( work->cellRes[SCR_NCG_BALL] , ncgData );
       GFL_HEAP_FreeMemory( ncgRes );
@@ -527,8 +559,40 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
   }
   //マークの更新
   {
-    GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_RARE] , FALSE );
-    GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , FALSE );
+    u8 i;
+    u8 bitMask = 1;
+    const u32 boxMark = PPP_Get( ppp , ID_PARA_mark , NULL );
+    for( i=0;i<POKEPARA_MARKING_ELEMS_MAX;i++ )
+    {
+      if( boxMark & bitMask )
+      {
+        GFL_CLACT_WK_SetAnmSeq( subWork->clwkMark[SSMT_BOX_DISC+i] , i*2 + 1 );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( subWork->clwkMark[SSMT_BOX_DISC+i] , i*2 );
+      }
+      bitMask = bitMask<1;
+    }
+    
+    //ポケルス抗体
+    if( POKERUS_CheckInfectedPPP( (POKEMON_PASO_PARAM*)ppp ) == TRUE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , FALSE );
+    }
+    //レア
+    if( PPP_CheckRare( ppp ) == TRUE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_RARE] , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_RARE] , FALSE );
+    }
     
   }
   
@@ -560,6 +624,29 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_Switching( work->camera );
 
     subWork->state = PSS_DISP_BACK;
+  }
+  
+  //状態異常＋ポケルス
+  {
+    
+    if( PP_GetSick( pp ) & PTL_CONDITION_BAD )
+    {
+      GFL_CLACT_WK_SetAnmSeq( subWork->clwkStIjyou , APP_COMMON_GetStatusIconAnime(pp) );
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkStIjyou , TRUE );
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkPokerus , FALSE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( subWork->clwkStIjyou , FALSE );
+      if( POKERUS_CheckInfectPPP( (POKEMON_PASO_PARAM*)ppp ) == TRUE )
+      {
+        GFL_CLACT_WK_SetDrawEnable( subWork->clwkPokerus , TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( subWork->clwkPokerus , FALSE );
+      }
+    }
   }
 
   /*

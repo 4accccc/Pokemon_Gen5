@@ -176,3 +176,9 @@ const u32 APP_COMMON_GetHPBarBasePltArcIdx( void );
 const u32 APP_COMMON_GetHPBarBaseCharArcIdx( const APP_COMMON_MAPPING mapping );
 const u32 APP_COMMON_GetHPBarBaseCellArcIdx( const APP_COMMON_MAPPING mapping );
 const u32 APP_COMMON_GetHPBarBaseAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
+//ƒ|ƒPƒ‹ƒXŽæ“¾
+extern u32 APP_COMMON_GetPokerusPltArcIdx( void );
+extern u32 APP_COMMON_GetPokerusCharArcIdx( const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetPokerusCellArcIdx( const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetPokerusAnimeArcIdx( const APP_COMMON_MAPPING mapping );
