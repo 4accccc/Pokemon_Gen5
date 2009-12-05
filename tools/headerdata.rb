@@ -155,6 +155,7 @@ class HeaderDataArray
   end
 
   def load( filename )
+    #読み込み済みのものは読み込まない
     unless @headerArray.has_key?( filename )
       @headerArray[ filename ] = HeaderData.new( filename )
     end
@@ -181,7 +182,7 @@ class HeaderDataArray
     #余分なスペースなど破棄
     name = name.gsub( /\s/,"" )
     
-    @headerArray.each do |headerData|
+    @headerArray.each do |key, headerData|
       value = headerData.search( name )
       if value != nil
         return value
