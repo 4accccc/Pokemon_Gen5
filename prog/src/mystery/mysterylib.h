@@ -202,7 +202,7 @@ extern u32 MysteryLib_GetCasetteCode(int cas);
 //------------------------------------------------------------------
 ///	下画面にプレゼント受け取り演出を表示
 //------------------------------------------------------------------
-extern void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli);
+extern void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_PACK_DATA *deli);
 
 //------------------------------------------------------------------
 ///	指定のバッファを暗号化

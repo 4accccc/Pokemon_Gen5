@@ -270,11 +270,12 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
       break;
       
     case SMI_MYSTERY_GIFT:  //不思議な贈り物
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
-      break;
+      //@todo 置き換えが終わるまで一時封印
+//      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
+//      break;
 
     case SMI_WIFI_SETTING: //WIFI設定
-    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
         break;
             
     case SMI_GBS_CONNECT: //バトル大会メニュー

@@ -1,42 +1,39 @@
 //============================================================================================
 /**
- * @file	mystery_data.h
- * @date	2006.04.28
- * @author	tamada / mitsuhara
- * @brief	ふしぎ通信用セーブデータ用ヘッダ
+ * @file	  mystery_data.h
+ * @date	  2009.12.04
+ * @author	k.ohno
+ * @brief	  ふしぎ通信用セーブデータ用ヘッダ
  */
 //============================================================================================
 
-#ifndef	__MYSTERY_DATA_H__
-#define	__MYSTERY_DATA_H__
+#pragma once
 
+#include "include/buflen.h"
 #include "savedata/save_control.h"
 #include "poke_tool/poke_tool.h"
+#include "savedata/regulation.h"
 
 //============================================================================================
 //
 //			定義
 //
 //============================================================================================
-//------------------------------------------------------------------
-///		贈り物データの大きさ
-//------------------------------------------------------------------
-#define	GIFT_DATA_SIZE	256		// 配達員１つのサイズ
 
 //------------------------------------------------------------------
 ///		贈り物データの個数
 //------------------------------------------------------------------
-#define GIFT_DELIVERY_MAX	8	// 配達員８つ
-#define GIFT_CARD_MAX		3	// カードデータ３つ
-#define GIFT_CARD_NONE      (3)
-#define	GIFT_DATA_MAX		8	//カードなし5件＋カードあり3件で8件分
+#define	GIFT_DATA_MAX		12	//カードなし5件＋カードあり3件で8件分
 
 //------------------------------------------------------------------
 ///		カード関係のサイズ定義
 //------------------------------------------------------------------
-#define GIFT_DATA_CARD_TITLE_MAX	36
-#define GIFT_DATA_CARD_TEXT_MAX		250
-#define GIFT_DATA_SCRIPT_MAX		(256+1024)
+#define GIFT_DATA_CARD_TITLE_MAX	36    //配布タイトル
+
+#define GIFT_DATA_CARD_TEXT_MAX		504   //説明テキスト
+
+
+#define MYSTERYGIFT_POKEICON	3  //ポケモンアイコン
 
 
 //------------------------------------------------------------------
@@ -44,33 +41,12 @@
 //------------------------------------------------------------------
 #define MYSTERYGIFT_TYPE_NONE		0	// 何も無い
 #define MYSTERYGIFT_TYPE_POKEMON	1	// ポケモン
-#define MYSTERYGIFT_TYPE_POKEEGG	2	// タマゴ
-#define MYSTERYGIFT_TYPE_ITEM		3	// どうぐ
-#define MYSTERYGIFT_TYPE_RULE		4	// ルール
-#define MYSTERYGIFT_TYPE_GOODS		5	// グッズ
-#define MYSTERYGIFT_TYPE_ACCESSORY	6	// アクセサリ
-#define MYSTERYGIFT_TYPE_RANGEREGG	7	// マナフィーのタマゴ
-#define MYSTERYGIFT_TYPE_MEMBERSCARD	8	// メンバーズカード
-#define MYSTERYGIFT_TYPE_LETTER		9	// オーキドのてがみ
-#define MYSTERYGIFT_TYPE_WHISTLE	10	// てんかいのふえ
-#define MYSTERYGIFT_TYPE_POKETCH	11	// ポケッチ
-#define MYSTERYGIFT_TYPE_SECRET_KEY	12	// 秘密の鍵
-#define MYSTERYGIFT_TYPE_MOVIE		13	// 映画配布
-#define MYSTERYGIFT_TYPE_MAX	14	// 
+#define MYSTERYGIFT_TYPE_ITEM		2	// どうぐ
+#define MYSTERYGIFT_TYPE_RULE		3	// ルール
+#define MYSTERYGIFT_TYPE_MAX	4	// 総数
+
 #define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
 
-#define MYSTERYGIFT_ACCTYPE_SEAL   1  // アクセサリーのシール
-#define MYSTERYGIFT_ACCTYPE_CLIP   2  // アクセサリーのクリップ
-#define MYSTERYGIFT_ACCTYPE_BG   3  // アクセサリーの背景
-
-#define MYSTERYPOKE_PARENTNAME_THROW  0  // 親の名前をそのまま
-#define MYSTERYPOKE_PARENTNAME_MY   1  // 親名を自分の名前に変える
-
-
-//------------------------------------------------------------------
-///		確定しているイベント番号
-//------------------------------------------------------------------
-#define MYSTERYGIFT_MANAFIEGG		1	// マナフィのたまご
 
 
 
@@ -81,19 +57,46 @@ typedef struct {
 
 // ポケモン
 typedef struct {
-  u32 parentType;
-  u8 data[236];		// sizeof(POKEMON_PARAM)	#####
-  u8 ribbon[10];	// ribbon data
-  u8 dummy[6];
+	u32	id_no;			// 親のID
+  u32 version;    // ROMバージョン
+  u32 rnd;        // 固体乱数
+  u16 ribbon_no;        //リボンビット 16本
+  u16 get_ball;  //捕まえたボール
+  u16 item;      //もちもの
+  u16 waza1;     //技1
+  u16 waza2;     //技2
+  u16 waza3;     //技3
+  u16 waza4;     //技4
+  u16 mons_no;   //モンスターNo
+  u8 form_no;    //フォルムNo
+  u8 country_code;  //国コード
+	STRCODE	nickname[MONS_NAME_SIZE+EOM_SIZE];	//16h	ニックネーム(MONS_NAME_SIZE=10)+(EOM_SIZE=1)=11  最初がEOMならデフォルト
+  u8 seikaku;          //性格
+  u8 sex;              //性別
+  u8 speabino;         //とくせい
+  u8 rare;             //レアにするかどうか 0=ランダムレアない  1=ランダム 2=レア
+  u8 get_place;        //捕まえた場所
+  u8 birth_place;      //生まれた場所
+  u8 get_level;        //捕まえたLEVEL
+  u8 style;                    //かっこよさ
+  u8 beautiful;                //うつくしさ
+  u8 cute;                     //かわいさ
+  u8 clever;                   //かしこさ
+  u8 strong;                   //たくましさ
+  u8 fur;                      //毛艶
+  u8 hp_rnd;               //HP乱数
+  u8 pow_rnd;              //攻撃力乱数
+  u8 def_rnd;              //防御力乱数
+  u8 agi_rnd;              //素早さ乱数
+  u8 spepow_rnd;             //特攻乱数
+  u8 spedef_rnd;             //特防乱数
+  STRCODE	oyaname[PERSON_NAME_SIZE+EOM_SIZE];	//10h	親の名前(PERSON_NAME_SIZE=7)+(EOM_SIZE_=1)=8*2(STRCODE=u16)
+  u8 oyasex;      //親の性別 0 1 2 
+  u8 level;     //ポケモンレベル
+  u8 egg;       //タマゴかどうか TRUE＝たまご
+  u8 dummy;
 } GIFT_PRESENT_POKEMON;
 
-// タマゴ
-typedef struct {
-  u32 parentType;
-  u8 data[236];		// sizeof(POKEMON_PARAM)	#####
-  u8 ribbon[10];	// ribbon data
-  u8 dummy[6];
-} GIFT_PRESENT_POKEEGG;
 
 // どうぐ
 typedef struct {
@@ -101,48 +104,10 @@ typedef struct {
   int movieflag;
 } GIFT_PRESENT_ITEM;
 
-// グッズ
-typedef struct {
-  int goodsNo;
-} GIFT_PRESENT_GOODS;
-
 // ルール(レギュレーション)
 typedef struct {
-	//FIXME:正しい型に！
-	u16	regulation;	
-//  REGULATION regulation;
+  REGULATION regu_data;
 } GIFT_PRESENT_RULE;
-
-// アクセサリ
-typedef struct {
-  int accType;
-  int accNo;
-} GIFT_PRESENT_ACCESSORY;
-
-// マナフィーのタマゴ
-typedef struct {
-  int dummy;
-} GIFT_PRESENT_RANGEREGG;
-
-// メンバーズカード
-typedef struct {
-  int itemNo;
-} GIFT_PRESENT_MEMBERSCARD;
-
-// オーキドのてがみ
-typedef struct {
-  int itemNo;
-} GIFT_PRESENT_LETTER;
-
-// てんかいのふえ
-typedef struct {
-  int itemNo;
-} GIFT_PRESENT_WHISTLE;
-
-// ポケッチ
-typedef struct {
-  int id;
-} GIFT_PRESENT_POKETCH;
 
 // ふしぎなおくりもの強制クリア
 typedef struct {
@@ -152,83 +117,42 @@ typedef struct {
 typedef union {
   GIFT_PRESENT_ALL 		all;
   GIFT_PRESENT_POKEMON		pokemon;
-  GIFT_PRESENT_POKEEGG		egg;
   GIFT_PRESENT_ITEM		item;
-  GIFT_PRESENT_GOODS		goods;
   GIFT_PRESENT_RULE		rule;
-  GIFT_PRESENT_ACCESSORY	accessory;
-  GIFT_PRESENT_RANGEREGG	rangeregg;
-  GIFT_PRESENT_MEMBERSCARD	memberscard;
-  GIFT_PRESENT_LETTER		letter;
-  GIFT_PRESENT_WHISTLE		whistle;
-  GIFT_PRESENT_POKETCH		poketch;
   GIFT_PRESENT_REMOVE		remove;
 } GIFT_PRESENT;
 
 
 
-#define MYSTERYGIFT_DELIVERY	0
-#define MYSTERYGIFT_CARD	1
-
-#define MYSTERYGIFT_POKEICON	3
-
-// ふしぎなおくりもの　ビーコンデータ
-typedef struct {
+// 保存するデータ
+typedef struct{
+  GIFT_PRESENT data;
   STRCODE event_name[GIFT_DATA_CARD_TITLE_MAX];	// イベントタイトル
-  u32 version;					// 対象バージョン(０の場合は制限無しで配布)
-  u16 event_id;					// イベントＩＤ(最大2048件まで)
-  u8 only_one_flag: 1;				// １度だけ受信フラグ(0..何度でも受信可能 1..１回のみ)
-  u8 access_point: 1;				// アクセスポイント(もしかして必要なくなった？)
-  u8 have_card: 1;				// カード情報を含んでいるか(0..含んでいない  1..含んでる)
-  u8 delivery_flag: 1;				// 配達員から受け取るものを含んでいるか
-  u8 re_deal_flag: 1;				// 孫配布する事が可能か？(0..出来ない 1..出来る)
-  u8 groundchild_flag: 1;			// 孫配布フラグ(0..違う 1..孫配布)
-  u8 dummy: 2;
-} GIFT_BEACON;
-
-// 配達員(最大８つ)
-typedef struct {
-  u16 gift_type;
-  u16 link : 2;					// カードへのリンク(0: 2:リンク 3リンクなし)
-  u16 dummy : 14;
-  GIFT_PRESENT data;
-} GIFT_DELIVERY;
-
-
-// カード情報(最大３つ)
-typedef struct {
-  u16 gift_type;
-  u16 dummy;					// 配達員へのリンク
-  GIFT_PRESENT data;
-
-  GIFT_BEACON beacon;				// ビーコン情報と同等の情報を持つ
-
-  STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX];	// 説明テキスト
-  u8 re_deal_count;				// 再配布の回数(0～254、255は無制限)
-  u16 pokemon_icon[MYSTERYGIFT_POKEICON];	// ポケモンアイコン３つ分
-
-  // ↑配布するのはここまで
-  // ↓この下はフラッシュにセーブする時のみ必要なデータ
-  
-  u8 re_dealed_count;				// 配布した回数
   s32 recv_date;				// 受信した時間
-  
-} GIFT_CARD;
+  u16 event_id;					// イベントＩＤ(最大2048件まで)
+  u16 pokemon_icon[MYSTERYGIFT_POKEICON];	// 下画面ポケモンアイコン３つ分
+  u16 pokemon_icon_up;	// 上画面ポケモンアイコン
+  u16 poke_silhouette;  // ポケモンシルエット
+  u8 poke_form;         // ポケモンシルエットのフォルム
+  u8 card_message;      //  カードのメッセージタイプ
+  u8 pokemon_icon_up_type;  //上画面ポケモンアイコンタイプ
+  u8 pokemon_icon_type;  // 
+  u8 gift_type;        // 送られてくるタイプ
+  u8 only_one_flag:1;	 // １度だけ受信フラグ(0..何度でも受信可能 1..１回のみ)
+  u8 have:1;				 // データを受け取った場合 1
+  u8 padding:6;
+  u32 dummy[4];            //予備データ16byte
+} GIFT_PACK_DATA;
 
 
-typedef union {
-  GIFT_DELIVERY deli;
-  GIFT_CARD card;
-} GIFT_DATA;
+// サーバから送られるデータ
+typedef struct{
+  GIFT_PACK_DATA data;
+  u32 version;					// 対象バージョン(０の場合は制限無しで配布)
+  STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX];	// 説明テキスト
+} DOWNLOAD_GIFT_DATA;
 
 
-// 通信する際のパッケージ定義
-// beacon.have_card == TRUE ならば data = card;
-//                     FALSE ならば data = deli;
-typedef struct {
-  GIFT_BEACON beacon;
-  GIFT_DATA data;
-} GIFT_COMM_PACK;
 
 
 //------------------------------------------------------------------
@@ -261,32 +185,11 @@ extern void MYSTERYDATA_Init(MYSTERY_DATA * fd);
 //------------------------------------------------------------------
 extern MYSTERY_DATA * SaveData_GetMysteryData(SAVE_CONTROL_WORK * sv);
 
-//------------------------------------------------------------------
-/// 配達員データの取得
-//------------------------------------------------------------------
-extern GIFT_DELIVERY * MYSTERYDATA_GetDeliData(MYSTERY_DATA * fd, int index);
-//------------------------------------------------------------------
-/// 配達員データをセーブデータ登録
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_SetDeliData(MYSTERY_DATA *fd, const void *p, int link);
-//------------------------------------------------------------------
-/// 配達員データを抹消する
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_RemoveDeliData(MYSTERY_DATA *fd, int index);
-//------------------------------------------------------------------
-/// 配達員データがセーブできるかチェック
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_CheckDeliDataSpace(MYSTERY_DATA *fd);
-//------------------------------------------------------------------
-/// 配達員データの存在チェック
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsExistsDelivery(const MYSTERY_DATA * fd, int index);
-
 
 //------------------------------------------------------------------
 /// カードデータの取得
 //------------------------------------------------------------------
-extern GIFT_CARD *MYSTERYDATA_GetCardData(MYSTERY_DATA *fd, int index);
+extern GIFT_PACK_DATA *MYSTERYDATA_GetCardData(MYSTERY_DATA *fd, u32 cardindex);
 //------------------------------------------------------------------
 /// カードデータをセーブデータ登録
 //------------------------------------------------------------------
@@ -294,8 +197,7 @@ extern BOOL MYSTERYDATA_SetCardData(MYSTERY_DATA *fd, const void *p);
 //------------------------------------------------------------------
 /// カードデータを抹消する
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_RemoveCardData(MYSTERY_DATA *fd, int index);
-extern BOOL MYSTERYDATA_RemoveCardDataPlusBit(MYSTERY_DATA *fd, int index);
+extern void MYSTERYDATA_RemoveCardData(MYSTERY_DATA *fd, u32 cardindex);
 //------------------------------------------------------------------
 /// カードデータがセーブできるかチェック
 //------------------------------------------------------------------
@@ -303,72 +205,27 @@ extern BOOL MYSTERYDATA_CheckCardDataSpace(MYSTERY_DATA *fd);
 //------------------------------------------------------------------
 /// カードデータが存在するか返す
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsExistsCard(const MYSTERY_DATA * fd, int index);
+extern BOOL MYSTERYDATA_IsExistsCard(const MYSTERY_DATA * fd, u32 cardindex);
 //------------------------------------------------------------------
 /// セーブデータ内にカードデータが存在するか返す
 //------------------------------------------------------------------
 extern BOOL MYSTERYDATA_IsExistsCardAll(const MYSTERY_DATA *fd);
+//------------------------------------------------------------------
+//	 指定のカードからデータを受け取り済みか返す
+//------------------------------------------------------------------
+extern BOOL MYSTERYDATA_IsHavePresent(const MYSTERY_DATA * fd, u32 cardindex);
 
-//------------------------------------------------------------------
-///	指定のカードにリンクされている配達員が存在するか
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_GetCardLinkDeli(const MYSTERY_DATA *fd, int index);
 
-//------------------------------------------------------------------
-///	指定カードにリンクされている配達員を削除
-//------------------------------------------------------------------
-extern void MYSTERYDATA_RemoveCardLinkDeli(const MYSTERY_DATA *fd, int index);
+
 
 //------------------------------------------------------------------
 /// 指定のイベントはすでにもらったか返す
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, int num);
+extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 //------------------------------------------------------------------
 /// 指定のイベントもらったよフラグを立てる
 //------------------------------------------------------------------
-extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, int num);
-//------------------------------------------------------------------
-/// 指定のイベントもらったよフラグを落す
-//------------------------------------------------------------------
-extern void MYSTERYDATA_ResetEventRecvFlag(MYSTERY_DATA * fd, int num);
-//------------------------------------------------------------------
-///	ふしぎなおくりものを表示出来るか？
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsMysteryMenu(MYSTERY_DATA *fd);
-//------------------------------------------------------------------
-///	ふしぎなおくりものの表示フラグをONにする
-//------------------------------------------------------------------
-extern void MYSTERYDATA_SetMysteryMenu(MYSTERY_DATA *fd);
-
-
-//------------------------------------------------------------------
-/// これ以下の関数を使うために必要な初期化
-//------------------------------------------------------------------
-extern void MYSTERYDATA_InitSlot(SAVE_CONTROL_WORK * sv, int heap_id);
-//------------------------------------------------------------------
-/// これ以下の関数を使い終わった後の後始末
-//------------------------------------------------------------------
-extern void MYSTERYDATA_FinishSlot(SAVE_CONTROL_WORK * sv, int flag);
-//------------------------------------------------------------------
-/// データがあるスロット番号を返す関数
-//------------------------------------------------------------------
-extern int MYSTERYDATA_GetSlotData(void);
-//------------------------------------------------------------------
-/// スロットにデータがあるか返す関数
-//------------------------------------------------------------------
-extern BOOL MYSTERYDATA_CheckSlotData(void);
-//------------------------------------------------------------------
-/// 一番若いデータは何なのかを返す
-//------------------------------------------------------------------
-extern int MYSTERYDATA_GetSlotType(int index);
-//------------------------------------------------------------------
-/// 一番若いデータの構造体へのポインタを返す
-//------------------------------------------------------------------
-extern GIFT_PRESENT *MYSTERYDATA_GetSlotPtr(int index);
-//------------------------------------------------------------------
-/// 指定のスロットを消去する
-//------------------------------------------------------------------
-extern void MYSTERYDATA_RemoveSlot(int index);
+extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 
 
 //------------------------------------------------------------------
@@ -376,4 +233,3 @@ extern void MYSTERYDATA_RemoveSlot(int index);
 //------------------------------------------------------------------
 extern void MYSTERYDATA_DebugSetPokemon(void);
 
-#endif	/* __MYSTERY_DATA_H__ */

@@ -11,9 +11,7 @@ enum {
   COMMMYSTERYFUNC_ERROR_NONE = 0,
   COMMMYSTERYFUNC_ERROR_VERSION,	// 配布バージョンに含まれていなかった
   COMMMYSTERYFUNC_ERROR_HAVE,		// すでにもらっていた
-  COMMMYSTERYFUNC_ERROR_FULLGIFT,	// 配達員が一杯
   COMMMYSTERYFUNC_ERROR_FULLCARD,	// カードが一杯
-  COMMMYSTERYFUNC_ERROR_GROUNDCHILD,	// これは孫配信
   COMMMYSTERYFUNC_ERROR_MAX
 };
 
@@ -45,7 +43,7 @@ extern void CommMysteryFunc_BgInit( GFL_BG_INI * ini );
  * @return	NONE
  */
 //------------------------------------------------------------------
-extern int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, GIFT_COMM_PACK *gcp);
+extern int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, DOWNLOAD_GIFT_DATA *gcp);
 
 #endif	// __COMM_MYSTERY_FUNC_H__
 /*  */

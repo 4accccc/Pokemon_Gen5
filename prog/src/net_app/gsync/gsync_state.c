@@ -183,7 +183,13 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_testStart);
     break;
 
+
+  case PAD_BUTTON_Y:
     
+
+    
+    GSYNC_DISP_HandInit(pWork->pDispWork);
+    break;
   case PAD_BUTTON_B:
     _CHANGE_STATE(NULL);
     break;
@@ -199,6 +205,8 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _upeffectLoop(G_SYNC_WORK* pWork)
 {
+
+
 }
 
 
@@ -213,6 +221,10 @@ static void _upeffectLoop(G_SYNC_WORK* pWork)
 static void _upeffectStart(G_SYNC_WORK* pWork)
 {
   GSYNC_DISP_PokemonIconCreate(pWork->pDispWork, PP_GetPPPPointer(pWork->pp));
+
+  if(0){
+  }
+
   _CHANGE_STATE(_ghttpKeyWait);
 }
 

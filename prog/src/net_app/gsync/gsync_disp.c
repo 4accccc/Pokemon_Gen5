@@ -68,6 +68,7 @@ typedef enum
 typedef enum
 {
   CELL_CUR_POKE_PLAYER,
+  CELL_CUR_HAND,
     _CELL_DISP_NUM,
 } _CELL_WK_ENUM;
 
@@ -135,8 +136,8 @@ static void dispInit(GSYNC_DISP_WORK* pWork);
 static void settingSubBgControl(GSYNC_DISP_WORK* pWork);
 static void _TOUCHBAR_Init(GSYNC_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
-static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight);
-static void _ArrowRelease(GSYNC_DISP_WORK* pWork);
+static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y);
+static void _HandRelease(GSYNC_DISP_WORK* pWork);
 
 
 
@@ -182,7 +183,7 @@ void GSYNC_DISP_Main(GSYNC_DISP_WORK* pWork)
 void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork)
 {
 
-  _ArrowRelease(pWork);
+  _HandRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_NEGOOBJ] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_NEGOOBJ] );
@@ -344,69 +345,26 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
-/*
-    pWork->cellRes[CHAR_NEGOOBJ] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_nego_obj_NCGR ,
-                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-    pWork->cellRes[PLT_NEGOOBJ] =
-      GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0, 0, 3, pWork->heapID  );
-    pWork->cellRes[ANM_NEGOOBJ] =
-      GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_box_m_obj_NANR , pWork->heapID  );
-*/
-    
-    GFL_ARC_CloseDataHandle(p_handle);
-	}
-#if 1
-  {
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
-    
     pWork->cellRes[CHAR_HANDOBJ] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_box_gra_box_m_obj_lz_NCGR ,
-                              TRUE , CLSYS_DRAW_MAX , pWork->heapID );
+      GFL_CLGRP_CGR_Register( p_handle , NARC_gsync_hand_obj_NCGR ,
+                              FALSE , CLSYS_DRAW_MAX , pWork->heapID );
     pWork->cellRes[PLT_HANDOBJ] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_box_gra_box_m_obj2_NCLR , CLSYS_DRAW_MAX ,    0, 0, 3, pWork->heapID  );
+        p_handle ,NARC_gsync_hand_obj2_NCLR , CLSYS_DRAW_MAX ,    0, 0, 3, pWork->heapID  );
     pWork->cellRes[ANM_HANDOBJ] =
       GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_box_gra_box_m_obj_NCER, NARC_box_gra_box_m_obj_NANR , pWork->heapID  );
+        p_handle , NARC_gsync_hand_obj_NCER, NARC_gsync_hand_obj_NANR , pWork->heapID  );
 
     GFL_ARC_CloseDataHandle(p_handle);
 	}
-#endif
   
 }
 
 
-void GSYNC_DISP_LevelInputInit(GSYNC_DISP_WORK* pWork)
+void GSYNC_DISP_HandInit(GSYNC_DISP_WORK* pWork)
 {
-	{
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
-    //キャラパレット転送済み
-    // サブ画面BG0スクリーン転送
-/*    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg2_NSCR,
-                                              GFL_BG_FRAME0_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                              pWork->heapID);
-*/
-
-
-    GFL_ARC_CloseDataHandle(p_handle);
-	}
-
-  _SetArrow(pWork,_ARROW_LEVEL_XU * 8, _ARROW_LEVEL_YU * 8,FALSE);
-  _SetArrow(pWork,_ARROW_LEVEL_XD * 8, _ARROW_LEVEL_YD * 8,TRUE);
-
-  _SetArrow(pWork,_ARROW_MY_XU * 8, _ARROW_MY_YU * 8,FALSE);
-  _SetArrow(pWork,_ARROW_MY_XD * 8, _ARROW_MY_YD * 8,TRUE);
-
-  _SetArrow(pWork,_ARROW_FRIEND_XU * 8, _ARROW_FRIEND_YU * 8,FALSE);
-  _SetArrow(pWork,_ARROW_FRIEND_XD * 8, _ARROW_FRIEND_YD * 8,TRUE);
-
-
-  
+  _SetHand(pWork,_POKEMON_CELLX, _POKEMON_CELLX);
 }
 
 
@@ -469,10 +427,16 @@ TOUCHBAR_WORK* GSYNC_DISP_GetTouchWork(GSYNC_DISP_WORK* pWork)
 //-----------------------------------------------------------------------------
 
 
-static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight)
+static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y)
 {
   int i=0;
-   
+
+  if(pWork->curIcon[CELL_CUR_HAND]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_HAND]);
+    pWork->curIcon[CELL_CUR_HAND]=NULL;
+  }
+
+  
   for(i = 0 ; i < _CELL_DISP_NUM ;i++){
 
     if(pWork->curIcon[i]==NULL){
@@ -480,13 +444,13 @@ static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight)
 
       cellInitData.pos_x = x;
       cellInitData.pos_y = y;
-      cellInitData.anmseq = bRight ? 8 :  6;
+      cellInitData.anmseq = 13;
       cellInitData.softpri = 0;
       cellInitData.bgpri = 1;
       pWork->curIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                                pWork->cellRes[CHAR_NEGOOBJ],
-                                                                pWork->cellRes[PLT_NEGOOBJ],
-                                                                pWork->cellRes[ANM_NEGOOBJ],
+                                                                pWork->cellRes[CHAR_HANDOBJ],
+                                                                pWork->cellRes[PLT_HANDOBJ],
+                                                                pWork->cellRes[ANM_HANDOBJ],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[i] , TRUE );
       GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[i], TRUE );
@@ -503,7 +467,7 @@ static void _SetArrow(GSYNC_DISP_WORK* pWork,int x,int y,BOOL bRight)
  */
 //-----------------------------------------------------------------------------
 
-static void _ArrowRelease(GSYNC_DISP_WORK* pWork)
+static void _HandRelease(GSYNC_DISP_WORK* pWork)
 {
   int i=0;
    

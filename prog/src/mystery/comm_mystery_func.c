@@ -125,39 +125,19 @@ void CommMysteryFunc_BgInit( GFL_BG_INI * ini )
  * @return	NONE
  */
 //------------------------------------------------------------------
-int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, GIFT_COMM_PACK *gcp)
+int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, DOWNLOAD_GIFT_DATA *gcp)
 {
 	u32 version;
 	MYSTERY_DATA *fdata = SaveControl_DataPtrGet(sv,GMDATA_ID_MYSTERYDATA);
 
-#if 0
-	// デバッグ用の強制エラー発生コード
-	return COMMMYSTERYFUNC_ERROR_GROUNDCHILD;
-#endif
-#ifdef DEBUG_ONLY_FOR_mituhara
-	OS_TPrintf("拾ったビーコンのバージョンは %08X です\n", gcp->beacon.version);
-	OS_TPrintf("一度しか受け取れないフラグ: %d\n", gcp->beacon.only_one_flag);
-	OS_TPrintf("カード付きおくりものフラグ: %d\n", gcp->beacon.have_card);
-	OS_TPrintf("孫配布フラグ: %d\n", gcp->beacon.groundchild_flag);
-#endif
-
+	version = gcp->version;
 	
-	version = gcp->beacon.version;
-	
-	// デバッグ用のふしぎなおくりもの消去処理
-	if(version == 0xFFFFFFFF && gcp->beacon.event_id == 0xFFFF){
+	// ふしぎなおくりもの消去処理
+	if(version == 0xFFFFFFFF && gcp->data.gift_type == 0xFFFF){
 		MYSTERYDATA_Init(fdata);
-		//FIXME セーブ処理
-		//SaveData_SaveParts(sv, SVBLK_ID_NORMAL);
+    SaveControl_Save(sv);
 		OS_ResetSystem(0); 
 	}
-
-
-		//100～152のＰＢＲのデータを金銀プラチナで受け取るためにバージョンビットを増やしている
-		// k.ohno  2007/6/20
-		if((gcp->beacon.event_id >= 100) && (gcp->beacon.event_id <= 152)){
-			  version |= (1<<VERSION_PLATINUM)+(1<<VERSION_GOLD)+(1<<VERSION_SILVER);
-		}
 
 	// 対象バージョンが０ならば全てのバージョンで受け取れる
 	if(version == 0)
@@ -168,36 +148,16 @@ int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, GIFT_COMM_PACK *gcp)
 		return COMMMYSTERYFUNC_ERROR_VERSION;
 
 	// 一度しか受け取れないおくりものは、
-	if(gcp->beacon.only_one_flag == TRUE &&
+	if(gcp->data.only_one_flag == TRUE &&
 		 // すでに受け取っているか調べる
-		 MYSTERYDATA_IsEventRecvFlag(fdata, gcp->beacon.event_id) == TRUE)
+		 MYSTERYDATA_IsEventRecvFlag(fdata, gcp->data.event_id) == TRUE)
 		return COMMMYSTERYFUNC_ERROR_HAVE;
 
-	// カード付きおくりものは
-	if( gcp->beacon.have_card == TRUE &&
-		 // カード情報がセーブできるかチェック
-		MYSTERYDATA_CheckCardDataSpace(fdata) == FALSE)
+  //カードいっぱい検査
+	if( MYSTERYDATA_CheckCardDataSpace(fdata) == FALSE)
 	{
-#if DEB_ARI
-		OS_TPrintf("本当はいっぱいで受け取れない！！\n");
-#else
-		return COMMMYSTERYFUNC_ERROR_FULLCARD;
-#endif
+    return COMMMYSTERYFUNC_ERROR_FULLCARD;
 	}
-
-	// さらに配達員情報が含まれているおくりものは
-	// 配達員のスロットもチェックする
-#if DEB_ARI
-	if(MYSTERYDATA_CheckDeliDataSpace(fdata) == FALSE)
-		OS_TPrintf("本当はいっぱいで受け取れない！！\n");
-#else
-	if(MYSTERYDATA_CheckDeliDataSpace(fdata) == FALSE)
-		return COMMMYSTERYFUNC_ERROR_FULLGIFT;
-#endif
-	// 孫配布のチェック
-	if(gcp->beacon.groundchild_flag == 1)
-		return COMMMYSTERYFUNC_ERROR_GROUNDCHILD;
-
 	return COMMMYSTERYFUNC_ERROR_NONE;
 }
 

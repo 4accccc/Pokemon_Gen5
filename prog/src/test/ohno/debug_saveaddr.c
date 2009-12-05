@@ -143,6 +143,16 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
  */
 //------------------------------------------------------------------------------
 
+#include "savedata/situation.h"
+#include "savedata/mystery_data.h"
+#include "savedata/record.h"
+#include "system\pms_data.h"
+#include "savedata/worldtrade_data.h"
+#include "savedata/sodateya_work.h"
+#include "savedata/misc.h"
+#include "savedata/intrude_save.h"
+
+
 static void _keyWait(SAVEADDR_WORK* pWork)
 {
   {
@@ -177,7 +187,50 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
     }
   }
-  
+
+  {
+    int size,sizetotal=0;
+    size = Situation_GetWorkSize();
+    OS_TPrintf("%d Situation_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    size = MYSTERYDATA_GetWorkSize();
+    OS_TPrintf("%d MYSTERYDATA_GetWorkSize\n",size);
+    OS_TPrintf("%d MYSTERYDATA  GIFT_PRESENT_POKEMON\n",sizeof(GIFT_PRESENT_POKEMON));
+    sizetotal+=size;
+
+    size = RECORD_GetWorkSize();
+    OS_TPrintf("%d RECORD_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    size = PMSW_GetSaveDataSize();
+    OS_TPrintf("%d PMSW_GetSaveDataSize\n",size);
+    sizetotal+=size;
+
+    size = WorldTradeData_GetWorkSize();
+    OS_TPrintf("%d WorldTradeData_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    size = SODATEYA_WORK_GetWorkSize();
+    OS_TPrintf("%d SODATEYA_WORK_GetWorkSize\n",size);
+    sizetotal+size;
+
+    size = MISC_GetWorkSize();
+    OS_TPrintf("%d MISC_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    size = IntrudeSave_GetWorkSize();
+    OS_TPrintf("%d IntrudeSave_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    size = DREAMWORLD_SV_GetWorkSize();
+    OS_TPrintf("%d DREAMWORLD_SV_GetWorkSize\n",size);
+    sizetotal+=size;
+
+    OS_TPrintf("%d total\n",sizetotal);
+  }
+
+
 }
 
 

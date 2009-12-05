@@ -367,6 +367,7 @@ $(LCFDEF_FILE): $(OBJS_STATIC) $(OBJS_OVERLAY)
 	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
 
 
+GDIRT_CLEAN += lcf_def_twl.txt lcf_def.txt
 
 #--------------------------------------- ----------------------------
 programs = $(TARGETS)

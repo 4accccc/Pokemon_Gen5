@@ -117,7 +117,7 @@ typedef struct {
 
 	int from_seq;
 	int next_seq;					// フェードの次に行うシーケンス番号
-	GIFT_COMM_PACK gift_data;			// 届いたおくりものデータの全体(ビーコン＋データ)
+	DOWNLOAD_GIFT_DATA gift_data;			// 届いたおくりものデータの全体(ビーコン＋データ)
 	int timeout;
 
 	int connectIndex;
@@ -168,7 +168,7 @@ typedef struct {
 	BOOL (*wifi_check_func)(void);
 	GFL_BMPWIN	*wifiwin;
 
-	GIFT_DATA comm_data;					// 暗号化されたデータ
+	GIFT_PACK_DATA comm_data;
 
 	void (*func_hook)(void *);
 	int save_cancel;

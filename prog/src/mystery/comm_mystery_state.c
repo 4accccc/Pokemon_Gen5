@@ -54,7 +54,7 @@ typedef struct{
 	u8 connectIndex;   				// 子機が接続する親機のindex番号
 	MYSTATUS *status[SCAN_PARENT_COUNT_MAX];
 
-	GIFT_DATA recv_data;				// 受信したデータ
+	DOWNLOAD_GIFT_DATA recv_data;				// 受信したデータ
 	u8 recv_flag;					// 受信したフラグ
 	u8 result_flag[SCAN_PARENT_COUNT_MAX];	// ちゃんと受信しました返事
 
@@ -110,24 +110,12 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 BOOL CommMysteryBeaconCheck(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
 void* CommMysteryGetBeaconData(void* pWork);
 int CommMysteryGetBeaconSize(void* pWork);
+
 //	ビーコン比較関数
 BOOL CommMysteryBeaconCheck(GameServiceID GameServiceID1, GameServiceID GameServiceID2)
 {
 	return TRUE;
 }
-//	ビーコンデータ取得関数
-static GIFT_BEACON beaconTemp; 
-void* CommMysteryGetBeaconData(void* pWork)
-{
-	return (void*)&beaconTemp;
-}
-
-//	ビーコンデータサイズ取得関数
-int CommMysteryGetBeaconSize(void* pWork)
-{
-	return sizeof(GIFT_BEACON);
-}
-
 
 
 //==============================================================================
@@ -173,18 +161,17 @@ void CommMysteryInitNetLib(void* pWork)
 	GFLNetInitializeStruct mysteryGiftNetInit = {
 		_CommPacketTbl,		//NetSamplePacketTbl,  // 受信関数テーブル
 		CM_COMMAND_MAX,		// 受信テーブル要素数
-        NULL,		///< ハードで接続した時に呼ばれる
-        NULL,		///< ネゴシエーション完了時にコール
-        CommMysteryGetBeaconData,	// ユーザー同士が交換するデータのポインタ取得関数
-		CommMysteryGetBeaconSize,	// ユーザー同士が交換するデータのサイズ取得関数
-		CommMysteryGetBeaconData,	//FIELD_COMM_FUNC_GetBeaconData,			// ビーコンデータ取得関数  
-		CommMysteryGetBeaconSize,	//FIELD_COMM_FUNC_GetBeaconSize,			// ビーコンデータサイズ取得関数 
+    NULL,		///< ハードで接続した時に呼ばれる
+    NULL,		///< ネゴシエーション完了時にコール
+    NULL,	// ユーザー同士が交換するデータのポインタ取得関数
+		NULL,	// ユーザー同士が交換するデータのサイズ取得関数
+		NULL,	//FIELD_COMM_FUNC_GetBeaconData,			// ビーコンデータ取得関数  
+		NULL,	//FIELD_COMM_FUNC_GetBeaconSize,			// ビーコンデータサイズ取得関数 
 		CommMysteryBeaconCheck,//FIELD_COMM_FUNC_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
 		NULL,//FIELD_COMM_FUNC_ErrorCallBack,			// 通信不能なエラーが起こった場合呼ばれる
-        NULL,  //FatalError
-        NULL,//FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
+    NULL,  //FatalError
+    NULL,//FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
 		NULL,	// オート接続で親になった場合
-#if GFL_NET_WIFI
 		NULL,		///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
 		NULL,		///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
 		NULL,		///< wifiフレンドリスト削除コールバック
@@ -192,7 +179,6 @@ void CommMysteryInitNetLib(void* pWork)
 		NULL,		///< DWCのユーザデータ（自分のデータ）
 		0,			///< DWCのヒープサイズ
 		TRUE,        ///< デバック用サーバにつなぐかどうか
-#endif  //GFL_NET_WIFI
 		0x333,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
 		GFL_HEAPID_APP,  //元になるheapid
 		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
@@ -207,9 +193,7 @@ void CommMysteryInitNetLib(void* pWork)
 		GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
 		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 		WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
-#if GFL_NET_IRC
 		IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
-#endif
     0,//MP親最大サイズ 512まで
     0,//dummy
 	};
