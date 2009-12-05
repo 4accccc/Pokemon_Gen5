@@ -43,6 +43,11 @@ class HeaderSearchError < Exception; end
 #------------------------------------------------------------------------------
 class HeaderData
   
+
+  def debug_puts( str )
+    #puts str
+  end
+
   def initialize( filename )
 
     #定義情報
@@ -149,6 +154,10 @@ end
 #ヘッダーデータ配列クラス
 #------------------------------------------------------------------------------
 class HeaderDataArray
+
+  def debug_puts( str )
+    #puts str
+  end
 
   def initialize
     @headerArray = Hash.new
