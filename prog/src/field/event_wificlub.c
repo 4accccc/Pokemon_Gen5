@@ -50,6 +50,7 @@ enum _EVENT_IRCBATTLE {
   _WAIT_WIFICLUB,
   _WAIT_NET_END,
   _FIELD_OPEN,
+  _FIELD_FADEIN,
   _FIELD_END
 };
 
@@ -95,6 +96,10 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case _FIELD_OPEN:
     _battleParaFree(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    (*seq) ++;
+    break;
+  case _FIELD_FADEIN:
+    GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _FIELD_END:
