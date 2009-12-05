@@ -295,7 +295,7 @@ typedef struct {
   u8  msgSpeed;
   u8  fWazaEff : 1;
   u8  fSubway : 1;
-  u8  dmy : 7;
+  u8  dmy : 6;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -408,7 +408,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xb000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xc000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
@@ -1315,6 +1315,7 @@ FS_EXTERN_OVERLAY(battle);
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
+    BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
     (*seq) = SEQ_BTL_START;
     break;
 
