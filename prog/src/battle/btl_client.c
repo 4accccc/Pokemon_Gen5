@@ -165,6 +165,7 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
@@ -183,7 +184,6 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
@@ -344,8 +344,13 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
       if( cmd != BTL_ACMD_NONE )
       {
         wk->subProc = getSubProc( wk, cmd );
-        wk->subSeq = 0;
-        wk->myState = 1;
+        if( wk->subProc != NULL ){
+          wk->subSeq = 0;
+          wk->myState = 1;
+        }else{
+          wk->subSeq = 0;
+          wk->myState = 2;
+        }
       }
     }
     break;
@@ -370,7 +375,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 {
   static const struct {
     BtlAdapterCmd   cmd;
-    ClientSubProc   procs[ BTL_CLIENT_TYPE_MAX ];
+    ClientSubProc   proc[ BTL_CLIENT_TYPE_MAX ];
   }procTbl[] = {
 
     { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },
@@ -379,7 +384,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,   SubProc_AI_SelectAction } },
     { BTL_ACMD_SELECT_POKEMON,  { SubProc_UI_SelectPokemon,  SubProc_AI_SelectPokemon } },
     { BTL_ACMD_SERVER_CMD,      { SubProc_UI_ServerCmd,      SubProc_AI_ServerCmd } },
-
+    { BTL_ACMD_RECORD_DATA,     { SubProc_UI_RecordData,     NULL } },
   };
 
   int i;
@@ -388,7 +393,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   {
     if( procTbl[i].cmd == cmd )
     {
-      return procTbl[i].procs[ wk->myType ];
+      return procTbl[i].proc[ wk->myType ];
     }
   }
 
@@ -596,20 +601,27 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       wk->prevPokeIdx = wk->procPokeIdx;
+      (*seq)++;
     }
-    (*seq)++;
+    else{
+      (*seq) += 2;
+    }
     break;
-    // アクション選択開始
+
   case 2:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
-      BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
-      BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+    if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq)++;
     }
     break;
 
   case 3:
+    // アクション選択開始
+    BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+    (*seq)++;
+    break;
+
+  case 4:
     switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
 
     // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
@@ -1562,6 +1574,22 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 }
 
 //---------------------------------------------------
+// 操作記録データ受信->保存
+//---------------------------------------------------
+static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->btlRec )
+  {
+    u32 dataSize;
+    const void* dataBuf;
+
+    dataSize = BTL_ADAPTER_GetRecvData( wk->adapter, &dataBuf );
+    BTL_Printf("録画データ %d bytes 書き込みます\n", dataSize);
+    BTL_REC_Write( wk->btlRec, dataBuf, dataSize );
+  }
+  return TRUE;
+}
+//---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq )
@@ -1656,7 +1684,7 @@ restart:
   switch( *seq ){
   case 0:
     {
-      u16 cmdSize;
+      u32 cmdSize;
       const void* cmdBuf;
 
       cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );

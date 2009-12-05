@@ -20,12 +20,13 @@
 #include "btl_event.h"
 #include "btl_util.h"
 #include "btl_string.h"
-#include "handler\hand_tokusei.h"
+#include "btl_rec.h"
 
 #include "btl_server_cmd.h"
 #include "btl_field.h"
 #include "btl_server_flow.h"
 #include "btl_server_local.h"
+#include "handler\hand_tokusei.h"
 
 #include "btl_server.h"
 
@@ -71,6 +72,7 @@ struct _BTL_SERVER {
   SvflowResult          flowResult;
   BtlBagMode            bagMode;
   GFL_STD_RandContext   randContext;
+  BTL_RECTOOL           recTool;
 
 
   u8          numClient;
@@ -98,6 +100,7 @@ static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
+static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
@@ -460,13 +463,42 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       BTL_Printf("アクション受け付け完了\n");
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
-      BTL_Printf("サーバコマンド生成完了,送信します ... result=%d\n", server->flowResult);
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
+
+      {
+        void* recData;
+        u32   recDataSize;
+
+        recData = MakeSelectActionRecord( server, &recDataSize );
+        if( recData != NULL )
+        {
+          BTL_Printf("操作記録データを送信する (%dbytes)\n", recDataSize);
+          SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+          (*seq)++;
+        }
+        else
+        {
+          (*seq) += 2;
+        }
+      }
     }
     break;
 
   case 2:
+    if( WaitAdapterCmd(server) )
+    {
+      BTL_Printf("操作記録データの送信完了\n");
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+      BTL_Printf("サーバコマンド送信します ... result=%d\n", server->flowResult);
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+      (*seq)++;
+      break;
+
+  case 4:
     if( WaitAdapterCmd(server) )
     {
       BTL_Printf("全クライアントのコマンド再生おわりました...result=%d\n", server->flowResult);
@@ -510,6 +542,35 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
+/**
+ * 操作記録用のアクション選択データを生成
+ *
+ * @param   server
+ * @param   u32
+ *
+ * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
+ */
+static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize )
+{
+  u32 ID;
+
+  BTL_RECTOOL_Init( &server->recTool );
+
+  for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
+  {
+    if( server->client[ID].myID != CLIENT_DISABLE_ID )
+    {
+      const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[ID].adapter );
+      u32 numAction = BTL_ADAPTER_GetReturnDataCount( server->client[ID].adapter );
+
+      BTL_RECTOOL_PutSelActionData( &server->recTool, ID, action, numAction );
+    }
+  }
+
+  return BTL_RECTOOL_FixSelActionData( &server->recTool, dataSize );
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入した直後の処理
@@ -786,12 +847,3 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
     server->changePokePos[ server->changePokeCnt++ ] = pos;
   }
 }
-
-void BTL_SERVER_NotifyGiveupClientID( BTL_SERVER* server, u8 clientID )
-{
-  GF_ASSERT(server->giveupClientCnt < BTL_CLIENT_MAX);
-  {
-    server->giveupClientID[ server->giveupClientCnt++ ] = clientID;
-  }
-}
-

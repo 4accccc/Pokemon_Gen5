@@ -701,7 +701,6 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
     {
       if( !BPP_IsDead( BTL_PARTY_GetMemberData(cw->party, posIdx)) )
       {
-        BTL_Printf("client(%d, posIdx=%d poke...In!\n", i, posIdx);
         scproc_MemberInCore( wk, i, posIdx, posIdx );
       }
     }
