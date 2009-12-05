@@ -50,7 +50,8 @@ BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))
 
 #UNIQ_SCRIPT
 include  ../../script/uniq_script.list
-SCRBASE = $(basename $(notdir $(UNIQ_SCRIPTFILES)))
+#SCRBASE = $(basename $(notdir $(UNIQ_SCRIPTFILES)))
+SCRBASE = $(basename $(notdir $(UNIQ_TOP_EVENT_SCRFILES)))
 UNIQ_SCRIPTHEADER = $(addprefix $(SCRIPTDIR)/,$(addsuffix _def.h,$(SCRBASE)))
 
 LIST_FILE 	= list.txt
