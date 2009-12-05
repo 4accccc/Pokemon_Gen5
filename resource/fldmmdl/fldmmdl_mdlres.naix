@@ -62,7 +62,7 @@ enum {
 	NARC_fldmmdl_mdlres_wifism_nsbtx = 48,
 	NARC_fldmmdl_mdlres_wifisw_nsbtx = 49,
 	NARC_fldmmdl_mdlres_sunglasses_nsbtx = 50,
-	NARC_fldmmdl_mdlres_leader1_nsbtx = 51,
+	NARC_fldmmdl_mdlres_leader1a_nsbtx = 51,
 	NARC_fldmmdl_mdlres_hakase2_nsbtx = 52,
 	NARC_fldmmdl_mdlres_tree_nsbtx = 53,
 	NARC_fldmmdl_mdlres_rock_nsbtx = 54,

@@ -90,14 +90,14 @@
 #define WIFISW (0x52) //82(82,total 82) Wifi係員♀
 #define SUNGLASSES (0x53) //83(83,total 83) サングラス
 #define AMBRELLA (0x54) //84(84,total 84) パラソル
-#define LEADER1 (0x55) //85(85,total 85) ジムリーダー１a
+#define LEADER1A (0x55) //85(85,total 85) ジムリーダー１a
 #define LEADER2 (0x56) //86(86,total 86) ジムリーダー２
 #define LEADER3 (0x57) //87(87,total 87) ジムリーダー３
 #define LEADER4 (0x58) //88(88,total 88) ジムリーダー４
 #define LEADER5 (0x59) //89(89,total 89) ジムリーダー５
 #define LEADER6 (0x5a) //90(90,total 90) ジムリーダー６
 #define LEADER7 (0x5b) //91(91,total 91) ジムリーダー７
-#define LEADER8 (0x5c) //92(92,total 92) ジムリーダー８a
+#define LEADER8W (0x5c) //92(92,total 92) ジムリーダー８w
 #define BIGFOUR1 (0x5d) //93(93,total 93) 四天王１
 #define BIGFOUR2 (0x5e) //94(94,total 94) 四天王２
 #define BIGFOUR3 (0x5f) //95(95,total 95) 四天王３
