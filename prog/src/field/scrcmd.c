@@ -34,7 +34,7 @@
 #include "event_gameover.h" //EVENT_NormalLose
 #include "event_battle.h"   //FIELD_BATTLE_IsLoseResult
 
-//#include "tr_tool/tr_tool.h"
+#include "debug/debug_flg.h" //DEBUG_FLG_～
 
 
 #include "scrcmd_battle.h"
@@ -1368,6 +1368,13 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
 
+#ifdef  PM_DEBUG
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) {
+    u16* ret_wk = SCRCMD_GetVMWork( core, work );
+    *ret_wk = TRUE;
+    return VMCMD_RESULT_SUSPEND;
+  }
+#endif
   // 分割セーブ開始
   GAMEDATA_SaveAsyncStart( gdata );
   
