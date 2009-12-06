@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: debug_symbol.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DEBUG_SYMBOL_NAIX_
+#define NARC_DEBUG_SYMBOL_NAIX_
+
+enum {
+	NARC_debug_symbol_work_define_bin = 0,
+	NARC_debug_symbol_flag_define_bin = 1
+};
+
+/* NARC_DEBUG_SYMBOL_NAIX_ */
+#endif

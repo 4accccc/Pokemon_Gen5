@@ -1,4 +1,4 @@
-#----------------------------------------------------------------------------
+#============================================================================
 #
 #
 #   スクリプトフラグ/ワーク管理システム
@@ -6,13 +6,8 @@
 #
 #   2009.07.14  tamada GAMEFREAK inc.
 #
-#----------------------------------------------------------------------------
+#============================================================================
 $KCODE= "SJIS"
-
-lists = [
-  ["sys_flag.xls", "SYS_FLAG_",  "SYSFLAG_START", 320],
-  ["time_flag.xls", "TM_FLAG_", "TMFLAG_START", 192]
-]
 
 class FlagReadError < Exception; end
 
@@ -20,16 +15,14 @@ XLS2TAB = "ruby #{ENV["PROJECT_ROOT"]}tools/exceltool/xls2xml/tab_out.rb -c "
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
-class PMFlag
-  attr_reader :name, :comment
-   def initialize(name, comment, access)
-     @name = name
-     @comment = comment
-     @access = access
-#     puts "new flag #{name} = #{comment}"
-   end
+def read_excel_file( filename )
+  command = "#{XLS2TAB} #{filename}"
+  tmpfile = `#{command}`.split("\n")
+  return tmpfile
 end
 
+#============================================================================
+#============================================================================
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 class PMFlagData
@@ -39,21 +32,33 @@ class PMFlagData
   COL_ACTIVE = 2
   COL_COMMENT = 3
 
+  #----------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
+  class PMFlag
+    attr_reader :name, :comment
+     def initialize(name, comment, access)
+       @name = name
+       @comment = comment
+       @access = access
+     end
+  end
+
   attr_reader  :filename, :prefix, :start_no, :max, :count
 
+  #----------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   def initialize(filename, prefix, start_no, max)
     @filename = filename
     @prefix = prefix
     @start_no = start_no
     @max = max
 
-    STDERR.puts "MAKE FLAGS #{filename}, #{prefix}, #{start_no} - #{max}"
+    #STDERR.puts "MAKE FLAGS #{filename}, #{prefix}, #{start_no} - #{max}"
     @flags = Array.new
     @count = 0
 
     if filename != nil then
-      command = "#{XLS2TAB} #{@filename}"
-      @tmpfile = `#{command}`.split("\n")
+      @tmpfile = read_excel_file( @filename )
       read(@tmpfile)
     else
       @max.times{|n|
@@ -67,7 +72,9 @@ class PMFlagData
     raise FlagReadError, "#{@filename}:#{@count}:\n #{string}"
   end
 
+  #----------------------------------------------------------------------------
   #メソッド：読み込み
+  #----------------------------------------------------------------------------
   def read(lines)
     column = lines.shift.split(",")
     raiseError "フォーマット異常です.#{column[COL_NUMBER]}" if column[COL_NUMBER] != "number"
@@ -108,7 +115,9 @@ class PMFlagData
     }
   end
 
+  #----------------------------------------------------------------------------
   #メソッド：書き出し
+  #----------------------------------------------------------------------------
   def write_define()
     output = ""
     output += "/* flags \"#{@filename}\" #{@start_no} ～ #{@start_no + @max - 1} */\n"
@@ -132,9 +141,24 @@ class PMFlagData
     return output
   end
 
+  #----------------------------------------------------------------------------
+  #メソッド：バイナリ書き出し
+  #----------------------------------------------------------------------------
+  def write_binary()
+    output = ""
+    @flags.each_with_index{| flag, index |
+      next if flag.name == nil
+      raiseError "名称（#{flag.name}）が長すぎます\n" if flag.name.length > 29
+      output += [@start_no + index].pack("S")
+      output += [flag.name].pack("a29x")
+    }
+    return output
+  end
+
 end
-#----------------------------------------------------------------------------
-#----------------------------------------------------------------------------
+
+#============================================================================
+#============================================================================
 class FLAGMANAGER
 
   COL_FILENAME = 0
@@ -144,21 +168,26 @@ class FLAGMANAGER
 
   attr_reader :manager_filename, :tmpfile, :flagdatas
 
+  #----------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   def initialize(filename)
     @manager_filename = filename
-    command = "#{XLS2TAB} #{@manager_filename}"
-    @tmpfile = `#{command}`.split("\n")
+    @tmpfile = read_excel_file( @manager_filename )
     @flagdatas = Array.new
     read_list(@tmpfile)
     check()
   end
 
+  #----------------------------------------------------------------------------
   #エラー処理
+  #----------------------------------------------------------------------------
   def raiseError(string, count)
     raise FlagReadError, "#{@manager_filename}:#{count}:\n #{string}"
   end
 
+  #----------------------------------------------------------------------------
   #読み込み処理
+  #----------------------------------------------------------------------------
   def read_list(lines)
     linecount = 1
     column = lines.shift.split(",")
@@ -183,8 +212,6 @@ class FLAGMANAGER
       begin 
         max = Integer(column[COL_MAX])
       rescue
-        p column
-        puts "#{line}"
         raiseError("最大値設定異常", linecount)
       end
       next_pos = start_no + max
@@ -197,7 +224,9 @@ class FLAGMANAGER
     }
   end
 
+  #----------------------------------------------------------------------------
   #パラメータチェック
+  #----------------------------------------------------------------------------
   def check()
     prefixes = Hash.new
 
@@ -228,6 +257,9 @@ class FLAGMANAGER
 
   end
 
+  #----------------------------------------------------------------------------
+  # 定義の書き出し
+  #----------------------------------------------------------------------------
   def write_defines()
     sym = File.basename(@manager_filename,".*").upcase
     flag_min = -1
@@ -254,17 +286,36 @@ class FLAGMANAGER
 
     return output
   end
+  #----------------------------------------------------------------------------
+  # バイナリの書き出し
+  #----------------------------------------------------------------------------
+  def write_binary()
+    output = ""
+    @flagdatas.each{|flagdata|
+      output += flagdata.write_binary()
+    }
+  end
+
 end
 
+#============================================================================
+#
+#   メイン処理
+#
+#============================================================================
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 man = FLAGMANAGER.new(ARGV[0])
 
-temp = man.write_defines()
+defines = man.write_defines()
 
 File.open(ARGV[1], "w"){|file|
-  file.puts temp
+  file.puts defines
 }
 
+binary = man.write_binary()
+File.open(ARGV[2], "wb"){|file|
+  file.write binary
+}
 
 
