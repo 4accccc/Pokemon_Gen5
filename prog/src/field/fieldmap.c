@@ -46,8 +46,6 @@
 #include "warpdata.h"   //ARRIVEDATA_SetArriveFlag
 
 #include "field_comm_actor.h"
-#include "field_comm/field_comm_main.h"
-#include "field_comm/field_comm_event.h"
 #include "field_comm/intrude_field.h"
 
 #include "fldmmdl.h"
@@ -265,8 +263,6 @@ struct _FIELDMAP_WORK
 	
 	FIELD_WEATHER *weather_sys;
   FIELD_SUBSCREEN_WORK* fieldSubscreenWork;
-	
-	FIELD_COMM_MAIN *commSys;
 	
 	FLDMSGBG *fldMsgBG;
   FLDMSGWIN *goldMsgWin;  // 所持金表示用ウィンドウ
@@ -1276,18 +1272,6 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
 //======================================================================
 //	フィールドマップ　参照、設定
 //======================================================================
-//--------------------------------------------------------------
-/**
- * FIELDMAP_WORK FIELD_COMM_MAIN取得
- * @param	fieldWork	FIELDMAP_WORK
- * @retval	void*
- */
-//--------------------------------------------------------------
-void * FIELDMAP_GetCommSys( const FIELDMAP_WORK *fieldWork )
-{
-	return (void*)fieldWork->commSys;
-}
-
 //--------------------------------------------------------------
 /**
  * FIELDMAP_WORK FLDMSGBG取得

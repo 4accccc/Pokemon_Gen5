@@ -85,7 +85,6 @@ typedef struct
 extern BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork );
 
 //FIELDMAP_WORK ê›íËÅAéQè∆
-extern void * FIELDMAP_GetCommSys( const FIELDMAP_WORK *fieldWork );
 extern FLDMSGBG * FIELDMAP_GetFldMsgBG( FIELDMAP_WORK *fieldWork );
 extern FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork );
 extern FLDNOGRID_MAPPER* FIELDMAP_GetFldNoGridMapper( FIELDMAP_WORK *fieldWork );

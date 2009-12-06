@@ -27,7 +27,6 @@
 #include "system/wipe.h"      //WIPE_SYS_EndCheck
 #include "event_mapchange.h"
 #include "event_ircbattle.h"      //EVENT_IrcBattle
-#include "field_comm/field_comm_event.h"   //FIELD_COMM_EVENT_Å`
 #include "field_comm/intrude_field.h"
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle

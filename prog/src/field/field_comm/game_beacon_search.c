@@ -15,8 +15,8 @@
 
 #include "field/game_beacon_search.h"
 #include "gamesystem/game_comm.h"
-#include "field/field_comm/field_comm_func.h"
 #include "field/field_beacon_message.h"
+#include "field/intrude_comm.h"
 
 
 //==============================================================================

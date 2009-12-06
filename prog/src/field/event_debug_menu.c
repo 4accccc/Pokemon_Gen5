@@ -20,15 +20,12 @@
 
 #include "fieldmap.h"
 #include "field/zonedata.h"
-#include "field_comm/field_comm_main.h"
 #include "arc/fieldmap/zone_id.h"
 #include "field/eventdata_sxy.h"
 
 #include "event_debug_menu.h"
 #include "event_mapchange.h"
 
-#include "field_comm/field_comm_main.h"
-#include "field_comm/field_comm_debug.h"
 #include "net_app/irc_match/ircbattlemenu.h"
 #include "event_ircbattle.h"
 #include "event_wificlub.h"
@@ -495,9 +492,9 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
   const HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
+#if 0 //通信システム変更の為、Fix 2009.09.03(木)
   FIELD_COMM_DEBUG_WORK *work;
   
-#if 0 //通信システム変更の為、Fix 2009.09.03(木)
   GMEVENT_Change( event,
     FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
   work = GMEVENT_GetEventWork( event );

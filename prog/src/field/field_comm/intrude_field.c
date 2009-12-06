@@ -11,8 +11,6 @@
 
 #include "infowin/infowin.h"
 #include "gamesystem/gamesystem.h"
-#include "field_comm_menu.h"
-#include "field_comm_data.h"
 #include "field/field_player.h"
 #include "test/performance.h"
 #include "system/main.h"
