@@ -85,6 +85,10 @@ typedef enum{
   PANEL_COLORMODE_FLASH,      ///<決定中のフラッシュアニメ
 }PANEL_COLORMODE;
 
+///ミッションが実施中の時に街番号領域にセットされる
+#define SELECT_TOWN_ENFORCEMENT   (INTRUDE_TOWN_MAX)
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -114,8 +118,8 @@ typedef struct{
 
 ///モノリス全画面共用ワーク(上下PROC間、画面をまたいだワークのやり取りに使用)
 typedef struct{
-  u8 mission_select_town;           ///<ミッション画面：選択している街番号
-  u8 power_select_no;               ///<パワー画面：選択しているパワー番号
+  u8 mission_select_town;    ///<ミッション画面：選択している街番号 or SELECT_TOWN_ENFORCEMENT
+  u8 power_select_no;        ///<パワー画面：選択しているパワー番号
   u8 padding[2];
 }MONOLITH_COMMON_WORK;
 

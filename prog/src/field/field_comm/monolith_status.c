@@ -197,7 +197,7 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
     }
     break;
   case 1:
-    appwk->next_menu_index = MONOLITH_MENU_END;
+    appwk->next_menu_index = MONOLITH_MENU_TITLE;
     return GFL_PROC_RES_FINISH;
   }
   

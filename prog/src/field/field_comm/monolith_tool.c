@@ -192,6 +192,20 @@ void MonolithTool_Panel_Delete(PANEL_ACTOR *panel)
 
 //==================================================================
 /**
+ * パネルアクターの表示設定
+ *
+ * @param   panel		
+ * @param   on_off		TRUE:表示ON、　FALSE:表示OFF
+ */
+//==================================================================
+void MonolithTool_Panel_SetEnable(PANEL_ACTOR *panel, BOOL on_off)
+{
+  GFL_CLACT_WK_SetDrawEnable( panel->cap, on_off );
+  BmpOam_ActorSetDrawEnable( panel->bmpoam, on_off );
+}
+
+//==================================================================
+/**
  * パネルアクター更新処理
  *
  * @param   setup   モノリス全画面共通設定データへのポインタ

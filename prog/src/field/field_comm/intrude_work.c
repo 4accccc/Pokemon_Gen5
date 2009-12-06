@@ -190,20 +190,6 @@ MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm, int pa
 
 //==================================================================
 /**
- * 現在実行中のミッションデータへのポインタを取得
- *
- * @param   intcomm		
- *
- * @retval  MISSION_DATA *		現在実行中のミッションデータへのポインタ
- */
-//==================================================================
-MISSION_DATA * Intrude_GetExecuteMissionData(INTRUDE_COMM_SYS_PTR intcomm)
-{
-  return &intcomm->mission.data;
-}
-
-//==================================================================
-/**
  * 自分が今いるパレスエリアNoを取得する
  *
  * @param   intcomm		

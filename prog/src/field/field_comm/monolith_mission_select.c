@@ -12,6 +12,8 @@
 #include "monolith_common.h"
 #include "arc_def.h"
 #include "monolith_tool.h"
+#include "intrude_mission.h"
+#include "intrude_comm_command.h"
 #include "msg/msg_monolith.h"
 #include "monolith.naix"
 
@@ -22,6 +24,20 @@
 ///パネル「受ける」Y座標
 #define PANEL_RECEIVE_Y   (0x12*8)
 
+///パネルアクターID
+enum{
+  _PANEL_ORDER,           ///<ミッションを受ける
+  _PANEL_ENFORCEMENT,     ///<実施中
+  
+  _PANEL_MAX,
+};
+
+///表示モード
+enum{
+  VIEW_ORDER,           ///<ミッション受注画面
+  VIEW_ENFORCEMENT,     ///<ミッション実施中画面
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -29,7 +45,9 @@
 typedef struct{
   GFL_CLWK *act_town[INTRUDE_TOWN_MAX]; ///<街アイコンアクターへのポインタ
   GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
-  PANEL_ACTOR panel;
+  PANEL_ACTOR panel[_PANEL_MAX];
+  u8 no_select;           ///<ミッション受注済み。選択はもう出来ない
+  u8 padding;
 }MONOLITH_MSSELECT_WORK;
 
 //==============================================================================
@@ -53,6 +71,7 @@ static void _Msselect_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
 static void _Msselect_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_CancelIconDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_CancelIconUpdate(MONOLITH_MSSELECT_WORK *mmw);
+static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw, int view_mode);
 
 
 //==============================================================================
@@ -237,6 +256,14 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
+  enum{
+    SEQ_INIT,
+    SEQ_TOP,
+    SEQ_NO_SELECT,
+    SEQ_ORDER,
+    SEQ_ORDER_WAIT,
+    SEQ_FINISH,
+  };
   
   _TownIcon_AllUpdate(mmw, appwk);
   _Msselect_PanelUpdate(appwk, mmw);
@@ -247,10 +274,27 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
   }
   
   switch(*seq){
-  case 0:
+  case SEQ_INIT:
+    if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
+      _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
+      *seq = SEQ_NO_SELECT;
+    }
+    else{
+      *seq = SEQ_TOP;
+    }
+    break;
+    
+  case SEQ_TOP:
     {
       int trg = GFL_UI_KEY_GetTrg();
       int tp_ret = GFL_UI_TP_HitTrg(TownTouchRect);
+
+      if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){
+        OS_TPrintf("誰かがミッションを受注した\n");
+        mmw->no_select = TRUE;
+        *seq = SEQ_NO_SELECT;
+        break;
+      }
 
       if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + INTRUDE_TOWN_MAX){
         OS_TPrintf("街選択 %d\n", tp_ret);
@@ -258,16 +302,54 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("「受ける」選択\n");
-        MonolithTool_Panel_Flash(appwk, &mmw->panel, 1, 0, FADE_SUB_OBJ);
-        (*seq)++;
+        MonolithTool_Panel_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        *seq = SEQ_ORDER;
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
-        (*seq)++;
+        (*seq) = SEQ_FINISH;
       }
     }
     break;
-  case 1:
+
+  case SEQ_NO_SELECT:   //既に受注済み
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int tp_ret = GFL_UI_TP_HitTrg(TownTouchRect);
+
+      if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
+        OS_TPrintf("キャンセル選択\n");
+        (*seq) = SEQ_FINISH;
+      }
+    }
+    break;
+
+  case SEQ_ORDER:   //親機に「ミッション受注確認」を送信
+    {
+      const MISSION_DATA *mdata;
+
+      mdata = &appwk->parent->list.md[TownNo_to_Type[appwk->common->mission_select_town]];
+      if(IntrudeSend_MissionOrderConfirm(appwk->parent->intcomm, mdata) == TRUE){
+        *seq = SEQ_ORDER_WAIT;
+      }
+    }
+    break;
+  case SEQ_ORDER_WAIT:    //親機からの返事を待つ
+    {
+      MISSION_ENTRY_RESULT result;
+      
+      result = MISSION_GetRecvEntryAnswer(&appwk->parent->intcomm->mission);
+      if(result == MISSION_ENTRY_RESULT_OK){
+        *seq = SEQ_NO_SELECT;
+        _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
+      }
+      else if(result == MISSION_ENTRY_RESULT_NG){
+        *seq = SEQ_TOP;
+      }
+    }
+    break;
+
+  case SEQ_FINISH:
     if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
       return GFL_PROC_RES_FINISH;
@@ -416,9 +498,14 @@ static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT
 //==================================================================
 static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw)
 {
-  MonolithTool_Panel_Create(appwk->setup, &mmw->panel, 
+  MonolithTool_Panel_Create(appwk->setup, &mmw->panel[_PANEL_ORDER], 
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_000, NULL);
-  MonolithTool_Panel_Focus(appwk, &mmw->panel, 1, 0, FADE_SUB_OBJ);
+  MonolithTool_Panel_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+
+  MonolithTool_Panel_Create(appwk->setup, &mmw->panel[_PANEL_ENFORCEMENT], 
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_001, NULL);
+  MonolithTool_Panel_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
+  MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
 }
 
 //==================================================================
@@ -430,7 +517,11 @@ static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
 //==================================================================
 static void _Msselect_PanelDelete(MONOLITH_MSSELECT_WORK *mmw)
 {
-  MonolithTool_Panel_Delete(&mmw->panel);
+  int i;
+  
+  for(i = 0; i < _PANEL_MAX; i++){
+    MonolithTool_Panel_Delete(&mmw->panel[i]);
+  }
 }
 
 //==================================================================
@@ -442,8 +533,12 @@ static void _Msselect_PanelDelete(MONOLITH_MSSELECT_WORK *mmw)
 //==================================================================
 static void _Msselect_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw)
 {
+  int i;
+  
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
-  MonolithTool_Panel_TransUpdate(appwk->setup, &mmw->panel);
+  for(i = 0; i < _PANEL_MAX; i++){
+    MonolithTool_Panel_TransUpdate(appwk->setup, &mmw->panel[i]);
+  }
 }
 
 //==================================================================
@@ -481,4 +576,26 @@ static void _Msselect_CancelIconDelete(MONOLITH_MSSELECT_WORK *mmw)
 static void _Msselect_CancelIconUpdate(MONOLITH_MSSELECT_WORK *mmw)
 {
   MonolithTool_CancelIcon_Update(mmw->act_cancel);
+}
+
+//--------------------------------------------------------------
+/**
+ * 表示モード変更
+ *
+ * @param   appwk		
+ * @param   mmw		
+ * @param   view_mode		VIEW_???
+ */
+//--------------------------------------------------------------
+static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw, int view_mode)
+{
+  if(view_mode == VIEW_ORDER){
+    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ORDER], TRUE);
+    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
+  }
+  else{
+    appwk->common->mission_select_town = SELECT_TOWN_ENFORCEMENT;
+    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ORDER], FALSE);
+    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], TRUE);
+  }
 }

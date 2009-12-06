@@ -32,6 +32,13 @@ typedef enum{
   MISSION_TYPE_MAX,
 }MISSION_TYPE;
 
+///「ミッション受注します」の返事
+typedef enum{
+  MISSION_ENTRY_RESULT_NULL,    ///<返事なし
+  MISSION_ENTRY_RESULT_OK,      ///<受注OK
+  MISSION_ENTRY_RESULT_NG,      ///<受注NG
+}MISSION_ENTRY_RESULT;
+
 
 //==============================================================================
 //  コンバータから出力されるデータの構造体
@@ -53,7 +60,7 @@ typedef struct{
 
   u16 reward[4];      ///<報酬 0(1位) ～ 3(4位)
 
-  u8  confirm_type;   ///<ミッション確認タイプ (CONFIRM_???)
+  u8 confirm_type;    ///<ミッション確認タイプ (CONFIRM_???)
   u8 limit_run;       ///<制限走り　TRUE:走り禁止
   u8 limit_talk;      ///<制限話　TRUE:話禁止
   u8 padding;
@@ -147,6 +154,7 @@ typedef struct{
   u8 padding[2];
 }MISSION_DATA;
 #else
+
 ///ミッションでターゲットとなったプレイヤーの情報
 typedef struct{
   //ターゲットとなった相手のプレイヤー名
@@ -194,7 +202,8 @@ typedef struct{
   MISSION_CONV_DATA cdata;       ///<ミッションデータ
   MISSION_TYPE_WORK exwork;   ///<タイプ毎に異なる拡張ワーク
   u8 accept_netid;            ///<ミッション受注者のNetID
-
+  u8 palace_area;             ///<どのパレスエリアで受注したミッションなのか
+  
   u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
   u8 mission_no;              ///<ミッション番号(ミッションが無い場合はMISSION_NO_NULL)
   u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
@@ -203,6 +212,13 @@ typedef struct{
   u8 padding[2];
 }MISSION_DATA;
 #endif
+
+///「ミッション受注します」の返事の送信データ
+typedef struct{
+  u8 result;                    ///<MISSION_ENTRY_RESULT_???
+  u8 padding[3];
+  MISSION_DATA mdata;           ///<受注OKの場合、発動したミッションデータをセット
+}MISSION_ENTRY_ANSWER;
 
 ///ミッション結果
 typedef struct{
@@ -214,9 +230,8 @@ typedef struct{
 ///ミッション選択候補リスト構造体
 typedef struct{
   MISSION_DATA md[MISSION_TYPE_MAX];  ///<選択候補のミッションデータ
-  u8 accept_netid;            ///<ミッション受注者のNetID
-  u8 palace_area;             ///<このリストがどのパレスエリアのリストなのか
-  u8 padding[2];
+  u8 occ;                             ///<TRUE:リストが作成されている
+  u8 padding[3];
 }MISSION_CHOICE_LIST;
 
 ///ミッションシステム構造体
@@ -224,12 +239,14 @@ typedef struct{
   MISSION_CHOICE_LIST list[FIELD_COMM_MEMBER_MAX];  ///<選択候補のミッション一覧
   MISSION_DATA data;          ///<実行しているミッション
   MISSION_RESULT result;      ///<ミッション結果
+  MISSION_ENTRY_ANSWER entry_answer[FIELD_COMM_MEMBER_MAX]; ///<「ミッション受信します」の返事
   u32 timer;                  ///<ミッション失敗までのタイマー
   u8 list_send_req[FIELD_COMM_MEMBER_MAX];  ///<TRUE:ミッションリストの送信を行う
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
-  u8 padding;
+  
+  u8 recv_entry_answer_result;  ///<ミッション受注の返事(MISSION_ENTRY_RESULT_???)
 }MISSION_SYSTEM;
 

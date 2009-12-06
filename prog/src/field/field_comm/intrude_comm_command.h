@@ -36,6 +36,8 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_BINGO_INTRUSION_PARAM,          ///<ビンゴバトル乱入用のパラメータ
   INTRUDE_CMD_MISSION_LIST_REQ,               ///<ミッション選択候補リスト要求リクエスト
   INTRUDE_CMD_MISSION_LIST,                   ///<ミッション選択候補リスト
+  INTRUDE_CMD_MISSION_ORDER_CONFIRM,          ///<ミッション受注します
+  INTRUDE_CMD_MISSION_ENTRY_ANSWER,           ///<「ミッション受注します」の返事
   INTRUDE_CMD_MISSION_REQ,                    ///<ミッション要求リクエスト
   INTRUDE_CMD_MISSION_DATA,                   ///<ミッションデータ
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
@@ -72,6 +74,8 @@ extern BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id);
 extern BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id);
 extern BOOL IntrudeSend_MissionListReq(INTRUDE_COMM_SYS_PTR intcomm, u32 palace_area);
 extern BOOL IntrudeSend_MissionList(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission, int palace_area);
+extern BOOL IntrudeSend_MissionOrderConfirm(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata);
+extern BOOL IntrudeSend_MissionEntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_ENTRY_ANSWER *entry_answer, int send_netid);
 extern BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16 zone_id);
 extern BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_MissionAchieve(

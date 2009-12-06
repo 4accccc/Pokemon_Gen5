@@ -15,6 +15,7 @@
 #include "msg/msg_monolith.h"
 #include "mission_types.h"
 #include "intrude_mission.h"
+#include "intrude_types.h"
 
 #include "monolith.naix"
 
@@ -69,7 +70,7 @@ const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain = {
 };
 
 ///街番号からミッションタイプを取得するテーブル
-static const u32 TownNo_to_Type[] = {
+const u32 TownNo_to_Type[] = {
   MISSION_TYPE_PERSONALITY, ///<性格
   MISSION_TYPE_VICTORY,     ///<勝利(LV)
   MISSION_TYPE_OCCUR,       ///<発生(エンカウント)
@@ -309,11 +310,23 @@ static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *se
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_TYPE]), 0x0000);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
 
-  mdata = &appwk->parent->list.md[TownNo_to_Type[select_town]];
+  if(select_town == SELECT_TOWN_ENFORCEMENT 
+      && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //念のため2重にチェック
+    //ミッション実施中
+    mdata = MISSION_GetRecvData(&appwk->parent->intcomm->mission);
+  }
+  else{
+    //ミッション選択中
+    if(select_town > NELEMS(TownNo_to_Type)){
+      select_town = 0;
+    }
+    mdata = &appwk->parent->list.md[TownNo_to_Type[select_town]];
+  }
+
   explain_msgid = mdata->cdata.msg_id_contents_monolith;
   
   str_type = GFL_MSG_CreateString(setup->mm_monolith, 
-    msg_mono_mistype_000 + TownNo_to_Type[select_town]);
+    msg_mono_mistype_000 + mdata->cdata.type);
   str_explain = GFL_MSG_CreateString(setup->mm_mission_mono, explain_msgid);
   
   MISSIONDATA_Wordset(appwk->parent->intcomm, mdata, setup->wordset, HEAPID_MONOLITH);

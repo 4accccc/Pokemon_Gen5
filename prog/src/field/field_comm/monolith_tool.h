@@ -72,6 +72,7 @@ typedef struct{
 //==============================================================================
 extern void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset);
 extern void MonolithTool_Panel_Delete(PANEL_ACTOR *panel);
+extern void MonolithTool_Panel_SetEnable(PANEL_ACTOR *panel, BOOL on_off);
 extern BOOL MonolithTool_Panel_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel);
 
 extern PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk);
@@ -96,3 +97,8 @@ extern GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup);
 extern void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap);
 extern void MonolithTool_CancelIcon_Update(GFL_CLWK *cap);
 
+
+//==============================================================================
+//  外部データ
+//==============================================================================
+extern const u32 TownNo_to_Type[];

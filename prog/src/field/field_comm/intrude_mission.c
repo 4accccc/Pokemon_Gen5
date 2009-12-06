@@ -32,6 +32,7 @@
 static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid);
 static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid);
+static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 
 
 
@@ -67,9 +68,12 @@ void MISSION_Init(MISSION_SYSTEM *mission)
 void MISSION_Init_List(MISSION_SYSTEM *mission)
 {
   int i;
+  MISSION_TYPE type;
 
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    mission->list[i].accept_netid = INTRUDE_NETID_NULL;
+    for(type = 0; type < MISSION_TYPE_MAX; type++){
+      mission->list[i].md[type].accept_netid = INTRUDE_NETID_NULL;
+    }
   }
 }
 
@@ -96,6 +100,7 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   
   //送信リクエストがあれば送信
   MISSION_SendUpdate(intcomm, mission);
+  MISSION_Update_EntryAnswer(intcomm, mission);
 }
 
 //==================================================================
@@ -188,9 +193,9 @@ static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid)
 //==================================================================
 void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list)
 {
-  MISSION_CHOICE_LIST *mlist = &mission->list[list->palace_area];
+  MISSION_CHOICE_LIST *mlist = &mission->list[list->md[0].palace_area];
   
-  if(mlist->accept_netid != INTRUDE_NETID_NULL){
+  if(mlist->occ == TRUE){
     return; //既に受信済み
   }
   
@@ -282,6 +287,23 @@ BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission)
     return FALSE;
   }
   return TRUE;
+}
+
+//==================================================================
+/**
+ * 受信済みのミッションデータを取得する
+ *
+ * @param   mission		        
+ *
+ * @retval  MISSION_DATA *		ミッションデータへのポインタ(未受信の場合はNULL)
+ */
+//==================================================================
+MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission)
+{
+  if(MISSION_RecvCheck(mission) == FALSE){
+    return NULL;
+  }
+  return &mission->data;
 }
 
 //==================================================================
@@ -662,11 +684,9 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   const OCCUPY_INFO *occupy;
   
   list = &mission->list[palace_area];
-  if(list->accept_netid != INTRUDE_NETID_NULL){
+  if(list->occ == TRUE){
     return; //既に作成済み
   }
-  list->accept_netid = accept_netid;
-  list->palace_area = palace_area;
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
   palace_level = occupy->intrude_level + 1;//ミッションデータが1originの為、合わせて1origin化
@@ -679,9 +699,13 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   for(type = 0; type < MISSION_TYPE_MAX; type++){
     MISSIONDATA_Choice(cdata, &list->md[type].cdata, md_array_max, type, palace_level);
     MISSIONDATA_ExtraParamSet(intcomm, &list->md[type], accept_netid);
+    list->md[type].accept_netid = INTRUDE_NETID_NULL;
+    list->md[type].palace_area = palace_area;
   }
 
   MISSIONDATA_Unload(cdata);
+  
+  list->occ = TRUE;
 }
 
 //==================================================================
@@ -695,10 +719,147 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
 //==================================================================
 BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list)
 {
-  if(list->accept_netid != INTRUDE_NETID_NULL){
-    return TRUE;
+  return list->occ;
+}
+
+//==================================================================
+/**
+ * ミッションデータが親のミッション選択候補リストに存在しているか調べる
+ *
+ * @param   mission		
+ * @param   mdata		  ミッションデータへのポインタ
+ *
+ * @retval  BOOL		TRUE:存在している。　FALSE:存在していない
+ */
+//==================================================================
+BOOL MISSION_MissionList_CheckAgree(const MISSION_SYSTEM *mission, const MISSION_DATA *mdata)
+{
+  const MISSION_CHOICE_LIST *list;
+  MISSION_TYPE type;
+  
+  if(mdata->accept_netid != INTRUDE_NETID_NULL){
+    GF_ASSERT(0);
+    return FALSE; //まだ実行されていないミッションなのだからNETIDはNULLのはず
+  }
+  
+  list = &mission->list[mdata->palace_area];
+  for(type = 0; type < MISSION_TYPE_MAX; type++){
+    if(GFL_STD_MemComp(mdata, &list->md[type], sizeof(MISSION_DATA)) == 0){
+      return TRUE;
+    }
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * ミッションエントリー
+ *
+ * @param   mission		
+ * @param   mdata		  ミッションデータへのポインタ
+ * @param   net_id		エントリー者のNetID
+ *
+ * @retval  BOOL		  TRUE:エントリー成功　FALSE:エントリー失敗
+ */
+//==================================================================
+BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_DATA *mdata, int net_id)
+{
+  MISSION_DATA *exe_mdata = &mission->data;
+
+  GFL_STD_MemClear(&mission->entry_answer[net_id], sizeof(MISSION_ENTRY_ANSWER));
+
+  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
+    OS_TPrintf("NG:既に他のミッションが起動している\n");
+    mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG;
+    return FALSE;
+  }
+  
+  if(MISSION_MissionList_CheckAgree(&intcomm->mission, mdata) == FALSE){
+    OS_TPrintf("NG:親の持つ選択候補リストに存在しない\n");
+    mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG;
+    return FALSE;
+  }
+  
+  //実行するミッションとして登録
+  *exe_mdata = *mdata;
+  exe_mdata->accept_netid = net_id;
+
+  //返事セット
+  mission->entry_answer[net_id].mdata = *exe_mdata;
+  mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_OK;
+  
+  //全員に実行されるミッションデータを送信する
+  MISSION_Set_DataSendReq(mission);
+  
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションエントリーの結果を送信
+ *
+ * @param   mission		
+ */
+//--------------------------------------------------------------
+static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  int i;
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(mission->entry_answer[i].result != MISSION_ENTRY_RESULT_NULL){
+      if(IntrudeSend_MissionEntryAnswer(intcomm, &mission->entry_answer[i], i) == TRUE){
+        GFL_STD_MemClear(&mission->entry_answer[i], sizeof(MISSION_ENTRY_ANSWER));
+      }
+    }
+  }
+}
+
+//==================================================================
+/**
+ * 「ミッション受信します」の返事を受け取る
+ *
+ * @param   mission		
+ * @param   entry_answer		親から送られてきた返事データ
+ */
+//==================================================================
+void MISSION_SetRecvEntryAnswer(MISSION_SYSTEM *mission, const MISSION_ENTRY_ANSWER *entry_answer)
+{
+  mission->recv_entry_answer_result = entry_answer->result;
+  if(entry_answer->result == MISSION_ENTRY_RESULT_OK){
+    mission->data = entry_answer->mdata;
+  }
+}
+
+//==================================================================
+/**
+ * 「ミッション受信します」の親からの返事を取得
+ *
+ * @param   mission		
+ *
+ * @retval  MISSION_ENTRY_RESULT		
+ * 
+ * この関数を呼ぶごとに返事を受け取るフラグはクリアします
+ */
+//==================================================================
+MISSION_ENTRY_RESULT MISSION_GetRecvEntryAnswer(MISSION_SYSTEM *mission)
+{
+  MISSION_ENTRY_RESULT result;
+  
+  result = mission->recv_entry_answer_result;
+  MISSION_ClearRecvEntryAnswer(mission);
+  return result;
+}
+
+//==================================================================
+/**
+ * 「ミッション受信します」の親からの返事を受け取るバッファをクリア
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission)
+{
+  mission->recv_entry_answer_result = MISSION_ENTRY_RESULT_NULL;
 }
 
 //--------------------------------------------------------------
