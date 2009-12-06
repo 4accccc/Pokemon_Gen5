@@ -119,6 +119,7 @@
   ARCID_LOBBY_TRGRA   "debug/lobby_trfgra.narc"     #Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
   ARCID_FIELD_WEATHER "field_weather.narc"  #フィールド天気グラフィック
   ARCID_SCRSEQ    "fieldmap/script_seq.narc"    #スクリプトシーケンス
+  ARCID_DEBUG_SYM "fieldmap/debug_symbol.narc"  #シンボル名テーブル（デバッグ用）
   ARCID_MMDL_LIST "fieldmap/move_model_list.narc" #動作モデルリスト
   ARCID_CODE_INPUT  "code_input.narc"       #コード入力画面
   ARCID_FIELD_CAMERA  "fieldmap/field_camera_data.narc" #フィールドカメラ初期設定
