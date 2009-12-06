@@ -18,6 +18,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_multiboot_parent.h"
+#include "msg/msg_multiboot_child.h"
 #define ARCID_FONT_MB (ARCID_FONT)
 #define ARCID_MESSAGE_MB (ARCID_MESSAGE)
 #define FILE_MSGID_MB (NARC_message_multiboot_parent_dat)

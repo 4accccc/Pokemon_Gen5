@@ -34,7 +34,8 @@ SRCS	+= \
 		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_pt.c \
 		$(PARENT_SRC)/multiboot/util/mb_poke_icon.c \
-		$(PARENT_SRC)/multiboot/util/mb_util_msg.c
+		$(PARENT_SRC)/multiboot/util/mb_util_msg.c \
+        $(PARENT_SRC)/multiboot/util/mb_util.c
 				
 #================================================
 # ここから下はオーバーレイプログラム定義

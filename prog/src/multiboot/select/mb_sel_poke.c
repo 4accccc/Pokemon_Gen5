@@ -22,19 +22,6 @@
 //======================================================================
 #pragma mark [> define
 
-#define MB_SEL_POKE_BOX_TOP  (44)
-#define MB_SEL_POKE_BOX_LEFT (28)
-#define MB_SEL_POKE_BOX_WIDTH (24)
-#define MB_SEL_POKE_BOX_HEIGHT (24)
-#define MB_SEL_POKE_BOX_X_NUM  (6)
-
-#define MB_SEL_POKE_TRAY_TOP  (68)
-#define MB_SEL_POKE_TRAY_LEFT (192)
-#define MB_SEL_POKE_TRAY_WIDTH (40)
-#define MB_SEL_POKE_TRAY_HEIGHT (32)
-#define MB_SEL_POKE_TRAY_X_NUM  (2)
-#define MB_SEL_POKE_TRAY_OFS    (16) //右のオフセット
-
 //======================================================================
 //	enum
 //======================================================================
@@ -53,17 +40,20 @@ struct _MB_SEL_POKE
   u32      cellResIdx;
   GFL_CLWK *pokeIcon;
   
+  BOOL isMove;
+  BOOL isAutoDelete;
+  int startX,startY;
+  int moveOfsX,moveOfsY;
+  u8 endCnt;
+  u8 cnt;
+  
   BOOL isValid;
-  int posX;
-  int posY;
 };
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
-static const int MB_SEL_POKE_GetPosX( MB_SEL_POKE *pokeWork );
-static const int MB_SEL_POKE_GetPosY( MB_SEL_POKE *pokeWork );
 
 //--------------------------------------------------------------
 //	初期化
@@ -75,19 +65,24 @@ MB_SEL_POKE* MB_SEL_POKE_CreateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE_INIT_
 
   pokeWork->type = initWork->iconType;
   pokeWork->idx  = initWork->idx;
-  pokeWork->posX = MB_SEL_POKE_GetPosX( pokeWork );
-  pokeWork->posY = MB_SEL_POKE_GetPosY( pokeWork );
 
   //この時点ではpppは未定とし、ダミーセルを入れる
   pokeWork->cellResIdx = GFL_CLGRP_CGR_Register( initWork->arcHandle , 
                       NARC_mb_select_gra_icon_dummy_NCGR , 
                       FALSE , CLSYS_DRAW_MAIN , initWork->heapId  );
 
-  cellInitData.pos_x = pokeWork->posX;
-  cellInitData.pos_y = pokeWork->posY;
-  cellInitData.anmseq = 0;
+  cellInitData.pos_x = MB_SEL_POKE_GetPosX( pokeWork );
+  cellInitData.pos_y = MB_SEL_POKE_GetPosY( pokeWork );
+  cellInitData.anmseq = 1;
   cellInitData.softpri = 0;
-  cellInitData.bgpri = 1;
+  if( pokeWork->type == MSPT_BOX )
+  {
+    cellInitData.bgpri = 1;
+  }
+  else
+  {
+    cellInitData.bgpri = 0;
+  }
 
   pokeWork->pokeIcon = GFL_CLACT_WK_Create( initWork->cellUnit ,
             pokeWork->cellResIdx,
@@ -96,9 +91,11 @@ MB_SEL_POKE* MB_SEL_POKE_CreateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE_INIT_
             &cellInitData ,CLSYS_DRAW_MAIN , initWork->heapId );
 
   GFL_CLACT_WK_SetDrawEnable( pokeWork->pokeIcon , FALSE );
+  GFL_CLACT_WK_SetAutoAnmFlag( pokeWork->pokeIcon , TRUE );
 
   pokeWork->ppp = NULL;
   pokeWork->isValid = FALSE;
+  pokeWork->isMove = FALSE;
   return pokeWork;
 }
 
@@ -114,9 +111,29 @@ void MB_SEL_POKE_DeleteWork( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork )
 //--------------------------------------------------------------
 //	更新
 //--------------------------------------------------------------
-void MB_SEL_POKE_UpdateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork )
+const BOOL MB_SEL_POKE_UpdateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork )
 {
-  
+  if( pokeWork->isMove == TRUE )
+  {
+    GFL_CLACTPOS cellPos;
+    pokeWork->cnt++;
+    
+    cellPos.x = pokeWork->startX + pokeWork->moveOfsX*pokeWork->cnt/pokeWork->endCnt;
+    cellPos.y = pokeWork->startY + pokeWork->moveOfsY*pokeWork->cnt/pokeWork->endCnt;
+    GFL_CLACT_WK_SetPos( pokeWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
+    
+    if( pokeWork->cnt == pokeWork->endCnt )
+    {
+      if( pokeWork->isAutoDelete == TRUE )
+      {
+        MB_SEL_POKE_SetPPP( selWork , pokeWork , NULL );
+      }
+      pokeWork->isMove = FALSE;
+      //最終確認キャンセル時、トレー戻り後のみ例外処理があるのでその対応
+      MB_SEL_POKE_SetPri( selWork , pokeWork , pokeWork->type );
+    }
+  }
+  return pokeWork->isMove;
 }
 
 //--------------------------------------------------------------
@@ -156,6 +173,8 @@ void MB_SEL_POKE_SetPPP( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , POKEM
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pokeWork->pokeIcon , TRUE );
     GFL_HEAP_FreeMemory( tempRes );
+    
+    MB_SEL_POKE_SetPri( selWork , pokeWork , pokeWork->type );
   }
   else
   {
@@ -164,12 +183,63 @@ void MB_SEL_POKE_SetPPP( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , POKEM
   }
 }
 
+//--------------------------------------------------------------
+//	座標セット
+//--------------------------------------------------------------
+void MB_SEL_POKE_SetPos( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , GFL_CLACTPOS *pos )
+{
+  GFL_CLACT_WK_SetPos( pokeWork->pokeIcon , pos , CLSYS_DRAW_MAIN );
+}
 
+//--------------------------------------------------------------
+//	移動セット
+//--------------------------------------------------------------
+void MB_SEL_POKE_SetMove( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , int startX , int startY , int endX , int endY , const u8 cnt, const BOOL autoDel )
+{
+  GFL_CLACTPOS cellPos;
+
+  pokeWork->startX = startX;
+  pokeWork->startY = startY;
+  pokeWork->moveOfsX = endX - startX;
+  pokeWork->moveOfsY = endY - startY;
+  pokeWork->endCnt = cnt;
+  pokeWork->isMove = TRUE;
+  pokeWork->cnt = 0;
+  pokeWork->isAutoDelete = autoDel;
+  
+  cellPos.x = startX;
+  cellPos.y = startY;
+  GFL_CLACT_WK_SetPos( pokeWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
+}
+
+//--------------------------------------------------------------
+//	プライオリティ設定
+//--------------------------------------------------------------
+void MB_SEL_POKE_SetPri( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const MB_SEL_POKE_TYPE type )
+{
+  switch( type )
+  {
+  case MSPT_BOX:
+    GFL_CLACT_WK_SetBgPri( pokeWork->pokeIcon , MB_SEL_POKE_BG_PRI_BOX );
+    GFL_CLACT_WK_SetSoftPri( pokeWork->pokeIcon , MB_SEL_POKE_SOFT_PRI_BOX );
+    break;
+
+  case MSPT_TRAY:
+    GFL_CLACT_WK_SetBgPri( pokeWork->pokeIcon , MB_SEL_POKE_BG_PRI_TRAY );
+    GFL_CLACT_WK_SetSoftPri( pokeWork->pokeIcon , MB_SEL_POKE_SOFT_PRI_TRAY );
+    break;
+  
+  case MSPT_HOLD:
+    GFL_CLACT_WK_SetBgPri( pokeWork->pokeIcon , MB_SEL_POKE_BG_PRI_HOLD );
+    GFL_CLACT_WK_SetSoftPri( pokeWork->pokeIcon , MB_SEL_POKE_SOFT_PRI_HOLD );
+    break;
+  }
+}
 
 //--------------------------------------------------------------
 //	位置計算
 //--------------------------------------------------------------
-static const int MB_SEL_POKE_GetPosX( MB_SEL_POKE *pokeWork )
+const int MB_SEL_POKE_GetPosX( MB_SEL_POKE *pokeWork )
 {
   if( pokeWork->type == MSPT_BOX )
   {
@@ -180,7 +250,7 @@ static const int MB_SEL_POKE_GetPosX( MB_SEL_POKE *pokeWork )
     return (pokeWork->idx % MB_SEL_POKE_TRAY_X_NUM)*MB_SEL_POKE_TRAY_WIDTH + MB_SEL_POKE_TRAY_LEFT;
   }
 }
-static const int MB_SEL_POKE_GetPosY( MB_SEL_POKE *pokeWork )
+const int MB_SEL_POKE_GetPosY( MB_SEL_POKE *pokeWork )
 {
   if( pokeWork->type == MSPT_BOX )
   {
@@ -190,11 +260,28 @@ static const int MB_SEL_POKE_GetPosY( MB_SEL_POKE *pokeWork )
   {
     if( pokeWork->idx%MB_SEL_POKE_TRAY_X_NUM == 0 )
     {
-      return (pokeWork->idx / MB_SEL_POKE_TRAY_X_NUM)*MB_SEL_POKE_TRAY_HEIGHT + MB_SEL_POKE_TRAY_TOP;
+      return (pokeWork->idx / MB_SEL_POKE_TRAY_X_NUM)*MB_SEL_POKE_TRAY_HEIGHT + MB_SEL_POKE_TRAY_TOP ;
     }
     else
     {
       return (pokeWork->idx / MB_SEL_POKE_TRAY_X_NUM)*MB_SEL_POKE_TRAY_HEIGHT + MB_SEL_POKE_TRAY_TOP + MB_SEL_POKE_TRAY_OFS;
     }
   }
+}
+
+const BOOL MB_SEL_POKE_isValid( const MB_SEL_POKE *pokeWork )
+{
+  return pokeWork->isValid;
+}
+const MB_SEL_POKE_TYPE MB_SEL_POKE_GetType( const MB_SEL_POKE *pokeWork )
+{
+  return pokeWork->type;
+}
+const u8 MB_SEL_POKE_GetIdx( const MB_SEL_POKE *pokeWork )
+{
+  return pokeWork->idx;
+}
+void MB_SEL_POKE_SetIdx( MB_SEL_POKE *pokeWork , u8 idx )
+{
+  pokeWork->idx = idx;
 }

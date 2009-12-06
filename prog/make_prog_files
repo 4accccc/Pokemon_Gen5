@@ -832,6 +832,7 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/comm/mbp.c \
         multiboot/comm/mb_comm_sys.c \
         multiboot/util/mb_util_msg.c \
+        multiboot/util/mb_util.c \
         multiboot/util/mb_poke_icon.c \
         multiboot/select/mb_select_sys.c \
         multiboot/select/mb_sel_poke.c \

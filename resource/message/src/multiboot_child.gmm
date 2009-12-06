@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-20T15:17:37"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-06T12:57:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1548" top="186" right="2253" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1521" top="276" right="2226" bottom="904" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -361,6 +361,37 @@ WB側のDSの説明に従って下さい。</language>
 	<row id="MSG_MB_CHILD_SYS_02">
 		<language name="JPN" width="208">いいえ</language>
 		<language name="JPN_KANJI" width="208">いいえ</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_01">
+		<language name="JPN" width="208">Lv.[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="208">Lv.[2:02:３桁:0]</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_02">
+		<language name="JPN" width="240">タマゴは　パルパークで　遊ぶ事が
+できません。</language>
+		<language name="JPN_KANJI" width="240">タマゴは　パルパークで　あそぶことが
+できません。</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_03">
+		<language name="JPN" width="240">ひでんわざを　おぼえている　ポケモンは
+パルパークで　遊ぶ事が　できません。</language>
+		<language name="JPN_KANJI" width="240">ひでんわざを　おぼえている　ポケモンは　
+パルパークで　あそぶことが　できません。</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_04">
+		<language name="JPN" width="240">このポケモンは　パルパークで　
+遊ぶ事が　できません。</language>
+		<language name="JPN_KANJI" width="240">このポケモンは　パルパークで　
+あそぶことが　できません。</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_05">
+		<language name="JPN" width="240">この６ひきで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="240">この６ひきで　よろしいですか？</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_DEB_01">

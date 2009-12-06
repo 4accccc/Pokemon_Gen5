@@ -34,9 +34,12 @@ typedef struct
   DLPLAY_CARD_TYPE cardType;
   
   //ボックスデータ
+  STRCODE *boxName[MB_POKE_BOX_TRAY];
   void *boxData[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
   
   //戻り値用
+  //(0:ボックス番号 1:インデックス(0xFF不正値
+  u8   selectPoke[MB_CAP_POKE_NUM][2];
   //pppサイズ分のワークを確保しておいてください。
   void *ppp[MB_CAP_POKE_NUM];
 }MB_SELECT_INIT_WORK;

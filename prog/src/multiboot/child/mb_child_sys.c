@@ -133,8 +133,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG );
-  
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+  MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
   work->sndData = GFL_ARC_UTIL_Load( ARCID_MB_CHILD ,
@@ -343,7 +343,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
 
     break;
     
