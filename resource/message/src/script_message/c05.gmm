@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:56:58"/>
+	<create user="matsumiya" host="W00207" date="2009-12-06T15:10:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -590,30 +590,6 @@
 		<language name="JPN_KANJI" width="256">跳ね橋を　上げたり下げたりすると
 みんなが　注目するんだよね[BE:00:ページ切り替え（行送り）]
 ……で　プラズマ団に　逃げられたのさ</language>
-	</row>
-
-	<row id="msg_c05_workman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>♂
-・r06へのストッパー
-・GRIDX=177
-　GRIDZ=404
-・GRIDZ=405～407のPOSを踏むと
-　ストッパー機能</comment>
-		<attribute name="キャラクター">WORKMANその２</attribute>
-		<language name="JPN" width="256">わるいが　いまは　だれもとおせないよ
-ヤーコンさんに　そういわれているんだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">悪いが　今は　だれも通せないよ
-ヤーコンさんに　そういわれているんだ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c05_workman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>♂
-・話しかけたとき用メッセージラベル</comment>
-		<attribute name="キャラクター">WORKMANその３</attribute>
-		<language name="JPN" width="256">わるいが　いまは　だれもとおせないよ
-ヤーコンさんに　そういわれているんだ</language>
-		<language name="JPN_KANJI" width="256">悪いが　今は　だれも通せないよ
-ヤーコンさんに　そういわれているんだ</language>
 	</row>
 
 	<row id="msg_c05_businessman_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,,">
