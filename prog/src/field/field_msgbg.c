@@ -287,6 +287,8 @@ static void setBlendAlpha( BOOL on );
 static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
 static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin );
+static void winframe_SetPaletteBlack( u32 heapID );
+static void winframe_SetPaletteWhith( u32 heapID );
 
 static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin );
 static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
@@ -864,6 +866,7 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
 	
   if( pltt_no == PANO_FONT ){
+    winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
   }
   
@@ -1188,6 +1191,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
   
   if( pltt_no == PANO_FONT ){
+    winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
   }
 	return( menuFunc );
@@ -1746,6 +1750,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
   
   keyCursor_Init( &msgWin->cursor_work, fmb->heapID );
 
+  winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
   return( msgWin );
 }
@@ -1994,6 +1999,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
   
   keyCursor_Init( &sysWin->cursor_work, fmb->heapID );
   
+  winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
   return( sysWin );
 }
@@ -2246,6 +2252,7 @@ static void fldTalkMsgWin_Add(
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
   
+  winframe_SetPaletteWhith( fmb->heapID );
   setBlendAlpha( FALSE );
 
   switch( idx ){
@@ -2449,6 +2456,7 @@ static void fldPlainMsgWin_Add(
   plnwin->talkMsgWinSys = fmb->talkMsgWinSys;
   plnwin->talkMsgWinIdx = FLDTALKMSGWIN_IDX_PLAIN;
   
+  winframe_SetPaletteWhith( fmb->heapID );
   setBlendAlpha( FALSE );
   
   if( up_down == 0 ){
@@ -2631,6 +2639,7 @@ static void fldSubMsgWin_Add(
   subwin->talkMsgWinIdx = idx;
   subwin->id = id;
   
+  winframe_SetPaletteWhith( fmb->heapID );
   setBlendAlpha( FALSE );
   
   TALKMSGWIN_CreateWindowAlone(
@@ -2919,7 +2928,13 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
   switch( bgWin->seq_no ){
   case 0: //初期化
     bgWin->strBuf = strBuf;
+#if 0
     bgWin->strTemp = GFL_STR_CreateCopyBuffer( strBuf, bgWin->fmb->heapID );
+#else
+	  bgWin->strTemp = GFL_STR_CreateBuffer( 
+        GFL_STR_GetBufferLength(strBuf) + (EOM_CODESIZE*2),
+        bgWin->fmb->heapID );
+#endif
     
     bgwin_PrintStr(
         GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->fmb->fontHandle,
@@ -3935,6 +3950,38 @@ static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 {
 	BmpWinFrame_Clear( bmpwin, 0 );
 	GFL_BMPWIN_Delete( bmpwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビットマップウィンドウフレーム　黒背景パレットセット
+ * @param nothing
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void winframe_SetPaletteBlack( u32 heapID )
+{
+  u32 pal = PANO_MENU;
+  u32 arc = BmpWinFrame_WinPalArcGet();
+  GFL_ARC_UTIL_TransVramPaletteEx(
+      ARCID_FLDMAP_WINFRAME,
+      arc, PALTYPE_MAIN_BG, 0x20*0, pal*0x20, 0x20, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビットマップウィンドウフレーム　白背景パレットセット
+ * @param nothing
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void winframe_SetPaletteWhith( u32 heapID )
+{
+  u32 pal = PANO_MENU;
+  u32 arc = BmpWinFrame_WinPalArcGet();
+  GFL_ARC_UTIL_TransVramPaletteEx(
+      ARCID_FLDMAP_WINFRAME,
+      arc, PALTYPE_MAIN_BG, 0x20*1, pal*0x20, 0x20, heapID );
 }
 
 //--------------------------------------------------------------
