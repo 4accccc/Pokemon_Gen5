@@ -6,6 +6,8 @@
 #
 #   2009.07.14  tamada GAMEFREAK inc.
 #
+#   2009.12.06  デバッグシンボル生成機能を追加
+#
 #============================================================================
 $KCODE= "SJIS"
 
@@ -53,7 +55,7 @@ class PMFlagData
     @start_no = start_no
     @max = max
 
-    #STDERR.puts "MAKE FLAGS #{filename}, #{prefix}, #{start_no} - #{max}"
+    STDERR.puts "MAKE FLAGS #{filename}, #{prefix}, #{start_no} - #{max}"
     @flags = Array.new
     @count = 0
 
@@ -165,6 +167,7 @@ class FLAGMANAGER
   COL_STARTNO = 1
   COL_MAX = 2
   COL_PREFIX = 3
+  COL_DEBUGNAME = 4
 
   attr_reader :manager_filename, :tmpfile, :flagdatas
 
@@ -174,6 +177,7 @@ class FLAGMANAGER
     @manager_filename = filename
     @tmpfile = read_excel_file( @manager_filename )
     @flagdatas = Array.new
+    @debugfiles = Hash.new
     read_list(@tmpfile)
     check()
   end
@@ -195,14 +199,15 @@ class FLAGMANAGER
     raiseError("ファイルフォーマット異常：",linecount) if column[COL_STARTNO] != "開始ナンバー"
     raiseError("ファイルフォーマット異常：",linecount) if column[COL_MAX] != "最大数"
     raiseError("ファイルフォーマット異常：",linecount) if column[COL_PREFIX] != "プレフィックス指定"
+    raiseError("ファイルフォーマット異常：",linecount) if column[COL_DEBUGNAME] != "デバッグリスト名"
 
     next_pos = 0
     lines.each{ |line|
       linecount += 1
       column = line.split(",")
-      filename = column[COL_FILENAME]
-      if column.size < 4 || filename == "\#END" then break end
+      if column.size < 4 || column[0] == "\#END" then break end
 
+      filename = column[COL_FILENAME]
       prefix = column[COL_PREFIX]
       if column[COL_STARTNO] == "auto" then
         start_no = next_pos
@@ -220,6 +225,14 @@ class FLAGMANAGER
         @flagdatas << PMFlagData.new(filename, prefix, start_no, max)
       else
         @flagdatas << PMFlagData.new(nil, prefix, start_no, max)
+      end
+      debug_id = column[COL_DEBUGNAME]
+      if debug_id != "-" then
+        if @debugfiles.has_key?( debug_id ) then
+          @debugfiles[ debug_id ] << @flagdatas.last
+        else
+          @debugfiles[ debug_id ] = [ @flagdatas.last ]
+        end
       end
     }
   end
@@ -290,10 +303,16 @@ class FLAGMANAGER
   # バイナリの書き出し
   #----------------------------------------------------------------------------
   def write_binary()
-    output = ""
-    @flagdatas.each{|flagdata|
-      output += flagdata.write_binary()
+    files = Array.new
+    @debugfiles.each{|key, value|
+      filename = "wkdir/" + key
+      files << filename
+      output = ""
+      value.each{|flagdata| output += flagdata.write_binary() }
+      STDERR.puts "genarate #{filename}..."
+      File.open(filename, "wb"){|file| file.write output }
     }
+    return files
   end
 
 end
@@ -313,9 +332,9 @@ File.open(ARGV[1], "w"){|file|
   file.puts defines
 }
 
-binary = man.write_binary()
-File.open(ARGV[2], "wb"){|file|
-  file.write binary
+files = man.write_binary()
+File.open(ARGV[2], "w"){|file|
+  files.each{|name| file.puts "\"#{name}\"" }
 }
 
 

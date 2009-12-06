@@ -12,7 +12,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	masafumi_saitou mai_ando 
+USERS	=	masafumi_saitou mai_ando tamada
 
 #----------------------------------------------------------------------------
 #※ここに作成するファイル名を書く
@@ -20,8 +20,9 @@ USERS	=	masafumi_saitou mai_ando
 FLAGTARGET	= flag_define.h
 WORKTARGET	= work_define.h
 
-FLAG_DEBUG = flag_define.bin
-WORK_DEBUG = work_define.bin
+DEBUG_FLAG_LIST = wkdir/debug_flag.list
+DEBUG_WORK_LIST = wkdir/debug_work.list
+DEBUG_NARC_LIST = wkdir/debug_narc.list
 DEBUG_NARC	= debug_symbol.narc
 DEBUG_NAIX	= debug_symbol.naix
 
@@ -62,23 +63,24 @@ endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
-$(FLAGTARGET) $(FLAG_DEBUG): flags.xls $(FLAGFILES)
+$(FLAGTARGET) $(DEBUG_FLAG_LIST) : flags.xls $(FLAGFILES)
 	@echo フラグ生成開始...
-	ruby scripts/flag.rb flags.xls $(FLAGTARGET) $(FLAG_DEBUG)
+	ruby scripts/flag.rb flags.xls $(FLAGTARGET) $(DEBUG_FLAG_LIST)
 	@echo フラグ生成終了！！
 
-$(WORKTARGET) $(WORK_DEBUG):	works.xls $(WORKFILES)
+$(WORKTARGET) $(DEBUG_WORK_LIST) :	works.xls $(WORKFILES)
 	@echo ワーク生成開始
-	ruby scripts/flag.rb works.xls $(WORKTARGET) $(WORK_DEBUG)
+	ruby scripts/flag.rb works.xls $(WORKTARGET) $(DEBUG_WORK_LIST)
 	@echo ワーク生成終了！！
 
 endif	#CONVERTUSER
 
 ifeq	($(PM_DEBUG),yes)
 #デバッグ用アーカイブ生成
-$(DEBUG_NARC): $(WORK_DEBUG) $(FLAG_DEBUG)
+$(DEBUG_NARC): $(DEBUG_WORK_LIST) $(DEBUG_FLAG_LIST)
 	@echo デバッグアーカイブ生成
-	@nnsarc -i -c -n $(DEBUG_NARC) $(WORK_DEBUG) $(FLAG_DEBUG)
+	@cat $(DEBUG_WORK_LIST) $(DEBUG_FLAG_LIST) > $(DEBUG_NARC_LIST)
+	@nnsarc -l -i -c -n -S $(DEBUG_NARC_LIST) $(DEBUG_NARC)
 	@$(NAIXCUT) $(DEBUG_NAIX)
 
 $(TARGETDIR)/$(DEBUG_NARC):	$(DEBUG_NARC)
@@ -94,8 +96,11 @@ ifeq	($(PM_DEBUG),yes)
 endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	rm -f $(DEBUG_NARC) $(DEBUG_NAIX)
-	rm -f $(FLAG_DEBUG) $(WORK_DEBUG)
+	rm -f wkdir/*.bin
+	rm -f wkdir/*.list
 	@rm -f $(FLAGTARGET) $(WORKTARGET)
 endif
 
 
+test:
+	@echo $(DEBUG_WORKBINS)

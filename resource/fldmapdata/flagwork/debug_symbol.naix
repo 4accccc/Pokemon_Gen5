@@ -11,8 +11,14 @@
 #define NARC_DEBUG_SYMBOL_NAIX_
 
 enum {
-	NARC_debug_symbol_work_define_bin = 0,
-	NARC_debug_symbol_flag_define_bin = 1
+	NARC_debug_symbol_other_work_bin = 0,
+	NARC_debug_symbol_scene_work_bin = 1,
+	NARC_debug_symbol_sys_work_bin = 2,
+	NARC_debug_symbol_vanish_flag_bin = 3,
+	NARC_debug_symbol_sys_flag_bin = 4,
+	NARC_debug_symbol_etc_flag_bin = 5,
+	NARC_debug_symbol_item_flag_bin = 6,
+	NARC_debug_symbol_event_flag_bin = 7
 };
 
 /* NARC_DEBUG_SYMBOL_NAIX_ */
