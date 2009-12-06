@@ -261,12 +261,13 @@
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機釣り専用描画ステータス
 //--------------------------------------------------------------
-#define DRAW_STA_FISH_END	0x00
-#define DRAW_STA_FISH_START	0x01
+#define DRAW_STA_FISH_START	0x00
+#define DRAW_STA_FISH_END	0x01
 #define DRAW_STA_FISH_ON	0x02
 #define DRAW_STA_FISH_HIT	0x03
+#define DRAW_STA_FISH_MAX 0x04
 
-#define DRAW_STA_MAX_FISH	(DRAW_STA_FISH_HIT+1)
+#define DRAW_STA_FISH_MAX_DIR4 (DRAW_STA_FISH_MAX*DIR_MAX4)
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機万歳専用描画ステータス

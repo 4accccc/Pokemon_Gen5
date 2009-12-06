@@ -1898,6 +1898,31 @@ static const MMDL_BBDACT_ANMTBL * BlActAnm_GetAnmTbl( u32 no )
 	return( &DATA_MMDL_BBDACT_ANM_ListTable[no] );
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJコードで使用するアクターアニメテーブル取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+const MMDL_BBDACT_ANMTBL * MMDL_BLACTCONT_GetObjAnimeTable(
+  const MMDLSYS *mmdlsys, u16 code )
+{
+  u16 id;
+  const MMDL_BBDACT_ANMTBL *anmTbl;
+  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam( mmdlsys, code );
+  
+  id = prm->anm_id;
+  
+  if( prm->draw_type != MMDL_DRAWTYPE_BLACT ){
+    GF_ASSERT( 0 );
+    id = MMDL_BLACT_ANMTBLNO_BLACT;
+  }
+  
+  anmTbl = BlActAnm_GetAnmTbl( id );
+  return( anmTbl );
+}
+
 #if 0
 //--------------------------------------------------------------
 /**

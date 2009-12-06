@@ -38,10 +38,9 @@ typedef struct
 typedef struct
 {
   u16 actID;
-  u8 set_anm_dir;
-  u8 set_anm_status;
-   
-  COMMAN_ANMCTRL_WORK anmcnt_work;
+  u8 padding0;
+  u8 padding1;
+  COMMAN_ANMCTRL_WORK anmcnt;
 }DRAW_BLACT_WORK;
 
 //--------------------------------------------------------------
@@ -158,10 +157,9 @@ static void DrawHero_Init( MMDL *mmdl )
   DRAW_BLACT_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
-  work->set_anm_dir = DIR_NOT;
   
   code = MMDL_GetOBJCode( mmdl );
-  comManAnmCtrl_Init( &work->anmcnt_work );
+  comManAnmCtrl_Init( &work->anmcnt );
   
   if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
@@ -202,7 +200,7 @@ static void DrawHero_Draw( MMDL *mmdl )
   }
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-  comManAnmCtrl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -372,16 +370,16 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
   GF_ASSERT( dir < DIR_MAX4 );
   anm_id = dir;
   
-  if( work->set_anm_dir != dir ){ //方向更新
-    work->set_anm_dir = dir;
-    work->set_anm_status = status;
+  if( work->anmcnt.set_anm_dir != dir ){ //方向更新
+    work->anmcnt.set_anm_dir = dir;
+    work->anmcnt.set_anm_status = status;
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     init_flag = TRUE;
-  }else if( work->set_anm_status != status ){ //ステータス更新
+  }else if( work->anmcnt.set_anm_status != status ){ //ステータス更新
     u16 frame = 0;
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
-    work->set_anm_status = status;
+    work->anmcnt.set_anm_status = status;
   }
   
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
@@ -421,10 +419,9 @@ static void DrawBlAct_Init( MMDL *mmdl )
   DRAW_BLACT_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
-  work->set_anm_dir = DIR_NOT;
   
   code = MMDL_GetOBJCode( mmdl );
-  comManAnmCtrl_Init( &work->anmcnt_work );
+  comManAnmCtrl_Init( &work->anmcnt );
 
   if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
@@ -471,7 +468,7 @@ static void DrawBlAct_Draw( MMDL *mmdl )
 #endif
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-  comManAnmCtrl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -506,8 +503,8 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
   anm_id += dir;
   
-  if( work->set_anm_dir != dir ){ //方向更新
-    work->set_anm_dir = dir;
+  if( work->anmcnt.set_anm_dir != dir ){ //方向更新
+    work->anmcnt.set_anm_dir = dir;
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     init_flag = TRUE;
   }
@@ -548,7 +545,7 @@ static void DrawBlAct_DrawPCWoman( MMDL *mmdl )
       u16 init_flag = FALSE;
       u16 dir = blact_GetDrawDir( mmdl );
       u16 anm_idx = (status * DIR_MAX4);
-      COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt_work;
+      COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt;
       
       if( status != anmcnt->set_anm_status ){
         init_flag = TRUE;
@@ -560,7 +557,7 @@ static void DrawBlAct_DrawPCWoman( MMDL *mmdl )
 
       blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
     }else{
-      comManAnmCtrl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+      comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
     }
   }
   
@@ -651,16 +648,19 @@ static void DrawItemGetHero_Draw( MMDL *mmdl )
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   status = MMDL_GetDrawStatus( mmdl );
   
-  if( work->set_anm_status >= DRAW_STA_ITEMGET_MAX ){ //エラーフォロー
-    work->set_anm_status = DRAW_STA_ITEMGET_STOP;
-    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_status );
+  //エラーフォロー
+  if( work->anmcnt.set_anm_status >= DRAW_STA_ITEMGET_MAX ){ 
+    work->anmcnt.set_anm_status = DRAW_STA_ITEMGET_STOP;
+    GFL_BBDACT_SetAnimeIdx( actSys,
+        work->actID, work->anmcnt.set_anm_status );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
   }
  
   if( status < DRAW_STA_ITEMGET_MAX ){
-    if( work->set_anm_status != status ){
-      work->set_anm_status = status;
-      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_status );
+    if( work->anmcnt.set_anm_status != status ){
+      work->anmcnt.set_anm_status = status;
+      GFL_BBDACT_SetAnimeIdx( actSys,
+          work->actID, work->anmcnt.set_anm_status );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
     }
   }
@@ -712,16 +712,19 @@ static void DrawPCAzukeHero_Draw( MMDL *mmdl )
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   status = MMDL_GetDrawStatus( mmdl );
   
-  if( work->set_anm_status >= DRAW_STA_PCAZUKE_MAX ){ //エラーフォロー
-    work->set_anm_status = DRAW_STA_ITEMGET_STOP;
-    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_status );
+  //エラーフォロー
+  if( work->anmcnt.set_anm_status >= DRAW_STA_PCAZUKE_MAX ){
+    work->anmcnt.set_anm_status = DRAW_STA_ITEMGET_STOP;
+    GFL_BBDACT_SetAnimeIdx( actSys,
+        work->actID, work->anmcnt.set_anm_status );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
   }
  
   if( status < DRAW_STA_PCAZUKE_MAX ){
-    if( work->set_anm_status != status ){
-      work->set_anm_status = status;
-      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_status );
+    if( work->anmcnt.set_anm_status != status ){
+      work->anmcnt.set_anm_status = status;
+      GFL_BBDACT_SetAnimeIdx( actSys,
+          work->actID, work->anmcnt.set_anm_status );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
     }
   }
@@ -752,6 +755,45 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero =
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 釣りアニメ　表示別にオフセットセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void drawFishingHero_SetOffset(
+    MMDL *mmdl, u16 anm_idx, u16 frm_idx, VecFx32 *offs )
+{
+  u16 code,cell;
+  MMDLSYS *mmdlsys;
+  const MMDL_BBDACT_ANMTBL *anmTbl;
+  const GFL_BBDACT_ANM *anm;
+  
+  offs->x = 0;
+  offs->y = 0;
+  offs->z = 0;
+
+  code = MMDL_GetOBJCode( mmdl );
+  mmdlsys = MMDL_GetMMdlSys( mmdl );
+  anmTbl = MMDL_BLACTCONT_GetObjAnimeTable( mmdlsys, code );
+  
+  GF_ASSERT( anm_idx < anmTbl->anm_max );
+  
+  anm = anmTbl->pAnmTbl[anm_idx];
+  cell = anm[frm_idx].anmData.celIdx;
+  
+  if( cell == 6 || cell == 7 ){
+    offs->z = NUM_FX32( 8 );
+  }else if( cell == 10 || cell == 11 ){
+    offs->x = NUM_FX32( -5 );
+
+    if( anm[frm_idx].anmData.flipS ){
+      offs->x = -offs->x;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 描画処理　ビルボード　釣り自機　描画
  * @param  mmdl  MMDL
  * @retval  nothing
@@ -759,7 +801,48 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero =
 //--------------------------------------------------------------
 static void DrawFishingHero_Draw( MMDL *mmdl )
 {
+  u16 dir,status,anm_id;
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
 
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  dir = blact_GetDrawDir( mmdl );
+  status = MMDL_GetDrawStatus( mmdl );
+  anm_id = (status * DIR_MAX4) + dir;
+  
+  if( dir != work->anmcnt.set_anm_dir ||
+    work->anmcnt.set_anm_status != status ){
+    work->anmcnt.set_anm_dir = dir;
+    work->anmcnt.set_anm_status = status;
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+    GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+  }
+  
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+
+  {
+    VecFx32 offs;
+    drawFishingHero_SetOffset( mmdl,
+        GFL_BBDACT_GetAnimeIdx(actSys,work->actID),
+        GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID), &offs );
+    pos.x += offs.x;
+    pos.y += offs.y;
+    pos.z += offs.z;
+  }
+  
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
 
 //--------------------------------------------------------------
@@ -800,12 +883,12 @@ static void DrawYureHero_Draw( MMDL *mmdl )
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   dir = blact_GetDrawDir( mmdl );
-
-  if( work->set_anm_dir != dir ){
+  
+  if( work->anmcnt.set_anm_dir != dir ){
     u16 anm_id = dir;
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
-    work->set_anm_dir = dir;
+    work->anmcnt.set_anm_dir = dir;
   }
   
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
@@ -1023,7 +1106,7 @@ static void DrawTsurePoke_Init( MMDL *mmdl )
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
   work->set_anm_dir = DIR_NOT;
-  
+
   code = MMDL_GetOBJCode( mmdl );
   
   if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
@@ -1071,7 +1154,7 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
     if( dir != work->set_anm_dir ){
       init_flag = TRUE;
       work->set_anm_dir = dir;
-      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_dir );
+      GFL_BBDACT_SetAnimeIdx( actSys,work->actID, work->set_anm_dir );
     }
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
