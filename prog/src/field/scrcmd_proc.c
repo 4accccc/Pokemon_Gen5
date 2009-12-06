@@ -283,7 +283,6 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   MONOLITH_PARENT_WORK *parent;
   INTRUDE_COMM_SYS_PTR intcomm;
   const MISSION_CHOICE_LIST *list;
-  const MISSION_DATA *mdata;
   int palace_area;
   
   intcomm = Intrude_Check_CommConnect(game_comm);
@@ -296,9 +295,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
       &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
     palace_area = Intrude_GetPalaceArea(intcomm);
     list = Intrude_GetChoiceList(intcomm, palace_area);
-    mdata = Intrude_GetExecuteMissionData(intcomm);
     parent->list = *list;
-    parent->mdata = *mdata;
     parent->list_occ = TRUE;
   }
   else{
