@@ -5915,18 +5915,17 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
   BTL_POKEPARAM* bpp;
-//  u32 hem_state;
-
+  u32 hem_state;
 
   BTL_POKESET_SeekStart( pokeSet );
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
-//    hem_state = Hem_PushState( &wk->HEManager );
+    hem_state = Hem_PushState( &wk->HEManager );
 
     BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
     SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-//    Hem_PopState( &wk->HEManager, hem_state );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 //--------------------------------------------------------------------------------
