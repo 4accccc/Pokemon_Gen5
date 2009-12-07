@@ -134,7 +134,7 @@ typedef struct LIFT_RECT_tag
 #define F3_1_H  (1)
 #define F3_2_X  (7)
 #define F3_2_Z  (23)
-#define F3_2_W  (6)
+#define F3_2_W  (11)
 #define F3_2_H  (1)
 
 #define LIFT_WIDTH (5)
