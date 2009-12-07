@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2009 12/07 (Mon) 20:11
+# @date  2009 12/07 (Mon) 23:21
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -22,6 +22,7 @@ UNIQ_SCRIPTFILES = \
 	fld_item.ev \
 	init_scr.ev \
 	hiden.ev \
+	pasokon.ev \
 	wifi_club_scr.ev \
 	wifi_counter_scr.ev \
 	shop_scr.ev \
@@ -29,8 +30,7 @@ UNIQ_SCRIPTFILES = \
 	field_ev_scr.ev \
 	c3center_scr.ev \
 	gate_scr.ev \
-	debug_scr.ev \
-  pasokon.ev
+	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
 UNIQ_TOP_EVENT_SCRFILES = \
@@ -40,6 +40,7 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	trainer.ev \
 	fld_item.ev \
 	hiden.ev \
+	pasokon.ev \
 	wifi_club_scr.ev \
 	wifi_counter_scr.ev \
 	shop_scr.ev \
