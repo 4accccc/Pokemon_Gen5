@@ -34,6 +34,18 @@ REM ================================
 REM cleanしておく-> 通知が遅れてしまうので一端コメントアウト
 REM make clean
 
+REM progクリーンを試す
+cd prog
+make clean
+cd ..
+make
+
+REM 正常終了判定
+if %ERRORLEVEL% == 0 goto END:
+
+REM ================================
+REM エラー終了
+REM ================================
 @echo errorlevel = %ERRORLEVEL%
 
 exit %ERRORLEVEL%
