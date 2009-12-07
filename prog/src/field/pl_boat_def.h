@@ -33,4 +33,14 @@
 #define PL_BOAT_BTL_TYPE_DOUBLE (0)   //ダブルバトル
 #define PL_BOAT_BTL_TYPE_SINGLE (1)   //シングルバトル
 
+#define PL_BOAT_TALK_NOT_PAIR   (0)   //通常トレーナーＯＲダブルバトル可変型の方
+#define PL_BOAT_TALK_PAIR   (1)       //ダブルバトル可変型のじゃない方
+
+//メッセージの種類
+#define PL_BOAT_BTL_BEFORE_NORMAL  (0)    //通常トレーナーＯＲダブルバトル可変型の方
+#define PL_BOAT_BTL_AFTER_NORMAL  (1)     //通常トレーナーＯＲダブルバトル可変型の方
+#define PL_BOAT_BTL_BEFORE_PAIR  (2)      //ダブルバトル可変型のじゃない方
+#define PL_BOAT_BTL_AFTER_PAIR  (3)       //ダブルバトル可変型のじゃない方
+
+
 

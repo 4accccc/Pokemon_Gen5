@@ -55,7 +55,7 @@ VMCMD_RESULT EvCmdPlBoat_GetRoomInfo( VMHANDLE *core, void *wk )
 
   room_idx = SCRCMD_GetVMWorkValue( core, work );
   info_kind = VMGetU16( core );
-  param = VMGetU16( core );
+  param = SCRCMD_GetVMWorkValue( core, work );
   ret = SCRCMD_GetVMWork( core, work );
 
   switch(info_kind){

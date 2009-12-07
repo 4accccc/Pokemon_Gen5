@@ -377,13 +377,24 @@ int PL_BOAT_GetTrID(PL_BOAT_WORK_PTR work, const int inRoomIdx)
  * @brief　部屋の人物情報を取得　メッセージＩＤ
  * @param   work      PL_BOAT_WORK_PTR
  * @apram   inRoomIdx 部屋番号
- * @param   inMsgKind   メッセージ種類　0:通常　1：対戦後（トレーナーでないＮＰＣのときは通常）
+ * @param   inMsgKind   メッセージ種類　0:通常　1：対戦後（トレーナーでないＮＰＣのときは通常）3:戦闘前ダブル相方　4：戦闘後ダブル相方
  * @retval  int       メッセージＩＤ
 */
 //--------------------------------------------------------------
 int PL_BOAT_GetMsg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const inMsgKind)
 {
-  return work->RoomParam[inRoomIdx].NpcMsg[inMsgKind];
+  if ( PL_BOAT_CheckDblBtl(work, inRoomIdx) )
+  {
+    int msg;
+    if (inMsgKind == PL_BOAT_BTL_BEFORE_PAIR) msg = msg_c03r0801_babygirl2_01;
+    else if ( inMsgKind == PL_BOAT_BTL_AFTER_PAIR ) msg = msg_c03r0801_babygirl2_02;
+    else  msg = work->RoomParam[inRoomIdx].NpcMsg[inMsgKind];
+
+    return msg;
+  }else
+  {
+    return work->RoomParam[inRoomIdx].NpcMsg[inMsgKind];
+  }
 }
 
 //--------------------------------------------------------------
@@ -398,25 +409,6 @@ BOOL PL_BOAT_CheckBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx)
 {
   return work->RoomParam[inRoomIdx].BattleEnd;
 }
-
-//--------------------------------------------------------------
-/**
- * @brief　部屋の人物がダブルバトルするかをチェック
- * @param   work      PL_BOAT_WORK_PTR
- * @apram   inRoomIdx 部屋番号
- * @retval  BOOL       TRUEでダブルバトル
-*/
-//--------------------------------------------------------------
-BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx)
-{
-  BOOL rc = FALSE;
-
-  if ( (inRoomIdx == 2)&&(work->DblBtl[0]) ) rc = TRUE;
-  else if ( (inRoomIdx == 7)&&(work->DblBtl[1]) ) rc = TRUE;
-    
-  return rc;
-}
-
 
 //--------------------------------------------------------------
 /**
