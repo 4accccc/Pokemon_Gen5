@@ -52,16 +52,12 @@
 //外部公開
 #include "demo/demo3d.h"
 
-
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
-#include "mictest.naix"	// アーカイブ
-#include "msg/msg_mictest.h"  // GMM
-#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
+//#define DEMO3D_BG
 //#define DEMO3D_INFOWIN
 //#define DEMO3D_TOUCHBAR
 //#define DEMO3D_TASKMENU
@@ -214,7 +210,10 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID );
 static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk );
 static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk );
+
+#ifdef  Demo3D_BG
 static void Demo3D_BG_LoadResource( DEMO3D_BG_WORK* wk, HEAPID heapID );
+#endif // DEMO3D_BG
 
 #ifdef DEMO3D_INFOWIN
 //-------------------------------------
@@ -313,8 +312,10 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
+#ifdef DEMO3D_BG
 	//BGリソース読み込み
 	Demo3D_BG_LoadResource( &wk->wk_bg, wk->heapID );
+#endif // DEMO3D_BG
 
   //3D 初期化
   Demo3D_GRAPHIC3D_Init( wk, wk->heapID );
@@ -636,6 +637,7 @@ static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
   return is_loop;
 }
 
+#ifdef DEMO3D_BG
 //-----------------------------------------------------------------------------
 /**
  *	@brief  BG管理モジュール リソース読み込み
@@ -671,7 +673,7 @@ static void Demo3D_BG_LoadResource( DEMO3D_BG_WORK* wk, HEAPID heapID )
 
 	GFL_ARC_CloseDataHandle( handle );
 }
-
+#endif // DEMO3D_BG
 
 
 

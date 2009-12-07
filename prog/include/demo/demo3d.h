@@ -54,10 +54,9 @@ typedef struct {
   // [IN]
   DEMO3D_ID   demo_id;      ///< デモID
   u32         start_frame;  ///< デモ開始フレーム(1sync=1)
-// GAMESYS_WORK	*gamesys;	  ///< ゲームシステム
   // [OUT]
   u32            end_frame; ///< デモ終了フレーム(1sync=1)
-  DEMO3D_RESULT  result;    ///< デモ終了フレーム
+  DEMO3D_RESULT  result;    ///< デモ終了タイプ
 
 } DEMO3D_PARAM;
 
