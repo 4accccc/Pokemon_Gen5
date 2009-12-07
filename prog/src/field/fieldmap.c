@@ -2987,7 +2987,7 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
     if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-      FLD3D_CI_CallPokeCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
+//      FLD3D_CI_CallPokeCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
       FLD3D_CI_FlySkyCameraDebug(
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
