@@ -25,6 +25,9 @@
 #include "event_mapchange.h"
 #include "field/field_const.h"  //GRID_TO_FX32
 #include "eventdata_local.h"
+
+#include "fldeff_gyoe.h"
+#include "sound/pm_sndsys.h"
 //======================================================================
 //  define
 //======================================================================
@@ -144,6 +147,17 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
         &disappear_pos, zone_id, &appear_pos );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
+
+#if 1
+  { // びっくりマーク表示
+    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
+    FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+    FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
+    PMSND_PlaySE( SEQ_SE_FLD_15 );
+  }
+#endif
+
 
   return VMCMD_RESULT_SUSPEND;
 }

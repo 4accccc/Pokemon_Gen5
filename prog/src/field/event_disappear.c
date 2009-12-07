@@ -219,9 +219,11 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       man = FIELDMAP_GetTaskManager( work->fieldmap );
       FIELD_TASK_MAN_AddTask( man, move, NULL );
     }
+#if 0
     // びっくりマーク表示
     FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
     PMSND_PlaySE( SEQ_SE_FLD_15 );
+#endif
     work->frame = 0;
     ++( *seq );
     break;
