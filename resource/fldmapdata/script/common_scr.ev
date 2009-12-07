@@ -1,18 +1,18 @@
 //====================================================================
-//						common_scr
-//						共通・データ
+//            common_scr
+//            共通・データ
 //====================================================================
 
-	.text
-	.include	"scr_seq_def.h"
+  .text
+  .include  "scr_seq_def.h"
 
   .include  "../../message/dst/script/msg_common_scr.h"
-	
+  
 //--------------------------------------------------------------------
-//					     スクリプト本体
+//               スクリプト本体
 //--------------------------------------------------------------------
-_EVENT_DATA		ev_dummy
-_EVENT_DATA		ev_heal_p01_dummy
+_EVENT_DATA   ev_dummy
+_EVENT_DATA   ev_heal_p01_dummy
 _EVENT_DATA   ev_gameover_recover_home
 _EVENT_DATA   ev_gameover_recover_pokecen
 _EVENT_DATA   ev_report_event_call
@@ -20,7 +20,7 @@ _EVENT_DATA   ev_field_comm_exit_event_call
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
-//	共通スクリプト	
+//  共通スクリプト  
 //--------------------------------------------------------------------
 //====================================================================
 //====================================================================
@@ -34,9 +34,9 @@ EVENT_END
 //====================================================================
 EVENT_START   ev_heal_p01_dummy
   _TALK_START_SE_PLAY()
-	_BALLOONWIN_TALKOBJ_MSG( msg_common_pc_heal_01 )
-	_LAST_KEYWAIT()
- 	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_TALKOBJ_MSG( msg_common_pc_heal_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //////////////////////////////////////////////////////////////////////
@@ -78,19 +78,19 @@ EVENT_END
 //--------------------------------------------------------------
 ev_report_event_call:
 { 
-	// 変数を初期化
+  // 変数を初期化
   $SCWK_PARAM1 = FALSE    // セーブするかどうか
   $SCWK_PARAM2 = FALSE    // セーブデータが存在するかどうか
   $SCWK_PARAM3 = FALSE    // プレイ中のデータが新規データかどうか
   $SCWK_PARAM4 = FALSE    // セーブデータ量
   $SCWK_PARAM5 = 0        // temp
 
-	// セーブデータの状態を取得
-	_REPORT_CHECK( SCWK_PARAM2, SCWK_PARAM3, SCWK_PARAM4 )
-	// test
-	$SCWK_PARAM2 = TRUE
-	$SCWK_PARAM3 = FALSE
-	$SCWK_PARAM4 = 1	
+  // セーブデータの状態を取得
+  _REPORT_CHECK( SCWK_PARAM2, SCWK_PARAM3, SCWK_PARAM4 )
+  // test
+  $SCWK_PARAM2 = TRUE
+  $SCWK_PARAM3 = FALSE
+  $SCWK_PARAM4 = 1  
 
   //「かいても いいですか？」
   _SYSWIN_MSG_DOWN( msg_common_report_01 )
@@ -100,13 +100,13 @@ ev_report_event_call:
     $SCWK_PARAM1 = TRUE
   ENDIF
 
-	//「すでに べつの レポートが…」
-	IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
+  //「すでに べつの レポートが…」
+  IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
       _SYSWIN_MSG_DOWN( msg_common_report_08 )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
-		$SCWK_PARAM1 = FALSE
-	ENDIF
+    $SCWK_PARAM1 = FALSE
+  ENDIF
 
   //「うえから かいても いいですか？」
   IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 != TRUE) THEN
@@ -121,24 +121,25 @@ ev_report_event_call:
   // セーブ
   IF $SCWK_PARAM1 == TRUE THEN
     //「かきこんでいます」
-  		SWITCH $SCWK_PARAM4	
+      SWITCH $SCWK_PARAM4 
     CASE 0 THEN 
-			_SYSWIN_MSG_DOWN( msg_common_report_10 )
-		CASE 1 THEN
-			_SYSWIN_MSG_DOWN( msg_common_report_11 )
-		CASE 2 THEN
-			_SYSWIN_MSG_DOWN( msg_common_report_12 )
-		ENDSWITCH
-    _REPORT_CALL( SCWK_PARAM5 )	// 実セーブ処理
+      _SYSWIN_MSG_DOWN( msg_common_report_10 )
+    CASE 1 THEN
+      _SYSWIN_MSG_DOWN( msg_common_report_11 )
+    CASE 2 THEN
+      _SYSWIN_MSG_DOWN( msg_common_report_12 )
+    ENDSWITCH
+    _REPORT_CALL( SCWK_PARAM5 ) // 実セーブ処理
     _SYSWIN_CLOSE()
     // 書き込みに成功
     IF $SCWK_PARAM5 == TRUE THEN
+      _SE_PLAY( SEQ_SE_SAVE )
       //「しっかり かきのこした！」
-			_PLAYER_NAME(0)
+      _PLAYER_NAME(0)
           _SYSWIN_MSG_DOWN( msg_common_report_04 )
       _AB_KEYWAIT()
       _SYSWIN_CLOSE()
-			$SCWK_PARAM0 = SCR_REPORT_OK
+      $SCWK_PARAM0 = SCR_REPORT_OK
     // 書き込みに失敗
     ELSE
       //「かけませんでした」
@@ -154,8 +155,8 @@ ev_report_event_call:
     $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
   ENDIF
 
-	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
-	_END
+  _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
+  _END
 }
 
 //====================================================================
@@ -168,7 +169,7 @@ ev_report_event_call:
 ev_field_comm_exit_event_call:
 {
   _CALL sub_field_comm_exit_main
-	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
+  _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 }
 _END
 
