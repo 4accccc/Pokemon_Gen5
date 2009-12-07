@@ -6849,37 +6849,41 @@
 		<language name="JPN" width="256">SYS-26</language>
 		<language name="JPN_KANJI" width="256">SYS-26</language>
 	</row>
-	<row id="msg_seq_se_sys_hanten">
-		<language name="JPN" width="256">SYS-HANTEN</language>
-		<language name="JPN_KANJI" width="256">SYS-HANTEN</language>
+	<row id="msg_seq_se_sys_27">
+		<language name="JPN" width="256">SYS-27</language>
+		<language name="JPN_KANJI" width="256">SYS-27</language>
 	</row>
-	<row id="msg_seq_se_sys_aikon">
-		<language name="JPN" width="256">SYS-AIKON</language>
-		<language name="JPN_KANJI" width="256">SYS-AIKON</language>
+	<row id="msg_seq_se_sys_28">
+		<language name="JPN" width="256">SYS-28</language>
+		<language name="JPN_KANJI" width="256">SYS-28</language>
 	</row>
-	<row id="msg_seq_se_sys_kyukyu01">
-		<language name="JPN" width="256">SYS-KYUKYU01</language>
-		<language name="JPN_KANJI" width="256">SYS-KYUKYU01</language>
+	<row id="msg_seq_se_sys_29">
+		<language name="JPN" width="256">SYS-29</language>
+		<language name="JPN_KANJI" width="256">SYS-29</language>
 	</row>
-	<row id="msg_seq_se_sys_kyukyu02">
-		<language name="JPN" width="256">SYS-KYUKYU02</language>
-		<language name="JPN_KANJI" width="256">SYS-KYUKYU02</language>
+	<row id="msg_seq_se_sys_30">
+		<language name="JPN" width="256">SYS-30</language>
+		<language name="JPN_KANJI" width="256">SYS-30</language>
 	</row>
-	<row id="msg_seq_se_sys_vun">
-		<language name="JPN" width="256">SYS-VUN</language>
-		<language name="JPN_KANJI" width="256">SYS-VUN</language>
+	<row id="msg_seq_se_sys_31">
+		<language name="JPN" width="256">SYS-31</language>
+		<language name="JPN_KANJI" width="256">SYS-31</language>
 	</row>
-	<row id="msg_seq_se_sys_touch">
-		<language name="JPN" width="256">SYS-TOUCH</language>
-		<language name="JPN_KANJI" width="256">SYS-TOUCH</language>
+	<row id="msg_seq_se_sys_32">
+		<language name="JPN" width="256">SYS-32</language>
+		<language name="JPN_KANJI" width="256">SYS-32</language>
 	</row>
-	<row id="msg_seq_se_sys_gyu">
-		<language name="JPN" width="256">SYS-GYU</language>
-		<language name="JPN_KANJI" width="256">SYS-GYU</language>
+	<row id="msg_seq_se_sys_33">
+		<language name="JPN" width="256">SYS-33</language>
+		<language name="JPN_KANJI" width="256">SYS-33</language>
 	</row>
-	<row id="msg_seq_se_sys_kyu">
-		<language name="JPN" width="256">SYS-KYU</language>
-		<language name="JPN_KANJI" width="256">SYS-KYU</language>
+	<row id="msg_seq_se_sys_34">
+		<language name="JPN" width="256">SYS-34</language>
+		<language name="JPN_KANJI" width="256">SYS-34</language>
+	</row>
+	<row id="msg_seq_se_sys_35">
+		<language name="JPN" width="256">SYS-35</language>
+		<language name="JPN_KANJI" width="256">SYS-35</language>
 	</row>
 	<row id="msg_seq_se_sys_36">
 		<language name="JPN" width="256">SYS-36</language>
@@ -6936,10 +6940,6 @@
 	<row id="msg_seq_se_sys_49">
 		<language name="JPN" width="256">SYS-49</language>
 		<language name="JPN_KANJI" width="256">SYS-49</language>
-	</row>
-	<row id="msg_seq_se_sys_50">
-		<language name="JPN" width="256">SYS-50</language>
-		<language name="JPN_KANJI" width="256">SYS-50</language>
 	</row>
 	<row id="msg_seq_se_fld_01">
 		<language name="JPN" width="256">FLD-01</language>
@@ -7368,22 +7368,6 @@
 	<row id="msg_seq_se_fld_77">
 		<language name="JPN" width="256">FLD-77</language>
 		<language name="JPN_KANJI" width="256">FLD-77</language>
-	</row>
-	<row id="msg_seq_se_call1">
-		<language name="JPN" width="256">CALL1</language>
-		<language name="JPN_KANJI" width="256">CALL1</language>
-	</row>
-	<row id="msg_seq_se_sort">
-		<language name="JPN" width="256">SORT</language>
-		<language name="JPN_KANJI" width="256">SORT</language>
-	</row>
-	<row id="msg_seq_se_topbottom">
-		<language name="JPN" width="256">TOPBOTTOM</language>
-		<language name="JPN_KANJI" width="256">TOPBOTTOM</language>
-	</row>
-	<row id="msg_seq_se_rightleft">
-		<language name="JPN" width="256">RIGHTLEFT</language>
-		<language name="JPN_KANJI" width="256">RIGHTLEFT</language>
 	</row>
 	<row id="msg_seq_se_dmy_057">
 		<language name="JPN" width="256">DMY-057</language>
