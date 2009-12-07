@@ -1296,6 +1296,8 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
 //
 //
 //======================================================================
+#include "demo/demo3d.h"
+static DEMO3D_PARAM DebugDemo3DParam = { DEMO3D_ID_C_CRUISER, 0 };
 //--------------------------------------------------------------
 /**
  * @brief   ÉfÉÇåƒÇ—èoÇµ
@@ -1310,6 +1312,9 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
 static VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
 {
   u16 demo_no = SCRCMD_GetVMWorkValue( core, wk );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  GMEVENT * event = GAMESYSTEM_GetEvent( gsys );
+  GMEVENT_CallProc( event, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &DebugDemo3DParam );
   return VMCMD_RESULT_SUSPEND;
 }
 
