@@ -47,11 +47,6 @@ def print_scene(file, dir)
   file.puts("// " + demoid );
   file.puts("//=========================================================================\n");
 
-  unitname = "ho"
-
-  line = "static const GFL_G3D_UTIL_RES res_unit_" + unitname + "[] =\n";
-  file.puts( line );
-  file.puts("{\n");
   
   #1オリジン
   cnt = 1; 
@@ -65,24 +60,51 @@ def print_scene(file, dir)
     scene_dir.each{|i|
       #拡張子チェック
       if check_ext(i)
-        # 改行を覗く2文字
+        # 2文字の数値チェック
         if i.slice(/\d\d/).to_i == cnt
-          is_find = true
+        
+          # 初回のみヘッダ書き込み
+          if is_find == false
+            line = "static const GFL_G3D_UTIL_RES res_unit_" + sprintf("%02d",cnt) + "[] =\n";
+            file.puts( line );
+            file.puts("{\n");
+          end
+          
           puts i
+          puts 
+          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_RESARC },";
+          file.puts line
+
+          is_find = true          
         end
       end
     }
     if is_find == false
       break
+    else
+      file.puts("};\n");
+      cnt += 1
     end
-    cnt += 1
   end
-  
-
-
-  file.puts("};\n");
-
 end
+
+def print_access_table(file,dir)
+  #フォルダ内のファイルを列挙
+  scene_dir = Dir::entries( dir )
+  #フォルダ内のファイルを順繰り
+  scene_dir.each{|i|
+    #拡張子チェック
+    if check_ext(i)
+      # 2文字の数値チェック
+      if i.slice(/camera/) == "camera"
+          line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + " },";
+          file.puts line        
+        end
+    end
+  }
+  
+end
+
 
 #====================================================
 # 主処理 開始
@@ -100,11 +122,6 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts("#pragma once\n\n");
     file.puts("#include <gflib.h>\n");
     file.puts("#include \"arc/demo3d.naix\"\n\n");
-        
-    ### TODO ###
-    #imdの数 > 
-    #アニメの数 > ファイル名の数値ID
-
     
     #カレントにあるフォルダをしらみつぶし
     pwd =  Dir::entries( Dir::pwd )
@@ -116,5 +133,25 @@ File::open( DST_FILENAME ,"w"){ |file|
         end
       end
     end
+
+    file.puts("\n\n");
+
+    file.puts("//=========================================================================\n");
+    file.puts("// アクセステーブル" );
+    file.puts("//=========================================================================\n");
+    file.puts "static const DEMO3D_SETUP_DATA c_demo3d_setup_Data[ DEMO3D_ID_MAX ] = {"
+    file.puts "\t{ 0, 0, 0 },"
+
+    #カレントにあるフォルダをしらみつぶし
+    pwd =  Dir::entries( Dir::pwd )
+    for i in pwd
+      if File::ftype( i ) == "directory" 
+        # 特殊パスは排除
+        if i != "." && i != ".." && i != ".svn"
+          print_access_table(file,i)
+        end
+      end
+    end
+  file.puts "};"
 
 };
