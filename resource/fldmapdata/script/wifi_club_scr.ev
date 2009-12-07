@@ -11,6 +11,7 @@
   .include  "msg_wifi_club_scr.h"
   //.include  "wifi_club_scr.h"
   .include  "wifi_club_scr_local.h"
+  .include  "pokecen_scr_def.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
 
@@ -222,19 +223,22 @@ sub_club_counter_connect:
   _BALLOONWIN_CLOSE()
 
   //引率アニメ再生
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_club_p01 )
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 )
-  _OBJ_ANIME_WAIT()
+  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_club_p01 )
+  //_OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 )
+  //_OBJ_ANIME_WAIT()
 
   //エレベータアニメ再生
 
+  _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
 
   //クラブイベント呼び出し
-  _BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_OUT( )
+	_MAP_FADE_END_CHECK()
   _WIFI_CLUB_EVENT_CALL()
-	_BLACK_IN( )
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_IN( )
+	_MAP_FADE_END_CHECK()
+
+  _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_OUT
 
   $reg_return = SEQ_GOODBYE
 }
