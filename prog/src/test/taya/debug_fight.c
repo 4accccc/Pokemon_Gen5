@@ -35,6 +35,7 @@
 #include "savedata\config.h"
 #include "debug\debug_makepoke.h"
 #include "poke_tool\monsno_def.h"
+#include "savedata\battle_rec.h"
 #include "battle\battle.h"
 
 
@@ -107,6 +108,14 @@ typedef enum {
 }PokeIdx;
 
 typedef enum {
+  DBF_RECMODE_NONE=0,
+  DBF_RECMODE_REC,
+  DBF_RECMODE_PLAY,
+
+  DBF_RECMODE_MAX,
+}RecMode;
+
+typedef enum {
   SELITEM_POKE_SELF_1,
   SELITEM_POKE_SELF_2,
   SELITEM_POKE_SELF_3,
@@ -138,6 +147,8 @@ typedef enum {
   SELITEM_MSGSPEED,
   SELITEM_WAZAEFF,
   SELITEM_SUBWAYMODE,
+  SELITEM_REC_MODE,
+  SELITEM_REC_BUF,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -179,6 +190,9 @@ enum {
   LAYOUT_LABEL_SUBWAY_X = 144,
   LAYOUT_LABEL_SUBWAY_Y = LAYOUT_PARAM_LINE_Y3,
 
+  LAYOUT_LABEL_REC_X = 144,
+  LAYOUT_LABEL_REC_Y = LAYOUT_PARAM_LINE_Y4,
+
   LAYOUT_CRIPMARK_OX = 240,
   LAYOUT_CRIPMARK_OY = 4,
   LAYOUT_CRIPMARK_WIDTH = 12,
@@ -197,16 +211,16 @@ static const struct {
   { DBGF_LABEL_ENEMY1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1 },
-  { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1 },
-  { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2 },
+  { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1  },
+  { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1  },
+  { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2  },
   { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y },
+  { DBGF_LABEL_RECORD,  LAYOUT_LABEL_REC_X,      LAYOUT_LABEL_REC_Y    },
 
   { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
   { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
-
-
 };
+
 /*
  *  アイテムレイアウト
  */
@@ -247,6 +261,8 @@ static const struct {
   { SELITEM_MSGSPEED,   LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1 },
   { SELITEM_WAZAEFF,    LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2 },
   { SELITEM_SUBWAYMODE, LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y },
+  { SELITEM_REC_MODE,   LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y },
+  { SELITEM_REC_BUF,    LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y },
 
   { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
@@ -294,8 +310,10 @@ typedef struct {
   u8  weather;
   u8  msgSpeed;
   u8  fWazaEff : 1;
-  u8  fSubway : 1;
-  u8  dmy : 6;
+  u8  fSubway  : 1;
+  u8  recMode  : 2;
+  u8  recBufID : 2;
+  u8  dmy      : 2;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -320,6 +338,7 @@ struct _DEBUG_BTL_WORK {
   POKEPARTY*      partyEnemy1;
   POKEPARTY*      partyEnemy2;
   const POKEMON_PARAM*  clipPoke;
+  HEAPID          heapID;
   u8              fNetConnect;
   u8              fPlayerPartyAllocated;
   pMainProc       mainProc;
@@ -327,8 +346,16 @@ struct _DEBUG_BTL_WORK {
   u8              prevItemStrWidth[ SELITEM_MAX ];
   PROCPARAM_DEBUG_MAKEPOKE  makePokeParam;
   BATTLE_SETUP_PARAM  setupParam;
+  SAVE_CONTROL_WORK*  saveCtrl;
+  u16                 saveSeq0;
+  u16                 saveSeq1;
 
   DEBUG_BTL_SAVEDATA  saveData;
+
+  u8   recBuffer[ 4096 ];
+  u32  recSize;
+  GFL_STD_RandContext  recRand;
+
 };
 
 /*--------------------------------------------------------------------------*/
@@ -360,6 +387,8 @@ static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
@@ -369,6 +398,9 @@ static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
+static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam );
+static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
+static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
 static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
 static void* testBeaconGetFunc( void* pWork );
@@ -408,12 +440,15 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xc000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xe000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
+
+  BattleRec_Init(HEAPID_BTL_DEBUG_SYS );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
   GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
 
+  wk->heapID = HEAPID_BTL_DEBUG_SYS;
   wk->gameData = GAMEDATA_Create( HEAPID_BTL_DEBUG_SYS );
   wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
@@ -442,6 +477,7 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 
   deleteTemporaryModules( wk );
   quitGraphicSystems();
+  BattleRec_Exit();
 
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_SYS );
@@ -786,6 +822,14 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_SUBWAYMODE:
     save->fSubway ^= 1;
     break;
+
+  case SELITEM_REC_MODE:
+    save->btlType = loopValue( save->recMode+incValue, 0, DBF_RECMODE_MAX-1 );
+    break;
+
+  case SELITEM_REC_BUF:
+    save->recBufID = loopValue( save->recMode+incValue, 0, 3 );
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -888,8 +932,11 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_MSGSPEED:    printItem_MsgSpeed( wk, wk->strbuf ); break;
         case SELITEM_WAZAEFF:     printItem_WazaEff( wk, wk->strbuf ); break;
         case SELITEM_SUBWAYMODE:  printItem_SubwayMode( wk, wk->strbuf ); break;
+        case SELITEM_REC_MODE:    printItem_RecMode( wk, wk->strbuf ); break;
+        case SELITEM_REC_BUF:     printItem_RecBuf( wk, wk->strbuf ); break;
         case SELITEM_SAVE:        printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
         case SELITEM_LOAD:        printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
+
 
         default:
           GFL_STR_ClearBuffer( wk->strbuf );
@@ -928,6 +975,15 @@ static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+wk->saveData.fSubway, buf );
 }
+static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_REC_OFF+wk->saveData.recMode, buf );
+}
+static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_RECBUF_1+wk->saveData.recBufID, buf );
+}
+
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, strID, buf );
@@ -1028,9 +1084,11 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_SAVE,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
       { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_WAZAEFF,       SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
       { SELITEM_WAZAEFF,       SELITEM_MSGSPEED,      SELITEM_SUBWAYMODE,    SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
-      { SELITEM_SUBWAYMODE,    SELITEM_WAZAEFF,       SELITEM_SAVE,          SELITEM_SAVE,        SELITEM_SAVE },
-      { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
-      { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
+      { SELITEM_SUBWAYMODE,    SELITEM_WAZAEFF,       SELITEM_REC_MODE,      SELITEM_LOAD,        SELITEM_SAVE },
+      { SELITEM_REC_MODE,      SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_REC_BUF,     SELITEM_SAVE },
+      { SELITEM_REC_BUF,       SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_LOAD,        SELITEM_REC_MODE },
+      { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,    SELITEM_LOAD },
+      { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_REC_BUF },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,          Left-Item */
     };
 
@@ -1186,6 +1244,8 @@ FS_EXTERN_OVERLAY(battle);
     SEQ_SETUP_START,
     SEQ_BTL_START,
     SEQ_BTL_RETURN,
+    SEQ_BTL_SAVING,
+    SEQ_BTL_RELEASE,
   };
 
   enum {
@@ -1315,7 +1375,15 @@ FS_EXTERN_OVERLAY(battle);
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
-    BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
+    if( wk->saveData.recMode == DBF_RECMODE_REC ){
+      BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
+    }
+    else if( wk->saveData.recMode == DBF_RECMODE_PLAY ){
+      BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
+      LoadRecord( wk, wk->saveData.recBufID, &wk->setupParam );
+      BTL_SETUP_SetRecordPlayMode( &wk->setupParam );
+      TAYA_Printf("バトルパラメータを録画再生モードにした\n");
+    }
     (*seq) = SEQ_BTL_START;
     break;
 
@@ -1327,8 +1395,24 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_RETURN:
-    BATTLE_PARAM_Release( &wk->setupParam );
+    if( wk->saveData.recMode == DBF_RECMODE_REC )
+    {
+      SaveRecordStart( wk, &(wk->setupParam) );
+      (*seq) = SEQ_BTL_SAVING;
+    }
+    else{
+      (*seq) = SEQ_BTL_RELEASE;
+    }
+    break;
 
+  case SEQ_BTL_SAVING:
+    if( SaveRecordWait(wk, wk->saveData.recBufID) ){
+      (*seq) = SEQ_BTL_RELEASE;
+    }
+    break;
+
+  case SEQ_BTL_RELEASE:
+    BATTLE_PARAM_Release( &wk->setupParam );
     changeScene_recover( wk );
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
@@ -1336,6 +1420,72 @@ FS_EXTERN_OVERLAY(battle);
   }
   return FALSE;
 }
+/**
+ *  BATTLE_SETUP_PARAM の録画データセーブ開始
+ */
+static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam )
+{
+  u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
+  u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
+
+  *headerPtr++ = setupParam->recDataSize;
+  GFL_STD_MemCopy( &setupParam->recRandContext, headerPtr, sizeof(setupParam->recRandContext) );
+  GFL_STD_MemCopy( setupParam->recBuffer, dataPtr, setupParam->recDataSize );
+
+  wk->saveCtrl = GAMEDATA_GetSaveControlWork( wk->gameData );
+  wk->saveSeq0 = 0;
+  wk->saveSeq1 = 0;
+}
+/**
+ *  BATTLE_SETUP_PARAM の録画データセーブ終了待ち
+ */
+static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
+{
+  SAVE_RESULT result;
+  result = BattleRec_Save(wk->saveCtrl, wk->heapID, 0, 0, bufID, &wk->saveSeq0, &wk->saveSeq1);
+  switch( result ){
+  case SAVE_RESULT_OK:
+    {
+      u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
+      TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, %dbytes)\n", bufID, *headerPtr);
+    }
+    return TRUE;
+  case SAVE_RESULT_NG:
+    TAYA_Printf("録画データセーブ失敗\n");
+    return TRUE;
+
+  default:
+    return FALSE;
+  }
+}
+/**
+ *  BATTLE_SETUP_PARAM に録画データをロードしてセッティング
+ */
+static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
+{
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( wk->gameData );
+  LOAD_RESULT result;
+
+  BattleRec_Load( sv, wk->heapID, &result, NULL, bufID );
+//BOOL BattleRec_Load(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,BATTLE_PARAM *bp,int num)
+
+  if( result == LOAD_RESULT_OK )
+  {
+    u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
+    u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
+
+    dst->recDataSize = *headerPtr++;
+    GFL_STD_MemCopy( headerPtr, &dst->recRandContext, sizeof(dst->recRandContext) );
+    GFL_STD_MemCopy( dataPtr, dst->recBuffer, dst->recDataSize );
+
+    TAYA_Printf("録画データ読み込み完了 (bufID=%d, %dbyte)\n", bufID, dst->recDataSize);
+  }
+  else
+  {
+    TAYA_Printf("録画データ読み込み失敗: bufID=%d,  ResultCode=%d\n", bufID, result );
+  }
+}
+
 static void printPartyInfo( POKEPARTY* party )
 {
   POKEMON_PARAM* pp;
