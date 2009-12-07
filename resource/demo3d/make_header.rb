@@ -34,9 +34,10 @@ def check_ext(file)
            ext == "ima" || ext == "itp" || ext == "iva" );
 end
 
+#setupテーブル書き出し
 def print_setup(file,dir,cnt)
   file.puts "//setup"
-  file.puts "static const GFL_G3D_UTIL_SETUP" + dir + "_setup[] = {"
+  file.puts "static const GFL_G3D_UTIL_SETUP " + dir + "_setup[] = {"
   for i in 1..cnt-1
     str_unit = dir + "_unit" + sprintf("%02d",i);
     file.puts "\t{ res_" + str_unit + ", NELEMS(res_" + str_unit + "), obj_" + str_unit + ", NELEMS(obj_" + str_unit +  ") },"
@@ -44,10 +45,11 @@ def print_setup(file,dir,cnt)
   file.puts "};"
 end
 
+#animeテーブル書き出し
 def print_anime(file,cnt,anm_cnt)
     file.puts("//ANM");
     
-    file.puts "static const GFL_G3D_UTIL_ANM anm_table_unit" + sprintf("%02d",cnt) + "[] =";
+    file.puts "static const GFL_G3D_UTIL_ANM anm_table_unit" + sprintf("%02d",cnt) + "[] = {";
     
     for k in 1..anm_cnt-1
         file.puts "\t{ " + k.to_s + ", 0 },"
@@ -56,13 +58,13 @@ def print_anime(file,cnt,anm_cnt)
     file.puts("};\n");
 end
 
+#objテーブル書き出し
 def print_obj(file,dir,cnt,is_anm_tbl)
     file.puts("//OBJ");
     
     str_unit_num = sprintf("%02d",cnt);
                 
-    file.puts "static const GFL_G3D_UTIL_ANM obj_" + dir + "_unit" + str_unit_num + "[] =";
-    file.puts "{"
+    file.puts "static const GFL_G3D_UTIL_OBJ obj_" + dir + "_unit" + str_unit_num + "[] = {";
     file.puts "\t{"
     file.puts "\t\t0, 0, 0, // MdlResID, MdlDataID, TexResID"
     if is_anm_tbl == true
@@ -75,7 +77,7 @@ def print_obj(file,dir,cnt,is_anm_tbl)
 end
 
 
-#シーン項目を書き出し
+#シーン項目(フォルダ毎のデータ)を書き出し
 def print_scene(file, dir)
   #フォルダ内のファイルを列挙
   scene_dir = Dir::entries( dir )
@@ -87,8 +89,8 @@ def print_scene(file, dir)
   file.puts("//=========================================================================\n");
   file.puts("// " + demoid );
   file.puts("//=========================================================================\n");
-
-  puts ">" + dir
+  
+  puts " > " + dir
 
   #1オリジン
   cnt = 1; 
@@ -106,11 +108,10 @@ def print_scene(file, dir)
           # 初回のみヘッダ書き込み
           if is_find == false
             file.puts "//UNIT"
-            file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] =\n";
-            file.puts("{\n");
+            file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
           end
           
-          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_RESARC },";
+          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
           anm_cnt += 1
           file.puts line
 
@@ -153,7 +154,7 @@ def print_access_table(file,dir)
       if i.slice(/camera/) == "camera"
           line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + " },";
           file.puts line        
-        end
+      end
     end
   }
 end
@@ -172,9 +173,9 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts(" * @note\t" + DST_NOTE);
     file.puts(" */");
     file.puts("//=========================================================================\n");
-    file.puts("#pragma once\n\n");
-    file.puts("#include <gflib.h>\n");
-    file.puts("#include \"arc/demo3d.naix\"\n\n");
+#    file.puts("#pragma once\n\n");
+#    file.puts("#include <gflib.h>\n");
+#    file.puts("#include \"arc/demo3d.naix\"\n\n");
     
     #カレントにあるフォルダをしらみつぶし
     pwd =  Dir::entries( Dir::pwd )
@@ -192,7 +193,7 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts("//=========================================================================\n");
     file.puts("// アクセステーブル" );
     file.puts("//=========================================================================\n");
-    file.puts "static const DEMO3D_SETUP_DATA c_demo3d_setup_Data[ DEMO3D_ID_MAX ] = {"
+    file.puts "static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {"
     file.puts "\t{ 0, 0, 0 },"
 
     #カレントにあるフォルダをしらみつぶし
