@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-20T19:00:11"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T17:42:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -623,7 +623,7 @@
 プラズマ団が　手に入れる！</language>
 	</row>
 
-	<row id="msg_c07_girl2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・WHITEver</comment>
@@ -645,10 +645,12 @@
 悲しい　兄弟ゲンカ　よね……</language>
 	</row>
 
-	<row id="msg_c07_girl2_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・BALCKver</comment>
+		<attribute name="キャラクター">GIRL2
+少女（活発）</attribute>
 		<language name="JPN" width="256">ふたごの　えいゆう……
 あには　しんじつを　もとめ[BE:01:ページ切り替え（クリア）]
 おとうとは　りそうを　もとめて
@@ -665,7 +667,7 @@
 悲しい　兄弟ゲンカ　よね……</language>
 	</row>
 
-	<row id="msg_c07_ambrella_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07_ambrella_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">AMBRELLA
@@ -680,7 +682,7 @@
 人に　何を伝えるのでしょう</language>
 	</row>
 
-	<row id="msg_c07_man3_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_man3_01w" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・WHITEver</comment>
@@ -697,10 +699,11 @@
 滅ぼそうとも　したんだぞ……！</language>
 	</row>
 
-	<row id="msg_c07_man3_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_man3_01b" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・BALCKver</comment>
+		<attribute name="キャラクター">MAN3</attribute>
 		<language name="JPN" width="256">パッケージポケモンは
 えいゆうをたすけ　くにをつくった[BE:01:ページ切り替え（クリア）]
 だが　そのはんめん
@@ -713,7 +716,7 @@
 滅ぼそうとも　したんだぞ……！</language>
 	</row>
 
-	<row id="msg_c07_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07_fighterm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">FIGHTERM
@@ -726,6 +729,38 @@
 沈着冷静っぷり……[BE:01:ページ切り替え（クリア）]
 ファイティング　コンピュータとよぶ
 人が　いるのも　納得だよ</language>
+	</row>
+
+	<row id="msg_c07_iss1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ISS用
+・GRIDX=212、GRIDZ=220
+　GRIDX=212、GRIDZ=222
+　GRIDX=210、GRIDZ=222
+　GRIDX=210、GRIDZ=220の
+　四点を経由して右回りに移動
+・こいつの初期配置はGRIDX=211、GRIDZ=220</comment>
+		<attribute name="キャラクター">MAN2</attribute>
+		<language name="JPN" width="256">おどれ！　おどれ！</language>
+		<language name="JPN_KANJI" width="256">おどれ！　おどれ！</language>
+	</row>
+
+	<row id="msg_c07_iss2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ISS用
+・こいつの初期配置はGRIDX=212、GRIDZ=222</comment>
+		<attribute name="キャラクター">WOMAN2</attribute>
+		<language name="JPN" width="256">まわる♪　まわる♪</language>
+		<language name="JPN_KANJI" width="256">まわる♪　まわる♪</language>
+	</row>
+
+	<row id="msg_c07_iss3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ISS用
+・こいつの初期配置はGRIDX=210、GRIDZ=222</comment>
+		<attribute name="キャラクター">GIRL2</attribute>
+		<language name="JPN" width="256">あら　たのし！</language>
+		<language name="JPN_KANJI" width="256">あら　たのし！</language>
 	</row>
 
 	<row id="msg_c07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

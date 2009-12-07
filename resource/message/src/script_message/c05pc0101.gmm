@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T15:58:00"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T17:57:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="252"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="121">
 		</attribute>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05pc0101_middlewoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05pc0101_middlewoman1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
@@ -303,19 +303,32 @@
 マーケットには　行ったかい？</language>
 	</row>
 
-	<row id="msg_c05pc0101_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05pc0101_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・仮イベント
+・メッセージ表示後、
+　ItemNo422「わざマシン「なみのり」」入手処理</comment>
 		<attribute name="キャラ指定">GIRL1
 少女</attribute>
-		<language name="JPN" width="256">ヤーコンさんは　いっけん
-とっつきにくい　けれど　はなせば……[BE:01:ページ切り替え（クリア）]
-やっぱり　とっつきにくいわね
-きっと　いいひと　なんだろうけど</language>
-		<language name="JPN_KANJI" width="256">ヤーコンさんは　一見
-とっつきにくい　けれど　話せば……[BE:01:ページ切り替え（クリア）]
-やっぱり　とっつきにくいわね
-きっと　いい人　なんだろうけど</language>
+		<language name="JPN" width="256">あなたの　ポケモンに
+こんな　わざを　おぼえさせたら？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あなたの　ポケモンに
+こんな　わざを　おぼえさせたら？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c05pc0101_girl1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・入手後、自動で表示
+・以降、繰り返し
+※仮イベント</comment>
+		<language name="JPN" width="256">なみのりと　いう　わざを　おぼえた
+ポケモンが　いれば　みずのうえ　なら[BE:01:ページ切り替え（クリア）]
+かわのうえ　うみのうえも
+すいすい　いどう　できるのよ</language>
+		<language name="JPN_KANJI" width="256">なみのりと　いう　わざを　おぼえた
+ポケモンが　いれば　みずのうえ　なら[BE:01:ページ切り替え（クリア）]
+かわのうえ　うみのうえも
+すいすい　いどう　できるのよ</language>
 	</row>
 
 	<flowchart-group-list>
