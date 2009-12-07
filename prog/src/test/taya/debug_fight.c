@@ -440,7 +440,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xe000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x11000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
 
   BattleRec_Init(HEAPID_BTL_DEBUG_SYS );
@@ -824,11 +824,11 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     break;
 
   case SELITEM_REC_MODE:
-    save->btlType = loopValue( save->recMode+incValue, 0, DBF_RECMODE_MAX-1 );
+    save->recMode = loopValue( save->recMode+incValue, 0, DBF_RECMODE_MAX-1 );
     break;
 
   case SELITEM_REC_BUF:
-    save->recBufID = loopValue( save->recMode+incValue, 0, 3 );
+    save->recBufID = loopValue( save->recBufID+incValue, 0, 3 );
     break;
   }
 }
@@ -981,7 +981,7 @@ static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
 }
 static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
-  GFL_MSG_GetString( wk->mm, DBGF_ITEM_RECBUF_1+wk->saveData.recBufID, buf );
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_RECBUF_0+wk->saveData.recBufID, buf );
 }
 
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
