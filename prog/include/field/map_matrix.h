@@ -53,6 +53,9 @@ extern BOOL MAP_MATRIX_CheckBlockPosRange(
 extern BOOL MAP_MATRIX_CheckVectorPosRange(
 		const MAP_MATRIX *pMat, fx32 x, fx32 z );
 
+extern void MAP_MATRIX_SetTableSize( 
+    MAP_MATRIX *pMat, u8 xsize, u8 zsize );
+
 //--------------------------------------------------------------
 /**
  * @brief   MAP_MATRIX‚Ö‚Ìƒ|ƒCƒ“ƒ^Žæ“¾
