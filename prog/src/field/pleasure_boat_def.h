@@ -8,6 +8,7 @@
 #pragma once
 
 #define ROOM_NUM  (15)
+#define DBL_BTL_ROOM_NUM  (2)
 
 //@note 非トレーナーもいるがどこにトレーナーが配置されるか分からないので全部屋分保持しているメンバもある
 typedef struct PL_BOAT_ROOM_PRM_tag
@@ -30,5 +31,6 @@ typedef struct PL_BOAT_WORK_tag
   u8 TrNumRight;
   u8 TrNumSingle;
   u8 TrNumDouble;
+  BOOL DblBtl[DBL_BTL_ROOM_NUM];
 }PL_BOAT_WORK;
 

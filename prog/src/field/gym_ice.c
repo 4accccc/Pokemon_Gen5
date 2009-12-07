@@ -323,7 +323,7 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ICE );
   }
-
+#ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
       GMEVENT *event;
@@ -335,9 +335,12 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
       event = GYM_ICE_CreateWallEvt(gsys, 0);
       GAMESYSTEM_SetEvent(gsys, event);
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_START){
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+      GYM_ICE_ChangeRailMap(gsys, 0);
     }
   }
-  
+#endif
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }

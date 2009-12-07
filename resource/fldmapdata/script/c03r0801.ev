@@ -48,14 +48,35 @@ _EVENT_DATA		ev_c03r0801_wkobjcode13_01
 _EVENT_DATA		ev_c03r0801_wkobjcode14_01
 _EVENT_DATA		ev_c03r0801_babygirl1_01
 _EVENT_DATA		ev_c03r0801_babygirl1_02
+_EVENT_DATA		ev_zone_c03r0801
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//	LOCALWORK0⇒部屋番号
+//　　　話しかけが終了するまで、値を保証する必要があります
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_zone_c03r0801:
-//  _END
+ev_zone_c03r0801:
+  _PL_BOAT_GET_ROOM_INFO(0,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK0)
+  _PL_BOAT_GET_ROOM_INFO(1,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK1)
+  _PL_BOAT_GET_ROOM_INFO(2,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK2)
+  _PL_BOAT_GET_ROOM_INFO(3,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK3)
+  _PL_BOAT_GET_ROOM_INFO(4,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK4)
+  _PL_BOAT_GET_ROOM_INFO(5,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK5)
+  _PL_BOAT_GET_ROOM_INFO(6,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK6)
+  _PL_BOAT_GET_ROOM_INFO(7,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK7)
+  _PL_BOAT_GET_ROOM_INFO(8,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK8)
+  _PL_BOAT_GET_ROOM_INFO(9,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK9)
+  _PL_BOAT_GET_ROOM_INFO(10,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK10)
+  _PL_BOAT_GET_ROOM_INFO(11,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK11)
+  _PL_BOAT_GET_ROOM_INFO(12,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK12)
+  _PL_BOAT_GET_ROOM_INFO(13,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK13)
+  _PL_BOAT_GET_ROOM_INFO(14,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK14)
+
+  _END
 
 /**************************************************************/
 /*		遊覧船タイムアップスクリプト						  */
@@ -163,6 +184,10 @@ EVENT_END
 /*		可変オブジェ00										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode00_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 0
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -170,6 +195,10 @@ EVENT_END
 /*		可変オブジェ01										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode01_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 1
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -177,6 +206,10 @@ EVENT_END
 /*		可変オブジェ02										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode02_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 2
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -184,6 +217,10 @@ EVENT_END
 /*		可変オブジェ03										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode03_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 3
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -191,6 +228,10 @@ EVENT_END
 /*		可変オブジェ04										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode04_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 4
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -198,6 +239,10 @@ EVENT_END
 /*		可変オブジェ05										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode05_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 5
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -205,6 +250,10 @@ EVENT_END
 /*		可変オブジェ06										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode06_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 6
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -212,6 +261,10 @@ EVENT_END
 /*		可変オブジェ07										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode07_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 7
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -219,6 +272,10 @@ EVENT_END
 /*		可変オブジェ08										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode08_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 8
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -226,6 +283,10 @@ EVENT_END
 /*		可変オブジェ09										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode09_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 9
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -233,6 +294,10 @@ EVENT_END
 /*		可変オブジェ10										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode10_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 10
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -240,6 +305,10 @@ EVENT_END
 /*		可変オブジェ11										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode11_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 11
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -247,6 +316,10 @@ EVENT_END
 /*		可変オブジェ12										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode12_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 12
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -254,6 +327,10 @@ EVENT_END
 /*		可変オブジェ13										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode13_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 13
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -261,6 +338,10 @@ EVENT_END
 /*		可変オブジェ14										  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_wkobjcode14_01
+  //ローカルワーク0に部屋番号を格納する
+  $LOCALWORK0 = 14
+  //可変オブジェ共通ラベルをコール
+  _CALL ev_wkobjcommon
 
 EVENT_END
 
@@ -278,3 +359,134 @@ EVENT_START		ev_c03r0801_babygirl1_02
 
 EVENT_END
 
+
+//--------------------------------------------------------------
+/*  可変オブジェ共通                        */
+//--------------------------------------------------------------
+ev_wkobjcommon:
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_NPC_TYPE
+  //ＮＰＣの種類を取得
+  _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_NPC_TYPE,0,LWK_NPC_TYPE)
+
+  //デバッグプリント
+  _DEBUG_PRINT_WK(LWK_NPC_TYPE)
+
+  //ＮＰＣの種類で分岐
+  IF $LWK_NPC_TYPE == NPC_TYPE_TRAINER THEN             //トレーナー
+    _CALL ev_trainer
+
+  ELSIF $LWK_NPC_TYPE == NPC_TYPE_SHORT_TALKER THEN     //通常のＮＰＣ
+    _CALL ev_short_talker
+
+  ELSIF $LWK_NPC_TYPE == NPC_TYPE_LONG_TALKER THEN      //長話をするＮＰＣ
+    _CALL ev_long_talker
+  ELSE
+    //ここにくる場合は、不正処理となります。通常はここにきません
+  ENDIF
+
+  _RET
+
+//--------------------------------------------------------------
+/*  トレーナー共通                        */
+//--------------------------------------------------------------
+ev_trainer:
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_NPC_MSG_TR
+  DEFINE_LOCAL	LWK_TR_ID
+
+  //戦ったことがあるかフラグを取得
+  _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_BTL_FLG,0,SCWK_ANSWER)
+  IF $SCWK_ANSWER == PL_BOAT_TR_BTL_ALREADY THEN
+    //戦闘後メッセージＩＤを取得
+    _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,1,LWK_NPC_MSG_TR)
+    //会話開始
+    _TALK_OBJ_START()
+    _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_TR)
+    _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+    
+  ELSIF $SCWK_ANSWER == PL_BOAT_TR_BTL_YET THEN
+    //戦闘前メッセージＩＤを取得
+    _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,0,LWK_NPC_MSG_TR)
+    //トレーナーＩＤ取得
+    _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_TR_ID,0,LWK_TR_ID)
+    
+    //デバッグプリント
+    _DEBUG_PRINT_WK(LWK_TR_ID)
+    
+    //会話開始
+    _TALK_OBJ_START()
+    _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_TR)
+    _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+
+    //戦闘開始
+    _TRAINER_BTL_SET( LWK_TR_ID, 0 )
+    //敗戦チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+    ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    ENDIF
+
+    //船内トレーナー戦ったフラグオン
+    _PL_BOAT_SET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_BTL_FLG,0,PL_BOAT_TR_BTL_ALREADY)
+
+  ELSE      //ここにはこない。きたら不正。もしきてしまった場合は戦闘後メッセージを出して終了
+    //戦闘後メッセージＩＤを取得
+    _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,1,LWK_NPC_MSG_TR)
+    //会話開始
+    _TALK_OBJ_START()
+    _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_TR)
+    _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+  ENDIF
+
+  _RET
+
+//--------------------------------------------------------------
+/*  可変オブジェ　通常の話　共通            */
+//--------------------------------------------------------------
+ev_short_talker:
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_NPC_MSG
+  
+  //メッセージＩＤを取得
+  _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,0,LWK_NPC_MSG)
+
+  //デバッグプリント
+  _DEBUG_PRINT_WK(LWK_NPC_MSG)
+
+  //会話開始
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG)
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //時間経過（10秒）
+  _PL_BOAT_ADD_TIME(10)
+
+  _RET
+
+//--------------------------------------------------------------
+/*  可変オブジェ　長いの話　共通            */
+//--------------------------------------------------------------
+ev_long_talker:
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_NPC_MSG_LONG
+
+  //メッセージＩＤを取得
+  _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,0,LWK_NPC_MSG_LONG)
+
+  //会話開始
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_LONG)
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //時間経過（45秒）
+  _PL_BOAT_ADD_TIME(45)
+
+  _RET

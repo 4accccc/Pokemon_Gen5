@@ -45,6 +45,7 @@ typedef struct ENTRY_WORK_tag
   u8 Trainer[ENTRY_TR_MAX];
   u8 LongTalker[ENTRY_LONG_TALKER_MAX];
   u8 ShortTalker[ENTRY_SHORT_TALKER_MAX];
+  BOOL DblBtl[DBL_BTL_ROOM_NUM];
 }ENTRY_WORK;
 
 typedef struct TR_DATA_tag
@@ -93,7 +94,7 @@ static const TR_DATA DbgTrData[TRAINER_MAX] = {
   {MIDDLEMAN2,TRID_PRINCESS_04,{msg_c03r0801_girl4_03,msg_c03r0801_girl4_04}},
   {MAN2,TRID_GENTLE_01,{msg_c03r0801_gentleman_04,msg_c03r0801_gentleman_05}},
   {WOMAN1,TRID_MADAM_01,{msg_c03r0801_lady_04,msg_c03r0801_lady_05}},
-  {WOMAN3,TRID_FUTAGO_03,{msg_c03r0801_babygirl1_01,msg_c03r0801_babygirl1_02}},
+  {WOMAN3,TRID_FUTAGO_03,{msg_c03r0801_babygirl1_01,msg_c03r0801_babygirl1_02}},    //ダブルバトルトレーナー
 };
 
 static const NONE_TR_DATA DbgLongTalkerData[LONG_TALKER_MAX] = {
@@ -198,7 +199,7 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->TrNumSingle = 0;
   work->TrNumDouble = 0;
   
-  //イベント時間テーブルをロードするかも
+  //@todo イベント時間テーブルをロードするかも
   ;
   EntryTrainer(work);
   return work;
@@ -400,6 +401,25 @@ BOOL PL_BOAT_CheckBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx)
 
 //--------------------------------------------------------------
 /**
+ * @brief　部屋の人物がダブルバトルするかをチェック
+ * @param   work      PL_BOAT_WORK_PTR
+ * @apram   inRoomIdx 部屋番号
+ * @retval  BOOL       TRUEでダブルバトル
+*/
+//--------------------------------------------------------------
+BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx)
+{
+  BOOL rc = FALSE;
+
+  if ( (inRoomIdx == 2)&&(work->DblBtl[0]) ) rc = TRUE;
+  else if ( (inRoomIdx == 7)&&(work->DblBtl[1]) ) rc = TRUE;
+    
+  return rc;
+}
+
+
+//--------------------------------------------------------------
+/**
  * @brief　部屋の人物情報を操作 戦闘したことにする
  * @param   work      PL_BOAT_WORK_PTR
  * @apram   inRoomIdx 部屋番号
@@ -492,10 +512,14 @@ static void EntryTrainer(PL_BOAT_WORK *work)
     if (!rc)  InitEntryWork(&entry_work);   //初期化状態で続行
   }
 
-  //テーブルからトレーナをエントリ
+  //テーブルからトレーナをエントリ(ダブルバトルトレーナーを除く)
   CreateTrTbl(
-      TRAINER_MAX, tr_num, tr_tbl, entry_work.Trainer
+      TRAINER_MAX-1, tr_num, tr_tbl, entry_work.Trainer
       );
+  //ダブルバトルを抽選する場合、トレーナーテーブルの先頭のものを上書き
+  if(1){//@todo
+    entry_work.Trainer[0] = TRAINER_MAX-1;
+  }
    //テーブルから非トレーナー（長話）をエントリ
   CreateTrTbl(
       LONG_TALKER_MAX, ENTRY_LONG_TALKER_MAX, long_tbl, entry_work.LongTalker
@@ -517,6 +541,11 @@ static void EntryTrainer(PL_BOAT_WORK *work)
 
   {
     int count = 0;
+    //ダブルバトル部屋セット
+    for (i=0;i<DBL_BTL_ROOM_NUM;i++)
+    {
+      work->DblBtl[i] = entry_work.DblBtl[i];
+    }
     //部屋にトレーナーを格納
     for (i=0;i<tr_num;i++)
     {
@@ -600,6 +629,13 @@ static void InitEntryWork(ENTRY_WORK *work)
   int i;
   work->LastIdx = ROOM_NUM-1;
   work->EntryCount = 0;
+
+  //ダブルバトル部屋クリア
+  for (i=0;i<DBL_BTL_ROOM_NUM;i++)
+  {
+    work->DblBtl[i] = FALSE;
+  }
+
   //部屋インデックス初期化
   for (i=0;i<ROOM_NUM;i++)
   {
@@ -676,7 +712,37 @@ static BOOL EntryRoom(ENTRY_WORK *work)
 {
   int i;
   int idx, room_idx, del_idx;
+  int entry_room_num;
   BOOL rc;
+  BOOL left,right;
+  left = FALSE;
+  right = FALSE;
+
+  entry_room_num = ROOM_NUM;
+
+  //ダブルバトルできる部屋を選択
+  if(1)    //ダブルバトル抽選する @todo
+  {
+    if ( GFUser_GetPublicRand(2) ){
+      room_idx = 2; //三号室
+      left = TRUE;
+      work->DblBtl[0] = TRUE;
+    }else{
+      room_idx = 7; //八号室
+      right = TRUE;
+      work->DblBtl[1] = TRUE;
+    }
+    del_idx = SearchRoomIdx(work, room_idx);
+    //エントリ対象から抽選したインデックッスを除く
+    rc = DelEntry(work, del_idx);
+    if (!rc) return FALSE;
+    //エントリテーブルに格納
+    work->RoomEntry[work->EntryCount] = room_idx;
+    work->EntryCount++;
+
+    entry_room_num--;   //抽選総数デクリメント
+  }
+
   //ダブル型の部屋を1つ選択
   idx = GFUser_GetPublicRand(DOUBLE_ROOM_NUM);
   room_idx = DoubleRoom[idx];
@@ -688,28 +754,40 @@ static BOOL EntryRoom(ENTRY_WORK *work)
   work->RoomEntry[work->EntryCount] = room_idx;
   work->EntryCount++;
 
-  //始めに選んだ部屋が船内の左右どちらにあるかで次の部屋の候補を絞る
-  if ( RoomSt[idx].Side == ROOM_SIDE_LEFT ){    //左のとき
-    //右の部屋から抽選する
-    idx = GFUser_GetPublicRand(RIGHT_ROOM_NUM);
-    room_idx = RightRoom[idx];
-  }else{    //右のとき
-    //左の部屋から抽選する
-    idx = GFUser_GetPublicRand(LEFT_ROOM_NUM);
-    room_idx = RightRoom[idx];
+  entry_room_num--;   //抽選総数デクリメント
+
+  if (RoomSt[idx].Side == ROOM_SIDE_LEFT) left = TRUE;
+  else right = TRUE;
+
+  //ここまでの抽選で、両サイドの部屋が抽選されていない場合は、抽選されていない部屋から選ぶ
+  if ( (!right) || (!left) )
+  {
+    if ( right == FALSE )    //右がまだ抽選されてない
+    {
+      //右の部屋から抽選する
+      idx = GFUser_GetPublicRand(RIGHT_ROOM_NUM);
+      room_idx = RightRoom[idx];
+    }else    //左がまだ抽選されてない
+    {
+      //左の部屋から抽選する
+      idx = GFUser_GetPublicRand(LEFT_ROOM_NUM);
+      room_idx = RightRoom[idx];
+    }
+    del_idx = SearchRoomIdx(work, room_idx);
+    //エントリ対象から抽選したインデックッスを除く
+    rc = DelEntry(work, del_idx);
+    if (!rc) return FALSE;
+    //エントリテーブルに格納
+    work->RoomEntry[work->EntryCount] = room_idx;
+    work->EntryCount++;
+
+    entry_room_num--;   //抽選総数デクリメント
   }
-  del_idx = SearchRoomIdx(work, room_idx);
-  //エントリ対象から抽選したインデックッスを除く
-  rc = DelEntry(work, del_idx);
-  if (!rc) return FALSE;
-  //エントリテーブルに格納
-  work->RoomEntry[work->EntryCount] = room_idx;
-  work->EntryCount++;
 
   //残りの部屋をエントリ
-  for (i=0;i<ROOM_NUM-2;i++)
+  for (i=0;i<entry_room_num;i++)
   {
-    int denominator = (ROOM_NUM-2)-i;
+    int denominator = entry_room_num-i;
     idx = GFUser_GetPublicRand(denominator);
     room_idx = GetEntryItem(work, idx);
     OS_Printf("idx = %d  room = %d\n",idx, room_idx);

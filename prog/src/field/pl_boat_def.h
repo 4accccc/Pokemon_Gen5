@@ -18,6 +18,7 @@
 #define PL_BOAT_ROOM_INFO_TR_ID     (6)
 #define PL_BOAT_ROOM_INFO_MSG       (7)
 #define PL_BOAT_ROOM_INFO_BTL_FLG   (8)
+#define PL_BOAT_ROOM_INFO_BTL_TYPE  (9)
 
 //ＮＰＣ種類
 #define NPC_TYPE_TRAINER (0)
@@ -27,4 +28,9 @@
 //戦闘したことあるかチェック用
 #define PL_BOAT_TR_BTL_YET (0)      //まだ戦っていない
 #define PL_BOAT_TR_BTL_ALREADY (1)  //既に戦った
+
+//ダブルバトル・シングルバトル部屋
+#define PL_BOAT_BTL_TYPE_DOUBLE (0)   //ダブルバトル
+#define PL_BOAT_BTL_TYPE_SINGLE (1)   //シングルバトル
+
 

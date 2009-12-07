@@ -4648,6 +4648,19 @@
   .short  \idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　氷ジムレールにチェンジ
+ * @param idx   ギミックインデックス0～2
+ */
+//--------------------------------------------------------------
+#define _GYM_ICE_CHG_RAIL(idx) _ASM_GYM_ICE_CHG_RAIL idx
+
+  .macro  _ASM_GYM_ICE_CHG_RAIL idx
+  .short  EV_SEQ_GYM_ICE_CHG_RAIL
+  .short  \idx
+  .endm  
+
 //======================================================================
 //
 //  モデルアニメ関連
@@ -5540,9 +5553,9 @@
  * @param ret_wk    検索結トレーナー数
  */
 //--------------------------------------------------------------
-#define _PL_BOAT_GET_TR_NUM(type,ret_wk) _ASM_PL_BOAT_GET_TR_NUM type ret_wk
+#define _PL_BOAT_GET_TR_NUM(type,ret_wk) _ASM_PL_BOAT_GET_TR_NUM type, ret_wk
 
-  .macro  _ASM_PL_BOAT_GET_TR_NUM type ret_wk
+  .macro  _ASM_PL_BOAT_GET_TR_NUM type, ret_wk
   .short  EV_SEQ_PL_BOAT_GET_TR_NUM
   .short  \type
   .short  \ret_wk
@@ -5569,6 +5582,46 @@
 //
 //
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 遊覧船部屋内情報取得
+ * @param room_idx    部屋インデックス
+ * @param info_kind   取得情報
+ * @param param       情報取得パラメータ
+ * @param ret_wk      格納バッファ
+ */
+//--------------------------------------------------------------
+#define _PL_BOAT_GET_ROOM_INFO(room_idx,info_kind,param,ret_wk) \
+    _ASM_PL_BOAT_GET_ROOM_INFO room_idx,info_kind,param,ret_wk
+
+  .macro  _ASM_PL_BOAT_GET_ROOM_INFO room_idx,info_kind,param,ret_wk
+  .short  EV_SEQ_PL_BOAT_GET_ROOM_INFO
+  .short  \room_idx
+  .short  \info_kind
+  .short  \param
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 遊覧船部屋内情報セット
+ * @param room_idx    部屋インデックス
+ * @param info_kind   取得情報
+ * @param param       情報取得パラメータ
+ * @param set_val      セット情報
+ */
+//--------------------------------------------------------------
+#define _PL_BOAT_SET_ROOM_INFO(room_idx,info_kind,param,set_val) \
+    _ASM_PL_BOAT_SET_ROOM_INFO room_idx,info_kind,param,set_val
+
+  .macro  _ASM_PL_BOAT_SET_ROOM_INFO room_idx,info_kind,param,set_val
+  .short  EV_SEQ_PL_BOAT_SET_ROOM_INFO
+  .short  \room_idx
+  .short  \info_kind
+  .short  \param
+  .short  \set_val
+  .endm
+
 //--------------------------------------------------------------
 /**
  * マップフェードブラックイン
