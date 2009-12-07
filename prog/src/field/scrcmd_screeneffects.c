@@ -37,6 +37,8 @@
 #include "event_fieldmap_control.h"   //for EVENT_Field`
 #include "system/main.h"  //for HEAPID_PROC
 
+#define BRIGHT_FADE_SPPED (2)
+
 typedef enum {
   FADE_IN,
   FADE_OUT,
@@ -540,6 +542,9 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
     {
       int mode;
       int start, end;
+      int fade_speed;
+
+      fade_speed = BRIGHT_FADE_SPPED;
       if ( wk->fade_io == FADE_IN )
       {
         //ƒtƒF[ƒhƒCƒ“‚Ì‚Æ‚«‚Í‚a‚f‰Šú‰»‚·‚é
@@ -569,7 +574,7 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
       {
         mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
       }
-      GFL_FADE_SetMasterBrightReq(mode, start, end, 0);
+      GFL_FADE_SetMasterBrightReq(mode, start, end, fade_speed);
     }
     wk->Seq++;
     break;
