@@ -795,7 +795,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 
     do{
       OS_TPrintf("--- Map˜AŒ‹ %d ----\n", intcomm->connect_map_count + 1);
-      FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+      FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
       intcomm->connect_map_count++;
     }while(intcomm->connect_map_count < use_num);
 

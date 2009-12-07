@@ -8,6 +8,9 @@
 
 #include "height_ex.h"
 
+#include "field/fieldmap_proc.h"
+
+
 //------------------------------------------------------------------
 /**
  * @brief	マッパー制御構造体の不完全型定義
@@ -166,13 +169,14 @@ extern BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres);
 /**
  * @brief マップ接続
  *
+ * @param fieldmap  フィールドマップ
  * @param g3Dmapper 接続対象マッパー
  * @param matrix    接続するマップのマップマトリックス
  *
  * @return 接続できたらTRUE
  */
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix ); 
+BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix ); 
 
 //--------------------------------------------------------------
 /**

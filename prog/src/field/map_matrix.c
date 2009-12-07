@@ -193,6 +193,30 @@ u32 MAP_MATRIX_GetMapBlockTotalSize( const MAP_MATRIX *pMat )
 
 //--------------------------------------------------------------
 /**
+ * MAP_MATRIX マップXxZの総サイズ変更
+ * @param	pMat	MAP_MATRIX
+ * @param xsize Xサイズ
+ * @param zsize Zサイズ
+ */
+//--------------------------------------------------------------
+void MAP_MATRIX_SetTableSize( MAP_MATRIX *pMat, u8 xsize, u8 zsize )
+{ 
+  u32 total = xsize * zsize;
+
+  if( (MAP_MATRIX_WIDTH_MAX  < xsize) ||
+      (MAP_MATRIX_HEIGHT_MAX < zsize) ||
+      (MAP_MATRIX_MAX        < total) )
+  {
+    return;
+  }
+
+  pMat->size_w     = xsize;
+  pMat->size_h     = zsize;
+  pMat->table_size = total;
+}
+
+//--------------------------------------------------------------
+/**
  * MAP_MATRIX リソースデータIDが格納されたブロックテーブルを取得
  * @param	pMat	MAP_MATRIX
  * @retval	u32*	ブロックテーブルのポインタ
@@ -283,10 +307,10 @@ static void MapMatrix_SetData(
 		MI_CpuFill32( pMatTbl, zone_id, sizeof(u32)*MAP_MATRIX_MAX );
 	}
 	
-#ifdef DEBUG_ONLY_FOR_kagaya
+//#ifdef DEBUG_ONLY_FOR_kagaya
 	OS_Printf( "マトリクス情報 ID=%d,X=%d,Z=%d,FLAG=%d\n",
 		matrix_id, pMat->size_w, pMat->size_h, pMat->status_flag );
-#endif
+//#endif
 }
 
 //--------------------------------------------------------------

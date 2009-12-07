@@ -34,6 +34,12 @@
 #include "field/map_matrix.h"   // for MAP_MATRIX_MAX
 #include "map_attr.h" //MAPATTR_IsEnable
 
+#include "fieldmap.h"
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/gamedata_def.h"
+#include "field/map_matrix.h"
+
+
 //============================================================================================
 /**
  *
@@ -352,13 +358,14 @@ BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper )
 /**
  * @brief マップ接続
  *
+ * @param fieldmap  フィールドマップ
  * @param g3Dmapper 接続対象マッパー
  * @param matrix    接続するマップのマップマトリックス
  *
  * @return 接続できたらTRUE
  */
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
+BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
 { 
   int i, ix, iz;
   u16 add_sizex, add_sizez; // 追加マップの横・縦ブロック数
@@ -435,6 +442,16 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
   g3Dmapper->sizex     = sizex;
   g3Dmapper->sizez     = sizez; 
   g3Dmapper->totalSize = totalSize; 
+
+  // 大元のゲームデータとも整合性をとる
+#if 1
+  {
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldmap );
+    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+    MAP_MATRIX* matrix = GAMEDATA_GetMapMatrix( gdata );
+    MAP_MATRIX_SetTableSize( matrix, sizex, sizez );
+  }
+#endif
 
   // 後始末
   GFL_HEAP_FreeMemory( blocks );
