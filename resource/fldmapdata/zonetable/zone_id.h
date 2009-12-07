@@ -398,6 +398,15 @@
 #define ZONE_ID_WC10R0101        (394)
 #define ZONE_ID_C03R0901         (395)
 #define ZONE_ID_C09P03           (396)
-#define ZONE_ID_MAX	(397)
+#define ZONE_ID_C04R0304         (397)
+#define ZONE_ID_C04R0305         (398)
+#define ZONE_ID_C04R0402         (399)
+#define ZONE_ID_C04R0403         (400)
+#define ZONE_ID_C04R0404         (401)
+#define ZONE_ID_C04R0502         (402)
+#define ZONE_ID_C04R0902         (403)
+#define ZONE_ID_C04R1002         (404)
+#define ZONE_ID_C09R0701         (405)
+#define ZONE_ID_MAX	(406)
 #endif // __ZONE_ID_H__
 

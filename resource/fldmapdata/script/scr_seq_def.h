@@ -3566,6 +3566,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_ZONE_ID
+ * @brief 季節の取得
+ * @param ret_wk    結果を受けるワーク
+ * @return  ゾーンID
+ */
+//--------------------------------------------------------------
+#define _GET_ZONE_ID( ret_wk )  \
+    _ASM_GET_ZONE_ID ret_wk
+
+    .macro _ASM_GET_ZONE_ID ret_wk
+    .short  EV_SEQ_GET_ZONE_ID
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_BIRTHDAY
  * @brief 誕生日の取得
  * @param ret_month 月を受け取るワーク
