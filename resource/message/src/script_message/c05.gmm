@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-06T15:10:59"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T11:48:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="218"/>
+		<comment position="4" width="258"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラクター" english="キャラクター" type="string" default="" position="1" width="100">
 		</attribute>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_c05_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・橋を渡ったところにPOS設定
@@ -361,7 +361,7 @@
 逃げられて　しまったからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader_02</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
@@ -373,35 +373,42 @@
 
 	<row id="msg_c05_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けて、作業員と向き合って
-　leader_03表示</comment>
+※冷凍コンテナへの画面切り替え削除
+※メッセージ表示後、画面左に移動
+　数歩移動後、振り向き、続けてleader_03</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
 だいじなのは　おまえたちが　きたから
 プラズマだんが　にげたと　いうことだ[BE:01:ページ切り替え（クリア）]
 じぶんでも　ごういんだと　おもうが
-れいとうコンテナの　そうじでも　していろ[BE:01:ページ切り替え（クリア）]</language>
+おまえらも　プラズマだんを　さがせ[BE:00:ページ切り替え（行送り）]
+すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　言え[BE:01:ページ切り替え（クリア）]
 大事なのは　おまえたちが　来たから
 プラズマ団が　逃げたと　いうことだ[BE:01:ページ切り替え（クリア）]
-自分でも　強引だと思うが
-冷凍コンテナの　掃除でも　していろ[BE:01:ページ切り替え（クリア）]</language>
+自分でも　強引だと　思うが
+おまえらも　プラズマ団を　探せ[BE:00:ページ切り替え（行送り）]
+すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてworkman1_01</comment>
-		<language name="JPN" width="256">おい！　こいつらを
-れいとうコンテナまで　つれていけ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おい！　こいつらを
-冷凍コンテナまで　連れて行け！[BE:01:ページ切り替え（クリア）]</language>
+・メッセージ表示後、画面左に移動
+　画面外に消えると続けてblack_03</comment>
+		<language name="JPN" width="256">そうだな……[BE:01:ページ切り替え（クリア）]
+プラズマだんを　みつけだしたら
+ジムで　ちょうせんを　うけてやるぞ！[BE:00:ページ切り替え（行送り）]
+じんせいは　ギブ　アンド　テイク！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そうだな……[BE:01:ページ切り替え（クリア）]
+プラズマ団を　みつけだしたら
+ジムで　挑戦を　受けてやるぞ！[BE:00:ページ切り替え（行送り）]
+人生は　ギブ　アンド　テイク！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_workman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c05_workman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
-・メッセージ表示後、画面暗転し
-　d05のmsg_d05_workman_01に</comment>
+・このメッセージ削除</comment>
 		<attribute name="キャラクター">WORKMANその１</attribute>
 		<language name="JPN" width="256">はい！　ヤーコンさん
 コンテナまで　つれていきます！[BE:01:ページ切り替え（クリア）]</language>
@@ -409,7 +416,20 @@
 コンテナまで　連れて行きます！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、ライバル、画面左に移動
+・画面外に消えると、主人公操作可能</comment>
+		<attribute name="キャラクター">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">ブラッカー『……ったく
+さがせば　いいんだろ！　さがせば！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！　さきに　いくぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……ったく
+探せば　いいんだろ！　探せば！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！　先に　行くぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c05_sage1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・コンテナ内でプラズマ団に勝利すると
 　ジム前にゲーチスたちを配置
@@ -431,7 +451,7 @@
 配下を　引き取りに　来ました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_02</comment>
 		<attribute name="キャラクター">LEADER5
@@ -444,7 +464,7 @@
 ポケモンを　奪おうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_05</comment>
 		<attribute name="キャラクター">七賢者ゲーチス</attribute>
@@ -458,7 +478,7 @@
 人のポケモンを　奪ったりしませんよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_03</comment>
 		<attribute name="キャラクター">LEADER5
@@ -469,7 +489,7 @@
 で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_06</comment>
 		<attribute name="キャラクター">七賢者ゲーチス</attribute>
@@ -484,7 +504,7 @@
 部下どもが　いるのですよ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_04</comment>
 		<attribute name="キャラクター">LEADER5
@@ -495,7 +515,7 @@
 こいつらを　連れて　帰りな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、七賢人のOBJ
 　ヤーコンのほうに移動</comment>
@@ -511,7 +531,7 @@
 引き取らせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage2_01">
+	<row id="msg_c05_sage2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ･七賢人、ゲーチスのそばで
 　このメッセージ表示
@@ -522,7 +542,7 @@
 ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・その後、画面暗転し
 　プラズマ団のOBJ削除</comment>
@@ -539,7 +559,7 @@
 お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・画面暗転し、プラズマ団の動作も出る削除後
 ・主人公に隣接してメッセージ表示
@@ -558,7 +578,7 @@
 あんまり　ワシを　待たせるなよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
@@ -578,7 +598,7 @@
 来てから　コンテナしか　知らないし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_workman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c05_workman1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・h02付近に配置
 ・c05ジムバッジ入手のタイミングで削除</comment>
@@ -592,7 +612,7 @@
 ……で　プラズマ団に　逃げられたのさ</language>
 	</row>
 
-	<row id="msg_c05_businessman_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,,">
+	<row id="msg_c05_businessman_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c05ジムストッパー
 ・d05r0101イベントクリアで削除</comment>
@@ -605,9 +625,9 @@
 また　のちほど　いらしてください</language>
 	</row>
 
-	<row id="msg_c05_woman2_01">
+	<row id="msg_c05_woman2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">WOMAN2</attribute>
 		<language name="JPN" width="256">どうですか
 この　まち　じまんの　はねばし[BE:01:ページ切り替え（クリア）]
@@ -621,9 +641,9 @@
 呼ばれて　いるんですよ</language>
 	</row>
 
-	<row id="msg_c05_babygirl1_01">
+	<row id="msg_c05_babygirl1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">BABYGIRL1</attribute>
 		<language name="JPN" width="256">ねえねえ　トレーナーさん[BE:01:ページ切り替え（クリア）]
 ポケモンリーグ　してんのう　と
@@ -633,9 +653,9 @@
 たたかったことは　ある？</language>
 	</row>
 
-	<row id="msg_c05_backpackerw_01">
+	<row id="msg_c05_backpackerw_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">BACKPACKERW</attribute>
 		<language name="JPN" width="256">うみ……[BE:01:ページ切り替え（クリア）]
 わたしが　ここで　こぼした　なみだは
@@ -645,9 +665,9 @@
 アサギシティまで　流れるのかしら</language>
 	</row>
 
-	<row id="msg_c05_trainerm_01">
+	<row id="msg_c05_trainerm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">TRAINERM</attribute>
 		<language name="JPN" width="256">プラズマだんの　やつらに
 むりやり　ポケモンしょうぶを[BE:00:ページ切り替え（行送り）]
@@ -659,9 +679,9 @@
 ポケモン　奪われちゃったよ……</language>
 	</row>
 
-	<row id="msg_c05_driver_01">
+	<row id="msg_c05_driver_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">DRIVER</attribute>
 		<language name="JPN" width="256">あれだけの　にもつを　はこぶのに
 ポケモンたちの　ちからを　かりるのは[BE:00:ページ切り替え（行送り）]
@@ -671,9 +691,9 @@
 ナンセンスって　もんだね</language>
 	</row>
 
-	<row id="msg_c05_badman_01">
+	<row id="msg_c05_badman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">BADMAN</attribute>
 		<language name="JPN" width="256">ここだけの　はなし……[BE:01:ページ切り替え（クリア）]
 ジムリーダーの　ヤーコンさんは
@@ -685,9 +705,9 @@
 なにが　ヤバイかは　いえないけどさ</language>
 	</row>
 
-	<row id="msg_c05_workman_01">
+	<row id="msg_c05_workman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・7月末ROM用</comment>
+・台詞のみ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
 		<language name="JPN" width="256">れいとうコンテナ？
 あんなところに　ようじが　あるのか？</language>
@@ -695,7 +715,7 @@
 あんなところに　用事が　あるのか？</language>
 	</row>
 
-	<row id="msg_c05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_sign1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラクター">看板：街</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
