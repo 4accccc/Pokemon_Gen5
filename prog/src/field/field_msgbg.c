@@ -3965,7 +3965,7 @@ static void winframe_SetPaletteBlack( u32 heapID )
   u32 arc = BmpWinFrame_WinPalArcGet();
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,
-      arc, PALTYPE_MAIN_BG, 0x20*0, pal*0x20, 0x20, heapID );
+      arc, PALTYPE_MAIN_BG, 0x20*1, pal*0x20, 0x20, heapID );
 }
 
 //--------------------------------------------------------------
@@ -3981,7 +3981,7 @@ static void winframe_SetPaletteWhith( u32 heapID )
   u32 arc = BmpWinFrame_WinPalArcGet();
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,
-      arc, PALTYPE_MAIN_BG, 0x20*1, pal*0x20, 0x20, heapID );
+      arc, PALTYPE_MAIN_BG, 0x20*0, pal*0x20, 0x20, heapID );
 }
 
 //--------------------------------------------------------------
