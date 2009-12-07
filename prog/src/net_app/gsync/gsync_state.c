@@ -26,6 +26,7 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
+#include "savedata/system_data.h"
 #include "msg/msg_d_ohno.h"
 #include "gsync_local.h"
 #include "net/nhttp_rap.h"
@@ -176,7 +177,7 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   
   
   GSYNC_DISP_PokemonIconCreate(pWork->pDispWork, PP_GetPPPPointer(pWork->pp),CLSYS_DRAW_MAIN);
-GSYNC_DISP_PokemonIconJump(pWork->pDispWork);
+  GSYNC_DISP_PokemonIconJump(pWork->pDispWork);
 
   PMSND_PlaySE(SEQ_SE_SYS_25);
 
@@ -366,6 +367,21 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   データアップロード完了
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _upeffectLoop8(G_SYNC_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg()){
+    _CHANGE_STATE(NULL);
+  }
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -379,9 +395,9 @@ static void _upeffectLoop7(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(NULL);
-  }
+  PMSND_PlaySE(SEQ_SE_SYS_26);
+  _CHANGE_STATE(_upeffectLoop8);
+
 }
 
 //------------------------------------------------------------------------------
@@ -397,6 +413,7 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
     GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);
+  PMSND_PlaySE(SEQ_SE_SYS_25);
 
   _CHANGE_STATE(_upeffectLoop7);
 }
@@ -477,6 +494,7 @@ static void _upeffectLoop3(G_SYNC_WORK* pWork)
     GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
     GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani2);
 
+    PMSND_PlaySE(SEQ_SE_SYS_24);
 
     //    pWork->countTimer = _DREAMSMOKE_TIME;
     _CHANGE_STATE(_upeffectLoop4);
@@ -589,10 +607,11 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x48000 );
   pWork = GFL_PROC_AllocWork( proc, sizeof( G_SYNC_WORK ), HEAPID_GAMESYNC );
   GFL_STD_MemClear(pWork, sizeof(G_SYNC_WORK));
-  pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC);
+
   pWork->heapID = HEAPID_GAMESYNC;
 
   if(pParent){
+    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pParent->ctrl)));
     pWork->pSaveData = pParent->ctrl;
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
@@ -608,6 +627,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   }
   else{
 #if PM_DEBUG
+    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, 1234);
     _pWork=pWork;
     pWork->trayno=0;
     pWork->indexno=0;

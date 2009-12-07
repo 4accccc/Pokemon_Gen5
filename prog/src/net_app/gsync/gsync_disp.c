@@ -246,10 +246,10 @@ void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork)
   for(i=0;i<PLT_RESOURCE_MAX;i++){
     GFL_CLGRP_PLTT_Release(pWork->cellRes[i] );
   }
-  for(i=0;i<CEL_RESOURCE_MAX;i++){
+  for(;i<CEL_RESOURCE_MAX;i++){
     GFL_CLGRP_CGR_Release(pWork->cellRes[i] );
   }
-  for(i=0;i<ANM_RESOURCE_MAX;i++){
+  for(;i<ANM_RESOURCE_MAX;i++){
     GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i] );
   }
   
@@ -678,6 +678,7 @@ void GSYNC_DISP_PokemonIconMove(GSYNC_DISP_WORK* pWork)
 void GSYNC_DISP_PokemonIconJump(GSYNC_DISP_WORK* pWork)
 {
   GFL_CLACT_WK_SetAnmSeq( pWork->curIcon[CELL_CUR_POKE_PLAYER] , 1 );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , TRUE );
 }
 
 
@@ -706,6 +707,8 @@ void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork)
 
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 0, 16);
+  
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
     p_handle, NARC_gsync_downner_bg2_NSCR,
     GFL_BG_FRAME3_M, 0,

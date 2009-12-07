@@ -56,6 +56,16 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 	ctrl->data_exists = FALSE;			//データは存在しない
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
 
+#if DEBUG_ONLY_FOR_ohno
+  {  //各データのサイズを得る
+    int i;
+    for(i=0;i<SaveParam_Normal.table_max;i++){
+      FUNC_GET_SIZE func = SaveParam_Normal.table[i].get_size;
+      
+        OS_TPrintf(">><< size %d\n",func());
+    }
+  }
+#endif
 
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);

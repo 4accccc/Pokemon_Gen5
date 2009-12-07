@@ -34,7 +34,7 @@ extern BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork);
 extern NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork);
 extern void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork);
 
-extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID);
+extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid);
 extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
 
 

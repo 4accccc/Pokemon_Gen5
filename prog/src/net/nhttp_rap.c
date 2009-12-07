@@ -46,7 +46,7 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
 const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
 const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
-const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data2.php";  //POST
+const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=";  //POST
 
 typedef struct{
   const char* url;
@@ -73,6 +73,7 @@ struct _NHTTP_RAP_WORK {
   NHTTPConnectionHandle   handle;
   char getbuffer[_GET_MAXSIZE];
   HEAPID heapID;
+  u32 profileid;
 };
 
 
@@ -119,6 +120,8 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
+  char urlbuff[200];
+  char pidbuff[20];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
@@ -126,8 +129,16 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   }
 
 
-  NET_PRINT(" Target URL: %s\n", urltable[urlno].url);
-  handle = NHTTPCreateConnection( urltable[urlno].url,
+
+  GFL_STD_MemClear(urlbuff,sizeof(urlbuff));
+  GFL_STD_MemCopy(urltable[urlno].url, urlbuff, GFL_STD_StrLen(urltable[urlno].url));
+
+  if(urlno==NHTTPRAP_URL_UPLOAD){
+    STD_TSNPrintf(pidbuff,20,"%d", pWork->profileid);
+    GFL_STD_StrCat(urlbuff,pidbuff,sizeof(urlbuff));
+  }
+  NET_PRINT(" Target URL: %s\n", urlbuff);
+  handle = NHTTPCreateConnection( urlbuff,
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
                                   ConnectionCallback, pWork);
@@ -268,10 +279,10 @@ void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
 
 
 
-NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID)
+NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid)
 {
   NHTTP_RAP_WORK* pWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(NHTTP_RAP_WORK) );
-
+  pWork->profileid=profileid;
   return pWork;
 }
 
