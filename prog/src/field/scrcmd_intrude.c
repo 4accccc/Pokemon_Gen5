@@ -137,7 +137,7 @@ static GMEVENT * EVENT_Intrude_MissionStart(GAMESYS_WORK * gsys, u16 monolith_ty
 
 //--------------------------------------------------------------
 /**
- * イベント処理関数：ミッション開始
+ * イベント処理関数：ミッション開始   ※check　削除候補
  *
  * @param   event		
  * @param   seq		
@@ -249,8 +249,8 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
     intcomm = GameCommSys_GetAppWork(game_comm);
   }
 
-  IntrudeField_ConnectMapInit(fieldWork, gsys);
   if(intcomm != NULL){
+    IntrudeField_ConnectMapInit(fieldWork, gsys, intcomm);
     IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
   }
   

@@ -755,7 +755,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
  * wb -- col wb wb wb -
  */
 //==================================================================
-void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys)
+void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, INTRUDE_COMM_SYS_PTR intcomm)
 {
 #if 0
   MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
@@ -766,6 +766,8 @@ void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys
   FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
 
   MAP_MATRIX_Delete( mmatrix );
+#else
+  intcomm->connect_map_count = 0;
 #endif
 }
 

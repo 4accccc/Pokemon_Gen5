@@ -395,7 +395,7 @@ void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   
-  intcomm->connect_map_count = 0;
+//  intcomm->connect_map_count = 0;
   CommPlayer_Push(intcomm->cps);
 }
 
