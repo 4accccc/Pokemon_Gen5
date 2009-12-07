@@ -990,7 +990,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
 #ifdef PM_DEBUG
   //ƒeƒXƒg
   {
-#if 0    
+#if 1    
     if (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
       FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
       GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
