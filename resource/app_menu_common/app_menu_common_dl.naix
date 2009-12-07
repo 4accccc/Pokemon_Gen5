@@ -19,7 +19,11 @@ enum {
 	NARC_app_menu_common_dl_bar_button_NCLR = 5,
 	NARC_app_menu_common_dl_bar_button_128k_NCGR = 6,
 	NARC_app_menu_common_dl_bar_button_128k_NCER = 7,
-	NARC_app_menu_common_dl_bar_button_128k_NANR = 8
+	NARC_app_menu_common_dl_bar_button_128k_NANR = 8,
+	NARC_app_menu_common_dl_poke_mark_NCLR = 9,
+	NARC_app_menu_common_dl_poke_mark_128k_NCGR = 10,
+	NARC_app_menu_common_dl_poke_mark_128k_NCER = 11,
+	NARC_app_menu_common_dl_poke_mark_128k_NANR = 12
 };
 
 /* NARC_APP_MENU_COMMON_DL_NAIX_ */

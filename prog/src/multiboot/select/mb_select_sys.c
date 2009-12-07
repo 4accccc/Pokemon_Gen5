@@ -564,9 +564,9 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
 
   
   //‰º‰æ–ÊOBJ
-  work->cellResIdx[MSCR_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+  work->cellResIdx[MSCR_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
         NARC_mb_select_gra_box_obj_NCLR , CLSYS_DRAW_MAIN , 
-        MB_SEL_PLT_OBJ_COMMON*32 , 0 , 3 , work->heapId  );
+        MB_SEL_PLT_OBJ_COMMON*32 , work->heapId  );
   work->cellResIdx[MSCR_NCG_COMMON] = GFL_CLGRP_CGR_Register( arcHandle , 
         NARC_mb_select_gra_box_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellResIdx[MSCR_ANM_COMMON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
@@ -1195,7 +1195,7 @@ static void MB_SELECT_SetPokeInfo( MB_SELECT_WORK *work , const POKEMON_PASO_PAR
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgPokeInfo ) , 0x0 );
 
-  if( PPP_Get( ppp , ID_PARA_monsno_egg , NULL ) == TRUE )
+  if( PPP_Get( ppp , ID_PARA_tamago_flag , NULL ) == TRUE )
   {
     STRBUF *nameStr = GFL_MSG_CreateString( GlobalMsg_PokeName , MONSNO_TAMAGO );
     PRINTSYS_PrintQue( printQue , GFL_BMPWIN_GetBmp( work->msgPokeInfo ) , 
@@ -1459,12 +1459,6 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
       initWork->boxName[i][6] = 0xFFFF;
     }
 
-    for( i=0;i<MB_CAP_POKE_NUM;i++ )
-    {
-      initWork->ppp[i] = GFL_HEAP_AllocClearMemory( parentHeap , POKETOOL_GetPPPWorkSize() );
-      PPP_Clear( initWork->ppp[i] );
-    }
-
     work->initWork = initWork;
   }
   else
@@ -1495,10 +1489,6 @@ static GFL_PROC_RESULT MB_SELECT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   if( pwk == NULL )
   {
     u8 i,j;
-    for( i=0;i<MB_CAP_POKE_NUM;i++ )
-    {
-      GFL_HEAP_FreeMemory( work->initWork->ppp[i] );
-    }
     for( i=0;i<MB_POKE_BOX_TRAY;i++ )
     {
       for( j=0;j<MB_POKE_BOX_POKE;j++ )

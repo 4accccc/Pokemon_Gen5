@@ -5,8 +5,12 @@
 "task_menu.NCLR"
 "task_menu.NCGR"
 
-
 "bar_button.NCLR"
 "bar_button_128k.NCGR"
 "bar_button_128k.NCER"
 "bar_button_128k.NANR"
+
+"poke_mark.NCLR"
+"poke_mark_128k.NCGR"
+"poke_mark_128k.NCER"
+"poke_mark_128k.NANR"

@@ -40,4 +40,6 @@ typedef enum
 //======================================================================
 #pragma mark [> proto
 extern const MB_UTIL_CHECK_PLAY_RET MB_UTIL_CheckPlay_PalGate( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardType );
+extern void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLAY_CARD_TYPE cardType );
+extern void MB_UTIL_ConvertStr( const u16 *src , STRCODE *dst , const u8 dstLen , const DLPLAY_CARD_TYPE cardType );
 

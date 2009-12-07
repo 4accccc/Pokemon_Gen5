@@ -15,6 +15,12 @@
 
 #include "app/app_menu_common.h"
 
+//マルチブート用きり分け(MB時のみ読み込む
+#ifdef MULTI_BOOT_MAKE  //DL子機時処理
+#include "app_menu_common_dl.naix"
+#endif //MULTI_BOOT_MAKE
+
+
 ///技タイプ毎のパレットオフセット番号
 ALIGN4 static const u8 PokeTypePlttOffset[] = {
 	0,	//POKETYPE_NORMAL
@@ -115,7 +121,12 @@ const u32 APP_COMMON_GetWazaKindCharArcIdx( const PokeType type )
 //--------------------------------------------------------------
 const u32 APP_COMMON_GetBarIconPltArcIdx( void )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_bar_button_NCLR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_bar_button_NCLR;
+#endif //MULTI_BOOT_MAKE
 }
 const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type )
 {	
@@ -124,30 +135,62 @@ const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type )
 }
 const u32 APP_COMMON_GetBarIconCharArcIdx()
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_bar_button_128k_NCGR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_bar_button_128k_NCGR;
+#endif //MULTI_BOOT_MAKE
 }
 const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_bar_button_32k_NCER + mapping;
+#else                    //DL子機時処理
+	GF_ASSERT( mapping == APP_COMMON_MAPPING_128K );
+	return NARC_app_menu_common_dl_bar_button_128k_NCER;
+#endif //MULTI_BOOT_MAKE
 }
 const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_bar_button_32k_NANR + mapping;
+#else                    //DL子機時処理
+	GF_ASSERT( mapping == APP_COMMON_MAPPING_128K );
+	return NARC_app_menu_common_dl_bar_button_128k_NANR;
+#endif //MULTI_BOOT_MAKE
 }
 //--------------------------------------------------------------
 //下部バー系素材取得
 //--------------------------------------------------------------
 const u32 APP_COMMON_GetBarPltArcIdx( void )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_menu_bar_NCLR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_menu_bar_NCLR;
+#endif //MULTI_BOOT_MAKE
 }
 const u32 APP_COMMON_GetBarCharArcIdx( void )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_menu_bar_NCGR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_menu_bar_NCGR;
+#endif //MULTI_BOOT_MAKE
 }
 const u32 APP_COMMON_GetBarScrnArcIdx( void )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_menu_bar_NSCR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_menu_bar_NSCR;
+#endif //MULTI_BOOT_MAKE
 }
 const u32 APP_COMMON_GetBarScrn_512x256ArcIdx( void )
 {	
@@ -363,7 +406,12 @@ u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING 
 //-----------------------------------------------------------------------------
 u32 APP_COMMON_GetPokeMarkPltArcIdx( void )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_poke_mark_NCLR;
+#else                    //DL子機時処理
+	return NARC_app_menu_common_dl_poke_mark_NCLR;
+#endif //MULTI_BOOT_MAKE
 }
 //----------------------------------------------------------------------------
 /**
@@ -376,7 +424,13 @@ u32 APP_COMMON_GetPokeMarkPltArcIdx( void )
 //-----------------------------------------------------------------------------
 u32 APP_COMMON_GetPokeMarkCharArcIdx( const APP_COMMON_MAPPING mapping )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_poke_mark_32k_NCGR + mapping;
+#else                    //DL子機時処理
+	GF_ASSERT( mapping == APP_COMMON_MAPPING_128K );
+	return NARC_app_menu_common_dl_poke_mark_128k_NCGR;
+#endif //MULTI_BOOT_MAKE
 }
 //----------------------------------------------------------------------------
 /**
@@ -389,7 +443,13 @@ u32 APP_COMMON_GetPokeMarkCharArcIdx( const APP_COMMON_MAPPING mapping )
 //-----------------------------------------------------------------------------
 u32 APP_COMMON_GetPokeMarkCellArcIdx( const APP_COMMON_MAPPING mapping )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_poke_mark_32k_NCER + mapping;
+#else                    //DL子機時処理
+	GF_ASSERT( mapping == APP_COMMON_MAPPING_128K );
+	return NARC_app_menu_common_dl_poke_mark_128k_NCER;
+#endif //MULTI_BOOT_MAKE
 }
 //----------------------------------------------------------------------------
 /**
@@ -402,7 +462,13 @@ u32 APP_COMMON_GetPokeMarkCellArcIdx( const APP_COMMON_MAPPING mapping )
 //-----------------------------------------------------------------------------
 u32 APP_COMMON_GetPokeMarkAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	return NARC_app_menu_common_poke_mark_32k_NANR + mapping;
+#else                    //DL子機時処理
+	GF_ASSERT( mapping == APP_COMMON_MAPPING_128K );
+	return NARC_app_menu_common_dl_poke_mark_128k_NANR;
+#endif //MULTI_BOOT_MAKE
 }
 
 //--------------------------------------------------------------

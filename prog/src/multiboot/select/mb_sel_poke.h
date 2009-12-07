@@ -21,7 +21,7 @@
 #define MB_SEL_POKE_BG_PRI_TRAY (0)
 #define MB_SEL_POKE_BG_PRI_HOLD (0)
 #define MB_SEL_POKE_SOFT_PRI_BOX (16)
-#define MB_SEL_POKE_SOFT_PRI_TRAY (0)
+#define MB_SEL_POKE_SOFT_PRI_TRAY (1)
 #define MB_SEL_POKE_SOFT_PRI_HOLD (0)
 
 //======================================================================

@@ -9,10 +9,12 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "buflen.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "poke_tool/monsno_def.h"
 #include "waza_tool/wazano_def.h"
+#include "debug/debug_str_conv.h"
 
 #include "multiboot/mb_util.h"
 
@@ -85,4 +87,77 @@ const MB_UTIL_CHECK_PLAY_RET MB_UTIL_CheckPlay_PalGate( POKEMON_PASO_PARAM *ppp 
   return ret;
 }
 
+//--------------------------------------------------------------
+//	PPPの変換
+//--------------------------------------------------------------
+void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLAY_CARD_TYPE cardType )
+{
+  GFL_STD_MemCopy( src , dst , POKETOOL_GetPPPWorkSize() );
+  //名前変換
+  {
+    STRCODE monsName[MONS_NAME_SIZE+EOM_SIZE];
+    PPP_Get( dst , ID_PARA_nickname_raw , monsName );
+    MB_UTIL_ConvertStr( monsName , monsName , MONS_NAME_SIZE+EOM_SIZE , cardType );
+    PPP_Put( dst , ID_PARA_nickname_raw , (u32)monsName );
+  }
+  //親の名前変換
+  {
+    STRCODE oyaName[PERSON_NAME_SIZE+EOM_SIZE];
+    PPP_Get( dst , ID_PARA_oyaname_raw , oyaName );
+    MB_UTIL_ConvertStr( oyaName , oyaName , SAVELEN_PLAYER_NAME+EOM_SIZE , cardType );
+    PPP_Put( dst , ID_PARA_oyaname_raw , (u32)oyaName );
+  }
+  //性格の変換
+  {
+    const u32 rand = PPP_Get( dst , ID_PARA_personal_rnd , NULL );
+    PPP_Put( dst , ID_PARA_seikaku , rand%(PTL_SEIKAKU_MAX-1) );
+  }
+  
+  //デバッグ表示
+  /*
+  {
+    char sjisCode[(MONS_NAME_SIZE+EOM_SIZE)*2];
+    STRCODE monsName[MONS_NAME_SIZE+EOM_SIZE];
+    const u32 monsno = PPP_Get( dst , ID_PARA_monsno , NULL );
+    PPP_Get( dst , ID_PARA_nickname_raw , monsName );
+    DEB_STR_CONV_StrcodeToSjis( monsName , sjisCode , MONS_NAME_SIZE+EOM_SIZE );
+    OS_TPrintf("[%3d][%s]\n",monsno , sjisCode);
+  }
+  */
+}
+
+//--------------------------------------------------------------
+//	文字列の変換
+//--------------------------------------------------------------
+#include "./mb_str_arr.cdat"
+void MB_UTIL_ConvertStr( const u16 *src , STRCODE *dst , const u8 dstLen , const DLPLAY_CARD_TYPE cardType )
+{
+  const STRCODE EomCode = GFL_STR_GetEOMCode();
+  static const u16 UnknownCode = L'?';
+  int i,j;
+  BOOL isEnd = FALSE;
+  for( i=0;i<dstLen;i++ )
+  {
+    if( src[i] == 0xFFFF )
+    {
+      dst[i] = EomCode;
+      isEnd = TRUE;
+      break;
+    }
+    for( j=0;j<MB_STR_ARR_NUM;j++ )
+    {
+      if( src[i] == MB_STR_ARR[j][1] )
+      {
+        dst[i] = MB_STR_ARR[j][0];
+        break;
+      }
+    }
+    if( j == MB_STR_ARR_NUM ){
+      //該当文字なし
+      dst[i] = UnknownCode;
+    }
+  }
+  
+  GF_ASSERT_MSG(isEnd,"MB_UTIL_ConvertStr BufferOver!\n");
+}
 

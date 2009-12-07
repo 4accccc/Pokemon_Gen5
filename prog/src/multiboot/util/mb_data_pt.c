@@ -15,9 +15,10 @@
 
 #include "poke_tool/poke_tool.h"
 #include "multiboot/mb_data_main.h"
+#include "./mb_data_pt.h"
 
-#include "./pt_save.dat"  //dlplay_child_pt.c 以外で読むな
-#include "./dp_save.dat"  //dlplay_child_pt.c 以外で読むな
+#include "./pt_save.dat"  //mb_data_pt.c 以外で読むな
+#include "./dp_save.dat"  //mb_data_pt.c 以外で読むな
 
 #define PT_SAVE_SIZE (SECTOR_SIZE * SECTOR_MAX)
 //======================================================================
@@ -142,15 +143,13 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
         {
           dataWork->errorState = DES_MISS_LOAD_BACKUP;
         }
-
       }
-
     }
     //GF_ASSERT( dataWork->pBoxData != NULL );
     dataWork->subSeq++;
     break;
   
-  case 4: //BOXの解析(本当は親でやる？
+  case 4: //BOXの解析(テストデータ変換は別の場所で
 #if DEB_ARI
     if( dataWork->pBoxData != NULL )
     {
@@ -640,5 +639,22 @@ const u32 MB_DATA_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
     break;
   }
   return 0;
+}
+
+void* MB_DATA_PT_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
+{
+  PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
+  GF_ASSERT( dataWork->pBoxData != NULL );
+  
+  return &boxData->ppp[tray][idx];
+
+}
+
+u16* MB_DATA_PT_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
+{
+  PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
+  GF_ASSERT( dataWork->pBoxData != NULL );
+
+  return boxData->trayName[tray];
 }
 

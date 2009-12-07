@@ -154,6 +154,45 @@ BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork )
   return FALSE;
 }
 
+//Boxデータの取得(PPP・Name
+void* MB_DATA_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_PT_GetBoxPPP( dataWork , tray , idx  );
+    break;
+
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_GetBoxPPP( dataWork , tray , idx );
+    break;
+
+  case CARD_TYPE_GS:
+    return NULL;
+    break;
+  }
+  return NULL;
+}
+
+u16* MB_DATA_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_PT_GetBoxName( dataWork , tray );
+    break;
+
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_GetBoxName( dataWork , tray );
+    break;
+
+  case CARD_TYPE_GS:
+    return NULL;
+    break;
+  }
+  return NULL;
+}
+
 
 //刺さっているカードの種類の取得設定(設定はデバッグ用
 const DLPLAY_CARD_TYPE MB_DATA_GetCardType( MB_DATA_WORK *dataWork )

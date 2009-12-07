@@ -27,6 +27,7 @@ SRCS	+= \
 		$(PARENT_SRC)/system/brightness.c \
 		$(PARENT_SRC)/system/debug_print.c \
 		$(PARENT_SRC)/waza_tool/waza_tool.c \
+		$(PARENT_SRC)/debug/debug_str_conv.c \
 		$(PARENT_SRC)/multiboot/child/mb_child_sys.c \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
 		$(PARENT_SRC)/multiboot/select/mb_select_sys.c \

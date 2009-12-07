@@ -22,6 +22,7 @@
 #include "multiboot/mb_child_sys.h"
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_comm_sys.h"
+#include "multiboot/mb_util.h"
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_data_main.h"
 #include "multiboot/mb_local_def.h"
@@ -53,7 +54,8 @@ typedef enum
   MCS_WAIT_CONNECT,
   MCS_CHECK_ROM,
   MCS_SELECT_ROM, //デバッグ用
-  MCS_LOAD_DATA, //デバッグ用
+  MCS_LOAD_DATA,
+  MCS_DATA_CONV,
   
   MCS_SELECT_FADEOUT,
   MCS_SELECT_FADEOUT_WAIT,
@@ -79,7 +81,9 @@ typedef struct
   
   MB_CHILD_STATE  state;
   GFL_PROCSYS   *procSys;
-  void          *ppp[MB_CAP_POKE_NUM];
+  
+  POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
+  STRCODE *boxName[MB_POKE_BOX_TRAY];
   
   DLPLAY_CARD_TYPE cardType;
 
@@ -106,6 +110,8 @@ static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work );
 static void MB_CHILD_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MB_CHILD_LoadResource( MB_CHILD_WORK *work );
 
+static void MB_CHILD_DataConvert( MB_CHILD_WORK *work );
+
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
@@ -127,7 +133,7 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void MB_CHILD_Init( MB_CHILD_WORK *work )
 {
-  u8 i;
+  u8 i,j;
   work->state = MCS_FADEIN;
   work->msgWork = NULL;
 
@@ -146,10 +152,13 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
   
-  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
-    work->ppp[i] = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetPPPWorkSize() );
-    work->selInitWork.ppp[i] = work->ppp[i];
+    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    {
+      work->boxPoke[i][j] = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetPPPWorkSize() );
+    }
+    work->boxName[i] = GFL_HEAP_AllocClearMemory( work->heapId , 20 );  //8文字+EOM
   }
 }
 
@@ -158,10 +167,15 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
-  u8 i;
-  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  u8 i,j;
+
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
-    GFL_HEAP_FreeMemory( work->ppp[i] );
+    GFL_HEAP_FreeMemory( work->boxName[i] );
+    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    {
+      GFL_HEAP_FreeMemory( work->boxPoke[i][j] );
+    }
   }
 
   GFL_PROC_LOCAL_Exit( work->procSys );
@@ -296,8 +310,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_LOAD_DATA:
     if( MB_DATA_LoadDataFirst( work->dataWork ) == TRUE )
     {
-      work->state = MCS_SELECT_FADEOUT;
+      work->state = MCS_DATA_CONV;
     }
+    break;
+
+  case MCS_DATA_CONV:
+    MB_CHILD_DataConvert( work );
+    work->state = MCS_SELECT_FADEOUT;
     break;
   
   //--------------------------------------------------------
@@ -311,6 +330,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_SELECT_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
+      u8 i,j;
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
       work->msgWork = NULL;
@@ -318,6 +338,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //InitWorkのpppは最初に入れている
       work->selInitWork.parentHeap = work->heapId;
       work->selInitWork.cardType = work->cardType;
+      for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+      {
+        for( j=0;j<MB_POKE_BOX_POKE;j++ )
+        {
+          work->selInitWork.boxData[i][j] = work->boxPoke[i][j];
+        }
+        work->selInitWork.boxName[i] = work->boxName[i];
+      }
       
       GFL_PROC_LOCAL_CallProc( work->procSys , 
                                NO_OVERLAY_ID ,
@@ -494,6 +522,29 @@ static void MB_CHILD_LoadResource( MB_CHILD_WORK *work )
   GFL_ARC_CloseDataHandle( arcHandle );
 }
 
+//--------------------------------------------------------------
+//  データの変換
+//--------------------------------------------------------------
+static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
+{
+  u8 i,j;
+  //PPP
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+  {
+    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    {
+      void *pppSrc = MB_DATA_GetBoxPPP(work->dataWork,i,j);
+      MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[i][j] , work->cardType );
+    }
+  }
+  //ボックス名
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+  {
+    u16 *strSrc = MB_DATA_GetBoxName( work->dataWork,i );
+    
+    MB_UTIL_ConvertStr( strSrc , work->boxName[i] , 10 , work->cardType );
+  }
+}
 
 
 #pragma mark [>proc func
@@ -516,8 +567,8 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
   MB_CHILD_WORK *work;
   
   OS_TPrintf("LeastAppHeap[%x]",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xC0000 );
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0xC0000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xE0000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0xA0000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_CHILD_WORK), HEAPID_MULTIBOOT );
 
   work->heapId = HEAPID_MULTIBOOT;
