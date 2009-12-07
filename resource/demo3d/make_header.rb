@@ -26,7 +26,7 @@ DST_AUTOR = "genya_hosaka"
 DST_NOTE = "このファイルはdemo3d/make_header.rbによって自動生成されたものです。"
 ARC_ID = "ARCID_DEMO3D_GRA"
 
-
+#拡張子チェック
 def check_ext(file)
   ext = file.slice(/...\z/m)
   
@@ -34,7 +34,48 @@ def check_ext(file)
            ext == "ima" || ext == "itp" || ext == "iva" );
 end
 
+def print_setup(file,dir,cnt)
+  file.puts "//setup"
+  file.puts "static const GFL_G3D_UTIL_SETUP" + dir + "_setup[] = {"
+  for i in 1..cnt-1
+    str_unit = dir + "_unit" + sprintf("%02d",i);
+    file.puts "\t{ res_" + str_unit + ", NELEMS(res_" + str_unit + "), obj_" + str_unit + ", NELEMS(obj_" + str_unit +  ") },"
+  end
+  file.puts "};"
+end
 
+def print_anime(file,cnt,anm_cnt)
+    file.puts("//ANM");
+    
+    file.puts "static const GFL_G3D_UTIL_ANM anm_table_unit" + sprintf("%02d",cnt) + "[] =";
+    
+    for k in 1..anm_cnt-1
+        file.puts "\t{ " + k.to_s + ", 0 },"
+    end
+    
+    file.puts("};\n");
+end
+
+def print_obj(file,dir,cnt,is_anm_tbl)
+    file.puts("//OBJ");
+    
+    str_unit_num = sprintf("%02d",cnt);
+                
+    file.puts "static const GFL_G3D_UTIL_ANM obj_" + dir + "_unit" + str_unit_num + "[] =";
+    file.puts "{"
+    file.puts "\t{"
+    file.puts "\t\t0, 0, 0, // MdlResID, MdlDataID, TexResID"
+    if is_anm_tbl == true
+      file.puts "\t\tanm_table_unit" + str_unit_num + ", NELEMS(anm_table_unit" + str_unit_num + "), // AnmTbl, AnmTblNum"
+    else
+      file.puts "\t\tNULL, 0, // AnmTbl, AnmTblNum"
+    end
+    file.puts "\t}"
+    file.puts("};\n");
+end
+
+
+#シーン項目を書き出し
 def print_scene(file, dir)
   #フォルダ内のファイルを列挙
   scene_dir = Dir::entries( dir )
@@ -47,7 +88,6 @@ def print_scene(file, dir)
   file.puts("// " + demoid );
   file.puts("//=========================================================================\n");
 
-  
   #1オリジン
   cnt = 1; 
   loop do
@@ -57,6 +97,7 @@ def print_scene(file, dir)
     is_find = false
 
     #フォルダ内のファイルを順繰り
+    anm_cnt = 0;
     scene_dir.each{|i|
       #拡張子チェック
       if check_ext(i)
@@ -65,29 +106,43 @@ def print_scene(file, dir)
         
           # 初回のみヘッダ書き込み
           if is_find == false
-            line = "static const GFL_G3D_UTIL_RES res_unit_" + sprintf("%02d",cnt) + "[] =\n";
-            file.puts( line );
+            file.puts "//UNIT"
+            file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] =\n";
             file.puts("{\n");
           end
           
-          puts i
-          puts 
           line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_RESARC },";
+          anm_cnt += 1
           file.puts line
 
           is_find = true          
         end
       end
     }
+    # 終了判定
     if is_find == false
+      print_setup(file,dir,cnt);
       break
     else
+      # フッダ書き込み
       file.puts("};\n");
+      
+      # アニメ判定
+      if anm_cnt <= 1
+        print_obj(file,dir,cnt,false);
+      else
+        #アニメテーブル書き出し
+        print_anime(file,cnt,anm_cnt)
+        print_obj(file,dir,cnt,true);
+      end
+
+      # 次のユニットへ
       cnt += 1
     end
   end
 end
 
+# アクセステーブルの項目を書き出し
 def print_access_table(file,dir)
   #フォルダ内のファイルを列挙
   scene_dir = Dir::entries( dir )
@@ -102,7 +157,6 @@ def print_access_table(file,dir)
         end
     end
   }
-  
 end
 
 
@@ -143,7 +197,7 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts "\t{ 0, 0, 0 },"
 
     #カレントにあるフォルダをしらみつぶし
-    pwd =  Dir::entries( Dir::pwd )
+    pwd = Dir::entries( Dir::pwd )
     for i in pwd
       if File::ftype( i ) == "directory" 
         # 特殊パスは排除
