@@ -53,30 +53,30 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .imd.nsbmd:
 	g3dcvtr $<
-	CP $*.nsbmd ../
+#	CP $*.nsbmd ../
 
 .ica.nsbca:
 	g3dcvtr $< 
-	CP $*.nsbca ../
+#	CP $*.nsbca ../
 	# ICAカメラ とりあえず全て生成
 	ruby $(ICACONV) -rt $< $*.bin
-	CP $*.bin ../
+#	CP $*.bin ../
 
 .ita.nsbta:
 	g3dcvtr $<
-	CP $*.nsbta ../
+#	CP $*.nsbta ../
 
 .ima.nsbma:
 	g3dcvtr $<
-	CP $*.nsbma ../
+#	CP $*.nsbma ../
 
 .itp.nsbtp:
 	g3dcvtr $<
-	CP $*.nsbtp ../
+#	CP $*.nsbtp ../
 
 .iva.nsbva:
 	g3dcvtr $<
-	CP $*.nsbva ../
+#	CP $*.nsbva ../
 
 endif
 

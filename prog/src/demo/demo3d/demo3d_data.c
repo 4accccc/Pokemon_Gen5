@@ -31,7 +31,6 @@ typedef struct {
   int camera_idx;
 } DEMO3D_SETUP_DATA;
 
-
 // コンバートデータ
 #include "demo3d_resdata.cdat"
 
