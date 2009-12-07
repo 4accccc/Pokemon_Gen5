@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09.h"
-  //.include  "c09.h"
+  .include  "c09.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,111 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c09
+_EVENT_DATA    ev_c09_veteranm_01
+_EVENT_DATA    ev_c09_veteranm_02
+_EVENT_DATA    ev_pos_c09_firstvisit
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c09_flag_change:
-//  _END
+/************************************************************/
+/*					ベテラン♂（中央）						*/
+/************************************************************/
+EVENT_START	ev_c09_veteranm_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_03, C09_VETERANM_01, WIN_UP )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c09:
-  //とりあえず最初のラベルだけ生成している
-  _END
+
+/************************************************************/
+/*					ベテラン♂（左側）						*/
+/************************************************************/
+EVENT_START	ev_c09_veteranm_02
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm2_03, C09_VETERANM_02, WIN_UP )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/************************************************************/
+/*					初回POSイベント							*/
+/************************************************************/
+EVENT_START	ev_pos_c09_firstvisit
+	
+	//ベテラン（中央）：！マーク
+	_OBJ_ANIME( C09_VETERANM_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//解説しよう!
+	_BALLOONWIN_OBJMSG( msg_c09_veteranm1_01, C09_VETERANM_01 )
+	_MSGWIN_CLOSE()
+	
+	//ポケモンリーグは…
+	_BALLOONWIN_OBJMSG( msg_c09_veteranm1_02, C09_VETERANM_01 )
+	_MSGWIN_CLOSE()
+	
+	//ベテラン（左側）：右を向く
+	_OBJ_ANIME( C09_VETERANM_02, anm_staywalk_r )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()				//カメラ操作開始---------------------------▽
+	_CAMERA_PURGE()				//対象物とカメラのバインドを解く
+	_CAMERA_MOVE( 472,0,1888256,1568768,0,3874816,30 )	//カメラを動かす
+
+	
+	//全てのトレーナーにとって
+	_BALLOONWIN_OBJMSG( msg_c09_veteranm2_01, C09_VETERANM_02 )
+	_MSGWIN_CLOSE()
+	
+	_CAMERA_WAIT_MOVE()			//カメラ移動待ち
+	
+	//ベテラン（左側）：左を向く
+	_OBJ_ANIME( C09_VETERANM_02, anm_staywalk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//こちらで準備をしておくがいい
+	_BALLOONWIN_OBJMSG( msg_c09_veteranm2_02, C09_VETERANM_02 )
+	_MSGWIN_CLOSE()
+	
+	_CAMERA_RECV_MOVE( 15 )		//カメラを主人公位置に戻す
+	_CAMERA_WAIT_MOVE()			//カメラ移動待ち
+	_CAMERA_BIND()				//カメラバインド
+	_CAMERA_END()				//カメラ操作終了----------------------------△
+	
+	
+	//========================================//
+	
+	//POS無効
+	$WK_SCENE_C09 = 1
+	
+	//========================================//
+	
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staywalk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staywalk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
 
