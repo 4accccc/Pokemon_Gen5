@@ -150,14 +150,18 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
                              pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
 //  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  pWork->bgchar1M = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_M, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar1M = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 	
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-  
+
+#if PM_DEBUG
+    DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
+    DEBUG_PAUSE_SetEnable( TRUE );
+#endif
   return pWork;
 }
 
@@ -174,7 +178,7 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
   
 //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
 //                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M),
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar1M));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
@@ -224,7 +228,7 @@ void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
   
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME1_M ,
+      GFL_BG_FRAME1_S ,
       1 , 3, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
@@ -284,7 +288,7 @@ void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork)
 {
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 }
 
 //------------------------------------------------------------------------------
@@ -322,10 +326,10 @@ APP_TASKMENU_WORK* GSYNC_MESSAGE_YesNoStart(GSYNC_MESSAGE_WORK* pWork,int type)
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GSYNC_030, pWork->appitem[0].str);
+  GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_005, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GSYNC_031, pWork->appitem[1].str);
+  GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_006, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
@@ -496,151 +500,6 @@ void GSYNC_MESSAGE_DispClear(GSYNC_MESSAGE_WORK* pWork)
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
     }
   }
-}
-
-
-
-
-
-#define _BUTTON_ANYONE_X (9)
-#define _BUTTON_ANYONE_Y (6)
-
-#define _BUTTON_FRIEND_X (9)
-#define _BUTTON_FRIEND_Y (12)
-
-#define _BUTTON_TYPE_WIDTH (10*8)
-#define _BUTTON_TYPE_HEIGHT (3*8)
-
-static const GFL_UI_TP_HITTBL _AnyoneOrFriendBtnTbl[] = {
-  {	 _BUTTON_ANYONE_Y*8,  _BUTTON_ANYONE_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_ANYONE_X*8 , _BUTTON_ANYONE_X*8 + _BUTTON_TYPE_WIDTH  },
-  {	_BUTTON_FRIEND_Y*8,  _BUTTON_FRIEND_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_FRIEND_X*8 , _BUTTON_FRIEND_X*8 + _BUTTON_TYPE_WIDTH  },
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   だれでもかしっているひとか選択
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void GSYNC_MESSAGE_DispAnyoneOrFriend(GSYNC_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork)
-{
-
-  GSYNC_MESSAGE_DispInit(pWork);
-
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_005, _BUTTON_ANYONE_X, _BUTTON_ANYONE_Y);
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_006, _BUTTON_FRIEND_X, _BUTTON_FRIEND_Y);
-
-  GSYNC_MESSAGE_DispTransReq(pWork);
-
-  _ButtonSafeDelete(pWork);
-	pWork->pButton = GFL_BMN_Create( _AnyoneOrFriendBtnTbl, callback, pParentWork,  pWork->heapID );
-}
-
-
-
-
-
-
-static const GFL_UI_TP_HITTBL _levelselectBtnTbl[] = {
-  {	_ARROW_LEVEL_YU*8,   _ARROW_LEVEL_YU*8 + 16 ,
-    _ARROW_LEVEL_XU*8 ,  _ARROW_LEVEL_XU*8 + 16  },
-  {	_ARROW_LEVEL_YD*8,   _ARROW_LEVEL_YD*8 + 16 ,
-    _ARROW_LEVEL_XD*8 ,  _ARROW_LEVEL_XD*8 + 16  },
-
-  {	_ARROW_MY_YU*8,   _ARROW_MY_YU*8 + 16 ,
-    _ARROW_MY_XU*8 ,  _ARROW_MY_XU*8 + 16  },
-  {	_ARROW_MY_YD*8,   _ARROW_MY_YD*8 + 16 ,
-    _ARROW_MY_XD*8 ,  _ARROW_MY_XD*8 + 16  },
-
-  {	_ARROW_FRIEND_YU*8,   _ARROW_FRIEND_YU*8 + 16 ,
-    _ARROW_FRIEND_XU*8 ,  _ARROW_FRIEND_XU*8 + 16  },
-  {	_ARROW_FRIEND_YD*8,   _ARROW_FRIEND_YD*8 + 16 ,
-    _ARROW_FRIEND_XD*8 ,  _ARROW_FRIEND_XD*8 + 16  },
-
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   レベルの条件選択
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void GSYNC_MESSAGE_DispLevel(GSYNC_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork)
-{
-
-  GSYNC_MESSAGE_DispInit(pWork);
-
-  GFL_FONTSYS_SetColor(15, 14, 0);
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_007, 0, 0);
-
-  GFL_FONTSYS_SetColor(1, 2, 0);
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_008, 3, 4);
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_028, 1, 11);
-  GSYNC_MESSAGE_Disp(pWork, GSYNC_029, 1, 16);
-
-  pWork->msgidx[_MESSAGE_LEVEL] = GSYNC_MESSAGE_Disp(pWork, GSYNC_012,  13,  4);
-  pWork->msgidx[_MESSAGE_MY] = GSYNC_MESSAGE_Disp(pWork, GSYNC_017,     16, 11);
-  pWork->msgidx[_MESSAGE_FRIEND] = GSYNC_MESSAGE_Disp(pWork, GSYNC_017, 16, 16);
-
-  GSYNC_MESSAGE_DispTransReq(pWork);
-
-  _ButtonSafeDelete(pWork);
-	pWork->pButton = GFL_BMN_Create( _levelselectBtnTbl, callback, pParentWork,  pWork->heapID );
-}
-
-
-void GSYNC_MESSAGE_DispLevelChange(GSYNC_MESSAGE_WORK* pWork,int no)
-{
-  u16 msg[]={GSYNC_012,GSYNC_009,GSYNC_010,GSYNC_011};
-  
-  GSYNC_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_LEVEL]);
-}
-
-void GSYNC_MESSAGE_DispMyChange(GSYNC_MESSAGE_WORK* pWork,int no)
-{
-  u16 msg[]={GSYNC_017,GSYNC_013,GSYNC_014,GSYNC_015,GSYNC_016};
-  
-  GSYNC_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_MY]);
-}
-
-void GSYNC_MESSAGE_DispFriendChange(GSYNC_MESSAGE_WORK* pWork,int no)
-{
-  u16 msg[]={GSYNC_017,GSYNC_013,GSYNC_014,GSYNC_015,GSYNC_016};
-  
-  GSYNC_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_FRIEND]);
-}
-
-
-APP_TASKMENU_WORK* GSYNC_MESSAGE_SearchButtonStart(GSYNC_MESSAGE_WORK* pWork)
-{
-  int i;
-  APP_TASKMENU_INITWORK appinit;
-  APP_TASKMENU_WORK* pAppTask;
-
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  1;
-  appinit.itemWork =  &pWork->appitem[0];
-  appinit.charPosX = 18;
-  appinit.charPosY = 24;
-  appinit.posType = ATPT_RIGHT_DOWN;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
-
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GSYNC_023, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-  return pAppTask;
 }
 
 

@@ -81,5 +81,13 @@ extern void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_SettingSubBgControl(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_HandInit(GSYNC_DISP_WORK* pWork);
 extern TOUCHBAR_WORK* GSYNC_DISP_GetTouchWork(GSYNC_DISP_WORK* pWork);
-extern void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp);
+extern void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp, int draw);
+extern void GSYNC_DISP_PokemonIconMove(GSYNC_DISP_WORK* pWork);
+extern void GSYNC_DISP_PokemonIconJump(GSYNC_DISP_WORK* pWork);
+
+extern void GSYNC_DISP_ObjInit(GSYNC_DISP_WORK* pWork,int no);
+extern void GSYNC_DISP_ObjChange(GSYNC_DISP_WORK* pWork,int no,int no2);
+extern void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no);
+extern void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork);
+extern void GSYNC_DISP_BlendSmokeStart(GSYNC_DISP_WORK* pWork,BOOL bFadein);
 

@@ -104,6 +104,7 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(gamesync);
 extern const GFL_PROC_DATA G_SYNC_ProcData;
+extern const GFL_PROC_DATA G_SYNC_ProcData_Dbg;
 extern const GFL_PROC_DATA WifiClubProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
@@ -121,16 +122,22 @@ extern const GFL_PROC_DATA DebugSaveAddrProcData;
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
 	{//
+		DEBUG_OHNO_MSG0018,
+		&G_SYNC_ProcData,	
+		NULL,
+		FS_OVERLAY_ID(gamesync)
+	},
+	{//
+		DEBUG_OHNO_MSG0018,
+		&G_SYNC_ProcData_Dbg,	
+		NULL,
+		FS_OVERLAY_ID(gamesync)
+	},
+	{//
 		DEBUG_OHNO_MSG0017, 
 		&PokemonTradeWiFiProcData,	
 		_PokeTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
-	},
-	{//
-		DEBUG_OHNO_MSG0018,
-		&G_SYNC_ProcData,	
-		_PokeTradeWorkCreate,
-		FS_OVERLAY_ID(gamesync)
 	},
   {//
 		DEBUG_OHNO_MSG0015, 
@@ -153,12 +160,6 @@ static const D_MENULIST DebugMenuList[] = {
 	{//
 		DEBUG_OHNO_MSG0003, 
 		&DebugOhnoMainProcData,	
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
-	{//
-		DEBUG_OHNO_MSG0004, 
-		&G_SYNC_ProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},

@@ -22,9 +22,8 @@ typedef enum{
 } GSYNC_CALLTYPE_ENUM;
 
 
-typedef struct _EVENT_GSYNC_WORK EVENT_GSYNC_WORK;
 
-struct _EVENT_GSYNC_WORK{
+typedef struct {
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
@@ -35,7 +34,7 @@ struct _EVENT_GSYNC_WORK{
   u16 boxNo;
   u16 boxIndex;
   WIFILOGIN_PARAM aLoginWork;
-};
+} EVENT_GSYNC_WORK;
 
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);
 

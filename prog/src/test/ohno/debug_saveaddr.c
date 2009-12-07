@@ -151,6 +151,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/sodateya_work.h"
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
+#include "savedata/system_data_local.h"
 
 
 static void _keyWait(SAVEADDR_WORK* pWork)
@@ -185,6 +186,13 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_CAPTURE_POKE", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
+    }
+
+    {//ƒVƒXƒeƒ€
+      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
+
+      pAddr = (u8*)&pSys->profileId;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
     }
   }
 
