@@ -36,24 +36,26 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts(" * @note\t" + DST_NOTE);
     file.puts(" */");
     file.puts("//=========================================================================\n");
-    file.puts("#pragma once\n\n");
+    file.puts("#ifndef __DEMO3D_DEMOID_H__\n");
+    file.puts("#define __DEMO3D_DEMOID_H__\n\n");
 
-    file.puts "typedef enum {"
-    file.puts "\tDEMO3D_ID_NULL = 0,\n\n"
+    file.puts "#define DEMO3D_ID_NULL (0)\n\n"
 
     #カレントにあるフォルダをしらみつぶし
+    count = 0
     pwd =  Dir::entries( Dir::pwd )
     for i in pwd
       if File::ftype( i ) == "directory" 
         # 特殊パスは排除
         if i != "." && i != ".." && i != ".svn"
-          file.puts "\tDEMO3D_ID_" + i.upcase + ","
+          file.puts "#define DEMO3D_ID_" + i.upcase + " (" + count.to_s + ")" 
+          count += 1
         end
       end
     end
     
-    file.puts "\n\tDEMO3D_ID_MAX,"
+    file.puts "\n#define DEMO3D_ID_MAX (" + count.to_s + ")\n\n"
     
-    file.puts "} DEMO3D_ID;"
+    file.puts("#endif // __DEMO3D_DEMOID_H__");
 
 }

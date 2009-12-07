@@ -79,6 +79,10 @@ end
 
 #シーン項目(フォルダ毎のデータ)を書き出し
 def print_scene(file, dir)
+  is_elem_null = true #項目が一つもない
+
+  puts " > " + dir
+
   #フォルダ内のファイルを列挙
   scene_dir = Dir::entries( dir )
 
@@ -89,8 +93,6 @@ def print_scene(file, dir)
   file.puts("//=========================================================================\n");
   file.puts("// " + demoid );
   file.puts("//=========================================================================\n");
-  
-  puts " > " + dir
 
   #1オリジン
   cnt = 1; 
@@ -108,9 +110,13 @@ def print_scene(file, dir)
     
     #imdがなければ終了
     if imd == nil
-      print_setup(file,dir,cnt);
+      if is_elem_null == false
+        print_setup(file,dir,cnt);
+      end
       break;
     else
+      is_elem_null = false;
+
       #ヘッダ書き込み
       file.puts "//UNIT"
       file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
