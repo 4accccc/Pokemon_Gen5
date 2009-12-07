@@ -23,6 +23,7 @@ UNIQ_SCRIPTFILES = \
 	init_scr.ev \
 	hiden.ev \
 	wifi_club_scr.ev \
+	wifi_counter_scr.ev \
 	shop_scr.ev \
 	musical_scr.ev \
 	field_ev_scr.ev \
