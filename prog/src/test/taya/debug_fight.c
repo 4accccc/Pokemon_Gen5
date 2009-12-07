@@ -353,7 +353,7 @@ struct _DEBUG_BTL_WORK {
   DEBUG_BTL_SAVEDATA  saveData;
 
   u8   recBuffer[ 4096 ];
-  u32  recSize;
+  u32  recDataSize;
   GFL_STD_RandContext  recRand;
 
 };
@@ -1425,16 +1425,22 @@ FS_EXTERN_OVERLAY(battle);
  */
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam )
 {
-  u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
   u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
 
-  *headerPtr++ = setupParam->recDataSize;
-  GFL_STD_MemCopy( &setupParam->recRandContext, headerPtr, sizeof(setupParam->recRandContext) );
+  *((u32*)dataPtr) = setupParam->recDataSize;
+  TAYA_Printf("録画データセーブ準備:HeaterPtr=%p, dataSize=%dbyte\n", dataPtr, *dataPtr);
+  dataPtr += sizeof(u32);
+  GFL_STD_MemCopy( &setupParam->recRandContext, dataPtr, sizeof(setupParam->recRandContext) );
+  dataPtr += sizeof(setupParam->recRandContext);
   GFL_STD_MemCopy( setupParam->recBuffer, dataPtr, setupParam->recDataSize );
 
   wk->saveCtrl = GAMEDATA_GetSaveControlWork( wk->gameData );
   wk->saveSeq0 = 0;
   wk->saveSeq1 = 0;
+
+  wk->recDataSize = setupParam->recDataSize;
+  GFL_STD_MemCopy( setupParam->recBuffer, wk->recBuffer, wk->recDataSize );
+  wk->recRand = setupParam->recRandContext;
 }
 /**
  *  BATTLE_SETUP_PARAM の録画データセーブ終了待ち
@@ -1446,8 +1452,8 @@ static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
   switch( result ){
   case SAVE_RESULT_OK:
     {
-      u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
-      TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, %dbytes)\n", bufID, *headerPtr);
+      u32* dataPtr = (u32*)BattleRec_WorkPtrGet();
+      TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, headerPtr=%p, %dbytes)\n", bufID, dataPtr, *dataPtr);
     }
     return TRUE;
   case SAVE_RESULT_NG:
@@ -1466,22 +1472,30 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( wk->gameData );
   LOAD_RESULT result;
 
+  TAYA_Printf("ロードする\n");
   BattleRec_Load( sv, wk->heapID, &result, NULL, bufID );
 //BOOL BattleRec_Load(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,BATTLE_PARAM *bp,int num)
 
   if( result == LOAD_RESULT_OK )
   {
-    u32* headerPtr = (u32*)BattleRec_HeaderPtrGet();
     u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
 
-    dst->recDataSize = *headerPtr++;
-    GFL_STD_MemCopy( headerPtr, &dst->recRandContext, sizeof(dst->recRandContext) );
+
+    dst->recDataSize = *((u32*)dataPtr);
+    TAYA_Printf("ロードできた ptr=%p, size=%d\n", dataPtr, dst->recDataSize);
+    dataPtr += sizeof(u32);
+    GFL_STD_MemCopy( dataPtr, &dst->recRandContext, sizeof(dst->recRandContext) );
+    dataPtr += sizeof(dst->recRandContext);
     GFL_STD_MemCopy( dataPtr, dst->recBuffer, dst->recDataSize );
 
     TAYA_Printf("録画データ読み込み完了 (bufID=%d, %dbyte)\n", bufID, dst->recDataSize);
   }
   else
   {
+    dst->recDataSize = wk->recDataSize;
+    GFL_STD_MemCopy( wk->recBuffer, dst->recBuffer, wk->recDataSize );
+    dst->recRandContext = wk->recRand;
+
     TAYA_Printf("録画データ読み込み失敗: bufID=%d,  ResultCode=%d\n", bufID, result );
   }
 }
