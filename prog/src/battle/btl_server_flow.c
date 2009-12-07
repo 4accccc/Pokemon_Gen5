@@ -442,7 +442,7 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
 static inline int roundValue( int val, int min, int max );
 static inline int roundMin( int val, int min );
 static inline int roundMax( int val, int max );
-static inline BOOL perOccur( u8 per );
+static inline BOOL perOccur( BTL_SVFLOW_WORK* wk, u8 per );
 static void eventWork_Init( BTL_EVENT_WORK_STACK* stack );
 static void* eventWork_Push( BTL_EVENT_WORK_STACK* stack, u32 size );
 static void eventWork_Pop( BTL_EVENT_WORK_STACK* stack, void* adrs );
@@ -2169,11 +2169,11 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         yure_cnt = 3;
         fSuccess = TRUE;
       }else{
-        fSuccess = GFL_STD_MtRand(100) < 75;
+        fSuccess = BTL_CALC_GetRand(100) < 75;
         if( fSuccess ){
           yure_cnt = 3;
         }else{
-          yure_cnt = GFL_STD_MtRand( 4 );
+          yure_cnt = BTL_CALC_GetRand( 4 );
         }
       }
 
@@ -3040,7 +3040,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
     break;
   case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
-    bpp = get_opponent_pokeparam( wk, atPos, GFL_STD_MtRand(1) );
+    bpp = get_opponent_pokeparam( wk, atPos, BTL_CALC_GetRand(2) );
     break;
 
   case WAZA_TARGET_ENEMY_ALL:           ///< 敵側全体
@@ -3120,7 +3120,7 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     break;
   case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
     {
-      u8 r = GFL_STD_MtRand( area->numEnemys );
+      u8 r = BTL_CALC_GetRand( area->numEnemys );
       bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, area->enemyPos[r] );
     }
     break;
@@ -3259,7 +3259,7 @@ static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
               }else if( hp[1] < hp[0] ){
                 nextTargetIdx = refIdx[1];
               }else{
-                u8 rnd = GFL_STD_MtRand( 1 );
+                u8 rnd = BTL_CALC_GetRand( 2 );
                 nextTargetIdx = refIdx[ rnd ];
               }
             }
@@ -4560,6 +4560,8 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, Wa
 {
   BOOL fShrink;
 
+  BTL_Printf("ひるみ効果を与えるよ\n");
+
   if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
     fShrink = TRUE;
   }else{
@@ -4726,7 +4728,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     }
     //ランダム補正(100～85％)
     {
-      u16 ratio = 100 - GFL_STD_MtRand(16);
+      u16 ratio = 100 - BTL_CALC_GetRand( 16 );
 //      rawDamage = (rawDamage * ratio) / 100;
       fxDamage = (fxDamage * ratio) / 100;
       BTL_Printf("ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, (fxDamage>>FX32_SHIFT));
@@ -4955,7 +4957,7 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   {
     if( sick != WAZASICK_NULL )
     {
-      if( perOccur(per) ){
+      if( perOccur(wk, per) ){
         *pSickCont = sickCont;
         return sick;
       }
@@ -5122,7 +5124,7 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
   BTL_EVENTVAR_Pop();
 
   if( !failFlag ){
-    return perOccur(per);
+    return perOccur(wk, per);
   }else{
     return FALSE;
   }
@@ -5499,7 +5501,7 @@ static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
     }
   }
   GF_ASSERT( count );
-  return clwk->numCoverPos + GFL_STD_MtRand( count );
+  return clwk->numCoverPos + BTL_CALC_GetRand( count );
 }
 
 //--------------------------------------------------------------------------
@@ -6465,9 +6467,9 @@ static inline int roundMax( int val, int max )
   if( val > max ){ val = max; }
   return val;
 }
-static inline BOOL perOccur( u8 per )
+static inline BOOL perOccur( BTL_SVFLOW_WORK* wk, u8 per )
 {
-  return GFL_STD_MtRand(100) < per;
+  return BTL_CALC_GetRand( 100 ) < per;
 }
 //---------------------------------------------------------------------------------------------
 //  イベントワーク確保
@@ -7819,7 +7821,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     totalRank = roundValue( BTL_CALC_HITRATIO_MID + avoidRank - hitRank, BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
     per = BTL_CALC_HitPer( wazaHitRatio, totalRank );
 
-    return perOccur( per );
+    return perOccur( wk, per );
   }
 }
 //----------------------------------------------------------------------------------
@@ -7962,7 +7964,7 @@ static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         if( atLevel > defLevel )
         {
           per += (atLevel - defLevel);
-          ret = perOccur( per );
+          ret = perOccur( wk, per );
         }
       }
     }
@@ -8742,7 +8744,7 @@ static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
   if( fail_flag ){
     return FALSE;
   }else{
-    return perOccur(per);
+    return perOccur( wk, per );
   }
 }
 //----------------------------------------------------------------------------------
@@ -9095,6 +9097,21 @@ static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID )
 
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] 乱数生成
+ *
+ * @param   wk
+ * @param   range   乱数の範囲  ※0～(range-1) が返る／0を指定すると32bitの最大値まで返る
+ *
+ * @retval  u32     乱数
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetRand( BTL_SVFLOW_WORK* wk, u32 range )
+{
+  return BTL_CALC_GetRand( range );
+}
+
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール]指定IDのポケモンパラメータを返す
  *
  * @param   wk
@@ -9354,12 +9371,12 @@ BtlPokePos BTL_SVFTOOL_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID
     case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
     case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダムに１体
-      rnd = GFL_STD_MtRand(2);
+      rnd = BTL_CALC_GetRand( 2 );
       targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, myPos, rnd );
       break;
 
     case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体（選択）
-      rnd = GFL_STD_MtRand(2);
+      rnd = BTL_CALC_GetRand( 2 );
       if( rnd ){
         targetPos = myPos;
       }else{

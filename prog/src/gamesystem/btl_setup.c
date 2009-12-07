@@ -230,6 +230,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->netID = 0;
   dst->multiMode = 0;
   dst->recBuffer = NULL;
+  dst->fRecordPlay = FALSE;
 
   dst->partyPlayer = NULL;
   dst->partyEnemy1 = NULL;
@@ -598,7 +599,7 @@ void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
   }
 }
 /*
- *  @brief  録画用バッファを生成
+ *  @brief  セットアップ済みパラメータに録画用バッファを生成
  */
 void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID )
 {
@@ -606,5 +607,11 @@ void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID )
     dst->recBuffer = GFL_HEAP_AllocMemory( heapID, BTL_RECORD_BUFFER_SIZE );
   }
 }
-
+/*
+ *  @brief セットアップパラメータを録画再生モードに切り替え
+ */
+void BTL_SETUP_SetRecordPlayMode( BATTLE_SETUP_PARAM* dst )
+{
+  dst->fRecordPlay = TRUE;
+}
 

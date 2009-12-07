@@ -2311,7 +2311,11 @@ static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
   {
+#ifdef PM_DEBUG
+    u16 per = 100;
+#else
     u16 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER ) * 2;
+#endif
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     BTL_Printf("ポケ[%d]の てんのめぐみ で追加発生率２倍=%d%%\n", pokeID, per);
   }
@@ -2613,7 +2617,7 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     PokeSick sick;
     BPP_SICK_CONT cont;
-    u32 rand = GFL_STD_MtRand(90);
+    u32 rand = BTL_SVFTOOL_GetRand( flowWk, 90);
     if( rand < 30 ){
       sick = WAZASICK_DOKU;
     }else if( rand < 60 ){
@@ -2911,7 +2915,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     {
       BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
 
-      u8 idx = (targetCnt==1)? 0 : GFL_STD_MtRand( targetCnt );
+      u8 idx = (targetCnt==1)? 0 : BTL_SVFTOOL_GetRand( flowWk, targetCnt );
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[idx] );
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
@@ -2967,7 +2971,7 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( pokeCnt ){
       u8 idx = 0;
       if( pokeCnt > 1 ){
-        idx = GFL_STD_MtRand( pokeCnt );
+        idx = BTL_SVFTOOL_GetRand( flowWk, pokeCnt );
       }
 
       // 相手のぼうぎょ・とくぼうを比較して、弱い方に対応した自分のこうげき・とくこうをアップ
@@ -2981,7 +2985,7 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         }else if( def < sp_def ) {
           valueID = BPP_ATTACK;
         }else {
-          valueID = (GFL_STD_MtRand(2))? BPP_SP_ATTACK : BPP_ATTACK;
+          valueID = (BTL_SVFTOOL_GetRand( flowWk, 2))? BPP_SP_ATTACK : BPP_ATTACK;
         }
 
         {
@@ -3014,12 +3018,12 @@ static void handler_Yotimu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     const BTL_POKEPARAM* bpp;
     u8 ePokeID[BTL_POSIDX_MAX];
     u8 pokeCnt = BTL_SVFTOOL_GetAllOpponentFrontPokeID( flowWk, pokeID, ePokeID );
-    u8 pokeIdx = GFL_STD_MtRand( pokeCnt );
+    u8 pokeIdx = BTL_SVFTOOL_GetRand( flowWk, pokeCnt );
     bpp = BTL_SVFTOOL_GetPokeParam( flowWk, ePokeID[pokeIdx] );
 
     {
       u8 wazaCnt = BPP_WAZA_GetCount( bpp );
-      u8 wazaIdx = GFL_STD_MtRand( wazaCnt );
+      u8 wazaIdx = BTL_SVFTOOL_GetRand( flowWk, wazaCnt );
       WazaID waza = BPP_WAZA_GetID( bpp, wazaIdx );
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
@@ -3137,7 +3141,7 @@ static void handler_Omitoosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
 
     if( itemCnt ){
-      i = GFL_STD_MtRand( itemCnt );
+      i = BTL_SVFTOOL_GetRand( flowWk, itemCnt );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
       {
         BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
@@ -4187,7 +4191,7 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
     {
-      if( GFL_STD_MtRand(100) < 30 )
+      if( BTL_SVFTOOL_GetRand( flowWk, 100) < 30 )
       {
         WazaID  prevWaza = BPP_GetPrevWazaID( target );
         if( prevWaza != WAZANO_NULL )
@@ -4464,7 +4468,7 @@ static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetID[i] );
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
     {
-      if( GFL_STD_MtRand(100) < 30 )
+      if( BTL_SVFTOOL_GetRand( flowWk, 100) < 30 )
       {
         BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
@@ -4619,11 +4623,11 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   // 上がりうる（下がりうる）能力が０の場合、ランダムで１つだけ上がる（下がる）
   upEffect = downEffect = BPP_VALUE_NULL;
   if( (upCnt == 0) && (downCnt != 0) ){
-    i = GFL_STD_MtRand( downCnt );
+    i = BTL_SVFTOOL_GetRand( flowWk, downCnt );
     downEffect = work->downEffects[ i ];
   }
   else if( (upCnt != 0) && (downCnt == 0) ){
-    i = GFL_STD_MtRand( upCnt );
+    i = BTL_SVFTOOL_GetRand( flowWk, upCnt );
     upEffect = work->upEffects[ i ];
   }
   // 上がりうる能力、下がりうる能力が共に１以上の場合、考えられる組み合わせを列挙、カウントする
@@ -4653,7 +4657,7 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
     */
     // 組み合わせの中から１つをランダム決定
-    i = GFL_STD_MtRand( ptnCnt );
+    i = BTL_SVFTOOL_GetRand( flowWk, ptnCnt );
     upEffect = (work->patterns[i] >> 8) & 0xff;
     downEffect = work->patterns[i] & 0xff;
 //    BTL_Printf("-------\n決定 UP=%d, down=%d\n", upEffect, downEffect);

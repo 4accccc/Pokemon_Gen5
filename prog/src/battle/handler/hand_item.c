@@ -1247,7 +1247,7 @@ static void handler_SutaaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     WAZA_RANKEFF_SP_ATTACK, WAZA_RANKEFF_SP_DEFENCE,
     WAZA_RANKEFF_AGILITY,
   };
-  u8 idx = GFL_STD_MtRand( NELEMS(rankType) );
+  u8 idx = BTL_SVFTOOL_GetRand( flowWk, NELEMS(rankType) );
 
   common_PinchRankup( flowWk, pokeID, rankType[idx], 2 );
 }

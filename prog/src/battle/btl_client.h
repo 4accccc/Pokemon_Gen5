@@ -55,6 +55,7 @@ extern BTL_CLIENT* BTL_CLIENT_Create(
   HEAPID heapID );
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
+
 extern u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk );
 
 
@@ -71,7 +72,7 @@ extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
 extern BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client );
 
 
-
+extern const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size );
 
 
 #endif

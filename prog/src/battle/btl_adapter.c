@@ -240,13 +240,18 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
  * [SERVER用] クライアントから帰ってきたデータへのポインタを取得
  *
  * @param   wk        アダプタモジュール
+ * @param   size      [out] データサイズ
  *
  * @retval  const void*   データポインタ
  */
 //--------------------------------------------------------------------------------------
-const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk )
+const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk, u32* size )
 {
   GF_ASSERT(wk->returnDataPreparedFlag);
+
+  if( size != NULL ){
+    *size = wk->returnDataSize;
+  }
   return wk->returnDataAdrs;
 }
 
@@ -259,10 +264,10 @@ const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk )
  * @retval  u32   データポインタ
  */
 //--------------------------------------------------------------------------------------
-u32 BTL_ADAPTER_GetReturnDataCount( BTL_ADAPTER* wk )
+u32 BTL_ADAPTER_GetReturnDataSize( BTL_ADAPTER* wk )
 {
   GF_ASSERT(wk->returnDataPreparedFlag);
-  return wk->returnDataSize / sizeof(BTL_ACTION_PARAM);
+  return wk->returnDataSize;
 }
 
 //--------------------------------------------------------------------------------------

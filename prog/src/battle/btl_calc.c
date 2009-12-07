@@ -16,6 +16,43 @@
 
 //--------------------------------------------------------------
 /**
+ *  Global
+ */
+//--------------------------------------------------------------
+static GFL_STD_RandContext gRandContext = {0};
+
+//=============================================================================================
+/**
+ * 乱数システム初期化
+ *
+ * @param   randContext
+ */
+//=============================================================================================
+void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
+{
+  gRandContext = *randContext;
+}
+//=============================================================================================
+/**
+ * 乱数値を返す
+ *  ※返す値は 0～(pattern-1) の範囲。pattern==0だと、32bit全範囲。
+ *
+ * @param   pattern   乱数の取りうる値の範囲
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_GetRand( u32 range )
+{
+  if( range ){
+    return GFL_STD_Rand0( &gRandContext, range );
+  }else{
+    return GFL_STD_Rand( &gRandContext, GFL_STD_RAND_MAX );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  *  ステータスランク補正テーブル
  */
 //--------------------------------------------------------------
@@ -101,7 +138,7 @@ BOOL BTL_CALC_CheckCritical( u8 rank )
 {
   GF_ASSERT(rank < NELEMS(CriticalRankTable));
 
-  return (GFL_STD_MtRand( CriticalRankTable[rank] ) == 0);
+  return (BTL_CALC_GetRand( CriticalRankTable[rank] ) == 0);
 }
 
 //--------------------------------------------------------------
@@ -208,20 +245,18 @@ u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff )
  *  抵抗相性ランダム取得
  */
 //--------------------------------------------------------------
-PokeType  BTL_CALC_RandomResistType( PokeType type )
+u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst )
 {
-  u8  types[ POKETYPE_NUMS ];
   u8  cnt, i;
 
   for(i=0, cnt=0; i<POKETYPE_NUMS; ++i)
   {
     if( (TypeAffTbl[type][i] == x0) || (TypeAffTbl[type][i] == xH) ){
-      types[cnt++] = i;
+      dst[cnt++] = i;
     }
   }
 
-  i = GFL_STD_MtRand(cnt);
-  return types[ i ];
+  return cnt;
 }
 
 
@@ -258,7 +293,7 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
 
     u8  max, p, i;
 
-    p = GFL_STD_MtRand( 100 );
+    p = BTL_CALC_GetRand( 100 );
     max = numHitMax - HIT_COUNT_MIN;
     for(i=0; i<HIT_COUNT_RANGE; i++)
     {
@@ -526,7 +561,7 @@ WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect )
 //=============================================================================================
 WazaID BTL_CALC_RandWaza( const u16* excludeWazaTbl, u16 tblElems )
 {
-  u16 waza = 1 + GFL_STD_MtRand( WAZANO_MAX - tblElems );
+  u16 waza = 1 + BTL_CALC_GetRand( WAZANO_MAX - tblElems );
   u16 i;
 
   for(i=0; i<tblElems; ++i)

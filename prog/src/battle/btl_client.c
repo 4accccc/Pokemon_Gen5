@@ -130,15 +130,15 @@ struct _BTL_CLIENT {
 /*--------------------------------------------------------------------------*/
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BtlRotateDir _testAI_dir( BtlRotateDir prevDir );
 static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc );
 static BOOL SelActProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
@@ -165,8 +165,8 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
@@ -306,6 +306,17 @@ void BTL_CLIENT_Delete( BTL_CLIENT* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+/**
+ *  録画記録データを取得
+ */
+const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size )
+{
+  if( wk->btlRec ){
+    return BTL_REC_GetDataPtr( wk->btlRec, size );
+  }
+  return NULL;
+}
+
 //=============================================================================================
 /**
  * 描画処理モジュールをアタッチ（UIクライアントのみ）
@@ -378,13 +389,23 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     ClientSubProc   proc[ BTL_CLIENT_TYPE_MAX ];
   }procTbl[] = {
 
-    { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },
-    { BTL_ACMD_WAIT_SETUP,      { SubProc_UI_Setup,          SubProc_AI_Setup } },
-    { BTL_ACMD_SELECT_ROTATION, { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation } },
-    { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,   SubProc_AI_SelectAction } },
-    { BTL_ACMD_SELECT_POKEMON,  { SubProc_UI_SelectPokemon,  SubProc_AI_SelectPokemon } },
-    { BTL_ACMD_SERVER_CMD,      { SubProc_UI_ServerCmd,      SubProc_AI_ServerCmd } },
-    { BTL_ACMD_RECORD_DATA,     { SubProc_UI_RecordData,     NULL } },
+    { BTL_ACMD_WAIT_SETUP,
+      { SubProc_UI_Setup,          NULL,                      SubProc_UI_Setup           } },
+
+    { BTL_ACMD_SELECT_ROTATION,
+      { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation, SubProc_REC_SelectRotation } },
+
+    { BTL_ACMD_SELECT_ACTION,
+       { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+
+    { BTL_ACMD_SELECT_POKEMON,
+       { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
+
+    { BTL_ACMD_SERVER_CMD,
+       { SubProc_UI_ServerCmd,     NULL,                      SubProc_UI_ServerCmd       } },
+
+    { BTL_ACMD_RECORD_DATA,
+       { SubProc_UI_RecordData,    NULL,                      NULL                       } },
   };
 
   int i;
@@ -423,10 +444,7 @@ static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
 //  wk->returnDataPtr =
   return TRUE;
 }
-static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
-{
-  return TRUE;
-}
+
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
@@ -444,11 +462,6 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq )
-{
-
-  return TRUE;
-}
 
 
 
@@ -482,6 +495,11 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
+static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
+{
+
+}
+
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
   // @todo AI用。今は仮動作
@@ -493,7 +511,7 @@ static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
 }
 static BtlRotateDir _testAI_dir( BtlRotateDir prevDir )
 {
-  u32 rnd = GFL_STD_MtRand( 100 );
+  u32 rnd = BTL_CALC_GetRand( 100 );
 
   if( prevDir == BTL_ROTATEDIR_NONE )
   {
@@ -557,6 +575,11 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
+static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
+{
+  return TRUE;
+}
+
 //----------------------------------------------------------------------
 /**
  *  アクション選択ワーク初期化
@@ -607,12 +630,12 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       (*seq) += 2;
     }
     break;
-
   case 2:
-    if( BTLV_WaitMsg(wk->viewCore) ){
-      (*seq)++;
+    if( !BTLV_WaitMsg(wk->viewCore) ){
+      return FALSE;
     }
-    break;
+    (*seq)++;
+    /* fallthru */
 
   case 3:
     // アクション選択開始
@@ -1276,7 +1299,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           }
         }
         if( cnt ){
-          cnt = GFL_STD_MtRand( cnt );
+          cnt = BTL_CALC_GetRand( cnt );
           wazaIdx = usableWazaIdx[ cnt ];
           targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
         }else{
@@ -1306,7 +1329,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
         if( aliveCnt )
         {
-          u8 rndIdx = GFL_STD_MtRand(aliveCnt);
+          u8 rndIdx = BTL_CALC_GetRand(aliveCnt);
           targetPos = alivePokePos[ rndIdx ];
         }
       }
@@ -1572,6 +1595,11 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
   }
   return TRUE;
 }
+static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq )
+{
+  return TRUE;
+}
+
 
 //---------------------------------------------------
 // 操作記録データ受信->保存
@@ -1592,12 +1620,6 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
-static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq )
-{
-  // AIは何もしちゃダメ
-  return TRUE;
-}
-
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
   static const struct {

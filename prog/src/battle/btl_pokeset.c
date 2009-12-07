@@ -92,7 +92,7 @@ void BTL_POKESET_SortByAgility( BTL_POKESET* set, BTL_SVFLOW_WORK* flowWk )
     for(j=i+1; j<set->count; ++j)
     {
       if( (set->sortWork[j] > set->sortWork[i])
-      ||  ((set->sortWork[j] == set->sortWork[i]) && GFL_STD_MtRand(2)) // ‘f‘‚³ˆê’v‚È‚çƒ‰ƒ“ƒ_ƒ€
+      ||  ((set->sortWork[j] == set->sortWork[i]) && BTL_SVFTOOL_GetRand(flowWk, 2)) // ‘f‘‚³ˆê’v‚È‚çƒ‰ƒ“ƒ_ƒ€
       ){
         BTL_POKEPARAM* tmpBpp;
         u16            tmpDmg;

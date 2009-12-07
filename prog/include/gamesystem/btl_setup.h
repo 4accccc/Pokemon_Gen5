@@ -75,6 +75,11 @@ extern void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst );
 extern void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID );
 
 
+/*
+ *  @brief  セットアップ済みパラメータを録画再生モードに切り替え
+ */
+extern void BTL_SETUP_SetRecordPlayMode( BATTLE_SETUP_PARAM* dst );
+
 ////////////////////////////////////////////////////////////////////////
 /*
  * BATTLE_SETUP_PARAM初期化ユーティリティ関数群

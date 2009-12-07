@@ -1015,7 +1015,7 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       for(i=0; i<waza_cnt; ++i){
         type[i] = WAZADATA_GetType( BPP_WAZA_GetID(bpp, i) );
       }
-      i = GFL_STD_MtRand( waza_cnt );
+      i = BTL_SVFTOOL_GetRand( flowWk, waza_cnt );
       next_type = PokeTypePair_MakePure( type[i] );
     }
 
@@ -1768,7 +1768,7 @@ static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     };
     PokeSick sick;
     BPP_SICK_CONT cont;
-    u8 rand = GFL_STD_MtRand( NELEMS(sick_tbl) );
+    u8 rand = BTL_SVFTOOL_GetRand( flowWk, NELEMS(sick_tbl) );
 
     sick = sick_tbl[ rand ];
     cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
@@ -2064,7 +2064,7 @@ static void handler_PsycoWave( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 level = BPP_GetValue( bpp, BPP_LEVEL );
-    u16 rand = 50 + GFL_STD_MtRand(101);
+    u16 rand = 50 + BTL_SVFTOOL_GetRand( flowWk, 101);
     u16 damage = level * rand / 100;
     if( damage == 0 ){
       damage = 1;
@@ -2864,7 +2864,7 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_ADD_SICK* param;
       u8 turns;
 
-      turns = 3 + GFL_STD_MtRand(2);
+      turns = 3 + BTL_SVFTOOL_GetRand( flowWk, 2);
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
@@ -3472,7 +3472,7 @@ static void handler_Present_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u32 rand = GFL_STD_MtRand( 100 );
+    u32 rand = BTL_SVFTOOL_GetRand( flowWk, 100 );
     u32 pow = 0;
 
     if( rand < 40 ){
@@ -4262,7 +4262,7 @@ static void handler_Magnitude_pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 i, per = GFL_STD_MtRand( 100 );
+    u8 i, per = BTL_SVFTOOL_GetRand( flowWk, 100 );
 
     for(i=0; i<NELEMS(powTbl); ++i)
     {
@@ -4394,7 +4394,7 @@ static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       if( counter >= NELEMS(randRange) ){
         counter = NELEMS(randRange) - 1;
       }
-      if( GFL_STD_MtRand( randRange[counter] ) != 0 )
+      if( BTL_SVFTOOL_GetRand( flowWk, randRange[counter] ) != 0 )
       {
         // 連続利用による失敗。失敗したらハンドラごと消滅することで、こらえるチェックに反応しない。
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
@@ -4441,7 +4441,7 @@ static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
       if( counter >= NELEMS(randRange) ){
         counter = NELEMS(randRange) - 1;
       }
-      if( GFL_STD_MtRand( randRange[counter] ) != 0 )
+      if( BTL_SVFTOOL_GetRand( flowWk, randRange[counter] ) != 0 )
       {
         // 連続利用による失敗。失敗したらハンドラごと消滅することで、その後のイベントに反応しない。
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
@@ -4868,7 +4868,7 @@ static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
     if( valid_cnt )
     {
-      u8 idx = GFL_STD_MtRand( valid_cnt );
+      u8 idx = BTL_SVFTOOL_GetRand( flowWk, valid_cnt );
       for(i=0; i<NELEMS(rankType); ++i)
       {
         if( BPP_IsRankEffectValid(bpp, rankType[i], 2) )
@@ -5029,15 +5029,21 @@ static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     WazaID  waza = BPP_GetPrevWazaID( bpp );
     if( waza != WAZANO_NULL )
     {
-      BTL_HANDEX_PARAM_CHANGE_TYPE* param;
       PokeType type = WAZADATA_GetType( waza );
-      PokeType next_type = BTL_CALC_RandomResistType( type );
+      PokeType *typeArray = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(PokeType)* POKETYPE_NUMS );
+      u32 cnt = BTL_CALC_GetResistTypes( type, typeArray );
+      if( cnt )
+      {
+        BTL_HANDEX_PARAM_CHANGE_TYPE* param;
+        u32 idx = BTL_SVFTOOL_GetRand( flowWk, cnt );
+        PokeType next_type = typeArray[ idx ];
 
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
-      param->next_type = PokeTypePair_MakePure( next_type );
-      BTL_Printf("対象ポケ=%d, そのワザ=%d, そのタイプ=%d, 抵抗タイプ=%d\n",
-        BPP_GetID(bpp), waza, type, param->next_type);
-      param->pokeID = pokeID;
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
+        param->next_type = PokeTypePair_MakePure( next_type );
+        BTL_Printf("対象ポケ=%d, そのワザ=%d, そのタイプ=%d, 抵抗タイプ=%d\n",
+            BPP_GetID(bpp), waza, type, param->next_type);
+        param->pokeID = pokeID;
+      }
     }
   }
 }
@@ -7366,7 +7372,7 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
     if( wazaCnt )
     {
-      u8 idx = GFL_STD_MtRand( wazaCnt );
+      u8 idx = BTL_SVFTOOL_GetRand( flowWk, wazaCnt );
       BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, wazaAry[idx] );
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  wazaAry[idx] );
@@ -7417,7 +7423,7 @@ static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       }
       if( cnt )
       {
-        u8 idx = GFL_STD_MtRand( cnt );
+        u8 idx = BTL_SVFTOOL_GetRand( flowWk, cnt );
         BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, work[idx] );
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  work[idx] );

@@ -126,6 +126,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
+static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
@@ -175,6 +176,7 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
 static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static void checkWinner( BTL_MAIN_MODULE* wk );
+static void storeRecordData( BTL_MAIN_MODULE* wk );
 
 
 //--------------------------------------------------------------
@@ -210,6 +212,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
 
       GFL_STD_RandGeneralInit( &wk->randomContext );
+      BTL_CALC_InitRandSys( &wk->randomContext );
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
       wk->fWazaEffEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
@@ -218,8 +221,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
       BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
-
-//      WAZADATA_PrintDebug();
       (*seq)++;
     }
     break;
@@ -262,6 +263,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
   {
     BTL_Printf("バトルメインプロセス終了します\n");
     checkWinner( wk );
+    storeRecordData( wk );
     reflectPartyData( wk );
     return GFL_PROC_RES_FINISH;
   }
@@ -3084,5 +3086,27 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
   }
 
   wk->setupParam->result = result;
+}
+
+/**
+ *  録画用操作データがあればバトルパラメータに格納
+ */
+static void storeRecordData( BTL_MAIN_MODULE* wk )
+{
+  if( wk->setupParam->recBuffer != NULL )
+  {
+    BTL_CLIENT* myClient = wk->client[ wk->myClientID ];
+    const void* recData;
+    u32 dataSize;
+
+    recData = BTL_CLIENT_GetRecordData( myClient, &dataSize );
+    if( recData )
+    {
+      BTL_Printf("録画データ %d bytes 書き戻し\n", dataSize );
+      GFL_STD_MemCopy( recData, wk->setupParam->recBuffer, dataSize );
+      wk->setupParam->recDataSize = dataSize;
+      wk->setupParam->recRandContext = wk->randomContext;
+    }
+  }
 }
 

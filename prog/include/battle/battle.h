@@ -171,7 +171,7 @@ typedef struct {
   u8              commPos;    ///< 通信対戦なら自分の立ち位置（非通信時は無視）
   u8              netID;      ///< NetID
   u8              multiMode;  ///< ダブルの時、１だとマルチバトル。
-  u8              fExpDisable;///< TRUEだと経験値取得を行わない
+  u8              fRecordPlay;///< TRUEだと録画データ再生モード
 
   //対戦データ
   POKEPARTY*      partyPlayer;  ///< プレイヤーのパーティ
@@ -195,6 +195,8 @@ typedef struct {
   u8          capturedPokeIdx;  ///< 捕獲したポケモンのメンバー内インデックス（partyEnemy1 内）
 
   u8*         recBuffer;        ///< 録画データ生成先
+  u32         recDataSize;      ///< 録画データサイズ
+  GFL_STD_RandContext  recRandContext;    ///< 録画データ用乱数コンテキスト
 
 }BATTLE_SETUP_PARAM;
 

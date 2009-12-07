@@ -17,8 +17,8 @@
 typedef enum {
   BTL_RECFIELD_NULL = 0,
   BTL_RECFIELD_ACTION,        ///< 通常行動選択
-  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
-  BTL_RECFIELD_ROTATE,        ///< ローテーション
+  BTL_RECFIELD_ROTATION,      ///< ローテーション
+//  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
 }BtlRecFieldType;
 
 
@@ -36,6 +36,14 @@ static inline u8 MakeClientActionTag( u8 clientID, u8 numAction )
   GF_ASSERT(numAction < 32);
 
   return (clientID << 5) | (numAction);
+}
+
+static inline u8 MakeRotationTag( u8 clientID, BtlRotateDir dir )
+{
+  GF_ASSERT(clientID < 8);
+  GF_ASSERT(dir < 32);
+
+  return (clientID << 5) | (dir);
 }
 
 
@@ -120,7 +128,21 @@ BOOL BTL_REC_IsCorrect( const BTL_REC* wk )
   return !(wk->fSizeOver);
 }
 
-
+//=============================================================================================
+/**
+ * 書き込みデータ取得
+ *
+ * @param   wk
+ * @param   size
+ *
+ * @retval  const void*
+ */
+//=============================================================================================
+const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size )
+{
+  *size = wk->writePtr;
+  return wk->buf;
+}
 
 
 
@@ -213,3 +235,67 @@ void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize )
   }
   return NULL;
 }
+
+//=============================================================================================
+/**
+ * [RECTOOL] ローテーション選択データを１クライアント分、追加
+ *
+ * @param   recTool
+ * @param   clientID
+ * @param   dir
+ */
+//=============================================================================================
+void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir )
+{
+  // ヘッダ記述用に 1byte 空けておく
+  if( recTool->writePtr == 0 ){
+    recTool->type = BTL_RECFIELD_ROTATION;
+    recTool->writePtr++;
+  }
+
+  GF_ASSERT(recTool->type == BTL_RECFIELD_ACTION);
+
+  if( (recTool->clientBit & (1 << clientID)) == 0 )
+  {
+    if( recTool->writePtr < sizeof(recTool->buffer) )
+    {
+      recTool->clientBit |= (1 << clientID);
+      recTool->numClients++;
+      recTool->buffer[ recTool->writePtr++ ] = MakeRotationTag( clientID, dir );
+    }
+    else
+    {
+      GF_ASSERT(0);   // データ容量が多すぎる
+      recTool->fError = 1;
+    }
+  }
+  else
+  {
+    GF_ASSERT_MSG(0, "client_%d のデータ書き込みが２度発生している", clientID);
+  }
+
+}
+
+//=============================================================================================
+/**
+ * [RECTOOL] ローテーション選択データの書き込みを終了
+ *
+ * @param   recTool
+ * @param   dataSize  [out] クライアントに送信するデータサイズが入る
+ *
+ * @retval  void*   正常終了ならクライアントに送信するデータポインタ／エラー時はNULL
+ */
+//=============================================================================================
+void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize )
+{
+  GF_ASSERT(recTool->type == BTL_RECFIELD_ROTATION);
+
+  if( recTool->fError == 0 )
+  {
+    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients );
+    *dataSize = recTool->writePtr;
+    return recTool->buffer;
+  }
+  return NULL;
+}
+

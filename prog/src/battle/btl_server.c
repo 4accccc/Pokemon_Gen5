@@ -100,10 +100,13 @@ static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
-static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
+static BOOL SendActionRecord( BTL_SERVER* server );
+static BOOL SendRotateRecord( BTL_SERVER* server );
+static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
+static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static BOOL WaitAdapterCmd( BTL_SERVER* server );
@@ -420,15 +423,32 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
       SCQUE_Init( server->que );
       for(i=0; i<server->numClient; ++i)
       {
-        dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
+        dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
         BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, *dir );
       }
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
+
+      if( SendRotateRecord(server) ){
+        (*seq)++;
+      }else{
+        (*seq) += 2;
+      }
     }
     break;
 
   case 2:
+    if( WaitAdapterCmd(server) )
+    {
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    (*seq)++;
+    break;
+
+  case 4:
     if( WaitAdapterCmd(server) )
     {
       ResetAdapterCmd( server );
@@ -464,21 +484,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
 
-      {
-        void* recData;
-        u32   recDataSize;
-
-        recData = MakeSelectActionRecord( server, &recDataSize );
-        if( recData != NULL )
-        {
-          BTL_Printf("操作記録データを送信する (%dbytes)\n", recDataSize);
-          SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
-          (*seq)++;
-        }
-        else
-        {
-          (*seq) += 2;
-        }
+      if( SendActionRecord(server) ){
+        (*seq)++;
+      }else{
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
       }
     }
     break;
@@ -542,33 +551,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
-/**
- * 操作記録用のアクション選択データを生成
- *
- * @param   server
- * @param   u32
- *
- * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
- */
-static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize )
-{
-  u32 ID;
 
-  BTL_RECTOOL_Init( &server->recTool );
-
-  for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
-  {
-    if( server->client[ID].myID != CLIENT_DISABLE_ID )
-    {
-      const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[ID].adapter );
-      u32 numAction = BTL_ADAPTER_GetReturnDataCount( server->client[ID].adapter );
-
-      BTL_RECTOOL_PutSelActionData( &server->recTool, ID, action, numAction );
-    }
-  }
-
-  return BTL_RECTOOL_FixSelActionData( &server->recTool, dataSize );
-}
 
 
 //----------------------------------------------------------------------------------
@@ -599,12 +582,28 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
       BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
+
+      if( SendActionRecord(server) ){
+        (*seq)++;
+      }else{
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
+      }
     }
     break;
 
   case 2:
+    if( WaitAdapterCmd(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    (*seq)++;
+    break;
+
+  case 4:
     if( WaitAdapterCmd(server) )
     {
       ResetAdapterCmd( server );
@@ -656,12 +655,28 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
       BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
+
+      if( SendActionRecord(server) ){
+        (*seq)++;
+      }else{
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
+      }
     }
     break;
 
   case 2:
+    if( WaitAdapterCmd(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    (*seq)++;
+    break;
+
+  case 4:
     if( WaitAdapterCmd(server) )
     {
       ResetAdapterCmd( server );
@@ -722,6 +737,94 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
+
+
+/**
+ *  アクション記録データ送信開始
+ */
+static BOOL SendActionRecord( BTL_SERVER* server )
+{
+  void* recData;
+  u32   recDataSize;
+  recData = MakeSelectActionRecord( server, &recDataSize );
+  if( recData != NULL ){
+    BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
+    SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ *  ローテーション記録データ送信開始
+ */
+static BOOL SendRotateRecord( BTL_SERVER* server )
+{
+  void* recData;
+  u32   recDataSize;
+  recData = MakeRotationRecord( server, &recDataSize );
+  if( recData != NULL ){
+    BTL_Printf("ローテーション記録データを送信する (%dbytes)\n", recDataSize);
+    SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * アクション記録データを生成
+ *
+ * @param   server
+ * @param   dataSize   [out] 生成されたデータサイズ
+ *
+ * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
+ */
+static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize )
+{
+  u32 ID;
+
+  BTL_RECTOOL_Init( &server->recTool );
+
+  for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
+  {
+    if( server->client[ID].myID != CLIENT_DISABLE_ID )
+    {
+      u32 returnDataSize, numAction;
+      const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[ID].adapter, &returnDataSize );
+
+      numAction = returnDataSize / sizeof(BTL_ACTION_PARAM);
+      BTL_RECTOOL_PutSelActionData( &server->recTool, ID, action, numAction );
+    }
+  }
+
+  return BTL_RECTOOL_FixSelActionData( &server->recTool, dataSize );
+}
+/**
+ * ローテーション記録データを生成
+ *
+ * @param   server
+ * @param   dataSize   [out] 生成されたデータサイズ
+ *
+ * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
+ */
+static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize )
+{
+  u32 ID;
+
+  BTL_RECTOOL_Init( &server->recTool );
+
+  for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
+  {
+    if( server->client[ID].myID != CLIENT_DISABLE_ID )
+    {
+      const BtlRotateDir *pDir = BTL_ADAPTER_GetReturnData( server->client[ID].adapter, NULL );
+      BTL_RECTOOL_PutRotationData( &server->recTool, ID, *pDir );
+    }
+  }
+
+  return BTL_RECTOOL_FixRotationData( &server->recTool, dataSize );
+}
+
 
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd )
 {
@@ -802,10 +905,19 @@ SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID )
   }
   return NULL;
 }
+
+
+
+
+
 u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk )
 {
   GF_ASSERT(clwk->adapter);
-  return BTL_ADAPTER_GetReturnDataCount( clwk->adapter );
+  {
+    u32 dataSize = BTL_ADAPTER_GetReturnDataSize( clwk->adapter );
+    GF_ASSERT((dataSize%sizeof(BTL_ACTION_PARAM))==0);
+    return dataSize / sizeof(BTL_ACTION_PARAM);
+  }
 }
 const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
 {
@@ -813,7 +925,7 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
   GF_ASSERT_MSG(posIdx<clwk->numCoverPos, "posIdx=%d, numCoverPos=%d", posIdx, clwk->numCoverPos);
 
   {
-    const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( clwk->adapter );
+    const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( clwk->adapter, NULL );
     action += posIdx;
     return action;
   }

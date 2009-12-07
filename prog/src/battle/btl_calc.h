@@ -158,6 +158,9 @@ static inline BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+extern void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext );
+extern u32 BTL_CALC_GetRand( u32 range );
+
 extern u16 BTL_CALC_StatusRank( u16 defaultVal, u8 rank );
 extern u8 BTL_CALC_HitPer( u8 defPer, u8 rank );
 extern BOOL BTL_CALC_CheckCritical( u8 rank );
@@ -167,7 +170,7 @@ extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 
 extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
 extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
-extern PokeType  BTL_CALC_RandomResistType( PokeType type );
+extern u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst );
 
 
 
