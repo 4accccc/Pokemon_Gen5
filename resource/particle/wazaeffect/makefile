@@ -31,8 +31,7 @@ include $(PROJECT_RSCDIR)\macro_define
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 ifeq ($(CONVERTUSER),true)
-SUBDIRS	= ../../../../pokemon_wb_doc/particle/battleeffect \
-					../../../../pokemon_wb_doc/particle/wazaeffect
+SUBDIRS	= ../../../../pokemon_wb_doc/particle/wazaeffect
 endif
 
 #コンバート対象のファイルツリーを生成
