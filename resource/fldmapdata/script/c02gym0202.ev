@@ -138,7 +138,12 @@ EVENT_END
 
 //盗難イベント開始
 ev_c02gym_tounan:
-	
+
+    DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+   
+    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
 	//ジムリーダー夫を配置
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
 	
@@ -154,13 +159,27 @@ ev_c02gym_tounan:
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_come )
 	_OBJ_ANIME_WAIT()
 	
-	//主人公、びっくりして、横に飛び退く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump )
-	_OBJ_ANIME_WAIT()
-	
 	//間を作る為のウェイト
 	_TIME_WAIT  ( 16 )
+    
+   	//主人公、びっくりして、横に飛び退く
+    //プレイヤーが通る3グリッド分を用意
+    SWITCH $POSX
+    CASE 4THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_a )
+	_OBJ_ANIME_WAIT()
 	
+    CASE 5 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_b )
+	_OBJ_ANIME_WAIT()
+	
+    CASE 6 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_c )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    ENDSWITCH
+    
 	//アロエ：びっくりして、ジャンプする
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_leader_jump  )
 	_OBJ_ANIME_WAIT()
@@ -213,15 +232,39 @@ EVENT_END
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	主人公：びっくりして、横に飛び退く
+//	主人公：びっくりして、横に飛び退く_A
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_player_jump 
+	_ANIME_LABEL	anm_player_jump_a 
 	
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA AC_JUMP_L_2G_16F,1
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公：びっくりして、横に飛び退く_B
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_player_jump_b 
+	
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	主人公：びっくりして、横に飛び退く_C
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_player_jump_c 
+	
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

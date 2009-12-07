@@ -68,8 +68,31 @@ EVENT_START   ev_pos_c02_rival_01
 	//ライバルを配置
 	//初期状態では、博物館前に配置されている（後のイベントで使用する為）
 	//ポスを踏んだとき、ポケセン案内イベントの位置に配置し直す。
-	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 600, DIR_RIGHT )
+
+	{ //ここからローカル変数の参照制限範囲開始
+    DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
+    //プレイヤーが通る4グリッド分を用意
+    SWITCH $POSZ
+    CASE 598 THEN
+	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 598, DIR_RIGHT )
 	
+    CASE 599 THEN
+	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 599, DIR_RIGHT )
+     
+    CASE 600 THEN
+	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 600, DIR_RIGHT )
+ 	
+     CASE 601 THEN
+	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 601, DIR_RIGHT )
+ 
+    DEFAULT
+    ENDSWITCH
+    }
+    
 	//主人公がライバルに気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_kiduku )
 	_OBJ_ANIME_WAIT()
@@ -134,7 +157,7 @@ _ANIME_LABEL	anm_player_01_kiduku
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_01_walk
 
-	_ANIME_DATA	AC_WALK_L_8F,26
+	_ANIME_DATA	AC_WALK_L_8F,19
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -151,7 +174,7 @@ _ANIME_LABEL	anm_rival_01_come
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_walk
 
-	_ANIME_DATA	AC_WALK_L_8F,27
+	_ANIME_DATA	AC_WALK_L_8F,20
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -175,7 +198,7 @@ _ANIME_LABEL	anm_rival_01_saru
 /**************************************************************/
 EVENT_START   ev_pos_c02_boss_01
 	
-	_OBJ_ADD_EX( 636, 588, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	_OBJ_ADD_EX( 636, 586, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
 	
 	//プレイヤーがNにきづく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_kiduku)
@@ -183,6 +206,10 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nがやってくる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公がNのほうを向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn_d )
 	_OBJ_ANIME_WAIT()
 	
 	//Nがしゃべる
@@ -211,10 +238,6 @@ EVENT_START   ev_pos_c02_boss_01
 	//Nとの戦闘
 	_CALL		ev_boss_btl
 	
-	//主人公がNのほうを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn )
-	_OBJ_ANIME_WAIT()
-	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
 	_BALLOONWIN_OBJMSG( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00 )
@@ -222,6 +245,10 @@ EVENT_START   ev_pos_c02_boss_01
     
 	//Nが5歩移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公がNのほうを向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn_l )
 	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
@@ -272,7 +299,16 @@ _ANIME_LABEL	anm_player_02_kiduku
 //--------------------------------------------------------------------
 //主人公:Nのほうを向く                             
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_02_turn
+_ANIME_LABEL	anm_player_02_turn_d
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+	
+//--------------------------------------------------------------------
+//主人公:Nのほうを向く                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_02_turn_l
 
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
@@ -285,8 +321,6 @@ _ANIME_LABEL	anm_boss_01_walk_01
 	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
-	
-	
 
 //--------------------------------------------------------------------
 //N:5歩移動する                             

@@ -40,13 +40,12 @@ _EVENT_DATA    ev_pos_c02gym0101_leader_01
 _EVENT_DATA    ev_init_c02gym0101
 _EVENT_DATA_END
 
-
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_zone_c02gym0101:
 //  _END
-_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
+
 
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              　 */
@@ -57,11 +56,12 @@ INIT_EVENT_START	ev_init_c02gym0101
 	
 	IF $SCWK_TEMP0 == 0 THEN
 		IF $WK_SCENE_C02GYM0101 == 1  THEN 
-			IF FLAG_ON( FE_MUSEUM_TOUNAN) THEN	
+			IF FLAG_OFF( FE_MUSEUM_TOUNAN) THEN	
 		
-				_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 3, 3, DIR_DOWN )
-		
-			ENDIF	
+				_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 3, 4, DIR_DOWN )
+				
+			ENDIF
+				
 		ENDIF
 	ENDIF
 	
@@ -153,7 +153,13 @@ EVENT_END
 EVENT_START		ev_pos_c02gym0101_ad_01
 
 	//博物館案内イベント
-		
+
+
+		DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+		DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+		_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
 		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
 		
@@ -180,8 +186,22 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：主人公の前まで来る
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_kuru)
+		//POSの3グリッド分を用意する
+		SWITCH $POSX
+		CASE 11 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_kuru_a)
 		_OBJ_ANIME_WAIT()	
+
+		CASE 12 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_kuru_b)
+		_OBJ_ANIME_WAIT()	
+		     
+		CASE 13 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_kuru_c)
+		_OBJ_ANIME_WAIT()	
+
+		DEFAULT
+		ENDSWITCH
 		
 		//副館長：主人公が動くまで、ウェイトを持たせる（主人公の躊躇の表現）
 		_TIME_WAIT  ( 32 ) 
@@ -192,11 +212,27 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME_WAIT()	
 		
 		//副館長：展示物（骨（大））まで移動
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai)	
-		
+		//プレイヤーが通る3グリッド分を用意
 		//主人公：展示物（骨（大））まで移動
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai)
-		_OBJ_ANIME_WAIT()		
+		
+		SWITCH $POSX
+		CASE 11 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_a)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_a)
+		_OBJ_ANIME_WAIT()	
+	
+		CASE 12 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_b)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_b)
+		_OBJ_ANIME_WAIT()	
+     
+		CASE 13 THEN
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_c)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_c)
+		_OBJ_ANIME_WAIT()	
+		
+		DEFAULT
+		ENDSWITCH
 		
 		//副館長：骨（大）の説明
 		//骨格……　大昔の　ポケモン……
@@ -260,25 +296,57 @@ _ANIME_LABEL	anm_ad_shita_muku
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0	
 //--------------------------------------------------------------------
-//副館長:主人公の前まで移動                              
+//副館長:主人公の前まで移動_A                              
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_ad_shita_kuru
+_ANIME_LABEL	anm_ad_shita_kuru_a
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0	
 
 //--------------------------------------------------------------------
-//副館長:展示物（骨（大））を向く                              
+//副館長:主人公の前まで移動_B                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_shita_kuru_b
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//副館長:主人公の前まで移動_C                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_shita_kuru_c
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//副館長:展示物（骨（大））を向く                             
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ad_ue_muku
 	_ANIME_DATA	AC_STAY_WALK_U_16F,1
 	_ANIME_DATA	ACMD_END,0	
 	
 //--------------------------------------------------------------------
-//副館長:展示物（骨（大））の前まで移動                              
+//副館長:展示物（骨（大））の前まで移動_A                              
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_ad_idou_hone_dai
-	_ANIME_DATA	AC_WALK_U_8F,1,1
-	_ANIME_DATA	AC_WALK_L_8F,1,1
+_ANIME_LABEL	anm_ad_idou_hone_dai_a
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0	
+	
+//--------------------------------------------------------------------
+//副館長:展示物（骨（大））の前まで移動_B                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_hone_dai_b
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0	
+		
+//--------------------------------------------------------------------
+//副館長:展示物（骨（大））の前まで移動_C                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_hone_dai_c
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0	
 
@@ -287,10 +355,8 @@ _ANIME_LABEL	anm_ad_idou_hone_dai
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ad_idou_inseki
 	_ANIME_DATA	AC_WALK_L_8F,4,1
-	_ANIME_DATA	AC_WALK_U_8F,6,1
+	_ANIME_DATA	AC_WALK_U_8F,8,1
 	_ANIME_DATA	AC_WALK_L_8F,1,1
-	_ANIME_DATA	AC_WALK_U_8F,2,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0	
 	
 //--------------------------------------------------------------------
@@ -308,16 +374,34 @@ _ANIME_LABEL	anm_ad_idou_ishi
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ad_idou_jimu
 	_ANIME_DATA	AC_WALK_R_8F,5,1
-	_ANIME_DATA	AC_WALK_U_8F,8,1
+	_ANIME_DATA	AC_WALK_U_8F,7,1
 	_ANIME_DATA	AC_WALK_R_8F,1,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0	
 		
 //--------------------------------------------------------------------
-//主人公:展示物（骨（大））の前まで移動                              
+//主人公:展示物（骨（大））の前まで移動_A                              
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_idou_hone_dai
+_ANIME_LABEL	anm_player_idou_hone_dai_a
+	_ANIME_DATA	AC_WALK_U_8F,1,1
+	_ANIME_DATA	AC_WALK_R_8F,1,1
+	_ANIME_DATA	AC_WALK_U_8F,1,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//主人公:展示物（骨（大））の前まで移動_B                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_hone_dai_b
 	_ANIME_DATA	AC_WALK_U_8F,2,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//主人公:展示物（骨（大））の前まで移動_C                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_hone_dai_c
+	_ANIME_DATA	AC_WALK_U_8F,2,1
+	_ANIME_DATA	AC_WALK_L_8F,1,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0	
 
 //--------------------------------------------------------------------
@@ -341,7 +425,7 @@ _ANIME_LABEL	anm_player_idou_ishi
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_jimu
 	_ANIME_DATA	AC_WALK_R_8F,6,1
-	_ANIME_DATA	AC_WALK_U_8F,7,1
+	_ANIME_DATA	AC_WALK_U_8F,5,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
