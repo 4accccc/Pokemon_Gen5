@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/29 14:25:37
+#save date:2009/12/07 20:07:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/29 14:25:37
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-13
+14
 #event number: 0
 #type
 1
@@ -37,8 +37,10 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-56 80 200
+232 80 216
 #event number: 1
 #type
 1
@@ -66,8 +68,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--168 -80 -88
+-136 -80 -136
 #event number: 2
 #type
 1
@@ -95,8 +99,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--8 0 40
+40 0 24
 #event number: 3
 #type
 1
@@ -124,8 +130,10 @@ DIR_DOWN
 2
 #Move Limit Z Number
 3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-40 0 8
+-56 16 -24
 #event number: 4
 #type
 1
@@ -153,6 +161,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 152 0 -104
 #event number: 5
@@ -182,8 +192,10 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--232 0 136
+-216 0 136
 #event number: 6
 #type
 1
@@ -211,15 +223,17 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--232 0 104
+-216 0 104
 #event number: 7
 #type
 1
 #ID name
 T02_HAKASE_GUIDE
 #OBJ CODE Number
-HAKASE1
+HAKASE2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -240,8 +254,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-120 0 -40
+200 0 -40
 #event number: 8
 #type
 1
@@ -269,8 +285,10 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--120 0 120
+-152 0 136
 #event number: 9
 #type
 1
@@ -285,9 +303,9 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T02_SAGE
 #Event Script Name
-SCRID_T02_SAGE_01
+SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -298,8 +316,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 56
+-200 0 120
 #event number: 10
 #type
 1
@@ -312,9 +332,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T02_NNN
+FV_T02_MAN
 #Event Script Name
-SCRID_T02_BOODLE_01
+SCRID_DUMMY
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -327,8 +347,10 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 8
+-168 0 152
 #event number: 11
 #type
 1
@@ -343,7 +365,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T02_RIVAL_02
 #Event Script Name
-SCRID_T02_RIVAL_02
+SCRID_DUMMY
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -356,8 +378,10 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 -8
+-152 0 136
 #event number: 12
 #type
 1
@@ -372,7 +396,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T02_NNN
 #Event Script Name
-SCRID_T02_N_01
+SCRID_DUMMY
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -385,13 +409,46 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--72 0 8
+-168 0 120
+#event number: 13
+#type
+1
+#ID name
+T02_BOODLE_02
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T02_MAN
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/29 14:25:37
+#save date:
 2
 #hold event type:
 1
@@ -406,8 +463,10 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_T02_SIGN1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 72
+152 0 -8
 #event number: 1
 #Bg Event Label
 T02_SIGN2_01
@@ -417,68 +476,59 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_T02_SIGN2_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-88 0 -24
+200 16 -136
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/29 14:25:37
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #Pos Event Label
 POSID_T02_HAKAI_STOP
 #Pos Script Name
 SCRID_POS_T02_HAKAI_STOP
-#Event Trigger Work Name
-WK_SCENE_T02
-#Event Trigger Work Value
-1
-#Pos Event Size X
-1
-#Pos Event Size Z
-5
-#position
--232 0 152
-#event number: 1
-#Pos Event Label
-POSID_T02_RIVAL_STOP
-#Pos Script Name
-SCRID_POS_T02_RIVAL_STOP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_T02
 #Event Trigger Work Value
 0
-#Pos Event Size X
-1
-#Pos Event Size Z
-4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--120 0 136
-#event number: 2
+-216 0 152
+#size
+1 5
+#event number: 1
 #Pos Event Label
 POSID_T02_RIVAL_SPEECH
 #Pos Script Name
 SCRID_POS_T02_RIVAL_SPEECH
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_T02
 #Event Trigger Work Value
 1
-#Pos Event Size X
-1
-#Pos Event Size Z
-2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--72 0 8
+-136 0 136
+#size
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/29 14:25:37
+#save date:
 2
 #hold event type:
 1
@@ -495,8 +545,12 @@ DOOR_ID_T02PC0101_T02_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-120 0 -24
+200 0 -24
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_T02_T02R0101_EXIT01
@@ -508,8 +562,12 @@ DOOR_ID_T02R0101_T02_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -200 -81 -72
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_T02_T02R0201_EXIT01
@@ -521,8 +579,12 @@ DOOR_ID_T02R0201_T02_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--72 0 152
+24 0 152
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_T02_T02R0301_EXIT01
@@ -534,8 +596,12 @@ DOOR_ID_T02R0301_T02_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--168 0 152
+-104 0 152
+#size
+1 1
 #event number: 4
 #Door Event Label
 DOOR_ID_T02_T02R0401_EXIT01
@@ -547,8 +613,12 @@ DOOR_ID_T02R0401_T02_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-120 80 152
+168 80 120
+#size
+1 1
 #event number: 5
 #Door Event Label
 DOOR_ID_T02_R02R0101_EXIT03
@@ -560,8 +630,12 @@ DOOR_ID_R02R0101_T02_EXIT03
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 104
+#size
+1 1
 #event number: 6
 #Door Event Label
 DOOR_ID_T02_R02R0101_EXIT01
@@ -573,8 +647,12 @@ DOOR_ID_R02R0101_T02_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 136
+#size
+1 1
 #event number: 7
 #Door Event Label
 DOOR_ID_T02_R02R0101_EXIT02
@@ -586,7 +664,11 @@ DOOR_ID_R02R0101_T02_EXIT02
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 120
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

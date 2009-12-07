@@ -29,5 +29,6 @@
 #define T02_BOODLE_01                     10
 #define T02_RIVAL_02                      11
 #define T02_N_01                          12
+#define T02_BOODLE_02                     13
 
 #endif //ZONE_T02_EVC_H
