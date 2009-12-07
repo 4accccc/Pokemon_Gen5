@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-07T21:11:31"/>
+	<create user="taya" host="W00146" date="2009-12-07T21:43:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -473,12 +473,20 @@
 		<language name="JPN" width="256">PLAY</language>
 	</row>
 
+	<row id="DBGF_ITEM_RECBUF_0">
+		<language name="JPN" width="256">０</language>
+	</row>
+
 	<row id="DBGF_ITEM_RECBUF_1">
 		<language name="JPN" width="256">１</language>
 	</row>
 
 	<row id="DBGF_ITEM_RECBUF_2">
 		<language name="JPN" width="256">２</language>
+	</row>
+
+	<row id="DBGF_ITEM_RECBUF_3">
+		<language name="JPN" width="256">３</language>
 	</row>
 
 	<row id="DBGF_BG_00">
