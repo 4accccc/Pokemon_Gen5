@@ -144,6 +144,8 @@ typedef struct
 {
   HEAPID heapID;
 
+  DEMO3D_PARAM*         param;
+
 	DEMO3D_BG_WORK				wk_bg;
 
 	//描画設定
@@ -291,7 +293,8 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_STD_MemClear( wk, sizeof(DEMO3D_MAIN_WORK) );
 
   // 初期化
-  wk->heapID    = HEAPID_UI_DEBUG;
+  wk->heapID      = HEAPID_UI_DEBUG;
+  wk->param       = param;
   wk->demo_id     = param->demo_id;
   wk->start_frame = param->start_frame;
 	
@@ -435,6 +438,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       CHECK_KEY_TRG( PAD_KEY_UP ) 
     )
   {
+    wk->param->result = DEMO3D_RESULT_USER_END;
     return GFL_PROC_RES_FINISH;
   }
 
@@ -465,6 +469,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   // ループ検出で終了
   if( is_end )
   {
+    wk->param->result     = DEMO3D_RESULT_FINISH;
     return GFL_PROC_RES_FINISH;
   }
 
@@ -615,13 +620,13 @@ static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
   }
 	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );
   
-  //@TODO Aを押すとカメラを加算
-#if PM_DEBUG
-  is_loop = FALSE;
-//  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-#endif
   {
     is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+  }
+
+  // [OUT] フレーム値を設定
+  {
+    wk->param->end_frame  = ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT;
   }
 
   OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );

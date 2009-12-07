@@ -18,6 +18,9 @@
 
 #include "demo/demo3d_demoid.h" // DEMO3D_ID(コンバータから生成)
 
+// typedef宣言
+typedef u32 DEMO3D_ID;
+
 //=============================================================================
 /**
  *					外部公開
@@ -36,15 +39,26 @@ extern const GFL_PROC_DATA Demo3DProcData;
  *								構造体定義
  */
 //=============================================================================
+
+typedef enum
+{ 
+  DEMO3D_RESULT_NULL = 0,
+  DEMO3D_RESULT_USER_END, ///< ユーザーによる終了
+  DEMO3D_RESULT_FINISH,   ///< デモの終了
+} DEMO3D_RESULT;
+
 //-------------------------------------
 ///	PROCに渡す引数
 //=====================================
 typedef struct {	
   // [IN]
   DEMO3D_ID   demo_id;      ///< デモID
-  u32         start_frame;  ///< デモ開始フレーム
+  u32         start_frame;  ///< デモ開始フレーム(1sync=1)
 // GAMESYS_WORK	*gamesys;	  ///< ゲームシステム
   // [OUT]
+  u32            end_frame; ///< デモ終了フレーム(1sync=1)
+  DEMO3D_RESULT  result;    ///< デモ終了フレーム
+
 } DEMO3D_PARAM;
 
 FS_EXTERN_OVERLAY(demo3d);

@@ -6,12 +6,14 @@
  * @note	このファイルはdemo3d/make_demoid.rbによって自動生成されたものです。
  */
 //=========================================================================
-#pragma once
+#ifndef __DEMO3D_DEMOID_H__
+#define __DEMO3D_DEMOID_H__
 
-typedef enum {
-	DEMO3D_ID_NULL = 0,
+#define DEMO3D_ID_NULL (0)
 
-	DEMO3D_ID_C_CRUISER,
+#define DEMO3D_ID_C_CRUISER (0)
+#define DEMO3D_ID_N_CASTLE (1)
 
-	DEMO3D_ID_MAX,
-} DEMO3D_ID;
+#define DEMO3D_ID_MAX (2)
+
+#endif // __DEMO3D_DEMOID_H__

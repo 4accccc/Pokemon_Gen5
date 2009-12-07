@@ -53,6 +53,9 @@ static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
 	{ res_c_cruiser_unit02, NELEMS(res_c_cruiser_unit02), obj_c_cruiser_unit02, NELEMS(obj_c_cruiser_unit02) },
 	{ res_c_cruiser_unit03, NELEMS(res_c_cruiser_unit03), obj_c_cruiser_unit03, NELEMS(obj_c_cruiser_unit03) },
 };
+//=========================================================================
+// DEMO3D_ID_N_CASTLE
+//=========================================================================
 
 
 //=========================================================================
