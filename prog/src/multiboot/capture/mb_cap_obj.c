@@ -20,6 +20,9 @@
 //	define
 //======================================================================
 #pragma mark [> define
+#define MB_CAP_OBJ_ANM_SPD (4)
+#define MB_CAP_OBJ_ANM_FRAME (4)
+
 
 //======================================================================
 //	enum
@@ -33,9 +36,13 @@
 #pragma mark [> struct
 struct _MB_CAP_OBJ
 {
+  BOOL isPlayAnime;
+  u16 anmCnt;
   int objIdx;
   
   VecFx32 pos;
+  
+  MB_CAP_OBJ_TYPE objType;
 };
 
 //======================================================================
@@ -66,6 +73,11 @@ MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
   GFL_BBD_SetObjectDrawEnable( bbdSys , objWork->objIdx , &flg );
   //3D設定の関係で反転させる・・・
   GFL_BBD_SetObjectFlipT( bbdSys , objWork->objIdx , &flg );
+  
+  objWork->isPlayAnime = FALSE;
+  objWork->anmCnt = 0;
+  objWork->objType = initWork->type;
+  
   return objWork;
 }
 
@@ -82,6 +94,25 @@ void MB_CAP_OBJ_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
 }
 
 //--------------------------------------------------------------
+//	オブジェクト更新
+//--------------------------------------------------------------
+void MB_CAP_OBJ_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  if( objWork->isPlayAnime == TRUE )
+  {
+    u16 frame = objWork->anmCnt/MB_CAP_OBJ_ANM_SPD;
+    objWork->anmCnt++;
+    if( objWork->anmCnt >= MB_CAP_OBJ_ANM_SPD*MB_CAP_OBJ_ANM_FRAME )
+    {
+      frame = 0;
+      objWork->isPlayAnime = FALSE;
+    }
+    GFL_BBD_SetObjectCelIdx( bbdSys , objWork->objIdx , &frame );
+  }
+}
+
+//--------------------------------------------------------------
 //  当たり判定作成
 //--------------------------------------------------------------
 void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork )
@@ -93,4 +124,12 @@ void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork )
   hitWork->size.z = FX32_CONST(MB_CAP_OBJ_HITSIZE_Z);
 }
 
+//--------------------------------------------------------------
+//  アニメーションをリクエスト
+//--------------------------------------------------------------
+void MB_CAP_OBJ_StartAnime( MB_CAP_OBJ *objWork )
+{
+  objWork->isPlayAnime = TRUE;
+  objWork->anmCnt = 0;
+}
 

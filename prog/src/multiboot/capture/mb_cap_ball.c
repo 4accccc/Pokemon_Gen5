@@ -249,11 +249,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
       else
       if( i < MB_CAP_OBJ_SUB_R_START )
       {
-        //‰º‚Ì…‚Ì–Ø
+        //‰º‚Ì‘(‰º‚Ì…)
         const s8 idxX = (i-MB_CAP_OBJ_SUB_D_START);
         const s8 idxY = MB_CAP_OBJ_Y_NUM;
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , -1 );
-        PMSND_PlaySE( MB_SND_BALL_HIT_WATER );
+        PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       else
       if( i < MB_CAP_OBJ_SUB_L_START )

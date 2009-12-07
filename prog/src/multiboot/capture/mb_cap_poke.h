@@ -36,6 +36,8 @@ typedef enum
   MCPS_DOWN_MOVE,
   MCPS_DOWN_WAIT,
 
+  MCPS_ESCAPE,  //“¦‚°‚½
+
   MCPS_MAX,
 }MB_CAP_POKE_STATE;
 

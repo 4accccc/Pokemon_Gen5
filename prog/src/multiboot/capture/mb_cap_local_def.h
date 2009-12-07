@@ -78,18 +78,26 @@
 extern int  MB_CAP_UPPER_BALL_POS_BASE_Y;
 extern fx32 MB_CAP_BALL_SHOT_SPEED;
 
+extern u16 MB_CAP_TARGET_RAND_MAX;
+extern u16 MB_CAP_TARGET_RAND_DOWN;
+
 #else //MB_CAP_DEB
 
 //ボールの飛ぶ基本位置(ターゲットの回転中心)
 #define MB_CAP_UPPER_BALL_POS_BASE_Y ( 256 )
 //X192:Y120の距離は226 //66フレームで飛んで行くには3.5くらい
-#define MB_CAP_BALL_SHOT_SPEED (FX32_CONST(3.5f))
+#define MB_CAP_BALL_SHOT_SPEED (FX32_CONST(4.8f))
+
+//照準ずれ用
+#define MB_CAP_TARGET_RAND_MAX (320) //最大ずれ幅
+#define MB_CAP_TARGET_RAND_DOWN (10) //毎フレーム減る分
 
 #endif  //MB_CAP_DEB
 
 //ボールの最低・最高飛距離
 #define MB_CAP_UPPER_BALL_LEN_MIN ( MB_CAP_UPPER_BALL_POS_BASE_Y-192 )
 #define MB_CAP_UPPER_BALL_LEN_MAX ((int)( MB_CAP_UPPER_BALL_POS_BASE_Y*1.2f ))
+
 
 //------------------------------------------------------
 //ポケモン関係
@@ -105,10 +113,10 @@ extern int MB_CAP_POKE_DOWN_TIME;
 
 #else //MB_CAP_DEB
 
-#define MB_CAP_POKE_HIDE_LOOK_TIME (60*3)
-#define MB_CAP_POKE_HIDE_HIDE_TIME (60*4)
-#define MB_CAP_POKE_RUN_LOOK_TIME (60*1)
-#define MB_CAP_POKE_RUN_HIDE_TIME (60*5)
+#define MB_CAP_POKE_HIDE_LOOK_TIME (60*2)
+#define MB_CAP_POKE_HIDE_HIDE_TIME (60)
+#define MB_CAP_POKE_RUN_LOOK_TIME (80)
+#define MB_CAP_POKE_RUN_HIDE_TIME (40)
 #define MB_CAP_POKE_DOWN_TIME (60*3)
 
 #endif  //MB_CAP_DEB

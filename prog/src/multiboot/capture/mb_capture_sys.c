@@ -79,6 +79,10 @@ struct _MB_CAPTURE_WORK
   int objIdxTarget;
   u8 targetAnmCnt;
   u16 targetAnmFrame;
+  
+  u16  randLen;  //Æ€‚¸‚ê—p
+  fx32 befPullLen;
+  u16  befRotAngle;
 
   u16 bonusTime;
   
@@ -228,6 +232,7 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
 {
+  int i;
   switch( work->state )
   {
   case MSS_FADEIN:
@@ -255,6 +260,11 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
       return TRUE;
     }
     break;
+  }
+
+  for( i=0;i<MB_CAP_OBJ_NUM;i++ )
+  {
+    MB_CAP_OBJ_UpdateObject( work , work->objWork[i] );
   }
 
   MB_CAP_DOWN_UpdateSystem( work , work->downWork );
@@ -554,7 +564,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
   {
     const int idx = i-MB_CAP_OBJ_SUB_D_START;
-    initWork.type = MCOT_WATER;
+    initWork.type = MCOT_GRASS_SIDE;
     MB_CAPTURE_GetGrassObjectPos( idx , MB_CAP_OBJ_Y_NUM , &initWork.pos );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_D_TOP );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
@@ -697,32 +707,80 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
     const BOOL flg = TRUE;
     VecFx32 pos;
     VecFx32 ofs = {0,0,0};
+    const fx32 pullLen = MB_CAP_DOWN_GetPullLen( work->downWork );
+    const u16 rotAngle = MB_CAP_DOWN_GetRotAngle( work->downWork );
     
     pos.x = FX32_CONST(128);
     pos.y = FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y);
     pos.z = FX32_CONST(MB_CAP_UPPER_TARGET_BASE_Z);
     {
       //‹——£ŒvŽZ
-      const fx32 pullLen = MB_CAP_DOWN_GetPullLen( work->downWork );
       const fx32 rate = FX_Div(pullLen,MB_CAP_DOWN_BOW_PULL_LEN_MAX);
       const fx32 len = (MB_CAP_UPPER_BALL_LEN_MAX-MB_CAP_UPPER_BALL_LEN_MIN)*rate + FX32_CONST(MB_CAP_UPPER_BALL_LEN_MIN);
       ofs.y = len;
     }
     {
       //‰ñ“]ŒvŽZ
-      const u16 rotAngle = MB_CAP_DOWN_GetRotAngle( work->downWork );
       const fx32 sin = FX_SinIdx( rotAngle );
       const fx32 cos = FX_CosIdx( rotAngle );
       
       ofs.x = -FX_Mul( ofs.y , sin );
       ofs.y = FX_Mul( ofs.y , cos );
     }
+
+    {
+      //ƒ‰ƒ“ƒ_ƒ€Œë·’²®
+      fx32 lenSub = work->befPullLen - pullLen;
+      u16 rotSub = work->befRotAngle - rotAngle;
+      
+      if( lenSub < 0 )
+      {
+        lenSub *= -1;
+      }
+      if( rotSub > 0x8000 )
+      {
+        rotSub = 0x10000-rotSub;
+      }
+
+      //•â³’l
+      lenSub *= 8;
+      rotSub /= 10;
+      
+      work->randLen += (int)F32_CONST(lenSub) + rotSub;
+      
+      if( work->randLen < MB_CAP_TARGET_RAND_DOWN )
+      {
+        work->randLen = 0;
+      }
+      else
+      if( work->randLen > MB_CAP_TARGET_RAND_MAX )
+      {
+        work->randLen = MB_CAP_TARGET_RAND_MAX;
+      }
+      else
+      {
+        work->randLen -= MB_CAP_TARGET_RAND_DOWN;
+      }
+      
+      work->befPullLen = pullLen;
+      work->befRotAngle = rotAngle;
+    }
+    if( work->randLen > 0 )
+    {
+      //ƒ‰ƒ“ƒ_ƒ€Œë·
+      const u16 len = GFUser_GetPublicRand0(work->randLen);
+      const u16 rot = GFUser_GetPublicRand0(0x10000);
+      const fx32 ofsX = FX_SinIdx( rot ) * len / 10;
+      const fx32 ofsY = FX_CosIdx( rot ) * len / 10;
+      ofs.x += ofsX;
+      ofs.y += ofsY;
+      
+    }
     VEC_Subtract( &pos , &ofs , &work->targetPos );
     
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
     GFL_BBD_SetObjectTrans( work->bbdSys , work->objIdxTarget , &work->targetPos );
     work->isShotBall = FALSE;
-
   }
   else
   if( downState == MCDS_SHOT_WAIT )
@@ -831,12 +889,14 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
   }
 
   
+  //’e‚Ì•â[
   if( (activeBallNum == 0 || work->bonusTime > 0 )&&
       downState == MCDS_SHOT_WAIT &&
       work->isShotBall == TRUE )
   {
     MB_CAP_DOWN_ReloadBall( work->downWork , MB_CAPTURE_IsBonusTime(work) );
     work->isShotBall = FALSE;
+    work->randLen = MB_CAP_TARGET_RAND_MAX;
   }
 }
 
@@ -1073,12 +1133,16 @@ const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *
 #define MB_CAP_DEBUG_GROUP_BGM  (53)
 
 int MB_CAP_UPPER_BALL_POS_BASE_Y = 256;
-fx32 MB_CAP_BALL_SHOT_SPEED = FX32_CONST(3.5f);
+fx32 MB_CAP_BALL_SHOT_SPEED = FX32_CONST(4.8f);
 
-int MB_CAP_POKE_HIDE_LOOK_TIME = (60*3);
-int MB_CAP_POKE_HIDE_HIDE_TIME = (60*4);
-int MB_CAP_POKE_RUN_LOOK_TIME = (60*1);
-int MB_CAP_POKE_RUN_HIDE_TIME = (60*5);
+u16 MB_CAP_TARGET_RAND_MAX = 320;
+u16 MB_CAP_TARGET_RAND_DOWN = 10;
+
+
+int MB_CAP_POKE_HIDE_LOOK_TIME = (120);
+int MB_CAP_POKE_HIDE_HIDE_TIME = (60);
+int MB_CAP_POKE_RUN_LOOK_TIME = (80);
+int MB_CAP_POKE_RUN_HIDE_TIME = (40);
 int MB_CAP_POKE_DOWN_TIME = (60*3);
 
 int BgmTemp = 256;
@@ -1094,6 +1158,10 @@ static void MCD_U_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_BallSpd( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BallSpd( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BallRandWidth( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BallRandWidth( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BallRandDown( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BallRandDown( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item );
@@ -1126,6 +1194,8 @@ static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_BallBaseY ,MCD_D_BallBaseY , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_BallSpd   ,MCD_D_BallSpd   , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BallRandWidth ,MCD_D_BallRandWidth , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BallRandDown   ,MCD_D_BallRandDown   , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeHideTime   ,MCD_D_PokeHideTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeLookTime   ,MCD_D_PokeLookTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
@@ -1295,6 +1365,35 @@ static void MCD_D_BallSpd( void* userWork , DEBUGWIN_ITEM* item )
   
   DEBUGWIN_ITEM_SetNameV( item , "speed[%d.%d]",upVal,downVal );
   
+}
+static void MCD_U_BallRandWidth( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_TARGET_RAND_MAX );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BallRandWidth( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "rand max[%d.%d]",MB_CAP_TARGET_RAND_MAX/10 , MB_CAP_TARGET_RAND_MAX%10 );
+}
+
+static void MCD_U_BallRandDown( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_TARGET_RAND_DOWN );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BallRandDown( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "rand down[%d]",MB_CAP_TARGET_RAND_DOWN );
 }
 
 static void MCD_U_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item )

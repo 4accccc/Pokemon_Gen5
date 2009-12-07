@@ -18,6 +18,7 @@
 
 #include "./mb_cap_local_def.h"
 #include "./mb_cap_poke.h"
+#include "./mb_cap_obj.h"
 #include "./mb_cap_effect.h"
 
 #include "./mb_cap_snd_def.h"
@@ -58,8 +59,8 @@ struct _MB_CAP_POKE
   u16 anmFrame;
   u16 anmIdx;
   
-  u8 posXidx;
-  u8 posYidx;
+  s8 posXidx;
+  s8 posYidx;
   MB_CAP_POKE_DIR dir;
   VecFx32 startPos;
   VecFx32 pos;
@@ -77,6 +78,8 @@ struct _MB_CAP_POKE
 //	proto
 //======================================================================
 #pragma mark [> proto
+static void MB_CAP_POKE_SetEscape( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+
 static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
@@ -293,6 +296,15 @@ void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
   pokeWork->stateFunc = MB_CAP_POKE_StateDown;
 }
 
+//--------------------------------------------------------------
+//	ポケモンセット(逃げた
+//--------------------------------------------------------------
+static void MB_CAP_POKE_SetEscape( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
+{
+  pokeWork->state = MCPS_ESCAPE;
+  pokeWork->stateFunc = MB_CAP_POKE_StateNone;
+}
+
 #pragma mark [>state func
 //--------------------------------------------------------------
 //	ステート：無し
@@ -324,8 +336,6 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
 
     pokeWork->cnt = 0;
     pokeWork->state = MCPS_LOOK;
-
-    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
   }
   else
   if( pokeWork->cnt == MB_CAP_POKE_HIDE_LOOK_TIME+MB_CAP_POKE_HIDE_HIDE_TIME )
@@ -343,7 +353,6 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
 
     pokeWork->state = MCPS_LOOK;
 
-    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
   }
   else
   if( pokeWork->cnt == MB_CAP_POKE_HIDE_LOOK_TIME ||
@@ -441,6 +450,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
   else
   if( pokeWork->cnt == MB_CAP_POKE_RUN_LOOK_TIME )
   {
+    BOOL isCrossPoke = FALSE;
     const BOOL flg = FALSE;
     GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objShadowIdx , &flg );
     GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &flg );
@@ -458,12 +468,102 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     case MCPD_DOWN:
       pokeWork->posYidx++;
       break;
-    }    
-    pokeWork->state = MCPS_RUN_HIDE;
+    }
+    
+    //OBJアニメのリクエスト
+    {
+      MB_CAP_OBJ *objWork;
+      u8 objIdx;
+      if( pokeWork->posXidx == -1 )
+      {
+        objIdx = MB_CAP_OBJ_SUB_L_START+pokeWork->posYidx;
+      }
+      else
+      if( pokeWork->posXidx == MB_CAP_OBJ_X_NUM )
+      {
+        objIdx = MB_CAP_OBJ_SUB_R_START+pokeWork->posYidx;
+      }
+      else
+      if( pokeWork->posYidx == -1 )
+      {
+        objIdx = MB_CAP_OBJ_SUB_U_START+pokeWork->posXidx;
+      }
+      else
+      if( pokeWork->posYidx == MB_CAP_OBJ_Y_NUM )
+      {
+        objIdx = MB_CAP_OBJ_SUB_D_START+pokeWork->posXidx;
+      }
+      else
+      {
+        objIdx = pokeWork->posXidx + pokeWork->posYidx*MB_CAP_OBJ_X_NUM;
+      }
+      objWork = MB_CAPTURE_GetObjWork( capWork , objIdx );
+      MB_CAP_OBJ_StartAnime( objWork );
+      
+    }
+    
+    
+    //逃げ先にポケがいるかチェック
+    {
+      u8 i;
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        MB_CAP_POKE *checkPoke = MB_CAPTURE_GetPokeWork( capWork , i );
+        if( checkPoke != pokeWork )
+        {
+          if( pokeWork->posXidx == checkPoke->posXidx &&
+              pokeWork->posYidx == checkPoke->posYidx )
+          {
+            if( checkPoke->state == MCPS_HIDE ||
+                checkPoke->state == MCPS_LOOK ||
+                checkPoke->state == MCPS_RUN_HIDE )
+            {
+              isCrossPoke = TRUE;
+            }
+          }
+        }
+      }
+    }
+    
+    if( isCrossPoke == FALSE )
+    {
+      pokeWork->state = MCPS_RUN_HIDE;
+      
+      if( pokeWork->posXidx == -1 ||
+          pokeWork->posXidx == MB_CAP_OBJ_X_NUM ||
+          pokeWork->posYidx == -1 ||
+          pokeWork->posYidx == MB_CAP_OBJ_Y_NUM )
+      {
+        MB_CAP_POKE_SetEscape( capWork , pokeWork );
+      }
+    }
+    else
+    {
+      pokeWork->cnt = 0;
+      switch( pokeWork->dir )
+      {
+      case MCPD_LEFT:
+        pokeWork->dir = MCPD_RIGHT;
+        break;
+      case MCPD_RIGHT:
+        pokeWork->dir = MCPD_LEFT;
+        break;
+      case MCPD_UP:
+        pokeWork->dir = MCPD_DOWN;
+        break;
+      case MCPD_DOWN:
+        pokeWork->dir = MCPD_UP;
+        break;
+      }
+    }
+    
     
     MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->startPos );
     pokeWork->startPos.y -= FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y );
     pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
+
+    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
+
   }
   else
   if( pokeWork->cnt >= MB_CAP_POKE_RUN_LOOK_TIME+MB_CAP_POKE_RUN_HIDE_TIME )
