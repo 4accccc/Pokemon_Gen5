@@ -527,6 +527,8 @@ static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
 #ifdef PM_DEBUG
 BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
 BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys);
+static void DbgChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr);
+
 static u8 dbg_frame_slow = 0;
 static u8 dbg_count = 0;
 #endif  //PM_DEBUG
@@ -1001,7 +1003,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
         }
         OS_Printf("now_idx = %d\n",tmp->LeverIdx);
       }
-      ChgRale(fieldWork, ptr);
+      DbgChgRale(fieldWork, ptr);
     }
 #endif
     if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG ){
@@ -1928,6 +1930,58 @@ static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
     }
   }
 }
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * レール変更
+ * @param   fieldWork         フィールドワークポインタ
+ * @param   ptr               拡張ＯＢＪ管理ポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void DbgChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
+{
+  u8 cap_idx;
+  u8 obj;
+  u8 sw;
+  GYM_ELEC_SV_WORK *gmk_sv_work;
+  GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
+
+  if(tmp->LeverIdx == -1)
+  {
+    return;
+  }
+
+  //操作しようとしているレバーのスイッチがどちらに入っているかを調べる  
+  sw = gmk_sv_work->LeverSw[tmp->LeverIdx];
+  obj = OBJ_CAP_1+tmp->LeverIdx;
+  cap_idx = tmp->LeverIdx;    //スイッチインデックスがカプセルインデックスに対応
+
+  //セーブデータのスイッチ切り替え
+  gmk_sv_work->LeverSw[tmp->LeverIdx] = (gmk_sv_work->LeverSw[tmp->LeverIdx]+1)%2;
+  //すぐにレールアニメを切り替えられるならば変える
+  if ( CheckChangableRaleAtOnce(ptr, cap_idx, tmp->NowRaleIdx[tmp->LeverIdx]) ){
+    ChgRaleAnm(ptr, sw, tmp->LeverIdx);
+    //走行レール保存
+    tmp->NowRaleIdx[tmp->LeverIdx] =
+      (tmp->LeverIdx*2)+gmk_sv_work->LeverSw[tmp->LeverIdx];
+  }else{
+    //変えられない場合はリクエストを出す
+    if (tmp->RaleChgReq[tmp->LeverIdx]){
+      //既にリクエストされているならば、リクエストをキャンセル
+      tmp->RaleChgReq[tmp->LeverIdx] = 0;
+    }else{
+      //リクエストされていないならば、リクエストする
+      tmp->RaleChgReq[tmp->LeverIdx] = 1;
+    }
+  }
+}
+
+#endif
 
 //--------------------------------------------------------------
 /**
