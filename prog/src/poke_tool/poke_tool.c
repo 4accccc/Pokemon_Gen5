@@ -21,7 +21,7 @@
 #include    "poke_tool_def.h"
 #include    "poke_personal_local.h"
 #include    "arc_def.h"
-#include    "savedata/mail_util.h"
+#include    "savedata/mail.h"
 
 
 /*--------------------------------------------------------------------------*/

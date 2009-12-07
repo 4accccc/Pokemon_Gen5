@@ -1,9 +1,9 @@
 //=============================================================================
 /**
- * @file	  pokemontrade_proc.c
- * @brief	  ポケモン交換して通信を終了する
+ * @file    pokemontrade_proc.c
+ * @brief   ポケモン交換して通信を終了する
  * @author  ohno_katsumi@gamefreak.co.jp
- * @date	  09/07/09
+ * @date    09/07/09
  */
 //=============================================================================
 
@@ -232,7 +232,7 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL)
 
 static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
 {
-  static const u8	iconSize = 24;
+  static const u8 iconSize = 24;
   static const u8 iconTop = 72-24;
   static const u8 iconLeft = 72-48;
 
@@ -343,7 +343,7 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
@@ -367,7 +367,7 @@ static void _recvCancelPokemon(const int netID, const int size, const void* pDat
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは受け取らない
@@ -392,10 +392,10 @@ static void _recvFriendScrollBar(const int netID, const int size, const void* pD
   short* pRecvData = (short*)pData;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   if(netID == GFL_NET_SystemGetCurrentID()){
-    return;	//自分のデータは要らない
+    return; //自分のデータは要らない
   }
   pWork->FriendBoxScrollNum = pRecvData[0];
 }
@@ -406,7 +406,7 @@ static void _recvLookAtPoke(const int netID, const int size, const void* pData, 
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   pWork->userNetCommand[netID] = _NETCMD_LOOKATPOKE;
 }
@@ -417,7 +417,7 @@ static void _recvEggAndBattle(const int netID, const int size, const void* pData
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   pWork->userNetCommand[netID] = _NETCMD_EGG_AND_BATTLE;
 }
@@ -428,7 +428,7 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   pWork->userNetCommand[netID] = _NETCMD_CHANGE_CANCEL;
 }
@@ -439,7 +439,7 @@ static void _recvEnd(const int netID, const int size, const void* pData, void* p
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
 
   pWork->userNetCommand[netID] = _NETCMD_END;
@@ -452,7 +452,7 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
   POKEMON_TRADE_WORK *pWork = pWk;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   pWork->userNetCommand[netID] = _NETCMD_CHANGE_POKEMON;
 
@@ -462,8 +462,8 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	終了同期を取ったのでプロセス終了
- *	@param	POKEMON_TRADE_WORK		ワーク
+ *  @brief  終了同期を取ったのでプロセス終了
+ *  @param  POKEMON_TRADE_WORK    ワーク
  */
 //-----------------------------------------------------------------------------
 
@@ -476,8 +476,8 @@ static void _sendTimingCheck(POKEMON_TRADE_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	終了同期を取る
- *	@param	POKEMON_TRADE_WORK		ワーク
+ *  @brief  終了同期を取る
+ *  @param  POKEMON_TRADE_WORK    ワーク
  */
 //-----------------------------------------------------------------------------
 
@@ -496,7 +496,7 @@ static void _noneState(POKEMON_TRADE_WORK* pWork)
 
 
 //--------------------------------------------------------------
-//	ポケモン表示セット
+//  ポケモン表示セット
 //--------------------------------------------------------------
 void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp )
 {
@@ -507,7 +507,7 @@ void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp
 
 
 //--------------------------------------------------------------
-//	ポケモン表示リセット
+//  ポケモン表示リセット
 //--------------------------------------------------------------
 static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side )
 {
@@ -1972,9 +1972,9 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	GTSネゴシエーションだと最初に台詞が入る
- *	@param	POKEMON_TRADE_WORK
- *	@return	none
+ *  @brief  GTSネゴシエーションだと最初に台詞が入る
+ *  @param  POKEMON_TRADE_WORK
+ *  @return none
  */
 //-----------------------------------------------------------------------------
 
@@ -1996,9 +1996,9 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	TOUCHBAR初期化
- *	@param	POKEMON_TRADE_WORK
- *	@return	none
+ *  @brief  TOUCHBAR初期化
+ *  @param  POKEMON_TRADE_WORK
+ *  @return none
  */
 //-----------------------------------------------------------------------------
 
@@ -2006,59 +2006,59 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
 {
   //アイコンの設定
   //数分作る
-  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
+  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]  =
   {
     {
       TOUCHBAR_ICON_RETURN,
-      {	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUR_L,
-      {	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUR_R,
-      {	TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUTSOM1,
-      {	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUTSOM2,
-      {	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
     },
   };
 
-  TOUCHBAR_SETUP	touchbar_setup;
+  TOUCHBAR_SETUP  touchbar_setup;
   GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
 
-  touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-  touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-  touchbar_setup.p_unit		= pWork->cellUnit;										//OBJ読み込みのためのCLUNIT
+  touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
+  touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
+  touchbar_setup.p_unit   = pWork->cellUnit;                    //OBJ読み込みのためのCLUNIT
   touchbar_setup.is_notload_bg =TRUE;  //BGはなし
-  touchbar_setup.bar_frm	= GFL_BG_FRAME0_S;						//BG読み込みのためのBG面上下画面判定にも必要
-  touchbar_setup.bg_plt		= 0;			//BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt	= 0;			//OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
+  touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG読み込みのためのBG面上下画面判定にも必要
+  touchbar_setup.bg_plt   = 0;      //BGﾊﾟﾚｯﾄ
+  touchbar_setup.obj_plt  = 0;      //OBJﾊﾟﾚｯﾄ
+  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 
   touchbar_icon_tbl[3].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
   touchbar_icon_tbl[3].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
   touchbar_icon_tbl[3].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[3].active_anmseq	=	6;						//アクティブのときのアニメ
-  touchbar_icon_tbl[3].noactive_anmseq	=		5;						//ノンアクティブのときのアニメ
-  touchbar_icon_tbl[3].push_anmseq	=		4;						//押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[3].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
-  touchbar_icon_tbl[3].se	=		POKETRADESE_DECIDE;									//押したときにSEならしたいならば、SEの番号
+  touchbar_icon_tbl[3].active_anmseq  = 6;            //アクティブのときのアニメ
+  touchbar_icon_tbl[3].noactive_anmseq  =   5;            //ノンアクティブのときのアニメ
+  touchbar_icon_tbl[3].push_anmseq  =   4;            //押したときのアニメ（STOPになっていること）
+  touchbar_icon_tbl[3].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[3].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
 
   touchbar_icon_tbl[4].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
   touchbar_icon_tbl[4].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
   touchbar_icon_tbl[4].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[4].active_anmseq	=	9;						//アクティブのときのアニメ
-  touchbar_icon_tbl[4].noactive_anmseq	=		8;						//ノンアクティブのときのアニメ
-  touchbar_icon_tbl[4].push_anmseq	=		7;						//押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[4].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
-  touchbar_icon_tbl[4].se	=		POKETRADESE_DECIDE;									//押したときにSEならしたいならば、SEの番号
+  touchbar_icon_tbl[4].active_anmseq  = 9;            //アクティブのときのアニメ
+  touchbar_icon_tbl[4].noactive_anmseq  =   8;            //ノンアクティブのときのアニメ
+  touchbar_icon_tbl[4].push_anmseq  =   7;            //押したときのアニメ（STOPになっていること）
+  touchbar_icon_tbl[4].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[4].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
 
   pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
@@ -2170,11 +2170,11 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void	_VBlank( GFL_TCB *tcb, void *work )
+static void _VBlank( GFL_TCB *tcb, void *work )
 {
   POKEMON_TRADE_WORK *pWork=work;
 
-  GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+  GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
 
   if(pWork->bgscrollRenew){
 
@@ -2250,7 +2250,7 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMESYS_WORK* pParentWor
     pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
     pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
     pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
-    pWork->pMailBlock = SaveData_GetMailBlock(GAMEDATA_GetSaveControlWork(pGameData));
+    pWork->pMailBlock = GAMEDATA_GetMailBlock(pGameData);
   }
 #if PM_DEBUG
   else{
@@ -2509,7 +2509,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   GFL_G3D_DRAW_End();
 
 
-  //	ConnectBGPalAnm_Main(&pWork->cbp);
+  //  ConnectBGPalAnm_Main(&pWork->cbp);
 
   return retCode;
 }
