@@ -689,7 +689,10 @@ extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex );
 extern PokeType POKETOOL_GetMezaPa_Type( const POKEMON_PARAM* pp );
 extern u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp );
 
-
+// 技マシンで技を覚えるかチェック
+BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no );
+BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no );
+BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no );
 
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );

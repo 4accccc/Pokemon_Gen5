@@ -1552,6 +1552,65 @@ u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp )
   return pow;
 }
 
+//=============================================================================================
+/**
+ * 技マシンで技を覚えるかチェック
+ *
+ * @param[in] pp          ポケモンパラメータ構造体
+ * @param[in] machine_no  チェックする技マシンナンバー
+ *
+ * @retval  FALSE:覚えない　TRUE:覚える
+ */
+//=============================================================================================
+BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no )
+{ 
+  return PPP_CheckWazaMachine( &pp->ppp, machine_no );
+}
+
+//=============================================================================================
+/**
+ * 技マシンで技を覚えるかチェック
+ *
+ * @param[in] ppp
+ * @param[in] machine_no  チェックする技マシンナンバー
+ *
+ * @retval  FALSE:覚えない　TRUE:覚える
+ */
+//=============================================================================================
+BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no )
+{ 
+  u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, NULL );
+  u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+
+  return POKETOOL_CheckWazaMachine( mons_no, form_no, machine_no );
+}
+
+//=============================================================================================
+/**
+ * 技マシンで技を覚えるかチェック
+ *
+ * @param[in] mons_no     チェックするポケモンナンバー
+ * @param[in] form_no     チェックするポケモンのフォルムナンバー
+ * @param[in] machine_no  チェックする技マシンナンバー
+ *
+ * @retval  FALSE:覚えない　TRUE:覚える
+ */
+//=============================================================================================
+BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no )
+{ 
+	PokePersonalParamID	perID;
+	u32	machine_bit;
+
+	if( mons_no == MONSNO_TAMAGO )
+  {
+		return FALSE;
+	}
+
+	machine_bit = ( 1 << ( machine_no % 32 ) );
+	perID = POKEPER_ID_machine1 + ( machine_no / 32 );
+
+	return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & machine_bit ) != 0 );
+}
 
 //--------------------------------------------------------------------------
 /**
