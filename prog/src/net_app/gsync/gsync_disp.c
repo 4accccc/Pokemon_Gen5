@@ -160,8 +160,8 @@ typedef struct {
 static _GSYNCOBJPOS_STRUCT gsyncObjPosTable[]={
   {124,160,_BED_CELL_PRI},   //NANR_gsync_obj_bed    0 // 
   {124,160,_BED_CELL_PRI},   //NANR_gsync_obj_bed_ani    1 // 
-  {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_r    2 //
-  {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_l    3 //
+  {132,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_r    2 //
+  {122,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_l    3 //
   {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani1    4 //
   {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
   {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //

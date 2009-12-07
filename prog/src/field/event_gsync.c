@@ -97,9 +97,8 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _FIELD_FADE_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-    //
-//    (*seq) = _CALL_GAMESYNC_MENU;
-     (*seq) = _GAMESYNC_MAINPROC;
+    (*seq) = _CALL_GAMESYNC_MENU;
+//     (*seq) = _GAMESYNC_MAINPROC;
     break;
   case _CALL_GAMESYNC_MENU:
     dbw->isEndProc = FALSE;

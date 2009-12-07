@@ -34,6 +34,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "savedata/wifilist.h"
+#include "savedata/system_data.h"
 
 //#include "msg/msg_gtsnego.h"
 #include "msg/msg_wifi_system.h"
@@ -573,6 +574,7 @@ static void _saveingStart(WIFILOGIN_WORK* pWork)
     _connectingCommonWait(pWork);
   }
   else{
+		SYSTEMDATA_SetDpwInfo( SaveData_GetSystemData(pWork->pSave), WifiList_GetMyGSID(pWork->pList) );
     GFL_NET_DWC_SaveAsyncInit(pWork->pSave);
     pWork->bSaving=TRUE;
     _CHANGE_STATE(pWork, _saveingWait);

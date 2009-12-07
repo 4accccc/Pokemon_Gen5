@@ -68,10 +68,14 @@ static CPSCaInfo* cainfos[] = {
 };
 
 #define _GET_MAXSIZE  (1024)
+#define _URL_BUFFER   (200)
+
 
 struct _NHTTP_RAP_WORK {
   NHTTPConnectionHandle   handle;
   char getbuffer[_GET_MAXSIZE];
+  char urlbuff[_URL_BUFFER];
+
   HEAPID heapID;
   u32 profileid;
 };
@@ -120,7 +124,6 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
-  char urlbuff[200];
   char pidbuff[20];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
@@ -130,15 +133,15 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 
 
 
-  GFL_STD_MemClear(urlbuff,sizeof(urlbuff));
-  GFL_STD_MemCopy(urltable[urlno].url, urlbuff, GFL_STD_StrLen(urltable[urlno].url));
+  GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
+  GFL_STD_MemCopy(urltable[urlno].url, pWork->urlbuff, GFL_STD_StrLen(urltable[urlno].url));
 
   if(urlno==NHTTPRAP_URL_UPLOAD){
     STD_TSNPrintf(pidbuff,20,"%d", pWork->profileid);
-    GFL_STD_StrCat(urlbuff,pidbuff,sizeof(urlbuff));
+    GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
   }
-  NET_PRINT(" Target URL: %s\n", urlbuff);
-  handle = NHTTPCreateConnection( urlbuff,
+  NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
+  handle = NHTTPCreateConnection( pWork->urlbuff,
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
                                   ConnectionCallback, pWork);

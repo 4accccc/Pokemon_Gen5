@@ -35,6 +35,7 @@
 #include "gsync_obj_NANR_LBLDEFS.h"
 #include "gsync_poke.cdat"
 #include "msg/msg_gsync.h"
+#include "gsync.naix"
 
 
 /*
@@ -100,6 +101,7 @@ struct _G_SYNC_WORK {
   APP_TASKMENU_WORK* pAppTask;
   BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
+  void* pTopAddr;
   u16 trayno;
   u16 indexno;
   StateFunc* state;      ///< ハンドルのプログラム状態
@@ -408,7 +410,11 @@ static void _upeffectLoop7(G_SYNC_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _upeffectLoop6(G_SYNC_WORK* pWork)
 {
+  if(pWork->pTopAddr){
+    GFL_HEAP_FreeMemory(pWork->pTopAddr);
+  }
 
+  
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_002);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
@@ -462,7 +468,19 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNTINFO, pWork->pNHTTPRap)){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
+      if(0){
+        u32 size;
+        u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+        NHTTP_AddPostDataBinary(NHTTP_RAP_GetHandle(pWork->pNHTTPRap),"", topAddr, size );
+      }
+      else{
+        ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
+        u32 size;
+        pWork->pTopAddr = GFL_ARCHDL_UTIL_LoadEx(p_handle,NARC_gsync_save3_bin,FALSE,pWork->heapID,&size );
+        NHTTP_AddPostDataBinary(NHTTP_RAP_GetHandle(pWork->pNHTTPRap),"", pWork->pTopAddr, 0x80000 );
+        GFL_ARC_CloseDataHandle(p_handle);
+      }
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_upeffectLoop5);
       }
@@ -519,6 +537,31 @@ static void _upeffectLoop2(G_SYNC_WORK* pWork)
 
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   眠るエフェクト中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _upeffectLoop1(G_SYNC_WORK* pWork)
+{
+  pWork->countTimer--;
+  if(pWork->countTimer==0){
+    GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
+
+    GSYNC_DISP_ObjInit(pWork->pDispWork,NANR_gsync_obj_kemuri_r);
+    GSYNC_DISP_ObjInit(pWork->pDispWork,NANR_gsync_obj_kemuri_l);
+    
+    pWork->countTimer = _HAND_UP_TIME;
+    _CHANGE_STATE(_upeffectLoop2);
+  }
+}
+
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   眠るエフェクト中
@@ -531,8 +574,8 @@ static void _upeffectLoop(G_SYNC_WORK* pWork)
   if(pWork->countTimer==0){
     GSYNC_DISP_HandInit(pWork->pDispWork);
     GSYNC_DISP_PokemonIconMove(pWork->pDispWork);
-    pWork->countTimer = _HAND_UP_TIME;
-    _CHANGE_STATE(_upeffectLoop2);
+    pWork->countTimer = _BEDIN_TIME;
+    _CHANGE_STATE(_upeffectLoop1);
   }
 }
 
@@ -604,7 +647,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   G_SYNC_WORK* pWork;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x48000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x78000 );
   pWork = GFL_PROC_AllocWork( proc, sizeof( G_SYNC_WORK ), HEAPID_GAMESYNC );
   GFL_STD_MemClear(pWork, sizeof(G_SYNC_WORK));
 
@@ -713,6 +756,9 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   GSYNC_DISP_End(pWork->pDispWork);
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
+  }
+  if(pWork->pTopAddr){
+    GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
 
 
