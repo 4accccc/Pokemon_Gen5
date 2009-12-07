@@ -14,6 +14,8 @@
 #include "sound/pm_sndsys.h"
 #include "field_buildmodel.h"
 #include "../../../resource/fldmapdata/build_model/output/buildmodel_indoor.naix"
+#include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
+#include "field_sound.h"  // for FIELD_SOUND_xxxx
 
 
 //========================================================================================
@@ -21,6 +23,7 @@
 //========================================================================================
 #define BALLSET_WAIT     (15) // ボールセット間隔
 #define ANIME_START_WAIT (10) // ボールセット後の回復アニメーション開始待ち時間
+#define PCMACHINE_SEARCH_RANGE (FIELD_CONST_GRID_SIZE * 5)  // PCマシン検索範囲
 
 // イベント・シーケンス
 typedef enum {
@@ -293,16 +296,46 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
 {
   int i;
 
-  // ボールのアニメーション開始
+  // ボール
   for( i=0; i<work->setBallNum; i++ )
   {
     FIELD_BMODEL_SetAnime( work->ballBM[i], 0, BMANM_REQ_START );
   }
 
+  // マシン
+  {
+    G3DMAPOBJST**  objst;
+    u32           objnum;
+    FLDHIT_RECT     rect;
+    VecFx32          pos;
+    FIELD_PLAYER* player;
+
+    // 自機の周囲を検索
+    player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+    FIELD_PLAYER_GetPos( player, &pos );
+    rect.top    = pos.z - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.bottom = pos.z + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.left   = pos.x - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.right  = pos.x + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    objst = FIELD_BMODEL_MAN_CreateObjStatusList( work->bmMan, &rect, 
+                                                  BM_SEARCH_ID_PCMACHINE, &objnum );
+    // 発見した配置モデルのアニメ再生開始
+    if( 0 < objnum )
+    {
+      G3DMAPOBJST_setAnime( work->bmMan, objst[0], 0, BMANM_REQ_START );
+      G3DMAPOBJST_setAnime( work->bmMan, objst[0], 1, BMANM_REQ_START );
+    }
+    // 後始末
+    GFL_HEAP_FreeMemory( objst );
+  }
+
   // ME再生
-  PMSND_PauseBGM( TRUE );
-  PMSND_PushBGM();
-  PMSND_PlayBGM( SEQ_ME_ASA ); 
+  {
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND*  fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_PushPlayJingleBGM( fsnd, SEQ_ME_ASA );
+  }
 }
 
 //----------------------------------------------------------------------------------------
@@ -322,9 +355,13 @@ static void StopRecoveryAnime( RECOVERY_WORK* work )
     FIELD_BMODEL_SetAnime( work->ballBM[i], 0, BMANM_REQ_STOP );
   }
 
-  // BGM再生再開
-  PMSND_PopBGM();
-  PMSND_PauseBGM( FALSE ); 
+  // BGM復帰
+  {
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND*  fsnd = GAMEDATA_GetFieldSound( gdata );
+    FIELD_SOUND_PopBGM( fsnd );
+  }
 }
 
 //----------------------------------------------------------------------------------------
