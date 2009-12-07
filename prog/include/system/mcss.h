@@ -42,6 +42,11 @@
  * 構造体定義
  */
 //--------------------------------------------------------------------------
+typedef struct _MCSS_NCEC				MCSS_NCEC;
+typedef struct _MCSS_NCEC_WORK	MCSS_NCEC_WORK;
+typedef struct _MCSS_NCEN_WORK	MCSS_NCEN_WORK;
+typedef struct _MCSS_WORK				MCSS_WORK;
+typedef struct _MCSS_SYS_WORK		MCSS_SYS_WORK;
 
 typedef struct
 {
@@ -54,6 +59,19 @@ typedef struct
 	ARCDATID	nmar;
 	ARCDATID	ncec;
 }MCSS_ADD_WORK;
+
+typedef struct	
+{
+	NNSG2dCharacterData*			pCharData;			//テクスチャキャラ
+	NNSG2dPaletteData*				pPlttData;			//テクスチャパレット
+	NNSG2dImageProxy*					image_p;
+	NNSG2dImagePaletteProxy*	palette_p;
+	void*											pBufChar;			//テクスチャキャラバッファ
+	void*											pBufPltt;			//テクスチャパレットバッファ
+	u32												chr_ofs;
+	u32												pal_ofs;
+	MCSS_WORK*								mcss;
+}TCB_LOADRESOURCE_WORK;
 
 #ifdef PM_DEBUG
 typedef struct
@@ -68,15 +86,13 @@ typedef struct
 }MCSS_ADD_DEBUG_WORK;
 #endif
 
-typedef struct _MCSS_NCEC				MCSS_NCEC;
-typedef struct _MCSS_NCEC_WORK	MCSS_NCEC_WORK;
-typedef struct _MCSS_NCEN_WORK	MCSS_NCEN_WORK;
-typedef struct _MCSS_WORK				MCSS_WORK;
-typedef struct _MCSS_SYS_WORK		MCSS_SYS_WORK;
+typedef BOOL (MCSS_CALLBACK_FUNC)( const MCSS_ADD_WORK*, TCB_LOADRESOURCE_WORK*, void * );
 
 extern	MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
 extern	void						MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_Main( MCSS_SYS_WORK *mcss_sys );
+extern  void	          MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, void* work );
+extern  void	          MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work );
 extern	void						MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
 extern	MCSS_WORK*			MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
 extern	void						MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
