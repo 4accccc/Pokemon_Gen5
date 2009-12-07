@@ -5232,6 +5232,10 @@
  * 簡易BGウィンドウメッセージ表示
  * @param msg_id 表示するメッセージID
  * @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+                  TYPE_INFO → お得な掲示板
+                  TYPE_TOWN → 街看板
+                  TYPE_POST → 施設看板
+                  TYPE_ROAD → 道路看板
  */
 //--------------------------------------------------------------
 #define _EASY_BGWIN_MSG( msg_id, bg_type ) \
