@@ -276,6 +276,8 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 	//ˆø”æ“¾
 	param	= pwk;
 
+  GF_ASSERT( param->demo_id != DEMO3D_ID_NULL && param->demo_id < DEMO3D_ID_MAX );
+
 	//ƒq[ƒvì¬
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, DEMO3D_HEAP_SIZE );
   wk = GFL_PROC_AllocWork( proc, sizeof(DEMO3D_MAIN_WORK), HEAPID_UI_DEBUG );
@@ -486,6 +488,8 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
       const GFL_G3D_UTIL_SETUP* setup;
 
       setup = Demo3D_DATA_GetG3DUtilSetup( wk->demo_id, i );
+
+      HOSAKA_Printf("demoid=%d setup_idx=%d setup objcnt=%d resCount=%d \n",wk->demo_id, i, setup->objCount, setup->resCount);
 
       GF_ASSERT( wk->unit_idx[i] < UNIT_MAX );
       wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );

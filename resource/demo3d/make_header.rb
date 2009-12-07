@@ -99,15 +99,6 @@ def print_scene(file, dir)
     #フォルダ内のファイルを順繰り
     anm_cnt = 0;
 
-    #ヘッダ書き込み
-    file.puts "//UNIT"
-    file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
-
-#   return ( ext == "imd" || ext == "ica" || ext == "ita" ||
-#            ext == "ima" || ext == "itp" || ext == "iva" );
-   
-#    puts cnt
-
     #拡張子＆2文字の数値で絞込み
     val = scene_dir.to_a;
     val = val.select{ |i| i.slice(/\d\d/).to_i == cnt && check_ext(i) }
@@ -120,6 +111,10 @@ def print_scene(file, dir)
       print_setup(file,dir,cnt);
       break;
     else
+      #ヘッダ書き込み
+      file.puts "//UNIT"
+      file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
+
       #imdを先に書き出し
       file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
       

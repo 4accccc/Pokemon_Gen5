@@ -1,0 +1,64 @@
+//=========================================================================
+/**
+ * @file	demo3d_resdata.cdat
+ * @brief	コンバート環境にあるデータからデモ再生に使うテーブルを生成します。
+ * @autor	genya_hosaka
+ * @note	このファイルはdemo3d/make_header.rbによって自動生成されたものです。
+ */
+//=========================================================================
+//=========================================================================
+// DEMO3D_ID_C_CRUISER
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbca, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_table_unit01[] = {
+	{ 1, 0 },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		anm_table_unit01, NELEMS(anm_table_unit01), // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_unit02[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_02_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit02[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_unit03[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_03_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit03[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
+	{ res_c_cruiser_unit01, NELEMS(res_c_cruiser_unit01), obj_c_cruiser_unit01, NELEMS(obj_c_cruiser_unit01) },
+	{ res_c_cruiser_unit02, NELEMS(res_c_cruiser_unit02), obj_c_cruiser_unit02, NELEMS(obj_c_cruiser_unit02) },
+	{ res_c_cruiser_unit03, NELEMS(res_c_cruiser_unit03), obj_c_cruiser_unit03, NELEMS(obj_c_cruiser_unit03) },
+};
+
+
+//=========================================================================
+// アクセステーブル
+//=========================================================================
+static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
+	{ 0, 0, 0 },
+	{ c_cruiser_setup, NELEMS(c_cruiser_setup), NARC_demo3d_c_camera_bin },
+};
