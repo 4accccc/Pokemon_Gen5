@@ -92,7 +92,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@g3dcvtr $<
 
 %.bin:	data/%.ica
-	@ruby $(ICA_CNV) -t $< $@
+	@ruby $(ICA_CNV) -rt $< $@
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
