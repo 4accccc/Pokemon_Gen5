@@ -42,7 +42,7 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts "#define DEMO3D_ID_NULL (0)\n\n"
 
     #カレントにあるフォルダをしらみつぶし
-    count = 0
+    count = 1
     pwd =  Dir::entries( Dir::pwd )
     for i in pwd
       if File::ftype( i ) == "directory" 
