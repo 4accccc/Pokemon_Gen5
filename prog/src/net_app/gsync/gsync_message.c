@@ -159,8 +159,8 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
 #if PM_DEBUG
-    DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
-    DEBUG_PAUSE_SetEnable( TRUE );
+  //  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
+  //  DEBUG_PAUSE_SetEnable( TRUE );
 #endif
   return pWork;
 }
