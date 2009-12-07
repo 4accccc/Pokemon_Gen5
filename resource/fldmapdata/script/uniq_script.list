@@ -29,7 +29,8 @@ UNIQ_SCRIPTFILES = \
 	field_ev_scr.ev \
 	c3center_scr.ev \
 	gate_scr.ev \
-	debug_scr.ev 
+	debug_scr.ev \
+  pasokon.ev
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
 UNIQ_TOP_EVENT_SCRFILES = \
