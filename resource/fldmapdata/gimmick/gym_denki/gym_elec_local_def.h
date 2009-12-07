@@ -9,13 +9,13 @@
 
 //基準プラットフォーム以外の停車フレーム定義
 //※レール3
-#define R_STOP_FRM1 (50)	//レール1
-#define R_STOP_FRM2 (72)	//レール2
-#define R_STOP_FRM4 (126)	//レール4
-#define R_STOP_FRM6 (127)	//レール6
-#define R_STOP_FRM8 (139)	//レール8
+#define R_STOP_FRM1 (40)	//レール1
+#define R_STOP_FRM2 (65)	//レール2
+#define R_STOP_FRM4 (124)	//レール4
+#define R_STOP_FRM6 (126)	//レール6
+#define R_STOP_FRM8 (138)	//レール8
 //カプセルごとのレール移動アニメ共通部分フレーム（アニメデータ依存）
-#define COMM_FRM1 (24)
-#define COMM_FRM2 (100)
-#define COMM_FRM3 (95)
+#define COMM_FRM1 (13)
+#define COMM_FRM2 (105)
+#define COMM_FRM3 (93)
 #define COMM_FRM4 (70)
