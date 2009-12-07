@@ -83,11 +83,7 @@ extern BOOL BOX2BGWFRM_PokeMenuMoveMain( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk );
 
-extern void BOX2BGWFRM_PartyPokeFrameOnlyInSet( BGWINFRM_WORK * wk );
-
-extern void BOX2BGWFRM_PartyPokeFrameOnlyOutSet( BGWINFRM_WORK * wk );
-
-extern BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk );
+//extern BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk );
 
 extern BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk );
 extern BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk );

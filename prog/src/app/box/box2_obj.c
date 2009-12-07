@@ -2272,17 +2272,17 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 
 	appwk->chrRes[BOX2MAIN_CHRRES_POKERUSICON] = GFL_CLGRP_CGR_Register(
 																								ah,
-																								APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
+																								APP_COMMON_GetPokerusCharArcIdx(APP_COMMON_MAPPING_128K),
 																								FALSE, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 
 	appwk->celRes[BOX2MAIN_CELRES_POKERUSICON] = GFL_CLGRP_CELLANIM_Register(
 																								ah,
-																								APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
-																								APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
+																								APP_COMMON_GetPokerusCellArcIdx(APP_COMMON_MAPPING_128K),
+																								APP_COMMON_GetPokerusAnimeArcIdx(APP_COMMON_MAPPING_128K),
 																								HEAPID_BOX_APP );
 
   appwk->palRes[BOX2MAIN_PALRES_POKERUSICON] = GFL_CLGRP_PLTT_Register(
-																								ah,APP_COMMON_GetPokeMarkPltArcIdx(),
+																								ah, APP_COMMON_GetPokerusPltArcIdx(),
 																								CLSYS_DRAW_SUB, PALNUM_POKERUS_S*0x20, HEAPID_BOX_APP );
 
   GFL_ARC_CloseDataHandle( ah );

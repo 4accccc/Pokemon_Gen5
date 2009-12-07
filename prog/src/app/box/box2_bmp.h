@@ -26,11 +26,9 @@
 //「もどる」サイズ
 #define	BOX2BMP_BTN_MODORU_SX	( 8 )
 #define	BOX2BMP_BTN_MODORU_SY	( 3 )
-*/
 //「ポケモンをあずける」サイズ
 #define	BOX2BMP_BOXMVMENU_SX	( 11 )
 #define	BOX2BMP_BOXMVMENU_SY	( 6 )
-/*
 //「ボックスをきりかえる」サイズ
 #define	BOX2BMP_BOXMVBTN_SX		( 17 )
 #define	BOX2BMP_BOXMVBTN_SY		( 3 )

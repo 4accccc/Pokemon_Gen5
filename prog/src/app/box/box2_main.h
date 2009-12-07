@@ -230,18 +230,18 @@ enum {
 
 	BOX2BMPWIN_ID_MSG1,			// メッセージ１
 	BOX2BMPWIN_ID_MSG2,			// メッセージ２
+	BOX2BMPWIN_ID_MSG3,			// メッセージ３
 // ↑使用確定-----------------------------------------------------
 
 
-	BOX2BMPWIN_ID_MSG3,			// メッセージ３
 	BOX2BMPWIN_ID_MSG4,			// メッセージ４
 
 	BOX2BMPWIN_ID_BOXMV_MENU,	// ボックス移動のメニュー
 
 	BOX2BMPWIN_ID_BOXMV_BTN,	//「ボックスをきりかえる」
-	BOX2BMPWIN_ID_Y_STATUS,		// Ｙボタンステータス
+//	BOX2BMPWIN_ID_Y_STATUS,		// Ｙボタンステータス
 
-	BOX2BMPWIN_ID_TRAY_NAME,	// トレイ名
+//	BOX2BMPWIN_ID_TRAY_NAME,	// トレイ名
 
 	BOX2BMPWIN_ID_MAX
 };
@@ -274,7 +274,7 @@ enum {
 //	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
 	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
 	BOX2MAIN_WINFRM_BOXMV_BTN,	// ボックス移動時のボタン
-	BOX2MAIN_WINFRM_Y_ST_BTN,	// Ｙボタンステータス
+//	BOX2MAIN_WINFRM_Y_ST_BTN,	// Ｙボタンステータス
 
 //	BOX2MAIN_WINFRM_SUBDISP,	// 上画面用（技・持ち物）
 
@@ -2577,6 +2577,7 @@ extern int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncPokeMovePutKey2( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -18,7 +18,7 @@
 // 初期化ＩＤ
 enum {
 	BOX2UI_INIT_ID_PTOUT_MAIN = 0,		// あずける・メイン
-	BOX2UI_INIT_ID_PTOUT_BOXSEL,		// あずける・ボックス選択
+	BOX2UI_INIT_ID_PTOUT_BOXSEL,			// あずける・ボックス選択
 
 	BOX2UI_INIT_ID_PTIN_MAIN,			// つれていく・メイン
 
@@ -168,6 +168,27 @@ enum {
 	BOX2UI_PTOUT_MAIN_FREE,				// 11: にがす
 	BOX2UI_PTOUT_MAIN_CLOSE,			// 12: とじる
 
+	// 預ける場所選択
+	// 旧
+	BOX2UI_PTOUT_BOXSEL_TRAY1 = 32,	// トレイアイコン
+	BOX2UI_PTOUT_BOXSEL_TRAY2,		// トレイアイコン
+	BOX2UI_PTOUT_BOXSEL_TRAY3,		// トレイアイコン
+	BOX2UI_PTOUT_BOXSEL_TRAY4,		// トレイアイコン
+	BOX2UI_PTOUT_BOXSEL_TRAY5,		// トレイアイコン
+	BOX2UI_PTOUT_BOXSEL_TRAY6,		// トレイアイコン
+//	BOX2UI_PTOUT_BOXSEL_LEFT,			// トレイ矢印（左）
+//	BOX2UI_PTOUT_BOXSEL_RIGHT,		// トレイ矢印（右）
+	BOX2UI_PTOUT_BOXSEL_ENTER,		//「ポケモンをあずける」
+	BOX2UI_PTOUT_BOXSEL_CANCEL,		//「やめる」
+	// 新
+	BOX2UI_PTOUT_BOXSEL_NAME = 0,	// 00: トレイ名
+	BOX2UI_PTOUT_BOXSEL_TRAY,			// 01: トレイ
+	BOX2UI_PTOUT_BOXSEL_LEFT,			// 02: トレイ切り替え矢印・左
+	BOX2UI_PTOUT_BOXSEL_RIGHT,		// 03: トレイ切り替え矢印・右
+	BOX2UI_PTOUT_BOXSEL_RETURN,		// 04: 戻る
+
+
+
 	// ボックステーマ変更
 	BOX2UI_BOXTHEMA_MENU1 = 0,		// 00: ジャンプする
 	BOX2UI_BOXTHEMA_MENU2,				// 01: かべがみ
@@ -214,19 +235,6 @@ enum {
 
 
 
-	// 預ける場所選択
-	BOX2UI_PTOUT_BOXSEL_TRAY1 = 0,	// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY2,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY3,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY4,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY5,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY6,		// トレイアイコン
-
-	BOX2UI_PTOUT_BOXSEL_LEFT,		// トレイ矢印（左）
-	BOX2UI_PTOUT_BOXSEL_RIGHT,		// トレイ矢印（右）
-
-	BOX2UI_PTOUT_BOXSEL_ENTER,		//「ポケモンをあずける」
-	BOX2UI_PTOUT_BOXSEL_CANCEL,	//「やめる」
 
 
 	// ボックス整理・ポケモン移動
@@ -345,6 +353,8 @@ extern void BOX2UI_CursorMoveChange( BOX2_SYS_WORK * syswk, u32 id, u32 pos );
 //--------------------------------------------------------------------------------------------
 extern void BOX2UI_CursorMoveExit( BOX2_SYS_WORK * syswk );
 
+extern void BOX2UI_PutHandCursor( BOX2_SYS_WORK * syswk, int pos );
+
 //--------------------------------------------------------------------------------------------
 /**
  * 「ポケモンをあずける」メイン操作
@@ -462,6 +472,8 @@ extern u32 BOX2UI_BoxItemArrangeMoveHand( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2UI_CursorMoveVFuncWorkSet( BOX2_APP_WORK * appwk, int now_pos, int old_pos );
 
+extern void BOX2UI_CursorMoveVFuncWorkSetDirect( BOX2_APP_WORK * appwk, u8 nx, u8 ny, u8 ox, u8 oy );
+
 //--------------------------------------------------------------------------------------------
 /**
  * Ｙステータスボタンチェック
@@ -508,6 +520,9 @@ extern u32 BOX2UI_HitCheckTrgPartyPokeLeft(void);
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2UI_HitCheckTrgPartyPokeRight(void);
+
+extern void BOX2UI_PartyOutBoxSelCursorMoveSet( BOX2_SYS_WORK * syswk, u32 pos );
+extern void BOX2UI_PartyOutBoxSelCursorMovePutSet( BOX2_SYS_WORK * syswk, u32 pos );
 
 
 extern u32 BOX2UI_HitCheckContTrayArrow(void);

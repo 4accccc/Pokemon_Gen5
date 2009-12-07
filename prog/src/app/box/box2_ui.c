@@ -141,6 +141,7 @@ static const CURSORMOVE_CALLBACK PartyOutMainCallBack = {
 
 
 // あずける・ボックス選択
+/*
 static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 {
 	{  43,  83, 0, 0,	0, 8, 5, 1, {  71,  94,  31,  54 } },		// 00: トレイアイコン
@@ -158,40 +159,17 @@ static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
-/*
-static const GFL_UI_TP_HITTBL PartyOutBoxSelHitTbl[] =
-{
-	{  71,  94,  31,  54 },		// 00: トレイアイコン
-	{  71,  94,  65,  88 },		// 01: トレイアイコン
-	{  71,  94,  99, 122 },		// 02: トレイアイコン
-	{  71,  94, 133, 156 },		// 03: トレイアイコン
-	{  71,  94, 167, 190 },		// 04: トレイアイコン
-	{  71,  94, 201, 224 },		// 05: トレイアイコン
-
-	{  71,  94,   1,  22 },		// 06: トレイ矢印（左）
-	{  71,  94, 233, 254 },		// 07: トレイ矢印（右）
-
-	{ 112, 159, 168, 255 },		// 08:「ポケモンをあずける」
-	{ 168, 191, 192, 255 },		// 09:「やめる」
-
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-static const CURSORMOVE_DATA PartyOutBoxSelKeyTbl[] =
-{
-	{  43,  83, 0, 0,	0, 8, 5, 1 },		// 00: トレイアイコン
-	{  77,  83, 0, 0,	1, 8, 0, 2 },		// 01: トレイアイコン
-	{ 111,  83, 0, 0,	2, 8, 1, 3 },		// 02: トレイアイコン
-	{ 145,  83, 0, 0,	3, 8, 2, 4 },		// 03: トレイアイコン
-	{ 179,  83, 0, 0,	4, 8, 3, 5 },		// 04: トレイアイコン
-	{ 213,  83, 0, 0,	5, 8, 4, 0 },		// 05: トレイアイコン
-
-	{  12,  83, 0, 0,	6, 6, 6, 6 },		// 06: トレイ矢印（左）
-	{ 244,  83, 0, 0,	7, 7, 7, 7 },		// 07: トレイ矢印（右）
-
-	{ 212, 112, 0, 0,	0, 9, 8, 8 },		// 08:「ポケモンをあずける」
-	{ 224, 168, 0, 0,	8, 9, 9, 9 },		// 09:「やめる」
-};
 */
+static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
+{
+	{ 84, 16, 0, 0,	0, 0, 0, 0, {  17,  39,  26, 141 } },		// 00: トレイ名
+	{  0,  0, 0, 0,	1, 1, 1, 1, {  51, 172,   3, 164 } },		// 01: トレイ
+	{  0,  0, 0, 0,	2, 2, 2, 2, {  17,  38,   1,  22 } },		// 02: トレイ切り替え矢印・左
+	{  0,  0, 0, 0,	3, 3, 3, 3, {  17,  38, 145, 166 } },		// 03: トレイ切り替え矢印・右
+	{  0,  0, 0, 0,	4, 4, 4, 4, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 04: 戻る
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
+};
 static const CURSORMOVE_CALLBACK PartyOutBoxSelCallBack = {
 	PartyOutBoxSelCallBack_On,
 	CursorMoveCallBack_Off,
@@ -1054,7 +1032,7 @@ void BOX2UI_CursorMoveExit( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void CursorObjMove( BOX2_SYS_WORK * syswk, int pos )
+void BOX2UI_PutHandCursor( BOX2_SYS_WORK * syswk, int pos )
 {
 	const CURSORMOVE_DATA * pw;
 	u8	x, y;
@@ -1066,6 +1044,11 @@ static void CursorObjMove( BOX2_SYS_WORK * syswk, int pos )
 	x = pw->px;
 	y = pw->py;
 	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y, CLSYS_DEFREND_MAIN );
+}
+
+static void CursorObjMove( BOX2_SYS_WORK * syswk, int pos )
+{
+	BOX2UI_PutHandCursor( syswk, pos );
 	BOX2OBJ_MovePokeIconHand( syswk );
 }
 
@@ -1250,6 +1233,7 @@ static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos )
 //--------------------------------------------------------------------------------------------
 static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 {
+/*
 	BOX2_SYS_WORK * syswk;
 	const CURSORMOVE_DATA * pw;
 	u8	x, y;
@@ -1275,6 +1259,7 @@ static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 	}else{
 		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1290,6 +1275,7 @@ static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 //--------------------------------------------------------------------------------------------
 static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 {
+/*
 	BOX2_SYS_WORK * syswk = work;
 
 	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
@@ -1353,6 +1339,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1368,6 +1355,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 //--------------------------------------------------------------------------------------------
 static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos )
 {
+/*
 	BOX2_SYS_WORK * syswk = work;
 
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
@@ -1375,6 +1363,34 @@ static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos 
 	if( now_pos != BOX2UI_PTOUT_BOXSEL_LEFT && now_pos != BOX2UI_PTOUT_BOXSEL_RIGHT ){
 		CursorObjMove( syswk, now_pos );
 	}
+*/
+}
+
+void BOX2UI_PartyOutBoxSelCursorMoveSet( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	const CURSORMOVE_DATA * opw;
+	const CURSORMOVE_DATA * npw;
+
+	opw = CURSORMOVE_GetMoveData( syswk->app->cmwk, pos );
+	npw = &PartyOutBoxSelCursorMoveData[ BOX2UI_PTOUT_BOXSEL_NAME ];
+
+	BOX2UI_CursorMoveVFuncWorkSetDirect( syswk->app, npw->px, npw->py, opw->px, opw->py );
+}
+
+void BOX2UI_PartyOutBoxSelCursorMovePutSet( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	const CURSORMOVE_DATA * opw;
+	const CURSORMOVE_DATA * npw;
+
+	opw = &PartyOutBoxSelCursorMoveData[ BOX2UI_PTOUT_BOXSEL_NAME ];
+
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		npw = &BoxArrangeMainCursorMoveData[ pos ];
+	}else{
+		npw = &PartyOutMainCursorMoveData[ pos-BOX2OBJ_POKEICON_TRAY_MAX ];
+	}
+
+	BOX2UI_CursorMoveVFuncWorkSetDirect( syswk->app, npw->px, npw->py, opw->px, opw->py );
 }
 
 
@@ -3239,18 +3255,18 @@ u32 BOX2UI_BoxItemArrangeMoveHand( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2UI_CursorMoveVFuncWorkSet( BOX2_APP_WORK * appwk, int now_pos, int old_pos )
 {
-	const CURSORMOVE_DATA * pw;
-	BOX2MAIN_CURSORMOVE_WORK * cwk;
-	u8	nx, ny, ox, oy;
+	const CURSORMOVE_DATA * npw;
+	const CURSORMOVE_DATA * opw;
 
-	pw = CURSORMOVE_GetMoveData( appwk->cmwk, now_pos );
-	nx = pw->px;
-	ny = pw->py;
-	pw = CURSORMOVE_GetMoveData( appwk->cmwk, old_pos );
-	ox = pw->px;
-	oy = pw->py;
+	npw = CURSORMOVE_GetMoveData( appwk->cmwk, now_pos );
+	opw = CURSORMOVE_GetMoveData( appwk->cmwk, old_pos );
 
-	cwk = GFL_HEAP_AllocMemory( HEAPID_BOX_APP, sizeof(BOX2MAIN_CURSORMOVE_WORK) );
+	BOX2UI_CursorMoveVFuncWorkSetDirect( appwk, npw->px, npw->py, opw->px, opw->py );
+}
+
+void BOX2UI_CursorMoveVFuncWorkSetDirect( BOX2_APP_WORK * appwk, u8 nx, u8 ny, u8 ox, u8 oy )
+{
+	BOX2MAIN_CURSORMOVE_WORK * cwk = GFL_HEAP_AllocMemory( HEAPID_BOX_APP, sizeof(BOX2MAIN_CURSORMOVE_WORK) );
 
 	cwk->cnt = 4;
 	cwk->px  = nx;
@@ -3275,6 +3291,7 @@ void BOX2UI_CursorMoveVFuncWorkSet( BOX2_APP_WORK * appwk, int now_pos, int old_
 
 	appwk->vfunk.work = cwk;
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -179,6 +179,9 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 	// マーキングフレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
 
+	// ボックス移動フレーム
+	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
+	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
 
 
 
@@ -186,8 +189,8 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 
 
 	// ボックス移動フレーム
-	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
-
+//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
+/*
 	if( syswk->dat->callMode == BOX_MODE_AZUKERU ){
 		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME0_M, BOXMV_PTOUT_FRM_SX, BOXMV_PTOUT_FRM_SY );
 		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_partyout_bg_lz_NSCR );
@@ -195,6 +198,7 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
 		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
 	}
+*/
 
 
 /*	上画面　技・アイテムフレーム
@@ -350,13 +354,6 @@ void BOX2BGWFRM_PartyPokeFrameInSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
 	if( py != WINFRM_PARTYPOKE_PY ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, -1, py-WINFRM_PARTYPOKE_PY );
-/*
-		if( px == WINFRM_PARTYPOKE_LX ){
-			BGWINFRM_FramePut(
-				wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_PARTYPOKE_RET_PX, py+WINFRM_PARTYPOKE_RET_PY );
-			BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, -1, py-WINFRM_PARTYPOKE_PY );
-		}
-*/
 	}
 }
 
@@ -377,57 +374,6 @@ void BOX2BGWFRM_PartyPokeFrameOutSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
 	if( py != WINFRM_PARTYPOKE_INIT_PY ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, 1, WINFRM_PARTYPOKE_INIT_PY-py );
-/*
-		if( px == WINFRM_PARTYPOKE_LX ){
-			BGWINFRM_FramePut(
-				wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_PARTYPOKE_RET_PX, py+WINFRM_PARTYPOKE_RET_PY );
-			BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, 1, WINFRM_PARTYPOKE_INIT_PY-py );
-		}
-*/
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンのみフレームアウトセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- *
- * @li	通常は「やめる」もセットされる
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_PartyPokeFrameOnlyOutSet( BGWINFRM_WORK * wk )
-{
-	u16	i;
-	s8	px, py;
-
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
-	if( py != WINFRM_PARTYPOKE_INIT_PY ){
-		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, 1, WINFRM_PARTYPOKE_INIT_PY-py );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンのみフレームインセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- *
- * @li	通常は「やめる」もセットされる
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_PartyPokeFrameOnlyInSet( BGWINFRM_WORK * wk )
-{
-	u16	i;
-	s8	px, py;
-
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
-	if( py != WINFRM_PARTYPOKE_PY ){
-		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, -1, py-WINFRM_PARTYPOKE_PY );
 	}
 }
 
@@ -443,7 +389,6 @@ void BOX2BGWFRM_PartyPokeFrameOnlyInSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -507,7 +452,7 @@ void BOX2BGWFRM_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 {
-	u32	party_mv, ret_mv;
+	u32	party_mv;
 	s8	x1, y1, x2, y2;
 	BOOL	ret;
 
@@ -515,8 +460,8 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 
 	party_mv = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY );
 //	ret_mv   = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-	ret_mv   = 0;
-	BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN );
+//	ret_mv   = 0;
+//	BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN );
 
 	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY, &x2, &y2 );
 
@@ -524,7 +469,8 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PartyPokeIconScroll2( syswk );
 	}
 
-	if( party_mv == 0 && ret_mv == 0 ){
+//	if( party_mv == 0 && ret_mv == 0 ){
+	if( party_mv == 0 ){
 		ret = FALSE;
 	}else{
 		ret = TRUE;
@@ -543,6 +489,7 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
+/*
 BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 {
 	u32	party_mv;
@@ -567,6 +514,7 @@ BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
+*/
 
 // 手持ちポケモンフレームが右にあるか
 BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk )
@@ -842,7 +790,7 @@ BOOL BOX2BGWFRM_BoxMoveButtonCheck( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void YStatusButtonInitPut( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_Y_ST_BTN, WINFRM_Y_ST_BTN_PX, WINFRM_Y_ST_BTN_INIT_PY );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_Y_ST_BTN, WINFRM_Y_ST_BTN_PX, WINFRM_Y_ST_BTN_INIT_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -856,7 +804,7 @@ static void YStatusButtonInitPut( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_Y_ST_BTN, WINFRM_Y_ST_BTN_PX, WINFRM_Y_ST_BTN_INIT_PY-BOXPARTY_BTN_CNT );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_Y_ST_BTN, WINFRM_Y_ST_BTN_PX, WINFRM_Y_ST_BTN_INIT_PY-BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -870,7 +818,7 @@ void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_YStatusButtonInSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_Y_ST_BTN, 0, -1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_Y_ST_BTN, 0, -1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -884,7 +832,7 @@ void BOX2BGWFRM_YStatusButtonInSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_YStatusButtonOutSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_Y_ST_BTN, 0, 1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_Y_ST_BTN, 0, 1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -899,6 +847,7 @@ void BOX2BGWFRM_YStatusButtonOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk )
 {
+/*
 	s8	px, py;
 
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_Y_ST_BTN, &px, &py );
@@ -906,6 +855,8 @@ BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk )
 		return TRUE;
 	}
 	return FALSE;
+*/
+	return TRUE;
 }
 
 
