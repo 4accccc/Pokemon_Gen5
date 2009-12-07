@@ -615,6 +615,7 @@ static BOOL setup_alone_double( int* seq, void* work )
     (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
 
   if( sp->fRecordPlay ){
+    BTL_Printf("Ä¶ƒ^ƒCƒv‰Šú‰» ... dataSize=%d\n", sp->recDataSize);
     BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
     BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
   }

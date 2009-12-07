@@ -273,6 +273,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->basePos = clientID;
   wk->prevRotateDir = BTL_ROTATEDIR_NONE;
   wk->weather = BTL_WEATHER_NONE;
+  wk->viewCore = NULL;
 
   for(i=0; i<NELEMS(wk->frontPokeEmpty); ++i){
     wk->frontPokeEmpty[i] = FALSE;
@@ -446,22 +447,22 @@ u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk )
 //------------------------------------------------------------------------------------------------------
 
 
-static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
-{
-//  wk->returnDataPtr =
-  return TRUE;
-}
 
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
+  if( wk->viewCore == NULL ){
+    return TRUE;
+  }
   switch( *seq ){
   case 0:
+    BTL_Printf("UI REC Common Setup Start myID=%d\n", wk->myID);
     BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
     (*seq)++;
     break;
   case 1:
     if( BTLV_WaitCommand(wk->viewCore) )
     {
+      BTL_Printf("UI REC Common Setup End \n");
       return TRUE;
     }
     break;
@@ -584,6 +585,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
+  u8 numAction;
+  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction );
+
+  wk->returnDataPtr = act;
+  wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
+
+  BTL_Printf("REC return Action count=%d\n", numAction);
+
   return TRUE;
 }
 

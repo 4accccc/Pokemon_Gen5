@@ -10,6 +10,7 @@
 
 
 #include "btl_common.h"
+#include "btl_util.h"
 #include "btl_rec.h"
 
 
@@ -174,6 +175,7 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
   wk->recordData = recordData;
   wk->dataSize = dataSize;
   wk->readPtr = 0;
+  BTL_Printf("RECREADRE Init dataSize=%d\n", wk->dataSize);
 }
 
 //=============================================================================================
@@ -214,6 +216,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
     }
     else
     {
+      BTL_Printf("rec seek numClient=%d\n", numClient);
       for(i=0; i<numClient; ++i)
       {
         ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
@@ -225,6 +228,9 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
         else
         {
           const BTL_ACTION_PARAM* returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[wk->readPtr]);
+          GFL_STD_MemCopy( returnPtr, wk->buf, readNumAction * sizeof(BTL_ACTION_PARAM) );
+          returnPtr = (const BTL_ACTION_PARAM*)(wk->buf);
+          BTL_Printf("rec ReadPtr=%d, act=%d, waza=%d\n", wk->readPtr, returnPtr->gen.cmd, returnPtr->fight.waza);
           wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
 
           *numAction = readNumAction;
@@ -236,7 +242,8 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   }
 
 
-  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d", clientID, type);
+  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
+    clientID, type, wk->readPtr, wk->dataSize);
   return NULL;
 }
 

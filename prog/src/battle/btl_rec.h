@@ -76,6 +76,8 @@ typedef struct {
   u32         readPtr;
   u32         dataSize;
 
+  u8          buf[64];
+
 }BTL_RECREADER;
 
 
