@@ -170,6 +170,7 @@ enum{
   VALUE_Z,
   VALUE_SCALE_PERS,
   VALUE_SCALE_ORTH,
+  VALUE_PERSONAL_RND,
 
   VALUE_MAX,
 };
@@ -843,28 +844,50 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       {
         if( pvw->edit_mode == 1 )
         {
-          if( pvw->edit_value )
+          if( pvw->edit_value == VALUE_PERSONAL_RND ) 
+          { 
+            pvw->edit_value = VALUE_SCALE_PERS; 
+          }
+          else if( pvw->edit_value )
           {
             pvw->edit_value--;
           }
         }
         else
         {
-          pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] += ( 1 << ( pvw->edit_keta * 4 ) );
+          if( index == VALUE_PERSONAL_RND )
+          { 
+            pvw->value[ MODE_NORMAL ][ index ][ pvw->edit_pos ] += ( 1 << ( pvw->edit_keta * 4 ) );
+          }
+          else 
+          { 
+            pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] += ( 1 << ( pvw->edit_keta * 4 ) );
+          }
         }
       }
       if( rep & PAD_KEY_DOWN )
       {
         if( pvw->edit_mode == 1 )
         {
-          if( pvw->edit_value < VALUE_SCALE_PERS )
+          if( pvw->edit_value == VALUE_SCALE_PERS )
+          { 
+            pvw->edit_value = VALUE_PERSONAL_RND; 
+          }
+          else if( pvw->edit_value < VALUE_SCALE_PERS )
           {
             pvw->edit_value++;
           }
         }
         else
         {
-          pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] -= ( 1 << ( pvw->edit_keta * 4 ) );
+          if( index == VALUE_PERSONAL_RND )
+          { 
+            pvw->value[ MODE_NORMAL ][ index ][ pvw->edit_pos ] -= ( 1 << ( pvw->edit_keta * 4 ) );
+          }
+          else
+          { 
+            pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] -= ( 1 << ( pvw->edit_keta * 4 ) );
+          }
         }
       }
       if( ( rep & PAD_KEY_LEFT ) && ( pvw->edit_keta < 7 ) && ( pvw->edit_mode == 2 ) )
@@ -939,6 +962,13 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->edit_mode = 0;
       GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
+    }
+    if( ( trg & PAD_BUTTON_R ) && ( pvw->edit_value == VALUE_PERSONAL_RND ) )
+    { 
+      BTLV_EFFECT_DelPokemon( pvw->edit_pos );
+      PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0,
+                  pvw->value[ MODE_NORMAL ][ VALUE_PERSONAL_RND ][ pvw->edit_pos ] );
+      set_pokemon( pvw, pvw->edit_pos );
     }
     if( cont != 0)
     {
@@ -1130,10 +1160,18 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
     strbuf = GFL_MSG_CreateString( pvw->msg,  PVMSG_PERS + pvw->proj );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), PROJ_INFO_X, PROJ_INFO_Y, strbuf, pvw->font );
 
-    for( value = VALUE_X ; value < VALUE_SCALE_ORTH ; value++ )
+    for( value = VALUE_X ; value < VALUE_MAX ; value++ )
     {
       int index = value;
       int ofsx = 0;
+      int ofsy = value;
+
+      if( value == VALUE_SCALE_ORTH ) continue;
+
+      if( value == VALUE_PERSONAL_RND )
+      { 
+        ofsy--;
+      }
 
       if( value == VALUE_SCALE_PERS )
       {
@@ -1162,11 +1200,18 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
             GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
           }
         }
-        num = pvw->value[ pvw->mcss_mode ][ index ][ pos ] & ( 0x0000000f << ( keta * 4 ) );
+        if( index == VALUE_PERSONAL_RND )
+        { 
+          num = pvw->value[ MODE_NORMAL ][ index ][ pos ] & ( 0x0000000f << ( keta * 4 ) );
+        }
+        else
+        { 
+          num = pvw->value[ pvw->mcss_mode ][ index ][ pos ] & ( 0x0000000f << ( keta * 4 ) );
+        }
         num = num >> ( keta * 4 );
         strbuf = GFL_MSG_CreateString( pvw->msg,  EVMSG_NUM0 + num );
         PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ),
-                        VALUE_INFO_X + ofsx, VALUE_INFO_Y + VALUE_INFO_Y_OFS * value, strbuf, pvw->font );
+                        VALUE_INFO_X + ofsx, VALUE_INFO_Y + VALUE_INFO_Y_OFS * ofsy, strbuf, pvw->font );
         GFL_STR_DeleteBuffer( strbuf );
         ofsx += 8;
       }
