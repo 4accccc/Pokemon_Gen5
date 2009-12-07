@@ -23,6 +23,7 @@
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
 #include "gym_ice.h"
+#include "gym_dragon.h"
 #include "field_gimmick_d06.h"
 #include "field_gimmick_league_front01.h"
 #include "field_gimmick_league_front02.h"
@@ -44,6 +45,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_GROUND_Setup,
   GYM_GROUND_ENT_Setup,
   GYM_ICE_Setup,
+  GYM_DRAGON_Setup,
   H03_GIMMICK_Setup,
   GATE_GIMMICK_Setup,  // C04R0601
   GATE_GIMMICK_Setup,  // C08R0601
@@ -77,6 +79,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_GROUND_End,
   GYM_GROUND_ENT_End,
   GYM_ICE_End,
+  GYM_DRAGON_End,
   H03_GIMMICK_End,
   GATE_GIMMICK_End,  // C04R0601
   GATE_GIMMICK_End,  // C08R0601
@@ -110,6 +113,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_GROUND_Move,
   GYM_GROUND_ENT_Move,
   GYM_ICE_Move,
+  GYM_DRAGON_Move,
   H03_GIMMICK_Move,
   GATE_GIMMICK_Move,  // C04R0601 
   GATE_GIMMICK_Move,  // C08R0601 
