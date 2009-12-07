@@ -217,32 +217,32 @@ EVENT_END
 /************************************************************/
 //ここはカノコタウン
 EVENT_START ev_bg_t01_board_01
-	_EASY_MSG( msg_t01_sign1_01 )
+	_EASY_BGWIN_MSG( msg_t01_sign1_01, TYPE_TOWN )
 EVENT_END
 
 
 //（主人公）の家
 EVENT_START ev_bg_t01_board_02
 	_PLAYER_NAME( 0 )
-	_EASY_MSG( msg_t01_sign2_01 )
+	_EASY_BGWIN_MSG( msg_t01_sign2_01, TYPE_POST )
 EVENT_END
 
 
 //ライバルの家
 EVENT_START ev_bg_t01_board_03
-	_EASY_MSG( msg_t01_sign3_01 )
+	_EASY_BGWIN_MSG( msg_t01_sign3_01, TYPE_POST )
 EVENT_END
 
 
 //サポートの家
 EVENT_START ev_bg_t01_board_04
-	_EASY_MSG( msg_t01_sign4_01 )
+	_EASY_BGWIN_MSG( msg_t01_sign4_01, TYPE_POST )
 EVENT_END
 
 
 //アララギ　ポケモン研究所
 EVENT_START ev_bg_t01_board_05
-	_EASY_MSG( msg_t01_sign5_01 )
+	_EASY_BGWIN_MSG( msg_t01_sign5_01, TYPE_POST )
 EVENT_END
 
 
