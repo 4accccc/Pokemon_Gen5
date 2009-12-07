@@ -404,7 +404,7 @@
 
   DEF_CMD( EvCmdGetBirthDay, EV_SEQ_GET_BIRTHDAY )
   DEF_CMD( EvCmdGetSeasonID, EV_SEQ_GET_SEASON_ID )
-  NO_CMD()
+  DEF_CMD( EvCmdGetZoneID, EV_SEQ_GET_ZONE_ID )
   NO_CMD()
 
   DEF_CMD( EvCmdGetBadgeFlag, EV_SEQ_GET_BADGE_FLAG )

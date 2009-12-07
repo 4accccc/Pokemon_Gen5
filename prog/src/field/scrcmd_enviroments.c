@@ -241,6 +241,21 @@ VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ゾーンIDを取得する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = SCRCMD_WORK_GetZoneID( wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**
