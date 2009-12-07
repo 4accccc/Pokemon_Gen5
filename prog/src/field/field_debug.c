@@ -8,23 +8,17 @@
 //======================================================================
 #include "field_debug.h"
 #include "fieldmap.h"
+#include "field_bg_def.h"
 
 #include "fldmmdl.h"
 #include "field/map_matrix.h"
 #include "field/zonedata.h"
-
 #include "arc/others.naix"
 
 //======================================================================
 //	define
 //======================================================================
-#define DEBUG_BGFRAME (GFL_BG_FRAME2_M) //使用するBGフレーム
 #define DEBUG_PANO_FONT (15) //フォントで使用するパレットNo
-
-
-#define BG_COLORMODE    (GX_BG_COLORMODE_16)
-#define BG_SCRBASE      (GX_BG_SCRBASE_0xf800)
-#define BG_CHARBASE      (GX_BG_CHARBASE_0x18000)
 
 //======================================================================
 //	typedef struct
@@ -65,13 +59,13 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work );
  */
 //--------------------------------------------------------------
 FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
-	FIELDMAP_WORK *pFieldMainWork, HEAPID heapID )
+	FIELDMAP_WORK *pFieldMainWork, u8 bg_frame, HEAPID heapID )
 {
 	FIELD_DEBUG_WORK *work;
 	work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_DEBUG_WORK) );
 	
 	work->heapID = heapID;
-	work->bgFrame = DEBUG_BGFRAME;
+	work->bgFrame = bg_frame;
 	work->pFieldMainWork = pFieldMainWork;
 	
 	{	//デバッグ用フォント初期化
@@ -127,9 +121,9 @@ void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work )
   //セットアップしなおし
   G2_SetBG2ControlText(
       GX_BG_SCRSIZE_TEXT_256x256,
-      BG_COLORMODE,
-      BG_SCRBASE,
-      BG_CHARBASE);
+      FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_EFF1_CHARBASE);
 }
 
 //======================================================================
@@ -277,47 +271,6 @@ static void NTRCHR_BGCharLoad(
 
 //--------------------------------------------------------------
 /**
- * システムフォント表示　グラフィック初期化
- * @param	heapID HEAPID
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void DebugFont_SetGraphic( HEAPID heapID )
-{
-	void *buf;
-	
-	{	//パレット
-		NNSG2dPaletteData *pal;
-		buf = GFL_ARC_LoadDataAlloc(
-			ARCID_OTHERS, NARC_others_nfont_NCLR, heapID );
-		GF_ASSERT( buf != NULL );
-		
-		if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
-			GF_ASSERT( 0 );
-		}
-		
-		GFL_BG_LoadPalette( DEBUG_BGFRAME,
-			pal->pRawData, 32, DEBUG_PANO_FONT*32 );
-		GFL_HEAP_FreeMemory( buf );
-	}
-	
-	{	//キャラ
-		NNSG2dCharacterData *chr;
-		buf = GFL_ARC_LoadDataAlloc(
-			ARCID_OTHERS, NARC_others_nfont_NCGR, heapID );
-		GF_ASSERT( buf != NULL );
-		
-		if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
-			GF_ASSERT( 0 );
-		}
-		GFL_BG_LoadCharacter( DEBUG_BGFRAME,
-			chr->pRawData, chr->szByte, 0 );
-		GFL_HEAP_FreeMemory( buf );
-	}
-}
-
-//--------------------------------------------------------------
-/**
  * システムフォント表示　初期化
  * @param	work	FIELD_DEBUG_WORK
  * @retval	nothing
@@ -325,24 +278,50 @@ static void DebugFont_SetGraphic( HEAPID heapID )
 //--------------------------------------------------------------
 static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 {
+	void *buf;
+#if 1
 	{	//BG Frame
 		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, BG_COLORMODE,
-			BG_SCRBASE, BG_CHARBASE, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+			FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_EFF1_CHARBASE, FLDBG_MFRM_EFF1_CHARSIZE,
+			GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
 		};
 		
 		GFL_BG_SetBGControl( work->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
-		GFL_BG_SetPriority( work->bgFrame, 0 );
 		GFL_BG_FillCharacter( work->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( work->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( work->bgFrame );
 	}
+#endif
 	
-	DebugFont_SetGraphic( work->heapID );
+	{	//パレット
+		NNSG2dPaletteData *pal;
+		buf = GFL_ARC_LoadDataAlloc(
+			ARCID_OTHERS, NARC_others_nfont_NCLR, work->heapID );
+		GF_ASSERT( buf != NULL );
+		
+		if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
+			GF_ASSERT( 0 );
+		}
+		
+		GFL_BG_LoadPalette( work->bgFrame, pal->pRawData, 32, DEBUG_PANO_FONT*32 );
+		GFL_HEAP_FreeMemory( buf );
+	}
+	
+	{	//キャラ
+		NNSG2dCharacterData *chr;
+		buf = GFL_ARC_LoadDataAlloc( ARCID_OTHERS, NARC_others_nfont_NCGR, work->heapID );
+		GF_ASSERT( buf != NULL );
+		
+		if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
+			GF_ASSERT( 0 );
+		}
+		GFL_BG_LoadCharacter( work->bgFrame, chr->pRawData, chr->szByte, 0 );
+		GFL_HEAP_FreeMemory( buf );
+	}
 }
 
 //--------------------------------------------------------------
@@ -387,7 +366,7 @@ static void DebugFont_Print(
 {
 	u16 n = 0;
 	u16 *screen;
-	screen = GFL_BG_GetScreenBufferAdrs( DEBUG_BGFRAME );
+	screen = GFL_BG_GetScreenBufferAdrs( work->bgFrame );
 	while( msgBuf[n] != 0 ){
 		DebugFont_Put(screen,msgBuf[n],x+n,y);
 		n++;

@@ -18,6 +18,7 @@
 
 #include "field/fieldmap_proc.h"
 
+#include "field_bg_def.h"
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_light.h"
@@ -134,3 +135,5 @@ extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fiel
 extern void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq );
 extern BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork );
 
+extern void FIELDMAP_InitBGMode( void );
+extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );

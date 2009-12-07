@@ -16,6 +16,8 @@
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 
+#include "field_bg_def.h"
+
 //アーカイブ
 #include "arc_def.h"
 #include "font/font.naix"
@@ -40,7 +42,7 @@
 //BG面
 enum
 {	
-	BG_FRAME_SCROLL_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_SCROLL_M	= FLDBG_MFRM_MSG,
 };
 //パレット番号
 enum
@@ -234,8 +236,8 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 		{
 			0, 0, 0x1000, 0,
 			GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			FLDBG_MFRM_MSG_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+			GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
 		};
 		
 		GFL_BG_SetBGControl( BG_FRAME_SCROLL_M, &bgcnt, GFL_BG_MODE_TEXT );

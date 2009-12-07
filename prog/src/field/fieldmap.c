@@ -20,6 +20,7 @@
 
 #include "field/field_const.h"
 #include "fieldmap.h"
+#include "field_bg_def.h"
 #include "field_common.h"
 #include "field_flagcontrol.h" //FIELD_FLAGCONT_INIT～
 
@@ -168,9 +169,6 @@ typedef enum{
 ///	定数
 //--------------------------------------------------------------
 enum { 
-  ///3D面の描画プライオリティー
-  FIELD_3D_FRAME_PRI    =   1,
-
   ///テクスチャ使用サイズ指定
   FIELD_3D_VRAM_SIZE    =   GFL_G3D_TEX256K,
 
@@ -733,7 +731,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
 #if USE_DEBUGWIN_SYSTEM
-	DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
 	DEBUGWIN_ChangeLetterColor( 31,31,31 );
 	FIELD_FUNC_RANDOM_GENERATE_InitDebug
 		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
@@ -1807,7 +1805,7 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 
-	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
+	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
 #endif
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -1817,28 +1815,48 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
-void FIELDMAP_InitBGMode( void );
+/*
+ *  @brief  フィールドBGモードデフォルト初期化
+ */
 void FIELDMAP_InitBGMode( void )
 {
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
 }
 
-void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+
+/*
+ *  @brief  フィールドBG Vramデフォルト初期化
+ */
 void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 {
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 ); 
-	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
+	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
 
   // 会話ウインドウリソースセットアップ
 	FLDMSGBG_SetupResource( fieldWork->fldMsgBG );
-
+#if 0
+  {
+    GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+			FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_EFF1_CHARBASE, FLDBG_MFRM_EFF1_CHARSIZE,
+			GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
+		};
+		
+		GFL_BG_SetBGControl( FLDBG_MFRM_EFF1, &bgcntText, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( FLDBG_MFRM_EFF1, VISIBLE_ON );
+		GFL_BG_FillCharacter( FLDBG_MFRM_EFF1, 0x00, 1, 0 );
+		GFL_BG_FillScreen( FLDBG_MFRM_EFF1,0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( FLDBG_MFRM_EFF1 );
+	}
+#endif
   //フィールドデバッグ初期化
-  fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
+  fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, FLDBG_MFRM_EFF1, fieldWork->heapID );
 
 #if USE_DEBUGWIN_SYSTEM
-	DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
 	DEBUGWIN_ChangeLetterColor( 31,31,31 );
 	FIELD_FUNC_RANDOM_GENERATE_InitDebug
 		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );

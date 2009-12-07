@@ -35,8 +35,10 @@ FS_EXTERN_OVERLAY(poke_status);
 BOOL DebugBGInitEnd = FALSE;    //BG初期化監視フラグ
 #endif
 
-extern void FIELDMAP_InitBGMode( void );
-extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+
+#define BG_FRAME_CROSS_FADE ( FLDBG_MFRM_EFF1 )
+
+
 
 
 //============================================================================================
@@ -156,8 +158,8 @@ static GMEVENT_RESULT FieldCrossOutEvent(GMEVENT * event, int *seq, void * work)
 		GX_SetBankForBG(GX_VRAM_BG_128_D);
 		//アルファブレンド
 		//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2, 0,0);
-		GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
-		GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+		GFL_BG_SetPriority(BG_FRAME_CROSS_FADE, 0);
+		GFL_BG_SetVisible( BG_FRAME_CROSS_FADE, VISIBLE_ON );
 
 		return GMEVENT_RES_FINISH;
 	}
@@ -314,9 +316,9 @@ static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
   {
 	case 0:
     few->alphaWork = 16;
-    GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
-    GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    GFL_BG_SetPriority(BG_FRAME_CROSS_FADE, 0);
+    GFL_BG_SetPriority(FLDBG_MFRM_3D, 1);
+    GFL_BG_SetVisible( FLDBG_MFRM_3D, VISIBLE_ON );
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
 
 		// サブ画面輝度復帰
@@ -329,7 +331,7 @@ static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
 			few->alphaWork--;
 			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
 		} else {
-			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+			GFL_BG_SetVisible( BG_FRAME_CROSS_FADE, VISIBLE_OFF );
 
 			//VRAMクリア
 			GX_SetBankForLCDC(GX_VRAM_LCDC_D);

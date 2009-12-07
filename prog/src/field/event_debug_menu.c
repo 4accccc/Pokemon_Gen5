@@ -80,8 +80,6 @@
 //======================================================================
 //  define
 //======================================================================
-#define DEBUG_BGFRAME_MENU (GFL_BG_FRAME1_M)  //使用フレーム
-#define DEBUG_BGFRAME_MSG  (GFL_BG_FRAME2_M)  //使用フレーム
 #define DEBUG_MENU_PANO (14)
 #define DEBUG_FONT_PANO (15)
 

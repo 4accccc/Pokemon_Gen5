@@ -39,7 +39,7 @@
 //============================================================================================
 //============================================================================================
 
-#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
+#define DEBUG_ITEMDISP_FRAME ( FLDBG_MFRM_MSG )
 
 typedef struct _DEBUGITEM_PARAM EVENT_DEBUGITEM_WORK;
 typedef void (StateFunc)(EVENT_DEBUGITEM_WORK* wk);

@@ -19,6 +19,7 @@
 #include "message.naix"
 #include "msg/msg_yesnomenu.h"
 
+#include "field_bg_def.h"
 #include "field/field_msgbg.h"
 
 #include "sound/pm_sndsys.h"
@@ -27,10 +28,11 @@
 
 #include "winframe.naix"
 
+
 //======================================================================
 //	define
 //======================================================================
-#define FLDMSGBG_BGFRAME (GFL_BG_FRAME1_M)	///<使用BGフレーム
+#define FLDMSGBG_BGFRAME ( FLDBG_MFRM_MSG )	///<使用BGフレーム
 
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
@@ -3759,17 +3761,16 @@ static void setBGResource( FLDMSGBG *fmb )
 {
 	{	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+			FLDBG_MFRM_MSG_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+			GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
 		};
 		
 		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
 		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
 		
-		GFL_BG_SetPriority( fmb->bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
 		
 		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
@@ -3858,22 +3859,6 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
   HEAPID heapID = fmb->heapID;
   
   {
-#if 0    
-    //BG初期化
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-    
-		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( fmb->bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
-#endif		
     GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
 		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,

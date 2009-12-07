@@ -40,14 +40,6 @@
 */
 //=============================================================================
 //-------------------------------------
-///	BGフレーム
-//=====================================
-enum
-{
-	BG_FRAME_WINDOW_M	= GFL_BG_FRAME1_M
-} ;
-
-//-------------------------------------
 ///	
 //=====================================
 typedef enum
@@ -612,7 +604,7 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 	if( p_wk->p_menu == NULL && p_wk->is_empty == FALSE )
 	{	
 		//一瞬パシるので読み替え時はBG面を消す
-		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+		GFL_BG_SetVisible( FLDBG_MFRM_MSG, VISIBLE_OFF );
 		{	
 			FLDMSGBG *p_msgbg;
 
