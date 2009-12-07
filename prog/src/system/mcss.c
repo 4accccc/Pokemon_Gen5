@@ -47,18 +47,6 @@
  * 構造体宣言
  */
 //--------------------------------------------------------------------------
-typedef struct	
-{
-	NNSG2dCharacterData*			pCharData;			//テクスチャキャラ
-	NNSG2dPaletteData*				pPlttData;			//テクスチャパレット
-	NNSG2dImageProxy*					image_p;
-	NNSG2dImagePaletteProxy*	palette_p;
-	void*											pBufChar;			//テクスチャキャラバッファ
-	void*											pBufPltt;			//テクスチャパレットバッファ
-	u32												chr_ofs;
-	u32												pal_ofs;
-	MCSS_WORK*								mcss;
-}TCB_LOADRESOURCE_WORK;
 
 //--------------------------------------------------------------------------
 /**
@@ -193,6 +181,34 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 			}
     }
 	}
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief LoadResourceされる前に呼び出されるコールバック関数の設定
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  func     呼び出すコールバック関数
+ * @param[in]  work     呼び出すコールバック関数の引数
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, void* work )
+{ 
+  mcss_sys->load_resource_callback = func;
+  mcss_sys->callback_work = work;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief コールバックワークの設定
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  work     呼び出すコールバック関数の引数
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work )
+{ 
+  mcss_sys->callback_work = work;
 }
 
 #ifndef USE_RENDER
@@ -1348,6 +1364,16 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
 			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
 		}
+
+    if( mcss_sys->load_resource_callback )
+    { 
+      if( mcss_sys->load_resource_callback( maw, tlw, mcss_sys->callback_work ) == TRUE )
+      { 
+        mcss_sys->load_resource_callback = NULL;
+        mcss_sys->callback_work = NULL;
+
+      }
+    }
 		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
 }

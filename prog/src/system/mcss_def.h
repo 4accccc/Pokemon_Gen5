@@ -117,6 +117,8 @@ struct _MCSS_SYS_WORK
 	u32																			:31;
 	u32											texAdrs;							//テクスチャ転送開始アドレス
 	u32											palAdrs;							//テクスチャパレット転送開始アドレス
+  MCSS_CALLBACK_FUNC*     load_resource_callback;   //LoadResourceの前に呼ばれるコールバック（キャラデータ操作に使用）
+  void*                   callback_work;        //コールバック関数を呼ぶ時の引数のポインタ
 	int											heapID;								//使用するヒープID
 };
 
