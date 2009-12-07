@@ -40,6 +40,10 @@
 #define SPWIN_HEIGHT_FONT_SPACE (2)
 
 #define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
+#define MSG_LAST_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
+
+#define BGWIN_SCROLL_SPEED (8)
+#define BGWIN_MSG_SCROLL_SPEED (4)
 
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
@@ -1671,7 +1675,7 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( (trg & PAD_BUTTON_A) ){
+    if( (trg & MSG_SKIP_BTN) ){
       stm->flag_key_trg = TRUE;
     }
     
@@ -1685,7 +1689,7 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
 #endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+    if( (trg & MSG_LAST_BTN) ){
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
       stm->flag_key_trg = FALSE;
@@ -1857,7 +1861,7 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
     if( msgWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
       
-      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      if( (trg & MSG_LAST_BTN) ){
         if( msgWin->flag_cursor == CURSOR_FLAG_WRITE ){
           keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
           
@@ -2099,7 +2103,7 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
     if( sysWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
       
-      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      if( (trg & MSG_LAST_BTN) ){
         if( sysWin->flag_cursor == CURSOR_FLAG_WRITE ){
           keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
           
@@ -2371,7 +2375,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     tmsg->flag_cursor = CURSOR_FLAG_NONE;
     tmsg->flag_key_pause_clear = FALSE;
     
-    if( (trg & PAD_BUTTON_A) ){
+    if( (trg & MSG_SKIP_BTN) ){
       tmsg->flag_key_trg = TRUE;
     }
     
@@ -2390,7 +2394,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      if( (trg & MSG_LAST_BTN) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
         
@@ -2562,7 +2566,7 @@ BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin )
     plnwin->flag_cursor = CURSOR_FLAG_NONE;
     plnwin->flag_key_pause_clear = FALSE;
     
-    if( (trg & PAD_BUTTON_A) ){
+    if( (trg & MSG_SKIP_BTN) ){
       plnwin->flag_key_trg = TRUE;
     }
     
@@ -2576,7 +2580,7 @@ BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin )
           plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      if( (trg & MSG_LAST_BTN) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
         
@@ -2946,7 +2950,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
     bgWin->seq_no++;
     break;
   case 1: //スクロール
-    bgWin->y += 4;
+    bgWin->y += BGWIN_SCROLL_SPEED;
     
     if( bgWin->y >= 0 ){
       bgWin->y = 0;
@@ -2989,19 +2993,19 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
           bgWin->scroll_y,BGWIN_NCOL) == TRUE ){
       bgWin->seq_no = 2;
     }else{
-      bgWin->scroll_y += 2;
+      bgWin->scroll_y += BGWIN_MSG_SCROLL_SPEED;
     }
     
 	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
 	  GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
     break;
   case 5: //終了へ　キー待ち
-    if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
+    if( !(GFL_UI_KEY_GetTrg() & MSG_LAST_BTN) ){
       break;
     }
     bgWin->seq_no++;
   case 6: //スクロール
-    bgWin->y -= 4;
+    bgWin->y -= BGWIN_SCROLL_SPEED;
     
     if( bgWin->y <= -48 ){
       bgWin->y = -48;
@@ -3429,7 +3433,7 @@ BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
   trg = GFL_UI_KEY_GetTrg();
   cont = GFL_UI_KEY_GetCont();
   
-  if( (trg & PAD_BUTTON_A) ){
+  if( (trg & MSG_LAST_BTN) ){
     return( TRUE );
   }
   
