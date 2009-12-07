@@ -41,11 +41,13 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	DEFINE_LOCAL	LWK_GIAN_CHECK
 	DEFINE_LOCAL	LWK_HOKAKU_COUNT
+	DEFINE_LOCAL	LWK_YES
 	
-	//y‰¼zƒMƒAƒ“‚ð1•C•ß‚Ü‚¦‚Ä‚¢‚é
-	$LWK_GIAN_CHECK = 1
-
-	//y‰¼zGREP‚É–³‚©‚Á‚½ˆ×A—\‘z‚Åì¬
+	$LWK_YES = 1
+	
+	//ƒMƒAƒ“‚ð•ß‚Ü‚¦‚Ä‚¢‚é‚©‚Ìƒ`ƒFƒbƒN
+	_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_GIAN, LWK_GIAN_CHECK )
+	
 	//•ß‚Ü‚¦‚½ƒ|ƒPƒ‚ƒ“‚Ì”‚ðƒJƒEƒ“ƒg
 	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_GET, LWK_HOKAKU_COUNT )
 	
@@ -72,7 +74,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG( msg_c06_hakase1_01, C06_HAKASE1_01)
 	_BALLOONWIN_CLOSE()
 	
-	//y‰¼zGREP‚É–³‚©‚Á‚½ˆ×A—\‘z‚Åì¬
 	//•ßŠl”‚ðŠi”[
 	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 )
 	
@@ -84,7 +85,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 
 	//ƒMƒAƒ“‚ª‚¢‚é‚©‚Ç‚¤‚©‚ÅA•ªŠò	
 	//ƒMƒAƒ“‚ð•ß‚Ü‚¦‚Ä‚¢‚éH
-	IF $LWK_GIAN_CHECK >  0	THEN
+	IF $LWK_GIAN_CHECK ==  LWK_YES	THEN
 	
 		//•ß‚Ü‚¦‚Ä‚¢‚é
 		_BALLOONWIN_OBJMSG( msg_c06_hakase1_03, C06_HAKASE1_01)
