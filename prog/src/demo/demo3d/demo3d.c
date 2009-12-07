@@ -44,10 +44,14 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "arc/debug_obata.naix"
+
+//データ
 #include "demo3d_data.h"
 
 //外部公開
 #include "demo/demo3d.h"
+
 
 //@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
@@ -64,6 +68,8 @@
 
 FS_EXTERN_OVERLAY(ui_common);
 
+#define CHECK_KEY_TRG( key ) ( ( GFL_UI_KEY_GetTrg() & (key) ) == (key) )
+
 //=============================================================================
 /**
  *								定数定義
@@ -77,6 +83,7 @@ enum
 //@TODO 3という約束になっていたので3。ちゃんと作れば対応可能
 #define UNIT_MAX (3) ///< 使用ユニットの最大値
 
+#define ICA_BUFF_SIZE (10)
 
 //-------------------------------------
 ///	フレーム
@@ -416,8 +423,17 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 	DEMO3D_MAIN_WORK* wk = mywk;
   BOOL is_end;
 
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  // 特定キーでアプリ終了
+  if( 
+      CHECK_KEY_TRG( PAD_BUTTON_A ) ||
+      CHECK_KEY_TRG( PAD_BUTTON_B ) ||
+      CHECK_KEY_TRG( PAD_BUTTON_X ) ||
+      CHECK_KEY_TRG( PAD_BUTTON_Y ) ||
+      CHECK_KEY_TRG( PAD_KEY_LEFT ) ||
+      CHECK_KEY_TRG( PAD_KEY_RIGHT ) ||
+      CHECK_KEY_TRG( PAD_KEY_DOWN ) ||
+      CHECK_KEY_TRG( PAD_KEY_UP ) 
+    )
   {
     return GFL_PROC_RES_FINISH;
   }
@@ -460,12 +476,9 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  *								static関数
  */
 //=============================================================================
-
-#include "arc/debug_obata.naix"
-#define ICA_BUFF_SIZE (10)
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  3Dグラフィック 初期化
  *
  *	@param	DEMO3D_MAIN_WORK* wk 
  *
@@ -476,6 +489,9 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 {
   // icaデータをロード
   wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
+
+  // icaアニメフレーム初期化
+  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->start_frame) );
 
   // 3D管理ユーティリティーの生成
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
@@ -512,7 +528,10 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 
       for( j=0; j<anime_count; j++ )
       {
+        const int frame = FX32_CONST(wk->start_frame);
+
         GFL_G3D_OBJECT_EnableAnime( obj, j );
+        GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
       }
     }
   }
@@ -520,7 +539,7 @@ static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  グラフィック 開放
+ *	@brief  3Dグラフィック 開放
  *
  *	@param	DEMO3D_MAIN_WORK* wk 
  *
@@ -547,7 +566,7 @@ static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  3Dグラフィック 主処理
  *
  *	@param	DEMO3D_MAIN_WORK* wk 
  *
