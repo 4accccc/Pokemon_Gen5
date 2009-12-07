@@ -59,6 +59,9 @@ $(targetname).narc: $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj
 	nnsarc -r -l -n -i $(targetname) -S arclist.txt
 
 	$(NAIXCUT) $(targetname).naix
+	ruby make_header.rb
+	$(COPY) demo3d_resdata.cdat $(PROJECT_PROGDIR)src/demo/demo3d
+
 endif
 
 #------------------------------------------------------------------------------

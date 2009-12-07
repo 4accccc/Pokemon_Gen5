@@ -88,12 +88,11 @@ def print_scene(file, dir)
   file.puts("// " + demoid );
   file.puts("//=========================================================================\n");
 
+  puts ">" + dir
+
   #1オリジン
   cnt = 1; 
   loop do
-
-    puts cnt
-
     is_find = false
 
     #フォルダ内のファイルを順繰り
