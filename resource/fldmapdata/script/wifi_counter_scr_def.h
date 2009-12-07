@@ -5,6 +5,6 @@
 #define _WIFI_COUNTER_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_WIFI_COUNTER (1)
+#define SCRID_WIFI_COUNTER (10105)
 
 #endif //_WIFI_COUNTER_SCR_DEF_H_

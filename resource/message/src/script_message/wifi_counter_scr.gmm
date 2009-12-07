@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-07T18:27:23"/>
+	<create user="iwasawa" host="W00157" date="2009-12-07T20:15:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="150"/>
+		<id position="0" width="189"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_wifi_counter_01_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>受付カウンターに話しかけたときのメッセージ
 
 ・ＷｉーＦｉコネクションへ　いく
@@ -313,7 +313,7 @@
 		<language name="JPN_KANJI" width="256">ようこそ！▼</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ＷｉーＦｉコネクションを
 ごりよう　ですか？</language>
@@ -321,14 +321,14 @@
 ご利用　ですか？</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>フィールドへもどる</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">それでは　また　おこしください</language>
 		<language name="JPN_KANJI" width="256">それでは　また　おこしください</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>Wi-Fi接続をするかどうかの確認メッセージ
 
 「はい」
@@ -345,7 +345,7 @@
 かいし　しますか？</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>主人公がゲートを通って奥へ。
 受付の二人が、主人公のほうを向いて
 見送るような演出。
@@ -356,7 +356,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>・仮ＩＤで、ともだちてちょうに友達の登録がない場合
 の受付メッセージ
 メッセージ後、はい・いいえの選択
@@ -388,7 +388,7 @@ Wi-Fi P2P接続画面へ</comment>
 うけとりますか？[2:00:１桁:0]</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>・本ＩＤで、ともだちてちょうに友達の登録がない場合
 の受付メッセージ
 フィールドへもどる</comment>
@@ -415,7 +415,7 @@ Wi-Fi P2P接続画面へ</comment>
 おこしください</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -429,7 +429,9 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル１００」を　えらべます▼
 「レベル５０」や「レベル１００」では
 さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼</language>
+そのレベルに　そろえられます▼
+ＷｉーＦｉコネクションを
+ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">ＷｉーＦｉコネクション　では
 ともだちてちょうに　とうろくした▽
 ひと　どうしで　ポケモンこうかんや▽
@@ -440,10 +442,12 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル１００」を　えらべます▼
 「レベル５０」や「レベル１００」では
 さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼</language>
+そのレベルに　そろえられます▼
+ＷｉーＦｉコネクションを
+ごりよう　ですか？</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_err01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>エラーメッセージ
 C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -453,7 +457,7 @@ C-Gear入手前</comment>
 また　あとで　おこしください</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_err02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_err02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>エラーメッセージ
 ダメタマが手持ちにある</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -463,7 +467,7 @@ C-Gear入手前</comment>
 ポケモンが　います</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_err03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_err03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>エラーメッセージ
 フィールド通信接続終了処理エラー時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -473,34 +477,34 @@ C-Gear入手前</comment>
 やり直して　ください</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_win01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wifi_counter_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ランダムマッチング</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉコネクションへ　いく</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチング</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_win02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wifi_counter_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">グローバルターミナル</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナル</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_win03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wifi_counter_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ジオネット</language>
 		<language name="JPN_KANJI" width="256">ジオネット</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_win04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wifi_counter_win04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<language name="JPN" width="256">せつめいを　きく</language>
 		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
-	<row id="msg_wifi_counter_01_win05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wifi_counter_win05" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">やめる</language>
@@ -553,6 +557,100 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="msg_gterminal_gts_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>GTS</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ポケモン　グローバル　こうかんを
+しますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモン　グローバル　こうかんを
+しますか？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_win01" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTSメニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">こうかん　する</language>
+		<language name="JPN_KANJI" width="256">こうかん　する</language>
+	</row>
+
+	<row id="msg_gterminal_gts_win02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTSメニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+	</row>
+
+	<row id="msg_gterminal_gts_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTSメニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>GTS</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ＧＴＳでは　ポケモンを　あずけること
+ポケモンを　さがすことの[BE:01:ページ切り替え（クリア）]
+ふたつのほうほうで
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ＧＴＳでは　ポケモンを　あずけること
+ポケモンを　さがすことの[BE:01:ページ切り替え（クリア）]
+ふたつのほうほうで
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp_leave" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>GTS</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ポケモンを　あずけるには
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　あずけるには
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp_search" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>GTS</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ポケモンを　さがすには
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　さがすには
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp_win01" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTS 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ポケモンを　あずけるって？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　あずけるって？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp_win02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTS 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">ポケモンを　さがすって？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　さがすって？</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>GTS 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">わかった</language>
+		<language name="JPN_KANJI" width="256">わかった</language>
 	</row>
 
 	<flowchart-group-list>

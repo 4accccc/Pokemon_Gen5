@@ -25,3 +25,14 @@
 #define SEQ_SUB_GTERMINAL_EXP         (4)
 #define SEQ_SUB_GTERMINAL_RETURN      (0xFF)
 
+///グローバルターミナル:GTSシーケンス
+#define SEQ_SUB_GTERMINAL_GTS_MENU        (0)
+#define SEQ_SUB_GTERMINAL_GTS_EXP         (1)
+#define SEQ_SUB_GTERMINAL_GTS_EXCHANGE    (2)
+#define SEQ_SUB_GTERMINAL_GTS_RETURN      (0xFF)
+
+///グローバルターミナル:GTS：説明を聞くシーケンス
+#define SEQ_SUB_GTERMINAL_GTS_EXP_MENU        (0)
+#define SEQ_SUB_GTERMINAL_GTS_EXP_MAIN        (1)
+#define SEQ_SUB_GTERMINAL_GTS_EXP_RETURN      (0xFF)
+

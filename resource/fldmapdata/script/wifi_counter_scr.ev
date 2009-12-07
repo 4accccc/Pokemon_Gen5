@@ -55,7 +55,7 @@ sub_wifi_counter_main:
 
   //C-Gear取得チェック
   IF FLAG_OFF( FE_CGEAR_GET ) THEN
-    _SYSWIN_MSG_DOWN( msg_wifi_counter_01_err01 ) //また後でお越しください
+    _SYSWIN_MSG_DOWN( msg_wifi_counter_err01 ) //また後でお越しください
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     _RET
@@ -64,13 +64,14 @@ sub_wifi_counter_main:
   //ダメタマチェック
   _GET_PARTY_POKE_COUNT( i_ret, POKECOUNT_MODE_ONLY_DAME_EGG)
   IF $i_ret != 0 THEN
-    _SYSWIN_MSG_DOWN( msg_wifi_counter_01_err02 ) //手持ちに連れて行けないポケモンがいます
+    _SYSWIN_MSG_DOWN( msg_wifi_counter_err02 ) //手持ちに連れて行けないポケモンがいます
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     _RET
   ENDIF
 
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_00 ) //Wi-Fiコネクションへようこそ
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_00 ) //Wi-Fiコネクションへようこそ
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 ) //Wi-Fiカウンターをご利用ですか？
   $i_seq = SEQ_MAIN_MENU
 
   $i_loop = TRUE
@@ -81,7 +82,7 @@ sub_wifi_counter_main:
       $i_seq = $reg_return
 
     CASE SEQ_COUNTER_EXP THEN
-      _SYSWIN_MSG_DOWN( msg_wifi_counter_01_07 ) //Wi-Fiコネクションでは…
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_07 ) //Wi-Fiコネクションでは…
       $i_seq = SEQ_MAIN_MENU
 
     CASE SEQ_RANDOM_MATCH THEN
@@ -101,11 +102,11 @@ sub_wifi_counter_main:
       $i_seq = $reg_return
 
     CASE SEQ_GOODBYE THEN
-      _SYSWIN_MSG_DOWN( msg_wifi_counter_01_02 ) //それではまたお越しください
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_02 ) //それではまたお越しください
       $i_seq = SEQ_EXIT
    
     CASE SEQ_RETRY THEN
-      _SYSWIN_MSG_DOWN( msg_wifi_counter_01_err03 ) //もう一度最初からやり直してください
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_err03 ) //もう一度最初からやり直してください
       $i_seq = SEQ_EXIT
 
     CASE SEQ_EXIT THEN
@@ -124,16 +125,16 @@ sub_wifi_counter_main_menu:
 {
   DEFINE_LOCAL  i_ret
 
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_01)
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01)
 
   //分岐・ランダムマッチ/GTS/ジオネット/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_01_win01, SEQ_RANDOM_MATCH )	    //ランダムマッチ
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_01_win02, SEQ_GLOBAL_TERMINAL )	//グローバルターミナル
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_01_win03, SEQ_GOODBYE )	        //ジオネット
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_01_win04, SEQ_COUNTER_EXP )	    //説明を聞く
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_01_win05, SEQ_GOODBYE )        	//やめる
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GLOBAL_TERMINAL )	//グローバルターミナル
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win03, SEQ_GOODBYE )	        //ジオネット
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win04, SEQ_COUNTER_EXP )	    //説明を聞く
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win05, SEQ_GOODBYE )        	//やめる
 		
 	//メニュー表示
 	_BMPMENU_START()
@@ -166,7 +167,7 @@ sub_wifi_counter_check_connect:
 
   IF $i_id_state == TRUE THEN
     IF $i_friend_num == 0 THEN
-      _SYSWIN_MSG_DOWN( msg_wifi_counter_01_06 ) //友だちを登録していないと利用できません
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_06 ) //友だちを登録していないと利用できません
       _AB_KEYWAIT()
       _SYSWIN_CLOSE()
       $reg_return = SEQ_GOODBYE
@@ -177,7 +178,7 @@ sub_wifi_counter_check_connect:
   ENDIF
 
   //仮IDを取得しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_05 ) //自分のコードだけでも受け取りますか？
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_05 ) //自分のコードだけでも受け取りますか？
   _YES_NO_WIN( i_ret )
   
   //『はい』
@@ -199,7 +200,7 @@ sub_wifi_counter_connect:
   DEFINE_LOCAL  i_id_state
 
   //Wi-Fi接続を開始しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_03 )
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_03 )
   _YES_NO_WIN( i_ret )
   _SYSWIN_CLOSE()
 
@@ -228,7 +229,7 @@ sub_wifi_counter_connect:
   ENDIF
 
   //接続　それではご案内します
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_04 )
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
@@ -262,7 +263,7 @@ sub_wifi_random_match:
   DEFINE_LOCAL  i_id_state
 
   //Wi-Fi接続を開始しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_03 )
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_03 )
   _YES_NO_WIN( i_ret )
   _SYSWIN_CLOSE()
 
@@ -291,7 +292,7 @@ sub_wifi_random_match:
   ENDIF
 
   //接続　それではご案内します
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_04 )
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
@@ -388,7 +389,109 @@ _RET
 //--------------------------------------------------------------
 sub_gterminal_gts:
 {
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+
+  $i_seq = SEQ_SUB_GTERMINAL_GTS_MENU
+  $i_loop = TRUE
+
+  WHILE $i_loop == TRUE
+    SWITCH  $i_seq
+    CASE SEQ_SUB_GTERMINAL_GTS_MENU THEN
+      _CALL sub_gterminal_gts_menu  //メニュー表示
+      $i_seq = $reg_return
+    
+    CASE SEQ_SUB_GTERMINAL_GTS_EXP THEN
+      _CALL sub_gterminal_gts_exp  //説明を聞く
+      $i_seq = $reg_return
+ 
+    CASE SEQ_SUB_GTERMINAL_GTS_EXCHANGE THEN
+      _CALL sub_gterminal_gts_exchange  //交換
+      $i_seq = $reg_return
+ 
+    CASE SEQ_SUB_GTERMINAL_GTS_RETURN THEN
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+
+  //Wi-Fiカウンターをご利用ですか？
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
   $reg_return = SEQ_SUB_GTERMINAL_MENU
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS：メニュー表示
+//--------------------------------------------------------------
+sub_gterminal_gts_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+  //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+	_BMPMENU_MAKE_LIST( msg_gterminal_gts_win01, SEQ_SUB_GTERMINAL_GTS_EXCHANGE )    //交換
+	_BMPMENU_MAKE_LIST( msg_gterminal_gts_win02, SEQ_SUB_GTERMINAL_GTS_EXP )	      //説明を聞く
+	_BMPMENU_MAKE_LIST( msg_gterminal_gts_win03, SEQ_SUB_GTERMINAL_GTS_RETURN )     //もどる
+		
+	//メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_RETURN
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS：説明を聞く
+//--------------------------------------------------------------
+sub_gterminal_gts_exp:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_gterminal_gts_exp_win01, 0 )   //預ける
+	  _BMPMENU_MAKE_LIST( msg_gterminal_gts_exp_win02, 1 )   //探す
+	  _BMPMENU_MAKE_LIST( msg_gterminal_gts_exp_win03, 2 )   //わかった
+		
+	  //メニュー表示
+  	_BMPMENU_START()
+
+    IF $i_ret == 0 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_gts_exp_leave )
+    ELSIF $i_ret == 1 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_gts_exp_search )
+    ELSE
+      $i_loop = FALSE
+    ENDIF
+  ENDWHILE
+
+  //ポケモングローバル交換しますか？
+  _SYSWIN_MSG_DOWN( msg_gterminal_gts_01 )
+  $reg_return = SEQ_SUB_GTERMINAL_MENU
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS：交換
+//--------------------------------------------------------------
+sub_gterminal_gts_exchange:
+{
+  DEFINE_LOCAL  i_ret
+
+  //ポケモングローバル交換しますか？
+  _SYSWIN_MSG_DOWN( msg_gterminal_gts_01 )
+  $reg_return = SEQ_SUB_GTERMINAL_GTS_RETURN
 }
 _RET
 
@@ -431,7 +534,7 @@ _RET
 sub_wifi_counter_goodbye:
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 ) //お辞儀アニメ
   _OBJ_ANIME_WAIT()
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01_02 ) //それではまたお越しください
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_02 ) //それではまたお越しください
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 _RET
