@@ -66,7 +66,7 @@ TEX_MAG = $(PROJECT_ROOT)tools/imdtools/tex_mag/tex_mag.exe
 #----------------------------------------------------------------------------
 #	アーカイブのみ行う場合の依存関係
 #----------------------------------------------------------------------------
-NSBTXFILES = $(wildcard $(NSBTXFILESDIR)/*.nsbtx)
+NSBTXFILES = $(wildcard $(subst $(DQ),,$(NSBTXFILESDIR))/*.nsbtx)
 
 .PHONY:	do-build clean
 #----------------------------------------------------------------------------
