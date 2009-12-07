@@ -20,6 +20,8 @@
 #include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
 #include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
+#include "eventwork.h"  // for EVENTWORK_
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 
 
 //==========================================================================================
@@ -51,8 +53,8 @@ typedef enum{
 typedef enum{
   RES_LIFT_NSBMD,          // リフトのモデル
   RES_LIFT_NSBTA_ALL,      // 四天王(全員)　　を倒した時のita
-  RES_LIFT_NSBTA_KAKUTOU,  // 四天王(格闘)　　を倒した時のita
-  RES_LIFT_NSBTA_AKU,      // 四天王(悪)　　　を倒した時のita
+  RES_LIFT_NSBTA_FIGHT,    // 四天王(格闘)　　を倒した時のita
+  RES_LIFT_NSBTA_EVIL,     // 四天王(悪)　　　を倒した時のita
   RES_LIFT_NSBTA_GHOST,    // 四天王(ゴースト)を倒した時のita
   RES_LIFT_NSBTA_ESPER,    // 四天王(エスパー)を倒した時のita
   RES_NUM
@@ -71,8 +73,8 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 //------------------------
 typedef enum{
   LIFT_ANM_ALL,     // 四天王(全員)　　を倒した時のita
-  LIFT_ANM_KAKUTOU, // 四天王(格闘)　　を倒した時のita 
-  LIFT_ANM_AKU,     // 四天王(悪)　　　を倒した時のita
+  LIFT_ANM_FIGHT,   // 四天王(格闘)　　を倒した時のita 
+  LIFT_ANM_EVIL,    // 四天王(悪)　　　を倒した時のita
   LIFT_ANM_GHOST,   // 四天王(ゴースト)を倒した時のita
   LIFT_ANM_ESPER,   // 四天王(エスパー)を倒した時のita
   LIFT_ANM_NUM
@@ -80,8 +82,8 @@ typedef enum{
 static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
 {
   {RES_LIFT_NSBTA_ALL, 0},
-  {RES_LIFT_NSBTA_KAKUTOU, 0},
-  {RES_LIFT_NSBTA_AKU, 0},
+  {RES_LIFT_NSBTA_FIGHT, 0},
+  {RES_LIFT_NSBTA_EVIL, 0},
   {RES_LIFT_NSBTA_GHOST, 0},
   {RES_LIFT_NSBTA_ESPER, 0},
 }; 
@@ -272,14 +274,35 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_GIMMICK], UNIT_GIMMICK );
 
-  // リフトのアニメーション初期化
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ALL,     TRUE );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_KAKUTOU, FALSE );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_AKU,     FALSE );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_GHOST,   FALSE );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ESPER,   FALSE );
+  // リフトのアニメーション
+  {
+    GAMESYS_WORK* gsys;
+    GAMEDATA* gdata;
+    EVENTWORK* evwork;
+    BOOL fight, evil, ghost, esper;
+    // フラグチェック
+    gsys   = FIELDMAP_GetGameSysWork( fieldmap );
+    gdata  = GAMESYSTEM_GetGameData( gsys );
+    evwork = GAMEDATA_GetEventWork( gdata );
+    fight  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_FIGHTWIN );
+    evil   = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_EVILWIN );
+    ghost  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_GHOSTWIN );
+    esper  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_ESPWIN );
+    // アニメ再生
+    if( fight && evil && ghost && esper )
+    { // 四天王制覇
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ALL,   TRUE );
+    }
+    else
+    { // 各四天王クリアに応じたアニメを再生
+      if( fight ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_FIGHT, TRUE ); }
+      if( evil  ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_EVIL,  TRUE ); }
+      if( ghost ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_GHOST, TRUE ); }
+      if( esper ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ESPER, TRUE ); }
+    }
+  }
 
-  // リフトの座標を初期化
+  // リフトの座標
   {
     GFL_G3D_OBJSTATUS* objstatus;
     objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
