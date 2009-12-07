@@ -154,6 +154,7 @@
 #define WK_SCENE_D04R0101                16542 /* 0x409e D04遺跡：イベント用ワーク */
 #define WK_SCENE_D04R0601                16543 /* 0x409f D04遺跡奥：イベント用ワーク */
 #define WK_SCENE_R10                     16544 /* 0x40a0 R10／10番道路：イベント用ワーク */
+#define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
@@ -162,7 +163,7 @@
 
 #define WK_AREA_START                    16688 /* 0x4130  */
 
-#define WK_C05GYM_EXIT                   16688 /* 0x4130 Ｃ05地面ジムの接続リフト用ワーク */
+		/* not used 16688(0x4130) */
 		/* not used 16689(0x4131) */
 		/* not used 16690(0x4132) */
 		/* not used 16691(0x4133) */

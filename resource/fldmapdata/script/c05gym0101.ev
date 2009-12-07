@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05gym0101.h"
   .include  "c05gym0101.h"
+  .include  "c05gym0201_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -34,7 +35,7 @@ _EVENT_DATA    ev_c05gym0101_lift_05u
 _EVENT_DATA    ev_c05gym0101_lift_05d
 _EVENT_DATA    ev_c05gym0101_workman_00
 _EVENT_DATA    ev_zone_c05gym0101
-_EVENT_DATA    ev_scene_c05gym0101_gymstart_01
+_EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
 _EVENT_DATA    ev_c05gym0101_exitlift_00u
 _EVENT_DATA    ev_c05gym0101_exitlift_00d
 _EVENT_DATA_END
@@ -49,7 +50,6 @@ _EVENT_DATA_END
 //																	//
 //	ジムギミックに LOCALWORK10 を使用しています。					//
 //	同マップ内の使用を禁止します。									//
-//	0 = シーンチェンジ起動 エントランスから降りてくるリフト演出		//
 //																	//
 //------------------------------------------------------------------//
 
@@ -66,7 +66,7 @@ INIT_EVENT_END
 /************************************************************/
 /*				接続イベント エントランスから降下			*/
 /************************************************************/
-EVENT_START	ev_scene_c05gym0101_gymstart_01
+EVENT_START	ev_reserve_c05gym0101_gymstart_01
 
 	//マップ遷移ブラックイン
 	_MAP_FADE_BLACK_IN()
@@ -76,11 +76,7 @@ EVENT_START	ev_scene_c05gym0101_gymstart_01
 
 	_MAP_FADE_END_CHECK()
 
-
 	//========================================//
-
-	//接続イベント終了
-	$LOCALWORK10 = 1
 
 	//リフトの上下位置フラグを初期化（初期位置が下のリフトのフラグをたてておく）
 	//ゾーンチェンジではローカルフラグの操作ができないためゾーン進入時に必ず発動するこのイベントで初期化
@@ -399,23 +395,16 @@ EVENT_START	ev_c05gym0101_exitlift_00u
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
-
-    //マップ遷移ブラックアウト
+		//マップ遷移ブラックアウト
 		_MAP_FADE_BLACK_OUT()
 
 		//リフトを上昇させる（1 = エントランスに移動アニメ）
 		_GYM_GROUND_EXIT_LIFT( 1 )
 
 		_MAP_FADE_END_CHECK()
-    
-    
-
-		//========================================//
 
-		//エントランスリフトのジム戻り演出イベントを有効にする
-		$WK_C05GYM_EXIT = 1
-
-		//========================================//
+		//スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+		_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_01 )
 
 		//マップチェンジ
 		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 5, 0, 4, DIR_UP )

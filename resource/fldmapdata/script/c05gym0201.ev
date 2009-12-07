@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c05gym0201.h"
   .include  "c05gym0201.h"
+  .include  "c05gym0101_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,7 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0201_startlift_01
-_EVENT_DATA    ev_scene_c05gym0201_gymback_01
+_EVENT_DATA    ev_reserve_c05gym0201_gymback_01
 _EVENT_DATA    ev_c05gym0201_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA_END
@@ -38,7 +39,7 @@ _EVENT_DATA_END
 /************************************************************/
 /*			ジムフロアから戻ってくる演出					*/
 /************************************************************/
-EVENT_START	ev_scene_c05gym0201_gymback_01
+EVENT_START	ev_reserve_c05gym0201_gymback_01
 
 	//マップ遷移ブラックイン
 	_MAP_FADE_BLACK_IN()
@@ -47,13 +48,6 @@ EVENT_START	ev_scene_c05gym0201_gymback_01
 	_GYM_GROUND_ENT_EXIT_LIFT( 0 )
 
 	_MAP_FADE_END_CHECK()
-
-	//========================================//
-	
-	//シーンチェンジを無効にする
-	$WK_C05GYM_EXIT = 0
-	
-	//========================================//
 
 EVENT_END
 
@@ -70,15 +64,16 @@ EVENT_START	ev_c05gym0201_startlift_01
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
-    //マップ遷移ブラックアウト
+	    //マップ遷移ブラックアウト
 		_MAP_FADE_BLACK_OUT()
 
 		//リフトを下降させる（1 = 下降アニメ）
 		_GYM_GROUND_ENT_EXIT_LIFT( 1 )
-
+		
 		_MAP_FADE_END_CHECK()
 
-    
+		//予約スクリプト マップチェンジ後、リフトが降りるスクリプトを起動する
+		_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0101_GYMSTART_01 )
 
 		//マップチェンジ
 		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0101, 17, 50, 25, DIR_UP )
