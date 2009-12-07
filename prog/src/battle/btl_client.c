@@ -68,6 +68,7 @@ struct _BTL_CLIENT {
   const BTL_POKEPARAM*  procPoke;
   BTL_ACTION_PARAM*     procAction;
   BTL_REC*              btlRec;
+  BTL_RECREADER         btlRecReader;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -317,6 +318,12 @@ const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size )
   return NULL;
 }
 
+void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 dataSize )
+{
+  wk->myType = BTL_CLIENT_TYPE_REC;
+  BTL_RECREADER_Init( &wk->btlRecReader, recordData, dataSize );
+}
+
 //=============================================================================================
 /**
  * 描画処理モジュールをアタッチ（UIクライアントのみ）
@@ -497,7 +504,7 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
-
+  return TRUE;
 }
 
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
@@ -622,6 +629,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     {
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       wk->prevPokeIdx = wk->procPokeIdx;
       (*seq)++;

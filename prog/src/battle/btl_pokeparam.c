@@ -2272,6 +2272,10 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
       info->agi    = bpp->baseParam.agility - info->agi;
 
+      bpp->coreParam.hp += info->hp;
+      BTL_Printf("レベルアップしたのでHPが%dに増加\n", bpp->coreParam.hp);
+      PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
+
 //      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
 //      PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
@@ -2300,6 +2304,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi )
 {
   bpp->coreParam.exp = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, nextLevel );
+  bpp->coreParam.hp += hpMax;
   bpp->baseParam.level = nextLevel;
   bpp->baseParam.hpMax      += hpMax;
   bpp->baseParam.attack     += atk;

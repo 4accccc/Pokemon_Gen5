@@ -4110,6 +4110,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
         scPut_Koraeru( wk, defender, koraeru_cause );
       }
       damage_sum += damage;
+      BTL_Printf("与えるダメージ値=%d\n", damage);
       scproc_WazaAdditionalEffect( wk, wazaParam, attacker, defender, damage );
       scproc_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, fCritical );
       scproc_CheckItemReaction( wk, defender );
@@ -4117,6 +4118,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     }
 
     if( BPP_IsDead(defender) ){
+      BTL_Printf("ダメポケ倒れます=%d\n", damage);
       deadFlag = TRUE;
     }
     if( BPP_IsDead(attacker) ){
@@ -4772,6 +4774,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   // 最高で残りＨＰの範囲に収まるように最終補正
   if( rawDamage > BPP_GetValue(defender, BPP_HP) ){
     rawDamage = BPP_GetValue( defender, BPP_HP );
+    BTL_Printf("ダメ受けポケモンのＨＰ値にまるめ->%d\n", rawDamage);
   }
 
   BTL_EVENTVAR_Pop();
@@ -6787,10 +6790,11 @@ static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     aff = BTL_TYPEAFF_100;
   }
 
+  BPP_HpMinus( defender, damage );
+
   BTL_Printf("ポケ[%d]に対するワザダメージ値:%d -> 残りHP %d\n", BPP_GetID(defender), damage,
     BPP_GetValue(defender, BPP_HP));
 
-  BPP_HpMinus( defender, damage );
   SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
   SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, aff, damage, wazaParam->wazaID );
   if( critical_flag )

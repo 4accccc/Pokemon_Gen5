@@ -471,6 +471,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
 
   {
     bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
+    BTL_Printf("‚±‚±‚Å‚g‚o‚Í%d\n", bgw->bgcl[ pos ].hp);
     bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
     bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
     bgw->bgcl[ pos ].damage   = 0;

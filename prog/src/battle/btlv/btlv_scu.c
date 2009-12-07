@@ -1413,7 +1413,6 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
 
       subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
       bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
-//      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
@@ -2470,6 +2469,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
     stwin->bpp = BTL_POKECON_GetFrontPokeDataConst( stwin->parentWk->pokeCon, stwin->pokePos );
     if( !BPP_IsDead(stwin->bpp) )
     {
+      BTL_Printf("‚±‚±‚Åƒ|ƒPID=%d, HP=%d pos=%d\n", BPP_GetID(stwin->bpp), BPP_GetValue(stwin->bpp,BPP_HP), stwin->pokePos);
       BTLV_EFFECT_SetGauge( stwin->bpp, stwin->vpos );
       stwin->dispFlag = TRUE;
     }

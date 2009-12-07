@@ -60,6 +60,18 @@ typedef enum {
 }BtlvResult;
 
 
+//--------------------------------------------------------------
+/**
+ *  メッセージウェイト指定
+ */
+//--------------------------------------------------------------
+enum {
+
+  BTLV_MSGWAIT_NONE = 0,
+  BTLV_MSGWAIT_STD = 80,
+
+};
+
 //----------------------------------------------------------------------
 /**
  *  文字出力パラメータ
@@ -67,8 +79,9 @@ typedef enum {
 //----------------------------------------------------------------------
 typedef struct {
   u16   strID;          ///< 基本文字列ID
-  u8    strType;        ///< BtlStrType
-  u8    argCnt;         ///< 引数の数
+  u8    wait;           ///< 改行・表示終了時ウェイト
+  u8    strType : 4;    ///< BtlStrType
+  u8    argCnt  : 4;    ///< 引数の数
   int   args[BTL_STR_ARG_MAX];  ///< 引数
 }BTLV_STRPARAM;
 
@@ -81,12 +94,17 @@ static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u
   sp->argCnt = 0;
   sp->strID = strID;
   sp->strType = strType;
+  sp->wait = BTLV_MSGWAIT_STD;
 }
 static inline void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg )
 {
   if( sp->argCnt < NELEMS(sp->args) ){
     sp->args[ sp->argCnt++ ] = arg;
   }
+}
+static inline void BTLV_STRPARAM_SetWait( BTLV_STRPARAM* sp, u8 wait )
+{
+  sp->wait = wait;
 }
 
 

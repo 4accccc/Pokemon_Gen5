@@ -14,12 +14,6 @@
 
 
 
-typedef enum {
-  BTL_RECFIELD_NULL = 0,
-  BTL_RECFIELD_ACTION,        ///< 通常行動選択
-  BTL_RECFIELD_ROTATION,      ///< ローテーション
-//  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
-}BtlRecFieldType;
 
 
 static inline u8 MakeRecFieldTag( BtlRecFieldType type, u8 numClient )
@@ -29,6 +23,12 @@ static inline u8 MakeRecFieldTag( BtlRecFieldType type, u8 numClient )
 
   return (type << 4) | (numClient);
 }
+static inline void ReadRecFieldTag( u8 tagCode, BtlRecFieldType* type, u8* numClient )
+{
+  *type = ((tagCode >> 4) & 0x0f);
+  *numClient = tagCode & 0x0f;
+}
+
 
 static inline u8 MakeClientActionTag( u8 clientID, u8 numAction )
 {
@@ -36,6 +36,11 @@ static inline u8 MakeClientActionTag( u8 clientID, u8 numAction )
   GF_ASSERT(numAction < 32);
 
   return (clientID << 5) | (numAction);
+}
+static inline void ReadClientActionTag( u8 tagCode, u8* clientID, u8* numAction )
+{
+  *clientID  = ((tagCode>>5) & 0x07);
+  *numAction = (tagCode & 0x01f);
 }
 
 static inline u8 MakeRotationTag( u8 clientID, BtlRotateDir dir )
@@ -45,8 +50,20 @@ static inline u8 MakeRotationTag( u8 clientID, BtlRotateDir dir )
 
   return (clientID << 5) | (dir);
 }
+static inline void ReadRotationTag( u8 tagCode, u8* clientID, BtlRotateDir* dir )
+{
+  *clientID  = ((tagCode>>5) & 0x07);
+  *dir = (tagCode & 0x01f);
+}
 
 
+/*===========================================================================================*/
+/*                                                                                           */
+/* クライアント用                                                                            */
+/*                                                                                           */
+/* 対戦時：録画データの蓄積／再生時：録画データの読み取り                                    */
+/*                                                                                           */
+/*===========================================================================================*/
 
 enum {
   BTL_REC_SIZE = 4096,
@@ -58,6 +75,7 @@ struct _BTL_REC {
   u16  writePtr;
   u8   fSizeOver;
   u8   dmy;
+  const void* readData;
   u8   buf[ BTL_REC_SIZE ];
 };
 
@@ -87,7 +105,6 @@ void BTL_REC_Delete( BTL_REC* wk )
 {
   GFL_HEAP_FreeMemory( wk );
 }
-
 //=============================================================================================
 /**
  * データ書き込み
@@ -113,7 +130,6 @@ void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size )
     }
   }
 }
-
 //=============================================================================================
 /**
  * 最後まで正常に書き込まれているかチェック
@@ -144,7 +160,85 @@ const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size )
   return wk->buf;
 }
 
+//=============================================================================================
+/**
+ * 読み込み開始
+ *
+ * @param   wk
+ * @param   recordData
+ * @param   dataSize
+ */
+//=============================================================================================
+void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize )
+{
+  wk->recordData = recordData;
+  wk->dataSize = dataSize;
+  wk->readPtr = 0;
+}
 
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ * @param   clientID      対象クライアントID
+ * @param   type          [out] 戻り値データ種別
+ *
+ * @retval  const void*   １件分のデータ先頭ポインタ
+ */
+//=============================================================================================
+//=============================================================================================
+/**
+ * アクションデータ１件読み込み
+ *
+ * @param   wk
+ * @param   clientID    対象クライアントID
+ * @param   numAction   [out] アクションデータ数
+ *
+ * @retval  const BTL_ACTION_PARAM*   読み込んだアクションデータ先頭
+ */
+//=============================================================================================
+const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction )
+{
+  BtlRecFieldType type;
+  u8 numClient, readClientID, readNumAction;
+  u32 i;
+
+  while( 1 )
+  {
+    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient );
+    if( (wk->readPtr >= wk->dataSize) ){ break; }
+    if( type != BTL_RECFIELD_ACTION )
+    {
+      wk->readPtr += numClient;
+    }
+    else
+    {
+      for(i=0; i<numClient; ++i)
+      {
+        ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
+        if( (wk->readPtr >= wk->dataSize) ){ break; }
+        if( readClientID != clientID )
+        {
+          wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
+        }
+        else
+        {
+          const BTL_ACTION_PARAM* returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[wk->readPtr]);
+          wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
+
+          *numAction = readNumAction;
+          return returnPtr;
+        }
+      }
+    }
+    if( (wk->readPtr >= wk->dataSize) ){ break; }
+  }
+
+
+  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d", clientID, type);
+  return NULL;
+}
 
 
 

@@ -74,14 +74,14 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- *  考えるのが人間かAIか？
+ *  クライアントタイプ
  */
 //--------------------------------------------------------------
 typedef enum {
 
-  BTL_CLIENT_TYPE_UI = 0,
-  BTL_CLIENT_TYPE_AI,
-  BTL_CLIENT_TYPE_RECPLAY,
+  BTL_CLIENT_TYPE_UI = 0,   ///< プレイヤー
+  BTL_CLIENT_TYPE_AI,       ///< AI
+  BTL_CLIENT_TYPE_REC,      ///< 録画再生
 
   BTL_CLIENT_TYPE_MAX,
   BTL_CLIENT_TYPE_NONE = BTL_CLIENT_TYPE_MAX,

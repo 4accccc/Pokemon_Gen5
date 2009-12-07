@@ -11,6 +11,13 @@
 
 #include "btl_action.h"
 
+typedef enum {
+  BTL_RECFIELD_NULL = 0,
+  BTL_RECFIELD_ACTION,        ///< 通常行動選択
+  BTL_RECFIELD_ROTATION,      ///< ローテーション
+//  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
+}BtlRecFieldType;
+
 /*===========================================================================================*/
 /*                                                                                           */
 /* サーバー用                                                                                */
@@ -63,5 +70,15 @@ extern BOOL BTL_REC_IsCorrect( const BTL_REC* wk );
 extern const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size );
 
 
+typedef struct {
 
+  const u8*   recordData;
+  u32         readPtr;
+  u32         dataSize;
+
+}BTL_RECREADER;
+
+
+extern void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize );
+extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction );
 

@@ -211,7 +211,9 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
 
-      GFL_STD_RandGeneralInit( &wk->randomContext );
+      if( !(wk->setupParam->fRecordPlay) ){
+        GFL_STD_RandGeneralInit( &wk->randomContext );
+      }
       BTL_CALC_InitRandSys( &wk->randomContext );
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
@@ -480,11 +482,11 @@ static BOOL setup_alone_single( int* seq, void* work )
   srcParty_Set( wk, 1, sp->partyEnemy1 );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), BTL_STANDALONE_PLAYER_CLIENT_ID );
+  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), BTL_STANDALONE_PLAYER_CLIENT_ID );
+  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
   PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
 
   // Server 作成
@@ -495,11 +497,16 @@ static BOOL setup_alone_single( int* seq, void* work )
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
-  wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
-       wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1,
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
 
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle,
-    1, 1, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1,
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+
+  if( sp->fRecordPlay ){
+    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+  }
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -602,9 +609,16 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+
+  if( sp->fRecordPlay ){
+    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+  }
+
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -686,9 +700,16 @@ static BOOL setup_alone_triple( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
-    BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
-    BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+    (sp->fRecordPlay)? BTL_CLIENT_TYPE_REC : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+
+  if( sp->fRecordPlay ){
+    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+  }
+
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -2378,7 +2399,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
 
-//  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
+  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
 
   return BTL_PARTY_GetMemberDataConst( party, posIdx );
 }

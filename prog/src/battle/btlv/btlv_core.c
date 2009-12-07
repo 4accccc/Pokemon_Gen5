@@ -1191,7 +1191,7 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
     return;
   }
 
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, param->wait );
 }
 //=============================================================================================
 /**
