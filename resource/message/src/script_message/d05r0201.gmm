@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T17:18:05"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T11:34:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_d05r0201_black_03">
+	<row id="msg_d05r0201_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・POSを踏むと、コンテナ奥を見たまま
 　このメッセージ表示
@@ -344,17 +344,17 @@
 ・はい→black_04
 　いいえ→black_05</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……？
+		<language name="JPN" width="256">ブラッカー『……？
 この　おくにも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマだん　かもな
 じゅんびは　いいか？[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">クロック『……？
+		<language name="JPN_KANJI" width="256">ブラッカー『……？
 この　奥にも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマ団かもな
 準備は　良いか？[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_04">
+	<row id="msg_d05r0201_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、ライバル先導で
@@ -364,7 +364,7 @@
 		<language name="JPN_KANJI" width="256">じゃ　行くか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_05">
+	<row id="msg_d05r0201_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度話しかけたときはblack_03から</comment>
@@ -386,15 +386,15 @@
 寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_06">
+	<row id="msg_d05r0201_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……やれやれ
+		<language name="JPN" width="256">ブラッカー『……やれやれ
 ほんとうに　かくれていたとは[BE:01:ページ切り替え（クリア）]
 さむいんだろ？
 そとまで　あんない　してやるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……やれやれ
+		<language name="JPN_KANJI" width="256">ブラッカー『……やれやれ
 本当に　隠れていたとは[BE:01:ページ切り替え（クリア）]
 寒いんだろ？
 外まで　案内してやるよ[BE:01:ページ切り替え（クリア）]</language>
@@ -429,13 +429,13 @@
 といわけで　オレが　相手しよう！</language>
 	</row>
 
-	<row id="msg_d05r0201_black_07">
+	<row id="msg_d05r0201_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、戦闘</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
 ひとりずつ　かたづけるぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
 一人ずつ　片付けるぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -443,13 +443,15 @@
 		<comment>♂
 ・戦闘後メッセージ
 ・続けてworkman_01</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
 ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
 震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_workman_01">
+	<row id="msg_d05r0201_workman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・プラズマ団との戦闘後に出現
 　主人公に隣接してメッセージ表示
@@ -473,15 +475,15 @@
 プラズマ団が　大挙してるんだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_08">
+	<row id="msg_d05r0201_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、画面暗転してd05の外に
 ・コンテナ内のイベント関係のOBJ削除</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
 なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
 なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
