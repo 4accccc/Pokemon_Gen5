@@ -47,6 +47,8 @@
 #define BGWIN_SCROLL_SPEED (8)
 #define BGWIN_MSG_SCROLL_SPEED (4)
 
+#define PAD_KEY_ALL (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -3002,7 +3004,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
 	  GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
     break;
   case 5: //終了へ　キー待ち
-    if( !(GFL_UI_KEY_GetTrg() & MSG_LAST_BTN) ){
+    if( !(GFL_UI_KEY_GetTrg() & (MSG_LAST_BTN|PAD_KEY_ALL)) ){
       break;
     }
     bgWin->seq_no++;
