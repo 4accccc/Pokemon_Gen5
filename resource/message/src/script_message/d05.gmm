@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-11T17:51:40"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T12:24:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="239"/>
+		<comment position="4" width="255"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="124">
 		</attribute>
@@ -294,68 +294,64 @@
 
 	<row id="msg_d05_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・冷凍コンテナの出入り口前に配置
-・メッセージ表示後
-　black_01表示</comment>
+・冷凍コンテナの出入り口前に配置</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">ヤーコンさんは
-ああ　いっているけれど[BE:01:ページ切り替え（クリア）]
-きみたちに　きがいが　およばないよう
-かんがえていると　おもうんだよな[BE:01:ページ切り替え（クリア）]
-なので　にげた
-プラズマだんが　みつかるまで[BE:00:ページ切り替え（行送り）]
-コンテナに　かくれていてよ[BE:01:ページ切り替え（クリア）]
-……まあ　まちを　うろついても
-ダイジョウブだと　おもうけどね</language>
-		<language name="JPN_KANJI" width="256">ヤーコンさんは
-ああ　いっているけれど[BE:01:ページ切り替え（クリア）]
-君たちに　危害が　及ばないよう
-考えていると　思うんだよな[BE:01:ページ切り替え（クリア）]
-なので　逃げた
-プラズマ団が　みつかるまで[BE:00:ページ切り替え（行送り）]
-コンテナに　隠れていてよ[BE:01:ページ切り替え（クリア）]
-……まあ　街を　うろついても
-ダイジョウブだと　思うけどね</language>
+		<language name="JPN" width="256">ここ？[BE:01:ページ切り替え（クリア）]
+れいとうコンテナ　だーよ[BE:01:ページ切り替え（クリア）]
+なかに　さぎょういん　とか
+やせいの　ポケモンが　おるだーよ！</language>
+		<language name="JPN_KANJI" width="256">ここ？[BE:01:ページ切り替え（クリア）]
+冷凍コンテナ　だーよ[BE:01:ページ切り替え（クリア）]
+なかに　さぎょういん　とか
+野生のポケモンが　おるだーよ！</language>
 	</row>
 
 	<row id="msg_d05_workman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・msg_d05_black_01表示後に話しかけたとき
-・コンテナ内のプラズマ団に勝利すると
-　ここから削除</comment>
-		<language name="JPN" width="256">……まあ　まちを　うろついても
-ダイジョウブだと　おもうけどね</language>
-		<language name="JPN_KANJI" width="256">……まあ　街を　うろついても
-ダイジョウブだと　思うけどね</language>
+・black_01表示後に話しかけたとき
+・コンテナ内のプラズマ団に勝利するとここから削除</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">プラズマだんを　さがさせているのも
+なんだかんだで　おまえらのこと[BE:00:ページ切り替え（行送り）]
+ヤーコンさん　ひょうか　してるだーよ</language>
+		<language name="JPN_KANJI" width="256">プラズマ団を　探させているのも
+なんだかんだで　おまえらのこと[BE:00:ページ切り替え（行送り）]
+ヤーコンさん　評価してるだーよ</language>
 	</row>
 
 	<row id="msg_d05_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・表示後、d05r0101内へ</comment>
+・pos（詳細未定）を踏むと
+　主人公に隣接してメッセージ表示
+・表示後、d05r0101内へ
+・ライバルの動作モデルが消えると主人公操作可能に
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『めんどくせーな！[BE:01:ページ切り替え（クリア）]
-プラズマだんが　みつかるまで
-コンテナの　なかに　いてやろうぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『めんどくせーな！[BE:01:ページ切り替え（クリア）]
-プラズマ団が　見つかるまで
-コンテナの中に　いてやろうぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+まさか　とは　おもうけどさ
+ひょっとして　この　なかに[BE:00:ページ切り替え（行送り）]
+プラズマだん　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
+……さむいの　イヤだけど　しらべるか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+まさか　とは　思うけどさ
+ひょっとして　この中に[BE:00:ページ切り替え（行送り）]
+プラズマ団　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
+……寒いの　イヤだけど　調べるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・d05r0101内でプラズマ団に勝利後
 　画面暗転でここに復帰するとメッセージ表示
 ・表示後、ライバルだけc05方面に移動
 　画面外に消えると操作可能に</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『さぎょうの　おっさん
-あわてて　ジムに　もどったよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『さぎょういんの　おっさん
+あわてて　ジムに　もどったぜ[BE:01:ページ切り替え（クリア）]
 そうとうに　やばいんだろーな
 さ　オレたちも　いくぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『作業員の　おっさん
-あわてて　ジムに　戻ったよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『さっきの　おっさん
+あわてて　ジムに　戻ったぜ[BE:01:ページ切り替え（クリア）]
 相当に　やばいんだろーな
 さ　オレたちも　行くぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
