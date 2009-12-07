@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/07 (Mon) 20:11
+ * @date  2009 12/07 (Mon) 22:06
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -53,7 +53,10 @@
 #define ID_INIT_SCR_OFFSET_END           (9699)
 
 #define ID_HIDEN_OFFSET                  (10000) //秘伝技スクリプト
-#define ID_HIDEN_OFFSET_END              (10099)
+#define ID_HIDEN_OFFSET_END              (10089)
+
+#define ID_PASOKON_OFFSET                (10090) //ポケセンPC用スクリプト
+#define ID_PASOKON_OFFSET_END            (10099)
 
 #define ID_WIFI_CLUB_SCR_OFFSET          (10100) //WI-FIクラブ受付用スクリプト
 #define ID_WIFI_CLUB_SCR_OFFSET_END      (10104)

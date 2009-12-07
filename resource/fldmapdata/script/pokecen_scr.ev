@@ -20,7 +20,6 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_heal_p01
 _EVENT_DATA    ev_union
-_EVENT_DATA    ev_pc
 _EVENT_DATA    ev_zone_pokecen
 _EVENT_DATA    ev_init_pokecen
 _EVENT_DATA    ev_recover_pokecen
@@ -474,17 +473,3 @@ _ANIME_LABEL    anm_player_return_strait
   _ANIME_DATA   AC_WALK_D_16F, 3
   _ANIME_DATA   ACMD_END,0
 
-
-/**************************************************************/
-/*                                                            */
-/*                                                            */
-/*        ポケモンセンター　PC                                */
-/*                                                            */
-/*                                                            */
-/**************************************************************/
-EVENT_START ev_pc
-{
-  // ボックス画面を呼び出す
-  _CALL_BOX_PROC()
-}
-EVENT_END 

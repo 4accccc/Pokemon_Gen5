@@ -78,7 +78,7 @@
 
 #include "savedata/encount_sv.h"
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
-#include "../../../resource/fldmapdata/script/pokecen_scr_def.h" // for SCRID_PC
+#include "../../../resource/fldmapdata/script/pasokon_def.h" // for SCRID_PC
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLE_EV_SPRAY_EFFECT_END
 
 #include "debug/debug_flg.h" //DEBUG_FLG_Å`

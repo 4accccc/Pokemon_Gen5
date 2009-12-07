@@ -1,0 +1,116 @@
+//======================================================================
+//                pasokon.ev
+//    スクリプトファイル：pasokon用
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_pasokon.h"
+  //.include  "pasokon.h"
+
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA ev_pc
+_EVENT_DATA_END
+
+
+/**************************************************************/
+/*                                                            */
+/*                                                            */
+/*        ポケモンセンター　PC                                */
+/*                                                            */
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_pc
+{ 
+  DEFINE_LOCAL exit
+  DEFINE_LOCAL select_pos
+
+  // ローカル変数の初期化
+  $exit = FALSE
+
+  // @todo PC起動イベント
+
+  // 「パソコンの スイッチを いれた！」
+  _PLAINWIN_MSG_DOWN( msg_pc_on_01 )
+
+  WHILE $exit == FALSE 
+    // 「どこの パソコンに せつぞく …」
+    _PLAINWIN_MSG_DOWN( msg_pc_on_02 )
+    // 選択ウィンドウ表示
+    _BMPMENU_INIT_EX( 0, 0, 0, TRUE, select_pos )
+    _BMPMENU_MAKE_LIST( msg_pc_window_01, msg_pc_window_01 )  // だれかのパソコン
+    _BMPMENU_MAKE_LIST( msg_pc_window_03, msg_pc_window_03 )  // 自分のパソコン
+    _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
+    _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
+    _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
+    _BMPMENU_START()
+    // 選択項目に応じた処理
+    SWITCH $select_pos
+    CASE msg_pc_window_01 THEN _CALL( pc_box )
+    CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
+    CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
+    CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
+    CASE msg_pc_window_06 THEN _CALL( pc_off )
+                               &exit = TRUE
+    CASE EV_WIN_B_CANCEL  THEN &exit = TRUE
+    ENDSWITCH
+  ENDWHILE
+
+  // @todo PC停止イベント
+
+  // ボックス画面を呼び出す
+  _CALL_BOX_PROC()
+}
+EVENT_END 
+
+
+/**************************************************************/
+/*       ボックス処理                                         */
+/**************************************************************/
+pc_box:
+{
+  //「ポケモンの あずかりシステムを …」
+  _PLAINWIN_MSG_DOWN( msg_pc_box_01 )
+
+  // 選択ウィンドウ表示
+  _BMPMENU_INIT_EX( 0, 0, 0, TRUE, select_pos )
+  _BMPMENU_MAKE_LIST( msg_pc_box_window_01, msg_pc_box_window_01 )  // あずける
+  _BMPMENU_MAKE_LIST( msg_pc_box_window_02, msg_pc_box_window_02 )  // つれていく
+  _BMPMENU_MAKE_LIST( msg_pc_box_window_03, msg_pc_box_window_03 )  // せいりする
+  _BMPMENU_MAKE_LIST( msg_pc_box_window_04, msg_pc_box_window_04 )  // もちもの
+  _BMPMENU_MAKE_LIST( msg_pc_box_window_05, msg_pc_box_window_05 )  // さようなら
+  _BMPMENU_START()
+}
+_RET
+
+/**************************************************************/
+/*       メールボックス処理                                   */
+/**************************************************************/
+pc_mail_box:
+_RET
+
+/**************************************************************/
+/*       博士の図鑑評価処理                                   */
+/**************************************************************/
+pc_zukan_check:
+_RET
+
+/**************************************************************/
+/*       殿堂入り処理                                         */
+/**************************************************************/
+pc_dendouiri:
+_RET
+
+/**************************************************************/
+/*       スイッチをきる処理                                   */
+/**************************************************************/
+pc_off:
+_RET

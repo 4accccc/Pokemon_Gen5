@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/07 (Mon) 20:11
+ * @date  2009 12/07 (Mon) 22:06
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -60,9 +60,15 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_wifi_club_scr_bin,
       NARC_script_message_wifi_club_scr_dat
     },
+    {//ポケセンPC用スクリプト
+      ID_PASOKON_OFFSET,              //(10090),
+      ID_PASOKON_OFFSET_END,          //(10099),
+      NARC_script_seq_pasokon_bin,
+      NARC_script_message_pasokon_dat
+    },
     {//秘伝技スクリプト
       ID_HIDEN_OFFSET,                //(10000),
-      ID_HIDEN_OFFSET_END,            //(10099),
+      ID_HIDEN_OFFSET_END,            //(10089),
       NARC_script_seq_hiden_bin,
       NARC_script_message_hiden_dat
     },
