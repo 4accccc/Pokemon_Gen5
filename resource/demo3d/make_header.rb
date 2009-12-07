@@ -51,7 +51,7 @@ def print_anime(file,cnt,anm_cnt)
     
     file.puts "static const GFL_G3D_UTIL_ANM anm_table_unit" + sprintf("%02d",cnt) + "[] = {";
     
-    for k in 1..anm_cnt-1
+    for k in 1..anm_cnt
         file.puts "\t{ " + k.to_s + ", 0 },"
     end
     
@@ -95,40 +95,49 @@ def print_scene(file, dir)
   #1オリジン
   cnt = 1; 
   loop do
-    is_find = false
 
     #フォルダ内のファイルを順繰り
     anm_cnt = 0;
-    scene_dir.each{|i|
-      #拡張子チェック
-      if check_ext(i)
-        # 2文字の数値チェック
-        if i.slice(/\d\d/).to_i == cnt
-        
-          # 初回のみヘッダ書き込み
-          if is_find == false
-            file.puts "//UNIT"
-            file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
-          end
-          
-          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
-          anm_cnt += 1
-          file.puts line
 
-          is_find = true          
-        end
-      end
-    }
-    # 終了判定
-    if is_find == false
+    #ヘッダ書き込み
+    file.puts "//UNIT"
+    file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
+
+#   return ( ext == "imd" || ext == "ica" || ext == "ita" ||
+#            ext == "ima" || ext == "itp" || ext == "iva" );
+   
+#    puts cnt
+
+    #拡張子＆2文字の数値で絞込み
+    val = scene_dir.to_a;
+    val = val.select{ |i| i.slice(/\d\d/).to_i == cnt && check_ext(i) }
+
+    #imdチェック
+    imd = val.find{ |i| i.slice(/...\z/m) == "imd" }
+    
+    #imdがなければ終了
+    if imd == nil
       print_setup(file,dir,cnt);
-      break
+      break;
     else
+      #imdを先に書き出し
+      file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
+      
+      #UNIT項目書き出し
+      val.each{|i|
+        #imdは既に出力したので飛ばす
+        if i.slice(/...\z/m) != "imd"
+          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
+          file.puts line
+          anm_cnt += 1
+        end
+      }
+      
       # フッダ書き込み
       file.puts("};\n");
       
       # アニメ判定
-      if anm_cnt <= 1
+      if anm_cnt <= 0
         print_obj(file,dir,cnt,false);
       else
         #アニメテーブル書き出し
@@ -139,6 +148,7 @@ def print_scene(file, dir)
       # 次のユニットへ
       cnt += 1
     end
+
   end
 end
 
