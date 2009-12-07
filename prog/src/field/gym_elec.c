@@ -123,12 +123,15 @@ typedef struct GYM_ELEC_TMP_tag
   s8 RideEvt;            //乗降イベント中カプセル番号
   ELEC_GYM_TASK_WK  TaskWk[CAPSULE_NUM_MAX];
   ICA_ANIME* IcaAnmPtr;
-  u8 FramePosDat[FRAME_POS_SIZE+HEADER_SIZE];
+  u8 FramePosDat[FRAME_POS_SIZE*2+HEADER_SIZE];
   BOOL AltoMove;
 
   u8 RaleChgReq[CAPSULE_NUM_MAX];
   u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
   s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
+
+  ICA_ANIME* IcaAnmPtr2[RALE_NUM_MAX];
+  u8 FramePosDat2[RALE_NUM_MAX][FRAME_POS_SIZE*2+HEADER_SIZE];
 
 }GYM_ELEC_TMP;
 
@@ -751,6 +754,21 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
   //始めはボリューム0
   NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+
+  {
+    u8 i;
+    for (i=0;i<RALE_NUM_MAX;i++){
+      u16 arc_idx;
+      u8 *dat;
+      arc_idx = RaleAnm[i];
+      dat = &tmp->FramePosDat2[i][0];
+      tmp->IcaAnmPtr2[i] = ICA_ANIME_Create( 
+            GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, dat, FRAME_POS_SIZE*2
+            );
+    }
+  }
+
 
 }
 
@@ -822,10 +840,11 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         //自分が乗っているカプセルのときはループＳＥ再生
         if ( (tmp->RadeRaleIdx != RIDE_NONE)&&(i == tmp->RadeRaleIdx / 2) ){
           //ループＳＥスタート
-#if 0
-          PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
-#endif          
           PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+          PMSND_PlaySE(GYM_ELEC_SE_SPEED);
+          //鳴らし始めはボリューム0にしとく
+          NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+
         }
         tmp->StopPlatformIdx[i] = PLATFORM_NO_STOP;
       }
@@ -929,11 +948,17 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
 //--------------------------------------------------------------
 void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
 {
+  u8 i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
 
   //ＳＥストップ
   PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+  PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+
+  for(i=0;i<RALE_NUM_MAX;i++){
+    ICA_ANIME_Delete( tmp->IcaAnmPtr2[i] );
+  }
 
   //監視ＴＣＢ削除
   GFL_TCB_DeleteTask( tmp->CapStopTcbPtr );
@@ -1436,6 +1461,8 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
   u8 obj_idx;
   EXP_OBJ_ANM_CNT_PTR anm;
 
+  int volume;
+
   GF_ASSERT(tmp->RadeRaleIdx != RIDE_NONE);
 
   //レールインデックス/2でカプセルインデックスになる
@@ -1458,7 +1485,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       OS_Printf("ロードレール%d\n",tmp->RadeRaleIdx);
       arc_idx = RaleAnm[tmp->RadeRaleIdx];
       tmp->IcaAnmPtr = ICA_ANIME_Create( 
-          GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, tmp->FramePosDat, FRAME_POS_SIZE
+          GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, tmp->FramePosDat, FRAME_POS_SIZE*2
           );
 
       GF_ASSERT(tmp->IcaAnmPtr != NULL);
@@ -1523,8 +1550,11 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->RideEvt = -1;
 
       //ループＳＥスタート
-      //PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
       PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+      PMSND_PlaySE(GYM_ELEC_SE_SPEED);
+      //鳴らし始めはボリューム0にしとく
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+
       //ボリュームセット
       NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), SE_VOL );
       //自機自動移動開始
@@ -1637,11 +1667,16 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       //乗降終了
       tmp->RideEvt = -1;
       tmp->RadeRaleIdx = RIDE_NONE;
+      
       {
+        //カプセル近接ＳＥのためGYM_ELEC_SE_DRIVEは鳴らし続ける
         PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
         //始めはボリューム0
         NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
+        //加速音はストップする
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       }
+      
       return GMEVENT_RES_FINISH;
     }
   }
@@ -1653,6 +1688,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
     if (frm == UP_SE_FRM1){
       PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
     }else if(frm == DOWN_SE_FRM1){
@@ -1664,6 +1700,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
     if (frm == UP_SE_FRM2){
       PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
     }else if(frm == DOWN_SE_FRM2){
@@ -1671,6 +1708,58 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       PMSND_PlaySE(GYM_ELEC_SE_DROP);
     };
   }
+
+  //アニメデータ取得
+  {
+    fx32 now_frm,next_frm;
+    VecFx32 now,next, dst;
+    fx32 len;
+    NNSG3dAnmObj* anm_obj_ptr;
+    GFL_G3D_ANM*  gfl_anm;
+    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, GYM_ELEC_UNIT_IDX, obj_idx);
+    u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
+    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+    fx32 last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm_ptr );
+
+    now_frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
+    next_frm = now_frm+FX32_ONE;
+    if ( next_frm >= last_frm) next_frm = 0;
+
+//    OS_Printf("%x, %x, %x\n",now_frm, next_frm, last_frm);
+
+    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
+    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        now_frm,
+                        &now);
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        next_frm,
+                        &next);
+
+    VEC_Subtract( &now, &next ,&dst );
+    len = VEC_Mag( &dst );
+    OS_Printf("len = %x\n",len);
+    if ( len >=SPD_LV5 ){
+//      OS_Printf("11111\n");
+      volume = 127;
+    }else if ( len >=SPD_LV4 ){
+//      OS_Printf("1111\n");
+      volume = 90;
+    }else if ( len >=SPD_LV3 ){
+//      OS_Printf("111\n");
+      volume = 60;
+    }else if( len >= SPD_LV2 ){
+//      OS_Printf("11\n");
+      volume = 30;
+    }else{
+//      OS_Printf("1\n");
+      volume = 0;
+    }
+  }
+
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), volume );
 
   return GMEVENT_RES_CONTINUE;
 }
