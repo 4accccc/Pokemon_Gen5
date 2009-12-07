@@ -1635,6 +1635,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
       }
     }
 
+    PMSND_PlaySE( SEQ_SE_SAVE );
     work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
     FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR15 );
     (*seq)++;
