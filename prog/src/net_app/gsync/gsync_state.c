@@ -472,13 +472,13 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
       if(0){
         u32 size;
         u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
-        NHTTP_AddPostDataBinary(NHTTP_RAP_GetHandle(pWork->pNHTTPRap),"", topAddr, size );
+        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
       }
       else{
         ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
         u32 size;
         pWork->pTopAddr = GFL_ARCHDL_UTIL_LoadEx(p_handle,NARC_gsync_save3_bin,FALSE,pWork->heapID,&size );
-        NHTTP_AddPostDataBinary(NHTTP_RAP_GetHandle(pWork->pNHTTPRap),"", pWork->pTopAddr, 0x80000 );
+        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->pTopAddr, 0x80000 );
         GFL_ARC_CloseDataHandle(p_handle);
       }
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
