@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T18:34:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-07T18:13:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 橋の前で　待っているから[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_footballm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FOOTBALLM
@@ -393,7 +393,7 @@
 足を　運んでみてくれ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_clown_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
@@ -410,7 +410,7 @@
 そこかしらに　トレーナーがいますから</language>
 	</row>
 
-	<row id="msg_c04_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_badman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BADMAN
@@ -425,7 +425,7 @@
 もっと鍛えて　挑戦してやるよ！！</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middleman2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
@@ -436,7 +436,7 @@
 圧倒されて　声もでないぞ</language>
 	</row>
 
-	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_backpackerw_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BACKPACKERW
@@ -447,7 +447,7 @@
 いるだけで　気持ちも　ゴージャス！！</language>
 	</row>
 
-	<row id="msg_c04_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_girl3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・babygirl1、middlewoman1とセット</comment>
@@ -459,18 +459,18 @@
 遊園地に　連れてきてもらったの！</language>
 	</row>
 
-	<row id="msg_c04_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_babygirl1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
-		<language name="JPN" width="256">ぐるぐる　メリーゴーラウンドで
-まわっちゃうの！　ぐるぐるって！！</language>
-		<language name="JPN_KANJI" width="256">ぐるぐる　メリーゴーラウンドで
-まわっちゃうの！　ぐるぐるって！！</language>
+		<language name="JPN" width="256">かんらんしゃ！　かんらんしゃ！
+あたし　かんらんしゃ　だいすきッ！！</language>
+		<language name="JPN_KANJI" width="256">かんらんしゃ！　かんらんしゃ！
+あたし　かんらんしゃ　だいすきッ！！</language>
 	</row>
 
-	<row id="msg_c04_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middlewoman1_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
@@ -481,9 +481,8 @@
 ジェットコースターなんですって！？</language>
 	</row>
 
-	<row id="msg_c04_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>看板分類：タウンマップ
-・仮メッセージ</comment>
+	<row id="msg_c04_sign1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ライモンシティ
 いなずまきらめく　かがやきのまち</language>
@@ -491,29 +490,29 @@
 稲妻きらめく　輝きの街</language>
 	</row>
 
-	<row id="msg_c04_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c04_sign2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ビッグスタジアム</language>
 		<language name="JPN_KANJI" width="256">ビッグスタジアム</language>
 	</row>
 
-	<row id="msg_c04_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c04_sign3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">リトルコート</language>
 		<language name="JPN_KANJI" width="256">リトルコート</language>
 	</row>
 
-	<row id="msg_c04_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c04_sign4_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ライモン　ファンパーク</language>
 		<language name="JPN_KANJI" width="256">ライモン　ファンパーク</language>
 	</row>
 
-	<row id="msg_c04_sign5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c04_sign5_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ミュージカル　ホール</language>
 		<language name="JPN_KANJI" width="256">ミュージカル　ホール</language>
