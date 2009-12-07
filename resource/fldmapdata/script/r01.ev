@@ -9,17 +9,6 @@
   .include  "r01.h"
 
 
-/**************************************************************/	
-/*    R01で使う定数                                     */
-/**************************************************************/
-#define CHECK_X01a (786)
-#define CHECK_X01b (787)
-#define CHECK_X01c (788)
-#define CHECK_X01d (789)
-#define CHECK_X01e (790)
-#define CHECK_X01f (791)
-#define CHECK_Z01a (729)
-
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -40,13 +29,15 @@ _EVENT_DATA ev_bg_r01_board_03
 _EVENT_DATA_END
 
 
-DEFINE_LOCAL  TEMP_00 //ローカル変数定義を宣言
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
 
-ev_dummy:
 EVENT_START   ev_r01_poke_getdemo_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 //POSイベント、POSごとに主人公移動アニメ
   { //ここからローカル変数の参照制限範囲開始
     DEFINE_LOCAL  POSX   /* ローカル変数定義 */
@@ -54,39 +45,48 @@ EVENT_START   ev_r01_poke_getdemo_01
 
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
     SWITCH $POSX
-    CASE 786 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide00a )
+    CASE 784 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x784 )
         _OBJ_ANIME_WAIT()
-    CASE 787, 788, 100 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide00b )
+    CASE 785 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x785 )
+        _OBJ_ANIME_WAIT()
+    CASE 786 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x786 )
+        _OBJ_ANIME_WAIT()
+    CASE 787 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x787 )
+        _OBJ_ANIME_WAIT()
+    CASE 788 THEN  //目の前に立ったケース
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x788 )
         _OBJ_ANIME_WAIT()
     CASE 789 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide00c )
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x789 )
         _OBJ_ANIME_WAIT()
-    CASE 790 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide00d )
+    CASE 793 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x793 )
         _OBJ_ANIME_WAIT()
-    CASE 791 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide00e )
+    DEFAULT  //目の前に立ったケースと同じ処理を行う
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x788 )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
   } //ローカル変数の参照制限範囲、ここまで。
 
-  //ここではPOSX,POSZは参照できないが、TEMP_00は参照できる
-  _PLAYER_POS_GET( TEMP_00, LOCALWORK0 )
-ev_dummy_end:
-
-
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget0 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_r01_black_01,R01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 
 //博士、メッセージ＋アニメ
-	_BALLOONWIN_OBJMSG( msg_r01_hakase2_01,R01_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_01,R01_HAKASE2_01 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1 )
+	
+	//サポート＋ライバル博士を見る
+	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_up )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_up )
+	
 	_OBJ_ANIME_WAIT()
 
 	//【仮】ポケモン捕獲デモ。仮処理で画面フェードを入れています。
@@ -98,14 +98,19 @@ ev_dummy_end:
 //博士、メッセージ＋退場アニメ
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1a )
 	_OBJ_ANIME_WAIT()
+	
+	//サポート＋ライバル戻ってきた博士を見る
+	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_right )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_left )
+	_OBJ_ANIME_WAIT()
 
-	_BALLOONWIN_OBJMSG( msg_r01_hakase2_02,R01_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_02,R01_HAKASE2_01 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 
 //モンスターボール入手
 	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
 
-	_BALLOONWIN_OBJMSG( msg_r01_hakase2_03,R01_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_03,R01_HAKASE2_01 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget2 )
@@ -130,7 +135,6 @@ ev_dummy_end:
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget5 )
 	_OBJ_ANIME_WAIT()
 
-	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_BALLOONWIN_OBJMSG( msg_r01_white_02,R01_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -143,6 +147,8 @@ ev_dummy_end:
 	_BALLOONWIN_CLOSE()
 
 //ライバル
+	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget4_2 )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r01_black_05,R01_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -230,6 +236,9 @@ EVENT_END
 
 EVENT_START   ev_pos_r01_pokecount_01
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
 //POSイベント、POSごとに主人公移動アニメ
  { //ここからローカル変数の参照制限範囲開始
 	DEFINE_LOCAL  POSX   /* ローカル変数定義 */
@@ -238,32 +247,32 @@ EVENT_START   ev_pos_r01_pokecount_01
 	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	SWITCH $POSX
 	CASE 788 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01a )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x788 )
 		_OBJ_ANIME_WAIT()
 	CASE 789 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01a )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x789 )
 	_OBJ_ANIME_WAIT()
-	CASE 790 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01b )
+	CASE 790 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x790 )
 		 _OBJ_ANIME_WAIT()
 	CASE 791 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01b )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x791 )
 		_OBJ_ANIME_WAIT()
 	CASE 792 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01b )
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x792 )
+		_OBJ_ANIME_WAIT()
 	CASE 793 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01c )
-		 _OBJ_ANIME_WAIT()
-	CASE 794 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide01c )
-		 _OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x793 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_x790 )
+		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 } //ローカル変数の参照制限範囲、ここまで。
 
 
 //カウント勝負質問
-_BALLOONWIN_OBJMSG( msg_r01_white_10,R01_SUPPORT_02)
+_BALLOONWIN_OBJMSG_POS( msg_r01_white_10,R01_SUPPORT_02 , WIN_DOWN )
 _YES_NO_WIN( SCWK_ANSWER )
 _BALLOONWIN_CLOSE()
 
@@ -276,9 +285,9 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_OBJ_ANIME_WAIT()
 	
 	//一緒だね
-	_BALLOONWIN_OBJMSG(msg_r01_white_13,R01_SUPPORT_02)
+	_BALLOONWIN_OBJMSG_POS(msg_r01_white_13,R01_SUPPORT_02 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG(msg_r01_black_11,R01_RIVEL_02)
+	_BALLOONWIN_OBJMSG_POS(msg_r01_black_11,R01_RIVEL_02 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート・ライバル退場
@@ -301,7 +310,7 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	
 ELSE
   //「いいえ」
-	_BALLOONWIN_OBJMSG(msg_r01_white_11,R01_SUPPORT_02)
+	_BALLOONWIN_OBJMSG_POS(msg_r01_white_11,R01_SUPPORT_02 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_no )
 	_OBJ_ANIME_WAIT()
@@ -318,27 +327,105 @@ EVENT_START   ev_r01_support_02
 EVENT_END
 
 //--------------------------------------------------------------
-//	R01　カウント用：POSで主人公移動
+//	R01　GETDEMO：POSで主人公移動784
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide01a
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	R01　カウント用：POSで主人公移動
-//--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide01b
+	_ANIME_LABEL	anm_r01_guide_x784
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　カウント用：POSで主人公移動
+//	R01　GETDEMO：POSで主人公移動785
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide01c
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_LABEL	anm_r01_guide_x785
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動786
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x786
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動787
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x787
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動788（デフォルト処理）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x788
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動789
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x789
 	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動793
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x793
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動788
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x788
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動789
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x789
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動790（デフォルト処理）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x790
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動791
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x791
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動792
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x792
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　カウント用：POSで主人公移動793
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_count_x793
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -356,10 +443,7 @@ _ANIME_LABEL	anm_r01_count_no
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r01_count_rival_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_4F,6
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -373,64 +457,26 @@ _ANIME_LABEL	anm_r01_count_rival_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　捕獲デモ用：POSで主人公移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r01_guide00a
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　捕獲デモ用：POSで主人公移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r01_guide00b
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　捕獲デモ用：POSで主人公移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r01_guide00c
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　捕獲デモ用：POSで主人公移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r01_guide00d
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　捕獲デモ用：POSで主人公移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r01_guide00e
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
 //	R01　捕獲デモ用：ライバルが博士を見る  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget0
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_D,8
 	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_R,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：ライバル・サポート捕獲を観察  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_R01_pokeget_up
+	_ANIME_DATA	AC_DIR_U,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：博士、草むらに入る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -438,8 +484,22 @@ _ANIME_LABEL	anm_R01_pokeget1
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1a
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：ライバル右を見る  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_R01_pokeget_right
+	_ANIME_DATA	AC_DIR_R,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：サポート左を見る  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_R01_pokeget_left
+	_ANIME_DATA	AC_DIR_L,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -468,6 +528,13 @@ _ANIME_LABEL	anm_R01_pokeget4
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_R01_pokeget5
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：ライバル、サポートを見る 
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_R01_pokeget4_2
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

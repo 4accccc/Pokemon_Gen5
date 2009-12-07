@@ -14,7 +14,7 @@
 #define R01_SUPPORT_01                     3
 #define R01_HAKASE2_01                     4
 #define R01_PRINCE_01                      5
-#define R01_SUPPORT_02                     6
-#define R01_RIVEL_02                       7
+#define R01_RIVEL_02                       6
+#define R01_SUPPORT_02                     7
 
 #endif //ZONE_R01_EVC_H
