@@ -34,8 +34,7 @@
 #define C05_SAGE_02                       10
 #define C05_RIVAL_02                      11
 #define C05_GYMLEADER_01                  12
-#define C05_WORKMAN_01                    13
-#define C05_RIVAL_01                      14
-#define C05_BUSINESSMAN_01                15
+#define C05_RIVAL_01                      13
+#define C05_BUSINESSMAN_01                14
 
 #endif //ZONE_C05_EVC_H

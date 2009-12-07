@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_scene_d05_01
+_EVENT_DATA    ev_pos_d05_rival_01
 _EVENT_DATA    ev_d05_workman_01
 _EVENT_DATA    ev_scene_d05_02
 _EVENT_DATA_END
@@ -28,18 +28,17 @@ _EVENT_DATA_END
 /**************************************************************/
 /*$WK_SCENE_D05=0 時発動イベント：コンテナにいるよう言われる   */
 /**************************************************************/
-EVENT_START   ev_scene_d05_01
-
-	//workmanコンテナにいるよう諭す
-	_BALLOONWIN_OBJMSG(msg_d05_workman_01,D05_WORKMAN_01)
-	_BALLOONWIN_CLOSE()
+EVENT_START   ev_pos_d05_rival_01
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 	
 	//ライバルめんどくさがりつつコンテナ内へ
-	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
+	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05_black_01,D05_RIVAL_01)
+	_BALLOONWIN_OBJMSG( msg_d05_black_01 , D05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_01)
+	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02 )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル一時的に消去
@@ -61,7 +60,17 @@ EVENT_END
 /*workman一言メッセージ：コンテナイベント終了まで表示          */
 /**************************************************************/
 EVENT_START   ev_d05_workman_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05_workman_02)
+
+	//ライバルPOSイベント前
+	IF $WK_SCENE_D05 == 0 THEN
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_workman_01 )
+	
+	//ライバルPOSイベント後
+	ELSE
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_workman_02 )
+	
+	ENDIF
+	
 EVENT_END
 
 /**************************************************************/
@@ -100,13 +109,19 @@ EVENT_START   ev_scene_d05_02
 EVENT_END
 
 //--------------------------------------------------------------
+//	D05：ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	D05：ライバルコンテナ内へ入ってゆく
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_d05_rival_01
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_U,1
+_ANIME_LABEL	anm_d05_rivalpos_02
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
