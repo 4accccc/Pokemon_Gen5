@@ -56,6 +56,33 @@ static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
 //=========================================================================
 // DEMO3D_ID_N_CASTLE
 //=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_castle_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_castle_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_castle_unit02[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_02_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_castle_unit02[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_castle_setup[] = {
+	{ res_n_castle_unit01, NELEMS(res_n_castle_unit01), obj_n_castle_unit01, NELEMS(obj_n_castle_unit01) },
+	{ res_n_castle_unit02, NELEMS(res_n_castle_unit02), obj_n_castle_unit02, NELEMS(obj_n_castle_unit02) },
+};
 
 
 //=========================================================================
@@ -64,4 +91,5 @@ static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
 	{ 0, 0, 0 },
 	{ c_cruiser_setup, NELEMS(c_cruiser_setup), NARC_demo3d_c_camera_bin },
+	{ n_castle_setup, NELEMS(n_castle_setup), NARC_demo3d_n_camera_bin },
 };

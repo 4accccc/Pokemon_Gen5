@@ -17,7 +17,11 @@ enum {
 	NARC_demo3d_cdemo_01_nsbca = 3,
 	NARC_demo3d_cdemo_01_nsbmd = 4,
 	NARC_demo3d_cdemo_02_nsbmd = 5,
-	NARC_demo3d_cdemo_03_nsbmd = 6
+	NARC_demo3d_cdemo_03_nsbmd = 6,
+	NARC_demo3d_n_camera_bin = 7,
+	NARC_demo3d_n_camera_nsbca = 8,
+	NARC_demo3d_n_demo_01_nsbmd = 9,
+	NARC_demo3d_n_demo_02_nsbmd = 10
 };
 
 /* NARC_DEMO3D_NAIX_ */

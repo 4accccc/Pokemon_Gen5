@@ -12,7 +12,8 @@
 #define DEMO3D_ID_NULL (0)
 
 #define DEMO3D_ID_C_CRUISER (1)
+#define DEMO3D_ID_N_CASTLE (2)
 
-#define DEMO3D_ID_MAX (2)
+#define DEMO3D_ID_MAX (3)
 
 #endif // __DEMO3D_DEMOID_H__
