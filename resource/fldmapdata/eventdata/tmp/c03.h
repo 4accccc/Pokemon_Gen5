@@ -21,5 +21,6 @@
 #ifndef ZONE_C03_EVC_H
 #define ZONE_C03_EVC_H
 
+#define C03_OL1_01                         0
 
 #endif //ZONE_C03_EVC_H
