@@ -41,26 +41,27 @@ File::open( DST_FILENAME ,"w"){ |file|
 
     file.puts "#define DEMO3D_ID_NULL (0)\n\n"
 
-    #カレントにあるフォルダをしらみつぶし
+    #カレントにあるフォルダをリストアップ
     pwd =  Dir::entries( Dir::pwd )
-    
 
-      count = 1
-      for i in pwd
-        if File::ftype( i ) == "directory" 
-          # 特殊パスは排除
-          if i != "." && i != ".." && i != ".svn"
+    #すべてチェック
+    count = 1
+    for i in pwd
+      # フォルダを検出
+      if File::ftype( i ) == "directory" 
+        # 特殊フォルダは排除
+        if i != "." && i != ".." && i != ".svn"
 
-            #imdチェック > imdがフォルダ内に一つもない場合はIDを生成しない
-            imd = Dir::entries(i).find{|elem| elem.slice(/...\z/m) == "imd" }
-            if imd != nil
-              file.puts "#define DEMO3D_ID_" + i.upcase + " (" + count.to_s + ")" 
-              count += 1
-            end
-
+          #imdチェック > imdがフォルダ内に一つもない場合はIDを生成しない
+          imd = Dir::entries(i).find{|elem| elem.slice(/...\z/m) == "imd" }
+          if imd != nil
+            file.puts "#define DEMO3D_ID_" + i.upcase + " (" + count.to_s + ")" 
+            count += 1
           end
+
         end
       end
+    end
     
     file.puts "\n#define DEMO3D_ID_MAX (" + count.to_s + ")\n\n"
     
