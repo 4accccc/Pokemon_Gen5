@@ -364,6 +364,39 @@ MAPATTR FLDNOGRID_MAPPER_GetAttr( const FLDNOGRID_MAPPER* cp_mapper, const RAIL_
   return RAIL_ATTR_GetAttribute( cp_mapper->p_attr, cp_location );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール  ライン分岐のON・OFF
+ *
+ *	@param	p_mapper    マッパー
+ *	@param	line_index  ラインインデックス
+ *	@param	flag        フラグ  TRUE：分岐ON　　FALSE：分岐OFF
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_SetLineActive( FLDNOGRID_MAPPER* p_mapper, u32 line_index, BOOL flag )
+{
+  GF_ASSERT( p_mapper );
+  FIELD_RAIL_MAN_SetLineActive( p_mapper->p_railMan, line_index, flag );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール　ライン分岐のON・OFF取得
+ *
+ *	@param	cp_mapper   マッパー
+ *	@param	line_index  ラインインデックス
+ *  
+ *	@retval TRUE    ライン分岐可能
+ *	@retval FALSE   ライン分岐不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL FLDNOGRID_MAPPER_GetLineActive( const FLDNOGRID_MAPPER* cp_mapper, u32 line_index )
+{
+  GF_ASSERT( cp_mapper );
+  return FIELD_RAIL_MAN_GetLineActive( cp_mapper->p_railMan, line_index );
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
