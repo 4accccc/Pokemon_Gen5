@@ -27,8 +27,8 @@ class BmAnime
   @@COL_SYMBOL  = 1
   @@COL_ANMTYPE = 2
   @@COL_PROGTYPE = 3
-  @@COL_ANMCOUNT = 4
-  @@COL_SETCOUNT = 5
+  @@COL_ANMSET = 4
+  @@COL_PATTERN_COUNT = 5
   @@COL_FILES = 6
 
   #アニメタイプ指定(ならびに注意！！）
@@ -49,8 +49,8 @@ class BmAnime
 	attr :symbol
 	attr :anm_type
   attr :prog_type
-  attr :anime_count
-  attr :set_count
+  attr :anmset_num
+  attr :pattern_count
   attr :files
 
   #初期化
@@ -69,9 +69,9 @@ class BmAnime
       raise InputFileError, "アニメID #{@symbol} の動作タイプ \"#{column[@@COL_PROGTYPE]}\" は非対応です"
     end
 
-    @anime_count = Integer(column[@@COL_ANMCOUNT])
+    @anmset_num = Integer(column[@@COL_ANMSET])
 
-    @set_count = Integer(column[@@COL_SETCOUNT])
+    @pattern_count = Integer(column[@@COL_PATTERN_COUNT])
 
     @files = column[@@COL_FILES .. (@@COL_FILES + @@MAX_FILE - 1)].find_all{|item|item != ""}.map{|item|
       ext = File.extname(item)
@@ -80,6 +80,9 @@ class BmAnime
       end
       item.sub(ext, @@ext_tbl[ext])   #拡張子をコンバート後のものに変換
     }
+    if @files.length != @anmset_num * @pattern_count then
+      raise InputFileError, "#{@symbol}の指定ファイル数（#{@files.length}) != #{@anmset_num} x #{@pattern_count} です"
+    end
 	end
 
 
@@ -137,7 +140,7 @@ begin
   str = ""
   bmarray.each{|anm|
     #アニメタイプ、動作指定、アニメカウント、セットカウント
-    arr = [anm.anm_type, anm.prog_type, anm.anime_count, anm.set_count]
+    arr = [anm.anm_type, anm.prog_type, anm.anmset_num, anm.pattern_count]
     #アニメ指定ファイル
     anm.files.each{|file|
       index = anime_naix.getIndex(file.sub(/\./,"_"))
