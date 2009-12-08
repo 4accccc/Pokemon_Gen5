@@ -383,7 +383,6 @@ BOOL  BTLV_EFFECT_CheckExecute( void )
 //============================================================================================
 void  BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position )
 {
-  u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
   BTLV_MCSS_Add( bew->bmw, pp, position );
 }
 

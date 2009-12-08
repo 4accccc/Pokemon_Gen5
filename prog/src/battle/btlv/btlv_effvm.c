@@ -54,6 +54,7 @@ typedef struct{
   u32               set_alpha_flag        :1;     //ALPHA操作されたか？
   u32               execute_effect_type   :1;     //起動しているエフェクトタイプ（0:技エフェクト　1:戦闘エフェクト）
   u32                                     :25;
+  u32               sequence_work;                //シーケンスで使用する汎用ワーク
   GFL_TCBSYS*       tcbsys;
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
@@ -221,6 +222,7 @@ static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -265,7 +267,6 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
  *  データテーブル
  */
 //============================================================================================
-#define TBL_START ( 4 )
 #define TBL_AA2BB ( 4 * 0 )
 #define TBL_BB2AA ( 4 * 1 )
 #define TBL_A2B   ( 4 * 2 )
@@ -350,6 +351,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_CONTROL_MODE,
   VMEC_IF,
   VMEC_MCSS_POS_CHECK,
+  VMEC_SET_WORK,
 
   VMEC_SEQ_END,
 };
@@ -466,7 +468,6 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs;
   int table_ofs;
-  int *seq_cnt;
 
   bevw->sequence = NULL;
 
@@ -510,16 +511,10 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     table_ofs = TBL_AA2BB;
   }
 
-  seq_cnt = (int *)&bevw->sequence[ 0 ];
+  start_ofs = (int *)&bevw->sequence[ table_ofs ];
 
-  if( param )
-  { 
-    if( ( (*seq_cnt) > 1 ) && ( param->turn_count == 0 ) )
-    { 
-      table_ofs += TBL_MAX * 1;
-    }
-  }
-  start_ofs = (int *)&bevw->sequence[ TBL_START + table_ofs ];
+  //汎用ワークを初期化
+  bevw->sequence_work = 0;
 
   VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
 }
@@ -2401,6 +2396,28 @@ static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	汎用ワークに値をセット
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int value =  ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_SET_WORK:\nvalue:%d\n",value);
+#endif DEBUG_OS_PRINT
+
+  bevw->sequence_work = value;
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3292,6 +3309,16 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   int ret;
 
   switch( param ){ 
+  case BTLEFF_WORK_POS_AA_WEIGHT: ///<POS_AAの体重
+  case BTLEFF_WORK_POS_BB_WEIGHT: ///<POS_BBの体重
+  case BTLEFF_WORK_POS_A_WEIGHT:  ///<POS_Aの体重
+  case BTLEFF_WORK_POS_B_WEIGHT:  ///<POS_Bの体重
+  case BTLEFF_WORK_POS_C_WEIGHT:  ///<POS_Cの体重
+  case BTLEFF_WORK_POS_D_WEIGHT:  ///<POS_Dの体重
+  case BTLEFF_WORK_POS_E_WEIGHT:  ///<POS_Eの体重
+  case BTLEFF_WORK_POS_F_WEIGHT:  ///<POS_Fの体重
+     ret = BTLV_MCSS_GetWeight( BTLV_EFFECT_GetMcssWork(), param );
+    break;
   case BTLEFF_WORK_WAZA_RANGE:    ///<技の効果範囲
     ret = bevw->param.waza_range;
     break;
@@ -3309,6 +3336,13 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
     ret = bevw->param.item_no;
+    break;
+  case BTLEFF_WORK_SEQUENCE_WORK:   ///<汎用ワーク
+    ret = bevw->sequence_work;
+    break;
+  default:
+    //未知のパラメータです
+    GF_ASSERT( 0 );
     break;
   }
   return ret;
