@@ -167,11 +167,15 @@ extern GFL_SAVEDATA * GFL_SAVEDATA_Create(const GFL_SVLD_PARAM * sv_param, u32 h
  * @param   heap_save_id		セーブシステムで使用
  * @param   svwk_adrs       セーブワーク実体として使用するワークのポインタ
  * @param   svwk_size       svwk_adrsのサイズ
+ * @param   svwk_clear      svwk_adrsがNULLでない場合、
+ *                            TRUE:バッファの初期化を行う
+ *                            FALSE:バッファの初期化は行わない
  *
  * @retval  GFL_SAVEDATA *		
  */
 //==================================================================
-extern GFL_SAVEDATA * GFL_SAVEDATA_CreateEx(const GFL_SVLD_PARAM * sv_param, u32 heap_save_id, void *svwk_adrs, u32 svwk_size );
+extern GFL_SAVEDATA * GFL_SAVEDATA_CreateEx(const GFL_SVLD_PARAM * sv_param, 
+  u32 heap_save_id, void *svwk_adrs, u32 svwk_size, BOOL svwk_clear );
 
 //---------------------------------------------------------------------------
 /**
