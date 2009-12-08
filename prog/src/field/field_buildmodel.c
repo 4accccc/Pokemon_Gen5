@@ -1649,6 +1649,8 @@ static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream
 (const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
 static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine
 (const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPc
+(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
