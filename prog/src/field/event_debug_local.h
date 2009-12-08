@@ -94,6 +94,11 @@ extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(
 extern GMEVENT * DEBUG_EVENT_FLDMENU_DebugScript( const DEBUG_MENU_EVENT_WORK * now_wk );
 
 //--------------------------------------------------------------
+///サブメニューイベント：デバッグフラグ操作
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_FLDMENU_DebugFlag( const DEBUG_MENU_EVENT_WORK * now_wk );
+
+//--------------------------------------------------------------
 ///サブメニューイベント：マップジャンプ（限定版）
 //--------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, HEAPID heapID );
