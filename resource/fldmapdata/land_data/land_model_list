@@ -737,4 +737,6 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/champion_05_00.nsbmd \
 	$(DIR_TEMP)/champion_05_01.nsbmd \
 	$(DIR_TEMP)/champion_05_02.nsbmd \
-	$(DIR_TEMP)/champion_05_03.nsbmd
+	$(DIR_TEMP)/champion_05_03.nsbmd \
+	$(DIR_TEMP)/m_dun0805_00_00.nsbmd \
+	$(DIR_TEMP)/m_gstation01_00_00.nsbmd

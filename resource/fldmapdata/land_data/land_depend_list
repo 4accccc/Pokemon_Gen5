@@ -737,4 +737,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/champion_05_00.ngpack \
 	$(DIR_OUTPUT)/champion_05_01.ngpack \
 	$(DIR_OUTPUT)/champion_05_02.ngpack \
-	$(DIR_OUTPUT)/champion_05_03.ngpack
+	$(DIR_OUTPUT)/champion_05_03.ngpack \
+	$(DIR_OUTPUT)/m_dun0805_00_00.ngpack \
+	$(DIR_OUTPUT)/m_gstation01_00_00.ngpack
