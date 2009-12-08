@@ -2378,7 +2378,7 @@
 #define SYS_FLAG_BIGFOUR_EVILWIN          2410 /* 0x096a 四天王(悪)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_BIGFOUR_FIGHTWIN         2411 /* 0x096b 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_BIGFOUR_ESPWIN           2412 /* 0x096c 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
-		/* not used  2413(0x096d) */
+#define SYS_FLAG_PCNAME                   2413 /* 0x096d 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
 		/* not used  2414(0x096e) */
 		/* not used  2415(0x096f) */
 		/* not used  2416(0x0970) */
