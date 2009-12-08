@@ -42,6 +42,7 @@ enum {
   RSC_GRID_BRIDGE_H03 = 13,     // 1x6
   RSC_HYBRID = 14,     // 
   RSC_GRID_FOURKINGS = 15,     // 四天王部屋用
+  RSC_GRID_NOSCROLL = 16,     // グリッド　スクロールなし動作
 
 	//NO_GRID_SAMPLE = 2,
 	//GRID_GS_SAMPLE = 3,
