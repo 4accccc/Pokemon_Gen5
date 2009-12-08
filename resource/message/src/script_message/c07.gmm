@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-08T20:01:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-08T20:04:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -768,8 +768,8 @@
 ・ISS用
 ・こいつの初期配置はGRIDX=212、GRIDZ=220</comment>
 		<attribute name="キャラクター">BOY1</attribute>
-		<language name="JPN" width="256">るらら～♪　るらら～♪</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">らんらん♪　るるる～♪</language>
+		<language name="JPN_KANJI" width="256">らんらん♪　るるる～♪</language>
 	</row>
 
 	<row id="msg_c07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
