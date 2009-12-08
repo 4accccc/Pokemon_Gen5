@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C04R0102 (1)
+#define SCRID_C04R0102_RECEIPT (2)
 
 #endif //_C04R0102_DEF_H_
