@@ -9,8 +9,8 @@
 #ifndef __SAVE_CONTROL_H__
 #define __SAVE_CONTROL_H__
 
+#include <gflib.h>
 #include <backup_system.h>
-#include "system/main.h"
 
 
 //==============================================================================
