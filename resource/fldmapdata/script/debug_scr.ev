@@ -89,8 +89,8 @@ EVENT_START ev_debug_tamada
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//Ｎ城出現デモ（テスト）
-	_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//やめる（テスト）
+	_BMPMENU_MAKE_LIST( msg_debug_01, 0 )	//Ｎ城出現デモ（テスト）
+	_BMPMENU_MAKE_LIST( msg_debug_00, 1 )	//やめる（テスト）
 	//メニュー表示
 	_BMPMENU_START()
 
@@ -117,19 +117,23 @@ EVENT_START ev_debug_masafumi
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//Ｎ城出現デモ（テスト）
-	_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//やめる（テスト）
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+	_BMPMENU_MAKE_LIST( msg_debug_00, 4 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
 
 	IF $SCWK_ANSWER == 0 THEN
-		//Ｎ城出現デモのデバッグ処理（テスト）
-		
-		//ここにワーク操作など、確認したいイベントの発動条件を記述します。
-		_SE_PLAY( SEQ_SE_KAIDAN )
-		_SE_WAIT()
+		_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
+	ELSIF $SCWK_ANSWER == 1 THEN
+		_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
+	ELSIF $SCWK_ANSWER == 2 THEN
+		_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+	ELSIF $SCWK_ANSWER == 3 THEN
+		_FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
 	ENDIF
-
 
 EVENT_END
 

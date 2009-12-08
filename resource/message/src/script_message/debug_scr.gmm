@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-11-30T18:32:49"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-12-08T23:10:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,16 +292,46 @@
 	</lock>
 
 
-	<row id="msg_debug_masafumi_01">
+	<row id="msg_debug_00">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">Ｎ城出現デモ</language>
-		<language name="JPN_KANJI" width="256">Ｎ城出現デモ</language>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_debug_01">
+		<language name="JPN" width="256">テスト01</language>
+		<language name="JPN_KANJI" width="256">テスト01</language>
+	</row>
+
+	<row id="msg_debug_02">
+		<language name="JPN" width="256">テスト02</language>
+		<language name="JPN_KANJI" width="256">テスト02</language>
+	</row>
+
+	<row id="msg_debug_03">
+		<language name="JPN" width="256">テスト03</language>
+		<language name="JPN_KANJI" width="256">テスト03</language>
+	</row>
+
+	<row id="msg_debug_masafumi_01">
+		<language name="JPN" width="256">ゴースト</language>
+		<language name="JPN_KANJI" width="256">ゴースト</language>
 	</row>
 
 	<row id="msg_debug_masafumi_02">
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
+		<language name="JPN" width="256">あく</language>
+		<language name="JPN_KANJI" width="256">あく</language>
+	</row>
+
+	<row id="msg_debug_masafumi_03">
+		<language name="JPN" width="256">かくとう</language>
+		<language name="JPN_KANJI" width="256">かくとう</language>
+	</row>
+
+	<row id="msg_debug_masafumi_04">
+		<language name="JPN" width="256">エスパー</language>
+		<language name="JPN_KANJI" width="256">エスパー</language>
 	</row>
 
 	<flowchart-group-list>
