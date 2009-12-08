@@ -764,10 +764,15 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     u8 numDeadPoke;
 
     wk->numEndActOrder = wk->numActOrder;
+
     // ターンチェック処理
     scproc_TurnCheck( wk );
-    numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+    if( scproc_CheckShowdown(wk) ){
+      wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
+      return wk->flowResult;
+    }
 
+    numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
     // 死亡・生き返りなどでポケ交換の必要があるかチェック
     if( relivePokeRec_CheckNecessaryPokeIn(wk)
     ||  (numDeadPoke != 0)
@@ -777,6 +782,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
       return SVFLOW_RESULT_POKE_IN_REQ;
     }
     return SVFLOW_RESULT_DEFAULT;
+
   }
   // まだアクションが残っているが入れ替え・逃げなど発生でサーバーへ返す
   else

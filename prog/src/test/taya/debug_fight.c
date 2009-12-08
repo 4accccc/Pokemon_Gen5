@@ -1425,7 +1425,7 @@ FS_EXTERN_OVERLAY(battle);
  */
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam )
 {
-  u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
+  u8* dataPtr = (u8*)BattleRec_GetOperationBufferPtr();
 
   *((u32*)dataPtr) = setupParam->recDataSize;
   TAYA_Printf("録画データセーブ準備:WorkPtr=%p, dataSize=%dbyte, ptr=%p, dump=%08x\n", dataPtr, *dataPtr, dataPtr, *dataPtr);
@@ -1478,13 +1478,13 @@ static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
   switch( result ){
   case SAVE_RESULT_OK:
     {
-      u32* dataPtr = (u32*)BattleRec_WorkPtrGet();
+      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
       TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
     }
     return TRUE;
   case SAVE_RESULT_NG:
     {
-      u32* dataPtr = (u32*)BattleRec_WorkPtrGet();
+      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
       TAYA_Printf("録画データセーブ失敗 ... (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
     }
     return TRUE;
@@ -1502,12 +1502,10 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
   LOAD_RESULT result;
 
   TAYA_Printf("ロードする\n");
-  BattleRec_Load( sv, wk->heapID, &result, NULL, bufID );
-//BOOL BattleRec_Load(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,BATTLE_PARAM *bp,int num)
-
+  BattleRec_Load( sv, wk->heapID, &result, bufID );
   if( result == LOAD_RESULT_OK )
   {
-    u8* dataPtr = (u8*)BattleRec_WorkPtrGet();
+    u8* dataPtr = (u8*)BattleRec_GetOperationBufferPtr();
 
 
     dst->recDataSize = *((u32*)dataPtr);
@@ -1518,18 +1516,22 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
     GFL_STD_MemCopy( dataPtr, dst->recBuffer, dst->recDataSize );
 
     {
-      u32* p = (u32*)BattleRec_WorkPtrGet();
+      u32* p = (u32*)BattleRec_GetOperationBufferPtr();
       TAYA_Printf("録画データ読み込み完了 (bufID=%d, %dbyte, ptr=%p, dump=%08x)\n", bufID, dst->recDataSize, p, *p);
     }
   }
   else
   {
+//    #define _TEST_REC_1ST
     static const u8 kariRecData[] = {
-      0x12,0x01,0xf1,0x01,0x00,0x00,0x21,0x81,0x25,0x00,0x00,
+      0x12,0x01,0xf1,0x64,0x00,0x00,0x21,0x41,0x17,0x00,0x00,0x12,0x01,0xb1,0x25,0x00,
+      0x00,0x21,0x41,0x08,0x00,0x00,0x12,0x01,0xf1,0x01,0x00,0x00,0x21,0x41,0x08,0x00,
+      0x00,
     };
     static const u8 kariRecRand[] = {
-      0xda,0x0d,0x9a,0xab,0x0e,0xb2,0x31,0xb7,0x65,0x89,0x07,0x6c,0x65,0x8b,0x58,0x5d,
-      0xc3,0x9e,0x26,0x00,0x00,0x00,0x00,0x00,
+      0x28, 0x21, 0x70, 0xe5, 0x41, 0x38, 0x2a, 0xbd,
+      0x65, 0x89, 0x07, 0x6c, 0x65, 0x8b, 0x58, 0x5d,
+      0xc3, 0x9e, 0x26, 0x00, 0x00, 0x00, 0x00, 0x00,
     };
 
     dst->recDataSize = sizeof(kariRecData);
@@ -1537,7 +1539,7 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
     GFL_STD_MemCopy( kariRecRand, &(dst->recRandContext), sizeof(kariRecRand) );
 
     {
-      u32* dataPtr = (u32*)BattleRec_WorkPtrGet();
+      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
       TAYA_Printf("録画データ読み込み失敗: bufID=%d,  ResultCode=%d, dataPtr=%p, dump=%08x\n", bufID, result, dataPtr, *dataPtr );
     }
   }

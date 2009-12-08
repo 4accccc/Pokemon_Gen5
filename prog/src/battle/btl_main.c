@@ -213,6 +213,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       if( !(wk->setupParam->fRecordPlay) ){
         GFL_STD_RandGeneralInit( &wk->randomContext );
+      }else{
+        wk->randomContext = setup_param->recRandContext;
       }
       BTL_CALC_InitRandSys( &wk->randomContext );
 

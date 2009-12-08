@@ -130,8 +130,8 @@ struct _BTL_CLIENT {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
-static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq );
@@ -168,6 +168,7 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
@@ -398,7 +399,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   }procTbl[] = {
 
     { BTL_ACMD_WAIT_SETUP,
-      { SubProc_UI_Setup,          NULL,                      SubProc_UI_Setup           } },
+      { SubProc_UI_Setup,          NULL,                      SubProc_REC_Setup          } },
 
     { BTL_ACMD_SELECT_ROTATION,
       { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation, SubProc_REC_SelectRotation } },
@@ -410,7 +411,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
        { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
 
     { BTL_ACMD_SERVER_CMD,
-       { SubProc_UI_ServerCmd,     NULL,                      SubProc_UI_ServerCmd       } },
+       { SubProc_UI_ServerCmd,     NULL,                      SubProc_REC_ServerCmd      } },
 
     { BTL_ACMD_RECORD_DATA,
        { SubProc_UI_RecordData,    NULL,                      NULL                       } },
@@ -450,9 +451,6 @@ u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk )
 
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
-  if( wk->viewCore == NULL ){
-    return TRUE;
-  }
   switch( *seq ){
   case 0:
     BTL_Printf("UI REC Common Setup Start myID=%d\n", wk->myID);
@@ -470,7 +468,14 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-
+static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->viewCore )
+  {
+    return SubProc_UI_Setup( wk, seq );
+  }
+  return TRUE;
+}
 
 
 //------------------------------------------------------------------------------------------------------
@@ -519,7 +524,7 @@ static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
 }
 static BtlRotateDir _testAI_dir( BtlRotateDir prevDir )
 {
-  u32 rnd = BTL_CALC_GetRand( 100 );
+  u32 rnd = GFL_STD_MtRand( 100 );
 
   if( prevDir == BTL_ROTATEDIR_NONE )
   {
@@ -1316,7 +1321,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           }
         }
         if( cnt ){
-          cnt = BTL_CALC_GetRand( cnt );
+          cnt = GFL_STD_MtRand( cnt );
           wazaIdx = usableWazaIdx[ cnt ];
           targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
         }else{
@@ -1346,7 +1351,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
         if( aliveCnt )
         {
-          u8 rndIdx = BTL_CALC_GetRand(aliveCnt);
+          u8 rndIdx = GFL_STD_MtRand(aliveCnt);
           targetPos = alivePokePos[ rndIdx ];
         }
       }
@@ -1637,6 +1642,14 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
+static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->viewCore )
+  {
+    return SubProc_UI_ServerCmd( wk, seq );
+  }
+  return TRUE;
+}
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
   static const struct {

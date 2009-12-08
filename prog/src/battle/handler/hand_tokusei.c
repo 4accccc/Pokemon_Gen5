@@ -2311,11 +2311,7 @@ static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
   {
-#ifdef PM_DEBUG
-    u16 per = 100;
-#else
     u16 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER ) * 2;
-#endif
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     BTL_Printf("É|ÉP[%d]ÇÃ ÇƒÇÒÇÃÇﬂÇÆÇ› Ç≈í«â¡î≠ê∂ó¶ÇQî{=%d%%\n", pokeID, per);
   }

@@ -21,6 +21,9 @@
 //--------------------------------------------------------------
 static GFL_STD_RandContext gRandContext = {0};
 
+#ifdef PM_DEBUG
+static u32 gDebugCounter=0;
+#endif
 //=============================================================================================
 /**
  * 乱数システム初期化
@@ -31,6 +34,23 @@ static GFL_STD_RandContext gRandContext = {0};
 void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
 {
   gRandContext = *randContext;
+
+  #ifdef PM_DEBUG
+  gDebugCounter = 0;
+  {
+    u8* p = (u8*)(&gRandContext);
+    u32 i;
+    OS_TPrintf("******** Random Context *******\n");
+    for(i=0; i<sizeof(gRandContext); ++i)
+    {
+      OS_TPrintf("0x%02x, ", p[i]);
+      if( ((i+1)%8)==0 ){
+        OS_TPrintf("\n");
+      }
+    }
+    OS_TPrintf("\n");
+  }
+  #endif
 }
 //=============================================================================================
 /**
@@ -44,11 +64,14 @@ void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
 //=============================================================================================
 u32 BTL_CALC_GetRand( u32 range )
 {
+  u32 result;
   if( range ){
-    return GFL_STD_Rand0( &gRandContext, range );
+    result = GFL_STD_Rand0( &gRandContext, range );
   }else{
-    return GFL_STD_Rand( &gRandContext, GFL_STD_RAND_MAX );
+    result = GFL_STD_Rand( &gRandContext, GFL_STD_RAND_MAX );
   }
+  BTL_Printf("GetRand counter=%d, range=%d, result=%d\n", gDebugCounter++, range, result);
+  return result;
 }
 
 //--------------------------------------------------------------
@@ -130,15 +153,22 @@ u8 BTL_CALC_HitPer( u8 defPer, u8 rank )
  *  クリティカル率テーブル
  */
 //--------------------------------------------------------------
-static const u8 CriticalRankTable[] = {
-  16, 8, 4, 3, 2,
-};
-
 BOOL BTL_CALC_CheckCritical( u8 rank )
 {
+  static const u8 CriticalRankTable[] = {
+    16, 8, 4, 3, 2,
+  };
+
   GF_ASSERT(rank < NELEMS(CriticalRankTable));
 
-  return (BTL_CALC_GetRand( CriticalRankTable[rank] ) == 0);
+  {
+    u8 rp = CriticalRankTable[ rank ];
+    u8 ret = BTL_CALC_GetRand( rp );
+
+    BTL_Printf("Critical Rank=%d, num=%d, result=%d\n", rank, rp, ret);
+
+    return (ret == 0);
+  }
 }
 
 //--------------------------------------------------------------
