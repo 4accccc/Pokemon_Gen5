@@ -265,6 +265,7 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
  *  データテーブル
  */
 //============================================================================================
+#define TBL_START ( 4 )
 #define TBL_AA2BB ( 4 * 0 )
 #define TBL_BB2AA ( 4 * 1 )
 #define TBL_A2B   ( 4 * 2 )
@@ -279,6 +280,7 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
 #define TBL_D2A   ( 4 * 11 )
 #define TBL_D2B   ( 4 * 12 )
 #define TBL_D2C   ( 4 * 13 )
+#define TBL_MAX   ( 4 * 14 )
 #define TBL_ERROR ( 0xffffffff )
 
 static const int  script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
@@ -464,6 +466,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs;
   int table_ofs;
+  int *seq_cnt;
 
   bevw->sequence = NULL;
 
@@ -478,7 +481,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->waza = waza;
   if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
   { 
-    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, GFL_HEAP_LOWID( bevw->heapID ) );
     //HPゲージ非表示
     BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
@@ -490,7 +493,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   }
   else
   { 
-    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, waza - BTLEFF_SINGLE_ENCOUNT_1, bevw->heapID );
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, waza - BTLEFF_SINGLE_ENCOUNT_1, GFL_HEAP_LOWID( bevw->heapID ) );
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
   }
   if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
@@ -507,9 +510,18 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     table_ofs = TBL_AA2BB;
   }
 
-  start_ofs = (int *)&bevw->sequence[ table_ofs ];
+  seq_cnt = (int *)&bevw->sequence[ 0 ];
 
-  VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
+  if( param )
+  { 
+    if( ( (*seq_cnt) > 1 ) && ( param->turn_count == 0 ) )
+    { 
+      table_ofs += TBL_MAX * 1;
+    }
+  }
+  start_ofs = (int *)&bevw->sequence[ TBL_START + table_ofs ];
+
+  VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
 }
 
 //============================================================================================
@@ -1680,6 +1692,9 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
