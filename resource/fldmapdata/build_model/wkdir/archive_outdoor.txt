@@ -188,3 +188,6 @@
 "nsbmdfiles/bc_block_06.nsbmd"
 "nsbmdfiles/bc_block_07.nsbmd"
 "nsbmdfiles/bc_block_08.nsbmd"
+"nsbmdfiles/outwarp01.nsbmd"
+"nsbmdfiles/outwarp02.nsbmd"
+"nsbmdfiles/outwarp03.nsbmd"

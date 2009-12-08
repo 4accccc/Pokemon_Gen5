@@ -189,4 +189,7 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/bc_block_06.nsbmd \
 	$(RESDIR)/bc_block_07.nsbmd \
 	$(RESDIR)/bc_block_08.nsbmd \
+	$(RESDIR)/outwarp01.nsbmd \
+	$(RESDIR)/outwarp02.nsbmd \
+	$(RESDIR)/outwarp03.nsbmd \
 
