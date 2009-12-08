@@ -116,7 +116,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
       { 
         (*seq) ++;
       }
-      else
+      else if( p_param->result == WIFILOGIN_RESULT_CANCEL )
       { 
         (*seq)  = _WAIT_NET_END;
       }

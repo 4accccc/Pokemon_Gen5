@@ -739,11 +739,13 @@ static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0007);
       _CHANGE_STATE(pWork,_modeDifferDSWait4);
     }
     else{
-    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+      WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       _CHANGE_STATE(pWork,NULL);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
