@@ -804,10 +804,13 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATI
 BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, RAIL_LOCATION * next_location)
 {
   BOOL move;
+  RAIL_LOCATION save_location;
   
   GF_ASSERT( man );
   GF_ASSERT( now_location );
   GF_ASSERT( next_location );
+
+  save_location = *now_location;
 
   FIELD_RAIL_WORK_SetLocation( man->calc_work, now_location );
   FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_1, key );
@@ -815,11 +818,11 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
 
   // •Ï‰»‚ª‚ ‚Á‚½‚©H
-  if( GFL_STD_MemComp( now_location, &man->calc_work->now_location, sizeof(RAIL_LOCATION) ) == 0 )
+  if( GFL_STD_MemComp( &save_location, next_location, sizeof(RAIL_LOCATION) ) == 0 )
   {
     return FALSE;
   }
-  return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
+  return FIELD_RAIL_WORK_CheckLocation( man->calc_work, next_location );
 }
 
 
