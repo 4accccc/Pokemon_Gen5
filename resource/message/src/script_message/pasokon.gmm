@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-02T16:32:22"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-12-08T16:06:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="32" top="207" right="684" bottom="827" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="477"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="644"/>
@@ -453,7 +453,7 @@
 	<row id="msg_pc_box_window_03" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_04表示</comment>
-		<language name="JPN" width="256">ポケモンを　せいりする</language>
+		<language name="JPN" width="256">ボックスを　せいりする</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　せいりする</language>
 	</row>
 
@@ -469,6 +469,13 @@
 ・msg_pc_box_06表示</comment>
 		<language name="JPN" width="256">さようなら</language>
 		<language name="JPN_KANJI" width="256">さようなら</language>
+	</row>
+
+	<row id="msg_pc_box_window_06" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
+		<comment>■選択肢ウインドウ
+・msg_pc_box_07表示</comment>
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
 	</row>
 
 	<row id="msg_pc_box_02">
@@ -490,8 +497,8 @@
 	</row>
 
 	<row id="msg_pc_box_04">
-		<comment>■「ポケモンを　せいりする」にカーソルがあっているとき
-・決定するとボックスポケモン整理の処理へ</comment>
+		<comment>■「ボックスを　せいりする」にカーソルがあっているとき
+・決定するとボックス整理の処理へ</comment>
 		<language name="JPN" width="256">ボックスに　あずけている　ポケモンや
 てもちのポケモンを　せいり　できます</language>
 		<language name="JPN_KANJI" width="256">ボックスに　あずけている　ポケモンや
@@ -514,6 +521,15 @@
 つうしんを　せつだん　します</language>
 		<language name="JPN_KANJI" width="256">ポケモンあずかりシステム　への
 つうしんを　せつだん　します</language>
+	</row>
+
+	<row id="msg_pc_box_07">
+		<comment>■「バトルボックス」にカーソルがあっているとき
+・決定するとバトルボックスの処理へ</comment>
+		<language name="JPN" width="256">てもちとは　べつに　たいせんでつかう
+ポケモンを　とうろく　できます</language>
+		<language name="JPN_KANJI" width="256">てもちとは　べつに　たいせんでつかう
+ポケモンを　とうろく　できます</language>
 	</row>
 
 	<row id="msg_pc_mail_01">
