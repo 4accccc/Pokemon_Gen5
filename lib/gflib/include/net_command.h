@@ -45,6 +45,8 @@ enum GFL_NET_CommCommand_e {
   GFL_NET_CMD_WIFI_EXIT,              ///< 子機が親機に終了するように送信
   GFL_NET_CMD_HUGEDATA,            ///< 大きなデータの分割転送ルーチン
   GFL_NET_CMD_HUGEPREDATA,         ///< 大きなデータを送る予約コマンド
+  GFL_NET_CMD_LOWER_DATA,          ///< 低優先度データ送信
+  GFL_NET_CMD_LOWER_DATA_FLG,      ///< 低優先度データ送信のフラグ
   //------------------------------------------------ここまで----------
   GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください
 };

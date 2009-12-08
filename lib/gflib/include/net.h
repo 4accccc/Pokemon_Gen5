@@ -102,7 +102,7 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 #define GFL_NET_NO_PARENTMACHINE (0)  ///< 親機の番号
 
 
-#define GFL_NET_CHILD_MAX  ( 15 )    ///<  子機最大数 15->7に
+#define GFL_NET_CHILD_MAX  ( 15 )    ///<  子機最大数
 #define GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)  ///< 機最大数
 #define GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1) ///<   通信ハンドル最大数  子機全部＋親機 分
 
@@ -1028,6 +1028,68 @@ extern BOOL GFL_NET_IsError(void);
 extern int GFL_NET_GetErrorCode(void);
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：システム作成(送信側
+ *
+ * @param   heapId システム作成用HEAP
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_InitSystem( const HEAPID heapId );
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：システム削除
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_ExitSystem();
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：送信データ設定
+ *
+ * @param   data   送信データ
+ * @param   size   送信サイズ
+ * @param   sendBit送信対象bit
+ * @param   isMp   MP通信モードか？
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_SetSendData( void* data , const u32 size , const u8 sendBit , const BOOL isMp );
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信バッファ作成
+ *
+ * @param   size   受信サイズ(最大値
+ * @param   netID  送信側のnetID
+ * @param   heapId システム作成用HEAP
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_CreatePostBuffer( u32 size , const u8 netId , const HEAPID heapId );
+
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信バッファ取得
+ *
+ * @return  void* データ
+ */
+//--------------------------------------------------------------
+extern void* GFL_NET_LDATA_GetPostData( const u8 netId );
+
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：送信完了チェック
+ *
+ * @return  BOOL TRUE:終了したか
+ */
+//--------------------------------------------------------------
+extern const BOOL GFL_NET_LDATA_IsFinishSend();
+
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信完了チェック
+ *
+ * @return  BOOL TRUE:終了したか
+ */
+//--------------------------------------------------------------
+extern const BOOL GFL_NET_LDATA_IsFinishPost( const u8 netId );
 
 
 #ifdef PM_DEBUG
