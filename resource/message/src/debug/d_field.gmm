@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-12-04T13:12:38"/>
+	<create user="genya_hosaka" host="W00159" date="2009-12-08T12:30:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="61" top="170" right="766" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="129" top="208" right="834" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -832,6 +832,51 @@ res(0x[2:07:８桁:3])</language>
 	<row id="DEBUG_FIELD_TELEPORT">
 		<language name="JPN" width="160">テレポート</language>
 		<language name="JPN_KANJI" width="160">テレポート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D">
+		<language name="JPN" width="160">3Dデモ</language>
+		<language name="JPN_KANJI" width="160">3Dデモ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_01">
+		<language name="JPN" width="160">ゆうらんせん</language>
+		<language name="JPN_KANJI" width="160">ゆうらん船</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_02">
+		<language name="JPN" width="160">Nのしろ</language>
+		<language name="JPN_KANJI" width="160">Nの城</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_03">
+		<language name="JPN" width="160">デモ3</language>
+		<language name="JPN_KANJI" width="160">デモ3</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_04">
+		<language name="JPN" width="160">デモ4</language>
+		<language name="JPN_KANJI" width="160">デモ4</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_05">
+		<language name="JPN" width="160">デモ5</language>
+		<language name="JPN_KANJI" width="160">デモ5</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_06">
+		<language name="JPN" width="160">デモ6</language>
+		<language name="JPN_KANJI" width="160">デモ6</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_07">
+		<language name="JPN" width="160">デモ7</language>
+		<language name="JPN_KANJI" width="160">デモ7</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_08">
+		<language name="JPN" width="160">デモ8</language>
+		<language name="JPN_KANJI" width="160">デモ8</language>
 	</row>
 
 	<flowchart-group-list>

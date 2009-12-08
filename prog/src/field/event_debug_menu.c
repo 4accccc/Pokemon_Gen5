@@ -74,6 +74,7 @@
 #include "event_debug_local.h"
 
 #include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
+#include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -165,6 +166,7 @@ static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
 
 
 //======================================================================
@@ -219,6 +221,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, 
   { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
+  { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d }, 
 };
 
 
@@ -3748,3 +3751,21 @@ static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByTeleport( gsys ) );
   return TRUE;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 3Dƒfƒ‚Ä¶
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK* wk )
+{
+  GMEVENT*         parent = wk->gmEvent;
+  GAMESYS_WORK*      gsys = wk->gmSys;
+  FIELDMAP_WORK* fieldmap = wk->fieldWork;
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  GMEVENT_ChangeEvent( parent, DEBUG_EVENT_FLDMENU_Demo3DSelect( gsys, heap_id ) );
+
+  return TRUE;
+}
+
