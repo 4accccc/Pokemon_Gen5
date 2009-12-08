@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T18:22:27"/>
+	<create user="matsumiya" host="W00207" date="2009-12-08T22:44:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -407,19 +407,19 @@
 きみが　アイリスの　ように
 わたしに　みらいを　みせてくれること[BE:00:ページ切り替え（行送り）]
 のぞんでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">よくぞ　まいられた[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">よくぞ　参られた[BE:01:ページ切り替え（クリア）]
 わたしが　ソウリュウ　ポケモンジム
 ジムリーダーの　シャガで　ある[BE:01:ページ切り替え（クリア）]
-……しちょうとして
-まちの　はってんに　じんりょくし[BE:01:ページ切り替え（クリア）]
+……市長として
+街の　発展に　尽力し[BE:01:ページ切り替え（クリア）]
 トレーナーとして　ただ
-つよさを　おいもとめた……[BE:01:ページ切り替え（クリア）]
-そんないま　もとめるのは
-あかるい　みらいを　みせてくれる[BE:00:ページ切り替え（行送り）]
-わかい　トレーナーの　そんざい[BE:01:ページ切り替え（クリア）]
+強さを　追い求めた……[BE:01:ページ切り替え（クリア）]
+そんな今　求めるのは
+明るい　未来を　みせてくれる[BE:00:ページ切り替え（行送り）]
+若い　トレーナーの　存在[BE:01:ページ切り替え（クリア）]
 きみが　アイリスの　ように
-わたしに　みらいを　みせてくれること[BE:00:ページ切り替え（行送り）]
-のぞんでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
+わたしに　未来を　みせてくれること[BE:00:ページ切り替え（行送り）]
+望んでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08gym0101_leader_02b">
@@ -432,8 +432,8 @@
 きみと　であい
 たたかえたこと　かんしゃする[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">すばらしい[BE:01:ページ切り替え（クリア）]
-きみと　であい
-たたかえたこと　かんしゃする[BE:01:ページ切り替え（クリア）]</language>
+きみと　出会い
+闘えたこと　感謝する[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08gym0101_leader_03b">
@@ -459,9 +459,9 @@
 わざマシンの　ひとつ[BE:01:ページ切り替え（クリア）]
 そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
-わたしが　すきな
-わざマシンの　ひとつ[BE:01:ページ切り替え（クリア）]
-そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
+わたしが　好きな
+技マシンの　ひとつ[BE:01:ページ切り替え（クリア）]
+その名も　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08gym0101_leader_05b">
