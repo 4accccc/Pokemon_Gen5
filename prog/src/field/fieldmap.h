@@ -43,9 +43,10 @@
 
 #include "fld3d_ci.h"
 
-
 #include "field_task.h"
 #include "field_task_manager.h"
+
+#include "bsubway_scr_common.h"
 
 //======================================================================
 //	define

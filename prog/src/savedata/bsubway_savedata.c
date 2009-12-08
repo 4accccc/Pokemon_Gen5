@@ -1,0 +1,1064 @@
+//======================================================================
+/**
+ * @file  bsubway_savedata.c
+ * @brief  バトルサブウェイ　セーブデータ関連
+ * @authaor  iwasawa
+ * @date  2008.12.11
+ * @note PLより移植 kagaya
+ */
+//======================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
+
+#if 0
+#include "common.h"
+#include "savedata/savedata_def.h"
+#include "savedata/savedata.h"
+
+#include "system/gamedata.h"
+#include "system/pms_data.h"
+#include "system/buflen.h"
+#include "system/msgdata.h"
+#include "battle/battle_common.h"
+#include "battle/b_tower_data.h"
+
+#include "savedata/frontier_savedata.h"
+#include "frontier_savedata_local.h"
+
+#include "b_tower_local.h"
+
+#define _BSUBWAY_H_GLOBAL
+#include "savedata/b_tower.h"
+#include "field/b_tower_scr_def.h"
+#include "libdpw/dpw_bt.h"
+
+#include "msgdata/msg.naix"
+#include "msgdata/msg_btower_app.h"
+#endif
+
+#include "libdpw/dpw_bt.h"
+
+#include "savedata/bsubway_savedata.h"
+#include "bsubway_savedata_local.h"
+#include "../field/bsubway_scr_def.h"
+
+#ifdef _NITRO
+// 構造体が想定のサイズとなっているかチェック
+SDK_COMPILER_ASSERT(sizeof(BSUBWAY_LEADER_DATA) == 34);
+SDK_COMPILER_ASSERT(sizeof(BSUBWAY_POKEMON) == 56);
+SDK_COMPILER_ASSERT(sizeof(BSUBWAY_WIFI_PLAYER) == 228);
+#endif
+
+//======================================================================
+//  define
+//======================================================================
+
+//======================================================================
+//  struct
+//======================================================================
+
+//======================================================================
+//  proto
+//======================================================================
+
+//======================================================================
+//  バトルサブウェイ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　プレイデータサイズ
+ */
+//--------------------------------------------------------------
+int BSUBWAY_PlayData_GetWorkSize(void)
+{
+  return sizeof(BSUBWAY_PLAYWORK);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　プレイヤースコアデータサイズ
+ */
+//--------------------------------------------------------------
+int  BSUBWAY_SocreData_GetWorkSize(void)
+{
+  return sizeof(BSUBWAY_SCOREWORK);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　ポケモンデータサイズ
+ */
+//--------------------------------------------------------------
+int BSUBWAY_WifiPoke_GetWorkSize(void)
+{
+  return sizeof(BSUBWAY_POKEMON);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　Wifiデータサイズ
+ */
+//--------------------------------------------------------------
+int  BSUBWAY_WifiData_GetWorkSize(void)
+{
+  return sizeof(BSUBWAY_WIFI_DATA);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief　サブウェイ Wifi/トレーナーロードプレイヤーデータ構造体データサイズ
+ */
+//--------------------------------------------------------------
+int BSUBWAY_DpwBtPlayer_GetWorkSize(void)
+{
+  return sizeof(Dpw_Bt_Player);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　プレイデータクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PlayData_Clear(BSUBWAY_PLAYWORK* dat)
+{
+  MI_CpuClear8(dat,sizeof(BSUBWAY_PLAYWORK));
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ  スコアデータクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_Clear(BSUBWAY_SCOREWORK* dat)
+{
+  MI_CpuClear8(dat,sizeof(BSUBWAY_SCOREWORK));
+  dat->wifi_rank = 1;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　プレイヤーメッセージデータクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PlayerMsg_Clear(BSUBWAY_PLAYER_MSG* dat)
+{
+#if 0 //wb
+  PMSDAT_SetupDefaultBattleTowerMessage(&dat->msg[0], BSWAY_MSG_PLAYER_READY);
+  PMSDAT_SetupDefaultBattleTowerMessage(&dat->msg[1], BSWAY_MSG_PLAYER_WIN);
+  PMSDAT_SetupDefaultBattleTowerMessage(&dat->msg[2], BSWAY_MSG_PLAYER_LOSE);
+  PMSDAT_SetupDefaultBattleTowerMessage(&dat->msg[3], BSWAY_MSG_LEADER);
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　Wifiデータクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_Clear(BSUBWAY_WIFI_DATA* dat)
+{
+  MI_CpuClear8(dat,sizeof(BSUBWAY_WIFI_DATA));
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//======================================================================
+//　サブウェイ　プレイデータアクセス系
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイデータ　取得
+ *
+ *  @param  dat  BSUBWAY_PLAYWORK*
+ *  @param  id  取得するデータID BSUBWAY_PSD_ID型
+ *  @param  buf  void*:データ取得ポインタ
+ */
+//--------------------------------------------------------------
+u32 BSUBWAY_PlayData_Get(BSUBWAY_PLAYWORK* dat,BSWAY_PSD_ID id,void* buf)
+{
+  switch(id){
+  case BSWAY_PSD_playmode:
+    return (u32)dat->play_mode;
+  case BSWAY_PSD_round:
+    return (u32)dat->tower_round;
+  case BSWAY_PSD_rec_down:
+    return (u32)dat->wifi_rec_down;
+  case BSWAY_PSD_rec_turn:
+    return dat->wifi_rec_turn;
+  case BSWAY_PSD_rec_damage:
+    return dat->wifi_rec_damage;
+  case BSWAY_PSD_pokeno:
+    MI_CpuCopy8(dat->member_poke,buf,BSUBWAY_STOCK_MEMBER_MAX);
+    return 0;
+  case BSWAY_PSD_pare_poke:
+    MI_CpuCopy8(&dat->pare_poke,buf,sizeof(BSUBWAY_PAREPOKE_PARAM));
+    return 0;
+  case BSWAY_PSD_pare_itemfix:
+    return dat->itemfix_f;
+  case BSWAY_PSD_trainer:
+    MI_CpuCopy8(dat->trainer_no,buf,2*BSUBWAY_STOCK_TRAINER_MAX);
+    return 0;
+  case BSWAY_PSD_partner:
+    return dat->partner;
+  case BSWAY_PSD_rnd_seed:
+    return dat->play_rnd_seed;
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイデータ　セット
+ *  
+ *  @param  dat  BSUBWAY_PLAYWORK*
+ *  @param  id  取得するデータID BSUBWAY_PSD_ID型
+ *  @param  buf  void*:データを格納したバッファへのポインタ
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PlayData_Put(
+    BSUBWAY_PLAYWORK* dat,BSWAY_PSD_ID id,const void* buf)
+{
+  u32  *buf32 = (u32 *)buf;
+  u16  *buf16=(u16 *)buf;
+  u8  *buf8=(u8 *)buf;
+
+  switch(id){
+  case BSWAY_PSD_playmode:
+    dat->play_mode = buf8[0];
+    break;
+  case BSWAY_PSD_round:
+    dat->tower_round = buf8[0];
+    break;
+  case BSWAY_PSD_rec_down:
+    dat->wifi_rec_down = buf8[0];
+    break;
+  case BSWAY_PSD_rec_turn:
+    dat->wifi_rec_turn = buf16[0];
+    break;
+  case BSWAY_PSD_rec_damage:
+    dat->wifi_rec_damage = buf16[0];
+    break;
+  case BSWAY_PSD_pokeno:
+    MI_CpuCopy8(buf8,dat->member_poke,4);
+    break;
+  case BSWAY_PSD_pare_poke:
+    MI_CpuCopy8(buf16,&dat->pare_poke,sizeof(BSUBWAY_PAREPOKE_PARAM));
+    break;
+  case BSWAY_PSD_pare_itemfix:
+    dat->itemfix_f = buf8[0];
+    break;
+  case BSWAY_PSD_trainer:
+    MI_CpuCopy8(buf16,dat->trainer_no,2*BSUBWAY_STOCK_TRAINER_MAX);
+    break;
+  case BSWAY_PSD_rnd_seed:
+    dat->play_rnd_seed = buf32[0];
+    break;
+  case BSWAY_PSD_partner:
+    dat->partner = buf8[0];
+    break;
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief プレイデータ　WifiレコードデータAdd  
+ *
+ *  @param  down  倒されたポケモン追加数
+ *  @param  turn  かかったターン追加数
+ *  @param  damage  受けたダメージ追加値
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PlayData_WifiRecordAdd(
+    BSUBWAY_PLAYWORK* dat,u8 down,u16 turn,u16 damage)
+{
+  if(dat->wifi_rec_down + down < 255){
+    dat->wifi_rec_down += down;
+  }
+  if(dat->wifi_rec_turn + turn < 65535){
+    dat->wifi_rec_turn += turn;
+  }
+  if(dat->wifi_rec_damage + damage < 65535){
+    dat->wifi_rec_damage += damage;
+  }
+
+#if  PL_T0855_080710_FIX
+  OS_Printf( "********************\n" );
+  OS_Printf( "dat->wifi_rec_turn = %d\n", dat->wifi_rec_turn );
+  OS_Printf( "dat->wifi_rec_down = %d\n", dat->wifi_rec_down );
+  OS_Printf( "dat->wifi_rec_damage = %d\n", dat->wifi_rec_damage );
+#endif
+
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイデータ　正しくセーブ済みかどうか？
+ *
+ *  @retval  TRUE  正しくセーブされている
+ *  @retval FALSE  セーブされていない
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_PlayData_GetSaveFlag(BSUBWAY_PLAYWORK* dat)
+{
+  return dat->saved_f;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイデータ　セーブ状態フラグをセット
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PlayData_SetSaveFlag(BSUBWAY_PLAYWORK* dat,BOOL flag)
+{
+  dat->saved_f = flag;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//======================================================================
+//　サブウェイ　スコアデータアクセス系
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ バトルポイントセット
+ *
+ *  有効コマンド set/get/add/sub
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_ScoreData_SetBattlePoint(BSUBWAY_SCOREWORK* dat,u16 num,BSWAY_DATA_SETID mode)
+{
+  switch(mode){
+  case BSWAY_DATA_set:
+    if(num > 9999){
+      dat->btl_point = 9999;
+    }else{
+      dat->btl_point = num;
+    }
+    break;
+  case BSWAY_DATA_add:
+    if(dat->btl_point+num > 9999){
+      dat->btl_point = 9999;
+    }else{
+      dat->btl_point += num;
+    }
+    break;
+  case BSWAY_DATA_sub:
+    if(dat->btl_point < num){
+      dat->btl_point = 0;
+    }else{
+      dat->btl_point -= num;
+    }
+  case BSWAY_DATA_get:
+  default:
+    break;
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return dat->btl_point;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　Wifi連続敗戦カウント操作
+ *  有効コマンド get/reset/inc
+ *  @return  操作後のカウント
+ */
+//--------------------------------------------------------------
+u8 BSUBWAY_ScoreData_SetWifiLoseCount(BSUBWAY_SCOREWORK* dat,BSWAY_DATA_SETID mode)
+{
+  switch(mode){
+  case BSWAY_DATA_reset:
+    dat->wifi_lose = 0;
+    dat->wifi_lose_f = 0;
+    break;
+  case BSWAY_DATA_inc:
+    if(dat->wifi_lose_f){
+      //連続敗戦中
+      dat->wifi_lose += 1;
+    }else{
+      dat->wifi_lose = 1;
+      dat->wifi_lose_f = 1;
+    }
+    break;
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return dat->wifi_lose;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　Wifiランク操作
+ *  有効コマンド get/reset/inc/dec
+ */
+//--------------------------------------------------------------
+u8  BSUBWAY_ScoreData_SetWifiRank(BSUBWAY_SCOREWORK* dat,BSWAY_DATA_SETID mode)
+{
+  switch(mode){
+  case BSWAY_DATA_reset:
+    dat->wifi_rank = 1;
+    break;
+  case BSWAY_DATA_inc:
+    if(dat->wifi_rank < 10){
+      dat->wifi_rank += 1;
+    }
+    break;
+  case BSWAY_DATA_dec:
+    if(dat->wifi_rank>1){
+      dat->wifi_rank -= 1;
+    }
+    break;
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return dat->wifi_rank;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  使用ポケモンデータ保存
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_SetUsePokeData(BSUBWAY_SCOREWORK* dat,
+        BSWAY_SCORE_POKE_DATA mode,BSUBWAY_POKEMON* poke)
+{
+  if(mode == BSWAY_SCORE_POKE_SINGLE){
+    MI_CpuCopy8(poke,dat->single_poke,sizeof(BSUBWAY_POKEMON)*3);
+  }else{
+    MI_CpuCopy8(poke,dat->wifi_poke,sizeof(BSUBWAY_POKEMON)*3);
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  使用ポケモンデータをバッファにコピーして取得
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_GetUsePokeData(BSUBWAY_SCOREWORK* dat,
+      BSWAY_SCORE_POKE_DATA mode,BSUBWAY_POKEMON* poke)
+{
+  if(mode == BSWAY_SCORE_POKE_SINGLE){
+    MI_CpuCopy8(dat->single_poke,poke,sizeof(BSUBWAY_POKEMON)*3);
+  }else{
+    MI_CpuCopy8(dat->wifi_poke,poke,sizeof(BSUBWAY_POKEMON)*3);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  使用ポケモンデータをバッファにコピーして取得(WiFi構造体データ型)
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_GetUsePokeDataDpw(BSUBWAY_SCOREWORK* dat,
+      BSWAY_SCORE_POKE_DATA mode,DPW_BT_POKEMON_DATA* poke)
+{
+  if(mode == BSWAY_SCORE_POKE_SINGLE){
+    MI_CpuCopy8(dat->single_poke,poke,sizeof(BSUBWAY_POKEMON)*3);
+  }else{
+    MI_CpuCopy8(dat->wifi_poke,poke,sizeof(BSUBWAY_POKEMON)*3);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ Wifi成績操作
+ */
+//--------------------------------------------------------------
+u16  BSUBWAY_ScoreData_SetWifiScore(BSUBWAY_SCOREWORK* dat,BSUBWAY_PLAYWORK *playdata)
+{
+  u16  sa,sb,sc,sd,st;
+  u16  score = 0;
+
+  //ラウンド数は勝ち抜き数+1になっているのでマイナス１して計算する
+  sa = (playdata->tower_round-1)*1000;
+  sb = playdata->wifi_rec_turn*10;
+  sc = playdata->wifi_rec_down*20;
+  if(sb+sc > 950){
+    st = 0;
+  }else{
+    st = 950-(sb+sc);
+  }
+  if(playdata->wifi_rec_damage>(1000-30)){
+    sd = 0;
+  }else{
+    sd = (1000-playdata->wifi_rec_damage)/30;
+  }
+  score = sa+st+sd;
+  dat->wifi_score = score;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return score;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　Wifi成績0クリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_ClearWifiScore(BSUBWAY_SCOREWORK* dat)
+{
+  dat->wifi_score = 0;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　Wifi成績取得
+ */
+//--------------------------------------------------------------
+u16  BSUBWAY_ScoreData_GetWifiScore(BSUBWAY_SCOREWORK* dat)
+{
+  return dat->wifi_score;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータから勝ち抜いた数を取得
+ */
+//--------------------------------------------------------------
+u8  BSUBWAY_ScoreData_GetWifiWinNum(BSUBWAY_SCOREWORK* dat)
+{
+  u8 ret = 0;
+  ret = (dat->wifi_score)/1000;
+
+  return ret;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　周回数操作
+ *  有効コマンド reset/inc/get
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_ScoreData_SetStage(
+    BSUBWAY_SCOREWORK* dat,u16 id,BSWAY_DATA_SETID mode)
+{
+  u16 id2;
+
+  if(id == BSWAY_MODE_RETRY){
+    return 0;  //リトライモードではカウントしない
+  }
+
+  //プラチナ追加
+  if(id == BSWAY_MODE_WIFI_MULTI){
+    id2 = 5;            //tower_stage[5]
+  }else{
+    id2 = id;
+  }
+
+  switch(mode){
+  case BSWAY_DATA_reset:
+    dat->tower_stage[id2] = 0;
+    break;
+  case BSWAY_DATA_inc:
+    if(dat->tower_stage[id2] < 65534){
+      dat->tower_stage[id2] += 1;
+    }
+    break;
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return dat->tower_stage[id2];
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  現在のステージ値をセットする
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_ScoreData_SetStageValue(BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
+{
+  u16 id2;
+
+  //if(id >= BSWAY_MODE_RETRY){
+  if(id == BSWAY_MODE_RETRY){
+    return 0;  //リトライモードではカウントしない
+  }
+
+  //プラチナ追加
+  if(id == BSWAY_MODE_WIFI_MULTI){
+    id2 = 5;            //tower_stage[5]
+  }else{
+    id2 = id;
+  }
+
+  dat->tower_stage[id2] = value;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return dat->tower_stage[id2];
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  デバッグ限定　現在のステージ値をセットする
+ */
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+u16 BSUBWAY_ScoreData_DebugSetStageValue(BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
+{
+  return BSUBWAY_ScoreData_SetStageValue( dat, id, value );
+}
+#endif  //PM_DEBUG
+  
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ フラグエリアセット
+ */
+//--------------------------------------------------------------
+BOOL  BSUBWAY_ScoreData_SetFlags(
+    BSUBWAY_SCOREWORK* dat,u16 id,BSWAY_DATA_SETID mode)
+{
+  u16  i;
+  u16  flag = 1;
+
+  //エラーチェック
+  if( id >= BSWAY_SFLAG_MAX ){
+    GF_ASSERT( (0) && "TowerScoreData_SetFlags IDが不正です！" );
+    return 0;
+  }
+
+  //フラグID生成
+  for(i = 0;i < id;i++){
+    flag <<= 1;
+  }
+  switch(mode){
+  case BSWAY_DATA_reset:
+    flag = (flag^0xFFFF);
+    dat->flags &= flag;
+    break;
+  case BSWAY_DATA_set:
+    dat->flags |= flag;
+    break;
+  case BSWAY_DATA_get:
+    return (BOOL)((dat->flags>>id)&0x0001);
+    
+  }
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ用日付変化ランダムシード保存
+ */
+//--------------------------------------------------------------
+void BSUBWAY_ScoreData_SetDayRndSeed(BSUBWAY_SCOREWORK* dat,u32 rnd_seed)
+{
+  dat->day_rnd_seed = rnd_seed;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ用日付変化ランダムシード取得
+ */
+//--------------------------------------------------------------
+u32 BSUBWAY_ScoreData_GetDayRndSeed(BSUBWAY_SCOREWORK* dat)
+{
+  return dat->day_rnd_seed;
+}
+
+//======================================================================
+//　サブウェイ　プレイヤーメッセージデータアクセス系
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @brief  簡易会話データをセット
+ */
+//--------------------------------------------------------------
+#if 0 //wb
+void BSUBWAY_PlayerMsg_Set(SAVEDATA* sv,BSWAY_PLAYER_MSG_ID id,PMS_DATA* src)
+{
+  FRONTIER_SAVEWORK* data = SaveData_Get(sv,GMDATA_ID_FRONTIER);
+  
+  PMSDAT_Copy(&(data->tower.player_msg.msg[id]),src);
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ *  @brief  簡易会話データを取得
+ */
+//--------------------------------------------------------------
+#if 0 //wb
+PMS_DATA* BSUBWAY_PlayerMsg_Get(SAVEDATA* sv,BSWAY_PLAYER_MSG_ID id)
+{
+  FRONTIER_SAVEWORK* data = SaveData_Get(sv,GMDATA_ID_FRONTIER);
+  
+  return &(data->tower.player_msg.msg[id]);
+}
+#endif
+
+//======================================================================
+//　サブウェイ　Wifiデータアクセス系
+//======================================================================
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ *  @brief  指定したルームデータの取得フラグを立てる
+ *
+ *  @param  rank  1オリジンなので注意
+ *  @param  roomno  1オリジンなので注意
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_SetRoomDataFlag(BSUBWAY_WIFI_DATA* dat,
+    u8 rank,u8 roomno,RTCDate *day)
+{
+  u8  idx,ofs;
+  u8  flag = 1;
+  u16  roomid;
+  
+  if(roomno == 0 || roomno > 200){
+    return;
+  }
+  if(rank == 0 || rank > 10){
+    return;
+  }
+  //両方1オリジンなので-1して計算
+  roomid = (rank-1)*200+(roomno-1);
+  
+  idx = roomid/8;
+  ofs = roomid%8;
+  flag <<= ofs;
+
+  dat->flags[idx] |= flag;
+
+  dat->day = RTCDate2GFDate(day);
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  ルームデータ取得フラグをクリアする
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_ClearRoomDataFlag(BSUBWAY_WIFI_DATA* dat)
+{
+  MI_CpuClear8(dat->flags,BSUBWAY_ROOM_DATA_FLAGS_LEN);
+  MI_CpuClear8(&dat->day,sizeof(GF_DATE));
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  日付が変わっているかどうかチェック
+ */
+//--------------------------------------------------------------
+static BOOL check_day(RTCDate* new,RTCDate* old)
+{
+  if(new->year > old->year){
+    return TRUE;
+  }
+  if(new->month > old->month){
+    return TRUE;
+  }
+  if(new->day > old->day){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  指定したルームのDLフラグが立っているかチェック
+ *
+ *  @param  rank  1オリジンなので注意
+ *  @param  roomno  1オリジンなので注意
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_WifiData_CheckRoomDataFlag(BSUBWAY_WIFI_DATA* dat,u8 rank,u8 roomno,RTCDate* day)
+{
+  u8  idx,ofs;
+  u8  flag = 1;
+  u16  roomid;
+  RTCDate old_day;
+  
+  if(roomno > 200 || rank > 10){
+    return FALSE;
+  }
+
+  //最後にDLした日付から、日が変わっているかどうかチェック
+  GFDate2RTCDate(dat->day,&old_day);
+  if(check_day(day,&old_day)){
+    //日が変わっているので、フラグ群をオールクリア
+    BSUBWAY_WifiData_ClearRoomDataFlag(dat);
+    return FALSE;
+  }
+  //両方1オリジンなので-1して計算
+  roomid = (rank-1)*200+(roomno-1);
+  
+  idx = roomid/8;
+  ofs = roomid%8;
+  flag <<= ofs;
+
+  if(dat->flags[idx] & flag){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイヤーデータが存在しているかチェック
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_WifiData_IsPlayerDataEnable(BSUBWAY_WIFI_DATA* dat)
+{
+  return (BOOL)dat->player_data_f;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  リーダーデータがあるかどうかチェック
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_WifiData_IsLeaderDataEnable(BSUBWAY_WIFI_DATA* dat)
+{
+  return (BOOL)dat->leader_data_f;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイヤーデータをセーブ
+ *  
+ *  @param  rank  1オリジンなので注意 
+ *  @param  roomno  1オリジンなので注意
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_SetPlayerData(BSUBWAY_WIFI_DATA* dat,DPW_BT_PLAYER* src,u8 rank,u8 roomno)
+{
+  MI_CpuCopy8(src,dat->player,
+    sizeof(BSUBWAY_WIFI_PLAYER)*BSUBWAY_STOCK_WIFI_PLAYER_MAX);
+  
+  //roomnoとrankを保存
+  dat->player_rank = rank;
+  dat->player_room = roomno;
+  dat->player_data_f = 1;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイヤーデータをクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_ClearPlayerData(BSUBWAY_WIFI_DATA* dat)
+{
+  MI_CpuClear8(dat->player,
+    sizeof(BSUBWAY_WIFI_PLAYER)*BSUBWAY_STOCK_WIFI_PLAYER_MAX);
+  dat->player_data_f = 0;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイヤーデータのRoomID(ランクとroomNo)を取得
+ *
+ *  @param  roomid  BSUBWAY_ROOMID型(b_tower.hで公開)
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_GetPlayerDataRoomID(BSUBWAY_WIFI_DATA* dat,BSUBWAY_ROOMID *roomid)
+{
+  roomid->rank = dat->player_rank;
+  roomid->no = dat->player_room;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  プレイヤーデータをサブウェイ戦闘用に解凍
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_GetBtlPlayerData(BSUBWAY_WIFI_DATA* dat,
+    BSUBWAY_PARTNER_DATA* player,const u8 round)
+{
+  BSUBWAY_TRAINER  *tr;      //トレーナーデータ
+  BSUBWAY_POKEMON  *poke;    //持ちポケモンデータ
+  BSUBWAY_WIFI_PLAYER* src;
+  MSGDATA_MANAGER* pMan;
+
+  tr = &(player->bt_trd);
+  poke = player->btpwd;
+  src = &(dat->player[round]);
+
+  //トレーナーパラメータ取得
+  tr->player_id = BSUBWAY_TRAINER_ID;//src->id_no;  //サブウェイ用IDは固定値
+  tr->tr_type = src->tr_type;
+  //NGネームフラグチェック
+  if(src->ngname_f){
+    pMan = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
+        NARC_msg_btower_app_dat,HEAPID_WORLD);
+
+    MSGMAN_GetStr(pMan,msg_def_player_name01+src->gender,tr->name);
+    MSGMAN_Delete(pMan);
+  }else{
+    MI_CpuCopy8(src->name,tr->name,16);
+  }
+  MI_CpuCopy8(src->appear_word,tr->appear_word,8);
+  MI_CpuCopy8(src->win_word,tr->win_word,8);
+  MI_CpuCopy8(src->lose_word,tr->lose_word,8);
+
+  //ポケモンデータ取得
+  MI_CpuCopy8(src->poke,poke,sizeof(BSUBWAY_POKEMON)*3);
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+/**
+ *  @brief  リーダーデータをセーブ
+ *  
+ *  @param  rank  1オリジンなので注意
+ *  @param  roomno  1オリジンなので注意
+ */
+void BSUBWAY_WifiData_SetLeaderData(BSUBWAY_WIFI_DATA* dat,DPW_BT_LEADER* src,u8 rank,u8 roomno)
+{
+  MI_CpuCopy8(src,&dat->leader,
+    sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+  
+  //roomnoとrankを保存
+  dat->leader_rank = rank;
+  dat->leader_room = roomno;
+  dat->leader_data_f = 1;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  リーダーデータをクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_ClearLeaderData(BSUBWAY_WIFI_DATA* dat)
+{
+  MI_CpuClear8(&dat->leader,
+    sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+  dat->leader_data_f = 0;
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  リーダーデータのRoomID(ランクとroomNo)を取得
+ *
+ *  @param  roomid  BSUBWAY_ROOMID型(b_tower.hで公開)
+ */
+//--------------------------------------------------------------
+void BSUBWAY_WifiData_GetLeaderDataRoomID(BSUBWAY_WIFI_DATA* dat,BSUBWAY_ROOMID *roomid)
+{
+  roomid->rank = dat->leader_rank;
+  roomid->no = dat->leader_room;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  リーダーデータをAllocしたメモリにコピーして取得する
+ *
+ *  ＊内部でAllocしたメモリ領域を返すので、呼び出し側が明示的に解放すること！
+ */
+//--------------------------------------------------------------
+BSUBWAY_LEADER_DATA* BSUBWAY_WifiData_GetLeaderDataAlloc(BSUBWAY_WIFI_DATA* dat,int heapID) 
+{
+  BSUBWAY_LEADER_DATA* bp;
+
+  bp = sys_AllocMemory(heapID,sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+  MI_CpuCopy8(dat->leader,bp,sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+
+  return bp;
+}
+#endif
+
+//======================================================================
+//  サブウェイ　セーブデータブロック関連
+//======================================================================
+#if 0 //wb
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　プレイデータへのポインタを取得
+ */
+//--------------------------------------------------------------
+BSUBWAY_PLAYWORK* SaveData_GetTowerPlayData(SAVEDATA* sv)
+{
+  FRONTIER_SAVEWORK* data = SaveData_Get(sv,GMDATA_ID_FRONTIER);
+  
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_CheckCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return &data->play_tower;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ　スコアデータへのポインタを取得
+ */
+//--------------------------------------------------------------
+BSUBWAY_SCOREWORK* SaveData_GetTowerScoreData(SAVEDATA* sv)
+{
+  FRONTIER_SAVEWORK* data = SaveData_Get(sv,GMDATA_ID_FRONTIER);
+  
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_CheckCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return &data->tower.score;
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  サブウェイ Wifiデータへのポインタを取得  
+ */
+//--------------------------------------------------------------
+BSUBWAY_WIFI_DATA*  SaveData_GetTowerWifiData(SAVEDATA* sv)
+{
+  FRONTIER_SAVEWORK* data = SaveData_Get(sv,GMDATA_ID_FRONTIER);
+  
+#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_CheckCrc(GMDATA_ID_FRONTIER);
+#endif //CRC_LOADCHECK
+  return &data->tower.wifi;
+}
+#endif
