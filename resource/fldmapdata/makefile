@@ -13,6 +13,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					camera_data \
 					gimmick \
 					map_matrix \
+					map_replace \
 					build_model \
 					mm_list \
 					eventdata/groupdata \
