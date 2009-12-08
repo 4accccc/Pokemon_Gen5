@@ -64,6 +64,7 @@ $(TARGET_NARC) $(TARGET_HEADER):	$(SRC_XLS) $(DEPENDFILES)
 	$(CSV_RUBY) -comma -n 0 $(SRC_XLS) > $(SRC_TXT)
 	ruby map_replace.rb $(SRC_TXT) $(TARGET_BINARY) $(TARGET_HEADER)
 	nnsarc -i -c -n -l $(TARGET_NARC) *.bin
+	@$(NAIXCUT) $(TARGET_NAIX)
 
 endif	#CONVERTUSER
 

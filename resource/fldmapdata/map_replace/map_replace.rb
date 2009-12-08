@@ -37,7 +37,7 @@ class FileReadError < Exception; end
 class Dict
   @@matrix_syms = HeaderData.new("../map_matrix/map_matrix.naix")
   @@landdata_syms = HeaderData.new("../land_data/map_land_data.naix")
-  @@prog_syms = HeaderData.new("map_replace_def.h")
+  @@prog_syms = HeaderData.new("../../../prog/src/field/map_replace_def.h")
 
   @@types = {
     "‹Gß" => "MAPREPLACE_ID_SEASON",
