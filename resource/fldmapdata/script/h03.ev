@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_h03.h"
-  //.include  "h03.h"
+  .include  "h03.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h03
+_EVENT_DATA    ev_pos_h03_sage2_01
+_EVENT_DATA    ev_pos_h03_sage2_02
 _EVENT_DATA_END
 
 
@@ -32,7 +33,89 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_h03:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START    ev_pos_h03_sage2_01
+	
+	//七賢人がやってくる
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
+	_OBJ_ANIME_WAIT()
+
+	//七賢人が喋る
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_01, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//七賢人が去っていく
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_saru_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_POS_CHANGE( H03_SAGE2_01, 15, 0, 58, DIR_DOWN )
+
+	//===========フラグワーク操作===========//
+	
+	//h03のPOSイベント1を無効に
+	$LOCALWORK15 = 1
+	
+	//======================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage2_kuru_01
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage2_saru_01
+	_ANIME_DATA AC_WALK_U_8F,30
+	_ANIME_DATA AC_WALK_U_4F,10
+	_ANIME_DATA AC_WALK_U_2F,10
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START    ev_pos_h03_sage2_02
+	
+	//七賢人がやってくる
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
+	_OBJ_ANIME_WAIT()
+
+	//七賢人が喋る
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】画面暗転後の処理が未実装
+	//画面暗転・プラズマ団OB削除
+	_BLACK_OUT()
+	
+//	_OBJ_DEL(C05_HAKAI_01)
+//	_OBJ_DEL(C05_HAKAI_02)
+//	_OBJ_DEL(C05_SAGE_01)
+//	_OBJ_DEL(C05_SAGE_02)
+//	_OBJ_DEL(C05_HAKAI_01)
+//	_OBJ_DEL(C05_HAKAI_02)
+	_OBJ_DEL(H03_SAGE2_01)
+
+//	_FLAG_SET(FV_H03_SAGE2_01)
+	
+	_BLACK_IN()
+
+	//===========フラグワーク操作===========//
+	
+	//h03のPOSイベント1を無効に
+	$LOCALWORK15 = 2
+	
+	//======================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage2_saru_02
+	_ANIME_DATA AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
 

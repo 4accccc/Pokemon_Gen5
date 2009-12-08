@@ -34,5 +34,6 @@
 #ifndef ZONE_H03_EVC_H
 #define ZONE_H03_EVC_H
 
+#define H03_SAGE2_01                       0
 
 #endif //ZONE_H03_EVC_H
