@@ -83,6 +83,8 @@ FMMDL_RESLIST_NCGIMD = \
 	leader8b.imd \
 	corn.imd \
 	ninja.imd \
+	espm.imd \
+	espw.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
