@@ -1,0 +1,10 @@
+EFFSEQ
+$0001
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_156.spa
+#001
+%00
+パーティクルデータロード	w_156
+パーティクル再生（正射影）	w_156	W_156_156_ZZZ	攻撃側	0:2:0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
