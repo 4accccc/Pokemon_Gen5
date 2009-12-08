@@ -583,15 +583,15 @@
   NO_CMD()
   NO_CMD()
  
-  //Wi-Fiクラブ関連
+  //Wi-Fiクラブ/Wi-Fi受付関連
   DEF_CMD( EvCmdWifiCheckMyGSID ,EV_SEQ_WIFI_CHECK_MY_GSID )
   DEF_CMD( EvCmdWifiGetFriendNum, EV_SEQ_WIFI_GET_FRIEND_NUM )
   DEF_CMD( EvCmdWifiClubEventCall, EV_SEQ_WIFI_CLUB_EVENT_CALL )
-  NO_CMD()
+  DEF_CMD( EvCmdWifiGTSEventCall,  EV_SEQ_WIFI_GTS_EVENT_CALL )
   
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdWifiGeoNetCall, EV_SEQ_WIFI_GEONET_PROC_CALL )
+  DEF_CMD( EvCmdWifiRandomMatchEventCall, EV_SEQ_WIFI_RANDOM_MATCH_EVENT_CALL )
+  DEF_CMD( EvCmdWifiBattleRecorderEventCall, EV_SEQ_WIFI_BATTLE_RECORDER_EVENT_CALL )
   NO_CMD()
 
   //ミュージカル関連

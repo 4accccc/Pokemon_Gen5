@@ -10,7 +10,7 @@
 #define SEQ_COUNTER_EXP       (1)
 #define SEQ_RANDOM_MATCH      (2)
 #define SEQ_GLOBAL_TERMINAL   (3)
-#define SEQ_GEO_NET           (10)
+#define SEQ_GEO_NET           (4)
 #define SEQ_GOODBYE           (10)
 #define SEQ_RETRY             (11)
 #define SEQ_EXIT              (12)

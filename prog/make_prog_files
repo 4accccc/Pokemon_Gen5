@@ -81,7 +81,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_event.c \
         gamesystem/game_data.c \
         gamesystem/msgspeed.c \
-	gamesystem/btl_setup.c \
+        gamesystem/btl_setup.c \
         map/dp3format.c \
         field/zonedata.c \
         field/areadata.c \
@@ -177,6 +177,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_pokemon.c \
         field/scrcmd_player.c \
         field/scrcmd_proc.c \
+        field/scrcmd_wifi_st.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \

@@ -25,9 +25,9 @@ _EVENT_DATA    ev_wifi_counter
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
+DEFINE_LOCAL  ret_param
 
 { //WIFI_COUNTER
-DEFINE_LOCAL  lwk_return 
 
 //==============================================================
 /// 
@@ -124,8 +124,6 @@ _RET
 sub_wifi_counter_main_menu:
 {
   DEFINE_LOCAL  i_ret
-
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01)
 
   //分岐・ランダムマッチ/GTS/ジオネット/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
@@ -393,6 +391,8 @@ sub_gterminal_gts:
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
 
+  _SYSWIN_MSG_DOWN( msg_gterminal_gts_01 )
+
   $i_seq = SEQ_SUB_GTERMINAL_GTS_MENU
   $i_loop = TRUE
 
@@ -454,10 +454,12 @@ sub_gterminal_gts_exp:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_loop
 
+  _SYSWIN_MSG_DOWN( msg_gterminal_gts_exp )
+
   $i_loop = TRUE
   WHILE $i_loop == TRUE
 
-    //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
+    //分岐・預ける/探す/わかった
 	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_gterminal_gts_exp_win01, 0 )   //預ける
@@ -500,7 +502,34 @@ _RET
 //--------------------------------------------------------------
 sub_gterminal_btl_video:
 {
-  
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  _SYSWIN_MSG_DOWN( msg_gterminal_btlvideo_01 )
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    //分岐・バトルビデオを見る/説明を聞く/やめる
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_gterminal_btlvideo_win01, 0 )   //みる
+	  _BMPMENU_MAKE_LIST( msg_gterminal_btlvideo_win02, 1 )   //説明を聞く
+	  _BMPMENU_MAKE_LIST( msg_gterminal_btlvideo_win03, 2 )   //戻る
+		
+	  //メニュー表示
+  	_BMPMENU_START()
+
+    IF $i_ret == 0 THEN
+    ELSIF $i_ret == 1 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_btlvideo_exp )  //説明
+    ELSE
+      $i_loop = FALSE
+    ENDIF
+  ENDWHILE
+
+  //Wi-Fiコネクションをご利用ですか？
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
   $reg_return = SEQ_SUB_GTERMINAL_MENU
 }
 _RET
@@ -510,6 +539,34 @@ _RET
 //--------------------------------------------------------------
 sub_gterminal_musical:
 {
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  _SYSWIN_MSG_DOWN( msg_gterminal_musical_01 )
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    //分岐・ミュージカルショットを見る/説明を聞く/やめる
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_gterminal_musical_win01, 0 )   //みる
+	  _BMPMENU_MAKE_LIST( msg_gterminal_musical_win02, 1 )   //説明を聞く
+	  _BMPMENU_MAKE_LIST( msg_gterminal_musical_win03, 2 )   //戻る
+		
+	  //メニュー表示
+  	_BMPMENU_START()
+
+    IF $i_ret == 0 THEN
+    ELSIF $i_ret == 1 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_musical_exp )  //説明
+    ELSE
+      $i_loop = FALSE
+    ENDIF
+  ENDWHILE
+
+  //Wi-Fiコネクションをご利用ですか？
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
   $reg_return = SEQ_SUB_GTERMINAL_MENU
 }
 _RET

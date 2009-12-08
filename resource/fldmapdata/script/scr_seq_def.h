@@ -2766,11 +2766,26 @@
  */
 //--------------------------------------------------------------
 #define _BMPMENU_MAKE_LIST( msg_id, param ) \
-    _ASM_BMPMENU_MAKE_LIST msg_id, param
+    _ASM_BMPMENU_MAKE_LIST msg_id, 0, param
 
-  .macro  _ASM_BMPMENU_MAKE_LIST msg_id,param
+//--------------------------------------------------------------
+/**
+ *  _BMPMENU_MAKE_LIST BMPメニュー　リスト作成拡張版
+ *  @param msg_id メッセージID
+ *  @param ex_msg_id  各項目の説明メッセージID
+ *  @param param メッセージが選択された際に結果として返す値
+ *
+ *  ex_msgを各項目選択時にウィンドウに描画します
+ *  09.12.08現在 SYSWIN限定
+ */
+//--------------------------------------------------------------
+#define _BMPMENU_MAKE_LIST_EX( msg_id, ex_msg_id, param ) \
+    _ASM_BMPMENU_MAKE_LIST msg_id, ex_msg_id, param
+
+  .macro  _ASM_BMPMENU_MAKE_LIST msg_id,ex_msg_id,param
   .short  EV_SEQ_BMPMENU_MAKE_LIST
   .short  \msg_id
+  .short  \ex_msg_id 
   .short  \param
   .endm
 
@@ -5162,6 +5177,51 @@
 
   .macro  _ASM_WIFI_CLUB_EVENT_CALL
   .short  EV_SEQ_WIFI_CLUB_EVENT_CALL
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fi GTSネゴシエーションイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_GTS_EVENT_CALL( ) _ASM_WIFI_GTS_EVENT_CALL
+
+  .macro  _ASM_WIFI_GTS_EVENT_CALL
+  .short  EV_SEQ_WIFI_GTS_EVENT_CALL
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fi GeoNetイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_GEO_NET_CALL( ) _ASM_WIFI_GEO_NET_CALL
+
+  .macro  _ASM_WIFI_GEO_NET_CALL
+  .short  EV_SEQ_WIFI_GEO_NET_CALL
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fi ランダムマッチイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_RANDOM_MATCH_EVENT_CALL( ) _ASM_WIFI_RANDOM_MATCH_EVENT_CALL
+
+  .macro  _ASM_WIFI_RANDOM_MATCH_EVENT_CALL
+  .short  EV_SEQ_WIFI_RANDOM_MATCH_EVENT_CALL
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fi バトルレコーダーイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_BATTLE_RECORDER_EVENT_CALL( mode ) _ASM_WIFI_BATTLE_RECORDER_EVENT_CALL mode
+
+  .macro  _ASM_WIFI_BATTLE_RECORDER_EVENT_CALL
+  .short  EV_SEQ_WIFI_BATTLE_RECORDER_EVENT_CALL
+  .byte   \mode
   .endm
 
 //======================================================================

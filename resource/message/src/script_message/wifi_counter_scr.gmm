@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-07T20:15:26"/>
+	<create user="iwasawa" host="W00157" date="2009-12-07T21:55:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1659" top="172" right="2347" bottom="952" maximized="no" rayout="Vertical2">
+	<dialog left="342" top="154" right="1030" bottom="934" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -651,6 +651,84 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">わかった</language>
 		<language name="JPN_KANJI" width="256">わかった</language>
+	</row>
+
+	<row id="msg_gterminal_btlvideo_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>BtlVideo</comment>
+		<attribute name="キャラ指定">BtlVideo</attribute>
+		<language name="JPN" width="256">バトルビデオを　みますか？</language>
+		<language name="JPN_KANJI" width="256">バトルビデオを　みますか？</language>
+	</row>
+
+	<row id="msg_gterminal_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>BtlVideo</comment>
+		<attribute name="キャラ指定">BtlVideo</attribute>
+		<language name="JPN" width="256">バトルビデオは・・・
+・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+バトルビデオを　みますか？</language>
+		<language name="JPN_KANJI" width="256">バトルビデオは・・・
+・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+バトルビデオを　みますか？</language>
+	</row>
+
+	<row id="msg_gterminal_btlvideo_win01" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>BtlVideoメニュー</comment>
+		<attribute name="キャラ指定">BtlVideo</attribute>
+		<language name="JPN" width="256">みる</language>
+		<language name="JPN_KANJI" width="256">みる</language>
+	</row>
+
+	<row id="msg_gterminal_btlvideo_win02" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>BtlVideoメニュー</comment>
+		<attribute name="キャラ指定">BtlVideo</attribute>
+		<language name="JPN" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+	</row>
+
+	<row id="msg_gterminal_btlvideo_win03" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>BtlVideoメニュー</comment>
+		<attribute name="キャラ指定">BtlVideo</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="msg_gterminal_musical_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>Musical</comment>
+		<attribute name="キャラ指定">Musical</attribute>
+		<language name="JPN" width="256">ミュージカルショットを　みますか？</language>
+		<language name="JPN_KANJI" width="256">ミュージカルショットを　みますか？</language>
+	</row>
+
+	<row id="msg_gterminal_musical_exp" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>Musical</comment>
+		<attribute name="キャラ指定">Musical</attribute>
+		<language name="JPN" width="256">ミュージカルショットは・・・・・
+・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+ミュージカルショットを　みますか？</language>
+		<language name="JPN_KANJI" width="256">ミュージカルショットは・・・・・
+・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+ミュージカルショットを　みますか？</language>
+	</row>
+
+	<row id="msg_gterminal_musical_win01" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>Musicalメニュー</comment>
+		<attribute name="キャラ指定">Musical</attribute>
+		<language name="JPN" width="256">みる</language>
+		<language name="JPN_KANJI" width="256">みる</language>
+	</row>
+
+	<row id="msg_gterminal_musical_win02" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>Musicalメニュー</comment>
+		<attribute name="キャラ指定">Musical</attribute>
+		<language name="JPN" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+	</row>
+
+	<row id="msg_gterminal_musical_win03" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>Musicalメニュー</comment>
+		<attribute name="キャラ指定">Musical</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
 	<flowchart-group-list>
