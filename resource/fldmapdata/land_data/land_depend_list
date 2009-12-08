@@ -495,7 +495,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun0804_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0804_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0804_01_01.3dppack \
-	$(DIR_OUTPUT)/m_dun0805_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0805_00_00.ngpack \
 	$(DIR_OUTPUT)/m_dun0805_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0805_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0805_01_01.3dppack \
