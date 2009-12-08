@@ -44,7 +44,7 @@ static SAVE_CONTROL_WORK *SaveControlWork = NULL;
  * @brief	セーブデータ構造の初期化
  */
 //---------------------------------------------------------------------------
-SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
+SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 {
 	SAVE_CONTROL_WORK *ctrl;
 	LOAD_RESULT load_ret;
@@ -360,7 +360,7 @@ void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *t
  * 使用が終わったら必ずSaveControl_Extra_Unloadで解放してください(ロード出来なかったとしても)
  */
 //==================================================================
-LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id)
+LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id)
 {
 	LOAD_RESULT load_ret;
 
@@ -420,17 +420,44 @@ BOOL SaveControl_Extra_CheckLoad(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id
  * 使用が終わったら必ずSaveControl_Extra_UnloadWorkで解放してください(ロード出来なかったとしても)
  */
 //==================================================================
-LOAD_RESULT SaveControl_Extra_LoadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id, void *work, u32 work_size)
+LOAD_RESULT SaveControl_Extra_LoadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id, void *work, u32 work_size)
 {
 	LOAD_RESULT load_ret;
 
   GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
   ctrl->sv_extra[extra_id] 
-    = GFL_SAVEDATA_CreateEx(&SaveParam_ExtraTbl[extra_id], heap_id, work, work_size );
+    = GFL_SAVEDATA_CreateEx(&SaveParam_ExtraTbl[extra_id], heap_id, work, work_size, TRUE );
 	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
 	
 	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
 	return load_ret;
+}
+
+//==================================================================
+/**
+ * 外部セーブデータのシステムのみを作成(セーブワークは外側から渡す)
+ *    workで渡されているワークの内容がそのままロードしたデータとして認識し、
+ *    フラッシュからデータはロードしない
+ *    　※フラッシュからロードしたい場合はこの関数ではなく、SaveControl_Extra_LoadWorkを
+ *        使用してください。
+ *    外部セーブで、セーブ直前にセーブシステムを作成する場合の使用を想定しています。
+ *
+ * @param   ctrl		    セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @param   heap_id		  セーブシステムで使用するヒープID
+ * @param   work        ロードしたデータをこのワークに展開
+ * @param   work_size   workのサイズ
+ * 
+ * 使用が終わったら必ずSaveControl_Extra_UnloadWorkで解放してください
+ */
+//==================================================================
+void SaveControl_Extra_SystemSetup(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id, void *work, u32 work_size)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
+  ctrl->sv_extra[extra_id] 
+    = GFL_SAVEDATA_CreateEx(&SaveParam_ExtraTbl[extra_id], heap_id, work, work_size, FALSE );
+	
+	OS_TPrintf("外部セーブロード無しセットアップ extra_id = %d\n", extra_id);
 }
 
 //==================================================================

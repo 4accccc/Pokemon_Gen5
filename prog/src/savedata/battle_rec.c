@@ -294,7 +294,7 @@ SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work
 #endif
 
     //セーブ対象の外部セーブ領域のセーブシステムを作成(セーブワークの実体はbrsを渡す)
-    SaveControl_Extra_LoadWork(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
+    SaveControl_Extra_SystemSetup(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
 
     SaveControl_Extra_SaveAsyncInit(sv, SAVE_EXTRA_ID_REC_MINE + num);
     do{

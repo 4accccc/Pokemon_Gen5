@@ -10,6 +10,7 @@
 #define __SAVE_CONTROL_H__
 
 #include <backup_system.h>
+#include "system/main.h"
 
 
 //==============================================================================
@@ -61,7 +62,7 @@ typedef u32 EX_CERTIFY_SAVE_KEY;
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id);
+extern SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id);
 extern SAVE_CONTROL_WORK * SaveControl_GetPointer(void);
 extern LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl);
@@ -80,11 +81,13 @@ extern void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size,
 //  外部セーブ関連
 //--------------------------------------------------------------
 extern LOAD_RESULT SaveControl_Extra_Load(
-  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id);
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id);
 extern void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern BOOL SaveControl_Extra_CheckLoad(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern LOAD_RESULT SaveControl_Extra_LoadWork(
-  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id, void *work, u32 work_size);
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id, void *work, u32 work_size);
+extern void SaveControl_Extra_SystemSetup(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, 
+  HEAPID heap_id, void *work, u32 work_size);
 extern void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern SAVE_RESULT SaveControl_Extra_SaveAsyncMain(
