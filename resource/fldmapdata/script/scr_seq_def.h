@@ -5070,14 +5070,18 @@
 
 //--------------------------------------------------------------
 /**
- *  ボックスプロセスを呼び出す
+ *  @brief ボックスプロセスを呼び出す
+ *  @param mode ボックス呼び出しモード( BOX_MODE_xxxx )
+ *
+ *  ※呼び出しモード prog/include/app/box_mode.h
  */
 //--------------------------------------------------------------
-#define _CALL_BOX_PROC() \
-    _ASM_CALL_BOX_PROC 
+#define _CALL_BOX_PROC( mode ) \
+    _ASM_CALL_BOX_PROC mode
 
-  .macro  _ASM_CALL_BOX_PROC 
+  .macro  _ASM_CALL_BOX_PROC mode
   .short  EV_SEQ_CALL_BOX_PROC
+  .short  \mode
   .endm
 
 //======================================================================

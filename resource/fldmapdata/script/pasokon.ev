@@ -74,6 +74,34 @@ EVENT_END
 /**************************************************************/
 pc_box:
 {
+  DEFINE_LOCAL exit
+  DEFINE_LOCAL select_pos
+
+  // ローカル変数の初期化
+  $exit = FALSE
+
+  //「ポケモンの あずかりシステムを …」
+  _PLAINWIN_MSG_DOWN( msg_pc_box_01 )
+
+  WHILE $exit == FALSE 
+    // 選択ウィンドウ表示
+    _BMPMENU_INIT_EX( 0, 0, 0, TRUE, select_pos )
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_01, msg_pc_box_window_01 )  // あずける
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_02, msg_pc_box_window_02 )  // つれていく
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_03, msg_pc_box_window_03 )  // せいりする
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_04, msg_pc_box_window_04 )  // もちもの
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_05, msg_pc_box_window_05 )  // さようなら
+    _BMPMENU_START()
+
+    // ボックス画面の呼び出し
+    SWITCH $select_pos
+    CASE msg_pc_box_window_01 THEN _CALL_BOX_PROC( BOX_MODE_AZUKERU )
+    CASE msg_pc_box_window_02 THEN _CALL_BOX_PROC( BOX_MODE_TURETEIKU )
+    CASE msg_pc_box_window_03 THEN _CALL_BOX_PROC( BOX_MODE_SEIRI )
+    CASE msg_pc_box_window_04 THEN _CALL_BOX_PROC( BOX_MODE_ITEM )
+    CASE msg_pc_box_window_05 THEN $exit = TRUE 
+    ENDSWITCH 
+  ENDWHILE
 }
 _RET
 

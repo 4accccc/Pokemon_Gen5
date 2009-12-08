@@ -67,15 +67,16 @@ static void callback_BoxProc( void* work )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRCMD_WORK*              work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*               scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*             gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*                gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK*          sv = GAMEDATA_GetSaveControlWork( gdata );
+  FIELDMAP_WORK*        fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16                   box_mode = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数
   BOX2_GFL_PROC_PARAM* box_param = NULL;
-  BOX_CALLBACK_WORK* cw = NULL;
-  GMEVENT* event = NULL;
+  BOX_CALLBACK_WORK*          cw = NULL;
+  GMEVENT*                 event = NULL;
   
   // ボックスのプロセスパラメータを作成
   box_param            = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX2_GFL_PROC_PARAM) );
@@ -86,7 +87,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   box_param->mystatus  = GAMEDATA_GetMyStatus( gdata );
   box_param->cfg       = SaveData_GetConfig( sv );
   box_param->zknMode   = 0;
-  box_param->callMode  = BOX_MODE_SEIRI;
+  box_param->callMode  = box_mode;
 
   // コールバックのパラメータを作成
   cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX_CALLBACK_WORK) );
