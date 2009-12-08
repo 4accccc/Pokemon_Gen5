@@ -60,6 +60,7 @@
   ARCID_POKEICON    "poke_icon.narc"        #ポケモンアイコン
   ARCID_FLDMAP_LANDDATA "fieldmap/map_land_data.narc" #フィールドマップ地形データ
   ARCID_FLDMAP_MAPMATRIX "fieldmap/map_matrix.narc" #フィールドマップマトリクス
+  ARCID_FLDMAP_REPLACE  "fieldmap/map_replace.narc" #マップ置き換えデータ
   ARCID_BATTGRA   "battle/battgra_wb.narc"  #
   ARCID_ZONEDATA    "fieldmap/zonedata.narc"    #ゾーン毎データ
   ARCID_BMODEL_OUTDOOR  "fieldmap/buildmodel_outdoor.narc"  #配置モデルデータ（屋外）
