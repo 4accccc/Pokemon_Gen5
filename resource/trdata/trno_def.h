@@ -3,7 +3,7 @@
  * @file	trno_def.h
  * @bfief	トレーナーID定義ファイル
  * @author	TrainerDataConverter
- * @date	2009-12-02
+ * @date	2009-12-08
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -223,6 +223,57 @@
 #define	TRID_PRINCESS_04   ( 209 ) 
 #define	TRID_MADAM_01   ( 210 ) 
 #define	TRID_GENTLE_01   ( 211 ) 
+#define	TRID_BATTLEG_04   ( 212 ) 
+#define	TRID_BATTLEG_05   ( 213 ) 
+#define	TRID_BATTLEG_06   ( 214 ) 
+#define	TRID_KARATE_04   ( 215 ) 
+#define	TRID_KARATE_05   ( 216 ) 
+#define	TRID_KARATE_06   ( 217 ) 
+#define	TRID_BOSS_04   ( 218 ) 
+#define	TRID_BOSS_05   ( 219 ) 
+#define	TRID_BOSS_06   ( 220 ) 
+#define	TRID_HAKAIM1_05   ( 221 ) 
+#define	TRID_HAKAIM1_06   ( 222 ) 
+#define	TRID_HAKAIM1_07   ( 223 ) 
+#define	TRID_HAKAIM1_08   ( 224 ) 
+#define	TRID_HAKAIW1_01   ( 225 ) 
+#define	TRID_HAKAIW1_02   ( 226 ) 
+#define	TRID_HAKAIW1_03   ( 227 ) 
+#define	TRID_BIGFOUR1_01   ( 228 ) 
+#define	TRID_BIGFOUR2_01   ( 229 ) 
+#define	TRID_BIGFOUR3_01   ( 230 ) 
+#define	TRID_BIGFOUR4_01   ( 231 ) 
+#define	TRID_SAGE1_01   ( 232 ) 
+#define	TRID_ESPM_04   ( 233 ) 
+#define	TRID_ESPM_05   ( 234 ) 
+#define	TRID_ESPW_04   ( 235 ) 
+#define	TRID_BACKPACKERM_05   ( 236 ) 
+#define	TRID_BACKPACKERM_06   ( 237 ) 
+#define	TRID_BACKPACKERW_05   ( 238 ) 
+#define	TRID_BACKPACKERW_06   ( 239 ) 
+#define	TRID_SCIENTISTM_05   ( 240 ) 
+#define	TRID_WORKER2_15   ( 241 ) 
+#define	TRID_MOUNT_04   ( 242 ) 
+#define	TRID_MOUNT_05   ( 243 ) 
+#define	TRID_ELITEW_06   ( 244 ) 
+#define	TRID_ELITEW_07   ( 245 ) 
+#define	TRID_ELITEM_06   ( 246 ) 
+#define	TRID_ELITEM_07   ( 247 ) 
+#define	TRID_KARATE_07   ( 248 ) 
+#define	TRID_DOCTOR_03   ( 249 ) 
+#define	TRID_VETERANM_02   ( 250 ) 
+#define	TRID_VETERANW_02   ( 251 ) 
+#define	TRID_KARATE_08   ( 252 ) 
+#define	TRID_BATTLEG_07   ( 253 ) 
+#define	TRID_BATTLEG_08   ( 254 ) 
+#define	TRID_MOUNT_06   ( 255 ) 
+#define	TRID_MOUNT_07   ( 256 ) 
+#define	TRID_SCIENTISTM_06   ( 257 ) 
+#define	TRID_SCIENTISTW_04   ( 258 ) 
+#define	TRID_VETERANM_03   ( 259 ) 
+#define	TRID_VETERANW_03   ( 260 ) 
+#define	TRID_ELITEW_08   ( 261 ) 
+#define	TRID_ELITEM_08   ( 262 ) 
 
 #ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
 typedef  int TrainerID;

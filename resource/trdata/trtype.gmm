@@ -649,6 +649,30 @@
 		<language name="JPN" width="216">ジェントルマン</language>
 	</row>
 
+	<row id="MSG_TRTYPE_HAKAIW1">
+		<language name="JPN" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BIGFOUR1">
+		<language name="JPN" width="216">してんのう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BIGFOUR2">
+		<language name="JPN" width="216">してんのう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BIGFOUR3">
+		<language name="JPN" width="216">してんのう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BIGFOUR4">
+		<language name="JPN" width="216">してんのう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SAGE1">
+		<language name="JPN" width="216">プラズマだん</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

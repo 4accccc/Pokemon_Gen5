@@ -3,7 +3,6 @@
  * @file	monsno_def.h
  * @bfief	ポケモンNoのDefine定義ファイル
  * @author	PersonalConverter
- * @date	2009-11-30
  * パーソナルコンバータから生成されました
 */
 //============================================================================================
@@ -503,7 +502,7 @@
 #define		MONSNO_DAAKURAI			( 491 )
 #define		MONSNO_SHEIMI				( 492 )
 #define		MONSNO_ARUSEUSU			( 493 )
-#define		MONSNO_PINBOO				( 494 )
+#define		MONSNO_MAMANBOU			( 494 )
 #define		MONSNO_MOGURYUU			( 495 )
 #define		MONSNO_GORIDARUMA		( 496 )
 #define		MONSNO_MEGUROKO			( 497 )
@@ -514,13 +513,13 @@
 #define		MONSNO_ONOKKUSU			( 502 )
 #define		MONSNO_DESUMASU			( 503 )
 #define		MONSNO_BANBIINA			( 504 )
-#define		MONSNO_GIAADO				( 505 )
+#define		MONSNO_GIGIARU			( 505 )
 #define		MONSNO_PURUNSU			( 506 )
 #define		MONSNO_MAMEPATO			( 507 )
 #define		MONSNO_SIMAMA				( 508 )
 #define		MONSNO_MUSYAANA			( 509 )
 #define		MONSNO_TYURINE			( 510 )
-#define		MONSNO_GIAN					( 511 )
+#define		MONSNO_GIARU				( 511 )
 #define		MONSNO_DOREDHIA			( 512 )
 #define		MONSNO_KOROMORI			( 513 )
 #define		MONSNO_MONMEN				( 514 )
@@ -552,11 +551,11 @@
 #define		MONSNO_SIKIZIKA			( 540 )
 #define		MONSNO_PURUKINGU		( 541 )
 #define		MONSNO_ZEBURAIKA		( 542 )
-#define		MONSNO_GIANTOSU			( 543 )
+#define		MONSNO_GIGIGIARU		( 543 )
 #define		MONSNO_NORANYAA			( 544 )
-#define		MONSNO_WANRAN				( 545 )
-#define		MONSNO_TUURAN				( 546 )
-#define		MONSNO_SURIIRAN			( 547 )
+#define		MONSNO_YUNIRAN			( 545 )
+#define		MONSNO_DABURAN			( 546 )
+#define		MONSNO_RANKURUSU		( 547 )
 #define		MONSNO_KUSAHEBI			( 548 )
 #define		MONSNO_KUSANEEKU		( 549 )
 #define		MONSNO_PURANBURA		( 550 )
@@ -571,7 +570,7 @@
 #define		MONSNO_MUKATTE			( 559 )
 #define		MONSNO_MUKANDE			( 560 )
 #define		MONSNO_MUKADENTE		( 561 )
-#define		MONSNO_DENDANI			( 562 )
+#define		MONSNO_BATYURU			( 562 )
 #define		MONSNO_DENTYURA			( 563 )
 #define		MONSNO_IIGURA				( 564 )
 #define		MONSNO_IIGURAN			( 565 )
@@ -588,8 +587,8 @@
 #define		MONSNO_KABURION			( 576 )
 #define		MONSNO_TANISU				( 577 )
 #define		MONSNO_TANIINO			( 578 )
-#define		MONSNO_SODAIGON			( 579 )
-#define		MONSNO_OOBUTTU			( 580 )
+#define		MONSNO_DASUTODASU		( 579 )
+#define		MONSNO_YABUKURON		( 580 )
 #define		MONSNO_TAMAGO				( 581 )
 #define		MONSNO_DAMETAMAGO		( 582 )
 #define		MONSNO_END					( 580 )
