@@ -358,7 +358,7 @@ static void CheckSeasonChange( MAPCHANGE_WORK* work )
   gmtime = SaveData_GetGameTime( scw );
   RTC_ConvertSecondToDateTime( &date_start, &time_start, gmtime->start_sec );
   // Œ»İ‚Æ‚»‚Ì‹Gß‚ğ‹‚ß‚é
-  RTC_GetDate( &date_now );
+  GFL_RTC_GetDate( &date_now );
   work->next_season = (date_now.month + 12 - date_start.month) % PMSEASON_TOTAL;
   // ÅŒã‚É•\¦‚µ‚½‹Gß‚ğæ“¾
   last_season = FIELD_STATUS_GetSeasonDispLast( fstatus );
