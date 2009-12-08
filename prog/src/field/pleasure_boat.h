@@ -29,3 +29,10 @@ extern BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx);
 //部屋情報セット
 extern void PL_BOAT_SetBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const BOOL inFlg);
 
+//時間取得・セット
+extern int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work);
+extern void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime);
+
+GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *ret_wk);
+
+

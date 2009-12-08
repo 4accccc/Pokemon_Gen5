@@ -16,3 +16,4 @@ extern VMCMD_RESULT EvCmdPlBoat_GetTrNum( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlBoat_AddTime( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlBoat_GetRoomInfo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlBoat_SetRoomInfo( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPlBoat_CallDemo( VMHANDLE *core, void *wk );

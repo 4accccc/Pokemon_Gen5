@@ -86,7 +86,3 @@ VMCMD_RESULT EvCmdPlBoat_GetRoomInfo( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
-
-
-
-

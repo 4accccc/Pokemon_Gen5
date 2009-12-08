@@ -32,6 +32,8 @@
 
 #include "pl_boat_def.h"
 
+#include "demo\demo3d.h"
+
 //--------------------------------------------------------------
 /**
  * 遊覧船モード開始
@@ -171,5 +173,37 @@ VMCMD_RESULT EvCmdPlBoat_SetRoomInfo( VMHANDLE *core, void *wk )
   }
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 甲板デモコール
+ * @param   core          仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlBoat_CallDemo( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  GMEVENT *call_event;
+  
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
+
+  ret = SCRCMD_GetVMWork( core, work );
+
+  call_event = PL_BOAT_CreateDemoEvt(gsys, *ptr, ret);
+  
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+
+  return VMCMD_RESULT_SUSPEND;
 }
 

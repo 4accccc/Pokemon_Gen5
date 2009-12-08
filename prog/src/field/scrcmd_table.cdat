@@ -671,7 +671,7 @@
 
   DEF_CMD( EvCmdPlBoat_GetRoomInfo, EV_SEQ_PL_BOAT_GET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
-  NO_CMD()
+  DEF_CMD( EvCmdPlBoat_CallDemo, EV_SEQ_PL_BOAT_CALL_DEMO )
   NO_CMD()
 
   // •XƒWƒ€

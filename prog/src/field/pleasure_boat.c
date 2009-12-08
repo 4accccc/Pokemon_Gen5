@@ -426,6 +426,31 @@ void PL_BOAT_SetBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const BOOL in
 
 //--------------------------------------------------------------
 /**
+ * @brief　時間取得
+ * @param   work      PL_BOAT_WORK_PTR
+ * @retval  int       経過時間(シンク)
+*/
+//--------------------------------------------------------------
+int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work)
+{
+  return work->Time;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief　時間セット
+ * @param   work      PL_BOAT_WORK_PTR
+ * @param   inTime    経過時間(シンク)
+ * @retval  none
+*/
+//--------------------------------------------------------------
+void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime)
+{
+  work->Time = inTime;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief	イベント取得
  * @param	 work      PL_BOAT_WORK_PTR
  * @retval PL_BOAT_EVT    発生イベントタイプ
