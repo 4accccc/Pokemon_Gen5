@@ -1,3 +1,4 @@
 DATA_LIST = \
     ue_migi.nsbmd \
-    arm_01.nsbmd
+    arm_01.nsbmd \
+    m_gym0802f.nsbmd
