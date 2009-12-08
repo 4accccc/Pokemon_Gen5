@@ -46,6 +46,7 @@ enum
   SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
   SE_BAG_SRIDE        = SEQ_SE_SELECT1, ///< スライドバー
   SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
+  SE_BAG_SORT         = SEQ_SE_SYS_36,    ///< ソート音
 };
 
 

@@ -2072,7 +2072,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
   // çƒï`âÊ
   _windowRewrite( pWork );
 
-  GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+  GFL_SOUND_PlaySE( SE_BAG_SORT );
 }
 
 //-----------------------------------------------------------------------------
