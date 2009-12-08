@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-06T12:08:23"/>
+	<create user="ohno" host="W00141" date="2009-12-07T21:56:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,7 +368,7 @@
 		<comment position="3" width="361"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="1" width="158"/>
+			<message position="1" width="181"/>
 			<font default=" 0:font_talk" position="4" width="100">
 				<list entry="0" file="Q:/msgdata/font/font_talk.nftr"/>
 				<list entry="1" file="Q:/msgdata/font/font_system.nftr"/>
@@ -390,14 +390,14 @@
 		</language>
 	</columns>
 
-	<dialog left="103" top="159" right="993" bottom="772" maximized="no" rayout="Vertical2">
+	<dialog left="103" top="160" right="993" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="453" top="448" right="800" bottom="600" visible="no"/>
 		<tag-palette left="453" top="133" right="800" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="496"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="882"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -446,6 +446,12 @@
 		<comment>世界大会参加用メニューです</comment>
 		<language name="JPN" font=" 1:font_system" width="192">バトル　たいかい</language>
 		<language name="JPN_KANJI">バトル　たいかい</language>
+	</row>
+
+	<row id="START_MENU_STR_ITEM_06">
+		<comment>ポケモンドリームワールド用アカウント作成</comment>
+		<language name="JPN" font=" 1:font_system" width="192">ポケモンドリームワールドせってい</language>
+		<language name="JPN_KANJI">ポケモンドリームワールド設定</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_01_02">

@@ -15,7 +15,6 @@
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
 
-#include "infowin/infowin.h"
 #include "system/main.h"
 #include "system/wipe.h"
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
@@ -703,6 +702,75 @@ static void _modeLoginWait(WIFILOGIN_WORK* pWork)
 
 
 
+static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+      WifiList_Init(pWork->pList);
+      _CHANGE_STATE(pWork,_connectionStart);
+    }
+    else{
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _CHANGE_STATE(pWork,NULL);
+    }
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
+
+
+
+static void _modeDifferDSWait4(WIFILOGIN_WORK* pWork)
+{
+
+  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  _CHANGE_STATE(pWork,_modeDifferDSWait5);
+}
+
+
+static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0007);
+      _CHANGE_STATE(pWork,_modeDifferDSWait4);
+    }
+    else{
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+      _CHANGE_STATE(pWork,NULL);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
+
+
+
+static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
+{
+
+
+  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  _CHANGE_STATE(pWork,_modeDifferDSWait3);
+}
+
+
+static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
+{
+  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){
+    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
+    _CHANGE_STATE(pWork,_modeDifferDSWait2);
+  }
+//  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   最初の接続のプロファイル分岐
@@ -721,7 +789,7 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //別DSの場合
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
-    _CHANGE_STATE(pWork,_modeProfileWait);
+    _CHANGE_STATE(pWork,_modeDifferDSWait);
   }
   else  //普通の接続
   {
@@ -849,7 +917,7 @@ static void _modeReporting(WIFILOGIN_WORK* pWork)
 
 
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->dbw->ctrl);
+    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->pSave);
 
     if(svr == SAVE_RESULT_OK){
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -878,7 +946,7 @@ static void _modeReportWait2(WIFILOGIN_WORK* pWork)
 
 //      WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_007);
 
-      SaveControl_SaveAsyncInit(pWork->dbw->ctrl );
+      SaveControl_SaveAsyncInit(pWork->pSave );
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
@@ -930,17 +998,9 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     pWork->bDreamWorld = pEv->bDreamWorld;
     pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID,pEv->bDreamWorld);
     pWork->pMessageWork = WIFILOGIN_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat);
-    pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
-    pWork->pList = SaveData_GetWifiListData(
-      GAMEDATA_GetSaveControlWork(
-        GAMESYSTEM_GetGameData(
-          ((pEv->gsys))) ));
+    pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
+    pWork->pList = SaveData_GetWifiListData( GAMEDATA_GetSaveControlWork( pEv->gamedata) );
 
-
-		if(!pEv->bDreamWorld){
-			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
-			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
-		}
 
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
@@ -985,9 +1045,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_DISP_Main(pWork->pDispWork);
   WIFILOGIN_MESSAGE_Main(pWork->pMessageWork);
 
-  if(!pEv->bDreamWorld){
-    INFOWIN_Update();
-  }
 
   return retCode;
 }
@@ -1007,9 +1064,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcEnd( GFL_PROC * proc, int * seq, void * pwk
 
   GFL_PROC_FreeWork(proc);
 
-  if(!pEv->bDreamWorld){
-    INFOWIN_Exit();
-  }
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
 
 

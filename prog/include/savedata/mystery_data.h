@@ -23,7 +23,9 @@
 //------------------------------------------------------------------
 ///		贈り物データの個数
 //------------------------------------------------------------------
-#define	GIFT_DATA_MAX		12	//カードなし5件＋カードあり3件で8件分
+#define	GIFT_DATA_MAX		12	//カード12
+
+#define MYSTERYGIFT_NUTSET_MAX 4 //木の実セットの数
 
 //------------------------------------------------------------------
 ///		カード関係のサイズ定義
@@ -31,7 +33,6 @@
 #define GIFT_DATA_CARD_TITLE_MAX	36    //配布タイトル
 
 #define GIFT_DATA_CARD_TEXT_MAX		504   //説明テキスト
-
 
 #define MYSTERYGIFT_POKEICON	3  //ポケモンアイコン
 
@@ -43,7 +44,8 @@
 #define MYSTERYGIFT_TYPE_POKEMON	1	// ポケモン
 #define MYSTERYGIFT_TYPE_ITEM		2	// どうぐ
 #define MYSTERYGIFT_TYPE_RULE		3	// ルール
-#define MYSTERYGIFT_TYPE_MAX	4	// 総数
+#define MYSTERYGIFT_TYPE_NUTSET		4	// 木の実セット
+#define MYSTERYGIFT_TYPE_MAX	5	// 総数
 
 #define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
 
@@ -100,14 +102,26 @@ typedef struct {
 
 // どうぐ
 typedef struct {
-  int itemNo;
-  int movieflag;
+  int itemNo;        ///どうぐ番号
+  int movieflag;    ///映画配信かどうか
 } GIFT_PRESENT_ITEM;
 
 // ルール(レギュレーション)
 typedef struct {
-  REGULATION regu_data;
+  REGULATION regu_data;  ///デジタル選手証
 } GIFT_PRESENT_RULE;
+
+// 木の実セット  PDW用
+typedef struct {
+  int itemNo[MYSTERYGIFT_NUTSET_MAX];
+  int itemMax[MYSTERYGIFT_NUTSET_MAX];
+} GIFT_PRESENT_NUTSET;
+
+// ポケモンエンカウント PDW用
+typedef struct {
+  int pokemon;
+} GIFT_PRESENT_ENCOUNT;
+
 
 // ふしぎなおくりもの強制クリア
 typedef struct {
@@ -119,6 +133,8 @@ typedef union {
   GIFT_PRESENT_POKEMON		pokemon;
   GIFT_PRESENT_ITEM		item;
   GIFT_PRESENT_RULE		rule;
+  GIFT_PRESENT_NUTSET nutset;
+  GIFT_PRESENT_ENCOUNT encount;
   GIFT_PRESENT_REMOVE		remove;
 } GIFT_PRESENT;
 

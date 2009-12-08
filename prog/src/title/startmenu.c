@@ -77,6 +77,7 @@ enum START_MENU_ITEM
   SMI_NEWGAME,    //最初から
   SMI_MYSTERY_GIFT, //不思議な贈り物
   SMI_WIFI_SETTING, //Wifi設定
+  SMI_PDW_ACCOUNT,  //PDWアカウント設定
   SMI_GBS_CONNECT,  //GlobalBattleStation接続
   
   SMI_MAX,
@@ -129,7 +130,7 @@ typedef struct
   u32     anmIdx;
 
   START_MENU_ITEM_WORK itemWork[SMI_MAX];
-  
+
   u16 anmCnt;
   u16 transBuf;
   
@@ -203,6 +204,7 @@ static const START_MENU_ITEM_SETTING ItemSettingData[SMI_MAX] =
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
+  {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
 };
 
 FS_EXTERN_OVERLAY(battle_championship);
@@ -250,7 +252,11 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 }
 
 FS_EXTERN_OVERLAY(mystery);
+FS_EXTERN_OVERLAY(pdw_acc);
+   
 extern const GFL_PROC_DATA MysteryGiftProcData;
+extern const GFL_PROC_DATA PDW_ACC_MainProcData;
+
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
@@ -277,7 +283,11 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
     case SMI_WIFI_SETTING: //WIFI設定
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
         break;
-            
+
+    case SMI_PDW_ACCOUNT: //ポケモンドリームワールド設定
+      GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &PDW_ACC_MainProcData, NULL);
+        break;
+      
     case SMI_GBS_CONNECT: //バトル大会メニュー
       // @todo irc_battleではなく大会メニューへつなぐ
       //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
@@ -661,6 +671,7 @@ static void START_MENU_ITEM_CommonDraw( START_MENU_WORK *work , GFL_BMPWIN *win 
     START_MENU_STR_ITEM_02,
     START_MENU_STR_ITEM_03,
     START_MENU_STR_ITEM_04,
+    START_MENU_STR_ITEM_06,
     START_MENU_STR_ITEM_05,
   };
   

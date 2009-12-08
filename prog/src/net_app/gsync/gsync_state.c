@@ -654,8 +654,8 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   pWork->heapID = HEAPID_GAMESYNC;
 
   if(pParent){
-    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pParent->ctrl)));
-    pWork->pSaveData = pParent->ctrl;
+    pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
+    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
@@ -764,8 +764,15 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 
   NHTTP_RAP_End(pWork->pNHTTPRap);
 
+#if PM_DEBUG
+  if(pwk==NULL){
+    _pWork = NULL;
+    BOX_DAT_ExitManager(pWork->pBox);
+  }
+#endif
+  
   GFL_PROC_FreeWork(proc);
-
+ 
   GFL_HEAP_DeleteHeap(HEAPID_GAMESYNC);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
   return GFL_PROC_RES_FINISH;

@@ -101,7 +101,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
       dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(WIFILOGIN_PARAM));
       p_param = dbw->p_sub_wk;
       p_param->gsys = gsys;
-      p_param->ctrl = dbw->ctrl;
+      p_param->gamedata = GAMESYSTEM_GetGameData(gsys);
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw->p_sub_wk);
     }
     (*seq)++;

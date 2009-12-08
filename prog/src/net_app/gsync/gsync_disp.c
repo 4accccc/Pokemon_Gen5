@@ -244,13 +244,19 @@ void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork)
   _HandRelease(pWork);
 
   for(i=0;i<PLT_RESOURCE_MAX;i++){
-    GFL_CLGRP_PLTT_Release(pWork->cellRes[i] );
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_PLTT_Release(pWork->cellRes[i] );
+    }
   }
-  for(;i<CEL_RESOURCE_MAX;i++){
-    GFL_CLGRP_CGR_Release(pWork->cellRes[i] );
+  for(;i<CHAR_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_CGR_Release(pWork->cellRes[i] );
+    }
   }
   for(;i<ANM_RESOURCE_MAX;i++){
-    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i] );
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i] );
+    }
   }
   
   if(pWork->p_hblank){
@@ -459,6 +465,7 @@ void GSYNC_DISP_ObjChange(GSYNC_DISP_WORK* pWork,int no,int no2)
 void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no)
 {
   GFL_CLACT_WK_Remove( pWork->curIcon[no] );
+  pWork->curIcon[no]=NULL;
 }
 
 

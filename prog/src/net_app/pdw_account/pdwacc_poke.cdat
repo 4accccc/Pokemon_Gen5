@@ -1,0 +1,14 @@
+
+
+
+#define _POKEMON_CELLX ( 128 )  //ポケモン位置
+#define _POKEMON_CELLY ( 128 )  //ポケモン位置
+
+
+#define _SMOKE_FADE_TIME FX32_CONST(0.25)  //煙のフェード係数 大きければ早い
+
+#define _BEDIN_TIME (70)   //ベッドにポケモンがのる ベッドアニメ開始
+#define _HAND_UP_TIME (15)    //布団を落としはじめるまでの時間
+#define _DREAMSMOKE_TIME (60) //布団を落としはじめから上画面に煙が出るまで
+
+
