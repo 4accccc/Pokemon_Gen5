@@ -69,6 +69,9 @@ struct _BTLV_MCSS_WORK
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
   u32             callback_work;
+
+  u16             weight[ BTLV_MCSS_MAX ];
+
   HEAPID          heapID;
 };
 
@@ -288,6 +291,13 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_MakeMAW( pp, &maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->mcss[ position ] = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &maw );
+
+  //ポケモンの体重データを取得しておく
+  { 
+    u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+    u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+    bmw->weight[ position ] = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_weight );
+  }
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
@@ -855,6 +865,20 @@ BOOL  BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position )
 void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy, u8 end_evy, u8 wait, u32 rgb )
 {
   MCSS_SetPaletteFade( bmw->mcss[ position ], start_evy, end_evy, wait, rgb );
+}
+
+//============================================================================================
+/**
+ * @brief 指定された立ち位置のMCSSの体重データを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+u16  BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  return bmw->weight[ position ];
 }
 
 //============================================================================================
