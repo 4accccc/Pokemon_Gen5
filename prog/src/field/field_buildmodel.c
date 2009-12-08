@@ -932,6 +932,20 @@ static BOOL BMINFO_isPcMachine(const BMINFO * bmInfo)
     return FALSE;
   }
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL BMINFO_isPc(const BMINFO * bmInfo)
+{
+  switch (bmInfo->prog_id)
+  {
+  case BM_PROG_ID_PC:
+    return TRUE;
+  default:
+    return FALSE;
+  }
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static BOOL BMINFO_isPCElavator(const BMINFO * bmInfo)
@@ -1661,6 +1675,9 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
     case BM_SEARCH_ID_PCMACHINE:
       if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine(man, obj) == FALSE) continue;
       break;
+    case BM_SEARCH_ID_PC:
+      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisPc(man, obj) == FALSE) continue;
+      break;
     case BM_SEARCH_ID_NULL:
     default:
       break;
@@ -1711,6 +1728,17 @@ static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine(const FIELD_BMODEL_MAN * man
   entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
   return BMINFO_isPcMachine(&man->bmInfo[entryNo]);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPc(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
+{
+  u8 entryNo;
+  GF_ASSERT( G3DMAPOBJST_exists(obj) );
+  entryNo = obj->objSt->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  return BMINFO_isPc(&man->bmInfo[entryNo]);
 }
 
 //------------------------------------------------------------------
