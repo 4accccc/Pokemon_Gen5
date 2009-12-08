@@ -75,8 +75,8 @@ typedef struct _BATTLE_REC_WORK {
   REC_POKEPARTY     rec_party[BTL_CLIENT_MAX];
   MYSTATUS          my_status[BTL_CLIENT_MAX];
   CONFIG            config;
-//  u16 padding;
   u16 magic_key;
+  u16 padding;
 
   //CRC(ïKÇ∏ç≈å„îˆÇ…ÇµÇƒÇ®Ç≠Ç±Ç∆)
   GDS_CRC       crc;

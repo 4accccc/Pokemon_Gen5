@@ -353,7 +353,8 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, 
   BATTLE_REC_HEADER *head;
   BATTLE_REC_WORK *rec;
   SAVE_RESULT result;
-
+  u16 test_crc;
+  
   switch(*work0){
   case 0:
     //データがないときは、何もしない
@@ -375,9 +376,12 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, 
       sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
 
     //CRCをキーにして暗号化
+    test_crc = rec->crc.crc16ccitt_hash;
     BattleRec_Coded(rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
       rec->crc.crc16ccitt_hash + ((rec->crc.crc16ccitt_hash ^ 0xffff) << 16));
-
+    //ここに引っかかる場合はCRCの開始位置が構造体上で4バイトアライメントされていない
+    GF_ASSERT(rec->crc.crc16ccitt_hash == test_crc);
+    
     *work1 = 0;
     (*work0)++;
     break;
