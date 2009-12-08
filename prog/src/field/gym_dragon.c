@@ -32,17 +32,17 @@
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
 
-#define DRAGON1_X (7*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON1_X (10*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define DRAGON1_Y (0*FIELD_CONST_GRID_FX32_SIZE)
-#define DRAGON1_Z (26*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON1_Z (23*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 
-#define DRAGON2_X (31*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON2_X (29*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define DRAGON2_Y (0*FIELD_CONST_GRID_FX32_SIZE)
-#define DRAGON2_Z (15*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON2_Z (16*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 
-#define DRAGON3_X (0*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
-#define DRAGON3_Y (0*FIELD_CONST_GRID_FX32_SIZE)
-#define DRAGON3_Z (0*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON3_X (18*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define DRAGON3_Y (6*FIELD_CONST_GRID_FX32_SIZE)
+#define DRAGON3_Z (22*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 
 static const VecFx32 DragonPos[DRAGON_NUM_MAX] = {
   { DRAGON1_X, DRAGON1_Y, DRAGON1_Z },
@@ -51,8 +51,8 @@ static const VecFx32 DragonPos[DRAGON_NUM_MAX] = {
 };
 
 static const u16 DragonRad[DRAGON_NUM_MAX] = {
-  0,
   0x8000,
+  0,
   0
 };
 
@@ -182,16 +182,15 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   {
     int j;
     int idx;
+    int rad = 0;
     GFL_G3D_OBJSTATUS *status;
+
+    rad = DragonRad[i];
     //頭
     idx = OBJ_HEAD_1 + (i*2);
     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, idx);
     status->trans = DragonPos[i];
-    {
-      int rad = 0;
-      rad = DragonRad[i];
-      MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
-    }
+    MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, idx, TRUE);
 /**    
@@ -209,6 +208,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     idx = OBJ_ARM_1 + (i*2);
     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, idx);
     status->trans = DragonPos[i];
+    MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, idx, TRUE);
 /**    
