@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-08T16:15:40"/>
+	<create user="kagaya" host="W00143" date="2009-12-08T17:13:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,65 +292,86 @@
 	</lock>
 
 
-	<row id="msg_c04r0402_receipt_01">
-		<comment>？？？</comment>
-		<language name="JPN" width="256">&quot;バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+	<row id="msg_c04r0102_receipt_01">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　シングルトレインの
-じょうしゃを　ごあんない　しております&quot;</language>
-		<language name="JPN_KANJI" width="256">&quot;バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　シングルトレインの
-じょうしゃを　ごあんない　しております&quot;</language>
+じょうしゃを　ごあんない　しております</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_02">
+	<row id="msg_c04r0102_receipt_02">
 		<language name="JPN" width="256">シングルトレイン　ルール説明</language>
 		<language name="JPN_KANJI" width="256">シングルトレイン　ルール説明</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_03">
-		<language name="JPN" width="256">げんざい　れんしょうちゅう</language>
-		<language name="JPN_KANJI" width="256">げんざい　れんしょうちゅう</language>
+	<row id="msg_c04r0102_receipt_03">
+		<language name="JPN" width="256">げんざい　れんしょうちゅうです</language>
+		<language name="JPN_KANJI" width="256">げんざい　れんしょうちゅうです</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_04">
+	<row id="msg_c04r0102_receipt_04">
+		<comment>メニュー</comment>
 		<language name="JPN" width="256">じょうしゃする</language>
 		<language name="JPN_KANJI" width="256">じょうしゃする</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_05">
+	<row id="msg_c04r0102_receipt_05">
+		<comment>メニュー</comment>
 		<language name="JPN" width="256">せつめいをきく</language>
 		<language name="JPN_KANJI" width="256">せつめいをきく</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_06">
+	<row id="msg_c04r0102_receipt_06">
+		<comment>メニュー</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_07">
+	<row id="msg_c04r0102_receipt_07">
 		<language name="JPN" width="256">それでは　またの　ごりようを
 おまちして　おります！</language>
 		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
 おまちして　おります！</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_08">
-		<language name="JPN" width="256">てもちポケモンでは　さんかできない</language>
-		<language name="JPN_KANJI" width="256">てもちポケモンでは　さんかできない</language>
+	<row id="msg_c04r0102_receipt_08">
+		<language name="JPN" width="256">そのポケモンでは　さんかできない</language>
+		<language name="JPN_KANJI" width="256">そのポケモンでは　さんかできない</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_09">
+	<row id="msg_c04r0102_receipt_09">
 		<language name="JPN" width="256">それでは　さんかする　ポケモンを
 えらんで　ください</language>
 		<language name="JPN_KANJI" width="256">それでは　さんかする　ポケモンを
 えらんで　ください</language>
 	</row>
 
-	<row id="msg_c04r0402_receipt_10">
+	<row id="msg_c04r0102_receipt_10">
 		<language name="JPN" width="256">それでは　シングルトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　シングルトレインへ
 ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_c04r0102_receipt_11">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">てもち</language>
+	</row>
+
+	<row id="msg_c04r0102_receipt_12">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
+	</row>
+
+	<row id="msg_c04r0102_receipt_13">
+		<language name="JPN" width="256">シングルトレインに
+じょうしゃ　しますか？</language>
+		<language name="JPN_KANJI" width="256">シングルトレインに
+じょうしゃ　しますか？</language>
 	</row>
 
 	<flowchart-group-list>

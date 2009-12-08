@@ -27,15 +27,67 @@ _EVENT_DATA_END
 //ev_c04r0102_flag_change:
 //  _END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
+//--------------------------------------------------------------
+//  とりあえず最初のラベルだけ生成している
+//--------------------------------------------------------------
 ev_c04r0102:
-  //とりあえず最初のラベルだけ生成している
   _END
 
 //--------------------------------------------------------------
 //  受付 C04R0102_RECEIPT
-//-------------------------------------------------------------
-ev_c04r0102_receipt:
-  _END
+//--------------------------------------------------------------
+EVENT_START ev_c04r0102_receipt
+  _TALK_OBJ_START()
+  
+  //バトルサブウェイにようこそ
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //連勝中チェック
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_03 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //バトルサブウェイ　シングル説明
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_02 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //シングルトレインに乗車するか？
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_13 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+  //乗車する・やめる
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_04, 0 ) //乗車する
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_05, 1 ) //説明を聞く
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_06, 3 ) //やめる
+  _BMPMENU_START()
+  
+  //バトルボックスチェック
+  
+  //バトルボックス有る場合は選択ウィンドウ
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_11, 0 ) //てもち
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_12, 1 ) //ボックス
+  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_06, 3 ) //やめる
+  _BMPMENU_START()
+  
+  //参加ポケモンチェック
+  
+  //参加するポケモンを選んでください
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_09 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //セーブ処理
+  
+  //シングルトレインへご乗車下さい
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_10 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //自機移動アニメ、画面遷移
+EVENT_END
