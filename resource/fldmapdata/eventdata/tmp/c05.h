@@ -15,6 +15,7 @@
 #define DOOR_ID_C05_EXIT18               10
 #define DOOR_ID_C05_EXIT19               11
 #define DOOR_ID_C05_EXIT14               12
+#define DOOR_ID_C05_EXIT20               13
 
 #endif //ZONE_C05_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
