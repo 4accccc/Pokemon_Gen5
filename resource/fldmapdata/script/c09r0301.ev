@@ -19,20 +19,141 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c09r0301
+_EVENT_DATA    ev_c09r0301_bigfour3_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c09r0301_flag_change:
-//  _END
+/************************************************************/
+/*						四天王（格闘）						*/
+/************************************************************/
+EVENT_START	ev_c09r0301_bigfour3_01
+	_TALK_OBJ_START()
+	
+	//ゲームクリア前後で分岐
+	IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+		
+		//========ゲームクリア前（Ｎ城クリア前の四天王）===============
+		
+		//戦闘済みかで分岐
+		IF FLAG_OFF( SYS_FLAG_BIGFOUR_FIGHTWIN ) THEN
+			
+			
+			//戦闘前---------------------------------------------------
+			
+			
+			//戦闘前メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_01 )
+			_MSGWIN_CLOSE()
+			
+			//トレーナー戦呼び出し
+			_TRAINER_BTL_SET( TRID_TANPAN_01, 0 )
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+			
+			//========================================//
+			
+			//四天王（シキミ）勝利フラグをセット
+			_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+			
+			//========================================//
+			
+			//戦闘後メッセージ 四天王討伐状況で修正
+			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+				
+				//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_04 )
+				
+			ELSE
+				
+				//それ以外なら通常メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_02 )
+				
+			ENDIF
+			
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ELSE
+			
+			
+			//戦闘後---------------------------------------------------
+			
+			//戦闘後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
+	
+	
+	ELSE
+		
+		//========ゲームクリア後（Ｎ城クリア後の四天王）===============
+		
+		//戦闘済みかで分岐
+		IF FLAG_OFF( SYS_FLAG_BIGFOUR_FIGHTWIN ) THEN
+			
+			
+			//戦闘前---------------------------------------------------
+			
+			
+			//戦闘前メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_05 )
+			_MSGWIN_CLOSE()
+			
+			//トレーナー戦呼び出し
+			_TRAINER_BTL_SET( TRID_TANPAN_01, 0 )
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+			
+			//========================================//
+			
+			//四天王（シキミ）勝利フラグをセット
+			_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+			
+			//========================================//
+			
+			//戦闘後メッセージ
+			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+				
+				//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_08 )
+				
+			ELSE
+				
+				//それ以外なら通常メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_06 )
+				
+			ENDIF
+			
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ELSE
+			
+			
+			//戦闘後---------------------------------------------------
+			
+			//戦闘後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
+	
+	ENDIF
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c09r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_END
 

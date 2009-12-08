@@ -13,5 +13,6 @@
 #ifndef ZONE_C09P01_EVC_H
 #define ZONE_C09P01_EVC_H
 
+#define C09P01_TEST_ELV                    0
 
 #endif //ZONE_C09P01_EVC_H

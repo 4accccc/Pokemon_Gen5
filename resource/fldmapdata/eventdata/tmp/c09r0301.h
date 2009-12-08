@@ -9,5 +9,6 @@
 #ifndef ZONE_C09R0301_EVC_H
 #define ZONE_C09R0301_EVC_H
 
+#define C09R0301_BIGFOUR3_01               0
 
 #endif //ZONE_C09R0301_EVC_H

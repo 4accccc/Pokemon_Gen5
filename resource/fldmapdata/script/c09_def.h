@@ -8,5 +8,6 @@
 #define SCRID_C09_VETERANM_01 (1)
 #define SCRID_C09_VETERANM_02 (2)
 #define SCRID_POS_C09_FIRSTVISIT (3)
+#define SCRID_ZONE_C09 (4)
 
 #endif //_C09_DEF_H_
