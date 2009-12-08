@@ -31,6 +31,8 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
+#define FLOOR_VISIBLE_HEIGHT    (5*FIELD_CONST_GRID_FX32_SIZE)
+
 
 #define DRAGON1_X (10*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define DRAGON1_Y (0*FIELD_CONST_GRID_FX32_SIZE)
@@ -43,6 +45,10 @@
 #define DRAGON3_X (18*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define DRAGON3_Y (6*FIELD_CONST_GRID_FX32_SIZE)
 #define DRAGON3_Z (22*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+#define FLOOR_X (20*FIELD_CONST_GRID_FX32_SIZE)
+#define FLOOR_Y (0*FIELD_CONST_GRID_FX32_SIZE)
+#define FLOOR_Z (20*FIELD_CONST_GRID_FX32_SIZE)
 
 static const VecFx32 DragonPos[DRAGON_NUM_MAX] = {
   { DRAGON1_X, DRAGON1_Y, DRAGON1_Z },
@@ -67,6 +73,7 @@ typedef struct GYM_DRAGON_TMP_tag
 enum {
   RES_ID_HEAD_MDL = 0,
   RES_ID_ARM_MDL,
+  RES_ID_FLOOR_MDL,
 };
 
 //ＯＢＪインデックス
@@ -77,6 +84,7 @@ enum {
   OBJ_ARM_2,
   OBJ_HEAD_3,
   OBJ_ARM_3,
+  OBJ_FLOOR,
 };
 
 
@@ -86,6 +94,7 @@ enum {
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_ue_migi_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_GYM_DRAGON, NARC_gym_dragon_arm_01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_DRAGON, NARC_gym_dragon_m_gym0802f_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 };
 
 //3Dオブジェクト設定テーブル
@@ -140,6 +149,16 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		NULL,			//アニメテーブル(複数指定のため)
 		0,//NELEMS(g3Dutil_anmTbl_wall1),	//アニメリソース数
 	},
+
+  //床
+	{
+		RES_ID_FLOOR_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_FLOOR_MDL, 	//テクスチャリソースID
+		NULL,			//アニメテーブル(複数指定のため)
+		0,	//アニメリソース数
+	},
+
 
 };
 
@@ -225,6 +244,33 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 //    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_WALL);
 //    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_SW);
   }
+
+  //床座標セット
+  {
+    GFL_G3D_OBJSTATUS *status;
+    int idx = OBJ_FLOOR;
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, idx);
+    status->trans.x = FLOOR_X;
+    status->trans.y = FLOOR_Y;
+    status->trans.z = FLOOR_Z;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, idx, TRUE);
+  }
+
+  //セットアップ時2階表示判定
+  {
+    VecFx32 pos;
+    BOOL vanish;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
+    else vanish = TRUE;       //2階の床と竜を非表示
+
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_ARM_3, vanish );
+  }
 }
 
 //--------------------------------------------------------------
@@ -266,5 +312,20 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
 
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
+
+  //自機の高さを監視
+  {
+    VecFx32 pos;
+    BOOL vanish;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
+    else vanish = TRUE;       //2階の床と竜を非表示
+
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_ARM_3, vanish );
+  }
 }
 
