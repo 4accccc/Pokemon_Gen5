@@ -76,6 +76,10 @@
 #define UP_SE_FRM2  (1036288)
 #define DOWN_SE_FRM2  (1294336)
 
+#define LOOP_SE_FRM1  (724992)
+#define LOOP_SE_FRM2  (720896)
+
+
 #define SPD_LV5 (FX32_ONE * 8 * 4)
 #define SPD_LV4 (FX32_ONE * 8 * 3)
 #define SPD_LV3 (FX32_ONE * 8 * 2)
@@ -1685,30 +1689,51 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
   //@todo
   //ＳＥ制御
-  if (tmp->RadeRaleIdx == 2){
+  if ( (tmp->RadeRaleIdx == 2)||(tmp->RadeRaleIdx == 3)||(tmp->RadeRaleIdx == 4)||(tmp->RadeRaleIdx == 5) )
+  {
     u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
-    if (frm == UP_SE_FRM1){
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
-      //昇りＳＥスタート
-      PMSND_PlaySE(GYM_ELEC_SE_RISE);
-    }else if(frm == DOWN_SE_FRM1){
-      //下りＳＥスタート
-      PMSND_PlaySE(GYM_ELEC_SE_DROP);
+
+    switch( tmp->RadeRaleIdx ){
+    case 2:
+      if (frm == UP_SE_FRM1){
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //昇りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_RISE);
+      }else if(frm == DOWN_SE_FRM1){
+        //下りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_DROP);
+      }
+      break;
+    case 3:
+      if (frm == UP_SE_FRM2){
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //昇りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_RISE);
+      }else if(frm == DOWN_SE_FRM2){
+        //下りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_DROP);
+      };
+      break;
+    case 4:
+      if (frm == LOOP_SE_FRM1){
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //宙返りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_LOOP);
+      }
+      break;
+    case 5:
+      if (frm == LOOP_SE_FRM2){
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //宙返りＳＥスタート
+        PMSND_PlaySE(GYM_ELEC_SE_LOOP);
+      }
+      break;
     }
-  }else if(tmp->RadeRaleIdx == 3){
-    u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
-    fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
-    if (frm == UP_SE_FRM2){
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
-      //昇りＳＥスタート
-      PMSND_PlaySE(GYM_ELEC_SE_RISE);
-    }else if(frm == DOWN_SE_FRM2){
-      //下りＳＥスタート
-      PMSND_PlaySE(GYM_ELEC_SE_DROP);
-    };
   }
 
   //アニメデータ取得
@@ -1742,7 +1767,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
     VEC_Subtract( &now, &next ,&dst );
     len = VEC_Mag( &dst );
-    OS_Printf("len = %x\n",len);
+//    OS_Printf("len = %x\n",len);
     if ( len >=SPD_LV5 ){
 //      OS_Printf("11111\n");
       volume = 127;
@@ -2196,7 +2221,7 @@ getJntSRTAnmResult_(const NNSG3dResJntAnm* pJntAnm,
       // データのオフセットはpAnmSRTTagからのものになる
       fx32 x;
       getTransData_(&x, Frame, pData, pJntAnm);
-      OS_Printf("X= %d::%x\n",x,x);
+//      OS_Printf("X= %d::%x\n",x,x);
       outVec->x = x;
 
       // NNSG3dJntAnmTInfoと配列へのオフセットデータの分
@@ -2209,7 +2234,7 @@ getJntSRTAnmResult_(const NNSG3dResJntAnm* pJntAnm,
       // データのオフセットはpAnmSRTTagからのものになる
       fx32 y;
       getTransData_(&y, Frame, pData, pJntAnm);
-      OS_Printf("Y= %d::%x\n",y,y);
+//      OS_Printf("Y= %d::%x\n",y,y);
       outVec->y = y;
           
       // NNSG3dJntAnmTInfoと配列へのオフセットデータの分
@@ -2222,7 +2247,7 @@ getJntSRTAnmResult_(const NNSG3dResJntAnm* pJntAnm,
       // データのオフセットはpAnmSRTTagからのものになる
       fx32 z;
       getTransData_(&z, Frame, pData, pJntAnm);
-      OS_Printf("Z= %d::%x\n",z,z);
+//      OS_Printf("Z= %d::%x\n",z,z);
       outVec->z = z;
 
       // NNSG3dJntAnmTInfoと配列へのオフセットデータの分

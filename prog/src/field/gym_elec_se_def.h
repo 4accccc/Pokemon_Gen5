@@ -15,4 +15,5 @@
 #define GYM_ELEC_SE_START  (SEQ_SE_FLD_28)    //発射
 #define GYM_ELEC_SE_CAP_OC  (SEQ_SE_FLD_22)   //カプセル開閉
 #define GYM_ELEC_SE_SPEED  (SEQ_SE_FLD_76)   //カプセル加速のときの音
+#define GYM_ELEC_SE_LOOP  (SEQ_SE_FLD_67)   //カプセル宙返り
 
