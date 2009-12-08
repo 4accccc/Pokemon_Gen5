@@ -84,14 +84,17 @@ typedef struct
   SUBPROC_WORK          subproc;
 
   //以下システム層に置いておくデータ
-  WIFIBATTLEMATCH_DATA_WORK *p_data;
+  WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
+  WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
 
   //コアモード
-  WIFIBATTLEMATCH_CORE_MODE core_mode;
+  WIFIBATTLEMATCH_CORE_MODE     core_mode;
+  WIFIBATTLEMATCH_CORE_RETMODE  core_ret;
 
   //バトルの結果
   BtlResult                 btl_result;
 
+  //バトル用に選んだパーティ
   POKEPARTY                 *p_btl_party;
 
 } WIFIBATTLEMATCH_SYS;
@@ -131,6 +134,12 @@ static void POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //バトル
 static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+
+//-------------------------------------
+///	データバッファ作成
+//=====================================
+static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
+static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 //=============================================================================
 /**
  *					外部参照
@@ -217,15 +226,17 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_SYS) );
   p_wk->p_param   = p_param_adrs;
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
-  p_wk->p_data  = WIFIBATTLEMATCH_DATA_Init( HEAPID_WIFIBATTLEMATCH_SYS );
 
   p_wk->p_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+
+  //データバッファ作成
+  DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
   //自分のデータ設定(レートとポケパーティはまだ)
   { 
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
 
-    p_player  = WIFIBATTLEMATCH_DATA_GetPlayerDataPtr( p_wk->p_data );
+    p_player  = p_wk->p_player_data;
     {
       MYSTATUS  *p_my;
       p_my  = GAMEDATA_GetMyStatus(p_wk->p_param->p_game_data);
@@ -275,8 +286,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 	//モジュール破棄
 	SUBPROC_Exit( &p_wk->subproc );
 
-  WIFIBATTLEMATCH_DATA_Exit( p_wk->p_data );
+  //データバッファ破棄
+  DATA_DeleteBuffer( p_wk );
 
+  //ワーク破棄
   GFL_HEAP_FreeMemory( p_wk->p_btl_party );
 
   //プロセスワーク破棄
@@ -527,8 +540,10 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_CORE_PARAM) );
 	p_param->p_param	  = p_wk->p_param;
   p_param->mode       = p_wk->core_mode;
+  p_param->retmode    = p_wk->core_ret;
   p_param->btl_result = p_wk->btl_result;
-  p_param->p_data     = p_wk->p_data;
+  p_param->p_player_data  = p_wk->p_player_data;
+  p_param->p_enemy_data   = p_wk->p_enemy_data;
 		
 	return p_param;
 }
@@ -545,6 +560,7 @@ static void WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   WIFIBATTLEMATCH_SYS         *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
 
+  p_wk->core_ret = p_param->retmode;
   switch( p_param->result )
   { 
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE:
@@ -585,7 +601,7 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     POKEPARTY *p_party;
     POKEMON_PARAM *pp;
 
-    p_player = WIFIBATTLEMATCH_DATA_GetPlayerDataPtr( p_wk->p_data );
+    p_player = p_wk->p_player_data;
     p_party  = (POKEPARTY*)p_player->pokeparty;
     for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
     {
@@ -599,7 +615,7 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     WIFIBATTLEMATCH_ENEMYDATA *p_enemy;
     POKEPARTY *p_party;
 
-    p_enemy = WIFIBATTLEMATCH_DATA_GetEnemyDataPtr( p_wk->p_data );
+    p_enemy = p_wk->p_enemy_data;
     p_param->enemyName      = p_enemy->name;
     p_param->enemyPokeParty = (POKEPARTY*)p_enemy->pokeparty;
     p_param->enemySex       = p_enemy->sex;
@@ -685,4 +701,30 @@ static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データバッファ作成
+ *
+ *	@param	WIFIBATTLEMATCH_SYS *p_wk ワーク
+ *	@param  heapID                    heapID
+ */
+//-----------------------------------------------------------------------------
+static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID )
+{ 
+  p_wk->p_player_data = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+  p_wk->p_enemy_data  = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データバッファ破棄
+ *
+ *	@param	WIFIBATTLEMATCH_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
+{ 
+  GFL_HEAP_FreeMemory( p_wk->p_player_data );
+  GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
 }

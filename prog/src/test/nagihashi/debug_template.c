@@ -335,7 +335,8 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		POKEMON_PASO_PARAM	*p_ppp;
 		ARCHANDLE						*p_handle;
 			
-		p_ppp	= (POKEMON_PASO_PARAM	*)PP_Create( 3, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+		p_ppp	= (POKEMON_PASO_PARAM	*)PP_Create( 490, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+    PPP_Put( p_ppp,ID_PARA_tamago_flag, TRUE );
 
 		p_handle	= POKE2DGRA_OpenHandle( HEAPID_NAGI_DEBUG_SUB );
 		p_wk->objres[ OBJRESID_PM_CHR ]	= POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, p_ppp, POKEGRA_DIR_BACK, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );

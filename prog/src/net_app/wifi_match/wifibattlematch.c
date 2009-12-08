@@ -61,7 +61,7 @@ enum
 	BG_FRAME_M_BACK	=	GFL_BG_FRAME1_M, 
 
 	//ƒTƒu‰æ–Ê
-	BG_FRAME_S_BACK	=	GFL_BG_FRAME1_M, 
+	BG_FRAME_S_BACK	=	GFL_BG_FRAME1_S, 
 } ;
 
 //-------------------------------------

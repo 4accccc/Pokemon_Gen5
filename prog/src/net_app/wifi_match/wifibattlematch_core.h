@@ -36,6 +36,14 @@ typedef enum
   WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE,  //バトル終了
 } WIFIBATTLEMATCH_CORE_MODE;
 
+//-------------------------------------
+///	終了時モード
+//=====================================
+typedef enum 
+{
+  WIFIBATTLEMATCH_CORE_RETMODE_RATE,  //レーティングモード
+  WIFIBATTLEMATCH_CORE_RETMODE_FREE,  //フリーモード
+} WIFIBATTLEMATCH_CORE_RETMODE;
 
 //=============================================================================
 /**
@@ -47,11 +55,15 @@ typedef enum
 //=====================================
 typedef struct
 {
-  WIFIBATTLEMATCH_CORE_RESULT result;   //[out]終了コード
-  WIFIBATTLEMATCH_PARAM       *p_param; //[in ]外部引数
-  WIFIBATTLEMATCH_CORE_MODE   mode;     //[in ]起動モード
+  WIFIBATTLEMATCH_CORE_RETMODE retmode;     //[in/out]前回終了時のモード
+  WIFIBATTLEMATCH_CORE_RESULT result;       //[out]終了コード
+  WIFIBATTLEMATCH_PARAM       *p_param;     //[in ]外部引数
+  WIFIBATTLEMATCH_CORE_MODE   mode;         //[in ]起動モード
   BtlResult                   btl_result;   //[in ]バトル結果
-  WIFIBATTLEMATCH_DATA_WORK   *p_data;      //[in ]常駐データ置き場
+  //以下、[in ]常駐データ
+  WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
+  WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
+
 } WIFIBATTLEMATCH_CORE_PARAM;
 
 //=============================================================================

@@ -102,6 +102,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_gsync.c \
         field/event_gtsnego.c \
         field/event_wifibattlematch.c \
+        field/event_debug_wifimatch.c \
         field/event_fldmmdl_control.c \
         net_app/wificlub/wifi_p2pevent.c \
         field/event_wificlub.c \
@@ -1156,8 +1157,7 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 #===> SRCS_OVERLAY_BATTLE_BAG
 #===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_subproc.c \
-                                    net_app/wifi_match/wifibattlematch_data.c
+                                    net_app/wifi_match/wifibattlematch_subproc.c
 
 # WIFIバトルマッチング表示周り部分
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -1172,7 +1172,8 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
 								net_app/wifi_match/wifibattlematch_view.c \
                 net_app/wifi_match/wifibattlematch_net.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
-                net_app/wifi_match/wifibattlematch_util.c
+                net_app/wifi_match/wifibattlematch_util.c \
+                net_app/wifi_match/debug/debug_wifi_match.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI
@@ -1207,6 +1208,7 @@ SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
                                 net_app/battle_recorder/br_codein.c \
                                 net_app/battle_recorder/br_codein_disp.c \
                                 net_app/battle_recorder/br_codein_pv.c \
+                                net_app/battle_recorder/br_fade.c \
 																poke_tool/rpp_to_pp.c
 
 # デバッグデータ作成

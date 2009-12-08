@@ -24,8 +24,6 @@
 
 
 
-FS_EXTERN_OVERLAY(wifibattlematch);
-
 //============================================================================================
 //
 //    定数
@@ -35,6 +33,7 @@ FS_EXTERN_OVERLAY(wifibattlematch);
 ///	シーケンス
 //=====================================
 enum{
+  _FIELD_COMM,
   _FIELD_FADEOUT,
   _FIELD_CLOSE,
   _CALL_WIFILOGIN,
@@ -84,16 +83,19 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
 
 
   switch (*seq) {
+  case _FIELD_COMM:
+    if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
+    {
+      (*seq)++;
+    }
+    break;
   case _FIELD_FADEOUT:
     GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq)++;
     break;
   case _FIELD_CLOSE:
-    if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
-    {
-      GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-      (*seq)++;
-    }
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    (*seq)++;
     break;
   case _CALL_WIFILOGIN:
     { 

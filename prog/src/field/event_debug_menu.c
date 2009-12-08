@@ -78,6 +78,8 @@
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
+#include "event_debug_wifimatch.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -163,11 +165,12 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
-
 
 //======================================================================
 //  デバッグメニューリスト
@@ -218,6 +221,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
+  { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake }, 
+  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas }, 
   { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, 
   { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
@@ -3230,7 +3235,34 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
   return TRUE;
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サケサーバーデバッグモードへ
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *
+ *	@return TRUEでイベンﾄ継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_SAKE ) );
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトラスサーバーデバッグモードへ
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *
+ *	@return TRUEでイベンﾄ継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_ATLAS ) );
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------------
 /**

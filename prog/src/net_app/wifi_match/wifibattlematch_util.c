@@ -158,6 +158,34 @@ void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FON
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  BMPWINメッセージ  プリント開始  （デバッグ版）
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *	@param	str              文字列   0xFFFF終端
+ *	@param	*p_font           フォント
+ */
+//-----------------------------------------------------------------------------
+void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font )
+{ 
+  	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+	//文字列作成
+	GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, cp_str, len );
+
+  //ストリーム中ならばストリーム破棄
+  if( p_wk->p_stream )
+  { 
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+
+  //ストリーム作成
+  p_wk->p_stream  =  PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf, p_font, MSGSPEED_GetWait(), p_wk->p_tcblsys, 0, p_wk->heapID, p_wk->clear_chr );
+
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  メッセージ  終了検知
  *
  *	@param	const WBM_TEXT_WORK* cp_wk  ワーク

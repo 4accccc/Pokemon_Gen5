@@ -37,6 +37,8 @@ extern void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk );
 extern void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
 extern BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk );
 
+extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font );
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  ƒŠƒXƒg
