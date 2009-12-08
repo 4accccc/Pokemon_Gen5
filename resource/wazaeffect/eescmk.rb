@@ -1,8 +1,11 @@
+#! ruby -Ks
 #========================================================================
 #
 #	エフェクトエディタで生成したデータからスクリプトファイルを生成
 #
 #========================================================================
+
+  require File.dirname(__FILE__) + '/../../tools/hash/wazano_hash'
 
 	$KCODE = "Shift-JIS"
 
@@ -378,6 +381,14 @@ end
 				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
 				seq_str = "\nWE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + ":\n"
 				sequence << seq_str
+        if seq_cnt == 0
+          $tame_waza.size.times{ |cnt|
+            if $tame_waza[ cnt ] == num_str.to_i
+				      seq_str = "\tIF  BTLEFF_WORK_TURN_COUNT, BTLEFF_COND_EQUAL, 0, " + "WE_" + num_str + 1.to_s(10) + "_" + dir_str + "\n"
+				      sequence << seq_str
+            end
+          }
+        end
 				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + "\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
 				str = ""
@@ -514,9 +525,6 @@ end
 
   seq_cnt.times{ |cnt|
 	  fp_w.print( "WE_" + num_str + cnt.to_s(10) + ":\n" )
-    if cnt == 0
-      fp_w.printf( "\t.long\t%d\n", seq_cnt )
-    end
 		seq_tables[ cnt ].size.times { |seq|
 			fp_w.print seq_tables[ cnt ][ seq ]
 		}
@@ -524,9 +532,17 @@ end
 
   seq_cnt.times{ |cnt|
 		sequences[ cnt ].size.times { |seq|
+      if cnt == 0 && seq == 2
+        $tame_waza.size.times{ |tame|
+          if ( $tame_waza[ tame ] == num_str.to_i ) && ( seq_cnt < 2 )
+	          fp_w.print( "WE_" + num_str + 1.to_s(10) + "_" + dir_str + ":\n" )
+          end
+        }
+      end
 			fp_w.print sequences[ cnt ][ seq ]
 		}
   }
+
 	fp_w.close
 
 	#bin_list_tmpのダブりをチェック
