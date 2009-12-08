@@ -2202,7 +2202,11 @@ static int SubSeq_Save( WORLDTRADE_WORK *wk )
 	SaveData_RequestTotalSave();
 	
 	// セーブ初期化
-	SaveData_DivSave_Init( wk->param->savedata,0);
+  { 
+    GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+    GAMEDATA_SaveAsyncStart(gamedata);
+  }
+
 
 	wk->subprocess_seq = SUBSEQ_SAVE_RANDOM_WAIT;
 	wk->wait           = GFUser_GetPublicRand(60)+2;
@@ -2245,10 +2249,11 @@ static int SubSeq_SaveRandomWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SaveWait( WORLDTRADE_WORK *wk )
 {
+  GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
 #ifdef DEBUG_SAVE_NONE
 	if(1){	
 #else
-	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_LAST){
+	if(GAMEDATA_SaveAsyncMain(gamedata)==SAVE_RESULT_LAST){
 #endif
 
 		// セーブシーケンスにくるまでに次の設定は終えているので、SUBSEQ_ENDだけでよい
@@ -2273,10 +2278,11 @@ static int SubSeq_SaveWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SaveLast( WORLDTRADE_WORK *wk )
 {
+  GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
 #ifdef DEBUG_SAVE_NONE
 	if(1){	
 #else
-	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_OK){
+	if(GAMEDATA_SaveAsyncMain(gamedata)==SAVE_RESULT_OK){
 #endif
 		wk->subprocess_seq = wk->saveNextSeq2nd;
 
@@ -2307,7 +2313,11 @@ static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk )
 
 	
 	// セーブ初期化
-	SaveData_DivSave_Init( wk->param->savedata,0);
+	// セーブ初期化
+  { 
+    GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+    GAMEDATA_SaveAsyncStart(gamedata);
+  }
 	wk->subprocess_seq = SUBSEQ_TIMEOUT_SAVE_WAIT;
 
 	return SEQ_MAIN;
@@ -2327,10 +2337,11 @@ static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk )
 {
+  GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
 #ifdef DEBUG_SAVE_NONE
 	if(1){	
 #else
-	if(SaveData_DivSave_Main(wk->param->savedata)==SAVE_RESULT_OK){
+	if(GAMEDATA_SaveAsyncMain(gamedata)==SAVE_RESULT_OK){
 #endif
 
 		// タイトル画面に戻る設定

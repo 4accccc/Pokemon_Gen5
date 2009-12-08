@@ -28,6 +28,8 @@
 #include "savedata/record.h"
 #include "field/eventdata_system.h"
 
+#include "gamesystem/game_data.h"
+
 //tool
 #include "poke_tool/poke_tool.h"
 #include "pokeicon/pokeicon.h"
@@ -229,16 +231,6 @@ static inline int PokeIconCgxArcIndexGetByMonsNumber( int pokeno, int tamago, in
 static inline int PokeIconPalNumGet( int pokeno, int form, int tamago )
 {
 	return POKEICON_GetPalNum( pokeno, form, tamago );
-}
-static inline void SaveData_DivSave_Init( SAVE_CONTROL_WORK *sv, int a )
-{
-#ifndef DEBUG_SAVE_NONE
-	SaveControl_SaveAsyncInit( sv );
-#endif
-}
-static inline SAVE_RESULT SaveData_DivSave_Main( SAVE_CONTROL_WORK *sv )
-{
-	return SaveControl_SaveAsyncMain( sv );
 }
 static inline int PokePersonalParaGet(int mons_no, int param )
 { 
