@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: scr_cam_prm.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-12-08T23:05:19
+ *****************************************************************************/
+
+#ifndef NARC_SCR_CAM_PRM_NAIX_
+#define NARC_SCR_CAM_PRM_NAIX_
+
+enum {
+	NARC_scr_cam_prm_scr_cam_prm_test_bin = 0
+};
+
+/* NARC_SCR_CAM_PRM_NAIX_ */
+#endif
