@@ -31,6 +31,9 @@ _EVENT_DATA    ev_c07_ambrella_01
 _EVENT_DATA    ev_c07_man3_01
 _EVENT_DATA    ev_c07_fighterm_01
 _EVENT_DATA    ev_bg_c07_board_01
+_EVENT_DATA    ev_c07_man2_01
+_EVENT_DATA    ev_c07_woman2_01
+_EVENT_DATA    ev_c07_girl2_02
 _EVENT_DATA_END
 
 
@@ -264,6 +267,28 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c07_fighterm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_fighterm_01 )
+EVENT_END
+
+/**************************************************************/
+/* MAN2_01（ISS）                                             */
+/**************************************************************/
+EVENT_START   ev_c07_man2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_iss1_01 )
+EVENT_END
+
+/**************************************************************/
+/* WOMAN2_01（ISS）                                             */
+/**************************************************************/
+EVENT_START   ev_c07_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_iss2_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* GIRL2_01（ISS）                                             */
+/**************************************************************/
+EVENT_START   ev_c07_girl2_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_iss3_01 )
 EVENT_END
 
 

@@ -17,5 +17,8 @@
 #define SCRID_C07_MAN3_01 (10)
 #define SCRID_C07_FIGHTERM_01 (11)
 #define SCRID_BG_C07_BOARD_01 (12)
+#define SCRID_C07_MAN2_01 (13)
+#define SCRID_C07_WOMAN2_01 (14)
+#define SCRID_C07_GIRL2_02 (15)
 
 #endif //_C07_DEF_H_
