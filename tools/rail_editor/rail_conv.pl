@@ -501,6 +501,23 @@ sub convData
 	}
 	print( "output $outfile.line\n" );
 
+
+	#ラインヘッダー情報
+	{
+		open( FILEOUT_LINE, ">$outfile.h" );
+
+    print( FILEOUT_LINE "#pragma once\n" );
+    print( FILEOUT_LINE "// out put rail_conv.pl\n" );
+    print( FILEOUT_LINE "// rail line name\n" );
+    
+
+		for( $i=0; $i<@LINE_NAME; $i++ )
+    {
+			print( FILEOUT_LINE "#define ".$LINE_NAME[$i]." ($i)\n" );
+    }
+  }
+	print( "output $outfile.h\n" );
+
 	#ラインPOS情報
 	{
 		my( $funcindex, $distfuncindex, $work_index, $datasiz, $one_datasiz, $work_number );

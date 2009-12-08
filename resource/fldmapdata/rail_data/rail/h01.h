@@ -1,0 +1,20 @@
+#pragma once
+// out put rail_conv.pl
+// rail line name
+#define RE_LINE_0 (0)
+#define RE_LINE_1 (1)
+#define RE_LINE_2 (2)
+#define RE_LINE_3 (3)
+#define RE_LINE_4 (4)
+#define RE_LINE_5 (5)
+#define RE_LINE_6 (6)
+#define RE_LINE_7 (7)
+#define RE_LINE_8 (8)
+#define RE_LINE_9 (9)
+#define RE_LINE_10 (10)
+#define RE_LINE_11 (11)
+#define RE_LINE_12 (12)
+#define RE_LINE_13 (13)
+#define RE_LINE_14 (14)
+#define RE_LINE_15 (15)
+#define RE_LINE_16 (16)

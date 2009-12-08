@@ -48,6 +48,11 @@ HEADERDIR = $(PROJECT_PROGDIR)src/field/
 HEADERDUMMY_TARGET = headerdummy.txt
 
 #------------------------------------------------------------------------------
+#ヘッダコピー先
+#------------------------------------------------------------------------------
+RAILHEADER_COPY = $(PROJECT_PROGDIR)src/field/rail_line/
+
+#------------------------------------------------------------------------------
 #	#サフィックス
 #	#コンバート対象者のみ、コンバートのルールを有効にする
 #------------------------------------------------------------------------------
@@ -88,6 +93,7 @@ ifeq	($(CONVERTUSER),true)
 $(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
+	$(COPY) *.h $(RAILHEADER_COPY)
 
 
 # コピー先のnarcが古い場合実行する
@@ -115,6 +121,7 @@ else
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
+	$(COPY) *.h $(RAILHEADER_COPY)
 
 #アーカイブのみ生成
 $(targetname).narc: $(OBJ_FILE)
