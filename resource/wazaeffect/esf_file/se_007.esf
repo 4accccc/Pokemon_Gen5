@@ -1,0 +1,15 @@
+EFFSEQ
+$0006
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_390.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_052.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_196.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_084.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_006_piyo_roll.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_007_heart.spa
+#001
+%00
+パーティクルデータロード	be_se_007_heart
+パーティクル再生（正射影）	be_se_007_heart	BE_SE_007_HEART_SE_007_HEART	攻撃側	0:2:0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
