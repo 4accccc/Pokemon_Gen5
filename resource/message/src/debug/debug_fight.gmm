@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-07T21:43:25"/>
+	<create user="taya" host="W00146" date="2009-12-08T17:37:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,6 +371,22 @@
 
 	<row id="DBGF_LABEL_RECORD">
 		<language name="JPN" width="256">ろくが</language>
+	</row>
+
+	<row id="DBGF_LABEL_MUST_TUIKA">
+		<language name="JPN" width="256">必ず追加効果</language>
+	</row>
+
+	<row id="DBGF_LABEL_MUST_TOKU">
+		<language name="JPN" width="256">必ずとくせい</language>
+	</row>
+
+	<row id="DBGF_LABEL_MUST_ITEM">
+		<language name="JPN" width="256">必ずアイテム</language>
+	</row>
+
+	<row id="DBGF_LABEL_MUST_CRITICAL">
+		<language name="JPN" width="256">必ずクリティカル</language>
 	</row>
 
 	<row id="DBGF_ITEM_SAVE">
