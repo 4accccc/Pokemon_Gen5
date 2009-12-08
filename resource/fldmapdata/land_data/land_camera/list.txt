@@ -244,3 +244,7 @@
 "market05.bin"
 "champ02.bin"
 "leagin03.bin"
+"basket01.bin"
+"seat01.bin"
+"baseball01.bin"
+"seat02.bin"
