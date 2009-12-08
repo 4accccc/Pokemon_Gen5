@@ -301,9 +301,12 @@ end
 	fp_r.close
 
 	seq_no = 0
-	seq_table = []
-	sequence = []
-	inc_header = []
+	seq_tables = []
+	sequences = []
+	inc_headers = []
+
+  seq_cnt = 0
+
 	dir_table = [ "AA2BB", "BB2AA", "A2B", "A2C", "A2D", "B2A", "B2C", "B2D", "C2A", "C2B", "C2D", "D2A", "D2B", "D2C" ]
 	ARGV[ ARGV_ESF_FILE ] =~ /\D+(\d+)\.\D+/
 	num_str = $1
@@ -354,11 +357,11 @@ end
 				  num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
           write_file = "we_" + num_str + ".s"
         end
-				seq_table.clear
-				sequence.clear
-				inc_header.clear
+				seq_table = Array.new
+				sequence = Array.new
+				inc_header = Array.new
 				dir_table.size.times { |dir|
-					seq_table << "\t.long\t" + "WE_" + num_str + "_00 - WE_" + num_str +"\t//" + dir_table[ dir ] + "\n"
+					seq_table << "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_00 - WE_" + num_str + 0.to_s(10) +"\t//" + dir_table[ dir ] + "\n"
 				}
 				seq_no = SEQ_MAKE_DATA
 			end
@@ -367,41 +370,15 @@ end
 				data_pos -= 1
 				seq_no = SEQ_EFFNO_SEARCH
 			elsif split_data[ EFFNO_POS ][ 0 ].chr == "&"
-				fp_w = open( write_file, "w" )
-				fp_w.print("//===================================================\n")
-				fp_w.print("//\n")
-				fp_w.print("//	エフェクトシーケンス\n")
-				fp_w.print("//\n")
-				fp_w.print("//	コンバータから吐き出されたファイルです\n")
-				fp_w.print("//\n")
-				fp_w.print("//===================================================\n")
-				fp_w.print("\n")
-				fp_w.print("\t.text\n")
-				fp_w.print("\n")
-				fp_w.print("#define	__ASM_NO_DEF_\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/wb_sound_data.sadl\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/waza_eff_gra_def.h\n")
-				inc_header.size.times { |inc|
-					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect/" + inc_header[ inc ] + "\n")
-				}
-				fp_w.print("\n")
-				fp_w.print( "WE_" + num_str + ":\n" )
-				seq_table.size.times { |seq|
-					fp_w.print seq_table[ seq ]
-				}
-				sequence.size.times { |seq|
-					fp_w.print sequence[ seq ]
-				}
-				fp_w.close
+        inc_headers << inc_header
+				seq_tables << seq_table
+				sequences	<< sequence
+        seq_cnt += 1
 			elsif split_data[ EFFNO_POS ][ 0 ].chr == "%"
 				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
-				seq_str = "\nWE_" + num_str + "_" + dir_str + ":\n"
+				seq_str = "\nWE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + ":\n"
 				sequence << seq_str
-				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + "_" + dir_str + " - WE_" + num_str + "\t//" + dir_table[ dir_str.to_i ] + "\n"
+				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + "\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
 				str = ""
 				str += "\t" + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_com_label + "\t"
@@ -507,6 +484,50 @@ end
 		end
 		data_pos += 1
 	end
+
+  #シーケンスファイル書き出し
+	fp_w = open( write_file, "w" )
+	fp_w.print("//===================================================\n")
+	fp_w.print("//\n")
+	fp_w.print("//	エフェクトシーケンス\n")
+	fp_w.print("//\n")
+	fp_w.print("//	コンバータから吐き出されたファイルです\n")
+	fp_w.print("//\n")
+	fp_w.print("//===================================================\n")
+	fp_w.print("\n")
+	fp_w.print("\t.text\n")
+	fp_w.print("\n")
+	fp_w.print("#define	__ASM_NO_DEF_\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/wb_sound_data.sadl\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/waza_eff_gra_def.h\n")
+
+  seq_cnt.times{ |cnt|
+		inc_headers[ cnt ].size.times { |inc|
+  		fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect/" + inc_headers[ cnt ][ inc ] + "\n")
+		}
+  }
+	fp_w.print("\n")
+
+  seq_cnt.times{ |cnt|
+	  fp_w.print( "WE_" + num_str + cnt.to_s(10) + ":\n" )
+    if cnt == 0
+      fp_w.printf( "\t.long\t%d\n", seq_cnt )
+    end
+		seq_tables[ cnt ].size.times { |seq|
+			fp_w.print seq_tables[ cnt ][ seq ]
+		}
+  }
+
+  seq_cnt.times{ |cnt|
+		sequences[ cnt ].size.times { |seq|
+			fp_w.print sequences[ cnt ][ seq ]
+		}
+  }
+	fp_w.close
 
 	#bin_list_tmpのダブりをチェック
 	bin_list_tmp.size.times {|tmp_num|
