@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-07T17:42:52"/>
+	<create user="matsumiya" host="W00207" date="2009-12-08T20:01:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -739,7 +739,7 @@
 　GRIDX=210、GRIDZ=222
 　GRIDX=210、GRIDZ=220の
 　四点を経由して右回りに移動
-・こいつの初期配置はGRIDX=211、GRIDZ=220</comment>
+・こいつの初期配置はGRIDX=212、GRIDZ=220</comment>
 		<attribute name="キャラクター">MAN2</attribute>
 		<language name="JPN" width="256">おどれ！　おどれ！</language>
 		<language name="JPN_KANJI" width="256">おどれ！　おどれ！</language>
@@ -761,6 +761,15 @@
 		<attribute name="キャラクター">GIRL2</attribute>
 		<language name="JPN" width="256">あら　たのし！</language>
 		<language name="JPN_KANJI" width="256">あら　たのし！</language>
+	</row>
+
+	<row id="msg_c07_iss4_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・ISS用
+・こいつの初期配置はGRIDX=212、GRIDZ=220</comment>
+		<attribute name="キャラクター">BOY1</attribute>
+		<language name="JPN" width="256">るらら～♪　るらら～♪</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_c07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
