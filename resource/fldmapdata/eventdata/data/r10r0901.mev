@@ -39,7 +39,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0901.wms
 #hold event type:
 1
 #hold event number:
-5
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_R10R0901_R10R0801_EXIT01
@@ -57,73 +57,5 @@ EVENTDATA_POSTYPE_GRID
 -40 0 -120
 #size
 5 1
-#event number: 1
-#Door Event Label
-DOOR_ID_R10R0901_D09_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_EXIT14_00
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 16 120
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_R10R0901_D09_EXIT02
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_EXIT14_00
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 8 120
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_R10R0901_D09_EXIT03
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_EXIT14_00
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 8 120
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_R10R0901_D09_EXIT04
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_EXIT14_00
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 8 120
-#size
-1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

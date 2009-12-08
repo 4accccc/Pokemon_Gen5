@@ -1,5 +1,5 @@
 #../data/d09.mev
-../tmp/d09.bin:../data/d09.mev $(UNIQ_SCRIPTHEADER) ../tmp/d09.h ../../zonetable/zone_id.h ../../../../prog/include/field/eventdata_type.h ../tmp/r10r0901.h ../tmp/c09.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D09_def.h 
+../tmp/d09.bin:../data/d09.mev $(UNIQ_SCRIPTHEADER) ../tmp/d09.h ../../zonetable/zone_id.h ../tmp/c09.h ../../../../prog/include/field/eventdata_type.h ../tmp/d09r0101.h 
 	@echo ../data/d09.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d09.h ../../zonetable/zone_id.h ../../../../prog/include/field/eventdata_type.h ../tmp/r10r0901.h ../tmp/c09.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D09_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d09.h ../../zonetable/zone_id.h ../tmp/c09.h ../../../../prog/include/field/eventdata_type.h ../tmp/d09r0101.h 
 
