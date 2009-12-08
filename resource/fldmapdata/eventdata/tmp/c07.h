@@ -28,5 +28,6 @@
 #define C07_MAN2_01                        9
 #define C07_WOMAN2_01                     10
 #define C07_GIRL2_02                      11
+#define C07_BOY1_01                       12
 
 #endif //ZONE_C07_EVC_H

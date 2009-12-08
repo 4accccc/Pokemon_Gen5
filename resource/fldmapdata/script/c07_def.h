@@ -20,5 +20,6 @@
 #define SCRID_C07_MAN2_01 (13)
 #define SCRID_C07_WOMAN2_01 (14)
 #define SCRID_C07_GIRL2_02 (15)
+#define SCRID_C07_BOY1_01 (16)
 
 #endif //_C07_DEF_H_
