@@ -426,31 +426,6 @@ void PL_BOAT_SetBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const BOOL in
 
 //--------------------------------------------------------------
 /**
- * @brief　時間取得
- * @param   work      PL_BOAT_WORK_PTR
- * @retval  int       経過時間(シンク)
-*/
-//--------------------------------------------------------------
-int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work)
-{
-  return work->Time;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief　時間セット
- * @param   work      PL_BOAT_WORK_PTR
- * @param   inTime    経過時間(シンク)
- * @retval  none
-*/
-//--------------------------------------------------------------
-void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime)
-{
-  work->Time = inTime;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief	イベント取得
  * @param	 work      PL_BOAT_WORK_PTR
  * @retval PL_BOAT_EVT    発生イベントタイプ
@@ -487,7 +462,7 @@ static void EntryTrainer(PL_BOAT_WORK *work)
   u8 long_tbl[LONG_TALKER_MAX];
   u8 short_tbl[SHORT_TALKER_MAX];
 
-  RTC_GetDate( &date );
+  GFL_RTC_GetDate( &date );
 
   //曜日別にトレーナー数を決定
   switch( date.week ){
@@ -683,7 +658,7 @@ static int SearchRoomIdx(ENTRY_WORK *work, const int inRoomIdx)
   for (i=0;i<ROOM_NUM;i++){
     if (work->RoomIdx[i] == inRoomIdx) return i;
   }
-  GF_ASSERT(0);
+  GF_ASSERT_MSG(0,"roomidx=%d",inRoomIdx);
   return -1;
 }
 
@@ -788,7 +763,7 @@ static BOOL EntryRoom(ENTRY_WORK *work)
     {
       //左の部屋から抽選する
       idx = GFUser_GetPublicRand(LEFT_ROOM_NUM);
-      room_idx = RightRoom[idx];
+      room_idx = LeftRoom[idx];
     }
     del_idx = SearchRoomIdx(work, room_idx);
     //エントリ対象から抽選したインデックッスを除く

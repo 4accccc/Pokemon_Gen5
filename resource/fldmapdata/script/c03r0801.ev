@@ -564,5 +564,28 @@ ev_long_talker:
 /*	甲板部への移動用ＰＯＳ								      */ 
 /**************************************************************/
 EVENT_START		ev_pos_c03r0801_move_01
+  //@todo ここに甲板に出るアニメとかを書ける
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+
+  _PL_BOAT_CALL_DEMO(SCWK_ANSWER)
+
+  _FIELD_OPEN()
+
+  IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN
+    //望さんスクリプト終了
+    _PL_BOAT_END()
+    //マップチェンジ
+    _MAP_CHANGE( ZONE_ID_C03P15, 12, 22, DIR_RIGHT )
+  ELSE
+    //船内に戻ってくる
+    _MAP_FADE_BLACK_IN()
+
+    //@todo ここに甲板から戻ってくるアニメとかを書ける
+    
+    _MAP_FADE_END_CHECK()
+  ENDIF
 
 EVENT_END

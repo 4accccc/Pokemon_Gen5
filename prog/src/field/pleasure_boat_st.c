@@ -12,7 +12,9 @@
 
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
 
+#include "pl_boat_def.h"
 #include "demo\demo3d.h"
+#include "demo\demo3d_demoid.h"   //for DEMO3D_ID_～
 
 typedef struct DEMO_EVT_WORK_tag
 {
@@ -81,7 +83,7 @@ GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *
   evt_work->Param.start_frame = PL_BOAT_GetTime(work);
   OS_Printf("start_frame = %d\n",evt_work->Param.start_frame);
   //デモＩＤセット
-  evt_work->Param.demo_id = 0;
+  evt_work->Param.demo_id = DEMO3D_ID_C_CRUISER;
 
   return event;
 }
@@ -108,8 +110,9 @@ static GMEVENT_RESULT DemoCallEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1:
     //デモからデータ取得
-    if ( evt_work->Param.result == DEMO3D_RESULT_FINISH ) *(evt_work->RetWk) = 1;
-    else *(evt_work->RetWk) = 0;
+    if ( evt_work->Param.result == DEMO3D_RESULT_FINISH )
+      *(evt_work->RetWk) = PL_BOAT_DEMO_FINISHED;
+    else *(evt_work->RetWk) = PL_BOAT_DEMO_USER_END;
 
     //経過時間セット
     PL_BOAT_SetTime(evt_work->Ptr, evt_work->Param.end_frame);
@@ -122,5 +125,30 @@ static GMEVENT_RESULT DemoCallEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief　時間取得
+ * @note    アプリコールするときに呼ぶ
+ * @param   work      PL_BOAT_WORK_PTR
+ * @retval  int       経過時間(シンク)
+*/
+//--------------------------------------------------------------
+int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work)
+{
+  return work->Time;
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief　時間セット
+ * @note    アプリから戻ってくるときに呼ぶ
+ * @param   work      PL_BOAT_WORK_PTR
+ * @param   inTime    経過時間(シンク)
+ * @retval  none
+*/
+//--------------------------------------------------------------
+void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime)
+{
+  work->Time = inTime;
+}
 

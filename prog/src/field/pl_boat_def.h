@@ -42,5 +42,9 @@
 #define PL_BOAT_BTL_BEFORE_PAIR  (2)      //ダブルバトル可変型のじゃない方
 #define PL_BOAT_BTL_AFTER_PAIR  (3)       //ダブルバトル可変型のじゃない方
 
+//デモの終わり方
+#define PL_BOAT_DEMO_USER_END (0)         //プレーヤーがデモを終了させた
+#define PL_BOAT_DEMO_FINISHED (1)         //デモが最後まで再生された
+
 
 
