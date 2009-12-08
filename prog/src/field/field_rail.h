@@ -37,6 +37,12 @@
 #define RAIL_OFS_TO_GRID(x)  ( (x) / RAIL_WALK_OFS )
 
 
+
+//------------------------------------------------------------------
+// LINE 非アクティブ設定　最大数
+//------------------------------------------------------------------
+#define RAIL_LINE_SWITCH_BUFFER_MAX   ( 18 )
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
@@ -142,7 +148,7 @@ typedef enum {
  * @brief テーブルインデックス無効値
  */
 //------------------------------------------------------------------
-#define RAIL_TBL_NULL	( 0xffffffff )
+#define RAIL_TBL_NULL	( 0xffff )
 
 
 //-----------------------------------------------------------------------------
@@ -269,6 +275,14 @@ extern BOOL FIELD_RAIL_MAN_Calc3DPosRailLocation( const FIELD_RAIL_MAN * cp_man,
 extern BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_startpos, const VecFx32* cp_endpos, RAIL_LOCATION* p_location, VecFx32* p_locpos );
 
 
+//------------------------------------------------------------------
+// ラインのアクティブ設定
+//  非アクティブに出来るラインの個数には、制限があります！
+//  RAIL_LINE_SWITCH_BUFFER_MAX
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_SetLineActive( FIELD_RAIL_MAN * man, u32 index, BOOL flag );
+extern BOOL FIELD_RAIL_MAN_GetLineActive( const FIELD_RAIL_MAN * man, u32 index );
+
 
 //------------------------------------------------------------------
 // 基準となるレールグリッドサイズの取得
@@ -363,8 +377,6 @@ extern RAIL_KEY FIELD_RAIL_WORK_GetFrontKey( const FIELD_RAIL_WORK * work );
 //------------------------------------------------------------------
 extern void FIELD_RAIL_WORK_SetActiveFlag( FIELD_RAIL_WORK * work, BOOL flag );
 extern BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work );
-
-
 
 //------------------------------------------------------------------
 // 判定系ツール

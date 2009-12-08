@@ -93,6 +93,15 @@ static const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default =
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+//-------------------------------------
+///	ラインスイッチ
+//=====================================
+typedef struct 
+{
+  // ライン、分岐スイッチ
+  u16 flag[RAIL_LINE_SWITCH_BUFFER_MAX];
+} RAIL_LINE_SWITCH;
+
 
 //------------------------------------------------------------------
 /**
@@ -120,6 +129,7 @@ struct _FIELD_RAIL_WORK{
 
 	/// レールデータ
 	const RAIL_SETTING* rail_dat;
+	const RAIL_LINE_SWITCH* line_switch;
 
 
 	///<一定フレームでの動作用情報
@@ -143,6 +153,7 @@ struct _FIELD_RAIL_WORK{
   const FIELD_RAIL_MAN* cp_man;
 };
 
+
 //------------------------------------------------------------------
 /**
  * @brief
@@ -165,9 +176,11 @@ struct _FIELD_RAIL_MAN{
   // ロケーションのみでの計算用
   FIELD_RAIL_WORK* calc_work;
 
-
   /// ライン、ポイントテーブル
 	RAIL_SETTING rail_dat;
+
+  /// ラインスイッチ
+  RAIL_LINE_SWITCH line_switch;
 };
 
 //============================================================================================
@@ -185,6 +198,14 @@ static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key);
 static void calcKeyLocation( const FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION* ans );
 
 
+//------------------------------------------------------------------
+// ラインスイッチ
+//------------------------------------------------------------------
+static void initLineSwitch( RAIL_LINE_SWITCH* work );
+static void onLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index );
+static void offLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index );
+static BOOL getLineSwitch( const RAIL_LINE_SWITCH* work, u16 line_index );
+static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, const RAIL_SETTING * raildat, u32 index );
 
 
 //------------------------------------------------------------------
@@ -305,6 +326,9 @@ void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
 { 
   man->active_flag = TRUE;
 
+  // ラインスイッチのクリア
+  initLineSwitch( &man->line_switch );
+
   // ポイント、ラインテーブル設定
 	initRailDat( &man->rail_dat, setting );
 }
@@ -321,6 +345,9 @@ void FIELD_RAIL_MAN_Clear(FIELD_RAIL_MAN * man)
   man->active_flag = FALSE;
   // ポイント、ラインテーブル設定
 	clearRailDat( &man->rail_dat );
+  
+  // ラインスイッチのクリア
+  initLineSwitch( &man->line_switch );
 }
 
 //----------------------------------------------------------------------------
@@ -611,21 +638,24 @@ BOOL FIELD_RAIL_MAN_Calc3DPosRailLocation( const FIELD_RAIL_MAN * cp_man, const 
   // Ｙ座標が誤差以内で、その点につながるライン上にいるのか（内積を使用する）。
   for( i=0; i<cp_man->rail_dat.line_count; i++ )
   {
-    cp_line = getRailDatLine( &cp_man->rail_dat, i );
-    cp_point_s = getRailDatPoint( &cp_man->rail_dat, cp_line->point_s );
-    cp_point_e = getRailDatPoint( &cp_man->rail_dat, cp_line->point_e );
-    
-    // 求める
+    cp_line = getLineSwitchRailDatLine( &cp_man->line_switch, &cp_man->rail_dat, i );
+    if( cp_line )
     {
-	    RAIL_LINE_HIT_LOCATION_FUNC* func;
-      func = getRailDatLineHitLocationFunc( &cp_man->rail_dat, cp_line->line_pos_set );
-      if( func )
+      cp_point_s = getRailDatPoint( &cp_man->rail_dat, cp_line->point_s );
+      cp_point_e = getRailDatPoint( &cp_man->rail_dat, cp_line->point_e );
+      
+      // 求める
       {
-        result = func( i, cp_man, &pos, p_location, p_locpos );
-        // ヒット
-        if( result )
+        RAIL_LINE_HIT_LOCATION_FUNC* func;
+        func = getRailDatLineHitLocationFunc( &cp_man->rail_dat, cp_line->line_pos_set );
+        if( func )
         {
-          return result;
+          result = func( i, cp_man, &pos, p_location, p_locpos );
+          // ヒット
+          if( result )
+          {
+            return result;
+          }
         }
       }
     }
@@ -675,7 +705,12 @@ BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const 
   data_in = FALSE;
   for( i=0; i<cp_man->rail_dat.line_count; i++ )
   {
-    cp_line = getRailDatLine( &cp_man->rail_dat, i );
+    cp_line = getLineSwitchRailDatLine( &cp_man->line_switch, &cp_man->rail_dat, i );
+    if( cp_line == NULL )
+    {
+      continue;
+    }
+    
     cp_point_s = getRailDatPoint( &cp_man->rail_dat, cp_line->point_s );
     cp_point_e = getRailDatPoint( &cp_man->rail_dat, cp_line->point_e );
     cp_linepos = getRailDatLinePos( &cp_man->rail_dat, cp_line->line_pos_set );
@@ -736,6 +771,54 @@ BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const 
 
   return data_in;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールラインのアクティブ設定
+ *
+ *	@param	man       マネージャ
+ *	@param	index     ラインインデックス
+ *	@param	flag      フラグ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_SetLineActive( FIELD_RAIL_MAN * man, u32 index, BOOL flag )
+{
+  if( flag == FALSE )
+  {
+    // ラインを非アクティブに
+    if( getLineSwitch(&man->line_switch, index) == FALSE )
+    {
+      onLineSwitch( &man->line_switch, index );
+    }
+  }
+  else
+  {
+    // ラインをアクティブに
+    offLineSwitch( &man->line_switch, index );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールラインのアクティブ状態を取得
+ *
+ *	@param	man     マネージャ
+ *	@param	index   ラインインデックス
+ *
+ *	@retval TRUE  アクティブ
+ *	@retval FALSE そのラインには分岐でいかない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_GetLineActive( const FIELD_RAIL_MAN * man, u32 index )
+{
+  if( getLineSwitch(&man->line_switch, index) == FALSE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -1837,14 +1920,14 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const RAIL_LINE * RAILPOINT_getLineByKey(const RAIL_POINT * point, RAIL_KEY key, const RAIL_SETTING* rail_dat)
+static const RAIL_LINE * RAILPOINT_getLineByKey(const RAIL_POINT * point, RAIL_KEY key, const RAIL_SETTING* rail_dat, const  RAIL_LINE_SWITCH* cp_lineswitch )
 {
   int i;
   for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
   {
     if (point->keys[i] == key)
     {
-      return getRailDatLine( rail_dat, point->lines[i] );
+      return getLineSwitchRailDatLine( cp_lineswitch, rail_dat, point->lines[i] );
     }
   }
   return NULL;
@@ -1884,13 +1967,13 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
     {
       // もしも、lofs以上でl_ofs_maxで、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_e );
-      next_line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat);
+      next_line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat, work->line_switch);
     }
     else
     {
       // もしも、lofsが０未満で、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_s );
-      next_line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat);
+      next_line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat, work->line_switch);
     }
 
     // ないときは、移動不可能or通常設定
@@ -2090,11 +2173,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   if (key == nLine->key)
   {//正方向キーの場合
     const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
-    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat);
-    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat);
+    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch);
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch);
     BOOL width_over = FALSE;
-    //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat);
+    //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat, work->line_switch);
     TAMADA_Printf("↑");
     work->line_ofs += count_up;
     if (work->line_ofs < nLine_ofs_max) {   // nLine_ofs_max == 次のラインのline_ofs 0
@@ -2214,10 +2297,10 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   else if (key == getReverseKey(nLine->key))
   {//逆方向キーの場合
     const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
-    //const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
-    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat);
-    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat);
-    const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
+    //const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch);
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch);
+    const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
     BOOL width_over = FALSE;
     TAMADA_Printf("↓");
     work->line_ofs -= count_up;
@@ -2341,7 +2424,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     { 
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
-        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
+        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
         if(right)
         {
           if ( isLinePoint_S( work->rail_dat, right, nPoint ) )
@@ -2382,7 +2465,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       }
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
+        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
         if(right)
         {
           if ( isLinePoint_S( work->rail_dat, right, nPoint ) )
@@ -2447,7 +2530,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
-        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
+        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
         if(left)
         {
           if ( isLinePoint_S( work->rail_dat, left, nPoint ) )
@@ -2486,7 +2569,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       }
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat);
+        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
         if(left)
         {
           if ( isLinePoint_S( work->rail_dat, left, nPoint ) )
@@ -2606,27 +2689,30 @@ static RAIL_KEY updatePointMove(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 count_
   {
     if (nPoint->keys[i] == key)
     { // POINT --> LINE[i] への移行処理
-      const RAIL_LINE * nLine = getRailDatLine( work->rail_dat, nPoint->lines[i] );
+      const RAIL_LINE * nLine = getLineSwitchRailDatLine( work->line_switch, work->rail_dat, nPoint->lines[i] );
       s32 ofs_max;
 
-      // 
-      ofs_max = getLineOfsMax( nLine, work->ofs_unit, work->rail_dat );
-      
-			if ( isLinePoint_S( work->rail_dat, nLine, nPoint ) )
-      { 
-        setLine(work, nLine, key, count_up, 0, ofs_max, nPoint->width_ofs_max[i]);
-        //work->line_ofs = 1;  //最初は１から！
-      }
-			else if ( isLinePoint_E( work->rail_dat, nLine, nPoint ) )
+      if( nLine )
       {
-        setLine(work, nLine, key, ofs_max - count_up, 0, ofs_max, nPoint->width_ofs_max[i]);
-        //work->line_ofs = nLine->ofs_max - 1; //最後ー1から！
+        // 
+        ofs_max = getLineOfsMax( nLine, work->ofs_unit, work->rail_dat );
+        
+        if ( isLinePoint_S( work->rail_dat, nLine, nPoint ) )
+        { 
+          setLine(work, nLine, key, count_up, 0, ofs_max, nPoint->width_ofs_max[i]);
+          //work->line_ofs = 1;  //最初は１から！
+        }
+        else if ( isLinePoint_E( work->rail_dat, nLine, nPoint ) )
+        {
+          setLine(work, nLine, key, ofs_max - count_up, 0, ofs_max, nPoint->width_ofs_max[i]);
+          //work->line_ofs = nLine->ofs_max - 1; //最後ー1から！
+        }
+        //つながったLINEを次のRAILとしてセット
+        //work->type = FIELD_RAIL_TYPE_LINE;
+        //work->line = nLine;
+        //debugCheckLineData(work->line, work->rail_dat);
+        return key;
       }
-      //つながったLINEを次のRAILとしてセット
-      //work->type = FIELD_RAIL_TYPE_LINE;
-      //work->line = nLine;
-      //debugCheckLineData(work->line, work->rail_dat);
-      return key;
     }
   }
   return RAIL_KEY_NULL;
@@ -2649,7 +2735,8 @@ static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat, const
   work->line_ofs = 0;
   work->width_ofs = 0;
   work->key = RAIL_KEY_NULL;
-	work->rail_dat = rail_dat;
+	work->rail_dat      = rail_dat;
+	work->line_switch   = &cp_man->line_switch;
   work->ofs_unit = rail_dat->ofs_unit;
 
 
@@ -2991,6 +3078,118 @@ static void calcKeyLocation( const FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LO
     ans->width_grid ++;
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインスイッチバッファのクリア
+ *
+ *	@param	work  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void initLineSwitch( RAIL_LINE_SWITCH* work )
+{
+  int i;
+
+  for( i=0; i<RAIL_LINE_SWITCH_BUFFER_MAX; i++ )
+  {
+    work->flag[i] = RAIL_TBL_NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインスイッチ設定
+ *
+ *	@param	work        ワーク
+ *	@param	line_index  ラインインデックス
+ */
+//-----------------------------------------------------------------------------
+static void onLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index )
+{
+  int i;
+
+  for( i=0; i<RAIL_LINE_SWITCH_BUFFER_MAX; i++ )
+  {
+    if( work->flag[i] == RAIL_TBL_NULL )
+    {
+      work->flag[i] = line_index;
+      return ;
+    }
+  }
+  
+  // ラインスイッチの設定数オーバー
+  GF_ASSERT( 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインスイッチ解除
+ *
+ *	@param	work        ワーク
+ *	@param	line_index  ラインインデックス
+ */
+//-----------------------------------------------------------------------------
+static void offLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index )
+{
+  int i;
+
+  for( i=0; i<RAIL_LINE_SWITCH_BUFFER_MAX; i++ )
+  {
+    if( work->flag[i] == line_index )
+    {
+      work->flag[i] = RAIL_TBL_NULL;
+      return ;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインスイッチ　設定されているかチェック
+ *
+ *	@param	work        ワーク
+ *	@param	line_index  ラインインデックス
+ *
+ *	@retval TRUE  設定されている
+ *	@retval FALSE 設定されていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL getLineSwitch( const RAIL_LINE_SWITCH* work, u16 line_index )
+{
+  int i;
+
+  for( i=0; i<RAIL_LINE_SWITCH_BUFFER_MAX; i++ )
+  {
+    if( work->flag[i] == line_index )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインスイッチ  を使用した、ラインの取得関数
+ *
+ *	@param	work      ワーク
+ *	@param	raildat   レール情報
+ *	@param	index     ラインインデックス
+ *
+ *	@retval  ライン
+ *	@retval NULL  スイッチにより、そのラインには分岐できない
+ */
+//-----------------------------------------------------------------------------
+static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, const RAIL_SETTING * raildat, u32 index )
+{
+  if( getLineSwitch( work, index ) == FALSE )
+  {
+    return getRailDatLine( raildat, index );
+  }
+  return NULL;
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
