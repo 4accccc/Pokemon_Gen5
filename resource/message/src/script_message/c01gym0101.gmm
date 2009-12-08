@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:45:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-08T16:48:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,87 +293,132 @@
 
 
 	<row id="msg_c01gym0101_leader1_01" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・最初は1体だけOBJを表示
-・posを踏むとメッセージ表示
-・表示後、表示されていたOBJから
-　左右に同じOBJを展開、表示
-・続けてmsg_c01gym0101_leader1_02</comment>
-		<attribute name="キャラ指定">LEADER1</attribute>
-		<language name="JPN" width="256">ようこそ！！
-サンヨウシティ　ポケモンジムへ！</language>
-		<language name="JPN_KANJI" width="256">ようこそ！！
-サンヨウシティ　ポケモンジムへ！</language>
+		<comment>♂
+・まず、デントのみを画面中央に表示
+・メッセージ表示後、お辞儀アニメ再生
+・続けてeader1_02</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">ようこそ　こちら
+サンヨウシティ　ポケモンジムです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ようこそ　こちら
+サンヨウシティ　ポケモンジムです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_02" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・続けてmsg_c01gym0101_leader1_03</comment>
-		<language name="JPN" width="256">ぼくたちは　それぞれ
-ほのおタイプ　くさタイプ　そして[BE:00:ページ切り替え（行送り）]
-みずタイプの　ポケモンの　つかいてです！</language>
-		<language name="JPN_KANJI" width="256">ぼくたちは　それぞれ
-ほのおタイプ　くさタイプ　そして[BE:00:ページ切り替え（行送り）]
-みずタイプの　ポケモンの　使い手です！</language>
+		<comment>♂
+・続けてleader1_03a</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">あの……　ぼくたちは　それぞれ
+ほのおタイプ……　くさタイプ……[BE:00:ページ切り替え（行送り）]
+そして　みずタイプの[BE:00:ページ切り替え（行送り）]
+ポケモンの　つかいて　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あの……　ぼくたちは　それぞれ
+ほのおタイプ……　くさタイプ……[BE:00:ページ切り替え（行送り）]
+そして　みずタイプの[BE:00:ページ切り替え（行送り）]
+ポケモンの　使い手　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_03a">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
-・続けてmsg_c01gym0101_leader1_04</comment>
+	<row id="msg_c01gym0101_leader1_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・デントから2キャラ分移動、移動先で1回転してから
+　メッセージ表示
+・続けてleader1_03b</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
 		<language name="JPN" width="256">オレは　ほのおタイプの
-ポケモンで　あばれる　ポッド！</language>
+ポケモンで　あばれる　ポッド！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">オレは　ほのおタイプの
-ポケモンで　暴れる　ポッド！</language>
+ポケモンで　暴れる　ポッド！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_03b" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・続けてmsg_c01gym0101_leader1_05</comment>
-		<language name="JPN" width="256">みずタイプの　ポケモンが　すきな
-ぼく！　なまえは　コーン！</language>
-		<language name="JPN_KANJI" width="256">みずタイプの　ポケモンが　好きな
-ぼく！　名前は　コーン！</language>
+	<row id="msg_c01gym0101_leader1_03b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・デントから2キャラ分移動、移動先で1回転してから
+　メッセージ表示
+・続けてleader1_03c</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">みずタイプで　たたかう　コーンです
+いご　おみしりおき　を！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">みずタイプで　闘う　コーンです
+以後　お見知りおき　を！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_03c">
-		<comment>♂：ジムリーダー「デント」（画面右）
-・続けてmsg_c01gym0101_leader1_06</comment>
-		<language name="JPN" width="256">そして　オレが　くさタイプの
-ポケモンを　つかいこなす　デント！</language>
-		<language name="JPN_KANJI" width="256">そして　オレが　くさタイプの
-ポケモンを　使いこなす　デント！</language>
+	<row id="msg_c01gym0101_leader1_03c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・メッセージ表示後、３人その場で右回転×２（仮）
+　ただしデントだけワンテンポ遅れる
+・続けてleader1_04</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">そして　ぼくはですね
+くさタイプの　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
+デントと　もうします[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そして　ぼくはですね
+くさタイプの　ポケモンで　闘う[BE:00:ページ切り替え（行送り）]
+デントと　もうします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_04" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・0＝最初に選んだポケモン名
+	<row id="msg_c01gym0101_leader1_04" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・続けてleader1_04a</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">デント『あのですね……[BE:01:ページ切り替え（クリア）]
+ぼくたちは　ですね　どうして
+３にん　いるかと　いいますと……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">デント『あのですね……[BE:01:ページ切り替え（クリア）]
+ぼくたちは　ですね　どうして
+３人　いるかと　いいますと……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：新規追加
+・続けてleader1_04b</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
+		<language name="JPN" width="256">ポッド『もう！
+オレが　せつめい　するッ！[BE:01:ページ切り替え（クリア）]
+オレたち　３にんはッ！
+あいてが　さいしょに　えらんだ[BE:01:ページ切り替え（クリア）]
+ポケモンの　タイプに　あわせて
+だれが　たたかうか　きめるんだッ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポッド『もう！
+オレが　説明するッ！[BE:01:ページ切り替え（クリア）]
+オレたち　３人はッ！
+相手が　最初に　選んだ[BE:01:ページ切り替え（クリア）]
+ポケモンの　タイプに　あわせて
+だれが　闘うか　決めるんだッ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_04b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：新規追加
 ・最初に選んだポケモンが
 　くさ→leader1_05a
 　ほのお→leader1_05ｂ
-　みず→leader1_05c</comment>
-		<language name="JPN" width="256">ぼくたち　３人は！[BE:01:ページ切り替え（クリア）]
-きみが　さいしょに　えらんだ
-ポケモンが　にがてなタイプの[BE:00:ページ切り替え（行送り）]
-ポケモンを　つかいます！[BE:01:ページ切り替え（クリア）]
-あいてに　ゆうりな　タイプの
-ポケモンを　えらんで　たたかう……[BE:00:ページ切り替え（行送り）]
-これも　りっぱな　せんりゃく　ですよね[BE:01:ページ切り替え（クリア）]
-そして　きみが　えらんだのは
-[1:01:ポケモン種族名:0]　でしたよね</language>
-		<language name="JPN_KANJI" width="256">ぼくたち　３人は！[BE:01:ページ切り替え（クリア）]
-キミが　最初に　選んだポケモンが
-苦手とするタイプの　ポケモンを使います[BE:01:ページ切り替え（クリア）]
-相手に　有利なタイプの
-ポケモンを　選んで　戦う[BE:00:ページ切り替え（行送り）]
-これも　立派な　戦略ですよね[BE:01:ページ切り替え（クリア）]
-そして　きみが　最初に　選んだのは
-[1:01:ポケモン種族名:0]　でしたよね</language>
+　みず→leader1_05c
+・0＝最初に選んだポケモンのタイプ</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">コーン『そうなんだよね[BE:01:ページ切り替え（クリア）]
+そして　あなたが　さいしょに
+えらんだ　パートナーは[BE:00:ページ切り替え（行送り）]
+[1:03:ポケモンタイプ:0]タイプ　なんだよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">コーン『そうなんだよね[BE:01:ページ切り替え（クリア）]
+そして　あなたが　最初に
+選んだ　パートナーは[BE:00:ページ切り替え（行送り）]
+[1:03:ポケモンタイプ:0]タイプ　なんだよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_05a">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
-最初に選んだポケモンが、くさタイプ
+	<row id="msg_c01gym0101_leader1_05a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・プレイヤーが最初に選んだポケモンが「くさタイプ」
+・その場ジャンプしてからメッセージ表示
 ・表示後、主人公、移動可能</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
 		<language name="JPN" width="256">ということで
 ほのおタイプで　もやしまくる[BE:00:ページ切り替え（行送り）]
 オレ　ポッドが　あいてをするぜ！</language>
@@ -382,259 +427,292 @@
 オレ　ポッドが　相手をするぜ！</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_05b" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-最初に選んだポケモンが、ほのおタイプ
+	<row id="msg_c01gym0101_leader1_05b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・プレイヤーが最初に選んだポケモンが「ほのおタイプ」
 ・表示後、主人公、移動可能</comment>
-		<language name="JPN" width="256">ということで
-みずタイプの　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
-ポッドが　あいてを　いたします</language>
-		<language name="JPN_KANJI" width="256">ということで
-みずタイプの　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
-ポッドが　相手を　いたします！</language>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">そう！みずタイプを　あいする
+この　コーンが　あいて　なのさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そう！みずタイプを　愛する
+この　コーンが　相手　なのさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_05c">
-		<comment>♂：ジムリーダー「デント」（画面右）
-最初に選んだポケモンが、みずタイプ
+	<row id="msg_c01gym0101_leader1_05c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・プレイヤーが最初に選んだポケモンが「みずタイプ」
 ・表示後、主人公、移動可能</comment>
-		<language name="JPN" width="256">ということで
-くさタイプを　つかいこなす[BE:00:ページ切り替え（行送り）]
-デントが　あいて　だぜ！</language>
-		<language name="JPN_KANJI" width="256">ということで
-くさタイプを　使いこなす[BE:00:ページ切り替え（行送り）]
-デントが　相手だぜ！</language>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">はい……　というわけで
+くさタイプの　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
+ぼく　デントが　おあいてします[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">はい……　というわけで
+くさタイプの　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
+ぼく　デントが　お相手します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_20a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
-最初に選んだポケモンが、くさタイプ
-・msg_c01gym0101_leader1_05a表示後に会話
+	<row id="msg_c01gym0101_leader1_20a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘前メッセージ</comment>
-		<language name="JPN" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">イヤッホー！　兄弟のなかで
-一番　強い　オレと遊ぼうぜ！！</language>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
+		<language name="JPN" width="256">イヤッホー！[BE:01:ページ切り替え（クリア）]
+きょうだいで　いちばん　つよい
+オレさまと　あそぼうぜ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">イヤッホー！[BE:01:ページ切り替え（クリア）]
+兄弟で　一番　強い
+オレさまと　遊ぼうぜ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-最初に選んだポケモンが、ほのおタイプ
-・msg_c01gym0101_leader1_05b表示後に会話
+	<row id="msg_c01gym0101_leader1_20b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘前メッセージ</comment>
-		<language name="JPN" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">この　３人の　中で
-いちばん　強い　ぼくが[BE:00:ページ切り替え（行送り）]
-相手を　いたします！</language>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">よかったね！　３にんの
+トップと　たたかうことが　できて[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よかったね！　３にんの
+トップと　たたかうことが　できて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_20c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ジムリーダー「デント」（画面右）
-最初に選んだポケモンが、みずタイプ
-・msg_c01gym0101_leader1_05c表示後に会話
+	<row id="msg_c01gym0101_leader1_20c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘前メッセージ</comment>
-		<language name="JPN" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">オレ　負けないよ！
-だって　兄弟で一番　強いし！</language>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">はい　ぼくで　よろしければ
+まごころを　こめて[BE:00:ページ切り替え（行送り）]
+おあいて　させていただきます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あっ　はい　ぼくで　よろしければ
+真心を　こめて[BE:00:ページ切り替え（行送り）]
+お相手させて　いただきます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_21a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
-最初に選んだポケモンが、くさタイプ
-・msg_c01gym0101_leader1_05a表示後に会話
+	<row id="msg_c01gym0101_leader1_21a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘しない場合用</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
 		<language name="JPN" width="256">なんだよーッ！
-オレが　たたかいたかったのになー！！</language>
+オレ　あばれたかったのになー！！</language>
 		<language name="JPN_KANJI" width="256">なんだよーッ！
-オレが　闘いたかったのになー！！</language>
+オレ　あばれたかったのになー！！</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_21b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-最初に選んだポケモンが、ほのおタイプ
-・msg_c01gym0101_leader1_05b表示後に会話
+	<row id="msg_c01gym0101_leader1_21b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘しない場合用</comment>
-		<language name="JPN" width="256">ざんねんですね
-ぼくが　おあいて　したかったです</language>
-		<language name="JPN_KANJI" width="256">残念ですね
-ぼくが　お相手したかったです</language>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">よかったね　キミ
+あいてが　この　コーンじゃなくて</language>
+		<language name="JPN_KANJI" width="256">よかったね　キミ
+相手が　この　コーンじゃなくて</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_21c" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂：ジムリーダー「デント」（画面右）
-最初に選んだポケモンが、みずタイプ
-・msg_c01gym0101_leader1_05c表示後に会話
+	<row id="msg_c01gym0101_leader1_21c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・leader1_05c表示後に会話
 ・戦闘しない場合用</comment>
-		<language name="JPN" width="256">オレが　いちばん　つよいのに！
-どうして　みずタイプ　なんだよ！！</language>
-		<language name="JPN_KANJI" width="256">オレが　兄弟で一番　強いのに！
-どうして　みずタイプ　選んだんだよ！！</language>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">……うーん　どうしても
+ダンスの　タイミングが　ずれるんです[BE:01:ページ切り替え（クリア）]
+ああ　そうですよね　きみと
+ポケモンしょうぶ　してみたかったです</language>
+		<language name="JPN_KANJI" width="256">……うーん　どうしても
+ダンスの　タイミングが　ずれるんです[BE:01:ページ切り替え（クリア）]
+ああ　そうですよね　きみと
+ポケモン勝負　してみたかったです</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_06a">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
+	<row id="msg_c01gym0101_leader1_06a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ
 ・続けて最初に選んだポケモンが
-　ほのお→msg_c01gym0101_leader1_07a
-　みず→msg_c01gym0101_leader1_07b
-　くさ→msg_c01gym0101_leader1_07c</comment>
-		<language name="JPN" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
+　ほのお→leader1_07a
+　みず→eader1_07b
+　くさ→leader1_07c</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
+		<language name="JPN" width="256">うわーッ！　おまえ　すげえ！！[BE:01:ページ切り替え（クリア）]
 ポケモンリーグの　きまりだ
-この　ジムバッジを　うけとってくれ</language>
+この　ジムバッジを　うけとってくれ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">うわーッ！　おまえ　すげえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　決まりだ
-この　ジムバッジを　受け取ってくれ</language>
+ポケモンリーグの　きまりだ
+この　ジムバッジを　うけとってくれ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_06b" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
+	<row id="msg_c01gym0101_leader1_06b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ
 ・続けて最初に選んだポケモンが
-　ほのお→msg_c01gym0101_leader1_07a
-　みず→msg_c01gym0101_leader1_07b
-　くさ→msg_c01gym0101_leader1_07c</comment>
-		<language name="JPN" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　きまりだ
-この　ジムバッジを　うけとってくれ</language>
+　ほのお→leader1_07a
+　みず→eader1_07b
+　くさ→leader1_07c</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">すごいですね！[BE:01:ページ切り替え（クリア）]
+ポケモンリーグの　きまりです
+この　バッジを　どうぞ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">すごいですね！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　決まりです
-この　ジムバッジを　どうぞ！</language>
+ポケモンリーグの　きまりです
+この　バッジを　どうぞ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_06c">
-		<comment>♂：ジムリーダー「デント」（画面右）
+	<row id="msg_c01gym0101_leader1_06c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ
 ・続けて最初に選んだポケモンが
-　ほのお→msg_c01gym0101_leader1_07a
-　みず→msg_c01gym0101_leader1_07b
-　くさ→msg_c01gym0101_leader1_07c</comment>
-		<language name="JPN" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　きまりだ
-この　ジムバッジを　うけとってくれ</language>
-		<language name="JPN_KANJI" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　決まりなんだ
-この　ジムバッジを　もらってくれ！</language>
+　ほのお→leader1_07a
+　みず→eader1_07b
+　くさ→leader1_07c</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">……おどろいた
+きみ　すっごく　つよいんだね[BE:01:ページ切り替え（クリア）]
+ポッドや　コーンでは
+かてない　あいて　だったみたい……</language>
+		<language name="JPN_KANJI" width="256">……おどろいた
+きみ　すっごく　強いんだね[BE:01:ページ切り替え（クリア）]
+ポッドや　コーンでは
+勝てない　相手だったみたい……</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_07a">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
+	<row id="msg_c01gym0101_leader1_07a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ（フィールド）
 ・最初に、ほのおタイプ「ポケモン名」選択
 　ファンファーレ＋バッジ入手処理
-・続けてmsg_c01gym0101_leader1_09表示
-
-0＝主人公名</comment>
+・続けてleader1_09表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポッドから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポッドから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_07b" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
+	<row id="msg_c01gym0101_leader1_07b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ（フィールド）
 ・最初に、くさタイプ「ポケモン名」選択
 　ファンファーレ＋バッジ入手処理
-・続けてmsg_c01gym0101_leader1_09表示
-
-0＝主人公名</comment>
+・続けてleader1_09表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　コーンから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　コーンから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_07c">
-		<comment>♂：ジムリーダー「デント」（画面右）
+	<row id="msg_c01gym0101_leader1_07c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
 ・戦闘後メッセージ（フィールド）
 ・最初に、みずタイプ「ポケモン名」選択
 　ファンファーレ＋バッジ入手処理
-・続けてmsg_c01gym0101_leader1_09表示
-
-0＝主人公名</comment>
+・続けてleader1_09表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　デントから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　デントから
-トライバッジを　もらった！</language>
+トライバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_08" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・アイテム入手処理
-・続けてmsg_c03gym0101_leader_05表示</comment>
+	<row id="msg_c01gym0101_leader1_08" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・主人公に隣接してメッセージ表示
+・続けてleader1_09表示</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
 		<language name="JPN" width="256">ジムバッジは
 トレーナーの　つよさの　あかしです[BE:01:ページ切り替え（クリア）]
-あと　これも　もらってください</language>
+あと　これも　もらってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ジムバッジは
-トレーナーの　強さの証です！[BE:01:ページ切り替え（クリア）]
-あと　これも　もらってください</language>
+トレーナーの　強さの　証です[BE:01:ページ切り替え（クリア）]
+あと　これも　もらってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_09" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
+	<row id="msg_c01gym0101_leader1_09" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
 ・アイテム入手処理後
-
-0＝道具名（No000「わざマシン00」）
-1＝技名（「１２３４５６７」）</comment>
-		<language name="JPN" width="256">その　[1:09:どうぐ名:0]の　なかみは
-[1:07:わざ名:1]です！[BE:01:ページ切り替え（クリア）]
+・0＝道具名（No000「わざマシン00」）
+・1＝技名（「ふるいたてる」）</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">その　[1:09:どうぐ名:0]の　なかは
+[1:07:わざ名:1]　といいます[BE:01:ページ切り替え（クリア）]
 （わざの　かいせつ　その１）
 （わざの　かいせつ　その２）[BE:01:ページ切り替え（クリア）]
 ちなみに　わざマシンは
-なんどだって　つかえるんですよ</language>
-		<language name="JPN_KANJI" width="256">その　[1:09:どうぐ名:0]の　なかみは
-[1:07:わざ名:1]です！[BE:01:ページ切り替え（クリア）]
+なんどでも　つかえるんですよ</language>
+		<language name="JPN_KANJI" width="256">その　[1:09:どうぐ名:0]の　中は
+[1:07:わざ名:1]　といいます[BE:01:ページ切り替え（クリア）]
 （わざの　かいせつ　その１）
 （わざの　かいせつ　その２）[BE:01:ページ切り替え（クリア）]
 ちなみに　わざマシンは
-何度だって　使えるんですよ</language>
+何度でも　使えるんですよ</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_10" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
-		<comment>♂：ジムリーダー「コーン」（画面中）
-・msg_c01gym0101_leader_05
-　表示後に再度会話</comment>
+	<row id="msg_c01gym0101_leader1_10" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+		<comment>♂
+・leader1_09表示後に再度会話</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
 		<language name="JPN" width="256">ぼくたち　イッシュちほう　では
 まだ　かけだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
 ということは　ほかの　ジムリーダーは
-もっともっと　つよいって　ことですね</language>
-		<language name="JPN_KANJI" width="256">ぼくたち　イッシュ地方では
+もっと　つよいって　ことですよね[BE:00:ページ切り替え（行送り）]
+ふう　がんばらないと……　ですね</language>
+		<language name="JPN_KANJI" width="256">ぼくたち　イッシュ地方　では
 まだ　かけだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
 ということは　他の　ジムリーダーは
-もっともっと　強いって　ことですね</language>
+もっと　強いって　ことですよね[BE:00:ページ切り替え（行送り）]
+ふう　がんばらないと……　ですね</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_11">
-		<comment>♂：ジムリーダー「ポッド」（画面左）
-・msg_c01gym0101_leader_05
-　表示後に再度会話</comment>
+	<row id="msg_c01gym0101_leader1_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・leader1_09表示後に再度会話</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
 		<language name="JPN" width="256">わざマシンは　なんどだって
-つかえると　いうことは[BE:01:ページ切り替え（クリア）]
+つかえると　いうことはッ！[BE:01:ページ切り替え（クリア）]
 つれている　ポケモン
 すべてに　おなじ　わざを[BE:00:ページ切り替え（行送り）]
-おしえることだって　できるんだぜ！！</language>
-		<language name="JPN_KANJI" width="256">わざマシンは　何度だって
-使えると　いうことは[BE:01:ページ切り替え（クリア）]
-連れている　ポケモンすべてに　同じ技を
-教えることだって　できるんだぜ！！</language>
+おしえることだって　できるんだぜッ！！</language>
+		<language name="JPN_KANJI" width="256">技マシンは　何度だって
+使えると　いうことはッ！[BE:01:ページ切り替え（クリア）]
+連れている　ポケモン
+すべてに　同じ　技を[BE:00:ページ切り替え（行送り）]
+教えることだって　できるんだぜッ！！</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_12">
-		<comment>♂：ジムリーダー「デント」（画面右）
-・msg_c01gym0101_leader_05
-　表示後に再度会話</comment>
-		<language name="JPN" width="256">オレたちが
-もし　１７にん　きょうだい　だったら[BE:01:ページ切り替え（クリア）]
+	<row id="msg_c01gym0101_leader1_12" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・leader1_09表示後に再度会話</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">もし　サンヨウシティの　ジムリーダーが
+１７にん　きょうだい　だったら[BE:01:ページ切り替え（クリア）]
 それぞれが　タイプごとの
-スペシャリストに　なってただろうな</language>
-		<language name="JPN_KANJI" width="256">オレたちが　もし　１７人兄弟だったら
-それぞれが　タイプごとの[BE:00:ページ切り替え（行送り）]
-スペシャリストに　なってただろうな</language>
+スペシャリストに　なってのかもね</language>
+		<language name="JPN_KANJI" width="256">もし　サンヨウシティの　ジムリーダーが
+１７人兄弟　だったら[BE:01:ページ切り替え（クリア）]
+それぞれが　タイプごとの
+スペシャリストに　なってのかもね</language>
 	</row>
 
 	<row id="msg_c01gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
