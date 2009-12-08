@@ -8,5 +8,10 @@
 #ifndef ZONE_R09R0201_EVC_H
 #define ZONE_R09R0201_EVC_H
 
+#define R09R0201_WAITRESS_01               0
+#define R09R0201_BOY3_01                   1
+#define R09R0201_MIDDLEWOMAN1_01           2
+#define R09R0201_BREEDERM_01               3
+#define R09R0201_WOMAN3_01                 4
 
 #endif //ZONE_R09R0201_EVC_H

@@ -12,5 +12,6 @@
 #ifndef ZONE_R09_EVC_H
 #define ZONE_R09_EVC_H
 
+#define R09_BAKER_01                       0
 
 #endif //ZONE_R09_EVC_H

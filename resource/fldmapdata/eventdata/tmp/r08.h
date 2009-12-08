@@ -9,5 +9,8 @@
 #ifndef ZONE_R08_EVC_H
 #define ZONE_R08_EVC_H
 
+#define R08_BACKPACKERM_01                 0
+#define R08_CAMERAMAN_01                   1
+#define R08_AMBRELLA_01                    2
 
 #endif //ZONE_R08_EVC_H

@@ -14,5 +14,6 @@
 #ifndef ZONE_R08R0201_EVC_H
 #define ZONE_R08R0201_EVC_H
 
+#define R08R0201_BADMAN_01                 0
 
 #endif //ZONE_R08R0201_EVC_H
