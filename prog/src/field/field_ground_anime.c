@@ -37,7 +37,7 @@
 // 
 //=====================================
 //NNSG3dAnmObjのメモリサイズ	プラチナの１ブロック内のマテリアル最大数分
-#define FIELD_GRANM_WORK_ANIMEOBJ_WORK_MATNODE_MAX	( 48 )
+#define FIELD_GRANM_WORK_ANIMEOBJ_WORK_MATNODE_MAX	( 50 )
 #define FIELD_GRANM_WORK_ANIMEOBJ_WORK_SIZE	( sizeof(NNSG3dAnmObj) + (2*FIELD_GRANM_WORK_ANIMEOBJ_WORK_MATNODE_MAX) )
 
 
