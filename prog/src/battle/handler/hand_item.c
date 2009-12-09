@@ -2817,12 +2817,9 @@ static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
 
-  param->fExMsg = TRUE;
-  param->exStr.type = BTL_STRTYPE_SET;
-  param->exStr.ID = BTL_STRID_SET_MoudokuGetSP;
-  param->exStr.argCnt = 2;
-  param->exStr.args[0] = pokeID;
-  param->exStr.args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );;
+  HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MoudokuGetSP );
+  HANDEX_STR_AddArg( &param->exStr, pokeID );
+  HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
 }
 // ‚È‚°‚Â‚¯Œø‰Ê
 static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -2860,13 +2857,12 @@ static void handler_KaenDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   param->fAlmost = FALSE;
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
-  param->fExMsg = TRUE;
-
-  param->exStr.type = BTL_STRTYPE_SET;
-  param->exStr.ID = BTL_STRID_SET_YakedoGetSP;
-  param->exStr.argCnt = 2;
-  param->exStr.args[0] = pokeID;
   param->exStr.args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );;
+
+  HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YakedoGetSP );
+  HANDEX_STR_AddArg( &param->exStr, pokeID );
+  HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
 }
 // ‚È‚°‚Â‚¯Œø‰Ê
 static void handler_KaenDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
