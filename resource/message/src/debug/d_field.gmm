@@ -307,7 +307,7 @@
 
 	<dialog left="129" top="208" right="834" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
+		<tag-palette left="412" top="136" right="940" bottom="658" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -791,12 +791,20 @@
 res(0x[2:07:８桁:1])
 
 fldmmdl
-res(0x[2:07:８桁:3])</language>
+res(0x[2:07:８桁:3])
+
+heapID Field
+free size (0x[2:07:８桁:4])
+allocable (0x[2:07:８桁:5])</language>
 		<language name="JPN_KANJI" width="160">bmodel
 res(0x[2:07:８桁:1])
 
 fldmmdl
-res(0x[2:07:８桁:3])</language>
+res(0x[2:07:８桁:3])
+
+heapID Field
+free size (0x[2:07:８桁:4])
+allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR55">

@@ -434,7 +434,7 @@ extern void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera);
 extern void FIELD_CAMERA_DEBUG_InitControl( FIELD_CAMERA* camera, HEAPID heapID );
 extern void FIELD_CAMERA_DEBUG_ExitControl( FIELD_CAMERA* camera );
 extern BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int repeat );
-extern void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win );
+extern void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 map_size_x, fx32 map_size_z );
 extern void FIELD_CAMERA_DEBUG_DrawControlHelp( FIELD_CAMERA* camera, GFL_BMPWIN* p_win );
 #endif
 

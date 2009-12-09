@@ -8,6 +8,8 @@
 #include <gflib.h>
 #include <calctool.h>
 
+#include "field/field_const.h"
+
 #include "field_g3d_mapper.h"
 #include "field_common.h"
 #include "field_camera.h"
@@ -2010,7 +2012,7 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
  *	@param	p_win     ウィンドウ
  */
 //-----------------------------------------------------------------------------
-void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
+void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 map_size_x, fx32 map_size_z )
 {
   //クリア
   
@@ -2101,6 +2103,85 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
 
     WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 128, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // Maya Camera Anime Trans
+  // 小数点　第2位まで表示
+  {
+    f32 f_x, f_y, f_z;
+    s32 x, y, z;
+    u16 rot_x, rot_y, rot_z;
+    fx32 xz_dist;
+    VecFx32 camerapos, target, xz_vec;
+
+    GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
+    GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camerapos );
+    // カメラ座標を表示
+    // 小数点以下無視
+    x = FX_Whole( camerapos.x ) - (FX_Whole(map_size_x)/2);
+    y = FX_Whole( camerapos.y );
+    z = FX_Whole( camerapos.z ) - (FX_Whole(map_size_z)/2);
+
+    f_x = FX_FX32_TO_F32(camerapos.x - FX_Floor(camerapos.x));
+    f_y = FX_FX32_TO_F32(camerapos.y - FX_Floor(camerapos.y));
+    f_z = FX_FX32_TO_F32(camerapos.z - FX_Floor(camerapos.z));
+
+    /// 整数部
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 0, x, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 1, y, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 2, z, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+
+    /// 小数部
+    x = (s32)(f_x * 100.0f);
+    y = (s32)(f_y * 100.0f);
+    z = (s32)(f_z * 100.0f);
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 3, x, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 5, z, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_MAYA_TRANS, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 144, camera->p_debug_strbuff, camera->p_debug_font );
+
+    // カメラからターゲットへのベクトルを生成
+    VEC_Subtract( &target, &camerapos, &target );
+
+    // XZ平面の距離を求める
+    VEC_Set( &xz_vec, target.x, 0, target.z );
+    xz_dist = VEC_Mag( &xz_vec );
+
+    // 角度を求める
+    // XZ平面の角度
+    // 平面とY方向の角度
+    rot_y = FX_Atan2Idx( -target.x, -target.z );
+    rot_x = FX_Atan2Idx( target.y, xz_dist );
+    rot_z = 0;
+
+    f_x = (f32)(rot_x / (f32)0x10000) * 360.0f;
+    f_y = (f32)(rot_y / (f32)0x10000) * 360.0f;
+    x = (s32)f_x;
+    y = (s32)f_y;
+    z = 0;
+    
+    /// 整数部
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 0, x, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 1, y, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 2, z, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+
+    /// 小数部
+    f_x -= x;
+    f_y -= y;
+    x = (s32)(f_x * 100.0f);
+    y = (s32)(f_y * 100.0f);
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 3, x, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( camera->p_debug_wordset, 5, z, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_MAYA_ROTATE, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 160, camera->p_debug_strbuff, camera->p_debug_font );
   }
 
   GFL_BMPWIN_TransVramCharacter( p_win );

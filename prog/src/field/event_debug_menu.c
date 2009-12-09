@@ -3326,6 +3326,11 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
 
   // 表示面の作成
   {
+    const FLDMAPPER* cp_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldWork );
+    fx32 map_size_x, map_size_z;
+
+    FLDMAPPER_GetSize( cp_mapper, &map_size_x, &map_size_z );
+    
     // インフォーバーの非表示
     FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(p_fieldWork));
     GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
@@ -3361,7 +3366,7 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
       BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, heapID );
       BmpWinFrame_Write( p_work->p_win, TRUE, 1, 15 );
 
-      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win );
+      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win, map_size_x, map_size_z );
     }
   }
 
@@ -3380,6 +3385,10 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
   int trg = GFL_UI_KEY_GetTrg();
   int cont = GFL_UI_KEY_GetCont();
   int repeat = GFL_UI_KEY_GetRepeat();
+  const FLDMAPPER* cp_mapper = FIELDMAP_GetFieldG3Dmapper( p_work->p_field );
+  fx32 map_size_x, map_size_z;
+
+  FLDMAPPER_GetSize( cp_mapper, &map_size_x, &map_size_z );
 
   // SELECT終了
   if( trg & PAD_BUTTON_SELECT )
@@ -3427,7 +3436,7 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
     {
       // カメラ情報を更新
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
-      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win );
+      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win, map_size_x, map_size_z );
     }
   }
   
@@ -3715,6 +3724,10 @@ static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
   WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
 
 #endif  // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+
+  // FIELDヒープの残り
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 4, GFI_HEAP_GetHeapFreeSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 5, GFI_HEAP_GetHeapAllocatableSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
 
   // 表示
   GFL_MSG_GetString( p_wk->p_debug_msgdata, DEBUG_FIELD_STR54, p_wk->p_debug_strbuff_tmp );
