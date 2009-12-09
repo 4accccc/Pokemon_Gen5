@@ -195,6 +195,15 @@ extern int GFL_NET_StateStartWifiPeerMatch( int target );
 extern int GFL_NET_StateStartWifiRandomMatch( void);
 //==============================================================================
 /**
+ * @brief   WIFIランダムマッチを開始する
+ * @param   pNetHandle   GFL_NETHANDLE
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_StateStartWifiRandomMatch_RateMode(void );
+//==============================================================================
+/**
  * @brief   WIFIでマッチングを切る場合の処理
  * @param   bAuto  自分から強制切断するときはFALSE 接続状況にあわせる場合TRUE
  * @retval  none
