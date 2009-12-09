@@ -90,7 +90,7 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
       FIELD_BMODEL_MAN* man;
       mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
       man    = FLDMAPPER_GetBuildModelManager( mapper );
-      G3DMAPOBJST_setAnime( man, work->pcStatus, 1, BMANM_REQ_START );
+      G3DMAPOBJST_setAnime( man, work->pcStatus, 1, BMANM_REQ_LOOP );
     }
     ++(*seq);
     break;
