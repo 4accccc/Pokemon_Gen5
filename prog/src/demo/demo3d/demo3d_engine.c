@@ -103,6 +103,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 
   GF_ASSERT( graphic );
 
+  HOSAKA_Printf("start_frame=%d\n",start_frame);
+
   // メインワーク アロケート
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(DEMO3D_ENGINE_WORK) );
 
@@ -110,8 +112,14 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->graphic       = graphic;
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
-  wk->anime_speed = FX32_ONE; // アニメーションスピード(固定)
+  wk->anime_speed   = FX32_ONE; // アニメーションスピード(固定)
 
+  //@TODO 応急処置 クルーザーは30FPS
+  if( demo_id == DEMO3D_ID_C_CRUISER )
+  {
+    GFL_UI_ChangeFrameRate( GFL_UI_FRAMERATE_30 );
+  }
+  
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
   unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
@@ -179,6 +187,9 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
+  // 60FPSにもどす
+  GFL_UI_ChangeFrameRate( GFL_UI_FRAMERATE_60 );
+  
   Demo3D_CMD_Exit( wk->cmd );
 
   // ICA破棄
@@ -215,6 +226,8 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   GFL_G3D_CAMERA* p_camera;
   BOOL is_loop;
   GFL_G3D_OBJSTATUS status;
+
+  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // コマンド実行
   Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT );
@@ -258,8 +271,6 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   {
     is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
   }
-
-  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // ループ検出で終了
   return is_loop;

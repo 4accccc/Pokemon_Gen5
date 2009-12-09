@@ -182,7 +182,7 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, u32 now_frame )
   // 頭出し
   data = &data[ wk->cmd_idx ];
     
-  GF_ASSERT( data->frame > now_frame );
+  GF_ASSERT( data->frame >= now_frame );
 
   // 指定フレームまで待機
   if( data->frame == now_frame )
@@ -235,10 +235,11 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
     {
       cmd_exec( &data[i] );
     }
-    else if( data[i].frame > now_frame )
+    else if( data[i].frame >= now_frame )
     {
       // 頭出し終了
       *out_idx = i;
+      HOSAKA_Printf("setup cmd_idx=%d \n", i);
       return FALSE;
     }
   }
@@ -260,7 +261,12 @@ static void cmd_exec( const DEMO3D_CMD_DATA* data )
   GF_ASSERT( data->type != DEMO3D_CMD_TYPE_NULL );
   GF_ASSERT( data->type < DEMO3D_CMD_TYPE_END );
       
-  HOSAKA_Printf("cmd exec type=%d \n", data->type);
+  OS_TPrintf("call cmd type=%d [%d,%d,%d,%d,%d,%d]\n", data->type,
+      data->param[0],
+      data->param[1],
+      data->param[2],
+      data->param[3]
+      );
   
   c_cmdtbl[ data->type ]( data->param );
 }
