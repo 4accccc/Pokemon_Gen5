@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="tanoue_reiko" host="W00192" date="2009-12-09T15:43:30" source="in31_r_sita.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="26"
+	scaling_rule="maya"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="25"
+	interpolation="frame"
+	compress_node="merge" node_size="4 2"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="3">
+	0.000000 90.000000 -90.000000
+</node_rotate_data>
+
+<node_translate_data size="30">
+	64.000000 0.000000 -28.000000 38.000000 0.000000 -1.280029 -2.560059 -3.840088 -5.120117 -6.399902
+	-7.679932 -8.959961 -10.239990 -11.520020 -12.800049 -14.080078 -15.360107 -16.639893 -17.919922 -19.199951
+	-20.479980 -21.760010 -23.040039 -24.320068 -25.600098 -26.879883 -28.159912 -29.439941 -30.719971 -32.000000
+</node_translate_data>
+
+<node_anm_array size="2">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="1"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="2"/>
+	</node_anm>
+	<node_anm index="1">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="2"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="3"/>
+		<translate_y frame_step="1" data_size="26" data_head="4"/>
+		<translate_z frame_step="1" data_size="1" data_head="1"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
