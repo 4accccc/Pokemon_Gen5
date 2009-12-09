@@ -1291,36 +1291,6 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 //======================================================================
-//
-//
-//    3Dデモ関連
-//
-//
-//======================================================================
-#include "demo/demo3d.h"
-static DEMO3D_PARAM DebugDemo3DParam = { DEMO3D_ID_N_CASTLE, 0 };
-//--------------------------------------------------------------
-/**
- * @brief   デモ呼び出し
- * @param	core		仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- *
- * @todo  まだ仮コマンドに過ぎない。3Dデモ呼び出しが完成したら追加する
- *
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
-{
-  u16 demo_no = SCRCMD_GetVMWorkValue( core, wk );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
-  GMEVENT * event = GAMESYSTEM_GetEvent( gsys );
-  GMEVENT_CallProc( event, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &DebugDemo3DParam );
-  return VMCMD_RESULT_SUSPEND;
-}
-
-
-//======================================================================
 //  その他
 //======================================================================
 //--------------------------------------------------------------
