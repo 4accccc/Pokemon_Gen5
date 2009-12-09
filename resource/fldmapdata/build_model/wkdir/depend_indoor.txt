@@ -112,4 +112,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d6_denkiiwa01.nsbmd \
 	$(RESDIR)/d6_yuka_biri02.nsbmd \
 	$(RESDIR)/d6_yuka_biri03.nsbmd \
+	$(RESDIR)/pcev02.nsbmd \
 

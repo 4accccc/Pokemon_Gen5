@@ -111,3 +111,4 @@
 "nsbmdfiles/d6_denkiiwa01.nsbmd"
 "nsbmdfiles/d6_yuka_biri02.nsbmd"
 "nsbmdfiles/d6_yuka_biri03.nsbmd"
+"nsbmdfiles/pcev02.nsbmd"
