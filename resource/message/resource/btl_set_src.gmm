@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-03T15:25:36"/>
+	<create user="taya" host="W00146" date="2009-12-09T16:49:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1411,7 +1411,6 @@
 	</row>
 
 	<row id="BTL_STRID_SET_Mamoru">
-		<comment>まもる、みきり</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 こうげきから　みを　まもった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
@@ -1432,6 +1431,14 @@
 そらたかく　とびあがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 空高く　飛び上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Ikari">
+		<comment>いかり</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+いかりのボルテージが　あがっていく！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+怒りのボルテージが　上がっていく！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Diving">
