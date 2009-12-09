@@ -321,8 +321,9 @@ VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
 {
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   VecFx32 pos;
@@ -338,7 +339,7 @@ VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  entry = BMANIME_DIRECT_Search( bmodel_man, BM_SEARCH_ID_DOOR, &pos );
+  entry = BMANIME_DIRECT_Search( bmodel_man, bm_id, &pos );
   G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
   G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
 
@@ -399,7 +400,7 @@ static void * getMemory(MEMKEY key)
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static BOOL EvWaitDoorAnime( VMHANDLE *core, void *wk );
+static BOOL EvWaitBModelAnime( VMHANDLE *core, void *wk );
 enum { DOOR_ANIME_KEY_01 = 0x03fa };
 
 //--------------------------------------------------------------
@@ -411,9 +412,10 @@ enum { DOOR_ANIME_KEY_01 = 0x03fa };
  *
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   MEMKEY key;
@@ -430,7 +432,7 @@ VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &pos );
+  ctrl = BMANIME_CTRL_Create( bmodel_man, bm_id, &pos );
 
   reserveKey( ctrl, DOOR_ANIME_KEY_01 );
 
@@ -448,7 +450,7 @@ VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk )
  *
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
 
@@ -473,7 +475,7 @@ VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk )
  *
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
@@ -505,10 +507,10 @@ VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
  * キーを持ったリスト構造でワーク管理する？
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
-  VMCMD_SetWait( core, EvWaitDoorAnime );
+  VMCMD_SetWait( core, EvWaitBModelAnime );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -521,7 +523,7 @@ VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk )
  * @return  BOOL  TRUEのとき終了
  */
 //--------------------------------------------------------------
-static BOOL EvWaitDoorAnime( VMHANDLE *core, void *wk )
+static BOOL EvWaitBModelAnime( VMHANDLE *core, void *wk )
 {
   BMANIME_CONTROL_WORK * ctrl;
   ctrl = getMemory( DOOR_ANIME_KEY_01 );  //手抜き

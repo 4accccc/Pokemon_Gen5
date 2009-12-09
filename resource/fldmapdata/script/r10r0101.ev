@@ -43,7 +43,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_init_r10r0101
   IF FLAG_ON( FE_BADGEGATE01_OPEN ) THEN
-    _DOOR_ANIME_SET_OPENED( 15, 7 )
+    _BMODEL_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
   ENDIF
 INIT_EVENT_END
 
@@ -53,7 +53,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_recover_r10r0101
   IF FLAG_ON( FE_BADGEGATE01_OPEN ) THEN
-    _DOOR_ANIME_SET_OPENED( 15, 7 )
+    _BMODEL_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
   ENDIF
 INIT_EVENT_END
 
@@ -147,9 +147,9 @@ ev_sub_gate_open_demo:
       DEFINE_LOCAL	DOOR_ANIME_ID
 
       //ゲートアニメ制御
-      _DOOR_ANIME_CREATE( DOOR_ANIME_ID, 15, 7 )
-      _DOOR_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-      _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+      _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 15, 7 )
+      _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+      _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
       //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
       _BALLOONWIN_OBJMSG( msg_r10r0101_badge_03, R10R0101_VETERANM )
@@ -180,7 +180,7 @@ ev_sub_gate_open_demo:
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
 
-      _DOOR_ANIME_DELETE( DOOR_ANIME_ID )
+      _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
     }
 
     _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）

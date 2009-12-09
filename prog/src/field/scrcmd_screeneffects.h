@@ -25,12 +25,12 @@ extern VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk );
 
 
 

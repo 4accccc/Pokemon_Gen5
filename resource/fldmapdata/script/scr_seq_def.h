@@ -4735,93 +4735,97 @@
 
 //--------------------------------------------------------------
 /**
- * @def _DOOR_ANIME_CREATE
- * @brief ドアアニメコントローラーの生成
+ * @def _BMODEL_ANIME_CREATE
+ * @brief 配置モデルアニメコントローラーの生成
  * @param ret_wk  anm_idをうけとるためのワーク
+ * @param bm_id   配置モデルの種類指定ID（script_def.hを参照）
  * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
  * @param gz      アニメ生成する配置モデルのZ位置（グリッド単位）
  *
- * ret_wkで受け取ったアニメ指定IDを使ってドアアニメ各コマンド
- * （_DOOR_ANIME_DELETE/_DOOR_ANIME_SET/_DOOR_ANIME_WAIT）を
+ * ret_wkで受け取ったアニメ指定IDを使って配置モデルアニメ各コマンド
+ * （_BMODEL_ANIME_DELETE/_BMODEL_ANIME_SET/_BMODEL_ANIME_WAIT）を
  * 呼び出す。
  */
 //--------------------------------------------------------------
-#define _DOOR_ANIME_CREATE( ret_wk, gx, gz ) \
-    _ASM_DOOR_ANIME_CREATE ret_wk, gx, gz
+#define _BMODEL_ANIME_CREATE( ret_wk, bm_id, gx, gz ) \
+    _ASM_BMODEL_ANIME_CREATE ret_wk, bm_id, gx, gz
 
-    .macro _ASM_DOOR_ANIME_CREATE ret_wk, gx, gz
-    .short  EV_SEQ_DOOR_ANIME_CREATE
+    .macro _ASM_BMODEL_ANIME_CREATE ret_wk, bm_id, gx, gz
+    .short  EV_SEQ_BMODEL_ANIME_CREATE
     .short  \ret_wk
+    .short  \bm_id
     .short  \gx
     .short  \gz
     .endm
 
 //--------------------------------------------------------------
 /**
- * @def _DOOR_ANIME_DELETE
- * @brief ドアアニメコントローラーの削除
+ * @def _BMODEL_ANIME_DELETE
+ * @brief 配置モデルアニメコントローラーの削除
  * @param anm_id  配置モデルを指定するためのID
  */
 //--------------------------------------------------------------
-#define _DOOR_ANIME_DELETE( anm_id ) \
-     _ASM_DOOR_ANIME_DELETE anm_id
+#define _BMODEL_ANIME_DELETE( anm_id ) \
+     _ASM_BMODEL_ANIME_DELETE anm_id
 
-     .macro _ASM_DOOR_ANIME_DELETE anm_id
-     .short EV_SEQ_DOOR_ANIME_DELETE
+     .macro _ASM_BMODEL_ANIME_DELETE anm_id
+     .short EV_SEQ_BMODEL_ANIME_DELETE
      .short \anm_id
      .endm
 
 //--------------------------------------------------------------
 /**
- * @def _DOOR_ANIME_SET
- * @brief ドアアニメのセット
+ * @def _BMODEL_ANIME_SET
+ * @brief 配置モデルアニメのセット
  * @param anm_id    配置モデルを指定するためのID
  * @param anm_type  アニメーションの種類指定
  */
 //--------------------------------------------------------------
-#define _DOOR_ANIME_SET( anm_id, anm_type ) \
-    _ASM_DOOR_ANIME_SET anm_id, anm_type
+#define _BMODEL_ANIME_SET( anm_id, anm_type ) \
+    _ASM_BMODEL_ANIME_SET anm_id, anm_type
 
-    .macro _ASM_DOOR_ANIME_SET anm_id, anm_type
-    .short  EV_SEQ_DOOR_ANIME_SET
+    .macro _ASM_BMODEL_ANIME_SET anm_id, anm_type
+    .short  EV_SEQ_BMODEL_ANIME_SET
     .short  \anm_id
     .short  \anm_type
     .endm
 
 //--------------------------------------------------------------
 /**
- * @def _DOOR_ANIME_WAIT
- * @brief ドアアニメの終了待ち
+ * @def _BMODEL_ANIME_WAIT
+ * @brief 配置モデルアニメの終了待ち
  * @param anm_id  配置モデルを指定するためのID
  */
 //--------------------------------------------------------------
-#define _DOOR_ANIME_WAIT( anm_id ) \
-    _ASM_DOOR_ANIME_WAIT anm_id
+#define _BMODEL_ANIME_WAIT( anm_id ) \
+    _ASM_BMODEL_ANIME_WAIT anm_id
 
-    .macro _ASM_DOOR_ANIME_WAIT anm_id
-    .short  EV_SEQ_DOOR_ANIME_WAIT
+    .macro _ASM_BMODEL_ANIME_WAIT anm_id
+    .short  EV_SEQ_BMODEL_ANIME_WAIT
     .short  \anm_id
     .endm
 
 //--------------------------------------------------------------
 /**
- * @def _DOOR_ANIME_SET_OPENED
- * @brief ドアアニメ状態を開けっ放しにする
+ * @def _BMODEL_ANIME_SET_FINISHED
+ * @brief 配置モデルアニメ状態を終了状態で固定する
+ * @param bm_id   配置モデルの種類指定ID（script_def.hを参照）
  * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
  * @param gz      アニメ生成する配置モデルのZ位置（グリッド単位）
  *
  * @note
- * ・グローバルなアニメ状態を操作するので、マップ中の同じ種類のすべてのドアが開く
+ * ・グローバルなアニメ状態を操作するので、マップ中の同じ種類のすべての配置モデルに適用される
  * ・状態は保持されないため、マップ再構成時に毎回呼び出す必要がある
  *
  * バッジチェックゲートを開けっ放しにするためのコマンドで、他では使い道がないかも。
  */
 //--------------------------------------------------------------
-#define _DOOR_ANIME_SET_OPENED( gx, gz )  \
-    _ASM_DOOR_ANIME_SET_OPENED gx, gz
+#define _BMODEL_ANIME_SET_FINISHED( bm_id, gx, gz )  \
+    _ASM_BMODEL_ANIME_SET_FINISHED bm_id, gx, gz
 
-    .macro  _ASM_DOOR_ANIME_SET_OPENED gx, gz
-    .short  EV_SEQ_DOOR_ANIME_SET_OPENED
+    .macro  _ASM_BMODEL_ANIME_SET_FINISHED bm_id, gx, gz
+    .short  EV_SEQ_BMODEL_ANIME_SET_FINISHED
+    .short  \bm_id
     .short  \gx
     .short  \gz
     .endm
