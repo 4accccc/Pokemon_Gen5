@@ -5626,14 +5626,15 @@
 //--------------------------------------------------------------
 /**
  * @def _CALL_SHOP_PROC_BUY
- * @brief ショップイベント呼び出し
+ * @brief 四天王　歩きアニメーションイベント呼び出し
  * @param fourking_id 0～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
  */
 //--------------------------------------------------------------
 #define _FOURKINGS_WALKEVENT( fourking_id ) _ASM_FOURKINGS_WALKEVENT fourking_id
+
   .macro  _ASM_FOURKINGS_WALKEVENT fourking_id
   .short  EV_SEQ_FOURKINGS_WALKEVENT
-  .short  fourking_id
+  .short  \fourking_id
   .endm
 
 
