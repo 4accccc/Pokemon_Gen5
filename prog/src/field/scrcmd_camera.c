@@ -41,6 +41,14 @@ typedef struct CAM_PARAM_tag
   FLD_CAM_MV_PARAM_CHK Chk;
 }CAM_PARAM;
 
+// 構造体が想定のサイズとなっているかチェック
+#ifdef PM_DEBUG
+#ifdef _NITRO
+SDK_COMPILER_ASSERT(sizeof(CAM_PARAM) == 44);
+#endif
+#endif		//PM_DEBUG
+
+
 //--------------------------------------------------------------
 /**
  * カメラ終了処理
