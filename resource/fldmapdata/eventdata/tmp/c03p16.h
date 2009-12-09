@@ -8,5 +8,6 @@
 #ifndef ZONE_C03P16_EVC_H
 #define ZONE_C03P16_EVC_H
 
+#define C03P16_CABINGUIDE_01               0
 
 #endif //ZONE_C03P16_EVC_H

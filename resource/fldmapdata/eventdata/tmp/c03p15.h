@@ -8,6 +8,5 @@
 #ifndef ZONE_C03P15_EVC_H
 #define ZONE_C03P15_EVC_H
 
-#define C03P15_CABINGUIDE_01               0
 
 #endif //ZONE_C03P15_EVC_H

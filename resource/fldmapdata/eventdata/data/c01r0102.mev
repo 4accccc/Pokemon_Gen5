@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/27 12:03:04
+#save date:2009/12/09 12:20:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0102.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/27 12:03:04
+#save date:
 2
 #hold event type:
 1
@@ -16,7 +16,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0102.wms
 #ID name
 C01R0102_INVENTOR_01
 #OBJ CODE Number
-GIRL1
+ASSISTANTW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -37,6 +37,8 @@ DIR_RIGHT
 2
 #Move Limit Z Number
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 120
 #event number: 1
@@ -66,13 +68,15 @@ DIR_LEFT
 0
 #Move Limit Z Number
 4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/27 12:03:04
+#save date:
 2
 #hold event type:
 1
@@ -87,13 +91,15 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_C01R0102_BOOKS_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -216 0 104
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/27 12:03:04
+#save date:
 2
 #hold event type:
 1
@@ -103,7 +109,7 @@ SCRID_C01R0102_BOOKS_01
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/27 12:03:04
+#save date:
 2
 #hold event type:
 1
@@ -120,7 +126,11 @@ DOOR_ID_C01R0101_C01R0102_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -88 0 216
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

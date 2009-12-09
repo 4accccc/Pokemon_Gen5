@@ -9,9 +9,6 @@
 #define DOOR_ID_C01_C01R0501_EXIT01       4
 #define DOOR_ID_C01_C01GYM0101_EXIT01     5
 #define DOOR_ID_C01_D01R0101_EXIT01       6
-#define DOOR_ID_C01_D01R0101_EXIT02       7
-#define DOOR_ID_C01_D01R0101_EXIT03       8
-#define DOOR_ID_C01_D01R0101_EXIT04       9
 
 #endif //ZONE_C01_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

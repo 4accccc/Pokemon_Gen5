@@ -3,11 +3,7 @@
 #define ZONE_H01R0101_EVD_H
 
 #define DOOR_ID_H01R0101_H01P01_EXIT01    0
-#define DOOR_ID_H01R0101_H01P01_EXIT03    1
-#define DOOR_ID_H01R0101_H01P01_EXIT02    2
-#define DOOR_ID_H01R0101_H01_EXIT01       3
-#define DOOR_ID_H01R0101_H01_EXIT03       4
-#define DOOR_ID_H01R0101_H01_EXIT02       5
+#define DOOR_ID_H01R0101_H01_EXIT01       1
 
 #endif //ZONE_H01R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

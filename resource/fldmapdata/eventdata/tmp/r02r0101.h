@@ -3,11 +3,7 @@
 #define ZONE_R02R0101_EVD_H
 
 #define DOOR_ID_R02R0101_T02_EXIT01       0
-#define DOOR_ID_R02R0101_T02_EXIT03       1
-#define DOOR_ID_R02R0101_T02_EXIT02       2
-#define DOOR_ID_R02R0101_R02_EXIT01       3
-#define DOOR_ID_R02R0101_R02_EXIT03       4
-#define DOOR_ID_R02R0101_R02_EXIT02       5
+#define DOOR_ID_R02R0101_R02_EXIT01       1
 
 #endif //ZONE_R02R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

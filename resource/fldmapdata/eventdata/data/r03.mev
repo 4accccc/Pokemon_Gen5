@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/11 20:48:27
+#save date:2009/12/09 11:40:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/11 20:48:27
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 1000 16 56
 #event number: 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 712 0 -40
 #event number: 2
@@ -95,6 +99,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 728 0 -40
 #event number: 3
@@ -124,6 +130,8 @@ DIR_DOWN
 1
 #Move Limit Z Number
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 808 16 24
 #event number: 4
@@ -153,6 +161,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 608 0 -64
 #event number: 5
@@ -182,6 +192,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 624 0 -48
 #event number: 6
@@ -211,6 +223,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 640 0 -64
 #event number: 7
@@ -240,6 +254,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 640 0 -48
 #event number: 8
@@ -269,6 +285,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 624 0 -64
 #event number: 9
@@ -298,6 +316,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 648 0 -360
 #event number: 10
@@ -327,6 +347,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 776 16 104
 #event number: 11
@@ -356,6 +378,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 712 16 40
 #event number: 12
@@ -385,6 +409,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 616 16 120
 #event number: 13
@@ -414,6 +440,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 728 16 40
 #event number: 14
@@ -443,6 +471,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 568 0 -40
 #event number: 15
@@ -472,6 +502,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 104 16 -104
 #event number: 16
@@ -501,6 +533,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 488 0 -232
 #event number: 17
@@ -530,6 +564,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 536 0 -504
 #event number: 18
@@ -559,6 +595,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 -616
 #event number: 19
@@ -588,6 +626,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 16 -168
 #event number: 20
@@ -617,6 +657,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 248 0 -264
 #event number: 21
@@ -646,6 +688,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 296 0 -648
 #event number: 22
@@ -675,6 +719,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 312 0 -568
 #event number: 23
@@ -704,6 +750,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 200 0 -536
 #event number: 24
@@ -733,6 +781,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 56 0 -568
 #event number: 25
@@ -762,6 +812,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 16 -248
 #event number: 26
@@ -791,6 +843,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 440 0 -104
 #event number: 27
@@ -820,13 +874,15 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 472 0 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/11 20:48:27
+#save date:
 2
 #hold event type:
 1
@@ -841,6 +897,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_R03_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 1064 0 -40
 #event number: 1
@@ -852,8 +910,10 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_R03_BOARD_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-632 0 -24
+504 0 -24
 #event number: 2
 #Bg Event Label
 R03_BOARD_03
@@ -863,13 +923,15 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_R03_BOARD_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 888 16 56
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/11 20:48:27
+#save date:
 2
 #hold event type:
 1
@@ -880,71 +942,79 @@ SCRID_BG_R03_BOARD_03
 SCRID_POS_R03_RIVAL_02
 #Pos Script Name
 SCRID_POS_R03_RIVAL_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_R03
 #Event Trigger Work Value
 3
-#Pos Event Size X
-1
-#Pos Event Size Z
-4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 496 0 -336
+#size
+1 4
 #event number: 1
 #Pos Event Label
 SCRID_POS_R03_SUPPORT_01
 #Pos Script Name
 SCRID_POS_R03_SUPPORT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_R03
 #Event Trigger Work Value
 1
-#Pos Event Size X
-4
-#Pos Event Size Z
-1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 440 0 -104
+#size
+4 1
 #event number: 2
 #Pos Event Label
 SCRID_R03_RIVAL_01
 #Pos Script Name
 SCRID_POS_R03_RIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_R03
 #Event Trigger Work Value
 0
-#Pos Event Size X
-1
-#Pos Event Size Z
-5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 480 0 -16
+#size
+1 5
 #event number: 3
 #Pos Event Label
 POSID_R03_SUPPORT_03
 #Pos Script Name
 SCRID_POS_R03_SUPPORT_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_R03
 #Event Trigger Work Value
 2
-#Pos Event Size X
-3
-#Pos Event Size Z
-1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 440 0 -88
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/11 20:48:27
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-8
+7
 #event number: 0
 #Door Event Label
 DOOR_ID_R03_C02R0701_EXIT01
@@ -956,8 +1026,12 @@ DOOR_ID_C02R0701_R03_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -600
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_R03_C02R0701_EXIT02
@@ -969,8 +1043,12 @@ DOOR_ID_C02R0701_R03_EXIT02
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -616
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_R03_C02R0701_EXIT03
@@ -982,8 +1060,12 @@ DOOR_ID_C02R0701_R03_EXIT03
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -632
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_R03_C02R0701_EXIT04
@@ -995,8 +1077,12 @@ DOOR_ID_C02R0701_R03_EXIT03
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -648
+#size
+1 1
 #event number: 4
 #Door Event Label
 DOOR_ID_R03_R03R0101_EXIT01
@@ -1008,8 +1094,12 @@ DOOR_ID_R03R0101_R03_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 840 16 72
+#size
+1 1
 #event number: 5
 #Door Event Label
 DOOR_ID_R03_R03R0201_EXIT01
@@ -1021,8 +1111,12 @@ DOOR_ID_R03R0201_R03_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 984 16 72
+#size
+1 1
 #event number: 6
 #Door Event Label
 DOOR_ID_R03_R03R0301_EXIT01
@@ -1034,20 +1128,11 @@ DOOR_ID_R03R0301_R03_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 16 88
-#event number: 7
-#Door Event Label
-DOOR_ID_R03_R03R0301_EXIT02
-#Next Zone ID Name
-ZONE_ID_R03R0301
-#Next Door ID Name
-DOOR_ID_R03R0301_R03_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--120 16 72
+#size
+1 2
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

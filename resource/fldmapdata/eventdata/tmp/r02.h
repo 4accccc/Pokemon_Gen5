@@ -3,8 +3,6 @@
 #define ZONE_R02_EVD_H
 
 #define DOOR_ID_R02_R02R0101_EXIT01       0
-#define DOOR_ID_R02_R02R0101_EXIT03       1
-#define DOOR_ID_R02_R02R0101_EXIT02       2
 
 #endif //ZONE_R02_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

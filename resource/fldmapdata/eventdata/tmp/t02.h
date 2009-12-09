@@ -7,9 +7,7 @@
 #define DOOR_ID_T02_T02R0201_EXIT01       2
 #define DOOR_ID_T02_T02R0301_EXIT01       3
 #define DOOR_ID_T02_T02R0401_EXIT01       4
-#define DOOR_ID_T02_R02R0101_EXIT03       5
-#define DOOR_ID_T02_R02R0101_EXIT01       6
-#define DOOR_ID_T02_R02R0101_EXIT02       7
+#define DOOR_ID_T02_R02R0101_EXIT01       5
 
 #endif //ZONE_T02_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

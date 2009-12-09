@@ -430,7 +430,7 @@ EVENT_START   ev_t02_rival_01
 EVENT_END
 
 /************************************************************/
-/*	【仮】七賢者ゲーチス　演説　細かい演出は未調整			*/
+/*	七賢者ゲーチス　演説									*/
 /************************************************************/
 EVENT_START   ev_pos_t02_rival_speech
 
@@ -511,18 +511,20 @@ EVENT_START   ev_pos_t02_rival_speech
 
 	//わたくしの　なまえは　ゲーチス
 	_BALLOONWIN_OBJMSG( msg_t02_sage1_01 , T02_SAGE_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//群集：飛び跳ねる
-	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
-	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_jump )
-	_OBJ_ANIME_WAIT()
 	
 	//群集「えっ？」
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_01 , 22 , 5 , 1 ) 
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 12 , 2 )
+
+	//10フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 10 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 2 )
 
 	//われわれ　人間は　ポケモンと　ともに
 	//【仮】ゲーチス：左右に動く
@@ -533,23 +535,37 @@ EVENT_START   ev_pos_t02_rival_speech
 
 	//トレーナーは　ポケモンに　好き勝手　命令している
 	_BALLOONWIN_OBJMSG( msg_t02_sage3_03 , T02_SAGE_01 )
-	_BALLOONWIN_CLOSE()
 	
 	//群集：ざわざわ……
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 22 , 5 , 3 ) 
+	_SUBWIN_MSG( msg_t02_boodle_02 , 18 , 5 , 3 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 20 , 12 , 4 )
+	_SUBWIN_MSG( msg_t02_boodle_02 , 16 , 12 , 4 )
+
+	//10フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 10 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 3 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 4 )
 
 	//いいですか　みなさん　ポケモンは　人間とは　異なり
 	_BALLOONWIN_OBJMSG( msg_t02_sage4_04 , T02_SAGE_01 )
-	_BALLOONWIN_CLOSE()
 	
 	//群集：？
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_03 , 22 , 5 , 5 ) 
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_03 , 20 , 12 , 6 )
+
+	//10フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 10 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 5 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 6 )
 
 	//そうです！　ポケモンを　解放することです！
 	_BALLOONWIN_OBJMSG( msg_t02_sage4_05 , T02_SAGE_01 )
