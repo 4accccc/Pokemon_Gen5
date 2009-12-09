@@ -55,7 +55,7 @@ enum {
 	NARC_mail_gra_mailbox_u_lz_NSCR = 41,
 	NARC_mail_gra_mailbox_u_lz_NCGR = 42,
 	NARC_mail_gra_mailbox_u_NCLR = 43,
-	NARC_mail_gra_mailbox_obj_lz_NCGR = 44,
+	NARC_mail_gra_mailbox_obj_m_lz_NCGR = 44,
 	NARC_mail_gra_mailbox_obj_NCER = 45,
 	NARC_mail_gra_mailbox_obj_NANR = 46,
 	NARC_mail_gra_mailbox_obj_NCLR = 47

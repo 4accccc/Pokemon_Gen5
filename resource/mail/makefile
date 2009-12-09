@@ -31,18 +31,16 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
-esources:=$(wildcard *.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
-eobjects = $(subst .nce,.NCER,$(esources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -54,9 +52,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nsc.NSCR:
 	g2dcvtr $<
 	ntrcomp -l 2 -o $*_lz.NSCR $*.NSCR
-
-.nce.NCER:
-	g2dcvtr $< -br
 
 
 endif
@@ -80,6 +75,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) mailarc.txt
+	g2dcvtr mailbox_obj.nce -br
+	ntrcomp -l 2 -o mailbox_obj_m_lz.ncgr mailbox_obj_m.ncgr
 	nnsarc -c -l -n -i $(targetname) -S mailarc.txt
 	$(NAIXCUT) $(targetname).naix
 endif

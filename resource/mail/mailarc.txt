@@ -42,7 +42,7 @@
 "mailbox_u_lz.NSCR"
 "mailbox_u_lz.NCGR"
 "mailbox_u.NCLR"
-"mailbox_obj_lz.NCGR"
+"mailbox_obj_m_lz.NCGR"
 "mailbox_obj.NCER"
 "mailbox_obj.NANR"
 "mailbox_obj.NCLR"
