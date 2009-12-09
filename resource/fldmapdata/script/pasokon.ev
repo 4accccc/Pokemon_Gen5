@@ -32,9 +32,13 @@ EVENT_START ev_pc
 { 
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos
+  DEFINE_LOCAL f_pcname
+  DEFINE_LOCAL f_zukan_get
 
   // ローカル変数の初期化
   $exit = FALSE
+  _FLAG_CHECK( SYS_FLAG_PCNAME, f_pcname )
+  _FLAG_CHECK( SYS_FLAG_ZUKAN_GET, f_zukan_get )
 
   // PC起動イベント
   _POKECEN_PC_ON()
@@ -51,13 +55,16 @@ EVENT_START ev_pc
     _SYSWIN_CLOSE()
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
-    // @todo フラグを見て項目名を変更
-    _BMPMENU_MAKE_LIST( msg_pc_window_01, msg_pc_window_01 )  // だれかのパソコン
-    //_BMPMENU_MAKE_LIST( msg_pc_window_02, msg_pc_window_02 )  // 開発者のパソコン
-    // @todo 図鑑を持っていなければ表示しない
+    IF $f_pcname == FALSE THEN
+      _BMPMENU_MAKE_LIST( msg_pc_window_01, msg_pc_window_01 )  // だれかのパソコン
+    ELSE
+      _BMPMENU_MAKE_LIST( msg_pc_window_02, msg_pc_window_02 )  // 開発者のパソコン
+    ENDIF
     _PLAYER_NAME( 0 )
     _BMPMENU_MAKE_LIST( msg_pc_window_03, msg_pc_window_03 )  // 自分のパソコン
-    _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
+    IF $f_zukan_get == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
+    ENDIF
     // @todo 殿堂入りしていなければ表示しない
     _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
@@ -65,6 +72,7 @@ EVENT_START ev_pc
     // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_window_01 THEN _CALL( pc_box )
+    CASE msg_pc_window_02 THEN _CALL( pc_box )
     CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
     CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
     CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
