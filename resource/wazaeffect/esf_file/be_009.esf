@@ -110,41 +110,41 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_5
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
-指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	150	WEIGHT_BB_M
+指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	1500	WEIGHT_BB_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1	0
 汎用ワークに値をセット	2
 ラベル	WEIGHT_BB_M
-指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	50	NO_EXIST_BB_5
+指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	500	NO_EXIST_BB_5
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_BB_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_BB_5
 立ち位置チェック	POS_B	いない	NO_EXIST_B_5
 ポケモン移動	POS_B	追従	0	-3	10	0	0
-指定されたワークを見て条件分岐	POS_B_WEIGHT	<	150	WEIGHT_B_M
+指定されたワークを見て条件分岐	POS_B_WEIGHT	<	1500	WEIGHT_B_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_B	方向無し	1	0
 汎用ワークに値をセット	2
 ラベル	WEIGHT_B_M
-指定されたワークを見て条件分岐	POS_B_WEIGHT	<	50	NO_EXIST_B_5
+指定されたワークを見て条件分岐	POS_B_WEIGHT	<	500	NO_EXIST_B_5
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_B_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_B_5
 立ち位置チェック	POS_D	いない	NO_EXIST_D_5
 ポケモン移動	POS_D	追従	0	-3	10	0	0
-指定されたワークを見て条件分岐	POS_D_WEIGHT	<	150	WEIGHT_D_M
+指定されたワークを見て条件分岐	POS_D_WEIGHT	<	1500	WEIGHT_D_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_D	方向無し	1	0
 汎用ワークに値をセット	2
 ラベル	WEIGHT_D_M
-指定されたワークを見て条件分岐	POS_D_WEIGHT	<	50	NO_EXIST_D_5
+指定されたワークを見て条件分岐	POS_D_WEIGHT	<	500	NO_EXIST_D_5
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_D_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_D_5
 立ち位置チェック	POS_F	いない	NO_EXIST_F_5
 ポケモン移動	POS_F	追従	0	-3	10	0	0
-指定されたワークを見て条件分岐	POS_F_WEIGHT	<	150	WEIGHT_F_M
+指定されたワークを見て条件分岐	POS_F_WEIGHT	<	1500	WEIGHT_F_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_F	方向無し	1	0
 汎用ワークに値をセット	2
 ラベル	WEIGHT_F_M
-指定されたワークを見て条件分岐	POS_F_WEIGHT	<	50	NO_EXIST_F_5
+指定されたワークを見て条件分岐	POS_F_WEIGHT	<	500	NO_EXIST_F_5
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_F_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_F_5
