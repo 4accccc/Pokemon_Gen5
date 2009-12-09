@@ -4199,12 +4199,11 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
         WazaID  prevWaza = BPP_GetPrevWazaID( target );
         if( prevWaza != WAZANO_NULL )
         {
-          u8 prevWazaIdx = BPP_WAZA_SearchIdx( target, prevWaza );
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
           u8 turns = BTL_CALC_RandRange( 2, 5 );
 
           param->sickID = WAZASICK_KANASIBARI;
-          param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWazaIdx );
+          param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
         }

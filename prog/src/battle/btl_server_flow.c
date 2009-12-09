@@ -3298,6 +3298,8 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   u8 pokeID = BPP_GetID( attacker );
   u16  que_reserve_pos;
 
+  BTL_Printf("ポケ[%d], waza=%dのワザ出し処理開始\n", BPP_GetID(attacker), waza );
+
   // １ターン溜めワザの発動チェック
   if( scproc_Fight_TameWazaExe(wk, attacker, targetRec, waza) ){
     return;
@@ -3331,7 +3333,9 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   // 対象ごとの無効チェック＆回避チェック->原因表示はその先に任せる  *
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
-  flowsub_checkWazaAvoid( wk, &wk->wazaParam, attacker, targetRec );
+  if( category != WAZADATA_CATEGORY_ICHIGEKI ){
+    flowsub_checkWazaAvoid( wk, &wk->wazaParam, attacker, targetRec );
+  }
   // 最初は居たターゲットが残っていない -> 何も表示せず終了
   if( BTL_POKESET_IsRemovedAll(targetRec) ){
     return;
@@ -3551,6 +3555,66 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     scEvent_WazaAvoid( wk, attacker, wazaParam->wazaID, count, pokeID );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
+  }
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] 出したワザが対象に当たるか判定（一撃必殺以外のポケモン対象ワザ）
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   waza
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------
+static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
+  const SVFL_WAZAPARAM* wazaParam )
+{
+  if( IsMustHit(attacker, defender) ){
+    return TRUE;
+  }
+
+  if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) ){
+    return FALSE;
+  }
+
+  if( scEvent_IsExcuseCalcHit(wk, attacker, defender, wazaParam->wazaID) ){
+    return TRUE;
+  }
+
+  if( BPP_CheckSick(defender, WAZASICK_TELEKINESIS) ){
+    BTL_Printf("相手がテレキネシス状態だからあたります\n");
+    return TRUE;
+  }
+
+  {
+    u8 wazaHitPer, totalPer;
+    s8 hitRank, avoidRank, totalRank;
+
+    wazaHitPer = scEvent_getHitPer(wk, attacker, defender, wazaParam);
+
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RANK );
+
+      hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
+      avoidRank = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_RANK );
+
+    BTL_EVENTVAR_Pop();
+
+    totalRank = roundValue( (int)(BTL_CALC_HITRATIO_MID + hitRank - avoidRank), BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
+    totalPer  = BTL_CALC_HitPer( wazaHitPer, totalRank );
+
+    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d\n", BPP_GetID(attacker), hitRank );
+    BTL_Printf("防御ポケ[%d]  回避Rank=%d\n", BPP_GetID(defender), avoidRank );
+    BTL_Printf("ワザ的中率=%d  最終命中ランク=%d, 最終命中率=%d\n", wazaHitPer, totalRank, totalPer );
+
+    return perOccur( wk, totalPer );
   }
 }
 //----------------------------------------------------------------------------------
@@ -5377,6 +5441,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPAR
         {
           wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
           scPut_Ichigeki( wk, target );
+          scproc_CheckDeadCmd( wk, target );
         }
         else
         {
@@ -7791,66 +7856,6 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TAME_RELEASE );
   BTL_EVENTVAR_Pop();
 }
-//--------------------------------------------------------------------------
-/**
- * [Event] 出したワザが対象に当たるか判定（一撃必殺以外のポケモン対象ワザ）
- *
- * @param   wk
- * @param   attacker
- * @param   defender
- * @param   waza
- *
- * @retval  BOOL
- */
-//--------------------------------------------------------------------------
-static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
-  const SVFL_WAZAPARAM* wazaParam )
-{
-  if( IsMustHit(attacker, defender) ){
-    return TRUE;
-  }
-
-  if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) ){
-    return FALSE;
-  }
-
-  if( scEvent_IsExcuseCalcHit(wk, attacker, defender, wazaParam->wazaID) ){
-    return TRUE;
-  }
-
-  if( BPP_CheckSick(defender, WAZASICK_TELEKINESIS) ){
-    BTL_Printf("相手がテレキネシス状態だからあたります\n");
-    return TRUE;
-  }
-
-  {
-    u8 wazaHitPer, totalPer;
-    s8 hitRank, avoidRank, totalRank;
-
-    wazaHitPer = scEvent_getHitPer(wk, attacker, defender, wazaParam);
-
-    BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RANK );
-
-      hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
-      avoidRank = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_RANK );
-
-    BTL_EVENTVAR_Pop();
-
-    totalRank = roundValue( (int)(BTL_CALC_HITRATIO_MID + hitRank - avoidRank), BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
-    totalPer  = BTL_CALC_HitPer( wazaHitPer, totalRank );
-
-    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d\n", BPP_GetID(attacker), hitRank );
-    BTL_Printf("防御ポケ[%d]  回避Rank=%d\n", BPP_GetID(defender), avoidRank );
-    BTL_Printf("ワザ的中率=%d  最終命中ランク=%d, 最終命中率=%d\n", wazaHitPer, totalRank, totalPer );
-
-    return perOccur( wk, totalPer );
-  }
-}
 //----------------------------------------------------------------------------------
 /**
  * [Event] そらをとぶ、ダイビング等、場から隠れているポケモンへのヒットチェック
@@ -7988,6 +7993,7 @@ static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         u8 per = WAZADATA_GetParam( waza, WAZAPARAM_HITPER );
         u8 atLevel = BPP_GetValue( attacker, BPP_LEVEL );
         u8 defLevel = BPP_GetValue( defender, BPP_LEVEL );
+        BTL_Printf("デフォ命中率=%d\n", per);
         if( atLevel > defLevel )
         {
           per += (atLevel - defLevel);
@@ -10268,7 +10274,8 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   u32 i;
 
 
-  for(i=0; i<param->poke_cnt; ++i){
+  for(i=0; i<param->poke_cnt; ++i)
+  {
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead( pp_target )
     &&  BPP_IsRankEffectValid( pp_target, param->rankType, param->rankVolume )
@@ -10281,13 +10288,15 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
     scPut_TokWin_In( wk, pp_user );
   }
 
-  for(i=0; i<param->poke_cnt; ++i){
+  for(i=0; i<param->poke_cnt; ++i)
+  {
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead(pp_target) )
     {
       if( scproc_RankEffectCore(wk, pp_target, param->rankType, param->rankVolume,
         BTL_POKEID_NULL, itemID, param->fAlmost, !(param->fStdMsgDisable))
       ){
+        handexSub_putString( wk, &param->exStr );
         result = 1;
       }
     }

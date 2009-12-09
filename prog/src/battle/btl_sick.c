@@ -285,6 +285,7 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
   case WAZASICK_DOKU:       strID = BTL_STRID_SET_DokuGet; break;
   case WAZASICK_DOKUDOKU:   strID = BTL_STRID_SET_MoudokuGet; break;
+  case WAZASICK_KANASIBARI: strID = BTL_STRID_SET_Kanasibari; break;
 
 // パワートリックはワザハンドラの方で設定
 //  case WAZASICK_POWERTRICK: strID = BTL_STRID_SET_PowerTrick; break;
@@ -328,6 +329,7 @@ void BTL_SICK_MakeDefaultMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POK
 
     switch( sickID ){
     case WAZASICK_BIND:
+    case WAZASICK_KANASIBARI:
       {
         WazaID  waza = BPP_SICKCONT_GetParam( cont );
         HANDEX_STR_AddArg( str, waza );

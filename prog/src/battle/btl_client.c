@@ -1215,8 +1215,8 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // かなしばり状態（かなしばり直前に出していたワザを選べない）
   if( BPP_CheckSick(bpp, WAZASICK_KANASIBARI) )
   {
-    u8 idx = BPP_GetSickParam( bpp, WAZASICK_KANASIBARI );
-    if( BPP_WAZA_SearchIdx(bpp, waza) == idx )
+    u16 kanasibariWaza = BPP_GetSickParam( bpp, WAZASICK_KANASIBARI );
+    if( waza == kanasibariWaza )
     {
       if( strParam != NULL )
       {
