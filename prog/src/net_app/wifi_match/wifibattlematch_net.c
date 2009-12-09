@@ -184,6 +184,9 @@ typedef struct
 //=====================================
 struct _WIFIBATTLEMATCH_NET_WORK
 { 
+  const DWCUserData *cp_user_data;
+  WIFI_LIST *p_wifilist;
+
   u32 seq_matchmake;
   char filter[128];
   char search[128];
@@ -361,11 +364,13 @@ static const NetRecvFuncTable sc_net_recv_tbl[WIFIBATTLEMATCH_NETCMD_MAX] =
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( HEAPID heapID )
+WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_data, WIFI_LIST *p_wifilist, HEAPID heapID )
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_NET_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_NET_WORK) );
+  p_wk->cp_user_data  = cp_user_data;
+  p_wk->p_wifilist    = p_wifilist;
 
 
   p_wk->p_field_buff  = GFL_HEAP_AllocClearMemory( heapID, ATLAS_GetFieldNameNum() * sizeof(DWCGdbField) );
@@ -456,7 +461,7 @@ BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
  *	@return TRUE処理完了  FALSE処理中
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserData *cp_user_data, SAVE_CONTROL_WORK *p_save, DWCGdbError *p_result )
+BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save, DWCGdbError *p_result )
 { 
   enum
   { 
@@ -485,7 +490,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
 	  switch( p_wk->seq )
 	  { 
 	  case SEQ_INIT:
-	    *p_result = DWC_GdbInitialize( GAME_ID, cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
+	    *p_result = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
 	    if( *p_result != DWC_GDB_ERROR_NONE )
 	    { 
         p_wk->is_initialize = FALSE;
@@ -588,10 +593,9 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
 	      };
 	
 	      SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
-	      WIFI_LIST   *p_wifilist = SaveData_GetWifiListData( p_save );
 	
 	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
-	      const s32 now_profileID   = WifiList_GetMyGSID( p_wifilist );
+	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
         DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d\n", init_profileID, now_profileID );
 	
 	      STD_TSPrintf( p_wk->search, "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
@@ -682,9 +686,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
         //新規の場合、デフォルト値をいれる
         int i;
         SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
-	      WIFI_LIST   *p_wifilist = SaveData_GetWifiListData( p_save );
 	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
-	      const s32 now_profileID   = WifiList_GetMyGSID( p_wifilist );
+	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
 	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
 	      { 
 	        p_wk->p_field_buff[i].name          = (char*)ATLAS_GetFieldName()[i];
@@ -1199,7 +1202,7 @@ void WIFIBATTLEMATCH_SC_StartDebug( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMA
  *	@retval TRUEならば処理終了  FALSEならば処理進行中or不正エラー
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserData *cp_user_data, DWCScResult *p_result )
+BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_result )
 { 
   DWCScResult ret;
   
@@ -1214,7 +1217,7 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserDa
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
       { 
-        ret = DWC_GdbInitialize( GAME_ID, cp_user_data, DWC_GDB_SSL_TYPE_SERVER_AUTH );
+        ret = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_GDB_SSL_TYPE_SERVER_AUTH );
         if( *p_result != DWC_GDB_ERROR_NONE )
         { 
           *p_result = ret;
@@ -2322,7 +2325,7 @@ void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_
  *	@retval TRUEならば処理終了  FALSEならば処理進行中or不正エラー
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserData *cp_user_data, DWCGdbError *p_result )
+BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result )
 { 
   DWCError    error;
   DWCGdbState state;
@@ -2334,7 +2337,7 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserD
     switch( p_wk->seq )
     { 
     case WIFIBATTLEMATCH_GDB_SEQ_INIT:
-      *p_result = DWC_GdbInitialize( GAME_ID, cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
+      *p_result = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_start  = FALSE;
@@ -2662,7 +2665,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
  *	@return TRUEで終了  FALSEで破棄
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWCUserData *cp_user_data, DWCGdbError *p_result )
+BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result )
 { 
   enum
   { 
@@ -2683,7 +2686,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, const DWC
     switch( p_wk->seq )
     { 
     case SEQ_INIT:
-      *p_result = DWC_GdbInitialize( GAME_ID, cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
+      *p_result = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_w_start  = FALSE;

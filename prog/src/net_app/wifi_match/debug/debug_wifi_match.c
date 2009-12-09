@@ -18,14 +18,12 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "debug/debug_str_conv.h"
+#include "gamesystem/game_data.h"
 
 //アーカイブ
 #include "font/font.naix"
 #include "arc_def.h"
 #include "message.naix"
-
-//  ネット
-#include "savedata/wifilist.h"  //DWCUserData
 
 //自分のモジュール
 #include "../wifibattlematch_graphic.h"
@@ -132,7 +130,6 @@ typedef struct
   WIFIBATTLEMATCH_NET_WORK  *p_net;
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  score;
   WIFIBATTLEMATCH_SC_DEBUG_DATA       report;
-  DWCUserData               *p_user_data;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
   NUMINPUT_WORK             numinput;
@@ -153,7 +150,6 @@ typedef struct
   u32         data[DEBUG_DATA_MAX];
   WIFIBATTLEMATCH_NET_WORK  *p_net;
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  score;
-  DWCUserData               *p_user_data;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
   NUMINPUT_WORK             numinput;
@@ -200,7 +196,7 @@ static void INPUTWIN_GetRange( u32 key, INPUTWIN_PARAM *p_wk );
 //-------------------------------------
 ///	SAKE
 //=====================================
-static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,DWCUserData *p_user_data,  HEAPID heapID );
+static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapID );
 static void SAKE_Exit( DEBUG_SAKE_WORK *p_wk );
 static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk );
 static void Sake_CreateDisplay( DEBUG_SAKE_WORK *p_wk, HEAPID heapID );
@@ -210,7 +206,7 @@ static void Sake_UpdateDisplay( DEBUG_SAKE_WORK *p_wk );
 //-------------------------------------
 ///	ATLAS
 //=====================================
-static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, DWCUserData *p_user_data, SAVE_CONTROL_WORK* p_save, HEAPID heapID );
+static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, WIFI_LIST *p_wifilist, SAVE_CONTROL_WORK* p_save, HEAPID heapID );
 static void ATLAS_Exit( DEBUG_ATLAS_WORK *p_wk );
 static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk );
 static void Atlas_CreateRecvDisplay( DEBUG_ATLAS_WORK *p_wk, HEAPID heapID );
@@ -353,17 +349,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_DEBUG_PROC_Init
 	}
 
   { 
-    DWCUserData*  p_user_data;
-    SAVE_CONTROL_WORK *p_sv;
-    p_user_data = WifiList_GetMyUserInfo( SaveData_GetWifiListData( p_param->p_save ) );
+    WIFI_LIST *p_wifilist = GAMEDATA_GetWiFiList( p_param->p_gamedata );
 
     if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_ATLAS )
     { 
-      ATLAS_Init( &p_wk->atlas, p_user_data, p_param->p_save, HEAPID_WIFIMATCH_DEBUG );
+      ATLAS_Init( &p_wk->atlas, p_wifilist, p_param->p_save, HEAPID_WIFIMATCH_DEBUG );
     }
     else if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_SAKE )
     { 
-      SAKE_Init( &p_wk->sake, p_user_data, HEAPID_WIFIMATCH_DEBUG );
+      SAKE_Init( &p_wk->sake, p_wifilist, HEAPID_WIFIMATCH_DEBUG );
     }
   }
 
@@ -497,17 +491,19 @@ static void INPUTWIN_GetRange( u32 key, INPUTWIN_PARAM *p_wk )
  *	@param	heapID ヒープ
  */
 //-----------------------------------------------------------------------------
-static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,DWCUserData *p_user_data,  HEAPID heapID )
+static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_SAKE_WORK) );
   p_wk->heapID    = heapID;
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
-  p_wk->p_user_data = p_user_data; 
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, heapID );
   Sake_CreateDisplay( p_wk, heapID );
-  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( heapID );
+  { 
+    DWCUserData *p_user_data  = WifiList_GetMyUserInfo( p_wifilist );
+    p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, heapID );
+  }
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
@@ -631,7 +627,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
   case SEQ_WAIT_RECVDATA:
     { 
       DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
         { 
           const u16 str[] = L"データ取得完了";
@@ -692,7 +688,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
   case SEQ_WAIT_SENDDATA:
     { 
       DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net, p_wk->p_user_data, &result )  )
+      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net, &result )  )
       { 
         { 
           const u16 str[] = L"データ送信完了";
@@ -812,7 +808,7 @@ static void Sake_UpdateDisplay( DEBUG_SAKE_WORK *p_wk )
  *	@param	heapID                    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, DWCUserData *p_user_data, SAVE_CONTROL_WORK* p_save, HEAPID heapID )
+static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, WIFI_LIST *p_wifilist, SAVE_CONTROL_WORK* p_save, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_ATLAS_WORK) );
   p_wk->heapID    = heapID;
@@ -820,10 +816,13 @@ static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, DWCUserData *p_user_data, SAVE_C
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
-  p_wk->p_user_data = p_user_data;
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, heapID );
   Atlas_CreateReportDisplay( p_wk, heapID );
-  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( heapID );
+
+  { 
+    DWCUserData *p_user_data  = WifiList_GetMyUserInfo( p_wifilist );
+    p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, heapID );
+  }
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
@@ -911,7 +910,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
   case SEQ_WAIT_INIT:
     { 
       DWCGdbError error;
-      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_user_data, p_wk->p_save, &error )  )
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save, &error )  )
       { 
         { 
           const u16 str[] = L"送信自分。Aで送信、Xでモード、タッチで値";
@@ -1058,7 +1057,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
   case SEQ_WAIT_RECVDATA:
     { 
       DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
         { 
           const u16 str[] = L"データ取得完了";
@@ -1138,7 +1137,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
   case SEQ_WAIT_SENDDATA:
     { 
       DWCScResult result;
-      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, p_wk->p_user_data, &result )  )
+      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, &result )  )
       { 
         { 
           const u16 str[] = L"レポート送信完了";

@@ -156,9 +156,6 @@ struct _WIFIBATTLEMATCH_WORK
   //ネット
   WIFIBATTLEMATCH_NET_WORK  *p_net;
 
-  //ユーザーデータ
-  DWCUserData               *p_user_data;
-
   //メインシーケンス
   WIFIBATTLEMATCH_MAINSEQ_FUNCTION  main_seq;
 
@@ -246,11 +243,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_WORK), HEAPID_WIFIBATTLEMATCH_CORE );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_WORK) );	
 
-  { 
-    p_wk->p_user_data = WifiList_GetMyUserInfo( GAMEDATA_GetWiFiList( p_param->p_param->p_game_data ) );
-  }
-
-
 
 	//グラフィック設定
 	p_wk->p_graphic	= WIFIBATTLEMATCH_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_WIFIBATTLEMATCH_CORE );
@@ -300,8 +292,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 
 	//モジュールの作成
 	{	
+    DWCUserData *p_user_data;
+    WIFI_LIST   *p_wifilist;
+    p_wifilist  = GAMEDATA_GetWiFiList( p_param->p_param->p_game_data );
+    p_user_data = WifiList_GetMyUserInfo( p_wifilist );
 
-    p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, HEAPID_WIFIBATTLEMATCH_CORE );
     p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, HEAPID_WIFIBATTLEMATCH_CORE );
 
 	}
@@ -642,7 +638,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Start( WIFIBATTLEMATCH_WORK *p_wk, WIFIBAT
     { 
       DWCGdbError error;
       SAVE_CONTROL_WORK *p_save = GAMEDATA_GetSaveControlWork(p_param->p_param->p_game_data);
-      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_user_data, p_save, &error ) )
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_save, &error ) )
       { 
         *p_subseq = SEQ_START_RECVDATA_SAKE;
       }
@@ -827,7 +823,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
     { 
       DWCGdbError result  = DWC_GDB_ERROR_NONE;
       GF_ASSERT_MSG( result == DWC_GDB_ERROR_NONE, "GdbProcessエラー %d\n", result );
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
         //自分のデータを表示
         PLAYERINFO_RANDOMMATCH_DATA info_setup;
@@ -1140,7 +1136,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
   case SEQ_WAIT_REPORT_ATLAS:
     { 
       DWCScResult result;
-      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, &result ) )
       { 
         NAGI_Printf( "送ったよ！%d\n", result );
         *p_subseq = SEQ_START_RECVDATA_SAKE;
@@ -1159,7 +1155,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     { 
       DWCGdbError result  = DWC_GDB_ERROR_NONE;
       GF_ASSERT_MSG( result == DWC_GDB_ERROR_NONE, "GdbProcessエラー %d\n", result );
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
         PLAYERINFO_RANDOMMATCH_DATA info_setup;
         GFL_CLUNIT	*p_unit;
@@ -1906,7 +1902,7 @@ static BOOL WifiBattleMatch_Debug_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTL
   case 3:
     { 
       DWCScResult result;
-      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, p_wk->p_user_data, &result ) )
+      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, &result ) )
       { 
         NAGI_Printf( "送ったよ！%d\n", result );
         (*p_seq)  = 2;
@@ -1918,7 +1914,7 @@ static BOOL WifiBattleMatch_Debug_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTL
   case 4:
     { 
       DWCGdbError error;
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, p_wk->p_user_data, &error ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &error ) )
       { 
         NAGI_Printf( "データベースからもらったよ！%d\n", error );
         (*p_seq)  = 2;
