@@ -454,14 +454,14 @@ static void SetupCharUnitAction( FIELD_PLACE_NAME* sys );
 static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* sys );
 static void LaunchCharUnit( FIELD_PLACE_NAME* sys );
 static void MoveAllCharUnit( FIELD_PLACE_NAME* sys ); 
-
-static void UpdatePlaceName( FIELD_PLACE_NAME* sys ); 
+// BG, 文字ユニットへの書き込み
 static void WritePlaceNameIntoCharUnit( FIELD_PLACE_NAME* sys );
 static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys );
-
+// 地名の更新
+static void UpdatePlaceName( FIELD_PLACE_NAME* sys ); 
+// 状態の変更
 static void SetState( FIELD_PLACE_NAME* sys, STATE next_state );
-static void Cancel( FIELD_PLACE_NAME* sys );
-
+static void Cancel( FIELD_PLACE_NAME* sys ); 
 // 各状態時の動作
 static void Process_HIDE( FIELD_PLACE_NAME* sys );
 static void Process_SETUP( FIELD_PLACE_NAME* sys );
@@ -469,8 +469,7 @@ static void Process_FADE_IN( FIELD_PLACE_NAME* sys );
 static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
 static void Process_LAUNCH( FIELD_PLACE_NAME* sys );
 static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
-static void Process_FADE_OUT( FIELD_PLACE_NAME* sys );
-
+static void Process_FADE_OUT( FIELD_PLACE_NAME* sys ); 
 // 各状態時の描画処理
 static void Draw_HIDE( FIELD_PLACE_NAME* sys );
 static void Draw_SETUP( FIELD_PLACE_NAME* sys );
@@ -1047,38 +1046,7 @@ static void MoveAllCharUnit( FIELD_PLACE_NAME* sys )
 	{
 		CHAR_UNIT_Move( &sys->charUnit[i] );
 	}
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief 表示する地名を更新する
- *
- * @param sys 更新するシステム
- */
-//-----------------------------------------------------------------------------------
-static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
-{
-	u16 str_id;
-  
-  // 地名が変わらない
-  if( sys->currentZoneID == sys->nextZoneID ){ return; }
-
-	// ゾーンIDから地名文字列を取得する
-	str_id = ZONEDATA_GetPlaceNameID( sys->nextZoneID );
-
-  // エラー回避
-	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
-	if( str_id == 0 ) 
-  { //「なぞのばしょ」なら表示しない
-    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", sys->nextZoneID );
-    FIELD_PLACE_NAME_Hide( sys );
-  }
-
-  // 表示中のゾーンID, 地名を更新
-  sys->currentZoneID = sys->nextZoneID;	   
-	GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
-	sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
-}
+} 
 
 //-----------------------------------------------------------------------------------
 /**
@@ -1131,6 +1099,37 @@ static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys )
 
 	// 更新されたキャラデータをVRAMに転送
 	GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 表示する地名を更新する
+ *
+ * @param sys 更新するシステム
+ */
+//-----------------------------------------------------------------------------------
+static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
+{
+	u16 str_id;
+  
+  // 地名が変わらない
+  if( sys->currentZoneID == sys->nextZoneID ){ return; }
+
+	// ゾーンIDから地名文字列を取得する
+	str_id = ZONEDATA_GetPlaceNameID( sys->nextZoneID );
+
+  // エラー回避
+	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
+	if( str_id == 0 ) 
+  { //「なぞのばしょ」なら表示しない
+    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", sys->nextZoneID );
+    FIELD_PLACE_NAME_Hide( sys );
+  }
+
+  // 表示中のゾーンID, 地名を更新
+  sys->currentZoneID = sys->nextZoneID;	   
+	GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+	sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
 }
 
 //-----------------------------------------------------------------------------------

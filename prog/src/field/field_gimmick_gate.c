@@ -972,7 +972,6 @@ static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA*
 {
   HEAPID heap_id; 
   NEWS_PARAM news;
-  RTCDate date;
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_PROPAGATION];
