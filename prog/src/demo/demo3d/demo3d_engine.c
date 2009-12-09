@@ -30,6 +30,9 @@
 //データ
 #include "demo3d_data.h"
 
+// 3Dデモコマンド
+#include "demo3d_cmd.h" 
+
 #include "demo3d_engine.h"
 
 //=============================================================================
@@ -58,6 +61,7 @@ struct _DEMO3D_ENGINE_WORK {
   fx32          anime_speed;  ///< アニメーションスピード
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL* g3d_util;
+  DEMO3D_CMD_WORK*  cmd;
   u16* unit_idx; // unit_idx保持（ALLOC)
 };
 
@@ -107,6 +111,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
   wk->anime_speed = FX32_ONE; // アニメーションスピード(固定)
+
+  wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
   unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
 
@@ -173,6 +179,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
+  Demo3D_CMD_Exit( wk->cmd );
+
   // ICA破棄
   ICA_ANIME_Delete( wk->ica_anime );
 
@@ -207,6 +215,9 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   GFL_G3D_CAMERA* p_camera;
   BOOL is_loop;
   GFL_G3D_OBJSTATUS status;
+
+  // コマンド実行
+  Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT );
 
   // ステータス初期化
   VEC_Set( &status.trans, 0, 0, 0 );

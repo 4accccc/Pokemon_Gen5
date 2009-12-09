@@ -1256,6 +1256,7 @@ SRCS_OVERLAY_DEBUG_HOSAKA   = test/hosaka/debug_3d_demo.c
 SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
                       demo/demo3d/demo3d_graphic.c \
 					            demo/demo3d/demo3d_engine.c \
-					            demo/demo3d/demo3d_data.c
+					            demo/demo3d/demo3d_data.c \
+								demo/demo3d/demo3d_cmd.c
 
 

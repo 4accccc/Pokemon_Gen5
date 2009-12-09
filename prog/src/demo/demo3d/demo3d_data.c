@@ -2,19 +2,19 @@
 /**
  *
  *	@file		demo3d_data.c
- *	@brief  コンバートデータのアクセサ
+ *	@brief  3Dデモエンジン コンバートデータへのアクセサ
  *	@author		hosaka genya
  *	@data		2009.11.27
  *
  */
 //============================================================================
-#pragma once
-
 #include <gflib.h>
 
 #include "system/main.h"
 #include "system/ica_anime.h"
 #include "arc/arc_def.h"
+
+#include "sound/pm_sndsys.h" // for SEQ_SE_XXX
 
 #include "demo/demo3d.h"
 
@@ -89,4 +89,21 @@ const GFL_G3D_UTIL_SETUP* Demo3D_DATA_GetG3DUtilSetup( DEMO3D_ID id, u8 setup_id
 }
 
 
+// コンバートデータ読み込み
+#include "demo3d_cmd_data.cdat"
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからコマンドデータを取得
+ *
+ *	@param	DEMO3D_ID id デモID
+ *
+ *	@retval DEMO3D_CMD_DATA* コマンドデータ配列へのポインタ
+ */
+//-----------------------------------------------------------------------------
+const DEMO3D_CMD_DATA* Demo3D_DATA_GetCmdData( DEMO3D_ID id )
+{
+  GF_ASSERT( id < DEMO3D_ID_MAX && id != DEMO3D_ID_NULL );
+  return demo3d_cmd_access_tbl[ id ];
+}
 

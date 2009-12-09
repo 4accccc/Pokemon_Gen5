@@ -1,0 +1,69 @@
+//=============================================================================
+/**
+ *
+ *	@file		demo3d_cmd_data.cdat
+ *	@brief  デモ3D用コマンドデータ
+ *	@author	hosaka genya
+ *	@data		2009.12.09
+ *
+ */
+//=============================================================================
+//@TODO コンバータから出力する予定
+//@TODO 30FPS,60FPSをコンバート時に換算するかも?
+
+static const DEMO3D_CMD_DATA demo3d_cmd01_data[] = 
+{ 
+  // 初期化パラメータ
+  {  DEMO3D_CMD_TYPE_SE, -1,      { SEQ_SE_FLD_77, } }, // 波
+  // 汽笛
+  {  DEMO3D_CMD_TYPE_SE, 0,       { SEQ_SE_FLD_76, } }, 
+  {  DEMO3D_CMD_TYPE_SE, 1*45*30, { SEQ_SE_FLD_76, } },
+  {  DEMO3D_CMD_TYPE_SE, 2*45*30, { SEQ_SE_FLD_76, } },
+  {  DEMO3D_CMD_TYPE_SE, 3*45*30, { SEQ_SE_FLD_76, } },
+  {  DEMO3D_CMD_TYPE_SE, 4*45*30, { SEQ_SE_FLD_76, } },
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } }, ///< コマンド終了
+};
+
+static const DEMO3D_CMD_DATA demo3d_cmd02_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd03_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd04_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd05_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd06_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd07_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd08_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+// アクセステーブル
+static const DEMO3D_CMD_DATA* demo3d_cmd_access_tbl[] = 
+{ 
+  NULL,
+  demo3d_cmd01_data,
+  demo3d_cmd02_data,
+  demo3d_cmd03_data,
+  demo3d_cmd04_data,
+  demo3d_cmd05_data,
+  demo3d_cmd06_data,
+  demo3d_cmd07_data,
+  demo3d_cmd08_data,
+};
+
