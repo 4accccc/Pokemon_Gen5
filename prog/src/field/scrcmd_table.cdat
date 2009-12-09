@@ -147,7 +147,7 @@
   NO_CMD()
   
   DEF_CMD( EvCmdPlainWinMsg, EV_SEQ_PLAINWIN_MSG )
-  DEF_CMD( EvCmdPlainWinClose, EV_SEQ_PLAINWIN_MSG_CLOSE )
+  DEF_CMD( EvCmdPlainWinClose, EV_SEQ_PLAINWIN_CLOSE )
   DEF_CMD( EvCmdSubWinMsg, EV_SEQ_SUBWIN_MSG )
   DEF_CMD( EvCmdSubWinClose, EV_SEQ_SUBWIN_CLOSE )
   
@@ -504,8 +504,8 @@
 
   //âÊñ ââèoä÷òA
   DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPokecenPcOn, EV_SEQ_POKECEN_PC_ON )
+  DEF_CMD( EvCmdPokecenPcOff, EV_SEQ_POKECEN_PC_OFF )
   NO_CMD()
 
   DEF_CMD( EvCmdDoorAnimeCreate, EV_SEQ_DOOR_ANIME_CREATE )

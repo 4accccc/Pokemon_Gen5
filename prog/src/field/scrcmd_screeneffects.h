@@ -22,6 +22,8 @@ extern VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_WhiteOut( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk );
 

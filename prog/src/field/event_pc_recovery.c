@@ -45,7 +45,7 @@ typedef enum {
 } BALL_INDEX;
 
 // ボール設置座標 (回復マシンからのオフセット)
-VecFx32 ball_offset[BALL_NUM] = 
+static const VecFx32 ball_offset[BALL_NUM] = 
 {
   {  -4*FX32_ONE,   14*FX32_ONE,  -3*FX32_ONE},
   {   4*FX32_ONE,   14*FX32_ONE,  -3*FX32_ONE},
@@ -68,6 +68,7 @@ typedef struct
   u16                   seqCount;  // シーケンス動作フレームカウンタ
   FIELD_BMODEL_MAN*        bmMan;  // 配置モデルマネージャ
   FIELD_BMODEL* ballBM[BALL_NUM];  // ボールの配置モデル
+  G3DMAPOBJST*      machineObjSt;  // 回復マシン配置モデル
 
 } RECOVERY_WORK;
 
@@ -77,7 +78,7 @@ typedef struct
 //========================================================================================
 static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void* work );
 static void SetupEvent( 
-    RECOVERY_WORK* work, GAMESYS_WORK* gsys, VecFx32* mechine_pos, u8 pokemon_num );
+    RECOVERY_WORK* work, GAMESYS_WORK* gsys, u8 pokemon_num );
 static void ExitEvent( RECOVERY_WORK* work );
 static void ChangeSequence( RECOVERY_WORK* work, int* seq, SEQID next_seq );
 static void SetMonsterBall( RECOVERY_WORK* work );
@@ -96,14 +97,13 @@ static BOOL IsRecoveryAnimeEnd( RECOVERY_WORK* work );
  *
  * @param gsys        ゲームシステム
  * @param parent      親イベント
- * @param machine_pos 回復マシンの座標
  * @param pokemon_num 手持ちポケモンの数
  *
  * @return 作成した回復アニメイベント
  */
 //----------------------------------------------------------------------------------------
 GMEVENT* EVENT_PcRecoveryAnime( 
-    GAMESYS_WORK* gsys, GMEVENT* parent, VecFx32* machine_pos, u8 pokemon_num )
+    GAMESYS_WORK* gsys, GMEVENT* parent, u8 pokemon_num )
 {
   GMEVENT* event;
   RECOVERY_WORK* work;
@@ -113,7 +113,7 @@ GMEVENT* EVENT_PcRecoveryAnime(
 
   // イベントワーク初期化
   work = (RECOVERY_WORK*)GMEVENT_GetEventWork( event );
-  SetupEvent( work, gsys, machine_pos, pokemon_num ); 
+  SetupEvent( work, gsys, pokemon_num ); 
   return event;
 }
 
@@ -180,27 +180,54 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
  *
  * @param work        イベントワーク
  * @param gsys        ゲームシステム
- * @param machine_pos 回復マシンの座標
  * @param pokemon_num 手持ちポケモンの数
  */
 //----------------------------------------------------------------------------------------
 static void SetupEvent( 
-    RECOVERY_WORK* work, GAMESYS_WORK* gsys, VecFx32* machine_pos, u8 pokemon_num )
+    RECOVERY_WORK* work, GAMESYS_WORK* gsys, u8 pokemon_num )
 {
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
   FLDMAPPER*   g3d_mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
 
   // イベントワーク初期化
-  work->heapID     = heap_id;
-  work->fieldmap   = fieldmap;
-  work->pokemonNum = pokemon_num;
-  work->setBallNum = 0;
-  VEC_Set( &work->machinePos, machine_pos->x, machine_pos->y, machine_pos->z );
-  work->bmMan = FLDMAPPER_GetBuildModelManager( g3d_mapper );
+  work->heapID       = heap_id;
+  work->fieldmap     = fieldmap;
+  work->pokemonNum   = pokemon_num;
+  work->setBallNum   = 0;
+  work->bmMan        = FLDMAPPER_GetBuildModelManager( g3d_mapper );
+  work->machineObjSt = NULL;
 
   // 念のため例外処理
   if( BALL_NUM < work->pokemonNum ) work->pokemonNum = BALL_NUM;
+
+  // 回復マシンの座標を取得
+  {
+    FIELD_PLAYER* player;
+    VecFx32 pos;
+    G3DMAPOBJST** objst;
+    u32 objnum;
+    FLDHIT_RECT rect;
+    player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+    FIELD_PLAYER_GetPos( player, &pos );
+    rect.top    = pos.z - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.bottom = pos.z + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.left   = pos.x - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    rect.right  = pos.x + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
+    objst = FIELD_BMODEL_MAN_CreateObjStatusList( work->bmMan, &rect, 
+                                                  BM_SEARCH_ID_PCMACHINE, &objnum );
+    if( objst )
+    {
+      work->machineObjSt = objst[0];
+      GD3MAPOBJST_getPos( objst[0], &work->machinePos );
+    }
+    GFL_HEAP_FreeMemory( objst );
+
+    // DEBUG:
+    OBATA_Printf( "machinePos = %d, %d, %d\n", FX_Whole(work->machinePos.x), 
+                                               FX_Whole(work->machinePos.y), 
+                                               FX_Whole(work->machinePos.z) );
+  }
 
   // ボールの配置モデルを作成
   {
@@ -212,7 +239,7 @@ static void SetupEvent(
 
     for( i=0; i<BALL_NUM; i++ )
     {
-      VEC_Add( machine_pos, &ball_offset[i], &status.trans );
+      VEC_Add( &work->machinePos, &ball_offset[i], &status.trans );
       work->ballBM[i] = FIELD_BMODEL_Create_Direct( work->bmMan, bmodel_id, &status );
     }
   }
@@ -303,30 +330,10 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
   }
 
   // マシン
+  if( work->machineObjSt )
   {
-    G3DMAPOBJST**  objst;
-    u32           objnum;
-    FLDHIT_RECT     rect;
-    VecFx32          pos;
-    FIELD_PLAYER* player;
-
-    // 自機の周囲を検索
-    player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-    FIELD_PLAYER_GetPos( player, &pos );
-    rect.top    = pos.z - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
-    rect.bottom = pos.z + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
-    rect.left   = pos.x - (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
-    rect.right  = pos.x + (PCMACHINE_SEARCH_RANGE << FX32_SHIFT);
-    objst = FIELD_BMODEL_MAN_CreateObjStatusList( work->bmMan, &rect, 
-                                                  BM_SEARCH_ID_PCMACHINE, &objnum );
-    // 発見した配置モデルのアニメ再生開始
-    if( 0 < objnum )
-    {
-      G3DMAPOBJST_setAnime( work->bmMan, objst[0], 0, BMANM_REQ_START );
-      G3DMAPOBJST_setAnime( work->bmMan, objst[0], 1, BMANM_REQ_START );
-    }
-    // 後始末
-    GFL_HEAP_FreeMemory( objst );
+    G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 0, BMANM_REQ_START );
+    G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 1, BMANM_REQ_START );
   }
 
   // ME再生

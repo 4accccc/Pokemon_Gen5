@@ -1772,6 +1772,15 @@ void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_id
   OBJHND_setAnime( &man->objHdl[entryNo], anm_idx, req );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
+{
+  VecFx32 pos;
+  GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
+  VEC_Add( &obj->objSt->trans, &pos, dst );
+}
+
 
 //============================================================================================
 //

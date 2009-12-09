@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-12-08T16:06:17"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-12-08T16:20:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="644"/>
 		<band id="3" index="3" style="0000" width="644"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -365,8 +365,8 @@
 		<comment>■選択肢ウインドウ
 ・ボックス管理者
 </comment>
-		<language name="JPN" width="256">だれかのパソコン</language>
-		<language name="JPN_KANJI" width="256">だれかのパソコン</language>
+		<language name="JPN" width="256">（かいはつしゃ）のパソコン</language>
+		<language name="JPN_KANJI" width="256">（開発者）のパソコン</language>
 	</row>
 
 	<row id="msg_pc_window_03" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -570,6 +570,14 @@
 つうしんを　せつだん　します</language>
 		<language name="JPN_KANJI" width="256">じぶんのパソコン　への
 つうしんを　せつだん　します</language>
+	</row>
+
+	<row id="msg_pc_zukan_check_01">
+		<comment>■「はかせのパソコン」選択時</comment>
+		<language name="JPN" width="256">（はかせの　なまえ）の
+パソコンに　せつぞくした！</language>
+		<language name="JPN_KANJI" width="256">（博士の名前）の
+パソコンに　接続した！</language>
 	</row>
 
 	<flowchart-group-list>

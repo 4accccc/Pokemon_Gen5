@@ -37,6 +37,8 @@
 #include "event_fieldmap_control.h"   //for EVENT_Field～
 #include "system/main.h"  //for HEAPID_PROC
 
+#include "event_pokecen_pc.h"  // for EVENT_PokecenPcOn, EVENT_PokecenPcOff
+
 #define BRIGHT_FADE_SPPED (2)
 
 typedef enum {
@@ -250,7 +252,6 @@ VMCMD_RESULT EvCmdMapFadeCheck( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
 {
-  VecFx32 pos;
   GMEVENT * call_event;
   GMEVENT * parent;
   SCRCMD_WORK *work = wk;
@@ -259,13 +260,60 @@ VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
   u16 pokecount = SCRCMD_GetVMWorkValue( core, wk );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-  FIELD_PLAYER_GetDirPos( fld_player, DIR_UP, &pos );
-  pos.z -= 48*FX32_ONE;  // TEMP: C01ポケセンでテスト
-  //PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
   
   parent = SCRIPT_GetEvent( sc );
-  call_event = EVENT_PcRecoveryAnime( gsys, parent, &pos, pokecount );
+  call_event = EVENT_PcRecoveryAnime( gsys, parent, pokecount );
   SCRIPT_CallEvent( sc, call_event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * PC起動アニメ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  配置モデルを検索し、その位置にアニメを適用したい。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk )
+{
+  GMEVENT* event;
+  GMEVENT* parent;
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  parent = SCRIPT_GetEvent( sc );
+  event = EVENT_PokecenPcOn( parent, gsys, fieldmap );
+  SCRIPT_CallEvent( sc, event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * PC停止アニメ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  配置モデルを検索し、その位置にアニメを適用したい。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk )
+{
+  GMEVENT* event;
+  GMEVENT* parent;
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  parent = SCRIPT_GetEvent( sc );
+  event = EVENT_PokecenPcOff( parent, gsys, fieldmap );
+  SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }
 

@@ -36,35 +36,45 @@ EVENT_START ev_pc
   // ローカル変数の初期化
   $exit = FALSE
 
-  // @todo PC起動イベント
+  // PC起動イベント
+  _POKECEN_PC_ON()
 
   // 「パソコンの スイッチを いれた！」
-  _PLAINWIN_MSG_DOWN( msg_pc_on_01 )
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG_DOWN( msg_pc_on_01 )
+  _SYSWIN_CLOSE()
 
   WHILE $exit == FALSE 
     // 「どこの パソコンに せつぞく …」
-    _PLAINWIN_MSG_DOWN( msg_pc_on_02 )
+    _SYSWIN_MSG_DOWN( msg_pc_on_02 )
+    _AB_KEYWAIT()
+    _SYSWIN_CLOSE()
     // 選択ウィンドウ表示
-    _BMPMENU_INIT_EX( 0, 0, 0, TRUE, select_pos )
+    _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
+    // @todo フラグを見て項目名を変更
     _BMPMENU_MAKE_LIST( msg_pc_window_01, msg_pc_window_01 )  // だれかのパソコン
+    //_BMPMENU_MAKE_LIST( msg_pc_window_02, msg_pc_window_02 )  // 開発者のパソコン
+    // @todo 図鑑を持っていなければ表示しない
+    _PLAYER_NAME( 0 )
     _BMPMENU_MAKE_LIST( msg_pc_window_03, msg_pc_window_03 )  // 自分のパソコン
     _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
+    // @todo 殿堂入りしていなければ表示しない
     _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START()
-    // 選択項目に応じた処理
+    // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_window_01 THEN _CALL( pc_box )
     CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
     CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
     CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
-    CASE msg_pc_window_06 THEN _CALL( pc_off )
-                               $exit = TRUE
+    CASE msg_pc_window_06 THEN $exit = TRUE
     CASE EV_WIN_B_CANCEL  THEN $exit = TRUE
     ENDSWITCH
   ENDWHILE
 
-  // @todo PC停止イベント
+  // PC停止イベント
+  _POKECEN_PC_OFF()
 }
 EVENT_END 
 
@@ -80,26 +90,32 @@ pc_box:
   // ローカル変数の初期化
   $exit = FALSE
 
+  // SE
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
+
   //「ポケモンの あずかりシステムを …」
-  _PLAINWIN_MSG_DOWN( msg_pc_box_01 )
+  _SYSWIN_MSG_DOWN( msg_pc_box_01 )
+  _SYSWIN_CLOSE()
 
   WHILE $exit == FALSE 
     // 選択ウィンドウ表示
-    _BMPMENU_INIT_EX( 0, 0, 0, TRUE, select_pos )
+    _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST( msg_pc_box_window_01, msg_pc_box_window_01 )  // あずける
     _BMPMENU_MAKE_LIST( msg_pc_box_window_02, msg_pc_box_window_02 )  // つれていく
     _BMPMENU_MAKE_LIST( msg_pc_box_window_03, msg_pc_box_window_03 )  // せいりする
+    _BMPMENU_MAKE_LIST( msg_pc_box_window_06, msg_pc_box_window_06 )  // バトルボックス
     _BMPMENU_MAKE_LIST( msg_pc_box_window_04, msg_pc_box_window_04 )  // もちもの
     _BMPMENU_MAKE_LIST( msg_pc_box_window_05, msg_pc_box_window_05 )  // さようなら
-    _BMPMENU_START()
-
-    // ボックス画面の呼び出し
+    _BMPMENU_START() 
+    // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_box_window_01 THEN _CALL_BOX_PROC( BOX_MODE_AZUKERU )
     CASE msg_pc_box_window_02 THEN _CALL_BOX_PROC( BOX_MODE_TURETEIKU )
     CASE msg_pc_box_window_03 THEN _CALL_BOX_PROC( BOX_MODE_SEIRI )
+    CASE msg_pc_box_window_06 THEN _CALL_BOX_PROC( BOX_MODE_BATTLE )
     CASE msg_pc_box_window_04 THEN _CALL_BOX_PROC( BOX_MODE_ITEM )
     CASE msg_pc_box_window_05 THEN $exit = TRUE 
+    CASE EV_WIN_B_CANCEL      THEN $exit = TRUE
     ENDSWITCH 
   ENDWHILE
 }
@@ -109,22 +125,64 @@ _RET
 /*       メールボックス処理                                   */
 /**************************************************************/
 pc_mail_box:
+{
+  DEFINE_LOCAL exit
+  DEFINE_LOCAL select_pos
+
+  // ローカル変数の初期化
+  $exit = FALSE
+
+  // SE
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
+
+  //「○○の パソコンに せつぞくした！」
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+
+  WHILE $exit == FALSE
+    // 選択ウィンドウ表示
+    _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
+    _BMPMENU_MAKE_LIST( msg_pc_mail_window_01, msg_pc_mail_window_01 )  // メールボックス
+    _BMPMENU_MAKE_LIST( msg_pc_mail_window_02, msg_pc_mail_window_02 )  // せつぞくを きる
+    _BMPMENU_START()
+    // 選択に応じた処理
+    // @todo メールボックス呼び出し処理
+    SWITCH $select_pos
+    CASE msg_pc_mail_window_02 THEN $exit = TRUE
+    CASE EV_WIN_B_CANCEL       THEN $exit = TRUE
+    ENDSWITCH 
+  ENDWHILE
+}
 _RET
 
 /**************************************************************/
 /*       博士の図鑑評価処理                                   */
 /**************************************************************/
 pc_zukan_check:
+{
+  // SE
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
+
+  //「はかせの パソコンに せつぞくした！」
+  _SYSWIN_MSG_DOWN( msg_pc_zukan_check_01 ) 
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+
+  // @todo 図鑑評価メッセージを表示
+}
 _RET
 
 /**************************************************************/
 /*       殿堂入り処理                                         */
 /**************************************************************/
 pc_dendouiri:
-_RET
+{
+  // SE
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
 
-/**************************************************************/
-/*       スイッチをきる処理                                   */
-/**************************************************************/
-pc_off:
+  // @todo データが正常かどうかをチェック
+  // @todo 殿堂入り画面の表示
+}
 _RET

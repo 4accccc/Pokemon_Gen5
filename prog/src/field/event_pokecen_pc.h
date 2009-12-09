@@ -15,22 +15,26 @@
 /**
  * @brief ポケセンのPC起動イベントを作成する
  *
+ * @param parent   親イベント
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_PokecenPcOn( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_PokecenPcOn( GMEVENT* parent, 
+                                   GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief ポケセンのPC停止イベントを作成する
  *
+ * @param parent   親イベント
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_PokecenPcOff( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_PokecenPcOff( GMEVENT* parent, 
+                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );

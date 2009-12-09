@@ -4698,6 +4698,32 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _POKECEN_PC_ON
+ * @brief ポケセンPC起動アニメ
+ */
+//--------------------------------------------------------------
+#define _POKECEN_PC_ON()  \
+  _ASM_POKECEN_PC_ON
+
+  .macro  _ASM_POKECEN_PC_ON
+  .short  EV_SEQ_POKECEN_PC_ON
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _POKECEN_PC_OFF
+ * @brief ポケセンPC停止アニメ
+ */
+//--------------------------------------------------------------
+#define _POKECEN_PC_OFF()  \
+  _ASM_POKECEN_PC_OFF
+
+  .macro  _ASM_POKECEN_PC_OFF
+  .short  EV_SEQ_POKECEN_PC_OFF
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _DOOR_ANIME_CREATE
  * @brief ドアアニメコントローラーの生成
  * @param ret_wk  anm_idをうけとるためのワーク

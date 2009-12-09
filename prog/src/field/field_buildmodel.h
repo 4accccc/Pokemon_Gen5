@@ -153,6 +153,7 @@ extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 
 extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
 extern void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req );
+extern void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst);
 
 //============================================================================================
 //============================================================================================
