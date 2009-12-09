@@ -929,6 +929,7 @@ int BPP_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
   s8  min, max;
 
   ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  BTL_Printf("ƒ|ƒP[%d]‚Ìƒ‰ƒ“ƒNŒø‰Ê(%d) ... Œ»’iŠK=%d, ã¸ŒÀŠE=%d\n", pp->coreParam.myID, rankType, *ptr, (max-(*ptr)));
   return max - (*ptr);
 }
 //=============================================================================================

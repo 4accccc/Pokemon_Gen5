@@ -2651,6 +2651,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     // ワザメッセージ出力
     if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
       // 他ワザ呼び出し時など、ワザ名メッセージをカスタマイズした場合
+      BTL_Printf("メッセージカスタマイズがありました\n");
       handexSub_putString( wk, &wk->strParam );
     }else{
       scPut_WazaMsg( wk, attacker, actWaza );
@@ -2952,6 +2953,8 @@ static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
 
   u8 intrPokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
   u8 numTarget;
+
+  BTL_Printf("割り込みターゲットポケ=%d\n", intrPokeID);
 
   BTL_POKESET_Clear( rec );
 
@@ -4948,13 +4951,15 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK_TYPE );
+    sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, sickCont.raw );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-    sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
     if( sick == WAZASICK_SPECIAL_CODE ){
       sick = WAZASICK_NULL;
@@ -6598,6 +6603,7 @@ static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSic
 
   BPP_CurePokeSick( bpp );
   SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
+  SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
 
   switch( sick ){
   case POKESICK_NEMURI:
@@ -6951,6 +6957,8 @@ static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target )
 static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value, BOOL fEffectEnable )
 {
   u8 pokeID = BPP_GetID( bpp );
+
+  BTL_Printf("ポケ[%d]のHPを %d だけシフトする\n", pokeID, value );
 
   if( value > 0 )
   {
@@ -7436,10 +7444,10 @@ static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   BOOL result;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, actWazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)str );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, actWazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WORK_ADRS, (int)str );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_REQWAZA_MSG );
     result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
@@ -7608,9 +7616,9 @@ static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 {
   u8 pokeID = BTL_POKEID_NULL;
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, pokeID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECIDE_TARGET );
     pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
@@ -7809,17 +7817,16 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   {
-    u8 wazaHitRatio, per;
+    u8 wazaHitPer, totalPer;
     s8 hitRank, avoidRank, totalRank;
 
-    wazaHitRatio = scEvent_getHitPer(wk, attacker, defender, wazaParam);
+    wazaHitPer = scEvent_getHitPer(wk, attacker, defender, wazaParam);
 
     BTL_EVENTVAR_Push();
-
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_HIT_RATIO) );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RANK );
 
       hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
@@ -7827,10 +7834,14 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 
     BTL_EVENTVAR_Pop();
 
-    totalRank = roundValue( BTL_CALC_HITRATIO_MID + avoidRank - hitRank, BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
-    per = BTL_CALC_HitPer( wazaHitRatio, totalRank );
+    totalRank = roundValue( (int)(BTL_CALC_HITRATIO_MID + hitRank - avoidRank), BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
+    totalPer  = BTL_CALC_HitPer( wazaHitPer, totalRank );
 
-    return perOccur( wk, per );
+    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d\n", BPP_GetID(attacker), hitRank );
+    BTL_Printf("防御ポケ[%d]  回避Rank=%d\n", BPP_GetID(defender), avoidRank );
+    BTL_Printf("ワザ的中率=%d  最終命中ランク=%d, 最終命中率=%d\n", wazaHitPer, totalRank, totalPer );
+
+    return perOccur( wk, totalPer );
   }
 }
 //----------------------------------------------------------------------------------
@@ -8095,8 +8106,8 @@ static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DMG_TO_RECOVER_FIX );
   BTL_EVENTVAR_Pop();
 }
@@ -10380,6 +10391,7 @@ static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER
 {
   BTL_HANDEX_PARAM_KILL* param = (BTL_HANDEX_PARAM_KILL*)param_header;
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BTL_Printf("ポケ[%d]を強制的にひんし\n", param->pokeID);
   if( !BPP_IsDead(pp_target) ){
     scproc_KillPokemon( wk, pp_target );
     handexSub_putString( wk, &param->exStr );

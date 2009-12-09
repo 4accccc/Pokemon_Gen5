@@ -188,6 +188,14 @@ typedef struct {
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
   ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
 
+  // デバッグ系
+  u8          fMustTuika    : 1;  ///< 追加効果の発生率100％
+  u8          fMustToku     : 1;  ///< 一部とくせい効果の発生率100％
+  u8          fMustItem     : 1;  ///< 一部アイテム効果の発生率100％
+  u8          fMustCritical : 1;  ///< 打撃ワザによるクリティカル発生率100％
+  u8          fHPConst      : 1;  ///< ポケモンのHPが減らない
+  u8          fPPConst      : 1;  ///< ポケモンのPPが減らない
+
 
   //----- 以下、バトルの結果格納パラメータ ----
 

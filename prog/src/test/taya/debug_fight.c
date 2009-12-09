@@ -56,6 +56,8 @@ enum {
   POKEPARA_SIZE = 228,  // ポケモンパラメータ想定サイズ
   POKEPARA_SAVEAREA_SIZE = POKEPARA_SIZE * POKEPARA_MAX,
 
+  PAGE_MAX = 2,
+
   SAVEAREA_SIZE = 0x2000,
 
 };
@@ -150,6 +152,13 @@ typedef enum {
   SELITEM_REC_MODE,
   SELITEM_REC_BUF,
 
+  SELITEM_MUST_TUIKA,
+  SELITEM_MUST_TOKU,
+  SELITEM_MUST_ITEM,
+  SELITEM_MUST_CRITICAL,
+  SELITEM_HP_CONST,
+  SELITEM_PP_CONST,
+
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
 
@@ -198,74 +207,150 @@ enum {
   LAYOUT_CRIPMARK_WIDTH = 12,
   LAYOUT_CRIPMARK_HEIGHT = 12,
 
+
+  LAYOUT_LABEL_MUST_TUIKA_X     = 4,
+  LAYOUT_LABEL_MUST_TOKU_X      = 4,
+  LAYOUT_LABEL_MUST_ITEM_X      = 4,
+  LAYOUT_LABEL_MUST_CRITICAL_X  = 4,
+  LAYOUT_LABEL_HP_CONST_X       = 4,
+  LAYOUT_LABEL_PP_CONST_X       = 4,
+
+  LAYOUT_LABEL_MUST_TUIKA_Y     = 8,
+  LAYOUT_LABEL_MUST_TOKU_Y      = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
+  LAYOUT_LABEL_MUST_ITEM_Y      = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
+  LAYOUT_LABEL_MUST_CRITICAL_Y  = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
+  LAYOUT_LABEL_HP_CONST_Y       = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
+  LAYOUT_LABEL_PP_CONST_Y       = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
+
 };
+
+//======================================================================
 /*
- *  ラベルレイアウト
+ *  ラベルレイアウト定義用構造体
  */
-static const struct {
-  u16 strID;
-  u8  x;
-  u8  y;
-}LabelLayout[] = {
-  { DBGF_LABEL_FRIEND1, LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_ENEMY1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1  },
-  { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1  },
-  { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2  },
-  { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y },
-  { DBGF_LABEL_RECORD,  LAYOUT_LABEL_REC_X,      LAYOUT_LABEL_REC_Y    },
+//======================================================================
+typedef struct {
+  u16  strID;
+  u8   x;
+  u8   y;
+}LABEL_LAYOUT;
+
+//------------------------------------------------------
+/*
+ *  ラベルレイアウト（１ページ目）
+ */
+//------------------------------------------------------
+static const LABEL_LAYOUT LabelLayout_Page1[] = {
+  { DBGF_LABEL_FRIEND1, LAYOUT_PARTY_LINE1_X,    LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_ENEMY1,  LAYOUT_PARTY_LINE2_X,    LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X,    LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X,    LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1      },
+  { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1      },
+  { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2      },
+  { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y     },
+  { DBGF_LABEL_RECORD,  LAYOUT_LABEL_REC_X,      LAYOUT_LABEL_REC_Y        },
 
   { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
   { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
 };
-
+//------------------------------------------------------
 /*
- *  アイテムレイアウト
+ *  ラベルレイアウト（２ページ目）
  */
-static const struct {
+//------------------------------------------------------
+static const LABEL_LAYOUT LabelLayout_Page2[] = {
+  { DBGF_LABEL_MUST_TUIKA,    LAYOUT_LABEL_MUST_TUIKA_X,    LAYOUT_LABEL_MUST_TUIKA_Y    },
+  { DBGF_LABEL_MUST_TOKU,     LAYOUT_LABEL_MUST_TOKU_X,     LAYOUT_LABEL_MUST_TOKU_Y     },
+  { DBGF_LABEL_MUST_ITEM,     LAYOUT_LABEL_MUST_ITEM_X,     LAYOUT_LABEL_MUST_ITEM_Y     },
+  { DBGF_LABEL_MUST_CRITICAL, LAYOUT_LABEL_MUST_CRITICAL_X, LAYOUT_LABEL_MUST_CRITICAL_Y },
+  { DBGF_LABEL_HP_CONST,      LAYOUT_LABEL_HP_CONST_X,      LAYOUT_LABEL_HP_CONST_Y      },
+  { DBGF_LABEL_PP_CONST,      LAYOUT_LABEL_PP_CONST_X,      LAYOUT_LABEL_PP_CONST_Y      },
+};
+
+//======================================================================
+/*
+ *  アイテムレイアウト定義用構造体
+ */
+//======================================================================
+typedef struct {
   u16  itemID;
   u8   x;
   u8   y;
-}ItemLayout[] = {
-  { SELITEM_POKE_SELF_1,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y1 },
-  { SELITEM_POKE_SELF_2,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y2 },
-  { SELITEM_POKE_SELF_3,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y3 },
-  { SELITEM_POKE_SELF_4,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y4 },
-  { SELITEM_POKE_SELF_5,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y5 },
-  { SELITEM_POKE_SELF_6,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y6 },
+  int  min;
+  int  max;
+}ITEM_LAYOUT;
 
-  { SELITEM_POKE_ENEMY1_1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y1 },
-  { SELITEM_POKE_ENEMY1_2,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y2 },
-  { SELITEM_POKE_ENEMY1_3,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y3 },
-  { SELITEM_POKE_ENEMY1_4,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y4 },
-  { SELITEM_POKE_ENEMY1_5,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y5 },
-  { SELITEM_POKE_ENEMY1_6,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y6 },
+/**
+ *  アイテムレイアウト（１ページ目）
+ */
+static const ITEM_LAYOUT ItemLayout_Page1[] = {
+  { SELITEM_POKE_SELF_1,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
+  { SELITEM_POKE_SELF_2,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
+  { SELITEM_POKE_SELF_3,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
+  { SELITEM_POKE_SELF_4,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
+  { SELITEM_POKE_SELF_5,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
+  { SELITEM_POKE_SELF_6,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
 
-  { SELITEM_POKE_FRIEND_1,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y1 },
-  { SELITEM_POKE_FRIEND_2,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y2 },
-  { SELITEM_POKE_FRIEND_3,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y3 },
-  { SELITEM_POKE_FRIEND_4,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y4 },
-  { SELITEM_POKE_FRIEND_5,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y5 },
-  { SELITEM_POKE_FRIEND_6,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y6 },
+  { SELITEM_POKE_ENEMY1_1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
+  { SELITEM_POKE_ENEMY1_2,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
+  { SELITEM_POKE_ENEMY1_3,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
+  { SELITEM_POKE_ENEMY1_4,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
+  { SELITEM_POKE_ENEMY1_5,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
+  { SELITEM_POKE_ENEMY1_6,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
 
-  { SELITEM_POKE_ENEMY2_1,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y1 },
-  { SELITEM_POKE_ENEMY2_2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y2 },
-  { SELITEM_POKE_ENEMY2_3,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y3 },
-  { SELITEM_POKE_ENEMY2_4,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y4 },
-  { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5 },
-  { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6 },
+  { SELITEM_POKE_FRIEND_1,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
+  { SELITEM_POKE_FRIEND_2,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
+  { SELITEM_POKE_FRIEND_3,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
+  { SELITEM_POKE_FRIEND_4,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
+  { SELITEM_POKE_FRIEND_5,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
+  { SELITEM_POKE_FRIEND_6,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
 
-  { SELITEM_BTL_TYPE,   LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1 },
-  { SELITEM_MSGSPEED,   LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1 },
-  { SELITEM_WAZAEFF,    LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2 },
-  { SELITEM_SUBWAYMODE, LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y },
-  { SELITEM_REC_MODE,   LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y },
-  { SELITEM_REC_BUF,    LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y },
+  { SELITEM_POKE_ENEMY2_1,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
+  { SELITEM_POKE_ENEMY2_2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
+  { SELITEM_POKE_ENEMY2_3,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
+  { SELITEM_POKE_ENEMY2_4,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
+  { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
+  { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
+
+  { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,  0, BTLTYPE_MAX-1     },
+  { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,  0, MSGSPEED_FAST_EX  },
+  { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,  0, 1                 },
+  { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y, 0, 1                 },
+  { SELITEM_REC_MODE,       LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y,    0, DBF_RECMODE_MAX-1 },
+  { SELITEM_REC_BUF,        LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y,    0, 3                 },
 
   { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
+};
+
+/**
+ *  アイテムレイアウト（２ページ目）
+ */
+static const ITEM_LAYOUT ItemLayout_Page2[] = {
+  { SELITEM_MUST_TUIKA,     LAYOUT_LABEL_MUST_TUIKA_X    +60, LAYOUT_LABEL_MUST_TUIKA_Y,    0, 1 },
+  { SELITEM_MUST_TOKU,      LAYOUT_LABEL_MUST_TOKU_X     +60, LAYOUT_LABEL_MUST_TOKU_Y,     0, 1 },
+  { SELITEM_MUST_ITEM,      LAYOUT_LABEL_MUST_ITEM_X     +60, LAYOUT_LABEL_MUST_ITEM_Y,     0, 1 },
+  { SELITEM_MUST_CRITICAL,  LAYOUT_LABEL_MUST_CRITICAL_X +60, LAYOUT_LABEL_MUST_CRITICAL_Y, 0, 1 },
+  { SELITEM_HP_CONST,       LAYOUT_LABEL_HP_CONST_X      +60, LAYOUT_LABEL_HP_CONST_Y,      0, 1 },
+  { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +60, LAYOUT_LABEL_PP_CONST_Y,      0, 1 },
+
+};
+
+//----------------------------------------------------------------------
+/*
+ *  ラベル・アイテムレイアウトテーブル本体
+ */
+//----------------------------------------------------------------------
+static const struct {
+  const LABEL_LAYOUT*   labelLayout;
+  const ITEM_LAYOUT*    itemLayout;
+  u16                   labelElems;
+  u16                   itemElems;
+
+}LayoutTable[] = {
+  { LabelLayout_Page1, ItemLayout_Page1,  NELEMS(LabelLayout_Page1), NELEMS(ItemLayout_Page1) },
+  { LabelLayout_Page2, ItemLayout_Page2,  NELEMS(LabelLayout_Page2), NELEMS(ItemLayout_Page2) },
 };
 
 
@@ -306,14 +391,22 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
  *  SaveData
  */
 typedef struct {
-  u8  btlType;
-  u8  weather;
-  u8  msgSpeed;
-  u8  fWazaEff : 1;
-  u8  fSubway  : 1;
-  u8  recMode  : 2;
-  u8  recBufID : 2;
-  u8  dmy      : 2;
+  u32  btlType  : 5;
+  u32  weather  : 3;
+  u32  msgSpeed : 3;
+  u32  fWazaEff : 1;
+  u32  fSubway  : 1;
+  u32  recMode  : 2;
+  u32  recBufID : 2;
+
+  u32  fMustTuika    : 1;
+  u32  fMustToku     : 1;
+  u32  fMustItem     : 1;
+  u32  fMustCritical : 1;
+  u32  fHPConst      : 1;
+  u32  fPPConst      : 1;
+
+  u32  dmy      : 7;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -341,6 +434,7 @@ struct _DEBUG_BTL_WORK {
   HEAPID          heapID;
   u8              fNetConnect;
   u8              fPlayerPartyAllocated;
+  u8              pageNum;
   pMainProc       mainProc;
   int             mainSeq;
   u8              prevItemStrWidth[ SELITEM_MAX ];
@@ -349,6 +443,7 @@ struct _DEBUG_BTL_WORK {
   SAVE_CONTROL_WORK*  saveCtrl;
   u16                 saveSeq0;
   u16                 saveSeq1;
+
 
   DEBUG_BTL_SAVEDATA  saveData;
 
@@ -392,7 +487,9 @@ static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
+static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf );
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_ChangePage( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
@@ -460,6 +557,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
 
   savework_Init( &wk->saveData );
+  wk->pageNum = 0;
   wk->selectItem = SELITEM_POKE_SELF_1;
 
   setMainProc( wk, mainProc_Setup );
@@ -689,6 +787,8 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
 
   POKEMON_PARAM* pp;
 
+  GFL_STD_MemClear( saveData, sizeof(DEBUG_BTL_SAVEDATA) );
+
   saveData->btlType  = BTLTYPE_SINGLE_WILD;
   saveData->weather  = BTL_WEATHER_NONE;
   saveData->msgSpeed = MSGSPEED_FAST;
@@ -752,7 +852,6 @@ static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk 
     pp = savework_GetPokeParaArea( saveData, i );
     if( PP_Get(pp, ID_PARA_monsno, NULL) ){
       u32 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-      TAYA_Printf("敵パーティ(%p)に対し、PP(%p) : monsno=%d を追加\n", wk->partyEnemy1, pp, monsno);
       PokeParty_Add( wk->partyEnemy1, pp );
     }
   }
@@ -830,6 +929,26 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_REC_BUF:
     save->recBufID = loopValue( save->recBufID+incValue, 0, 3 );
     break;
+
+
+  case SELITEM_MUST_TUIKA:
+    save->fMustTuika ^= 1;
+    break;
+  case SELITEM_MUST_TOKU:
+    save->fMustToku ^= 1;
+    break;
+  case SELITEM_MUST_ITEM:
+    save->fMustItem ^= 1;
+    break;
+  case SELITEM_MUST_CRITICAL:
+    save->fMustCritical ^= 1;
+    break;
+  case SELITEM_HP_CONST:
+    save->fHPConst ^= 1;
+    break;
+  case SELITEM_PP_CONST:
+    save->fPPConst ^= 1;
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -906,13 +1025,18 @@ static BtlRule btltype_GetRule( BtlType type )
 //----------------------------------------------------------------------------------
 static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
 {
-  u32 i;
-  for(i=0; i<NELEMS(ItemLayout); ++i)
+  const ITEM_LAYOUT*  itemTable;
+  u32 i, elems;
+
+  itemTable = LayoutTable[ wk->pageNum ].itemLayout;
+  elems = LayoutTable[ wk->pageNum ].itemElems;
+
+  for(i=0; i<elems; ++i)
   {
-    if( ItemLayout[i].itemID == itemID )
+    if( itemTable[i].itemID == itemID )
     {
-      u16 x = ItemLayout[i].x;
-      u16 y = ItemLayout[i].y;
+      u16 x = itemTable[i].x;
+      u16 y = itemTable[i].y;
 
       if( fSelect ){
         GFL_FONTSYS_SetColor( 3, 4, 0x0f );
@@ -937,6 +1061,12 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SAVE:        printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
         case SELITEM_LOAD:        printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
 
+        case SELITEM_MUST_TUIKA:    printItem_Flag( wk, wk->saveData.fMustTuika,    wk->strbuf ); break;
+        case SELITEM_MUST_TOKU:     printItem_Flag( wk, wk->saveData.fMustToku,     wk->strbuf ); break;
+        case SELITEM_MUST_ITEM:     printItem_Flag( wk, wk->saveData.fMustItem,     wk->strbuf ); break;
+        case SELITEM_MUST_CRITICAL: printItem_Flag( wk, wk->saveData.fMustCritical, wk->strbuf ); break;
+        case SELITEM_HP_CONST:      printItem_Flag( wk, wk->saveData.fHPConst, wk->strbuf ); break;
+        case SELITEM_PP_CONST:      printItem_Flag( wk, wk->saveData.fPPConst, wk->strbuf ); break;
 
         default:
           GFL_STR_ClearBuffer( wk->strbuf );
@@ -1001,8 +1131,10 @@ static void clearClipMark( DEBUG_BTL_WORK* wk )
               LAYOUT_CRIPMARK_WIDTH, LAYOUT_CRIPMARK_HEIGHT, 0xff );
   GFL_BMPWIN_TransVramCharacter( wk->win );
 }
-
-
+static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+flag, buf );
+}
 
 
 
@@ -1013,19 +1145,25 @@ static void clearClipMark( DEBUG_BTL_WORK* wk )
 //----------------------------------------------------------------------------------
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq )
 {
-  u32 i;
+  const LABEL_LAYOUT* labelTable;
+  const ITEM_LAYOUT*  itemTable;
+  u32 i, elems;
 
   GFL_FONTSYS_SetColor( 1, 2, 0x0f );
 
-  for(i=0; i<NELEMS(LabelLayout); ++i)
+  labelTable = LayoutTable[ wk->pageNum ].labelLayout;
+  elems = LayoutTable[ wk->pageNum ].labelElems;
+  for(i=0; i<elems; ++i)
   {
-    GFL_MSG_GetString( wk->mm, LabelLayout[i].strID, wk->strbuf );
-    PRINTSYS_Print( wk->bmp, LabelLayout[i].x, LabelLayout[i].y, wk->strbuf, wk->fontHandle );
+    GFL_MSG_GetString( wk->mm, labelTable[i].strID, wk->strbuf );
+    PRINTSYS_Print( wk->bmp, labelTable[i].x, labelTable[i].y, wk->strbuf, wk->fontHandle );
   }
 
-  for(i=0; i<NELEMS(ItemLayout); ++i)
+  itemTable = LayoutTable[ wk->pageNum ].itemLayout;
+  elems = LayoutTable[ wk->pageNum ].itemElems;
+  for(i=0; i<elems; ++i)
   {
-    PrintItem( wk, ItemLayout[i].itemID, (wk->selectItem == ItemLayout[i].itemID));
+    PrintItem( wk, itemTable[i].itemID, (wk->selectItem == itemTable[i].itemID));
   }
 
   GFL_BMPWIN_MakeScreen( wk->win );
@@ -1040,6 +1178,19 @@ static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq )
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：ページ切り替え
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_ChangePage( DEBUG_BTL_WORK* wk, int* seq )
+{
+  GFL_BMP_Clear( wk->bmp, 0xff );
+  wk->selectItem = LayoutTable[ wk->pageNum ].itemLayout[0].itemID;
+  setMainProc( wk, mainProc_Setup );
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * メインプロセス：ルート
@@ -1090,6 +1241,13 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
+      { SELITEM_MUST_TUIKA,    SELITEM_MUST_CRITICAL, SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_ITEM,     SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_CRITICAL, SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_HP_CONST,      SELITEM_MUST_CRITICAL, SELITEM_PP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_PP_CONST,      SELITEM_HP_CONST,      SELITEM_MUST_TUIKA,    SELITEM_NULL,          SELITEM_NULL          },
+  /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
     };
 
     u32 nextItem = SELITEM_NULL, i;
@@ -1138,6 +1296,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     }
   }
 
+  if( key & PAD_BUTTON_L ){
+    wk->pageNum = loopValue( wk->pageNum-1, 0, (PAGE_MAX-1) );
+    setMainProc( wk, mainProc_ChangePage );
+  }
+  if( key & PAD_BUTTON_R ){
+    wk->pageNum = loopValue( wk->pageNum+1, 0, (PAGE_MAX-1) );
+    setMainProc( wk, mainProc_ChangePage );
+  }
+
   if( key & PAD_BUTTON_A )
   {
     if( selItem_IsPoke(wk->selectItem) ){
@@ -1173,8 +1340,6 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
 
   return FALSE;
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * メインプロセス：ポケパラ作成
@@ -1529,7 +1694,7 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
       0x00,
     };
     static const u8 kariRecRand[] = {
-      0x28, 0x21, 0x70, 0xe5, 0x41, 0x38, 0x2a, 0xbd,
+      0x46, 0x11, 0x82, 0x3e, 0xda, 0x39, 0xd2, 0x50,
       0x65, 0x89, 0x07, 0x6c, 0x65, 0x8b, 0x58, 0x5d,
       0xc3, 0x9e, 0x26, 0x00, 0x00, 0x00, 0x00, 0x00,
     };

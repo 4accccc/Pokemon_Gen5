@@ -454,6 +454,7 @@ typedef enum {
   TAGIDX_ITEM_NAME     = 9,
   TAGIDX_POKE_NICKNAME_TRUTH = 12,
   TAGIDX_TRAINER_TYPE  = 14,
+  TAGIDX_POKETYPE_NAME  = 15,
 }TagIndexType;
 
 static const STRCODE* seekNextTag( const STRCODE* sp, PrintSysTagGroup* tagGroup, u16* tagIndex, u8* argIndex )
@@ -605,6 +606,9 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             break;
           case TAGIDX_ITEM_NAME:
             WORDSET_RegisterItemName( wset, bufIdx, args[argIdx] );
+            break;
+          case TAGIDX_POKETYPE_NAME:
+            WORDSET_RegisterPokeTypeName( wset, bufIdx, args[argIdx] );
             break;
           default:
             GF_ASSERT_MSG(0, "unknown tagIdx = %d\n", tagIdx);

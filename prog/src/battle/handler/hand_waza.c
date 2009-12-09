@@ -813,6 +813,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HUKITOBASI,      ADD_KousokuSpin   },
     { WAZANO_PAWAATORIKKU,    ADD_PowerTrick    },
     { WAZANO_HENSIN,          ADD_Hensin        },
+    { WAZANO_DAIBAKUHATU,     ADD_Daibakuhatsu  },
+    { WAZANO_ZIBAKU,          ADD_Daibakuhatsu  },
 
     // 以下、新ワザ
     { WAZANO_KARI_BENOMUSHOKKU,     ADD_BenomShock      },
@@ -1754,7 +1756,7 @@ static void handler_Yuwaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static BTL_EVENT_FACTOR*  ADD_TriAttack( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK, handler_TriAttack },    // 追加効果による状態異常チェックハンドラ
+    { BTL_EVENT_ADD_SICK_TYPE, handler_TriAttack },    // 追加効果による状態異常チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -2619,6 +2621,7 @@ static BTL_EVENT_FACTOR*  ADD_Daibakuhatsu( u16 pri, WazaID waza, u8 pokeID )
 }
 static void handler_Daibakuhatsu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // 自分が攻撃の時、相手側防御を半分にして計算
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
@@ -4470,17 +4473,18 @@ enum {
   GAMAN_STATE_1ST = 0,
   GAMAN_STATE_2ND,
   GAMAN_STATE_3RD,
+  GAMAN_STATE_END,
 };
 
 static BTL_EVENT_FACTOR*  ADD_Gaman( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,     handler_Gaman },          //
-    { BTL_EVENT_REQWAZA_MSG,          handler_Gaman_WazaMsg },
+    { BTL_EVENT_WAZA_EXECUTE_FIX,     handler_Gaman          }, //
+    { BTL_EVENT_REQWAZA_MSG,          handler_Gaman_WazaMsg  },
     { BTL_EVENT_WAZA_EXECUTE_CHECK,   handler_Gamen_ExeCheck },
-    { BTL_EVENT_WAZA_EXECUTE_FAIL,    handler_Gaman_Fail },
-    { BTL_EVENT_DECIDE_TARGET,        handler_Gaman_Target },
-    { BTL_EVENT_WAZA_DMG_PROC1,       handler_Gaman_Damage },
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,    handler_Gaman_Fail     },
+    { BTL_EVENT_DECIDE_TARGET,        handler_Gaman_Target   },
+    { BTL_EVENT_WAZA_DMG_PROC1,       handler_Gaman_Damage   },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -4530,6 +4534,7 @@ static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
       break;
     case GAMAN_STATE_3RD:
+
       HANDEX_STR_Setup( param, BTL_STRTYPE_SET, BTL_STRID_SET_GamanEnd );
       HANDEX_STR_AddArg( param, pokeID );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
@@ -4547,9 +4552,11 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     for(t=0; t<3; ++t)
     {
       cnt = BPP_WAZADMGREC_GetCount( bpp, t );
+      BTL_Printf("%dターン前のダメージ受け回数=%d...\n", t, cnt);
       if( cnt ){
         BPP_WAZADMG_REC  rec;
         BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
+        BTL_Printf("ターゲットをポケ%dに確定\n", rec.pokeID);
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, rec.pokeID );
         break;
       }
@@ -4563,11 +4570,13 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 dmg_sum = gaman_getTotalDamage( bpp );
+    BTL_Printf("３ターンダメージ合計:%d\n", dmg_sum);
     if( dmg_sum ){
       dmg_sum *= 2;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
       BTL_Printf("がまん３ターン目：ダメージ吐き出し=%d\n", dmg_sum);
     }
+    work[0] = GAMAN_STATE_END;
   }
 }
 static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4577,6 +4586,7 @@ static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 dmg_sum = gaman_getTotalDamage( bpp );
+    BTL_Printf("３ターンダメージ合計:%d\n", dmg_sum);
     if( dmg_sum == 0 ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
       BTL_Printf("がまん３ターン目：ダメージ受けてないので失敗\n");
@@ -4609,6 +4619,7 @@ static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp )
   for(t=0; t<3; ++t)
   {
     cnt = BPP_WAZADMGREC_GetCount( bpp, t );
+    BTL_Printf("%dターン前のダメージ受け総数=%d\n", t, cnt);
     for(i=0; i<cnt; ++i)
     {
       BPP_WAZADMGREC_Get( bpp, t, i, &rec );
@@ -4723,13 +4734,17 @@ static void handler_Itamiwake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     u32 hp_target = BPP_GetValue( bpp_target, BPP_HP );
     u32 hp_avrg = (hp_me + hp_target) / 2;
 
+
     BTL_HANDEX_PARAM_SHIFT_HP* param;
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SHIFT_HP, pokeID );
     param->poke_cnt = 2;
     param->pokeID[0] = pokeID;
     param->volume[0] = hp_avrg - hp_me;
     param->pokeID[1] = target_pokeID;
-    param->pokeID[1] = hp_avrg - hp_target;
+    param->volume[1] = hp_avrg - hp_target;
+
+    BTL_Printf("ポケ[%d] のHP %d -> %d : value=%d\n", param->pokeID[0], hp_me, hp_avrg, param->volume[0] );
+    BTL_Printf("ポケ[%d] のHP %d -> %d : value=%d\n", param->pokeID[1], hp_me, hp_avrg, param->volume[1] );
 
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
@@ -4772,6 +4787,7 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       rank_param->rankType = BPP_ATTACK;
       rank_param->rankVolume = upVolume;
+      BTL_Printf("はらだいこ：上昇段階=%d\n", upVolume);
       rank_param->poke_cnt = 0;
       rank_param->pokeID[0] = pokeID;
       rank_param->fStdMsgDisable = TRUE;
@@ -5700,11 +5716,9 @@ static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     param->pokeID[0] = pokeID;
     param->sickID = WAZASICK_MUSTHIT_TARGET;
     param->sickCont = BPP_SICKCONT_MakeTurnParam( 2, targetPokeID );
-    param->fExMsg = TRUE;
-    param->exStr.type = BTL_STRTYPE_SET;
-    param->exStr.ID = BTL_STRID_SET_LockOn;
-    param->exStr.argCnt = 1;
-    param->exStr.args[0] = pokeID;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_LockOn );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, targetPokeID );
   }
 }
 //----------------------------------------------------------------------------------

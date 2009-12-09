@@ -47,7 +47,7 @@
 // 画面構成定義
 //--------------------------------------------
 #define _WINDOW_MAXNUM (4)   //ウインドウのパターン数
-#define _MESSAGE_BUF_NUM	( 200*2 )
+#define _MESSAGE_BUF_NUM  ( 200*2 )
 #define _SUBMENU_LISTMAX (2)
 
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
@@ -57,26 +57,26 @@
 
 
 //-------------------------------------------------------------------------
-///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
+/// 文字表示色定義(default) -> gflib/fntsys.hへ移動
 //------------------------------------------------------------------
 
-#define WINCLR_COL(col)	(((col)<<4)|(col))
+#define WINCLR_COL(col) (((col)<<4)|(col))
 //------------------------------------------------------------------
-//	カラー関連ダミー定義
+//  カラー関連ダミー定義
 //------------------------------------------------------------------
 // 通常のフォントカラー
-#define	FBMP_COL_NULL		(0)
-#define	FBMP_COL_BLACK		(1)
-#define	FBMP_COL_BLK_SDW	(2)
-#define	FBMP_COL_RED		(3)
-#define	FBMP_COL_RED_SDW	(4)
-#define	FBMP_COL_GREEN		(5)
-#define	FBMP_COL_GRN_SDW	(6)
-#define	FBMP_COL_BLUE		(7)
-#define	FBMP_COL_BLU_SDW	(8)
-#define	FBMP_COL_PINK		(9)
-#define	FBMP_COL_PNK_SDW	(10)
-#define	FBMP_COL_WHITE		(15)
+#define FBMP_COL_NULL   (0)
+#define FBMP_COL_BLACK    (1)
+#define FBMP_COL_BLK_SDW  (2)
+#define FBMP_COL_RED    (3)
+#define FBMP_COL_RED_SDW  (4)
+#define FBMP_COL_GREEN    (5)
+#define FBMP_COL_GRN_SDW  (6)
+#define FBMP_COL_BLUE   (7)
+#define FBMP_COL_BLU_SDW  (8)
+#define FBMP_COL_PINK   (9)
+#define FBMP_COL_PNK_SDW  (10)
+#define FBMP_COL_WHITE    (15)
 
 
 typedef enum{
@@ -107,7 +107,7 @@ struct _PDWACC_MESSAGE_WORK {
 
   GFL_MSGDATA *pMsgData;  //
 
-  WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
+  WORDSET *pWordSet;                // メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
   STRBUF* pStrBuf;
   int msgidx[_MESSAGE_INDEX_MAX];
@@ -117,14 +117,14 @@ struct _PDWACC_MESSAGE_WORK {
   GFL_BMPWIN* mainDispWin[_BMP_WINDOW_NUM];
 
   PRINT_STREAM* pStream;
-	GFL_TCBLSYS *pMsgTcblSys;
+  GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
-	APP_TASKMENU_RES* pAppTaskRes;
+  APP_TASKMENU_RES* pAppTaskRes;
 //  int windowNum;
   HEAPID heapID;
-  
+
 };
 
 
@@ -157,11 +157,11 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
 //  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   pWork->bgchar1M = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-	
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
 #if PM_DEBUG
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
@@ -180,7 +180,7 @@ void PDWACC_MESSAGE_Main(PDWACC_MESSAGE_WORK* pWork)
 void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
 {
   int i;
-  
+
 //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
 //                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M),
@@ -211,8 +211,8 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
       GFL_BMPWIN_Delete(pWork->mainDispWin[i]);
     }
   }
-  
-	GFL_BMPWIN_Exit();
+
+  GFL_BMPWIN_Exit();
   GFL_HEAP_FreeMemory(pWork);
 }
 
@@ -230,7 +230,7 @@ void PDWACC_MESSAGE_InfoMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN* pwin;
 
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  
+
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S ,
@@ -327,8 +327,8 @@ APP_TASKMENU_WORK* PDWACC_MESSAGE_YesNoStart(PDWACC_MESSAGE_WORK* pWork,int type
     appinit.posType = ATPT_RIGHT_DOWN;
     break;
   }
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, PDWACC_005, pWork->appitem[0].str);
@@ -346,11 +346,11 @@ APP_TASKMENU_WORK* PDWACC_MESSAGE_YesNoStart(PDWACC_MESSAGE_WORK* pWork,int type
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンイベント実行関数
+ *  @brief  ボタンイベント実行関数
  *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
+ *  @param  bttnid    ボタンID
+ *  @param  event   イベント種類
+ *  @param  p_work    ワーク
  */
 //-----------------------------------------------------------------------------
 
@@ -371,7 +371,7 @@ void PDWACC_MESSAGE_SystemMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN* pwin;
 
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  
+
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME2_S , 1 , 3, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
@@ -454,7 +454,7 @@ static int PDWACC_MESSAGE_Disp(PDWACC_MESSAGE_WORK* pWork,int msgid,int x,int y)
       pwin = pWork->mainDispWin[i];
 
       GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
-  
+
       GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
       PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,1, 2, pWork->pStrBuf, pWork->pFontHandle );
       GFL_BMPWIN_TransVramCharacter(pwin);
@@ -497,7 +497,7 @@ static void PDWACC_MESSAGE_DispTransReq(PDWACC_MESSAGE_WORK* pWork)
 void PDWACC_MESSAGE_DispClear(PDWACC_MESSAGE_WORK* pWork)
 {
   int i;
-  
+
   for(i=0;i<_BMP_WINDOW_NUM;i++){
     if(pWork->mainDispWin[i]!=NULL){
       BmpWinFrame_Clear(pWork->mainDispWin[i], WINDOW_TRANS_OFF);
