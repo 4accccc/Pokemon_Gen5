@@ -107,3 +107,7 @@
 "nsbmdfiles/warp01.nsbmd"
 "nsbmdfiles/warp02.nsbmd"
 "nsbmdfiles/warp03.nsbmd"
+"nsbmdfiles/c09Chandelier.nsbmd"
+"nsbmdfiles/d6_denkiiwa01.nsbmd"
+"nsbmdfiles/d6_yuka_biri02.nsbmd"
+"nsbmdfiles/d6_yuka_biri03.nsbmd"

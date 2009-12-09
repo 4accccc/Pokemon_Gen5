@@ -108,4 +108,8 @@ DEP_INDOOR	=	\
 	$(RESDIR)/warp01.nsbmd \
 	$(RESDIR)/warp02.nsbmd \
 	$(RESDIR)/warp03.nsbmd \
+	$(RESDIR)/c09Chandelier.nsbmd \
+	$(RESDIR)/d6_denkiiwa01.nsbmd \
+	$(RESDIR)/d6_yuka_biri02.nsbmd \
+	$(RESDIR)/d6_yuka_biri03.nsbmd \
 
