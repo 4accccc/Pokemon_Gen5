@@ -1347,7 +1347,7 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
 
 #ifdef  PM_DEBUG
-  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) {
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableReport) ) {
     u16* ret_wk = SCRCMD_GetVMWork( core, work );
     *ret_wk = TRUE;
     return VMCMD_RESULT_SUSPEND;
