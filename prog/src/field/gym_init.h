@@ -15,4 +15,5 @@ extern void GYM_INIT_Normal(GAMESYS_WORK *gsys);
 extern void GYM_INIT_Anti(GAMESYS_WORK *gsys);
 extern void GYM_INIT_Fly(GAMESYS_WORK *gsys);
 extern void GYM_INIT_Insect(GAMESYS_WORK *gsys);
+extern void GYM_INIT_Dragon(GAMESYS_WORK *gsys);
 

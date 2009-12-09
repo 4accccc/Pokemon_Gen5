@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C08GYM0101 (1)
+#define SCRID_ZONE_C08GYM0101 (2)
 
 #endif //_C08GYM0101_DEF_H_

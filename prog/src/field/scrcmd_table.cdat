@@ -697,6 +697,13 @@
   NO_CMD()
   NO_CMD()
 
+  //ドラゴンジム
+  DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

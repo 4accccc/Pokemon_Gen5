@@ -115,3 +115,22 @@ VMCMD_RESULT EvCmdGymInsect_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--ドラゴン--
+//--------------------------------------------------------------
+/**
+ * ドラゴンジム初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
+  GYM_INIT_Dragon(gsys);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
+
+  return VMCMD_RESULT_CONTINUE;
+}

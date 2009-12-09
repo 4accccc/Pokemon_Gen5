@@ -13,6 +13,7 @@
 #include "gym_normal_sv.h"
 #include "gym_anti_sv.h"
 #include "gym_insect_sv.h"
+#include "gym_dragon_sv.h"
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
@@ -146,5 +147,35 @@ void GYM_INIT_Insect(GAMESYS_WORK *gsys)
 
 }
 
+//--------------------------------------------------------------
+/**
+ * ドラゴンジム初期化
+ * @param	    gsys    ゲームシステムポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
+{
+  DRAGON_WORK *wk;
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+  }
+
+  wk = &gmk_sv_work->DraWk[0];
+  wk->HeadDir = HEAD_DIR_DOWN;
+  wk->ArmDir[0] = ARM_DIR_DOWN;
+  wk->ArmDir[1] = ARM_DIR_DOWN;
+  wk = &gmk_sv_work->DraWk[1];
+  wk->HeadDir = HEAD_DIR_DOWN;
+  wk->ArmDir[0] = ARM_DIR_DOWN;
+  wk->ArmDir[1] = ARM_DIR_DOWN;
+  wk = &gmk_sv_work->DraWk[2];
+  wk->HeadDir = HEAD_DIR_UP;
+  wk->ArmDir[0] = ARM_DIR_UP;
+  wk->ArmDir[1] = ARM_DIR_UP;
+}
 
 
