@@ -549,7 +549,7 @@
   DEF_CMD( EvCmdCamera_Move,   EV_SEQ_CAMERA_MOVE )
   DEF_CMD( EvCmdCamera_RecoverMove,   EV_SEQ_CAMERA_RECV_MOVE )
   DEF_CMD( EvCmdCamera_WaitMove,   EV_SEQ_CAMERA_WAIT_MOVE )
-  NO_CMD()
+  DEF_CMD( EvCmdCamera_MoveByID,   EV_SEQ_CAMERA_MOVE_BY_ID )
 
   NO_CMD()
   NO_CMD()

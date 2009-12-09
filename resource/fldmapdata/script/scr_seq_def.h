@@ -5482,6 +5482,26 @@
 
 //--------------------------------------------------------------
 /**
+ * カメラ移動ＩＤ指定
+ * @param pitch     ピッチ
+ * @param yaw       ヨー
+ * @param dist      距離
+ * @param x         注視点Ｘ
+ * @param y         注視点Ｙ
+ * @param z         注視点Ｚ
+ * @param frame     移動フレーム
+ */
+//--------------------------------------------------------------
+#define _CAMERA_MOVE_BY_ID(id, frame) _ASM_CAMERA_MOVE_BY_ID id, frame
+  
+  .macro _ASM_CAMERA_MOVE_BY_ID id, frame
+  .short EV_SEQ_CAMERA_MOVE_BY_ID
+  .short \id
+  .short \frame
+  .endm  
+
+//--------------------------------------------------------------
+/**
  * カメラ復帰移動
  * @param frame   移動フレーム
  */

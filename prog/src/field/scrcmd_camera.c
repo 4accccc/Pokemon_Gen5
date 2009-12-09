@@ -32,6 +32,15 @@ static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
 static void EndCamera(FIELD_CAMERA *camera);
 
+typedef struct CAM_PARAM_tag
+{
+  u16 Pitch;
+  u16 Yaw;
+  fx32 Dist;
+  VecFx32 Pos;
+  FLD_CAM_MV_PARAM_CHK Chk;
+}CAM_PARAM;
+
 //--------------------------------------------------------------
 /**
  * カメラ終了処理
@@ -194,6 +203,46 @@ VMCMD_RESULT EvCmdCamera_Move( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * カメラの移動(ID指定型)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCamera_MoveByID( VMHANDLE *core, void *wk )
+{
+
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+
+  CAM_PARAM cam_param;
+  u16 param_id;
+  u16 frame;
+  param_id = VMGetU16( core );
+  frame = VMGetU16( core );
+  
+  //アーカイブからリソース定義をロード
+  GFL_ARC_LoadData(&cam_param, ARCID_SCR_CAM_PRM, param_id);
+  
+  {
+    FLD_CAM_MV_PARAM param;
+    param.Core.AnglePitch = cam_param.Pitch;
+    param.Core.AngleYaw = cam_param.Yaw;
+    param.Core.Distance = cam_param.Dist;
+    param.Core.TrgtPos = cam_param.Pos;
+    param.Chk = cam_param.Chk;
+
+    NOZOMU_Printf("cam_prm = %d,%d,%d\n",cam_param.Pitch, cam_param.Yaw, cam_param.Dist);
+
+    FIELD_CAMERA_SetLinerParam(camera, &param, frame);
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * カメラの復帰移動
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
@@ -297,14 +346,3 @@ static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work )
 
   return GMEVENT_RES_CONTINUE;
 }
-
-
-
-
-
-
-
-
-
-
-
