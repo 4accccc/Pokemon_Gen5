@@ -534,11 +534,6 @@ static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
 {
   u16 submodel_id;
   const BMINFO * bmInfo;
-  //現状、屋外にしかサブモデルを持つ配置モデルは存在しない
-  if (man->mdl_arc_id != ARCID_BMODEL_OUTDOOR)
-  {
-    return FALSE;
-  }
   bmInfo = FIELD_BMODEL_MAN_GetBMInfo( man, bm_id );
   submodel_id = bmInfo->sub_bm_id;
   if (submodel_id == BM_SUBMODEL_NULL_ID)
