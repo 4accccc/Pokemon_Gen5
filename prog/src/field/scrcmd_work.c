@@ -10,6 +10,7 @@
 #include "fieldmap.h"
 #include "scrcmd_work.h"
 #include "arc_def.h"
+#include "script_local.h"
 
 #include "script_message.naix"
 
@@ -55,8 +56,6 @@ struct _TAG_SCRCMD_WORK
 	
 	GFL_MSGDATA *msgData;
 	VecFx32 talkMsgWinTailPos;
-  
-  void *msgWin; //ƒƒjƒ…[Œn—¬—p
   
   GFL_TCB *tcb_callproc;
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
@@ -242,7 +241,12 @@ GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 {
+#if 0
 	work->msgWin = msgWin;
+#else
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_SetMsgWinPointer( sc, msgWin );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -254,7 +258,12 @@ void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 //--------------------------------------------------------------
 void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 {
+#if 0
 	return( work->msgWin );
+#else
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  return SCRIPT_GetMsgWinPointer( sc  );
+#endif
 }
 
 //--------------------------------------------------------------

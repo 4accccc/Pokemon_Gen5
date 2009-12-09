@@ -124,6 +124,7 @@ struct _TAG_SCRIPT_WORK
   //script.c内で使用しない、外部公開用メンバ
   //  public R/W
   //☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+  void *msgWin;           //メニュー系流用メッセージウィンドウ
 
 	WORDSET* wordset;				//単語セット
 	STRBUF* msg_buf;				//メッセージバッファポインタ
@@ -669,6 +670,32 @@ SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc )
   initFldParam( &sc->fld_param, sc->gsys );
   GF_ASSERT( sc->fld_param.fieldMap != NULL );
   return &sc->fld_param;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト制御ワークのメッセージウィンドウポインタ取得
+ * @param	sc		    SCRIPT型のポインタ
+ * @param	msgWin		取得するメンバID(script.h参照)
+ * @return	"アドレス"
+ */
+//--------------------------------------------------------------
+void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc )
+{
+  return sc->msgWin;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト制御ワークのメッセージウィンドウポインタセット
+ * @param	sc		    SCRIPT型のポインタ
+ * @param	msgWin		取得するメンバID(script.h参照)
+ * @return	"アドレス"
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin )
+{
+  sc->msgWin = msgWin;
 }
 
 //--------------------------------------------------------------

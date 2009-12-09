@@ -177,6 +177,8 @@ extern void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id );
 extern GMEVENT * SCRIPT_GetEvent( SCRIPT_WORK * sc );
 extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );
 extern SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc );
+extern void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc );
+extern void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin );
 
 //======================================================================
 //	
