@@ -788,11 +788,12 @@ sub ReadMevData_DOOREVENT
 sub SetMevData_OBJEVENT
 {
   my( $mev_ev, $xls_ev ) = @_;
-  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum );
+  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum, $input_index );
 
   $mev_index = &GetArrayNum(\@$mev_ev);
 
   $mev_num = &GetArrayNum(\@$mev_ev) / &GetArrayNum(\@MEV_OBJEVENT_KEY);
+  $input_index = $mev_num;
   $xls_num = &GetArrayNum(\@$xls_ev) / &GetArrayNum(\@OBJEVENT_KEY);
 
   &debug_put( "SetMevData_OBJEVENT mev_num=$mev_num  xls_num=$xls_num\n" );
@@ -831,7 +832,8 @@ sub SetMevData_OBJEVENT
     {
       #êVãKäiî[
       #àÍî‘â∫Ç…äiî[Ç∑ÇÈ
-      $merge_index = $mev_num;
+      $merge_index = $input_index;
+      $input_index ++;
 
       $roopnum = &GetArrayNum( \@OBJEVENT_KEY );
       for( $key_index=0; $key_index<$roopnum; $key_index++ )
@@ -869,11 +871,12 @@ sub SetMevData_OBJEVENT
 sub SetMevData_BGEVENT
 {
   my( $mev_ev, $xls_ev ) = @_;
-  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum );
+  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum, $input_index );
 
   $mev_index = &GetArrayNum( \@$mev_ev );
 
   $mev_num = &GetArrayNum(\@$mev_ev) / &GetArrayNum(\@MEV_BGEVENT_KEY);
+  $input_index = $mev_num;
   $xls_num = &GetArrayNum(\@$xls_ev) / &GetArrayNum(\@BGEVENT_KEY);
 
   &debug_put( "SetMevData_BGEVENT mev_num=$mev_num  xls_num=$xls_num\n" );
@@ -912,7 +915,8 @@ sub SetMevData_BGEVENT
     {
       #êVãKäiî[
       #àÍî‘â∫Ç…äiî[Ç∑ÇÈ
-      $merge_index = $mev_num;
+      $merge_index = $input_index;
+      $input_index ++;
 
       $roopnum = &GetArrayNum( \@BGEVENT_KEY );
       for( $key_index=0; $key_index<$roopnum; $key_index++ )
@@ -948,11 +952,12 @@ sub SetMevData_BGEVENT
 sub SetMevData_POSEVENT
 {
   my( $mev_ev, $xls_ev ) = @_;
-  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum );
+  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum, $input_index );
 
   $mev_index = &GetArrayNum( \@$mev_ev );
 
   $mev_num = &GetArrayNum(\@$mev_ev) / &GetArrayNum(\@MEV_POSEVENT_KEY);
+  $input_index = $mev_num;
   $xls_num = &GetArrayNum(\@$xls_ev) / &GetArrayNum(\@POSEVENT_KEY);
 
   &debug_put( "SetMevData_POSEVENT mev_num=$mev_num  xls_num=$xls_num\n" );
@@ -991,7 +996,8 @@ sub SetMevData_POSEVENT
     {
       #êVãKäiî[
       #àÍî‘â∫Ç…äiî[Ç∑ÇÈ
-      $merge_index = $mev_num;
+      $merge_index = $input_index;
+      $input_index ++;
 
       $roopnum = &GetArrayNum( \@POSEVENT_KEY );
       for( $key_index=0; $key_index<$roopnum; $key_index++ )
@@ -1030,11 +1036,12 @@ sub SetMevData_POSEVENT
 sub SetMevData_DOOREVENT
 {
   my( $mev_ev, $xls_ev, $id_add_str ) = @_;
-  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum );
+  my( $mev_index, $xls_index, $sarch, $xls_num, $mev_num, $merge_flag, $merge_index, $key_index, $setnum, $roopnum, $input_index );
 
   $mev_index = &GetArrayNum( \@$mev_ev );
 
   $mev_num = &GetArrayNum(\@$mev_ev) / &GetArrayNum(\@MEV_DOOREVENT_KEY);
+  $input_index = $mev_num;
   $xls_num = &GetArrayNum(\@$xls_ev) / &GetArrayNum(\@DOOREVENT_KEY);
 
   &debug_put( "SetMevData_DOOREVENT mev_num=$mev_num  xls_num=$xls_num\n" );
@@ -1080,7 +1087,8 @@ sub SetMevData_DOOREVENT
     {
       #êVãKäiî[
       #àÍî‘â∫Ç…äiî[Ç∑ÇÈ
-      $merge_index = $mev_num;
+      $merge_index = $input_index;
+      $input_index++;
 
       $roopnum = &GetArrayNum( \@DOOREVENT_KEY );
       for( $key_index=0; $key_index<$roopnum; $key_index++ )
