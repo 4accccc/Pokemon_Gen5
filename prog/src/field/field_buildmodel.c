@@ -24,12 +24,8 @@
 
 #include "field_g3d_mapper.h"		//下記ヘッダに必要
 
-#include "system/el_scoreboard.h"
-
 #include "savedata/save_control.h"    //テストでランダムマップの都市の種類を取得
 #include "savedata/randommap_save.h"  //テストでランダムマップの都市の種類を取得
-
-typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
 #include "arc/fieldmap/area_id.h"
 #include "arc/fieldmap/buildmodel_info.naix"
@@ -132,8 +128,8 @@ typedef struct _FIELD_BMANIME_DATA
 { 
   u8 anm_type;  ///<BMANIME_TYPE  アニメの種類指定
   u8 prg_type;  ///<BMANIME_PROG_TYPE 動作プログラムの種類指定
-  u8 anm_count; ///<アニメカウント（未使用）
-  u8 set_count; ///<セットカウント（未使用）
+  u8 anmset_num; ///<アニメセット数
+  u8 ptn_count; ///<パターン数
   u16 IDs[GLOBAL_OBJ_ANMCOUNT]; ///<アニメアーカイブ指定ID
 }FIELD_BMANIME_DATA;
 
@@ -819,7 +815,7 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data)
   if (type >= BMANIME_TYPE_MAX) type = BMANIME_TYPE_MAX - 1;
   TAMADA_Printf("FIELD_BMANIME_DATA:");
   TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
-  TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
+  TAMADA_Printf("%d %d %d\n",data->prg_type, data->anmset_num, data->ptn_count);
   for (anmNo = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   {
     TAMADA_Printf("%04x ", data->IDs[anmNo]);
@@ -1314,10 +1310,16 @@ static void OBJHND_TYPENONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * o
 static void OBJHND_TYPEETERNAL_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
 {
   int anmNo;
-  for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  u32 set_num = anmData->anmset_num;
+  for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT && anmNo<set_num; anmNo++ ){
     GFL_G3D_OBJECT_EnableAnime( objHdl->g3Dobj, anmNo );  //renderとanimeの関連付け
     GFL_G3D_OBJECT_ResetAnimeFrame( objHdl->g3Dobj, anmNo ); 
     objHdl->anmMode[anmNo] = BM_ANMMODE_LOOP;
+  }
+  for( ;anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo ++)
+  {
+    objHdl->anmMode[anmNo] = BM_ANMMODE_NOTHING;
   }
 }
 //------------------------------------------------------------------
@@ -1326,6 +1328,8 @@ static void OBJHND_TYPEETERNAL_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND 
 static void OBJHND_TYPETIMEZONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
 {
   int anmNo, nowNo;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  GF_ASSERT( anmData->anmset_num == 1 );  //時間帯アニメはセット数が大きいのは無理！
   nowNo = TIMEANIME_CTRL_getIndex( &man->tmanm_ctrl );
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
     if (anmNo == nowNo)
@@ -1465,6 +1469,55 @@ static void OBJHND_TYPEEVENT_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * ob
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void applyNormalAnime( OBJ_HND * objHdl, u32 anmNo )
+{
+  int i;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  u32 setNo = anmData->anmset_num * anmNo;
+  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
+  for (i = 0; i < anmData->anmset_num; i++) {
+    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
+    GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, setNo + i );
+    objHdl->anmMode[setNo + i] = BM_ANMMODE_TEMPORARY;
+  }
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void applyReverseAnime( OBJ_HND * objHdl, u32 anmNo )
+{
+  int i;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  u32 setNo = anmData->anmset_num * anmNo;
+  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
+  for ( i = 0; i < anmData->anmset_num; i++ ) {
+    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
+    {
+      GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, setNo + i );
+      NNSG3dAnmObj * anmObj = GFL_G3D_ANIME_GetAnmObj( g3Danm );
+      fx32 num = NNS_G3dAnmObjGetNumFrame( anmObj );
+      GFL_G3D_OBJECT_SetAnimeFrame(objHdl->g3Dobj, setNo + i, (const int*)&num );
+    }
+    objHdl->anmMode[setNo + i] = BM_ANMMODE_REVERSE;
+  }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void applyStopAnime( OBJ_HND * objHdl, u32 anmNo )
+{
+  int i;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  u32 setNo = anmData->anmset_num * anmNo;
+  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
+  for ( i = 0; i < anmData->anmset_num; i++ ) {
+    if (objHdl->anmMode[setNo + i] != BM_ANMMODE_NOTHING) {
+      objHdl->anmMode[setNo + i] = BM_ANMMODE_STOP;
+    }
+  }
+}
+
+//------------------------------------------------------------------
 /**
  * @brief アニメ全停止
  */
@@ -1502,12 +1555,15 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
   switch ((BMANM_REQUEST)req) {
   case BMANM_REQ_START:
     disableAllAnime( objHdl );
-    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
-    GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, anmNo );
-    objHdl->anmMode[anmNo] = BM_ANMMODE_TEMPORARY;
+    applyNormalAnime( objHdl, anmNo );
+    //GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
+    //GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, anmNo );
+    //objHdl->anmMode[anmNo] = BM_ANMMODE_TEMPORARY;
     break;
   case BMANM_REQ_REVERSE_START:
     disableAllAnime( objHdl );
+    applyReverseAnime( objHdl, anmNo );
+#if 0
     GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
     {
       GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, anmNo );
@@ -1516,11 +1572,15 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
       GFL_G3D_OBJECT_SetAnimeFrame(objHdl->g3Dobj, anmNo, (const int*)&num );
     }
     objHdl->anmMode[anmNo] = BM_ANMMODE_REVERSE;
+#endif
     break;
   case BMANM_REQ_STOP:
+    applyStopAnime( objHdl, anmNo );
+#if 0
     if (objHdl->anmMode[anmNo] != BM_ANMMODE_NOTHING) {
       objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
     }
+#endif
     break;
   case BMANM_REQ_END:
     disableAllAnime( objHdl );
