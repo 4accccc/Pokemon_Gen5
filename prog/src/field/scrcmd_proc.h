@@ -105,3 +105,6 @@ extern VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk );
  */
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk );
+

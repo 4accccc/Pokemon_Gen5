@@ -46,6 +46,8 @@
 #include "field/monolith_main.h"
 #include "field\field_comm\intrude_mission.h"
 
+#include "demo/demo3d.h"  //Demo3DProcData etc.
+
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
 ////////////////////////////////////////////////////////////////
@@ -95,6 +97,7 @@ VMCMD_RESULT EvCmdFieldClose( VMHANDLE *core, void *wk )
 //サブプロセス呼び出し
 ////////////////////////////////////////////////////////////////
 
+//--------------------------------------------------------------
 /*
  *  @brief  サブプロセスコールとWait関数のセットアップ(メモリ解放バージョン)
  *
@@ -106,10 +109,12 @@ VMCMD_RESULT EvCmdFieldClose( VMHANDLE *core, void *wk )
  *  @param  callback      サブプロセス終了時に呼び出すコールバック関数ポインタ。NULL指定可
  *  @param  callback_work 汎用ワーク。NULL指定可
  *
- *  注：callbackにNULLを指定した場合、サブプロセス終了時に
+ *  @note
+ *  callbackにNULLを指定した場合、サブプロセス終了時に
  *  proc_workとcallback_workに対して GFL_HEAP_FreeMemory()を呼び出します。
  *  callbackを指定した場合は、callback中で明示的に解放をしてください
  */
+//--------------------------------------------------------------
 void EVFUNC_CallSubProc( VMHANDLE *core, SCRCMD_WORK *work,
     FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void* proc_work,
     void (*callback)(CALL_PROC_WORK* cpw), void* callback_work )
@@ -312,4 +317,31 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   
   return VMCMD_RESULT_SUSPEND;
 }
+
+//======================================================================
+//
+//
+//    3Dデモ関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   デモ呼び出し
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
+  param->demo_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 

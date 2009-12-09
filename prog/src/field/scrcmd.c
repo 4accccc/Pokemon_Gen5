@@ -1298,7 +1298,7 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
 //
 //======================================================================
 #include "demo/demo3d.h"
-static DEMO3D_PARAM DebugDemo3DParam = { DEMO3D_ID_C_CRUISER, 0 };
+static DEMO3D_PARAM DebugDemo3DParam = { DEMO3D_ID_N_CASTLE, 0 };
 //--------------------------------------------------------------
 /**
  * @brief   ÉfÉÇåƒÇ—èoÇµ
