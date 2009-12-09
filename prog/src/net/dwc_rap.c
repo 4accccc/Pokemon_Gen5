@@ -57,15 +57,15 @@ typedef struct
 {
   u8 sendBuffer[ SIZE_SEND_BUFFER ];
   //	u8* recvBuffer;
-  DWCFriendData keyList[FRIENDLIST_MAXSIZE];  // DWC形式の友達リスト
+  DWCFriendData* pFriendData;  // DWC形式の友達リスト
   DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体
-  DWCUserData myUserData;		// DWCのユーザデータ（自分のデータ）
+  DWCUserData* pUserData;		// DWCのユーザデータ（自分のデータ）
   DWCInetControl stConnCtrl;
   void *recvPtr[_WIFI_NUM_MAX];  //受信バッファの32バイトアライメントしていないポインタ
   int deletedIndex[FRIENDLIST_MAXSIZE];
   int srcIndex[FRIENDLIST_MAXSIZE];
-  DWCUserData* pSaveDataUserData;
-  DWCFriendData* pSaveDataFriendData;
+//  DWCUserData* pSaveDataUserData;
+//  DWCFriendData* pSaveDataFriendData;
   GFL_NET_MYDWCReceiverFunc serverCallback;
   GFL_NET_MYDWCReceiverFunc clientCallback;
   MYDWCDisconnectFunc disconnectCallback;
@@ -292,17 +292,17 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   _dWork->myvchat_send = 1;
 
   //セーブデータのポインタを記録
-  _dWork->pSaveDataUserData = pUserData;
-  _dWork->pSaveDataFriendData = pFriendData;
+//  _dWork->pSaveDataUserData = pUserData;
+//  _dWork->pSaveDataFriendData = pFriendData;
 
-  GFL_STD_MemCopy(pUserData , &_dWork->myUserData, sizeof(_dWork->myUserData));
-  GFL_STD_MemCopy(pFriendData , _dWork->keyList, sizeof(_dWork->keyList));
+//  GFL_STD_MemCopy(pUserData , &_dWork->pUserData, sizeof(_dWork->myUserData));
+//  GFL_STD_MemCopy(pFriendData , _dWork->pFriendData, sizeof(_dWork->keyList));
 
   // 2008.06.02 tomoya ClosedCallbackで切断処理に遷移するようにするのかをフラグできりかえれるように変更(Wi-Fiクラブ４人募集画面用)
   _dWork->closedflag = TRUE;
 
 #ifdef PM_DEBUG
-  DWC_ReportUserData(&_dWork->myUserData);
+  DWC_ReportUserData(_dWork->pUserData);
 #endif
 
   {
@@ -318,13 +318,13 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   GFL_NET_DWC_showFriendInfo();
 
 
-  if( !DWC_CheckHasProfile( &_dWork->myUserData ) )
+  if( !DWC_CheckHasProfile( _dWork->pUserData ) )
   {
     // まだこのデータで一度もＷｉＦｉに繋いでいない。
     return MYDWC_STARTCONNECT_FIRST;
   }
 
-  if( !DWC_CheckValidConsole( &_dWork->myUserData ) )
+  if( !DWC_CheckValidConsole( _dWork->pUserData ) )
   {
     // 本体情報が違う→違うＤＳで接続しようとしている。
     return 	MYDWC_STARTCONNECT_DIFFERENTDS;
@@ -450,10 +450,10 @@ int GFL_NET_DWC_connect()
     }
     // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
     // フレンドライブラリ初期化
-    DWC_InitFriendsMatch( (&_dWork->myUserData),
+    DWC_InitFriendsMatch( _dWork->pUserData,
 													GAME_PRODUCTID, 
 													GAME_SECRET_KEY, 0, 0,
-													_dWork->keyList, FRIENDLIST_MAXSIZE);
+													_dWork->pFriendData, FRIENDLIST_MAXSIZE);
 
     {// IPLのユーザ名を使ってログイン
       // 自分のユーザ名を圧縮。
@@ -1062,25 +1062,21 @@ static void LoginCallback(DWCError error, int profileID, void *param)
   BOOL result;
 
   // stUserDataが更新されているかどうかを確認。
-  if ( DWC_CheckDirtyFlag( (&_dWork->myUserData)) )
+  if ( DWC_CheckDirtyFlag( _dWork->pUserData) )
   {
     // 必ずこのタイミングでチェックして、dirty flagが有効になっていたら、
     // DWCUserDataをDSカードのバックアップに保存するようにしてください。
-    // 2006.04.07 k.ohno  セーブエリアに入れる
     DWCUserData *userdata = NULL;
-    DWC_ClearDirtyFlag(&_dWork->myUserData);
-    //   SaveData_SaveParts(_dWork->pSaveData, SVBLK_ID_NORMAL);  //セーブ中 k.ohno 06.06.05
+    DWC_ClearDirtyFlag(_dWork->pUserData);
     _dWork->saveing = 1;  //セーブ中に1
 
-    //          userdata = WifiList_GetMyUserInfo(SaveData_GetWifiListData(_dWork->pSaveData));
-    //          MI_CpuCopy32( &_dWork->myUserData, userdata,  sizeof(_dWork->myUserData) );
     MYDWC_DEBUGPRINT("自分のフレンドコードが変更\n");
   }
 
   if (error == DWC_ERROR_NONE){
     // 認証成功、プロファイルID取得
     result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
-                                    UpdateServersCallback, &_dWork->myUserData,
+                                    UpdateServersCallback, _dWork->pUserData,
                                     FriendStatusCallback, param,
                                     DeleteFriendListCallback, param);
 
@@ -2077,8 +2073,8 @@ static void mydwc_updateFriendInfo( void )
     int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
     int size;
 
-    if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
-      _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],(char*)_dWork->friendinfo[index],&size);
+    if( DWC_IsBuddyFriendData( &(_dWork->pFriendData[index]) ) ){
+      _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
 #ifdef PM_DEBUG
       GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
 #endif
@@ -2444,12 +2440,12 @@ void GFL_NET_DWC_showFriendInfo()
 {
   int i;
 
-  if( !DWC_CheckHasProfile( &_dWork->myUserData ) )
+  if( !DWC_CheckHasProfile( _dWork->pUserData ) )
   {
     DWCFriendData token;
     u32 *ptr;
 
-    DWC_CreateExchangeToken( &_dWork->myUserData, &token );
+    DWC_CreateExchangeToken( _dWork->pUserData, &token );
     ptr = (u32*)&token;
     MYDWC_DEBUGPRINT("まだ、プロファイルＩＤ取得前\nログインＩＤ:(%d, %d, %d)\n\n", ptr[0], ptr[1], ptr[2] );
   }
@@ -2457,14 +2453,14 @@ void GFL_NET_DWC_showFriendInfo()
   {
     // 接続済み
     DWCFriendData token;
-    DWC_CreateExchangeToken( &_dWork->myUserData, &token );
-    MYDWC_DEBUGPRINT("プロファイルＩＤ:%d \n\n", DWC_GetGsProfileId( &_dWork->myUserData, &token ) );
+    DWC_CreateExchangeToken( _dWork->pUserData, &token );
+    MYDWC_DEBUGPRINT("プロファイルＩＤ:%d \n\n", DWC_GetGsProfileId( _dWork->pUserData, &token ) );
   }
 
   for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
   {
-    int ret = DWC_GetFriendDataType( &(_dWork->keyList[i]) );
-    u32 *ptr = (u32*)(&_dWork->keyList[i]);
+    int ret = DWC_GetFriendDataType( &(_dWork->pFriendData[i]) );
+    u32 *ptr = (u32*)(&_dWork->pFriendData[i]);
     switch(ret)
     {
     case DWC_FRIENDDATA_LOGIN_ID:
@@ -2472,11 +2468,11 @@ void GFL_NET_DWC_showFriendInfo()
       break;
 
     case DWC_FRIENDDATA_FRIEND_KEY:
-      MYDWC_DEBUGPRINT("%d:フレンドコード:(%d)", i, DWC_GetGsProfileId( &_dWork->myUserData, &_dWork->keyList[i] ) );
+      MYDWC_DEBUGPRINT("%d:フレンドコード:(%d)", i, DWC_GetGsProfileId( _dWork->pUserData, &_dWork->pFriendData[i] ) );
       break;
 
     case DWC_FRIENDDATA_GS_PROFILE_ID:
-      MYDWC_DEBUGPRINT("%d:プロファイルＩＤ:(%d)", i, DWC_GetGsProfileId( &_dWork->myUserData, &_dWork->keyList[ i ]) );
+      MYDWC_DEBUGPRINT("%d:プロファイルＩＤ:(%d)", i, DWC_GetGsProfileId( _dWork->pUserData, &_dWork->pFriendData[ i ]) );
       break;
 
     case DWC_FRIENDDATA_NODATA:
@@ -2485,7 +2481,7 @@ void GFL_NET_DWC_showFriendInfo()
       break;
     }
 
-    if( DWC_IsBuddyFriendData( &(_dWork->keyList[i]) ) )
+    if( DWC_IsBuddyFriendData( &(_dWork->pFriendData[i]) ) )
     {
       MYDWC_DEBUGPRINT("(両思い)");
     }
@@ -2799,55 +2795,16 @@ static void _FuncNonSave(void)
 {
   int i;
   
-  if(_dWork->bFriendSave == FALSE){
-
-    GFL_STD_MemCopy(&_dWork->myUserData, _dWork->pSaveDataUserData, sizeof(_dWork->myUserData));
-    GFL_STD_MemCopy(_dWork->keyList, _dWork->pSaveDataFriendData, sizeof(_dWork->keyList));
-    for(i = 0;i < FRIENDLIST_MAXSIZE; i++){
-      if(_dWork->deletedIndex[i] != -1){
-        GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-        if(pNetInit->friendDeleteFunc){
-          pNetInit->friendDeleteFunc( _dWork->deletedIndex[i], _dWork->srcIndex[i], GFL_NET_GetWork());
-        }
-        //フロンティアのデータがあればここに入れる必要がある
-        // WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), _dWork->deletedIndex[i], _dWork->srcIndex[i]);
-        // FrontierRecord_DataMarge(SaveData_GetFrontier(_dWork->pSaveData), deletedIndex, srcIndex);
-        _dWork->deletedIndex[i] = -1;
+  
+  for(i = 0;i < FRIENDLIST_MAXSIZE; i++){
+    if(_dWork->deletedIndex[i] != -1){
+      GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+      if(pNetInit->friendDeleteFunc){
+        pNetInit->friendDeleteFunc( _dWork->deletedIndex[i], _dWork->srcIndex[i], GFL_NET_GetWork());
       }
+      _dWork->deletedIndex[i] = -1;
     }
   }
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   通常データの分割セーブ初期化
- * @param   ctrl		セーブデータ管理ワークへのポインタ
- * @retval  none
- */
-//--------------------------------------------------------------
-void GFL_NET_DWC_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl)
-{
-  _dWork->bFriendSave = TRUE;
-  // もう一度移し変え
-  GFL_STD_MemCopy(&_dWork->myUserData, _dWork->pSaveDataUserData, sizeof(_dWork->myUserData));
-  GFL_STD_MemCopy(_dWork->keyList, _dWork->pSaveDataFriendData, sizeof(_dWork->keyList));
-  SaveControl_SaveAsyncInit(ctrl);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   通常データの分割セーブメイン処理
- * @param   ctrl		セーブデータ管理ワークへのポインタ
- * @retval  セーブ結果
- */
-//--------------------------------------------------------------
-SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
-{
-  SAVE_RESULT ret = SaveControl_SaveAsyncMain(ctrl);
-	if(ret == SAVE_RESULT_OK){
-    _dWork->bFriendSave = FALSE;
-  }
-  return ret;
 }
 
 //--------------------------------------------------------------

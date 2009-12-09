@@ -8,15 +8,11 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __COMM_COMMAND_WFP2PMF_FUNC_H__
-#define __COMM_COMMAND_WFP2PMF_FUNC_H__
+#pragma once
 
 
-#include "wifi_p2pmatchfour_local.h"
 #include "net_app/wificlub/wifi_p2pmatch.h"
 #include "wifi_p2pmatch_local.h"
-
-#define	GLOBAL	extern
 
 //-----------------------------------------------------------------------------
 /**
@@ -51,6 +47,4 @@ extern void CommWFP2PMFGameStart(const int netID, const int size, const void* pD
 extern void CommWFP2PMFGameVchat(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
-#undef	GLOBAL
-#endif		// __COMM_COMMAND_WFP2PMF_FUNC_H__
 

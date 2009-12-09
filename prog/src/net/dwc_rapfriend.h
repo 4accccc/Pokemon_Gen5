@@ -7,13 +7,13 @@
  */
 //=============================================================================
 
-#ifndef __DWC_RAPFRIEND_H__
-#define  __DWC_RAPFRIEND_H__
+#pragma once
 
 #include <dwc.h>
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
 #include "savedata/wifilist.h"
+#include "gamesystem/game_data.h"
 
 //==============================================================================
 /**
@@ -62,8 +62,7 @@ extern int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend );
  * @retval  int 	
  */
 //------------------------------------------------------------------
-extern void GFL_NET_DWC_FriendDataWrite(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite);
+extern void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite);
 
-extern void GFL_NET_DWC_FriendDataAdd(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID);
+extern void GFL_NET_DWC_FriendDataAdd(GAMEDATA* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID);
 
-#endif //__DWC_RAPFRIEND_H__

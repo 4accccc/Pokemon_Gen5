@@ -155,9 +155,9 @@ int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
  * @retval  int 	
  */
 //------------------------------------------------------------------
-void GFL_NET_DWC_FriendDataWrite(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite)
+void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite)
 {
-    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    WIFI_LIST* pList = GAMEDATA_GetWiFiList(pGameData);
     DWCFriendData *keyList  = WifiList_GetDwcDataPtr(pList, addListIndex);
     STRBUF* pBuf;
 
@@ -199,14 +199,14 @@ void GFL_NET_DWC_FriendDataWrite(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStat
  */
 //------------------------------------------------------------------
 
-void GFL_NET_DWC_FriendDataAdd(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID)
+void GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID)
 {
-    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    WIFI_LIST* pList = GAMEDATA_GetWiFiList(pGameData);
     int i;
 
     for(i = 0; i < WIFILIST_FRIEND_MAX;i++){
         if( !WifiList_IsFriendData( pList, i ) ){
-            GFL_NET_DWC_FriendDataWrite(pSaveData, pMyStatus, pFriend, i, heapID, 0);
+            GFL_NET_DWC_FriendDataWrite(pGameData, pMyStatus, pFriend, i, heapID, 0);
             break;
         }
     }

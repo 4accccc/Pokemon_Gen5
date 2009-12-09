@@ -148,6 +148,23 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc state, int line)
 #endif
 
 
+static void _networkClose1(G_SYNC_WORK* pWork)
+{
+  if(!GFL_NET_IsInit()){
+    _CHANGE_STATE(NULL);
+  }
+}
+
+static void _networkClose(G_SYNC_WORK* pWork)
+{
+  if(!GFL_NET_IsInit()){
+    _CHANGE_STATE(NULL);
+  }
+  else{
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(_networkClose1);
+  }
+}
 
 
 static void _wakeupActio8(G_SYNC_WORK* pWork)
@@ -156,7 +173,7 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(NULL);
+    _CHANGE_STATE(_networkClose);
   }
 }
 
@@ -269,7 +286,7 @@ static void _wakeupAction3(G_SYNC_WORK* pWork)
     }
     else{
       //@todo Ø’fˆ—‚Ö
-      _CHANGE_STATE(NULL);
+      _CHANGE_STATE(_networkClose);
     }
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -379,7 +396,7 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
 static void _upeffectLoop8(G_SYNC_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(NULL);
+    _CHANGE_STATE(_networkClose);
   }
 }
 
@@ -467,6 +484,10 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
+  //test
+    _CHANGE_STATE(_upeffectLoop6);
+  return;
+
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
       if(0){
@@ -514,7 +535,8 @@ static void _upeffectLoop3(G_SYNC_WORK* pWork)
 
     PMSND_PlaySE(SEQ_SE_SYS_24);
 
-    //    pWork->countTimer = _DREAMSMOKE_TIME;
+//    test
+
     _CHANGE_STATE(_upeffectLoop4);
   }
 }

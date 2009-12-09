@@ -6,12 +6,13 @@
  * @date	06.04.05
  */
 //============================================================================================
-#ifndef __WIFI_NOTE_H__
-#define __WIFI_NOTE_H__
+#pragma once
 
 //============================================================================================
 //	定義
 //============================================================================================
+
+#include "gamesystem/game_data.h"
 
 //------------------------------------------------------
 /**
@@ -19,9 +20,7 @@
  */
 //------------------------------------------------------
 typedef struct {
-    SAVE_CONTROL_WORK*  saveControlWork;
-//	SAVEDATA*  savedata;
-//	KEYTOUCH_STATUS* kt_status;
+  GAMEDATA* pGameData;
 }WIFINOTE_PROC_PARAM;
 
 
@@ -31,4 +30,3 @@ extern const GFL_PROC_DATA WifiNoteProcData;
 // ポインタ参照だけできるレコードコーナーワーク構造体
 typedef struct _WIFINOTE_WORK WIFINOTE_WORK;	
 
-#endif //__WIFI_NOTE_H__

@@ -12,23 +12,18 @@
 #include "buflen.h"
 
 typedef struct{
-    STRCODE         groupName[BUFLEN_PERSON_NAME];
-    STRCODE 		name[BUFLEN_PERSON_NAME];
+  STRCODE 		name[BUFLEN_PERSON_NAME];
 	u32				id;
 	u16		battle_win;
 	u16		battle_lose;
 	u16     trade_num;
-    u16     year;    //最後に対戦した年月日 まだの場合は０００  //46
-    u8     month;	                             //47								
-    u8     day;
-    u8     sex;
-    u8     unionGra;
-	u16		pofin_num;
-	u16		minigame_ballslow;
-	u16		minigame_balanceball;
-	u16		minigame_balloon;
-  u8 isIN;        // このデータが有効の場合1
-  u8 dummy;
+  u16     year;    //最後に対戦した年月日 まだの場合は０００  //46
+  u8     month;	                             //47								
+  u8     day;
+  u8     unionGra;
+  u8     sex:1;
+  u8 isIN:1;        // このデータが有効の場合1
+  u8 dummy:6;
 }WIFI_FRIEND;
 
 struct _WIFI_LIST{

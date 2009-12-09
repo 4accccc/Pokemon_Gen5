@@ -19,11 +19,13 @@
 #include "net_app/wifi_login.h"
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
+#include "net_app/pdwacc.h"
 
 
 typedef struct {
   WIFILOGIN_PARAM     login;
   GAMEDATA      *gameData;
+  PDWACC_PROCWORK pwdaccWork;
   HEAPID heapID;
 } PDWACCMAIN_WORK;
 
@@ -81,7 +83,9 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     break;
 
   case _WIFI_ACCOUNT:
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, NULL);
+    pWork->pwdaccWork.gameData = pWork->gameData;
+    pWork->pwdaccWork.heapID = pWork->heapID;
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
     (*seq)++;
     break;
 

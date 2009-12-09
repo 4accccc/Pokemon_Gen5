@@ -30,6 +30,7 @@ struct _DREAMWORLD_SAVEDATA {
 	DREAM_WORLD_FURNITUREDATA furnitureID[DREAM_WORLD_DATA_MAX_FURNITURE];  //9	配信家具
   u8 pokemoStatus;        //8	送信したポケモン						1byte			送信したポケモンの状態を受け取る
   u8 pokemonIn;  ///ppにポケモンが入っているかどうか
+  u8 signin; //アカウントをすでに登録したかどうか
 };
 
 
@@ -96,6 +97,31 @@ POKEMON_PARAM* DREAMWORLD_SV_GetSleepPokemon(DREAMWORLD_SAVEDATA* pSV)
 void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PARAM* pp)
 {
   GFL_STD_MemCopy(pp,&pSV->pp,POKETOOL_GetWorkSize());
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   アカウント登録を一回でも起動したかどうか
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  SigninしていたらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetSignin(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg)
+{
+  pSV->signin = bFlg;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   アカウント登録を一回でも起動したかどうか
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	ポケモンセット時はTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL DREAMWORLD_SV_GetSignin(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->signin;
 }
 
 //--------------------------------------------------------------------------------------------

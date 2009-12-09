@@ -174,6 +174,7 @@ struct _GAMESYNC_MENU {
 	APP_TASKMENU_RES* pAppTaskRes;
   EVENT_GSYNC_WORK * dbw;
   int windowNum;
+  GAMEDATA* gamedata;
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
@@ -714,8 +715,8 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     return;
   }
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->dbw->ctrl);
-
+    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
+    
     if(svr == SAVE_RESULT_OK){
 			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
@@ -747,7 +748,8 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
       GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_007, pWork->pStrBuf );
       _infoMessageDisp(pWork);
       //セーブ開始
-      SaveControl_SaveAsyncInit( pWork->dbw->ctrl );
+      GAMEDATA_SaveAsyncStart(pWork->gamedata);
+      //SaveControl_SaveAsyncInit( pWork->dbw->ctrl );
       _CHANGE_STATE(pWork,_modeReporting);
 #else
       _CHANGE_STATE(pWork,NULL);
@@ -820,6 +822,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GAMESYNC_MENU *pWork = GFL_PROC_AllocWork( proc, sizeof( GAMESYNC_MENU ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(GAMESYNC_MENU));
     pWork->heapID = HEAPID_IRCBATTLE;
+    pWork->gamedata = pParentWork->gameData;
 
     GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
     GXS_DispOn();

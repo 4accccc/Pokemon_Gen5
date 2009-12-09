@@ -1303,10 +1303,9 @@ int MysteryLib_SaveDSCard(void)
 		break;
 
 	case MYSTERYLIB_SEQ_SAVE_MAIN:
-		//    OS_TPrintf("•ªŠ„ƒZ[ƒu’†...\n");
-		//result = SaveData_DivSave_Main(wk->sv);
-		result = SaveControl_SaveAsyncMain( wk->sv );
-		if(result == SAVE_RESULT_NG){
+//    result = GAMEDATA_SaveAsyncMain(pWork->gamedata);  //@todo
+
+    if(result == SAVE_RESULT_NG){
 			wk->save_seq = MYSTERYLIB_SEQ_SAVE_NG;
 		} else if(result == SAVE_RESULT_OK){
 			wk->save_seq = MYSTERYLIB_SEQ_SAVE_OK;

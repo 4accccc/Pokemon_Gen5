@@ -17,7 +17,6 @@
 #include "dwc_rapinitialize.h"
 #include "net/dwc_rapcommon.h"
 #include "dwc_rapfriend.h"
-#include "net/dwc_lobbylib.h"
 
 
 extern GFLNetDevTable *NET_GetWifiDeviceTable(void);

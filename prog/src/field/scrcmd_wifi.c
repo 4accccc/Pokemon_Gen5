@@ -68,7 +68,7 @@ VMCMD_RESULT EvCmdWifiCheckMyGSID( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   u16*              ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  WIFI_LIST* wifi_save = SaveData_GetWifiListData( GAMEDATA_GetSaveControlWork( gdata ) );
+  WIFI_LIST* wifi_save =  GAMEDATA_GetWiFiList( gdata );
 
   *ret_wk = WifiList_CheckMyGSID( wifi_save );
   return VMCMD_RESULT_CONTINUE;
@@ -89,7 +89,7 @@ VMCMD_RESULT EvCmdWifiGetFriendNum( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   u16*              ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  WIFI_LIST* wifi_save = SaveData_GetWifiListData( GAMEDATA_GetSaveControlWork( gdata ) );
+  WIFI_LIST* wifi_save = GAMEDATA_GetWiFiList(  gdata  );
 
   *ret_wk = WifiList_GetFriendDataNum( wifi_save );
   return VMCMD_RESULT_CONTINUE;

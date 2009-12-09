@@ -1025,21 +1025,20 @@ static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq );
 static void* _getMyUserData(void* pWork)  //DWCUserData
 {
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
-  return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->pSaveData));
+  return WifiList_GetMyUserInfo(GAMEDATA_GetWiFiList(wk->pGameData));
 }
 
 static void* _getFriendData(void* pWork)  //DWCFriendData
 {
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
-  //    NET_PRINT("Friend %d\n",WifiList_GetFriendDataNum(SaveData_GetWifiListData(wk->pSaveData)));
-  return WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSaveData),0);
+  return WifiList_GetDwcDataPtr(GAMEDATA_GetWiFiList(wk->pGameData),0);
 }
 
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
 {
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
 
-  WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), deletedIndex, srcIndex);
+  WifiList_DataMarge(GAMEDATA_GetWiFiList(wk->pGameData), deletedIndex, srcIndex);
 }
 
 
@@ -1519,9 +1518,10 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     //        wk->MsgIndex = _PRINTTASK_MAX;
     wk->pMatch = pParentWork->pMatch;
     wk->pSaveData = pParentWork->pSaveData;
+    wk->pGameData = pParentWork->pGameData;
 
-    wk->pMyPoke = SaveData_GetTemotiPokemon(pParentWork->pSaveData);
-    wk->pList = SaveData_GetWifiListData(pParentWork->pSaveData);
+    wk->pMyPoke = GAMEDATA_GetMyPokemon(wk->pGameData);
+    wk->pList = GAMEDATA_GetWiFiList(wk->pGameData);
     wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
     wk->initSeq = pParentWork->seq;    // P2PかDPWか
     wk->endSeq = WIFI_P2PMATCH_END;
@@ -3404,15 +3404,6 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
         }
         num++;
       }
-      /*            { バトル中に一括で処理してあるので、ここからは削除
-                WIFI_HISTORY* pHistry = SaveData_GetWifiHistory(wk->pSaveData);
-                int nation = wk->pMatch->friendMatchStatus[i].nation;
-                int area = wk->pMatch->friendMatchStatus[i].area;
-                WIFIHIST_STAT stat = WIFIHISTORY_GetStat(pHistry, nation, area);
-                if((WIFIHIST_STAT_NODATA == stat) || (WIFIHIST_STAT_NEW == stat)){
-                    WIFIHISTORY_SetStat(pHistry, nation, area, stat);
-                }
-            } */
     }
   }
   return num;
@@ -3774,8 +3765,7 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   if( GFL_NET_DWC_GetSaving()) {
-    //    SaveControl_SaveAsyncInit(wk->pSaveData); ///セーブ開始
-    GFL_NET_DWC_SaveAsyncInit(wk->pSaveData);
+    GAMEDATA_SaveAsyncStart(wk->pGameData);
     _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_SAVING2);
     return seq;
   }
@@ -3809,8 +3799,7 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
 static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_NET_DWC_GetSaving()){
-    //    SAVE_RESULT result = SaveControl_SaveAsyncMain(wk->pSaveData);
-    SAVE_RESULT result = GFL_NET_DWC_SaveAsyncMain(wk->pSaveData);
+    SAVE_RESULT result = GAMEDATA_SaveAsyncMain(wk->pGameData);
     if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
       GFL_NET_DWC_ResetSaving();
     }
@@ -7214,7 +7203,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START2)
           && (_parent_MsgEndCheck( wk ) == TRUE) ){   // メッセージの終了も待つように変更 08.06.01  tomoya
-    GFL_NET_DWC_FriendAutoInputCheck( WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSaveData), 0));
+    GFL_NET_DWC_FriendAutoInputCheck( WifiList_GetDwcDataPtr(GAMEDATA_GetWiFiList(wk->pGameData), 0));
 
     EndMessageWindowOff(wk);
 
@@ -8999,9 +8988,6 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   // グループ
   {
-    //MYSTATUS* pTarget = MyStatus_AllocWork(HEAPID_WIFIP2PMATCH);
-    //MyStatus_SetMyName(pTarget, WifiList_GetFriendGroupNamePtr(wk->pList,friendNo));
-    //WORDSET_RegisterPlayerName( wk->view.p_wordset, 0, pTarget);
     int sex = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_SEX);
     WifiList_GetFriendName(wk->pList, friendNo, wk->pExpStrBuf);
     WORDSET_RegisterWord( wk->WordSet, 0, wk->pExpStrBuf, sex, TRUE, PM_LANG);
@@ -9286,44 +9272,6 @@ static void MCVSys_UserDispDrawType04( WIFIP2PMATCH_WORK *wk, u32 heapID )
                     wk->TitleString, wk->fontHandle);
   }
 
-#if _BATTLE_TOWER_REC
-  {
-    FRONTIER_SAVEWORK* p_fsave;
-    p_fsave = SaveData_GetFrontier( wk->pSaveData );
-
-    num = FrontierRecord_Get( p_fsave, FRID_STAGE_MULTI_WIFI_MONSNO, friendNo );
-    p_str = MSGDAT_UTIL_GetMonsName( num, heapID );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_BTST_K_X,  MCV_USERD_BTST_K_Y,
-                    p_str, wk->fontHandle);
-    GFL_STR_DeleteBuffer( p_str );
-  }
-
-
-  // 前回記録
-  {
-    MCVSys_UserDispFrontiorTitleStrGet( wk, wk->TitleString, MCV_FRONTIOR_STAGE, friendNo );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_BTST_LAST_X,  MCV_USERD_BTST_LAST_Y,
-                    wk->TitleString, wk->fontHandle);
-
-    MCVSys_UserDispFrontiorNumDraw( wk, msg_wifilobby_bf13,
-                                    FRID_STAGE_MULTI_WIFI_RENSHOU_CNT, friendNo,
-                                    MCV_USERD_BTST_LASTNUM_X, MCV_USERD_BTST_LASTNUM_Y );
-  }
-
-  // 最高記録
-  {
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_bf07, wk->TitleString );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_BTST_MAX_X,  MCV_USERD_BTST_MAX_Y,
-                    wk->TitleString, wk->fontHandle);
-
-    MCVSys_UserDispFrontiorNumDraw( wk, msg_wifilobby_bf13,
-                                    FRID_STAGE_MULTI_WIFI_RENSHOU, friendNo,
-                                    MCV_USERD_BTST_MAXNUM_X, MCV_USERD_BTST_MAXNUM_Y );
-  }
-#endif //_BATTLE_TOWER_REC
 }
 
 // バトルルーレット
@@ -9372,66 +9320,6 @@ static void MCVSys_UserDispDrawType05( WIFIP2PMATCH_WORK *wk, u32 heapID )
 // ミニゲーム
 static void MCVSys_UserDispDrawType06( WIFIP2PMATCH_WORK *wk, u32 heapID )
 {
-#if 0 //WiFi広場関連は削除
-  int friendNo;
-  WIFI_LIST* p_list;
-
-  p_list  = SaveData_GetWifiListData( wk->pSaveData );
-
-  friendNo = wk->view.touch_friendNo - 1;
-
-  // タイトル
-  {
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_mg01, wk->TitleString );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_MINI_TITLE_X,  MCV_USERD_MINI_TITLE_Y,
-                    wk->TitleString, wk->fontHandle);
-  }
-
-  // たまいれ
-  {
-    WORDSET_RegisterWiFiLobbyGameName( wk->view.p_wordset, 0, WFLBY_GAME_BALLSLOW );
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_mg02, wk->pExpStrBuf );
-    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_MINI_BC_X,  MCV_USERD_MINI_BC_Y,
-                    wk->TitleString, wk->fontHandle);
-
-    MCVSys_UserDispNumDraw( wk, msg_wifilobby_mg05,
-                            WifiList_GetFriendInfo( p_list, friendNo, WIFILIST_FRIEND_BALLSLOW_NUM ),
-                            MCV_USERD_MINI_BCNUM_X, MCV_USERD_MINI_BCNUM_Y );
-  }
-
-  // たまのり
-  {
-    WORDSET_RegisterWiFiLobbyGameName( wk->view.p_wordset, 0, WFLBY_GAME_BALANCEBALL );
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_mg02, wk->pExpStrBuf );
-    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_MINI_BB_X,  MCV_USERD_MINI_BB_Y,
-                    wk->TitleString, wk->fontHandle);
-
-    MCVSys_UserDispNumDraw( wk, msg_wifilobby_mg05,
-                            WifiList_GetFriendInfo( p_list, friendNo, WIFILIST_FRIEND_BALANCEBALL_NUM ),
-                            MCV_USERD_MINI_BBNUM_X, MCV_USERD_MINI_BBNUM_Y );
-  }
-
-  // ふうせん
-  {
-    WORDSET_RegisterWiFiLobbyGameName( wk->view.p_wordset, 0, WFLBY_GAME_BALLOON );
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_mg02, wk->pExpStrBuf );
-    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin),
-                    MCV_USERD_MINI_BL_X,  MCV_USERD_MINI_BL_Y,
-                    wk->TitleString, wk->fontHandle);
-
-    MCVSys_UserDispNumDraw( wk, msg_wifilobby_mg05,
-                            WifiList_GetFriendInfo( p_list, friendNo, WIFILIST_FRIEND_BALLOON_NUM ),
-                            MCV_USERD_MINI_BLNUM_X, MCV_USERD_MINI_BLNUM_Y );
-  }
-#else
-  GF_ASSERT(0);
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -9479,16 +9367,6 @@ static void MCVSys_UserDispDrawFrontierOffScrn( WIFIP2PMATCH_WORK *wk )
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispFrontiorNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 factoryid, u32 friendno, u32 x, u32 y )
 {
-#if _BATTLE_TOWER_REC
-  int num;
-  FRONTIER_SAVEWORK* p_fsave;
-
-  p_fsave = SaveData_GetFrontier( wk->pSaveData );
-
-  num = FrontierRecord_Get(p_fsave, factoryid, friendno);
-
-  MCVSys_UserDispNumDraw( wk, strid, num, x, y );
-#endif //_BATTLE_TOWER_REC
 }
 
 //----------------------------------------------------------------------------
@@ -9512,31 +9390,6 @@ static void MCVSys_UserDispFrontiorNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u3
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispFrontiorTitleStrGet( WIFIP2PMATCH_WORK *wk, STRBUF* p_str, u32 factoryid, u32 friendno )
 {
-#if _BATTLE_TOWER_REC
-  FRONTIER_SAVEWORK* p_fsave;
-  BOOL clear_flag;
-  u32 stridx;
-  static const u32 sc_MCVSYS_FRONTIOR_CLEAR_BIT[ MCV_FRONTIOR_NUM ] = {
-    FRID_TOWER_MULTI_WIFI_CLEAR_BIT,
-    FRID_FACTORY_MULTI_WIFI_CLEAR_BIT,
-    FRID_FACTORY_MULTI_WIFI_CLEAR100_BIT,
-    FRID_CASTLE_MULTI_WIFI_CLEAR_BIT,
-    FRID_STAGE_MULTI_WIFI_CLEAR_BIT,
-    FRID_ROULETTE_MULTI_WIFI_CLEAR_BIT,
-  };
-
-  GF_ASSERT( factoryid < MCV_FRONTIOR_NUM );
-
-  p_fsave   = SaveData_GetFrontier( wk->pSaveData );
-
-  clear_flag = FrontierRecord_Get(p_fsave, sc_MCVSYS_FRONTIOR_CLEAR_BIT[factoryid], friendno);
-  if( clear_flag == FALSE ){
-    stridx = msg_wifilobby_bf06;
-  }else{
-    stridx = msg_wifilobby_bf18;
-  }
-  GFL_MSG_GetString(  wk->MsgManager, stridx, p_str );
-#endif //_BATTLE_TOWER_REC
 }
 
 //----------------------------------------------------------------------------

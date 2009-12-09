@@ -30,6 +30,7 @@
 #include "system/shortcut_data.h"			//SHORTCUT_ID
 //#include "savedata/gimmickwork.h"
 #include "field/pleasure_boat_ptr.h"
+#include "savedata/wifilist.h"
 
 //============================================================================================
 //============================================================================================
@@ -505,3 +506,13 @@ extern SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata );
  */
 //----------------------------------------------------------
 extern PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata);
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GAMEDATAからのWIFIListの取得
+ *	@param	gamedata      ゲームデータ
+ *	@return WIFIListのポインタ
+ */
+//-----------------------------------------------------------------------------
+extern WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata);
+

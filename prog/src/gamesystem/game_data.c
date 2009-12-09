@@ -41,6 +41,7 @@
 #include "savedata/intrude_save.h"  //
 #include "savedata/randommap_save.h"  //WF・BC
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
+#include "savedata/wifilist.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
 
@@ -68,7 +69,7 @@ struct _GAMEDATA{
   POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	CONFIG		*config;				///<コンフィグセーブデータへのポインタ
   BOX_MANAGER *boxMng;      ///<ボックス管理構造体へのポインタ
-
+  WIFI_LIST* WiFiList;
   BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
 
   MMDLSYS *mmdlsys;
@@ -183,6 +184,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
 	gd->config	= SaveData_GetConfig( gd->sv_control_ptr );
   gd->boxMng	= BOX_DAT_InitManager( heapID , gd->sv_control_ptr );
+  //WifiList
+  gd->WiFiList = WifiList_AllocWork(heapID);
 
   //占拠情報
   for(i = 0; i < OCCUPY_ID_MAX; i++){
@@ -226,6 +229,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   ENCOUNT_WORK_Delete( gamedata->enc_work );
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
 	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
+  GFL_HEAP_FreeMemory( gamedata->WiFiList );
   BOX_DAT_ExitManager( gamedata->boxMng );
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
@@ -307,6 +311,19 @@ FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID
   GF_ASSERT_MSG(id < GAMEDATA_WFBC_ID_MAX, "wfbc data data_id = %d\n", id);
   return &gamedata->wfbc[id];
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GAMEDATAからのWIFIListの取得
+ *	@param	gamedata      ゲームデータ
+ *	@return WIFIListのポインタ
+ */
+//-----------------------------------------------------------------------------
+WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata)
+{
+  return gamedata->WiFiList;
+}
+
 
 
 //============================================================================================
@@ -1103,7 +1120,12 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationDataLoadStatus( situation, gamedata->fldstatus );
     SaveData_SituationLoadSeasonID( situation, &gamedata->season_id );
-  } 
+  }
+  { //WIFILIST
+    WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
+    const WIFI_LIST* swifilist = SaveData_GetWifiListData( gamedata->sv_control_ptr );
+    WifiList_Copy(swifilist, wifilist);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1148,6 +1170,11 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
     SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationDataUpdateStatus( situation, gamedata->fldstatus );
     SaveData_SituationUpdateSeasonID( situation, gamedata->season_id );
+  }
+  { //WIFILIST
+    const WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
+    WIFI_LIST* swifilist = SaveData_GetWifiListData( gamedata->sv_control_ptr );
+    WifiList_Copy(wifilist, swifilist);
   }
 }
 

@@ -147,7 +147,7 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
     return;	//Ž©•ª‚Ìƒf[ƒ^‚Í–³Ž‹
   }
 
-  GFL_NET_DWC_FriendDataAdd(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork),
+  GFL_NET_DWC_FriendDataAdd(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork)),
                             (MYSTATUS*)pData, &pWork->friendData, HEAPID_IRCBATTLE);
 }
 
@@ -209,7 +209,7 @@ static void _sendFriendCode(IRC_BATTLE_FRIEND* pWork)
   DWCFriendData friendData;
 
   GFL_NET_DWC_GetMySendedFriendCode(
-    SaveData_GetWifiListData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)) ,&friendData);
+    GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))) ,&friendData);
   GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
                    sizeof(DWCFriendData),&friendData);
 

@@ -551,7 +551,7 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 
 
 
-#if 1
+#if 0
 //--------------------------------------------------------------
 /**
  * @brief   デバッグ ポケモンをセーブデータに入れる
@@ -2707,7 +2707,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
   GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData(p_gamesys);
   DEBUG_WIFIGTS_EVENT_WORK  *p_gts;
 
-  if( WifiList_CheckMyGSID( SaveData_GetWifiListData(SaveControl_GetPointer())) )
+  if( WifiList_CheckMyGSID( GAMEDATA_GetWiFiList(p_gamedata)) )
   { 
     //イヴェント
     GMEVENT_Change( p_event, debugMenuWifiGts, sizeof(DEBUG_WIFIGTS_EVENT_WORK) );
@@ -2736,7 +2736,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->gts.myparty          = SaveData_GetTemotiPokemon(p_gts->gts.savedata);
     p_gts->gts.mybox            = GAMEDATA_GetBoxManager(p_gamedata);
     p_gts->gts.zukanwork        = NULL;
-    p_gts->gts.wifilist         = SaveData_GetWifiListData(p_gts->gts.savedata);
+    p_gts->gts.wifilist         = GAMEDATA_GetWiFiList(p_gamedata);
     p_gts->gts.wifihistory      = SaveData_GetWifiHistory(p_gts->gts.savedata);
     p_gts->gts.mystatus         = SaveData_GetMyStatus(p_gts->gts.savedata);
     p_gts->gts.config           = SaveData_GetConfig(p_gts->gts.savedata);
@@ -2833,10 +2833,11 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
 { 
   GAMESYS_WORK *gsys = p_wk->gmSys;
   FIELDMAP_WORK *fieldWork = p_wk->fieldWork;
+  GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData(gsys);
   GMEVENT       *p_event    = p_wk->gmEvent;
   DEBUG_GDS_EVENT_WORK *p_gds;
   
-  if( WifiList_CheckMyGSID( SaveData_GetWifiListData(SaveControl_GetPointer())) )
+  if( WifiList_CheckMyGSID(GAMEDATA_GetWiFiList(p_gamedata) ) )
   { 
     //イヴェント
     GMEVENT_Change( p_event, debugMenuGDS, sizeof(DEBUG_GDS_EVENT_WORK) );

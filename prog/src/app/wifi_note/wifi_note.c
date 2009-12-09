@@ -1059,7 +1059,8 @@ typedef struct {
 //=====================================
 typedef struct {
   int key_mode;
-  SAVE_CONTROL_WORK* p_save;  // セーブデータ
+  //SAVE_CONTROL_WORK* p_save;  // セーブデータ
+  GAMEDATA* pGameData;
   u8 subseq;      // サブシーケンス
   u8 reqstatus;   // 次に進みたいステータス
   u8 reqsubseq;   // 次のステータスの開始サブシーケンス
@@ -1348,9 +1349,9 @@ static void Draw_SCRNDATA_Exit( WFNOTE_DRAW* p_draw );
 static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, GFL_BMPWIN** win, u32 msg_idx );
 static void Draw_BmpTitleOff( WFNOTE_DRAW* p_draw );
 static void Draw_FriendCodeSetWordset( WFNOTE_DRAW* p_draw, u64 code );
-static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx, u32 heapID );
-static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx, u32 heapID );
-static BOOL Draw_FriendDaySetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx );
+static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx, u32 heapID );
+static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw,const WFNOTE_DATA* cp_data, u32 idx, u32 heapID );
+static BOOL Draw_FriendDaySetWordset( WFNOTE_DRAW* p_draw,const WFNOTE_DATA* cp_data, u32 idx );
 static void Draw_NumberSetWordset( WFNOTE_DRAW* p_draw, u32 num );
 static void Draw_WflbyGameSetWordSet( WFNOTE_DRAW* p_draw, u32 num );
 static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, u32 heapID );
@@ -1811,7 +1812,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 
 //  デバッグ起動で名前が無い時用
   {
-    MYSTATUS  *myStatus = SaveData_GetMyStatus( p_wk->pp->saveControlWork );
+    MYSTATUS  *myStatus = GAMEDATA_GetMyStatus(p_wk->pp->pGameData);//SaveData_GetMyStatus( p_wk->pp->saveControlWork );
     if( MyStatus_CheckNameClear( myStatus ) == TRUE )
     {
       STRBUF  *name = GFL_STR_CreateBuffer( 6 , HEAPID_WIFINOTE );
@@ -2075,9 +2076,9 @@ static void Sub_BmpWinAdd( GFL_BMPWIN ** win, u8 frmnum,
 //-----------------------------------------------------------------------------
 static void Data_Init( WFNOTE_DATA* p_data, WIFINOTE_PROC_PARAM* wp, u32 heapID )
 {
-  CONFIG* config;
+//  CONFIG* config;
 
-  p_data->p_save = wp->saveControlWork;
+  p_data->pGameData = wp->pGameData;
   p_data->codein.p_name = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
   p_data->codein.p_code = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
@@ -2085,14 +2086,14 @@ static void Data_Init( WFNOTE_DATA* p_data, WIFINOTE_PROC_PARAM* wp, u32 heapID 
   p_data->key_mode = GFL_UI_CheckTouchOrKey();
 
   //コンフィグ
-  config = SaveData_GetConfig(p_data->p_save);
+//  config = SaveData_GetConfig(p_data->p_save);
   p_data->msg_spd = MSGSPEED_GetWait();
-  p_data->win_type = CONFIG_GetWindowType(config);
-  if(CONFIG_GetInputMode(config) != INPUTMODE_L_A){
+  p_data->win_type = WINTYPE_01;
+//  if(CONFIG_GetInputMode(config) != INPUTMODE_L_A){
     p_data->lr_key_enable = TRUE;
-  }else{
-    p_data->lr_key_enable = FALSE;
-  }
+//  }else{
+//    p_data->lr_key_enable = FALSE;
+//  }
 #if NOTE_TEMP_COMMENT
   MsgPrintSkipFlagSet( TRUE );
   MsgPrintTouchPanelFlagSet( TRUE );
@@ -2193,7 +2194,7 @@ static u32 Data_NewFriendDataSet( WFNOTE_DATA* p_data, STRBUF* p_code, STRBUF* p
   int ret;
   int pos;
 
-  p_list = SaveData_GetWifiListData( p_data->p_save );
+  p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
 
   mycode = DWC_CreateFriendKey( WifiList_GetMyUserInfo(p_list) );
 
@@ -2275,7 +2276,7 @@ static void Data_FrIdxMake( WFNOTE_DATA* p_data )
 
   GFL_STD_MemFill( &p_data->idx, 0, sizeof(WFNOTE_IDXDATA) );
 
-  p_list = SaveData_GetWifiListData( p_data->p_save );
+  p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
 
   p_data->idx.friendnum = 0;
   for( i=0; i<FLIST_FRIEND_MAX; i++ ){
@@ -2868,12 +2869,12 @@ static void Draw_FriendCodeSetWordset( WFNOTE_DRAW* p_draw, u64 code )
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx, u32 heapID )
+static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx, u32 heapID )
 {
   WIFI_LIST* p_wifilist;
   MYSTATUS* p_mystatus;
 
-  p_wifilist = SaveData_GetWifiListData( p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(cp_data->pGameData); //SaveData_GetWifiListData( p_save );
   p_mystatus = MyStatus_AllocWork( heapID );
 #if NOTE_DEBUG
   {
@@ -2899,10 +2900,10 @@ static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx, u32 heapID )
+static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx, u32 heapID )
 {
   MYSTATUS* p_mystatus = MyStatus_AllocWork( heapID );
-  WIFI_LIST* p_wifilist = SaveData_GetWifiListData( p_save );
+  WIFI_LIST* p_wifilist = GAMEDATA_GetWiFiList(cp_data->pGameData); //SaveData_GetWifiListData( p_save );
 #if NOTE_DEBUG
   {
     STRBUF  *nameStr = GFL_STR_CreateBuffer( 10 , heapID );
@@ -2929,9 +2930,9 @@ static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* 
  *  @retval FALSE 日にちがなかった
  */
 //-----------------------------------------------------------------------------
-static BOOL Draw_FriendDaySetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p_save, u32 idx )
+static BOOL Draw_FriendDaySetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx )
 {
-  WIFI_LIST* p_wifilist = SaveData_GetWifiListData( p_save );
+  WIFI_LIST* p_wifilist = GAMEDATA_GetWiFiList(cp_data->pGameData); //SaveData_GetWifiListData( p_save );
   u32 num;
   BOOL ret = TRUE;
 
@@ -3437,7 +3438,7 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
   // 自分の名前をワードセットに設定
-  WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, SaveData_GetMyStatus( p_data->p_save ) );
+  WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, GAMEDATA_GetMyStatus(p_data->pGameData) );
 
   for( i=0; i<4; i++ ){
     u32 siz;
@@ -3831,7 +3832,7 @@ static BOOL ModeSelect_StatusChengeCheck( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* 
 
   if( p_wk->cursor == MODESEL_CUR_CODEIN ){
     // あきがあるかチェック
-    p_list = SaveData_GetWifiListData( p_data->p_save );
+    p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
     for(i=0;i<WIFILIST_FRIEND_MAX;i++){
       if( !WifiList_IsFriendData( p_list, i ) ){  //
         return TRUE;
@@ -3990,7 +3991,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
 
     // 文字列初期化データを設定
     listidx = FList_FRIdxGet( p_wk );
-    p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+    p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
     Data_NAMEIN_INIT_Set( p_data, WifiList_GetFriendNamePtr( p_wifilist, p_data->idx.fridx[listidx] ) );
     p_data->subseq = SEQ_FLIST_NAMECHG_WIPE;
     break;
@@ -4009,7 +4010,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
   case SEQ_FLIST_NAMECHG_WAIT:  // 名前変更
     // 名前を変更
     listidx = FList_FRIdxGet( p_wk );
-    p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+    p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
     WifiList_SetFriendName( p_wifilist, p_data->idx.fridx[listidx], p_data->codein.p_name );
   case SEQ_FLIST_NAMECHG_WAITWIPE:  // 名前変更 何もしないで復帰
     // 描画初期化
@@ -4064,14 +4065,9 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
   case SEQ_FLIST_DELETE_ANMWAIT:  // 破棄YESNOをまってから処理
     if( FList_DeleteAnmMain( p_wk, p_draw ) == TRUE ){
       // 破棄処理
-      p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+      p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
       listidx = FList_FRIdxGet( p_wk );
       WifiList_ResetData( p_wifilist, p_data->idx.fridx[ listidx ] );
-      //フレンド毎に持つフロンティアデータも削除 2008.05.24(土) matsuda
-#if USE_FRONTIER_DATA
-      FrontierRecord_ResetData(
-        SaveData_GetFrontier(p_data->p_save), p_data->idx.fridx[ listidx ]);
-#endif
       // 友達インデックスを作り直す
       // 友達の表示を書き直す
       // リストデータ作成
@@ -4803,7 +4799,7 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   u32 listidx;
 
   // wifiリストから性別を取得
-  p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   listidx = FList_FRIdxGet( p_wk );
   sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[ listidx ], WIFILIST_FRIEND_SEX );
 
@@ -4829,7 +4825,7 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
 #endif
   }
   // メッセージ表示
-  Draw_FriendNameSetWordset( p_draw, p_data->p_save, p_data->idx.fridx[ listidx ], heapID );
+  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
   FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_13, heapID );
   // やじるし非表示
   Draw_YazirushiSetDrawFlag( p_draw, FALSE );
@@ -4921,7 +4917,7 @@ static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   u64 code;
   u32 listidx;
 
-  p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   listidx = FList_FRIdxGet( p_wk );
   p_frienddata = WifiList_GetDwcDataPtr( p_wifilist,
       p_data->idx.fridx[ listidx ] );
@@ -4930,7 +4926,7 @@ static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
     // コード表示
     PMSND_PlaySE(WIFINOTE_DECIDE_SE);
     Draw_FriendCodeSetWordset( p_draw, code );
-    Draw_FriendNameSetWordset( p_draw, p_data->p_save, p_data->idx.fridx[ listidx ], heapID );
+    Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
     FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_32, heapID );
     return TRUE;
   }
@@ -4952,7 +4948,7 @@ static void FListSeq_DeleteInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
   u32 listidx;
 
   listidx = FList_FRIdxGet( p_wk );
-  Draw_FriendNameSetWordset( p_draw, p_data->p_save, p_data->idx.fridx[ listidx ], heapID );
+  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
   FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_29, heapID );
 }
 
@@ -5500,7 +5496,7 @@ static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA*
   int idx;
   WIFI_LIST* p_list;
 
-  p_list = SaveData_GetWifiListData( p_data->p_save );
+  p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
 
   // クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(*p_wk->text), 0 );
@@ -6041,7 +6037,7 @@ static void MyCode_DrawInit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
   // 自分のコード取得
-  p_list = SaveData_GetWifiListData(p_data->p_save);
+  p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData(p_data->p_save);
   p_userdata = WifiList_GetMyUserInfo( p_list );
   code = DWC_CreateFriendKey( p_userdata );
 
@@ -6104,7 +6100,7 @@ static void MyCodeSeq_Init( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
 {
 
   // タイトル設定
-  WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, SaveData_GetMyStatus( p_data->p_save ) );
+  WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, GAMEDATA_GetMyStatus(p_data->pGameData) );
   Draw_BmpTitleWrite( p_draw, &p_draw->title, msg_mycode_title );
 
   // 背景設定
@@ -6688,7 +6684,7 @@ static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
 {
   GFL_CLACTPOS pos;
   // タイトル表示
-  Draw_FriendNameSetWordset( p_draw, p_data->p_save,
+  Draw_FriendNameSetWordset( p_draw, p_data,
       p_data->idx.fridx[p_data->select_listidx], heapID );
   Draw_BmpTitleWrite( p_draw, &p_wk->win[FINFO_WIN_TITLE], msg_wifi_note_14 );
 
@@ -6831,7 +6827,7 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
   WIFI_LIST* p_wifilist;
   u32 sex,col,i;
 
-  p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_SEX );
 
   for(i = 0; i < FINFO_WIN_NUM;i++){
@@ -6854,14 +6850,14 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
   }else{
     col = WFNOTE_COL_BLACK;
   }
-  Draw_FriendNameSetWordset( p_draw, p_data->p_save, p_data->idx.fridx[p_data->select_listidx],heapID );
+  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[p_data->select_listidx],heapID );
   FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_NAME],
         p_data, p_draw, msg_finfo_name, 0, 0, col);
 
   //グループ
   FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_GRP01], p_data, p_draw, msg_finfo_grp01, 0, 0, WFNOTE_COL_WHITE );
 
-  Draw_FriendGroupSetWordset( p_draw, p_data->p_save,
+  Draw_FriendGroupSetWordset( p_draw, p_data,
       p_data->idx.fridx[p_data->select_listidx], heapID );
   FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_GRP02], p_data, p_draw, msg_finfo_grp02, 0, 0, WFNOTE_COL_BLACK );
 
@@ -6872,7 +6868,7 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
     FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_DAY01], p_data, p_draw,
         msg_finfo_day01,0, 0, WFNOTE_COL_WHITE );
 
-    result = Draw_FriendDaySetWordset( p_draw, p_data->p_save,
+    result = Draw_FriendDaySetWordset( p_draw, p_data,
         p_data->idx.fridx[p_data->select_listidx] );
     if( result ){
       FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_DAY02], p_data, p_draw,
@@ -7156,7 +7152,7 @@ static BOOL FInfo_SelectListIdxAdd( WFNOTE_DATA* p_data, WF_COMMON_WAY way )
   s32 select_listidx;
   WIFI_LIST* p_wifilist;
 
-  p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   select_listidx = p_data->select_listidx;
 
   if( way == WF_COMMON_TOP ){
@@ -7519,7 +7515,7 @@ static void FInfoDraw_Page00( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
   u8 ofsx = 0;
   u8 ofsy = 0;
 
-  p_wifilist = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
 
   // 対戦成績タイトル
   FInfoDraw_Bmp( p_wk, 0, FINFO_PAGE00_BA_BTT,
@@ -7575,11 +7571,6 @@ static void FInfoDraw_Page01( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 {
   u32 num;
   u8 ofsx,ofsy;
-#if USE_FRONTIER_DATA
-  FRONTIER_SAVEWORK*  p_fsave;
-
-  p_fsave   = SaveData_GetFrontier( p_data->p_save );
-#endif USE_FRONTIER_DATA
 
   // タイトル
   ofsx = (FINFO_PAGE01_BA_CAP_X-FINFO_PAGE_X)*8;
@@ -7593,23 +7584,14 @@ static void FInfoDraw_Page01( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
   ofsx = (FINFO_PAGE01_BA_DAT_X-FINFO_PAGE_X)*8;
   ofsy = (FINFO_PAGE01_BA_DAT_Y-FINFO_PAGE_Y)*8;
   {
-#if USE_FRONTIER_DATA
-    BOOL clear_flag = FrontierRecord_Get(p_fsave, FRID_TOWER_MULTI_WIFI_CLEAR_BIT,
-                p_data->idx.fridx[p_data->select_listidx]);
-#else
     BOOL clear_flag = TRUE;
-#endif //USE_FRONTIER_DATA
 
 
     FInfoDraw_Bmp( p_wk, 2, FINFO_PAGE01_BA_DAT,
         p_data, p_draw, msg_finfo_frprm_win01+clear_flag,
         FINFO_PAGE01_DAT_X+ofsx, FINFO_PAGE01_DAT_Y01+ofsy,
         WFNOTE_COL_BLACK, p_draw->p_str, p_draw->p_tmp );
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_TOWER_MULTI_WIFI_RENSHOU_CNT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 123;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 2, FINFO_PAGE01_BA_DAT,
         p_data, p_draw, msg_finfo_frprm_wnum,
@@ -7622,11 +7604,7 @@ static void FInfoDraw_Page01( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
       p_data, p_draw, msg_finfo_frprm_win03,
       FINFO_PAGE01_DAT_X+ofsx, FINFO_PAGE01_DAT_Y02+ofsy,
       WFNOTE_COL_BLACK, p_draw->p_str, p_draw->p_tmp );
-#if USE_FRONTIER_DATA
-  num = FrontierRecord_Get(p_fsave, FRID_TOWER_MULTI_WIFI_RENSHOU, p_data->idx.fridx[p_data->select_listidx]);
-#else
   num = 456;
-#endif
   Draw_NumberSetWordset( p_draw, num );
   FInfoDraw_Bmp( p_wk, 2, FINFO_PAGE01_BA_DAT,
       p_data, p_draw, msg_finfo_frprm_wnum,
@@ -7644,11 +7622,6 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
   BOOL clear_flag;
   u32 stridx;
   int ofsx,ofsy;
-#if USE_FRONTIER_DATA
-  FRONTIER_SAVEWORK* p_fsave;
-
-  p_fsave = SaveData_GetFrontier( p_data->p_save );
-#endif
   p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
@@ -7675,11 +7648,7 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     //前回
-#if USE_FRONTIER_DATA
-    clear_flag = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_CLEAR_BIT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     clear_flag = TRUE;
-#endif
     if( clear_flag == FALSE ){
       stridx = msg_finfo_frprm_win01;
     }else{
@@ -7693,22 +7662,14 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     // 連勝
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_RENSHOU_CNT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 789;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV50NO,
         p_data, p_draw, msg_finfo_frprm_wnum,
         FINFO_PAGE02_LV50LN0_X+ofsx, FINFO_PAGE02_LV50L_Y+ofsy,
         WFNOTE_COL_BLACK, p_str, p_tmp );
     // 交換
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_TRADE_CNT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 147;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV50NO,
         p_data, p_draw, msg_wifi_note_49,
@@ -7723,22 +7684,14 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     // 連勝
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_RENSHOU, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 258;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV50NO,
         p_data, p_draw, msg_finfo_frprm_wnum,
         FINFO_PAGE02_LV50MN0_X+ofsx, FINFO_PAGE02_LV50M_Y+ofsy,
         WFNOTE_COL_BLACK, p_str, p_tmp );
     // 交換
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_TRADE, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 369;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV50NO,
         p_data, p_draw, msg_wifi_note_49,
@@ -7761,11 +7714,7 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     //前回
-#if USE_FRONTIER_DATA
-    clear_flag = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_CLEAR100_BIT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     clear_flag = TRUE;
-#endif
     if( clear_flag == FALSE ){
       stridx = msg_finfo_frprm_win01;
     }else{
@@ -7779,22 +7728,14 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     // 連勝
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_RENSHOU100_CNT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 123;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV100NO,
         p_data, p_draw, msg_finfo_frprm_wnum,
         FINFO_PAGE02_LV100LN0_X+ofsx, FINFO_PAGE02_LV100L_Y+ofsy,
         WFNOTE_COL_BLACK, p_str, p_tmp );
     // 交換
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_TRADE100_CNT, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 456;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV100NO,
         p_data, p_draw, msg_wifi_note_49,
@@ -7809,22 +7750,14 @@ static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
         WFNOTE_COL_BLACK, p_str, p_tmp );
 
     // 連勝
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_RENSHOU100, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 789;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV100NO,
         p_data, p_draw, msg_finfo_frprm_wnum,
         FINFO_PAGE02_LV100MN0_X+ofsx, FINFO_PAGE02_LV100M_Y+ofsy,
         WFNOTE_COL_BLACK, p_str, p_tmp );
     // 交換
-#if USE_FRONTIER_DATA
-    num = FrontierRecord_Get(p_fsave, FRID_FACTORY_MULTI_WIFI_TRADE100, p_data->idx.fridx[p_data->select_listidx]);
-#else
     num = 255;
-#endif
     Draw_NumberSetWordset( p_draw, num );
     FInfoDraw_Bmp( p_wk, 3, FINFO_PAGE02_LV100NO,
         p_data, p_draw, msg_wifi_note_49,
@@ -8108,7 +8041,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
   p_fsave = SaveData_GetFrontier( p_data->p_save );
 #endif
 
-  p_wifilist  = SaveData_GetWifiListData( p_data->p_save );
+  p_wifilist  = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 

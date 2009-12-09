@@ -1388,8 +1388,7 @@ static void * FMenuCallProc_WifiNote(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK
   WIFINOTE_PROC_PARAM* pFriend;
   
   pFriend = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(WIFINOTE_PROC_PARAM) );
-  pFriend->saveControlWork = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->param->gsys) );
-  OS_TPrintf("SAVEWORK %x\n",pFriend->saveControlWork);
+  pFriend->pGameData = GAMESYSTEM_GetGameData(wk->param->gsys);
 
   return pFriend;
 }

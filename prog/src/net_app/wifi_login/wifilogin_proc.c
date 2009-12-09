@@ -162,6 +162,7 @@ struct _WIFILOGIN_WORK {
   WIFILOGIN_MESSAGE_WORK* pMessageWork; //メッセージ系
   WIFI_LIST* pList;
   WIFILOGIN_PARAM * dbw;  //親のワーク
+  GAMEDATA* gamedata;
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
@@ -318,19 +319,19 @@ static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 static void* _getMyUserData(void* pWork)  //DWCUserData
 {
   WIFILOGIN_WORK *wk = pWork;
-  return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->pSave));
+  return WifiList_GetMyUserInfo(GAMEDATA_GetWiFiList(wk->gamedata));
 }
 
 static void* _getFriendData(void* pWork)  //DWCFriendData
 {
   WIFILOGIN_WORK *wk = pWork;
-  return WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSave),0);
+  return WifiList_GetDwcDataPtr(GAMEDATA_GetWiFiList(wk->gamedata),0);
 }
 
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
 {
   WIFILOGIN_WORK *wk = pWork;
-  WifiList_DataMarge(SaveData_GetWifiListData(wk->pSave), deletedIndex, srcIndex);
+  WifiList_DataMarge(GAMEDATA_GetWiFiList(wk->gamedata), deletedIndex, srcIndex);
 }
 
 
@@ -549,7 +550,8 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
 static void _saveingWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_NET_DWC_GetSaving()){
-    SAVE_RESULT result = GFL_NET_DWC_SaveAsyncMain(pWork->pSave);
+
+    SAVE_RESULT result = GAMEDATA_SaveAsyncMain(pWork->gamedata);
     if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
       GFL_NET_DWC_ResetSaving();
     }
@@ -574,7 +576,10 @@ static void _saveingStart(WIFILOGIN_WORK* pWork)
   }
   else{
 		SYSTEMDATA_SetDpwInfo( SaveData_GetSystemData(pWork->pSave), WifiList_GetMyGSID(pWork->pList) );
-    GFL_NET_DWC_SaveAsyncInit(pWork->pSave);
+
+    GAMEDATA_SaveAsyncStart(pWork->gamedata);
+
+//    GFL_NET_DWC_SaveAsyncInit(pWork->pSave);
     pWork->bSaving=TRUE;
     _CHANGE_STATE(pWork, _saveingWait);
     return;
@@ -919,8 +924,8 @@ static void _modeReporting(WIFILOGIN_WORK* pWork)
 
 
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->pSave);
-
+    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
+    
     if(svr == SAVE_RESULT_OK){
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
@@ -948,7 +953,7 @@ static void _modeReportWait2(WIFILOGIN_WORK* pWork)
 
 //      WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_007);
 
-      SaveControl_SaveAsyncInit(pWork->pSave );
+      GAMEDATA_SaveAsyncStart(pWork->gamedata);
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
@@ -996,12 +1001,12 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     WIFILOGIN_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( WIFILOGIN_WORK ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(WIFILOGIN_WORK));
     pWork->heapID = HEAPID_IRCBATTLE;
-
+    pWork->gamedata = pEv->gamedata;
     pWork->bDreamWorld = pEv->bDreamWorld;
     pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID,pEv->bDreamWorld);
     pWork->pMessageWork = WIFILOGIN_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat);
     pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
-    pWork->pList = SaveData_GetWifiListData( GAMEDATA_GetSaveControlWork( pEv->gamedata) );
+    pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
 
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 

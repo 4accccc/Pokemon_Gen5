@@ -297,6 +297,7 @@ struct _WIFIP2PMATCH_WORK{
   BMPMENULIST_WORK* sublw;		// BMPメニューワーク
 //  GFL_BG_INI		*bgl;									// GF_BGL_INI
   SAVE_CONTROL_WORK*  pSaveData;
+GAMEDATA* pGameData;
   POKEPARTY* pMyPoke;
   void* pEmail;
   void* pFrontier;

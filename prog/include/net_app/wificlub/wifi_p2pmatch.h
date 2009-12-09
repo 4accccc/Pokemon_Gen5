@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "gamesystem/game_event.h"
+#include "gamesystem/game_data.h"
 #include "wifi_p2pmatch_def.h"
 
 //============================================================================================
@@ -23,9 +24,10 @@
 //------------------------------------------------------
 typedef struct {
   void* pMatch;
-	SAVE_CONTROL_WORK*  pSaveData;
-    int seq;                // どこに分岐してほしいかが入っている
-    int targetID;   //対戦 交換する人が誰なのかが入っている
+  GAMEDATA* pGameData;
+  SAVE_CONTROL_WORK*  pSaveData;
+  int seq;                // どこに分岐してほしいかが入っている
+  int targetID;   //対戦 交換する人が誰なのかが入っている
 }WIFIP2PMATCH_PROC_PARAM;
 
 extern const GFL_PROC_DATA WifiP2PMatchProcData;

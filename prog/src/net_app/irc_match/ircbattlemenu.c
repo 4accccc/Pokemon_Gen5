@@ -925,8 +925,8 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
     return;
   }
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
-
+    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
+    
     if(svr == SAVE_RESULT_OK){
 
 			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
@@ -965,7 +965,8 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
       GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
       _infoMessageDisp(pWork);
       //セーブ開始
-      SaveControl_SaveAsyncInit( IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw) );
+      GAMEDATA_SaveAsyncStart(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
+
       _CHANGE_STATE(pWork,_modeReporting);
 #else
       _CHANGE_STATE(pWork,NULL);
