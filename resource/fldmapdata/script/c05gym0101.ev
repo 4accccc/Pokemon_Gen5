@@ -105,7 +105,6 @@ EVENT_START		ev_c05gym0101_leader
 		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_01,C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
 	
-	/*【仮】戦闘処理スキップ
 		//戦闘処理
 		_TRAINER_BTL_SET( TRID_LEADER5_01, 0 )
 		//結果チェック
@@ -115,7 +114,7 @@ EVENT_START		ev_c05gym0101_leader
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
-	*/
+		
 		//勝利後会話
 		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_02 , C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
@@ -133,10 +132,16 @@ EVENT_START		ev_c05gym0101_leader
 		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_04 , C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
 		
+		//ジム内ストッパーOBJ削除
+		_OBJ_DEL( C05GYM0101_STOPPER_01 )
+		
 		//============フラグワーク操作=============//
 	
 		//D06電気洞窟前のPOSイベント起動（電気洞窟ストッパー解除）
 		$WK_SCENE_D06 = 1
+		
+		//ジム内ストッパーOBJ非表示に
+		_FLAG_SET( FV_C05GYM0101_CORN )
 
 		//========================================//
 		

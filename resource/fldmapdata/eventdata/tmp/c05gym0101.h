@@ -31,5 +31,8 @@
 #define C05GYM0101_DUMMY_00               20
 #define C05GYM0101_DUMMY_01               21
 #define TR_WORKER2_12                     22
+#define C05GYM0101_STOPPER_02             23
+#define C05GYM0101_STOPPER_03             24
+#define C05GYM0101_STOPPER_04             25
 
 #endif //ZONE_C05GYM0101_EVC_H
