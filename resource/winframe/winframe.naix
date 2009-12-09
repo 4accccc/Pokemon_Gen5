@@ -22,7 +22,10 @@ enum {
 	NARC_winframe_spwin_NCGR = 8,
 	NARC_winframe_system_NCGR = 9,
 	NARC_winframe_syswin_NCGR = 10,
-	NARC_winframe_talk_win00_NCGR = 11
+	NARC_winframe_talk_win00_NCGR = 11,
+	NARC_winframe_balloonwin_T___v___p_NSCR = 12,
+	NARC_winframe_bgwin_T___v___p_NSCR = 13,
+	NARC_winframe_spwin_T___v___p_NSCR = 14
 };
 
 /* NARC_WINFRAME_NAIX_ */
