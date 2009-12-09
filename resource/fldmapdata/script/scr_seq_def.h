@@ -5245,9 +5245,9 @@
 //--------------------------------------------------------------------
 #define _WIFI_BATTLE_RECORDER_EVENT_CALL( mode ) _ASM_WIFI_BATTLE_RECORDER_EVENT_CALL mode
 
-  .macro  _ASM_WIFI_BATTLE_RECORDER_EVENT_CALL
+  .macro  _ASM_WIFI_BATTLE_RECORDER_EVENT_CALL mode
   .short  EV_SEQ_WIFI_BATTLE_RECORDER_EVENT_CALL
-  .byte   \mode
+  .short  \mode
   .endm
 
 //======================================================================

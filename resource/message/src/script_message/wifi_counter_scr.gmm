@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-09T11:15:56"/>
+	<create user="iwasawa" host="W00157" date="2009-12-09T15:52:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="342" top="154" right="1030" bottom="934" maximized="no" rayout="Vertical2">
+	<dialog left="149" top="165" right="837" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -511,16 +511,24 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
+	<row id="msg_gterminal_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">グローバルターミナル</attribute>
+		<language name="JPN" width="256">グローバルターミナルを
+ごりよう　ですか？</language>
+		<language name="JPN_KANJI" width="256">グローバルターミナルを
+ごりよう　ですか？</language>
+	</row>
+
 	<row id="msg_gterminal_exp01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>グローバルターミナル説明</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">グローバルターミナルは
 ・・・・・・・・・・▼
-ＷｉーＦｉコネクションを
+グローバルターミナルを
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナルは
 ・・・・・・・・・・▼
-ＷｉーＦｉコネクションを
+グローバルターミナルを
 ごりよう　ですか？</language>
 	</row>
 
@@ -800,66 +808,76 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ランダムマッチの
-せつめいが　はいる　よてい　です</language>
-		<language name="JPN_KANJI" width="256"></language>
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチの
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードの
-せつめいが　はいる　よてい　です</language>
-		<language name="JPN_KANJI" width="256"></language>
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">レーティングモードの
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">フリーモードの
-せつめいが　はいる　よてい　です</language>
-		<language name="JPN_KANJI" width="256"></language>
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フリーモードの
+せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">どの　たいせんを　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">どの　たいせんを　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シングルバトル</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">シングルバトル</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ダブルバトル</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ダブルバトル</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">トリプルバトル</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">トリプルバトル</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ローテーションバトル</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ローテーションバトル</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win05" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シューターバトル</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">シューターバトル</language>
+	</row>
+
+	<row id="msg_rndmatch_03_win06" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチメニュー</comment>
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
 	<row id="msg_rndmatch_04_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -867,7 +885,8 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シングルバトルに
 ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">シングルバトルに
+ちょうせん　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -875,7 +894,8 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ダブルバトルに
 ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ダブルバトルに
+ちょうせん　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -883,7 +903,8 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">トリプルバトルに
 ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">トリプルバトルに
+ちょうせん　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -891,7 +912,8 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ローテーションバトルに
 ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルに
+ちょうせん　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -899,165 +921,188 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シューターバトルに
 ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">シューターバトルに
+ちょうせん　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">けってい</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ルールを　きく</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ルールを　きく</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>ランダムマッチメニュー</comment>
+		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_rndmatch_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ルール／シングル</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シングルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-３ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+３ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-３ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+３ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ルール／ダブル</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ダブルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-４ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+４ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ダブルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-４ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+４ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ルール／トリプル</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">トリプルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-６ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-６ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ルール／ローテーション</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ローテーションバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-５ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+５ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルは
-たたかうまえに　あいてと　じぶんの▽
-てもち　ポケモンを　みくらべて▽
-５ひき　えらんで　たいせん　します▼
+たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+５ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ルール／シューター</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シューターバトルは
-サポートシューターを　つかって▽
-トリプルバトルを　おこないます▼
+サポートシューターを　つかって[BE:00:ページ切り替え（行送り）]
+トリプルバトルを　おこないます[BE:01:ページ切り替え（クリア）]
 たたかうまえに　あいてと　じぶんの
-てもち　ポケモンを　みくらべて▽
-６ひき　えらんで　たいせん　します▼
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シューターバトルは
-サポートシューターを　つかって▽
-トリプルバトルを　おこないます▼
+サポートシューターを　つかって[BE:00:ページ切り替え（行送り）]
+トリプルバトルを　おこないます[BE:01:ページ切り替え（クリア）]
 たたかうまえに　あいてと　じぶんの
-てもち　ポケモンを　みくらべて▽
-６ひき　えらんで　たいせん　します▼
+てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
+６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
-ポケモンで　なくては　ならず▼
+ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません▼
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません　</language>
+つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>バトルボックス選択メッセージ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">またの　ごりようを
-おまちしております</language>
-		<language name="JPN_KANJI" width="256">またの　ごりようを
-おまちしております</language>
+		<language name="JPN" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+	</row>
+
+	<row id="msg_rndmatch_05_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチ</comment>
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">てもち</language>
+	</row>
+
+	<row id="msg_rndmatch_05_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチ</comment>
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
+	</row>
+
+	<row id="msg_rndmatch_05_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチ</comment>
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="msg_rndmatch_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

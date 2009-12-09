@@ -25,7 +25,10 @@ _EVENT_DATA    ev_wifi_counter
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
-DEFINE_LOCAL  ret_param
+DEFINE_LOCAL  reg_param
+
+//DEFINE_LOCAL lwk_rm_regulation
+//DEFINE_LOCAL lwk_rm_party
 
 { //WIFI_COUNTER
 
@@ -73,6 +76,9 @@ sub_wifi_counter_main:
   _SYSWIN_MSG_DOWN( msg_wifi_counter_00 ) //Wi-Fiコネクションへようこそ
   _SYSWIN_MSG_DOWN( msg_wifi_counter_01 ) //Wi-Fiカウンターをご利用ですか？
   $i_seq = SEQ_MAIN_MENU
+  
+  //フィールド通信切断
+//  _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
@@ -96,10 +102,6 @@ sub_wifi_counter_main:
     CASE SEQ_GEO_NET THEN
       _CALL sub_wifi_geo_net  //ジオネット
       $i_seq = $reg_return  
-
-    CASE SEQ_CONNECT THEN
-      _CALL sub_wifi_counter_connect
-      $i_seq = $reg_return
 
     CASE SEQ_GOODBYE THEN
       _SYSWIN_MSG_DOWN( msg_wifi_counter_02 ) //それではまたお越しください
@@ -146,172 +148,283 @@ sub_wifi_counter_main_menu:
 _RET
 
 //==============================================================
-//サブルーチン：Wi-Fiコネクトチェック
+//サブルーチン：フィールド通信切断処理
 //==============================================================
-sub_wifi_counter_check_connect:
+sub_wifi_counter_field_comm_exit_check:
 {
   DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_friend_num
-  DEFINE_LOCAL  i_id_state
 
-  //IDの状態チェック
-
-  _WIFI_CHECK_MY_GSID( i_id_state )
- // $i_id_state = 0
-
-  //登録人数チェック
-  _WIFI_GET_FRIEND_NUM( i_friend_num )
-//  $i_friend_num = 1
-
-  IF $i_id_state == TRUE THEN
-    IF $i_friend_num == 0 THEN
-      _SYSWIN_MSG_DOWN( msg_wifi_counter_06 ) //友だちを登録していないと利用できません
-      _AB_KEYWAIT()
-      _SYSWIN_CLOSE()
-      $reg_return = SEQ_GOODBYE
-    ELSE
-      $reg_return = SEQ_CONNECT
-    ENDIF
-    _RET
-  ENDIF
-
-  //仮IDを取得しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_05 ) //自分のコードだけでも受け取りますか？
-  _YES_NO_WIN( i_ret )
-  
-  //『はい』
-  IF $i_ret == SCR_YES THEN
-    $reg_return = SEQ_CONNECT
-  ELSE
-    $reg_return = SEQ_GOODBYE
-  ENDIF
-}
-_RET
-
-//==============================================================
-//サブルーチン：Wi-Fiコネクト
-//==============================================================
-sub_wifi_counter_connect:
-{
-  DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_friend_num
-  DEFINE_LOCAL  i_id_state
-
-  //Wi-Fi接続を開始しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_03 )
-  _YES_NO_WIN( i_ret )
-  _SYSWIN_CLOSE()
-
-  IF $i_ret == SCR_NO THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ENDIF
- 
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_GOODBYE
-    _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_RETRY
-    _RET
+  ELSE
+    $reg_return = 0
   ENDIF
-
-  //接続　それではご案内します
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
-
-  //引率アニメ再生
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
-  _OBJ_ANIME_WAIT()
-
-  //エレベータアニメ再生
-
-
-  //クラブイベント呼び出し
-  _BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
-  _WIFI_CLUB_EVENT_CALL()
-	_BLACK_IN( )
-	_DISP_FADE_END_CHECK()
-
-  $reg_return = SEQ_GOODBYE
 }
 _RET
-
 
 //==============================================================
 //サブルーチン：ランダムマッチメイン
 //==============================================================
+{ //RANDOM_MATCH_START
+DEFINE_LOCAL lwk_rm_regulation
+DEFINE_LOCAL lwk_rm_party
+
 sub_wifi_random_match:
 {
   DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_friend_num
-  DEFINE_LOCAL  i_id_state
-
-  //Wi-Fi接続を開始しますか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_03 )
-  _YES_NO_WIN( i_ret )
-  _SYSWIN_CLOSE()
-
-  IF $i_ret == SCR_NO THEN
-    $reg_return = SEQ_GOODBYE
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+  
+  //フィールド通信切断
+  _CALL sub_wifi_counter_field_comm_exit_check
+  IF $reg_return != 0 THEN
     _RET
   ENDIF
+
+  _SYSWIN_MSG_DOWN( msg_rndmatch_01 )
+
+  $i_seq = SEQ_SUB_RNDMATCH_MENU
+  $i_loop = TRUE
+
+  WHILE $i_loop == TRUE
+    SWITCH  $i_seq
+    CASE SEQ_SUB_RNDMATCH_MENU THEN
+      _CALL sub_rndmatch_menu  //メニュー表示
+      $i_seq = $reg_return
+    
+    CASE SEQ_SUB_RNDMATCH_EXP THEN
+      _CALL sub_rndmatch_exp  //説明を聞く
+      $i_seq = $reg_return
+    
+    CASE SEQ_SUB_RNDMATCH_TRY_SELECT THEN
+      _CALL sub_rndmatch_try_select  //挑戦するコースを選ぶ
+      $i_seq = $reg_return
+ 
+    CASE SEQ_SUB_RNDMATCH_TRY_CHECK THEN
+      _CALL sub_rndmatch_try_check  //挑戦するか確認
+      $i_seq = $reg_return
+ 
+    CASE SEQ_SUB_RNDMATCH_TRY THEN
+      _CALL sub_rndmatch_try  //挑戦
+      $i_seq = $reg_return
+
+    CASE SEQ_SUB_RNDMATCH_RETURN THEN
+      //Wi-Fiカウンターをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_MAIN_MENU
+      $i_loop = FALSE
+    
+    CASE SEQ_SUB_RNDMATCH_EXIT THEN
+      $reg_return = SEQ_GOODBYE
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+}
+_RET
+
+//--------------------------------------------------------------
+//ランダムマッチ：メインメニュー表示
+//--------------------------------------------------------------
+sub_rndmatch_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+  //分岐・挑戦する/説明を聞く/やめる
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+	_BMPMENU_MAKE_LIST( msg_rndmatch_01_win01, SEQ_SUB_RNDMATCH_TRY_SELECT) //挑戦する
+	_BMPMENU_MAKE_LIST( msg_rndmatch_01_win02, SEQ_SUB_RNDMATCH_EXP )	      //説明を聞く
+	_BMPMENU_MAKE_LIST( msg_rndmatch_01_win03, SEQ_SUB_RNDMATCH_RETURN )    //もどる
+		
+	//メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_SUB_RNDMATCH_RETURN
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//ランダムマッチ：説明を聞く
+//--------------------------------------------------------------
+sub_rndmatch_exp:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+  DEFINE_LOCAL  i_msg
+
+  //どの説明を聞きますか
+  _SYSWIN_MSG_DOWN( msg_rndmatch_02 )
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    //分岐・預ける/探す/わかった
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_rndmatch_02_win01, 0 )   //ランダムマッチに就いて
+	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win02, 1 )   //レーティングモードについて
+	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win03, 2 )   //フリーモードについて
+	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win04, 3 )   //もどる
+		
+	  //メニュー表示
+  	_BMPMENU_START()
+
+    IF $i_ret < 3 THEN
+      $i_msg = msg_rndmatch_02_exp01
+      $i_msg += $i_ret
+      _SYSWIN_MSG_DOWN( i_msg )
+    ELSE
+      $i_loop = FALSE
+    ENDIF
+  ENDWHILE
+
+  //ランダムマッチに挑戦しますか？
+  _SYSWIN_MSG_DOWN( msg_rndmatch_01 )
+  $reg_return = SEQ_SUB_RNDMATCH_MENU
+}
+_RET
+
+//--------------------------------------------------------------
+//ランダムマッチ：挑戦するコースを選ぶ
+//--------------------------------------------------------------
+sub_rndmatch_try_select:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_msg
+
+  //どの対戦をしますか？
+  _SYSWIN_MSG_DOWN( msg_rndmatch_03 )
+
+  //分岐・シングル/ダブル/トリプル/ローテ/シューター/もどる
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  _BMPMENU_MAKE_LIST( msg_rndmatch_03_win01, 0 )   //シングル
+	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win02, 1 )   //ダブル
+	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win03, 2 )   //トリプル
+	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win04, 3 )   //ローテーション
+	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win05, 4 )   //シューター
+	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win06, 5 )   //もどる
+		
+  //メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret > 4 THEN
+    $reg_return = SEQ_SUB_RNDMATCH_RETURN
+    _RET
+  ENDIF
+  //レギュレーション保存
+  $lwk_rm_regulation = $i_ret
+  $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
+}
+_RET
+
+//--------------------------------------------------------------
+//ランダムマッチ：挑戦するコースを選ぶ
+//--------------------------------------------------------------
+sub_rndmatch_try_check:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_msg
+
+  //○○に挑戦しますか？
+  $i_msg = msg_rndmatch_04_01
+  $i_msg += $lwk_rm_regulation
+  _SYSWIN_MSG_DOWN( i_msg )
+
+  //分岐・決定/ルールを聞く/もどる
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+  _BMPMENU_MAKE_LIST( msg_rndmatch_04_win01, 0 )   //決定
+	_BMPMENU_MAKE_LIST( msg_rndmatch_04_win02, 1 )   //ルールを聞く
+	_BMPMENU_MAKE_LIST( msg_rndmatch_04_win03, 2 )   //戻る
+  
+  //メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret == 0 THEN
+    //決定
+    $reg_return = SEQ_SUB_RNDMATCH_TRY
+  ELSIF $i_ret == 1 THEN
+    //ルールを聞く
+    $i_msg = msg_rndmatch_04_exp01
+    $i_msg += $lwk_rm_regulation
+    _SYSWIN_MSG_DOWN( i_msg )
+    
+    $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
+  ELSE
+    $reg_return = SEQ_SUB_RNDMATCH_RETURN
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//ランダムマッチ：挑戦する
+//--------------------------------------------------------------
+sub_rndmatch_try:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_msg
+
+  //手持ちかバトルボックスか選んでください
+  _SYSWIN_MSG_DOWN( msg_rndmatch_05 )
+
+  //分岐・手持ち/バトルボックス/やめる
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  _BMPMENU_MAKE_LIST( msg_rndmatch_05_win01, 0 )   //手持ち
+	_BMPMENU_MAKE_LIST( msg_rndmatch_05_win02, 1 )   //バトルボックス
+	_BMPMENU_MAKE_LIST( msg_rndmatch_05_win03, 2 )   //やめる
+		
+  //メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret > 1 THEN
+    $reg_return = SEQ_SUB_RNDMATCH_RETURN
+    _RET
+  ENDIF
+  //パーティ選択保存
+  $lwk_rm_party = $i_ret
+  
+  //パーティメンバチェック
 
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
+
   // 書き込みに失敗
   IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_GOODBYE
+    $reg_return = SEQ_SUB_RNDMATCH_EXIT
     _RET
   ENDIF
- 
-  //フィールド通信切断
-  _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
+  
+  //入り口移動アニメ
+  _CALL sub_anm_wifi_counter_in
 
-  IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-    $reg_return = SEQ_RETRY
-    _RET
-  ENDIF
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+  
+  _WIFI_RANDOM_MATCH_EVENT_CALL()
+  
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 
-  //接続　それではご案内します
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _CALL sub_anm_wifi_counter_out
 
-  //引率アニメ再生
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
-  _OBJ_ANIME_WAIT()
-
-  //エレベータアニメ再生
-
-
-  //クラブイベント呼び出し
-  _BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
-  _WIFI_CLUB_EVENT_CALL()
-	_BLACK_IN( )
-	_DISP_FADE_END_CHECK()
-
-  $reg_return = SEQ_GOODBYE
+  $reg_return = SEQ_SUB_RNDMATCH_EXIT
 }
 _RET
+
+
+} //RANDOM_MATCH_END
 
 //==============================================================
 //サブルーチン：グローバルターミナル
@@ -321,6 +434,15 @@ sub_wifi_global_terminal:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
+  
+  //フィールド通信切断
+  _CALL sub_wifi_counter_field_comm_exit_check
+  IF $reg_return != 0 THEN
+    _RET
+  ENDIF
+
+  //グローバルターミナルをご利用ですか？
+  _SYSWIN_MSG_DOWN( msg_gterminal_01 )
 
   $i_seq = SEQ_SUB_GTERMINAL_MENU
   $i_loop = TRUE
@@ -346,12 +468,18 @@ sub_wifi_global_terminal:
     CASE SEQ_SUB_GTERMINAL_MUSICAL THEN
       _CALL sub_gterminal_musical  //ミュージカル
       $i_seq = $reg_return
- 
+
     CASE SEQ_SUB_GTERMINAL_RETURN THEN
+      //Wi-Fiカウンターをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_MAIN_MENU
+      $i_loop = FALSE
+    
+    CASE SEQ_SUB_GTERMINAL_EXIT THEN
+      $reg_return = SEQ_GOODBYE
       $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
-  $reg_return = SEQ_MAIN_MENU
 }
 _RET
 
@@ -409,15 +537,19 @@ sub_gterminal_gts:
     CASE SEQ_SUB_GTERMINAL_GTS_EXCHANGE THEN
       _CALL sub_gterminal_gts_exchange  //交換
       $i_seq = $reg_return
- 
+
     CASE SEQ_SUB_GTERMINAL_GTS_RETURN THEN
+      //Wi-Fiカウンターをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_SUB_GTERMINAL_MENU
+      $i_loop = FALSE
+    
+    CASE SEQ_SUB_GTERMINAL_GTS_EXIT THEN
+      $reg_return = SEQ_SUB_GTERMINAL_EXIT
       $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
 
-  //Wi-Fiカウンターをご利用ですか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
-  $reg_return = SEQ_SUB_GTERMINAL_MENU
 }
 _RET
 
@@ -490,6 +622,27 @@ _RET
 sub_gterminal_gts_exchange:
 {
   DEFINE_LOCAL  i_ret
+  
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_EXIT
+    _RET
+  ENDIF
+ 
+  //入り口移動アニメ
+  _CALL sub_anm_wifi_counter_in
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  
+  _WIFI_GTS_EVENT_CALL()
+  
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  _CALL sub_anm_wifi_counter_out
 
   //ポケモングローバル交換しますか？
   _SYSWIN_MSG_DOWN( msg_gterminal_gts_01 )
@@ -521,16 +674,20 @@ sub_gterminal_btl_video:
   	_BMPMENU_START()
 
     IF $i_ret == 0 THEN
+      $reg_param = SCRCMD_BTL_RECORDER_MODE_VIDEO
+      _CALL sub_gterminal_btl_recorder_call
+      IF $reg_return == SEQ_SUB_GTERMINAL_EXIT THEN
+        $i_loop = FALSE
+      ENDIF
     ELSIF $i_ret == 1 THEN
       _SYSWIN_MSG_DOWN( msg_gterminal_btlvideo_exp )  //説明
     ELSE
+      //Wi-Fiコネクションをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_SUB_GTERMINAL_MENU
       $i_loop = FALSE
     ENDIF
   ENDWHILE
-
-  //Wi-Fiコネクションをご利用ですか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
-  $reg_return = SEQ_SUB_GTERMINAL_MENU
 }
 _RET
 
@@ -558,15 +715,49 @@ sub_gterminal_musical:
   	_BMPMENU_START()
 
     IF $i_ret == 0 THEN
+      $reg_param = SCRCMD_BTL_RECORDER_MODE_MUSICAL
+      _CALL sub_gterminal_btl_recorder_call
+      IF $reg_return == SEQ_SUB_GTERMINAL_EXIT THEN
+        $i_loop = FALSE
+      ENDIF
     ELSIF $i_ret == 1 THEN
       _SYSWIN_MSG_DOWN( msg_gterminal_musical_exp )  //説明
     ELSE
+      //Wi-Fiコネクションをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_SUB_GTERMINAL_MENU
       $i_loop = FALSE
     ENDIF
   ENDWHILE
+}
+_RET
 
-  //Wi-Fiコネクションをご利用ですか？
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+//--------------------------------------------------------------
+//グローバルターミナル：バトルビデオ・ミュージカルショット　呼び出し
+//--------------------------------------------------------------
+sub_gterminal_btl_recorder_call:
+{
+  DEFINE_LOCAL  i_ret
+
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_GTERMINAL_EXIT
+    _RET
+  ENDIF
+
+  _CALL sub_anm_wifi_counter_in
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+  _WIFI_BATTLE_RECORDER_EVENT_CALL( 0 )
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  _CALL sub_anm_wifi_counter_out
   $reg_return = SEQ_SUB_GTERMINAL_MENU
 }
 _RET
@@ -577,8 +768,26 @@ _RET
 sub_wifi_geo_net:
 {
   DEFINE_LOCAL  i_ret
+  
+  //フィールド通信切断
+  _CALL sub_wifi_counter_field_comm_exit_check
+  IF $reg_return != 0 THEN
+    _RET
+  ENDIF
 
-  $reg_return = SEQ_GOODBYE
+  
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _SYSWIN_CLOSE()
+  _FIELD_CLOSE()
+  
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  //Wi-Fiコネクションをご利用ですか？
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+  $reg_return = SEQ_MAIN_MENU
 }
 _RET
 
@@ -595,6 +804,35 @@ sub_wifi_counter_goodbye:
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 _RET
+
+//===================================================================================
+/////////////////////////////////////////////////////////////////////////////////////
+//アニメデータ
+/////////////////////////////////////////////////////////////////////////////////////
+//===================================================================================
+//==============================================================
+//部屋へ誘導
+//==============================================================
+sub_anm_wifi_counter_in:
+{
+  _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
+  _SYSWIN_CLOSE()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//==============================================================
+//部屋からでてくる
+//==============================================================
+sub_anm_wifi_counter_out:
+{
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
+}
+_RET
+
 
 //--------------------------------------------------------------------
 //通信部屋へ誘導

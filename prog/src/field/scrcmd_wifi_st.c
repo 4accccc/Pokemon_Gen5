@@ -86,7 +86,7 @@ VMCMD_RESULT EvCmdWifiBattleRecorderEventCall( VMHANDLE* core, void* wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  u8 mode = VMGetU8( core );
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
 
   /*
   SCRIPT_CallEvent( sc, EVENT_WiFiClub( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
