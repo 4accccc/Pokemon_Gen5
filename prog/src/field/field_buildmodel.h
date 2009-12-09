@@ -102,6 +102,7 @@ typedef enum {
 //============================================================================================
 //------------------------------------------------------------------
 /// プログラム指定ID
+//コンバータから参照されているので記述ルールには注意。
 //------------------------------------------------------------------
 typedef enum {
   BM_PROG_ID_NONE = 0,
@@ -112,10 +113,14 @@ typedef enum {
   BM_PROG_ID_PCELEVATOR,
   BM_PROG_ID_PCMACHINE,
   BM_PROG_ID_PC,
+  BM_PROG_ID_PCEV_DOOR,
+  BM_PROG_ID_PCEV_FLOOR,
 
   BM_PROG_ID_MAX,
 }BM_PROG_ID;
 //------------------------------------------------------------------
+/// 検索用指定ID
+//スクリプトのSCR_BMID_と一対一対応なので注意
 //------------------------------------------------------------------
 typedef enum {
   BM_SEARCH_ID_NULL = 0,
@@ -123,6 +128,8 @@ typedef enum {
   BM_SEARCH_ID_SANDSTREAM,
   BM_SEARCH_ID_PCMACHINE,
   BM_SEARCH_ID_PC,
+  BM_SEARCH_ID_PCEV_DOOR,
+  BM_SEARCH_ID_PCEV_FLOOR,
 
   BM_SEARCH_ID_MAX,
 }BM_SEARCH_ID;

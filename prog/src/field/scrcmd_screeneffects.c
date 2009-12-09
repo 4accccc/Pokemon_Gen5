@@ -338,7 +338,7 @@ VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  entry = BMANIME_DIRECT_SearchDoor( bmodel_man, &pos );
+  entry = BMANIME_DIRECT_Search( bmodel_man, BM_SEARCH_ID_DOOR, &pos );
   G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
   G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
 
@@ -430,7 +430,7 @@ VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  ctrl = BMANIME_CTRL_Create( bmodel_man, &pos );
+  ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &pos );
 
   reserveKey( ctrl, DOOR_ANIME_KEY_01 );
 

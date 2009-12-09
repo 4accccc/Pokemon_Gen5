@@ -95,7 +95,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_START:
-    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, &fdaw->pos );
+    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
     if (fdaw->ctrl)
     {
       u16 seNo;
@@ -230,7 +230,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
   switch (*seq)
   { 
   case SEQ_DOORIN_OPENANIME_START:
-    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, &fdaw->pos );
+    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
     if (fdaw->ctrl)
     {
       u16 seNo;

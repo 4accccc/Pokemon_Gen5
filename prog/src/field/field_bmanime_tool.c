@@ -67,41 +67,30 @@ static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
 
 //------------------------------------------------------------------
 /**
- * @brief 指定位置付近のドア配置モデルを検索する
- * @param bmodel_man
- * @param pos
+ * @brief 指定位置付近の配置モデルを検索する
+ * @param bmodel_man  配置モデルマネジャーへのポインタ
+ * @param id          検索ID（BM_SEARCH_ID参照）
+ * @param pos         検索位置
  * @return NULL   見つからなかった
  * @return G3DMAPOBJST *  見つけたドア配置モデルへの参照
  */
 //------------------------------------------------------------------
-G3DMAPOBJST * BMANIME_DIRECT_SearchDoor(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos)
+G3DMAPOBJST * BMANIME_DIRECT_Search(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos)
 {
   G3DMAPOBJST * entry = NULL;
   G3DMAPOBJST ** array;
   u32 result_num;
 
+  GF_ASSERT( id < BM_SEARCH_ID_MAX );
   {
     //検索矩形を作成
     FLDHIT_RECT rect;
     makeRect(&rect, pos);
     //矩形範囲内の配置モデルリストを生成する
-    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, &rect, BM_SEARCH_ID_DOOR, &result_num);
+    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, &rect, id, &result_num);
   }
   entry = array[0];
-#if 0
-  {
-    int i;
-    for (i = 0; i < result_num; i++)
-    {
-      if (FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(bmodel_man, array[i]) == TRUE)
-      {
-        //取得した配置モデルリストから、ドアであるかチェック
-        entry = array[i];
-        break;
-      }
-    }
-  }
-#endif
   //矩形範囲内の配置モデルリストを解放する
   GFL_HEAP_FreeMemory(array);
   return entry;
@@ -109,13 +98,14 @@ G3DMAPOBJST * BMANIME_DIRECT_SearchDoor(FIELD_BMODEL_MAN * bmodel_man, const Vec
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos)
+BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos)
 {
   BMANIME_CONTROL_WORK * ctrl;
   G3DMAPOBJST * obj;
   FIELD_BMODEL * entry;
 
-  obj = BMANIME_DIRECT_SearchDoor(bmodel_man, pos);
+  obj = BMANIME_DIRECT_Search(bmodel_man, id, pos);
   if (obj == NULL) return NULL;
   entry = FIELD_BMODEL_Create( bmodel_man, obj );
   if (entry == NULL) return NULL;
