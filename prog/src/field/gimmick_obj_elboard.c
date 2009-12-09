@@ -19,6 +19,7 @@
 //==================================================================================
 // ■定数
 //==================================================================================
+#define WRITE_POS_Y  (1)  // 文字列書き込み先y座標
 #define CHAR_WIDTH  (13)  // 文字幅[dot]
 #define CHAR_HEIGHT (16)  // 文字高さ[dot]
 #define MARGIN_SIZE  (1)  // 文字間スペース幅
@@ -401,9 +402,9 @@ static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, const NEWS_PARAM* param, int ind
     rnd = GFL_G3D_OBJECT_GetG3Drnd( elboard->g3dObj );
     res = GFL_G3D_RENDER_GetG3DresTex( rnd );
     // 描画
-    news->tex = ELBOARD_TEX_Add_Ex(
-        res, param->texName, param->pltName, strbuf,
-        (CHAR_WIDTH + MARGIN_SIZE) * elboard->dispSize, 2, elboard->heapID );
+    news->tex = ELBOARD_TEX_Add_Ex( res, param->texName, param->pltName, strbuf,
+                                    (CHAR_WIDTH + MARGIN_SIZE) * elboard->dispSize, 
+                                    WRITE_POS_Y, elboard->heapID );
     // 後始末
     GFL_HEAP_FreeMemory( strbuf );
     GFL_MSG_Delete( msg );

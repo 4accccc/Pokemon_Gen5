@@ -28,6 +28,7 @@
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "msg/msg_gate.h"
 #include "field/zonedata.h"
+#include "field/enc_pokeset.h"  // for ENCPOKE_GetGenerateZone
 
 #include "field_task_manager.h"
 #include "field_task.h"
@@ -301,7 +302,8 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap );
 static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap );
 static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data );
 static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
-static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
+static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data, 
+                                 const GAMEDATA* gdata );
 static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
@@ -453,11 +455,11 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
   }
 
   // ニュースを追加
-  AddNews_DATE( work->elboard, &elboard_data );         // 日付
-  AddNews_WEATHER( work->elboard, &elboard_data );      // 天気
-  AddNews_PROPAGATION( work->elboard, &elboard_data );  // 大量発生
-  AddNews_INFO( work->elboard, &elboard_data );         // 地域情報
-  AddNews_CM( work->elboard, &elboard_data );           // 一言CM
+  AddNews_DATE( work->elboard, &elboard_data );                // 日付
+  AddNews_WEATHER( work->elboard, &elboard_data );             // 天気
+  AddNews_PROPAGATION( work->elboard, &elboard_data, gdata );  // 大量発生
+  AddNews_INFO( work->elboard, &elboard_data );                // 地域情報
+  AddNews_CM( work->elboard, &elboard_data );                  // 一言CM
 }
 
 //------------------------------------------------------------------------------------------
@@ -966,12 +968,40 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
  *
  * @param elboard 追加する掲示板
  * @param data    電光掲示板データ
+ * @param gdata   ゲームデータ
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data, 
+                                 const GAMEDATA* gdata )
 {
   HEAPID heap_id; 
   NEWS_PARAM news;
+  WORDSET* wordset;
+  u16 zone_id;
+
+  // 大量発生が起きているゾーンを取得
+  zone_id = ENCPOKE_GetGenerateZone( gdata ); 
+  // 大量発生が起きていない
+  if( zone_id == 0xFFFF ){ return; }
+
+  // ワードセット作成
+  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
+  wordset = WORDSET_Create( heap_id );
+
+  // ワードセットに地名をセット
+  {
+    GFL_MSGDATA* msg_place_name;
+    int str_id;
+    STRBUF* zone_name;
+
+    msg_place_name = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+                                     ARCID_MESSAGE, NARC_message_place_name_dat, heap_id ); 
+    str_id         = ZONEDATA_GetPlaceNameID( zone_id );
+    zone_name      = GFL_MSG_CreateString( msg_place_name, str_id );
+    WORDSET_RegisterWord( wordset, 0, zone_name, 0, TRUE, 0 );
+    GFL_STR_DeleteBuffer( zone_name );
+    GFL_MSG_Delete( msg_place_name );
+  }
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_PROPAGATION];
@@ -980,10 +1010,13 @@ static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA*
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_propagation;
-  news.wordset    = NULL;
+  news.wordset    = wordset;
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
+
+  // ワードセット破棄
+  WORDSET_Delete( wordset );
 }
 
 //------------------------------------------------------------------------------------------
