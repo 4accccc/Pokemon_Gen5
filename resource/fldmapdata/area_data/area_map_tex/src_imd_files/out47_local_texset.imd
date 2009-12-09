@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-12-08T21:47:13"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-09T16:44:10"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -3554,15 +3554,15 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_green_pl"
-		path="C:/home/wb_data3d/field/out24/map/tex/c3_green.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/c3_green.tga"
 	>
 		<bitmap size="128">
-			8888 9998 9999 9999 8889 9988 9999 8888
-			88aa 8898 9998 8889 9aaa a889 9aaa 8899
-			99aa 8888 aaaa 9988 9668 9888 aaa9 977a
-			9666 9999 8899 8778 8866 9999 9999 7779
-			6876 7798 8999 7788 6777 7776 8888 7778
-			6776 8766 7888 6777 6766 7766 7777 6677
+			9999 9999 9999 9999 aa98 9999 aaa9 8999
+			aa98 999a aaaa 8999 a988 999a 9aaa 8899
+			6667 9999 99aa 8899 7666 9999 888a 8888
+			8666 8aa8 6667 8877 8866 8aaa 6678 8776
+			8876 aaaa 6688 8766 7777 aaaa 6778 7766
+			7776 aaa7 7877 6766 7766 a777 7777 6677
 			6666 7776 6777 6666 6665 6666 6666 5666
 			6655 6666 6666 5566 5555 6665 5666 5555
 			5553 5555 5555 3555 5532 5555 5555 2355
@@ -4936,137 +4936,137 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_road1_pl"
-		path="C:/home/wb_data3d/field/out24/map/tex/c3_road1.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/c3_road1.tga"
 	>
 		<bitmap size="1024">
-			9999 b999 bbbd 0bbb bbbd bbbb bbbb bbbb
-			aaa2 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
-			bb99 55bb 55bd 5555 bbbd bbbb bbbb 55bb
-			8ba2 8888 8888 8888 8888 aaaa aaaa 58aa
-			bb99 5bbb 55bd 5555 bbbd bbbb bbbb 55bb
-			85ad 8888 8888 8888 8888 bbbb bbbb 5bbb
-			bb99 bbbb 55bd 5555 bbbd bbbb bbbb 5bbb
-			8bad 8888 8888 8888 8888 bbbb bbbb 5bbb
-			bb99 bb3b 55bd 5555 bbbd 3bbb b33b 5b33
-			bbad bbbb 88bb 8888 bbb8 bbbb bbbb 5bbb
-			bb99 bbbb 55bd 5555 bbbd b77b bbbb 5bbb
-			bbad bbbb 88bb aaa8 bb8a bbbb bbbb 5abb
-			bb99 bbbb 55bd 5555 bbbd b77b bbbb 5bbb
-			bbad bbbb 88bb aaa8 aaaa bbbb bbbb 5abb
-			bb99 7bbb dd5d dddd bbb1 bbbb bbbb 5bbb
-			bbad aabb aaaa aa88 aaaa dbbb bbbb 5bbb
-			bb99 7bbb bbbd bbbb bbbd bbbb bbbb 5bbb
-			bbad aaaa aaaa aa8a aaaa baaa bbbb 5bbb
-			5599 bbbb bbbd bbbb 55bd bbbb bbbb 5bbb
-			bbad aaaa aaaa aaaa bbaa aaaa bbba 5bbb
-			5599 bbbb b5bd bbbb 55bd bbbb bbbb 577b
-			abad baaa aabb aaaa aaaa aaaa 88ba 5558
-			bb99 bbbb bbbd 3bbb bbbd bbbb bbbb 577b
-			abad baaa abaa aaaa aaaa aaaa 88ba 5558
-			bb99 bbbb bbbd 3bbb bbbd bbbb bbbb 5bbb
-			abad baaa aaaa aaaa aaab aaaa 88aa 5aa8
-			bb99 5bbb bbbd bbbb bbbd bbbb bbbb 5bbb
-			aba2 aaaa aaaa aaba aaaa aaaa aaaa 5aaa
-			bbb9 bbbb 5b5d bb55 5552 5555 5555 5555
-			aba2 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			ddd9 dddd dddd 2ddd d222 dddd dddd 2ddd
-			aba2 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			bbb9 bbbb bbbb bbbb bbb2 5bbb bbb2 5bbb
-			aba2 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			77b9 7777 7777 5577 bbb2 5bbb bbbd 55bb
-			abad aaaa baaa aaaa aaaa aaaa bbaa 55bb
-			77b9 7777 7777 5577 b5bd 5bbb bbb5 55bb
-			abad aaaa aaaa aaaa aaaa aaaa baaa 5bb8
-			bbb9 bbbb bbbb 577b bbbd 5bbb bbb5 5bb7
-			abad aaaa aaaa aaaa aaaa aaaa aaaa 5bab
-			bbb9 3bbb b33b 5733 bbbd 5bbb bbb5 5b3b
-			abad aaaa aaaa aaaa aaaa aaaa aaaa 5bbb
-			bbb9 b77b bbbb 5bbb bbbd 5bbb bbbd 5bbb
-			bbad aaaa aaaa abbb aaaa aaaa aaaa 5bba
-			bbb9 b77b bbbb 5bbb 5b5d bb55 bbbd 5bbb
-			bbad aaaa aaaa a888 abaa aaaa aaaa 5bba
-			bbb9 bbbb bbbb 5bbb ddd2 dddd bbb1 5bbb
-			bbad aabb aaaa abbb aaaa aaaa aaaa 5bba
-			bbb9 bbbb bbbb 5bbb bbbd 5bbb bbbd 5bbb
-			bbad aaaa baaa a9bb aaaa aaaa aaaa 5bba
-			55b9 bbbb bbbb 5bbb bbbd 5bbb 55bd 5bbb
-			bbad baaa baaa a9bb aaaa aaaa aaaa 5bbb
-			55b9 bbbb bbbb 5bbb b5bd 5bbb 55bd 577b
-			bbad bbbb aaaa abbb baaa aabb aaaa 588b
-			bbb9 bbbb bbbb 5bbb bbbd 5bbb bbbd 577b
-			bbad aaab aaaa aaaa aaaa aaaa aaaa 588b
-			bbb9 bbbb bbbb 5bbb bbbd 5bbb bbb5 5bbb
-			bbad aaab aaaa aaaa aaaa aaaa aaaa 5bbb
-			bbb9 bbbb bbbb 5bbb bbbd 5bbb bbbd 5bbb
-			bba2 bbbb bbbb bbbb bbbb bbbb bbbb 5bbb
-			55b9 5555 5555 5555 555d 5555 555d 5555
-			5552 5555 5555 5555 5555 5555 5555 5555
-			ddd9 dddd dddd dddd dd5d dddd dddd 2ddd
-			ddd2 dddd dd22 dddd 2222 2222 2222 2222
-			aaa9 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			5552 5555 bbbd bbbb ccbd cccc cccc 5bcc
-			4ba9 4444 4444 4444 4444 aaaa aaaa 54aa
-			555d 5555 bbbd 55bb bbbd bbbb bbbb 55bb
-			45a9 4444 4444 4444 4444 bbbb bbbb 5bbb
-			555d 5555 bbbd 5bbb bbb5 bbbb bbbb 55bb
-			4ba9 4444 4444 4444 4444 bbbb bbbb 5bbb
-			555d 5555 bbbd 5bbb bbb5 bbbb bbbb 5bbb
-			bba9 bbbb bbbb bb6b bbbb bbbb bbbb 5bbb
-			555d 5555 bbbd 5b3b bbb5 3bbb b33b 5b33
-			bba9 bbbb bbbb bbbb bbbb bbbb bbbb 5abb
-			555d 5555 bbbd 5bbb bbbd b77b bbbb 5bbb
-			baa9 bbbb bbbb bbbb bbbb bbbb bbbb 5abb
-			555d 5555 bbbd 5bbb bbbd b77b bbbb 5bbb
-			baa9 bbbb bbbb bbbb bbbb dbbb bbbb 5bbb
-			dd52 dddd bbbd 5bbb bbb1 bbbb bbbb 5bbb
-			baa9 bbbb bbbb bbbb bbbb bbbb bbbb 5bbb
-			bbb2 bbbb bbbd 5bbb bbbd bbbb bbbb 5bbb
-			baa9 bbbb bbbb bbbb bbbb bbbb bbbb 5bbb
-			bb9d 99bb 55bd 5bbb 55bd bbbb bbbb 5bbb
-			baa9 bbbb bbbb bbbb bbbb bbbb 44bb 5554
-			b5bd 99bb 55bd 5bbb 55bd bbbb bbbb 577b
-			baa9 bbbb bbbb bbbb bbbb bbbb 44bb 5554
-			bbbd 3bbb bbbd 5bbb bbbd bbbb bbbb 577b
-			aaa9 bbaa bbbb abba bbbb bbbb 44aa 5aa4
-			bbbd 3bbb bbbd 5bbb bbbd bbbb bbbb 5bbb
-			aaa9 aaaa bbaa aabb bbba abab aaaa 5aaa
-			bbbd bbbb bbbd 5bbb bbbd bbbb bbbb 5bbb
-			aaa9 aaaa aaaa aaaa baaa aabb aaaa 5aaa
-			5b5d bb55 555d 5555 55bd 5555 5555 5555
-			aaa9 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			dddd dddd dddd dddd dddd 2ddd dd22 2ddd
-			aaa9 aaaa aaaa aaaa aaaa aaaa aaaa 5aaa
-			bbbd bbbb bbbb bbbb bbbd bbbb bbbd 5bbb
-			aaa9 aaaa baaa abbb aaaa aaaa bbaa 55bb
-			77bd 7777 7777 5577 bbbd 55bb bbbd 5bbb
-			aaa9 aaaa 3aaa ab33 aaaa aaaa baaa 5bb7
-			77bd 7777 7777 5577 bbbd 55bb b5bd 5bbb
-			aaa9 aaaa 3aaa ab39 aaaa aaaa aaaa 5b3b
-			bbbd bbbb bbbb b77b bbbd bbb7 bbbd 5bbb
-			aaa9 aaaa 3aaa ab33 aaaa aaaa aaaa 5bbb
-			bbbd 3bbb b33b b733 bbbd bb3b bbbd 5bbb
-			aaa9 aaaa baaa abbb aaaa aaaa aaaa 5bba
-			bbbd b77b bbbb bbbb bbbd bbbb bbbd 5bbb
-			aaa9 aaaa baaa a777 abaa aaaa aaaa 5bba
-			bbb2 b77b bbbb bbbb bbbd bbbb 5b5d 5b55
-			aaa9 aaaa baaa abbb aaaa aaaa aaaa 5bba
-			bbb2 bbbb bbbb 7bbb bbb2 7bbb ddd2 dddd
-			aaa9 aaaa baaa a9bb aaaa aaaa aaaa 5bba
-			bbbd bbbb bbbb 7bbb bbb2 7bbb ddd2 dddd
-			aaa9 baaa baaa a9bb aaaa aaaa aaaa 5bbb
-			55bd bbbb bbbb bbbb 55bd bbbb dddd dddd
-			aaa9 bbba aaaa abbb baaa aabb aaaa 577b
-			55bd bbbb bbbb bbbb 55bd b77b dddd dddd
-			3ba9 aa33 aaaa aaaa aaaa aaaa aaaa 577b
-			bbbd bbbb bbbb bbbb bbbd b77b dddd dddd
-			3ba9 aa39 aaaa aaaa aaaa aaaa aaaa 5bbb
-			bbbd bbbb bbbb bbbb bbbd bbbb dddd dddd
-			3ba9 aa33 aaaa aaaa aaaa aaaa aaaa 5bbb
-			bbbd bbbb bbbb 5bbb bbbd 5bbb dddd dddd
-			5559 5555 5555 5555 5555 5555 5555 5555
-			555d 5555 5555 5555 5552 5555 dddd dddd
-			ddd9 dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd 2ddd dd22 dddd dd5d 22dd
+			4444 4444 4444 4444 4444 4444 4444 1444
+			4440 4444 4444 4444 4444 4444 4444 0144
+			7774 4777 1111 1111 7771 7777 7777 1477
+			7740 7777 7777 7777 7777 7777 7777 0146
+			6674 4666 5551 5555 6671 6666 6666 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 4666 5551 5555 6671 6666 6666 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 4646 5551 5555 6671 6666 6666 1466
+			6740 6666 6666 6666 4446 6444 6666 0146
+			6674 4666 5551 5555 6671 6446 6666 1466
+			6740 6666 6666 6666 4446 6444 6666 0146
+			6674 4666 5551 5555 6671 6446 6666 1466
+			6740 6666 6666 6666 4446 6444 6666 0146
+			6674 4666 1101 1111 6671 6666 6666 1466
+			6740 6666 6666 6666 4446 6444 6666 0146
+			6674 4666 6661 4666 6671 6666 6666 1466
+			6740 6666 6666 6666 4446 6644 6666 0146
+			4474 4666 6661 4666 6671 6666 6666 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			4474 4666 6661 4666 6671 6666 6666 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 4666 6661 4666 6671 6666 6666 1466
+			6740 6666 6444 6666 6666 6666 6666 0146
+			6674 4666 6661 4666 6671 6666 6666 1466
+			6740 6666 6444 6666 6666 6666 6666 0146
+			6674 4666 6661 4666 6671 6666 6666 1446
+			6740 6666 6444 6666 6666 6666 6666 0146
+			4444 4444 4441 4444 4141 4444 4444 1444
+			6740 6666 6666 6666 6666 6666 6666 0146
+			1114 1111 1111 1111 1111 1111 1111 1111
+			6740 6666 6666 6666 6666 6666 6666 0146
+			7774 7777 7777 4777 7771 4777 7771 1477
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 4466 4644 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 4466 4644 6671 1666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 4466 4644 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 4466 4644 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 6666 4666 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 6666 4666 4471 4444 6671 1466
+			6740 6666 6666 6444 6666 6666 6666 0146
+			6674 6666 6666 4666 1111 1111 6671 1466
+			6740 6666 6666 6444 6666 6666 6666 0146
+			6674 6666 6666 4666 7771 7777 6671 1166
+			6740 6666 6666 6444 6666 6666 6666 0146
+			6674 6446 6666 4666 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6446 6666 4666 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 6666 4666 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			6674 6666 6666 4666 6671 4666 6671 1466
+			6740 6666 6666 6666 6666 6666 6666 0146
+			4444 4444 4444 4444 4471 4444 4441 1444
+			4440 4444 4444 4444 4444 4444 4444 0144
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1110 1111 1111 1111 1111 1111 1111 0111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			4444 4444 4444 4444 4444 4444 4444 1444
+			2220 0222 7771 4677 7771 7777 7777 0147
+			7774 7777 7777 7777 7777 7777 7777 1467
+			2220 0222 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			2220 0222 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			2220 0222 6671 4666 4671 6644 6666 0146
+			6674 4466 6644 6666 6666 6666 6666 1466
+			2220 0222 6671 4666 4671 6644 6666 0146
+			6674 4466 6644 6666 6666 6666 6666 1466
+			2220 0222 6671 4666 4671 6644 6666 0146
+			6674 4466 6644 6666 6666 6666 6666 1466
+			0000 0000 6671 4666 6671 6666 6666 0146
+			6674 4466 6644 6666 6666 6666 6666 1466
+			1110 1111 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			7770 4677 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 4666 6671 4666 6671 6666 6644 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 4666 6671 4666 6671 6666 6644 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 4666 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 4666 6671 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 4444 6666 1466
+			6660 4666 6661 4666 6671 6666 6666 0146
+			6674 6666 6666 6666 6666 4444 6666 1466
+			4440 4444 4441 4444 4441 4444 4444 0144
+			6674 6666 6666 6666 6666 4444 6666 1466
+			1110 1111 1111 1111 1111 1111 1111 0111
+			6674 6666 6666 6666 6666 4444 6666 1466
+			7770 7777 7777 4467 7771 4677 7771 0147
+			6674 6666 6666 6666 6666 4444 6666 1466
+			6670 6666 6666 4466 6671 4666 6671 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 6666 6666 4466 6671 4666 6471 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 6666 6666 4466 6671 4666 6671 0146
+			6674 6666 6666 6666 6666 6666 6666 1466
+			6670 6666 6666 4466 6671 4666 6671 0146
+			6674 6666 6666 6666 6666 4466 4444 1464
+			6670 6446 6666 4466 6671 4666 6671 0146
+			6674 4666 6664 6666 6666 4466 4444 1464
+			6670 6446 6666 4466 6671 4666 4441 0144
+			6674 4666 6644 6666 6666 4466 4444 1464
+			6670 6666 6666 4466 6671 4666 1111 0111
+			6674 4666 6644 6666 6666 4466 4444 1464
+			6670 6666 6666 4466 6671 4666 3331 0133
+			6674 6666 6666 6666 6666 4466 4444 1464
+			6670 6666 6666 4466 4471 4666 3331 0133
+			6674 6666 6666 6666 6666 4466 4444 1464
+			6670 6666 6666 4466 4471 4666 3331 0133
+			6674 6666 6666 6666 6666 4466 4444 1464
+			6670 6666 6666 4466 6671 4666 3331 0133
+			6664 6666 6666 6666 6666 6666 6666 1466
+			6660 6666 6666 4466 6661 4666 3331 0133
+			4444 4444 4444 4444 4444 4444 4444 1444
+			4440 4444 4444 4444 4441 4444 3331 0133
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1110 1111 1111 1111 1111 1111 1111 0111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="70" name="c3_road2"
@@ -5074,7 +5074,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_road2_pl"
-		path="C:/home/wb_data3d/field/out24/map/tex/c3_road2.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/c3_road2.tga"
 	>
 		<bitmap size="128">
 			5554 1555 5555 0555 a951 1a56 a569 115a
@@ -5694,41 +5694,41 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3bay_yuka1_pl"
-		path="C:/home/wb_data3d/field/out24/map/tex/c3bay_yuka1.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/c3bay_yuka1.tga"
 	>
 		<bitmap size="256">
-			1100 2222 2222 2222 2222 3222 0133 0000
-			1100 2222 2222 2000 2222 3222 0133 0000
-			1000 2222 2222 2000 2332 3222 0133 0000
-			1000 2221 2222 1000 1331 2211 1122 0000
-			1000 2221 2222 1222 1221 2211 1133 0110
-			0000 3321 2222 2222 2222 2211 1133 0110
-			0000 1321 2211 2222 2222 2222 0002 0011
-			1000 1221 2211 2222 2222 2222 0002 0011
-			1000 1221 2211 1222 3332 2222 0002 0011
-			1000 2222 2222 2222 3332 2222 1222 0001
-			1000 2222 2222 2222 3332 2222 1122 0001
-			2100 2222 2222 2222 2222 2222 1122 0001
-			2100 2222 2112 2222 0002 2222 1121 0001
-			2100 2222 2112 2222 0001 2222 1121 0000
-			2100 2222 2222 3332 0001 2222 1111 1000
-			2100 2222 2222 3332 2111 2222 1112 0000
-			2100 2222 2333 3332 2222 2222 1112 0000
-			1100 1222 2311 2222 2222 2211 1222 0000
-			1100 1222 2311 2222 2222 2211 1222 0001
-			1000 1221 2211 3322 2223 2222 1222 0001
-			1000 2221 2222 3322 2213 2222 1222 0001
-			1000 2221 2222 3322 2213 2222 1122 0001
-			1000 2221 2222 1222 2211 2222 1122 0001
-			1000 2233 2222 2222 2222 3332 1122 0011
-			1000 2233 1112 2222 2222 3332 1122 0011
-			1100 2222 1112 2222 2222 2222 1122 0011
-			1100 2222 1112 2333 2222 2222 3322 0011
-			2100 2222 3222 2333 2222 2222 3000 0011
-			3100 2223 3222 2333 3222 2233 1000 0001
-			3100 2223 1122 2331 3222 2233 1000 0001
-			1000 2223 1122 2221 3222 2233 1122 0001
-			1000 2222 2222 2222 2222 2222 1122 0001
+			2000 7531 ffde ffff ffff cfff 6ecc 4866
+			2000 7531 ffde f666 ffff cfff 6ecc 4866
+			2000 7531 ffde f666 fccf cfff 6ecc 4866
+			2000 7531 ffde e666 ecce ffee eeff 4866
+			2000 7531 ffde efff effe ffee eecc 4ee6
+			0000 7831 ffde ffff ffff ffee eecc 4ee6
+			0000 7831 ffab ffff ffff ffff 666f 48ee
+			2000 7531 ffab ffff ffff ffff 666f 48ee
+			2000 7531 ffab efff cccf ffff 666f 48ee
+			2000 7531 ffde ffff cccf ffff efff 486e
+			2000 7531 ffde ffff cccf ffff eeff 486e
+			2000 7531 ffde ffff ffff ffff eeff 486e
+			2000 7531 feae ffff 666f ffff eefe 486e
+			2000 7531 feae ffff 666e ffff eefe 4866
+			2000 7531 ffde cccf 666e ffff eeee e866
+			2000 7531 ffde cccf feee ffff eeef 4866
+			2000 7531 fc9f cccf ffff ffff eeef 4866
+			2000 7531 fcab ffff ffff ffee efff 4866
+			2000 7531 fcab ffff ffff ffee efff 486e
+			2000 7531 ffab ccff fffc ffff efff 486e
+			2000 7531 ffde ccff ffec ffff efff 486e
+			2000 7531 ffde ccff ffec ffff eeff 486e
+			2000 7531 ffde efff ffee ffff eeff 486e
+			2000 7531 ffde ffff ffff cccf eeff 48ee
+			2000 7531 eeae ffff ffff cccf eeff 48ee
+			2000 7531 eeae ffff ffff ffff eeff 48ee
+			2000 7531 eeae fccc ffff ffff ccff 48ee
+			2000 7531 cfde fccc ffff ffff c666 48ee
+			2000 7531 cfde fccc cfff ffcc e666 486e
+			2000 7531 eede fcce cfff ffcc e666 486e
+			2000 7531 eede fffe cfff ffcc eeff 486e
+			2000 7531 ffde ffff ffff ffff eeff 486e
 		</bitmap>
 	</tex_image>
 	<tex_image index="81" name="c3bay_yuka2"
@@ -7670,9 +7670,8 @@
 	<tex_palette index="77" name="c3_ramp_pl" color_size="8">
 		0c42 0c62 1ca2 28e3 3146 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="78" name="c3_road1_pl" color_size="16">
-		4e55 39ad 2d69 4a50 420f 3dee 4e72 3e0e
-		3e10 4e73 4631 4210 3def 35ad 7fff 7fff
+	<tex_palette index="78" name="c3_road1_pl" color_size="8">
+		4630 4a52 4e72 4e92 5294 5693 56b5 5ad6
 	</tex_palette>
 	<tex_palette index="79" name="c3_road2_pl" color_size="4">
 		5ef7 6318 6739 7fff
@@ -7745,8 +7744,9 @@
 	<tex_palette index="89" name="c3_yuka2_pl" color_size="4">
 		5ef7 5ad6 56b5 5294
 	</tex_palette>
-	<tex_palette index="90" name="c3bay_yuka1_pl" color_size="8">
-		358c 39ad 3dce 41ef 7fff 7fff 7fff 7fff
+	<tex_palette index="90" name="c3bay_yuka1_pl" color_size="16">
+		2929 2d4a 2929 2d4a 316b 316b 358c 358c
+		316b 41ce 39ad 358c 41ef 3dce 39ad 3dce
 	</tex_palette>
 	<tex_palette index="91" name="c3bay_yuka2_pl" color_size="8">
 		52b4 4a73 52b5 4e94 56d6 56b5 4632 4a73
