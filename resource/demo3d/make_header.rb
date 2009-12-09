@@ -46,10 +46,10 @@ def print_setup(file,dir,cnt)
 end
 
 #animeテーブル書き出し
-def print_anime(file,cnt,anm_cnt)
+def print_anime(file,dir,cnt,anm_cnt)
     file.puts("//ANM");
     
-    file.puts "static const GFL_G3D_UTIL_ANM anm_table_unit" + sprintf("%02d",cnt) + "[] = {";
+    file.puts "static const GFL_G3D_UTIL_ANM anm_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {";
     
     for k in 1..anm_cnt
         file.puts "\t{ " + k.to_s + ", 0 },"
@@ -68,7 +68,7 @@ def print_obj(file,dir,cnt,is_anm_tbl)
     file.puts "\t{"
     file.puts "\t\t0, 0, 0, // MdlResID, MdlDataID, TexResID"
     if is_anm_tbl == true
-      file.puts "\t\tanm_table_unit" + str_unit_num + ", NELEMS(anm_table_unit" + str_unit_num + "), // AnmTbl, AnmTblNum"
+      file.puts "\t\tanm_" + dir + "_unit" + str_unit_num + ", NELEMS(anm_" + dir + "_unit" + str_unit_num + "), // AnmTbl, AnmTblNum"
     else
       file.puts "\t\tNULL, 0, // AnmTbl, AnmTblNum"
     end
@@ -142,7 +142,7 @@ def print_scene(file, dir)
         print_obj(file,dir,cnt,false);
       else
         #アニメテーブル書き出し
-        print_anime(file,cnt,anm_cnt)
+        print_anime(file,dir,cnt,anm_cnt)
         print_obj(file,dir,cnt,true);
       end
 
