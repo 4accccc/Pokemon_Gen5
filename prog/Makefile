@@ -348,12 +348,19 @@ overlay/main.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
 	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
 
+lcf_def.txt: make_prog_files
+	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
+
+
 endif
 
 ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
 
 overlay/main.TWL.HYB.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
+	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
+
+lcf_def_twl.txt: make_prog_files
 	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
 
 endif
