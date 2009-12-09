@@ -23,7 +23,6 @@
 
 //通信
 #include "net/network_define.h"
-#include "savedata/wifilist.h"
 #include "../net/dwc_rapfriend.h"	//GFL_NET_DWC_CheckFriendCodeByTokenのため
 
 //アーカイブ
@@ -101,7 +100,7 @@ typedef struct
 	FLDMENUFUNC						*p_menu;
 	FLDMENUFUNC_LISTDATA	*p_menu_data;
 
-	SAVE_CONTROL_WORK	*p_sv;
+  GAMEDATA          *p_gamedata;
 	GAMESYS_WORK			*p_gsys;
 	FIELDMAP_WORK			*p_field;
 	FLDMSGBG					*p_msg_bg;
@@ -130,8 +129,8 @@ static GMEVENT_RESULT EVENT_DebugBeaconMain( GMEVENT *p_event, int *p_seq, void 
 //-------------------------------------
 ///	ビーコンデータ
 //=====================================
-static void BEACON_DATA_Init( BEACON_DATA *p_wk, SAVE_CONTROL_WORK *p_sv );
-static BEACON_REGISTER_RESULT BEACON_DATA_Register( const BEACON_DATA *cp_data, SAVE_CONTROL_WORK *p_sv, HEAPID heapID );
+static void BEACON_DATA_Init( BEACON_DATA *p_wk, GAMEDATA *p_gamedata );
+static BEACON_REGISTER_RESULT BEACON_DATA_Register( const BEACON_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID );
 static void BEACON_DATA_SetWord( const BEACON_DATA *cp_wk, WORDSET *p_word, STRBUF *p_str, HEAPID heapID );
 
 //-------------------------------------
@@ -245,13 +244,13 @@ void EVENT_DebugBeacon( GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_field, FLDMSGBG *
   p_wk = GMEVENT_GetEventWork(p_event);
 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_BEACON_WORK) );
-	p_wk->p_sv			= SaveControl_GetPointer();
+	p_wk->p_gamedata	= GAMESYSTEM_GetGameData( p_gsys );
 	p_wk->p_gsys		= p_gsys;
 	p_wk->p_field		= p_field;
 	p_wk->p_msg_bg	= p_msg_bg;
 	p_wk->heapID		= heapID;
 
-	BEACON_DATA_Init( &p_wk->my_beacon, p_wk->p_sv );
+	BEACON_DATA_Init( &p_wk->my_beacon, p_wk->p_gamedata );
 }
 
 //----------------------------------------------------------------------------
@@ -433,7 +432,7 @@ static GMEVENT_RESULT EVENT_DebugBeaconMain( GMEVENT *p_event, int *p_seq, void 
 			for( ; p_wk->check_idx < p_wk->recv_set.recv_num; p_wk->check_idx++ )
 			{	
 				p_data	= &p_wk->recv_set.recv_beacon[ p_wk->check_idx ];
-				res	= BEACON_DATA_Register( &p_data->beacon, p_wk->p_sv, p_wk->heapID );
+				res	= BEACON_DATA_Register( &p_data->beacon, p_wk->p_gamedata, p_wk->heapID );
 
 				switch( res )
 				{	
@@ -581,7 +580,7 @@ static GMEVENT_RESULT EVENT_DebugBeaconMain( GMEVENT *p_event, int *p_seq, void 
  *	@param	*p_sv							セーブデータ
  */
 //-----------------------------------------------------------------------------
-static void BEACON_DATA_Init( BEACON_DATA *p_wk, SAVE_CONTROL_WORK *p_sv )
+static void BEACON_DATA_Init( BEACON_DATA *p_wk, GAMEDATA *p_gamedata )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(BEACON_DATA) );
 
@@ -590,7 +589,7 @@ static void BEACON_DATA_Init( BEACON_DATA *p_wk, SAVE_CONTROL_WORK *p_sv )
 	//自分の名前取得
 	{
 		MYSTATUS * p_status;
-		p_status	= SaveData_GetMyStatus( p_sv );
+		p_status	=  GAMEDATA_GetMyStatus( p_gamedata );
 		MyStatus_CopyNameStrCode( p_status, p_wk->playername, PERSON_NAME_SIZE + EOM_SIZE );
 		p_wk->sex	= MyStatus_GetMySex( p_status );
 	}
@@ -600,7 +599,7 @@ static void BEACON_DATA_Init( BEACON_DATA *p_wk, SAVE_CONTROL_WORK *p_sv )
 		WIFI_LIST* p_list;
 		DWCUserData*	p_userdata;
 
-		p_list						= SaveData_GetWifiListData( p_sv );
+		p_list						= GAMEDATA_GetWiFiList( p_gamedata );
 		p_userdata				= WifiList_GetMyUserInfo( p_list );
 		p_wk->friendcode	= DWC_CreateFriendKey( p_userdata );
 	}
@@ -619,13 +618,13 @@ static void BEACON_DATA_Init( BEACON_DATA *p_wk, SAVE_CONTROL_WORK *p_sv )
  *
  */
 //-----------------------------------------------------------------------------
-static BEACON_REGISTER_RESULT BEACON_DATA_Register( const BEACON_DATA *cp_data, SAVE_CONTROL_WORK *p_sv, HEAPID heapID )
+static BEACON_REGISTER_RESULT BEACON_DATA_Register( const BEACON_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID )
 {	
 	WIFI_LIST* p_list;
 	DWCUserData*	p_userdata;
 
 	//自分の情報取得
-	p_list						= SaveData_GetWifiListData( p_sv );
+	p_list						= GAMEDATA_GetWiFiList( p_gamedata );
 	p_userdata				= WifiList_GetMyUserInfo( p_list );
 
 	{	

@@ -32,9 +32,6 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 
-//  ネット
-#include "savedata/wifilist.h"
-
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_graphic.h"
 #include "wifibattlematch_view.h"
@@ -250,9 +247,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_WORK) );	
 
   { 
-    SAVE_CONTROL_WORK *p_sv;
-    p_sv              = GAMEDATA_GetSaveControlWork(p_param->p_param->p_game_data);
-    p_wk->p_user_data = WifiList_GetMyUserInfo( SaveData_GetWifiListData( p_sv ) );
+    p_wk->p_user_data = WifiList_GetMyUserInfo( GAMEDATA_GetWiFiList( p_param->p_param->p_game_data ) );
   }
 
 
@@ -577,18 +572,23 @@ static BOOL WifiBattleMatch_Random_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATT
 //-----------------------------------------------------------------------------
 static int WIFIBATTLEMATCH_RND_SUBSEQ_Init( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_subseq )
 { 
+
+  NAGI_Printf( " mode%d ret%d\n", p_param->mode, p_param->retmode );
   switch( p_param->mode )
   { 
   case WIFIBATTLEMATCH_CORE_MODE_START:
+    *p_subseq = 0;
     return WIFIBATTLEMATCH_RND_SUBSEQ_START;
 
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
     if( p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
     { 
+      *p_subseq = 0;
       return WIFIBATTLEMATCH_RND_SUBSEQ_RATE_BTL_END;
     }
-    else
+    else if( p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_FREE )
     { 
+      *p_subseq = 0;
       return WIFIBATTLEMATCH_RND_SUBSEQ_FREE_BTL_END;
     }
   }
@@ -1200,7 +1200,21 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     *p_subseq       = SEQ_WAIT_SAVE;
     break;
   case SEQ_WAIT_SAVE:
-    *p_subseq       = SEQ_START_SELECT_BTLREC_MSG;
+    *p_subseq       = SEQ_START_DISCONNECT;
+    break;
+
+    //-------------------------------------
+    /// 切断処理
+    //=====================================
+  case SEQ_START_DISCONNECT:
+    *p_subseq = SEQ_WAIT_DISCONNECT;
+    break;
+
+  case SEQ_WAIT_DISCONNECT:
+    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+    { 
+      *p_subseq = SEQ_START_SELECT_BTLREC_MSG;
+    }
     break;
 
     //-------------------------------------
@@ -1211,6 +1225,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     *p_subseq = SEQ_WAIT_MSG;
     p_wk->next_seq  = SEQ_START_SELECTBTLREC;
     break;
+
   case SEQ_START_SELECTBTLREC:
     { 
       WBM_LIST_SETUP  setup;
@@ -1229,6 +1244,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
       *p_subseq     = SEQ_WAIT_SELECTBTLREC;
     }
     break;
+
   case SEQ_WAIT_SELECTBTLREC:
     {
       const u32 select  = WBM_LIST_Main( p_wk->p_list );
@@ -1238,28 +1254,13 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
         switch( select )
         { 
         case 0:
-          *p_subseq = SEQ_START_DISCONNECT;  //@todo
+          *p_subseq = SEQ_START_SELECT_CONTINUE_MSG;
           break;
         case 1:
-          *p_subseq = SEQ_START_DISCONNECT;
+          *p_subseq = SEQ_START_SELECT_CONTINUE_MSG;
           break;
         }
       }
-    }
-    break;
-
-
-    //-------------------------------------
-    /// 切断処理
-    //=====================================
-  case SEQ_START_DISCONNECT:
-    *p_subseq = SEQ_WAIT_DISCONNECT;
-    break;
-
-  case SEQ_WAIT_DISCONNECT:
-    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
-    { 
-      *p_subseq = SEQ_START_SELECT_CONTINUE_MSG;
     }
     break;
 

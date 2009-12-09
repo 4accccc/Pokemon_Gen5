@@ -16,6 +16,7 @@
 ///GDSプロック制御を呼び出すときに引き渡すパラメータ構造体
 typedef struct{
 //	FIELDSYS_WORK *fsys;	///<フィールドシステムへのポインタ
+  GAMEDATA          *gamedata;    ///WiFiListの取得をGAMEDATA経由でするため、
 	SAVE_CONTROL_WORK *savedata;		///<セーブデータへのポインタ
 	int connect;			///<0以外:初回接続(接続時の「はい/いいえ」選択無し)。0以外:2度目以降
 	u8 gds_mode;			///<BR_MODE_GDS_???

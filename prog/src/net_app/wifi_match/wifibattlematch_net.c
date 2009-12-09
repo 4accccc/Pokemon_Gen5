@@ -590,8 +590,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
 	      SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
 	      WIFI_LIST   *p_wifilist = SaveData_GetWifiListData( p_save );
 	
-	      const u16 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
-	      const u16 now_profileID   = WifiList_GetMyGSID( p_wifilist );
+	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
+	      const s32 now_profileID   = WifiList_GetMyGSID( p_wifilist );
         DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d\n", init_profileID, now_profileID );
 	
 	      STD_TSPrintf( p_wk->search, "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
@@ -673,6 +673,9 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
 	        p_wk->p_field_buff[i].type  = sc_field_type[i];
 	        p_wk->p_field_buff[i].value.int_s32 = p_wk->backup.arry[i];
 	      }
+
+        DEBUG_NET_Printf( "DS本体を交換しました\n" );
+
 	    }
       else
       { 
@@ -680,8 +683,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
         int i;
         SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
 	      WIFI_LIST   *p_wifilist = SaveData_GetWifiListData( p_save );
-	      const u16 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
-	      const u16 now_profileID   = WifiList_GetMyGSID( p_wifilist );
+	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
+	      const s32 now_profileID   = WifiList_GetMyGSID( p_wifilist );
 	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
 	      { 
 	        p_wk->p_field_buff[i].name          = (char*)ATLAS_GetFieldName()[i];
@@ -700,6 +703,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, const D
             p_wk->p_field_buff[i].value.int_s32 = sc_default_value[i];
           }
         }
+        DEBUG_NET_Printf( "新規に開始しました\n" );
       }
 
       //新規開始のときは、まっさらな状態で作成
@@ -2599,6 +2603,7 @@ static void DwcRap_Gdb_GetRecordsProfileIDCallback(int record_num, DWCGdbField**
 
   for (i = 0; i < record_num; i++)
   {
+    DEBUG_NET_Printf( "自分のレコードを発見！\n" );
     for (j = 0; j < ATLAS_GetFieldNameNum(); j++)   // user_param -> field_num
     {
       DWCGdbField* field  = &records[i][j];

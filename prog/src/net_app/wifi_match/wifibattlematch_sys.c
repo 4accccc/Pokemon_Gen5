@@ -538,10 +538,10 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_CORE_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_CORE_PARAM) );
-	p_param->p_param	  = p_wk->p_param;
-  p_param->mode       = p_wk->core_mode;
-  p_param->retmode    = p_wk->core_ret;
-  p_param->btl_result = p_wk->btl_result;
+	p_param->p_param	      = p_wk->p_param;
+  p_param->mode           = p_wk->core_mode;
+  p_param->retmode        = p_wk->core_ret;
+  p_param->btl_result     = p_wk->btl_result;
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
 		

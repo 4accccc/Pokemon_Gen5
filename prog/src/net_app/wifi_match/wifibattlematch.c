@@ -189,7 +189,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_WORK), HEAPID_WIFIBATTLEMATCH );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_WORK) );	
-  p_wk->p_user_data = WifiList_GetMyUserInfo( SaveData_GetWifiListData( p_param->p_save ) );
+  p_wk->p_user_data = WifiList_GetMyUserInfo( GAMEDATA_GetWiFiList( p_param->p_game_data ) );
 
 	//引数受け取り
 	p_wk->p_param	= p_param_adrs;

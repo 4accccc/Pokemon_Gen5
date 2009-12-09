@@ -19,6 +19,7 @@
 #include "gds_boxshot.h"
 #include "gds_dressup.h"
 
+#include "gamesystem/game_data.h"
 #include "poke_tool/monsno_def.h"
 //#include "gflib/strbuf_family.h"
 #include "savedata/gds_profile.h"
@@ -65,7 +66,6 @@
 #include "font/font.naix"
 #include "system/bmp_winframe.h"
 #include "net/network_define.h"
-#include "savedata\wifilist.h"
 #include "system/net_err.h"
 
 
@@ -1373,7 +1373,7 @@ static int Enter_DpwTrInit( GDS_CONNECT_SYS *wk )
 	SYSTEMDATA *systemdata;
 	WIFI_LIST *wifilist;
 	
-	wifilist = SaveData_GetWifiListData(wk->oya_proc_work->proc_param->savedata);
+	wifilist = GAMEDATA_GetWiFiList(wk->oya_proc_work->proc_param->gamedata);
 	systemdata = SaveData_GetSystemData(wk->oya_proc_work->proc_param->savedata);
 
 	// DWCUser構造体取得
@@ -1384,7 +1384,7 @@ static int Enter_DpwTrInit( GDS_CONNECT_SYS *wk )
 	//	とりあえずセットしておくことになった	2008.01.17(木)
 	profileId = SYSTEMDATA_GetDpwInfo( systemdata );
 	if( profileId==0 ){
-		OS_TPrintf("初回取得profileIdなのでDpwInfoとして登録した %08x \n", WifiList_GetMyGSID(SaveData_GetWifiListData(wk->oya_proc_work->proc_param->savedata)));
+		OS_TPrintf("初回取得profileIdなのでDpwInfoとして登録した %08x \n", WifiList_GetMyGSID(GAMEDATA_GetWiFiList(wk->oya_proc_work->proc_param->gamedata)));
 
 		// 初回取得FriendKeyなので、DpwIdとして保存する
 		SYSTEMDATA_SetDpwInfo( systemdata, WifiList_GetMyGSID(wifilist) );
