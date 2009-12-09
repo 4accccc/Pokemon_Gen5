@@ -323,10 +323,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_BG_SetVisible( BG_FRAME_BAR_M,  VISIBLE_OFF );
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-
-	// @TODO	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
+  
+  // フェードイン リクエスト
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -345,6 +344,19 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	DEMO3D_MAIN_WORK* wk = mywk;
+  
+  if( *seq == 0 )
+  {
+    // フェードアウト リクエスト
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
+    (*seq)++;
+    return GFL_PROC_RES_CONTINUE;
+  }
+  else if( GFL_FADE_CheckFade() == TRUE )
+  {
+    // フェード中は処理に入らない
+    return GFL_PROC_RES_CONTINUE;
+  }
 
 #ifdef DEMO3D_TASKMENU
 	//TASKMENUシステム＆リソース破棄
@@ -402,6 +414,12 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 { 
 	DEMO3D_MAIN_WORK* wk = mywk;
   BOOL is_end;
+
+  // フェード中は処理しない
+  if( GFL_FADE_CheckFade() == TRUE )
+  {
+    return GFL_PROC_RES_CONTINUE;
+  }
 
   // 特定キーでアプリ終了
   if( 
