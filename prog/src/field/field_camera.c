@@ -1583,7 +1583,15 @@ static void DEBUG_ControlWork( FIELD_CAMERA* camera )
     VecFx32 move_camera;
     
     // ターゲットオフセット
-    VEC_Subtract( &camera->debug_target, &camera->target_write, &camera->target_offset );
+    if( camera->watch_target != NULL )
+    {
+      VEC_Subtract( &camera->debug_target, &camera->target_write, &camera->target_offset );
+    }
+    else
+    {
+      VEC_Set( &camera->target, camera->debug_target.x, camera->debug_target.y, camera->debug_target.z );
+      VEC_Set( &camera->target_offset, 0,0,0 );
+    }
 
     // カメラアングル
     VEC_Subtract( &camera->debug_camera, &camera->target_write, &move_camera ); 
@@ -1606,6 +1614,7 @@ static void DEBUG_ControlWork( FIELD_CAMERA* camera )
 #define CAMERA_DEBUG_PAERS_MOVE  (64)
 #define CAMERA_DEBUG_NEARFAR_MOVE  (FX32_CONST(2))
 #define CAMERA_DEBUG_POS_MOVE  (FX32_ONE)
+#define CAMERA_DEBUG_LEN_MOVE  (FX32_ONE)
 enum
 {
   CAMERA_DEBUG_BUFFER_MODE_ZBUFF_MANUAL,
@@ -1773,6 +1782,18 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
       ret = TRUE;
     }
 
+    if( repeat & PAD_BUTTON_L )
+    {
+      camera->debug_target_len -= CAMERA_DEBUG_LEN_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_BUTTON_R )
+    {
+      camera->debug_target_len += CAMERA_DEBUG_LEN_MOVE;
+      ret = TRUE;
+    }
+
+
     // 変更地を保存
     camera->debug_target_pitch  = pitch;
     camera->debug_target_yaw    = yaw;
@@ -1818,6 +1839,7 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
       camera->debug_target_yaw += CAMERA_DEBUG_ANGLE_MOVE;
       ret = TRUE;
     }
+
   }
   // パース操作
   else if( cont & PAD_BUTTON_A )
