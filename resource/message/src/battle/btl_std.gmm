@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-01T22:35:15"/>
+	<create user="taya" host="W00146" date="2009-12-09T12:43:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,6 +485,12 @@
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
 [1:02:ポケモンニックネーム:1]と　[1:02:ポケモンニックネーム:2]と▽
 [1:02:ポケモンニックネーム:3]を　くりだした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Hit_PluralTimes" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>複数回ヒット</comment>
+		<language name="JPN" width="216">[2:00:１桁:0]かい　あたった！</language>
+		<language name="JPN_KANJI" width="216">[2:00:１桁:0]回　当たった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_Self" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
