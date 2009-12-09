@@ -1678,6 +1678,12 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     }
     PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, palData->szByte );
 
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+
     return bevw->control_mode;
   }
 #endif
