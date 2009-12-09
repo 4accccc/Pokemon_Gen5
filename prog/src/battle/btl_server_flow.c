@@ -4075,6 +4075,9 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   int i;
 
   fPluralHit = scEvent_CheckPluralHit( wk, attacker, wazaParam->wazaID, &hit_count );
+  if( fPluralHit ){
+    BTL_Printf("複数回ヒットワザ ... 回数=%d\n", hit_count);
+  }
 
   wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
   damage_sum = 0;
@@ -4143,10 +4146,9 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     BPP_TURNFLAG_Set( defender, BPP_TURNFLG_DAMAGED );
   }
 
-  if( fPluralHit )
+  if( fPluralHit && (hit_count > 1))
   {
-    // @@@ 「●●回あたった！」メッセージ
-//    SCQUE_PUT_MSG_WazaHitCount( wk->que, i ); // @@@ あとで
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hit_count );
   }
 }
 //
@@ -5218,7 +5220,10 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 {
   volume = scEvent_RankValueChange( wk, target, effect, wazaUsePokeID, itemID, volume );
 
+
+  BTL_Printf("ポケ[%d]の能力ランク(%d)を%d段階、上昇させる\n", BPP_GetID(target), effect, volume );
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
+    BTL_Printf("でももう効果ありませんでした\n");
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
       return FALSE;
@@ -8467,21 +8472,22 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 {
   u8 max = WAZADATA_GetParam( waza, WAZAPARAM_HITCOUNT_MAX );
 
+  BTL_Printf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
+
   if( max > 1 )
   {
     BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT_MAX, max );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_HITCOUNT_MAX, max );
       BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT, BTL_CALC_HitCountMax(max) );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
       *hitCount = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT );
+
     BTL_EVENTVAR_Pop();
     return TRUE;
   }
-  else
-  {
-    *hitCount = 1;
-  }
+
+  *hitCount = 1;
   return FALSE;
 }
 

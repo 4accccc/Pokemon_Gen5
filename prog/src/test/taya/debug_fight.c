@@ -546,7 +546,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
 
   wk->heapID = HEAPID_BTL_DEBUG_SYS;
-  wk->gameData = GAMEDATA_Create( HEAPID_BTL_DEBUG_SYS );
+  wk->gameData = pwk;
   wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyFriend = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );

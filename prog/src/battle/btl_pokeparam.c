@@ -904,9 +904,10 @@ static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* m
 BOOL BPP_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume )
 {
   const s8* ptr;
-  s8  min, max;
+  s8  min, max, next_value;
 
   ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  BTL_Printf("  Œ»ó=%d, Å¬=%d, Å‘å=%d, Œø‰Ê’l=%d\n", *ptr, min, max, volume);
   if( volume > 0 ){
     return ((*ptr) < max);
   }else{

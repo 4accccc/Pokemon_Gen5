@@ -702,9 +702,9 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
       FS_EXTERN_OVERLAY(title);
       GFL_OVERLAY_Load(FS_OVERLAY_ID(title));
 
-			// 輝度フェードアウト
-			GFL_FADE_SetMasterBrightReq
-				(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 16, 0);
+      // 輝度フェードアウト
+      GFL_FADE_SetMasterBrightReq
+        (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 16, 0);
 
       switch( work->gameType_ )
       {
@@ -905,7 +905,8 @@ FS_EXTERN_OVERLAY(debug_fight);
 extern const GFL_PROC_DATA  DebugFightProcData;
 static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(debug_fight), &DebugFightProcData, NULL);
+  GAMEDATA* gameData = GAMEDATA_Create( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(debug_fight), &DebugFightProcData, gameData );
   return TRUE;
 }
 
