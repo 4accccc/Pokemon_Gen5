@@ -570,11 +570,6 @@
 		<language name="JPN_KANJI" width="216">ひんふく</language>
 	</row>
 
-	<row id="search_abc_45">
-		<language name="JPN" width="216">ひんほー</language>
-		<language name="JPN_KANJI" width="216">ひんほー</language>
-	</row>
-
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

@@ -556,31 +556,26 @@
 	</row>
 
 	<row id="search_abc_42">
-		<language name="JPN" width="216">てんたに</language>
-		<language name="JPN_KANJI" width="216">てんたに</language>
-	</row>
-
-	<row id="search_abc_43">
 		<language name="JPN" width="216">てんちゆら</language>
 		<language name="JPN_KANJI" width="216">てんちゆら</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">てんねん</language>
 		<language name="JPN_KANJI" width="216">てんねん</language>
 	</row>
 
-	<row id="search_abc_45">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">てんのめくみ</language>
 		<language name="JPN_KANJI" width="216">てんのめくみ</language>
 	</row>
 
-	<row id="search_abc_46">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">てんりゆう</language>
 		<language name="JPN_KANJI" width="216">てんりゆう</language>
 	</row>
 
-	<row id="search_abc_47">
+	<row id="search_abc_46">
 		<language name="JPN" width="216">てんわ</language>
 		<language name="JPN_KANJI" width="216">てんわ</language>
 	</row>
