@@ -6,7 +6,7 @@ require 'fileutils'
 require 'program_conv'
 
 #出力個数
-PROGRAM_NUM = 5
+PROGRAM_NUM = 20
 #PROGRAM_NUM = 1
 #演目データエクセル
 PRAGRAM_DATA_EXCEL = "program_data.xls"
