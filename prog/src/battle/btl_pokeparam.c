@@ -2509,7 +2509,7 @@ BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp )
 
 BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage )
 {
-  GF_ASSERT(bpp->migawariHP==0);
+  GF_ASSERT(bpp->migawariHP!=0);
 
   if( bpp->migawariHP <= damage ){
     bpp->migawariHP = 0;
