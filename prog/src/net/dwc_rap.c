@@ -291,13 +291,8 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   _dWork->opvchaton = 1;
   _dWork->myvchat_send = 1;
 
-  //セーブデータのポインタを記録
-//  _dWork->pSaveDataUserData = pUserData;
-//  _dWork->pSaveDataFriendData = pFriendData;
-
-//  GFL_STD_MemCopy(pUserData , &_dWork->pUserData, sizeof(_dWork->myUserData));
-//  GFL_STD_MemCopy(pFriendData , _dWork->pFriendData, sizeof(_dWork->keyList));
-
+  _dWork->pUserData = pUserData;
+  _dWork->pFriendData = pFriendData;
   // 2008.06.02 tomoya ClosedCallbackで切断処理に遷移するようにするのかをフラグできりかえれるように変更(Wi-Fiクラブ４人募集画面用)
   _dWork->closedflag = TRUE;
 
