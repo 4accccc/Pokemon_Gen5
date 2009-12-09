@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-21T17:13:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-09T16:54:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="257" top="368" right="962" bottom="988" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,15 +292,10 @@
 	</lock>
 
 
-	<row id="msg_h03_sage2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_sage2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・posを踏むと
-　このメッセージ表示
-・表示後、カメラを倒し橋の先が見えるようにする
-・カメラ角度復帰すると
-　この動作モデル、r09方面に移動し
-　画面外に消えると主人公操作可能</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
+・posを踏むとッセージ表示</comment>
+		<attribute name="キャラ指定">七人衆</attribute>
 		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
 おまえの　ちからが
 どれほどの　ものか　たしかめよ　と[BE:01:ページ切り替え（クリア）]
@@ -313,13 +308,12 @@
 倒せるか　見させて　もらうぞよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_h03_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・したっぱ7人抜きを終えると
-　主人公に隣接してメッセージ表示
+・したっぱ7人抜きを終えるとメッセージ表示
 ・表示後、画面暗転し
 　プラズマ団の動作モデルをすべて削除</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
+		<attribute name="キャラ指定">七人衆</attribute>
 		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
 おまえは　われらが　あるじ
 プラズマだんの　おうに　とって[BE:00:ページ切り替え（行送り）]
@@ -332,6 +326,124 @@
 よろしくない　存在に　なりうると[BE:01:ページ切り替え（クリア）]
 たしかに　その　強さ
 ゲーチスさまに　知らせねば……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_h03_sage2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・sage2_02表示後に、通り抜けようとしたとき</comment>
+		<attribute name="キャラ指定">七人衆</attribute>
+		<language name="JPN" width="256">？？？『おやおや
+まだ　おわっていないぞ？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『おやおや
+まだ　終わっていないぞ？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_h03_sage2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・sage2_02表示後に、直接話したとき
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">七人衆</attribute>
+		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
+おまえの　ちからが
+どれほどの　ものか　たしかめよ　と[BE:01:ページ切り替え（クリア）]
+ここにいる　プラズマだんを
+たおせるか　みさせて　もらうぞよ！</language>
+		<language name="JPN_KANJI" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
+おまえの　力量が
+どれほどの　ものか　確かめよ　と[BE:01:ページ切り替え（クリア）]
+ここにいる　プラズマ団を
+倒せるか　見させて　もらうぞよ！</language>
+	</row>
+
+	<row id="msg_h03_hakaim5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♂
+hakaim1_05</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaim6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♂
+hakaim1_06</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaim7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♂
+hakaim1_07</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaim8_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♂
+hakaim1_08</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♀
+hakaiw1_01</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaiw2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♀
+hakaiw1_02</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
+	</row>
+
+	<row id="msg_h03_hakaiw3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ表示後に再度会話</comment>
+		<attribute name="キャラ指定">プラズマ団♀
+hakaiw1_03</attribute>
+		<language name="JPN" width="256">プラズマだん『……たしかに　つよい
+だが　Ｎさまのほうが　もっとつよい！[BE:01:ページ切り替え（クリア）]
+さあ　のこりの　メンバーに　かてるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……たしかに　強い
+だが　Ｎさまの方が　もっと強い！[BE:01:ページ切り替え（クリア）]
+さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
 	<flowchart-group-list>
