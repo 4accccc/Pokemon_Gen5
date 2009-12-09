@@ -48,7 +48,7 @@ ev_trainer_common_10:
   _RET
   
 ev_trainer_common_11:
-  _AB_KEYWAIT()
+  //_AB_KEYWAIT()   メッセージ側にキー送りがあるためここでのウェイトは不要
   _BALLOONWIN_CLOSE()
   
   /*
@@ -235,7 +235,7 @@ ev_trainer_type_single:
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
   $SCWK_TEMP0 = $SCWK_ANSWER
   _TRAINER_MSG_SET(  SCWK_TEMP0,TRMSG_FIGHT_START )
-  _AB_KEYWAIT()
+  //_AB_KEYWAIT()   メッセージ側にキー送りがあるためここでのウェイトは不要
   _BALLOONWIN_CLOSE()
   
   _TRAINER_BTL_SET(  SCWK_TEMP0,0 )
