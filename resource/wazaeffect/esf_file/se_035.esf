@@ -1,0 +1,36 @@
+EFFSEQ
+$0020
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_390.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_188.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_342.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_124.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_151.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_002_doku_bub.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_116.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_002_doku_bub.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_116.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_012_ball_up.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_014_ball_up.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_017_sack_down.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_240.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_258.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_201.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_071.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_033.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_020.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_035.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_083.spa
+#001
+%00
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_083
+パーティクル再生（正射影）	w_083	W_083_083_FIRE_CIRCLE01	攻撃側	0:2:0
+タイマーによるウエイト	6
+ポケモン円移動	攻撃側	Ｙ軸右	シフトＨ＋	0.1	0.05	16:0:3	0
+ポケモン拡縮	攻撃側	往復	0.1	-0.1	30	0	1
+パーティクル再生（正射影）	w_083	W_083_083_FIRE_CIRCLE_KEMURI	攻撃側	0:2:0
+エフェクト終了待ち	すべて
+ポケモンアニメ	攻撃側	アニメスタート
+エフェクト終了待ち	すべて
+エフェクト終了
+&
