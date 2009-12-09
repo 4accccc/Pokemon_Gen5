@@ -3367,7 +3367,7 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
   int       position = 0;
   fx32      offset_y;
 
-  if( ortho_mode == TRUE )
+  if( ( ortho_mode == TRUE ) && ( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL ) )
   { 
     GFL_G3D_PROJECTION  proj;
 	  VecFx32 Eye    = { 0, 0, 0 };          // Eye position
