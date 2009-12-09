@@ -36,6 +36,7 @@ typedef struct _ENC_POKE_PARAM
 
 typedef struct _ENCPOKE_FLD_PARAM
 {
+  const GAMEDATA* gdata;
   ENC_SV_PTR enc_save;
 
   //ÉçÉPÅ[ÉVÉáÉìëº
@@ -86,6 +87,7 @@ typedef struct _ENCPOKE_FLD_PARAM
 
 extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type, const WEATHER_NO weather );
+extern u16 ENCPOKE_GetGenerateZone( const GAMEDATA* gdata );
 
 extern u32 ENCPOKE_EncProbManipulation(const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb);
 extern u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA *enc_tbl, ENC_POKE_PARAM* outPokeTbl );

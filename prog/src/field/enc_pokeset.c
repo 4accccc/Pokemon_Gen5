@@ -73,6 +73,8 @@ static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 //プロトタイプ
 static u32 eps_GetPercentRand( void );
 static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp, const WEATHER_NO weather );
+static const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata );
+static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable);
 
 static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable);
 
@@ -117,6 +119,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   outEfp->location = location;
   outEfp->enc_type = enc_type;
 
+  outEfp->gdata = gdata;
   outEfp->enc_save = EncDataSave_GetSaveDataPtr( save );
 
   //プレイヤーのIDセット
@@ -395,6 +398,21 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   POKE_PERSONAL_CloseHandle( personal );
 }
 
+/*
+ *  @brief  現在大量発生が起きているゾーンIDを返す
+ *
+ *  @retval 0xFFFF  大量発生が起きていない(クリア前)
+ *  @retval それ以外  大量発生が起きているゾーンID
+ */
+u16 ENCPOKE_GetGenerateZone( const GAMEDATA* gdata )
+{
+  const GENERATE_ENCOUNT* gene = encpoke_GetGenerateData( gdata );
+
+  if(gene == NULL){
+    return 0xFFFF;
+  }
+  return gene->zone_id;
+}
 
 //===============================================================================
 //サブ　エンカウトデータ関連
@@ -481,6 +499,33 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
   }
 }
 
+
+//--------------------------------------------------------------
+/*
+ *  @brief  現在起きている大量発生データを返す
+ *
+ *  @retval NULL  大量発生が起きていない(クリア前)
+ *  @retval それ以外  発生している大量発生パラメータ
+ */
+//--------------------------------------------------------------
+const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata )
+{
+  const GENERATE_ENCOUNT* gene;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork((GAMEDATA*)gdata);
+  BOOL gameclear_f = EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( (GAMEDATA*)gdata ),SYS_FLAG_GAME_CLEAR ); 
+  u8  idx;
+ 
+  if( !gameclear_f ){
+    return NULL;
+  }
+  idx = EncDataSave_GetGenerateZoneIdx( EncDataSave_GetSaveDataPtr( save ) );
+ 
+  if( idx >= GENERATE_ENC_POKE_MAX ){
+    idx = 0;
+  }
+  return &DATA_GenerateEncount[idx];
+}
+
 //--------------------------------------------------------------
 /**
  * 大量発生チェック
@@ -493,16 +538,9 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
 //--------------------------------------------------------------
 static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable)
 {
-  const GENERATE_ENCOUNT* gene;
-  u8  idx = EncDataSave_GetGenerateZoneIdx( ioEfp->enc_save );
-
-  if( idx >= GENERATE_ENC_POKE_MAX ){
-    idx = 0;
-  }
-  idx = 0;
-  gene = &DATA_GenerateEncount[idx];
-
-  if(!ioEfp->gameclear_f || gene->zone_id != zone_id){
+  const GENERATE_ENCOUNT* gene = encpoke_GetGenerateData( ioEfp->gdata );
+  
+  if( gene == NULL || gene->zone_id != zone_id ){
     return FALSE;
   }
   if( ioEfp->location != ENC_LOCATION_GROUND_L && ioEfp->location != ENC_LOCATION_GROUND_H ){
