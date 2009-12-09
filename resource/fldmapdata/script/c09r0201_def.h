@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C09R0201_BIGFOUR2_01 (1)
+#define SCRID_POS_C09R0201_ENTER_01 (2)
 
 #endif //_C09R0201_DEF_H_

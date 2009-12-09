@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09r0201.h"
-  //.include  "c09r0201.h"
+  .include  "c09r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c09r0201_bigfour2_01
+_EVENT_DATA    ev_pos_c09R0201_enter_01
 _EVENT_DATA_END
 
 
@@ -158,5 +159,56 @@ EVENT_START	ev_c09r0201_bigfour2_01
 	
 	
 EVENT_END
+
+
+/************************************************************/
+/*					螺旋を登るposイベント					*/
+/************************************************************/
+EVENT_START	ev_pos_c09R0201_enter_01
+
+	_FOURKINGS_WALKEVENT( 2 )
+
+	//主人公：上を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ローカル定義
+	DEFINE_LOCAL	DOOR_ANIME_ID
+	
+	//ドアアニメコントローラの作成
+	_DOOR_ANIME_CREATE( DOOR_ANIME_ID, 15, 15 )
+	
+	//ドアを開ける
+	_DOOR_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//主人公：上へ進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ドアを閉じる
+	_DOOR_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	
+	
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//主人公：上を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//主人公：上へ進む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ply_move_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
 
 
