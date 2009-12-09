@@ -17,6 +17,7 @@
 
 
 #include "field/field_const.h"
+#include "fldmmdl.h"
 
 #include "fld_scenearea_loader_func.h"
 #include "fld_scenearea_loader.h"
@@ -426,9 +427,15 @@ static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCEN
 {
   const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
   u16 grid_x, grid_z, grid_sizx, grid_sizz;
+  VecFx32 local_pos;
 
-  grid_x = FX32_TO_GRID( cp_pos->x );
-  grid_z = FX32_TO_GRID( cp_pos->z );
+  local_pos = *cp_pos;
+  local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
+  local_pos.y -= MMDL_VEC_Y_GRID_OFFS_FX32;
+  local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
+
+  grid_x = FX32_TO_GRID( local_pos.x );
+  grid_z = FX32_TO_GRID( local_pos.z );
 
   // X と Zどちらかが1である必要がある
   GF_ASSERT( (cp_param->grid_sizx == 1) || (cp_param->grid_sizz == 1) );
@@ -475,6 +482,13 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   s32 yaw;
   fx32 length;
 
+  VecFx32 local_pos;
+
+  local_pos = *cp_pos;
+  local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
+  local_pos.y -= MMDL_VEC_Y_GRID_OFFS_FX32;
+  local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
+
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -490,13 +504,13 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   {
     // 右に奥行き
     start_num = GRID_TO_FX32( cp_param->grid_x );
-    sub_num   = cp_pos->x - start_num;
+    sub_num   = local_pos.x - start_num;
   }
   else
   {
     // 手前に奥行き
     start_num = GRID_TO_FX32( cp_param->grid_z );
-    sub_num   = cp_pos->z - start_num;
+    sub_num   = local_pos.z - start_num;
   }
 
   // 移動割合からアングルと距離を求める
