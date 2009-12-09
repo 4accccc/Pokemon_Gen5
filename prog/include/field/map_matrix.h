@@ -56,6 +56,8 @@ extern BOOL MAP_MATRIX_CheckVectorPosRange(
 extern void MAP_MATRIX_SetTableSize( 
     MAP_MATRIX *pMat, u8 xsize, u8 zsize );
 
+extern void MAP_MATRIX_CheckReplace(
+    MAP_MATRIX *pMat, GAMEDATA * gamedata );
 //--------------------------------------------------------------
 /**
  * @brief   MAP_MATRIX‚Ö‚Ìƒ|ƒCƒ“ƒ^Žæ“¾
