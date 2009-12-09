@@ -1482,6 +1482,21 @@ static void applyNormalAnime( OBJ_HND * objHdl, u32 anmNo )
     objHdl->anmMode[setNo + i] = BM_ANMMODE_TEMPORARY;
   }
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void applyLoopAnime( OBJ_HND * objHdl, u32 anmNo )
+{
+  int i;
+  const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
+  u32 setNo = anmData->anmset_num * anmNo;
+  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
+  for (i = 0; i < anmData->anmset_num; i++) {
+    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
+    GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, setNo + i );
+    objHdl->anmMode[setNo + i] = BM_ANMMODE_LOOP;
+  }
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1552,6 +1567,8 @@ static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req)
 //------------------------------------------------------------------
 static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req )
 {
+  GF_ASSERT_MSG(req < BMANM_REQ_MAX, "BMANM_REQ(%d)は未対応です\n", req ); //未定義リクエスト
+
   switch ((BMANM_REQUEST)req) {
   case BMANM_REQ_START:
     disableAllAnime( objHdl );
@@ -1574,6 +1591,10 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
     objHdl->anmMode[anmNo] = BM_ANMMODE_REVERSE;
 #endif
     break;
+  case BMANM_REQ_LOOP:
+    disableAllAnime( objHdl );
+    applyLoopAnime( objHdl, anmNo );
+    break;
   case BMANM_REQ_STOP:
     applyStopAnime( objHdl, anmNo );
 #if 0
@@ -1585,8 +1606,6 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
   case BMANM_REQ_END:
     disableAllAnime( objHdl );
     break;
-  default:
-    GF_ASSERT(0); //未定義リクエスト
     break;
   }
 }
