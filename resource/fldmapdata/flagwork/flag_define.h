@@ -2365,10 +2365,10 @@
 
 #define SYS_FLAG_AREA_START               2400 /* 0x0960  */
 
-#define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 ゲームクリアフラグ（殿堂入り時にセット） */
+#define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 ゲームクリアフラグ（N城攻略時にセット） */
 #define SYS_FLAG_FIRST_POKE_GET           2401 /* 0x0961 最初のポケモンを入手した */
 #define SYS_FLAG_ZUKAN_GET                2402 /* 0x0962 ずかんをもらった */
-		/* not used  2403(0x0963) */
+#define SYS_FLAG_DENDOUIRI                2403 /* 0x0963 ゲームクリアフラグ（殿堂入り時にセット） */
 #define SYS_FLAG_KAIRIKI                  2404 /* 0x0964 かいりき状態フラグ */
 		/* not used  2405(0x0965) */
 		/* not used  2406(0x0966) */
