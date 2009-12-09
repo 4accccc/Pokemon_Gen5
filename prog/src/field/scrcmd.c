@@ -66,6 +66,7 @@
 #include "scrcmd_fldci.h"
 #include "scrcmd_fourkings.h"
 #include "scrcmd_pl_boat.h"
+#include "scrcmd_bsubway.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -449,6 +450,7 @@ VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
   OS_Printf( "EvCmdDebugPrintWk: %d\n", val );
   return VMCMD_RESULT_CONTINUE;
 }
+
 //--------------------------------------------------------------
 /**
  * @brief

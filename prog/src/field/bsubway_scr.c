@@ -11,9 +11,16 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
-#include "bsubway_scr_common.h"
+#include "savedata/save_tbl.h"
+
+#include "system/main.h"  //HEAPID_PROC
+
+#include "savedata/bsubway_savedata.h"
+#include "savedata/bsubway_savedata_def.h"
+#include "battle/bsubway_battle_data.h"
 #include "bsubway_scr_def.h"
 #include "bsubway_scr.h"
+#include "bsubway_scr_common.h"
 
 //======================================================================
 //  define
@@ -26,6 +33,7 @@
 //======================================================================
 //  proto
 //======================================================================
+static u8 bswScr_GetMemberNum( u16 mode );
 
 //======================================================================
 //  バトルサブウェイ　スクリプトワーク関連
@@ -46,16 +54,170 @@ void BSUBWAY_SCRWORK_ClearWork( BSUBWAY_SCRWORK **bsw_scr )
 //--------------------------------------------------------------
 /**
  * BSUBWAY_SCRWORK ワークエリアを取得して初期化する
- * @param gdata GAMEDATA*
- * @param init 初期化モード BTWR_PLAY_NEW:初めから、BTWR_PLAY_CONTINE:続きから
+ * @param gsys GAMESYS_WORK*
+ * @param init 初期化モード BSWAY_PLAY_NEW:始め、BSWAY_PLAY_CONTINE:続き
  * @param playmode プレイモード指定:BTWR_MODE_～*
  * @retval BSUBWAY_SCRWORK*
  */
 //--------------------------------------------------------------
 BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
-    GAMEDATA *gdata, u16 init, u16 playmode )
+    GAMESYS_WORK *gsys, u16 init, u16 playmode )
 {
-  return( NULL );
+  int i;
+  BSUBWAY_SCRWORK *bsw_scr;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  
+  bsw_scr = GFL_HEAP_AllocClearMemory(
+      HEAPID_PROC, sizeof(BSUBWAY_SCRWORK) );
+  
+  bsw_scr->heapID = HEAPID_PROC;
+  bsw_scr->magicNo = BSUBWAY_SCRWORK_MAGIC;
+  
+  bsw_scr->playData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_PLAYDATA );
+  bsw_scr->scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  
+  BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, FALSE ); //セーブなしに
+  
+  if( init == BSWAY_PLAY_NEW ){ //新規
+    u8 buf8;
+    
+    bsw_scr->play_mode = playmode;
+    bsw_scr->play_mode = playmode;
+    bsw_scr->member_num = bswScr_GetMemberNum( bsw_scr->play_mode );
+    bsw_scr->now_round = 1;
+    bsw_scr->now_win = 0;
+    
+    for(i = 0;i < BSUBWAY_STOCK_MEMBER_MAX;i++){
+      bsw_scr->member[i] = BSWAY_NULL_POKE;
+    }
+    
+    for(i = 0;i < BSUBWAY_STOCK_TRAINER_MAX;i++){
+      bsw_scr->trainer[i] = BSWAY_NULL_TRAINER;
+    }
+    
+    //プレイデータ初期化
+    BSUBWAY_PLAYDATA_Init( bsw_scr->playData );
+    buf8 = bsw_scr->play_mode; //プレイモードだけはこの時点でセーブ反映
+    BSUBWAY_PLAYDATA_SetData(
+        bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
+    
+    /* //wb null
+    #ifdef BTOWER_AUTO_DEB
+    if(wk->play_mode == BTWR_MODE_WIFI){
+      OS_Printf(" #WifiTowerStage=%d\n",DebugBTowerAutoStage++);
+    }
+    #endif
+    */
+  }else{ //続き　データロード
+    bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
+        bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+    bsw_scr->now_round = (u8)BSUBWAY_PLAYDATA_GetData(
+        bsw_scr->playData, BSWAY_PLAYDATA_ID_round, NULL );
+    bsw_scr->now_win = bsw_scr->now_round-1;
+    
+    bsw_scr->member_num = bswScr_GetMemberNum( bsw_scr->play_mode );
+    
+    //選ばれているポケモンNo
+    BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
+        BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
+    
+    //抽選済みのトレーナーNo
+    BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
+        BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer);
+    
+    #if 0 //wb null
+    //プレイランダムシード取得
+    wk->play_rnd_seed = TowerPlayData_Get(
+        wk->playSave,BTWR_PSD_rnd_seed,NULL);
+    OS_Printf("TowerContinueRndSeed = %d\n",wk->play_rnd_seed);
+    #endif
+    
+    #if 0 //wb null
+    if( bsw_scr->play_mode == BSWAY_MODE_MULTI ){
+      wk->partner = (u8)TowerPlayData_Get(
+          wk->playSave,BTWR_PSD_partner,NULL);
+
+      //パートナートレーナーデータ再生成
+      TowerPlayData_Get(wk->playSave,
+          BTWR_PSD_pare_poke,&(wk->five_poke[wk->partner]));
+      RomBattleTowerPartnerDataMake(wk,&wk->five_data[wk->partner],
+        TOWER_FIVE_FIRST+wk->partner,
+        TowerPlayData_Get(wk->playSave,BTWR_PSD_pare_itemfix,NULL),
+        &(wk->five_poke[wk->partner]),wk->heapID);
+    }
+    #endif
+  }
+  
+  bsw_scr->my_sex = MyStatus_GetMySex( mystatus );
+  
+  //現在のレコードを取得
+#if 0 //wb null
+  if( bsw_scr->play_mode != BSWAY_MODE_RETRY ){
+    frontier = SaveData_GetFrontier(savedata);
+    record = SaveData_GetRecord(savedata);
+    
+    //現在の連勝数は挑戦中フラグがonのときだけ引き継ぐ
+    if(wk->play_mode == BTWR_MODE_WIFI_MULTI){
+#if 0
+      chg_flg = TowerScoreData_SetFlags(wk->scoreSave,
+            BTWR_SFLAG_WIFI_MULTI_RECORD,BTWR_DATA_get);
+#else
+      //chg_flg = FrontierRecord_Get(SaveData_GetFrontier(savedata), 
+      //            FRID_TOWER_MULTI_WIFI_CLEAR_BIT,
+      //            Frontier_GetFriendIndex(FRID_TOWER_MULTI_WIFI_CLEAR_BIT) );
+      chg_flg = SysWork_WifiFrClearFlagGet( SaveData_GetEventWork(savedata) );
+      OS_Printf( "WIFI chg_flg = %d\n", chg_flg );
+#endif
+    }else{
+      chg_flg = TowerScoreData_SetFlags(wk->scoreSave,
+            BTWR_SFLAG_SINGLE_RECORD+wk->play_mode,BTWR_DATA_get);
+    }
+
+    if(chg_flg){
+      if(wk->play_mode == BTWR_MODE_WIFI_MULTI){
+        wk->renshou = FrontierRecord_Get(
+        frontier,FRID_TOWER_MULTI_WIFI_RENSHOU_CNT,
+        Frontier_GetFriendIndex(FRID_TOWER_MULTI_WIFI_RENSHOU_CNT) );
+      }else{
+        wk->renshou = FrontierRecord_Get(
+        frontier,FRID_TOWER_SINGLE_RENSHOU_CNT+wk->play_mode*2,
+        FRONTIER_RECORD_NOT_FRIEND);
+      }
+
+      wk->stage = TowerScoreData_SetStage(
+          wk->scoreSave,wk->play_mode,BTWR_DATA_get);
+    }
+
+    wk->win_cnt = RECORD_Get(record,RECID_BTOWER_WIN);
+
+    //wk->stageがchg_flgに関係なく取得していたので変更(08.05.20)
+    //wifiのために変更したがwifiでは連勝記録はDPとは別のものを使用しているので、
+    //周回数の変数は見ていないから平気と思われるが一応。
+    //wk->stage = TowerScoreData_SetStage(
+        wk->scoreSave,wk->play_mode,BTWR_DATA_get);
+  }
+#endif
+
+#if 0 //wb null
+  //WIFI(32人データがあるので、周回数ワークが足りないため、
+  //連勝数から周回数を算出してセット
+  if(wk->play_mode == BTWR_MODE_WIFI_MULTI){
+    wk->stage = TowerScoreData_SetStageValue(
+        wk->scoreSave, BTWR_MODE_WIFI_MULTI, 
+        (wk->renshou / 7) );
+    OS_Printf( "** wk->renshou = %d\n", wk->renshou );
+    OS_Printf( "** stage = %d\n", TowerScoreData_SetStage(wk->scoreSave,
+                              BTWR_MODE_WIFI_MULTI,BTWR_DATA_get) );
+  }
+
+  OS_Printf( "stage = %d\n", wk->stage );
+  return wk;
+#endif
+  return( bsw_scr );
 }
 
 //--------------------------------------------------------------
@@ -67,10 +229,40 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
 //--------------------------------------------------------------
 void BSUBWAY_SCRWORK_ReleaseWork( BSUBWAY_SCRWORK *bsw_scr )
 {
+  GF_ASSERT( bsw_scr != NULL );
+  
   if( bsw_scr != NULL ){
     GF_ASSERT( bsw_scr->magicNo == BSUBWAY_SCRWORK_MAGIC );
+    MI_CpuClear8( bsw_scr, sizeof(BSUBWAY_SCRWORK) );
     GFL_HEAP_FreeMemory( bsw_scr );
   }
+}
+
+//======================================================================
+//  parts
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * プレイモード別メンバー数
+ * @param play_mode 
+ * @retval  
+ */
+//--------------------------------------------------------------
+static u8 bswScr_GetMemberNum( u16 mode )
+{
+  switch(mode){
+  case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_WIFI:
+  case BSWAY_MODE_RETRY:
+    return 3;
+  case BSWAY_MODE_DOUBLE:
+    return 4;
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_WIFI_MULTI:
+    return 2;
+  }
+  return 0;
 }
 
 //======================================================================
@@ -99,7 +291,7 @@ void BSUBWAY_SCRWORK_SelectPoke(
  */
 //--------------------------------------------------------------
 BOOL BSUBWAY_SCRWORK_GetEntryPoke(
-    BSUBWAY_SCRWORK *wk, void **app_work, GAMEDATA *gdata ) //SAVEDATA *sv )
+    BSUBWAY_SCRWORK *wk, void **app_work, GAMESYS_WORK *gsys ) //SAVEDATA *sv )
 {
 #if 0 //wb
   u16  i = 0;
@@ -145,7 +337,7 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke(
  */
 //--------------------------------------------------------------
 int BSUBWAY_SCRWORK_CheckEntryPoke(
-    BSUBWAY_SCRWORK *wk, GAMEDATA *gdata ) //SAVEDATA *savedata )
+    BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys ) //SAVEDATA *savedata )
 {
 #if 0 //wb
 #if 1
@@ -202,7 +394,7 @@ static BOOL is_trainer_conflict( u16* trainer,u16 id,u16 num )
  *  @brief　対戦トレーナーNo抽選
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
+void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
 #if 0 //wb
   int i;
@@ -374,7 +566,7 @@ static void bswayscr_SetCommonScore(
  *  @brief  敗戦処理  
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_SetLoseScore( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
+void BSUBWAY_SCRWORK_SetLoseScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
 #if 0 //wb
   u32  ret = 0;
@@ -491,7 +683,7 @@ void BSUBWAY_SCRWORK_SetLoseScore( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
  *  @brief  クリア処理
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
+void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
 #if 0 //wb
   u32  ret = 0;
@@ -845,7 +1037,7 @@ u16  BSUBWAY_SCRWORK_GoodsFlagSet( BSUBWAY_SCRWORK *wk,SAVEDATA *sv )
 //--------------------------------------------------------------
 #if 0 //wb
 u16 BSUBWAY_SCRWORK_SetWifiRank(
-    BSUBWAY_SCRWORK *wk, GAMEDATA *gdata, u8 mode )
+    BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys, u8 mode )
 {
   u8  ct,rank;
   BTLTOWER_SCOREWORK *score = SaveData_GetTowerScoreData( sv );
@@ -919,7 +1111,7 @@ u16 BSUBWAY_SCRWORK_SetWifiRank(
  */
 //--------------------------------------------------------------
 #if 0 //wb
-u16 BSUBWAY_SCRWORK_LeaderRibbonSet( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
+u16 BSUBWAY_SCRWORK_LeaderRibbonSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
   if( wk->play_mode != BTWR_MODE_SINGLE ){
     return 0;
@@ -942,7 +1134,7 @@ u16 BSUBWAY_SCRWORK_LeaderRibbonSet( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
  */
 //--------------------------------------------------------------
 #if 0 //wb
-u16 BSUBWAY_SCRWORK_RenshouRibbonSet( BSUBWAY_SCRWORK *wk, GAMEDATA *gdata )
+u16 BSUBWAY_SCRWORK_RenshouRibbonSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
   u8  id,fid;
   u16  record,goods,ret;

@@ -25,90 +25,21 @@
 //  struct
 //======================================================================
 //--------------------------------------------------------------
-/// バトルサブウェイプレイ進行データ
-/// 挑戦開始時にクリアされる
-/// size=20byte
-//--------------------------------------------------------------
-struct _BSUBWAY_PLAYWORK
-{
-  u8  itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
-  u8  saved_f    :1;  ///<セーブ済みかどうか
-  u8  play_mode  :3;  ///<現在どこにチャレンジ中か?
-  u8  partner    :3;  ///<現在誰と組んでいるか?
-  u8  dummy; ///<4byte境界ダミー
-  u8  tower_round;    ///<バトルサブウェイ今何人目？
-  u8  wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
-  u16  wifi_rec_turn;    ///<勝ち抜きにかかったターン数
-  u16  wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
-  
-  u8  member_poke[BSUBWAY_STOCK_MEMBER_MAX];    ///<選択したポケモンの位置
-  u16  trainer_no[BSUBWAY_STOCK_TRAINER_MAX];    ///<対戦トレーナーNo保存
-  
-  u32  play_rnd_seed;  ///<タワープレイ変化ランダムシード保存場所
-  
-  ///<AIマルチのペアのポケモン再生成に必要なパラメータ
-  struct _BSUBWAY_PAREPOKE_PARAM  pare_poke;
-};
-
-//--------------------------------------------------------------
-/// バトルサブウェイ　スコアデータ
-/// size= 20+168+168=356byte
-/// ゲームを通して保存&管理しておく、プレイヤー成績
-//--------------------------------------------------------------
-struct _BSUBWAY_SCOREWORK
-{
-  u16  btl_point;  ///<バトルポイント
-  u8  wifi_lose;  ///<連続敗戦カウント
-  u8  wifi_rank;  ///<WiFiランク
-
-  u32  day_rnd_seed;  ///<タワー用日付変化ランダムシード保存場所
-  
-  union{
-    struct{
-    u16  silver_get:1;    ///<シルバートロフィーゲット
-    u16  gold_get:1;      ///<ゴールドトロフィーゲット
-    u16  silver_ready:1;    ///<シルバー貰えます
-    u16  gold_ready:1;    ///<ゴールド貰えます
-    u16  wifi_lose_f:1;    ///<wifi連続敗戦フラグ
-    u16  wifi_update:1;    ///<wifi成績アップロードフラグ
-    u16  wifi_poke_data:1;  ///<wifiポケモンデータストック有りナシフラグ
-    u16  single_poke_data:1;  ///<singleポケモンデータストック有りナシフラグ
-    u16  single_record:1;  ///<シングルレコード挑戦中フラグ
-    u16  double_record:1;  ///<ダブルレコード挑戦中フラグ
-    u16  multi_record:1;    ///<マルチレコード挑戦中フラグ
-    u16  cmulti_record:1;  ///<通信マルチレコード挑戦中フラグ
-    u16  wifi_record:1;    ///<Wifiレコード挑戦中フラグ
-    u16  copper_get:1;    ///<カッパートロフィーゲット
-    u16  copper_ready:1;    ///<カッパー貰えます
-    u16  :1;  ///<境界ダミー
-    };
-    u16  flags;
-  };
-  
-  ///<バトルサブウェイ周回数(paddingをWIFI_MULTI用に加えた)
-  u16  tower_stage[6];
-
-  //WiFiチャレンジデータ
-  u16  wifi_score;  ///<WiFi成績
-  //WiFiポケモンデータストック
-  struct _BSUBWAY_POKEMON  wifi_poke[3];
-  //トレーナーロード用シングルデータストック
-  struct _BSUBWAY_POKEMON  single_poke[3];
-};
-
-//--------------------------------------------------------------
 /// バトルサブウェイ プレイヤーメッセージデータ
 /// 8*4=32byte
 //--------------------------------------------------------------
+#if 0 //wb null
 struct _BSUBWAY_PLAYER_MSG
 {
   PMS_DATA  msg[4];  ///<自分用メッセージ
 };
+#endif
 
 //--------------------------------------------------------------
 /// バトルサブウェイ WIFI プレイヤーデータ
 /// 56*3+60=228byte
 //--------------------------------------------------------------
+#if 0 //wb null
 struct _BSUBWAY_WIFI_PLAYER
 {
   struct _BSUBWAY_POKEMON  poke[3];
@@ -139,11 +70,13 @@ struct _BSUBWAY_WIFI_PLAYER
   u16  lose_word[4];            //敗退メッセージ  
   u16  result;                //成績
 };
+#endif
 
 //--------------------------------------------------------------
 /// バトルサブウェイ WIFI DLデータ
 /// 280byte+1596(228*7)byte+1020(34*30)byte=2836byte
 //--------------------------------------------------------------
+#if 0 //wb null
 struct _BSUBWAY_WIFI_DATA
 {
 //  GF_DATE  day;  ///<DLした日付4byte
@@ -163,6 +96,7 @@ struct _BSUBWAY_WIFI_DATA
   ///リーダーデータ
   struct _BSUBWAY_LEADER_DATA leader[BSUBWAY_STOCK_WIFI_LEADER_MAX];
 };
+#endif
 
 //======================================================================
 //  extern

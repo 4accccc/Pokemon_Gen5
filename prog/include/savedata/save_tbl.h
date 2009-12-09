@@ -89,7 +89,8 @@ enum{
 	GMDATA_ID_SHORTCUT,	        // Yボタン登録
 	GMDATA_ID_ZUKAN,	          // ポケモン図鑑
 	GMDATA_ID_ENCOUNT,	        // エンカウント関連セーブデータ
-  
+  GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
+  GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
 	GMDATA_ID_MAX,
 };
 

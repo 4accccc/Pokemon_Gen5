@@ -46,7 +46,7 @@
 #include "field_task.h"
 #include "field_task_manager.h"
 
-#include "bsubway_scr_common.h"
+#include "bsubway_scr.h"
 
 //======================================================================
 //	define
@@ -124,6 +124,7 @@ extern FLDMSGWIN * FIELDMAP_GetGoldMsgWin( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin );
 extern SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork );
 extern AREADATA* FIELDMAP_GetAreaData( FIELDMAP_WORK* fieldWork );
+extern BSUBWAY_SCRWORK ** FIELDMAP_GetBSubwayScriptWork( FIELDMAP_WORK *fieldWork );
 extern FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm);
 extern GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm);
 

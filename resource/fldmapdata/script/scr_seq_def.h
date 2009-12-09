@@ -5806,6 +5806,7 @@
   .endm
   
 //======================================================================
+//  3Dデモ
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -5821,6 +5822,71 @@
   .short  EV_SEQ_DEMO_SCENE
   .short  \demo_no
   .endm
-
   
+//======================================================================
+//  バトルサブウェイ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _BSUBWAY_WORK_CLEAR
+ * @brief バトルサブウェイ　ワーククリア
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _BSUBWAY_WORK_CLEAR() \
+    _ASM_BSUBWAY_WORK_CLEAR
+
+  .macro  _ASM_BSUBWAY_WORK_CLEAR
+  .short  EV_SEQ_BSUBWAY_WORK_CLEAR
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _BSUBWAY_WORK_CREATE
+ * @brief バトルサブウェイ　ワーク作成
+ * @param init 初期化種類 BSWAY_PLAY_NEW等
+ * @param mode バトルモード BSWAY_MODE_SINGLE等
+ */
+//--------------------------------------------------------------
+#define _BSUBWAY_WORK_CREATE( init, mode ) \
+    _ASM_BSUBWAY_WORK_CREATE init, mode
+
+  .macro  _ASM_BSUBWAY_WORK_CREATE
+  .short  EV_SEQ_BSUBWAY_WORK_CREATE
+  .short  \init
+  .short  \mode
+  .endm
+ 
+//--------------------------------------------------------------
+/**
+ * @def _BSUBWAY_WORK_RELEASE
+ * @brief バトルサブウェイ　ワーク開放
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _BSUBWAY_WORK_RELEASE() \
+    _ASM_BSUBWAY_WORK_RELEASE
+
+  .macro  _ASM_BSUBWAY_WORK_RELEASE
+  .short  EV_SEQ_BSUBWAY_WORK_RELEASE
+  .endm
+ 
+//--------------------------------------------------------------
+/**
+ * @def _BSUBWAY_TOOL
+ * @brief バトルサブウェイ　コマンドツール呼び出し
+ * @param cmd 呼び出すコマンド　BSWAY_TOOL_CHK_ENTRY_POKE_NUM等
+ * @param param コマンドに渡すパラメータ
+ * @param ret_wk 結果格納先
+ */
+//--------------------------------------------------------------
+#define _BSUBWAY_TOOL( cmd, param, ret_wk ) \
+    _ASM_BSUBWAY_TOOL cmd, param, ret_wk
+
+  .macro  _ASM_BSUBWAY_TOOL
+  .short  EV_SEQ_BSUBWAY_TOOL
+  .short \cmd
+  .short \param
+  .short \ret_wk
+  .endm
 

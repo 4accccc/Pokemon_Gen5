@@ -46,6 +46,7 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/encount_sv.h"
 #include "savedata/c_gear_picture.h"
+#include "savedata/bsubway_savedata.h"
 
 //==============================================================================
 //  定数定義
@@ -368,7 +369,17 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_ENCOUNT,
     (FUNC_GET_SIZE)EncDataSave_GetWorkSize,
     (FUNC_INIT_WORK)EncDataSave_Init,
-  }
+  },
+  { //バトルサブウェイ　プレイデータ
+    GMDATA_ID_BSUBWAY_PLAYDATA,
+    (FUNC_GET_SIZE)BSUBWAY_PLAYDATA_GetWorkSize,
+    (FUNC_INIT_WORK)BSUBWAY_PLAYDATA_Init,
+  },
+  { //バトルサブウェイ　スコアデータ
+    GMDATA_ID_BSUBWAY_SCOREDATA,
+    (FUNC_GET_SIZE)BSUBWAY_SCOREDATA_GetWorkSize,
+    (FUNC_INIT_WORK)BSUBWAY_SCOREDATA_Init,
+  },
 };
 
 //--------------------------------------------------------------

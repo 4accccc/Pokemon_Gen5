@@ -24,8 +24,6 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
-#include "bsubway_scr.h"
-
 //======================================================================
 //  define
 //======================================================================
@@ -37,7 +35,7 @@
 //======================================================================
 //  extern
 //======================================================================
-extern BOOL EvCmdBattleTowerWorkInit( VMHANDLE* core, void *wk );
-extern BOOL EvCmdBattleTowerWorkClear(VMHANDLE* core, void *wk );
-extern BOOL EvCmdBattleTowerWorkRelease(VMHANDLE* core, void *wk );
-extern BOOL EvCmdBattleTowerTools( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBSubwayWorkCreate( VMHANDLE* core, void *wk );
+extern VMCMD_RESULT EvCmdBSubwayWorkClear(VMHANDLE* core, void *wk );
+extern VMCMD_RESULT EvCmdBSubwayWorkRelease(VMHANDLE* core, void *wk );
+extern VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk );

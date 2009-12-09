@@ -2,10 +2,10 @@
 /**
  * @file  scrcmd_bsybway.c
  * @brief  バトルサブウェイ　スクリプトコマンド専用ソース
- * @author	Miyuki Iwasawa
+ * @author  Miyuki Iwasawa
  * @date  2006.05.23
  *
- * 2007.05.24	Satoshi Nohara*
+ * 2007.05.24  Satoshi Nohara*
  *
  * @note plから移植 kagaya
  */
@@ -17,6 +17,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#include "fieldmap.h"
+
 #include "script.h"
 #include "script_local.h"
 #include "script_def.h"
@@ -24,7 +26,7 @@
 #include "scrcmd_work.h"
 
 #include "bsubway_scr.h"
-
+#include "bsubway_scr_common.h"
 #include "scrcmd_bsubway.h"
 
 //======================================================================
@@ -34,761 +36,396 @@
 //======================================================================
 //  struct
 //======================================================================
+static BOOL bsway_CheckEntryPokeNum(
+    u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
 
 //======================================================================
 //  proto
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  @brief  バトルタワー用ワーク作成と初期化
+ *  @brief  バトルサブウェイ用ワーク作成と初期化
  *  @param  init  初期化モード指定
- *          BTWR_PLAY_NEW:new game
- *          BTWR_PLAY_CONTINUE:new game
- *  @param  mode  プレイモード指定:BTWR_MODE_～
+ *          BSWAY_PLAY_NEW:new game
+ *          BSWAY_PLAY_CONTINUE:new game
+ *  @param  mode  プレイモード指定:BSWAY_MODE_～
  *  @return 0
  */
 //--------------------------------------------------------------
-BOOL EvCmdBattleTowerWorkInit( VMHANDLE* core, void *wk )
+VMCMD_RESULT EvCmdBSubwayWorkCreate( VMHANDLE* core, void *wk )
 {
-  u16  init,mode;
-  init = VMGetU16(core);
-  mode = VMGetU16(core);
-
-#if 0 //wb
-  core->fsys->btower_wk = TowerScr_WorkInit(
-      GameSystem_GetSaveData(core->fsys), init, mode );
-#endif
+  u16 init = VMGetU16(core);
+  u16 mode = VMGetU16(core);
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  BSUBWAY_SCRWORK **bsw_scr;
   
+  bsw_scr = FIELDMAP_GetBSubwayScriptWork( fparam->fieldMap );
+  *bsw_scr = BSUBWAY_SCRWORK_CreateWork( gsys, init, mode );
   return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- *  @brief  バトルタワー制御用ワークポインタ初期化
+ *  @brief  バトルサブウェイ制御用ワークポインタ初期化
  */
 //--------------------------------------------------------------
-BOOL EvCmdBattleTowerWorkClear(VMHANDLE* core, void *wk )
+VMCMD_RESULT EvCmdBSubwayWorkClear(VMHANDLE* core, void *wk )
 {
-#if 0 //wb
-  BSUBWAY_SCR_ClearWork( TowerScr_WorkClear(&(core->fsys->btower_wk));
-#endif
-  return 0;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  BSUBWAY_SCRWORK **bsw_scr;
+  
+  bsw_scr = FIELDMAP_GetBSubwayScriptWork( fparam->fieldMap );
+  BSUBWAY_SCRWORK_ClearWork( bsw_scr );
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- *  @brief  バトルタワー用ワーク解放
+ *  @brief  バトルサブウェイ用ワーク解放
  *  @return 0
  */
 //--------------------------------------------------------------
-BOOL EvCmdBattleTowerWorkRelease(VMHANDLE* core, void *wk )
+VMCMD_RESULT EvCmdBSubwayWorkRelease(VMHANDLE* core, void *wk )
 {
-#if 0 //wb
-  BTOWER_SCRWORK* wk;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  BSUBWAY_SCRWORK **bsw_scr;
   
-  //ワーク領域解放
-  TowerScr_WorkRelease(core->fsys->btower_wk);
-  core->fsys->btower_wk = NULL;
-#endif
-  return 0;
+  bsw_scr = FIELDMAP_GetBSubwayScriptWork( fparam->fieldMap );
+  BSUBWAY_SCRWORK_ReleaseWork( *bsw_scr );
+  *bsw_scr = NULL;
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- *  @brief  バトルタワー用コマンド群呼び出しインターフェース
+ *  @brief  バトルサブウェイ用コマンド群呼び出しインターフェース
  *  @param  com_id    u16:コマンドID
  *  @param  retwk_id  u16:返り値を格納するワークのID
  */
 //--------------------------------------------------------------
-BOOL EvCmdBattleTowerTools( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 {
-#if 0 //wb
-  u16  com_id,param,retwk_id;
-  u16* ret_wk,*prm_wk;
-  void ** buf;
-  BTOWER_SCRWORK* wk;
-
-  com_id  = VMGetU16(core);
-  param  = VMGetWorkValue(core);
-  retwk_id= VMGetU16(core);
-  ret_wk  = GetEventWorkAdrs( core->fsys, retwk_id );
-
-  wk = core->fsys->btower_wk;
-
-  switch(com_id){
-
-  //ワーク非依存
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  u16 com_id = VMGetU16( core );
+  u16 param = SCRCMD_GetVMWorkValue( core, work );
+  u16 retwk_id = VMGetU16( core );
+  u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
+  BSUBWAY_SCRWORK *bsw_scr,**bsw_scr_base;
+  void **buf;
   
-  //1:バトルタワー参加可能なポケモン数のチェック
-  case BTWR_TOOL_CHK_ENTRY_POKE_NUM:
-    if(param == 0){
-      *ret_wk = TowerScrTools_CheckEntryPokeNum(wk->member_num,core->fsys->savedata,1);
+  bsw_scr_base = FIELDMAP_GetBSubwayScriptWork( fparam->fieldMap );
+  bsw_scr = *bsw_scr_base;
+   
+  switch( com_id ){
+  //ワーク非依存
+  //参加可能なポケモン数のチェック
+  case BSWAY_TOOL_CHK_ENTRY_POKE_NUM:
+    if( param == 0 ){
+      *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
     }else{
-      *ret_wk = TowerScrTools_CheckEntryPokeNum(param,core->fsys->savedata,1);
+      *ret_wk = bsway_CheckEntryPokeNum( param, gsys, 1 );
     }
     break;
-
-  //2:リセット
-  case BTWR_TOOL_SYSTEM_RESET:
+  //リセット
+  case BSWAY_TOOL_SYSTEM_RESET:
+    #if 0 //wb null
     TowerScrTools_SystemReset();
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_CLEAR_PLAY_DATA:
-    TowerScrTools_ClearPlaySaveData(SaveData_GetTowerPlayData(core->fsys->savedata));
+  //プレイデータクリア
+  case BSWAY_TOOL_CLEAR_PLAY_DATA:
+    BSUBWAY_PLAYDATA_Init( bsw_scr->playData );
     break;
-
-  case BTWR_TOOL_IS_SAVE_DATA_ENABLE:
-    *ret_wk = TowerScrTools_IsSaveDataEnable(
-            SaveData_GetTowerPlayData(core->fsys->savedata));
+  //セーブしているか？
+  case BSWAY_TOOL_IS_SAVE_DATA_ENABLE:
+    *ret_wk = BSUBWAY_PLAYDATA_GetSaveFlag( bsw_scr->playData );
     break;
-
   //脱出用に現在のロケーションを記憶する
-  case BTWR_TOOL_PUSH_NOW_LOCATION:
+  case BSWAY_TOOL_PUSH_NOW_LOCATION:
+    #if 0 //wb null
     TowerScrTools_PushNowLocation(core->fsys);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_POP_NOW_LOCATION:
+  //記録したロケーションに戻す。
+  case BSWAY_TOOL_POP_NOW_LOCATION:
+    #if 0 // wb null
     TowerScrTools_PopNowLocation(core->fsys);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_GET_RENSHOU_RECORD:
+  //連勝レコード数取得
+  case BSWAY_TOOL_GET_RENSHOU_RECORD:
+    #if 0 //wb null
     *ret_wk = TowerScrTools_GetRenshouRecord(core->fsys->savedata,param);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  //d31r0201.ev
-  case BTWR_TOOL_WIFI_RANK_DOWN:
+  case BSWAY_TOOL_WIFI_RANK_DOWN:
+    #if 0 // wb null 
     *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,2);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  //d31r0201.ev
-  case BTWR_TOOL_GET_WIFI_RANK:
+  case BSWAY_TOOL_GET_WIFI_RANK:
+    #if 0
     *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,0);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_SET_WIFI_UPLOAD_FLAG:
+  case BSWAY_TOOL_SET_WIFI_UPLOAD_FLAG:
+    #if 0
     TowerScrTools_SetWifiUploadFlag(core->fsys->savedata,param);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_GET_WIFI_UPLOAD_FLAG:
+  case BSWAY_TOOL_GET_WIFI_UPLOAD_FLAG:
+    #if 0
     *ret_wk = TowerScrTools_GetWifiUploadFlag(core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_SET_NG_SCORE:
+  case BSWAY_TOOL_SET_NG_SCORE:
+    #if 0
     *ret_wk = TowerScrTools_SetNGScore(core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_TOOL_IS_PLAYER_DATA_ENABLE:
+  case BSWAY_TOOL_IS_PLAYER_DATA_ENABLE:
+    #if 0
     *ret_wk = TowerScrTools_IsPlayerDataEnable(core->fsys->savedata);
     break;
-
-  case BTWR_TOOL_WIFI_CONNECT:
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
+  case BSWAY_TOOL_WIFI_CONNECT:
+    #if 0
     EventCmd_BTowerWifiCall(core->event_work,param,retwk_id,*ret_wk);
     return 1;
-  
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
   //ワーク依存
-  
   //ポケモンリスト画面呼び出し
-  case BTWR_SUB_SELECT_POKE:
+  case BSWAY_SUB_SELECT_POKE:
+    #if 0
     buf = GetEvScriptWorkMemberAdrs(core->fsys, ID_EVSCR_SUBPROC_WORK);
     TowerScr_SelectPoke(wk,core->event_work,buf);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     return 1;
-
-  //選択されたポケモン取得*/
-  case BTWR_SUB_GET_ENTRY_POKE:
+  //選択されたポケモン取得
+  case BSWAY_SUB_GET_ENTRY_POKE:
+    #if 0
     buf = GetEvScriptWorkMemberAdrs(core->fsys, ID_EVSCR_SUBPROC_WORK);
     *ret_wk = TowerScr_GetEntryPoke(wk,buf,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
   //参加指定した手持ちポケモンの条件チェック
-  case BTWR_SUB_CHK_ENTRY_POKE:
+  case BSWAY_SUB_CHK_ENTRY_POKE:
+    #if 0
     *ret_wk = TowerScr_CheckEntryPoke(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_IS_CLEAR:
+  case BSWAY_SUB_IS_CLEAR:
+    #if 0
     *ret_wk = TowerScr_IsClear(wk);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_SET_LOSE_SCORE:
+  case BSWAY_SUB_SET_LOSE_SCORE:
+    #if 0
     TowerScr_SetLoseScore(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_SET_CLEAR_SCORE:
+  case BSWAY_SUB_SET_CLEAR_SCORE:
+    #if 0
     TowerScr_SetClearScore(wk,core->fsys->savedata,core->fsys->fnote);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_SAVE_REST_PLAY_DATA:
+  case BSWAY_SUB_SAVE_REST_PLAY_DATA:
+    #if 0
     TowerScr_SaveRestPlayData(wk);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_CHOICE_BTL_SEVEN:
+  case BSWAY_SUB_CHOICE_BTL_SEVEN:
+    #if 0
     TowerScr_ChoiceBtlSeven(wk);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_GET_ENEMY_OBJ:
+  case BSWAY_SUB_GET_ENEMY_OBJ:
+    #if 0
     *ret_wk = TowerScr_GetEnemyObj(wk,param);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
   //現在のプレイモードを取得
-  case BTWR_SUB_GET_PLAY_MODE:
+  case BSWAY_SUB_GET_PLAY_MODE:
+    #if 0
     *ret_wk = (u16)TowerScr_GetPlayMode(wk);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_GET_LEADER_CLEAR_FLAG:
+  case BSWAY_SUB_GET_LEADER_CLEAR_FLAG:
+    #if 0
     *ret_wk = TowerScr_GetLeaderClearFlag(wk);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_GOODS_FLAG_SET:
+  case BSWAY_SUB_GOODS_FLAG_SET:
+    #if 0
     TowerScr_GoodsFlagSet(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_LEADER_RIBBON_SET:
+  case BSWAY_SUB_LEADER_RIBBON_SET:
+    #if 0
     *ret_wk = TowerScr_LeaderRibbonSet(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_RENSHOU_RIBBON_SET:
+  case BSWAY_SUB_RENSHOU_RIBBON_SET:
+    #if 0
     *ret_wk = TowerScr_RenshouRibbonSet(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_SET_PARTNER_NO:
+  case BSWAY_SUB_SET_PARTNER_NO:
+    #if 0
     wk->partner = param;
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_GET_PARTNER_NO:
+  case BSWAY_SUB_GET_PARTNER_NO:
+    #if 0
     *ret_wk = wk->partner;
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  //
-  case BTWR_SUB_BTL_TRAINER_SET:
-     TowerScr_BtlTrainerNoSet(wk,core->fsys->savedata);
-     break;
-
-  case BTWR_SUB_GET_SELPOKE_IDX:
-     *ret_wk = wk->member[param];
+  case BSWAY_SUB_BTL_TRAINER_SET:
+    #if 0
+    TowerScr_BtlTrainerNoSet(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  //d31r0201.ev
+  case BSWAY_SUB_GET_SELPOKE_IDX:
+    #if 0
+    *ret_wk = wk->member[param];
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
+    break;
   //(BTS通信142)変更の対象
-  case BTWR_SUB_WIFI_RANK_UP:
+  case BSWAY_SUB_WIFI_RANK_UP:
+    #if 0
     *ret_wk = TowerScr_SetWifiRank(wk,core->fsys->savedata,1);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_SUB_GET_MINE_OBJ:
+  case BSWAY_SUB_GET_MINE_OBJ:
+    #if 0
     *ret_wk = btltower_GetMineObj(wk,param);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
   //プレイランダムシードを更新する
-  case BTWR_SUB_UPDATE_RANDOM:
+  case BSWAY_SUB_UPDATE_RANDOM:
+    #if 0
     *ret_wk = TowerScr_PlayRandUpdate(wk,core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
-  case BTWR_DEB_IS_WORK_NULL:
+  case BSWAY_DEB_IS_WORK_NULL:
+    #if 0
     if(wk == NULL){
       *ret_wk = 1;
     }else{
       *ret_wk = 0;
     }
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
     break;
-
   //58:受信バッファクリア
-  case BTWR_SUB_RECV_BUF_CLEAR:
-    MI_CpuClear8(wk->recv_buf,BTWR_SIO_BUF_LEN);
+  case BSWAY_SUB_RECV_BUF_CLEAR:
+    #if 0
+    MI_CpuClear8(wk->recv_buf,BSWAY_SIO_BUF_LEN);
     break;
-
+    #else
+    GF_ASSERT( 0 && "WB未作成コマンドです" );
+    #endif
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
-    GF_ASSERT( (0) && "com_idが未対応です！" );
+    GF_ASSERT( 0 && "com_idが未対応です！" );
     *ret_wk = 0;
     break;
   }
-#endif
-  return 0;
-}
-
-//--------------------------------------------------------------
-/**
- *  @brief  抽選済みの5人衆のポケモンデータを返す
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBattleTowerGetSevenPokeData(VMHANDLE* core)
-{
-  u16  id,idx;
-  u16 *ret_poke,*ret_waza;
-  BTOWER_SCRWORK* wk = core->fsys->btower_wk;
-
-  id =  VMGetWorkValue(core);    //5人衆id
-  idx =  VMGetWorkValue(core);  //取りたいポケモンのidx
-
-  ret_poke = GetEventWorkAdrs(core->fsys,VMGetU16(core));
-  ret_waza = GetEventWorkAdrs(core->fsys,VMGetU16(core));
-
-  *ret_poke = wk->five_data[id].btpwd[idx].mons_no;
-  *ret_waza = wk->five_data[id].btpwd[idx].waza[0];
-
-  return 0;
-}
-#endif
-
-
-//--------------------------------------------------------------
-/**
- *  @brief  バトルタワー プライズをもらえる状態かどうか？
- *  @param  retwk_id  u16:返り値を格納するワークのID
- */
-//--------------------------------------------------------------
-#if 0
-BOOL EvCmdBattleTowerIsPrizeGet(VMHANDLE* core)
-{
-  u16  retwk_id,win,ret;
-  u16* ret_wk;
   
-  retwk_id = VMGetU16(core);
-  ret_wk = GetEventWorkAdrs( core->fsys, retwk_id );
-
-  *ret_wk = BtlTower_IsPrizeGet(core->fsys->savedata);
-  return 0;
+  return VMCMD_RESULT_CONTINUE;
 }
-#endif
-
-
-//--------------------------------------------------------------
-/**
- *  @brief  バトルタワー　プライズを渡すヒトを表示するかどうか？
- *  @param  retwk_id  u16:返り値を格納するワークのID
- */
-//--------------------------------------------------------------
-#if 0
-BOOL EvCmdBattleTowerIsPrizemanSet(VMHANDLE* core)
-{
-  u16  retwk_id,win,ret;
-  u16* ret_wk;
-  
-  retwk_id = VMGetU16(core);
-  ret_wk = GetEventWorkAdrs( core->fsys, retwk_id );
-
-  *ret_wk = BtlTower_IsPrizemanSet(core->fsys->savedata);
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @brief  通信マルチデータ送信
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBattleTowerSendBuf(VMHANDLE* core)
-{
-  int command,size;
-  const MYSTATUS* my;
-  u16 mode  = VMGetWorkValue(core);
-  u16 param  = VMGetWorkValue(core);
-  u16* ret_wk = VMGetWork(core);
-
-  BTOWER_SCRWORK* wk = core->fsys->btower_wk;
-
-  OS_Printf( "通信マルチデータ送信\n" );
-
-  *ret_wk = 0;
-  //MI_CpuClear8(wk->recv_buf,BTWR_SIO_BUF_LEN);    //再送信のために分けた(08.07.03)
-
-  //送信コマンドが増えたら、送信前に受信バッファのクリアを呼ばないとダメ！
-  //TOOLS BTWR_SUB_RECV_BUF_CLEAR
-
-  switch(mode){
-  case TOWER_COMM_PLAYER_DATA:  //ポケモン選択
-    command = FC_TOWER_PLAYER_DATA;
-    BTowerComm_SendPlayerData(core->fsys->btower_wk,core->fsys->savedata);
-    break;
-  case TOWER_COMM_TR_DATA:    //抽選トレーナー
-    command = FC_TOWER_TR_DATA;
-    BTowerComm_SendTrainerData(core->fsys->btower_wk);
-    break;
-  case TOWER_COMM_RETIRE_SELECT:  //リタイアを選ぶか？
-    command = FC_TOWER_RETIRE_SELECT;
-    BTowerComm_SendRetireSelect(core->fsys->btower_wk,param);
-    break;
-  }
-  OS_Printf(">>btwr send = %d,%d,%d\n",wk->send_buf[0],wk->send_buf[1],wk->send_buf[2]);
-
-  //自分、相手のどちらかがDPの時は、DPの通信処理
-  if( Frontier_CheckDPRomCode(core->fsys->savedata) == 1 ){
-
-    OS_Printf( "DPの形式の通信処理\n" );
-    //CommToolSetTempData(CommGetCurrentID(),wk->send_buf);
-    //*ret_wk = 1;    //成功
-#if 1
-    //同期待ち、受信人数待ちがないので、再送信してもずれそうだが一応。
-    if( CommToolSetTempData(CommGetCurrentID(),wk->send_buf) == TRUE ){
-      *ret_wk = 1;    //成功
-    }else{
-      return 1;      //注意！
-    }
-#endif
-  }else{
-    OS_Printf( "PLの形式の通信処理\n" );
-    CommCommandFrontierInitialize( wk );
-    //size = 35;          //定義がない？ぽいので、とりあえず直値
-    size = BTWR_SIO_BUF_LEN;    //bufは[35]で、2byteなので、size=70
-    if( CommSendData(command,wk->send_buf,size) == TRUE ){
-      *ret_wk = 1;  //成功
-    }
-  }
-
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @brief  通信マルチデータ受信
- */
-//--------------------------------------------------------------
-#if 0 //wb
-static BOOL EvWaitBattleTowerRecvBuf(VMHANDLE * core);
-
-BOOL EvCmdBattleTowerRecvBuf(VMHANDLE* core)
-{
-  u16  retwk_id;
-  u16  mode;
-  BTOWER_SCRWORK* wk = core->fsys->btower_wk;
-
-  OS_Printf( "通信マルチデータ受信\n" );
-
-  mode = VMGetWorkValue(core);
-  retwk_id = VMGetU16(core);
-  
-  //自分、相手のどちらかがDPの時は、DPの通信処理
-  if( Frontier_CheckDPRomCode(core->fsys->savedata) == 1 ){
-    OS_Printf( "DPの形式の通信処理\n" );
-    EventCmd_BTowerSioRecvBuf(core->fsys->event,mode,retwk_id);
-  }else{
-    OS_Printf( "PLの形式の通信処理\n" );
-    wk->ret_wkno = retwk_id;
-    wk->mode = mode;
-    VM_SetWait( core, EvWaitBattleTowerRecvBuf );
-  }
-  return 1;
-}
-
-//return 1 = 終了
-static BOOL EvWaitBattleTowerRecvBuf(VMHANDLE * core)
-{
-  u8 check_num;
-  BTOWER_SCRWORK* wk = core->fsys->btower_wk;
-  u16* ret_wk = GetEventWorkAdrs( core->fsys, wk->ret_wkno );
-
-  //トレーナーデータは親だけ送信、子だけ受信の形になっているため
-  if( wk->mode == TOWER_COMM_TR_DATA ){
-    check_num = 1;
-  }else{
-    check_num = 2;
-    //check_num = FRONTIER_COMM_PLAYER_NUM;
-  }
-
-  if( wk->recieve_count == check_num ){ 
-    wk->recieve_count = 0;
-    *ret_wk = wk->check_work;
-    return 1;
-  }
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @brief  リーダーデータルームIDを取得
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBattleTowerGetLeaderRoomID(VMHANDLE* core)
-{
-  BTOWER_ROOMID roomid;
-  
-  u16  *ret01 = GetEventWorkAdrs(core->fsys,VMGetU16(core));
-  u16  *ret02 = GetEventWorkAdrs(core->fsys,VMGetU16(core));
-
-  TowerWifiData_GetLeaderDataRoomID(
-      SaveData_GetTowerWifiData(core->fsys->savedata),&roomid);
-  
-  *ret01 = roomid.rank;
-  *ret02 = roomid.no;
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @brief  リーダーDLデータが存在するかどうか？
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBattleTowerIsLeaderDataExist(VMHANDLE* core)
-{
-  u16  *ret_wk = GetEventWorkAdrs(core->fsys,VMGetU16(core));
-  *ret_wk = TowerWifiData_IsLeaderDataEnable(
-      SaveData_GetTowerWifiData(core->fsys->savedata));
-  return 0;
-}
-#endif
-
-
-//--------------------------------------------------------------
-/**
- *  @biref  必要な人物OBJコードを返す
- */
-//--------------------------------------------------------------
-#if 0
-static u16 btltower_GetMineObj(BTOWER_SCRWORK* wk,u8 mode)
-{
-  static const u16 five_cord[] = {
-   SEVEN1,SEVEN5,SEVEN2,SEVEN3,SEVEN4
-  };
-  if(mode == BTWR_PTCODE_OBJ){
-    return wk->partner;
-  }
-  if(mode == BTWR_PTCODE_MINE2){
-    if(wk->play_mode == BTWR_MODE_MULTI){
-      return five_cord[wk->partner];
-    }else{
-      if(wk->pare_sex){
-        return HEROINE;
-      }else{
-        return HERO;
-      }
-    }
-  }
-  if(wk->my_sex){
-    return HEROINE;
-  }else{
-    return HERO;
-  }
-}
-#endif
 
 //======================================================================
-//  データ関連
+//  parts
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 所持バトルポイントウィンドウ表示
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
+ * 参加可能なポケモン数のチェック
+ * @param  num      参加に必要なポケモン数
+ * @param  item_flag  アイテムチェックするかフラグ
+ * @retval BOOL TRUE=参加可能
  */
 //--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBtlPointWinWrite(VMHANDLE * core)  
+static BOOL bsway_CheckEntryPokeNum(
+    u16 num, GAMESYS_WORK *gsys, BOOL item_flag )
 {
-  FIELDSYS_WORK* fsys = core->fsys;
-  u8 x = VMGetU8(core);
-  u8 z = VMGetU8(core);
-
-  GF_BGL_BMPWIN** pMsgWinDat;
-  pMsgWinDat = GetEvScriptWorkMemberAdrs( fsys, ID_EVSCR_COINWINDAT );
-  *pMsgWinDat = EvWin_BtlPointWinPut( core->fsys, x, z );
-
-  return 0;
+  return( TRUE );
 }
-#endif
-
-//--------------------------------------------------------------
-/**
- * 所持バトルポイントウィンドウ削除
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBtlPointWinDel(VMHANDLE * core)
-{
-  FIELDSYS_WORK* fsys = core->fsys;
-  GF_BGL_BMPWIN** pMsgWinDat = GetEvScriptWorkMemberAdrs( fsys, ID_EVSCR_COINWINDAT );
-  EvWin_CoinWinDel(* pMsgWinDat );
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * 所持バトルポイント再表示
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdBtlPointWrite(VMHANDLE * core)
-{
-  FIELDSYS_WORK* fsys = core->fsys;
-  GF_BGL_BMPWIN** pMsgWinDat = GetEvScriptWorkMemberAdrs( fsys, ID_EVSCR_COINWINDAT );
-  EvWin_BtlPointWrite( core->fsys, *pMsgWinDat );
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * 所持バトルポイントを取得
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdCheckBtlPoint( VMHANDLE * core )
-{
-  FIELDSYS_WORK* fsys = core->fsys;
-  SAVEDATA * sv = fsys->savedata;
-  u16 * ret_wk = VMGetWork(core);
-  
-  *ret_wk = TowerScoreData_SetBattlePoint(
-        SaveData_GetTowerScoreData(sv),0,BTWR_DATA_get);
-  return  0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * バトルポイントを加える
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdAddBtlPoint( VMHANDLE * core )
-{
-  FIELDSYS_WORK* fsys = core->fsys;
-  SAVEDATA * sv = fsys->savedata;
-  u16 value = VMGetWorkValue(core);
-
-  //レコード更新
-  RECORD_Add( SaveData_GetRecord(core->fsys->savedata), RECID_WIN_BP, value );
-
-  TowerScoreData_SetBattlePoint(
-      SaveData_GetTowerScoreData(sv),value,BTWR_DATA_add);
-  return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * バトルポイントを引く
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdSubBtlPoint( VMHANDLE * core )
-{
-  FIELDSYS_WORK* fsys = core->fsys;
-  SAVEDATA * sv = fsys->savedata;
-  u16 value = VMGetWorkValue(core);
-
-  //レコード更新
-  RECORD_Add( SaveData_GetRecord(core->fsys->savedata), RECID_USE_BP, value );
-
-  TowerScoreData_SetBattlePoint(
-      SaveData_GetTowerScoreData(sv),value,BTWR_DATA_sub);
-
-  return 0;
-};
-#endif
-
-//--------------------------------------------------------------
-/**
- * バトルポイントを指定ポイント持っているかどうかを返す（_COMP_GOLDのバトルポイント版）
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdCompBtlPoint( VMHANDLE * core )
-{
-  u16  now_bp;
-  FIELDSYS_WORK* fsys = core->fsys;
-  SAVEDATA * sv = fsys->savedata;
-  u16 value = VMGetWorkValue(core);
-  u16* ret_wk  = VMGetWork( core );
-
-  now_bp = TowerScoreData_SetBattlePoint(
-        SaveData_GetTowerScoreData(sv),0,BTWR_DATA_get);
-
-  if(now_bp < value){
-    *ret_wk = FALSE;
-  }else{
-    *ret_wk = TRUE;
-  }
-  return  0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * バトルポイントと交換できるアイテムのデータを返す
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  "0"
- */
-//--------------------------------------------------------------
-#if 0 //wb
-BOOL EvCmdGetBtlPointGift( VMHANDLE * core )
-{
-  u8  ofs = 0;
-  u16  list_id = VMGetWorkValue(core);  //リストno
-  u16  item_idx = VMGetWorkValue(core);  //アイテムindex
-  u16* ret_item = VMGetWork(core);
-  u16* ret_bp = VMGetWork(core);
-
-  static const u16 bpgift_list[][2] = {
-    {ITEM_TAURIN,1},
-    {ITEM_RIZOTIUMU,1},
-    {ITEM_BUROMUHEKISIN,1},
-    {ITEM_KITOSAN,1},
-    {ITEM_INDOMETASIN,1},
-    {ITEM_MAKKUSUAPPU,1},
-    {ITEM_PAWAARISUTO,16},
-    {ITEM_PAWAABERUTO,16},
-    {ITEM_PAWAARENZU,16},
-    {ITEM_PAWAABANDO,16},
-    {ITEM_PAWAAANKURU,16},
-    {ITEM_PAWAAUEITO,16},
-    {ITEM_DOKUDOKUDAMA,16},
-    {ITEM_KAENDAMA,16},
-    {ITEM_SIROIHAABU,32},
-    {ITEM_PAWAHURUHAABU,32},
-    {ITEM_HIKARINOKONA,48},
-    {ITEM_KODAWARIHATIMAKI,48},
-    {ITEM_KIAINOHATIMAKI,48},
-    {ITEM_PINTORENZU,48},
-    {ITEM_TIKARANOHATIMAKI,48},
-    {ITEM_KIAINOTASUKI,48},
-    {ITEM_KODAWARISUKAAHU,48},
-    {ITEM_SURUDOITUME,48},
-    {ITEM_SURUDOIKIBA,48},
-    {ITEM_HUSIGINAAME,48},
-    
-    {ITEM_WAZAMASIN06,32},
-    {ITEM_WAZAMASIN73,32},
-    {ITEM_WAZAMASIN61,32},
-    {ITEM_WAZAMASIN45,32},
-    {ITEM_WAZAMASIN40,40},
-    {ITEM_WAZAMASIN31,40},
-    {ITEM_WAZAMASIN08,48},
-    {ITEM_WAZAMASIN04,48},
-    {ITEM_WAZAMASIN81,64},
-    {ITEM_WAZAMASIN30,64},
-    {ITEM_WAZAMASIN53,64},
-    {ITEM_WAZAMASIN36,80},
-    {ITEM_WAZAMASIN59,80},
-    {ITEM_WAZAMASIN71,80},
-    {ITEM_WAZAMASIN26,80},
-  };
-
-  if(list_id == 1){
-    ofs = BP_GIFT_NUM01;
-  }else{
-    ofs = 0;
-  }
-  *ret_item = bpgift_list[ofs+item_idx][0];
-  *ret_bp = bpgift_list[ofs+item_idx][1];
-
-  return 0;
-}
-#endif

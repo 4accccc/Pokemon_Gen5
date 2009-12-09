@@ -40,7 +40,7 @@ typedef struct
 //--------------------------------------------------------------
 /// バトルサブウェイ　スクリプトワーク
 //--------------------------------------------------------------
-typedef struct _BSUBWAY_SCRWORK
+struct _BSUBWAY_SCRWORK
 {
   int  magicNo;  ///<マジックナンバー
   int  heapID;  ///<ヒープ
@@ -76,10 +76,11 @@ typedef struct _BSUBWAY_SCRWORK
 
   //現在のロケーションを記憶しておく
   LOCATION_WORK  now_location;
-
-  BSUBWAY_PLAYWORK*  playSave;  ///<セーブデータへのポインタ
-  BSUBWAY_SCOREWORK*  scoreSave;  ///<セーブデータへのポインタ
-
+  
+  BSUBWAY_PLAYDATA *playData;  ///<セーブデータへのポインタ
+  BSUBWAY_SCOREDATA *scoreData;  ///<セーブデータへのポインタ
+  
+#if 0  //wb null
   //対戦相手データ格納場所
   BSUBWAY_PARTNER_DATA  tr_data[2];
   
@@ -105,6 +106,7 @@ typedef struct _BSUBWAY_SCRWORK
   u8  dummy;
   u16  check_work;
   u16  ret_wkno;
-}BSUBWAY_SCRWORK;
+#endif
+};
 
 #endif  //__SUBWAY_SCR_COMMON_H__

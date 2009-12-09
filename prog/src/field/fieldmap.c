@@ -325,6 +325,8 @@ struct _FIELDMAP_WORK
   FIELD_TASK_MAN* taskManager;  // タスクマネージャ
 
   BOOL MapFadeReq;     //マップ遷移用フェードリクエスト
+  
+  BSUBWAY_SCRWORK *bsubway_scrwork; //バトルサブウェイ用ワークポインタ
 };
 
 //--------------------------------------------------------------
@@ -1777,6 +1779,18 @@ SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork )
 AREADATA* FIELDMAP_GetAreaData( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->areadata;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK BSUBWAY_SCRWORK取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval BSUBWAY_SCRWORK*
+ */
+//--------------------------------------------------------------
+BSUBWAY_SCRWORK ** FIELDMAP_GetBSubwayScriptWork( FIELDMAP_WORK *fieldWork )
+{
+  return &fieldWork->bsubway_scrwork;
 }
 
 //======================================================================

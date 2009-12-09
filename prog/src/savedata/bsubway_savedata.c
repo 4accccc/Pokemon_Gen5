@@ -10,43 +10,19 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
-#if 0
-#include "common.h"
-#include "savedata/savedata_def.h"
-#include "savedata/savedata.h"
-
-#include "system/gamedata.h"
-#include "system/pms_data.h"
-#include "system/buflen.h"
-#include "system/msgdata.h"
-#include "battle/battle_common.h"
-#include "battle/b_tower_data.h"
-
-#include "savedata/frontier_savedata.h"
-#include "frontier_savedata_local.h"
-
-#include "b_tower_local.h"
-
-#define _BSUBWAY_H_GLOBAL
-#include "savedata/b_tower.h"
-#include "field/b_tower_scr_def.h"
-#include "libdpw/dpw_bt.h"
-
-#include "msgdata/msg.naix"
-#include "msgdata/msg_btower_app.h"
-#endif
-
 #include "libdpw/dpw_bt.h"
 
 #include "savedata/bsubway_savedata.h"
 #include "bsubway_savedata_local.h"
 #include "../field/bsubway_scr_def.h"
 
+#if 0 //wb null
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック
 SDK_COMPILER_ASSERT(sizeof(BSUBWAY_LEADER_DATA) == 34);
 SDK_COMPILER_ASSERT(sizeof(BSUBWAY_POKEMON) == 56);
 SDK_COMPILER_ASSERT(sizeof(BSUBWAY_WIFI_PLAYER) == 228);
+#endif
 #endif
 
 //======================================================================
@@ -56,34 +32,427 @@ SDK_COMPILER_ASSERT(sizeof(BSUBWAY_WIFI_PLAYER) == 228);
 //======================================================================
 //  struct
 //======================================================================
+//--------------------------------------------------------------
+/// バトルサブウェイプレイ進行データ
+/// 挑戦開始時にクリアされる
+/// size=20byte
+//--------------------------------------------------------------
+struct _BSUBWAY_PLAYDATA
+{
+  u8  itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
+  u8  saved_f    :1;  ///<セーブ済みかどうか
+  u8  play_mode  :3;  ///<現在どこにチャレンジ中か?
+  u8  partner    :3;  ///<現在誰と組んでいるか?
+  u8  dummy; ///<4byte境界ダミー
+  u8  tower_round;    ///<バトルサブウェイ今何人目？
+  u8  wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
+  u16  wifi_rec_turn;    ///<勝ち抜きにかかったターン数
+  u16  wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
+  
+  u8  member_poke[BSUBWAY_STOCK_MEMBER_MAX];    ///<選択したポケモンの位置
+  u16  trainer_no[BSUBWAY_STOCK_TRAINER_MAX];    ///<対戦トレーナーNo保存
+  
+  u32  play_rnd_seed;  ///<タワープレイ変化ランダムシード保存場所
+  
+  ///<AIマルチのペアのポケモン再生成に必要なパラメータ
+  struct _BSUBWAY_PAREPOKE_PARAM  pare_poke;
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　スコアデータ
+/// size= 20+168+168=356byte
+/// ゲームを通して保存&管理しておく、プレイヤー成績
+//--------------------------------------------------------------
+struct _BSUBWAY_SCOREDATA
+{
+  u16  btl_point;  ///<バトルポイント
+  u8  wifi_lose;  ///<連続敗戦カウント
+  u8  wifi_rank;  ///<WiFiランク
+
+  u32  day_rnd_seed;  ///<タワー用日付変化ランダムシード保存場所
+  
+  union{
+    struct{
+    u16  silver_get:1;    ///<シルバートロフィーゲット
+    u16  gold_get:1;      ///<ゴールドトロフィーゲット
+    u16  silver_ready:1;    ///<シルバー貰えます
+    u16  gold_ready:1;    ///<ゴールド貰えます
+    u16  wifi_lose_f:1;    ///<wifi連続敗戦フラグ
+    u16  wifi_update:1;    ///<wifi成績アップロードフラグ
+    u16  wifi_poke_data:1;  ///<wifiポケモンデータストック有りナシフラグ
+    u16  single_poke_data:1;  ///<singleポケモンデータストック有りナシフラグ
+    u16  single_record:1;  ///<シングルレコード挑戦中フラグ
+    u16  double_record:1;  ///<ダブルレコード挑戦中フラグ
+    u16  multi_record:1;    ///<マルチレコード挑戦中フラグ
+    u16  cmulti_record:1;  ///<通信マルチレコード挑戦中フラグ
+    u16  wifi_record:1;    ///<Wifiレコード挑戦中フラグ
+    u16  copper_get:1;    ///<カッパートロフィーゲット
+    u16  copper_ready:1;    ///<カッパー貰えます
+    u16  :1;  ///<境界ダミー
+    };
+    u16  flags;
+  };
+  
+  ///<バトルサブウェイ周回数(paddingをWIFI_MULTI用に加えた)
+  u16  tower_stage[6];
+
+  //WiFiチャレンジデータ
+  u16  wifi_score;  ///<WiFi成績
+  //WiFiポケモンデータストック
+  struct _BSUBWAY_POKEMON  wifi_poke[3];
+  //トレーナーロード用シングルデータストック
+  struct _BSUBWAY_POKEMON  single_poke[3];
+};
 
 //======================================================================
 //  proto
 //======================================================================
 
 //======================================================================
-//  バトルサブウェイ
+//  バトルサブウェイ　プレイデータ
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  @brief  サブウェイ　プレイデータサイズ
+ * プレイデータサイズ
+ * @param nothing
+ * @retval int ワークサイズ
  */
 //--------------------------------------------------------------
-int BSUBWAY_PlayData_GetWorkSize(void)
+int BSUBWAY_PLAYDATA_GetWorkSize( void )
 {
-  return sizeof(BSUBWAY_PLAYWORK);
+  return( sizeof(BSUBWAY_PLAYDATA) );
 }
 
 //--------------------------------------------------------------
 /**
- *  @brief  サブウェイ　プレイヤースコアデータサイズ
+ * プレイデータ　初期化
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
  */
 //--------------------------------------------------------------
-int  BSUBWAY_SocreData_GetWorkSize(void)
+void BSUBWAY_PLAYDATA_Init( BSUBWAY_PLAYDATA *bsw_play )
 {
-  return sizeof(BSUBWAY_SCOREWORK);
+  MI_CpuClear8( bsw_play, sizeof(BSUBWAY_PLAYDATA) );
 }
 
+//--------------------------------------------------------------
+/**
+ * プレイデータ　セーブフラグセット
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @param flag TRUE=セーブあり FALSE=なし
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_SetSaveFlag( BSUBWAY_PLAYDATA *bsw_play, BOOL flag )
+{
+  bsw_play->saved_f = flag;
+}
+
+//--------------------------------------------------------------
+/**
+ *  プレイデータ　正しくセーブ済みかどうか？
+ *  @retval  TRUE  正しくセーブされている
+ *  @retval FALSE  セーブされていない
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_PLAYDATA_GetSaveFlag( BSUBWAY_PLAYDATA *bsw_play )
+{
+  return bsw_play->saved_f;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　取得
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @param id 取得するBSWAY_PLAYDATA_ID
+ * @param buf データ取得ポインタ
+ * @retval u32 IDから取得した結果
+ */
+//--------------------------------------------------------------
+u32 BSUBWAY_PLAYDATA_GetData(
+    const BSUBWAY_PLAYDATA *bsw_play, BSWAY_PLAYDATA_ID id, void *buf )
+{
+  switch( id )
+  {
+  case BSWAY_PLAYDATA_ID_playmode:
+    return (u32)bsw_play->play_mode;
+  case BSWAY_PLAYDATA_ID_round:
+    return (u32)bsw_play->tower_round;
+  case BSWAY_PLAYDATA_ID_rec_down:
+    return (u32)bsw_play->wifi_rec_down;
+  case BSWAY_PLAYDATA_ID_rec_turn:
+    return bsw_play->wifi_rec_turn;
+  case BSWAY_PLAYDATA_ID_rec_damage:
+    return bsw_play->wifi_rec_damage;
+  case BSWAY_PLAYDATA_ID_pokeno:
+    GF_ASSERT( buf != NULL );
+    MI_CpuCopy8( bsw_play->member_poke, buf, BSUBWAY_STOCK_MEMBER_MAX );
+    return 0;
+  case BSWAY_PLAYDATA_ID_pare_poke:
+    GF_ASSERT( buf != NULL );
+    MI_CpuCopy8( &bsw_play->pare_poke, buf, sizeof(BSUBWAY_PAREPOKE_PARAM) );
+    return 0;
+  case BSWAY_PLAYDATA_ID_pare_itemfix:
+    return bsw_play->itemfix_f;
+  case BSWAY_PLAYDATA_ID_trainer:
+    GF_ASSERT( buf != NULL );
+    MI_CpuCopy8(bsw_play->trainer_no,buf, 2*BSUBWAY_STOCK_TRAINER_MAX );
+    return 0;
+  case BSWAY_PLAYDATA_ID_partner:
+    return bsw_play->partner;
+  case BSWAY_PLAYDATA_ID_rnd_seed:
+    return bsw_play->play_rnd_seed;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　設定
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @param id 取得するBSWAY_PLAYDATA_ID
+ * @param buf 反映するデータポインタ
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_SetData(
+    BSUBWAY_PLAYDATA *bsw_play, BSWAY_PLAYDATA_ID id, const void *buf )
+{
+  u32 *buf32 = (u32*)buf;
+  u16 *buf16 = (u16*)buf;
+  u8 *buf8 = (u8*)buf;
+  
+  GF_ASSERT( buf != NULL );
+  
+  switch(id){
+  case BSWAY_PLAYDATA_ID_playmode:
+    bsw_play->play_mode = buf8[0];
+    break;
+  case BSWAY_PLAYDATA_ID_round:
+    bsw_play->tower_round = buf8[0];
+    break;
+  case BSWAY_PLAYDATA_ID_rec_down:
+    bsw_play->wifi_rec_down = buf8[0];
+    break;
+  case BSWAY_PLAYDATA_ID_rec_turn:
+    bsw_play->wifi_rec_turn = buf16[0];
+    break;
+  case BSWAY_PLAYDATA_ID_rec_damage:
+    bsw_play->wifi_rec_damage = buf16[0];
+    break;
+  case BSWAY_PLAYDATA_ID_pokeno:
+    MI_CpuCopy8( buf8, bsw_play->member_poke, 4 );
+    break;
+  case BSWAY_PLAYDATA_ID_pare_poke:
+    MI_CpuCopy8( buf16,
+        &bsw_play->pare_poke, sizeof(BSUBWAY_PAREPOKE_PARAM) );
+    break;
+  case BSWAY_PLAYDATA_ID_pare_itemfix:
+    bsw_play->itemfix_f = buf8[0];
+    break;
+  case BSWAY_PLAYDATA_ID_trainer:
+    MI_CpuCopy8( buf16, bsw_play->trainer_no, 2*BSUBWAY_STOCK_TRAINER_MAX );
+    break;
+  case BSWAY_PLAYDATA_ID_rnd_seed:
+    bsw_play->play_rnd_seed = buf32[0];
+    break;
+  case BSWAY_PLAYDATA_ID_partner:
+    bsw_play->partner = buf8[0];
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  /* //wb
+  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+  #endif //CRC_LOADCHECK
+  */
+}
+
+//======================================================================
+//  バトルサブウェイ　スコアデータ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * スコアデータサイズ
+ * @param none
+ * @retval int ワークサイズ
+ */
+//--------------------------------------------------------------
+int BSUBWAY_SCOREDATA_GetWorkSize( void )
+{
+  return( sizeof(BSUBWAY_SCOREDATA) );
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ初期化
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_Init( BSUBWAY_SCOREDATA *bsw_score )
+{
+  MI_CpuClear8( bsw_score, sizeof(BSUBWAY_SCOREDATA) );
+  bsw_score->wifi_rank = 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　バトルポイント操作
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param num セットする値
+ * @param mode BSWAY_SETMODE
+ * @retval u16 操作後のバトルポイント
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_SetBattlePoint(
+    BSUBWAY_SCOREDATA *bsw_score, u16 num, BSWAY_SETMODE mode )
+{
+  switch( mode ){
+  case BSWAY_SETMODE_set:
+    if( num > 9999 ){
+      bsw_score->btl_point = 9999;
+    }else{
+      bsw_score->btl_point = num;
+    }
+    break;
+  case BSWAY_SETMODE_add:
+    if( bsw_score->btl_point+num > 9999 ){
+      bsw_score->btl_point = 9999;
+    }else{
+      bsw_score->btl_point += num;
+    }
+    break;
+  case BSWAY_SETMODE_sub:
+    if( bsw_score->btl_point < num ){
+      bsw_score->btl_point = 0;
+    }else{
+      bsw_score->btl_point -= num;
+    }
+  case BSWAY_SETMODE_get:
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+
+  /* //wb
+  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+  #endif //CRC_LOADCHECK
+  */
+  
+  return bsw_score->btl_point;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　周回数操作
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param id スコアID
+ * @param value セットする値
+ * @param mode BSWAY_SETMODE
+ * @retval u16 操作後の周回数
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_SetStage(
+    BSUBWAY_SCOREDATA *bsw_score, u16 id, u16 value, BSWAY_SETMODE mode )
+{
+  u16 id2;
+  
+  if( id == BSWAY_MODE_RETRY ){
+    return 0;  //リトライモードではカウントしない
+  }
+  
+  //プラチナ追加　wifiマルチ
+  if( id == BSWAY_MODE_WIFI_MULTI ){
+    id2 = 5; //tower_stage[5]
+  }else{
+    id2 = id;
+  }
+
+  switch(mode){
+  case BSWAY_SETMODE_reset:
+    bsw_score->tower_stage[id2] = 0;
+    break;
+  case BSWAY_SETMODE_inc:
+    if( bsw_score->tower_stage[id2] < 65534 ){
+      bsw_score->tower_stage[id2] += 1;
+    }
+    break;
+  case BSWAY_SETMODE_set:
+    bsw_score->tower_stage[id2] = value;
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  /* //wb null
+  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+  #endif //CRC_LOADCHECK
+  */
+  return bsw_score->tower_stage[id2];
+}
+  
+//--------------------------------------------------------------
+/**
+ *  スコアデータ フラグエリアセット
+ *  @param bsw_score BSUBWAY_SCOREDATA*
+ *  @param id BSWAY_SCOREDATA_FLAG
+ *  @param mode BSWAY_SETMODE
+ *  @retval BOOL フラグの状態
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
+    BSWAY_SCOREDATA_FLAG id, BSWAY_SETMODE mode )
+{
+  u16 i;
+  u16 flag = 1;
+  
+  //エラーチェック
+  if( id >= BSWAY_SCOREDATA_FLAG_MAX ){
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+  //フラグID生成
+  for( i = 0; i < id; i++ ){
+    flag <<= 1;
+  }
+  
+  switch( mode ){
+  case BSWAY_SETMODE_reset:
+    flag = (flag^0xFFFF);
+    bsw_score->flags &= flag;
+    break;
+  case BSWAY_SETMODE_set:
+    bsw_score->flags |= flag;
+    break;
+  case BSWAY_SETMODE_get:
+    return (BOOL)((bsw_score->flags>>id)&0x0001);
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  /* //wb null
+  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
+  SVLD_SetCrc(GMDATA_ID_FRONTIER);
+  #endif //CRC_LOADCHECK
+  */
+  return 0;
+}
+
+//======================================================================
+//  wb null
+//======================================================================
+//----
+#if 0 //wb null
+//----
 //--------------------------------------------------------------
 /**
  *  @brief  サブウェイ　ポケモンデータサイズ
@@ -184,33 +553,33 @@ void BSUBWAY_WifiData_Clear(BSUBWAY_WIFI_DATA* dat)
  *  @param  buf  void*:データ取得ポインタ
  */
 //--------------------------------------------------------------
-u32 BSUBWAY_PlayData_Get(BSUBWAY_PLAYWORK* dat,BSWAY_PSD_ID id,void* buf)
+u32 BSUBWAY_PlayData_Get(BSUBWAY_PLAYWORK* dat,BSWAY_PLAYDATA_ID id,void* buf)
 {
   switch(id){
-  case BSWAY_PSD_playmode:
+  case BSWAY_PLAYDATA_ID_playmode:
     return (u32)dat->play_mode;
-  case BSWAY_PSD_round:
+  case BSWAY_PLAYDATA_ID_round:
     return (u32)dat->tower_round;
-  case BSWAY_PSD_rec_down:
+  case BSWAY_PLAYDATA_ID_rec_down:
     return (u32)dat->wifi_rec_down;
-  case BSWAY_PSD_rec_turn:
+  case BSWAY_PLAYDATA_ID_rec_turn:
     return dat->wifi_rec_turn;
-  case BSWAY_PSD_rec_damage:
+  case BSWAY_PLAYDATA_ID_rec_damage:
     return dat->wifi_rec_damage;
-  case BSWAY_PSD_pokeno:
+  case BSWAY_PLAYDATA_ID_pokeno:
     MI_CpuCopy8(dat->member_poke,buf,BSUBWAY_STOCK_MEMBER_MAX);
     return 0;
-  case BSWAY_PSD_pare_poke:
+  case BSWAY_PLAYDATA_ID_pare_poke:
     MI_CpuCopy8(&dat->pare_poke,buf,sizeof(BSUBWAY_PAREPOKE_PARAM));
     return 0;
-  case BSWAY_PSD_pare_itemfix:
+  case BSWAY_PLAYDATA_ID_pare_itemfix:
     return dat->itemfix_f;
-  case BSWAY_PSD_trainer:
+  case BSWAY_PLAYDATA_ID_trainer:
     MI_CpuCopy8(dat->trainer_no,buf,2*BSUBWAY_STOCK_TRAINER_MAX);
     return 0;
-  case BSWAY_PSD_partner:
+  case BSWAY_PLAYDATA_ID_partner:
     return dat->partner;
-  case BSWAY_PSD_rnd_seed:
+  case BSWAY_PLAYDATA_ID_rnd_seed:
     return dat->play_rnd_seed;
   }
   return 0;
@@ -226,44 +595,44 @@ u32 BSUBWAY_PlayData_Get(BSUBWAY_PLAYWORK* dat,BSWAY_PSD_ID id,void* buf)
  */
 //--------------------------------------------------------------
 void BSUBWAY_PlayData_Put(
-    BSUBWAY_PLAYWORK* dat,BSWAY_PSD_ID id,const void* buf)
+    BSUBWAY_PLAYWORK* dat,BSWAY_PLAYDATA_ID id,const void* buf)
 {
   u32  *buf32 = (u32 *)buf;
   u16  *buf16=(u16 *)buf;
   u8  *buf8=(u8 *)buf;
 
   switch(id){
-  case BSWAY_PSD_playmode:
+  case BSWAY_PLAYDATA_ID_playmode:
     dat->play_mode = buf8[0];
     break;
-  case BSWAY_PSD_round:
+  case BSWAY_PLAYDATA_ID_round:
     dat->tower_round = buf8[0];
     break;
-  case BSWAY_PSD_rec_down:
+  case BSWAY_PLAYDATA_ID_rec_down:
     dat->wifi_rec_down = buf8[0];
     break;
-  case BSWAY_PSD_rec_turn:
+  case BSWAY_PLAYDATA_ID_rec_turn:
     dat->wifi_rec_turn = buf16[0];
     break;
-  case BSWAY_PSD_rec_damage:
+  case BSWAY_PLAYDATA_ID_rec_damage:
     dat->wifi_rec_damage = buf16[0];
     break;
-  case BSWAY_PSD_pokeno:
+  case BSWAY_PLAYDATA_ID_pokeno:
     MI_CpuCopy8(buf8,dat->member_poke,4);
     break;
-  case BSWAY_PSD_pare_poke:
+  case BSWAY_PLAYDATA_ID_pare_poke:
     MI_CpuCopy8(buf16,&dat->pare_poke,sizeof(BSUBWAY_PAREPOKE_PARAM));
     break;
-  case BSWAY_PSD_pare_itemfix:
+  case BSWAY_PLAYDATA_ID_pare_itemfix:
     dat->itemfix_f = buf8[0];
     break;
-  case BSWAY_PSD_trainer:
+  case BSWAY_PLAYDATA_ID_trainer:
     MI_CpuCopy8(buf16,dat->trainer_no,2*BSUBWAY_STOCK_TRAINER_MAX);
     break;
-  case BSWAY_PSD_rnd_seed:
+  case BSWAY_PLAYDATA_ID_rnd_seed:
     dat->play_rnd_seed = buf32[0];
     break;
-  case BSWAY_PSD_partner:
+  case BSWAY_PLAYDATA_ID_partner:
     dat->partner = buf8[0];
     break;
   }
@@ -304,19 +673,6 @@ void BSUBWAY_PlayData_WifiRecordAdd(
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
   SVLD_SetCrc(GMDATA_ID_FRONTIER);
 #endif //CRC_LOADCHECK
-}
-
-//--------------------------------------------------------------
-/**
- *  @brief  プレイデータ　正しくセーブ済みかどうか？
- *
- *  @retval  TRUE  正しくセーブされている
- *  @retval FALSE  セーブされていない
- */
-//--------------------------------------------------------------
-BOOL BSUBWAY_PlayData_GetSaveFlag(BSUBWAY_PLAYWORK* dat)
-{
-  return dat->saved_f;
 }
 
 //--------------------------------------------------------------
@@ -1062,3 +1418,7 @@ BSUBWAY_WIFI_DATA*  SaveData_GetTowerWifiData(SAVEDATA* sv)
   return &data->tower.wifi;
 }
 #endif
+
+//----
+#endif //wb null
+//----

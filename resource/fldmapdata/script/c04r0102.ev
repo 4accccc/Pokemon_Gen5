@@ -9,6 +9,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0102.h"
   .include  "c04r0102.h"
+  
+  .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -37,7 +39,13 @@ ev_c04r0102:
 //  受付 C04R0102_RECEIPT
 //--------------------------------------------------------------
 EVENT_START ev_c04r0102_receipt
+  DEFINE_LOCAL flag_loop
+  DEFINE_LOCAL flag_end
+
   _TALK_OBJ_START()
+
+  //ワーククリア
+  _BSUBWAY_WORK_CLEAR()
   
   //バトルサブウェイにようこそ
   _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_01 )
@@ -49,22 +57,34 @@ EVENT_START ev_c04r0102_receipt
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   
-  //バトルサブウェイ　シングル説明
-  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_02 )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-  
   //シングルトレインに乗車するか？
   _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_13 )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
+  
+  //乗車する・やめるメニュー
+  $flag_loop = TRUE
+  $flag_end = FALSE
 
-  //乗車する・やめる
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_04, 0 ) //乗車する
-  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_05, 1 ) //説明を聞く
-  _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_06, 3 ) //やめる
-  _BMPMENU_START()
+  WHILE $flag_loop == TRUE
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_04, 0 ) //乗車する
+    _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_05, 1 ) //説明を聞く
+    _BMPMENU_MAKE_LIST( msg_c04r0102_receipt_06, 3 ) //やめる
+    _BMPMENU_START()
+  
+    SWITCH $SCWK_ANSWER
+    CASE 0 THEN //乗車する
+      $flag_loop = FALSE
+    CASE 1 THEN //説明を聞く
+     _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_02 )
+     _LAST_KEYWAIT()
+     _BALLOONWIN_CLOSE()
+    CASE 2 THEN //やめる
+      $flag_loop = FALSE
+      $flag_end = FALSE
+    ENDSWITCH
+  ENDWHILE
   
   //バトルボックスチェック
   
