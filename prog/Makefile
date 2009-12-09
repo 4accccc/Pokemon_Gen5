@@ -275,6 +275,8 @@ ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
 
 MAKELCF_DEFS		 = -DNITROSDK_ROOT='$(ROOT_M)'									\
 					   -DTARGET_NAME='$(TARGET_NAME)'								\
+					  -DOBJS_STATIC='$(foreach OBJ,$(OBJS_STATIC_M),$(OBJ))'			\
+					  -DOBJS_AUTOLOAD='$(foreach OBJ,$(OBJS_AUTOLOAD_M),$(OBJ))'		\
 							-Mlcf_def.txt	\
 					   -DGLIBS='$(GLIBRARIES_LINK)'									\
 					   -DLLIBS='$(LLIBRARIES_LINK)'									\
@@ -298,7 +300,9 @@ endif
 ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
 
 MAKELCF_DEFS	= -DTWLSDK_ROOT='$(ROOT_M)'									\
-		  -DTARGET_NAME='$(TARGET_NAME)'									\
+		  -DTARGET_NAME='$(TARGET_NAME)'								\
+		  -DOBJS_STATIC='$(foreach OBJ,$(OBJS_STATIC_M),$(OBJ))'			\
+		  -DOBJS_AUTOLOAD='$(foreach OBJ,$(OBJS_AUTOLOAD_M),$(OBJ))'		\
 			-Mlcf_def_twl.txt	\
 		  -DOBJS_LTDAUTOLOAD='$(foreach OBJ,$(OBJS_LTDAUTOLOAD_M),$(OBJ))'	\
 		  -DOBJS_LTDOVERLAY='$(foreach OBJ,$(OBJS_LTDOVERLAY_M),$(OBJ))'	\
@@ -342,10 +346,7 @@ ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
 
 overlay/main.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
-	-rm $(LCFDEF_FILE)
-	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
-	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
-	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
+	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
 
 endif
 
@@ -353,21 +354,12 @@ ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
 
 overlay/main.TWL.HYB.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
-	-rm $(LCFDEF_FILE)
-	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
-	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
-	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
+	ruby ./overlay/lcfdef.rb make_prog_files lcf_def.txt lcf_def_twl.txt
 
 endif
 
 
-$(LCFDEF_FILE): $(OBJS_STATIC) $(OBJS_OVERLAY)
-	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
-	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
-	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
-
-
-GDIRT_CLEAN += lcf_def_twl.txt lcf_def.txt
+GDIRT_CLEAN += lcf_def_twl.txt lcf_def.txt ./overlay/*.lsf
 
 #--------------------------------------- ----------------------------
 programs = $(TARGETS)
