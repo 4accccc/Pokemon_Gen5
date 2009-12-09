@@ -245,7 +245,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       FSFile file;
       BOOL result;
-      const char* arcPath = GFUser_GetFileNameByArcID( ARCID_MUSICAL_PROGRAM );
+      const char* arcPath = GFUser_GetFileNameByArcID( ARCID_MB_CAPTER );
       //“Ç‚Ýo‚·
       FS_InitFile( &file );
       result = FS_OpenFile(&file,arcPath);
@@ -257,6 +257,11 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       result = FS_CloseFile( &file );
       GF_ASSERT( result );
       OS_TPrintf( "[%d]\n",work->gameDataSize );
+    }
+    {
+      ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandleByMemory( work->gameData , work->gameDataSize , work->heapId );
+      OS_TPrintf("fileNum[%d]\n",GFL_ARC_GetDataFileCntByHandle(arcHandle));
+      GFL_ARC_CloseDataHandle( arcHandle );
     }
     work->state = MPS_SEND_GAMEDATA_SEND;
     break;

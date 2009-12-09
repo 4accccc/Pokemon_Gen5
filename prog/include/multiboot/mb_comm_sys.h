@@ -21,9 +21,20 @@
 #pragma mark [> enum
 typedef enum
 {
-  MCFT_GAMEDATA_SIZE,
-  MCFT_GAMEDATA_POST,
+  MCFT_CHILD_STATE,
+  
+  MCFT_MAX,
 }MB_COMM_FLG_TYPE;
+
+typedef enum
+{
+  MCCS_NONE,
+  MCCS_CONNECT,
+  MCCS_SELECT_BOX,
+  MCCS_WAIT_GAME_DATA,
+  MCCS_CAP_GAME,
+
+}MB_COMM_CHILD_STATE;
 
 //======================================================================
 //	typedef struct
@@ -60,6 +71,10 @@ extern MB_COMM_INIT_DATA* MB_COMM_GetInitData( MB_COMM_WORK* commWork );
 //チェック系
 extern const BOOL MB_COMM_IsSendEnable( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostInitData( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostGameData( const MB_COMM_WORK* commWork );
+
+extern void MB_COMM_SetChildState( MB_COMM_WORK* commWork , MB_COMM_CHILD_STATE state );
+extern const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork );
 
 //送信系
 extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );

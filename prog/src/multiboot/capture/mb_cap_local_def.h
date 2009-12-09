@@ -18,8 +18,12 @@
 //------------------------------------------------------
 //デバッグ有効
 //------------------------------------------------------
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #define MB_CAP_DEB (1)
-
+#else                    //DL子機時処理
+#define MB_CAP_DEB (0)
+#endif //MULTI_BOOT_MAKE
 
 #pragma mark [> define
 #define MB_CAPTURE_FRAME_FRAME (GFL_BG_FRAME1_M)

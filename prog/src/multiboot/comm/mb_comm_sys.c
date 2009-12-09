@@ -56,14 +56,6 @@ typedef enum
   //ココから下はつながっている状態のSTATEとする
   MCS_CONNECT,
   
-  //親機データ送信
-  MCS_SEND_GAMEDATA_INIT,
-  MCS_SEND_GAMEDATA_SEND,
-  MCS_SEND_GAMEDATA_WAIT,
-  
-  //子機データ送信
-  MCS_POST_GAMEDATA_WAIT,
-
   MCS_MAX,
 }MB_COMM_STATE;
 
@@ -72,7 +64,6 @@ typedef enum
 {
   MCST_FLG = GFL_NET_CMD_MULTIBOOT,
   MCST_INIT_DATA,
-  MCST_GAME_DATA,
   
   MCST_MAX,
 }MB_COMM_SEND_TYPE;
@@ -86,6 +77,9 @@ struct _MB_COMM_WORK
   HEAPID heapId;
   
   MB_COMM_STATE state;
+  
+  MB_COMM_CHILD_STATE newChildState;
+  MB_COMM_CHILD_STATE childState;
   
   //GAMEDATA系
   void *gameData;
@@ -119,7 +113,6 @@ static u8*    MUS_COMM_Post_GameDataBuff( int netID, void* pWork , int size );
 static const NetRecvFuncTable MultiBootCommPostTable[] = {
   { MB_COMM_Post_Flag     , NULL },
   { MB_COMM_Post_InitData , MUS_COMM_Post_InitDataBuff },
-  { MB_COMM_Post_GameData , MUS_COMM_Post_GameDataBuff },
 };
 
 //--------------------------------------------------------------
@@ -132,6 +125,9 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
   commWork->heapId = heapId;
   commWork->state = MCS_NONE;
   commWork->initData = NULL;
+
+  commWork->childState = MCCS_NONE;
+  commWork->newChildState = MCCS_NONE;
   
   return commWork;
 }
@@ -192,56 +188,16 @@ void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
     //この状態をMB_COMM_IsSendEnableのチェックに使ってる。
     break;
     
-  //親機データ送信
-  case MCS_SEND_GAMEDATA_INIT:
-    if( MB_COMM_Send_Flag( commWork , MCFT_GAMEDATA_SIZE , commWork->gameDataSize ) == TRUE )
+  }
+  
+  if( commWork->childState != commWork->newChildState &&
+      commWork->newChildState != MCCS_NONE )
+  {
+    const BOOL ret = MB_COMM_Send_Flag( commWork , MCFT_CHILD_STATE , commWork->newChildState );
+    if( ret == TRUE )
     {
-      commWork->state = MCS_SEND_GAMEDATA_SEND;
+      commWork->childState = commWork->newChildState;
     }
-    break;
-    
-  case MCS_SEND_GAMEDATA_SEND:
-    if( commWork->isPostGameDataSize == TRUE )
-    {
-      u32 size;
-      u32 topAdd = (u32)commWork->gameData + MB_COMM_GAMEDATA_SEND_SIZE * commWork->dataIdx;
-      if( commWork->gameDataSize < MB_COMM_GAMEDATA_SEND_SIZE * (commWork->dataIdx+1) ) 
-      {
-        size = commWork->gameDataSize % MB_COMM_GAMEDATA_SEND_SIZE;
-      }
-      else
-      {
-        size = MB_COMM_GAMEDATA_SEND_SIZE;
-      }
-      
-      if( MB_COMM_Send_GameData( commWork , (void*)topAdd , size ) == TRUE )
-      {
-        commWork->state = MCS_SEND_GAMEDATA_WAIT;
-      }
-    }
-    break;
-
-  case MCS_SEND_GAMEDATA_WAIT:
-    break;
-    
-  //子機データ送信
-  case MCS_POST_GAMEDATA_WAIT:
-    if( commWork->isPostGameData == TRUE )
-    {
-      if( MB_COMM_Send_Flag( commWork , MCFT_GAMEDATA_POST , commWork->dataIdx ) == TRUE )
-      {
-        commWork->isPostGameData = FALSE;
-        commWork->dataIdx++;
-        if( commWork->gameDataSize <= commWork->dataIdx * MB_COMM_GAMEDATA_SEND_SIZE )
-        {
-          commWork->state = MCS_CONNECT;
-#ifdef MB_COMM_TICK_TEST
-          MB_COMM_TPrintf("FinishGameDataPost[%dms]\n",OS_TicksToMilliSeconds(OS_GetTick()-gameDataAllTick));
-#endif
-        }
-      }
-    }
-    break;
   }
 }
 
@@ -302,6 +258,8 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isPostGameDataSize = FALSE;
   commWork->gameData = NULL;
   commWork->dataIdx = 0;
+  
+  GFL_NET_LDATA_InitSystem( commWork->heapId );
 }
 
 //--------------------------------------------------------------
@@ -310,6 +268,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
 void MB_COMM_ExitComm( MB_COMM_WORK* commWork )
 {
   GFL_NET_Exit(NULL);
+  GFL_NET_LDATA_ExitSystem();
 }
 
 //--------------------------------------------------------------
@@ -335,6 +294,7 @@ void MB_COMM_InitParent( MB_COMM_WORK* commWork )
 {
   GFL_NET_InitServer();
   commWork->state = MCS_REQ_NEGOTIATION;
+
 }
 
 //--------------------------------------------------------------
@@ -344,6 +304,8 @@ void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress )
 {
   GFL_NET_InitClientAndConnectToParent( macAddress );
   commWork->state = MCS_REQ_NEGOTIATION;
+
+  GFL_NET_LDATA_CreatePostBuffer( 0x78000 , 0 , HEAPID_MULTIBOOT_DATA );
 }
 
 #pragma mark [>Afetr Connect
@@ -366,6 +328,25 @@ const BOOL MB_COMM_IsPostInitData( const MB_COMM_WORK* commWork )
 {
   return commWork->isPostInitData;
 }
+
+const BOOL MB_COMM_IsPostGameData( const MB_COMM_WORK* commWork )
+{
+  return GFL_NET_LDATA_IsFinishPost( 0 );
+}
+
+//--------------------------------------------------------------
+// 子機ステートの設定・取得
+//--------------------------------------------------------------
+void MB_COMM_SetChildState( MB_COMM_WORK* commWork , MB_COMM_CHILD_STATE state )
+{
+  //差があったら更新時に自動で送る
+  commWork->newChildState = state;
+}
+const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork )
+{
+  return commWork->childState;
+}
+
 #pragma mark [>SendDataFunc
 //--------------------------------------------------------------
 // でかいサイズ送信用
@@ -374,8 +355,9 @@ void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 siz
 {
   commWork->gameData = gameData;
   commWork->gameDataSize = size;
-  commWork->dataIdx = 0;
-  commWork->state = MCS_SEND_GAMEDATA_INIT;
+  GFL_NET_LDATA_SetSendData( commWork->gameData , commWork->gameDataSize , 0x02 , TRUE );
+  //commWork->dataIdx = 0;
+  //commWork->state = MCS_SEND_GAMEDATA_INIT;
 }
 
 #pragma mark [>SendFunc
@@ -427,41 +409,14 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
   MB_COMM_FLG_PACKET *pkt = (MB_COMM_FLG_PACKET*)pData;
 
   MB_COMM_TPrintf("Post Flg[%d:%d(0x%x)] To [%d].\n",pkt->type,pkt->value,pkt->value,netID);
+
   switch( pkt->type )
   {
-  case MCFT_GAMEDATA_SIZE:
-    commWork->isPostGameDataSize = TRUE;
-    if( GFL_NET_IsParentMachine() == FALSE )
-    {
-      if( commWork->gameData == NULL )
-      {
-        commWork->gameData = GFL_NET_Align32Alloc( HEAPID_MULTIBOOT_DATA , pkt->value );
-        commWork->gameDataSize = pkt->value;
-        commWork->dataIdx = 0;
-        commWork->state = MCS_POST_GAMEDATA_WAIT;
-        commWork->isPostGameData = FALSE;
-#ifdef MB_COMM_TICK_TEST
-        gameDataAllTick = OS_GetTick();
-#endif
-      }
-    }
-    break;
-  
-  case MCFT_GAMEDATA_POST:
-    if( GFL_NET_IsParentMachine() == TRUE )
-    {
-      commWork->dataIdx++;
-      if( commWork->gameDataSize <= commWork->dataIdx*MB_COMM_GAMEDATA_SEND_SIZE )
-      {
-        commWork->state = MCS_CONNECT;
-      }
-      else
-      {
-        commWork->state = MCS_SEND_GAMEDATA_SEND;
-      }
-    }
+  case MCFT_CHILD_STATE:
+    commWork->childState = pkt->value;
     break;
   }
+
 }
 
 //--------------------------------------------------------------
@@ -504,56 +459,6 @@ static u8*    MUS_COMM_Post_InitDataBuff( int netID, void* pWork , int size )
     commWork->initData = GFL_HEAP_AllocClearMemory( commWork->heapId , sizeof( MB_COMM_INIT_DATA ) );
   }
   return (u8*)commWork->initData;
-}
-
-
-//--------------------------------------------------------------
-// ゲーム用データ送信
-//--------------------------------------------------------------
-const BOOL MB_COMM_Send_GameData( MB_COMM_WORK *commWork , void *gameData , const u32 size )
-{
-  BOOL ret;
-  GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
-  //GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  MB_COMM_TPrintf("Send GameData.\n");
-
-  //子機にだけ送れば良い
-  ret = GFL_NET_SendDataEx( parentHandle , 1 , 
-                            MCST_GAME_DATA , size , 
-                            gameData , FALSE , TRUE , TRUE );
-  if( ret == FALSE )
-  {
-    MB_COMM_TPrintf("Send GameData is failued!!\n");
-  }
-  return ret;
-  
-}
-
-//--------------------------------------------------------------
-// ゲーム用データ受信
-//--------------------------------------------------------------
-#ifdef MB_COMM_TICK_TEST
-static OSTick gameDataTick = 0;
-#endif
-static void MB_COMM_Post_GameData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
-{
-  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
-#ifdef MB_COMM_TICK_TEST
-  MB_COMM_TPrintf("Post GameData[%d][%dms].\n",size,OS_TicksToMilliSeconds(OS_GetTick()-gameDataTick));
-#else
-  MB_COMM_TPrintf("Post GameData[%d].\n",size);
-#endif
-  commWork->isPostGameData = TRUE;
-}
-static u8*    MUS_COMM_Post_GameDataBuff( int netID, void* pWork , int size )
-{
-  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
-  u32 topAdr = (u32)commWork->gameData + commWork->dataIdx*MB_COMM_GAMEDATA_SEND_SIZE;
-#ifdef MB_COMM_TICK_TEST
-  gameDataTick = OS_GetTick();
-#endif
-  MB_COMM_TPrintf("Post GameDataBuff[%x].\n",topAdr);
-  return (u8*)topAdr;
 }
 
 //--------------------------------------------------------------

@@ -15,7 +15,9 @@
 #ifndef MULTI_BOOT_MAKE //通常時処理
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 #else
-#include "wb_sound_palpark.sadl"
+#include "multiboot/wb_sound_palpark.sadl"
+#define GROUP_GLOBAL (0)
+#define SEQ_SE_END (1400)
 #endif //MULTI_BOOT_MAKE
 //------------------------------------------------------------------
 /**

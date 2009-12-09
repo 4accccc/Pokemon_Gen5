@@ -32,7 +32,6 @@ typedef struct
   HEAPID parentHeap;
   DLPLAY_CARD_TYPE cardType;
   ARCHANDLE *arcHandle;
-  //pppサイズ分のワークを確保しておいてください。
   void *ppp[MB_CAP_POKE_NUM];
 }MB_CAPTURE_INIT_WORK;
 

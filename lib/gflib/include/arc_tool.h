@@ -208,6 +208,19 @@ extern ARCHANDLE* GFL_ARC_OpenDataHandleByFilePath( const char* filePath, HEAPID
 
 //------------------------------------------------------------------
 /**
+ * アーカイブデータのファイルハンドルオープン（メモリ上のデータをARCHANDLEとして読む）
+ *
+ * @param   data      データのアドレス
+ * @param   size      データのサイズ
+ * @param   heapID    管理用ヒープＩＤ
+ *
+ * @retval  ARCHANDLE オープンされたハンドル（失敗ならNULL）
+ */
+//------------------------------------------------------------------
+extern ARCHANDLE* GFL_ARC_OpenDataHandleByMemory( void *data , const u32 size , HEAPID heapID );
+
+//------------------------------------------------------------------
+/**
  * アーカイブデータハンドルクローズ
  * （内部でファイルをクローズします）
  *

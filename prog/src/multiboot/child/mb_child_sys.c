@@ -21,6 +21,7 @@
 
 #include "multiboot/mb_child_sys.h"
 #include "multiboot/mb_select_sys.h"
+#include "multiboot/mb_capture_sys.h"
 #include "multiboot/mb_comm_sys.h"
 #include "multiboot/mb_util.h"
 #include "multiboot/mb_util_msg.h"
@@ -63,7 +64,17 @@ typedef enum
   MCS_SELECT_TERM,
   MCS_SELECT_FADEIN,
   MCS_SELECT_FADEIN_WAIT,
+
+  MCS_WAIT_GAME_DATA,
   
+  MCS_CAPTURE_FADEOUT,
+  MCS_CAPTURE_FADEOUT_WAIT,
+  MCS_CAPTURE_MAIN,
+  MCS_CAPTURE_TERM,
+  MCS_CAPTURE_FADEIN,
+  MCS_CAPTURE_FADEIN_WAIT,
+
+
   MCS_ERROR,
   
 }MB_CHILD_STATE;
@@ -92,6 +103,7 @@ typedef struct
   MB_DATA_WORK *dataWork;
   
   MB_SELECT_INIT_WORK selInitWork;
+  MB_CAPTURE_INIT_WORK capInitWork;
   
 }MB_CHILD_WORK;
 
@@ -325,6 +337,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     work->state = MCS_SELECT_FADEOUT_WAIT;
+    MB_COMM_SetChildState( work->commWork , MCCS_SELECT_BOX );
     break;
     
   case MCS_SELECT_FADEOUT_WAIT:
@@ -372,6 +385,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+    MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
 
     break;
     
@@ -384,11 +399,100 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_SELECT_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      work->state = MCS_CHECK_ROM;
+      if( MB_COMM_IsPostGameData( work->commWork ) == TRUE )
+      {
+        work->state = MCS_CAPTURE_FADEOUT;
+      }
+      else
+      {
+        work->state = MCS_WAIT_GAME_DATA;
+        MB_COMM_SetChildState( work->commWork , MCCS_WAIT_GAME_DATA );
+      }
     }
     break;
     
+  case MCS_WAIT_GAME_DATA:
+    if( MB_COMM_IsPostGameData( work->commWork ) == TRUE )
+    {
+      work->state = MCS_CAPTURE_FADEOUT;
+    }
+    break;
 
+  //--------------------------------------------------------
+  //•ßŠlƒQ[ƒ€
+  case MCS_CAPTURE_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = MCS_CAPTURE_FADEOUT_WAIT;
+    MB_COMM_SetChildState( work->commWork , MCCS_CAP_GAME );
+    break;
+    
+  case MCS_CAPTURE_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      u8 i;
+      MB_MSG_MessageTerm( work->msgWork );
+      MB_CHILD_TermGraphic( work );
+      PMSND_Exit();
+
+      work->msgWork = NULL;
+      
+      //InitWork‚Ìppp‚ÍÅ‰‚É“ü‚ê‚Ä‚¢‚é
+      work->capInitWork.parentHeap = work->heapId;
+      work->capInitWork.cardType = work->cardType;
+      work->capInitWork.arcHandle = GFL_ARC_OpenDataHandleByMemory( 
+                                              GFL_NET_LDATA_GetPostData( 0 ) ,
+                                              GFL_NET_LDATA_GetPostDataSize( 0 ) ,
+                                              work->heapId );
+      OS_TPrintf("fileNum[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->capInitWork.arcHandle));
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        const u8 tray = work->selInitWork.selectPoke[i][0];
+        const u8 idx  = work->selInitWork.selectPoke[i][1];
+        work->capInitWork.ppp[i] = work->boxPoke[tray][idx];
+      }
+      
+      GFL_PROC_LOCAL_CallProc( work->procSys , 
+                               NO_OVERLAY_ID ,
+                               &MultiBootCapture_ProcData ,
+                               &work->capInitWork );
+      
+      work->state = MCS_CAPTURE_MAIN;
+    }
+    break;
+    
+  case MCS_CAPTURE_MAIN:
+    {
+      const GFL_PROC_MAIN_STATUS ret = GFL_PROC_LOCAL_Main( work->procSys );
+      if( ret == GFL_PROC_MAIN_NULL )
+      {
+        work->state = MCS_CAPTURE_TERM;
+      }
+    }
+    break;
+    
+  case MCS_CAPTURE_TERM:
+    work->state = MCS_CAPTURE_FADEIN;
+
+    PMSND_InitMultiBoot( work->sndData );
+    MB_CHILD_InitGraphic( work );
+    MB_CHILD_LoadResource( work );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+
+    break;
+    
+  case MCS_CAPTURE_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = MCS_CAPTURE_FADEIN_WAIT;
+    break;
+
+  case MCS_CAPTURE_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      
+    }
+    break;
   }
   
   if( work->msgWork != NULL )
@@ -567,8 +671,8 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
   MB_CHILD_WORK *work;
   
   OS_TPrintf("LeastAppHeap[%x]",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xE0000 );
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0xA0000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x100000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0x80000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_CHILD_WORK), HEAPID_MULTIBOOT );
 
   work->heapId = HEAPID_MULTIBOOT;

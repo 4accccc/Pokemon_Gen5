@@ -1072,6 +1072,14 @@ extern void GFL_NET_LDATA_CreatePostBuffer( u32 size , const u8 netId , const HE
  */
 //--------------------------------------------------------------
 extern void* GFL_NET_LDATA_GetPostData( const u8 netId );
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信サイズ取得
+ *
+ * @return  u32 サイズ
+ */
+//--------------------------------------------------------------
+extern const u32 GFL_NET_LDATA_GetPostDataSize( const u8 netId );
 
 //--------------------------------------------------------------
 /**

@@ -153,10 +153,11 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
                                         NARC_mb_capture_gra_wb_sound_palpark_game_sdat ,
                                         FALSE ,
                                         work->heapId );
-  PMSND_InitMultiBoot(work->sndData);
-  
   MB_CAPTURE_InitGraphic( work );
   MB_CAPTURE_LoadResource( work );
+
+  PMSND_InitMultiBoot(work->sndData);
+  
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_CAPTURE_VBlankFunc , work , 8 );
 
   MB_CAPTURE_InitObject( work );
@@ -282,8 +283,7 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   GFL_CLACT_SYS_Main();
 
   
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START &&
-      GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
   {
     return TRUE;
   }
@@ -956,7 +956,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *p
   else
   {
     initWork = pwk;
-    GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x40000 );
+    GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x60000 );
     work = GFL_PROC_AllocWork( proc, sizeof(MB_CAPTURE_WORK), HEAPID_MULTIBOOT );
     work->initWork = pwk;
   }

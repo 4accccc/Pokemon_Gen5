@@ -32,6 +32,12 @@ SRCS	+= \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
 		$(PARENT_SRC)/multiboot/select/mb_select_sys.c \
 		$(PARENT_SRC)/multiboot/select/mb_sel_poke.c \
+        $(PARENT_SRC)/multiboot/capture/mb_capture_sys.c \
+        $(PARENT_SRC)/multiboot/capture/mb_cap_obj.c \
+        $(PARENT_SRC)/multiboot/capture/mb_cap_poke.c \
+        $(PARENT_SRC)/multiboot/capture/mb_cap_down.c \
+        $(PARENT_SRC)/multiboot/capture/mb_cap_ball.c \
+        $(PARENT_SRC)/multiboot/capture/mb_cap_effect.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_pt.c \
 		$(PARENT_SRC)/multiboot/util/mb_poke_icon.c \
