@@ -8183,18 +8183,19 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
   u16  rank = WAZADATA_GetParam( waza, WAZAPARAM_CRITICAL_RANK );
   rank += BPP_GetCriticalRank( attacker );
 
-  BTL_Printf("poke[%d]のワザ[%d]をチェックする\n",BPP_GetID(attacker), waza );
-
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_RANK, rank );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
     if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
     {
+      if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_CRITICAL) ){
+        return TRUE;
+      }
       if( WAZADATA_IsMustCritical(waza) ){
-        BTL_Printf("必ずクリティカルです\n");
+        BTL_Printf("必ずクリティカルなワザです\n");
         flag = TRUE;
       }else{
         rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
@@ -9705,6 +9706,20 @@ BOOL BTL_SVFTOOL_CheckSinkaMae( BTL_SVFLOW_WORK* wk, u8 pokeID )
 u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   return scEvent_CalcAgility( wk, bpp );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] デバッグフラグ取得
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  u16
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag )
+{
+  return BTL_MAIN_GetDebugFlag( wk->mainModule, flag );
 }
 
 

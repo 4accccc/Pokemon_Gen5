@@ -5178,6 +5178,7 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( turns );
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
+
 /*
       param->fExMsg = TRUE;
       param->exStr.type = BTL_STRTYPE_SET;

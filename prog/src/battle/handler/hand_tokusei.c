@@ -373,7 +373,7 @@ static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_Illusion_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Illusion_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_IllusionBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID );
-
+static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per );
 
 
 //=============================================================================================
@@ -619,6 +619,23 @@ void BTL_HANDLER_TOKUSEI_InitTurn( void )
   GFL_STD_MemClear( DisableTokTable, sizeof(DisableTokTable) );
 }
 */
+
+//=============================================================================================
+/**
+ * ランダム発動とくせいの共通チェックルーチン
+ */
+//=============================================================================================
+static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per )
+{
+  if( BTL_CALC_IsOccurPer(per) ){
+    return TRUE;
+  }
+  if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_TOKUSEI) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -2374,7 +2391,7 @@ static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
   if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
   {
-    if( BTL_CALC_IsOccurPer(33) )
+    if( Tokusei_IsExePer(flowWk, 33) )
     {
       BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
@@ -2651,7 +2668,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
-      if( BTL_CALC_IsOccurPer(per) )
+      if( Tokusei_IsExePer(flowWk, per) )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
@@ -4194,9 +4211,9 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
     {
-      if( BTL_SVFTOOL_GetRand( flowWk, 100) < 30 )
+      if( Tokusei_IsExePer(flowWk, 30) )
       {
-        WazaID  prevWaza = BPP_GetPrevWazaID( target );
+        WazaID  prevWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
         if( prevWaza != WAZANO_NULL )
         {
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
@@ -4206,6 +4223,8 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
           param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
+          param->header.tokwin_flag = TRUE;
+          BTL_Printf("のろわれボディ発動\n");
         }
       }
     }
@@ -4470,7 +4489,7 @@ static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetID[i] );
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
     {
-      if( BTL_SVFTOOL_GetRand( flowWk, 100) < 30 )
+      if( Tokusei_IsExePer(flowWk, 30) )
       {
         BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
@@ -4746,7 +4765,7 @@ static void handler_Dokusyu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
       // ３割の確率で相手をどくにする
-      if( BTL_CALC_IsOccurPer(30) )
+      if( Tokusei_IsExePer(flowWk, 30) )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->header.tokwin_flag = TRUE;

@@ -105,7 +105,6 @@ struct _BTL_MAIN_MODULE {
   int         subSeq;
   pMainLoop   mainLoop;
 
-
   HEAPID      heapID;
   u8          escapeClientID;
   u8          sendClientID;
