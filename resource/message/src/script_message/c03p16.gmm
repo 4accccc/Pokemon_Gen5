@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-12-09T13:00:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,120 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c03p16_cabinguide_01">
+		<comment>♀（仮）
+・遊覧船乗り場案内人
+・はい→cabinguide_02
+・いいえ→cabinguide_04</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">けしき　ウキウキ　しょうぶ　ワクワク
+ヒウンゆうらんせんへ　ようこそ！[BE:00:ページ切り替え（行送り）]
+ゆうらんせんは　はじめてですか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">景色　ウキウキ　勝負で　ワクワク
+ヒウン遊覧船へ　ようこそ！[BE:00:ページ切り替え（行送り）]
+遊覧船は　初めてですか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_02">
+		<comment>♀（仮）
+・続けてcabinguide_03</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">この　ゆうらんせんは
+イッシュちほうの　おおきな　はし[BE:00:ページ切り替え（行送り）]
+スカイアローブリッジを　くぐり[BE:00:ページ切り替え（行送り）]
+５ばんめのはしを　まわり[BE:00:ページ切り替え（行送り）]
+ヒウンシティへ　もどる　ふねです[BE:00:ページ切り替え（行送り）]
+じょうせんじかんは[BE:00:ページ切り替え（行送り）]
+ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
+きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">当　遊覧船は
+イッシュ地方の　大きな橋[BE:00:ページ切り替え（行送り）]
+スカイアローブリッジを　くぐり[BE:00:ページ切り替え（行送り）]
+５番目の橋を　まわり[BE:00:ページ切り替え（行送り）]
+ヒウンシティへ　戻ります[BE:00:ページ切り替え（行送り）]
+乗船時間は　全部で　５回[BE:00:ページ切り替え（行送り）]
+ボォォォォォォォ！　と[BE:00:ページ切り替え（行送り）]
+汽笛で　お知らせ　いたします[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_03">
+		<comment>♀（仮）
+・続けてcabinguide04</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ヒウンゆうらんせん　じまんの
+かんぱんでは　けしきを　たのしめます[BE:00:ページ切り替え（行送り）]
+きゃくしつないには　しょうぶずきな[BE:00:ページ切り替え（行送り）]
+トレーナーたちが　あつまっております[BE:00:ページ切り替え（行送り）]
+ぜひ　けしきも　しょうぶも[BE:00:ページ切り替え（行送り）]
+おたのしみ　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウン遊覧船　自慢の　甲板では
+景色を　楽しむことが　できます！[BE:00:ページ切り替え（行送り）]
+客室内には　勝負が好きな[BE:00:ページ切り替え（行送り）]
+トレーナーたちが　集まって　おります[BE:00:ページ切り替え（行送り）]
+是非　景色も　勝負も[BE:00:ページ切り替え（行送り）]
+お楽しみ　ください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_04">
+		<comment>♀（仮）
+・はい→cabinguide05
+・いいえ→cabinguide06</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ヒウンゆうらんせんへ
+おのりに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウン遊覧船へ
+お乗りに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_05">
+		<comment>♀（仮）
+遊覧船内に入る演出
+C03R0801へマップ移動</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">まもなく　しゅっこうに　なります
+いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">まもなく　出港に　なります
+いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_06">
+		<comment>♀（仮）
+・イベント終了</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">かしこまりました
+またの　おこしを　おまちしております[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">かしこまりました
+またの　お越しを　お待ちしております[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_07">
+		<comment>♀（仮）
+・乗船イベント終了後
+このメッセージへ</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ごじょうせん　ありがとうございました
+またの　おこしを　おまちしております[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ご乗船　ありがとうございました！
+またの　お越しを　お待ちしております[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_08">
+		<comment>♀（仮）
+・乗船時間外の場合</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ほんじつの　しゅっこうは
+しゅうりょう　いたしました[BE:00:ページ切り替え（行送り）]
+また　あす　おこしくださいませ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">本日の　出港は　終了　いたしました
+また　明日　お越しくださいませ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
