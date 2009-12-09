@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-14T18:43:11"/>
+	<create user="mori" host="W00155" date="2009-12-09T16:42:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,7 +234,7 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
-			<tag entry="04" japanese="X加算" english="X加算" view="EP">
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
 				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
 				<comment language="japanese">描画X座標を加算します。
 使用は許可制です。</comment>
@@ -319,8 +319,8 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -341,86 +341,96 @@
 
 
 	<row id="msg_title">
-		<language name="JPN" font=" 1:font_system">メールボックス</language>
-		<language name="JPN_KANJI" font=" 1:font_system">メールボックス</language>
+		<language name="JPN" font=" 1:small">メールボックス</language>
+		<language name="JPN_KANJI" font=" 1:small">メールボックス</language>
 	</row>
 
 	<row id="msg_page01">
-		<language name="JPN" font=" 1:font_system">[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system">[2:00:１桁:0]</language>
+		<language name="JPN" font=" 1:small">[2:00:１桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small">[2:00:１桁:0]</language>
 	</row>
 
 	<row id="msg_page02">
-		<language name="JPN" font=" 1:font_system">／</language>
-		<language name="JPN_KANJI" font=" 1:font_system">／</language>
+		<language name="JPN" font=" 1:small">／</language>
+		<language name="JPN_KANJI" font=" 1:small">／</language>
 	</row>
 
 	<row id="msg_return">
-		<language name="JPN" font=" 1:font_system">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system">やめる</language>
+		<language name="JPN" font=" 1:small">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small">やめる</language>
 	</row>
 
 	<row id="msg_close">
-		<language name="JPN" font=" 1:font_system">とじる</language>
-		<language name="JPN_KANJI" font=" 1:font_system">とじる</language>
+		<language name="JPN" font=" 1:small">とじる</language>
+		<language name="JPN_KANJI" font=" 1:small">とじる</language>
 	</row>
 
 	<row id="msg_menu01">
-		<language name="JPN" font=" 1:font_system">メールを　よむ</language>
-		<language name="JPN_KANJI" font=" 1:font_system">メールを　よむ</language>
+		<language name="JPN" font=" 1:small">メールを　よむ</language>
+		<language name="JPN_KANJI" font=" 1:small">メールを　よむ</language>
 	</row>
 
 	<row id="msg_menu02">
-		<language name="JPN" font=" 1:font_system">メールを　けす</language>
-		<language name="JPN_KANJI" font=" 1:font_system">メールを　けす</language>
+		<language name="JPN" font=" 1:small">メールを　けす</language>
+		<language name="JPN_KANJI" font=" 1:small">メールを　けす</language>
 	</row>
 
 	<row id="msg_menu03">
-		<language name="JPN" font=" 1:font_system">もたせる</language>
-		<language name="JPN_KANJI" font=" 1:font_system">もたせる</language>
+		<language name="JPN" font=" 1:small">もたせる</language>
+		<language name="JPN_KANJI" font=" 1:small">もたせる</language>
 	</row>
 
 	<row id="msg_menu04">
-		<language name="JPN" font=" 1:font_system">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system">やめる</language>
+		<language name="JPN" font=" 1:small">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small">やめる</language>
 	</row>
 
 	<row id="msg_message01">
-		<language name="JPN" font=" 1:font_system">[1:00:トレーナー名:0]の
+		<language name="JPN" font=" 1:small">[1:00:トレーナー名:0]の
 メールを　どうしますか？</language>
-		<language name="JPN_KANJI" font=" 1:font_system">[1:00:トレーナー名:0]の
+		<language name="JPN_KANJI" font=" 1:small">[1:00:トレーナー名:0]の
 メールを　どうしますか？</language>
 	</row>
 
 	<row id="msg_message02">
-		<language name="JPN" font=" 1:font_system">ないようは　きえて　しまいますが
+		<language name="JPN" font=" 1:small">ないようは　きえて　しまいますが
 よろしい　ですか？</language>
-		<language name="JPN_KANJI" font=" 1:font_system">ないようは　きえて　しまいますが
+		<language name="JPN_KANJI" font=" 1:small">ないようは　きえて　しまいますが
 よろしい　ですか？</language>
 	</row>
 
 	<row id="msg_message03">
-		<language name="JPN" font=" 1:font_system">ないようを　けしました</language>
-		<language name="JPN_KANJI" font=" 1:font_system">ないようを　けしました</language>
+		<language name="JPN" font=" 1:small">ないようを　けしました</language>
+		<language name="JPN_KANJI" font=" 1:small">ないようを　けしました</language>
 	</row>
 
 	<row id="msg_message04">
-		<language name="JPN" font=" 1:font_system">ポケモンに　もたせますか？</language>
-		<language name="JPN_KANJI" font=" 1:font_system">ポケモンに　もたせますか？</language>
+		<language name="JPN" font=" 1:small">ポケモンに　もたせますか？</language>
+		<language name="JPN_KANJI" font=" 1:small">ポケモンに　もたせますか？</language>
 	</row>
 
 	<row id="msg_message05">
-		<language name="JPN" font=" 1:font_system">ないようを　けした　メールを
+		<language name="JPN" font=" 1:small">ないようを　けした　メールを
 バッグに　しまいました</language>
-		<language name="JPN_KANJI" font=" 1:font_system">ないようを　けした　メールを
+		<language name="JPN_KANJI" font=" 1:small">ないようを　けした　メールを
 バッグに　しまいました</language>
 	</row>
 
 	<row id="msg_message06">
-		<language name="JPN" font=" 1:font_system">バッグが　いっぱいです…
+		<language name="JPN" font=" 1:small">バッグが　いっぱいです…
 メールを　すてました</language>
-		<language name="JPN_KANJI" font=" 1:font_system">バッグが　いっぱいです…
+		<language name="JPN_KANJI" font=" 1:small">バッグが　いっぱいです…
 メールを　すてました</language>
+	</row>
+
+	<row id="msg_mailbox_yes">
+		<language name="JPN" font=" 1:small">はい</language>
+		<language name="JPN_KANJI" font=" 1:small">はい</language>
+	</row>
+
+	<row id="msg_mailbox_no">
+		<language name="JPN" font=" 1:small">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
