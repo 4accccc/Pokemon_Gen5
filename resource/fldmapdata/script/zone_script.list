@@ -812,5 +812,21 @@ SCRIPTFILES += \
 	sp_c04r1002.ev \
 	c09r0701.ev \
 	sp_c09r0701.ev \
+	c03r1001.ev \
+	sp_c03r1001.ev \
+	c03r1002.ev \
+	sp_c03r1002.ev \
+	c03r1101.ev \
+	sp_c03r1101.ev \
+	c03r1102.ev \
+	sp_c03r1102.ev \
+	c03r1201.ev \
+	sp_c03r1201.ev \
+	c03r1202.ev \
+	sp_c03r1202.ev \
+	c03r1301.ev \
+	sp_c03r1301.ev \
+	c03r1302.ev \
+	sp_c03r1302.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
