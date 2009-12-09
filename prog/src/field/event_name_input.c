@@ -164,8 +164,10 @@ GMEVENT * EVENT_NameInput_PartyPoke(
     POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, party_index );
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     work->nameInParam = NAMEIN_AllocParam( 
         HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     work->pokeParam   = pp;
   }
 
@@ -198,7 +200,9 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
     }
     // “ü—ÍŒ‹‰Ê‚ðƒ[ƒN‚É•Ô‚·
     *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( pniw->nameInParam );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
