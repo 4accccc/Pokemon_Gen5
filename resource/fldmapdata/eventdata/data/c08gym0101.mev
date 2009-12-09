@@ -1,20 +1,361 @@
 #event data
-#save date:2009/10/24 17:00:17
+#save date:2009/12/09 16:57:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/24 17:00:17
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+11
+#event number: 0
+#type
+1
+#ID name
+C08GYM0101_DUMMY_01
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 120
+#event number: 1
+#type
+1
+#ID name
+C08GYM0101_DUMMY_02
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -136
+#event number: 2
+#type
+1
+#ID name
+C08GYM0101_DUMMY_03
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -56
+#event number: 3
+#type
+1
+#ID name
+C08GYM0101_DUMMY_04
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 -104
+#event number: 4
+#type
+1
+#ID name
+C08GYM0101_DUMMY_05
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -248
+#event number: 5
+#type
+1
+#ID name
+C08GYM0101_DUMMY_06
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 192 216
+#event number: 6
+#type
+1
+#ID name
+C08GYM0101_DUMMY_07
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 88
+#event number: 7
+#type
+1
+#ID name
+C08GYM0101_DUMMY_08
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 96 -24
+#event number: 8
+#type
+1
+#ID name
+C08GYM0101_DUMMY_09
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -24
+#event number: 9
+#type
+1
+#ID name
+C08GYM0101_DUMMY_10
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 96 -200
+#event number: 10
+#type
+1
+#ID name
+C08GYM0101_DUMMY_11
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 96 -232
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/24 17:00:17
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +365,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/24 17:00:17
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +375,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/24 17:00:17
+#save date:
 2
 #hold event type:
 1
@@ -51,8 +392,12 @@ DOOR_ID_C08_C08GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 120
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C08GYM0101_C08_EXIT02
@@ -64,8 +409,12 @@ DOOR_ID_C08_C08GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 120
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C08GYM0101_C08_EXIT03
@@ -77,7 +426,11 @@ DOOR_ID_C08_C08GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 120
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
