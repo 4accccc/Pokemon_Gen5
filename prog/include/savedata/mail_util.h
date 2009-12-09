@@ -25,33 +25,6 @@
 typedef struct _MAIL_BLOCK MAIL_BLOCK;
 
 
-/**
- *  @brief  空いているメールデータIDを取得
- *
- *  @param  id 追加したいメールブロックID
- *
- *  @return int データを追加できる場合は参照ID
- *        追加できない場合はマイナス値が返る
- */
-extern int MAIL_SearchNullID(MAIL_BLOCK* block,MAILBLOCK_ID id);
-
-/**
- *  @brief  メールデータを削除
- *
- *  @param  blockID ブロックのID
- *  @param  dataID  データID
- */
-extern void MAIL_DelMailData(MAIL_BLOCK* block,MAILBLOCK_ID blockID,int dataID);
-
-/**
- *  @brief  メールデータをセーブブロックに追加
- *
- *  ＊引き渡したMAIL_DATA構造体型データの中身がセーブデータに反映されるので
- *  　おかしなデータを入れないように注意！
- */
-extern void MAIL_AddMailFormWork(MAIL_BLOCK* block,
-    MAILBLOCK_ID blockID,int dataID,MAIL_DATA* src);
-
 
 //=============================================================
 /**

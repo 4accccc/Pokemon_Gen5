@@ -1005,8 +1005,11 @@ static BOOL TESTMODE_ITEM_SelectFuncSaito( TESTMODE_WORK *work , const int idx )
 {
   return TRUE;
 }
+
+#include "mori/d_mori.c"
 static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx )
 {
+  TESTMODE_COMMAND_ChangeMenu( work , menuMori , NELEMS(menuMori)  );
   return TRUE;
 }
 
