@@ -221,12 +221,7 @@ static void SetupEvent(
       work->machineObjSt = objst[0];
       GD3MAPOBJST_getPos( objst[0], &work->machinePos );
     }
-    GFL_HEAP_FreeMemory( objst );
-
-    // DEBUG:
-    OBATA_Printf( "machinePos = %d, %d, %d\n", FX_Whole(work->machinePos.x), 
-                                               FX_Whole(work->machinePos.y), 
-                                               FX_Whole(work->machinePos.z) );
+    GFL_HEAP_FreeMemory( objst ); 
   }
 
   // ボールの配置モデルを作成
@@ -333,7 +328,6 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
   if( work->machineObjSt )
   {
     G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 0, BMANM_REQ_START );
-    G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 1, BMANM_REQ_START );
   }
 
   // ME再生
