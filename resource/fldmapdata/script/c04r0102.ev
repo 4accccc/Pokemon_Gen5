@@ -85,7 +85,16 @@ EVENT_START ev_c04r0102_receipt
       $flag_end = FALSE
     ENDSWITCH
   ENDWHILE
-  
+  /*
+  IF $flag_end == FALSE
+    _NOP
+  ELSE
+    //またのご利用をお待ちしています
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_07 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
   //バトルボックスチェック
   
   //バトルボックス有る場合は選択ウィンドウ
@@ -105,9 +114,6 @@ EVENT_START ev_c04r0102_receipt
   //セーブ処理
   
   //シングルトレインへご乗車下さい
-  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0102_receipt_10 )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-  
   //自機移動アニメ、画面遷移
+  */
 EVENT_END
