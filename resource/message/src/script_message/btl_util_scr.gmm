@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-09T18:52:35"/>
+	<create user="iwasawa" host="W00157" date="2009-12-09T19:34:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="150"/>
+		<id position="0" width="194"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -292,10 +292,34 @@
 	</lock>
 
 
-	<row id="msg_btl_util_regulation_out" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+	<row id="msg_btl_util_party_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>バトルボックス選択メッセージ</comment>
+		<attribute name="キャラ指定">パーティ選択</attribute>
+		<language name="JPN" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+	</row>
+
+	<row id="msg_btl_util_party_select_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>パーティ選択</comment>
+		<attribute name="キャラ指定">パーティ選択</attribute>
+		<language name="JPN" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">てもち</language>
+	</row>
+
+	<row id="msg_btl_util_party_select_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>パーティ選択</comment>
+		<attribute name="キャラ指定">パーティ選択</attribute>
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
+	</row>
+
+	<row id="msg_btl_util_party_select_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>パーティ選択</comment>
+		<attribute name="キャラ指定">パーティ選択</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
