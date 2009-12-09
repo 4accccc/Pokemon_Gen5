@@ -128,15 +128,18 @@ enum {
 //ＯＢＪインデックス
 enum {
   OBJ_HEAD_1 = 0,
-  OBJ_ARM_1,
+  OBJ_L_ARM_1,
+  OBJ_R_ARM_1,
   OBJ_BUTTON_L_1,
   OBJ_BUTTON_R_1,
   OBJ_HEAD_2,
-  OBJ_ARM_2,
+  OBJ_L_ARM_2,
+  OBJ_R_ARM_2,
   OBJ_BUTTON_L_2,
   OBJ_BUTTON_R_2,
   OBJ_HEAD_3,
-  OBJ_ARM_3,
+  OBJ_L_ARM_3,
+  OBJ_R_ARM_3,
   OBJ_BUTTON_L_3,
   OBJ_BUTTON_R_3,
   OBJ_FLOOR,
@@ -397,13 +400,21 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     }
 */
-    //腕
-    idx = OBJ_ARM_1 + (i*DRAGON_PARTS_SET);
+    //左腕
+    idx = OBJ_L_ARM_1 + (i*DRAGON_PARTS_SET);
     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, idx);
     status->trans = DragonPos[i];
     MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, idx, TRUE);
+    //右腕
+    idx = OBJ_R_ARM_1 + (i*DRAGON_PARTS_SET);
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, idx);
+    status->trans = DragonPos[i];
+    MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, idx, TRUE);
+
 /**    
     for (j=0;j<WALL_ANM_NUM;j++)
     {
@@ -443,7 +454,10 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 
     FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
     FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_L_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_R_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, vanish );
   }
 }
 
@@ -499,7 +513,10 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
 
     FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
     FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_L_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_R_ARM_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, vanish );
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, vanish );
   }
 }
 
@@ -594,11 +611,19 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       int anm_idx;
       int obj_idx;
       //現在状況から動かす腕アニメを決定
-      if ( tmp->TrgtArm == DRA_ARM_LEFT ) anm_idx = 0;  //@todo
-      else anm_idx = 0;  //@todo
+      if ( tmp->TrgtArm == DRA_ARM_LEFT )
+      {
+        anm_idx = 0;  //@todo
+        obj_idx = OBJ_L_ARM_1;
+      }
+      else
+      {
+        anm_idx = 0;  //@todo
+        obj_idx = OBJ_R_ARM_1;
+      }
 
       //腕のＯＢＪとアニメをセット
-      obj_idx = OBJ_ARM_1+(tmp->TrgtHead*DRAGON_PARTS_SET);
+      obj_idx += (tmp->TrgtHead*DRAGON_PARTS_SET);
 
       call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
       //腕アニメイベントコール
