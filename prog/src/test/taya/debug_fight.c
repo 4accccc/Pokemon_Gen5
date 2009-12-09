@@ -328,12 +328,12 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
  *  アイテムレイアウト（２ページ目）
  */
 static const ITEM_LAYOUT ItemLayout_Page2[] = {
-  { SELITEM_MUST_TUIKA,     LAYOUT_LABEL_MUST_TUIKA_X    +60, LAYOUT_LABEL_MUST_TUIKA_Y,    0, 1 },
-  { SELITEM_MUST_TOKU,      LAYOUT_LABEL_MUST_TOKU_X     +60, LAYOUT_LABEL_MUST_TOKU_Y,     0, 1 },
-  { SELITEM_MUST_ITEM,      LAYOUT_LABEL_MUST_ITEM_X     +60, LAYOUT_LABEL_MUST_ITEM_Y,     0, 1 },
-  { SELITEM_MUST_CRITICAL,  LAYOUT_LABEL_MUST_CRITICAL_X +60, LAYOUT_LABEL_MUST_CRITICAL_Y, 0, 1 },
-  { SELITEM_HP_CONST,       LAYOUT_LABEL_HP_CONST_X      +60, LAYOUT_LABEL_HP_CONST_Y,      0, 1 },
-  { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +60, LAYOUT_LABEL_PP_CONST_Y,      0, 1 },
+  { SELITEM_MUST_TUIKA,     LAYOUT_LABEL_MUST_TUIKA_X    +68, LAYOUT_LABEL_MUST_TUIKA_Y,    0, 1 },
+  { SELITEM_MUST_TOKU,      LAYOUT_LABEL_MUST_TOKU_X     +68, LAYOUT_LABEL_MUST_TOKU_Y,     0, 1 },
+  { SELITEM_MUST_ITEM,      LAYOUT_LABEL_MUST_ITEM_X     +68, LAYOUT_LABEL_MUST_ITEM_Y,     0, 1 },
+  { SELITEM_MUST_CRITICAL,  LAYOUT_LABEL_MUST_CRITICAL_X +68, LAYOUT_LABEL_MUST_CRITICAL_Y, 0, 1 },
+  { SELITEM_HP_CONST,       LAYOUT_LABEL_HP_CONST_X      +68, LAYOUT_LABEL_HP_CONST_Y,      0, 1 },
+  { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +68, LAYOUT_LABEL_PP_CONST_Y,      0, 1 },
 
 };
 
@@ -498,6 +498,7 @@ static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam );
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
 static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
+static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* setup );
 static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
 static void* testBeaconGetFunc( void* pWork );
@@ -1553,6 +1554,7 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_START:
+    setDebugParams( &wk->saveData, &wk->setupParam );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
     printPartyInfo( wk->setupParam.partyEnemy1 );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
@@ -1709,7 +1711,22 @@ static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
     }
   }
 }
+/**
+ *  デバッグ機能のセットアップ
+ */
+static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* setup )
+{
+  if( save->fMustTuika )    { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_MUST_TUIKA );    }
+  if( save->fMustToku )     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_MUST_TOKUSEI );  }
+  if( save->fMustItem )     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_MUST_ITEM );     }
+  if( save->fMustCritical ) { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_MUST_CRITICAL ); }
+  if( save->fHPConst )      { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_HP_CONST );      }
+  if( save->fPPConst )      { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_PP_CONST );      }
+}
 
+/**
+ *  パーティメンバー内容をPrint
+ */
 static void printPartyInfo( POKEPARTY* party )
 {
   POKEMON_PARAM* pp;

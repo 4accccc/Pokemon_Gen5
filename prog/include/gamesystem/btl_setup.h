@@ -138,13 +138,7 @@ extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData
  */
 //-----------------------------------------------------------------------------
 #ifdef PM_DEBUG
-typedef enum {
-  BTL_SETUP_DEBUGFLAG_MUST_TUIKA=0,   ///< 追加効果の発生率を100％にする
-  BTL_SETUP_DEBUGFLAG_MUST_TOKUSEI,   ///< 一部とくせいの効果発生率を100％にする
-  BTL_SETUP_DEBUGFLAG_MUST_ITEM,      ///< 一部アイテムの効果発生率を100％にする
-  BTL_SETUP_DEBUGFLAG_MUST_CRITICAL,  ///< 打撃ワザのクリティカル発生率を100％にする
-}BtlSetupDebugFlag;
 
-extern BTL_SETUP_DEBUG_SetFlag( BATTLE_SETUP_PARAM* dst, BtlSetupDebugFlag flag );
+extern void BTL_SETUP_SetDebugFlag( BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag );
 
 #endif

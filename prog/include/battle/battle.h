@@ -149,6 +149,26 @@ typedef struct {
 
 }BSP_TRAINER_DATA;
 
+//--------------------------------------------------------------
+/**
+ *  デバッグフラグ
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+  BTL_DEBUGFLAG_MUST_TUIKA = 0, ///< 追加効果の発生率を100％にする
+  BTL_DEBUGFLAG_MUST_TOKUSEI,   ///< 一部とくせいの効果発生率を100％にする
+  BTL_DEBUGFLAG_MUST_ITEM,      ///< 一部アイテムの効果発生率を100％にする
+  BTL_DEBUGFLAG_MUST_CRITICAL,  ///< 打撃ワザのクリティカル発生率を100％にする
+  BTL_DEBUGFLAG_HP_CONST,       ///< HP減らない
+  BTL_DEBUGFLAG_PP_CONST,       ///< PP減らない
+  BTL_DEBUGFLAG_SAME_RANDOM,    ///< 前回と同じ乱数のタネを使う
+
+  BTL_DEBUGFLAG_MAX,
+
+}BtlDebugFlag;
+
+
 //-----------------------------------------------------------------------------------
 /**
  *  バトルセットアップパラメータ
@@ -189,12 +209,7 @@ typedef struct {
   ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
 
   // デバッグ系
-  u8          fMustTuika    : 1;  ///< 追加効果の発生率100％
-  u8          fMustToku     : 1;  ///< 一部とくせい効果の発生率100％
-  u8          fMustItem     : 1;  ///< 一部アイテム効果の発生率100％
-  u8          fMustCritical : 1;  ///< 打撃ワザによるクリティカル発生率100％
-  u8          fHPConst      : 1;  ///< ポケモンのHPが減らない
-  u8          fPPConst      : 1;  ///< ポケモンのPPが減らない
+  u16         DebugFlag;          ///< 各種デバッグフラグ
 
 
   //----- 以下、バトルの結果格納パラメータ ----

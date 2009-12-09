@@ -615,3 +615,14 @@ void BTL_SETUP_SetRecordPlayMode( BATTLE_SETUP_PARAM* dst )
   dst->fRecordPlay = TRUE;
 }
 
+/*
+ *  @brief デバッグ用フラグセット
+ */
+void BTL_SETUP_SetDebugFlag( BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag )
+{
+  GF_ASSERT(flag < BTL_DEBUGFLAG_MAX);
+
+  dst->DebugFlag |= (1 << flag);
+}
+
+
