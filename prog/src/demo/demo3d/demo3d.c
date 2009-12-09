@@ -13,10 +13,6 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
-// ICA
-#include "system/ica_anime.h"
-#include "system/ica_camera.h"
-
 //タスクメニュー
 #include "app/app_taskmenu.h"
 
@@ -44,15 +40,12 @@
 //アーカイブ
 #include "arc_def.h"
 
-#include "arc/debug_obata.naix"
-
-//データ
-#include "demo3d_data.h"
-
 //外部公開
 #include "demo/demo3d.h"
 
 #include "message.naix"
+
+#include "demo3d_engine.h"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -75,11 +68,6 @@ enum
 { 
   DEMO3D_HEAP_SIZE = 0x100000,  ///< ヒープサイズ
 };
-
-//@TODO 3という約束になっていたので3。ちゃんと作れば対応可能
-#define UNIT_MAX (3) ///< 使用ユニットの最大値
-
-#define ICA_BUFF_SIZE (10)
 
 //-------------------------------------
 ///	フレーム
@@ -146,7 +134,6 @@ typedef struct
 
 	//描画設定
 	DEMO3D_GRAPHIC_WORK	*graphic;
-  fx32                 anime_speed;  ///< アニメーションスピード
 
 #ifdef DEMO3D_TOUCHBAR
 	//タッチバー
@@ -175,12 +162,8 @@ typedef struct
 	PRINT_UTIL								print_util;
 	u32												seq;
 #endif	//DEMO3D_PRINT_TOOL
-  
-  DEMO3D_ID                demo_id;
-  u32                      start_frame;
-  ICA_ANIME                *ica_anime;
-  GFL_G3D_UTIL* g3d_util;
-  u16 unit_idx[ UNIT_MAX ]; 
+
+  DEMO3D_ENGINE_WORK*   engine;
 
 } DEMO3D_MAIN_WORK;
 
@@ -207,10 +190,6 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
-static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID );
-static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk );
-static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk );
-
 #ifdef  Demo3D_BG
 static void Demo3D_BG_LoadResource( DEMO3D_BG_WORK* wk, HEAPID heapID );
 #endif // DEMO3D_BG
@@ -294,12 +273,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   // 初期化
   wk->heapID      = HEAPID_UI_DEBUG;
   wk->param       = param;
-  wk->demo_id     = param->demo_id;
-  wk->start_frame = param->start_frame;
 	
 	//描画設定初期化
 	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
-  wk->anime_speed = FX32_ONE; // アニメーションスピード
 
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -318,7 +294,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 #endif // DEMO3D_BG
 
   //3D 初期化
-  Demo3D_GRAPHIC3D_Init( wk, wk->heapID );
+  wk->engine = Demo3D_ENGINE_Init( wk->graphic, param->demo_id, param->start_frame, wk->heapID );
 
 #ifdef DEMO3D_INFOWIN
 	//INFOWINの初期化
@@ -396,7 +372,7 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 	GFL_FONT_Delete( wk->font );
   
   //3D 破棄
-  Demo3D_GRAPHIC3D_Exit( wk );
+  Demo3D_ENGINE_Exit( wk->engine );
 
 	//描画設定破棄
 	DEMO3D_GRAPHIC_Exit( wk->graphic );
@@ -466,7 +442,12 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 	DEMO3D_GRAPHIC_2D_Draw( wk->graphic );
 
 	//3D描画
-  is_end = Demo3D_GRAPHIC3D_Main( wk );
+  is_end = Demo3D_ENGINE_Main( wk->engine );
+
+  // [OUT] フレーム値を設定
+  {
+    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine );
+  }
 
   // ループ検出で終了
   if( is_end )
@@ -483,159 +464,6 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  *								static関数
  */
 //=============================================================================
-//-----------------------------------------------------------------------------
-/**
- *	@brief  3Dグラフィック 初期化
- *
- *	@param	DEMO3D_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_GRAPHIC3D_Init( DEMO3D_MAIN_WORK* wk, HEAPID heapID )
-{
-  // icaデータをロード
-  wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
-
-  // icaアニメフレーム初期化
-  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->start_frame) );
-
-  // 3D管理ユーティリティーの生成
-  wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
-
-  // ユニット追加
-  {
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      const GFL_G3D_UTIL_SETUP* setup;
-
-      setup = Demo3D_DATA_GetG3DUtilSetup( wk->demo_id, i );
-
-      HOSAKA_Printf("demoid=%d setup_idx=%d setup objcnt=%d resCount=%d \n",wk->demo_id, i, setup->objCount, setup->resCount);
-
-      GF_ASSERT( wk->unit_idx[i] < UNIT_MAX );
-      wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );
-    }
-  }
-  
-  // アニメーション有効化
-  {
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      int j;
-      GFL_G3D_OBJ* obj;
-      int anime_count;
-      
-      obj         = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      
-      GF_ASSERT( wk->unit_idx[i] < UNIT_MAX );
-
-      for( j=0; j<anime_count; j++ )
-      {
-        const int frame = FX32_CONST(wk->start_frame);
-
-        GFL_G3D_OBJECT_EnableAnime( obj, j );
-        GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
-      }
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  3Dグラフィック 開放
- *
- *	@param	DEMO3D_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_GRAPHIC3D_Exit( DEMO3D_MAIN_WORK* wk )
-{ 
-  // ICA破棄
-  ICA_ANIME_Delete( wk->ica_anime );
-
-  // ユニット破棄
-  {
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
-    }
-  }
-  
-  // 3D管理ユーティリティーの破棄
-  GFL_G3D_UTIL_Delete( wk->g3d_util );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  3Dグラフィック 主処理
- *
- *	@param	DEMO3D_MAIN_WORK* wk 
- *
- *	@retval TRUE : 終了
- */
-//-----------------------------------------------------------------------------
-static BOOL Demo3D_GRAPHIC3D_Main( DEMO3D_MAIN_WORK* wk )
-{
-  GFL_G3D_CAMERA* p_camera;
-  BOOL is_loop;
-  GFL_G3D_OBJSTATUS status;
-
-  // ステータス初期化
-  VEC_Set( &status.trans, 0, 0, 0 );
-  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &status.rotate );
-
-  p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
-
-  ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
-  
-  // アニメーション更新
-  {
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      int j;
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      for( j=0; j<anime_count; j++ )
-      {
-        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
-      }
-    }
-  }
-
-  // 描画
-	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
-  {
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      GFL_G3D_DRAW_DrawObject( obj, &status );
-    }
-  }
-	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );
-  
-  {
-    is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
-  }
-
-  // [OUT] フレーム値を設定
-  {
-    wk->param->end_frame  = ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT;
-  }
-
-  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
-
-  // ループ検出で終了
-  return is_loop;
-}
 
 #ifdef DEMO3D_BG
 //-----------------------------------------------------------------------------
