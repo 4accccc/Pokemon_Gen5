@@ -140,5 +140,7 @@ extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData
 #ifdef PM_DEBUG
 
 extern void BTL_SETUP_SetDebugFlag( BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag );
+extern BOOL BTL_SETUP_GetDebugFlag( const BATTLE_SETUP_PARAM* param, BtlDebugFlag flag );
+
 
 #endif

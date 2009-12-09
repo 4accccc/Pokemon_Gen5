@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
+#include "gamesystem/btl_setup.h"
 #include "battle/battle.h"
 
 #include "btl_common.h"
@@ -2788,6 +2789,25 @@ BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->bagCursor;
 }
+
+//=============================================================================================
+/**
+ * デバッグフラグ取得
+ *
+ * @param   wk
+ * @param   flag
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag )
+{
+#ifdef PM_DEBUG
+  return BTL_SETUP_GetDebugFlag( wk->setupParam, flag );
+#endif
+  return FALSE;
+}
+
 //=============================================================================================
 /**
  * 捕獲したポケモン位置の通知を受け付け

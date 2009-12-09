@@ -380,7 +380,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
-static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
+static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BPP_SICK_CONT* pSickCont );
 static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
@@ -3305,13 +3305,13 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     return;
   }
 
-  // ダメージ受けポケモンワークをクリアしておく  *
+  // ダメージ受けポケモンワークをクリアしておく
   BTL_POKESET_Clear( &wk->pokesetDamaged );
 
-  // ワザエフェクトコマンド生成用にバッファ領域を予約しておく  *
+  // ワザエフェクトコマンド生成用にバッファ領域を予約しておく
   que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
 
-  // ワザ出し確定イベント  *
+  // ワザ出し確定イベント
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
     BOOL fQuit = scEvent_WazaExecuteFix( wk, attacker, waza, targetRec );
@@ -3323,15 +3323,15 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
   }
 
-  // 死んでるポケモンは除外 *
+  // 死んでるポケモンは除外
   BTL_POKESET_RemoveDeadPoke( targetRec );
-  // 最初は居たターゲットが残っていない->うまく決まらなかった、終了 *
+  // 最初は居たターゲットが残っていない->うまく決まらなかった、終了
   if( BTL_POKESET_IsRemovedAll(targetRec) ){
     scPut_WazaFail( wk, attacker, waza );
     return;
   }
 
-  // 対象ごとの無効チェック＆回避チェック->原因表示はその先に任せる  *
+  // 対象ごとの無効チェック＆回避チェック->原因表示はその先に任せる
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
   if( category != WAZADATA_CATEGORY_ICHIGEKI ){
     flowsub_checkWazaAvoid( wk, &wk->wazaParam, attacker, targetRec );
@@ -4386,207 +4386,6 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
-//--------------------------------------------------------------------------
-/**
- * [proc] 状態異常共通処理
- *
- * @param   wk
- * @param   target
- * @param   attacker
- * @param   sick
- * @param   sickCont
- * @param   fAlmost            失敗した時に原因メッセージを表示する
- *
- * @retval  BOOL       成功した場合TRUE
- */
-//--------------------------------------------------------------------------
-static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BOOL fDefaultMsgEnable )
-{
-  BOOL fSucceed;
-
-  fSucceed = addsick_core( wk, target, attacker, sick, sickCont, fAlmost );
-  if( fSucceed )
-  {
-    if( fDefaultMsgEnable ){
-      BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
-      handexSub_putString( wk, &wk->strParam );
-    }
-
-    {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-
-      if( sick < POKESICK_MAX ){
-        scEvent_PokeSickFixed( wk, target, attacker, sick );
-      }else if( sick == WAZASICK_IEKI ){
-        scEvent_IekiFixed( wk, target );
-      }
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-    }
-
-
-    scproc_CheckItemReaction( wk, target );
-  }
-
-  return fSucceed;
-}
-//--------------------------------------------------------------------------
-/**
- * 状態異常コア部分
- *
- * @param   wk
- * @param   target            状態異常をくらうポケ
- * @param   sick              状態異常ID
- * @param   sickCont          状態異常継続パラメータ
- * @param   fAlmost           ほぼ確定フラグ
- *
- * @retval  BOOL    状態異常にした場合、TRUE
- */
-//--------------------------------------------------------------------------
-static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost  )
-{
-  BtlAddSickFailCode  fail_code;
-
-  fail_code = addsick_check_fail( wk, target, sick, sickCont );
-
-  if( fail_code != BTL_ADDSICK_FAIL_NULL )
-  {
-    if( fAlmost ){
-      scPut_AddSickFail( wk, target, fail_code, sick );
-    }
-    return FALSE;
-  }
-  else
-  {
-    BOOL fFail = FALSE;
-    if( sick < WAZASICK_STD_MAX ){
-      fFail = scEvent_StdSick_CheckFail( wk, target, sick );
-    }
-
-    if( !fFail ){
-      BTL_Printf("状態異常決定：コード=%d\n", sick);
-      scPut_AddSick( wk, target, sick, sickCont );
-    }
-    else if( fAlmost )
-    {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_AddSick_Failed( wk, target, sick );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-    }
-    return !fFail;
-  }
-}
-static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaSick sick, BPP_SICK_CONT sickCont )
-{
-  // てんこう「はれ」の時に「こおり」にはならない
-  if( (BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE)
-  &&  (sick == POKESICK_KOORI)
-  ){
-    return BTL_ADDSICK_FAIL_OTHER;
-  }
-  // すでに混乱なら混乱にならないとか…
-  if( BPP_CheckSick(target, sick) ){
-    return BTL_ADDSICK_FAIL_ALREADY;
-  }
-
-  // すでにポケモン系状態異常になっているなら、新たにポケモン系状態異常にはならない
-  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
-  {
-    if( BPP_GetPokeSick(target) != POKESICK_NULL ){
-      return BTL_ADDSICK_FAIL_OTHER;
-    }
-  }
-
-  // タイプ「はがね」は、どくにならない
-  if( (sick==WAZASICK_DOKU) || (sick==WAZASICK_DOKUDOKU) )
-  {
-    PokeTypePair type = BPP_GetPokeType( target );
-    if( PokeTypePair_IsMatch(type, POKETYPE_HAGANE) ){
-      return BTL_ADDSICK_FAIL_OTHER;
-    }
-  }
-
-  return BTL_ADDSICK_FAIL_NULL;
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] 状態異常を失敗するケースのチェック
- *
- * @param   wk
- * @param   target
- * @param   sick
- *
- * @retval  BOOL    失敗する場合はTRUE
- */
-//----------------------------------------------------------------------------------
-static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
-{
-  BOOL fFail = FALSE;
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_CHECKFAIL );
-    fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-  BTL_EVENTVAR_Pop();
-  return fFail;
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] 状態異常失敗が確定した
- *
- * @param   wk
- * @param   target
- * @param   sick
- */
-//----------------------------------------------------------------------------------
-static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_FAILED );
-  BTL_EVENTVAR_Pop();
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] ポケモン系状態異常確定
- *
- * @param   wk
- * @param   target
- * @param   attacker
- * @param   sick
- */
-//----------------------------------------------------------------------------------
-static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_POKESICK_FIXED );
-  BTL_EVENTVAR_Pop();
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] いえきによる特性無効化の確定
- *
- * @param   wk
- * @param   target
- */
-//----------------------------------------------------------------------------------
-static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
-    BTL_EVENT_ForceCallHandlers( wk, BTL_EVENT_IEKI_FIXED );
-  BTL_EVENTVAR_Pop();
-}
-
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理
 //------------------------------------------------------------------
@@ -4981,7 +4780,7 @@ static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
   BPP_SICK_CONT sick_cont;
   u32 i=0;
 
-  sick = scEvent_CheckAddSick( wk, wazaParam->wazaID, attacker, target, &sick_cont );
+  sick = scEvent_CheckWazaAddSick( wk, wazaParam->wazaID, attacker, target, &sick_cont );
   if( sick != WAZASICK_NULL )
   {
     if( !BPP_IsDead(target) ){
@@ -5002,7 +4801,7 @@ static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
  * @retval  WazaSick          状態異常ID
  */
 //--------------------------------------------------------------------------
-static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
+static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BPP_SICK_CONT* pSickCont )
 {
   BPP_SICK_CONT sickCont;
@@ -5038,6 +4837,11 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     if( sick != WAZASICK_NULL )
     {
       if( perOccur(wk, per) ){
+        *pSickCont = sickCont;
+        return sick;
+      }
+      // デバッグ機能により必ず発生
+      if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_TUIKA) ){
         *pSickCont = sickCont;
         return sick;
       }
@@ -5161,6 +4965,236 @@ static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
     sickCont->raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
   BTL_EVENTVAR_Pop();
 }
+//--------------------------------------------------------------------------
+/**
+ * [proc] 状態異常共通処理
+ *
+ * @param   wk
+ * @param   target
+ * @param   attacker
+ * @param   sick
+ * @param   sickCont
+ * @param   fAlmost            失敗した時に原因メッセージを表示する
+ *
+ * @retval  BOOL       成功した場合TRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BOOL fDefaultMsgEnable )
+{
+  BOOL fSucceed;
+
+  fSucceed = addsick_core( wk, target, attacker, sick, sickCont, fAlmost );
+  if( fSucceed )
+  {
+    if( fDefaultMsgEnable ){
+      BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
+      handexSub_putString( wk, &wk->strParam );
+    }
+
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+
+      if( sick < POKESICK_MAX ){
+        scEvent_PokeSickFixed( wk, target, attacker, sick );
+      }else if( sick == WAZASICK_IEKI ){
+        scEvent_IekiFixed( wk, target );
+      }
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+
+
+    scproc_CheckItemReaction( wk, target );
+  }
+
+  return fSucceed;
+}
+//--------------------------------------------------------------------------
+/**
+ * 状態異常コア部分
+ *
+ * @param   wk
+ * @param   target            状態異常をくらうポケ
+ * @param   sick              状態異常ID
+ * @param   sickCont          状態異常継続パラメータ
+ * @param   fAlmost           ほぼ確定フラグ
+ *
+ * @retval  BOOL    状態異常にした場合、TRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost  )
+{
+  BtlAddSickFailCode  fail_code;
+
+  fail_code = addsick_check_fail( wk, target, sick, sickCont );
+
+  if( fail_code != BTL_ADDSICK_FAIL_NULL )
+  {
+    if( fAlmost ){
+      scPut_AddSickFail( wk, target, fail_code, sick );
+    }
+    return FALSE;
+  }
+  else
+  {
+    BOOL fFail = FALSE;
+    if( sick < WAZASICK_STD_MAX ){
+      fFail = scEvent_StdSick_CheckFail( wk, target, sick );
+    }
+
+    if( !fFail ){
+      BTL_Printf("状態異常決定：コード=%d\n", sick);
+      scPut_AddSick( wk, target, sick, sickCont );
+    }
+    else if( fAlmost )
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_AddSick_Failed( wk, target, sick );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+    return !fFail;
+  }
+}
+static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
+  WazaSick sick, BPP_SICK_CONT sickCont )
+{
+  // てんこう「はれ」の時に「こおり」にはならない
+  if( (BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE)
+  &&  (sick == POKESICK_KOORI)
+  ){
+    return BTL_ADDSICK_FAIL_OTHER;
+  }
+  // すでに混乱なら混乱にならないとか…
+  if( BPP_CheckSick(target, sick) ){
+    return BTL_ADDSICK_FAIL_ALREADY;
+  }
+
+  // すでにポケモン系状態異常になっているなら、新たにポケモン系状態異常にはならない
+  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
+  {
+    if( BPP_GetPokeSick(target) != POKESICK_NULL ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  // はがね or どくタイプは、「どく」にならない
+  if( (sick==WAZASICK_DOKU) || (sick==WAZASICK_DOKUDOKU) )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_HAGANE)
+    ||  PokeTypePair_IsMatch(type, POKETYPE_DOKU)
+    ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  // じめんタイプは、「まひ」にならない
+  if( sick==WAZASICK_MAHI )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_JIMEN) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  // ほのおタイプは、「やけど」にならない
+  if( sick==WAZASICK_YAKEDO )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_HONOO) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  // くさタイプは、「やどりぎのタネ」にならない
+  if( sick==WAZASICK_YADORIGI )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_KUSA) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  return BTL_ADDSICK_FAIL_NULL;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 状態異常を失敗するケースのチェック
+ *
+ * @param   wk
+ * @param   target
+ * @param   sick
+ *
+ * @retval  BOOL    失敗する場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
+{
+  BOOL fFail = FALSE;
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_CHECKFAIL );
+    fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+  BTL_EVENTVAR_Pop();
+  return fFail;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 状態異常失敗が確定した
+ *
+ * @param   wk
+ * @param   target
+ * @param   sick
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_FAILED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ポケモン系状態異常確定
+ *
+ * @param   wk
+ * @param   target
+ * @param   attacker
+ * @param   sick
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_POKESICK_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] いえきによる特性無効化の確定
+ *
+ * @param   wk
+ * @param   target
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
+    BTL_EVENT_ForceCallHandlers( wk, BTL_EVENT_IEKI_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ダメージワザの追加効果によるランク効果
@@ -5203,8 +5237,15 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
   BTL_EVENTVAR_Pop();
 
-  if( !failFlag ){
+  if( !failFlag )
+  {
+    // デバッグ機能により必ず発生
+    if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_TUIKA) ){
+      return TRUE;
+    }
+
     return perOccur(wk, per);
+
   }else{
     return FALSE;
   }

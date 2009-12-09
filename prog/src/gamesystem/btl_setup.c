@@ -624,5 +624,14 @@ void BTL_SETUP_SetDebugFlag( BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag )
 
   dst->DebugFlag |= (1 << flag);
 }
+/*
+ *  @brief デバッグ用フラグ取得
+ */
+BOOL BTL_SETUP_GetDebugFlag( const BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag )
+{
+  GF_ASSERT(flag < BTL_DEBUGFLAG_MAX);
+
+  return (dst->DebugFlag & (1 << flag)) != 0;
+}
 
 
