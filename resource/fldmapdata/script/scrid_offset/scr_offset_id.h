@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/07 (Mon) 23:21
+ * @date  2009 12/09 (Wed) 19:11
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -78,6 +78,9 @@
 
 #define ID_GATE_SCR_OFFSET               (10250) //ゲート用共通スクリプト
 #define ID_GATE_SCR_OFFSET_END           (10259)
+
+#define ID_BTL_UTIL_SCR_OFFSET           (10260) //各種対戦受付フロー共通スクリプト
+#define ID_BTL_UTIL_SCR_OFFSET_END       (10269)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)
