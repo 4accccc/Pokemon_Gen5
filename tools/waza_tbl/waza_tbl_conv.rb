@@ -3,7 +3,6 @@
   require File.dirname(__FILE__) + '/../label_make/label_make'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
-  require 'date'
 
 class PARA
   enum_const_set %w[
@@ -14,6 +13,46 @@ class PARA
     INFO3
     INFO4
     INFO5
+    Type
+    Category
+    DamageType
+    Power
+    HitPer
+    BasePP
+    Priority
+    HitCntMax
+    HitCntMin
+    SickID
+    SickPer
+    SickCont
+    SickTurnMin
+    SickTurnMax
+    CriticalRank
+    ShrinkPer
+    RankEffType1
+    RankEffType2
+    RankEffType3
+    RankEffValue1
+    RankEffValue2
+    RankEffValue3
+    RankEffPer1
+    RankEffPer2
+    RankEffPer3
+    DmgRecoverRatio
+    HPRecoverRatio
+    Target
+    FLG_Touch
+    FLG_Tame
+    FLG_Tire
+    FLG_Mamoru
+    FLG_MagicCoat
+    FLG_Yokodori
+    FLG_Oumu
+    FLG_TetsuNoKobusi
+    FLG_Bouon
+    FLG_Juryoku
+    FLG_KoriMelt
+    FLG_TripleFar
   ]
 end
 
@@ -70,7 +109,6 @@ end
   fp_wazano.print( " * @file	wazano_def.h\n" )
   fp_wazano.print( " * @bfief	技NoのDefine定義ファイル\n" )
   fp_wazano.print( " * @author	WazaTableConverter\n" )
-  fp_wazano.printf( " * @date\t%s\n", Date::today.to_s )
   fp_wazano.print( " * 技テーブルコンバータから生成されました\n" )
   fp_wazano.print( "*/\n")
   fp_wazano.print( "//============================================================================================\n" )
@@ -95,10 +133,16 @@ end
   atkmsg_gmm.make_row_index( "ATKMSG_Y_", 0, "！" )
   atkmsg_gmm.make_row_index( "ATKMSG_E_", 0, "！" )
 
+  #タメ技リスト
+  tame_waza = []
+
   cnt = 1
 
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/\t/)
+    if split_data[ PARA::FLG_Tame ] == "1"
+      tame_waza << cnt
+    end
     fp_wazano.print( "#define\t\t" )
     label_str = label.make_label( "WAZANO_", split_data[ PARA::WAZANAME ] )
     fp_wazano.print( label_str )
@@ -128,6 +172,14 @@ end
   fp_wazano.close
 
   fp_hash.printf("\t}\n" )
+
+  fp_hash.print("\n\t$tame_waza = [\n")
+
+  tame_waza.size.times{ |cnt|
+    fp_hash.printf("\t\t%d,\n",tame_waza[ cnt ])
+  }
+  fp_hash.printf("\t]\n" )
+
   fp_hash.close
 
   wazaname_gmm.close_gmm
