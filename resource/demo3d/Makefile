@@ -22,7 +22,8 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= c_cruiser n_castle
+#SUBDIRS	= c_cruiser n_castle
+include make_dir
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -41,7 +42,10 @@ obj_bin:=$(wildcard ./*/*.bin)
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	makedir subdir $(TARGETDIR)/$(targetname).narc
+
+makedir:
+	ruby make_dir.rb
 
 subdir:
 	@$(MAKE_SUBDIR)
