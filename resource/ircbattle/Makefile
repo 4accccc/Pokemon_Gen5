@@ -80,8 +80,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
-	$(DIFFCOPY) box_m_obj_NANR_LBLDEFS.h  $(TARGETDIR)../src/net_app/poke_trade
-	$(DIFFCOPY) p_st_obj_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/net_app/poke_trade
+	$(DIFFCOPY) ir_ani_NANR_LBLDEFS.h  $(TARGETDIR)../src/net_app/irc_match
+#	$(DIFFCOPY) box_m_obj_NANR_LBLDEFS.h  $(TARGETDIR)../src/net_app/poke_trade
+#	$(DIFFCOPY) p_st_obj_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/net_app/poke_trade
 endif
 
 #------------------------------------------------------------------------------
