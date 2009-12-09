@@ -110,7 +110,7 @@ for( $count_z=0; $count_z<$ARGV[2]; $count_z++ )
     }
 
     #サイズ　大きいほうを保存
-    if( $max_model_size_x > $model_size_x )
+    if( $max_model_size_x < $model_size_x )
     {
       $max_model_size_x = $model_size_x;
     }
@@ -194,7 +194,7 @@ for( $count_x=0; $count_x<$ARGV[1]; $count_x++ )
     }
 
     #サイズ　大きいほうを保存
-    if( $max_model_size_z > $model_size_z )
+    if( $max_model_size_z < $model_size_z )
     {
       $max_model_size_z = $model_size_z;
     }
