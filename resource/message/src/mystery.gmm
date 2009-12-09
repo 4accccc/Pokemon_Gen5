@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-12-19T17:25:13"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-09T00:21:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -14,48 +14,51 @@
 		<list entry="1" r="FF" g="00" b="00" a="FF"/>
 		<list entry="2" r="00" g="00" b="FF" a="FF"/>
 		<list entry="3" r="00" g="8C" b="00" a="FF"/>
-		<list entry="4" r="FF" g="00" b="FF" a="FF"/>
 	</color>
 
 	<tag-table>
 		<group entry="0" japanese="タググループ" english="タググループ">
 		</group>
 
-		<group entry="1" japanese="ポケモンＤＰ（単語）" english="PokemonDP" color="#c0c0c0">
-			<tag entry="00" japanese="ポケモン名" english="ポケモン名" view="EP" width="60" line="1">
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">ポケモンの名前</comment>
-				<comment language="english">ポケモンの名前</comment>
 			</tag>
-			<tag entry="01" japanese="ニックネーム" english="ニックネーム" view="EP" width="60" line="1">
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンのニックネーム</comment>
 				<comment language="english">ポケモンのニックネーム</comment>
 			</tag>
-			<tag entry="02" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">「DNAポケモン」など。</comment>
 				<comment language="english">「DNAポケモン」など。</comment>
 			</tag>
-			<tag entry="03" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="04" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="05" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="06" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="07" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
-				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-			</tag>
-			<tag entry="08" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
-				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-			</tag>
-			<tag entry="09" japanese="ポロック名" english="ポロック名" view="EP" width="108" line="1">
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
@@ -64,10 +67,10 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="12" japanese="attackmsg" english="attackmsg" view="EP" length="0" line="1">
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">戦闘専用</comment>
-				<comment language="english">戦闘専用</comment>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -212,29 +215,50 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
-			<tag entry="40" japanese="イメージクリップ背景" english="イメージクリップ背景" view="EP" width="96" line="1">
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
 			</tag>
-			<tag entry="41" japanese="GTC:ポケモン分類項目" english="GTC:ポケモン分類項目" view="EP" width="24" line="1">
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">世界通信交換でのポケモン分類
-日本語版では「あかさたな」</comment>
-				<comment language="english">世界通信交換でのポケモン分類
-日本語版では「あかさたな」</comment>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
 			</tag>
-			<tag entry="42" japanese="GTC:ポケモン性別指定項目" english="GTC:ポケモン性別指定項目" view="EP" width="60" line="1">
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">世界通信交換でのポケモンの
-性別指定</comment>
-				<comment language="english">世界通信交換でのポケモンの
-性別指定</comment>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
 			</tag>
-			<tag entry="43" japanese="GTC:レベル指定項目" english="GTC:レベル指定項目" view="EP" width="112" line="1">
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">世界通信交換でのポケモンの
-レベル指定</comment>
-				<comment language="english">世界通信交換でのポケモンの
-レベル指定</comment>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
 			</tag>
 			<tag entry="50" japanese="数字１桁" english="数字１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -271,29 +295,34 @@
 			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＤＰ（プログラム）" english="ポケモンＤＰ（プログラム）">
-			<tag entry="00" japanese="操作画面ガイドアイコン" english="操作画面ガイドアイコン" view="EP" width="24" line="2">
-				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="01" japanese="文字表示ウェイト" english="文字表示ウェイト" view="EP" length="0" line="1">
-				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
-				<comment language="japanese">次の文字を表示する前にウエイトを入れる（タスク表示専用）</comment>
-				<comment language="english">次の文字を表示する前にウエイトを入れる（タスク表示専用）</comment>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="02" japanese="コールバック引数" english="コールバック引数" view="EP" length="0" line="1">
-				<parameter number="0" japanese="引数" english="引数" type="int16"/>
-				<comment language="japanese">デフォルトでは０が渡されますが、このタグを使って任意の数値を渡せます。</comment>
-				<comment language="english">デフォルトでは０が渡されますが、このタグを使って任意の数値を渡せます。</comment>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="03" japanese="文字表示位置X" english="文字表示位置X" view="EP" length="0" line="1">
-				<parameter number="0" japanese="X位置" english="X位置" type="int16"/>
-				<comment language="japanese">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
-				<comment language="english">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="04" japanese="文字表示位置Y" english="文字表示位置Y" view="EP" length="0" line="1">
-				<parameter number="0" japanese="表示位置Y" english="表示位置Y" type="int16"/>
-				<comment language="japanese">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
-				<comment language="english">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 		</group>
 
@@ -337,13 +366,57 @@
 			</tag>
 		</group>
 
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
-		<set japanese="操作（上→下）" english="操作（上→下）" value="2:00:操作画面ガイドアイコン:0"/>
-		<set japanese="注視（上→下）" english="注視（上→下）" value="2:00:操作画面ガイドアイコン:1"/>
-		<set japanese="操作（下→上）" english="操作（下→上）" value="2:00:操作画面ガイドアイコン:2"/>
-		<set japanese="注視（下→上）" english="注視（下→上）" value="2:00:操作画面ガイドアイコン:3"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -352,15 +425,14 @@
 		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
 		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
 		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
-		<set japanese="標準色" english="Black" value="FF:00:色:0"/>
-		<set japanese="色１" english="Red" value="FF:00:色:1"/>
-		<set japanese="色２" english="Green" value="FF:00:色:2"/>
-		<set japanese="色３" english="Blue" value="FF:00:色:3"/>
-		<set japanese="色４" english="色４" value="FF:00:色:4"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
 	</tag-table>
 
 	<columns>
-		<id position="0" width="137"/>
+		<id position="0" width="217"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -368,7 +440,7 @@
 		<comment position="3" width="315"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="1" width="214"/>
+			<message position="1" width="277"/>
 			<font default=" 0:font_talk" position="4" width="100">
 				<list entry="0" file="Q:/msgdata/font/font_talk.nftr"/>
 				<list entry="1" file="Q:/msgdata/font/font_system.nftr"/>
@@ -380,7 +452,7 @@
 			<line position="7" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="2" width="100"/>
+			<message position="2" width="235"/>
 			<font default="" position="8" width="100">
 			</font>
 			<size position="9" width="100"/>
@@ -390,13 +462,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-16" top="147" right="687" bottom="712" maximized="no" rayout="Vertical2">
-		<comment-input left="677" top="578" right="1024" bottom="730" visible="yes"/>
-		<tag-palette left="574" top="159" right="921" bottom="557" visible="no"/>
-		<band id="0" index="0" style="0000" width="528"/>
+	<dialog left="159" top="127" right="845" bottom="692" maximized="no" rayout="Vertical2">
+		<comment-input left="783" top="637" right="1130" bottom="789" visible="yes"/>
+		<tag-palette left="574" top="159" right="1066" bottom="571" visible="no"/>
+		<band id="0" index="0" style="0000" width="511"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="695"/>
-		<band id="3" index="3" style="0000" width="695"/>
+		<band id="2" index="2" style="0000" width="678"/>
+		<band id="3" index="3" style="0000" width="678"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -418,7 +490,7 @@
 	</lock>
 
 
-	<row id="mystery_01_001">
+	<row id="mystery_01_001" text-color=",,,,,,,,,,,#ff0000,,,,,," back-color=",,,,,,,,,,,#ff8000,,,,,,">
 		<comment>ふしぎなおくりものに入ったときのメッセージ</comment>
 		<language name="JPN" width="216">ふしぎな　おくりもの　へ　ようこそ！</language>
 		<language name="JPN_KANJI">ふしぎな　おくりもの　へ　ようこそ！</language>
@@ -842,8 +914,8 @@
 
 	<row id="mystery_osusowake_002">
 		<comment>受信希望者の名前</comment>
-		<language name="JPN" width="216">[1:03:トレーナー名:0]</language>
-		<language name="JPN_KANJI">[1:03:トレーナー名:0]</language>
+		<language name="JPN" width="216">[1:03:ポケモンタイプ:0]</language>
+		<language name="JPN_KANJI">[1:03:ポケモンタイプ:0]</language>
 	</row>
 
 	<row id="mystery_osusowake_003">
@@ -931,8 +1003,8 @@
 
 	<row id="mystery_ranger_001">
 		<comment>ポケモンレンジャーと接続時、自分の名前表示、自分のトレーナーID表示</comment>
-		<language name="JPN" width="216">[FF:00:色:3][1:03:トレーナー名:0][FF:00:色:2]　[FF:00:色:0]ＩＤＮｏ．[1:36:数字５桁:1]</language>
-		<language name="JPN_KANJI">[FF:00:色:3][1:03:トレーナー名:0][FF:00:色:2]　[FF:00:色:0]ＩＤＮｏ．[1:36:数字５桁:1]</language>
+		<language name="JPN" width="216">[FF:00:色:3][1:03:ポケモンタイプ:0][FF:00:色:2]　[FF:00:色:0]ＩＤＮｏ．[1:36:数字５桁:1]</language>
+		<language name="JPN_KANJI">[FF:00:色:3][1:03:ポケモンタイプ:0][FF:00:色:2]　[FF:00:色:0]ＩＤＮｏ．[1:36:数字５桁:1]</language>
 	</row>
 
 	<row id="mystery_ranger_002" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
@@ -1018,6 +1090,450 @@
 せつぞく　しますか？</language>
 		<language name="JPN_KANJI">ＷｉーＦｉコネクション　に
 せつぞく　しますか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>不思議な贈り物トップ画面メッセージ</comment>
+		<language name="JPN" width="216">ふしぎな　おくりもの　へ　ようこそ！</language>
+		<language name="JPN_KANJI">ふしぎな　おくりもの　へ　ようこそ！</language>
+	</row>
+
+	<row id="syachi_mystery_menu_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：おくりものを受け取る</comment>
+		<language name="JPN" width="216">おくりものを　うけとる</language>
+		<language name="JPN_KANJI">おくりものを　うけとる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：アルバム画面</comment>
+		<language name="JPN" width="216">カードアルバムを　みる</language>
+		<language name="JPN_KANJI">カードアルバムを　みる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：やめる</comment>
+		<language name="JPN" width="216">やめる</language>
+		<language name="JPN_KANJI">やめる</language>
+	</row>
+
+	<row id="syachi_mystery_01_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信開始確認</comment>
+		<language name="JPN" width="216">ふしぎなおくりものを　うけとるため
+つうしんを　かいしします▽
+よろしいですか？</language>
+		<language name="JPN_KANJI">ふしぎなおくりものを　うけとるため
+つうしんを　かいしします▽
+よろしいですか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_002_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_002_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信選択メッセージ</comment>
+		<language name="JPN" width="216">おくりものの　うけとりかたを
+えらんで　ください</language>
+		<language name="JPN_KANJI">おくりものの　うけとりかたを
+えらんで　ください</language>
+	</row>
+
+	<row id="syachi_mystery_menu_004" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：ビーコン</comment>
+		<language name="JPN" width="216">ワイヤレスで　うけとる</language>
+		<language name="JPN_KANJI">ワイヤレスで　うけとる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：ＷｉーＦｉ</comment>
+		<language name="JPN" width="216">ＷｉーＦｉで　うけとる</language>
+		<language name="JPN_KANJI">ＷｉーＦｉで　うけとる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：赤外線</comment>
+		<language name="JPN" width="216">せきがいせんで　うけとる</language>
+		<language name="JPN_KANJI">せきがいせんで　うけとる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：戻る</comment>
+		<language name="JPN" width="216">もどる</language>
+		<language name="JPN_KANJI">もどる</language>
+	</row>
+
+	<row id="syachi_mystery_01_004" back-color="#c0c0c0,,,,,#c0c0c0,,,,,,,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="216">おくりものの　うけとりかたを
+えらんで　ください</language>
+		<language name="JPN_KANJI">おくりものの　うけとりかたを
+えらんで　ください</language>
+	</row>
+
+	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カード１枚削除メッセージ</comment>
+		<language name="JPN" width="216">いらないカードを　１まい　えらんで
+すててください</language>
+		<language name="JPN_KANJI">いらないカードを　１まい　えらんで
+すててください</language>
+	</row>
+
+	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カードを削除しないで出ようとしたときのメッセージ</comment>
+		<language name="JPN" width="216">カードを　すてないと
+おくりものを　もらえません▽
+よろしいですか？</language>
+		<language name="JPN_KANJI">カードを　すてないと
+おくりものを　もらえません▽
+よろしいですか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_006_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_006_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信確立：ビーコン</comment>
+		<language name="JPN" width="216">ＤＳワイヤレスつうしん　を
+かいし　します</language>
+		<language name="JPN_KANJI">ＤＳワイヤレスつうしん　を
+かいし　します</language>
+	</row>
+
+	<row id="syachi_mystery_01_007_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_007_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信確立：ＷｉーＦｉ</comment>
+		<language name="JPN" width="216">ＷｉーＦｉコネクション　に
+せつぞく　しますか？</language>
+		<language name="JPN_KANJI">ＷｉーＦｉコネクション　に
+せつぞく　しますか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_008_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_008_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信確立：赤外線</comment>
+		<language name="JPN" width="216">せきがいせん　つういんを
+かいし　します</language>
+		<language name="JPN_KANJI">せきがいせん　つういんを
+かいし　します</language>
+	</row>
+
+	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_009_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_010" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>通信確立後、贈り物探索時のメッセージ</comment>
+		<language name="JPN" width="216">おくりもの　を　さがしています
+しばらく　おまち　ください……</language>
+		<language name="JPN_KANJI">おくりもの　を　さがしています
+しばらく　おまち　ください……</language>
+	</row>
+
+	<row id="syachi_mystery_01_011" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>贈り物受信成功</comment>
+		<language name="JPN" width="216">うけとる　おくりものを
+えらんで　ください</language>
+		<language name="JPN_KANJI">うけとる　おくりものを
+えらんで　ください</language>
+	</row>
+
+	<row id="syachi_mystery_01_012" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>贈り物のダウンロードを中止するか確認</comment>
+		<language name="JPN" width="216">おくりものの　うけとりを
+やめますか？</language>
+		<language name="JPN_KANJI">おくりものの　うけとりを
+やめますか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_012_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_012_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_013" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>贈り物をダウンロードするか確認</comment>
+		<language name="JPN" width="216">この　おくりもの　を
+じゅしん　しますか？</language>
+		<language name="JPN_KANJI">この　おくりもの　を
+じゅしん　しますか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_013_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_013_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_014" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>贈り物データを書き込み中</comment>
+		<language name="JPN" width="216">おくりもの　を　じゅしんちゅう　です
+でんげんを　きらないで　ください……</language>
+		<language name="JPN_KANJI">おくりもの　を　じゅしんちゅう　です
+でんげんを　きらないで　ください……</language>
+	</row>
+
+	<row id="syachi_mystery_01_015" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>贈り物データを書き込み完了</comment>
+		<language name="JPN" width="216">おくりものを　うけとりました！▼
+ポケモンセンターにいる
+はいたついん　から　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものを　うけとりました！▼
+ポケモンセンターにいる
+はいたついん　から　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_01_016" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カードアルバムの整理完了後、セーブ処理</comment>
+		<language name="JPN" width="216">アルバムを　ほぞん　しています……
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">アルバムを　ほぞん　しています……
+でんげんを　きらないで　ください</language>
+	</row>
+
+	<row id="syachi_mystery_01_017" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カード整理の確認</comment>
+		<language name="JPN" width="216">ふしぎカードを　どうしますか？</language>
+		<language name="JPN_KANJI">ふしぎカードを　どうしますか？</language>
+	</row>
+
+	<row id="syachi_mystery_menu_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：入れ替え</comment>
+		<language name="JPN" width="216">ひとつまえと　いれかえ</language>
+		<language name="JPN_KANJI">ひとつまえと　いれかえ</language>
+	</row>
+
+	<row id="syachi_mystery_menu_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：削除</comment>
+		<language name="JPN" width="216">すてる</language>
+		<language name="JPN_KANJI">すてる</language>
+	</row>
+
+	<row id="syachi_mystery_menu_010" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：戻る</comment>
+		<language name="JPN" width="216">もどる</language>
+		<language name="JPN_KANJI">もどる</language>
+	</row>
+
+	<row id="syachi_mystery_01_018" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カード削除失敗</comment>
+		<language name="JPN" width="216">おくりものを　もらっていないので
+すてることは　できません！</language>
+		<language name="JPN_KANJI">おくりものを　もらっていないので
+すてることは　できません！</language>
+	</row>
+
+	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カード削除成功</comment>
+		<language name="JPN" width="216">カードを　すてました</language>
+		<language name="JPN_KANJI">カードを　すてました</language>
+	</row>
+
+	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＮＧメッセージ
+配達員の贈り物が一杯</comment>
+		<language name="JPN" width="216">はいたついんが　もっている
+おくりものが　いっぱい　です！▼
+ポケモンセンターに　いる
+はいたついんから▽
+おくりもの　を　うけとって▼
+レポートを　かいてから　きてください</language>
+		<language name="JPN_KANJI">はいたついんが　もっている
+おくりものが　いっぱい　です！▼
+ポケモンセンターに　いる
+はいたついんから▽
+おくりもの　を　うけとって▼
+レポートを　かいてから　きてください</language>
+	</row>
+
+	<row id="syachi_mystery_err_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＮＧメッセージ
+一度受信済みで再受信ＮＧのもの</comment>
+		<language name="JPN" width="216">この　おくりもの　は
+いちど　うけとった　ことが　あるので▽
+うけとる　ことが　できません！</language>
+		<language name="JPN_KANJI">この　おくりもの　は
+いちど　うけとった　ことが　あるので▽
+うけとる　ことが　できません！</language>
+	</row>
+
+	<row id="syachi_mystery_err_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＮＧメッセージ
+タイムオーバー
+Ｂキャンセル</comment>
+		<language name="JPN" width="216">おくりもの　が
+みつかりません　でした</language>
+		<language name="JPN_KANJI">おくりもの　が
+みつかりません　でした</language>
+	</row>
+
+	<row id="syachi_mystery_err_004" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="216">もうしこみ　が　きょひ　されました</language>
+		<language name="JPN_KANJI">もうしこみ　が　きょひ　されました</language>
+	</row>
+
+	<row id="syachi_mystery_err_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＮＧメッセージ
+不思議カードが一杯</comment>
+		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！▼
+おくりものを
+うけとる　ことが　できません！▼
+ふしぎカードを
+せいりしますか？</language>
+		<language name="JPN_KANJI">ふしぎなカードが　いっぱい　です！▼
+おくりものを
+うけとる　ことが　できません！▼
+ふしぎカードを
+せいりしますか？</language>
+	</row>
+
+	<row id="syachi_mystery_err_005_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_err_005_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_err_006" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="216">おくりものを　うけとるのに
+しっぱい　しました▼
+Ａボタンを　おすと
+タイトルに　もどります</language>
+		<language name="JPN_KANJI">おくりものを　うけとるのに
+しっぱい　しました▼
+Ａボタンを　おすと
+タイトルに　もどります</language>
+	</row>
+
+	<row id="syachi_mystery_err_007" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="216">おくりものを　みつけましたが
+このバージョンでは▽
+うけとることが　できません▽
+Ａボタンで　メニューに　もどります</language>
+		<language name="JPN_KANJI">おくりものを　みつけましたが
+このバージョンでは▽
+うけとることが　できません▽
+Ａボタンで　メニューに　もどります</language>
+	</row>
+
+	<row id="syachi_mystery_album_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカードアルバムキャプション</comment>
+		<language name="JPN" width="216">ふしぎカード　アルバム</language>
+		<language name="JPN_KANJI">ふしぎカード　アルバム</language>
+	</row>
+
+	<row id="syachi_mystery_album_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカードアルバム　ガイド表示</comment>
+		<language name="JPN" width="88">Ａ：せいりする</language>
+		<language name="JPN_KANJI">Ａ：せいりする</language>
+	</row>
+
+	<row id="syachi_mystery_album_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカードアルバム　ガイド表示</comment>
+		<language name="JPN" width="48">やめる</language>
+		<language name="JPN_KANJI">やめる</language>
+	</row>
+
+	<row id="syachi_mystery_album_004" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカードアルバム　目次
+0:現在のページ、1：最大ページ数</comment>
+		<language name="JPN" width="80">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]／[2:01:２桁:1]</language>
+	</row>
+
+	<row id="syachi_mystery_album_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカードアルバム　カードアイコンの西暦</comment>
+		<language name="JPN" width="80">[2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
+		<language name="JPN_KANJI">[2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
+	</row>
+
+	<row id="syachi_mystery_album_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカード　キャプション</comment>
+		<language name="JPN" width="88">ふしぎカード</language>
+		<language name="JPN_KANJI">ふしぎカード</language>
+	</row>
+
+	<row id="syachi_mystery_album_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカード　キャプション</comment>
+		<language name="JPN" width="120">もらったひづけ</language>
+		<language name="JPN_KANJI">もらったひづけ</language>
+	</row>
+
+	<row id="syachi_mystery_album_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>受け取った日付
+0:西暦、1：月、2：日</comment>
+		<language name="JPN" width="80">[2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
+		<language name="JPN_KANJI">[2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
+	</row>
+
+	<row id="syachi_mystery_album_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ふしぎカード　受信時のガイド表示</comment>
+		<language name="JPN" width="80">Ａ：おわる</language>
+		<language name="JPN_KANJI">Ａ：おわる</language>
 	</row>
 
 	<flowchart-group-list>
