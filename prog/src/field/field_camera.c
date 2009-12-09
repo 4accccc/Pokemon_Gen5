@@ -203,6 +203,8 @@ static void deleteTraceData(FIELD_CAMERA * camera_ptr);
 static void updateTraceData(CAMERA_TRACE * trace,
     const VecFx32 * inTarget, const VecFx32 * inCamPos, VecFx32 * outTarget, VecFx32 * outCamPos);
 static void traceUpdate(FIELD_CAMERA * camera);
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void loadCameraParameters(FIELD_CAMERA * camera, const VecFx32* watch_target);
@@ -2138,6 +2140,14 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
 
     GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
     GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camerapos );
+
+    {
+      fx32 half_x, half_z;
+      half_x = FX_Div( map_size_x, 2<<FX32_SHIFT );
+      half_z = FX_Div( map_size_z, 2<<FX32_SHIFT );
+      OS_Printf( "Maya Trans x[%f] y[%f] z[%f]\n", FX_FX32_TO_F32(camerapos.x - half_x), FX_FX32_TO_F32(camerapos.y), FX_FX32_TO_F32(camerapos.z - half_z) );
+    }
+    
     // カメラ座標を表示
     // 小数点以下無視
     x = FX_Whole( camerapos.x ) - (FX_Whole(map_size_x)/2);
@@ -2182,6 +2192,11 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
 
     f_x = (f32)(rot_x / (f32)0x10000) * 360.0f;
     f_y = (f32)(rot_y / (f32)0x10000) * 360.0f;
+
+    {
+      OS_Printf( "Maya Rotate x[%f] y[%f]\n", f_x, f_y );
+    }
+ 
     x = (s32)f_x;
     y = (s32)f_y;
     z = 0;

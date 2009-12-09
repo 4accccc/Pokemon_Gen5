@@ -53,6 +53,7 @@ enum
 {
   SEQ_INIT00,
   SEQ_INIT01,
+  SEQ_INIT02,
   SEQ_UPDATE,
   SEQ_EXIT,
 };
@@ -344,6 +345,20 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
   case SEQ_INIT01:
     {
       FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->p_fieldmap ); 
+      FIELD_CAMERA_StopTraceRequest( p_camera );
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_INIT02:
+    {
+      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->p_fieldmap ); 
+
+      if( FIELD_CAMERA_CheckTrace(p_camera) )
+      {
+        break;
+      }
+
       EV_CAMERA_Init( &p_work->camera, p_camera, heapID, p_work->fourkings_no );
     }
     EV_HERO_Init1( &p_work->hero );
@@ -484,6 +499,9 @@ static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
 
   // 最後にZONEの初期値に戻す
   FIELD_CAMERA_SetDefaultParameter( p_wk->p_camera );
+
+  // トレース情報の初期化
+  FIELD_CAMERA_RestartTrace( p_wk->p_camera );
 
   // ダミーカメラ破棄
   GFL_G3D_CAMERA_Delete( p_wk->p_dummy_camera );
