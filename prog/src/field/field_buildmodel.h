@@ -135,8 +135,13 @@ typedef enum {
 }BM_SEARCH_ID;
 
 //------------------------------------------------------------------
+/// 配置モデル実データアクセス用オブジェクト
 //------------------------------------------------------------------
 typedef struct _G3DMAPOBJST G3DMAPOBJST;
+
+//------------------------------------------------------------------
+/// 配置モデル制御データ
+//------------------------------------------------------------------
 typedef struct _FIELD_BMODEL FIELD_BMODEL;
 
 //------------------------------------------------------------------
@@ -156,13 +161,16 @@ extern BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel);
 
 
 //------------------------------------------------------------------
+//  配置モデル実データのアクセス関数
 //------------------------------------------------------------------
-
 extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 ( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num );
 
+extern BM_SEARCH_ID G3DMAPOBJST_getSearchID(
+    const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj );
 extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
-extern void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req );
+extern void G3DMAPOBJST_setAnime(
+    FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req );
 extern void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst);
 
 //============================================================================================

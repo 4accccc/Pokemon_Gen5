@@ -33,6 +33,14 @@
 SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_OPEN == ANM_INDEX_DOOR_OPEN );
 SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_CLOSE == ANM_INDEX_DOOR_CLOSE );
 
+SDK_COMPILER_ASSERT( SCR_BMID_NULL == BM_SEARCH_ID_NULL );
+SDK_COMPILER_ASSERT( SCR_BMID_DOOR == BM_SEARCH_ID_DOOR );
+SDK_COMPILER_ASSERT( SCR_BMID_SANDSTREAM == BM_SEARCH_ID_SANDSTREAM );
+SDK_COMPILER_ASSERT( SCR_BMID_PCMACHINE == BM_SEARCH_ID_PCMACHINE );
+SDK_COMPILER_ASSERT( SCR_BMID_PC == BM_SEARCH_ID_PC );
+SDK_COMPILER_ASSERT( SCR_BMID_PCEV_DOOR == BM_SEARCH_ID_PCEV_DOOR );
+SDK_COMPILER_ASSERT( SCR_BMID_PCEV_FLOOR == BM_SEARCH_ID_PCEV_FLOOR );
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

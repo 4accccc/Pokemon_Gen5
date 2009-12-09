@@ -101,10 +101,6 @@ enum {
   BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
 
   BMANIME_NULL_ID  = 0xffff,
-  //BM_SUBMODEL_NULL_ID = 0xffff,
-
-  //電光掲示板で表示する文字列の長さ
-  BMODEL_ELBOARD_STR_LEN = 64 * 2,
 };
 
 static const BMODEL_ID BM_SUBMODEL_NULL_ID = 0xffff;
@@ -898,6 +894,24 @@ static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
   }
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BM_SEARCH_ID BMINFO_getSearchID( const BMINFO * bmInfo )
+{
+  const u8 search_id[] = {
+    BM_SEARCH_ID_NULL,        //BM_PROG_ID_NONE
+    BM_SEARCH_ID_DOOR,        //BM_PROG_ID_DOOR_NORMAL,
+    BM_SEARCH_ID_DOOR,        //BM_PROG_ID_DOOR_AUTO,
+    BM_SEARCH_ID_DOOR,        //BM_PROG_ID_BADGEGATE,
+    BM_SEARCH_ID_SANDSTREAM,  //BM_PROG_ID_SANDSTREAM,
+    BM_SEARCH_ID_NULL,        //BM_PROG_ID_PCELEVATOR,
+    BM_SEARCH_ID_PCMACHINE,   //BM_PROG_ID_PCMACHINE,
+    BM_SEARCH_ID_PC,          //BM_PROG_ID_PC,
+    BM_SEARCH_ID_PCEV_DOOR,   //BM_PROG_ID_PCEV_DOOR,
+    BM_SEARCH_ID_PCEV_FLOOR,  //BM_PROG_ID_PCEV_FLOOR,
+  };
+  return search_id[ bmInfo->prog_id ];
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static BOOL BMINFO_isSandStream(const BMINFO * bmInfo)
@@ -1717,16 +1731,15 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
 //    G3DMAPOBJST経由での操作関数群
 //
 //============================================================================================
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor
-(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream
-(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine
-(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPc
-(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
-
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデル実データ：検索処理
+ * @param man   配置モデルマネジャーへのポインタ
+ * @param rect  検索範囲
+ * @param search  検索する配置モデルのID
+ * @param num     見つかった配置モデル数
+ * @return  G3DMAPOBJSTの配列
+ */
 //------------------------------------------------------------------
 G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 ( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num )
@@ -1735,29 +1748,18 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
   int objNo, count = 0;
   result = GFL_HEAP_AllocClearMemory(man->heapID, sizeof(G3DMAPOBJST*) * GFL_G3D_MAP_OBJST_MAX);
 
+  GF_ASSERT( search < BM_SEARCH_ID_MAX );
   for (objNo = 0; objNo < NELEMS(man->g3DmapObjSt); objNo ++)
   {
     VecFx32 pos;
     G3DMAPOBJST * obj = &man->g3DmapObjSt[objNo];
     if ( G3DMAPOBJST_exists(obj) == FALSE ) continue;
-    switch (search)
-    {
-    case BM_SEARCH_ID_DOOR:
-      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(man, obj) == FALSE) continue;
-      break;
-    case BM_SEARCH_ID_SANDSTREAM:
-      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream(man, obj) == FALSE) continue;
-      break;
-    case BM_SEARCH_ID_PCMACHINE:
-      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine(man, obj) == FALSE) continue;
-      break;
-    case BM_SEARCH_ID_PC:
-      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisPc(man, obj) == FALSE) continue;
-      break;
-    case BM_SEARCH_ID_NULL:
-    default:
-      break;
+    if (search != BM_SEARCH_ID_NULL &&
+        search != G3DMAPOBJST_getSearchID(man, obj) )
+    { //検索対象が「何でも」でなく、対象OBJと一致しない場合は次を検索
+      continue;
     }
+
     GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
     VEC_Add( &obj->objSt->trans, &pos, &pos );
     if ( FLDHIT_RECT_IsIncludePos( rect, pos.x, pos.z ) == TRUE )
@@ -1774,50 +1776,19 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 }
 
 //------------------------------------------------------------------
+/// 配置モデル実データ：検索IDの取得
 //------------------------------------------------------------------
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
+BM_SEARCH_ID G3DMAPOBJST_getSearchID( const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj )
 {
   u8 entryNo;
   GF_ASSERT( G3DMAPOBJST_exists(obj) );
   entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_isDoor(&man->bmInfo[entryNo]);
+  return BMINFO_getSearchID(&man->bmInfo[entryNo]);
 }
 
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisSandStream(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
-{
-  u8 entryNo;
-  GF_ASSERT( G3DMAPOBJST_exists(obj) );
-  entryNo = obj->objSt->id;
-  ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_isSandStream(&man->bmInfo[entryNo]);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPcMachine(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
-{
-  u8 entryNo;
-  GF_ASSERT( G3DMAPOBJST_exists(obj) );
-  entryNo = obj->objSt->id;
-  ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_isPcMachine(&man->bmInfo[entryNo]);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisPc(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
-{
-  u8 entryNo;
-  GF_ASSERT( G3DMAPOBJST_exists(obj) );
-  entryNo = obj->objSt->id;
-  ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_isPc(&man->bmInfo[entryNo]);
-}
-
-//------------------------------------------------------------------
+/// 配置モデル実データ：表示制御
 //------------------------------------------------------------------
 void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
 {
@@ -1837,6 +1808,7 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
 }
 
 //------------------------------------------------------------------
+/// 配置モデル実データ：アニメ反映
 //------------------------------------------------------------------
 void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req )
 {
@@ -1847,6 +1819,7 @@ void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_id
 }
 
 //------------------------------------------------------------------
+/// 配置モデル実データ：位置取得
 //------------------------------------------------------------------
 void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
 {
