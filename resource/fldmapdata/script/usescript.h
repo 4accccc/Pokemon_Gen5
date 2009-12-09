@@ -78,6 +78,9 @@
 //ボックス呼び出しモード
 #include "../../../prog/include/app/box_mode.h"
 
+//3Dデモ指定IDの定義
+#include "../../../prog/include/demo/demo3d_demoid.h"
+
 //カメラパラメータID
 #include "../scr_cam_prm/scr_cam_prm_id.h"
 

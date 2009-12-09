@@ -5809,19 +5809,18 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @def _DEMO_SCENE
+ * @def _CALL_3D_DEMO
  * @brief デモ呼び出し
  * @param demo_no   デモID指定ナンバー
  */
 //--------------------------------------------------------------
-#define _DEMO_SCENE( demo_no )  \
-    _ASM_DEMO_SCENE demo_no
+#define _CALL_3D_DEMO( demo_no )  \
+    _ASM_CALL_3D_DEMO demo_no
 
   .macro  _ASM_DEMO_SCENE demo_no
   .short  EV_SEQ_DEMO_SCENE
   .short  \demo_no
   .endm
-
 
   
 

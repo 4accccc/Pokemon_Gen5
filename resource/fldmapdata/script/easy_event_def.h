@@ -231,15 +231,32 @@
  */
 //--------------------------------------------------------------
   .macro  _ASM_CGEAR_ON_DEMO
-  _ASM_DISP_FADE_START  DISP_FADE_WHITEOUT, 0, 16, DISP_FADE_SPEED
-  _ASM_DISP_FADE_END_CHECK
+  _ASM_MAP_FADE_WHITE_OUT
+  _ASM_MAP_FADE_END_CHECK
   _ASM_FIELD_CLOSE
 
   _ASM_SET_CGEAR_FLAG TRUE
 
   _ASM_FIELD_OPEN
-  _ASM_DISP_FADE_START  DISP_FADE_WHITEOUT, 16, 0, DISP_FADE_SPEED
-  _ASM_DISP_FADE_END_CHECK
+  _ASM_MAP_FADE_WHITE_IN
+  _ASM_MAP_FADE_END_CHECK
   .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @brief 3DÉfÉÇä»à’åƒÇ—èoÇµ
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_CALL_3D_DEMO demo_no
+  _ASM_MAP_FADE_BLACK_OUT
+  _ASM_MAP_FADE_END_CHECK
+  _ASM_FIELD_CLOSE
+  _ASM_DEMO_SCENE \demo_no
+  _ASM_FIELD_OPEN
+  _ASM_MAP_FADE_BLACK_IN
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
 
 
