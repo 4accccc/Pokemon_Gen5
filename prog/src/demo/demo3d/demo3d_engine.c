@@ -118,7 +118,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   {
     GFL_G3D_CAMERA* p_camera;
     fx32 fovySin;
-    fx32 fovyCos;fovyCos
+    fx32 fovyCos;
 
     p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
 
