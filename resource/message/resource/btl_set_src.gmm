@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-10T11:45:27"/>
+	<create user="taya" host="W00146" date="2009-12-10T17:43:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2175,16 +2175,15 @@
 	</row>
 
 	<row id="BTL_STRID_SET_CantEscTok">
-		<comment>逃げることが出来ないメッセージ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の　
-[1:06:とくせい名:1]　で
-にげることが　できない！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　
-[1:06:とくせい名:1]　で
-にげることが　できない！</language>
+		<comment>相手のとくせいで逃げることが出来ないメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+[1:06:とくせい名:1]　で　にげられない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+[1:06:とくせい名:1]　で　逃げられない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantEscWaza">
+		<comment>逃げられないワザにかかったメッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 もう　にげられない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
