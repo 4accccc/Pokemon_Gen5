@@ -85,8 +85,3 @@ extern void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo);
 extern void WifiList_SetCountStopNum( WIFI_LIST *list, int no );
 #endif
 
-//----------------------------------------------------------
-//	セーブデータ取得のための関数
-//----------------------------------------------------------
-extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK* pSave);
-

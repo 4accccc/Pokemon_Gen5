@@ -30,6 +30,33 @@
 #include "ircbattle.naix"
 #include "net_app/connect_anm.h"
 #include "../../field/event_ircbattle.h"
+#include "ir_ani_NANR_LBLDEFS.h"
+
+
+typedef enum
+{
+  PLT_DS,
+  PLT_RESOURCE_MAX,
+  CHAR_DS = PLT_RESOURCE_MAX,
+  CHAR_RESOURCE_MAX,
+  ANM_DS = CHAR_RESOURCE_MAX,
+  ANM_RESOURCE_MAX,
+  CEL_RESOURCE_MAX,
+} _CELL_RESOURCE_TYPE;
+
+typedef enum
+{
+  CELL_IRDS1,
+  CELL_IRDS2,
+  CELL_IRDS3,
+  CELL_IRDS4,
+  CELL_IRWAVE1,
+  CELL_IRWAVE2,
+  CELL_IRWAVE3,
+  CELL_IRWAVE4,
+  _CELL_DISP_NUM,
+} _CELL_WK_ENUM;
+
 
 
 #define _NET_DEBUG (1)  //デバッグ時は１
@@ -205,17 +232,28 @@ struct _IRC_BATTLE_MATCH {
   BMPMENU_WORK* pYesNoWork;
   //    GAMESYS_WORK *gameSys_;
   //    FIELD_MAIN_WORK *fieldWork_;
+
+  GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
+  GFL_CLUNIT	*cellUnit;
+  u32 cellRes[CEL_RESOURCE_MAX];
+  GFL_CLWK* curIcon[_CELL_DISP_NUM];
+
   u32 connect_bit;
   BOOL connect_ok;
   BOOL receive_ok;
   u32 receive_result_param;
   u32 receive_first_param;
+  GFL_ARCUTIL_TRANSINFO mainchar;
   GFL_ARCUTIL_TRANSINFO bgchar;
   GFL_ARCUTIL_TRANSINFO bgchar2;
   GFL_ARCUTIL_TRANSINFO subchar;
-  GFL_ARCUTIL_TRANSINFO subchar3;
   CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
   BOOL bParent;
+  BOOL ircmatchflg;
+  BOOL ircmatchanim;
+  int ircmatchanimCount;
+  BOOL ircCenterAnim;
+  int ircCenterAnimCount;
 };
 
 
@@ -273,6 +311,100 @@ static void _endCallBack(void* pWork)
   commsys->connect_bit = 0;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	波紋OBJ表示
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+static void _CLACT_SetResource(IRC_BATTLE_MATCH* pWork)
+{
+  int i=0;
+
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+
+  pWork->cellRes[CHAR_DS] =
+    GFL_CLGRP_CGR_Register( p_handle , NARC_ircbattle_ir_demo_ani_NCGR ,
+                            FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+  pWork->cellRes[PLT_DS] =
+    GFL_CLGRP_PLTT_RegisterEx(
+      p_handle ,NARC_ircbattle_ir_demo_NCLR , CLSYS_DRAW_MAIN, 0, 0, 3, pWork->heapID  );
+  pWork->cellRes[ANM_DS] =
+    GFL_CLGRP_CELLANIM_Register(
+      p_handle , NARC_ircbattle_ir_ani_NCER, NARC_ircbattle_ir_ani_NANR , pWork->heapID  );
+  GFL_ARC_CloseDataHandle(p_handle);
+
+}
+
+static void _CLACT_SetAnim(IRC_BATTLE_MATCH* pWork,int x,int y,int no,int anm)
+{  
+  if(pWork->curIcon[no]==NULL){
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.pos_x = x;
+    cellInitData.pos_y = y;
+    cellInitData.anmseq = anm;
+    cellInitData.softpri = no;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                         pWork->cellRes[CHAR_DS],
+                                                         pWork->cellRes[PLT_DS],
+                                                         pWork->cellRes[ANM_DS],
+                                                         &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+  }
+}
+
+
+
+static void _CLACT_AddPos(IRC_BATTLE_MATCH* pWork,int x,int y,int no)
+{
+  GFL_CLACTPOS apos;
+  GFL_CLACT_WK_GetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
+  apos.x+=x;
+  apos.y+=y;
+  GFL_CLACT_WK_SetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLACT開放
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void _CLACT_Release(IRC_BATTLE_MATCH* pWork)
+{
+  int i=0;
+   
+  for(i = 0 ; i < _CELL_DISP_NUM ;i++){
+    if(pWork->curIcon[i]!=NULL){
+      GFL_CLACT_WK_Remove(pWork->curIcon[i]);
+      pWork->curIcon[i]=NULL;
+    }
+  }
+  for(i=0;i<PLT_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_PLTT_Release(pWork->cellRes[i] );
+    }
+  }
+  for(;i<CHAR_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_CGR_Release(pWork->cellRes[i] );
+    }
+  }
+  for(;i<ANM_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i] ){
+      GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i] );
+    }
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   接続完了コールバック
@@ -309,29 +441,22 @@ static void _ircConnectEndCallback(void* pWk)
   IRC_BATTLE_MATCH *pWork = pWk;
   int no;
 
-  // 画像交換
-  if(1){
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 
-    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE){
-      no = NARC_ircbattle_c_start_NSCR;
-    }
-    else{
-      no = NARC_ircbattle_b_start_NSCR;
-    }
-
-
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, no,
-                                            GFL_BG_FRAME3_S, 0,
-                                            _START_PAL*0x1000+GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar3), 0, 0,
-                                            pWork->heapID);
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    GFL_ARC_CloseDataHandle( p_handle );
+  OS_TPrintf("-----------------\n");
+  pWork->ircmatchflg=TRUE;
+  pWork->ircmatchanim=TRUE;
+/*  
+  _buttonWindowDelete(pWork);
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+  {
+    int aMsgBuff[]={IRCBTL_STR_30};
+    _msgWindowCreate(aMsgBuff, pWork);
   }
-
-
-
+  else{
+    int aMsgBuff[]={IRCBTL_STR_31};
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+*/
 }
 
 //--------------------------------------------------------------
@@ -368,6 +493,21 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
 }
 
 
+static const GFL_DISP_VRAM _defVBTbl = {
+  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+  GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+  GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
+};
+
 
 //------------------------------------------------------------------------------
 /**
@@ -379,21 +519,7 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
 static void _createBg(IRC_BATTLE_MATCH* pWork)
 {
   {
-    static const GFL_DISP_VRAM vramBank = {
-      GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-      GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-      GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-      GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-      GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-      GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
-      GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-      GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-      GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-      GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
-      GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
-      GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-    };
-    GFL_DISP_SetBank( &vramBank );
+    GFL_DISP_SetBank( &_defVBTbl );
   }
   {
     static const GFL_BG_SYS_HEADER sysHeader = {
@@ -405,17 +531,30 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
   GFL_DISP_GXS_SetVisibleControlDirect(0);
 
   {
-    int frame = GFL_BG_FRAME1_M;
+    int frame = GFL_BG_FRAME0_M;
     GFL_BG_BGCNT_HEADER bgcntText = {
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, 0x8000,
-      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+      GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
       };
 
-    GFL_BG_SetBGControl(
-      frame, &bgcntText, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
+  //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GFL_BG_FRAME1_M;
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, 0x800, 0,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000,
+      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
+//    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -480,6 +619,20 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
 
 }
 
+
+//--------------------------------------------------------------
+/**
+ * G3D VBlank処理
+ * @param TCB GFL_TCB
+ * @param work tcb work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void	_VBlank( GFL_TCB *tcb, void *work )
+{
+  GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -571,19 +724,28 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
+
+
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_ir_demo_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
+    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_ir_demo_NCGR,
+                                                                  GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
+
+    if(EVENTIRCBTL_ENTRYMODE_MULTH==pWork->selectType){ //1vs1
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo1_NSCR,
+                                                GFL_BG_FRAME1_M, 0,
+                                                GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                                pWork->heapID);
+    }
+
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo2_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+
+    
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
-    // メイン画面BG2キャラ転送
-    pWork->bgchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
-                                                                 NARC_ircbattle_connect_NCGR,
-                                                                 GFL_BG_FRAME1_M, 0, 0, pWork->heapID);
-    // メイン画面BG2スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_connect_01_NSCR,
-                                              GFL_BG_FRAME1_M, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), 0, 0,
-                                              pWork->heapID);
     // サブ画面BG0キャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_connect_sub_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
@@ -593,19 +755,6 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
-
-
-    //パレットアニメシステム作成
-    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
-
-
-
-    // サブ画面BG3キャラ転送
-    pWork->subchar3 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_start_NCGR,
-                                                                  GFL_BG_FRAME3_S, 0, 0, pWork->heapID);
-    GFL_ARCHDL_UTIL_TransVramPalette(p_handle, NARC_ircbattle_start2_NCLR, PALTYPE_SUB_BG,
-                                     0x20*_START_PAL, 0x20, pWork->heapID);
-
 
     GFL_ARC_CloseDataHandle( p_handle );
   }
@@ -629,10 +778,45 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
 		}
   }
 
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+  GFL_CLACT_SYS_Create(	&GFL_CLSYSINIT_DEF_DIVSCREEN, &_defVBTbl, pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
+  pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
+
+
+
+  _CLACT_SetResource(pWork);
+
+//  if(EVENTIRCBTL_ENTRYMODE_MULTH)
+
+  if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
+    int keisu=4;
+  
+    _CLACT_SetAnim(pWork,88,72,CELL_IRDS2,NANR_ir_ani_CellAnime3);  //左
+    _CLACT_SetAnim(pWork,88+keisu,72+keisu,CELL_IRWAVE1,NANR_ir_ani_CellAnime0);
+
+
+    _CLACT_SetAnim(pWork,168,      110,CELL_IRDS1,NANR_ir_ani_CellAnime2); //右
+    _CLACT_SetAnim(pWork,168-keisu,110-keisu,CELL_IRWAVE2,NANR_ir_ani_CellAnime1);
+  
+  }
+  else{ //2vs2
+    int keisu=4;
+    int kei2=16;
+  
+    _CLACT_SetAnim(pWork, kei2+ 88,        -kei2+72,CELL_IRDS2,NANR_ir_ani_CellAnime3);  //左
+    _CLACT_SetAnim(pWork, kei2+ 88+keisu,  -kei2+72+keisu,CELL_IRWAVE1,NANR_ir_ani_CellAnime0);
+   // _CLACT_SetAnim(pWork, -kei2+ 88,        kei2+72,CELL_IRDS4,NANR_ir_ani_CellAnime3);  //左
+    _CLACT_SetAnim(pWork, -kei2+ 88+keisu,  kei2+72+keisu,CELL_IRWAVE3,NANR_ir_ani_CellAnime0);
+
+ //   _CLACT_SetAnim(pWork, kei2+ 168,       -kei2+   110,CELL_IRDS1,NANR_ir_ani_CellAnime2); //右
+    _CLACT_SetAnim(pWork, kei2+ 168-keisu, -kei2+   110-keisu,CELL_IRWAVE2,NANR_ir_ani_CellAnime1);
+    _CLACT_SetAnim(pWork,-kei2+168,         kei2+   110,CELL_IRDS3,NANR_ir_ani_CellAnime2); //右
+    _CLACT_SetAnim(pWork,-kei2+168-keisu,   kei2+   110-keisu,CELL_IRWAVE4,NANR_ir_ani_CellAnime1);
+  }
+
+
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2 );
 
 
   _CHANGE_STATE(pWork,_fadeInWait);
@@ -791,8 +975,59 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
 	12, 512
 	};
 
+
+
+
+
+
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
+
+  if(pWork->ircCenterAnim){  //4台の時2台を真ん中に
+    pWork->ircCenterAnimCount++;
+
+    _CLACT_AddPos(pWork, -2,+2,CELL_IRDS2);
+    _CLACT_AddPos(pWork, 2,-2,CELL_IRDS3);
+
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 16-(pWork->ircCenterAnimCount*2), 16);
+    
+    if(pWork->ircCenterAnimCount>8){
+      pWork->ircCenterAnim=FALSE;
+      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+    }
+
+  }
+  else if(pWork->ircmatchanim==TRUE){  //2台の時お互いを引く
+    pWork->ircmatchanimCount++;
+    if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
+      _CLACT_AddPos(pWork, 2, 1,CELL_IRDS1);
+      _CLACT_AddPos(pWork,-2,-1,CELL_IRDS2);
+    }
+    if(pWork->ircmatchanimCount > 25){;
+      pWork->ircmatchanim=FALSE;
+    }
+
+  }
+  if(pWork->ircmatchflg==TRUE){
+    _buttonWindowDelete(pWork);
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+    {
+      int aMsgBuff[]={IRCBTL_STR_30};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else{
+      int aMsgBuff[]={IRCBTL_STR_31};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE1]);
+      pWork->curIcon[CELL_IRWAVE1]=NULL;
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE2]);
+      pWork->curIcon[CELL_IRWAVE2]=NULL;
+    }
+    pWork->ircmatchflg=FALSE;
+  }
+  
 	if(GFL_NET_IsInit()){
 		if(GFL_NET_NEG_TYPE_TYPE_ERROR==GFL_NET_HANDLE_GetNegotiationType(GFL_NET_HANDLE_GetCurrentHandle())){  ///< モードが異なる接続エラー
 			int aMsgBuff[]={IRCBTL_STR_25};
@@ -834,7 +1069,7 @@ static void _ircPreConnect(IRC_BATTLE_MATCH* pWork)
 {
   _buttonWindowDelete(pWork);
 
-  if(pWork->bParent){
+  if(pWork->bParent){  //リーダー
     int aMsgBuff[]={IRCBTL_STR_12};
     _msgWindowCreate(aMsgBuff, pWork);
   }
@@ -842,6 +1077,8 @@ static void _ircPreConnect(IRC_BATTLE_MATCH* pWork)
     int aMsgBuff[]={IRCBTL_STR_13};
     _msgWindowCreate(aMsgBuff, pWork);
   }
+
+  pWork->ircCenterAnim=TRUE;
   _CHANGE_STATE(pWork,_ircMatchWait);
 }
 
@@ -966,6 +1203,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
     retCode = GFL_PROC_RES_CONTINUE;
   }
   ConnectBGPalAnm_Main(&pWork->cbp);
+  GFL_CLACT_SYS_Main();
 
   return retCode;
 }
@@ -981,6 +1219,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   IRC_BATTLE_MATCH* pWork = mywk;
 
   _workEnd(pWork);
+  GFL_TCB_DeleteTask( pWork->g3dVintr );
+  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  GFL_CLACT_SYS_Delete();
 
   ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
