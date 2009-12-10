@@ -17,7 +17,7 @@
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
 #include "msg/script/msg_c03r0801.h"
 #include "tr_tool/trno_def.h"
-
+#include "sound/pm_sndsys.h"
 
 #define WHISTLE_MARGINE (45)
 
@@ -35,6 +35,9 @@
 #define ENTRY_TR_MAX    (7)
 #define ENTRY_LONG_TALKER_MAX (2)
 #define ENTRY_SHORT_TALKER_MAX (10)
+
+//SE
+#define PL_BOAT_SE_WHISTLE  (SEQ_SE_FLD_78)   //‹D“J
 
 typedef struct ENTRY_WORK_tag
 {
@@ -235,7 +238,7 @@ void PL_BOAT_Main(PL_BOAT_WORK_PTR work)
   //‹D“J‚ÌƒŠƒNƒGƒXƒg‚ª‚©‚©‚Á‚Ä‚¢‚éê‡‚Í‚r‚dÄ¶
   if (work->WhistleReq)
   {
-    ;
+    PMSND_PlaySE(PL_BOAT_SE_WHISTLE);
     work->WhistleCount++;
     work->WhistleReq = FALSE;
   }

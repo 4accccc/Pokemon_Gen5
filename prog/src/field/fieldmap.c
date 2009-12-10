@@ -895,7 +895,13 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 
   // Visual‚É‚©‚©‚í‚éˆ—
-	fldmap_G3D_Control( fieldWork );        
+	fldmap_G3D_Control( fieldWork );
+
+  //—V——‘D‹D“JŠÄŽ‹i—V——‘D‚Å‚Í‚È‚¢‚Æ‚«‚Íˆ—‚ðƒXƒ‹[‚·‚éj
+  {
+    PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
+    PL_BOAT_Main(*wk_ptr);
+  }
 
   return MAINSEQ_RESULT_CONTINUE;
 }
