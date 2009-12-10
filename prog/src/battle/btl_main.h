@@ -29,6 +29,7 @@ extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag 
 /*------------------------------------------------------------------------------*/
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
+extern COMM_PLAYER_SUPPORT* BTL_MAIN_GetCommSupportHandle( const BTL_MAIN_MODULE* wk );
 
 /*------------------------------------------------------------------------------*/
 /* クライアントID，ポケモンID，位置IDなどの情報＆相互変換                       */

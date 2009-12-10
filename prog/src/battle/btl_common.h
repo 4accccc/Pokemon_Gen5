@@ -37,6 +37,7 @@ enum {
   BTL_ROTATE_NUM = 3,       ///< ローテーション対象ポケ数
 
   BTL_CLIENTID_NULL = BTL_CLIENT_MAX,
+  BTL_CLIENTID_COMM_SUPPORT = BTL_CLIENTID_NULL,
 };
 
 //--------------------------------------------------------------

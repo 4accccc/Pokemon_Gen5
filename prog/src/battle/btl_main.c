@@ -1435,6 +1435,24 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
   }
   return FALSE;
 }
+//=============================================================================================
+/**
+ * 通信プレイヤーサポートハンドラを返す
+ *
+ * @param   wk
+ *
+ * @retval  COMM_PLAYER_SUPPORT*
+ */
+//=============================================================================================
+COMM_PLAYER_SUPPORT* BTL_MAIN_GetCommSupportHandle( const BTL_MAIN_MODULE* wk )
+{
+  if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+  ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    return wk->setupParam->commSupport;
+  }
+  return NULL;
+}
 
 //=============================================================================================
 /**
@@ -2894,7 +2912,11 @@ BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 // string x 2
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  return wk->trainerParam[clientID].trainerID;
+  if( clientID != BTL_CLIENTID_COMM_SUPPORT ){
+    return wk->trainerParam[clientID].trainerID;
+  }else{
+    return TRID_NULL;
+  }
 }
 // scu x 2
 u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
@@ -2905,7 +2927,11 @@ u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
 
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  return wk->trainerParam[ clientID ].playerStatus;
+  if( clientID != BTL_CLIENTID_COMM_SUPPORT ){
+    return wk->trainerParam[ clientID ].playerStatus;
+  }else{
+    return COMM_PLAYER_SUPPORT_GetMyStatus( wk->setupParam->commSupport );
+  }
 }
 
 //----------------------------------------------------------------------------------------------

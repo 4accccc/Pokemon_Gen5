@@ -6046,6 +6046,46 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
  */
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
 {
+  COMM_PLAYER_SUPPORT* supportHandle = BTL_MAIN_GetCommSupportHandle( wk->mainModule );
+  if( supportHandle )
+  {
+    SUPPORT_TYPE support_type;
+
+    support_type = COMM_PLAYER_SUPPORT_GetSupportType( supportHandle );
+    if( support_type != SUPPORT_TYPE_NULL )
+    {
+      u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+      SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
+      u8 pokeIDAry[ BTL_POSIDX_MAX ];
+      u8 cnt, i;
+      BTL_POKEPARAM* bpp;
+
+      // ¶‚«‚Ä‚ÄHP‚ª–ƒ^ƒ“‚Å‚Í‚È‚¢ƒ|ƒP‚Ì‚İ—ñ‹“
+      for(i=0, cnt=0; i<clwk->numCoverPos; ++i)
+      {
+        bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, i );
+        if( !BPP_IsDead(bpp) && !BPP_IsHPFull(bpp) )
+        {
+          pokeIDAry[ cnt++ ] = BPP_GetID( bpp );
+        }
+      }
+      if( cnt )
+      {
+        u32 recoverHP;
+        u8 pokeID = pokeIDAry[ GFL_STD_MtRand(cnt) ];
+        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+        recoverHP = BPP_GetValue( bpp, BPP_MAX_HP );
+        if( support_type == SUPPORT_TYPE_RECOVER_HALF ){
+          recoverHP /= 2;
+        }
+        if( recoverHP ){
+          scPut_SimpleHp( wk, bpp, recoverHP, TRUE );
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CommSupport, BTL_CLIENTID_COMM_SUPPORT, pokeID );
+          COMM_PLAYER_SUPPORT_Init( supportHandle );
+        }
+      }
+    }
+  }
 
 }
 /**

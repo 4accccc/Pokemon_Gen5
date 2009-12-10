@@ -956,7 +956,6 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 
   case 2:
     if( BTLV_WaitMsg(wk->viewCore) ){
-      BTLV_StartMsg( wk->viewCore, &wk->strParam );
       SelActProc_Set( wk, selact_Root );
     }
     break;
