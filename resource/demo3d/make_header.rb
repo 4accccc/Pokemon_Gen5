@@ -157,13 +157,36 @@ end
 def print_access_table(file,dir)
   #フォルダ内のファイルを列挙
   scene_dir = Dir::entries( dir )
+  
+  # 設定テキストを読み出し
+  val = scene_dir.to_a;
+  val = val.select{ |i| i.slice(/init/) == "init" }
+
+  init_path = dir.to_s + "/" + val.to_s
+
+  # 初期化パラメータ格納配列
+  param = []
+
+  File::open( init_path ,"r"){ |init|
+    cnt = 0;
+    init.each{ |line|
+      param[cnt] = line.to_f # 一回数値にすることでコメントやスペースをそぎ落とす
+      param[cnt] = param[cnt] * 0x1000
+      param[cnt] = param[cnt].prec_i
+      cnt += 1
+    }
+  }
+
+  p param
+  
   #フォルダ内のファイルを順繰り
   scene_dir.each{|i|
     #拡張子チェック
     if check_ext(i)
       # 2文字の数値チェック
       if i.slice(/camera/) == "camera"
-          line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + " },";
+          line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + ", "
+          line += param[0].to_s + ", " + param[1].to_s + ", " + param[2].to_s + "," + " },"
           file.puts line        
       end
     end
@@ -205,7 +228,7 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts("// アクセステーブル" );
     file.puts("//=========================================================================\n");
     file.puts "static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {"
-    file.puts "\t{ 0, 0, 0 },"
+    file.puts "\t{ 0 }, // DEMO3D_ID_NULL"
 
     #カレントにあるフォルダをしらみつぶし
     pwd = Dir::entries( Dir::pwd )

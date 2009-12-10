@@ -75,3 +75,36 @@ extern const DEMO3D_CMD_DATA* Demo3D_DATA_GetCmdData( DEMO3D_ID id );
 //-----------------------------------------------------------------------------
 extern const DEMO3D_CMD_DATA* Demo3D_DATA_GetEndCmdData( DEMO3D_ID id );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからアニメーションスピードを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval fx32 アニメーションスピード
+ */
+//-----------------------------------------------------------------------------
+extern const fx32 Demo3D_DATA_GetAnimeSpeed( DEMO3D_ID id );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからパース値SINを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval fx32 fovy_sin パース値SIN
+ */
+//-----------------------------------------------------------------------------
+extern const fx32 Demo3D_DATA_GetCameraFovySin( DEMO3D_ID id );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからパース値COSを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval fx32 fovy_sin パース値COS
+ */
+//-----------------------------------------------------------------------------
+extern const fx32 Demo3D_DATA_GetCameraFovyCos( DEMO3D_ID id );
+

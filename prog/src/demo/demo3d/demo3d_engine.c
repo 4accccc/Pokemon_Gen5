@@ -114,11 +114,22 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->start_frame   = start_frame;
   wk->anime_speed   = FX32_ONE; // アニメーションスピード(固定)
 
-  //@TODO 応急処置 クルーザーは30FPS
-  if( demo_id == DEMO3D_ID_C_CRUISER )
+  // コンバータデータからの初期化
   {
-    wk->anime_speed = FX32_ONE / 2;
+    GFL_G3D_CAMERA* p_camera;
+    fx32 fovySin;
+    fx32 fovyCos;fovyCos
+
+    p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
+
+    fovySin = Demo3D_DATA_GetCameraFovySin( demo_id );
+    fovyCos = Demo3D_DATA_GetCameraFovyCos( demo_id );
+
+    GFL_G3D_CAMERA_SetfovySin( p_camera, fovySin );
+    GFL_G3D_CAMERA_SetfovyCos( p_camera, fovyCos );
   }
+   
+  wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( demo_id );
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
