@@ -138,6 +138,36 @@
   _POP_WORK   SCWK_PARAM0
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief イベント入手成功イベント「▼」待ちあり
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_ITEM_EVENT_SUCCESS_KEYWAIT itemno, num
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
+  _ASM_LDWKVAL  SCWK_PARAM1, \num
+  _CHG_COMMON_SCR SCRID_ITEM_EVENT_SUCCESS_KEYWAIT
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief イベント入手成功イベント「▼」待ちなし
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_ITEM_EVENT_SUCCESS_NOWAIT itemno, num
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
+  _ASM_LDWKVAL  SCWK_PARAM1, \num
+  _CHG_COMMON_SCR SCRID_ITEM_EVENT_SUCCESS_NOWAIT
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
 //======================================================================
 //   簡易メッセージコマンド
 //======================================================================

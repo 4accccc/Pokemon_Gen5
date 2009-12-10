@@ -53,9 +53,11 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
+  _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_KIZUGUSURI, 10 )
+  _ITEM_EVENT_SUCCESS_NOWAIT( ITEM_OISIIMIZU, 5 )
   //_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
   //_ASM_BGM_STOP
-  _ASM_BGM_PLAY SEQ_BGM_E_SUPPORT
+  //_ASM_BGM_PLAY SEQ_BGM_E_SUPPORT
 
   _GET_MEZAMERU_POWER_TYPE( SCWK_ANSWER , 0 )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
@@ -103,9 +105,9 @@ EVENT_START ev_debug_tamada
 		_SE_WAIT()
 	ENDIF
 
-  _BGM_FADEOUT( 0, 30 )
-  _BGM_STOP()
-  _BGM_NOW_MAP_RECOVER()
+  //_BGM_FADEOUT( 0, 30 )
+  //_BGM_STOP()
+  //_BGM_NOW_MAP_RECOVER()
   //_END_EVENT_BGM()
 EVENT_END
 

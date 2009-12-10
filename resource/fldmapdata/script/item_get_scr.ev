@@ -86,6 +86,8 @@ _CHG_LOCAL_SCR
 //	SCWK_TEMP1	個数
 //====================================================================
 ev_item_event_success_keywait:
+  $SCWK_TEMP0 = $SCWK_PARAM0
+  $SCWK_TEMP1 = $SCWK_PARAM1
 	_CALL			sub_item_event_keywait
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 	_END
@@ -97,6 +99,8 @@ ev_item_event_success_keywait:
 //	SCWK_TEMP1	個数
 //====================================================================
 ev_item_event_success_nowait:
+  $SCWK_TEMP0 = $SCWK_PARAM0
+  $SCWK_TEMP1 = $SCWK_PARAM1
 	_CALL			sub_item_event_nowait
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 	_END
@@ -253,6 +257,14 @@ sub_item_event_nowait:
 
   _CALL		sub_pocket_me_set									//MEセット
   _CALL   sub_item_event_get_msg
+  _ME_WAIT()
+
+  _PLAYER_NAME(	0 )
+  _ITEM_NAME(	1, SCWK_TEMP0 )
+
+  //ポケットナンバーをSCWK_ANSWERに代入
+  _GET_POCKET_ID(	SCWK_TEMP0, SCWK_ANSWER )
+  _POCKET_NAME(	2, SCWK_ANSWER )
 
   _SYSWIN_MSG_DOWN(	msg_item_get_pocket_nowait )
   _LAST_KEYWAIT()
