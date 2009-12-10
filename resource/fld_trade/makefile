@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro
+USERS	= obata_toshihiro tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -64,13 +64,6 @@ do-build:	subdir file_cp $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
-#ファイルコピー
-file_cp:
-	xcopy /d /y $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
-	xcopy /d /y $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
-	xcopy /d /y $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
-	xcopy /d /y $(PM_VER_H_DIR)pm_version.h $(CPY_DIR)
-
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
@@ -79,11 +72,22 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
+#ファイルコピー
+file_cp:
+	$(COPY) -f -u $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
+	$(COPY) -f -u $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
+	$(COPY) -f -u $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
+	$(COPY) -f -u $(PM_VER_H_DIR)pm_version.h $(CPY_DIR)
+
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(MAKE_FILE)
 	perl conv.pl
 	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 	$(NAIXCUT) $(targetname).naix
+
+else
+file_cp:
+	#dummy target
 
 endif
 
