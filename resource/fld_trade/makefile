@@ -34,11 +34,11 @@ PM_VER_H_DIR		= ..\\..\\prog\\include\\
 CPY_DIR	= .
 
 #依存するファイル
-MAKE_FILE	= fld_trade.xls \
-			  monsno_def.h \
-			  itemsym.h \
-			  tokusyu_def.h \
-			  pm_version.h
+MAKE_FILE	= fld_trade_poke.xls \
+			      monsno_def.h \
+			      itemsym.h \
+			      tokusyu_def.h \
+			      pm_version.h
 
 #ターゲットファイル
 MAKE_TARGET = fld_trade_00.dat
@@ -64,6 +64,13 @@ do-build: file_cp $(MAKE_TARGET) $(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
+#ファイルコピー
+file_cp:
+	xcopy /d /y $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
+	xcopy /d /y $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
+	xcopy /d /y $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
+	xcopy /d /y $(PM_VER_H_DIR)pm_version.h $(CPY_DIR)
+
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
@@ -72,26 +79,14 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
-#ファイルコピー
-file_cp:
-	xcopy /d /y $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
-	xcopy /d /y $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
-	xcopy /d /y $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
-	xcopy /d /y $(PM_VER_H_DIR)pm_version.h $(CPY_DIR)
-
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(CONVERTDATA)
-	nnsarc -r -l -n -i $(targetname) $^
+	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 	$(NAIXCUT) $(targetname).naix
 
 #データコンバート
 $(MAKE_TARGET):$(MAKE_FILE)
 	perl conv.pl
-
-#アーカイブ
-$(targetname).narc:$(DAT_FILE) $(MAKE_TARGET)
-	#アーカイブ
-	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 
 endif
 
