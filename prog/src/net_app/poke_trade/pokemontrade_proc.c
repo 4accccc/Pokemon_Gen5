@@ -2451,6 +2451,34 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   return PokemonTradeProcInit(proc,seq,pParent->gsys ,pWork,POKEMONTRADE_GTSNEGO);
 }
 
+static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_RESULT ret;
+  POKEMONTRADE_DEMO_PARAM* pParent=pwk;
+  POKEMON_TRADE_WORK *pWork;
+  int i;
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
+  pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
+
+  ret = PokemonTradeProcInit(proc,seq,pParent->gsys ,pWork, POKEMONTRADE_EVENT);
+
+
+  GFL_STD_MemCopy(pParent->pMyPoke, pWork->recvPoke[0] , POKETOOL_GetWorkSize());
+  GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
+
+  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke);
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke);
+
+  
+  POKMEONTRADE_IRCDEMO_ChangeDemo(pWork);
+
+  return ret;
+}
+
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -2542,8 +2570,9 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   IRC_POKETRADE_MainGraphicExit(pWork);
   IRC_POKETRADE_SubGraphicExit(pWork);
-  TOUCHBAR_Exit(pWork->pTouchWork);
-
+  if(pWork->pTouchWork){
+    TOUCHBAR_Exit(pWork->pTouchWork);
+  }
 
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   IRC_POKETRADEDEMO_End(pWork);
@@ -2601,4 +2630,10 @@ const GFL_PROC_DATA PokemonTradeWiFiProcData = {
   PokemonTradeProcEnd,
 };
 
+//ƒfƒ‚‹N“®—p
+const GFL_PROC_DATA PokemonTradeDemoProcData = {
+  PokemonTradeDemoProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
 

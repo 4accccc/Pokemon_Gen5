@@ -272,19 +272,25 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 
 void IRC_POKETRADE_SubGraphicExit(POKEMON_TRADE_WORK* pWork)
 {
-	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+  if(pWork->pAppTaskRes){
+    APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+    pWork->pAppTaskRes=NULL;
+  }
   IRC_POKETRADE_TrayExit(pWork);
   if(pWork->subchar1){
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),
                              GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar1 ));
+    pWork->subchar1=0;
   }
   if(pWork->subchar2){
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar2),
                              GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar2 ));
+    pWork->subchar2=0;
   }
   if(pWork->bgchar){
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                              GFL_ARCUTIL_TRANSINFO_GetSize( pWork->bgchar ));
+    pWork->bgchar=0;
   }
 }
 
@@ -721,8 +727,9 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
     GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON] );
     pWork->cellRes[ANM_POKEICON]=0;
   }
-  
-  GFL_HEAP_FreeMemory(pWork->pCharMem);
+  if(pWork->pCharMem){
+    GFL_HEAP_FreeMemory(pWork->pCharMem);
+  }
   pWork->pCharMem = NULL;
 }
 
@@ -1343,7 +1350,7 @@ void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetBGControl(
       frame, &bgcntText, GFL_BG_MODE_TEXT );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
   {
@@ -1358,7 +1365,7 @@ void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetBGControl(
       frame, &bgcntText, GFL_BG_MODE_TEXT );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
   {
@@ -1373,7 +1380,7 @@ void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetBGControl(
       frame, &bgcntText, GFL_BG_MODE_TEXT );
     //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
 
@@ -1495,7 +1502,7 @@ void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
     //		GFL_BG_LoadScreenReq( frame );
     //        GFL_BG_ClearFrame(frame);
   }
@@ -1511,7 +1518,7 @@ void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork)
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
     //        GFL_BG_ClearFrame(frame);
   }
@@ -1526,7 +1533,7 @@ void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 64, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
   {

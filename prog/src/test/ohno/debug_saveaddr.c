@@ -221,7 +221,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     size = SODATEYA_WORK_GetWorkSize();
     OS_TPrintf("%d SODATEYA_WORK_GetWorkSize\n",size);
-    sizetotal+size;
+    sizetotal+=size;
 
     size = MISC_GetWorkSize();
     OS_TPrintf("%d MISC_GetWorkSize\n",size);

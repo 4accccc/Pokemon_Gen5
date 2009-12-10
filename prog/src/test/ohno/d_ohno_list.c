@@ -28,6 +28,8 @@
 #include "item/item.h"
 #include "poke_tool/pokeparty.h"
 #include "net_app/wificlub/wifi_p2pmatch.h"
+#include "net_app/pokemontrade.h"
+#include "poke_tool/monsno_def.h"
 
 
 //==============================================================================
@@ -93,6 +95,7 @@ typedef struct{
 //==============================================================================
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
 static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
+static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -121,6 +124,12 @@ extern const GFL_PROC_DATA DebugSaveAddrProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//
+		DEBUG_OHNO_MSG0019, 
+		&PokemonTradeDemoProcData,
+		_PokeTradeDemoWorkCreate,
+		FS_OVERLAY_ID(pokemon_trade)
+	},
 	{//
 		DEBUG_OHNO_MSG0018,
 		&G_SYNC_ProcData,	
@@ -505,6 +514,23 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
 
   MyStatus_Init( pWork->pStatus[0]);
   MyStatus_Init( pWork->pStatus[1]);
+  
+  return pWork;
+}
+
+
+
+
+static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
+{
+	POKEMONTRADE_DEMO_PARAM *pWork;
+
+  
+	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
+
+  pWork->pMyPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+  pWork->pNPCPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+
   
   return pWork;
 }

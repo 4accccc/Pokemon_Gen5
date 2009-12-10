@@ -598,8 +598,12 @@ static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork)
   GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
   pWork->pPokemonTradeDemo = NULL;
 
-  _CHANGE_STATE(pWork,POKMEONTRADE_SAVE_Init);
-
+  if(pWork->type == POKEMONTRADE_EVENT){
+    _CHANGE_STATE(pWork,NULL);
+  }
+  else{
+    _CHANGE_STATE(pWork,POKMEONTRADE_SAVE_Init);
+  }
 }
 
 
