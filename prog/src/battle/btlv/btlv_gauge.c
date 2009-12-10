@@ -1457,6 +1457,7 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
   }
   else
   {
+    BTL_Printf("GAUGE[%d] SetStatus(%d)\n", pos, sick);
     GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, TRUE );
     GFL_CLACT_WK_SetAnmSeq( bgw->bgcl[ pos ].status_clwk, sick_anm[ sick ] );
   }

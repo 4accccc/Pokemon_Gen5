@@ -609,6 +609,8 @@ static BTL_EVENT_FACTOR*  ADD_FreeFall( u16 pri, WazaID waza, u8 pokeID );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_GensiNoTikara( u16 pri, WazaID waza, u8 pokeID );
+static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -819,6 +821,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_ZIBAKU,          ADD_Daibakuhatsu  },
     { WAZANO_KIAIDAME,        ADD_Kiaidame      },
     { WAZANO_IKARI,           ADD_Ikari         },
+    { WAZANO_GENSINOTIKARA,   ADD_GensiNoTikara },
+    { WAZANO_AYASIIKAZE,      ADD_GensiNoTikara },  // あやしいかぜ=げんしのちから
 
     // 以下、新ワザ
     { WAZANO_KARI_BENOMUSHOKKU,     ADD_BenomShock      },
@@ -4084,6 +4088,7 @@ static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       param->pokeID = target_pokeID;
       param->itemID = ITEM_DUMMY_DATA;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, target_pokeID );
       HANDEX_STR_AddArg( &param->exStr, itemID );
     }
@@ -7657,7 +7662,43 @@ static void handler_Manekko_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * げんしのちから・あやしいかぜ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_GensiNoTikara( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_GET_RANKEFF_VALUE,   handler_GensiNoTikara  },  // ワザランク増減効果チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+// ワザランク増減効果チェックハンドラ
+static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分がワザ使用者＆対象のケースで
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8* validEffect;
+    u8  validEffectCount, i;
 
+    validEffect = BTL_SVFTOOL_GetTmpWork( flowWk, WAZA_RANKEFF_NUMS );
+    for(i=BPP_RANKPARAM_START, validEffectCount=0; i<=BPP_RANKPARAM_END; ++i)
+    {
+      if( BPP_IsRankEffectValid(bpp, i, 1) ){
+        validEffect[ validEffectCount++ ] = i;
+      }
+    }
+    if( validEffectCount ){
+      i = BTL_CALC_GetRand( validEffectCount );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, validEffect[i] );
+    }
+  }
+}
 
 
 
@@ -8828,5 +8869,7 @@ static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+
+
 
 

@@ -5239,16 +5239,16 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
 
   if( !failFlag )
   {
+    if( perOccur(wk, per) ){
+      return TRUE;
+    }
     // デバッグ機能により必ず発生
     if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_TUIKA) ){
       return TRUE;
     }
-
-    return perOccur(wk, per);
-
-  }else{
-    return FALSE;
   }
+
+  return FALSE;
 }
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ワザによる直接のランク効果
@@ -5293,16 +5293,53 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     int  volume;
 
     scEvent_GetWazaRankEffectValue( wk, wazaParam->wazaID, i, attacker, target, &effect, &volume );
-    if( scproc_RankEffectCore(wk, target, effect, volume, atkPokeID, ITEM_DUMMY_DATA, fAlmost, TRUE) )
+    if( effect != WAZA_RANKEFF_NULL )
     {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_WazaRankEffectFixed( wk, target, wazaParam->wazaID, effect, volume );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-      ret = TRUE;
+      if( scproc_RankEffectCore(wk, target, effect, volume, atkPokeID, ITEM_DUMMY_DATA, fAlmost, TRUE) )
+      {
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_WazaRankEffectFixed( wk, target, wazaParam->wazaID, effect, volume );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+        ret = TRUE;
+      }
     }
   }
   return ret;
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] ワザによる（直接・追加）ランク増減効果を取得
+ *
+ * @param   wk
+ * @param   waza
+ * @param   idx
+ * @param   attacker
+ * @param   target
+ * @param   effect    [out] 効果種類
+ * @param   volume    [out] 効果値
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u32 idx,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume )
+{
+  *effect = WAZADATA_GetRankEffect( waza, idx, volume );
+  BTL_Printf("ワザ[%d]のランク効果[%d] type=%d, volume=%d\n", waza, idx, *effect, *volume);
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, *effect );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, *volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_GET_RANKEFF_VALUE );
+    *effect = BTL_EVENTVAR_GetValue( BTL_EVAR_STATUS_TYPE );
+    *volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+  BTL_EVENTVAR_Pop();
+
+  if( *effect == WAZA_RANKEFF_SP ){
+    *effect = WAZA_RANKEFF_NULL;
+  };
 }
 //--------------------------------------------------------------------------
 /**
@@ -8862,36 +8899,6 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
       }
     }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
-  BTL_EVENTVAR_Pop();
-}
-//--------------------------------------------------------------------------
-/**
- * [Event] ワザによる（直接・追加）ランク増減効果を取得
- *
- * @param   wk
- * @param   waza
- * @param   idx
- * @param   attacker
- * @param   target
- * @param   effect    [out] 効果種類
- * @param   volume    [out] 効果値
- *
- */
-//--------------------------------------------------------------------------
-static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u32 idx,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume )
-{
-  *effect = WAZADATA_GetRankEffect( waza, idx, volume );
-  BTL_Printf("ワザ[%d]のランク効果_%d=%d, volume=%d\n", waza, idx, *effect, volume);
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, *effect );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, *volume );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_GET_RANKEFF_VALUE );
-    *volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
   BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------------------

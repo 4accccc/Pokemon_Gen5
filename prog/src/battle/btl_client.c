@@ -2132,7 +2132,8 @@ static BOOL scProc_ACT_SickIcon( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
   {
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-    BTLV_EFFECT_SetGaugeStatus( args[1], pos );
+    BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+    BTLV_EFFECT_SetGaugeStatus( args[1], vpos );
     (*seq)++;
   }
   break;

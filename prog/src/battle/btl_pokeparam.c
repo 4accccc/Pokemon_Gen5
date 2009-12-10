@@ -880,7 +880,7 @@ static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID typ
   case BPP_AVOID_RATIO: ptr = &pp->varyParam.avoid; break;
 
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0, "illegal rank Type ->%d", type);
     return NULL;
   }
   return ptr;
@@ -894,19 +894,19 @@ static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* m
 /**
  * ランク増減効果が有効か？
  *
- * @param   pp
+ * @param   bpp
  * @param   rankType
  * @param   volume
  *
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume )
+BOOL BPP_IsRankEffectValid( const BTL_POKEPARAM* bpp, BppValueID rankType, int volume )
 {
   const s8* ptr;
   s8  min, max, next_value;
 
-  ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  ptr = getRankVaryStatusConst( bpp, rankType, &min, &max );
   BTL_Printf("  現状=%d, 最小=%d, 最大=%d, 効果値=%d\n", *ptr, min, max, volume);
   if( volume > 0 ){
     return ((*ptr) < max);
