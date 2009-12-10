@@ -6941,6 +6941,10 @@
 		<language name="JPN" width="256">SYS-49</language>
 		<language name="JPN_KANJI" width="256">SYS-49</language>
 	</row>
+	<row id="msg_seq_se_sys_50">
+		<language name="JPN" width="256">SYS-50</language>
+		<language name="JPN_KANJI" width="256">SYS-50</language>
+	</row>
 	<row id="msg_seq_se_fld_01">
 		<language name="JPN" width="256">FLD-01</language>
 		<language name="JPN_KANJI" width="256">FLD-01</language>
@@ -7405,13 +7409,13 @@
 		<language name="JPN" width="256">DMY-097</language>
 		<language name="JPN_KANJI" width="256">DMY-097</language>
 	</row>
-	<row id="msg_seq_se_dmy_098">
-		<language name="JPN" width="256">DMY-098</language>
-		<language name="JPN_KANJI" width="256">DMY-098</language>
+	<row id="msg_seq_se_toujou_large">
+		<language name="JPN" width="256">TOUJOU-LARGE</language>
+		<language name="JPN_KANJI" width="256">TOUJOU-LARGE</language>
 	</row>
-	<row id="msg_seq_se_dmy_099">
-		<language name="JPN" width="256">DMY-099</language>
-		<language name="JPN_KANJI" width="256">DMY-099</language>
+	<row id="msg_seq_se_lvup">
+		<language name="JPN" width="256">LVUP</language>
+		<language name="JPN_KANJI" width="256">LVUP</language>
 	</row>
 	<row id="msg_seq_se_dmy_100">
 		<language name="JPN" width="256">DMY-100</language>
