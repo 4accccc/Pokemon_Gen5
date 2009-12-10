@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-12-10T16:58:35"/>
+	<create user="tamada" host="W00139" date="2009-12-10T17:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -381,25 +381,25 @@
 		<language name="JPN_KANJI" width="240">[2:07:８桁:0]</language>
 	</row>
 
-	<row id="dni_flag_sys_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_sys_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>スクリプト用フラグ操作メニュー：システムフラグ</comment>
 		<language name="JPN" width="240">システムフラグ</language>
 		<language name="JPN_KANJI" width="240">システムフラグ</language>
 	</row>
 
-	<row id="dni_flag_event_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_event_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>スクリプト用フラグ操作メニュー：イベントフラグ</comment>
 		<language name="JPN" width="240">イベントフラグ</language>
 		<language name="JPN_KANJI" width="240">イベントフラグ</language>
 	</row>
 
-	<row id="dni_flag_item_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_item_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>スクリプト用フラグ操作メニュー：フィールドアイテム</comment>
 		<language name="JPN" width="240">アイテムフラグ</language>
 		<language name="JPN_KANJI" width="240">アイテムフラグ</language>
 	</row>
 
-	<row id="dni_flag_etc_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_etc_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>スクリプト用フラグ操作メニュー：その他</comment>
 		<language name="JPN" width="240">そのたフラグ</language>
 		<language name="JPN_KANJI" width="240">その他フラグ</language>
