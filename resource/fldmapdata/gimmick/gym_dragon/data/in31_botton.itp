@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-12-09T15:27:39" source="in31_botton.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-12-10T15:34:40" source="in31_botton.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_pattern_info
-	frame_size="26"
+	frame_size="27"
 	tool_start_frame="0"
-	tool_end_frame="25"
+	tool_end_frame="26"
 	compress_material="on" material_size="1 1"
 />
 
@@ -25,19 +25,19 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="2">
-		0 25
+	<frame_idx size="3">
+		0 13 26
 	</frame_idx>
-	<image_idx size="2">
-		0 1
+	<image_idx size="3">
+		0 1 0
 	</image_idx>
-	<palette_idx size="2">
-		0 1
+	<palette_idx size="3">
+		0 1 0
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="gym08_b_1" data_size="2" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="gym08_b_1" data_size="3" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
