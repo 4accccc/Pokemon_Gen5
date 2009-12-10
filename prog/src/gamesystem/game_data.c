@@ -42,6 +42,7 @@
 #include "savedata/randommap_save.h"  //WF・BC
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 #include "savedata/wifilist.h"
+#include "gamesystem/comm_player_support.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
 
@@ -102,6 +103,7 @@ struct _GAMEDATA{
 
   GIMMICKWORK GimmickWork;      //ギミックワーク
   PL_BOAT_WORK_PTR PlBoatWorkPtr;   //遊覧船ワーク
+  COMM_PLAYER_SUPPORT *comm_player_support;   ///<通信プレイヤーサポート
 };
 
 //==============================================================================
@@ -219,6 +221,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //遊覧船ポインタをＮＵＬＬ初期化
   gd->PlBoatWorkPtr = NULL;
 
+  //通信相手からのサポートデータ
+  gd->comm_player_support = COMM_PLAYER_SUPPORT_Alloc(heapID);
+
   return gd;
 }
 
@@ -226,6 +231,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
   ENCOUNT_WORK_Delete( gamedata->enc_work );
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
 	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
@@ -1281,4 +1287,16 @@ PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata)
 	return &gamedata->PlBoatWorkPtr;
 }
 
-
+//==================================================================
+/**
+ * サポートデータへのポインタ取得
+ *
+ * @param   gamedata		
+ *
+ * @retval  COMM_PLAYER_SUPPORT *		
+ */
+//==================================================================
+COMM_PLAYER_SUPPORT * GAMEDATA_GetCommPlayerSupportPtr(GAMEDATA * gamedata)
+{
+  return gamedata->comm_player_support;
+}
