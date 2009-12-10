@@ -289,12 +289,12 @@ exit(0);
 
 
 sub file_open{
-	system( "../../../convert/exceltool/ExcelSeetConv -s tab fld_trade.xls" );
-	open( FILEIN, "fld_trade.txt" );
+	system( "../../tools/exceltool/ExcelSeetConv -s tab fld_trade_poke.xls" );
+	open( FILEIN, "fld_trade_poke.txt" );
 	@FLD_TRADE_FILE = <FILEIN>;
 	close( FILEIN );
 
-	open( FILEIN, "monsno.h" );
+	open( FILEIN, "monsno_def.h" );
 	@MONSNO_H_FILE = <FILEIN>;
 	close( FILEIN );
 
@@ -313,20 +313,25 @@ sub file_open{
 sub get_monsno{
 	my( $key )  = @_;
 	
+  print "$key\n";
 	foreach $one ( @MONSNO_H_FILE ){
 
-		if( $one =~ /#define\t*$key\t*\(([0-9]*)\)/ ){
+		if( $one =~ /#define\t*$key\t*\( ([0-9]*) \)/ ){
+      print "monsno = $1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
+  print "monsno no hit\n";
 	return 0;
 }
 sub get_tokusyu{
 	my( $key )  = @_;
 	
+  print "$key\n";
 	foreach $one ( @TOKUSYU_H_FILE ){
 
 		if( $one =~ /#define\t*$key\t*\(([0-9]*)\)/ ){
+      print "tokusyu = $1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
@@ -336,9 +341,11 @@ sub get_tokusyu{
 sub get_item{
 	my( $key )  = @_;
 	
+  print "$key\n";
 	foreach $one ( @ITEMSYM_H_FILE ){
 
 		if( $one =~ /#define $key\t*\( ([0-9]*) \)/ ){
+      print "item = $1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
