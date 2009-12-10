@@ -7417,9 +7417,9 @@
 		<language name="JPN" width="256">LVUP</language>
 		<language name="JPN_KANJI" width="256">LVUP</language>
 	</row>
-	<row id="msg_seq_se_dmy_100">
-		<language name="JPN" width="256">DMY-100</language>
-		<language name="JPN_KANJI" width="256">DMY-100</language>
+	<row id="msg_seq_se_fld_tele2">
+		<language name="JPN" width="256">FLD-TELE2</language>
+		<language name="JPN_KANJI" width="256">FLD-TELE2</language>
 	</row>
 	<row id="msg_seq_se_dmy_101">
 		<language name="JPN" width="256">DMY-101</language>
