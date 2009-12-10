@@ -507,7 +507,7 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  //u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
   BMANIME_CONTROL_WORK * ctrl;
   u16 seNo;
 
