@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:02:18" source="mon.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-12-10T22:47:03" source="c09gate_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:02:18" source="mon.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-12-10T22:47:03" source="c09gate_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-3.000000 0.225830 -1.000000" whd="6.000000 4.023926 2.000000"/>
+<box_test pos_scale="3" xyz="-3.000000 0.250000 -1.000000" whd="6.000000 4.000000 2.000000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c09_mon.1"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c09_mon.1_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/c09_mon.1.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c09gate_01/tex/c09_mon.1.tga"
 	>
 		<bitmap size="64">
 			1111 4432 3444 1122 2222 3322 3333 2223
@@ -53,7 +53,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c09_mon.2_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/c09_mon.2.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c09gate_01/tex/c09_mon.2.tga"
 	>
 		<bitmap size="64">
 			1111 4432 3444 1122 2222 3322 3333 2223
@@ -188,7 +188,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 0.904053 1.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
