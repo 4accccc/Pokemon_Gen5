@@ -38,7 +38,6 @@ typedef struct DRAGON_WORK_tag
 //ドラゴンジムセーブワーク
 typedef struct GYM_DRAGON_SV_WORK_tag
 {
-  int dummy;
   DRAGON_WORK DraWk[DRAGON_NUM_MAX];
 }GYM_DRAGON_SV_WORK;
 

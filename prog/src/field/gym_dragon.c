@@ -380,7 +380,8 @@ static const int ArmAnmTbl[3/*DRA_ARM_MAX*/][ARM_DIR_MAX] =
 };
 
 static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
-    const int inIdx, const VecFx32 *inPos, const u16 *inRad, const int inAnmNum);
+    const int inIdx, const VecFx32 *inPos, const u16 *inRad,
+    const int inAnmNum, const BOOL inCulling);
 
 static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work );
@@ -422,23 +423,23 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     rad = DragonRad[i];
     //頭
     idx = OBJ_HEAD_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &DragonPos[i], &rad, DRAGON_ANM_NUM);
+    SetupMdl(ptr, idx, &DragonPos[i], &rad, DRAGON_ANM_NUM, FALSE);
 
     //左腕
     idx = OBJ_L_ARM_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM);
+    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM, FALSE);
    
     //右腕
     idx = OBJ_R_ARM_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM);
+    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM, FALSE);
 
     //ボタン
     idx = OBJ_BUTTON_L_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &ButtonPos[i*2], NULL, BTN_ANM_NUM);
+    SetupMdl(ptr, idx, &ButtonPos[i*2], NULL, BTN_ANM_NUM, TRUE);
     
     //ボタン
     idx = OBJ_BUTTON_R_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &ButtonPos[i*2+1], NULL, BTN_ANM_NUM);
+    SetupMdl(ptr, idx, &ButtonPos[i*2+1], NULL, BTN_ANM_NUM, TRUE);
     
 //    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_WALL);
 //    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_SW);
@@ -448,7 +449,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   {
     int idx = OBJ_FLOOR;
     VecFx32 pos = {FLOOR_X,FLOOR_Y,FLOOR_Z};
-    SetupMdl(ptr, idx, &pos, NULL, 0);
+    SetupMdl(ptr, idx, &pos, NULL, 0, FALSE);
   }
 
   //セットアップ時2階表示判定
@@ -478,19 +479,20 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
  * @param       inPos     表示座標
  * @param       inRad     回転値ポインタ（ＮＵＬＬのときは計算しない）
  * @param       inAnmNum  アニメ数
+ * @param       inCulling カリング有無
  * @return      none
  */
 //--------------------------------------------------------------
 static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
-    const int inIdx, const VecFx32 *inPos, const u16 *inRad, const int inAnmNum)
+    const int inIdx, const VecFx32 *inPos, const u16 *inRad, const int inAnmNum, const BOOL inCulling)
 {
   int i;
   GFL_G3D_OBJSTATUS *status; 
   status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_DRAGON_UNIT_IDX, inIdx);
   status->trans = *inPos;
   if (inRad!=NULL) MTX_RotY33(&status->rotate, FX_SinIdx(*inRad), FX_CosIdx(*inRad));
-  //カリングする
-  FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, inIdx, TRUE);
+  //カリング設定
+  FLD_EXP_OBJ_SetCulling(ptr, GYM_DRAGON_UNIT_IDX, inIdx, inCulling);
   //アニメ設定
   for (i=0;i<inAnmNum;i++)
   {
@@ -634,6 +636,22 @@ static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk)
 static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir)
 {
   int idx = NeckAnmTbl[wk->HeadDir][inNextDir]-RES_ID_HEAD_ANM_UR;
+#ifdef PM_DEBUG  
+  switch(wk->HeadDir){
+  case HEAD_DIR_UP:
+    OS_Printf("現在上\n");
+    break;
+  case HEAD_DIR_DOWN:
+    OS_Printf("現在下\n");
+    break;
+  case HEAD_DIR_LEFT:
+    OS_Printf("現在左\n");
+    break;
+  case HEAD_DIR_RIGHT:
+    OS_Printf("現在右\n");
+    break;  
+  }
+#endif 
   GF_ASSERT_MSG(idx>=0, "now=%d next=%d",wk->HeadDir, inNextDir);
   return idx;
 }
@@ -719,15 +737,19 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       {
         anm_idx = 1;  //下に動かす
         next_dir = ARM_DIR_DOWN;
+        OS_Printf("腕を下に動かす\n");
       }
       else
       {
         anm_idx = 0;  //上に動かす
         next_dir = ARM_DIR_UP;
+        OS_Printf("腕を上に動かす\n");
       }
 
       if ( tmp->TrgtArm == DRA_ARM_LEFT ) obj_idx = OBJ_L_ARM_1;
       else obj_idx = OBJ_R_ARM_1;
+
+      OS_Printf("動かす腕は%d obj= %d\n",tmp->TrgtArm,obj_idx);
 
       obj_idx += (tmp->TrgtHead*DRAGON_PARTS_SET);
 
@@ -757,6 +779,8 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       next_dir = GetHeadDirByArm(tmp->DraWk);
       anm_idx = GetHeadAnmIdx(tmp->DraWk, next_dir);
 
+      OS_Printf("次の首の動きは　%d anm=%d\n",next_dir, anm_idx);
+
       obj_idx = OBJ_HEAD_1+(tmp->TrgtHead*DRAGON_PARTS_SET);
 
       //首のＯＢＪとアニメをセット
@@ -764,6 +788,37 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       tmp->AnmPlayWk.AnmNum = 1;
       tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
       tmp->AnmPlayWk.AllAnmNum = DRAGON_ANM_NUM;
+
+#ifdef PM_DEBUG
+      {
+        switch(anm_idx){
+        case 0:
+          OS_Printf("上＞右\n");
+          break;
+        case 1:
+          OS_Printf("右＞上\n");
+          break;
+        case 2:
+          OS_Printf("上＞左\n");
+          break;
+        case 3:
+          OS_Printf("左＞上\n");
+          break;
+        case 4:
+          OS_Printf("下＞右\n");
+          break;
+        case 5:
+          OS_Printf("右＞下\n");
+          break;
+        case 6:
+          OS_Printf("下＞左\n");
+          break;
+        case 7:
+          OS_Printf("左＞下\n");
+          break;
+        }
+      }
+#endif
       
       call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
       //首アニメイベントコール
@@ -833,7 +888,7 @@ static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work )
       for (i=0;i<play_work->AnmNum;i++)
       {
         u8 anm_ofs = play_work->AnmOfs[i];
-        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_DRAGON_UNIT_IDX, obj_idx, i);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_DRAGON_UNIT_IDX, obj_idx, anm_ofs);
         //アニメ停止解除
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         //アニメ無効を解除
