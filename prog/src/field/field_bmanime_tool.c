@@ -151,7 +151,7 @@ void BMANIME_CTRL_Delete(BMANIME_CONTROL_WORK * ctrl)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx)
+void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx)
 {
   if (ctrl == NULL) return;
   if (ctrl->anm_idx != NO_ANIME_IDX) {
@@ -159,6 +159,16 @@ extern void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx)
   }
   ctrl->anm_idx = anm_idx;
   FIELD_BMODEL_SetAnime( ctrl->entry, anm_idx, BMANM_REQ_START);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void BMANIME_CTRL_StopAnime( BMANIME_CONTROL_WORK * ctrl )
+{
+  if (ctrl == NULL) return;
+  if (ctrl->anm_idx != NO_ANIME_IDX) {
+    FIELD_BMODEL_SetAnime( ctrl->entry, ctrl->anm_idx, BMANM_REQ_STOP);
+  }
 }
 
 //------------------------------------------------------------------

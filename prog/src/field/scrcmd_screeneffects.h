@@ -30,6 +30,7 @@ extern VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk );
 
 

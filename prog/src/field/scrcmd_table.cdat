@@ -514,7 +514,7 @@
   DEF_CMD( EvCmdBModelAnimeWait, EV_SEQ_BMODEL_ANIME_WAIT )
 
   DEF_CMD( EvCmdBModelAnimeSetFinished, EV_SEQ_BMODEL_ANIME_SET_FINISHED )
-  NO_CMD()
+  DEF_CMD( EvCmdBModelAnimeStop, EV_SEQ_BMODEL_ANIME_STOP )
   NO_CMD()
   NO_CMD()
 
@@ -693,7 +693,7 @@
   NO_CMD()
 
   DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )
-  NO_CMD()
+  DEF_CMD( EvCmdCallTVTDemo, EV_SEQ_CALL_TVT_DEMO )
   NO_CMD()
   NO_CMD()
 

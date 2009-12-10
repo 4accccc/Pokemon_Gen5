@@ -47,6 +47,7 @@
 #include "field\field_comm\intrude_mission.h"
 
 #include "demo/demo3d.h"  //Demo3DProcData etc.
+#include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
@@ -340,6 +341,29 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
   param->demo_id = SCRCMD_GetVMWorkValue( core, wk );
 
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   TVトランシーバーデモ呼び出し
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
+  //DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
+  //param->demo_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, NULL, NULL, NULL );
 
   return VMCMD_RESULT_SUSPEND;
 }

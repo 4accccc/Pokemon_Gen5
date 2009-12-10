@@ -400,7 +400,7 @@ static void * getMemory(MEMKEY key)
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static BOOL EvWaitBModelAnime( VMHANDLE *core, void *wk );
+static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk );
 enum { DOOR_ANIME_KEY_01 = 0x03fa };
 
 //--------------------------------------------------------------
@@ -497,6 +497,32 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief ドアアニメ制御：アニメセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
+{
+  u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  BMANIME_CONTROL_WORK * ctrl;
+  u16 seNo;
+
+  ctrl = getMemory( anime_id );
+  if (ctrl != NULL)
+  {
+    BMANIME_CTRL_StopAnime( ctrl );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
  * @brief ドアアニメ制御：アニメウェイト
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
@@ -510,7 +536,7 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
-  VMCMD_SetWait( core, EvWaitBModelAnime );
+  VMCMD_SetWait( core, evWaitBModelAnime );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -523,7 +549,7 @@ VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
  * @return  BOOL  TRUEのとき終了
  */
 //--------------------------------------------------------------
-static BOOL EvWaitBModelAnime( VMHANDLE *core, void *wk )
+static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
 {
   BMANIME_CONTROL_WORK * ctrl;
   ctrl = getMemory( DOOR_ANIME_KEY_01 );  //手抜き
