@@ -97,3 +97,19 @@ extern const MYSTATUS * COMM_PLAYER_SUPPORT_GetMyStatus(const COMM_PLAYER_SUPPOR
  */
 //==================================================================
 extern SUPPORT_TYPE COMM_PLAYER_SUPPORT_GetSupportType(const COMM_PLAYER_SUPPORT *cps);
+
+
+
+//==============================================================================
+//  gamedata
+//==============================================================================
+//==================================================================
+/**
+ * サポートデータへのポインタ取得
+ *
+ * @param   gamedata		
+ *
+ * @retval  COMM_PLAYER_SUPPORT *		
+ */
+//==================================================================
+extern COMM_PLAYER_SUPPORT * GAMEDATA_GetCommPlayerSupportPtr(GAMEDATA * gamedata);

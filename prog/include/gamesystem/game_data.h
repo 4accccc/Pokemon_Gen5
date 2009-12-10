@@ -517,13 +517,3 @@ extern PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata);
 //-----------------------------------------------------------------------------
 extern WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata);
 
-//==================================================================
-/**
- * サポートデータへのポインタ取得
- *
- * @param   gamedata		
- *
- * @retval  COMM_PLAYER_SUPPORT *		
- */
-//==================================================================
-extern COMM_PLAYER_SUPPORT * GAMEDATA_GetCommPlayerSupportPtr(GAMEDATA * gamedata);
