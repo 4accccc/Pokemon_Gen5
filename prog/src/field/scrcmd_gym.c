@@ -36,6 +36,7 @@
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
 #include "gym_ice.h"
+#include "gym_dragon.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -504,4 +505,61 @@ VMCMD_RESULT EvCmdGymIce_ChgRail( VMHANDLE *core, void *wk )
   GYM_ICE_ChangeRailMap(gsys, idx);
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ドラゴンジムギミック　ギミックイベントコール
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk )
+{
+  u16 head;
+  u16 arm;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  head = VMGetU16( core );
+  arm = VMGetU16( core );
+
+  call_event = GYM_DRAGON_CreateGmkEvt(gsys, head, arm);
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * ドラゴンジムギミック　自機飛び降りイベント
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk )
+{
+  u16 dir;
+  
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  dir = VMGetU16( core );
+  
+  call_event = GYM_DRAGON_CreateJumpDownEvt(gsys, dir);
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
 }

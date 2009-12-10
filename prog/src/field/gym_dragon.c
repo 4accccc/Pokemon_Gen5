@@ -382,11 +382,14 @@ static const int ArmAnmTbl[3/*DRA_ARM_MAX*/][ARM_DIR_MAX] =
 static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
     const int inIdx, const VecFx32 *inPos, const u16 *inRad,
     const int inAnmNum, const BOOL inCulling);
+static void SetupAnm(GYM_DRAGON_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inIdx);
 
 static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work );
 static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk);
 static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir);
+static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work );
+
 
 
 //--------------------------------------------------------------
@@ -440,9 +443,9 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     //ボタン
     idx = OBJ_BUTTON_R_1 + (i*DRAGON_PARTS_SET);
     SetupMdl(ptr, idx, &ButtonPos[i*2+1], NULL, BTN_ANM_NUM, TRUE);
-    
-//    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_WALL);
-//    SetupWallSwAnm(ptr, gmk_sv_work->WallMoved[i], i, OBJ_KIND_SW);
+
+    //セーブデータを見て、アニメ状態をセット
+    SetupAnm(gmk_sv_work, ptr, i);
   }
 
   //床座標セット
@@ -509,6 +512,98 @@ static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
 
 //--------------------------------------------------------------
 /**
+ * アニメのセットアップ関数
+ * @param	      ptr       ＯＢＪポインタ
+ * @param       inIdx     ドラゴンのインデックス
+ * @return      none
+ */
+//--------------------------------------------------------------
+static void SetupAnm(GYM_DRAGON_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inIdx)
+{
+  int anm_ofs;
+  int res_base;
+  int idx;
+  fx32 last;
+  EXP_OBJ_ANM_CNT_PTR anm;
+
+  DRAGON_WORK *wk = &gmk_sv_work->DraWk[inIdx];
+
+  res_base = RES_ID_HEAD_ANM_UR;
+  //頭
+  switch(wk->HeadDir){
+  case HEAD_DIR_UP:
+    //右＞上のアニメのラストフレームをセットしておく
+    anm_ofs = RES_ID_HEAD_ANM_RU - res_base;
+    break;
+  case HEAD_DIR_DOWN:
+    //右＞下のアニメのラストフレームをセットしておく
+    anm_ofs = RES_ID_HEAD_ANM_RD - res_base;
+    break;
+  case HEAD_DIR_LEFT:
+    //上＞右のアニメのラストフレームをセットしておく
+    anm_ofs = RES_ID_HEAD_ANM_UR - res_base;
+    break;
+  case HEAD_DIR_RIGHT:
+    //上＞左のアニメのラストフレームをセットしておく
+    anm_ofs = RES_ID_HEAD_ANM_UL - res_base;
+    break;
+  default:
+    GF_ASSERT(0);
+    //右＞上のアニメのラストフレームをセットしておく
+    anm_ofs = RES_ID_HEAD_ANM_RU - res_base;
+  }
+
+  {
+    idx = OBJ_HEAD_1 + (inIdx*DRAGON_PARTS_SET);
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, TRUE);
+    //最終フレームをセット
+    last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+    //ラストフレーム
+    FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, last );
+  }
+
+  //左腕
+  {
+    idx = OBJ_L_ARM_1 + (inIdx*DRAGON_PARTS_SET);
+    if (wk->ArmDir[DRA_ARM_LEFT] == ARM_DIR_UP) anm_ofs = ARM_DIR_UP;
+    else anm_ofs = ARM_DIR_DOWN;
+
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, TRUE);
+    //最終フレームをセット
+    last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+    //ラストフレーム
+    FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, last );
+  }
+
+  //右腕
+  {
+    idx = OBJ_R_ARM_1 + (inIdx*DRAGON_PARTS_SET);
+    if (wk->ArmDir[DRA_ARM_RIGHT] == ARM_DIR_UP) anm_ofs = ARM_DIR_UP;
+    else anm_ofs = ARM_DIR_DOWN;
+
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, TRUE);
+    //最終フレームをセット
+    last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+    //ラストフレーム
+    FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_DRAGON_UNIT_IDX, idx, anm_ofs, last );
+  }
+}
+
+
+//--------------------------------------------------------------
+/**
  * 解放関数
  * @param	      fieldWork     フィールドワークポインタ
  * @return      none
@@ -569,10 +664,10 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
     GMEVENT *event;
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-      event = GYM_DRAGON_CreateAnmEvt(gsys, 1,0);
+      event = GYM_DRAGON_CreateGmkEvt(gsys, 1,0);
       GAMESYSTEM_SetEvent(gsys, event);
     }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-      event = GYM_DRAGON_CreateAnmEvt(gsys, 1,1);
+      event = GYM_DRAGON_CreateGmkEvt(gsys, 1,1);
       GAMESYSTEM_SetEvent(gsys, event);
     }
   }
@@ -580,7 +675,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
 
 //--------------------------------------------------------------
 /**
- * アニメイベント作成
+ * ギミック発動イベント作成
  * @param	      gsys        ゲームシステムポインタ
  * @param       inDragonIdx   対象ドラゴンインデックス0～2
  * @param       inArmIdx   対象腕インデックス0～1　0：左　1：右
@@ -588,7 +683,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
  * @return      GMEVENT     イベントポインタ
  */
 //--------------------------------------------------------------
-GMEVENT *GYM_DRAGON_CreateAnmEvt(GAMESYS_WORK *gsys, const int inDragonIdx, const int inArmIdx)
+GMEVENT *GYM_DRAGON_CreateGmkEvt(GAMESYS_WORK *gsys, const int inDragonIdx, const int inArmIdx)
 {
   GMEVENT * event;
 
@@ -612,11 +707,45 @@ GMEVENT *GYM_DRAGON_CreateAnmEvt(GAMESYS_WORK *gsys, const int inDragonIdx, cons
   event = GMEVENT_Create( gsys, NULL, AnmMoveEvt, 0 );
 
   return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機アニメイベント作成
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inDir       自機の向き
+ * 
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_DRAGON_CreateJumpDownEvt(GAMESYS_WORK *gsys, const int inDir)
+{
+  GMEVENT * event;
+
+  GYM_DRAGON_TMP *tmp;
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+    tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+  }
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, JumpDownEvt, 0 );
+
+  return event;
 
 }
 
-
-//ドラゴンの腕の状態から次の首の位置を決定する
+//--------------------------------------------------------------
+/**
+ * ドラゴンの腕の状態から次の首の位置を決定する
+ * @param	      wk        ドラゴンのデータワーク
+ * @return      HEAD_DIR    頭の向き
+ */
+//--------------------------------------------------------------
 static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk)
 {
   HEAD_DIR dir;
@@ -632,7 +761,14 @@ static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk)
   return dir;
 }
 
-//現在の首の位置と次の首の位置から、再生する首のアニメーションを決定する
+//--------------------------------------------------------------
+/**
+ * 現在の首の位置と次の首の位置から、再生する首のアニメーションを決定する
+ * @param	      wk        ドラゴンのデータワーク
+ * @param       inNextDir    頭の向き
+ * @return       int       アニメインデックス
+ */
+//--------------------------------------------------------------
 static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir)
 {
   int idx = NeckAnmTbl[wk->HeadDir][inNextDir]-RES_ID_HEAD_ANM_UR;
@@ -656,7 +792,14 @@ static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir)
   return idx;
 }
 
-//ドラゴンの腕の状態から次の腕の位置を決定する
+//--------------------------------------------------------------
+/**
+ * ドラゴンの腕の状態から次の腕の位置を決定する
+ * @param	      wk        ドラゴンのデータワーク
+ * @param       inArm     腕インデックス
+ * @return       ARM_DIR   腕の向き
+ */
+//--------------------------------------------------------------
 static  ARM_DIR GetArmDir(DRAGON_WORK *wk, const DRA_ARM inArm)
 {
   ARM_DIR dir, now_dir;
@@ -667,20 +810,18 @@ static  ARM_DIR GetArmDir(DRAGON_WORK *wk, const DRA_ARM inArm)
   return dir;
 }
 
-//指定の腕の移動をするアニメのインデックスを返す
+//--------------------------------------------------------------
+/**
+ * 指定の腕の移動をするアニメのインデックスを返す
+ * @param       inNextDir     移動後の腕の方向
+ * @param       inArm         腕のインデックス
+ * @return       int           アニメインデックス
+ */
+//--------------------------------------------------------------
 static int GetArmAnmIdx(const ARM_DIR inNextDir, const DRA_ARM inArm)
 {
   return ArmAnmTbl[inArm][inNextDir];
 }
-
-
-//※フロー
-//　スイッチ押下アニメ＞＞腕の現在位置からアニメを決定＞＞腕動くアニメ＞＞腕の現在位置更新
-//＞＞腕の状態から次の首の位置を決定＞＞現在の首の位置からアニメを決定＞＞アニメ再生
-//＞＞首の情報更新＞＞現在の首の状態からレール進入禁止をセット
-//＞＞動かしたのが、2階の竜で、結果上を向いた場合と下を向いた場合にレールセットを書き換える
-//＞＞進入禁止の情報も書き換え後のレールに引き継ぐ
-
 
 //--------------------------------------------------------------
 /**
@@ -917,5 +1058,37 @@ static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work )
     }
   }
 
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の飛び降りアニメイベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_DRAGON_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+  }
+
+  switch(*seq){
+  case 0:
+    //終了
+    return GMEVENT_RES_FINISH;
+  }
+  
   return GMEVENT_RES_CONTINUE;
 }
