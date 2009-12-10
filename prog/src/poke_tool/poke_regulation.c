@@ -325,11 +325,13 @@ BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp
     }
     break;
   }
+#if 0  //タマゴは手持ちにいても良いが　人数には数えない
   //たまご参戦不可
   if( PP_Get(pp, ID_PARA_tamago_flag, NULL ) != 0 ){
     ret = FALSE;
     *FailedBit |= POKEFAILEDBIT_EGG;
   }
+#endif
   // 参加禁止ポケかどうか
   if(Regulation_CheckParamBit(pReg, REGULATION_VETO_POKE_BIT, mons)){
     ret = FALSE;
