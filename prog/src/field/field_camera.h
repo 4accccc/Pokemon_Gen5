@@ -384,7 +384,7 @@ extern FLD_CAM_MV_PARAM_CORE *FIELD_CAMERA_GetMoveDstPrmPtr(FIELD_CAMERA * camer
 extern void FIELD_CAMERA_RestartTrace(FIELD_CAMERA * camera_ptr);
 extern void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr);
 extern BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr);
-
+extern BOOL FIELD_CAMERA_CheckTraceSys(FIELD_CAMERA * camera_ptr);
 
 #ifdef  PM_DEBUG
 typedef enum{

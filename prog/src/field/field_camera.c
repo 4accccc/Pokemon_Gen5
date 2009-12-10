@@ -2446,7 +2446,6 @@ static void traceUpdate(FIELD_CAMERA * camera)
 void FIELD_CAMERA_RestartTrace(FIELD_CAMERA * camera_ptr)
 {
   CAMERA_TRACE *trace;
-
   trace = camera_ptr->Trace;
   if (trace == NULL){
     GF_ASSERT(0);
@@ -2508,6 +2507,30 @@ BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr)
   }
   return trace->Valid;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレースシステムが有効であるかをチェック
+ *
+ *	@param	camera_ptr  カメラポインタ
+ *	@return BOOL        TRUEで稼働中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_CheckTraceSys(FIELD_CAMERA * camera_ptr)
+{
+  CAMERA_TRACE *trace;
+
+  //ウォッチターゲットがない場合は稼動動いていないとみなす。
+  if (camera_ptr->watch_target == NULL){
+		return FALSE;
+	}
+  trace = camera_ptr->Trace;
+  if (trace == NULL){
+    return FALSE;
+  }
+  return TRUE;
+}
+
 
 //----------------------------------------------------------------------------
 /**

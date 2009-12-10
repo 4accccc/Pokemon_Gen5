@@ -61,8 +61,11 @@ static void EndCamera(FIELD_CAMERA *camera)
 {
   //復帰パラメータをクリアする
   FIELD_CAMERA_ClearRecvCamParam(camera);
-  //カメラトレース再開
-  FIELD_CAMERA_RestartTrace(camera);
+  if ( FIELD_CAMERA_CheckTraceSys(camera) )
+  {
+    //カメラトレース再開
+    FIELD_CAMERA_RestartTrace(camera);
+  }
   //終了チェックフラグをオフ
   SCREND_CHK_SetBitOff(SCREND_CHK_CAMERA);
 }
@@ -100,14 +103,18 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
   //復帰パラメータをセットする
   FIELD_CAMERA_SetRecvCamParam(camera);
-  //カメラトレースを停止するリクエストを出す
-  FIELD_CAMERA_StopTraceRequest(camera);
-  //カメラトレース処理が停止するのを待つイベントをコール
+
+  if ( FIELD_CAMERA_CheckTraceSys(camera) )
   {
-    GMEVENT *call_event;
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopEvt, 0 );
-    SCRIPT_CallEvent( sc, call_event );
+    //カメラトレースを停止するリクエストを出す
+    FIELD_CAMERA_StopTraceRequest(camera);
+    //カメラトレース処理が停止するのを待つイベントをコール
+    {
+      GMEVENT *call_event;
+      SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+      call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopEvt, 0 );
+      SCRIPT_CallEvent( sc, call_event );
+    }
   }
   //終了チェックフラグをオン
   SCREND_CHK_SetBitOn(SCREND_CHK_CAMERA);
