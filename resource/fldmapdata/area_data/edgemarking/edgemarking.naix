@@ -14,7 +14,8 @@ enum {
 	NARC_edgemarking_edge01_bin = 0,
 	NARC_edgemarking_edge02_bin = 1,
 	NARC_edgemarking_edge03_bin = 2,
-	NARC_edgemarking_edge04_bin = 3
+	NARC_edgemarking_edge04_bin = 3,
+	NARC_edgemarking_edge05_bin = 4
 };
 
 /* NARC_EDGEMARKING_NAIX_ */
