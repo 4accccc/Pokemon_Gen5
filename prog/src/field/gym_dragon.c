@@ -180,11 +180,11 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_si_rneck2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_si_lneck_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_si_lneck2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_DRAGON, NARC_gym_dragon_in31_l_ue_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_l_sita_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_r_ue_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_r_sita_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_l_ue_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_l_sita_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_botton_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+		{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_botton_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
 };
 
 //3Dアニメ　頭
@@ -430,11 +430,11 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 
     //左腕
     idx = OBJ_L_ARM_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM, FALSE);
+    SetupMdl(ptr, idx, &DragonPos[i], &rad, ARM_ANM_NUM, FALSE);
    
     //右腕
     idx = OBJ_R_ARM_1 + (i*DRAGON_PARTS_SET);
-    SetupMdl(ptr, idx, &DragonPos[i], NULL, ARM_ANM_NUM, FALSE);
+    SetupMdl(ptr, idx, &DragonPos[i], &rad, ARM_ANM_NUM, FALSE);
 
     //ボタン
     idx = OBJ_BUTTON_L_1 + (i*DRAGON_PARTS_SET);
