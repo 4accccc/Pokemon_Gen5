@@ -12,7 +12,7 @@ USERS	= obata_toshihiro
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = fld_trade
+targetname = fld_trade_poke
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -89,9 +89,9 @@ $(MAKE_TARGET):$(MAKE_FILE)
 	perl conv.pl
 
 #アーカイブ
-fld_trade.narc:$(DAT_FILE) $(MAKE_TARGET)
+$(targetname).narc:$(DAT_FILE) $(MAKE_TARGET)
 	#アーカイブ
-	nnsarc -c -i -n fld_trade.narc -S fld_trade_list.lst
+	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 
 endif
 
