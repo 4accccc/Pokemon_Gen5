@@ -776,7 +776,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
       //ページ切り替えボタン
       if( ret == 0 )
       {
-        //OS_TPrintf("LEFT\n");
+        //MB_TPrintf("LEFT\n");
         work->pageMoveDir = MSD_LEFT;
         work->state = MSS_CHANGE_PAGE;
         work->changePageCnt = 0;
@@ -794,7 +794,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
       else
       if( ret == 1 )
       {
-        //OS_TPrintf("RIGHT\n");
+        //MB_TPrintf("RIGHT\n");
         work->pageMoveDir = MSD_RIGHT;
         work->state = MSS_CHANGE_PAGE;
         work->changePageCnt = 0;
@@ -1054,7 +1054,7 @@ static const BOOL MB_SELECT_CheckDropBox( MB_SELECT_WORK *work )
 static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
 {
   work->changePageCnt++;
-  //OS_TPrintf("[%2d]",work->changePageCnt);
+  //MB_TPrintf("[%2d]",work->changePageCnt);
   
   if( work->changePageCnt <= MB_SEL_CHANGE_CNT )
   {
@@ -1100,7 +1100,7 @@ static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
       {
         cellPos.x -= MB_SEL_CHANGE_PAGE_LEN;
       }
-      //OS_TPrintf("[%4d]",cellPos.x);
+      //MB_TPrintf("[%4d]",cellPos.x);
       for( iy=0;iy<MB_SEL_POKE_BOX_Y_NUM;iy++ )
       {
         const u8 idx = ix + iy*MB_SEL_POKE_BOX_X_NUM;
@@ -1162,7 +1162,7 @@ static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
     }
     work->state = MSS_MAIN;
   }
-  //OS_TPrintf("\n");
+  //MB_TPrintf("\n");
 }
 
 //--------------------------------------------------------------
@@ -1427,7 +1427,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 
     initWork->parentHeap = parentHeap;
     initWork->cardType = CARD_TYPE_DUMMY;
-    OS_TPrintf("デバッグポケ作成");
+    MB_TPrintf("デバッグポケ作成");
     for( i=0;i<MB_POKE_BOX_TRAY;i++ )
     {
       for( j=0;j<MB_POKE_BOX_POKE;j++ )
@@ -1443,9 +1443,9 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
                      PTL_SETUP_ID_AUTO );
         }
       }
-      OS_TPrintf(".%d",i);
+      MB_TPrintf(".%d",i);
     }
-    OS_TPrintf("Finish!\n");
+    MB_TPrintf("Finish!\n");
     //トレー名セット
     for( i=0;i<MB_POKE_BOX_TRAY;i++ )
     {

@@ -55,6 +55,7 @@
 #include <gflib.h>
 #include "system/main.h"
 
+#include "multiboot/mb_local_def.h"
 #include "mbp.h"
 
 #define MB_HEAP_ID HEAPID_MULTIBOOT
@@ -77,11 +78,11 @@ static void MBP_ChangeState(u16 state);
 // lcfファイルでIRQスタックサイズを少し大きめに設定しておいた方が安全です。
 //
 // 特にOS_Printf()は大量のスタックを消費するので、
-// コールバック内ではできるだけ軽量版のOS_TPrintf()を使用するようにしてください。
+// コールバック内ではできるだけ軽量版のMB_TPrintf()を使用するようにしてください。
 
 #define MBP_DEBUG
 #if defined( MBP_DEBUG )
-#define MBP_Printf          OS_TPrintf //
+#define MBP_Printf          MB_TPrintf //
 #else
 #define MBP_Printf(...)     ((void)0)
 #endif
@@ -283,9 +284,9 @@ static BOOL MBP_RegistFile(const MBGameRegistry *gameInfo)
          * この領域が使用されます。
          * このメモリはサイズさえ充分であれば 静的に用意されていても構いません.
          */
-        OS_TPrintf("LeastMbHeap[%x]",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID));
+        MB_TPrintf("LeastMbHeap[%x]",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID));
         sFilebuf = GFL_HEAP_AllocClearMemory( MB_HEAP_ID , 0x10000);
-        OS_TPrintf("->MbHeap[%x](%x)\n",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID),bufferSize);
+        MB_TPrintf("->MbHeap[%x](%x)\n",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID),bufferSize);
         if (sFilebuf == NULL)
         {
             /* セグメント情報を格納するバッファの確保失敗 */
@@ -676,7 +677,7 @@ static void ParentStateCallback(u16 child_aid, u32 status, void *arg)
 
             userInfo = (MBUserInfo *)arg;
 
-            OS_TPrintf("callback playerNo = %d\n", userInfo->playerNo);
+            MB_TPrintf("callback playerNo = %d\n", userInfo->playerNo);
 
             // 親機がエントリー受付状態でない場合にエントリー要求をしてきた
             // 子機は確認なしにキックする。
@@ -819,7 +820,7 @@ static void ParentStateCallback(u16 child_aid, u32 status, void *arg)
     case MB_COMM_PSTATE_ERROR:
         {
             MBErrorStatus *cb = (MBErrorStatus *)arg;
-			OS_TPrintf("             ErrType is [%d]\n",cb->errcode);
+			MB_TPrintf("             ErrType is [%d]\n",cb->errcode);
             switch (cb->errcode)
             {
                 //------------------------------

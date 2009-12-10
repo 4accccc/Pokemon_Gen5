@@ -349,6 +349,10 @@ void DEB_STR_CONV_StrcodeToSjis( const STRCODE *str1 , char *str2 , const u32 le
   
 }
 
+void DEB_STR_CONV_StrBufferToSjis( const STRBUF *str1 , char *str2 , const u32 len )
+{
+  DEB_STR_CONV_StrcodeToSjis( GFL_STR_GetStringCodePointer(str1) , str2 , len );
+}
 
 //--------------------------------------------------------------
 //	

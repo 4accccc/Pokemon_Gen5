@@ -26,6 +26,7 @@ extern  u8    MB_DATA_GetErrorState( MB_DATA_WORK *dataWork );
 
 extern  void* MB_DATA_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx );
 extern  u16* MB_DATA_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray );
+extern  void MB_DATA_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx );
 
 extern  BOOL  MB_DATA_IsFinishSaveFirst( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_IsFinishSaveSecond( MB_DATA_WORK *dataWork );

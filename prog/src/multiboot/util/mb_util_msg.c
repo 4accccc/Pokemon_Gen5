@@ -220,7 +220,7 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
 {
   if( msgWork->printHandle != NULL )
   {
-    OS_TPrintf( NULL , "Message is not finish!!\n" );
+    MB_TPrintf( "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( msgWork->printHandle );
     msgWork->printHandle = NULL;
   }
@@ -257,7 +257,7 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
 {
   if( msgWork->printHandle != NULL )
   {
-    OS_TPrintf( NULL , "Message is not finish!!\n" );
+    MB_TPrintf( "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( msgWork->printHandle );
     msgWork->printHandle = NULL;
   }
@@ -437,4 +437,12 @@ PRINT_QUE* MB_MSG_GetPrintQue( MB_MSG_WORK *msgWork )
 const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork )
 {
   return PRINTSYS_QUE_IsFinished( msgWork->printQue );
+}
+const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork )
+{
+  if( msgWork->printHandle == NULL )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }

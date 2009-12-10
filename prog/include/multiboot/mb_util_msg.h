@@ -95,5 +95,6 @@ extern WORDSET* MB_MSG_GetWordSet( MB_MSG_WORK *msgWork );
 extern GFL_FONT* MB_MSG_GetFont( MB_MSG_WORK *msgWork );
 extern PRINT_QUE* MB_MSG_GetPrintQue( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork );
+extern const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork );
 
 

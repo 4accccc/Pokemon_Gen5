@@ -58,6 +58,7 @@ typedef enum
   MCS_LOAD_DATA,
   MCS_DATA_CONV,
   
+  //選択画面
   MCS_SELECT_FADEOUT,
   MCS_SELECT_FADEOUT_WAIT,
   MCS_SELECT_MAIN,
@@ -65,8 +66,10 @@ typedef enum
   MCS_SELECT_FADEIN,
   MCS_SELECT_FADEIN_WAIT,
 
+  //ゲームデータ到着待ち
   MCS_WAIT_GAME_DATA,
   
+  //捕獲ゲーム
   MCS_CAPTURE_FADEOUT,
   MCS_CAPTURE_FADEOUT_WAIT,
   MCS_CAPTURE_MAIN,
@@ -74,11 +77,33 @@ typedef enum
   MCS_CAPTURE_FADEIN,
   MCS_CAPTURE_FADEIN_WAIT,
 
+  //転送・保存
+  MCS_TRANS_POKE_INIT,
+  MCS_TRANS_POKE_SEND,
+
+  MCS_SAVE_INIT,
+  MCS_SAVE_MAIN,
+  MCS_SAVE_TERM,
 
   MCS_ERROR,
   
 }MB_CHILD_STATE;
 
+typedef enum
+{
+  MCSS_SAVE_WAIT_SAVE_INIT,
+  MCSS_SAVE_SYNC_SAVE_INIT,
+  MCSS_SAVE_INIT,
+  MCSS_SAVE_WAIT_FIRST,
+  MCSS_SAVE_WAIT_FIRST_SYNC,
+  MCSS_SAVE_FIRST_SAVE_LAST,
+  MCSS_SAVE_WAIT_SECOND,
+  MCSS_SAVE_WAIT_SECOND_SYNC,
+  MCSS_SAVE_SECOND_SAVE_LAST,
+  MCSS_SAVE_WAIT_LAST_SAVE,
+  MCSS_SAVE_WAIT_FINISH_SAVE_SYNC,
+}MB_CHILD_SUB_STATE;
+  
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -91,7 +116,10 @@ typedef struct
   void  *sndData;
   
   MB_CHILD_STATE  state;
+  MB_CHILD_SUB_STATE  subState;
   GFL_PROCSYS   *procSys;
+  u8 captureNum;
+  u8 saveWaitCnt;
   
   POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
   STRCODE *boxName[MB_POKE_BOX_TRAY];
@@ -123,6 +151,11 @@ static void MB_CHILD_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 static void MB_CHILD_LoadResource( MB_CHILD_WORK *work );
 
 static void MB_CHILD_DataConvert( MB_CHILD_WORK *work );
+
+static void MB_CHILD_SaveInit( MB_CHILD_WORK *work );
+static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work );
+static void MB_CHILD_SaveMain( MB_CHILD_WORK *work );
+
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -163,6 +196,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
+  work->captureNum = 0;
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -250,7 +284,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         //青箱の05053056のMacAddress(手打ち)
         u8 addTemp[6] = {0x00,0x09,0xbf,0xf4,0x33,0x15};
         MB_COMM_InitChild( work->commWork , addTemp );
-        OS_TPrintf("Quick boot!!\n");
+        MB_TPrintf("Quick boot!!\n");
 #else
         GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
 #endif
@@ -410,6 +444,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
     }
     break;
+  //--------------------------------------------------------
+  //ゲームデータ到着待ち
     
   case MCS_WAIT_GAME_DATA:
     if( MB_COMM_IsPostGameData( work->commWork ) == TRUE )
@@ -437,14 +473,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
       work->msgWork = NULL;
       
-      //InitWorkのpppは最初に入れている
       work->capInitWork.parentHeap = work->heapId;
       work->capInitWork.cardType = work->cardType;
       work->capInitWork.arcHandle = GFL_ARC_OpenDataHandleByMemory( 
                                               GFL_NET_LDATA_GetPostData( 0 ) ,
                                               GFL_NET_LDATA_GetPostDataSize( 0 ) ,
                                               work->heapId );
-      OS_TPrintf("fileNum[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->capInitWork.arcHandle));
+      MB_TPrintf("fileNum[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->capInitWork.arcHandle));
       for( i=0;i<MB_CAP_POKE_NUM;i++ )
       {
         const u8 tray = work->selInitWork.selectPoke[i][0];
@@ -478,6 +513,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
     break;
     
@@ -490,9 +526,73 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_CAPTURE_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      
+      u8 i;
+      work->captureNum = 0;
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        if( work->capInitWork.isCapture[i] == TRUE )
+        {
+          work->captureNum++;
+        }
+      }
+      if( work->captureNum > 1 )
+      {
+        work->state = MCS_TRANS_POKE_INIT;
+        MB_COMM_SetChildState( work->commWork , MCCS_SEND_POKE );
+      }
+      else
+      {
+        //TODO 分岐修正
+        work->state = MCS_TRANS_POKE_INIT;
+      }
     }
     break;
+  //--------------------------------------------------------
+  //転送・保存フェイズ
+  case MCS_TRANS_POKE_INIT:
+    {
+      u8 i;
+      MB_COMM_ClearSendPokeData( work->commWork );
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        if( work->capInitWork.isCapture[i] == TRUE )
+        {
+          const u8 tray = work->selInitWork.selectPoke[i][0];
+          const u8 idx  = work->selInitWork.selectPoke[i][1];
+          MB_COMM_AddSendPokeData( work->commWork , work->capInitWork.ppp[i] );
+          
+          //元データのpppを消す
+          MB_DATA_ClearBoxPPP( work->dataWork , tray , idx );
+        }
+      }
+    }
+    work->state = MCS_TRANS_POKE_SEND;
+    break;
+    
+  case MCS_TRANS_POKE_SEND:
+    if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
+    {
+      work->state = MCS_SAVE_INIT;
+    }
+    break;
+
+  case MCS_SAVE_INIT:
+    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    {
+      MB_CHILD_SaveInit( work );
+      work->state = MCS_SAVE_MAIN;
+      work->subState = MCSS_SAVE_WAIT_SAVE_INIT;
+    }
+    break;
+
+  case MCS_SAVE_MAIN:
+    MB_CHILD_SaveMain( work );
+    break;
+
+  case MCS_SAVE_TERM:
+    MB_CHILD_SaveTerm( work );
+    break;
+
   }
   
   if( work->msgWork != NULL )
@@ -650,6 +750,130 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
   }
 }
 
+#pragma mark [>save func
+//--------------------------------------------------------------
+//  セーブ初期化
+//--------------------------------------------------------------
+static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
+{
+  MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_04 );
+
+}
+
+//--------------------------------------------------------------
+//  セーブ開放
+//--------------------------------------------------------------
+static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
+{
+}
+
+//--------------------------------------------------------------
+//  セーブ更新
+//--------------------------------------------------------------
+static void MB_CHILD_SaveMain( MB_CHILD_WORK *work )
+{
+	MB_DATA_SaveData( work->dataWork );
+
+  switch( work->subState )
+  {
+  case MCSS_SAVE_WAIT_SAVE_INIT:
+    if( MB_MSG_CheckPrintQueIsFinish( work->msgWork ) == TRUE &&
+        MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_READY_START_SAVE , 0 ) == TRUE )
+      {
+        work->subState = MCSS_SAVE_SYNC_SAVE_INIT;
+      }
+    }
+    break;
+  case MCSS_SAVE_SYNC_SAVE_INIT:
+    if( MB_COMM_GetIsPermitStartSave( work->commWork ) == TRUE )
+    {
+      work->subState = MCSS_SAVE_INIT;
+    }
+    break;
+    
+  case MCSS_SAVE_INIT:
+    work->subState = MCSS_SAVE_WAIT_FIRST;
+    MB_TPrintf( "MB_Parent Save Start!\n" );
+    break;
+
+  case MCSS_SAVE_WAIT_FIRST:
+		if( MB_DATA_IsFinishSaveFirst( work->dataWork ) == TRUE )
+		{
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_FINISH_FIRST_SAVE , 0 ) == TRUE )
+      {
+  			work->subState = MCSS_SAVE_WAIT_FIRST_SYNC;
+        MB_TPrintf( "MB_Parent Finish First!\n" );
+  		}
+		}
+    break;
+
+  case MCSS_SAVE_WAIT_FIRST_SYNC:
+    work->subState = MCSS_SAVE_FIRST_SAVE_LAST;
+		work->saveWaitCnt = 0;
+    break;
+
+  case MCSS_SAVE_FIRST_SAVE_LAST:
+    if( MB_COMM_GetIsPermitFirstSave( work->commWork ) == TRUE )
+    {
+      work->saveWaitCnt++;
+      if( work->saveWaitCnt > MB_COMM_GetSaveWaitTime( work->commWork ) == TRUE )
+      {
+        work->subState = MCSS_SAVE_WAIT_SECOND;
+  			MB_DATA_PermitLastSaveFirst( work->dataWork );
+        MB_TPrintf( "MB_Parent FirstLast Save!\n" );
+      }
+    }
+    break;
+
+  case MCSS_SAVE_WAIT_SECOND:
+		if( MB_DATA_IsFinishSaveSecond( work->dataWork ) == TRUE )
+		{
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_FINISH_SECOND_SAVE , 0 ) == TRUE )
+      {
+        work->subState = MCSS_SAVE_WAIT_SECOND_SYNC;
+        MB_TPrintf( "MB_Parent Finish Second!\n" );
+  		}
+		}
+    break;
+
+  case MCSS_SAVE_WAIT_SECOND_SYNC:
+    work->subState = MCSS_SAVE_SECOND_SAVE_LAST;
+		work->saveWaitCnt = 0;
+    break;
+
+  case MCSS_SAVE_SECOND_SAVE_LAST:
+    if( MB_COMM_GetIsPermitSecondSave( work->commWork ) == TRUE )
+    {
+      work->saveWaitCnt++;
+      if( work->saveWaitCnt > MB_COMM_GetSaveWaitTime( work->commWork ) == TRUE )
+      {
+        work->subState = MCSS_SAVE_WAIT_LAST_SAVE;
+        MB_TPrintf( "MB_Parent SecondLast Save!\n" );
+  			MB_DATA_PermitLastSaveSecond( work->dataWork );
+      }
+    }
+    break;
+
+  case MCSS_SAVE_WAIT_LAST_SAVE:
+		if( MB_DATA_IsFinishSaveAll( work->dataWork ) == TRUE )
+		{
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_FINISH_SAVE , 0 ) == TRUE )
+      {
+        work->subState = MCSS_SAVE_WAIT_FINISH_SAVE_SYNC;
+  		}
+    }
+    break;
+  case MCSS_SAVE_WAIT_FINISH_SAVE_SYNC:
+    if( MB_COMM_GetIsPermitFinishSave( work->commWork ) == TRUE )
+    {
+      work->state = MCS_SAVE_TERM;
+      MB_TPrintf( "MB_Parent Finish All Save Seq!!!\n" );
+    }
+    break;
+  }
+}
 
 #pragma mark [>proc func
 static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
@@ -670,7 +894,7 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
 {
   MB_CHILD_WORK *work;
   
-  OS_TPrintf("LeastAppHeap[%x]",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
+  MB_TPrintf("LeastAppHeap[%x]",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x100000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0x80000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_CHILD_WORK), HEAPID_MULTIBOOT );

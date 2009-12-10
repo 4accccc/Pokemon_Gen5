@@ -110,7 +110,7 @@ void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLA
   //性格の変換
   {
     const u32 rand = PPP_Get( dst , ID_PARA_personal_rnd , NULL );
-    PPP_Put( dst , ID_PARA_seikaku , rand%(PTL_SEIKAKU_MAX-1) );
+    PPP_Put( dst , ID_PARA_seikaku , rand%(PTL_SEIKAKU_MAX) );
   }
   
   //デバッグ表示
@@ -121,7 +121,7 @@ void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLA
     const u32 monsno = PPP_Get( dst , ID_PARA_monsno , NULL );
     PPP_Get( dst , ID_PARA_nickname_raw , monsName );
     DEB_STR_CONV_StrcodeToSjis( monsName , sjisCode , MONS_NAME_SIZE+EOM_SIZE );
-    OS_TPrintf("[%3d][%s]\n",monsno , sjisCode);
+    MB_TPrintf("[%3d][%s]\n",monsno , sjisCode);
   }
   */
 }

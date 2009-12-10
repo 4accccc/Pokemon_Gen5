@@ -33,6 +33,8 @@ typedef struct
   DLPLAY_CARD_TYPE cardType;
   ARCHANDLE *arcHandle;
   void *ppp[MB_CAP_POKE_NUM];
+  
+  BOOL isCapture[MB_CAP_POKE_NUM];
 }MB_CAPTURE_INIT_WORK;
 
 

@@ -10,6 +10,14 @@
 //======================================================================
 #pragma once
 
+#if 1
+#define MB_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
+#define MB_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
+#else
+#define MB_TPrintf(...) ((void)0)
+#define MB_Printf(...)  ((void)0)
+#endif //DEB_ARI
+
 #define MB_DEF_GGID (0x444)
 
 //êeéqï íËã`

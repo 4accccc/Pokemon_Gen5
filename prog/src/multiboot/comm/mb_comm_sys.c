@@ -28,20 +28,14 @@
 #include "test/ariizumi/ari_debug.h"
 #define MB_COMM_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
 #else
-#define MB_COMM_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
+#define MB_COMM_TPrintf(...) (void)((MB_TPrintf(__VA_ARGS__)))
 #endif //MULTI_BOOT_MAKE
 #else
 
-#define MB_COMM_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
+#define MB_COMM_TPrintf(...) (void)((MB_TPrintf(__VA_ARGS__)))
 #endif//デバッグ出力切り替え
 
-#define MB_COMM_TICK_TEST
-
-#ifdef MB_COMM_TICK_TEST
-static OSTick gameDataAllTick = 0;
-#endif
-
-#define MB_COMM_GAMEDATA_SEND_SIZE (0x7000)
+#define MB_COMM_PPP_PACK_SIZE (POKETOOL_GetPPPWorkSize()*MB_CAP_POKE_NUM + sizeof(MB_COMM_PPP_PACK_HEADER))
 //======================================================================
 //  enum
 //======================================================================
@@ -64,6 +58,7 @@ typedef enum
 {
   MCST_FLG = GFL_NET_CMD_MULTIBOOT,
   MCST_INIT_DATA,
+  MCST_POKE_DATA,
   
   MCST_MAX,
 }MB_COMM_SEND_TYPE;
@@ -72,6 +67,12 @@ typedef enum
 //  typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct
+{
+  u8 num;
+  u8 pad[3];
+}MB_COMM_PPP_PACK_HEADER;
+
 struct _MB_COMM_WORK
 {
   HEAPID heapId;
@@ -81,18 +82,26 @@ struct _MB_COMM_WORK
   MB_COMM_CHILD_STATE newChildState;
   MB_COMM_CHILD_STATE childState;
   
-  //GAMEDATA系
-  void *gameData;
-  u32  gameDataSize;
-  u8   dataIdx;
-  
+  void  *pppPackData;  //ヘッダ＋PPP6個分のバッファ(実送信は必要分！
   //子機のみ
   MB_COMM_INIT_DATA *initData;
   
   //確認フラグ系
-  BOOL    isPostInitData;
-  BOOL    isPostGameData;
-  BOOL    isPostGameDataSize;
+  u16    isPostInitData:1;
+  u16    isPostPokeData:1;
+
+  u16    isPost_PostPokeData:1;
+
+  u16    isReadyChildStatSave:1;
+  u16    isFinishChildFirstSave:1;
+  u16    isFinishChildSecondSave:1;
+  u16    isFinishChildSave:1;
+  u16    isPermitStartSave:1;
+  u16    isPermitFirstSave:1;
+  u16    isPermitSecondSave:1;
+  u16    isPermitFinishSave:1;
+  
+  u8      saveWaitCnt;
 };
 
 
@@ -109,10 +118,13 @@ static void MB_COMM_Post_InitData( const int netID, const int size , const void*
 static u8*    MUS_COMM_Post_InitDataBuff( int netID, void* pWork , int size );
 static void MB_COMM_Post_GameData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_GameDataBuff( int netID, void* pWork , int size );
+static void MB_COMM_Post_PokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_PokeDataBuff( int netID, void* pWork , int size );
 
 static const NetRecvFuncTable MultiBootCommPostTable[] = {
   { MB_COMM_Post_Flag     , NULL },
   { MB_COMM_Post_InitData , MUS_COMM_Post_InitDataBuff },
+  { MB_COMM_Post_PokeData , MUS_COMM_Post_PokeDataBuff },
 };
 
 //--------------------------------------------------------------
@@ -129,6 +141,7 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
   commWork->childState = MCCS_NONE;
   commWork->newChildState = MCCS_NONE;
   
+  commWork->pppPackData = GFL_HEAP_AllocClearMemory( commWork->heapId , MB_COMM_PPP_PACK_SIZE );
   return commWork;
 }
 
@@ -254,10 +267,14 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   GFL_NET_Init( &aGFLNetInit , NULL , (void*)commWork );
   
   commWork->isPostInitData = FALSE;
-  commWork->isPostGameData = FALSE;
-  commWork->isPostGameDataSize = FALSE;
-  commWork->gameData = NULL;
-  commWork->dataIdx = 0;
+  commWork->isReadyChildStatSave = FALSE;
+  commWork->isFinishChildFirstSave = FALSE;
+  commWork->isFinishChildSecondSave = FALSE;
+  commWork->isFinishChildSave = FALSE;
+  commWork->isPermitStartSave = FALSE;
+  commWork->isPermitFirstSave = FALSE;
+  commWork->isPermitSecondSave = FALSE;
+  commWork->isPermitFinishSave = FALSE;
   
   GFL_NET_LDATA_InitSystem( commWork->heapId );
 }
@@ -347,17 +364,125 @@ const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork )
   return commWork->childState;
 }
 
+//--------------------------------------------------------------
+// 保存系ステートの主得
+//--------------------------------------------------------------
+const BOOL MB_COMM_GetIsReadyChildStartSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isReadyChildStatSave;
+}
+const BOOL MB_COMM_GetIsFinishChildFirstSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isFinishChildFirstSave;
+}
+const BOOL MB_COMM_GetIsFinishChildSecondSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isFinishChildFirstSave;
+}
+const BOOL MB_COMM_GetIsFinishChildSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isFinishChildSave;
+}
+const BOOL MB_COMM_GetIsPermitStartSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPermitStartSave;
+}
+const BOOL MB_COMM_GetIsPermitFirstSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPermitFirstSave;
+}
+const BOOL MB_COMM_GetIsPermitSecondSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPermitSecondSave;
+}
+const BOOL MB_COMM_GetIsPermitFinishSave( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPermitFinishSave;
+}
+//同期セーブのため、許可が出てから同じフレーム待ってセーブ
+const u8 MB_COMM_GetSaveWaitTime( const MB_COMM_WORK* commWork )
+{
+  return commWork->saveWaitCnt;
+}
+
 #pragma mark [>SendDataFunc
 //--------------------------------------------------------------
 // でかいサイズ送信用
 //--------------------------------------------------------------
 void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size )
 {
-  commWork->gameData = gameData;
-  commWork->gameDataSize = size;
-  GFL_NET_LDATA_SetSendData( commWork->gameData , commWork->gameDataSize , 0x02 , TRUE );
-  //commWork->dataIdx = 0;
-  //commWork->state = MCS_SEND_GAMEDATA_INIT;
+  GFL_NET_LDATA_SetSendData( gameData , size , 0x02 , TRUE );
+}
+
+//--------------------------------------------------------------
+// 送受信用ポケデータクリア
+//--------------------------------------------------------------
+void MB_COMM_ClearSendPokeData( MB_COMM_WORK* commWork )
+{
+  u8 i;
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  
+  packHeader->num = 0;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    POKEMON_PASO_PARAM *ppp = (POKEMON_PASO_PARAM*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*i + sizeof(MB_COMM_PPP_PACK_HEADER));
+    PPP_Clear( ppp );
+  }
+
+  commWork->isPostPokeData = FALSE;
+  commWork->isPost_PostPokeData = FALSE;
+}
+
+//--------------------------------------------------------------
+// 送信用ポケデータ追加
+//--------------------------------------------------------------
+void MB_COMM_AddSendPokeData( MB_COMM_WORK* commWork , const POKEMON_PASO_PARAM *ppp )
+{
+  u8 i;
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  GF_ASSERT( packHeader->num < MB_CAP_POKE_NUM );
+  
+  {
+    void* pppAdr = (void*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*packHeader->num + sizeof(MB_COMM_PPP_PACK_HEADER));
+
+    GFL_STD_MemCopy( ppp , pppAdr , POKETOOL_GetPPPWorkSize() );
+  }
+  packHeader->num++;
+}
+
+//--------------------------------------------------------------
+// ポケ受信確認
+//--------------------------------------------------------------
+const BOOL MB_COMM_IsPostPoke( MB_COMM_WORK* commWork )
+{
+  return commWork->isPostPokeData;
+}
+
+//--------------------------------------------------------------
+// 受信ポケモン数取得
+//--------------------------------------------------------------
+const u8 MB_COMM_GetPostPokeNum( MB_COMM_WORK* commWork )
+{
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  
+  return packHeader->num;
+}
+
+//--------------------------------------------------------------
+// 受信ポケモン取得
+//--------------------------------------------------------------
+const POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx )
+{
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  return (POKEMON_PASO_PARAM*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*idx + sizeof(MB_COMM_PPP_PACK_HEADER));
+}
+
+//--------------------------------------------------------------
+// ポケ受信＿受信確認確認
+//--------------------------------------------------------------
+const BOOL MB_COMM_IsPost_PostPoke( MB_COMM_WORK* commWork )
+{
+  return commWork->isPost_PostPokeData;
 }
 
 #pragma mark [>SendFunc
@@ -412,8 +537,41 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
 
   switch( pkt->type )
   {
+  // 親→子----------------------------------
+  case MCFT_POST_POKE:
+    commWork->isPost_PostPokeData = TRUE;
+    break;
+  case MCFT_PERMIT_START_SAVE:
+    commWork->isPermitStartSave = TRUE;
+    break;
+  case MCFT_PERMIT_FIRST_SAVE:
+    commWork->isPermitFirstSave = TRUE;
+    commWork->saveWaitCnt = pkt->value;
+    break;
+  case MCFT_PERMIT_SECOND_SAVE:
+    commWork->isPermitSecondSave = TRUE;
+    commWork->saveWaitCnt = pkt->value;
+    break;
+  case MCFT_PERMIT_FINISH_SAVE:
+    commWork->isPermitFinishSave = TRUE;
+    break;
+
+  // 子→親----------------------------------
   case MCFT_CHILD_STATE:
     commWork->childState = pkt->value;
+    break;
+
+  case MCFT_READY_START_SAVE:
+    commWork->isReadyChildStatSave = TRUE;
+    break;
+  case MCFT_FINISH_FIRST_SAVE:
+    commWork->isFinishChildFirstSave = TRUE;
+    break;
+  case MCFT_FINISH_SECOND_SAVE:
+    commWork->isFinishChildSecondSave = TRUE;
+    break;
+  case MCFT_FINISH_SAVE:
+    commWork->isFinishChildSave = TRUE;
     break;
   }
 
@@ -460,6 +618,46 @@ static u8*    MUS_COMM_Post_InitDataBuff( int netID, void* pWork , int size )
   }
   return (u8*)commWork->initData;
 }
+
+//--------------------------------------------------------------
+// ポケモンデータ送信
+//--------------------------------------------------------------
+const BOOL MB_COMM_Send_PokeData( MB_COMM_WORK *commWork )
+{
+  BOOL ret;
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  const u32 sendSize = packHeader->num * POKETOOL_GetPPPWorkSize() + sizeof(MB_COMM_PPP_PACK_HEADER);
+  //GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  MB_COMM_TPrintf("Send PokeData.\n");
+
+  //親機にだけ送れば良い
+  ret = GFL_NET_SendDataEx( selfHandle , 0 , 
+                            MCST_POKE_DATA , sendSize , 
+                            commWork->pppPackData , TRUE , FALSE , TRUE );
+  if( ret == FALSE )
+  {
+    MB_COMM_TPrintf("Send PokeData is failued!!\n");
+  }
+  return ret;
+  
+}
+//--------------------------------------------------------------
+// 初期化用データ受信
+//--------------------------------------------------------------
+static void MB_COMM_Post_PokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
+  MB_COMM_TPrintf("Post PokeData.\n");
+  commWork->isPostPokeData = TRUE;
+  
+}
+static u8*    MUS_COMM_Post_PokeDataBuff( int netID, void* pWork , int size )
+{
+  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
+  return (u8*)commWork->pppPackData;
+}
+
 
 //--------------------------------------------------------------
 /**

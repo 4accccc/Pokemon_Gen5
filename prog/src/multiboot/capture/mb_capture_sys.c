@@ -168,6 +168,10 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->targetAnmCnt = 0;
   work->targetAnmFrame = 0;
   work->bonusTime = 0;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    work->initWork->isCapture[i] = FALSE;
+  }
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {
@@ -194,6 +198,12 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 #if MB_CAP_DEB
   MB_CAPTURE_TermDebug( work );
 #endif
+
+  MB_TPrintf("Debug AllCapture!!!\n");
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    work->initWork->isCapture[i] = TRUE;
+  }
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {
@@ -635,7 +645,7 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
       if( isLoop == FALSE )
       {
         MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
-        OS_TPrintf("[%d][%d]\n",idxX,idxY);
+        MB_TPrintf("[%d][%d]\n",idxX,idxY);
       }
     }
   }
@@ -1325,7 +1335,7 @@ static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item )
       if( isLoop == FALSE )
       {
         MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
-        OS_TPrintf("[%d][%d]\n",idxX,idxY);
+        MB_TPrintf("[%d][%d]\n",idxX,idxY);
       }
     }
   }  

@@ -26,5 +26,6 @@ extern void DEB_STR_CONV_SjisToStrcode( const char* str1 , STRCODE *str2 , const
 //  @param str1‚Ì•ÏŠ·‚ğs‚¤’·‚³(•¶š”
 //--------------------------------------------------------------
 extern void DEB_STR_CONV_StrcodeToSjis( const STRCODE *str1 , char *str2 , const u32 len );
+extern void DEB_STR_CONV_StrBufferToSjis( const STRBUF *str1 , char *str2 , const u32 len );
 
 

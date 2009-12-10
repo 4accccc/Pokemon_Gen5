@@ -658,3 +658,10 @@ u16* MB_DATA_PT_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
   return boxData->trayName[tray];
 }
 
+void  MB_DATA_PT_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
+{
+  PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
+  GF_ASSERT( dataWork->pBoxData != NULL );
+  
+  PPP_Clear( (POKEMON_PASO_PARAM*)&boxData->ppp[tray][idx] );
+}

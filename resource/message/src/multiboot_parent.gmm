@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-17T17:43:50"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T00:17:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="161"/>
+		<id position="0" width="166"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -312,13 +312,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1667" top="323" right="2356" bottom="943" maximized="no" rayout="Vertical2">
+	<dialog left="1522" top="169" right="2227" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="514"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="681"/>
-		<band id="3" index="3" style="0000" width="681"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -354,6 +354,33 @@
 	<row id="MSG_MB_PAERNT_02">
 		<language name="JPN" width="208">ロードしています。</language>
 		<language name="JPN_KANJI" width="208">ロードしています。</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_03">
+		<language name="JPN" width="208">ポケモンを　せんたくしています</language>
+		<language name="JPN_KANJI" width="208">ポケモンを　選択しています</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_04">
+		<language name="JPN" width="208">パルパーク　きどうちゅう</language>
+		<language name="JPN_KANJI" width="208">パルパーク　起動中</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_05">
+		<language name="JPN" width="208">ゲームちゅう　です</language>
+		<language name="JPN_KANJI" width="208">ゲームちゅう　です</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_06">
+		<language name="JPN" width="208">データを　じゅしん　しています</language>
+		<language name="JPN_KANJI" width="208">データを　受信しています</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_07">
+		<language name="JPN" width="208">レポートにかきこんでいます。
+でんげんをきらないでください。</language>
+		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
+でんげんをきらないでください。</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_TITLE">

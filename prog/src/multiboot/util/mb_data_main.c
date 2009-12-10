@@ -194,6 +194,24 @@ u16* MB_DATA_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
 }
 
 
+//Boxデータの削除(PPP
+void MB_DATA_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    MB_DATA_PT_ClearBoxPPP( dataWork , tray , idx  );
+    break;
+
+  case CARD_TYPE_PT:
+    MB_DATA_PT_ClearBoxPPP( dataWork , tray , idx );
+    break;
+
+  case CARD_TYPE_GS:
+    break;
+  }
+}
+
 //刺さっているカードの種類の取得設定(設定はデバッグ用
 const DLPLAY_CARD_TYPE MB_DATA_GetCardType( MB_DATA_WORK *dataWork )
 {

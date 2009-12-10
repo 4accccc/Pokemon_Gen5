@@ -189,6 +189,7 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 		{
 			u8 i,bi;
 			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
+			/*
 			//ポケモンデータの暗号化
 			for( bi=0;bi<BOX_MAX_TRAY;bi++)
 			{
@@ -208,6 +209,7 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 				PT_POKEMON_PARAM *param = &pBox->ppp[d_data->selectBoxNumber_][i];
 				PokePasoParaInit( param );
 			}
+			*/
 			//footerの加工
 			//BOX
 			{
@@ -388,7 +390,7 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 			u16 sum;
 			PT_CalcTool_Decoded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
 			sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
-			//FIXME:サムチェエエエック
+			//FIXME:サムチェック
 			OS_TPrintf("[%2d-%2d] sum[%5d][%5d] ",bi,i,sum ,param->checksum);
 			{
 				POKEMON_PASO_PARAM1	*ppp1 = (POKEMON_PASO_PARAM1 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA1);

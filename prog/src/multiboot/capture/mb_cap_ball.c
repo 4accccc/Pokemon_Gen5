@@ -370,7 +370,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
       GFL_BBD_SetObjectSiz( bbdSys , ballWork->objIdx , &size , &size );
       GFL_BBD_SetObjectCelIdx( bbdSys , ballWork->objIdx , &cellIdx );
       GFL_BBD_SetObjectRotate( bbdSys , ballWork->objIdx , &rot );
-      OS_TPrintf("Hit!!\n");
+      MB_TPrintf("Hit!!\n");
       PMSND_PlaySE( MB_SND_POKE_CAPTURE );
     }
   }

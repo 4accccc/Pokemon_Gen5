@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-08T20:14:08"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T17:22:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1522" top="169" right="2227" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1544" top="198" right="2249" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -356,6 +356,13 @@ WB側のDSの説明に従って下さい。</language>
 	<row id="MSG_MB_CHILD_03">
 		<language name="JPN" width="208">パルパーク　きどうちゅう・・・</language>
 		<language name="JPN_KANJI" width="208">パルパーク　起動中・・・</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_04">
+		<language name="JPN" width="208">レポートにかきこんでいます。
+でんげんをきらないでください。</language>
+		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
+でんげんをきらないでください。</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SYS_01">
