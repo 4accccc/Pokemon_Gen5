@@ -29,9 +29,9 @@ typedef struct {
   const GFL_G3D_UTIL_SETUP* setup;
   int max;
   int camera_idx;
+  fx32 anime_speed;
   fx32 fovy_sin;
   fx32 fovy_cos;
-  fx32 anime_speed;
 } DEMO3D_SETUP_DATA;
 
 // コンバートデータ

@@ -112,7 +112,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->graphic       = graphic;
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
-  wk->anime_speed   = FX32_ONE; // アニメーションスピード(固定)
+//  wk->anime_speed   = FX32_ONE; // アニメーションスピード(固定)
 
   // コンバータデータからの初期化
   {
@@ -125,11 +125,12 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
     fovySin = Demo3D_DATA_GetCameraFovySin( demo_id );
     fovyCos = Demo3D_DATA_GetCameraFovyCos( demo_id );
 
-    GFL_G3D_CAMERA_SetfovySin( p_camera, fovySin );
-    GFL_G3D_CAMERA_SetfovyCos( p_camera, fovyCos );
+    GFL_G3D_CAMERA_SetfovySin( p_camera, FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
+    GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
   }
    
   wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( demo_id );
+  HOSAKA_Printf("anime_speed=%d\n", wk->anime_speed );
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
