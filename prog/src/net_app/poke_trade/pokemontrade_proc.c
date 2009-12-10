@@ -2090,6 +2090,7 @@ static void _mcssSystemHeapEnd(POKEMON_TRADE_WORK* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
   MCSS_Exit(pWork->mcssSys);
+  pWork->mcssSys=NULL;
   GFL_G3D_CAMERA_Delete(pWork->pCamera);
   GFL_G3D_Exit();
 
@@ -2119,7 +2120,6 @@ static void _dispSystemHeapInit(POKEMON_TRADE_WORK* pWork)
 
 static void _dispSystemHeapEnd(POKEMON_TRADE_WORK* pWork)
 {
-  MCSS_Exit(pWork->mcssSys);
   GFL_CLACT_SYS_Delete();
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
