@@ -17,29 +17,29 @@
 
 // 初期化ＩＤ
 enum {
-	BOX2UI_INIT_ID_PTOUT_MAIN = 0,		// あずける・メイン
-	BOX2UI_INIT_ID_PTOUT_BOXSEL,			// あずける・ボックス選択
+	BOX2UI_INIT_ID_PTOUT_MAIN = 0,			// あずける・メイン
+	BOX2UI_INIT_ID_PTOUT_BOXSEL,				// あずける・ボックス選択
 
-	BOX2UI_INIT_ID_PTIN_MAIN,			// つれていく・メイン
+	BOX2UI_INIT_ID_PTIN_MAIN,						// つれていく・メイン
 
 	BOX2UI_INIT_ID_ARRANGE_MAIN,				// ボックス整理・メイン
 	BOX2UI_INIT_ID_ARRANGE_MOVE,				// ボックス整理・ポケモン移動（ボックス間）
 	BOX2UI_INIT_ID_ARRANGE_PARTY,				// ボックス整理・手持ちポケモン
 	BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE,	// ボックス整理・ポケモン移動（手持ち）
 
-	BOX2UI_INIT_ID_ITEM_A_MAIN,		// 持ち物整理・メイン
-	BOX2UI_INIT_ID_ITEM_A_PARTY,		// 持ち物整理・手持ちポケモン
+	BOX2UI_INIT_ID_ITEM_MAIN,						// 持ち物整理・メイン
+	BOX2UI_INIT_ID_ITEM_PARTY,					// 持ち物整理・手持ちポケモン
 
-	BOX2UI_INIT_ID_MARKING,					// マーキング
+	BOX2UI_INIT_ID_MARKING,							// マーキング
 
-	BOX2UI_INIT_ID_BOXTHEMA_CHG,		// ボックステーマ変更
+	BOX2UI_INIT_ID_BOXTHEMA_CHG,				// ボックステーマ変更
 
-	BOX2UI_INIT_ID_WALLPAPER_CHG,		// 壁紙変更
+	BOX2UI_INIT_ID_WALLPAPER_CHG,				// 壁紙変更
 
-	BOX2UI_INIT_ID_BOXJUMP_MAIN,		// ボックスジャンプ
+	BOX2UI_INIT_ID_BOXJUMP_MAIN,				// ボックスジャンプ
 
-	BOX2UI_INIT_ID_BATTLEBOX_MAIN,		// バトルボックス・メイン
-	BOX2UI_INIT_ID_BATTLEBOX_PARTY,		// バトルボックス・パーティ操作メイン
+	BOX2UI_INIT_ID_BATTLEBOX_MAIN,			// バトルボックス・メイン
+	BOX2UI_INIT_ID_BATTLEBOX_PARTY,			// バトルボックス・パーティ操作メイン
 };
 
 // ボタンＩＤ
@@ -74,7 +74,7 @@ enum {
 	BOX2UI_ARRANGE_PGT_TRAY6,		// 38: トレイアイコン
 
 	BOX2UI_ARRANGE_PGT_PARTY,		// 39: 手持ちポケモン
-	BOX2UI_ARRANGE_PGT_STTUS,		// 40: ステータス
+	BOX2UI_ARRANGE_PGT_STATUS,	// 40: ステータス
 	BOX2UI_ARRANGE_PGT_RET,			// 41: 戻る
 
 	// ボックス整理・手持ちポケモン
@@ -103,7 +103,7 @@ enum {
 	BOX2UI_ARRANGE_PTGT_LEFT,			// 37: ボックス切り替え矢印（左）
 	BOX2UI_ARRANGE_PTGT_RIGHT,		// 38: ボックス切り替え矢印（右）
 	BOX2UI_ARRANGE_PTGT_BOXLIST,	// 39: ボックスリスト
-	BOX2UI_ARRANGE_PTGT_STTUS,		// 40: ステータス
+	BOX2UI_ARRANGE_PTGT_STATUS,		// 40: ステータス
 	BOX2UI_ARRANGE_PTGT_RET,			// 41: 戻る
 
 	// バトルボックス・メイン操作
@@ -169,23 +169,48 @@ enum {
 	BOX2UI_PTOUT_MAIN_CLOSE,			// 12: とじる
 
 	// 預ける場所選択
-	// 旧
-	BOX2UI_PTOUT_BOXSEL_TRAY1 = 32,	// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY2,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY3,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY4,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY5,		// トレイアイコン
-	BOX2UI_PTOUT_BOXSEL_TRAY6,		// トレイアイコン
-//	BOX2UI_PTOUT_BOXSEL_LEFT,			// トレイ矢印（左）
-//	BOX2UI_PTOUT_BOXSEL_RIGHT,		// トレイ矢印（右）
-	BOX2UI_PTOUT_BOXSEL_ENTER,		//「ポケモンをあずける」
-	BOX2UI_PTOUT_BOXSEL_CANCEL,		//「やめる」
-	// 新
 	BOX2UI_PTOUT_BOXSEL_NAME = 0,	// 00: トレイ名
 	BOX2UI_PTOUT_BOXSEL_TRAY,			// 01: トレイ
 	BOX2UI_PTOUT_BOXSEL_LEFT,			// 02: トレイ切り替え矢印・左
 	BOX2UI_PTOUT_BOXSEL_RIGHT,		// 03: トレイ切り替え矢印・右
 	BOX2UI_PTOUT_BOXSEL_RETURN,		// 04: 戻る
+
+
+	// 持ち物整理・メイン操作
+	BOX2UI_ITEM_MAIN_POKE1 = 0,		// 00: ポケモン
+	BOX2UI_ITEM_MAIN_NAME = BOX2UI_ITEM_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,		// 30: ボックス名
+	BOX2UI_ITEM_MAIN_LEFT,				// 31: トレイ切り替え矢印・左
+	BOX2UI_ITEM_MAIN_RIGHT,				// 32: トレイ切り替え矢印・右
+	BOX2UI_ITEM_MAIN_PARTY,				// 33: 手持ちポケモン
+	BOX2UI_ITEM_MAIN_RETURN1,			// 34: 戻る１
+	BOX2UI_ITEM_MAIN_RETURN2,			// 35: 戻る２
+
+	BOX2UI_ITEM_MAIN_MENU1,				// 36: いどうする
+	BOX2UI_ITEM_MAIN_MENU2,				// 37: バッグへ or もたせる
+	BOX2UI_ITEM_MAIN_CLOSE,				// 38: とじる
+
+	// 旧
+	BOX2UI_ITEM_A_MAIN_CHANGE,		// 34: 持ち物整理
+
+	// 持ち物整理・手持ちポケモン
+	BOX2UI_ITEM_PARTY_POKE1 = 0,	// 00: 手持ちポケモン
+	BOX2UI_ITEM_PARTY_POKE2,
+	BOX2UI_ITEM_PARTY_POKE3,
+	BOX2UI_ITEM_PARTY_POKE4,
+	BOX2UI_ITEM_PARTY_POKE5,
+	BOX2UI_ITEM_PARTY_POKE6,
+
+	BOX2UI_ITEM_PARTY_BOXLIST,		// 06: ボックスリスト
+	BOX2UI_ITEM_PARTY_RETURN1,		// 07: 戻る１
+	BOX2UI_ITEM_PARTY_RETURN2,		// 08: 戻る２
+
+	BOX2UI_ITEM_PARTY_MENU1,			// 09: いどうする
+	BOX2UI_ITEM_PARTY_MENU2,			// 10: バッグへ or もたせる
+	BOX2UI_ITEM_PARTY_CLOSE,			// 11: とじる
+
+
+
+
 
 
 
@@ -255,31 +280,10 @@ enum {
 	BOX2UI_ARRANGE_MOVE_CHANGE,	// 45: ボックスをきりかえる
 
 
-	// 持ち物整理・メイン操作
-	BOX2UI_ITEM_A_MAIN_POKE1 = 0,	// 00: ポケモン
-	BOX2UI_ITEM_A_MAIN_NAME = BOX2UI_ITEM_A_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: ボックス名
-	BOX2UI_ITEM_A_MAIN_LEFT,		// 31: トレイ切り替え矢印・左
-	BOX2UI_ITEM_A_MAIN_RIGHT,		// 32: トレイ切り替え矢印・右
-	BOX2UI_ITEM_A_MAIN_PARTY,		// 33: 手持ちポケモン
-	BOX2UI_ITEM_A_MAIN_CHANGE,		// 34: 持ち物整理
-	BOX2UI_ITEM_A_MAIN_RETURN,		// 35: もどる
 
-	BOX2UI_ITEM_A_MAIN_MENU1,		// 36: バッグへ or もたせる
-	BOX2UI_ITEM_A_MAIN_CLOSE,		// 37: とじる
 
-	// 持ち物整理・手持ちポケモン
-	BOX2UI_ITEM_A_PARTY_POKE1 = 0,	// 手持ちポケモン
-	BOX2UI_ITEM_A_PARTY_POKE2,
-	BOX2UI_ITEM_A_PARTY_POKE3,
-	BOX2UI_ITEM_A_PARTY_POKE4,
-	BOX2UI_ITEM_A_PARTY_POKE5,
-	BOX2UI_ITEM_A_PARTY_POKE6,
 
-	BOX2UI_ITEM_A_PARTY_CHANGE,	//「いれかえ」
-	BOX2UI_ITEM_A_PARTY_RETURN,	//「もどる」
 
-	BOX2UI_ITEM_A_PARTY_MENU1,		// バッグへ or もたせる
-	BOX2UI_ITEM_A_PARTY_CLOSE,		//「とじる」
 
 
 	// ボックステーマ変更

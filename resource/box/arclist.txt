@@ -13,7 +13,6 @@
 "box_mark_bg_lz.NSCR"
 "box_move_bg_lz.NSCR"
 "box_partyout_bg_lz.NSCR"
-"box_wpchg_bg_lz.NSCR"
 "box_m_bg1_lz.NCGR"
 
 "box_wp01_lz.NSCR"
@@ -71,6 +70,10 @@
 "selwin_lz.NCGR"
 "selwin.NCLR"
 
+"bar_button_lz.NCGR"
+"bar_button.NCER"
+"bar_button.NANR"
+
 "box_m_obj_lz.NCGR"
 "box_m_obj.NCER"
 "box_m_obj.NANR"
@@ -81,11 +84,6 @@
 "box_tray.NCER"
 "box_tray.NANR"
 
-"box_wp_image.NCGR"
-"box_wp_image.NCLR"
-"box_wp_image.NCER"
-"box_wp_image.NANR"
-
 "box_pokeicon_lz.NCGR"
 
 "box_itemicon_lz.NCGR"
@@ -95,6 +93,3 @@
 "box_typeicon_lz.NCGR"
 "box_typeicon.NCER"
 "box_typeicon.NANR"
-
-"sub_item_frm_lz.NSCR"
-"sub_waza_frm_lz.NSCR"

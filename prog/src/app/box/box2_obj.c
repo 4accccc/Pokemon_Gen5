@@ -33,13 +33,14 @@
 
 // メインパレット
 #define	PALNUM_TRAYICON		( 0 )																		// パレット番号：トレイアイコン
-#define	PALSIZ_TRAYICON		( 1 )																		// パレット数：トレイアイコン
-#define	PALNUM_WPICON			( PALNUM_TRAYICON + PALSIZ_TRAYICON )		// パレット番号：壁紙アイコン
-#define	PALSIZ_WPICON			( 2 )																		// パレット数：壁紙アイコン
-#define	PALNUM_POKEICON		( PALNUM_WPICON + PALSIZ_WPICON )				// パレット番号：ポケモンアイコン
+#define	PALSIZ_TRAYICON		( 3 )																		// パレット数：トレイアイコン
+//#define	PALNUM_WPICON			( PALNUM_TRAYICON + PALSIZ_TRAYICON )		// パレット番号：壁紙アイコン
+//#define	PALSIZ_WPICON			( 2 )																		// パレット数：壁紙アイコン
+//#define	PALNUM_POKEICON		( PALNUM_WPICON + PALSIZ_WPICON )				// パレット番号：ポケモンアイコン
+#define	PALNUM_POKEICON		( PALNUM_TRAYICON + PALSIZ_TRAYICON )		// パレット番号：ポケモンアイコン
 #define	PALSIZ_POKEICON		( POKEICON_PAL_MAX )										// パレット数：ポケモンアイコン
 #define	PALNUM_BOXOBJ			( PALNUM_POKEICON + PALSIZ_POKEICON )		// パレット番号：その他のＯＢＪ
-#define	PALSIZ_BOXOBJ			( 5 )																		// パレット数：その他のＯＢＪ
+#define	PALSIZ_BOXOBJ			( 3 )																		// パレット数：その他のＯＢＪ
 #define	PALNUM_TOUCH_BAR	( PALNUM_BOXOBJ + PALSIZ_BOXOBJ )				// パレット番号：タッチバー
 #define	PALSIZ_TOUCH_BAR	( 4 )																		// パレット数：タッチバー
 #define	PALNUM_ITEMICON		( PALNUM_TOUCH_BAR + PALSIZ_TOUCH_BAR )	// パレット番号：アイテムアイコン
@@ -47,7 +48,7 @@
 
 #define	PALNUM_OUTLINE		( 2 )										// パレット番号：アウトラインカーソル（リソースのオフセット）
 #define	PALNUM_TB_STATUS	( 3 )										// パレット番号：タッチバーステータス（リソースのオフセット）
-#define	PLANUM_TRAYPOKE		( PALNUM_WPICON + 1 )		// パレット番号：トレイアイコンに表示するドット
+#define	PLANUM_TRAYPOKE		( PALNUM_TRAYICON + 2 )		// パレット番号：トレイアイコンに表示するドット
 
 // サブパレット
 #define	PALNUM_TYPEICON_S	( 0 )																			// パレット番号：タイプアイコン
@@ -225,7 +226,7 @@ static void TypeIconObjAdd( BOX2_APP_WORK * appwk );
 static void SubDispResLoad( BOX2_APP_WORK * appwk );
 
 //static void WallPaperIconResLoad( BOX2_APP_WORK * appwk );
-static void WallPaperObjAdd( BOX2_APP_WORK * appwk );
+//static void WallPaperObjAdd( BOX2_APP_WORK * appwk );
 
 static void ItemIconDummyResLoad( BOX2_APP_WORK * appwk );
 //static void ItemIconObjAdd( BOX2_APP_WORK * appwk );
@@ -310,8 +311,8 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// タッチバーステータスボタン
-		{ TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_Y, BOX2OBJ_ANM_TB_STATUS, 64, 0 },
-		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
+		{ TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_Y, 0, 64, 0 },
+		BOX2MAIN_CHRRES_BOX_BAR, BOX2MAIN_PALRES_TOUCH_BAR, BOX2MAIN_CELRES_BOX_BAR,
 		PALNUM_TB_STATUS, CLSYS_DRAW_MAIN,
 	},
 
@@ -399,12 +400,14 @@ static const BOX_CLWK_DATA ClaTrayIconParam = {
 	0, CLSYS_DRAW_MAIN,
 };
 
+/*
 // 壁紙アイコン
 static const BOX_CLWK_DATA ClaWallPaperIconParam = {
 	{ BOX2OBJ_WPICON_PX, -21, 0, 10, 1 },
 	BOX2MAIN_CHRRES_WPICON, BOX2MAIN_PALRES_WPICON, BOX2MAIN_CELRES_WPICON,
 	0, CLSYS_DRAW_MAIN,
 };
+*/
 
 // タイプアイコン（上画面）
 static const BOX_CLWK_DATA ClaTypeIconParam = {
@@ -590,7 +593,7 @@ static void ClactAdd( BOX2_SYS_WORK * syswk )
 	syswk->app->clunit = GFL_CLACT_UNIT_Create( BOX2OBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_BOX_APP );
 
 	TrayObjAdd( syswk->app );
-	WallPaperObjAdd( syswk->app );
+//	WallPaperObjAdd( syswk->app );
 	PokeIconObjAdd( syswk->app );
 	BoxObjAdd( syswk->app );
 	TypeIconObjAdd( syswk->app );
@@ -909,6 +912,7 @@ static void BoxGraResLoad( BOX2_APP_WORK * appwk )
 																							NARC_box_gra_box_tray_NANR,
 																							HEAPID_BOX_APP );
 
+/*
 	// 壁紙アイコン
 	for( i=0; i<BOX2OBJ_WPICON_MAX; i++ ){
 		appwk->chrRes[BOX2MAIN_CHRRES_WPICON+i] = GFL_CLGRP_CGR_Register(
@@ -923,6 +927,7 @@ static void BoxGraResLoad( BOX2_APP_WORK * appwk )
   appwk->palRes[BOX2MAIN_PALRES_WPICON] = GFL_CLGRP_PLTT_Register(
 																						ah, NARC_box_gra_box_wp_image_NCLR,
 																						CLSYS_DRAW_MAIN, PALNUM_WPICON*0x20, HEAPID_BOX_APP );
+*/
 
 	// ポケモンアイコン
 	// キャラ
@@ -944,6 +949,16 @@ static void BoxGraResLoad( BOX2_APP_WORK * appwk )
 																						NARC_box_gra_box_m_obj_NCER,
 																						NARC_box_gra_box_m_obj_NANR,
 																						HEAPID_BOX_APP );
+
+	// ステータスボタン
+	appwk->chrRes[BOX2MAIN_CHRRES_BOX_BAR] = GFL_CLGRP_CGR_Register(
+																							ah, NARC_box_gra_bar_button_lz_NCGR,
+																							TRUE, CLSYS_DRAW_MAIN, HEAPID_BOX_APP );
+	appwk->celRes[BOX2MAIN_CELRES_BOX_BAR] = GFL_CLGRP_CELLANIM_Register(
+																							ah,
+																							NARC_box_gra_bar_button_NCER,
+																							NARC_box_gra_bar_button_NANR,
+																							HEAPID_BOX_APP );
 
 	// アイテムアイコン
 	appwk->chrRes[BOX2MAIN_CHRRES_ITEMICON] = GFL_CLGRP_CGR_Register(
@@ -1192,7 +1207,7 @@ void BOX2OBJ_PokeIconBufLoad( BOX2_SYS_WORK * syswk, u32 tray )
 			continue;
 		}
 		// 取得位置
-		if( syswk->tray == syswk->get_tray && syswk->get_pos == i ){
+		if( syswk->dat->callMode != BOX_MODE_ITEM && syswk->tray == syswk->get_tray && syswk->get_pos == i ){
 			syswk->app->pokeicon_exist[i] = FALSE;
 			continue;
 		}
@@ -2439,6 +2454,7 @@ static void WallPaperIconResLoad( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void WallPaperObjAdd( BOX2_APP_WORK * appwk )
 {
 	BOX_CLWK_DATA	prm;
@@ -2450,18 +2466,8 @@ static void WallPaperObjAdd( BOX2_APP_WORK * appwk )
 		prm.chrRes = BOX2MAIN_CHRRES_WPICON + i;
 		appwk->clwk[BOX2OBJ_ID_WPICON+i] = ClactWorkCreate( appwk, &prm );
 	}
-/*
-	TCATS_OBJECT_ADD_PARAM_S	prm;
-	u32	i;
-
-	for( i=0; i<BOX2OBJ_WPICON_MAX; i++ ){
-		prm = ClaWallPaperIconParam;
-		prm.x += BOX2OBJ_WPICON_SX * i;
-		prm.id[0] = CHR_ID_WPICON + i;
-		appwk->cap[BOX2OBJ_ID_WPICON+i] = CATS_ObjectAdd_S( appwk->csp, appwk->crp, &prm );
-	}
-*/
 }
+*/
 
 
 //============================================================================================
@@ -3706,6 +3712,7 @@ static void WallPaperChgFntOamPos( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk )
 {
 	BOX2_APP_WORK * appwk = syswk->app;
@@ -3716,29 +3723,13 @@ void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_NAME, BOXMV_TRAY_NAME_PX, BOXMV_TRAY_NAME_PY, CLSYS_DEFREND_MAIN );
 //	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_ARROW, BOXMV_TRAY_ARROW_PX, BOXMV_TRAY_ARROW_PY, CLSYS_DEFREND_MAIN );
 
-/*
-	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_BOXMV_LA], BOXMV_LA_PX, BOXMV_LA_PY );
-//↑[GS_CONVERT_TAG]
-	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_BOXMV_RA], BOXMV_RA_PX, BOXMV_RA_PY );
-//↑[GS_CONVERT_TAG]
-	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_TRAY_CUR], BOXMV_TRAY_CUR_PX, BOXMV_TRAY_CUR_PY );
-//↑[GS_CONVERT_TAG]
-	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_TRAY_NAME], BOXMV_TRAY_NAME_PX, BOXMV_TRAY_NAME_PY );
-//↑[GS_CONVERT_TAG]
-	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_TRAY_ARROW], BOXMV_TRAY_ARROW_PX, BOXMV_TRAY_ARROW_PY );
-//↑[GS_CONVERT_TAG]
-*/
-
 	BOX2OBJ_WallPaperObjChange( syswk );
 
 //	BOX2OBJ_AnmSet( appwk, BOX2OBJ_ID_TRAY_NAME, BOX2OBJ_ANM_WP_NAME );
 
 	WallPaperChgFntOamPos( appwk );
-/*
-	FONTOAM_SetDrawFlag( appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, TRUE );
-	FONTOAM_SetDrawFlag( appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, FALSE );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3750,17 +3741,12 @@ void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv )
 {
 	u32	i;
 	s16	x, y;
 
-/*
-	for( i=BOX2OBJ_ID_TRAY_CUR; i<=BOX2OBJ_ID_TRAY_ARROW; i++ ){
-		BOX2OBJ_GetPos( appwk, i, &x, &y, CLSYS_DEFREND_MAIN );
-		BOX2OBJ_SetPos( appwk, i, x, y+mv, CLSYS_DEFREND_MAIN );
-	}
-*/
 	WallPaperChgFntOamPos( appwk );
 
 	for( i=0; i<BOX2OBJ_WPICON_MAX; i++ ){
@@ -3768,6 +3754,7 @@ void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv )
 		BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_WPICON+i, x, y+mv, CLSYS_DEFREND_MAIN );
 	}
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3809,6 +3796,7 @@ void BOX2OBJ_WallPaperCursorSet( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk )
 {
 	s16	x, y, px;
@@ -3826,6 +3814,7 @@ void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk )
 
 	WallPaperChgFntOamPos( syswk->app );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3836,6 +3825,7 @@ void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_WallPaperObjChange( BOX2_SYS_WORK * syswk )
 {
 	NNSG2dCharacterData * chr;
@@ -3864,6 +3854,7 @@ void BOX2OBJ_WallPaperObjChange( BOX2_SYS_WORK * syswk )
 	GFL_HEAP_FreeMemory( buf );
 	GFL_HEAP_FreeMemory( cpy );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4019,12 +4010,12 @@ void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 statu
 	// ステータス
 	if( status == BOX2OBJ_TB_ICON_ON ){
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_STATUS, TRUE );
-		BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_TB_STATUS, BOX2OBJ_ANM_TB_STATUS );
+		BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_TB_STATUS, 0 );
 	}else if( status == BOX2OBJ_TB_ICON_OFF ){
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_STATUS, FALSE );
 	}else{
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_STATUS, TRUE );
-		BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_TB_STATUS, BOX2OBJ_ANM_TB_STATUS_OFF );
+		BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_TB_STATUS, 2 );
 	}
 }
 

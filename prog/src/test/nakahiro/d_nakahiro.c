@@ -414,6 +414,9 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
 	    PP_Put( pp, ID_PARA_tamago_flag, 1 );
 	    PP_Put( pp, ID_PARA_form_no, 0 );
 		}
+		if( ( i & 3 ) == 3 ){
+	    PP_Put( pp, ID_PARA_item, 1+(i&1) );
+		}
 		ppp = PP_GetPPPPointerConst( pp );
 		if( BOXDAT_PutPokemon( wk->box_data.sv_box, ppp ) == FALSE ){
 			GFL_HEAP_FreeMemory( pp );
@@ -464,7 +467,9 @@ static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
 		pp = PP_Create( mons[i], 50, 0, wk->heapID );
     PP_Put( pp, ID_PARA_oyaname, (u32)str );
     PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
-    PP_Put( pp, ID_PARA_item, 1 );
+		if( i & 1 ){
+			PP_Put( pp, ID_PARA_item, 1 );
+		}
 		PokeParty_Add( wk->box_data.pokeparty, pp );
 		GFL_HEAP_FreeMemory( pp );
 	}

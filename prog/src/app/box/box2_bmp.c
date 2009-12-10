@@ -2002,6 +2002,7 @@ void BOX2BMP_MenuVanish( BOX2_SYS_WORK * syswk, u32 max )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_ItemArrangeMenuStrPrint( BOX2_SYS_WORK * syswk, u16 item )
 {
+/*
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU1].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU2].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU3].win), 0 );
@@ -2016,6 +2017,7 @@ void BOX2BMP_ItemArrangeMenuStrPrint( BOX2_SYS_WORK * syswk, u16 item )
 	}else{
 		ButtonPut_S( syswk, BOX2BMPWIN_ID_MENU5, mes_boxbutton_08_01 );
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2481,6 +2483,15 @@ void BOX2BMP_ItemArrangeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
 	u32	str;
 
 	switch( msgID ){
+	case BOX2BMP_MSGID_ITEM_A_SET:				// どうぐを　もたせます
+		str = msg_boxmes_01_30;
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_INIT:				// @0を　どうしますか？
+		str = msg_boxmes_01_26;
+		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
+		break;
+
 	case BOX2BMP_MSGID_ITEM_A_RET_CHECK:	// @0を　しまいますか？
 		str = msg_boxmes_01_28;
 		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );

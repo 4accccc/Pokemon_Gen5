@@ -101,8 +101,10 @@ enum {
 	BOX2MAIN_CHRRES_ITEMICON_SUB,
 	BOX2MAIN_CHRRES_TYPEICON,
 	BOX2MAIN_CHRRES_TRAYICON = BOX2MAIN_CHRRES_TYPEICON + POKETYPE_MAX,
-	BOX2MAIN_CHRRES_WPICON = BOX2MAIN_CHRRES_TRAYICON + BOX2OBJ_TRAYICON_MAX,
-	BOX2MAIN_CHRRES_BOXOBJ = BOX2MAIN_CHRRES_WPICON + BOX2OBJ_WPICON_MAX,
+//	BOX2MAIN_CHRRES_WPICON = BOX2MAIN_CHRRES_TRAYICON + BOX2OBJ_TRAYICON_MAX,
+//	BOX2MAIN_CHRRES_BOXOBJ = BOX2MAIN_CHRRES_WPICON + BOX2OBJ_WPICON_MAX,
+	BOX2MAIN_CHRRES_BOXOBJ = BOX2MAIN_CHRRES_TRAYICON + BOX2OBJ_TRAYICON_MAX,
+	BOX2MAIN_CHRRES_BOX_BAR,
 	BOX2MAIN_CHRRES_TOUCH_BAR,
 	BOX2MAIN_CHRRES_POKEMARK,
 	BOX2MAIN_CHRRES_POKERUSICON,
@@ -117,7 +119,7 @@ enum {
 	BOX2MAIN_PALRES_ITEMICON_SUB,
 	BOX2MAIN_PALRES_TYPEICON,
 	BOX2MAIN_PALRES_TRAYICON,
-	BOX2MAIN_PALRES_WPICON,
+//	BOX2MAIN_PALRES_WPICON,
 	BOX2MAIN_PALRES_BOXOBJ,
 	BOX2MAIN_PALRES_TOUCH_BAR,
 	BOX2MAIN_PALRES_POKEMARK,
@@ -132,8 +134,9 @@ enum {
 	BOX2MAIN_CELRES_ITEMICON,
 	BOX2MAIN_CELRES_TYPEICON,
 	BOX2MAIN_CELRES_TRAYICON,
-	BOX2MAIN_CELRES_WPICON,
+//	BOX2MAIN_CELRES_WPICON,
 	BOX2MAIN_CELRES_BOXOBJ,
+	BOX2MAIN_CELRES_BOX_BAR,
 	BOX2MAIN_CELRES_TOUCH_BAR,
 	BOX2MAIN_CELRES_POKEMARK,
 	BOX2MAIN_CELRES_POKERUSICON,
@@ -179,9 +182,10 @@ enum {
 
 	BOX2OBJ_ID_TRAYICON = BOX2OBJ_ID_TYPEICON + POKETYPE_MAX,
 
-	BOX2OBJ_ID_WPICON = BOX2OBJ_ID_TRAYICON + BOX2OBJ_TRAYICON_MAX,
+//	BOX2OBJ_ID_WPICON = BOX2OBJ_ID_TRAYICON + BOX2OBJ_TRAYICON_MAX,
 
-	BOX2OBJ_ID_POKEICON = BOX2OBJ_ID_WPICON + BOX2OBJ_WPICON_MAX,
+//	BOX2OBJ_ID_POKEICON = BOX2OBJ_ID_WPICON + BOX2OBJ_WPICON_MAX,
+	BOX2OBJ_ID_POKEICON = BOX2OBJ_ID_TRAYICON + BOX2OBJ_TRAYICON_MAX,
 
 	BOX2OBJ_ID_OUTLINE = BOX2OBJ_ID_POKEICON + BOX2OBJ_POKEICON_MAX,
 
@@ -801,7 +805,7 @@ extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u16 pos, u16 tray, int p
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, u32 buf );
+extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, u32 tray, int prm, u32 buf );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2252,7 +2256,7 @@ extern int BOX2MAIN_VFuncPokeMenuMove( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPokeFreeMenuMove( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncPokeFreeMenuMove( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2384,7 +2388,7 @@ extern int BOX2MAIN_VFuncBoxThemaMenuMove( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncWallPaperFrmIn( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncWallPaperFrmIn( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2637,7 +2641,7 @@ extern int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconSetTouch( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemIconGetTouch( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2649,7 +2653,7 @@ extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconSetTouch( BOX2_SYS_WORK * syswk 
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconChgTouch( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemIconChgTouch( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2673,7 +2677,7 @@ extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconPutKey( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemIconPutKey( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2685,7 +2689,7 @@ extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconPutKey( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangeBoxPartyIconPutKeyCancel( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemIconPutKeyCancel( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

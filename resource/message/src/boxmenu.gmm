@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-12-02T19:18:17"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-12-08T15:37:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -806,7 +806,7 @@
 	</row>
 
 	<row id="mes_boxbutton_02_09" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
-		<comment>メニュー</comment>
+		<comment>メニュー（バトルボックス）</comment>
 		<language name="JPN" font=" 1:small" width="72">いどうする</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
 	</row>
@@ -865,16 +865,22 @@
 あずける</language>
 	</row>
 
-	<row id="mes_boxbutton_08_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+	<row id="mes_boxbutton_08_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>道具整理メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">バッグへ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">バッグへ</language>
 	</row>
 
-	<row id="mes_boxbutton_08_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+	<row id="mes_boxbutton_08_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>道具整理メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">もたせる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">もたせる</language>
+	</row>
+
+	<row id="mes_boxbutton_08_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>道具整理メニュー</comment>
+		<language name="JPN" font=" 1:small" width="72">いどうする</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
 	</row>
 
 	<row id="mes_box_subst_01_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">

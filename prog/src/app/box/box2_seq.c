@@ -253,11 +253,15 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk );
 //static int MainSeq_KeyGetPokeMoveMainCurMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ArrangePokeGetTouch( BOX2_SYS_WORK * syswk );
 
-static int MainSeq_ItemArrangeMain( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemMenuClose( BOX2_SYS_WORK * syswk );
+
 static int MainSeq_ItemArrangeMainCurMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeRetBagSet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeRetBagCheck( BOX2_SYS_WORK * syswk );
-static int MainSeq_ItemArrangeRetBagEnter( BOX2_SYS_WORK * syswk );
+
+static int MainSeq_ItemBagInAnm( BOX2_SYS_WORK * syswk );
+
 static int MainSeq_ItemArrangeRetBagCancel( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeRetBagEnd( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeGetBagCheck( BOX2_SYS_WORK * syswk );
@@ -266,16 +270,21 @@ static int MainSeq_ItemArrangeIconMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeIconMovePokeAdd( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeIconMoveChange( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeIconMoveChangeEnd( BOX2_SYS_WORK * syswk );
-static int MainSeq_ItemArrangeBoxPartyChgMain( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemGetInit( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemGetEnd( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeBoxPartyChgMainCurMoveRet( BOX2_SYS_WORK * syswk );
-static int MainSeq_ItemArrangeBoxPartyIconMoveSubFrmOut( BOX2_SYS_WORK * syswk );
+//static int MainSeq_ItemArrangeBoxPartyIconMoveSubFrmOut( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeBoxPartyIconMoveEnd( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeBoxPartyChgError( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeKeyGetMoveMain( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeKeyGetMoveMainCurMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangeKeyGetChangeCkack( BOX2_SYS_WORK * syswk );
-static int MainSeq_ItemArrangePartyMain( BOX2_SYS_WORK * syswk );
+
+static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk );
+static int MainSeq_ItemPartyMenuClose( BOX2_SYS_WORK * syswk );
+
 static int MainSeq_ItemArrangePartyMainCurMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangePartyIconMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemArrangePartyIconMovePokeAdd( BOX2_SYS_WORK * syswk );
@@ -380,7 +389,7 @@ static int PokeMenuOutSet( BOX2_SYS_WORK * syswk, int next );
 static int BoxThemaChgStart( BOX2_SYS_WORK * syswk );
 static int BoxThemaTrayIconSel( BOX2_SYS_WORK * syswk, u32 ret );
 static int BoxThemaTrayIconChg( BOX2_SYS_WORK * syswk, s8 mv );
-static void WallPaperPageChange( BOX2_SYS_WORK * syswk, s32 mv );
+//static void WallPaperPageChange( BOX2_SYS_WORK * syswk, s32 mv );
 //static void WallPaperPosSet( BOX2_SYS_WORK * syswk, u32 pos );
 static int WallPaperChange( BOX2_SYS_WORK * syswk );
 //static int PartyOutInit( BOX2_SYS_WORK * syswk );
@@ -434,6 +443,8 @@ static int SetCursorMoveRet( BOX2_SYS_WORK * syswk, int next );
 static int SetWallPaperChange( BOX2_SYS_WORK * syswk, u32 pos );
 
 static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk );
+
+static void ItemModeMenuSet( BOX2_SYS_WORK * syswk, s16 item );
 
 
 //============================================================================================
@@ -552,6 +563,55 @@ static const pBOX2_FUNC MainSeq[] = {
 //	MainSeq_PartyOutPokeMenuRcv,
 */
 
+	// 持ち物整理
+	MainSeq_ItemMain,				// ●
+	MainSeq_ItemMenuClose,	// ●
+
+	MainSeq_ItemArrangeMainCurMoveRet,
+	MainSeq_ItemArrangeRetBagSet,
+	MainSeq_ItemArrangeRetBagCheck,
+
+	MainSeq_ItemBagInAnm,		// ●
+
+	MainSeq_ItemArrangeRetBagCancel,
+	MainSeq_ItemArrangeRetBagEnd,
+	MainSeq_ItemArrangeGetBagCheck,
+	MainSeq_ItemArrangeItemSetMsg,
+	MainSeq_ItemArrangeIconMoveRet,
+	MainSeq_ItemArrangeIconMovePokeAdd,
+	MainSeq_ItemArrangeIconMoveChange,
+	MainSeq_ItemArrangeIconMoveChangeEnd,
+
+	MainSeq_ItemGetInit,		// ●
+	MainSeq_ItemGetMain,		// ●
+	MainSeq_ItemGetEnd,			// ●
+
+	MainSeq_ItemArrangeBoxPartyChgMainCurMoveRet,
+//	MainSeq_ItemArrangeBoxPartyIconMoveSubFrmOut,
+
+	MainSeq_ItemArrangeBoxPartyIconMovePokeAdd,	// ●
+
+	MainSeq_ItemArrangeBoxPartyIconMoveEnd,		// ●
+	MainSeq_ItemArrangeBoxPartyChgError,			// ●
+
+	MainSeq_ItemArrangeKeyGetMoveMain,
+	MainSeq_ItemArrangeKeyGetMoveMainCurMoveRet,
+
+	MainSeq_ItemArrangeKeyGetChangeCkack,			// ●
+
+	MainSeq_ItemPartyMain,			// ●
+	MainSeq_ItemPartyMenuClose,	// ●
+
+	MainSeq_ItemArrangePartyMainCurMoveRet,
+	MainSeq_ItemArrangePartyIconMoveRet,
+	MainSeq_ItemArrangePartyIconMovePokeAdd,
+	MainSeq_ItemArrangePartyIconMovePokeAddEnd,
+	MainSeq_ItemArrangePartyIconMoveChange,
+	MainSeq_ItemArrangePartyIconMoveChangeEnd,
+	MainSeq_ItemArrangePartyIconMoveErr,
+
+
+
 	// サブプロセス
 	MainSeq_StatusCall,
 	MainSeq_ItemMenuCheck,
@@ -648,37 +708,6 @@ static const pBOX2_FUNC MainSeq[] = {
 
 //	MainSeq_KeyGetPokeMoveMainCurMoveRet,
 
-	// 道具整理
-	MainSeq_ItemArrangeMain,
-	MainSeq_ItemArrangeMainCurMoveRet,
-	MainSeq_ItemArrangeRetBagSet,
-	MainSeq_ItemArrangeRetBagCheck,
-	MainSeq_ItemArrangeRetBagEnter,
-	MainSeq_ItemArrangeRetBagCancel,
-	MainSeq_ItemArrangeRetBagEnd,
-	MainSeq_ItemArrangeGetBagCheck,
-	MainSeq_ItemArrangeItemSetMsg,
-	MainSeq_ItemArrangeIconMoveRet,
-	MainSeq_ItemArrangeIconMovePokeAdd,
-	MainSeq_ItemArrangeIconMoveChange,
-	MainSeq_ItemArrangeIconMoveChangeEnd,
-	MainSeq_ItemArrangeBoxPartyChgMain,
-	MainSeq_ItemArrangeBoxPartyChgMainCurMoveRet,
-	MainSeq_ItemArrangeBoxPartyIconMoveSubFrmOut,
-	MainSeq_ItemArrangeBoxPartyIconMovePokeAdd,
-	MainSeq_ItemArrangeBoxPartyIconMoveEnd,
-	MainSeq_ItemArrangeBoxPartyChgError,
-	MainSeq_ItemArrangeKeyGetMoveMain,
-	MainSeq_ItemArrangeKeyGetMoveMainCurMoveRet,
-	MainSeq_ItemArrangeKeyGetChangeCkack,
-	MainSeq_ItemArrangePartyMain,
-	MainSeq_ItemArrangePartyMainCurMoveRet,
-	MainSeq_ItemArrangePartyIconMoveRet,
-	MainSeq_ItemArrangePartyIconMovePokeAdd,
-	MainSeq_ItemArrangePartyIconMovePokeAddEnd,
-	MainSeq_ItemArrangePartyIconMoveChange,
-	MainSeq_ItemArrangePartyIconMoveChangeEnd,
-	MainSeq_ItemArrangePartyIconMoveErr,
 
 	MainSeq_BoxEndInit,
 	MainSeq_BoxEndCancelInit,
@@ -728,7 +757,8 @@ static const YESNO_DATA YesNoFunc[] =
 	// ボックス整理・ポケモンを逃がす？
 	{ BoxArg_PokeFreeYes, BoxArg_PokeFreeNo },
 	// 道具整理・アイテムしまう？
-	{ BoxItemArg_RetBagYes, MainSeq_ItemArrangeRetBagCancel },
+//	{ BoxItemArg_RetBagYes, MainSeq_ItemArrangeRetBagCancel },
+	{ BoxItemArg_RetBagYes, MainSeq_ArrangePokeMenuRcv },
 	// ボックス終了する？（ボタン）
 	{ BoxArg_BoxEndYes, BoxArg_BoxEndNo },
 	// ボックス終了する？（キャンセル）
@@ -831,6 +861,21 @@ static const BOX2BMP_BUTTON_LIST BattleBoxMenuStrTbl[] =
 	{ mes_boxbutton_02_09, BOX2BMP_BUTTON_TYPE_WHITE },		// いどうする
 	{ mes_boxbutton_02_01, BOX2BMP_BUTTON_TYPE_WHITE },		// ようすをみる
 	{ mes_boxbutton_02_02, BOX2BMP_BUTTON_TYPE_WHITE },		// もちもの
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+};
+
+// メニュー文字列テーブル：持ち物整理・持ち物あり
+static const BOX2BMP_BUTTON_LIST ItemMenuStrTbl[] =
+{
+	{ mes_boxbutton_08_03, BOX2BMP_BUTTON_TYPE_WHITE },		// いどうする
+	{ mes_boxbutton_08_01, BOX2BMP_BUTTON_TYPE_WHITE },		// バッグへ
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+};
+
+// メニュー文字列テーブル：持ち物整理・持ち物なし
+static const BOX2BMP_BUTTON_LIST ItemNoneMenuStrTbl[] =
+{
+	{ mes_boxbutton_08_02, BOX2BMP_BUTTON_TYPE_WHITE },		// もたせる
 	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
 };
 
@@ -1241,7 +1286,8 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 	case BOX_MODE_ITEM:			// アイテム整理
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
-		seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		break;
 
 	case BOX_MODE_BATTLE:		// バトルボックス
@@ -1563,9 +1609,14 @@ static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 		case BOX_MODE_SEIRI:
 			BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
 			break;
+		case BOX_MODE_ITEM:
+			ItemModeMenuSet( syswk, syswk->app->get_item );
+			break;
 		case BOX_MODE_BATTLE:
-		default:
 			BOX2BMP_MenuStrPrint( syswk, BattleBoxMenuStrTbl, 4 );
+			break;
+		default:
+			break;
 		}
 		if( syswk->app->poke_free_err == 1 ){
 			syswk->app->poke_free_err = 0;
@@ -1604,8 +1655,19 @@ static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 			}
 			break;
 
+		case BOX_MODE_ITEM:
+			if( syswk->app->get_item == ITEM_DUMMY_DATA ){
+				BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_SET, BOX2BMPWIN_ID_MSG1 );
+			}else{
+				BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_INIT, BOX2BMPWIN_ID_MSG1 );
+			}
+			if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+				return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+			}else{
+				return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
+			}
+
 		case BOX_MODE_BATTLE:
-		default:
 			BOX2BMP_PokeSelectMsgPut(
 				syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
 			if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -1613,6 +1675,9 @@ static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 			}else{
 				return BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
 			}
+			break;
+
+		default:
 			break;
 		}
 	}
@@ -1712,6 +1777,7 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 
 	return 0;
 }
+/*
 static int RcvStatus_ModeItem( BOX2_SYS_WORK * syswk )
 {
 	int	next;
@@ -1765,7 +1831,7 @@ static int RcvStatus_ModeItem( BOX2_SYS_WORK * syswk )
 		if( syswk->dat->callMode == BOX_MODE_ITEM ){
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
-			next = BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+			next = BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 		}
 
 		if( syswk->pokechg_mode == 1 ){
@@ -1779,6 +1845,7 @@ static int RcvStatus_ModeItem( BOX2_SYS_WORK * syswk )
 
 	return next;
 }
+*/
 static int RcvStatus_ModeBattleBox( BOX2_SYS_WORK * syswk )
 {
 	switch( syswk->subProcMode ){
@@ -1824,9 +1891,11 @@ static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 {
 	int	next;
 
+/*
 #ifdef	BTS_5436_TEST
 	test_5436_flg = 1;
 #endif	// BTS_5436_TEST
+*/
 
 	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 
@@ -1840,9 +1909,11 @@ static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 	case BOX_MODE_SEIRI:			// せいり
 		next = RcvStatus_ModeSeiri( syswk );
 		break;
+/*
 	case BOX_MODE_ITEM:				// どうぐせいり
 		next = RcvStatus_ModeItem( syswk );
 		break;
+*/
 	case BOX_MODE_BATTLE:			// バトルボックス
 		next = RcvStatus_ModeBattleBox( syswk );
 		break;
@@ -1862,9 +1933,32 @@ static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_StrInRcv( BOX2_SYS_WORK * syswk )
 {
-	BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
-	syswk->app->old_cur_pos = BOX2UI_ARRANGE_MAIN_NAME;
-	return FadeInSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MAIN );
+	int	next;
+
+	switch( syswk->dat->callMode ){
+	case BOX_MODE_TURETEIKU:	// つれていく
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_PTIN_MAIN_NAME;
+		next = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		break;
+
+	case BOX_MODE_SEIRI:			// せいり
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_MAIN_NAME;
+		next = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+		break;
+
+	case BOX_MODE_ITEM:				// どうぐせいり
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ITEM_MAIN_NAME;
+		next = BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		break;
+	}
+
+	return FadeInSet( syswk, next );
 /*
 	BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BOXTHEMA_CHG, BOX2UI_BOXTHEMA_CHG_NANE );
 	syswk->app->old_cur_pos = syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX;
@@ -1889,110 +1983,13 @@ static int MainSeq_StrInRcv( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int RcvBag_ModeAzukeru( BOX2_SYS_WORK * syswk )
-{
-	int	next;
-
-	BOX2OBJ_PokeCursorAdd( syswk );
-
-	if( syswk->subRet == 0 ){
-		BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
-		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-			next = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
-		}else{
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_ITEM );
-			next = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
-		}
-		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
-	}else{
-		BOOL err = FALSE;
-		if( syswk->subRet == ITEM_HAKKINDAMA &&
-			BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_monsno, NULL ) != MONSNO_GIRATHINA ){
-			err = TRUE;
-		}else{
-			POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
-
-			BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->subRet );
-			if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-				BOX2OBJ_PokeIconChange(
-					syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
-			}
-			MYITEM_SubItem( syswk->dat->myitem, syswk->subRet, 1, HEAPID_BOX_APP );
-		}
-
-		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_ITEM );
-		}
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-
-		if( err == TRUE ){
-			syswk->subRet = 0;	// 下で参照するけど、むしろ０のほうが良い
-		}
-		next = BOX2SEQ_MAINSEQ_ITEMSET_MSG;
-	}
-
-	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
-
-	BOX2BGWFRM_SubDispWazaFrmInPosSet( syswk->app );
-
-	return next;
-}
-
-static int RcvBag_ModeTureteiku( BOX2_SYS_WORK * syswk )
-{
-	int	next;
-
-	BOX2OBJ_PokeCursorAdd( syswk );
-
-	if( syswk->subRet == 0 ){
-		BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
-		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-			next = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
-		}else{
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_ITEM );
-			next = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
-		}
-		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
-	}else{
-		BOOL err = FALSE;
-		if( syswk->subRet == ITEM_HAKKINDAMA &&
-			BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_monsno, NULL ) != MONSNO_GIRATHINA ){
-			err = TRUE;
-		}else{
-			POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
-
-			BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->subRet );
-			if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-				BOX2OBJ_PokeIconChange(
-					syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
-			}
-			MYITEM_SubItem( syswk->dat->myitem, syswk->subRet, 1, HEAPID_BOX_APP );
-		}
-
-		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_ITEM );
-		}
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-
-		if( err == TRUE ){
-			syswk->subRet = 0;	// 下で参照するけど、むしろ０のほうが良い
-		}
-		next = BOX2SEQ_MAINSEQ_ITEMSET_MSG;
-	}
-
-	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
-
-	BOX2BGWFRM_SubDispWazaFrmInPosSet( syswk->app );
-
-	return next;
-}
-
 static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 {
 	int	next;
 
 	switch( syswk->subProcMode ){
 	case SUB_PROC_MODE_MENU_BOX:			// ボックスのポケモンのメニューから
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 		next = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 		break;
 
@@ -2001,6 +1998,7 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_ITEM );
+		BOX2BGWFRM_BoxListButtonOn( syswk->app );
 		next = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
 		break;
 	}
@@ -2008,6 +2006,7 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_PokeCursorAdd( syswk );
 
 	if( syswk->subRet == 0 ){
+		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 		BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
 		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
 		BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
@@ -2020,13 +2019,15 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
 		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
-		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->subRet );
+		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
 		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
 		MYITEM_SubItem( syswk->dat->myitem, syswk->subRet, 1, HEAPID_BOX_APP_L );
 	}
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 
@@ -2037,17 +2038,86 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 {
 	int	next;
 
-//	BOX2BGWFRM_ArrangeUnderButtonDel( syswk );
+	switch( syswk->subProcMode ){
+	case SUB_PROC_MODE_MENU_BOX:			// ボックスのポケモンのメニューから
+//		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		BOX2OBJ_ItemIconPokePut( syswk->app, syswk->get_pos, BOX2MAIN_POKEMOVE_MODE_TRAY );
+		next = BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		break;
 
+	case SUB_PROC_MODE_MENU_PARTY:		// 手持ちのポケモンのメニューから
+		PartyFrmSet( syswk );
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
+//		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		BOX2OBJ_ItemIconPokePut( syswk->app, syswk->get_pos, BOX2MAIN_POKEMOVE_MODE_PARTY );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, BOX2UI_ITEM_PARTY_MENU2 );
+		next = BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
+		break;
+	}
+
+	ItemModeMenuSet( syswk, syswk->subRet );
+
+	if( syswk->subRet == 0 ){
+		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
+		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_SET, BOX2BMPWIN_ID_MSG1 );
+		// ボックスのポケモンのメニューから
+		if( syswk->subProcMode == SUB_PROC_MODE_MENU_BOX ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		// 手持ちのポケモンのメニューから
+		}else{
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		}
+		return next;
+	}
+
+	if( syswk->subRet == ITEM_HAKKINDAMA &&
+			BOX2MAIN_PokeParaGet(syswk,syswk->get_pos,syswk->tray,ID_PARA_monsno,NULL) != MONSNO_GIRATHINA ){
+		syswk->subRet = 0;
+	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
+		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
+
+		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
+		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
+			BOX2OBJ_PokeIconChange(
+				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
+		}
+		MYITEM_SubItem( syswk->dat->myitem, syswk->subRet, 1, HEAPID_BOX_APP_L );
+
+		// アイテムアイコンセット
+		syswk->app->get_item = syswk->subRet;
+		BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, TRUE );
+		BOX2OBJ_ItemIconCursorAdd( syswk->app );
+		BOX2OBJ_ItemIconCursorOn( syswk->app );
+	}
+
+	// ボックスのポケモンのメニューから
+	if( syswk->subProcMode == SUB_PROC_MODE_MENU_BOX ){
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+	// 手持ちのポケモンのメニューから
+	}else{
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		BOX2BGWFRM_BoxListButtonOn( syswk->app );
+	}
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+
+	return BOX2SEQ_MAINSEQ_ITEMSET_MSG;
+
+/*
 	if( syswk->subRet == 0 ){
 		BOX2BMP_ItemArrangeMenuStrPrint( syswk, 0 );
 		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
-			next = BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+			next = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		}else{
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_PARTY, BOX2UI_ITEM_A_PARTY_MENU1 );
-			next = BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, BOX2UI_ITEM_PARTY_MENU1 );
+			next = BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 		}
 		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
 	}else{
@@ -2068,7 +2138,7 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 
 		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 			BOX2UI_CursorMoveChange(
-				syswk, BOX2UI_INIT_ID_ITEM_A_PARTY, syswk->get_pos-BOX2OBJ_POKEICON_TRAY_MAX );
+				syswk, BOX2UI_INIT_ID_ITEM_PARTY, syswk->get_pos-BOX2OBJ_POKEICON_TRAY_MAX );
 		}else{
 			const CURSORMOVE_DATA * pw;
 			u8	x, y;
@@ -2111,6 +2181,7 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 	}
 
 	return next;
+*/
 }
 
 static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
@@ -2119,6 +2190,7 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 
 	switch( syswk->subProcMode ){
 	case SUB_PROC_MODE_MENU_BOX:			// ボックスのポケモンのメニューから
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 		next = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 		break;
 
@@ -2127,6 +2199,7 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_PARTY, BOX2UI_BATTLEBOX_PARTY_ITEM );
+		BOX2BGWFRM_BoxListButtonOn( syswk->app );
 		next = BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
 		break;
 	}
@@ -2134,6 +2207,7 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_PokeCursorAdd( syswk );
 
 	if( syswk->subRet == 0 ){
+		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 		BOX2BMP_MenuStrPrint( syswk, BattleBoxMenuStrTbl, 4 );
 		BOX2BGWFRM_PokeMenuOpenPosSet( syswk->app->wfrm );
 		BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
@@ -2146,13 +2220,15 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
 		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
-		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->subRet );
+		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
 		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
 		MYITEM_SubItem( syswk->dat->myitem, syswk->subRet, 1, HEAPID_BOX_APP_L );
 	}
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 
@@ -2163,21 +2239,7 @@ static int MainSeq_BagRcv( BOX2_SYS_WORK * syswk )
 {
 	int	next;
 
-/*
-	if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-		PartyFrmSet( syswk );
-		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
-	}
-*/
-
 	switch( syswk->dat->callMode ){
-	case BOX_MODE_AZUKERU:		// あずける
-		next = RcvBag_ModeAzukeru( syswk );
-		break;
-	case BOX_MODE_TURETEIKU:	// つれていく
-		next = RcvBag_ModeTureteiku( syswk );
-		break;
 	case BOX_MODE_SEIRI:			// せいり
 		next = RcvBag_ModeSeiri( syswk );
 		break;
@@ -2290,7 +2352,7 @@ static int MainSeq_MarkingMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_MARKING_ENTER:		// 06:「けってい」
 		{
 			u8	mark = syswk->app->pokeMark;
-			BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_mark, mark );
+			BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_mark, mark );
 			BOX2MAIN_SubDispMarkingChange( syswk, mark );
 		}
 //		Snd_SePlay( SE_BOX2_DECIDE );
@@ -2391,7 +2453,7 @@ static int MainSeq_PokeFreeInit( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 		BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 		syswk->app->sub_seq++;
-		return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_POKEFREE_INIT );
+		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_POKEFREE_INIT );
 
 	case 1:
 		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -2530,7 +2592,7 @@ static int MainSeq_PokeFreeEnter( BOX2_SYS_WORK * syswk )
 			syswk->get_pos = BOX2MAIN_GETPOS_NONE;
 
 			syswk->app->sub_seq = 0;
-			return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, syswk->next_seq );
+			return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, syswk->next_seq );
 		}else{
 			PokeMoveWorkAlloc( syswk );
 			syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_PARTY;
@@ -2723,15 +2785,21 @@ static int MainSeq_BoxThemaExit( BOX2_SYS_WORK * syswk )
 
 	case 1:
 		syswk->app->sub_seq = 0;
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
 		if( syswk->dat->callMode == BOX_MODE_SEIRI ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 			BOX2BGWFRM_TemochiButtonOn( syswk->app );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
 			return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 		}else if( syswk->dat->callMode == BOX_MODE_TURETEIKU ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
 			return BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		}else if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_NAME );
+			return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		}
 	}
 
@@ -2845,12 +2913,28 @@ static int MainSeq_BoxThemaJumpExit( BOX2_SYS_WORK * syswk )
 
 	case 1:
 		syswk->app->sub_seq = 0;
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+//		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
-		BOX2BGWFRM_TemochiButtonOn( syswk->app );
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
-		return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+//		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+//		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
+//		return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+
+		if( syswk->dat->callMode == BOX_MODE_SEIRI ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
+			return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+		}else if( syswk->dat->callMode == BOX_MODE_TURETEIKU ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
+			return BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		}else if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_NAME );
+			return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		}
 	}
 
 	return BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_EXIT;
@@ -3043,8 +3127,8 @@ static int MainSeq_ArrangePartyStart( BOX2_SYS_WORK * syswk )
 	BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_PARTY, BOX2UI_ITEM_A_PARTY_POKE1 );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, BOX2UI_ITEM_PARTY_POKE1 );
+		return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 	}
 	BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_POKE1 );
 	return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
@@ -3065,6 +3149,9 @@ static int MainSeq_ArrangePartyInit( BOX2_SYS_WORK * syswk )
 		BOX2BGWFRM_PartyPokeFrameInitPutLeft( syswk->app->wfrm );
 		BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
 		BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		}
 		syswk->app->sub_seq++;
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_INIT );
 
@@ -3072,12 +3159,10 @@ static int MainSeq_ArrangePartyInit( BOX2_SYS_WORK * syswk )
 		syswk->app->sub_seq = 0;
 		BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
 		BOX2BGWFRM_BoxListButtonOn( syswk->app );
-/*
 		if( syswk->dat->callMode == BOX_MODE_ITEM ){
-			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_PARTY, BOX2UI_ITEM_A_PARTY_POKE1 );
-			return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, BOX2UI_ITEM_PARTY_POKE1 );
+			return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 		}
-*/
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY, BOX2UI_ARRANGE_PARTY_POKE1 );
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
 	}
@@ -3237,8 +3322,13 @@ static int MainSeq_ArrangePartyEnd( BOX2_SYS_WORK * syswk )
 		syswk->app->sub_seq = 0;
 //		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_PARTY );
+			return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		}
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_PARTY );
 		return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 	}
@@ -3283,9 +3373,9 @@ static int MainSeq_ArrangeBoxPartyButtonIn( BOX2_SYS_WORK * syswk )
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_MAIN, BOX2UI_ITEM_A_MAIN_PARTY );
-//		return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_PARTY );
+//		return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEM_MAIN );
+		return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 	}
 
 	BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
@@ -3396,7 +3486,7 @@ static int MainSeq_ArrangeBoxPartyChgStart( BOX2_SYS_WORK * syswk )
 	}
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
 	return BOX2SEQ_MAINSEQ_ARRANGE_BOXPARTY_CHG_MAIN;
@@ -3985,10 +4075,10 @@ static int MainSeq_ArrangePartyFrmMoveREnd( BOX2_SYS_WORK * syswk )
 static int MainSeq_ArrangePartyFrmMoveLEnd( BOX2_SYS_WORK * syswk )
 {
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_PARTY, BOX2UI_ITEM_A_PARTY_POKE1 );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, BOX2UI_ITEM_PARTY_POKE1 );
 		BOX2MAIN_PokeInfoPut(
 			syswk, CURSORMOVE_PosGet(syswk->app->cmwk)+BOX2OBJ_POKEICON_TRAY_MAX );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 	}
 
 	if( syswk->quick_mode != 0 ){
@@ -4092,9 +4182,9 @@ static int MainSeq_ArrangeBoxRetButtonIn( BOX2_SYS_WORK * syswk )
 	int	next;
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		id   = BOX2UI_INIT_ID_ITEM_A_MAIN;
+		id   = BOX2UI_INIT_ID_ITEM_MAIN;
 		pos  = BOX2UI_ITEM_A_MAIN_CHANGE;
-		next = BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		next = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 	}else{
 		id   = BOX2UI_INIT_ID_ARRANGE_MAIN;
 //		pos  = BOX2UI_ARRANGE_MAIN_CHANGE;
@@ -4356,7 +4446,7 @@ static int MainSeq_ArrangeBoxThemaButtonIn( BOX2_SYS_WORK * syswk )
 	}
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_A_MAIN, BOX2UI_ITEM_A_MAIN_NAME );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_NAME );
 	}else{
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
 	}
@@ -4628,7 +4718,7 @@ static int MainSeq_BoxArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 
 	// 道具整理
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 	}
 	return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 }
@@ -5545,7 +5635,7 @@ static int MainSeq_PartyOutStartCheck( BOX2_SYS_WORK * syswk )
 /*
 static int MainSeq_PartyOutStartError( BOX2_SYS_WORK * syswk )
 {
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV) );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV) );
 }
 */
 
@@ -5989,7 +6079,15 @@ static int MainSeq_CursorMoveRet( BOX2_SYS_WORK * syswk )
 {
 	GFL_HEAP_FreeMemory( syswk->app->vfunk.work );
 	if( syswk->app->msg_put == 1 ){
-		BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
+		if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			if( syswk->app->get_item == ITEM_DUMMY_DATA ){
+				BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_SET, BOX2BMPWIN_ID_MSG1 );
+			}else{
+				BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_INIT, BOX2BMPWIN_ID_MSG1 );
+			}
+		}else{
+			BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
+		}
 		syswk->app->msg_put = 0;
 	}
 //	return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
@@ -6167,17 +6265,16 @@ static int MainSeq_PartyInMenuCloseEnd( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int MainSeq_ItemArrangeMain( BOX2_SYS_WORK * syswk )
+static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
+/*
 	ret = BOX2UI_HitTrayPokeTrg();
 	if( ret != GFL_UI_TP_HIT_NONE ){
-//↑[GS_CONVERT_TAG]
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
 			GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-//↑[GS_CONVERT_TAG]
 			BOX2MAIN_PokeInfoPut( syswk, ret );
 			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 			return TrayItemGet( syswk, ret );
@@ -6196,134 +6293,242 @@ static int MainSeq_ItemArrangeMain( BOX2_SYS_WORK * syswk )
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
 				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 				BOX2MAIN_PokeInfoOff( syswk );
-				return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+				return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 			}
 		}
 	}
+*/
 
 	ret = BOX2UI_BoxItemArrangeMain( syswk );
 
 	switch( ret ){
-	case BOX2UI_ITEM_A_MAIN_NAME:		// 30: ボックス名
+	case BOX2UI_ITEM_MAIN_NAME:		// 30: ボックス名
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
-		return BoxThemaChgStart( syswk );
+		BOX2MAIN_PokeInfoOff( syswk );
+		return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_INIT );
 
-	case BOX2UI_ITEM_A_MAIN_LEFT:		// 31: トレイ切り替え矢印・左
+	case BOX2UI_ITEM_MAIN_LEFT:		// 31: トレイ切り替え矢印・左
 //		Snd_SePlay( SE_BOX2_CHANGE_TRAY );
 		BOX2MAIN_PokeSelectOff( syswk );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_MAIN_NAME );
-		return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
+//		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_NAME );
+		return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEM_MAIN );
 
-	case BOX2UI_ITEM_A_MAIN_RIGHT:		// 32: トレイ切り替え矢印・右
+	case BOX2UI_ITEM_MAIN_RIGHT:		// 32: トレイ切り替え矢印・右
 //		Snd_SePlay( SE_BOX2_CHANGE_TRAY );
 		BOX2MAIN_PokeSelectOff( syswk );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_MAIN_NAME );
-		return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
+//		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_NAME );
+		return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEM_MAIN );
 
-/*
-	case BOX2UI_ITEM_A_MAIN_PARTY:		// 33: 手持ちポケモン
+	case BOX2UI_ITEM_MAIN_PARTY:				// 33: 手持ちポケモン
 //		Snd_SePlay( SE_BOX2_OPEN_PARTY_TRAY );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_BUTTON );
-*/
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_INIT) );
+		break;
+// 旧		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_BUTTON );
+
+	case BOX2UI_ITEM_MAIN_RETURN1:			// 34: 戻る１
+//		Snd_SePlay( SE_BOX2_DECIDE );
+//		BOX2MAIN_PokeInfoOff( syswk );
+		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+
+	case BOX2UI_ITEM_MAIN_RETURN2:			// 35: 戻る２
+//		Snd_SePlay( SE_BOX2_DECIDE );
+//		BOX2MAIN_PokeInfoOff( syswk );
+		syswk->dat->retMode = BOX_END_MODE_MENU;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+
+	case BOX2UI_ITEM_MAIN_MENU1:				// 36: いどうする
+//		Snd_SePlay( SE_BOX2_OPEN_PARTY_TRAY );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEMGET_INIT) );
 /*
 	case BOX2UI_ITEM_A_MAIN_CHANGE:	// 34: 持ち物整理
 //		Snd_SePlay( SE_BOX2_OPEN_PARTY_TRAY );
 		return YStatusButtonAnmSet( syswk, BOX2MAIN_WINFRM_MV_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_MOVE_BUTTON );
 */
-	case BOX2UI_ITEM_A_MAIN_MENU1:		// 36: バッグへ or もたせる
+
+	case BOX2UI_ITEM_MAIN_MENU2:				// 37: バッグへ or もたせる
+/*
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEMARRANGE_BAG_BUTTON );
+*/
+		if( syswk->app->get_item == ITEM_DUMMY_DATA ){
+			syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
+			syswk->cur_rcv_pos = BOX2UI_ITEM_MAIN_MENU2;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+		}else{
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+		}
+		break;
 
-	case BOX2UI_ITEM_A_MAIN_CLOSE:		// 37: とじる
+	case BOX2UI_ITEM_MAIN_CLOSE:				// 38: とじる
 //		Snd_SePlay( SE_BOX2_CANCEL );
 		{
 			u8	pos = syswk->get_pos;
 			BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
 			CURSORMOVE_PosSet( syswk->app->cmwk, pos );
 		}
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_MENU_CLOSE );
 //		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_CLOSE_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_CLOSE_BUTTON );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_CLOSE_BUTTON;
 
-	case CURSORMOVE_NONE:				// 動作なし
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+		if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ITEM_MAIN_NAME ){
+//			Snd_SePlay( SE_BOX2_CHANGE_TRAY );
+			BOX2MAIN_PokeSelectOff( syswk );
+			return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEM_MAIN );
+		}
+		break;
+
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+		if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ITEM_MAIN_NAME ){
+//			Snd_SePlay( SE_BOX2_CHANGE_TRAY );
+			BOX2MAIN_PokeSelectOff( syswk );
+			return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEM_MAIN );
+		}
+		break;
+
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
 		{
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos == BOX2UI_ARRANGE_MAIN_NAME ){
-				if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-//↑[GS_CONVERT_TAG]
-//					Snd_SePlay( SE_BOX2_CHANGE_TRAY );
-					BOX2MAIN_PokeSelectOff( syswk );
-					return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
-				}
-				if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-//↑[GS_CONVERT_TAG]
-//					Snd_SePlay( SE_BOX2_CHANGE_TRAY );
-					BOX2MAIN_PokeSelectOff( syswk );
-					return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
+			if( pos < BOX2UI_ARRANGE_MAIN_NAME ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+			}else{
+				if( pos != BOX2UI_ITEM_MAIN_MENU1 &&
+						pos != BOX2UI_ITEM_MAIN_MENU2 &&
+						pos != BOX2UI_ITEM_MAIN_CLOSE ){
+					BOX2MAIN_PokeInfoOff( syswk );
 				}
 			}
 		}
+//		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
 		break;
 
 	case CURSORMOVE_CURSOR_MOVE:		// 移動
 		{
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos < BOX2UI_ITEM_A_MAIN_NAME ){
+			if( pos < BOX2UI_ARRANGE_MAIN_NAME ){
 				BOX2MAIN_PokeInfoPut( syswk, pos );
 			}else{
-				if( pos != BOX2UI_ITEM_A_MAIN_MENU1 &&
-					pos != BOX2UI_ITEM_A_MAIN_CLOSE ){
+				if( pos != BOX2UI_ITEM_MAIN_MENU1 &&
+						pos != BOX2UI_ITEM_MAIN_MENU2 &&
+						pos != BOX2UI_ITEM_MAIN_CLOSE ){
 					BOX2MAIN_PokeInfoOff( syswk );
 				}
 			}
 		}
 //		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
-		return VFuncReqSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN_CURMOVE_RET );
+		return VFuncReqSet( syswk, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_MAIN) );
 
-	case BOX2UI_ITEM_A_MAIN_RETURN:	// 35: もどる
+	case CURSORMOVE_CANCEL:					// キャンセル
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeInfoOff( syswk );
-//		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_RET_BTN, BOX2SEQ_MAINSEQ_BOXEND_INIT );
-		return BOX2SEQ_MAINSEQ_BOXEND_INIT;
-
-	case CURSORMOVE_CANCEL:				// キャンセル
-//		Snd_SePlay( SE_BOX2_DECIDE );
-//		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_RET_BTN, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
-		return BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT;
-
-	case CURSORMOVE_CURSOR_ON:		// カーソル表示
-		{
-			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos < BOX2UI_ITEM_A_MAIN_NAME ){
-				BOX2MAIN_PokeInfoPut( syswk, pos );
-			}else{
-				if( pos != BOX2UI_ITEM_A_MAIN_MENU1 &&
-					pos != BOX2UI_ITEM_A_MAIN_CLOSE ){
-					BOX2MAIN_PokeInfoOff( syswk );
-				}
-			}
-		}
-//		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
-		break;
+		syswk->dat->retMode = BOX_END_MODE_MENU;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	default:
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_DECIDE );
-			BOX2MAIN_PokeInfoPut( syswk, ret );
-			BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_A_MAIN_MENU1, CURSORMOVE_PosGet(syswk->app->cmwk) );
-			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_MAIN_MENU1 );
 			return TrayItemGetKey( syswk, ret );
 		}
 		break;
 	}
 
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+
+
+
+/*
+	u32	ret;
+
+	ret = BOX2UI_HitTrayPokeTrg();
+	if( ret != GFL_UI_TP_HIT_NONE ){
+		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+//			Snd_SePlay( SE_BOX2_POKE_CATCH );
+			GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
+			if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+				BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
+			}
+			BOX2MAIN_PokeInfoPut( syswk, ret );
+			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+			return TrayPokeGet( syswk, ret );
+		}else{
+			if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
+				u8	pos = syswk->get_pos;
+				BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
+				CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+				BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//				BOX2BGWFRM_SubDispWazaFrmOutSet( syswk->app );
+				BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+				BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+				BOX2MAIN_ResetTouchBar( syswk );
+				BOX2BGWFRM_TemochiButtonOn( syswk->app );
+				return VFuncSet( syswk, BOX2MAIN_VFuncMenuMove, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MAIN) );
+			}else{
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+				BOX2MAIN_PokeInfoOff( syswk );
+				return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+			}
+		}
+	}
+
+	ret = BOX2UI_BoxArrangeMain( syswk );
+
+	switch( ret ){
+	case BOX2UI_ARRANGE_MAIN_PARTY:	// 33: 手持ちポケモン
+//		Snd_SePlay( SE_BOX2_OPEN_PARTY_TRAY );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_INIT) );
+
+
+	case BOX2UI_ARRANGE_MAIN_GET:			// 36: つかむ
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU1, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_INIT) );
+
+	case BOX2UI_ARRANGE_MAIN_STATUS:	// 37: ようすをみる
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
+		syswk->get_tray    = syswk->tray;
+		syswk->cur_rcv_pos = BOX2UI_ARRANGE_MAIN_STATUS;
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU2, BOX2SEQ_MAINSEQ_STATUS_CALL );
+
+	case BOX2UI_ARRANGE_MAIN_ITEM:		// 38: もちもの
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
+		syswk->cur_rcv_pos = BOX2UI_ARRANGE_MAIN_ITEM;
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+	}
+*/
+
 }
+
+static int MainSeq_ItemMenuClose( BOX2_SYS_WORK * syswk )
+{
+	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_SubDispWazaFrmOutSet( syswk->app );
+	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+	BOX2MAIN_ResetTouchBar( syswk );
+	BOX2BGWFRM_TemochiButtonOn( syswk->app );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeMenuClose, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_MAIN) );
+}
+/*
+static int MainSeq_ItemArrangeCloseButton( BOX2_SYS_WORK * syswk )
+{
+	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+	if( syswk->app->get_item != ITEM_DUMMY_DATA ){
+		BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
+	}
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeMenuClose, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN_CURMOVE_RET );
+}
+*/
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -6351,7 +6556,7 @@ static int MainSeq_ItemArrangeRetBagSet( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 	}
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_END );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_END );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6367,7 +6572,7 @@ static int MainSeq_ItemArrangeMainCurMoveRet( BOX2_SYS_WORK * syswk )
 {
 	GFL_HEAP_FreeMemory( syswk->app->vfunk.work );
 //↑[GS_CONVERT_TAG]
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6414,9 +6619,13 @@ static int MainSeq_ItemArrangeRetBagCheck( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int MainSeq_ItemArrangeRetBagEnter( BOX2_SYS_WORK * syswk )
+static int MainSeq_ItemBagInAnm( BOX2_SYS_WORK * syswk )
 {
-	if( BOX2OBJ_AnmCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == FALSE ){
+	if( BOX2OBJ_AnmCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == TRUE ){
+		return BOX2SEQ_MAINSEQ_ITEM_BAGIN_ANM;
+	}
+
+/*
 		const CURSORMOVE_DATA * pw;
 		u16	pos;
 		u8	x, y;
@@ -6431,16 +6640,23 @@ static int MainSeq_ItemArrangeRetBagEnter( BOX2_SYS_WORK * syswk )
 		x = pw->px;
 		y = pw->py;
 		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y, CLSYS_DEFREND_MAIN );
+*/
 
-		BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
-		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_RET, BOX2BMPWIN_ID_MSG1 );
-		BOX2BMP_ItemArrangeMenuStrPrint( syswk, 0 );
-		syswk->app->get_item = ITEM_DUMMY_DATA;
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_SET;
-		return BOX2SEQ_MAINSEQ_TRGWAIT;
+	ItemModeMenuSet( syswk, ITEM_DUMMY_DATA );
+
+	BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
+	BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_RET, BOX2BMPWIN_ID_MSG1 );
+	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+	}else{
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 	}
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_ENTER;
+	syswk->app->get_item = ITEM_DUMMY_DATA;
+//	syswk->next_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_SET;
+//	return BOX2SEQ_MAINSEQ_TRGWAIT;
+	syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
+	return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6485,7 +6701,7 @@ static int MainSeq_ItemArrangeRetBagCancel( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 	}
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_END );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_END );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6508,9 +6724,9 @@ static int MainSeq_ItemArrangeRetBagEnd( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
 	if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 	}
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6597,9 +6813,9 @@ static int MainSeq_ItemArrangeIconMoveRet( BOX2_SYS_WORK * syswk )
 //			Snd_SePlay( SE_BOX2_POKE_PUT );
 			BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 		}
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_MAIN_MENU1 );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU1 );
 		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 	}
 
 //	Snd_SePlay( SE_BOX2_POKE_PUT );
@@ -6642,7 +6858,7 @@ static int MainSeq_ItemArrangeIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動先にアイテムをセット
 	item = BOX2MAIN_PokeParaGet( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, NULL );
-	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, ID_PARA_item, syswk->app->get_item );
+	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, mvwk->put_pos );
 	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 		BOX2OBJ_PokeIconChange(
@@ -6653,12 +6869,14 @@ static int MainSeq_ItemArrangeIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動元にアイテムをセット
 	syswk->app->get_item = item;
-	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->app->get_item );
-	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
-	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-		BOX2OBJ_PokeIconChange(
-			syswk, syswk->tray, syswk->get_pos,
-			syswk->app->pokeicon_id[syswk->get_pos] );
+	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->get_tray, ID_PARA_item, syswk->app->get_item );
+	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
+		ppp = BOX2MAIN_PPPGet( syswk, syswk->get_tray, syswk->get_pos );
+		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
+			BOX2OBJ_PokeIconChange(
+				syswk, syswk->get_tray, syswk->get_pos,
+				syswk->app->pokeicon_id[syswk->get_pos] );
+		}
 	}
 
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
@@ -6666,8 +6884,8 @@ static int MainSeq_ItemArrangeIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 		ItemMoveWorkFree( syswk );
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
 		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-//		return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+//		return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEM_MAIN );
+		return BOX2SEQ_MAINSEQ_ITEM_MAIN;
 	}
 
 //	Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -6733,8 +6951,107 @@ static int MainSeq_ItemArrangeIconMoveChangeEnd( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
 
-//	return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN );
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+//	return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ITEM_MAIN );
+	return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+}
+
+
+static int MainSeq_ItemGetInit( BOX2_SYS_WORK * syswk )
+{
+	switch( syswk->app->sub_seq ){
+	case 0:
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			syswk->pokechg_mode = 1;
+		}else{
+			syswk->pokechg_mode = 0;
+		}
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+		BOX2MAIN_ResetTouchBar( syswk );
+		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+		syswk->app->sub_seq++;
+		return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeMenuClose, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+
+	case 1:
+		syswk->app->sub_seq++;
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			BOX2BGWFRM_PartyPokeFrameRightMoveSet( syswk->app->wfrm );
+		}else{
+			BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
+			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		}
+		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+
+	case 2:
+		syswk->app->sub_seq = 0;
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
+		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
+		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_STATUS );
+		return BoxPartyItemGetKey( syswk, syswk->get_pos );
+
+/*
+		return BOX2SEQ_MAINSEQ_ITEMGET_INIT;
+
+	case 3:
+		syswk->app->sub_seq = 0;
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
+*/
+	}
+
+	return BOX2SEQ_MAINSEQ_ITEMGET_INIT;
+
+/*
+	switch( syswk->app->sub_seq ){
+	case 0:
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			syswk->get_tray = BOX2MAIN_GETPOS_NONE;	// 取得したボックス
+		}else{
+			syswk->get_tray = syswk->tray;					// 取得したボックス
+		}
+//		syswk->box_mv_pos = syswk->tray;	// 現在参照しているボックス
+//		syswk->box_mv_flg = 1;						// ボックス移動フラグ
+//		syswk->pokechg_mode = 0;
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+		BOX2MAIN_ResetTouchBar( syswk );
+//		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//		BOX2MAIN_GetPokeData( syswk, syswk->tray, syswk->get_pos );
+		syswk->app->sub_seq++;
+		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+
+	case 1:
+		syswk->app->sub_seq++;
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			BOX2BGWFRM_PartyPokeFrameRightMoveSet( syswk->app->wfrm );
+//			return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrmRight, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+		}else{
+			BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
+			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		}
+		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+
+	case 2:
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+		BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_ON );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
+		syswk->app->old_cur_pos = syswk->get_pos;
+		syswk->app->sub_seq = 0;
+		return PartyPokeMoveGetKey( syswk, syswk->get_pos );
+	}
+
+	return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT;
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6746,187 +7063,229 @@ static int MainSeq_ItemArrangeIconMoveChangeEnd( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int MainSeq_ItemArrangeBoxPartyChgMain( BOX2_SYS_WORK * syswk )
+static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
-	// 手持ち
-	ret = BOX2UI_HitCheckTrgPartyPokeRight();
-	if( ret != GFL_UI_TP_HIT_NONE ){
-//↑[GS_CONVERT_TAG]
-		ret += BOX2OBJ_POKEICON_TRAY_MAX;
-		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-			BOX2MAIN_PokeInfoPut( syswk, ret );
-			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-			return BoxPartyItemGet( syswk, ret );
-		}else{
-			BOX2MAIN_PokeInfoOff( syswk );
-			CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-			if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-				return BoxMoveButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-			}else if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-				return YStatusButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
+	if( syswk->poke_get_key == 0 ){
+		// 手持ち
+		ret = BOX2UI_HitCheckTrgPartyPokeRight();
+		if( ret != GFL_UI_TP_HIT_NONE ){
+			ret += BOX2OBJ_POKEICON_TRAY_MAX;
+			if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+				BOX2MAIN_PokeInfoPut( syswk, ret );
+				BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+				return BoxPartyItemGet( syswk, ret );
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+				return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 			}
-			return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		}
+		// ボックス
+		ret = BOX2UI_HitTrayPokeTrg();
+		if( ret != GFL_UI_TP_HIT_NONE ){
+			if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+				BOX2MAIN_PokeInfoPut( syswk, ret );
+				BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+				return BoxPartyItemGet( syswk, ret );
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+				return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
+			}
 		}
 	}
 
-	// ボックス
-	ret = BOX2UI_HitTrayPokeTrg();
-	if( ret != GFL_UI_TP_HIT_NONE ){
-//↑[GS_CONVERT_TAG]
-		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-			BOX2MAIN_PokeInfoPut( syswk, ret );
-			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-			return BoxPartyItemGet( syswk, ret );
-		}else{
+	// キー・タッチチェック
+	ret = BOX2UI_ArrangePartyPokeGetMain( syswk );
+
+	switch( ret ){
+	case BOX2UI_ARRANGE_PTGT_NAME:		// 36: ボックス名
+		// 未取得
+		if( syswk->poke_get_key == 0 ){
+//		Snd_SePlay( SE_BOX2_DECIDE );
 			BOX2MAIN_PokeInfoOff( syswk );
-			CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-			if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-				return BoxMoveButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-			}else if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-				return YStatusButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
+			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_INIT );
+		}
+		break;
+
+	case BOX2UI_ARRANGE_PTGT_LEFT:		// 37: ボックス切り替え矢印（左）
+		// 未取得
+		if( syswk->poke_get_key == 0 ){
+			BOX2MAIN_PokeSelectOff( syswk );
+			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
+			return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		// 取得中
+		}else{
+			return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		}
+		break;
+
+	case BOX2UI_ARRANGE_PTGT_RIGHT:		// 38: ボックス切り替え矢印（右）
+		// 未取得
+		if( syswk->poke_get_key == 0 ){
+			BOX2MAIN_PokeSelectOff( syswk );
+			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
+			return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		// 取得中
+		}else{
+			return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		}
+		break;
+
+	case BOX2UI_ARRANGE_PTGT_RET:		// 41: 戻る
+		if( syswk->poke_get_key == 0 ){
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEMGET_END) );
+		}
+		break;
+
+	case CURSORMOVE_CANCEL:					// キャンセル
+		if( syswk->poke_get_key == 1 ){
+			return BoxPartyItemPutKey( syswk, BOX2MAIN_GETPOS_NONE );
+		}else{
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEMGET_END) );
+		}
+		break;
+
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+		if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PTGT_NAME ){
+			return TrayLeftScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		}
+		break;
+
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+		if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PTGT_NAME ){
+			return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		}
+		break;
+
+	case BOX2UI_ARRANGE_PTGT_BOXLIST:	// 39: ボックスリスト
+	case BOX2UI_ARRANGE_PTGT_STATUS:	// 40: ステータス
+	case CURSORMOVE_NO_MOVE_UP:				// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:			// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:				// カーソル表示
+	case CURSORMOVE_NONE:							// 動作なし
+		break;
+
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+//		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
+		if( syswk->poke_get_key == 0 ){
+			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
 			}
-			return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		}
+		return VFuncReqSet( syswk, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEMGET_MAIN) );
+
+	default:
+		// 取得中
+		if( syswk->poke_get_key == 1 ){
+			return BoxPartyItemPutKey( syswk, ret );
+		// 未取得
+		}else{
+			return BoxPartyItemGetKey( syswk, ret );
+		}
+		break;
+	}
+
+	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
+}
+
+static int MainSeq_ItemGetEnd( BOX2_SYS_WORK * syswk )
+{
+	switch( syswk->app->sub_seq ){
+	case 0:
+		BOX2MAIN_PokeInfoOff( syswk );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		if( syswk->pokechg_mode == 0 ){
+			BOX2BGWFRM_PartyPokeFrameOutSet( syswk->app->wfrm );
+		}else{
+			BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
+			BOX2BGWFRM_PartyPokeFrameLeftMoveSet( syswk->app->wfrm );
+		}
+		syswk->app->sub_seq++;
+		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ITEMGET_END );
+
+	case 1:
+		syswk->app->sub_seq = 0;
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
+		if( syswk->pokechg_mode == 0 ){
+			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos >= BOX2OBJ_POKEICON_PUT_MAX ){
+				pos = 0;
+			}else if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+				pos = 0;
+			}
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, pos );
+			BOX2MAIN_PokeInfoPut( syswk, pos );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		}else{
+			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos >= BOX2OBJ_POKEICON_PUT_MAX ){
+				pos = 0;
+			}else if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+				pos = 0;
+			}else{
+				pos -= BOX2OBJ_POKEICON_TRAY_MAX;
+			}
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_PARTY, pos );
+			BOX2MAIN_PokeInfoPut( syswk, pos+BOX2OBJ_POKEICON_TRAY_MAX );
+			BOX2BGWFRM_BoxListButtonOn( syswk->app );
+			return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 		}
 	}
 
-	// Ｙステータスボタン
+	return BOX2SEQ_MAINSEQ_ITEMGET_END;
+
 /*
-	if( BOX2UI_YStatusButtonCheck( syswk ) == TRUE ){
-		ret = CURSORMOVE_PosGet( syswk->app->cmwk );
-		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-//			Snd_SePlay( SE_BOX2_DECIDE );
-			syswk->get_pos = ret;
-			syswk->y_status_flg = 1;
-			return YStatusButtonAnmSet( syswk, BOX2MAIN_WINFRM_Y_ST_BTN, BOX2SEQ_MAINSEQ_STATUS_CALL );
+	switch( syswk->app->sub_seq ){
+	case 0:
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			syswk->get_tray = BOX2MAIN_GETPOS_NONE;	// 取得したボックス
+		}else{
+			syswk->get_tray = syswk->tray;					// 取得したボックス
 		}
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+		BOX2MAIN_ResetTouchBar( syswk );
+		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+		BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+		syswk->app->sub_seq++;
+		return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeMenuClose, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+
+	case 1:
+		syswk->app->sub_seq++;
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			BOX2BGWFRM_PartyPokeFrameRightMoveSet( syswk->app->wfrm );
+		}else{
+			BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
+			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		}
+		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+
+	case 2:
+		syswk->app->sub_seq = 0;
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
+		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
+		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
+		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_STATUS );
+		return BoxPartyItemGetKey( syswk, syswk->get_pos );
 	}
 */
 
-	ret = BOX2UI_BoxArrangePokeMove( syswk );
-
-	switch( ret ){
-	case BOX2UI_ARRANGE_MOVE_TRAY1:	// 37: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 0 );
-
-	case BOX2UI_ARRANGE_MOVE_TRAY2:	// 38: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 1 );
-
-	case BOX2UI_ARRANGE_MOVE_TRAY3:	// 39: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 2 );
-
-	case BOX2UI_ARRANGE_MOVE_TRAY4:	// 40: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 3 );
-
-	case BOX2UI_ARRANGE_MOVE_TRAY5:	// 41: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 4 );
-
-	case BOX2UI_ARRANGE_MOVE_TRAY6:	// 42: トレイアイコン
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2MAIN_PokeSelectOff( syswk );
-		return BoxMoveButtonFrmIn( syswk, 5 );
-
-	case BOX2UI_ARRANGE_MOVE_LEFT:		// 43: トレイ矢印（左）
-//		Snd_SePlay( SE_BOX2_CHANGE_TRAY );
-		BOX2MAIN_PokeSelectOff( syswk );
-		BoxMoveTrayIconChgOnly( syswk, -1 );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY1 + syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX );
-		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-			return BoxMoveButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-		}else if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-			return YStatusButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-		}
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
-
-	case BOX2UI_ARRANGE_MOVE_RIGHT:	// 44: トレイ矢印（右）
-//		Snd_SePlay( SE_BOX2_CHANGE_TRAY );
-		BOX2MAIN_PokeSelectOff( syswk );
-		BoxMoveTrayIconChgOnly( syswk, 1 );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY1 + syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX );
-		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-			return BoxMoveButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-		}else if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-			return YStatusButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-		}
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
-
-	case BOX2UI_ARRANGE_MOVE_CHANGE:	// 45: ボックスをきりかえる
-//		Snd_SePlay( SE_BOX2_CHANGE_TRAY );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY1 + syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_BOXMV_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOX_MOVE_BUTTON );
-
-	case CURSORMOVE_CURSOR_MOVE:	// 移動
-		{
-			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos < BOX2UI_ARRANGE_MOVE_RETURN ){
-				if( BOX2MAIN_PokeInfoPut( syswk, pos ) == TRUE ){
-					if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == FALSE ){
-						BOX2BMP_ButtonPutYStatus( syswk );
-						BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
-					}
-				}else{
-					if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-						BOX2BGWFRM_YStatusButtonOutSet( syswk->app->wfrm );
-					}
-				}
-			}else{
-				BOX2MAIN_PokeInfoOff( syswk );
-				if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-					BOX2BGWFRM_YStatusButtonOutSet( syswk->app->wfrm );
-				}
-			}
-		}
-//		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
-		if( syswk->app->vfunk.freq != NULL ){
-			return VFuncReqSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN_CURMOVE_RET );
-		}
-		break;
-
-	case CURSORMOVE_CURSOR_ON:		// カーソル表示
-	case CURSORMOVE_NONE:			// 動作なし
-		break;
-
-	case BOX2UI_ARRANGE_MOVE_RETURN:	// 36: やめる
-//		Snd_SePlay( SE_BOX2_CLOSE_PARTY_TRAY );
-		return PartyButtonAnmSet( syswk, 1, BOX2SEQ_MAINSEQ_BOX_MOVE_END_BUTTON );
-
-	case CURSORMOVE_CANCEL:				// キャンセル
-		if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == FALSE ){
-//			Snd_SePlay( SE_BOX2_CLOSE_PARTY_TRAY );
-			return PartyButtonAnmSet( syswk, 1, BOX2SEQ_MAINSEQ_BOX_MOVE_END_BUTTON );
-		}else{
-//			Snd_SePlay( SE_BOX2_CANCEL );
-			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY1 + syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX );
-			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-			return BoxMoveButtonFrmOut( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
-		}
-		break;
-
-	default:
-		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-			BOX2MAIN_PokeInfoPut( syswk, ret );
-			return BoxPartyItemGetKey( syswk, ret );
-		}
-	}
-
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -6941,7 +7300,7 @@ static int MainSeq_ItemArrangeBoxPartyChgMainCurMoveRet( BOX2_SYS_WORK * syswk )
 {
 	GFL_HEAP_FreeMemory( syswk->app->vfunk.work );
 //↑[GS_CONVERT_TAG]
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -6953,12 +7312,14 @@ static int MainSeq_ItemArrangeBoxPartyChgMainCurMoveRet( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ItemArrangeBoxPartyIconMoveSubFrmOut( BOX2_SYS_WORK * syswk )
 {
 	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 	BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
 	return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_POKEADD;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -6975,6 +7336,8 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	BOX2MAIN_ITEMMOVE_WORK * mvwk;
 	u16	item;
 
+	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+
 	mvwk = syswk->app->vfunk.work;
 
 /*
@@ -6983,7 +7346,9 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	}
 */
 
-	if( mvwk->put_pos == syswk->get_pos ){
+	// アイコンの移動先が元と同じ
+	if( mvwk->put_pos == syswk->get_pos &&
+			( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ) ){
 		u32	set_pos = mvwk->set_pos;
 		ItemMoveWorkFree( syswk );
 		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
@@ -6995,7 +7360,7 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 			return BOX2SEQ_MAINSEQ_TRGWAIT;
 		}else{
 			CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-			return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+			return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 		}
 	}
 
@@ -7004,7 +7369,7 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動先にアイテムをセット
 	item = BOX2MAIN_PokeParaGet( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, NULL );
-	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, ID_PARA_item, syswk->app->get_item );
+	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, mvwk->put_pos );
 	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 		BOX2OBJ_PokeIconChange(
@@ -7016,20 +7381,33 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動元にアイテムをセット
 	syswk->app->get_item = item;
-	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->app->get_item );
-	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
-	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-		BOX2OBJ_PokeIconChange(
-			syswk, syswk->tray, syswk->get_pos,
-			syswk->app->pokeicon_id[syswk->get_pos] );
+	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->get_tray, ID_PARA_item, syswk->app->get_item );
+	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
+		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
+		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
+			BOX2OBJ_PokeIconChange(
+				syswk, syswk->tray, syswk->get_pos,
+				syswk->app->pokeicon_id[syswk->get_pos] );
+		}
 	}
 
+	// 移動先がアイテムを持っていなかった
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
 		syswk->get_pos = mvwk->put_pos;
 		ItemMoveWorkFree( syswk );
 		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
+
+	// 移動元と移動先のトレイが違う
+	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray != syswk->tray ){
+		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+		syswk->get_pos = mvwk->put_pos;
+		ItemMoveWorkFree( syswk );
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
+	}
+
 
 	BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 	BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
@@ -7037,7 +7415,7 @@ static int MainSeq_ItemArrangeBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, TRUE );
 	BOX2OBJ_ItemIconCursorAdd( syswk->app );
 //	Snd_SePlay( SE_BOX2_POKE_CATCH );
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconChgTouch, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_END );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemIconChgTouch, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_END );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7079,7 +7457,14 @@ static int MainSeq_ItemArrangeBoxPartyIconMoveEnd( BOX2_SYS_WORK * syswk )
 
 	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+	{
+		u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+		if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
+			BOX2MAIN_PokeInfoPut( syswk, pos );
+		}
+	}
+
+	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7094,8 +7479,9 @@ static int MainSeq_ItemArrangeBoxPartyIconMoveEnd( BOX2_SYS_WORK * syswk )
 static int MainSeq_ItemArrangeBoxPartyChgError( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_SysWinVanishTrans( syswk->app, BOX2BMPWIN_ID_MSG1 );
+	BOX2MAIN_ResetTouchBar( syswk );
 	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7174,17 +7560,21 @@ static int MainSeq_ItemArrangeKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 
 	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->app->poke_put_key, FALSE );
 
-	if( syswk->app->poke_put_key == syswk->app->get_item_init_pos ){
+	// 初期位置と同じ
+	if( syswk->app->poke_put_key == syswk->app->get_item_init_pos &&
+			( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ) ){
 		syswk->app->get_item = ITEM_DUMMY_DATA;
-		BOX2MAIN_PokeInfoPut( syswk, syswk->app->poke_put_key );
-		BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
-		return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
+//		BOX2MAIN_PokeInfoPut( syswk, syswk->app->poke_put_key );
+//		BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
+//		return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
 	// 持っているアイテムを取得
 	item = BOX2MAIN_PokeParaGet( syswk, syswk->app->poke_put_key, syswk->tray, ID_PARA_item, NULL );
 	// アイテムを持たせる
-	BOX2MAIN_PokeParaPut( syswk, syswk->app->poke_put_key, ID_PARA_item, syswk->app->get_item );
+	BOX2MAIN_PokeParaPut( syswk, syswk->app->poke_put_key, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->app->poke_put_key );
 	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 		BOX2OBJ_PokeIconChange(
@@ -7195,17 +7585,22 @@ static int MainSeq_ItemArrangeKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 
 	// 取得したアイテムを元のポケモンに持たせる
 	syswk->app->get_item = item;
-	BOX2MAIN_PokeParaPut( syswk, syswk->app->get_item_init_pos, ID_PARA_item, syswk->app->get_item );
+	BOX2MAIN_PokeParaPut( syswk, syswk->app->get_item_init_pos, syswk->get_tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->app->get_item_init_pos );
-	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-		BOX2OBJ_PokeIconChange(
-			syswk, syswk->tray, syswk->app->get_item_init_pos,
-			syswk->app->pokeicon_id[syswk->app->get_item_init_pos] );
+	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
+		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
+			BOX2OBJ_PokeIconChange(
+				syswk, syswk->tray, syswk->app->get_item_init_pos,
+				syswk->app->pokeicon_id[syswk->app->get_item_init_pos] );
+		}
 	}
 
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
-		BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
-		return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
+//		BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
+//	return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
 	syswk->poke_get_key = 1;
@@ -7214,15 +7609,18 @@ static int MainSeq_ItemArrangeKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_ItemIconPokePutHand( syswk->app, syswk->app->poke_put_key, BOX2MAIN_POKEMOVE_MODE_ALL );
 	BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 
+/*
 	{
-		u32 winID = BOX2BMP_PokeItemInfoWrite( syswk, syswk->app->get_item );
+//		u32 winID = BOX2BMP_PokeItemInfoWrite( syswk, syswk->app->get_item );
 //		BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP, syswk->app->win[winID].win );
 //		BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP, syswk->app->win[winID+1].win );
-		BOX2OBJ_ItemIconChangeSub( syswk->app, syswk->app->get_item );
-		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+//		BOX2OBJ_ItemIconChangeSub( syswk->app, syswk->app->get_item );
+//		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
 	}
+*/
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_MOVE_MAIN );
+//	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_MOVE_MAIN );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7234,18 +7632,17 @@ static int MainSeq_ItemArrangeKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int MainSeq_ItemArrangePartyMain( BOX2_SYS_WORK * syswk )
+static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
+/*
 	ret = BOX2UI_HitCheckTrgPartyPokeLeft();
 	if( ret != GFL_UI_TP_HIT_NONE ){
-//↑[GS_CONVERT_TAG]
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
 			GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-//↑[GS_CONVERT_TAG]
 			BOX2MAIN_PokeInfoPut( syswk, ret );
 			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 			return PartyItemGet( syswk, ret );
@@ -7264,85 +7661,176 @@ static int MainSeq_ItemArrangePartyMain( BOX2_SYS_WORK * syswk )
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret - BOX2OBJ_POKEICON_TRAY_MAX );
 				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 				BOX2MAIN_PokeInfoOff( syswk );
-				return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+				return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 			}
 		}
 	}
+*/
 
 	ret = BOX2UI_BoxItemArrangePartyMoveMain( syswk );
 
 	switch( ret ){
 
-	case BOX2UI_ITEM_A_PARTY_CHANGE:	//「いれかえ」
+	case BOX2UI_ITEM_PARTY_BOXLIST:		// 06: ボックスリスト
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+
+	case BOX2UI_ITEM_PARTY_RETURN1:		// 07: 戻る１
+//		Snd_SePlay( SE_BOX2_DECIDE );
+//		BOX2MAIN_PokeInfoOff( syswk );
+		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+
+	case BOX2UI_ITEM_PARTY_RETURN2:		// 08: 戻る２
+//		Snd_SePlay( SE_BOX2_DECIDE );
+//		BOX2MAIN_PokeInfoOff( syswk );
+		syswk->dat->retMode = BOX_END_MODE_MENU;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+
+	case BOX2UI_ITEM_PARTY_MENU1:			// 09: いどうする
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEMGET_INIT) );
+/*
+	case BOX2UI_ITEM_PARTY_BOXLIST:	//「いれかえ」
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		return PartyButtonAnmSet( syswk, 0, BOX2SEQ_MAINSEQ_ITEM_CHG_BUTTON );
+*/
 
-	case BOX2UI_ITEM_A_PARTY_MENU1:	// バッグへ or もたせる
-//		Snd_SePlay( SE_BOX2_DECIDE );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEMARRANGE_BAG_BUTTON );
-
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
-		{
-			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos <= BOX2UI_ARRANGE_PARTY_POKE6 ){
-				BOX2MAIN_PokeInfoPut( syswk, pos+BOX2OBJ_POKEICON_TRAY_MAX );
-			}else{
-				if( pos != BOX2UI_ITEM_A_PARTY_MENU1 &&
-					pos != BOX2UI_ITEM_A_PARTY_CLOSE ){
-					BOX2MAIN_PokeInfoOff( syswk );
-				}
-			}
+	case BOX2UI_ITEM_PARTY_MENU2:			// 10: バッグへ or もたせる
+		if( syswk->app->get_item == ITEM_DUMMY_DATA ){
+			syswk->subProcMode = SUB_PROC_MODE_MENU_PARTY;
+			syswk->cur_rcv_pos = BOX2UI_ITEM_PARTY_MENU2;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+		}else{
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 		}
-//		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
-		return VFuncReqSet( syswk, BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN_CURMOVE_RET );
+		break;
 
-	case BOX2UI_ITEM_A_PARTY_RETURN:	//「もどる」
-	case CURSORMOVE_CANCEL:				// キャンセル
-//		Snd_SePlay( SE_BOX2_CLOSE_PARTY_TRAY );
-//		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_RET_BTN, BOX2SEQ_MAINSEQ_PARTY_END_BUTTON );
-		return BOX2SEQ_MAINSEQ_PARTY_END_BUTTON;
-
-	case BOX2UI_ITEM_A_PARTY_CLOSE:	//「とじる」
+	case BOX2UI_ITEM_PARTY_CLOSE:			// 11: とじる
 //		Snd_SePlay( SE_BOX2_CANCEL );
 		{
 			u8	pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
 			BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
 			CURSORMOVE_PosSet( syswk->app->cmwk, pos );
 		}
-//		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_CLOSE_BTN, BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_CLOSE_BUTTON );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_CLOSE_BUTTON;
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_PARTY_MENU_CLOSE );
 
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
 		{
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( pos <= BOX2UI_ARRANGE_PARTY_POKE6 ){
+			if( pos < BOX2UI_ARRANGE_PARTY_BOXLIST ){
 				BOX2MAIN_PokeInfoPut( syswk, pos+BOX2OBJ_POKEICON_TRAY_MAX );
-			}else{
-				if( pos != BOX2UI_ITEM_A_PARTY_MENU1 &&
-					pos != BOX2UI_ITEM_A_PARTY_CLOSE ){
-					BOX2MAIN_PokeInfoOff( syswk );
-				}
+			}else if( pos == BOX2UI_ARRANGE_PARTY_BOXLIST ){
+				BOX2MAIN_PokeInfoOff( syswk );
 			}
 		}
 //		Snd_SePlay( SE_BOX2_MOVE_CURSOR );
-		break;
+		return VFuncReqSet( syswk, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN) );
 
-	case CURSORMOVE_NONE:				// 動作なし
-		break;
+	case CURSORMOVE_CANCEL:					// キャンセル
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		syswk->dat->retMode = BOX_END_MODE_MENU;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_DECIDE );
-			BOX2MAIN_PokeInfoPut( syswk, ret );
-			BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_A_PARTY_MENU1, CURSORMOVE_PosGet(syswk->app->cmwk) );
-			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_PARTY_MENU1 );
 			return PartyItemGetKey( syswk, ret );
 		}
 	}
 
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+
+/*
+	// タッチ取得チェック
+	ret = BOX2UI_HitCheckTrgPartyPokeLeft();
+	if( ret != GFL_UI_TP_HIT_NONE ){
+		ret += BOX2OBJ_POKEICON_TRAY_MAX;
+		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+//			Snd_SePlay( SE_BOX2_POKE_CATCH );
+			GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
+			if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+				BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
+			}
+			BOX2MAIN_PokeInfoPut( syswk, ret );
+			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+			return PartyPokeGet( syswk, ret );
+		}else{
+			if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
+				u8	pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
+				BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
+				CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+				BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//				BOX2BGWFRM_SubDispWazaFrmOutSet( syswk->app );
+				BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+				BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+				BOX2MAIN_ResetTouchBar( syswk );
+				BOX2BGWFRM_BoxListButtonOn( syswk->app );
+				return VFuncSet( syswk, BOX2MAIN_VFuncMenuMove, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN) );
+			}else{
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret - BOX2OBJ_POKEICON_TRAY_MAX );
+				CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+				BOX2MAIN_PokeInfoOff( syswk );
+				return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
+			}
+		}
+	}
+
+	// キー・タッチチェック
+	ret = BOX2UI_BoxArrangePartyMoveMain( syswk );
+
+	switch( ret ){
+
+
+	case BOX2UI_ARRANGE_PARTY_GET:				// 09: つかむ
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU1, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT) );
+
+	case BOX2UI_ARRANGE_PARTY_ITEM:				// 11: もちもの
+		syswk->subProcMode = SUB_PROC_MODE_MENU_PARTY;
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+
+	case CURSORMOVE_CANCEL:							// キャンセル
+//		Snd_SePlay( SE_BOX2_DECIDE );
+		syswk->dat->retMode = BOX_END_MODE_MENU;
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+
+	default:
+		ret += BOX2OBJ_POKEICON_TRAY_MAX;
+		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+//			Snd_SePlay( SE_BOX2_DECIDE );
+			BOX2BMP_MenuStrPrint( syswk, PokeMenuStrTbl, 6 );
+			BOX2MAIN_PokeInfoPut( syswk, ret );
+			BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ARRANGE_PARTY_GET, CURSORMOVE_PosGet(syswk->app->cmwk) );
+			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PARTY_GET );
+			return PartyPokeGetKeyArrange( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN );
+		}
+	}
+*/
+
+
+	return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 }
+
+static int MainSeq_ItemPartyMenuClose( BOX2_SYS_WORK * syswk )
+{
+	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_SubDispWazaFrmOutSet( syswk->app );
+	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+	BOX2MAIN_ResetTouchBar( syswk );
+	BOX2BGWFRM_BoxListButtonOn( syswk->app );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeMenuClose, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN) );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -7357,7 +7845,7 @@ static int MainSeq_ItemArrangePartyMainCurMoveRet( BOX2_SYS_WORK * syswk )
 {
 	GFL_HEAP_FreeMemory( syswk->app->vfunk.work );
 //↑[GS_CONVERT_TAG]
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7395,9 +7883,9 @@ static int MainSeq_ItemArrangePartyIconMoveRet( BOX2_SYS_WORK * syswk )
 //			Snd_SePlay( SE_BOX2_POKE_PUT );
 			BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 		}
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_PARTY_MENU1 );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU1 );
 		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 	}
 
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
@@ -7442,7 +7930,7 @@ static int MainSeq_ItemArrangePartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動先にアイテムをセット
 	item = BOX2MAIN_PokeParaGet( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, NULL );
-	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, ID_PARA_item, syswk->app->get_item );
+	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, mvwk->put_pos );
 	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 		BOX2OBJ_PokeIconChange(
@@ -7453,12 +7941,14 @@ static int MainSeq_ItemArrangePartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 
 	// 移動元にアイテムをセット
 	syswk->app->get_item = item;
-	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, syswk->app->get_item );
-	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
-	if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-		BOX2OBJ_PokeIconChange(
-			syswk, syswk->tray, syswk->get_pos,
-			syswk->app->pokeicon_id[syswk->get_pos] );
+	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->get_tray, ID_PARA_item, syswk->app->get_item );
+	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
+		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
+		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
+			BOX2OBJ_PokeIconChange(
+				syswk, syswk->tray, syswk->get_pos,
+				syswk->app->pokeicon_id[syswk->get_pos] );
+		}
 	}
 
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
@@ -7502,7 +7992,7 @@ static int MainSeq_ItemArrangePartyIconMovePokeAddEnd( BOX2_SYS_WORK * syswk )
 {
 	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7575,9 +8065,9 @@ static int MainSeq_ItemArrangePartyIconMoveErr( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
 	BGWINFRM_FrameOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MENU5 );
-	CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_A_PARTY_MENU1 );
+	CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU1 );
 	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN;
+	return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -8342,7 +8832,7 @@ static int PokeFreeStartSet( BOX2_SYS_WORK * syswk )
 
 	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_POKEFREE_START );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_POKEFREE_START );
 }
 */
 
@@ -8580,7 +9070,7 @@ static int BoxMoveButtonFrmIn( BOX2_SYS_WORK * syswk, u32 ret )
 	u32	tmp;
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		next = BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		next = BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}else{
 		next = BOX2SEQ_MAINSEQ_ARRANGE_BOXPARTY_CHG_MAIN;
 	}
@@ -8714,7 +9204,7 @@ static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, u32 mode )
 		if( BOX2BGWFRM_BoxMoveButtonCheck(syswk->app->wfrm) == TRUE ){
 			BOX2BGWFRM_BoxMoveButtonOutSet( syswk->app->wfrm );
 		}
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 		break;
 	}
 */
@@ -8962,6 +9452,7 @@ static int BoxThemaTrayIconChg( BOX2_SYS_WORK * syswk, s8 mv )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void WallPaperPageChange( BOX2_SYS_WORK * syswk, s32 mv )
 {
 	s32	pos;
@@ -8975,14 +9466,6 @@ static void WallPaperPageChange( BOX2_SYS_WORK * syswk, s32 mv )
 	}
 	syswk->app->wallpaper_pos = pos;
 
-/*
-	if( mv > 0 ){
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
-	}else{
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
-	}
-*/
-
 	// OBJ変更
 	BOX2OBJ_WallPaperObjChange( syswk );
 	// カーソル位置
@@ -8993,6 +9476,7 @@ static void WallPaperPageChange( BOX2_SYS_WORK * syswk, s32 mv )
 	CURSORMOVE_PosSet( syswk->app->cmwk, (syswk->app->wallpaper_pos%BOX2OBJ_WPICON_MAX) );
 	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -9073,7 +9557,7 @@ static int PartyOutInit( BOX2_SYS_WORK * syswk )
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG3 );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_PARTYOUT_START_CHECK );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_PARTYOUT_START_CHECK );
 }
 */
 
@@ -9382,11 +9866,16 @@ static int PokeMovePutKey( BOX2_SYS_WORK * syswk, u32 pos, int next )
 //--------------------------------------------------------------------------------------------
 static int TrayItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 {
-	syswk->get_pos = pos;
+	syswk->get_pos  = pos;
+	syswk->get_tray = syswk->tray;
+
+	syswk->app->msg_put = 1;
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 
 	syswk->app->get_item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
 
-	BOX2BMP_ItemArrangeMenuStrPrint( syswk, syswk->app->get_item );
+	ItemModeMenuSet( syswk, syswk->app->get_item );
 
 	BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
 
@@ -9396,10 +9885,16 @@ static int TrayItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 		BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 		BOX2OBJ_ItemIconCursorAdd( syswk->app );
 
-		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_MAIN_MENU1, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU1 );
+
+//		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+	}else{
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_MAIN_MENU2, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU2 );
 	}
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN_CURMOVE_RET );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeGetKey, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_MAIN) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9471,20 +9966,18 @@ static int TrayItemGet( BOX2_SYS_WORK * syswk, u32 pos )
 static int BoxPartyItemGet( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	syswk->get_pos = pos;
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		syswk->get_tray = syswk->tray;
+	}else{
+		syswk->get_tray = BOX2MAIN_GETPOS_NONE;
+	}
 
 	syswk->app->get_item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
-
-	BOX2BMP_ButtonPutYStatus( syswk );
 
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
 		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-		if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-			return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
-		}else if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-			BOX2BGWFRM_BoxMoveButtonOutSet( syswk->app->wfrm );
-		}
-		return VFuncSet( syswk, BOX2MAIN_VFuncYStatusButtonMove, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN );
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
 //	Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -9494,15 +9987,9 @@ static int BoxPartyItemGet( BOX2_SYS_WORK * syswk, u32 pos )
 	BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 	BOX2OBJ_ItemIconCursorAdd( syswk->app );
 
-	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
+//	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
 
-	BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
-
-	if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == TRUE ){
-		BOX2BGWFRM_BoxMoveButtonOutSet( syswk->app->wfrm );
-	}else if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-		BOX2BGWFRM_YStatusButtonOutSet( syswk->app->wfrm );
-	}
+//	BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
 
 	{
 		s16	x, y;
@@ -9514,7 +10001,8 @@ static int BoxPartyItemGet( BOX2_SYS_WORK * syswk, u32 pos )
 
 	ItemMoveWorkAlloc( syswk );
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconSetTouch, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_SUBFRM_OUT );
+//	return VFuncSet( syswk, BOX2MAIN_VFuncItemIconGetTouch, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_SUBFRM_OUT );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemIconGetTouch, BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_POKEADD );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9531,11 +10019,16 @@ static int BoxPartyItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	syswk->get_pos = pos;
 	syswk->app->get_item_init_pos = pos;
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		syswk->get_tray = syswk->tray;
+	}else{
+		syswk->get_tray = BOX2MAIN_GETPOS_NONE;
+	}
 
 	syswk->app->get_item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
 
 	if( syswk->app->get_item == ITEM_DUMMY_DATA ){
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_CHG_MAIN;
+		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
 //	Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -9546,15 +10039,14 @@ static int BoxPartyItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 	BOX2OBJ_ItemIconPokePutHand( syswk->app, syswk->get_pos, BOX2MAIN_POKEMOVE_MODE_ALL );
 	BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 
-	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
+//	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
 
-	BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 
-	if( BOX2BGWFRM_YStatusButtonCheck( syswk->app->wfrm ) == TRUE ){
-		BOX2BGWFRM_YStatusButtonOutSet( syswk->app->wfrm );
-	}
+//	BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_MOVE_MAIN );
+//	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_MOVE_MAIN );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconGetKey, BOX2SEQ_MAINSEQ_ITEMGET_MAIN );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9570,17 +10062,16 @@ static int BoxPartyItemPutKeyCancel( BOX2_SYS_WORK * syswk )
 {
 	u32	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 
-	if( pos < BOX2UI_ARRANGE_MOVE_RETURN ){
-		if( BOX2MAIN_PokeInfoPut( syswk, pos ) == TRUE ){
-			BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
-		}
+	if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
+		BOX2MAIN_PokeInfoPut( syswk, pos );
 	}else{
 		BOX2MAIN_PokeInfoOff( syswk );
 	}
+
 	ItemMoveWorkAlloc( syswk );
 	return VFuncSet(
 			syswk,
-			BOX2MAIN_VFuncItemArrangeBoxPartyIconPutKeyCancel,
+			BOX2MAIN_VFuncItemIconPutKeyCancel,
 			BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_END );
 }
 
@@ -9611,9 +10102,9 @@ static int BoxPartyItemPutKey( BOX2_SYS_WORK * syswk, u32 pos )
 		return BoxPartyItemPutKeyCancel( syswk );
 	}
 
-	BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeBoxPartyIconPutKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_CHANGE_CHECK );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemIconPutKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_KEYGET_CHANGE_CHECK );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9628,11 +10119,15 @@ static int BoxPartyItemPutKey( BOX2_SYS_WORK * syswk, u32 pos )
 //--------------------------------------------------------------------------------------------
 static int PartyItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 {
-	syswk->get_pos = pos;
+	syswk->get_pos  = pos;
+	syswk->get_tray = syswk->tray;
+	syswk->app->msg_put = 1;
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 
 	syswk->app->get_item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
 
-	BOX2BMP_ItemArrangeMenuStrPrint( syswk, syswk->app->get_item );
+	ItemModeMenuSet( syswk, syswk->app->get_item );
 
 	BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
 
@@ -9641,10 +10136,47 @@ static int PartyItemGetKey( BOX2_SYS_WORK * syswk, u32 pos )
 		BOX2OBJ_ItemIconPokePut( syswk->app, syswk->get_pos, BOX2MAIN_POKEMOVE_MODE_PARTY );
 		BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 		BOX2OBJ_ItemIconCursorAdd( syswk->app );
-		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+//		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_PARTY_MENU1, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU1 );
+	}else{
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_PARTY_MENU2, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU2 );
 	}
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeGetKey, BOX2SEQ_MAINSEQ_ITEMARRANGE_PARTY_MAIN_CURMOVE_RET );
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeGetKey, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN) );
+
+/*
+	syswk->get_pos  = pos;
+	syswk->get_tray = syswk->tray;
+
+	syswk->app->msg_put = 1;
+
+	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+
+	syswk->app->get_item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
+
+	BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
+
+	ItemModeMenuSet( syswk, syswk->app->get_item );
+
+	if( syswk->app->get_item != ITEM_DUMMY_DATA ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
+		BOX2OBJ_ItemIconPokePut( syswk->app, syswk->get_pos, BOX2MAIN_POKEMOVE_MODE_TRAY );
+		BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
+		BOX2OBJ_ItemIconCursorAdd( syswk->app );
+
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_MAIN_MENU1, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU1 );
+
+//		BOX2BGWFRM_SubDispItemFrmInSet( syswk->app->wfrm );
+	}else{
+		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, BOX2UI_ITEM_MAIN_MENU2, CURSORMOVE_PosGet(syswk->app->cmwk) );
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU2 );
+	}
+
+	return VFuncSet( syswk, BOX2MAIN_VFuncItemArrangeGetKey, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ITEM_MAIN) );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9725,7 +10257,7 @@ static int ItemArrangeMenuStart( BOX2_SYS_WORK * syswk )
 		{
 			POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 			if( PPP_Get( ppp, ID_PARA_tamago_flag, NULL ) == 0 ){
-				syswk->cur_rcv_pos = BOX2UI_ITEM_A_MAIN_MENU1;
+				syswk->cur_rcv_pos = BOX2UI_ITEM_MAIN_MENU1;
 				return SubProcSet( syswk, SUB_PROC_TYPE_BAG );
 			}
 		}
@@ -9736,7 +10268,7 @@ static int ItemArrangeMenuStart( BOX2_SYS_WORK * syswk )
 	}
 
 	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, next );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, next );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9860,7 +10392,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 		BOX2MAIN_PokeInfoOff( syswk );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_PARTY_CHANGE) );
 
-	case BOX2UI_ARRANGE_PGT_STTUS:	// 40: ステータス
+	case BOX2UI_ARRANGE_PGT_STATUS:	// 40: ステータス
 		if( syswk->poke_get_key == 0 ){
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 			if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -9877,7 +10409,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->subProcMode = SUB_PROC_MODE_TB_BOX_GET;
 			syswk->y_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 		}
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, BOX2OBJ_ANM_TB_STATUS_ON, BOX2SEQ_MAINSEQ_STATUS_CALL );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, 1, BOX2SEQ_MAINSEQ_STATUS_CALL );
 
 	case BOX2UI_ARRANGE_PGT_RET:		// 41: 戻る
 		if( syswk->poke_get_key == 0 ){
@@ -10152,7 +10684,7 @@ static int BoxArg_ItemGetYes( BOX2_SYS_WORK * syswk )
 
 		BOX2BMP_ItemGetMsgPut( syswk, item, BOX2BMPWIN_ID_MSG1 );
 		item = 0;
-		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, item );
+		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, item );
 		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos,
@@ -10203,7 +10735,7 @@ static int BoxArg_PokeFreeNo( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, FALSE );
 	}
 
-	return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV) );
+	return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV) );
 }
 
 
@@ -10218,34 +10750,34 @@ static int BoxArg_PokeFreeNo( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int BoxItemArg_RetBagYes( BOX2_SYS_WORK * syswk )
 {
-	u16	item;
+	if( MYITEM_AddItem( syswk->dat->myitem, syswk->app->get_item, 1, HEAPID_BOX_APP ) == TRUE ){
+		POKEMON_PASO_PARAM * ppp;
+		u16	item;
 
-	if( MYITEM_AddItem( syswk->dat->myitem, syswk->app->get_item, 1, HEAPID_BOX_APP ) == FALSE ){
-//		Snd_SePlay( SE_BOX2_WARNING );
-		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_MAX, BOX2BMPWIN_ID_MSG1 );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_CANCEL;
-		return BOX2SEQ_MAINSEQ_TRGWAIT;
-	}
+		ppp  = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
+		item = ITEM_DUMMY_DATA;
 
-	item = ITEM_DUMMY_DATA;
-	BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, ID_PARA_item, item );
+		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, item );
 
-	{
-		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 		if( BOX2MAIN_PokeItemFormChange( ppp ) == TRUE ){
-			BOX2OBJ_PokeIconChange(
-				syswk, syswk->tray, syswk->get_pos,
-				syswk->app->pokeicon_id[syswk->get_pos] );
+			BOX2OBJ_PokeIconChange( syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
 		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+
+		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+		BOX2MAIN_ResetTouchBar( syswk );
+		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+		BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
+		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_ITEMICON, 2 );
+//		BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
+		return BOX2SEQ_MAINSEQ_ITEM_BAGIN_ANM;
 	}
 
-	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
-	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
-	BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
-	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_ITEMICON, 2 );
-	BOX2BGWFRM_SubDispItemFrmOutSet( syswk->app->wfrm );
-	return BOX2SEQ_MAINSEQ_ITEMARRANGE_RET_BAG_ENTER;
+//	Snd_SePlay( SE_BOX2_WARNING );
+	BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_MAX, BOX2BMPWIN_ID_MSG1 );
+	syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
+	return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -10303,9 +10835,17 @@ static int BoxArg_BoxEndNo( BOX2_SYS_WORK * syswk )
 		break;
 
 	case BOX_MODE_ITEM:			// どうぐせいり
-		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, FALSE );
-		return BOX2SEQ_MAINSEQ_ITEMARRANGE_MAIN;
+		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, FALSE );
+			BOX2BGWFRM_BoxListButtonOn( syswk->app );
+			return BOX2SEQ_MAINSEQ_ITEM_PARTY_MAIN;
+		}else{
+			BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, FALSE );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			return BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		}
+		break;
 
 	case BOX_MODE_BATTLE:		// バトルボックス
 		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
@@ -10894,7 +11434,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 		BOX2MAIN_PokeInfoOff( syswk );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_BOXLIST_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_BOXLIST_CHANGE) );
 
-	case BOX2UI_ARRANGE_PTGT_STTUS:		// 40: ステータス
+	case BOX2UI_ARRANGE_PTGT_STATUS:		// 40: ステータス
 		if( syswk->poke_get_key == 0 ){
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 			if( pos >= BOX2OBJ_POKEICON_PUT_MAX ){
@@ -10911,7 +11451,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->subProcMode = SUB_PROC_MODE_TB_PARTY_GET;
 			syswk->y_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 		}
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, BOX2OBJ_ANM_TB_STATUS_ON, BOX2SEQ_MAINSEQ_STATUS_CALL );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, 1, BOX2SEQ_MAINSEQ_STATUS_CALL );
 
 	case BOX2UI_ARRANGE_PTGT_RET:		// 41: 戻る
 		if( syswk->poke_get_key == 0 ){
@@ -11109,17 +11649,21 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 			if( ITEM_CheckMail( item ) == TRUE ){
 				BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 				syswk->app->sub_seq = 1;
-				return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+				return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 			}
 			BOX2BGWFRM_PokeMenuOff( syswk->app->wfrm );
 			BOX2BMP_ItemGetCheckMsgPut( syswk, item, BOX2BMPWIN_ID_MSG1 );
-			return YesNoSet( syswk, YESNO_ID_ITEMGET );
+			if( syswk->dat->callMode == BOX_MODE_ITEM ){
+				return YesNoSet( syswk, YESNO_ID_ITEM_RET_BAG );
+			}else{
+				return YesNoSet( syswk, YESNO_ID_ITEMGET );
+			}
 		}
 		// タマゴ
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 		BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 		syswk->app->sub_seq = 2;
-		return VFuncSet( syswk, BOX2MAIN_VFuncPokeFreeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 
 	case 1:		// メールを持っている
 //		Snd_SePlay( SE_BOX2_WARNING );
@@ -12056,4 +12600,24 @@ static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk )
 	wk->cnt = 0;
 	wk->mv  = 0;
 	syswk->app->seqwk = wk;
+}
+
+
+static void ItemModeMenuSet( BOX2_SYS_WORK * syswk, s16 item )
+{
+	if( item != ITEM_DUMMY_DATA ){
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+			CURSORMOVE_MoveTableBitOn( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU1 );
+		}else{
+			CURSORMOVE_MoveTableBitOn( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU1 );
+		}
+		BOX2BMP_MenuStrPrint( syswk,ItemMenuStrTbl, 3 );
+	}else{
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+			CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ITEM_MAIN_MENU1 );
+		}else{
+			CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ITEM_PARTY_MENU1 );
+		}
+		BOX2BMP_MenuStrPrint( syswk,ItemNoneMenuStrTbl, 2 );
+	}
 }

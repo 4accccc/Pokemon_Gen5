@@ -25,9 +25,9 @@ enum {
 	BOX2OBJ_ANM_HAND_OPEN,				// 手カーソル：開く
 	BOX2OBJ_ANM_HAND_CLOSE,				// 手カーソル：閉じる
 	BOX2OBJ_ANM_HAND_SHADOW,			// 手カーソル：影
-	BOX2OBJ_ANM_TB_STATUS,				// タッチバーステータス
-	BOX2OBJ_ANM_TB_STATUS_ON,			// タッチバーステータス・ON
-	BOX2OBJ_ANM_TB_STATUS_OFF,		// タッチバーステータス・OFF
+//	BOX2OBJ_ANM_TB_STATUS,				// タッチバーステータス
+//	BOX2OBJ_ANM_TB_STATUS_ON,			// タッチバーステータス・ON
+//	BOX2OBJ_ANM_TB_STATUS_OFF,		// タッチバーステータス・OFF
 };
 
 #define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
@@ -334,7 +334,7 @@ extern void BOX2OBJ_TrayIconChange( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperObjChange( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_WallPaperObjChange( BOX2_SYS_WORK * syswk );
 
 
 
@@ -862,7 +862,7 @@ extern void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -874,7 +874,7 @@ extern void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv );
+//extern void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -896,18 +896,7 @@ extern void BOX2OBJ_WallPaperCursorSet( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更：壁紙ＯＢＪ切り替え
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperObjChange( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
