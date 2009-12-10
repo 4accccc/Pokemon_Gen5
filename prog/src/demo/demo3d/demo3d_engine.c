@@ -250,6 +250,9 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   MTX_Identity33( &status.rotate );
 
   p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
+  
+  // ICAカメラ更新
+  is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
 
   ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
   
@@ -279,10 +282,6 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
     }
   }
 	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );
-  
-  {
-    is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
-  }
 
   // ループ検出で終了
   return is_loop;
