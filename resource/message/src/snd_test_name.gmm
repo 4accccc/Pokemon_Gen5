@@ -5937,6 +5937,10 @@
 		<language name="JPN" width="256">HINSHI</language>
 		<language name="JPN_KANJI" width="256">HINSHI</language>
 	</row>
+	<row id="msg_seq_se_toujou_large">
+		<language name="JPN" width="256">TOUJOU-LARGE</language>
+		<language name="JPN_KANJI" width="256">TOUJOU-LARGE</language>
+	</row>
 	<row id="msg_seq_se_toujou_mid">
 		<language name="JPN" width="256">TOUJOU-MID</language>
 		<language name="JPN_KANJI" width="256">TOUJOU-MID</language>
@@ -5945,17 +5949,17 @@
 		<language name="JPN" width="256">TOUJOU-SMALL</language>
 		<language name="JPN_KANJI" width="256">TOUJOU-SMALL</language>
 	</row>
-	<row id="msg_seq_se_dummy25">
-		<language name="JPN" width="256">DUMMY25</language>
-		<language name="JPN_KANJI" width="256">DUMMY25</language>
+	<row id="msg_seq_se_rotation_s">
+		<language name="JPN" width="256">ROTATION-S</language>
+		<language name="JPN_KANJI" width="256">ROTATION-S</language>
 	</row>
-	<row id="msg_seq_se_dummy26">
-		<language name="JPN" width="256">DUMMY26</language>
-		<language name="JPN_KANJI" width="256">DUMMY26</language>
+	<row id="msg_seq_se_rotation_b">
+		<language name="JPN" width="256">ROTATION-B</language>
+		<language name="JPN_KANJI" width="256">ROTATION-B</language>
 	</row>
-	<row id="msg_seq_se_dummy27">
-		<language name="JPN" width="256">DUMMY27</language>
-		<language name="JPN_KANJI" width="256">DUMMY27</language>
+	<row id="msg_seq_se_triple_s">
+		<language name="JPN" width="256">TRIPLE-S</language>
+		<language name="JPN_KANJI" width="256">TRIPLE-S</language>
 	</row>
 	<row id="msg_seq_se_dummy28">
 		<language name="JPN" width="256">DUMMY28</language>
@@ -6525,10 +6529,6 @@
 		<language name="JPN" width="256">PASA2</language>
 		<language name="JPN_KANJI" width="256">PASA2</language>
 	</row>
-          <row id="msg_seq_1545">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1546">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -7409,17 +7409,13 @@
 		<language name="JPN" width="256">DMY-097</language>
 		<language name="JPN_KANJI" width="256">DMY-097</language>
 	</row>
-	<row id="msg_seq_se_toujou_large">
-		<language name="JPN" width="256">TOUJOU-LARGE</language>
-		<language name="JPN_KANJI" width="256">TOUJOU-LARGE</language>
-	</row>
 	<row id="msg_seq_se_lvup">
 		<language name="JPN" width="256">LVUP</language>
 		<language name="JPN_KANJI" width="256">LVUP</language>
 	</row>
-	<row id="msg_seq_se_fld_tele2">
-		<language name="JPN" width="256">FLD-TELE2</language>
-		<language name="JPN_KANJI" width="256">FLD-TELE2</language>
+	<row id="msg_seq_se_fld_86">
+		<language name="JPN" width="256">FLD-86</language>
+		<language name="JPN_KANJI" width="256">FLD-86</language>
 	</row>
 	<row id="msg_seq_se_dmy_101">
 		<language name="JPN" width="256">DMY-101</language>
