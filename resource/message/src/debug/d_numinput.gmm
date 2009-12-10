@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-11-26T16:47:30"/>
+	<create user="tamada" host="W00139" date="2009-12-10T16:58:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -373,6 +373,60 @@
 　エフェクト発生位置オフセット</comment>
 		<language name="JPN" width="240">オフセットZ</language>
 		<language name="JPN_KANJI" width="240">オフセットZ</language>
+	</row>
+
+	<row id="dni_number_string" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>数値表示用</comment>
+		<language name="JPN" width="240">[2:07:８桁:0]</language>
+		<language name="JPN_KANJI" width="240">[2:07:８桁:0]</language>
+	</row>
+
+	<row id="dni_flag_sys_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用フラグ操作メニュー：システムフラグ</comment>
+		<language name="JPN" width="240">システムフラグ</language>
+		<language name="JPN_KANJI" width="240">システムフラグ</language>
+	</row>
+
+	<row id="dni_flag_event_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用フラグ操作メニュー：イベントフラグ</comment>
+		<language name="JPN" width="240">イベントフラグ</language>
+		<language name="JPN_KANJI" width="240">イベントフラグ</language>
+	</row>
+
+	<row id="dni_flag_item_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用フラグ操作メニュー：フィールドアイテム</comment>
+		<language name="JPN" width="240">アイテムフラグ</language>
+		<language name="JPN_KANJI" width="240">アイテムフラグ</language>
+	</row>
+
+	<row id="dni_flag_etc_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用フラグ操作メニュー：その他</comment>
+		<language name="JPN" width="240">そのたフラグ</language>
+		<language name="JPN_KANJI" width="240">その他フラグ</language>
+	</row>
+
+	<row id="dni_vanish_flag" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用フラグ操作メニュー：バニッシュフラグ</comment>
+		<language name="JPN" width="240">バニッシュフラグ</language>
+		<language name="JPN_KANJI" width="240">バニッシュフラグ</language>
+	</row>
+
+	<row id="dni_sys_work" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用ワーク操作メニュー：システム</comment>
+		<language name="JPN" width="240">システムワーク</language>
+		<language name="JPN_KANJI" width="240">システムワーク</language>
+	</row>
+
+	<row id="dni_scene_work" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用ワーク操作メニュー：シーン</comment>
+		<language name="JPN" width="240">シーンワーク</language>
+		<language name="JPN_KANJI" width="240">シーンワーク</language>
+	</row>
+
+	<row id="dni_other_work" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>スクリプト用ワーク操作メニュー：その他</comment>
+		<language name="JPN" width="240">そのたワーク</language>
+		<language name="JPN_KANJI" width="240">その他ワーク</language>
 	</row>
 
 	<flowchart-group-list>
