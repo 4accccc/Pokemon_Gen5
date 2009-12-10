@@ -611,7 +611,7 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
   }
 
   switch(*seq){
-  case 0:  //スイッチアニメ開始
+  case 0:  //アニメ開始
     {
       EXP_OBJ_ANM_CNT_PTR anm;
       u8 obj_idx;
