@@ -59,7 +59,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build: file_cp $(MAKE_TARGET) $(targetname).narc
+do-build:	subdir file_cp $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -80,13 +80,10 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(CONVERTDATA)
+$(targetname).narc: $(MAKE_FILE)
+	perl conv.pl
 	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 	$(NAIXCUT) $(targetname).naix
-
-#データコンバート
-$(MAKE_TARGET):$(MAKE_FILE)
-	perl conv.pl
 
 endif
 
