@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-19T19:22:10"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T21:35:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,132 +292,70 @@
 	</lock>
 
 
-	<row id="msg_d08r0601_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・話しかけでイベント開始（暫定）
-・はい/いいえ選択肢</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『ふうん……　きみ　なんだ
-どうして　ジャマを　するのかな？[BE:01:ページ切り替え（クリア）]
-ポケモンを　たすける！　という
-ボクの　おもいが　わからないのかい？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ふうん……　きみ　なんだ
-どうして　ジャマを　するのかな？[BE:01:ページ切り替え（クリア）]
-ポケモンを　救う！　という
-ボクの　思いが　わからないのかい？[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0601_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・pos（詳細未定：中央の階段あたり）
+・プラズマ団多数
+　→
+・続けてeader7_01</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……まってたぜ[BE:01:ページ切り替え（クリア）]
+オレも　ハチクさんも
+ざこの　あいてで　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……待ってたぜ[BE:01:ページ切り替え（クリア）]
+オレも　ハチクさんも
+雑魚の　相手で　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0601_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・はい選択時
-・メッセージ表示後、戦闘に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">ひどい　はなし　だね[BE:01:ページ切り替え（クリア）]
-まあ　いいよ
-わかってもらえる　だなんては[BE:00:ページ切り替え（行送り）]
-きたい　していないから[BE:01:ページ切り替え（クリア）]
-だけど　ジャマは　させない！[BE:01:ページ切り替え（クリア）]
-ボクの　ともだちの　ちから……
-キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ひどい　はなし　だね[BE:01:ページ切り替え（クリア）]
-まあ　いいよ
-わかってもらえる　だなんては[BE:00:ページ切り替え（行送り）]
-期待していないから[BE:01:ページ切り替え（クリア）]
-だけど　ジャマは　させない！[BE:01:ページ切り替え（クリア）]
-ボクの　友達の　力……
-キミに　みせつけて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0601_leader7_01">
+		<comment>♂：最上階イベント前
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……わたしは　へいきだ[BE:01:ページ切り替え（クリア）]
+だが　このままでは
+じかんだけが　すぎていく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……わたしは　平気だ[BE:01:ページ切り替え（クリア）]
+だが　このままでは
+時間だけが　過ぎていく[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0601_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・いいえ選択時
-・メッセージ表示後、戦闘に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">ほんとう　かい！
-それは　うれしいな[BE:01:ページ切り替え（クリア）]
-だけどね　キミ
-プラズマだんの　ジャマを　してるよね[BE:00:ページ切り替え（行送り）]
-だから　まずは　おしおき[BE:01:ページ切り替え（クリア）]
-ボクの　ともだちの　ちから……
-キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ほんとう　かい！
-それは　うれしいな[BE:01:ページ切り替え（クリア）]
-だけどね　キミ
-プラズマ団の　ジャマを　してるよね[BE:00:ページ切り替え（行送り）]
-だから　まずは　おしおき[BE:01:ページ切り替え（クリア）]
-ボクの　友達の　力……
-キミに　みせつけて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0601_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・メッセージ表示後
+　ジムリーダーとライバル、移動
+・応じてプラズマ団も移動して
+　先のフロアに進めるように</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『でだ！　いまから
+ハチクさんと　みちを　ひらくからさ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+おまえが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『でだ！　今から
+ハチクさんと　道を　開くからさ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+おまえが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0601_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・戦闘後メッセージ
-・このときＮと主人公の間に距離がある
-・主人公が動くとmsg_d08r0601_sage2_01</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『まいったな……
-せっかく　ここまで　きたのに</language>
-		<language name="JPN_KANJI" width="256">Ｎ『まいったな……
-せっかく　ここまで　きたのに</language>
+	<row id="msg_d08r0601_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・black_02表示後？？終了まで</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
 	</row>
 
-	<row id="msg_d08r0601_sage2_01">
-		<comment>♂
-・メッセージ表示後、プラズマ団したっぱが
-　主人公に隣接、そのままポケモン勝負へ</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『ええい！
-Ｎさまを　おたすけ　するのだ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『ええい！
-Ｎさまを　お助け　するのだ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0601_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・msg_d08r0601_sage2_01で開始される
-　ポケモン勝負後、自動でメッセージ表示
-・このときN、次フロアへの階段前にいる
-・メッセージ表示後、次のフロアへ
-　画面外に消えると主人公操作可能に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『そのトレーナーを　とおしてあげて
-すごいものを　みせてあげるから[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『そのトレーナーを　通してあげて
-すごいものを　みせてあげるから[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0601_sage2_02">
-		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『あたらしい　くにが　うまれる
-そのためには　まず　はかい　である！</language>
-		<language name="JPN_KANJI" width="256">？？？『新しい　国が　生まれる
-そのためには　まず　破壊である！</language>
-	</row>
-
-	<row id="msg_d08r0601_hakaim1_01">
-		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂その１</attribute>
-		<language name="JPN" width="256">プラズマだん『？？？</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
-	</row>
-
-	<row id="msg_d08r0601_hakaim2_01">
-		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂その２</attribute>
-		<language name="JPN" width="256">プラズマだん『？？？</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
-	</row>
-
-	<row id="msg_d08r0601_hakaiw1_01">
-		<comment>♀
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♀その１</attribute>
-		<language name="JPN" width="256">プラズマだん『？？？</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
+	<row id="msg_d08r0601_leader7_02">
+		<comment>♂：最上階イベント前
+・black_02表示後？？終了まで</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……かずが　おおい
+……これも　ひとつの　つよさか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……数が　多い
+……これも　ひとつの　強さか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

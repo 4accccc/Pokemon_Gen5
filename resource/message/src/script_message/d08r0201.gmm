@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-19T17:21:26"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T21:38:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,28 +292,48 @@
 	</lock>
 
 
-	<row id="msg_d08r0201_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：最上階イベント前
-・pos（詳細未定：倒れた柱の近く）を踏むと
-　主人公を見ないままメッセージ表示
-・続けてmsg_d08r0201_black_02</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『なにが　あったんだろうな
-あんな　はしらが　たおれているなんて[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なにが　あったんだろうな
-あんな　柱が　倒れているなんて[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0201_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・d08でmsg_d08_white_07表示後</comment>
+		<attribute name="キャラ指定">博士父</attribute>
+		<language name="JPN" width="256">アララギ『この　とうが
+いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
+むすめに　しらべさせるか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『この　塔が
+いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
+娘に　調べさせるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0201_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：最上階イベント前
-・主人公と向き合ってメッセージ表示
-・表示後、階段方向へ移動
-　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">プラズマだんは　うえ　だな
-いそごうぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団は　上だな
-急ごうぜ！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0201_leader7_01w">
+		<comment>♂
+・d08でmsg_d08_white_07表示後
+・WHITEver</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……シンは
+イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+ねむりから　さますとは……</language>
+		<language name="JPN_KANJI" width="256">ハチク『……シンは
+イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+眠りから　さますとは……</language>
+	</row>
+
+	<row id="msg_d08r0201_leader7_01b">
+		<comment>♂
+・d08でmsg_d08_white_07表示後
+・BLACKver</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……ムは
+イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+ねむりから　さますとは……</language>
+		<language name="JPN_KANJI" width="256">ハチク『……ムは
+イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+眠りから　さますとは……</language>
 	</row>
 
 	<flowchart-group-list>

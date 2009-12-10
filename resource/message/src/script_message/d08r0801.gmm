@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T21:34:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="285"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,132 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d08r0801_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・話しかけでイベント開始（暫定）
+・はい/いいえ選択肢</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『ふうん……　きみ　なんだ
+どうして　ジャマを　するのかな？[BE:01:ページ切り替え（クリア）]
+ポケモンを　たすける！　という
+ボクの　おもいが　わからないのかい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ふうん……　きみ　なんだ
+どうして　ジャマを　するのかな？[BE:01:ページ切り替え（クリア）]
+ポケモンを　救う！　という
+ボクの　思いが　わからないのかい？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0801_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">ひどい　はなし　だね[BE:01:ページ切り替え（クリア）]
+まあ　いいよ
+わかってもらえる　だなんては[BE:00:ページ切り替え（行送り）]
+きたい　していないから[BE:01:ページ切り替え（クリア）]
+だけど　ジャマは　させない！[BE:01:ページ切り替え（クリア）]
+ボクの　ともだちの　ちから……
+キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ひどい　はなし　だね[BE:01:ページ切り替え（クリア）]
+まあ　いいよ
+わかってもらえる　だなんては[BE:00:ページ切り替え（行送り）]
+期待していないから[BE:01:ページ切り替え（クリア）]
+だけど　ジャマは　させない！[BE:01:ページ切り替え（クリア）]
+ボクの　友達の　力……
+キミに　みせつけて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0801_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・いいえ選択時
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">ほんとう　かい！
+それは　うれしいな[BE:01:ページ切り替え（クリア）]
+だけどね　キミ
+プラズマだんの　ジャマを　してるよね[BE:00:ページ切り替え（行送り）]
+だから　まずは　おしおき[BE:01:ページ切り替え（クリア）]
+ボクの　ともだちの　ちから……
+キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ほんとう　かい！
+それは　うれしいな[BE:01:ページ切り替え（クリア）]
+だけどね　キミ
+プラズマ団の　ジャマを　してるよね[BE:00:ページ切り替え（行送り）]
+だから　まずは　おしおき[BE:01:ページ切り替え（クリア）]
+ボクの　友達の　力……
+キミに　みせつけて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0801_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・戦闘後メッセージ
+・このときＮと主人公の間に距離がある
+・主人公が動くとsage2_01</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『まいったな……
+せっかく　ここまで　きたのに</language>
+		<language name="JPN_KANJI" width="256">Ｎ『まいったな……
+せっかく　ここまで　きたのに</language>
+	</row>
+
+	<row id="msg_d08r0801_sage2_01">
+		<comment>♂
+・メッセージ表示後、プラズマ団したっぱが
+　主人公に隣接、そのままポケモン勝負へ</comment>
+		<attribute name="キャラ指定">七人衆</attribute>
+		<language name="JPN" width="256">？？？『ええい！
+Ｎさまを　おたすけ　するのだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『ええい！
+Ｎさまを　お助け　するのだ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0801_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・sage2_01で開始される
+　ポケモン勝負後、自動でメッセージ表示
+・このときN、次フロアへの階段前にいる
+・メッセージ表示後、次のフロアへ
+　画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『そのトレーナーを　とおしてあげて
+すごいものを　みせてあげるから[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『そのトレーナーを　通してあげて
+すごいものを　みせてあげるから[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0801_sage2_02">
+		<comment>♂
+・Ｎが次フロアに移動後から？？まで</comment>
+		<attribute name="キャラ指定">七人衆</attribute>
+		<language name="JPN" width="256">？？？『あたらしい　くにが　うまれる
+そのためには　まず　はかい　である！</language>
+		<language name="JPN_KANJI" width="256">？？？『新しい　国が　生まれる
+そのためには　まず　破壊である！</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim1_01">
+		<comment>♂
+・Ｎが次フロアに移動後から？？まで</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂その１</attribute>
+		<language name="JPN" width="256">プラズマだん『？？？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim2_01">
+		<comment>♂
+・Ｎが次フロアに移動後から？？まで</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂その２</attribute>
+		<language name="JPN" width="256">プラズマだん『？？？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaiw1_01">
+		<comment>♀
+・Ｎが次フロアに移動後から？？まで</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♀その１</attribute>
+		<language name="JPN" width="256">プラズマだん『？？？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『？？？</language>
 	</row>
 
 	<flowchart-group-list>

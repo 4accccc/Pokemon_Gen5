@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-19T19:21:49"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T21:34:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,117 +292,11 @@
 	</lock>
 
 
-	<row id="msg_d08r0701_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・posを踏むとメッセージ表示
-・表示後、動作モデルのアニメ
-　続けてドラゴン出現デモ（仮称）へつなげる</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『いにしえの　えいゆうと　ともに
-くにを　つくりだし[BE:00:ページ切り替え（行送り）]
-おおいなる　ポケモンよ……[BE:01:ページ切り替え（クリア）]
-ここにめざめ
-われに　ちからを　あたえよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『古の　英雄と　ともに
-国を　創りだし[BE:00:ページ切り替え（行送り）]
-大いなる　ポケモンよ……[BE:01:ページ切り替え（クリア）]
-ここに目覚め
-我に　力を与えよ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_boss_02w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・ドラゴン出現デモ終了後、マップに復帰
- パッケージポケモンの動作モデル配置済み
-　Nは下向き（＝主人公向き）でメッセージ表示
-・続けてmsg_d08r0701_boss_03</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『この　しろい　ポケモン
-シンと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　たいへんだな
-プラズマだんの　おうさま　として
-やることが　いっぱい　なんだ！</language>
-		<language name="JPN_KANJI" width="256">Ｎ『この　白い　ポケモン
-シンと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　大変だな
-プラズマ団の　王様　として[BE:00:ページ切り替え（行送り）]
-やることが　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_boss_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・ドラゴン出現デモ終了後、マップに復帰
- パッケージポケモンの動作モデル配置済み
-　Nは下向き（＝主人公向き）でメッセージ表示
-・続けてmsg_d08r0701_boss_03</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『この　くろい　ポケモン
-ムと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　たいへんだな
-プラズマだんの　おうさま　として
-やることが　いっぱい　なんだ！</language>
-		<language name="JPN_KANJI" width="256">Ｎ『この　黒い　ポケモン
-ムと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　大変だな
-プラズマ団の　王様　として[BE:00:ページ切り替え（行送り）]
-やることが　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・パッケージポケモンに乗り飛び去る（仮）
-・画面外に消えると階段から
-　ライバルとジムリーダー登場</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">さ　いこう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さ　いこう！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・所定のposに到達後、メッセージ表示
-・続けてmsg_d08r0701_leader7_01</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『いま　とびさったのって……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『いま　飛び去ったのって……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_leader7_01">
-		<comment>♂
-・続けてmsg_d08r0701_black_02</comment>
-		<attribute name="キャラ指定">LEADER7
-ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……なんたること[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……なんたること[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・Ｎが飛び去ったposに到達後、メッセージ表示
-・続けてmsg_d08r0701_leader7_02</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『なんで！
-なんで　Ｎが！[BE:01:ページ切り替え（クリア）]
-でんせつの　ポケモンを
-めざめさせるんだよ！？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なんで！
-なんで　Ｎが！[BE:01:ページ切り替え（クリア）]
-伝説の　ポケモンを
-目覚めさせるんだよ！？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08r0701_leader7_02">
-		<comment>♂
-・メッセージ表示後、画面暗転し
-　d08：リュウラセンの塔（外）へ切り替え</comment>
-		<attribute name="キャラ指定">LEADER7
-ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……もどろう[BE:01:ページ切り替え（クリア）]
-これから　どうするか
-きめなければ　ならない……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……戻ろう[BE:01:ページ切り替え（クリア）]
-これから　どうするか
-決めなければ　ならない……[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
