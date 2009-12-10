@@ -7376,8 +7376,31 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     WazaID  waza;
     BtlPokePos pos;
 
-    // @@@ –{—ˆ‚Í’nŒ`‚É‰ž‚¶‚Ä‚à‚Á‚ÆƒtƒNƒUƒc‚É
-    waza = (bg & 1)? WAZANO_HAIDOROPONPU : WAZANO_REITOUBIIMU;
+    switch( bg ){
+    case  BATTLE_BG_TYPE_GRASS:         ///< ‘‚Þ‚ç
+    case  BATTLE_BG_TYPE_GRASS_SEASON:  ///< ‘‚Þ‚ç(Žl‹G—L‚è)
+    case  BATTLE_BG_TYPE_FOREST:        ///< X
+    case  BATTLE_BG_TYPE_MOUNTAIN:      ///< ŽR
+      waza = WAZANO_TANEBAKUDAN;
+      break;
+    case  BATTLE_BG_TYPE_CAVE:          ///< “´ŒA
+    case  BATTLE_BG_TYPE_CAVE_DARK:     ///< “´ŒA(ˆÃ‚¢)
+      waza = WAZANO_IWANADARE;
+      break;
+    case  BATTLE_BG_TYPE_SEA:           ///< ŠC
+      waza = WAZANO_HAIDOROPONPU;
+      break;
+    case  BATTLE_BG_TYPE_SAND:          ///< »”™
+      waza = WAZANO_ZISIN;
+      break;
+    case  BATTLE_BG_TYPE_ROOM:          ///< Žº“à
+    case  BATTLE_BG_TYPE_CITY:          ///< ŠX
+    case  BATTLE_BG_TYPE_CITY_SEASON:   ///< ŠX(Žl‹G—L‚è)
+    default:
+      waza = WAZANO_TORAIATAKKU;
+      break;
+    }
+
     pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );

@@ -1393,27 +1393,6 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
- * 乱数値を返す
- *  ※返す値は 0～(pattern-1) の範囲。pattern==0だと、32bit全範囲。
- *
- * @param   pattern   乱数の取りうる値の範囲
- *
- * @retval  u32
- */
-//=============================================================================================
-u32 BTL_MAIN_GetRand( const BTL_MAIN_MODULE* wk, u32 pattern )
-{
-  GFL_STD_RandContext* context = (GFL_STD_RandContext*)(&wk->randomContext);
-
-  if( pattern ){
-    return GFL_STD_Rand0( context, pattern );
-  }else{
-    return GFL_STD_Rand( context, GFL_STD_RAND_MAX );
-  }
-}
-
-//=============================================================================================
-/**
  * 戦闘のルール指定子を返す
  *
  * @param   wk
@@ -2028,7 +2007,7 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
 //--------------------------------------------------------------------------
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos )
 {
-  GF_ASSERT(btlPos < NELEMS(wk->posCoverClientID));
+  GF_ASSERT_MSG(btlPos < NELEMS(wk->posCoverClientID), "pos=%d\n", btlPos);
   GF_ASSERT_MSG(wk->posCoverClientID[btlPos] != BTL_CLIENT_MAX, "pos=%d\n", btlPos);
 
   return wk->posCoverClientID[btlPos];
@@ -2417,10 +2396,12 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   const BTL_PARTY* party;
   u8 clientID, posIdx;
 
+  BTL_Printf("戦闘位置[%d] = ", pos);
+
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
 
-  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
+  BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
 
   return BTL_PARTY_GetMemberDataConst( party, posIdx );
 }
