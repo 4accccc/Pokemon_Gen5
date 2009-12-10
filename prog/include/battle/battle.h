@@ -22,6 +22,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/config.h"
+#include "gamesystem/comm_player_support.h"
 #include "buflen.h"
 
 #include "battle_bg_def.h"  //zonetableコンバータから参照させたいので定義を分離しました by iwasawa
@@ -201,12 +202,15 @@ typedef struct {
 
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM]; //トレーナーデータ
 
-  //セーブデータ系
+  // セーブデータ系
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
   const CONFIG*     configData;   ///< コンフィグデータ
   MYITEM*           itemData;     ///< アイテムデータ
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
   ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
+
+  // ゲームデータ系
+  COMM_PLAYER_SUPPORT*  commSupport;  ///< 通信プレイヤーサポート
 
   // デバッグ系
   u16         DebugFlag;          ///< 各種デバッグフラグ

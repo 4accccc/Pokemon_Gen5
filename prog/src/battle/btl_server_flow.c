@@ -419,6 +419,7 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
+static void scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
@@ -6012,6 +6013,8 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 
   scproc_turncheck_sub( wk, BTL_EVENT_TURNCHECK_BEGIN );
 
+  scproc_turncheck_CommSupport( wk );
+
   scproc_turncheck_sick( wk, pokeSet );
   scproc_turncheck_side( wk );
   scproc_turncheck_field( wk );
@@ -6038,6 +6041,16 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     wk->turnCount++;
   }
 }
+/**
+ *  ターンチェック：通信侵入者によるサポート
+ */
+static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
+{
+
+}
+/**
+ *  ターンチェック：開始・終了
+ */
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
