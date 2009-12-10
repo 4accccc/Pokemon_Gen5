@@ -236,3 +236,4 @@
   ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
   ARCID_GYM_DRAGON	"fieldmap/gym_dragon.narc"	#ドラゴンジム
   ARCID_SCR_CAM_PRM	"fieldmap/scr_cam_prm.narc"	#スクリプトカメラパラメータ
+  ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ
