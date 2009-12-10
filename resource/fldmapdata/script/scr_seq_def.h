@@ -4792,6 +4792,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _BMODEL_ANIME_STOP
+ * @brief 配置モデルアニメの停止
+ * @param anm_id  配置モデルを指定するためのID
+ */
+//--------------------------------------------------------------
+#define _BMODEL_ANIME_STOP( anm_id ) \
+    _ASM_BMODEL_ANIME_STOP anm_id
+
+    .macro _ASM_BMODEL_ANIME_STOP anm_id
+    .short  EV_SEQ_BMODEL_ANIME_STOP
+    .short  \anm_id
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _BMODEL_ANIME_WAIT
  * @brief 配置モデルアニメの終了待ち
  * @param anm_id  配置モデルを指定するためのID
@@ -5831,6 +5846,24 @@
 
   .macro  _ASM_DEMO_SCENE demo_no
   .short  EV_SEQ_DEMO_SCENE
+  .short  \demo_no
+  .endm
+  
+//======================================================================
+//  テレビトランシーバーデモ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _CALL_TVT_DEMO
+ * @brief デモ呼び出し
+ * @param demo_no   デモID指定ナンバー
+ */
+//--------------------------------------------------------------
+#define _CALL_TVT_DEMO( demo_no )  \
+    _ASM_CALL_TVT_DEMO demo_no
+
+  .macro  _ASM_TVT_DEMO demo_no
+  .short  EV_SEQ_CALL_TVT_DEMO
   .short  \demo_no
   .endm
   

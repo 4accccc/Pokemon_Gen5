@@ -33,6 +33,7 @@ _EVENT_DATA   ev_debug_nozomu
 _EVENT_DATA   ev_debug_tomoya
 _EVENT_DATA   ev_debug_obata
 _EVENT_DATA   ev_debug_hosaka
+_EVENT_DATA   ev_debug_ariizumi
 _EVENT_DATA_END
 
 
@@ -197,6 +198,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_hosaka
   _CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ariizumi
+  _CALL_TVT_DEMO( 0 )
 EVENT_END
 
 

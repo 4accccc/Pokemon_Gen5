@@ -258,5 +258,21 @@
   _ASM_MAP_FADE_END_CHECK
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief テレビトランシーバーデモ簡易呼び出し
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_CALL_TVT_DEMO demo_no
+  _ASM_MAP_FADE_BLACK_OUT
+  _ASM_MAP_FADE_END_CHECK
+  _ASM_FIELD_CLOSE
+  _ASM_TVT_DEMO \demo_no
+  _ASM_FIELD_OPEN
+  _ASM_MAP_FADE_BLACK_IN
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+
 
 

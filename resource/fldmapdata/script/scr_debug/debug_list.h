@@ -4,7 +4,7 @@
 //======================================================================
 #pragma once
 enum{
-  DEBUG_SCR_MAX = 12,
+  DEBUG_SCR_MAX = 13,
   DEBUG_SCR_OFS_ID = 0,
   DEBUG_SCR_OFS_NAME = 2,
   DEBUG_SCR_NAME_LEN = 30,
