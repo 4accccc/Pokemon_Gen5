@@ -520,6 +520,7 @@ VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk )
   u16 arm;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   head = VMGetU16( core );
@@ -532,6 +533,7 @@ VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
+  SCRIPT_CallEvent( sc, call_event );
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
@@ -549,6 +551,7 @@ VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk )
   
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   dir = VMGetU16( core );
@@ -560,6 +563,7 @@ VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
+  SCRIPT_CallEvent( sc, call_event );
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
