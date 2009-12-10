@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T19:03:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T14:10:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -591,8 +591,10 @@
 ポケモン図鑑　完成は　厳しそう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_r01_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてＴＶトランシーバーのコール音再生
+・tvt.gmmのmsg_transceiver_r01_01呼び出し</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『じゃあ
 カラクサタウンに　いくか[BE:01:ページ切り替え（クリア）]
@@ -600,6 +602,17 @@
 		<language name="JPN_KANJI" width="256">ブラッカー『じゃあ
 カラクサタウンに　行くか[BE:01:ページ切り替え（クリア）]
 博士も　待っているし[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r01_black_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、ライバルｔ02へ
+　主人公、操作可能</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……だってさ
+じゃ　オレ　いくわ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……だってさ
+じゃ　オレ　行くわ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_boy1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

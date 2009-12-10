@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-09T21:50:21"/>
+	<create user="matsumiya" host="W00207" date="2009-12-10T14:23:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,14 +355,30 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04">
+	<row id="msg_t01r0101_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・テレビトランシーバー入手処理
+※アイテムではない</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">そうだ！　これこれ！
+テレビトランシーバー！！[BE:00:ページ切り替え（行送り）]
+しゅうりから　もどってきてたわ！[BE:01:ページ切り替え（クリア）]
+ともだちの　ばんごうも
+ちゃんと　とうろく　されたままよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そうだ！　これこれ！
+テレビトランシーバー！！[BE:00:ページ切り替え（行送り）]
+修理から　戻ってきてたわ！[BE:01:ページ切り替え（クリア）]
+友達の　番号も
+ちゃんと　登録されたままよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_04_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
-		<attribute name="キャラ指定">主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『アララギはかせに
-おれいを　いわないとね</language>
-		<language name="JPN_KANJI" width="256">ママ『アララギ博士に
-お礼を　いわないとね</language>
+		<language name="JPN" width="256">じゃ　いってらっしゃい！
+アララギはかせに　よろしくね！</language>
+		<language name="JPN_KANJI" width="256">じゃ　いってらっしゃい！
+アララギはかせに　よろしくね！</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">

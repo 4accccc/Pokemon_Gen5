@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-19T11:58:12"/>
+	<create user="matsumiya" host="W00207" date="2009-12-09T14:53:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -337,121 +337,58 @@
 
 
 	<row id="mes_d01_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・posを踏むと
-　主人公に隣接してメッセージ表示
-・メッセージ表示後、
-　下を向いて「！」マーク表示
-・続けてmes_d01_white_02</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
-おかしな　うめを　みせる[BE:00:ページ切り替え（行送り）]
-ふしぎな　ポケモンを　さがすの？</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
-おかしな　夢を　見せる[BE:00:ページ切り替え（行送り）]
-不思議な　ポケモンを　探すの？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ表示後
-　友達♀、画面下に移動</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">なんだか　あっちの　ほうから
-ものおと　きこえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　いってみようよ！</language>
-		<language name="JPN_KANJI" width="256">なんだか　あっちの　方から
-物音　聞こえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　行ってみようよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_leader1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後
-　主人公の方、上を向いて
-　mes_d01_leader1_02表示</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">ジムリーダー</attribute>
-		<language name="JPN" width="256">よーし！　いいかんじ！[BE:01:ページ切り替え（クリア）]
-ほのおタイプの　わざは
-つかっていて　きもちいいぜ！！</language>
-		<language name="JPN_KANJI" width="256">よーし！　いい感じ！[BE:01:ページ切り替え（クリア）]
-ほのおタイプの　技は
-使っていて　気持ちいいぜ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_leader1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後
-　ジムリーダー、c01の方に移動
-・画面外に消えると
-　mes_d01_white_03表示</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">ジムリーダー</attribute>
-		<language name="JPN" width="256">なに　おまえら？[BE:01:ページ切り替え（クリア）]
-ジムリーダーが　かくれて
-しゅぎょう　しているのを　みるなよな[BE:01:ページ切り替え（クリア）]
-あっ　ひょっとして
-ジムに　ちょうせん　とか？[BE:01:ページ切り替え（クリア）]
-そっか　ちょうせんしゃ　か！
-よし　ジムで　まってるぜ！！</language>
-		<language name="JPN_KANJI" width="256">なに　おまえら？[BE:01:ページ切り替え（クリア）]
-ジムリーダーが　隠れて
-修行しているのを　見るなよな[BE:01:ページ切り替え（クリア）]
-あっ　ひょっとして
-ジムに　挑戦とか？[BE:01:ページ切り替え（クリア）]
-そっか　挑戦者か！
-よし　ジムで　待ってるぜ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公と向き合ってからメッセージ表示
-</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『やっぱり
-つよくなるには　しゅぎょう　なんだね</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『やっぱり
-強くなるには　修行なんだね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・mes_d01_white_03表示以降繰り返し
-・r03イベント開始で動作モデルを削除（暫定）</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">あたし　もう少し
-ゆめポケモン　さがしてみるね[BE:01:ページ切り替え（クリア）]
-ジムに　ちょうせん　するのは
-もうすこし　さきかな……？</language>
-		<language name="JPN_KANJI" width="256">あたし　もう少し
-夢ポケモン　探してみるね[BE:01:ページ切り替え（クリア）]
-ジムに　挑戦するのは
-もう少し　先かな……？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・c01ジムバッジ取得後
-・r03イベント開始で動作モデルを削除（暫定）
-※仮メッセージ</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">それって……
-すごーい！！</language>
-		<language name="JPN_KANJI" width="256">それって……
-すごーい！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="mes_d01_boy2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・7月用</comment>
+		<comment>no data</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">おかしな　ゆめを　みせる
-ふしぎな　ポケモンが　いるんだ！[BE:01:ページ切り替え（クリア）]
-ほんとうだぜ
-だって　オレ　みたもん！</language>
-		<language name="JPN_KANJI" width="256">おかしな　夢を　見せる
-不思議な　ポケモンが　いるんだ！[BE:01:ページ切り替え（クリア）]
-本当だぜ
-だって　オレ　見たもん！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
