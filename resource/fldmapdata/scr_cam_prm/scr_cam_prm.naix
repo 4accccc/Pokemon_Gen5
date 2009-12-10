@@ -4,14 +4,19 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-12-09T12:00:07
+	Update:2009-12-10T17:14:39
  *****************************************************************************/
 
 #ifndef NARC_SCR_CAM_PRM_NAIX_
 #define NARC_SCR_CAM_PRM_NAIX_
 
 enum {
-	NARC_scr_cam_prm_scr_cam_prm_test_bin = 0
+	NARC_scr_cam_prm_scr_cam_prm_test_bin = 0,
+	NARC_scr_cam_prm_c3_cam_01_bin = 1,
+	NARC_scr_cam_prm_c3_cam_02_bin = 2,
+	NARC_scr_cam_prm_c3_cam_03_bin = 3,
+	NARC_scr_cam_prm_c3_cam_04_bin = 4,
+	NARC_scr_cam_prm_c3_cam_05_bin = 5
 };
 
 /* NARC_SCR_CAM_PRM_NAIX_ */
