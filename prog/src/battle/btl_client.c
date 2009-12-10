@@ -86,7 +86,6 @@ struct _BTL_CLIENT {
   u32            returnDataSize;
 
   const BTL_PARTY*  myParty;
-  u8                frontPokeEmpty[ BTL_POSIDX_MAX ];       ///< 担当している戦闘位置にもう出せない時にTRUEにする
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
   u8                procPokeIdx;    ///< 処理中ポケモンインデックス
   s8                prevPokeIdx;    ///< 前回の処理ポケモンインデックス
@@ -156,9 +155,8 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
-static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
+static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* tokuseiID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
-static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param );
 static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
@@ -275,10 +273,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->prevRotateDir = BTL_ROTATEDIR_NONE;
   wk->weather = BTL_WEATHER_NONE;
   wk->viewCore = NULL;
-
-  for(i=0; i<NELEMS(wk->frontPokeEmpty); ++i){
-    wk->frontPokeEmpty[i] = FALSE;
-  }
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
 
   wk->myState = 0;
@@ -820,8 +814,18 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
-    (*seq)++;
+    {
+      u16 tokuseiID;
+      u8  code, pokeID, fCantEsc = FALSE;
+      code = is_prohibit_escape( wk, &pokeID, &tokuseiID );
+      if( (code != BTL_CANTESC_NULL)
+      ||  (BPP_GetID(wk->procPoke) == pokeID)
+      ){
+        fCantEsc = TRUE;
+      }
+      BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, fCantEsc, &wk->pokeSelResult );
+      (*seq)++;
+    }
     break;
 
   case 1:
@@ -905,8 +909,9 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
     default:
       {
         BtlCantEscapeCode  code;
+        u16 tokuseiID;
         u8 pokeID;
-        code = is_prohibit_escape( wk, &pokeID );
+        code = is_prohibit_escape( wk, &pokeID, &tokuseiID );
         // とくせい、ワザ効果等による禁止チェック
         if( code == BTL_CANTESC_NULL )
         {
@@ -916,10 +921,14 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
         }
         else
         {
-          // @todo ここは禁止コードを引数に渡すのではダメで、禁止コードに応じて文字列IDも変えないとマズい
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_CantEscTok );
-          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
-          BTLV_STRPARAM_AddArg( &wk->strParam, code );
+          if( tokuseiID != POKETOKUSEI_NULL ){
+            BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_CantEscTok );
+            BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+            BTLV_STRPARAM_AddArg( &wk->strParam, tokuseiID );
+          }else{
+            BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_CantEscWaza );
+            BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+          }
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = 1;
         }
@@ -938,7 +947,16 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      //(*seq) = SEQ_SELECT_ACTION;
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
       SelActProc_Set( wk, selact_Root );
     }
     break;
@@ -1256,26 +1274,51 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 }
 
 
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- *
+ * 逃げ・交換の禁止チェック
  *
  * @param   wk
- * @param   pokeID
+ * @param   pokeID      [out] 逃げ・交換できない原因となるポケID（敵・味方ともあり得る）
+ * @param   tokuseiID   [out] 逃げ・交換できない原因がとくせいの場合、そのとくせいID（それ以外POKETOKUSEI_NULL）
  *
- * @retval  BOOL
+ * @retval  BtlCantEscapeCode
  */
-//--------------------------------------------------------------------------
-static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID )
+//----------------------------------------------------------------------------------
+static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* tokuseiID )
 {
   BtlCantEscapeCode  code;
 
+  *tokuseiID = POKETOKUSEI_NULL;
+
+  // 相手のとくせい等による逃げ・交換禁止コードをチェック
   for(code=0; code<BTL_CANTESC_MAX; ++code)
   {
     *pokeID = cec_isEnable(&wk->cantEscCtrl, code, wk);
     if( *pokeID != BTL_POKEID_NULL )
     {
+      switch( code ){
+      case BTL_CANTESC_KAGEFUMI:  *tokuseiID = POKETOKUSEI_KAGEFUMI;  break;
+      case BTL_CANTESC_ARIJIGOKU: *tokuseiID = POKETOKUSEI_ARIJIGOKU; break;
+      case BTL_CANTESC_JIRYOKU:   *tokuseiID = POKETOKUSEI_JIRYOKU;   break;
+      }
       return code;
+    }
+  }
+
+  // こちらのポケモン状態異常による逃げ・交換禁止コードチェック
+  {
+    const BTL_POKEPARAM* bpp;
+    u32 i;
+    for(i=0; i<wk->numCoverPos; ++i)
+    {
+      bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, wk->myID, i );
+      if( !BPP_IsDead(bpp)
+      &&  BPP_CheckSick(bpp, WAZASICK_TOOSENBOU)
+      ){
+        *pokeID = BPP_GetID( bpp );
+        return BTL_CANTESC_TOOSENBOU;
+      }
     }
   }
 
@@ -1373,28 +1416,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   return TRUE;
 }
-//---------------------------------------------------
-// 担当位置を放棄する  numPos : 放棄する位置の数
-//---------------------------------------------------
-static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos )
-{
-  u8 i = wk->numCoverPos - 1;
-  while( numPos )
-  {
-    if( wk->frontPokeEmpty[i] == FALSE )
-    {
-      wk->frontPokeEmpty[i] =  TRUE;
-      numPos--;
-    }
-    if( i ) {
-      i--;
-    } else {
-      break;
-    }
-  }
-}
-
-//
 //--------------------------------------------------------------------------
 /**
  * 死亡時の選択可能ポケモン（場に出ているポケモン以外で、生きているポケモン）の数
@@ -1531,13 +1552,12 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
           // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
           if( numSelect > numPuttable )
           {
-            abandon_cover_pos( wk, numSelect - numPuttable );
             numSelect = numPuttable;
           }
 
           BTL_Printf("myID=%d 戦闘ポケ位置が死んだのでポケモン%d体選択\n", wk->myID, numSelect);
           setup_pokesel_param_dead( wk, numSelect, &wk->pokeSelParam );
-          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
+          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
           (*seq)++;
         }
         else
@@ -1588,7 +1608,6 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
       if( numSelect > numPuttable )
       {
-        abandon_cover_pos( wk, numSelect - numPuttable );
         numSelect = numPuttable;
       }
       BTL_Printf("myID=%d 戦闘ポケが死んだのでポケモン%d体選択\n", wk->myID, numSelect);

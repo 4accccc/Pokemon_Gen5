@@ -605,7 +605,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 }
 
 
-void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
+void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.font = wk->largeFontHandle;
@@ -617,6 +617,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+  wk->plistData.chg_waza = fCantEsc;  // “¦‚°EŒğŠ·‹Ö~ƒtƒ‰ƒO
 
   {
     u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );

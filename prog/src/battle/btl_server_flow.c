@@ -5368,8 +5368,8 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
     BTL_Printf("でももう効果ありませんでした\n");
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
-      return FALSE;
     }
+    return FALSE;
   }
 
   {
@@ -5697,6 +5697,7 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   BtlWeather  weather = WAZADATA_GetWeather( wazaParam->wazaID );
   if( weather != BTL_WEATHER_NONE )
   {
+    BTL_Printf("ワザ[%d]による天候変化->%d\n", wazaParam->wazaID, weather);
     if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
     }
@@ -5730,6 +5731,36 @@ static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn
     Hem_PopState( &wk->HEManager, hem_state );
   }
   return result;
+}
+//--------------------------------------------------------------------------
+/**
+ * 【Event】天候の変化チェック
+ *
+ * @param   wk
+ * @param   weather 天候
+ * @param   turn    [io]継続ターン数
+ *
+ * @retval  BOOL    変化する場合はTRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn )
+{
+  GF_ASSERT(weather != BTL_WEATHER_NONE);
+
+  {
+    BOOL fFail;
+
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_TURN_COUNT, *turn );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE );
+      weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
+      *turn = BTL_EVENTVAR_GetValue( BTL_EVAR_TURN_COUNT );
+      fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+    BTL_EVENTVAR_Pop();
+    return !fFail;
+  }
 }
 static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam )
 {
@@ -8320,8 +8351,8 @@ static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
     BppKoraeruCause  cause = BPP_KORAE_NONE;
 
     BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_KORAERU_CAUSE, cause );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_KORAERU_CHECK );
       cause = BTL_EVENTVAR_GetValue( BTL_EVAR_KORAERU_CAUSE );
@@ -9029,36 +9060,6 @@ static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, total_damage );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_SPECIAL_DRAIN );
   BTL_EVENTVAR_Pop();
-}
-//--------------------------------------------------------------------------
-/**
- * 【Event】天候の変化チェック
- *
- * @param   wk
- * @param   weather 天候
- * @param   turn    [io]継続ターン数
- *
- * @retval  BOOL    変化する場合はTRUE
- */
-//--------------------------------------------------------------------------
-static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn )
-{
-  GF_ASSERT(weather != BTL_WEATHER_NONE);
-
-  {
-    BOOL fFail;
-
-    BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_TURN_COUNT, *turn );
-      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE );
-      weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
-      *turn = BTL_EVENTVAR_GetValue( BTL_EVAR_TURN_COUNT );
-      fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-    BTL_EVENTVAR_Pop();
-    return !fFail;
-  }
 }
 //----------------------------------------------------------------------------------
 /**

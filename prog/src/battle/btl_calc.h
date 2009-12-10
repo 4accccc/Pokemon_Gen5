@@ -18,91 +18,6 @@
 #define BTL_CALC_BITFLAG_BUFSIZE(max)   (((max)/8)+(((max)%8)!=0))
 
 
-static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
-{
-  return (value * ratio) >> FX32_SHIFT;
-}
-
-static inline u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
-{
-  value = (value * ratio) >> FX32_SHIFT;
-  if( value == 0 ){
-    value = 1;
-  }
-  return value;
-}
-
-static inline u32 BTL_CALC_IsOccurPer( u32 per )
-{
-  return (GFL_STD_MtRand(100) < per);
-}
-
-static inline int BTL_CALC_Roundup( int value, int min )
-{
-  if( value < min ){ value = min; }
-  return value;
-}
-
-static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
-{
-  u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
-  if( ret == 0 ){ ret = 1; }
-  return ret;
-}
-
-static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
-{
-  if( min > max ){
-    u32 tmp = min;
-    min = max;
-    max = tmp;
-  }
-  {
-    u32 range = 1 + (max-min);
-    return min + GFL_STD_MtRand( range );
-  }
-}
-static inline void BTL_CALC_BITFLG_Construction( u8* flags, u8 bufsize )
-{
-  u32 i;
-  flags[0] = bufsize;
-  for(i=1; i<bufsize; ++i){
-    flags[i] = 0;
-  }
-}
-static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
-{
-  u8 byte = 1 + index / 8;
-  u8 bit = index & 8;
-  if( byte < flags[0] ){
-    flags[ byte ] |= (1 << bit);
-  }
-}
-static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
-{
-  u8 byte = 1 + index / 8;
-  u8 bit = index & 8;
-  if( byte < flags[0] ){
-    return (flags[ byte ] & (1 << bit)) != 0;
-  }
-  return 0;
-}
-static inline void BTL_CALC_BITFLG_Off( u8* flags, u32 index )
-{
-  u8 byte = 1 + index / 8;
-  u8 bit = index & 8;
-  if( byte < flags[0] ){
-    flags[ byte ] &= (~((u8)(1 << bit)));
-  }
-}
-
-static inline u32 BTL_CALC_ABS( int value )
-{
-  if( value < 0 ){
-    value *= -1;
-  }
-  return value;
-}
 
 //--------------------------------------------------------------------
 /**
@@ -221,6 +136,93 @@ extern u8 BTL_RULE_GetNumFrontPos( BtlRule rule );
 extern BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule );
 extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
 
+
+
+static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
+{
+  return (value * ratio) >> FX32_SHIFT;
+}
+
+static inline u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
+{
+  value = (value * ratio) >> FX32_SHIFT;
+  if( value == 0 ){
+    value = 1;
+  }
+  return value;
+}
+
+static inline u32 BTL_CALC_IsOccurPer( u32 per )
+{
+  return (BTL_CALC_GetRand(100) < per);
+}
+
+static inline int BTL_CALC_Roundup( int value, int min )
+{
+  if( value < min ){ value = min; }
+  return value;
+}
+
+static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
+{
+  u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
+  if( ret == 0 ){ ret = 1; }
+  return ret;
+}
+
+static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
+{
+  if( min > max ){
+    u32 tmp = min;
+    min = max;
+    max = tmp;
+  }
+  {
+    u32 range = 1 + (max-min);
+    return min + BTL_CALC_GetRand( range );
+  }
+}
+static inline void BTL_CALC_BITFLG_Construction( u8* flags, u8 bufsize )
+{
+  u32 i;
+  flags[0] = bufsize;
+  for(i=1; i<bufsize; ++i){
+    flags[i] = 0;
+  }
+}
+static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  if( byte < flags[0] ){
+    flags[ byte ] |= (1 << bit);
+  }
+}
+static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  if( byte < flags[0] ){
+    return (flags[ byte ] & (1 << bit)) != 0;
+  }
+  return 0;
+}
+static inline void BTL_CALC_BITFLG_Off( u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  if( byte < flags[0] ){
+    flags[ byte ] &= (~((u8)(1 << bit)));
+  }
+}
+
+static inline u32 BTL_CALC_ABS( int value )
+{
+  if( value < 0 ){
+    value *= -1;
+  }
+  return value;
+}
 
 #endif
 

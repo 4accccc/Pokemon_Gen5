@@ -185,10 +185,11 @@ extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
  *
  * @param   core      [in]  描画メインモジュールハンドラ
  * @param   param     [in]  選択処理パラメータポインタ
+ * @param   fCantEsc  [in]
  * @param   result    [out] 選択結果格納構造体ポインタ
  */
 //=============================================================================================
-extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
+extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BOOL fCantEsc, BTL_POKESELECT_RESULT* result );
 
 //=============================================================================================
 /**
