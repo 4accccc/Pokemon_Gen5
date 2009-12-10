@@ -107,3 +107,18 @@ const DEMO3D_CMD_DATA* Demo3D_DATA_GetCmdData( DEMO3D_ID id )
   return demo3d_cmd_access_tbl[ id ];
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータから終了コマンドデータを取得
+ *
+ *	@param	DEMO3D_ID id デモID
+ *
+ *	@retval DEMO3D_CMD_DATA* コマンドデータ配列へのポインタ
+ */
+//-----------------------------------------------------------------------------
+const DEMO3D_CMD_DATA* Demo3D_DATA_GetEndCmdData( DEMO3D_ID id )
+{
+  GF_ASSERT( id < DEMO3D_ID_MAX && id != DEMO3D_ID_NULL );
+  return demo3d_endcmd_access_tbl[ id ];
+}
+

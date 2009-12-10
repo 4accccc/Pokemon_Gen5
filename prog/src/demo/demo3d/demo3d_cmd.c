@@ -54,6 +54,7 @@ struct _DEMO3D_CMD_WORK {
   DEMO3D_ID demo_id;
   // [PRIVATE]
   BOOL  is_cmd_end;
+  int pre_frame; ///< 1sync=1
   int cmd_idx;
 };
 
@@ -66,7 +67,8 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx );
 static void cmd_exec( const DEMO3D_CMD_DATA* data );
 
 
-static void CMD_SE( int* param );
+static void CMD_SE(int* param);
+static void CMD_SE_STOP(int* param);
 
 // DEMO3D_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -76,6 +78,7 @@ static void (*c_cmdtbl[])() =
 { 
   NULL, // null
   CMD_SE,
+  CMD_SE_STOP,
   NULL, // end
 };
 
@@ -83,18 +86,21 @@ static void (*c_cmdtbl[])() =
 /**
  *	@brief  SE再生コマンド
  *
- *	@param	int* param コマンドパラメータの先頭ポインタ
+ *	@param	param[0] SE_Label
+ *	@param	param[1] volume : 0なら無効
+ *	@param	param[2] pan : 0なら無効
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CMD_SE( int* param )
+static void CMD_SE(int* param)
 {
   int player_no;
 
-  player_no = param[0];
 
   GFL_SOUND_PlaySE( param[0] );
+  
+  player_no = GFL_SOUND_GetPlayerNo( param[0] );
 
   // volume
   if( param[1] != 0 )
@@ -109,6 +115,23 @@ static void CMD_SE( int* param )
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SE:再生停止
+ *
+ *	@param	param
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CMD_SE_STOP(int* param)
+{
+  int player_no;
+
+  player_no = GFL_SOUND_GetPlayerNo( param[0] );
+
+  GFL_SOUND_StopPlayerNo( player_no );
+}
 
 //=============================================================================
 /**
@@ -138,6 +161,7 @@ DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ID demo_id, u32 start_frame, HEAPID hea
   wk->heap_id = heap_id;
   wk->demo_id = demo_id;
   wk->is_cmd_end = cmd_setup( demo_id, start_frame, &wk->cmd_idx );
+  wk->pre_frame = -1;
 
   return wk;
 }
@@ -153,6 +177,25 @@ DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ID demo_id, u32 start_frame, HEAPID hea
 //-----------------------------------------------------------------------------
 void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
 {
+  const DEMO3D_CMD_DATA* data;
+  int i;
+  
+  data  = Demo3D_DATA_GetEndCmdData( wk->demo_id );
+
+  // 終了コマンドを実行
+  for( i=0; i<CMD_ELEM_MAX; i++ )
+  {
+    if( data->type == DEMO3D_CMD_TYPE_END )
+    {
+      break;
+    }
+    else
+    {
+      cmd_exec( data );
+      data++;
+    }
+  }
+
   // ヒープ開放
   GFL_HEAP_FreeMemory( wk );
 }
@@ -176,16 +219,18 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
   {
     return;
   }
-
+  
   data  = Demo3D_DATA_GetCmdData( wk->demo_id );
 
   // 頭出し
   data = &data[ wk->cmd_idx ];
-    
-  GF_ASSERT( data->frame * FX32_ONE >= now_frame );
 
-  // 指定フレームまで待機
-  if( data->frame * FX32_ONE == now_frame )
+  now_frame = (now_frame >> FX32_SHIFT); ///< 整数化
+    
+  GF_ASSERT_MSG( data->frame >= now_frame, "cmd_idx=%d data->frame=%d now_frame=%d ", wk->cmd_idx, data->frame, now_frame );
+
+  // 指定フレームまで待機 && フレームが進まなかった場合はコマンドを処理しない
+  if( data->frame == now_frame && wk->pre_frame != now_frame )
   {
     int i;
     for( i=0; i<CMD_ELEM_MAX; i++ )
@@ -199,12 +244,14 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
       wk->cmd_idx++;
 
       // 終了判定 ENDフラグが立っているか、現在のフレームで実行するコマンドが無くなっていたら処理を抜ける
-      if( wk->is_cmd_end == TRUE || data->frame * FX32_ONE != now_frame )
+      if( wk->is_cmd_end == TRUE || data->frame != now_frame )
       {
         break;
       }
     }
   }
+  
+  wk->pre_frame = now_frame;
 }
 
 //=============================================================================
@@ -241,11 +288,11 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
       return TRUE;
     }
     //  初期化パラメータを実行
-    else if( data[i].frame == -1 )
+    else if( data[i].frame == DEMO3D_CMD_SYNC_INIT )
     {
       cmd_exec( &data[i] );
     }
-    else if( data[i].frame * FX32_ONE >= now_frame )
+    else if( data[i].frame >= now_frame )
     {
       // 頭出し終了
       *out_idx = i;

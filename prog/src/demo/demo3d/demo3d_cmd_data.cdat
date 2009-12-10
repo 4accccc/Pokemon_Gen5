@@ -11,10 +11,11 @@
 //@TODO コンバータから出力する予定
 //@TODO 30FPS,60FPSをコンバート時に換算するかも?
 
+// コマンド定義 >> demo3d_cmd_def.h
 static const DEMO3D_CMD_DATA demo3d_cmd01_data[] = 
 { 
   // 初期化パラメータ
-  {  DEMO3D_CMD_TYPE_SE, -1,      { SEQ_SE_FLD_79, } }, // 波
+  {  DEMO3D_CMD_TYPE_SE, DEMO3D_CMD_SYNC_INIT,      { SEQ_SE_FLD_79, } }, // 波
   // 汽笛
   {  DEMO3D_CMD_TYPE_SE, 0,       { SEQ_SE_FLD_78, } }, 
   {  DEMO3D_CMD_TYPE_SE, 1*45*30, { SEQ_SE_FLD_78, } },
@@ -23,40 +24,88 @@ static const DEMO3D_CMD_DATA demo3d_cmd01_data[] =
   {  DEMO3D_CMD_TYPE_SE, 4*45*30, { SEQ_SE_FLD_78, } },
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } }, ///< コマンド終了
 };
+static const DEMO3D_CMD_DATA demo3d_cmd01_end_data[] = 
+{ 
+  { DEMO3D_CMD_TYPE_SE_STOP, 0, { SEQ_SE_FLD_79 } }, // 波停止
+  { DEMO3D_CMD_TYPE_END, },
+};
 
+//------
 static const DEMO3D_CMD_DATA demo3d_cmd02_data[] = 
 { 
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
 };
-static const DEMO3D_CMD_DATA demo3d_cmd03_data[] = 
-{ 
-  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
-};
-static const DEMO3D_CMD_DATA demo3d_cmd04_data[] = 
-{ 
-  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
-};
-static const DEMO3D_CMD_DATA demo3d_cmd05_data[] = 
-{ 
-  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
-};
-static const DEMO3D_CMD_DATA demo3d_cmd06_data[] = 
-{ 
-  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
-};
-static const DEMO3D_CMD_DATA demo3d_cmd07_data[] = 
-{ 
-  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
-};
-static const DEMO3D_CMD_DATA demo3d_cmd08_data[] = 
+static const DEMO3D_CMD_DATA demo3d_cmd02_end_data[] = 
 { 
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
 };
 
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd03_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd03_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd04_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd04_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd05_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd05_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd06_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd06_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd07_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd07_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd08_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd08_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//================================
 // アクセステーブル
+//================================
 static const DEMO3D_CMD_DATA* demo3d_cmd_access_tbl[] = 
 { 
-  NULL,
+  NULL, // DEMO3D_ID_NULL
   demo3d_cmd01_data,
   demo3d_cmd02_data,
   demo3d_cmd03_data,
@@ -65,5 +114,18 @@ static const DEMO3D_CMD_DATA* demo3d_cmd_access_tbl[] =
   demo3d_cmd06_data,
   demo3d_cmd07_data,
   demo3d_cmd08_data,
+};
+
+static const DEMO3D_CMD_DATA* demo3d_endcmd_access_tbl[] =
+{ 
+  NULL, // DEMO3D_ID_NULL
+  demo3d_cmd01_end_data,
+  demo3d_cmd02_end_data,
+  demo3d_cmd03_end_data,
+  demo3d_cmd04_end_data,
+  demo3d_cmd05_end_data,
+  demo3d_cmd06_end_data,
+  demo3d_cmd07_end_data,
+  demo3d_cmd08_end_data,
 };
 

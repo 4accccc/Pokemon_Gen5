@@ -64,3 +64,14 @@ extern ICA_ANIME* Demo3D_DATA_CreateICACamera( DEMO3D_ID id, HEAPID heapID, int 
 //-----------------------------------------------------------------------------
 extern const DEMO3D_CMD_DATA* Demo3D_DATA_GetCmdData( DEMO3D_ID id );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータから終了コマンドデータを取得
+ *
+ *	@param	DEMO3D_ID id デモID
+ *
+ *	@retval DEMO3D_CMD_DATA* コマンドデータ配列へのポインタ
+ */
+//-----------------------------------------------------------------------------
+extern const DEMO3D_CMD_DATA* Demo3D_DATA_GetEndCmdData( DEMO3D_ID id );
+
