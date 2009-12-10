@@ -109,7 +109,8 @@ SUBDIRS	=	wmi \
 			mail \
 			season_display \
 			zukan_gra \
-			demo3d
+			demo3d \
+			fld_trade
 
 include $(RESOURCE_MACRO)
 
