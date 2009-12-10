@@ -19,8 +19,41 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03p16_cabinguide_01
+_EVENT_DATA		ev_reserve_c03p16_cabinguide_01
+_EVENT_DATA		ev_c03p16_cabinguide_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*			予約スクリプトイベント							  */
+/**************************************************************/
+EVENT_START		ev_reserve_c03p16_cabinguide_01
+		
+	//ブラックイン
+	_MAP_FADE_BLACK_IN()
+
+	//乗船アニメ
+	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+	_OBJ_ANIME_WAIT()
+
+	//ごじょうせん　ありがとうございました
+	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+//--------------------------------------------------------------
+//			下船アニメ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cabin_out
+	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_out
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+
 
 /**************************************************************/
 /*			遊覧船受付員	C03P16	イベントスクリプト		  */

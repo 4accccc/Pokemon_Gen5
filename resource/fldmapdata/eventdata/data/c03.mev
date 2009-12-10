@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/08 12:28:41
+#save date:2009/12/10 17:42:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #hold event type:
 1
 #hold event number:
-1
+15
 #event number: 0
 #type
 1
@@ -41,6 +41,440 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 18 7 0
+#event number: 1
+#type
+1
+#ID name
+C03_OL2_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_OL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+18 13 0
+#event number: 2
+#type
+1
+#ID name
+C03_OL3_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_OL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 13 1
+#event number: 3
+#type
+1
+#ID name
+C03_OL4_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_OL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 13 0
+#event number: 4
+#type
+1
+#ID name
+C03_OL5_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_OL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 16 -1
+#event number: 5
+#type
+1
+#ID name
+C03_BUSINESSMAN1_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 21 1
+#event number: 6
+#type
+1
+#ID name
+C03_BUSINESSMAN2_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 10 0
+#event number: 7
+#type
+1
+#ID name
+C03_BUSINESSMAN3_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 21 -2
+#event number: 8
+#type
+1
+#ID name
+C03_BUSINESSMAN4_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 6 -2
+#event number: 9
+#type
+1
+#ID name
+C03_BUSINESSMAN5_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+18 19 2
+#event number: 10
+#type
+1
+#ID name
+C03_BUSINESSMAN6_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 20 2
+#event number: 11
+#type
+1
+#ID name
+C03_BUSINESSMAN7_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 17 -2
+#event number: 12
+#type
+1
+#ID name
+C03_BUSINESSMAN8_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 11 -1
+#event number: 13
+#type
+1
+#ID name
+C03_BUSINESSMAN9_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+18 19 -2
+#event number: 14
+#type
+1
+#ID name
+C03_BUSINESSMAN101_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RAIL_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 9 -2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -70,14 +504,14 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-13
+16
 #event number: 0
 #Door Event Label
-DOOR_ID_C03_C03P05_EXIT01
+DOOR_ID_C03_C03P09_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P05
+ZONE_ID_C03P09
 #Next Door ID Name
-DOOR_ID_C03P05_C03_EXIT01
+DOOR_ID_C03P09_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -90,11 +524,11 @@ EVENTDATA_POSTYPE_RAIL
 5 1
 #event number: 1
 #Door Event Label
-DOOR_ID_C03_C03P13_EXIT01
+DOOR_ID_C03_C03P17_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P13
+ZONE_ID_C03P17
 #Next Door ID Name
-DOOR_ID_C03P13_C03_EXIT01
+DOOR_ID_C03P17_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
@@ -102,16 +536,16 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 0 -1
+3 0 -2
 #size
-3 1
+5 1
 #event number: 2
 #Door Event Label
-DOOR_ID_C03_C03P06_EXIT01
+DOOR_ID_C03_C03P10_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P06
+ZONE_ID_C03P10
 #Next Door ID Name
-DOOR_ID_C03P06_C03_EXIT01
+DOOR_ID_C03P10_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -124,11 +558,11 @@ EVENTDATA_POSTYPE_RAIL
 5 1
 #event number: 3
 #Door Event Label
-DOOR_ID_C03_C03P12_EXIT01
+DOOR_ID_C03_C03P16_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P12
+ZONE_ID_C03P16
 #Next Door ID Name
-DOOR_ID_C03P12_C03_EXIT01
+DOOR_ID_C03P16_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
@@ -140,6 +574,74 @@ EVENTDATA_POSTYPE_RAIL
 #size
 7 1
 #event number: 4
+#Door Event Label
+DOOR_ID_C03_C03P11_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03P11
+#Next Door ID Name
+DOOR_ID_C03P11_C03_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 5 -2
+#size
+5 1
+#event number: 5
+#Door Event Label
+DOOR_ID_C03_C03P15_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03P15
+#Next Door ID Name
+DOOR_ID_C03P15_C03_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+9 0 -4
+#size
+9 1
+#event number: 6
+#Door Event Label
+DOOR_ID_C03_C03P12_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03P12
+#Next Door ID Name
+DOOR_ID_C03P12_C03_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+11 5 -2
+#size
+5 1
+#event number: 7
+#Door Event Label
+DOOR_ID_C03_C03P14_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03P14
+#Next Door ID Name
+DOOR_ID_C03P14_C03_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+19 0 -2
+#size
+5 1
+#event number: 8
 #Door Event Label
 DOOR_ID_C03_C03P07_EXIT01
 #Next Zone ID Name
@@ -153,84 +655,16 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-8 5 -2
-#size
-5 1
-#event number: 5
-#Door Event Label
-DOOR_ID_C03_C03P11_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P11
-#Next Door ID Name
-DOOR_ID_C03P11_C03_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-9 0 -4
-#size
-9 1
-#event number: 6
-#Door Event Label
-DOOR_ID_C03_C03P08_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-11 5 -2
-#size
-5 1
-#event number: 7
-#Door Event Label
-DOOR_ID_C03_C03P10_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P10
-#Next Door ID Name
-DOOR_ID_C03P10_C03_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-19 0 -2
-#size
-5 1
-#event number: 8
-#Door Event Label
-DOOR_ID_C03_C03P03_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
 14 5 -2
 #size
 5 1
 #event number: 9
 #Door Event Label
-DOOR_ID_C03_C03P09_EXIT01
+DOOR_ID_C03_C03P13_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P09
+ZONE_ID_C03P13
 #Next Door ID Name
-DOOR_ID_C03P09_C03_EXIT01
+DOOR_ID_C03P13_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
@@ -264,7 +698,7 @@ DOOR_ID_C03_C03PC0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C03PC0101
 #Next Door ID Name
-DOOR_ID_C03PC0101_C03_EXIT02
+DOOR_ID_C03PC0101_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -292,5 +726,56 @@ EVENTDATA_POSTYPE_RAIL
 1 2 -1
 #size
 3 1
+#event number: 13
+#Door Event Label
+DOOR_ID_C03_C03R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03R0301
+#Next Door ID Name
+DOOR_ID_C03R0301_C03_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+18 10 3
+#size
+1 1
+#event number: 14
+#Door Event Label
+DOOR_ID_C03_C03R0701_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03R0701
+#Next Door ID Name
+DOOR_ID_C03R0701_C03_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 10 3
+#size
+1 1
+#event number: 15
+#Door Event Label
+DOOR_ID_C03_C03R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03R0101
+#Next Door ID Name
+DOOR_ID_C03R0101_C03_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 14 3
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

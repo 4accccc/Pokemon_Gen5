@@ -1,20 +1,175 @@
 #event data
-#save date:2000/00/00 00:00:00
+#save date:2009/12/10 22:35:22
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2000/00/00 00:00:00
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+C03CT_OL_02
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 104
+#event number: 1
+#type
+1
+#ID name
+C03CT_OL_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 40
+#event number: 2
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -88
+#event number: 3
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_02
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 24
+#event number: 4
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_03
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2000/00/00 00:00:00
+#save date:
 2
 #hold event type:
 1
@@ -24,140 +179,106 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2000/00/00 00:00:00
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+5
+#event number: 0
+#Pos Event Label
+POS_C03CT_EXIT_05
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -56
+#size
+1 11
+#event number: 1
+#Pos Event Label
+POS_C03CT_EXIT_04
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 184
+#size
+1 8
+#event number: 2
+#Pos Event Label
+POS_C03CT_EXIT_01
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 -72
+#size
+1 8
+#event number: 3
+#Pos Event Label
+POS_C03CT_EXIT_02
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 216
+#size
+1 10
+#event number: 4
+#Pos Event Label
+POS_C03CT_EXIT_03
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 232
+#size
+6 1
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:
 2
 #hold event type:
 1
 #hold event number:
 0
-#Map Event List Data End
-#SECTION End:POS_EVENT
-#SECTION START:DOOR_EVENT
-#Map Event List data
-#save date:2000/00/00 00:00:00
-2
-#hold event type:
-1
-#hold event number:
-7
-#event number: 0
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-1 0 -2
-#size
-5 1
-#event number: 1
-#Door Event Label
-DOOR_ID_C03P02_C03P04_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P04
-#Next Door ID Name
-DOOR_ID_C03P04_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-24 0 -2
-#size
-5 1
-#event number: 2
-#Door Event Label
-DOOR_ID_C03P02_C03P05_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P05
-#Next Door ID Name
-DOOR_ID_C03P05_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-5 0 -2
-#size
-5 1
-#event number: 3
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-7 0 -2
-#size
-5 1
-#event number: 4
-#Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-9 0 -2
-#size
-5 1
-#event number: 5
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-0 0 -1
-#size
-3 1
-#event number: 6
-#Door Event Label
-DOOR_ID_C03CT_C03P07_EXIT01_C03P02
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT02
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-96 0 -12
-#size
-1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

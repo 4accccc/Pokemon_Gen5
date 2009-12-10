@@ -11,7 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_c03r0801.h"
   .include  "c03r0801.h"
-
+  .include	"c03p16_def.h"	//受付員のスクリプトのヘッダーをインクルード！
+  
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -113,9 +114,12 @@ EVENT_START ev_prg_c03r0801_timeup
 
 	//望さんスクリプト終了
 	_PL_BOAT_END()
+
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
 	
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_C03P16, 17, 25, DIR_RIGHT )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 17, 0, 25, DIR_RIGHT )
 
 EVENT_END
 
@@ -575,10 +579,16 @@ EVENT_START		ev_pos_c03r0801_move_01
   _FIELD_OPEN()
 
   IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN
+    
     //望さんスクリプト終了
-    _PL_BOAT_END()
-    //マップチェンジ
-    _MAP_CHANGE( ZONE_ID_C03P16, 17, 25, DIR_RIGHT )
+	_PL_BOAT_END()
+
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
+	
+	//マップチェンジ
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 17, 0, 25, DIR_RIGHT )
+	
   ELSE
     //船内に戻ってくる
     _MAP_FADE_BLACK_IN()

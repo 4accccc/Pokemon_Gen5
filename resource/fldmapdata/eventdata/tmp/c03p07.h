@@ -2,18 +2,9 @@
 #ifndef ZONE_C03P07_EVD_H
 #define ZONE_C03P07_EVD_H
 
-#define DOOR_ID_C03P07_C03P02_EXIT02      0
-#define DOOR_ID_C03P07_C03P02_EXIT03      1
-#define DOOR_ID_C03P07_C03P02_EXIT05      2
-#define DOOR_ID_C03P07_C03P02_EXIT01      3
-#define DOOR_ID_C03P07_C03P02_EXIT06      4
-#define DOOR_ID_C03P07_C03P02_EXIT04      5
-#define DOOR_ID_C03P07_C03_EXIT01         6
-#define DOOR_ID_C03P07_C03_EXIT02         7
-#define DOOR_ID_C03P07_C03_EXIT03         8
-#define DOOR_ID_C03P07_C03_EXIT05         9
-#define DOOR_ID_C03P07_C03_EXIT06        10
-#define DOOR_ID_C03P07_C03_EXIT07        11
+#define DOOR_ID_C03P07_C03P01_EXIT01      0
+#define DOOR_ID_C03P07_C03_EXIT01         1
+#define DOOR_ID_C03P07_C03GYM0101_EXIT01  2
 
 #endif //ZONE_C03P07_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

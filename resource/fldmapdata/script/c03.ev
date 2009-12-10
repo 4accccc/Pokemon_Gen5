@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03_ol1_01
+_EVENT_DATA		ev_c03_businessman1_01
 _EVENT_DATA_END
 
 
@@ -34,5 +35,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_c03_ol1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_ol1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		BUSINESSMAN	会話スクリプト							  */
+/**************************************************************/
+EVENT_START		ev_c03_businessman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman13_01 )
 EVENT_END
 

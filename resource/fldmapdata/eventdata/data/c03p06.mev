@@ -9,7 +9,162 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p06.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+C03CT_OL_02
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -88
+#event number: 1
+#type
+1
+#ID name
+C03CT_OL_01
+#OBJ CODE Number
+OL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 24
+#event number: 2
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -72
+#event number: 3
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_02
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 104
+#event number: 4
+#type
+1
+#ID name
+C03CT_BUSINESSMAN_03
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +184,92 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p06.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#Pos Event Label
+POS_C03CT_EXIT_05
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -88
+#size
+1 7
+#event number: 1
+#Pos Event Label
+POS_C03CT_EXIT_04
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 200
+#size
+1 10
+#event number: 2
+#Pos Event Label
+POS_C03CT_EXIT_01
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 -56
+#size
+1 11
+#event number: 3
+#Pos Event Label
+POS_C03CT_EXIT_02
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 184
+#size
+1 7
+#event number: 4
+#Pos Event Label
+POS_C03CT_EXIT_03
+#Pos Script Name
+SCRID_POS_C03CT_EXIT_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 232
+#size
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -39,286 +279,14 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p06.wms
 #hold event type:
 1
 #hold event number:
-35
+1
 #event number: 0
 #Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT01
+DOOR_ID_C03P06_C03P12_EXIT01
 #Next Zone ID Name
-ZONE_ID_C03P02
+ZONE_ID_C03P12
 #Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 152
-#size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 152
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 152
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 152
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 152
-#size
-1 1
-#event number: 5
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT06
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 152
-#size
-1 1
-#event number: 6
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT08
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 152
-#size
-1 1
-#event number: 7
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT07
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 152
-#size
-1 1
-#event number: 8
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT09
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 152
-#size
-1 1
-#event number: 9
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT10
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 0 152
-#size
-1 1
-#event number: 10
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT12
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 152
-#size
-1 1
-#event number: 11
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT11
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 0 152
-#size
-1 1
-#event number: 12
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT13
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-72 0 152
-#size
-1 1
-#event number: 13
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT14
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 152
-#size
-1 1
-#event number: 14
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT16
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 152
-#size
-1 1
-#event number: 15
-#Door Event Label
-DOOR_ID_C03P06_C03P02_EXIT15
-#Next Zone ID Name
-ZONE_ID_C03P02
-#Next Door ID Name
-DOOR_ID_C03P02_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 152
-#size
-1 1
-#event number: 16
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
+DOOR_ID_C03P12_C03P06_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
@@ -326,314 +294,8 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -152
+-40 0 -248
 #size
-1 1
-#event number: 17
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 -152
-#size
-1 1
-#event number: 18
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -152
-#size
-1 1
-#event number: 19
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -152
-#size
-1 1
-#event number: 20
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 -152
-#size
-1 1
-#event number: 21
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT06
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -152
-#size
-1 1
-#event number: 22
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT07
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 -152
-#size
-1 1
-#event number: 23
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT08
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 -152
-#size
-1 1
-#event number: 24
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT09
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -152
-#size
-1 1
-#event number: 25
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT10
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 0 -152
-#size
-1 1
-#event number: 26
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT11
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 0 -152
-#size
-1 1
-#event number: 27
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT12
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 -152
-#size
-1 1
-#event number: 28
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT13
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-72 0 -152
-#size
-1 1
-#event number: 29
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT14
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 -152
-#size
-1 1
-#event number: 30
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT15
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -152
-#size
-1 1
-#event number: 31
-#Door Event Label
-DOOR_ID_C03P06_C03_EXIT16
-#Next Zone ID Name
-ZONE_ID_C03
-#Next Door ID Name
-DOOR_ID_C03_C03P06_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 -152
-#size
-1 1
-#event number: 32
-#Door Event Label
-DOOR_ID_C03P06_C03PC0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03PC0101
-#Next Door ID Name
-DOOR_ID_C03PC0101_C03P06_EXIT02
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 0 -88
-#size
-1 1
-#event number: 33
-#Door Event Label
-DOOR_ID_C03P06_C03R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03R0101
-#Next Door ID Name
-DOOR_ID_C03R0101_C03P06_EXIT02
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 0 -88
-#size
-1 1
-#event number: 34
-#Door Event Label
-DOOR_ID_C03CT_C03P07_EXIT01_C03P06
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT02
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-32 0 -68
-#size
-1 1
+6 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

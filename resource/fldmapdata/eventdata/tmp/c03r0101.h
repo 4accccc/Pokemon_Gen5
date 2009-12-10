@@ -2,9 +2,7 @@
 #ifndef ZONE_C03R0101_EVD_H
 #define ZONE_C03R0101_EVD_H
 
-#define DOOR_ID_C03R0101_C03P06_EXIT01    0
-#define DOOR_ID_C03R0101_C03P06_EXIT03    1
-#define DOOR_ID_C03R0101_C03P06_EXIT02    2
+#define DOOR_ID_C03R0101_C03_EXIT01       0
 
 #endif //ZONE_C03R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

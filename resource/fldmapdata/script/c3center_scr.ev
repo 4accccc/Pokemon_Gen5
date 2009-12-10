@@ -16,23 +16,619 @@
 //               スクリプト本体
 //--------------------------------------------------------------
 
-//--------------------------------------------------------------
+///--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c3center_scr
+_EVENT_DATA		ev_pos_c03ct_exit_01
+_EVENT_DATA		ev_pos_c03ct_exit_02
+_EVENT_DATA		ev_pos_c03ct_exit_03
+_EVENT_DATA		ev_pos_c03ct_exit_04
+_EVENT_DATA		ev_pos_c03ct_exit_05
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_zone_c3center_scr:
+//ev_zone_c03ct:
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		c03ct	EXIT01	POS									  */
 /**************************************************************/
-ev_c3center_scr:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_pos_c03ct_exit_01
 
+	//ローカル変数を定義
+	DEFINE_LOCAL LWK_ZONE1
+
+	//現在のゾーン取得
+	_GET_ZONE_ID( LWK_ZONE1 )
+	
+	//ゾーンIDがC03P01だった場合
+	IF $LWK_ZONE1 == ZONE_ID_C03P01 THEN
+		
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P08, 15, 62, DIR_DOWN )
+		
+	//ゾーンIDがC03P02だった場合
+	ELSIF $LWK_ZONE1 == ZONE_ID_C03P02 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+	
+	//ゾーンIDがC03P03だった場合
+	ELSIF $LWK_ZONE1 == ZONE_ID_C03P03 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P10, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P04だった場合
+	ELSIF $LWK_ZONE1 == ZONE_ID_C03P04 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P11, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P05だった場合
+	ELSIF $LWK_ZONE1 == ZONE_ID_C03P05 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P06だった場合
+	ELSE
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS１用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P07, 15, 17, DIR_DOWN )
+
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		c03ct	EXIT02	POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_c03ct_exit_02
+
+	//ローカル変数を定義
+	DEFINE_LOCAL LWK_ZONE2
+
+	//現在のゾーン取得
+	_GET_ZONE_ID( LWK_ZONE2 )
+	
+	//ゾーンIDがC03P01だった場合
+	IF $LWK_ZONE2 == ZONE_ID_C03P01 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+		
+	//ゾーンIDがC03P02だった場合
+	ELSIF $LWK_ZONE2 == ZONE_ID_C03P02 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P10, 15, 17, DIR_DOWN )
+	
+	//ゾーンIDがC03P03だった場合
+	ELSIF $LWK_ZONE2 == ZONE_ID_C03P03 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P11, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P04だった場合
+	ELSIF $LWK_ZONE2 == ZONE_ID_C03P04 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P05だった場合
+	ELSIF $LWK_ZONE2 == ZONE_ID_C03P05 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P07, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P06だった場合
+	ELSE
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS２用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P08, 15, 62, DIR_DOWN )
+
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		c03ct	EXIT03	POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_c03ct_exit_03
+
+	//ローカル変数を定義
+	DEFINE_LOCAL LWK_ZONE3
+
+	//現在のゾーン取得
+	_GET_ZONE_ID( LWK_ZONE3 )
+	
+	//ゾーンIDがC03P01だった場合
+	IF $LWK_ZONE3 == ZONE_ID_C03P01 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS３用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P10, 15, 17, DIR_DOWN )
+		
+	//ゾーンIDがC03P02だった場合
+	ELSIF $LWK_ZONE3 == ZONE_ID_C03P02 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS３用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P11, 15, 17, DIR_DOWN )
+	
+	//ゾーンIDがC03P03だった場合
+	ELSIF $LWK_ZONE3 == ZONE_ID_C03P03 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS３用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P04だった場合
+	ELSIF $LWK_ZONE3 == ZONE_ID_C03P04 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS３用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P07, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P05だった場合
+	ELSIF $LWK_ZONE3 == ZONE_ID_C03P05 THEN
+
+	//ゾーンIDがC03P06だった場合
+	ELSE
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS３用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		c03ct	EXIT04	POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_c03ct_exit_04
+
+	//ローカル変数を定義
+	DEFINE_LOCAL LWK_ZONE4
+
+	//現在のゾーン取得
+	_GET_ZONE_ID( LWK_ZONE4 )
+	
+	//ゾーンIDがC03P01だった場合
+	IF $LWK_ZONE4 == ZONE_ID_C03P01 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P11, 15, 17, DIR_DOWN )
+		
+	//ゾーンIDがC03P02だった場合
+	ELSIF $LWK_ZONE4 == ZONE_ID_C03P02 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+	
+	//ゾーンIDがC03P03だった場合
+	ELSIF $LWK_ZONE4 == ZONE_ID_C03P03 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P07, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P04だった場合
+	ELSIF $LWK_ZONE4 == ZONE_ID_C03P04 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P08, 15, 62, DIR_DOWN )
+
+	//ゾーンIDがC03P05だった場合
+	ELSIF $LWK_ZONE4 == ZONE_ID_C03P05 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P06だった場合
+	ELSE
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS４用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*		c03ct	EXIT05	POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_c03ct_exit_05
+
+	//ローカル変数を定義
+	DEFINE_LOCAL LWK_ZONE5
+
+	//現在のゾーン取得
+	_GET_ZONE_ID( LWK_ZONE5 )
+	
+	//ゾーンIDがC03P01だった場合
+	IF $LWK_ZONE5 == ZONE_ID_C03P01 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		
+	//ゾーンIDがC03P02だった場合
+	ELSIF $LWK_ZONE5 == ZONE_ID_C03P02 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P07, 15, 17, DIR_DOWN )
+	
+	//ゾーンIDがC03P03だった場合
+	ELSIF $LWK_ZONE5 == ZONE_ID_C03P03 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P08, 15, 62, DIR_DOWN )
+
+	//ゾーンIDがC03P04だった場合
+	ELSIF $LWK_ZONE5 == ZONE_ID_C03P04 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+				
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P05だった場合
+	ELSIF $LWK_ZONE5 == ZONE_ID_C03P05 THEN
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P10, 15, 17, DIR_DOWN )
+
+	//ゾーンIDがC03P06だった場合
+	ELSE
+
+		//カメラ操作開始
+		_CAMERA_START()
+		
+		//POS５用カメラ
+		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+
+		//カメラ移動待ち
+		_CAMERA_WAIT_MOVE()	
+		
+		//カメラ操作終了
+		_CAMERA_END()
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P11, 15, 17, DIR_DOWN )
+
+	ENDIF
+	
+EVENT_END
