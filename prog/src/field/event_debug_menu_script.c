@@ -21,19 +21,19 @@
 
 #include "field_debug.h"
 
-
 #include "event_debug_local.h"
 
 #include "arc/fieldmap/debug_list.h"  //DEBUG_SCR_
 #include "arc/fieldmap/script_seq.naix"
 #include "script.h" //SCRIPT_ChangeScript
 
-#include "arc/fieldmap/debug_symbol.naix"  //DEBUG_SYM_
-
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
 
+#include "message.naix" //NARC_message_d_field_dat
+
 //======================================================================
 //======================================================================
+
 
 //======================================================================
 //======================================================================
@@ -152,164 +152,6 @@ GMEVENT * DEBUG_EVENT_FLDMENU_DebugScript( const DEBUG_MENU_EVENT_WORK * now_wk 
   *new_wk = *now_wk;
   new_wk->call_proc = NULL;
   new_wk->menuFunc = NULL;
-
-  return new_event;
-}
-
-//======================================================================
-//======================================================================
-typedef struct {
-  DEBUG_MENU_EVENT_WORK dmew;
-  u32 arc_idx;
-  u32 select_id;
-}DEBUG_FLAGMENU_EVENT_WORK;
-
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-/// メニュー項目最大数取得：デバッグスクリプト
-//--------------------------------------------------------------
-static u16 DEBUG_GetDebugFlagMax( GAMESYS_WORK* gsys, void* cb_work )
-{
-  DEBUG_FLAGMENU_EVENT_WORK * df_work = cb_work;
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_DEBUG_SYM, df_work->dmew.heapID );
-  u16 size = GFL_ARC_GetDataSizeByHandle(p_handle, df_work->arc_idx );
-  GFL_ARC_CloseDataHandle( p_handle );
-  GF_ASSERT( size % DEBUG_SCR_EACH_SIZE == 0 );
-  return size / DEBUG_SCR_EACH_SIZE;
-}
-
-//--------------------------------------------------------------
-/// メニュー項目生成：デバッグスクリプト
-//--------------------------------------------------------------
-static void DEBUG_SetMenuWork_DebugFlag(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
-{
-  DEBUG_FLAGMENU_EVENT_WORK * df_work = cb_work;
-  int id,max = DEBUG_GetDebugFlagMax(gsys, cb_work);
-  
-  u8 buffer[DEBUG_SCR_EACH_SIZE];
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_DEBUG_SYM, heapID );
-  u16 * utfStr = GFL_HEAP_AllocClearMemory( heapID, DEBUG_SCR_NAME_LEN * sizeof(u16) );
-  STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_SCR_NAME_LEN + 1, heapID );
-
-  for( id = 0; id < max; id++ ){
-    u16 real_id;
-    GFL_STR_ClearBuffer( strBuf );
-    {
-      GFL_ARC_LoadDataOfsByHandle(p_handle, df_work->arc_idx,
-          id * DEBUG_SCR_EACH_SIZE, DEBUG_SCR_EACH_SIZE, buffer);
-      real_id = *((u16*)&buffer[DEBUG_SCR_OFS_ID]);
-      DEB_STR_CONV_SjisToStrcode(
-          (const char*)(buffer + DEBUG_SCR_OFS_NAME), utfStr, DEBUG_SCR_NAME_LEN );
-      //OS_Printf("DEBUG Flag %5d:%s\n", real_id, buffer + DEBUG_SCR_OFS_NAME);
-      GFL_STR_SetStringCode( strBuf, utfStr );
-    }
-    FLDMENUFUNC_AddStringListData( list, strBuf, real_id, heapID );
-  }
-  GFL_HEAP_FreeMemory( strBuf );
-  GFL_HEAP_FreeMemory( utfStr );
-  GFL_ARC_CloseDataHandle( p_handle );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief フィールドデバッグメニュー初期化データ：デバッグスクリプト
- */
-//--------------------------------------------------------------
-static const DEBUG_MENU_INITIALIZER DebugFlagSelectData = {
-  0,
-  0,                                ///<項目最大数（固定リストでない場合、０）
-  NULL,                             ///<参照するメニューデータ（生成する場合はNULL)
-  &DATA_DebugMenuList_ZoneSel,      ///<メニュー表示指定データ（流用）
-  1, 1, 20, 16,
-  DEBUG_SetMenuWork_DebugFlag,    ///<メニュー生成関数へのポインタ
-  DEBUG_GetDebugFlagMax,          ///<項目最大数取得関数へのポインタ
-};
-
-//--------------------------------------------------------------
-/**
- * イベント：デバッグスクリプト選択
- * @param event GMEVENT
- * @param seq   シーケンス
- * @param wk    event work
- * @retval  GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuFlagSelectEvent(
-    GMEVENT *event, int *seq, void *wk )
-{
-	DEBUG_FLAGMENU_EVENT_WORK * new_wk = wk;
-  DEBUG_MENU_EVENT_WORK * dmew = &new_wk->dmew;
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( dmew->gdata );
-  
-  switch( (*seq) ){
-  case 0:
-    dmew->menuFunc = DEBUGFLDMENU_InitEx( dmew->fieldWork, dmew->heapID,  &DebugFlagSelectData, new_wk );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      u32 ret;
-      ret = FLDMENUFUNC_ProcMenu( dmew->menuFunc );
-      
-      if( ret == FLDMENUFUNC_NULL ){  //操作無し
-        break;
-      }
-      //OS_Printf("DEBUG Flag SELECT %d\n", ret );
-      if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
-        FLDMENUFUNC_DeleteMenu( dmew->menuFunc );
-        return( GMEVENT_RES_FINISH );
-      }
-      new_wk->select_id = ret;
-      (*seq) ++;
-      break;
-    case 2:
-      OS_Printf("DEBUG FLAG:%d\n", EVENTWORK_CheckEventFlag( evwork, new_wk->select_id ) );
-      (*seq) ++;
-    case 3:
-      {
-        int trg = GFL_UI_KEY_GetTrg();
-        if (trg & PAD_BUTTON_A) {
-          if (EVENTWORK_CheckEventFlag( evwork ,new_wk->select_id ) ) {
-            EVENTWORK_ResetEventFlag( evwork, new_wk->select_id );
-          } else {
-            EVENTWORK_SetEventFlag( evwork, new_wk->select_id );
-          }
-          OS_Printf("DEBUG FLAG:Changed\n");
-          (*seq) --;
-        } else if ( trg & PAD_BUTTON_B ) {
-          OS_Printf("DEBUG FLAG:Fixed\n");
-          (*seq) = 1;
-        }
-      }
-      break;
-      
-      
-      
-      //Flag_ChangeFlag( event, ret, NULL, dmew->heapID );
-    }
-    break;
-  }
-
-  return( GMEVENT_RES_CONTINUE );
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FLDMENU_DebugFlag( const DEBUG_MENU_EVENT_WORK * now_wk )
-{
-	GMEVENT * new_event = GMEVENT_Create( now_wk->gmSys, NULL,
-      debugMenuFlagSelectEvent, sizeof(DEBUG_FLAGMENU_EVENT_WORK) );
-	DEBUG_FLAGMENU_EVENT_WORK * new_wk = GMEVENT_GetEventWork( new_event );
-  DEBUG_MENU_EVENT_WORK * dmew = &new_wk->dmew;
-
-	GFL_STD_MemClear( new_wk, sizeof(DEBUG_FLAGMENU_EVENT_WORK) );
-  *dmew = *now_wk;
-  dmew->call_proc = NULL;
-  dmew->menuFunc = NULL;
-
-  new_wk->arc_idx = NARC_debug_symbol_event_flag_bin;
 
   return new_event;
 }

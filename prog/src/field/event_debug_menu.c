@@ -673,7 +673,7 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
  
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys, 
-    FS_OVERLAY_ID( d_numinput ), EVENT_DMenuNumInput, wk );
+    FS_OVERLAY_ID( d_numinput ), DEBUG_EVENT_FLDMENU_NumInput, wk );
   
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 

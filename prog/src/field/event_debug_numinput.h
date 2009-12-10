@@ -1,27 +1,57 @@
+//======================================================================
 /*
  *  @file   event_debug_numinput.c
  *  @brief  デバッグ数値入力
  *  @author Miyuki Iwasawa
  *  @date   09.11.25
  */
+//======================================================================
 
 #pragma once
 
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
 //オーバーレイID extern
+//--------------------------------------------------------------
 FS_EXTERN_OVERLAY( d_numinput );
 
 typedef enum {  
   D_NUMINPUT_ENCEFF = 0,
   D_NUMINPUT_DUMMY,
+  D_NUMINPUT_FLAG,
   D_NUMINPUT_MODE_MAX
 }D_NUMINPUT_MODE;
 
 //--------------------------------------------------------------
+/// デバッグ数値入力：操作制御パラメータ
+//--------------------------------------------------------------
+typedef struct {
+  u32 min;  ///<入力最小値
+  u32 max;  ///<入力最大値
+  ///値を取得するための関数
+  u32 (*get_func)( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+  ///値を設定するための関数
+  void (*set_func)( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
+}DEBUG_NUMINPUT_PARAM;
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
- * 数値入力デバッグメニューイベント生成
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
+ * 数値入力のジャンル選択メニューイベント生成
  */
 //--------------------------------------------------------------
-extern GMEVENT* EVENT_DMenuNumInput( GAMESYS_WORK* gsys, void* work );
+extern GMEVENT* DEBUG_EVENT_FLDMENU_NumInput( GAMESYS_WORK* gsys, void* work );
+
+//--------------------------------------------------------------
+/**
+ * @brief 数値入力メイン処理
+ * @param gsys
+ * @param dni_param
+ * @param id
+ */
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_NumInput(
+    GAMESYS_WORK * gsys, const DEBUG_NUMINPUT_PARAM * dni_param, u32 id );
 
