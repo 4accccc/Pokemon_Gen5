@@ -133,10 +133,10 @@ typedef struct GYM_ELEC_TMP_tag
   u8 RaleChgReq[CAPSULE_NUM_MAX];
   u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
   s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
-
+/**
   ICA_ANIME* IcaAnmPtr2[RALE_NUM_MAX];
   u8 FramePosDat2[RALE_NUM_MAX][FRAME_POS_SIZE*2+HEADER_SIZE];
-
+*/
 }GYM_ELEC_TMP;
 
 typedef struct STOP_DAT_tag
@@ -528,6 +528,8 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work);
 static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
 static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
 
+static void StateSeFunc(FIELDMAP_WORK *fieldWork, GYM_ELEC_TMP *tmp);
+
 #ifdef PM_DEBUG
 BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
 BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys);
@@ -761,7 +763,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   //始めはボリューム0
   NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
   NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
-
+/**
   {
     u8 i;
     for (i=0;i<RALE_NUM_MAX;i++){
@@ -774,7 +776,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
             );
     }
   }
-
+*/  
 
 }
 
@@ -823,7 +825,6 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
       }
     }
   }
-
   //----カプセル停止制御部----
   for(i=0;i<CAPSULE_NUM_MAX;i++){
     u8 obj_idx = OBJ_CAP_1+i;
@@ -873,7 +874,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
     }
 //    OS_Printf("%d::stop_plat %d\n",i, gmk_sv_work->StopPlatformIdx[i]);
   } //end for
-
+  
   //--自機自動移動部--
   if (tmp->AltoMove){
     fx32 frame;
@@ -901,6 +902,9 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
   }
   else    //カプセルに乗っていないときボリューム変更
   {
+#if 1    
+    StateSeFunc(fieldWork, tmp);
+#else
     int volume;
     u8 rect_idx;
     rect_idx = CheckGetSeRect(fieldWork);
@@ -942,6 +946,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
     }
 
     NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
+#endif    
   }
 }
 
@@ -961,11 +966,11 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
   //ＳＥストップ
   PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
   PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
-
+/**
   for(i=0;i<RALE_NUM_MAX;i++){
     ICA_ANIME_Delete( tmp->IcaAnmPtr2[i] );
   }
-
+*/
   //監視ＴＣＢ削除
   GFL_TCB_DeleteTask( tmp->CapStopTcbPtr );
   //汎用ワーク解放
@@ -1046,6 +1051,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 #endif
+
   //アニメフレームをセーブデータに保存
   for (i=0;i<CAPSULE_NUM_MAX;i++){
     u8 obj_idx;
@@ -2431,4 +2437,96 @@ static u8 CheckGetSeRect(FIELDMAP_WORK *fieldWork)
     }
   }
   return i;
+}
+
+static void StateSeFunc(FIELDMAP_WORK *fieldWork, GYM_ELEC_TMP *tmp)
+{
+  int volume;
+  fx32 min_len;
+  int min_obj_idx, min_anm_idx;
+  BOOL first;
+  int i;
+
+  FLD_EXP_OBJ_CNT_PTR obj_cnt_ptr;
+  obj_cnt_ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  first = TRUE;
+  for(i=0;i<CAPSULE_NUM_MAX;i++)
+  {
+    //アニメデータ取得
+    fx32 now_frm;
+    VecFx32 now, player_pos, dst;
+    fx32 len;
+    NNSG3dAnmObj* anm_obj_ptr;
+    GFL_G3D_ANM*  gfl_anm;
+    u8 cap_idx = i;
+    u8 obj_idx = OBJ_CAP_1 + cap_idx;
+    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx);
+    u8 anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[cap_idx];
+    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+
+    now_frm = GetAnimeFrame(obj_cnt_ptr, obj_idx, anm_idx);
+
+    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
+    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        now_frm,
+                        &now);
+    VEC_Add( &now, &CapPos[cap_idx] ,&now );
+    FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &player_pos );
+    VEC_Subtract( &now, &player_pos ,&dst );
+    len = VEC_Mag( &dst );
+    if ( (min_len >len)|| first )
+    {
+      min_len = len;
+      min_obj_idx = obj_idx;
+      min_anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[cap_idx];
+      first = FALSE;
+    }
+  }
+
+  if ( SE_LEN <= min_len ) volume = 0;
+  else
+  {
+    fx32 now_frm,next_frm;
+    VecFx32 now,next, dst;
+    fx32 len;
+    NNSG3dAnmObj* anm_obj_ptr;
+    GFL_G3D_ANM*  gfl_anm;
+    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, min_obj_idx);
+    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, min_obj_idx, min_anm_idx);
+    fx32 last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm_ptr );
+
+    now_frm = GetAnimeFrame(obj_cnt_ptr, min_obj_idx, min_anm_idx);
+    next_frm = now_frm+FX32_ONE;
+    if ( next_frm >= last_frm) next_frm = 0;
+
+    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, min_anm_idx );
+    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        now_frm,
+                        &now);
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        next_frm,
+                        &next);
+
+    VEC_Subtract( &now, &next ,&dst );
+    len = VEC_Mag( &dst );
+    if ( len >=SPD_LV5 ){
+      volume = 127;
+    }else if ( len >=SPD_LV4 ){
+      volume = 120;
+    }else if ( len >=SPD_LV3 ){
+      volume = 90;
+    }else if( len >= SPD_LV2 ){
+      volume = 60;
+    }else{
+      volume = 0;
+    }
+  }
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
+
 }
