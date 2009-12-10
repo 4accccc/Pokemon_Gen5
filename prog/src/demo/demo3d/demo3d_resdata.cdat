@@ -91,7 +91,7 @@ static const GFL_G3D_UTIL_OBJ obj_n_castle_unit02[] = {
 //setup
 static const GFL_G3D_UTIL_SETUP n_castle_setup[] = {
 	{ res_n_castle_unit01, NELEMS(res_n_castle_unit01), obj_n_castle_unit01, NELEMS(obj_n_castle_unit01) },
-//	{ res_n_castle_unit02, NELEMS(res_n_castle_unit02), obj_n_castle_unit02, NELEMS(obj_n_castle_unit02) },
+	{ res_n_castle_unit02, NELEMS(res_n_castle_unit02), obj_n_castle_unit02, NELEMS(obj_n_castle_unit02) },
 };
 
 

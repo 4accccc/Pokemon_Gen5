@@ -66,7 +66,6 @@ struct _DEMO3D_CMD_WORK {
 static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx );
 static void cmd_exec( const DEMO3D_CMD_DATA* data );
 
-
 static void CMD_SE(int* param);
 static void CMD_SE_STOP(int* param);
 
@@ -119,7 +118,7 @@ static void CMD_SE(int* param)
 /**
  *	@brief  SE:çƒê∂í‚é~
  *
- *	@param	param
+ *	@param	param[0] SE_Label
  *
  *	@retval
  */
