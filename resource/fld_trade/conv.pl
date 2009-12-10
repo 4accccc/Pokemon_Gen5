@@ -7,6 +7,7 @@
 @FLD_TRADE_FILE = undef;	#データファル
 @MONSNO_H_FILE	= undef;	#モンスターナンバーデファイン
 @TOKUSYU_H_FILE	= undef;	#特殊ナンバーデファイン
+@SEIKAKU_H_FILE = undef;	#性格ナンバーデファイン
 @ITEMSYM_H_FILE = undef;	#アイテムナンバーデファイン
 @PMVER_H_FILE = undef;		#国コードナンバーデファイン
 @OUTPUT0_FILE = undef;		#書き出しデータ
@@ -56,118 +57,160 @@ foreach $one ( @FLD_TRADE_FILE ){
 			$OUTPUT10_FILE[0] = &get_monsno($line[$INPUT_INDEX[10]] );
 			$OUTPUT11_FILE[0] = &get_monsno($line[$INPUT_INDEX[11]] );
 			$OUTPUT12_FILE[0] = &get_monsno($line[$INPUT_INDEX[12]] );
-		}elsif( ($count >= 3) && ($count <= 8) ){	#HP乱数～特防乱数
-			$OUTPUT0_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[0]];
-			$OUTPUT1_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[1]];
-			$OUTPUT2_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[2]];
-			$OUTPUT3_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[3]];
-			$OUTPUT4_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[4]];
-			$OUTPUT5_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[5]];
-			$OUTPUT6_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[6]];
-			$OUTPUT7_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[7]];
-			$OUTPUT8_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[8]];
-			$OUTPUT9_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[9]];
-			$OUTPUT10_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[10]];
-			$OUTPUT11_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[11]];
-			$OUTPUT12_FILE[ 1+($count - 3) ] = $line[$INPUT_INDEX[12]];
-		}elsif( $count == 9 ){	#特性
-			$OUTPUT0_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[0]] );
-			$OUTPUT1_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[1]] );
-			$OUTPUT2_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[2]] );
-			$OUTPUT3_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[3]] );
-			$OUTPUT4_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[4]] );
-			$OUTPUT5_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[5]] );
-			$OUTPUT6_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[6]] );
-			$OUTPUT7_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[7]] );
-			$OUTPUT8_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[8]] );
-			$OUTPUT9_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[9]] );
-			$OUTPUT10_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[10]] );
-			$OUTPUT11_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[11]] );
-			$OUTPUT12_FILE[ 7 ] = &get_tokusyu($line[$INPUT_INDEX[12]] );
-		}elsif( ($count >= 10) && ($count <= 16) ){	#ID～RND
-			$OUTPUT0_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[0]];
-			$OUTPUT1_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[1]];
-			$OUTPUT2_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[2]];
-			$OUTPUT3_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[3]];
-			$OUTPUT4_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[4]];
-			$OUTPUT5_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[5]];
-			$OUTPUT6_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[6]];
-			$OUTPUT7_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[7]];
-			$OUTPUT8_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[8]];
-			$OUTPUT9_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[9]];
-			$OUTPUT10_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[10]];
-			$OUTPUT11_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[11]];
-			$OUTPUT12_FILE[ 8+($count - 10) ] = $line[$INPUT_INDEX[12]];
-		}elsif( $count == 17 ){	#アイテム
-			$OUTPUT0_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[0]] );
-			$OUTPUT1_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[1]] );
-			$OUTPUT2_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[2]] );
-			$OUTPUT3_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[3]] );
-			$OUTPUT4_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[4]] );
-			$OUTPUT5_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[5]] );
-			$OUTPUT6_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[6]] );
-			$OUTPUT7_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[7]] );
-			$OUTPUT8_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[8]] );
-			$OUTPUT9_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[9]] );
-			$OUTPUT10_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[10]] );
-			$OUTPUT11_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[11]] );
-			$OUTPUT12_FILE[ 15 ] = &get_item($line[$INPUT_INDEX[12]] );
-		}elsif( ($count >= 19) && ($count <= 20) ){	#親性別　毛
-			$OUTPUT0_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[0]];
-			$OUTPUT1_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[1]];
-			$OUTPUT2_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[2]];
-			$OUTPUT3_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[3]];
-			$OUTPUT4_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[4]];
-			$OUTPUT5_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[5]];
-			$OUTPUT6_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[6]];
-			$OUTPUT7_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[7]];
-			$OUTPUT8_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[8]];
-			$OUTPUT9_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[9]];
-			$OUTPUT10_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[10]];
-			$OUTPUT11_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[11]];
-			$OUTPUT12_FILE[ 16+($count - 19) ] = $line[$INPUT_INDEX[12]];
-		}elsif( $count == 21 ){		#国コード
-			$OUTPUT0_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[0]] );
-			$OUTPUT1_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[1]] );
-			$OUTPUT2_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[2]] );
-			$OUTPUT3_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[3]] );
-			$OUTPUT4_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[4]] );
-			$OUTPUT5_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[5]] );
-			$OUTPUT6_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[6]] );
-			$OUTPUT7_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[7]] );
-			$OUTPUT8_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[8]] );
-			$OUTPUT9_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[9]] );
-			$OUTPUT10_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[10]] );
-			$OUTPUT11_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[11]] );
-			$OUTPUT12_FILE[ 18 ] = &get_pmver($line[$INPUT_INDEX[12]] );
-		}elsif( $count == 22 ){		#交換するポケモン
-			$OUTPUT0_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[0]] );
-			$OUTPUT1_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[1]] );
-			$OUTPUT2_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[2]] );
-			$OUTPUT3_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[3]] );
-			$OUTPUT4_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[4]] );
-			$OUTPUT5_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[5]] );
-			$OUTPUT6_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[6]] );
-			$OUTPUT7_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[7]] );
-			$OUTPUT8_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[8]] );
-			$OUTPUT9_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[9]] );
-			$OUTPUT10_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[10]] );
-			$OUTPUT11_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[11]] );
-			$OUTPUT12_FILE[ 19 ] = &get_monsno($line[$INPUT_INDEX[12]] );
-		}elsif( $count == 23 ){		#交換するポケモンの性別
-			$OUTPUT0_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[0]] );
-			$OUTPUT1_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[1]] );
-			$OUTPUT2_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[2]] );
-			$OUTPUT3_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[3]] );
-			$OUTPUT4_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[4]] );
-			$OUTPUT5_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[5]] );
-			$OUTPUT6_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[6]] );
-			$OUTPUT7_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[7]] );
-			$OUTPUT8_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[8]] );
-			$OUTPUT9_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[9]] );
-			$OUTPUT10_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[10]] );
-			$OUTPUT11_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[11]] );
-			$OUTPUT12_FILE[ 20 ] = &get_monsno($line[$INPUT_INDEX[12]] );
+    }elsif( $count == 3 ){  #フォームナンバー
+			$OUTPUT0_FILE[1] = &get_formno($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[1] = &get_formno($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[1] = &get_formno($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[1] = &get_formno($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[1] = &get_formno($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[1] = &get_formno($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[1] = &get_formno($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[1] = &get_formno($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[1] = &get_formno($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[1] = &get_formno($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[1] = &get_formno($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[1] = &get_formno($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[1] = &get_formno($line[$INPUT_INDEX[12]] );
+		}elsif( ($count >= 4) && ($count <= 9) ){	#HP乱数～特防乱数
+			$OUTPUT0_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[0]];
+			$OUTPUT1_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[1]];
+			$OUTPUT2_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[2]];
+			$OUTPUT3_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[3]];
+			$OUTPUT4_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[4]];
+			$OUTPUT5_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[5]];
+			$OUTPUT6_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[6]];
+			$OUTPUT7_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[7]];
+			$OUTPUT8_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[8]];
+			$OUTPUT9_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[9]];
+			$OUTPUT10_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[10]];
+			$OUTPUT11_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[11]];
+			$OUTPUT12_FILE[ 2+($count - 4) ] = $line[$INPUT_INDEX[12]];
+		}elsif( $count == 10 ){	#特性
+			$OUTPUT0_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 8 ] = &get_tokusyu($line[$INPUT_INDEX[12]] );
+		}elsif( $count == 11 ){	#性格
+			$OUTPUT0_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 9 ] = &get_seikaku($line[$INPUT_INDEX[12]] );
+		}elsif( $count == 12 ){	#性別
+			$OUTPUT0_FILE[ 10 ] = ($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 10 ] = ($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 10 ] = ($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 10 ] = ($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 10 ] = ($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 10 ] = ($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 10 ] = ($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 10 ] = ($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 10 ] = ($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 10 ] = ($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 10 ] = ($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 10 ] = ($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 10 ] = ($line[$INPUT_INDEX[12]] );
+		}elsif( ($count >= 13) && ($count <= 18) ){	#ID～たくましさ
+			$OUTPUT0_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[0]];
+			$OUTPUT1_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[1]];
+			$OUTPUT2_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[2]];
+			$OUTPUT3_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[3]];
+			$OUTPUT4_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[4]];
+			$OUTPUT5_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[5]];
+			$OUTPUT6_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[6]];
+			$OUTPUT7_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[7]];
+			$OUTPUT8_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[8]];
+			$OUTPUT9_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[9]];
+			$OUTPUT10_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[10]];
+			$OUTPUT11_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[11]];
+			$OUTPUT12_FILE[ 11+($count - 13) ] = $line[$INPUT_INDEX[12]];
+		}elsif( $count == 19 ){	#アイテム
+			$OUTPUT0_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 17 ] = &get_item($line[$INPUT_INDEX[12]] );
+		}elsif( ($count >= 21) && ($count <= 22) ){	#親性別　毛
+			$OUTPUT0_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[0]];
+			$OUTPUT1_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[1]];
+			$OUTPUT2_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[2]];
+			$OUTPUT3_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[3]];
+			$OUTPUT4_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[4]];
+			$OUTPUT5_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[5]];
+			$OUTPUT6_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[6]];
+			$OUTPUT7_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[7]];
+			$OUTPUT8_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[8]];
+			$OUTPUT9_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[9]];
+			$OUTPUT10_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[10]];
+			$OUTPUT11_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[11]];
+			$OUTPUT12_FILE[ 18+($count - 21) ] = $line[$INPUT_INDEX[12]];
+		}elsif( $count == 23 ){		#国コード
+			$OUTPUT0_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 20 ] = &get_pmver($line[$INPUT_INDEX[12]] );
+		}elsif( $count == 24 ){		#交換するポケモン
+			$OUTPUT0_FILE[ 21 ] = ($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 21 ] = ($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 21 ] = ($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 21 ] = ($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 21 ] = ($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 21 ] = ($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 21 ] = ($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 21 ] = ($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 21 ] = ($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 21 ] = ($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 21 ] = ($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 21 ] = ($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 21 ] = ($line[$INPUT_INDEX[12]] );
+		}elsif( $count == 25 ){		#交換するポケモンの性別
+			$OUTPUT0_FILE[ 22 ] = ($line[$INPUT_INDEX[0]] );
+			$OUTPUT1_FILE[ 22 ] = ($line[$INPUT_INDEX[1]] );
+			$OUTPUT2_FILE[ 22 ] = ($line[$INPUT_INDEX[2]] );
+			$OUTPUT3_FILE[ 22 ] = ($line[$INPUT_INDEX[3]] );
+			$OUTPUT4_FILE[ 22 ] = ($line[$INPUT_INDEX[4]] );
+			$OUTPUT5_FILE[ 22 ] = ($line[$INPUT_INDEX[5]] );
+			$OUTPUT6_FILE[ 22 ] = ($line[$INPUT_INDEX[6]] );
+			$OUTPUT7_FILE[ 22 ] = ($line[$INPUT_INDEX[7]] );
+			$OUTPUT8_FILE[ 22 ] = ($line[$INPUT_INDEX[8]] );
+			$OUTPUT9_FILE[ 22 ] = ($line[$INPUT_INDEX[9]] );
+			$OUTPUT10_FILE[ 22 ] = ($line[$INPUT_INDEX[10]] );
+			$OUTPUT11_FILE[ 22 ] = ($line[$INPUT_INDEX[11]] );
+			$OUTPUT12_FILE[ 22 ] = ($line[$INPUT_INDEX[12]] );
 		}
 	}
 	$count ++;
@@ -227,7 +270,7 @@ open( FILEOUT_12, ">fld_trade_12.dat" );
 open( FILEOUT_12_T, ">fld_trade_12.txt" );
 binmode( FILEOUT_12 );
 
-for( $i=0; $i<21; $i++ ){
+for( $i=0; $i<23; $i++ ){
 	print( FILEOUT_0 pack("I", $OUTPUT0_FILE[$i]) );
 	print( FILEOUT_1 pack("I", $OUTPUT1_FILE[$i]) );
 	print( FILEOUT_2 pack("I", $OUTPUT2_FILE[$i]) );
@@ -302,6 +345,10 @@ sub file_open{
 	@TOKUSYU_H_FILE = <FILEIN>;
 	close( FILEIN );
 
+	open( FILEIN, "poke_tool.h" );
+	@SEIKAKU_H_FILE = <FILEIN>;
+	close( FILEIN );
+
 	open( FILEIN, "itemsym.h" );
 	@ITEMSYM_H_FILE = <FILEIN>;
 	close( FILEIN );
@@ -313,30 +360,58 @@ sub file_open{
 sub get_monsno{
 	my( $key )  = @_;
 	
-  print "$key\n";
+  print "$key = ";
 	foreach $one ( @MONSNO_H_FILE ){
 
 		if( $one =~ /#define\t*$key\t*\( ([0-9]*) \)/ ){
-      print "monsno = $1\n";
+      print "$1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
-  print "monsno no hit\n";
+  print "×\n";
+	return 0;
+}
+sub get_formno{
+	my( $key )  = @_;
+	
+  print "$key = ";
+	foreach $one ( @MONSNO_H_FILE ){
+
+		if( $one =~ /#define\t*$key\t*\( ([0-9]*) \)/ ){
+      print "$1\n";
+			return $1;	#ヒットしたナンバーを返す
+		}
+	}
+  print "×\n";
 	return 0;
 }
 sub get_tokusyu{
 	my( $key )  = @_;
 	
-  print "$key\n";
+  print "$key = ";
 	foreach $one ( @TOKUSYU_H_FILE ){
 
 		if( $one =~ /#define\t*$key\t*\(([0-9]*)\)/ ){
-      print "tokusyu = $1\n";
+      print "$1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
-	return 0;
+  print "×\n";
+	return 0; 
+}
+sub get_seikaku{
+	my( $key )  = @_;
 	
+  print "$key = ";
+	foreach $one ( @SEIKAKU_H_FILE ){
+
+		if( $one =~ /#define\s*$key\s*\( ([0-9]*) \)/ ){
+      print "$1\n";
+			return $1;	#ヒットしたナンバーを返す
+		}
+	}
+  print "×\n";
+	return 0; 
 }
 sub get_item{
 	my( $key )  = @_;
@@ -345,20 +420,24 @@ sub get_item{
 	foreach $one ( @ITEMSYM_H_FILE ){
 
 		if( $one =~ /#define $key\t*\( ([0-9]*) \)/ ){
-      print "item = $1\n";
+      print "$1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
+  print "×\n";
 	return 0;
 }
 sub get_pmver{
 	my( $key )  = @_;
 	
+  print "$key = ";
 	foreach $one ( @PMVER_H_FILE ){
 
 		if( $one =~ /#define\t*$key\t*([0-9]*)/ ){
+      print "$1\n";
 			return $1;	#ヒットしたナンバーを返す
 		}
 	}
+  print "×\n";
 	return 0;
 }

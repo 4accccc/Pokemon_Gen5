@@ -28,6 +28,7 @@ SUBDIRS	=
 MONSNO_H_DIR		= ..\\personal\\
 ITEMSYM_H_DIR		= ..\\..\\prog\\include\\item\\
 TOKUSYU_H_DIR		= ..\\..\\prog\\include\\poke_tool\\
+SEIKAKU_H_DIR		= ..\\..\\prog\\include\\poke_tool\\
 PM_VER_H_DIR		= ..\\..\\prog\\include\\
 
 #コピー先
@@ -38,7 +39,8 @@ MAKE_FILE	= fld_trade_poke.xls \
 			      monsno_def.h \
 			      itemsym.h \
 			      tokusyu_def.h \
-			      pm_version.h
+			      pm_version.h \
+						poke_tool.h
 
 #ターゲットファイル
 MAKE_TARGET = fld_trade_00.dat
@@ -77,6 +79,7 @@ file_cp:
 	$(COPY) -f -u $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
 	$(COPY) -f -u $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
 	$(COPY) -f -u $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
+	$(COPY) -f -u $(SEIKAKU_H_DIR)poke_tool.h $(CPY_DIR)
 	$(COPY) -f -u $(PM_VER_H_DIR)pm_version.h $(CPY_DIR)
 
 # コピー先のnarcが古い場合実行する

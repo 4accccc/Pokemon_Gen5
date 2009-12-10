@@ -14,6 +14,7 @@
 typedef struct 
 {
 	u32 monsno;			    // モンスターナンバー
+  u32 formno;         // フォームナンバー
 	u32 hp_rnd;			    // HP乱数
 	u32 at_rnd;			    // 攻撃乱数
 	u32 df_rnd;			    // 防御乱数
@@ -21,13 +22,14 @@ typedef struct
 	u32 sa_rnd;			    // 特攻乱数
 	u32 sd_rnd;			    // 特防乱数
 	u32 speabino;		    // 特殊能力
+  u32 seikaku;        // 性格
+  u32 sex;            // 性別
 	u32	mons_id;		    // ID
 	u32 style;			    // かっこよさ
 	u32 beautiful;	    // うつくしさ
 	u32 cute;			      // かわいさ
 	u32 clever;			    // かしこさ
 	u32 strong;			    // たくましさ
-	u32 mons_rnd;		    // 固体乱数
 	u32 item;			      // アイテム
 	u32 oya_sex;		    // 親性別
 	u32 fur;			      // 毛艶

@@ -98,11 +98,14 @@ typedef struct _FLD_TRADE_WORK FLD_TRADE_WORK;
  */
 //-----------------------------------------------------------------------------
 #include "field/fieldmap_proc.h"  // for FIELDMAP_WORK
+#include "gamesystem/gamesystem.h"  // for GMEVENT
 
 
+//--------------
+// ■交換ワーク
+//--------------
 extern FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heapID, u32 trade_no );
 extern void FLD_TRADE_WORK_Delete( FLD_TRADE_WORK* p_work ); 
-
 
 //----------------------
 // ■交換データ取得関係
@@ -115,6 +118,23 @@ extern u32 FLD_TRADE_WORK_GetChangeMonsno( const FLD_TRADE_WORK* cp_work );
 extern u32 FLD_TRADE_WORK_GetChangeMonsSex( const FLD_TRADE_WORK* cp_work );	
 // 親の性別
 extern u32 FLD_TRADE_WORK_GetTradeMonsOyaSex( const FLD_TRADE_WORK* cp_work );		
+
+//------------
+// ■イベント
+//------------
+//----------------------------------------------------------------------------------------
+/**
+ * @brief ゲーム内交換イベントを生成する
+ *
+ * @param gsys ゲームシステム
+ * @param trade_no  交換データNo.
+ * @param party_pos 交換に出すポケモンの手持ちインデックス
+ *
+ * @return 生成したイベント
+ */
+//----------------------------------------------------------------------------------------
+extern GMEVENT* EVENT_FieldPokeTrade( GAMESYS_WORK* gsys, u8 trade_no, u8 party_pos );
+
 
 
 // 交換の実行
