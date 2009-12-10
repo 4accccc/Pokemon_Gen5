@@ -929,6 +929,7 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 
   BTL_Printf("stw basePoke=%d, basePos=%d\n", BPP_GetID(wk->bpp), basePos);
 
+
   switch( target ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_OTHERS, basePos) );
@@ -936,33 +937,40 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
   case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
     stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
     break;
+  case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方ポケ（選択）
+    stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_MYTEAM, basePos) );
+    break;
+  case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方ポケ（選択）
+    stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_FRIENDS, basePos) );
+    break;
 
   case WAZA_TARGET_ENEMY_ALL:           ///< 敵側２体
   case WAZA_TARGET_ENEMY_RANDOM:        ///< 敵ランダム
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
     break;
-  case WAZA_TARGET_OTHER_ALL:     ///< 自分以外全部
+  case WAZA_TARGET_OTHER_ALL:           ///< 自分以外全部
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_OTHERS, basePos) );
     break;
-  case WAZA_TARGET_USER:      ///< 自分１体のみ
+  case WAZA_TARGET_USER:                ///< 自分１体のみ
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_DEFAULT, basePos) );
     break;
 
-  case WAZA_TARGET_SIDE_FRIEND:     ///< 自分側陣地
-  case WAZA_TARGET_FRIEND_ALL:      ///< 味方側全ポケ
-    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_FRIENDS, basePos) );
+  case WAZA_TARGET_SIDE_FRIEND:         ///< 自分側陣地
+  case WAZA_TARGET_FRIEND_ALL:          ///< 味方側全ポケ
+    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_MYTEAM, basePos) );
     break;
 
-  case WAZA_TARGET_SIDE_ENEMY:    ///< 敵側陣地
+  case WAZA_TARGET_SIDE_ENEMY:          ///< 敵側陣地
     stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
     break;
 
-  case WAZA_TARGET_FIELD:         ///< 場に効く（天候系など）
+  case WAZA_TARGET_FIELD:               ///< 場に効く（天候系など）
+  case WAZA_TARGET_ALL:
     stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ALL, basePos) );
     break;
 
-  case WAZA_TARGET_UNKNOWN:     ///< 特殊系（ゆびをふる等）
-    // @@@ 未実装
+  case WAZA_TARGET_UNKNOWN:             ///< 特殊系（ゆびをふる等）
+    stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_DEFAULT, basePos) );
     break;
 
   default:

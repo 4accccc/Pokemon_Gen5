@@ -1614,7 +1614,7 @@ static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
   case BTL_EXPOS_FULL_ENEMY:
     dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
     break;
-  case BTL_EXPOS_AREA_FRIENDS:
+  case BTL_EXPOS_AREA_MYTEAM:
     dst[0] = basePos;
     break;
   case BTL_EXPOS_AREA_ALL:
@@ -1641,7 +1641,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
     dst[2] = BTL_MAIN_GetNextPokePos( wk, basePos );
     return 3;
-  case BTL_EXPOS_AREA_FRIENDS:
+  case BTL_EXPOS_AREA_MYTEAM:
     dst[0] = basePos;
     dst[1] = BTL_MAIN_GetNextPokePos( wk, basePos );
     if( dst[0] > dst[1] )
@@ -1651,6 +1651,9 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
       dst[1] = tmp;
     }
     return 2;
+  case BTL_EXPOS_AREA_FRIENDS:
+    dst[0] = BTL_MAIN_GetNextPokePos( wk, basePos );
+    return 1;
   case BTL_EXPOS_AREA_ALL:
     dst[0] = BTL_POS_1ST_0;
     dst[1] = BTL_POS_2ND_0;
@@ -1709,7 +1712,7 @@ static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
       return 3;
     }
 
-  case BTL_EXPOS_AREA_FRIENDS:
+  case BTL_EXPOS_AREA_MYTEAM:
     if( fCenter )
     {
       dst[0] = basePos;
@@ -1723,6 +1726,21 @@ static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
       dst[1] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
       return 2;
     }
+    break;
+
+  case BTL_EXPOS_AREA_FRIENDS:
+    if( fCenter )
+    {
+      dst[0] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
+      dst[1] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+      return 2;
+    }
+    else
+    {
+      dst[0] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
+      return 1;
+    }
+    break;
 
   case BTL_EXPOS_AREA_ALL:
     if( fCenter )

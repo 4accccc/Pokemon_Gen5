@@ -158,7 +158,8 @@ typedef enum {
 
   BTL_EXPOS_AREA_ENEMY,       ///< （攻撃範囲内の）相手全部
   BTL_EXPOS_AREA_OTHERS,      ///< （攻撃範囲内の）自分以外全部
-  BTL_EXPOS_AREA_FRIENDS,     ///< （攻撃範囲内の）味方全部
+  BTL_EXPOS_AREA_MYTEAM,      ///< （攻撃範囲内の）味方全部
+  BTL_EXPOS_AREA_FRIENDS,     ///< （攻撃範囲内の）自分以外の味方全部
   BTL_EXPOS_AREA_ALL,         ///< （攻撃範囲内の）敵・味方全部
 
   BTL_EXPOS_FULL_ENEMY,       ///< （全フィールドの）相手全部
