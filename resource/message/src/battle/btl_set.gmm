@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-09T16:49:18"/>
+	<create user="taya" host="W00146" date="2009-12-10T11:45:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5598,21 +5598,55 @@
 
 	<row id="BTL_STRID_SET_Hatakiotosu">
 		<comment>はたきおとす</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたきおとした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたき落とした！</language>
 	</row>
+
+	<row id="BTL_STRID_SET_Hatakiotosu_2Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　やせいの　[1:02:ポケモンニックネーム:1]の
+[1:09:どうぐ名:2]を　はたきおとした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の[1:02:ポケモンニックネーム:1]の
+[1:09:どうぐ名:2]を　はたき落とした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Hatakiotosu_2E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいての　[1:02:ポケモンニックネーム:1]の
+[1:09:どうぐ名:2]を　はたきおとした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手の[1:02:ポケモンニックネーム:1]の
+[1:09:どうぐ名:2]を　はたき落とした！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_Hatakiotosu_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたきおとした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたき落とした！</language>
 	</row>
+
+	<row id="BTL_STRID_SET_Hatakiotosu_Y2Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]の▽
+[1:09:どうぐ名:2]を　はたきおとした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]の▽
+[1:09:どうぐ名:2]を　はたき落とした！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_Hatakiotosu_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたきおとした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
+[1:09:どうぐ名:2]を　はたき落とした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Hatakiotosu_E2E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]の▽
+[1:09:どうぐ名:2]を　はたきおとした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]の▽
 [1:09:どうぐ名:2]を　はたき落とした！</language>
 	</row>
 
@@ -5625,7 +5659,6 @@
 [1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_2Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 やせいの　[1:02:ポケモンニックネーム:1]から▽
@@ -5634,7 +5667,6 @@
 野生の　[1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_2E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 あいての　[1:02:ポケモンニックネーム:1]から▽
@@ -5643,7 +5675,6 @@
 相手の　[1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]から▽
@@ -5652,7 +5683,6 @@
 [1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_Y2Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 やせいの　[1:02:ポケモンニックネーム:1]から▽
@@ -5661,7 +5691,6 @@
 野生の　[1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]から▽
@@ -5670,7 +5699,6 @@
 [1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　奪い取った！</language>
 	</row>
-
 	<row id="BTL_STRID_SET_Dorobou_E2E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 あいての　[1:02:ポケモンニックネーム:1]から▽
