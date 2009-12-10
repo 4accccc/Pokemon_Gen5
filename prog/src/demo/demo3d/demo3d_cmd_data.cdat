@@ -13,15 +13,14 @@
 
 static const DEMO3D_CMD_DATA demo3d_cmd01_data[] = 
 { 
-  //@TODO ãDìJ:78 îg:79
   // èâä˙âªÉpÉâÉÅÅ[É^
-  {  DEMO3D_CMD_TYPE_SE, -1,      { SEQ_SE_FLD_77, } }, // îg
+  {  DEMO3D_CMD_TYPE_SE, -1,      { SEQ_SE_FLD_79, } }, // îg
   // ãDìJ
-  {  DEMO3D_CMD_TYPE_SE, 0,       { SEQ_SE_FLD_77, } }, 
-  {  DEMO3D_CMD_TYPE_SE, 1*45*30, { SEQ_SE_FLD_77, } },
-  {  DEMO3D_CMD_TYPE_SE, 2*45*30, { SEQ_SE_FLD_77, } },
-  {  DEMO3D_CMD_TYPE_SE, 3*45*30, { SEQ_SE_FLD_77, } },
-  {  DEMO3D_CMD_TYPE_SE, 4*45*30, { SEQ_SE_FLD_77, } },
+  {  DEMO3D_CMD_TYPE_SE, 0,       { SEQ_SE_FLD_78, } }, 
+  {  DEMO3D_CMD_TYPE_SE, 1*45*30, { SEQ_SE_FLD_78, } },
+  {  DEMO3D_CMD_TYPE_SE, 2*45*30, { SEQ_SE_FLD_78, } },
+  {  DEMO3D_CMD_TYPE_SE, 3*45*30, { SEQ_SE_FLD_78, } },
+  {  DEMO3D_CMD_TYPE_SE, 4*45*30, { SEQ_SE_FLD_78, } },
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } }, ///< ÉRÉ}ÉìÉhèIóπ
 };
 

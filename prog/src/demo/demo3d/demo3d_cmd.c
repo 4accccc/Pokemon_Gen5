@@ -167,7 +167,7 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, u32 now_frame )
+void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
 {
   const DEMO3D_CMD_DATA* data;
 
@@ -182,18 +182,28 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, u32 now_frame )
   // 頭出し
   data = &data[ wk->cmd_idx ];
     
-  GF_ASSERT( data->frame >= now_frame );
+  GF_ASSERT( data->frame * FX32_ONE >= now_frame );
 
   // 指定フレームまで待機
-  if( data->frame == now_frame )
+  if( data->frame * FX32_ONE == now_frame )
   {
-    // 実行
-    cmd_exec( data );
-    wk->cmd_idx++;
-    
-    // 次のコマンドがENDならフラグを立てる
-    data++;
-    wk->is_cmd_end = ( data->type == DEMO3D_CMD_TYPE_END );
+    int i;
+    for( i=0; i<CMD_ELEM_MAX; i++ )
+    {
+      // 実行
+      cmd_exec( data );
+      // 次のコマンドがENDならフラグを立てる
+      data++;
+      wk->is_cmd_end = ( data->type == DEMO3D_CMD_TYPE_END );
+     
+      wk->cmd_idx++;
+
+      // 終了判定 ENDフラグが立っているか、現在のフレームで実行するコマンドが無くなっていたら処理を抜ける
+      if( wk->is_cmd_end == TRUE || data->frame * FX32_ONE != now_frame )
+      {
+        break;
+      }
+    }
   }
 }
 
@@ -235,7 +245,7 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
     {
       cmd_exec( &data[i] );
     }
-    else if( data[i].frame >= now_frame )
+    else if( data[i].frame * FX32_ONE >= now_frame )
     {
       // 頭出し終了
       *out_idx = i;

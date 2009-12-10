@@ -117,7 +117,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   //@TODO 応急処置 クルーザーは30FPS
   if( demo_id == DEMO3D_ID_C_CRUISER )
   {
-    GFL_UI_ChangeFrameRate( GFL_UI_FRAMERATE_30 );
+    wk->anime_speed = FX32_ONE / 2;
   }
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
@@ -230,7 +230,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // コマンド実行
-  Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT );
+  Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
 
   // ステータス初期化
   VEC_Set( &status.trans, 0, 0, 0 );
@@ -282,15 +282,15 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
  *
  *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク
  *
- *	@retval フーレム値（1SYNC=1)
+ *	@retval フーレム値
  */
 //-----------------------------------------------------------------------------
-u32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk )
+fx32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk )
 {
   GF_ASSERT(wk);
   GF_ASSERT(wk->ica_anime);
 
-  return ICA_ANIME_GetNowFrame( wk->ica_anime ) >> FX32_SHIFT;
+  return ICA_ANIME_GetNowFrame( wk->ica_anime );
 }
 
 

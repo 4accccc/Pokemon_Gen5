@@ -69,7 +69,7 @@ extern BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk );
  *
  *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク
  *
- *	@retval フーレム値（1SYNC=1)
+ *	@retval フーレム値
  */
 //-----------------------------------------------------------------------------
-extern u32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk );
+extern fx32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk );

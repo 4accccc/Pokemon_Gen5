@@ -39,5 +39,5 @@ extern DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ID demo_id, u32 start_frame, HEA
 
 extern void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk );
 
-extern void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, u32 now_frame );
+extern void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame );
 
