@@ -1345,6 +1345,7 @@ extern void BOX2MAIN_BgFrameWorkMake( BOX2_SYS_WORK * syswk );
 extern void BOX2MAIN_BgFrameWorkExit( BOX2_APP_WORK * appwk );
 
 
+
 //============================================================================================
 //	マーキングフレーム
 //============================================================================================
@@ -2605,7 +2606,7 @@ extern int BOX2MAIN_VFuncItemArrangeGetKey( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangeGetTouch( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2641,7 +2642,7 @@ extern int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemIconGetTouch( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemMoveTouch( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2701,7 +2702,7 @@ extern int BOX2MAIN_VFuncItemIconPutKeyCancel( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemArrangePartyGetTouch( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncItemPartyGetTouch( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

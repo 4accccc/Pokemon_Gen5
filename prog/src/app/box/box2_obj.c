@@ -2707,6 +2707,7 @@ void BOX2OBJ_ItemIconCursorAdd( BOX2_APP_WORK * appwk )
 			appwk->clwk[BOX2OBJ_ID_OUTLINE+i] = ClactWorkCreate( appwk, &prm );
 //			GFL_CLACT_WK_SetPlttOffs(
 //				appwk->clwk[BOX2OBJ_ID_OUTLINE+i], PALNUM_OUTLINE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+			GFL_CLACT_WK_SetPlttOffs( appwk->clwk[BOX2OBJ_ID_OUTLINE+i], prm.pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 			BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_OUTLINE+i, FALSE );
 		}
 //		appwk->obj_trans_stop = 0;

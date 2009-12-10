@@ -468,7 +468,9 @@ static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
     PP_Put( pp, ID_PARA_oyaname, (u32)str );
     PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
 		if( i & 1 ){
-			PP_Put( pp, ID_PARA_item, 1 );
+//			PP_Put( pp, ID_PARA_item, 1 );
+//#define ITEM_GURASUMEERU		( 137 )		// ƒOƒ‰ƒXƒ[ƒ‹
+			PP_Put( pp, ID_PARA_item, 137 );
 		}
 		PokeParty_Add( wk->box_data.pokeparty, pp );
 		GFL_HEAP_FreeMemory( pp );

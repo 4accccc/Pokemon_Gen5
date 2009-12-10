@@ -316,3 +316,5 @@ enum {
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2SEQ_Main( BOX2_SYS_WORK * syswk, int * seq );
+
+extern void BOX2SEQ_ItemModeMenuSet( BOX2_SYS_WORK * syswk, s16 item );
