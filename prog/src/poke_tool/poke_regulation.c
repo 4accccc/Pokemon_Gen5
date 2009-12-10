@@ -284,6 +284,153 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
 }
 
 
+
+
+//------------------------------------------------------------------
+/**
+ * @brief  ポケモンがレギュレーションに適合しているかどうか調べる シャチ版=見せ合い対応
+ * @param   REGULATION     レギュレーション構造体ポインタ
+ * @param   POKEMON_PARAM  ポケパラ
+ * @param   FailedBit      条件違反をビットで返す
+ * @return  合致したらTRUE
+ */
+//------------------------------------------------------------------
+
+BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit)
+{
+  u16 mons = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+  u16 item = (u16)PP_Get( pp, ID_PARA_item, NULL );
+  int ans,level,weight,range;
+  BOOL ret=TRUE;
+
+  if(pReg==NULL){
+    return ret;
+  }
+  //LV
+  ans = Regulation_GetParam(pReg, REGULATION_LEVEL);
+  range = Regulation_GetParam(pReg, REGULATION_LEVEL_RANGE);
+  level = PP_Get(pp, ID_PARA_level, NULL);
+  // レベル制限がある場合検査
+  switch(range){
+  case REGULATION_LEVEL_RANGE_OVER:
+    if(ans > level){
+      ret = FALSE;
+      *FailedBit |= POKEFAILEDBIT_LEVEL;
+    }
+    break;
+  case REGULATION_LEVEL_RANGE_LESS:
+    if(ans < level){
+      ret = FALSE;
+      *FailedBit |= POKEFAILEDBIT_LEVEL;
+    }
+    break;
+  }
+  //たまご参戦不可
+  if( PP_Get(pp, ID_PARA_tamago_flag, NULL ) != 0 ){
+    ret = FALSE;
+    *FailedBit |= POKEFAILEDBIT_EGG;
+  }
+  // 参加禁止ポケかどうか
+  if(Regulation_CheckParamBit(pReg, REGULATION_VETO_POKE_BIT, mons)){
+    ret = FALSE;
+    *FailedBit |= POKEFAILEDBIT_VETO_POKE;
+  }
+  //持ち込み不可アイテムかどうか
+  if(Regulation_CheckParamBit(pReg, REGULATION_VETO_ITEM, item)){
+    ret = FALSE;
+    *FailedBit |= POKEFAILEDBIT_VETO_ITEM;
+  }
+  return TRUE;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケパーティがレギュレーションに適合しているかどうか調べる シャチ版=見せ合い対応
+            条件にあっていないものは数にかかわらずすべてはじく
+            Lv合計は調べていない
+ * @param   REGULATION     レギュレーション構造体ポインタ
+ * @param   POKEPARTY
+ * @param   FailedBit      条件違反をビットで返す
+ * @return  POKE_REG_RETURN_ENUM
+ */
+//------------------------------------------------------------------
+
+int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit)
+{
+  POKEMON_PARAM* pp;
+  int ans,cnt = 0,j,i,level = 0,form=0;
+  u16 monsTbl[6],itemTbl[6],formTbl[6];
+  int ret = POKE_REG_OK;
+
+  if(pReg==NULL){
+    return POKE_REG_OK;
+  }
+  GF_ASSERT(FailedBit);  //if文でいっぱいになるので呼び出し側で必ずセットする事
+
+  //全体数
+  cnt = PokeParty_GetMemberTopIdxBattleEnable(party);
+  
+  ans = Regulation_GetParam(pReg, REGULATION_NUM_LO);
+  if(cnt < ans){
+    *FailedBit |= POKEFAILEDBIT_NUM;
+    ret = POKE_REG_NUM_FAILED;  // 数があってない
+  }
+  for(i = 0; i < 6 ;i++){
+    pp = PokeParty_GetMemberPointer(party, i);
+    if(PokeRegulationCheckPokeParaLookAt(pReg, pp, FailedBit ) == FALSE){
+      ret = POKE_REG_ILLEGAL_POKE; // 個体が引っかかった
+    }
+    monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+    itemTbl[i] = (u16)PP_Get( pp, ID_PARA_item, NULL );
+    formTbl[i] = (u16)PP_Get( pp, ID_PARA_form_no, NULL );
+    level += PP_Get(pp,ID_PARA_level,NULL);
+  }
+  
+  // 同じポケモン
+  ans = Regulation_GetParam(pReg, REGULATION_BOTH_POKE);
+  if((ans == FALSE) && (cnt > 1)){  // 同じポケモンはだめで 一体以上の場合
+    for(i = 0; i < (6-1); i++){
+      for(j = i + 1;j < 6; j++){
+        if((monsTbl[i] == monsTbl[j]) && (monsTbl[i] != _POKENO_NONE)){
+          *FailedBit |= POKEFAILEDBIT_BOTHPOKE;
+          ret = POKE_REG_BOTH_POKE;
+        }
+      }
+    }
+  }
+  // 同じアイテム
+  ans = Regulation_GetParam(pReg, REGULATION_BOTH_ITEM);
+  if((ans == FALSE) && (cnt > 1)){  // 同じアイテムはだめで 一体以上の場合
+    for(i = 0; i < (6-1); i++){
+      for(j = i + 1;j < 6; j++){
+        if((itemTbl[i] == itemTbl[j]) && (monsTbl[i] != _POKENO_NONE) && (ITEM_DUMMY_DATA != itemTbl[i])){
+          *FailedBit |= POKEFAILEDBIT_BOTHITEM;
+          ret = POKE_REG_BOTH_ITEM;
+        }
+      }
+    }
+  }
+  ans = Regulation_GetParam(pReg, REGULATION_MUST_POKE);
+  form = Regulation_GetParam(pReg, REGULATION_MUST_POKE_FORM);
+  if((ans) && (cnt > 1)){ //必須ポケモンがいる
+    for(i = 0; i < 6; i++){
+      if(monsTbl[i] == ans){
+        if(formTbl[i] == form){
+          break;
+        }
+      }
+    }
+  }
+  if(i==6){
+    *FailedBit |= POKEFAILEDBIT_MAST_POKE;
+    ret = POKE_REG_NO_MASTPOKE;
+  }
+  return ret;
+}
+
+
+
 //------------------------------------------------------------------
 /**
  * @brief   ROMからレギュレーションデータを得る

@@ -36,6 +36,26 @@ extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * 
 //  パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫  受け付け用
 extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party);
 
+
 // regulation.narcにあるデータを読み込む
 extern const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);
 extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);
+
+
+//禁止フラグのビット
+#define POKEFAILEDBIT_NUM         (0x01)     ///< 数が足りてない
+#define POKEFAILEDBIT_LEVEL       (0x02)     ///< レベル違反のポケモンがいる
+#define POKEFAILEDBIT_VETO_POKE     (0x04)   ///< 禁止ポケモン
+#define POKEFAILEDBIT_BOTHPOKE    (0x08)    ///< 同じポケモン
+#define POKEFAILEDBIT_BOTHITEM    (0x10)    ///< 同じアイテム
+#define POKEFAILEDBIT_EGG         (0x20)    ///< たまご
+#define POKEFAILEDBIT_VETO_ITEM         (0x40)   ///< 禁止アイテム
+#define POKEFAILEDBIT_MAST_POKE (0x80)   ///< 必要ポケモンがいない
+
+// ポケモンがレギュレーションに適合しているかどうか調べる  何処が悪かったかBITで返します
+extern BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit);
+// ポケパーティがレギュレーションに適合しているかどうか調べる 何処が悪かったかBITで返します
+extern int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit);
+
+
+
