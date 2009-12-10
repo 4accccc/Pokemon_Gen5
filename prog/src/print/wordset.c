@@ -257,6 +257,21 @@ void WORDSET_RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* word, u32 
   RegisterWord( wordset, bufID, word, &param );
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファにポケモン種族名を登録 (MonsNo)
+ *
+ * @param   bufID   バッファID
+ * @param   pp      ポケモンパラメータ
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokeMonsNameNo( WORDSET* wordset, u32 bufID, u16 monsno )
+{
+  // [[[ここでポケモンの性別等をチェックできる]]]
+  GFL_MSG_GetString( GlobalMsg_PokeName, monsno, wordset->tmpBuf );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+}
 
 //------------------------------------------------------------------
 /**
@@ -273,8 +288,7 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 
   // [[[ここでポケモンの性別等をチェックできる]]]
   monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-  GFL_MSG_GetString( GlobalMsg_PokeName, monsno, wordset->tmpBuf );
-  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+  WORDSET_RegisterPokeMonsNameNo( wordset, bufID, monsno );
 }
 //------------------------------------------------------------------
 /**
@@ -291,9 +305,9 @@ void WORDSET_RegisterPokeMonsNamePPP( WORDSET* wordset, u32 bufID, const POKEMON
 
   // [[[ここでポケモンの性別等をチェックできる]]]
   monsno = PPP_Get( ppp, ID_PARA_monsno, NULL );
-  GFL_MSG_GetString( GlobalMsg_PokeName, monsno, wordset->tmpBuf );
-  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+  WORDSET_RegisterPokeMonsNameNo( wordset, bufID, monsno );
 }
+
 //------------------------------------------------------------------
 /**
  * 指定バッファにポケモンのニックネームを登録 (POKEMON_PARAM)

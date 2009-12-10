@@ -33,6 +33,7 @@ extern WORDSET*  WORDSET_Create( HEAPID heapID );
 extern WORDSET* WORDSET_CreateEx( u32 word_max, u32 buflen, HEAPID heapID );
 extern void WORDSET_Delete( WORDSET* wordset );
 extern void WORDSET_RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* word, u32 sex, BOOL singular_flag, u32 lang );
+extern void WORDSET_RegisterPokeMonsNameNo( WORDSET* wordset, u32 bufID, u16 monsno );
 extern void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp );
 extern void WORDSET_RegisterPokeMonsNamePPP( WORDSET* wordset, u32 bufID, const POKEMON_PASO_PARAM* ppp );
 extern void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp );
