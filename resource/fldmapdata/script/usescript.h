@@ -19,6 +19,7 @@
 #include "common_scr_def.h"
 #include "shop_scr_def.h"
 #include "item_get_scr_def.h"
+#include "btl_util_scr_def.h"
 
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
@@ -56,6 +57,8 @@
 
 //ポケモンのタイプ指定ID
 #include "../../../prog/include/poke_tool/poketype_def.h"
+//レギュレーション指定
+#include "../../../prog/include/poke_tool/regulation_def.h"
 
 //フィールド通信の種類定義
 #include "../../../prog/include/gamesystem/game_comm.h"

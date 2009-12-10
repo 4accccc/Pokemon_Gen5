@@ -5459,6 +5459,35 @@
 #define _FIELD_COMM_EXIT_EVENT_CALL( ret_wk )  \
     _ASM_FIELD_COMM_EXIT_EVENT_CALL  ret_wk
 
+//--------------------------------------------------------------
+/**
+ * @def _BTL_UTIL_PARTY_SELECT_CALL
+ * @brief 簡易イベントコマンド：対戦系受付　パーティ選択ウィンドウ呼び出し
+ *
+ * @param regulation  poke_tool/regulation_def.hに定義されたコード
+ * @param ret_wk  どのパーティを選択したかを取得 btl_util_scr_local.h
+ *                BTL_UTIL_PARTY_SELECT_TEMOTI  手持ちを選択
+ *                BTL_UTIL_PARTY_SELECT_BTLBOX  バトルボックスを選択
+ *                BTL_UTIL_PARTY_SELECT_NG      どちらも適合しない
+ *                BTL_UTIL_PARTY_SELECT_CANCEL  キャンセル
+ */
+//--------------------------------------------------------------
+#define _BTL_UTIL_PARTY_SELECT_CALL( regulation, ret_wk )  \
+    _ASM_BTL_UTIL_PARTY_SELECT_CALL  regulation, ret_wk
+
+//--------------------------------------------------------------
+/**
+ * @def _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL
+ * @brief 簡易イベントコマンド：
+ *        対戦系受付　パーティがレギュレーションに非適合だった時の一連のメッセージ表示
+ *
+ * @param regulation  poke_tool/regulation_def.hに定義されたコード
+ */
+//--------------------------------------------------------------
+#define _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )  \
+    _ASM_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL  regulation
+
+
 //======================================================================
 //
 //
@@ -5893,6 +5922,26 @@
   .short  \demo_no
   .endm
   
+  
+//======================================================================
+//  対戦系受付ユーティリティ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _SET_REGULATION_OUT_POKE_NAME
+ * @brief デモ呼び出し
+ * @param demo_no   デモID指定ナンバー
+ */
+//--------------------------------------------------------------
+#define _SET_REGULATION_OUT_POKE_NAME( regulation, ret_wk )  \
+    _ASM_SET_REGULATION_OUT_POKE_NAME regulation, ret_wk
+
+  .macro  _ASM_SET_REGULATION_OUT_POKE_NAME regulation, ret_wk
+  .short  EV_SEQ_BTL_UTIL_SET_REGULATION_OUT_POKE_NAME
+  .short  \regulation
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //  バトルサブウェイ
 //======================================================================

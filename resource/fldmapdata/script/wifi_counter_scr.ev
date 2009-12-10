@@ -9,8 +9,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_wifi_counter_scr.h"
-  //.include  "wifi_counter_scr.h"
   .include  "wifi_counter_scr_local.h"
+  .include  "btl_util_scr_local.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
 
@@ -26,9 +26,6 @@ _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
 DEFINE_LOCAL  reg_param
-
-//DEFINE_LOCAL lwk_rm_regulation
-//DEFINE_LOCAL lwk_rm_party
 
 { //WIFI_COUNTER
 
@@ -171,6 +168,7 @@ _RET
 //サブルーチン：ランダムマッチメイン
 //==============================================================
 { //RANDOM_MATCH_START
+DEFINE_LOCAL lwk_rm_regu_idx
 DEFINE_LOCAL lwk_rm_regulation
 DEFINE_LOCAL lwk_rm_party
 
@@ -322,7 +320,10 @@ sub_rndmatch_try_select:
     _RET
   ENDIF
   //レギュレーション保存
-  $lwk_rm_regulation = $i_ret
+  $lwk_rm_regu_idx = $i_ret
+  $lwk_rm_regulation = REG_RND_SINGLE
+  $lwk_rm_regulation += $i_ret
+  _DEBUG_PRINT_WK( lwk_rm_regulation )
   $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
 }
 _RET
@@ -337,7 +338,7 @@ sub_rndmatch_try_check:
 
   //○○に挑戦しますか？
   $i_msg = msg_rndmatch_04_01
-  $i_msg += $lwk_rm_regulation
+  $i_msg += $lwk_rm_regu_idx
   _SYSWIN_MSG_DOWN( i_msg )
 
   //分岐・決定/ルールを聞く/もどる
@@ -355,7 +356,7 @@ sub_rndmatch_try_check:
   ELSIF $i_ret == 1 THEN
     //ルールを聞く
     $i_msg = msg_rndmatch_04_exp01
-    $i_msg += $lwk_rm_regulation
+    $i_msg += $lwk_rm_regu_idx
     _SYSWIN_MSG_DOWN( i_msg )
     
     $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
@@ -373,28 +374,24 @@ sub_rndmatch_try:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_msg
 
-  //手持ちかバトルボックスか選んでください
-  _SYSWIN_MSG_DOWN( msg_rndmatch_05 )
+  //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
+  _DEBUG_PRINT_WK( lwk_rm_regulation )
+  _BTL_UTIL_PARTY_SELECT_CALL( lwk_rm_regulation, i_ret )
 
-  //分岐・手持ち/バトルボックス/やめる
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
-		
-  _BMPMENU_MAKE_LIST( msg_rndmatch_05_win01, 0 )   //手持ち
-	_BMPMENU_MAKE_LIST( msg_rndmatch_05_win02, 1 )   //バトルボックス
-	_BMPMENU_MAKE_LIST( msg_rndmatch_05_win03, 2 )   //やめる
-		
-  //メニュー表示
-	_BMPMENU_START()
-
-  IF $i_ret > 1 THEN
+  IF $i_ret == BTL_UTIL_PARTY_SELECT_CANCEL THEN
     $reg_return = SEQ_SUB_RNDMATCH_RETURN
     _RET
+  ELSIF $i_ret == BTL_UTIL_PARTY_SELECT_NG THEN
+    //参加できるポケモンがいません
+    _DEBUG_PRINT_WK( lwk_rm_regulation )
+    _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( lwk_rm_regulation )
+    $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RET
   ENDIF
+  
   //パーティ選択保存
   $lwk_rm_party = $i_ret
   
-  //パーティメンバチェック
-
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
 

@@ -273,6 +273,38 @@
   _ASM_MAP_FADE_END_CHECK
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  対戦受付　パーティ選択ウィンドウ表示 
+ *
+ * @param ret_wk      結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_BTL_UTIL_PARTY_SELECT_CALL regulation, ret_wk
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
 
+  _ASM_LDWKVAL  SCWK_PARAM1, \regulation
+  _CHG_COMMON_SCR SCRID_BTL_UTIL_PARTY_SELECT_CALL
+  _ASM_LDWKVAL  \ret_wk, SCWK_PARAM0
 
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  対戦受付　レギュレーションに合うパーティが見つからなかったときのメッセージ表示 
+ *
+ * @param ret_wk      結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL regulation
+  _PUSH_WORK  SCWK_PARAM0
+  
+  _ASM_LDWKVAL  SCWK_PARAM0, \regulation
+  _CHG_COMMON_SCR SCRID_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL
+  
+  _POP_WORK   SCWK_PARAM0
+  .endm
 

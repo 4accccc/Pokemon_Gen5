@@ -702,6 +702,17 @@
   DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
   DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
   NO_CMD()
+  
+  //対戦系受付ユーティリティ
+  DEF_CMD( EvCmdBtlUtilSetRegulationOutPokeName, EV_SEQ_BTL_UTIL_SET_REGULATION_OUT_POKE_NAME )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
 
   END_CMD

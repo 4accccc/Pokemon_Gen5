@@ -38,6 +38,7 @@
 
 
 #include "scrcmd_battle.h"
+#include "scrcmd_fld_battle.h"
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"

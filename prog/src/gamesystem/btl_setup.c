@@ -460,6 +460,7 @@ void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  dst->multiMode = TRUE;
 }
 
 //=============================================================================================
@@ -485,6 +486,7 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->partyPartner, partner, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  dst->multiMode = TRUE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

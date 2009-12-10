@@ -13,6 +13,7 @@
 UNIQ_SCRIPTFILES = \
 	common_scr.ev \
 	pokecen_scr.ev \
+	btl_util_scr.ev \
 	sodateya_scr.ev \
 	eggevent_scr.ev \
 	poke_waza.ev \
@@ -30,7 +31,6 @@ UNIQ_SCRIPTFILES = \
 	field_ev_scr.ev \
 	c3center_scr.ev \
 	gate_scr.ev \
-	btl_util_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル

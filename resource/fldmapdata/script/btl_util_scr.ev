@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_btl_util_scr.h"
+  .include  "btl_util_scr_local.h"
   //.include  "btl_util_scr.h"
 
 //--------------------------------------------------------------
@@ -17,7 +18,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_btl_util_regulation_out_msg_call
+_EVENT_DATA    ev_btl_util_party_select_call
+_EVENT_DATA    ev_btl_util_party_regulation_ng_msg_call
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -27,13 +29,77 @@ DEFINE_LOCAL  lwk_return
 
 //==============================================================
 /// 
+/// パーティを手持ちにするか、バトルボックスにするか選ぶ
+///
+/// SCWK_PARAM0に戻り値を返す
+//==============================================================
+ev_btl_util_party_select_call:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_regu
+
+  $i_regu = $SCWK_PARAM0 //レギュレーションID
+
+  //手持ちかバトルボックスか選んでください
+  _SYSWIN_MSG_DOWN( msg_btl_util_party_select_01 )
+
+  //分岐・手持ち/バトルボックス/やめる
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	
+  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win01, BTL_UTIL_PARTY_SELECT_TEMOTI )   //手持ち
+  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win02, BTL_UTIL_PARTY_SELECT_BTLBOX )   //バトルボックス
+  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win03, BTL_UTIL_PARTY_SELECT_CANCEL )   //やめる
+		
+  //メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $i_ret = BTL_UTIL_PARTY_SELECT_CANCEL
+  ELSIF $i_ret == BTL_UTIL_PARTY_SELECT_BTLBOX THEN
+    $i_ret = BTL_UTIL_PARTY_SELECT_NG //@todo　本当は手持ちもバトルボックスもNGの時このコードが返る
+  ENDIF
+  $SCWK_PARAM0 = $i_ret
+}
+_CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
+_END
+
+//==============================================================
+/// 
 ///
 /// レギュレーションに合わなかったときのメッセージを表示する
 ///
 ///
 //==============================================================
-ev_btl_util_regulation_out_msg_call:
+ev_btl_util_party_regulation_ng_msg_call:
 {
+  DEFINE_LOCAL  i_regu
+  DEFINE_LOCAL  i_num
+  DEFINE_LOCAL  i_msg
+
+  $i_regu = $SCWK_PARAM0
+  _DEBUG_PRINT_WK( i_regu )
+
+  //参加できるポケモンがいません
+  IF $i_regu < REG_RND_SINGLE THEN
+    $i_msg = msg_btl_util_party_ng_01
+  ELSE
+    //ランダムマッチとサブウェイには個別メッセージ有り
+    $i_msg = $i_regu
+    $i_msg -= REG_RND_SINGLE 
+    $i_msg += msg_btl_util_party_ng_rndmatch01
+  ENDIF
+  _SYSWIN_MSG_DOWN( i_msg )
+
+  //なお　タマゴ　○○は参加できません
+  _SET_REGULATION_OUT_POKE_NAME( i_regu, i_num )
+  $i_msg = msg_btl_util_party_ng_common00
+  _DEBUG_PRINT_WK( i_msg )
+  $i_msg += $i_num
+  _DEBUG_PRINT_WK( i_msg )
+  _SYSWIN_MSG_DOWN( i_msg )
+
+  //準備ができたらまだお越しください
+  _SYSWIN_MSG_DOWN( msg_btl_util_party_ng_end )
 }
 _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 _END

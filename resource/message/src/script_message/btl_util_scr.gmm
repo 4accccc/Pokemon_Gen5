@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-09T21:25:42"/>
+	<create user="iwasawa" host="W00157" date="2009-12-10T17:25:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,6 +322,25 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
+	<row id="msg_btl_util_party_ng_end" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチＮＧ終了メッセージ</comment>
+		<language name="JPN" width="256">じゅんびが　できましたら
+また　おこし　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゅんびが　できましたら
+また　おこし　ください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_btl_util_party_ng_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>その他レギュレーション用メッセージ
+
+必要があれば個別にラベル追加し
+表示スクリプトに手を入れる必要があります　</comment>
+		<language name="JPN" width="256">さんかできる　ポケモンが
+いません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さんかできる　ポケモンが
+いません！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
 	<row id="msg_btl_util_party_ng_rndmatch01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ・シングルバトル</comment>
 		<language name="JPN" width="256">さんかできる　ポケモンが
@@ -443,13 +462,9 @@
 	<row id="msg_btl_util_party_ng_common00" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ＮＧ：0匹</comment>
 		<language name="JPN" width="256">なお　タマゴは
-さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
-じゅんびが　できましたら
-また　おこしください</language>
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">なお　タマゴは
-さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
-じゅんびが　できましたら
-また　おこしください</language>
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_btl_util_party_ng_common01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -900,22 +915,6 @@
 [1:01:ポケモン種族名:23]　[1:01:ポケモン種族名:24]　[1:01:ポケモン種族名:25]
 [1:01:ポケモン種族名:26]は[BE:00:ページ切り替え（行送り）]
 さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_btl_util_party_ng_rndmatch_end" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>ランダムマッチＮＧ終了メッセージ</comment>
-		<language name="JPN" width="256">じゅんびが　できましたら
-また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">じゅんびが　できましたら
-また　おこし　ください</language>
-	</row>
-
-	<row id="msg_btl_util_party_ng_subway_end" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>サブウェイＮＧ終了メッセージ</comment>
-		<language name="JPN" width="256">じゅんびが　できましたら
-また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">じゅんびが　できましたら
-また　おこし　ください</language>
 	</row>
 
 	<flowchart-group-list>

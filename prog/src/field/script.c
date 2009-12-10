@@ -52,7 +52,7 @@
 
 enum
 {
-	WORDSET_SCRIPT_SETNUM = 8,		//デフォルトバッファ数
+	WORDSET_SCRIPT_SETNUM = 32,		//デフォルトバッファ数
 	WORDSET_SCRIPT_BUFLEN = 64,		//デフォルトバッファ長（文字数）
 };
 
