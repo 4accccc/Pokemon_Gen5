@@ -271,7 +271,7 @@ static void cmd_exec( const DEMO3D_CMD_DATA* data )
   GF_ASSERT( data->type != DEMO3D_CMD_TYPE_NULL );
   GF_ASSERT( data->type < DEMO3D_CMD_TYPE_END );
       
-  OS_TPrintf("call cmd type=%d [%d,%d,%d,%d,%d,%d]\n", data->type,
+  OS_TPrintf("call cmd type=%d [%d,%d,%d,%d]\n", data->type,
       data->param[0],
       data->param[1],
       data->param[2],
