@@ -359,7 +359,7 @@ void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDi
     recTool->writePtr++;
   }
 
-  GF_ASSERT(recTool->type == BTL_RECFIELD_ACTION);
+  GF_ASSERT(recTool->type == BTL_RECFIELD_ROTATION);
 
   if( (recTool->clientBit & (1 << clientID)) == 0 )
   {
