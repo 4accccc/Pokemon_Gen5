@@ -13,6 +13,7 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
+#include "msg/msg_mission_monolith.h"
 #include "mission_types.h"
 #include "intrude_mission.h"
 #include "intrude_types.h"
@@ -325,8 +326,7 @@ static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *se
 
   explain_msgid = mdata->cdata.msg_id_contents_monolith;
   
-  str_type = GFL_MSG_CreateString(setup->mm_monolith, 
-    msg_mono_mistype_000 + mdata->cdata.type);
+  str_type = GFL_MSG_CreateString(setup->mm_mission_mono, msg_mistype_000 + mdata->cdata.type);
   str_explain = GFL_MSG_CreateString(setup->mm_mission_mono, explain_msgid);
   
   MISSIONDATA_Wordset(appwk->parent->intcomm, mdata, setup->wordset, HEAPID_MONOLITH);

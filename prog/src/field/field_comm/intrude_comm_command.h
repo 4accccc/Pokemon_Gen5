@@ -41,6 +41,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_REQ,                    ///<ミッション要求リクエスト
   INTRUDE_CMD_MISSION_DATA,                   ///<ミッションデータ
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
+  INTRUDE_CMD_MISSION_ACHIEVE_ANSWER,         ///<ミッション達成報告の返事
   INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
   INTRUDE_CMD_OCCUPY_INFO,                    ///<占拠情報
   INTRUDE_CMD_TARGET_TIMING,                  ///<相手指定のタイミングコマンド
@@ -65,7 +66,7 @@ extern BOOL IntrudeSend_ProfileReq(void);
 extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_DeleteProfile(INTRUDE_COMM_SYS_PTR intcomm, int leave_netid);
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
-extern BOOL IntrudeSend_Talk(int send_net_id);
+extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id);
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
 extern BOOL IntrudeSend_TalkCancel(int send_net_id);
 extern BOOL IntrudeSend_BingoIntrusion(int send_net_id);
@@ -80,6 +81,8 @@ extern BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_ty
 extern BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_MissionAchieve(
   INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL IntrudeSend_MissionAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, 
+  MISSION_ACHIEVE achieve, int send_netid);
 extern BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);

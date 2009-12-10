@@ -20,9 +20,11 @@
 #include "event_comm_talked.h"
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
+#include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "field/field_comm/intrude_battle.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
+#include "event_comm_talk.h"
 #include "system/main.h"
 #include "item/itemsym.h"
 
@@ -65,6 +67,7 @@ typedef struct
 //  プロトタイプ宣言
 //==============================================================================
 static GMEVENT_RESULT CommWasTalkedTo( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT CommWasTalkedToMission( GMEVENT *event, int *seq, void *wk );
 
 
 
@@ -91,8 +94,20 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	COMMTALK_EVENT_WORK *ftalk_wk;
 	GMEVENT *event;
 	
-	event = GMEVENT_Create(
-		gsys, NULL,	CommWasTalkedTo, sizeof(COMMTALK_EVENT_WORK) );
+	switch(intcomm->recv_talk_first_attack.talk_type){
+	default:
+	  GF_ASSERT(0);
+	  //break;
+	case INTRUDE_TALK_TYPE_NORMAL:
+  	event = GMEVENT_Create(
+  		gsys, NULL,	CommWasTalkedTo, sizeof(COMMTALK_EVENT_WORK) );
+    break;
+  case INTRUDE_TALK_TYPE_MISSION:
+  	event = GMEVENT_Create(
+  		gsys, NULL,	CommWasTalkedToMission, sizeof(COMMTALK_EVENT_WORK) );
+    break;
+  }
+  
 	ftalk_wk = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
 	
@@ -275,6 +290,74 @@ static GMEVENT_RESULT CommWasTalkedTo( GMEVENT *event, int *seq, void *wk )
 	  *seq = SEQ_FINISH;
 	  break;
 	  
+	case SEQ_FINISH:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
+    Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
+		return( GMEVENT_RES_FINISH );
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド話し掛けイベント：ミッション
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CommWasTalkedToMission( GMEVENT *event, int *seq, void *wk )
+{
+	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+  enum{
+    SEQ_MSG_INIT,
+    SEQ_TALK_ANSWER,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_FINISH,
+  };
+
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+  #if 0 //※check　後で作成
+    if((*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_talk_cancel);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  #endif
+  }
+	
+	switch( *seq ){
+  case SEQ_MSG_INIT:
+    MISSIONDATA_Wordset(intcomm,
+       &intcomm->recv_talk_first_attack.mdata, talk->iem.wordset, talk->heapID);
+    IntrudeEventPrint_StartStream(&talk->iem, MissionItemMsgID[0] + 1);
+		(*seq)++;
+		break;
+	case SEQ_TALK_ANSWER:
+	  if(IntrudeSend_TalkAnswer(
+	      talk->intcomm, talk->intcomm->talk.talk_netid, talk->intcomm->talk.talk_status) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
 	case SEQ_FINISH:
     IntrudeEventPrint_ExitFieldMsg(&talk->iem);
 

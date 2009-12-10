@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-04T11:48:00"/>
+	<create user="matsuda" host="W00142" date="2009-12-09T12:32:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="119" right="2002" bottom="747" maximized="no" rayout="Vertical2">
+	<dialog left="11" top="119" right="716" bottom="747" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="258" right="1280" bottom="882" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -288,7 +288,55 @@
 	</lock>
 
 
-	<row id="plc_mism_01_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_mistype_000">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">しょうりミッション</language>
+		<language name="JPN_KANJI" width="256">しょうりミッション</language>
+	</row>
+
+	<row id="msg_mistype_001">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">わざミッション</language>
+		<language name="JPN_KANJI" width="256">わざミッション</language>
+	</row>
+
+	<row id="msg_mistype_002">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">きそミッション</language>
+		<language name="JPN_KANJI" width="256">きそミッション</language>
+	</row>
+
+	<row id="msg_mistype_003">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">おおきさミッション</language>
+		<language name="JPN_KANJI" width="256">おおきさミッション</language>
+	</row>
+
+	<row id="msg_mistype_004">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">ぞくせいミッション</language>
+		<language name="JPN_KANJI" width="256">ぞくせいミッション</language>
+	</row>
+
+	<row id="msg_mistype_005">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">どうぐミッション</language>
+		<language name="JPN_KANJI" width="256">どうぐミッション</language>
+	</row>
+
+	<row id="msg_mistype_006">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">はっせいミッション</language>
+		<language name="JPN_KANJI" width="256">はっせいミッション</language>
+	</row>
+
+	<row id="msg_mistype_007">
+		<comment>ミッション画面：ミッションタイプ</comment>
+		<language name="JPN" width="256">せいかくミッション</language>
+		<language name="JPN_KANJI" width="256">せいかくミッション</language>
+	</row>
+
+	<row id="plc_mism_01_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>勝利</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
 しょうぶを　いどめ
@@ -440,7 +488,7 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_03_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plc_mism_03_01" back-color="#ff8080,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
 		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
 
@@ -512,7 +560,7 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_04_01">
+	<row id="plc_mism_04_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>属性</comment>
 		<language name="JPN" width="256">[1:05:マップ名:0]の
 ｘｘｘｘへ　いけ！
@@ -672,7 +720,7 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_06_01">
+	<row id="plc_mism_06_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>道具</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　[1:00:トレーナー名:1]へ　わたせ
 
@@ -824,7 +872,7 @@
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
 	</row>
 
-	<row id="plc_mism_08_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="plc_mism_08_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>性格</comment>
 		<language name="JPN" width="256">ぜんいんで　[2:01:２桁:0]かい　はなしかけられろ
 せいげん　あり

@@ -19,12 +19,6 @@
 #include "mission.naix"
 
 
-//==============================================================================
-//  定数定義
-//==============================================================================
-///ミッション失敗までのタイム
-#define MISSION_TIME_OVER     (60/2 * 60)   // 60/2 = フィールドは1/30の為。
-
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -33,6 +27,8 @@ static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mis
 static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid);
 static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid);
 static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
+static void MISSION_Update_AchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
+static void MISSION_ClearTargetInfo(MISSION_TARGET_INFO *target);
 
 
 
@@ -50,10 +46,15 @@ static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYS
 //==================================================================
 void MISSION_Init(MISSION_SYSTEM *mission)
 {
+  int i;
+  
   GFL_STD_MemClear(mission, sizeof(MISSION_SYSTEM));
-  mission->data.mission_no = MISSION_NO_NULL;
-  mission->result.mission_data.mission_no = MISSION_NO_NULL;
   mission->data.accept_netid = INTRUDE_NETID_NULL;
+  MISSION_ClearTargetInfo(&mission->data.target_info);
+  mission->result.mission_data.accept_netid = INTRUDE_NETID_NULL;
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    mission->result.achieve_netid[i] = INTRUDE_NETID_NULL;
+  }
   
   MISSION_Init_List(mission);
 }
@@ -89,10 +90,12 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   //親機でミッション発動しているなら失敗までの秒数をカウントする
   if(GFL_NET_IsParentMachine() == TRUE 
       && MISSION_RecvCheck(mission) == TRUE 
-      && mission->result.mission_data.mission_no == MISSION_NO_NULL
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    mission->timer++;
-    if(mission->timer > MISSION_TIME_OVER){
+    u32 timer = GFL_RTC_GetTimeBySecond();
+    if(timer < mission->start_timer){ //start_timerより小さくなっている場合は回り込みが発生
+      timer += GFL_RTC_TIME_SECOND_MAX + 1;
+    }
+    if(timer - mission->start_timer > mission->data.cdata.time){
       GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
       MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
     }
@@ -101,6 +104,7 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   //送信リクエストがあれば送信
   MISSION_SendUpdate(intcomm, mission);
   MISSION_Update_EntryAnswer(intcomm, mission);
+  MISSION_Update_AchieveAnswer(intcomm, mission);
 }
 
 //==================================================================
@@ -142,10 +146,9 @@ BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, con
 {
   MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no != MISSION_NO_NULL || mdata->accept_netid != INTRUDE_NETID_NULL){
+  if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return FALSE;
   }
-  mdata->mission_no = GFUser_GetPublicRand0(MISSION_NO_MAX);
   mdata->accept_netid = accept_netid;
   mdata->monolith_type = req->monolith_type;
   mdata->zone_id = req->zone_id;
@@ -178,8 +181,8 @@ static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid)
     }
   }
   
-  GF_ASSERT_MSG(0, "connect_num = %d, accept_netid = %d, recv_profile = %d\n", 
-    connect_num, accept_netid, intcomm->recv_profile);
+  GF_ASSERT_MSG(0, "connect_num = %d, accept_netid = %d, recv_profile = %d, target_no=%d\n", 
+    connect_num, accept_netid, intcomm->recv_profile, target_no);
   return 0;
 }
 
@@ -222,13 +225,12 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
   mission->parent_data_recv = TRUE;
-  mission->timer = 0;
-  if(mdata->mission_no != MISSION_NO_NULL || mdata->accept_netid != INTRUDE_NETID_NULL){
+  mission->start_timer = GFL_RTC_GetTimeBySecond();
+  if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return;
   }
   
   *mdata = *src;
-  OS_TPrintf("mission受信 mission_no = %d\n", src->mission_no);
   //不正チェック
 #if 0 //もう少ししっかりとデータの取り扱いが決まってから有効にする
   if(mdata->mission_no >= MISSION_NO_MAX || mdata->monolith_type >= MONOLITH_TYPE_MAX){
@@ -283,7 +285,7 @@ BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission)
 {
   const MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no == MISSION_NO_NULL || mdata->accept_netid == INTRUDE_NETID_NULL || mission->parent_data_recv == FALSE){
+  if(mdata->accept_netid == INTRUDE_NETID_NULL || mission->parent_data_recv == FALSE){
     return FALSE;
   }
   return TRUE;
@@ -308,7 +310,7 @@ MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
- * ミッションデータから対応したミッションメッセージIDを取得する
+ * ミッションデータから対応したミッションメッセージIDを取得する ※check　削除候補
  *
  * @param   mission		
  *
@@ -320,10 +322,10 @@ u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission)
   const MISSION_DATA *mdata = &mission->data;
   u16 msg_id;
   
-  if(mdata->accept_netid == INTRUDE_NETID_NULL || mdata->mission_no == MISSION_NO_NULL || mdata->mission_no >= MISSION_NO_MAX){
+  if(mdata->accept_netid == INTRUDE_NETID_NULL){
     return msg_invasion_mission000;
   }
-  msg_id = mdata->mission_no * 2 + mdata->monolith_type;
+  msg_id = mdata->cdata.mission_no * 2 + mdata->monolith_type;
   return msg_invasion_mission001 + msg_id;
 }
 
@@ -341,16 +343,55 @@ u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid)
   const MISSION_RESULT *result = &mission->result;
   
   if(result->mission_data.accept_netid == INTRUDE_NETID_NULL
-      || result->mission_data.mission_no == MISSION_NO_FAIL
-      || result->mission_data.mission_no == MISSION_NO_NULL 
-      || result->mission_data.mission_no >= MISSION_NO_MAX){
+      || result->mission_fail == TRUE){
     return msg_invasion_mission_sys002;
   }
   
-  if(my_netid == result->achieve_netid){
+  if(my_netid == result->achieve_netid[0]){
     return msg_invasion_mission001_02;
   }
   return msg_invasion_mission001_03;
+}
+
+//==================================================================
+/**
+ * ミッション結果データ取得
+ *
+ * @param   mission		
+ *
+ * @retval  MISSION_RESULT *		結果データ(結果未受信の場合はNULL)
+ */
+//==================================================================
+MISSION_RESULT * MISSION_GetResultData(MISSION_SYSTEM *mission)
+{
+  if(MISSION_CheckRecvResult(mission) == FALSE){
+    return NULL;
+  }
+  return &mission->result;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション達成者として登録する
+ *
+ * @param   mission		
+ * @param   mdata		
+ * @param   achieve_netid		達成者のNetID
+ *
+ * @retval  int		  達成者としての順位(席が埋まっていた場合はFIELD_COMM_MEMBER_MAX)
+ */
+//--------------------------------------------------------------
+static int _SetAchieveNetID(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, int achieve_netid)
+{
+  MISSION_RESULT *result = &mission->result;
+  int i;
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(result->achieve_netid[i] == INTRUDE_NETID_NULL && mdata->cdata.reward[i] > 0){
+      return i;
+    }
+  }
+  return FIELD_COMM_MEMBER_MAX;
 }
 
 //==================================================================
@@ -369,22 +410,74 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
 {
   MISSION_RESULT *result = &mission->result;
   MISSION_DATA *data = &mission->data;
+  int ranking;
   
   OS_TPrintf("ミッション達成エントリー net_id=%d\n", achieve_netid);
-  if(result->mission_data.accept_netid != INTRUDE_NETID_NULL || result->mission_data.mission_no != MISSION_NO_NULL || mission->parent_result_recv == TRUE){
-    OS_TPrintf("先に達成者がいたので受け付けない\n");
-    return FALSE;
-  }
   if(GFL_STD_MemComp(data, mdata, sizeof(MISSION_DATA)) != 0){
     OS_TPrintf("親が管理しているミッションデータと内容が違うので受け付けない\n");
+    mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_NG;
+    return FALSE;
+  }
+  
+  ranking = _SetAchieveNetID(mission, mdata, achieve_netid);
+  if(ranking == FIELD_COMM_MEMBER_MAX){
+    OS_TPrintf("先に達成者がいたので受け付けない\n");
+    mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_NG;
     return FALSE;
   }
   
   result->mission_data = *mdata;
-  result->achieve_netid = achieve_netid;
-  mission->result_send_req = TRUE;
+  result->achieve_netid[ranking] = achieve_netid;
+  
+  mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_OK;
+  mission->result_send_req = TRUE;  //※check メインで席が全て埋まるor制限時間で送信するようにする
+  
   return TRUE;
 }
+
+//==================================================================
+/**
+ * ミッション達成報告の返事を取得
+ *
+ * @param   mission		
+ *
+ * @retval  MISSIN_ACHIEVE		MISSION_ACHIEVE_NULLの場合は返事は未受信
+ */
+//==================================================================
+MISSION_ACHIEVE MISSION_GetAchieveAnswer(MISSION_SYSTEM *mission)
+{
+  MISSION_ACHIEVE achieve = mission->parent_achieve_recv;
+  
+  mission->parent_achieve_recv = MISSION_ACHIEVE_NULL;
+  return achieve;
+}
+
+//==================================================================
+/**
+ * ミッション達成報告の返事受信バッファをクリア
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_ClearAchieveAnswer(MISSION_SYSTEM *mission)
+{
+  mission->parent_achieve_recv = MISSION_ACHIEVE_NULL;
+}
+
+//==================================================================
+/**
+ * 親からのミッション達成報告の返事をセット
+ *
+ * @param   mission		
+ * @param   achieve		
+ */
+//==================================================================
+void MISSION_SetParentAchieve(MISSION_SYSTEM *mission, MISSION_ACHIEVE achieve)
+{
+  mission->parent_achieve_recv = achieve;
+  OS_TPrintf("ミッション達成報告の返事 = %d\n", achieve);
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -397,17 +490,17 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
 static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
 {
   MISSION_RESULT *result = &mission->result;
-  MISSION_DATA *data = &mission->data;
+  MISSION_DATA *mdata = &mission->data;
   
-  if(data->accept_netid == INTRUDE_NETID_NULL || data->mission_no == MISSION_NO_NULL || result->mission_data.mission_no != MISSION_NO_NULL){
+  if(mdata->accept_netid == INTRUDE_NETID_NULL 
+      || result->mission_data.accept_netid != INTRUDE_NETID_NULL){
     OS_TPrintf("MissionFailは受け入れられない %d, %d\n", 
-      data->mission_no, result->mission_data.mission_no);
+      mdata->accept_netid, result->mission_data.accept_netid);
     return;
   }
   
-  result->mission_data = *data;
-  result->mission_data.mission_no = MISSION_NO_FAIL;
-  result->achieve_netid = fail_netid;
+  result->mission_data = *mdata;
+  result->mission_fail = TRUE;
   mission->result_send_req = TRUE;
   OS_TPrintf("ミッション失敗をセット\n");
 }
@@ -424,9 +517,9 @@ void MISSION_SetResult(MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result)
 {
   MISSION_RESULT *result = &mission->result;
   
-  GF_ASSERT(mission->parent_result_recv == FALSE);
+  GF_ASSERT(mission->parent_achieve_recv == FALSE);
   *result = *cp_result;
-  mission->parent_result_recv = TRUE;
+  mission->parent_achieve_recv = TRUE;
 }
 
 //==================================================================
@@ -438,11 +531,12 @@ void MISSION_SetResult(MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result)
  * @retval  BOOL		TRUE:受信した。　FALSE:受信していない
  */
 //==================================================================
-BOOL MISSION_RecvAchieve(const MISSION_SYSTEM *mission)
+BOOL MISSION_CheckRecvResult(const MISSION_SYSTEM *mission)
 {
   const MISSION_RESULT *result = &mission->result;
   
-  if(mission->parent_result_recv == TRUE && result->mission_data.accept_netid != INTRUDE_NETID_NULL && result->mission_data.mission_no != MISSION_NO_NULL){
+  if(mission->parent_achieve_recv == TRUE 
+      && result->mission_data.accept_netid != INTRUDE_NETID_NULL){
     return TRUE;
   }
   return FALSE;
@@ -462,13 +556,30 @@ BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid)
 {
   const MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no == MISSION_NO_NULL || mdata->accept_netid == INTRUDE_NETID_NULL){
+  if(mdata->accept_netid == INTRUDE_NETID_NULL){
     return FALSE;
   }
   if(talk_netid == mdata->target_netid){
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * 現在実施中のミッションタイプを取得する
+ *
+ * @param   mission		
+ *
+ * @retval  MISSION_TYPE		
+ */
+//==================================================================
+MISSION_TYPE MISSION_GetMissionType(const MISSION_SYSTEM *mission)
+{
+  if(MISSION_RecvCheck(mission) == FALSE){
+    return MISSION_TYPE_NONE;
+  }
+  return mission->data.cdata.type;
 }
 
 //==================================================================
@@ -481,22 +592,22 @@ BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid)
  * @retval  int		ミッションポイント
  */
 //==================================================================
-s32 MISSION_GetPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result)
+s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
 {
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-  s32 point;
+  const MISSION_RESULT *result = &intcomm->mission.result;
+  int i;
   
-  if(result->mission_data.mission_no == MISSION_NO_FAIL){
+  if(result->mission_fail == TRUE){
     return 0;
   }
   
-  if(result->achieve_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
-    point = 100;
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(result->achieve_netid[i] == GAMEDATA_GetIntrudeMyID(gamedata)){
+      return result->mission_data.cdata.reward[i];
+    }
   }
-  else{
-    point = 50;
-  }
-  return point;
+  return 0;
 }
 
 //==================================================================
@@ -515,14 +626,15 @@ BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *missio
   const MISSION_RESULT *result = &intcomm->mission.result;
   int point;
   
-  point = MISSION_GetPoint(intcomm, result);
+  point = MISSION_GetResultPoint(intcomm, mission);
   if(point > 0){
     OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-    PALACE_TOWN_RESULT town_result;
+//    PALACE_TOWN_RESULT town_result;
     
     //ミッションポイント加算
     mine_occupy->intrude_point += point;
     //街の占拠情報反映
+  #if 0
     if(Intrude_SearchPalaceTown(result->mission_data.zone_id, &town_result) == TRUE){
       if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
         mine_occupy->town.town_occupy[town_result.tblno] = OCCUPY_TOWN_WHITE;
@@ -534,6 +646,35 @@ BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *missio
     else{
       GF_ASSERT_MSG(0, "zone_id = %d\n", result->mission_data.zone_id);
     }
+  #else
+    if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
+      mine_occupy->town.town_occupy[result->mission_data.cdata.type] = OCCUPY_TOWN_WHITE;
+    }
+    else{
+      mine_occupy->town.town_occupy[result->mission_data.cdata.type] = OCCUPY_TOWN_BLACK;
+    }
+  #endif
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 自分がミッション達成者か調べる
+ *
+ * @param   intcomm		
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:ミッション達成者　FALSE:達成者ではない
+ */
+//==================================================================
+BOOL MISSION_CheckResultMissionMine(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  if(MISSION_CheckRecvResult(mission) == FALSE){
+    return FALSE;
+  }
+  if(MISSION_GetResultPoint(intcomm, mission) > 0){
     return TRUE;
   }
   return FALSE;
@@ -614,6 +755,19 @@ static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA
 
 //--------------------------------------------------------------
 /**
+ * ターゲット情報をクリア
+ *
+ * @param   target		
+ */
+//--------------------------------------------------------------
+static void MISSION_ClearTargetInfo(MISSION_TARGET_INFO *target)
+{
+  GFL_STD_MemClear(target, sizeof(MISSION_TARGET_INFO));
+  target->net_id = INTRUDE_NETID_NULL;
+}
+
+//--------------------------------------------------------------
+/**
  * ターゲット情報をセット
  *
  * @param   intcomm		
@@ -643,20 +797,21 @@ static void MISSIONDATA_ExtraParamSet(INTRUDE_COMM_SYS_PTR intcomm, MISSION_DATA
 {
   MISSION_TYPE_WORK *exwork = &mdata->exwork;
   
+  MISSION_ClearTargetInfo(&mdata->target_info);
   switch(mdata->cdata.type){
   case MISSION_TYPE_VICTORY:     ///<勝利(LV)
-    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_SKILL:       ///<技
     break;
   case MISSION_TYPE_BASIC:       ///<基礎
-    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_SIZE:        ///<大きさ
   case MISSION_TYPE_ATTRIBUTE:   ///<属性
     break;
   case MISSION_TYPE_ITEM:        ///<道具
-    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_OCCUR:       ///<発生(エンカウント)
   case MISSION_TYPE_PERSONALITY: ///<性格
@@ -814,6 +969,26 @@ static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYS
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * ミッション達成報告の返事を送信
+ *
+ * @param   mission		
+ */
+//--------------------------------------------------------------
+static void MISSION_Update_AchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  int i;
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(mission->result_mission_achieve[i] != MISSION_ACHIEVE_NULL){
+      if(IntrudeSend_MissionAchieveAnswer(intcomm, mission->result_mission_achieve[i], i) == TRUE){
+        mission->result_mission_achieve[i] = MISSION_ACHIEVE_NULL;
+      }
+    }
+  }
+}
+
 //==================================================================
 /**
  * 「ミッション受信します」の返事を受け取る
@@ -862,6 +1037,29 @@ void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission)
   mission->recv_entry_answer_result = MISSION_ENTRY_RESULT_NULL;
 }
 
+//==================================================================
+/**
+ * 指定NetIDがミッションターゲットの相手か調べる
+ *
+ * @param   mission		
+ * @param   net_id		調査対象のNetID
+ *
+ * @retval  BOOL		TRUE:ミッションターゲット　FALSE:ミッションターゲットではない
+ */
+//==================================================================
+BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id)
+{
+  if(MISSION_CheckRecvResult(mission) == TRUE  //既に結果を受信しているのでターゲットにはなり得ない
+      || MISSION_RecvCheck(mission) == FALSE){ //ミッションが発動していない
+    return FALSE;
+  }
+  
+  if(mission->data.target_info.net_id == net_id){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //--------------------------------------------------------------
 /**
  * 生のSTRCODEをWORDSETする
@@ -900,7 +1098,7 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
     {
       const MISSION_TYPEDATA_VICTORY *d_vic = (void*)mdata->cdata.data;
       
-      _Wordset_Strcode(wordset, 0, mdata->exwork.victory.target_info.name, 
+      _Wordset_Strcode(wordset, 0, mdata->target_info.name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
       
       WORDSET_RegisterNumber(wordset, 1, d_vic->battle_level, 3, 
@@ -913,7 +1111,7 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
     {
       const MISSION_TYPEDATA_BASIC *d_bas = (void*)mdata->cdata.data;
       
-      _Wordset_Strcode(wordset, 0, mdata->exwork.basic.target_info.name, 
+      _Wordset_Strcode(wordset, 0, mdata->target_info.name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
     break;
@@ -932,7 +1130,7 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
       
       WORDSET_RegisterItemName( wordset, 0, d_item->item_no );
       
-      _Wordset_Strcode(wordset, 1, mdata->exwork.item.target_info.name, 
+      _Wordset_Strcode(wordset, 1, mdata->target_info.name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
     break;

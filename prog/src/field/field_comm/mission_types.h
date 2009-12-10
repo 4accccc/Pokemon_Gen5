@@ -30,6 +30,7 @@ typedef enum{
   MISSION_TYPE_PERSONALITY, ///<性格
   
   MISSION_TYPE_MAX,
+  MISSION_TYPE_NONE = MISSION_TYPE_MAX, ///<ミッション実行していない
 }MISSION_TYPE;
 
 ///「ミッション受注します」の返事
@@ -39,6 +40,20 @@ typedef enum{
   MISSION_ENTRY_RESULT_NG,      ///<受注NG
 }MISSION_ENTRY_RESULT;
 
+///ミッション達成宣言の返事
+typedef enum{
+  MISSION_ACHIEVE_NULL,       ///<返事無し
+  MISSION_ACHIEVE_OK,         ///<達成OK
+  MISSION_ACHIEVE_NG,         ///<達成NG
+}MISSION_ACHIEVE;
+
+///会話タイプ
+typedef enum{
+  TALK_TYPE_NORMAL,    ///<主人公の性別に依存(MAN or WOMANに分岐)
+  TALK_TYPE_MAN,       ///<主人公：男
+  TALK_TYPE_WOMAN,     ///<主人公：女
+  TALK_TYPE_PIKACHU,   ///<ピカチュウ
+}TALK_TYPE;
 
 //==============================================================================
 //  コンバータから出力されるデータの構造体
@@ -170,13 +185,13 @@ typedef struct{
 typedef struct{
   union{
     struct{
-      MISSION_TARGET_INFO target_info;
+      u32 work;
     }victory;
     struct{
       u32 work;
     }skill;
     struct{
-      MISSION_TARGET_INFO target_info;
+      u32 work;
     }basic;
     struct{
       u32 work;
@@ -186,7 +201,7 @@ typedef struct{
       u8 padding[2];
     }attr;
     struct{
-      MISSION_TARGET_INFO target_info;
+      u32 work;
     }item;
     struct{
       u32 work;
@@ -201,11 +216,11 @@ typedef struct{
 typedef struct{
   MISSION_CONV_DATA cdata;       ///<ミッションデータ
   MISSION_TYPE_WORK exwork;   ///<タイプ毎に異なる拡張ワーク
+  MISSION_TARGET_INFO target_info;  ///<ミッションターゲット
   u8 accept_netid;            ///<ミッション受注者のNetID
   u8 palace_area;             ///<どのパレスエリアで受注したミッションなのか
   
   u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
-  u8 mission_no;              ///<ミッション番号(ミッションが無い場合はMISSION_NO_NULL)
   u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
   
   u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
@@ -223,7 +238,8 @@ typedef struct{
 ///ミッション結果
 typedef struct{
   MISSION_DATA mission_data;  ///<達成したミッションデータ
-  u8 achieve_netid;           ///<達成者のNetID
+  u8 achieve_netid[FIELD_COMM_MEMBER_MAX];  ///<達成者のNetID(順位順)
+  u8 mission_fail;            ///<ミッション失敗時：TRUE
   u8 padding[3];
 }MISSION_RESULT;
 
@@ -240,13 +256,19 @@ typedef struct{
   MISSION_DATA data;          ///<実行しているミッション
   MISSION_RESULT result;      ///<ミッション結果
   MISSION_ENTRY_ANSWER entry_answer[FIELD_COMM_MEMBER_MAX]; ///<「ミッション受信します」の返事
-  u32 timer;                  ///<ミッション失敗までのタイマー
+  u32 start_timer;            ///<ミッション開始時のタイム(GFL_RTC_GetTimeBySecond)
+  
+  //親が持つデータ
   u8 list_send_req[FIELD_COMM_MEMBER_MAX];  ///<TRUE:ミッションリストの送信を行う
+  u8 result_mission_achieve[FIELD_COMM_MEMBER_MAX];  ///<ミッション達成宣言の返事(MISSION_ACHIEVE_)
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
+  u8 padding[2];
+
+  //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
-  
   u8 recv_entry_answer_result;  ///<ミッション受注の返事(MISSION_ENTRY_RESULT_???)
+  u8 parent_achieve_recv;     ///<親からミッション達成報告を受信(MISSION_ACHIEVE_???)
 }MISSION_SYSTEM;
 

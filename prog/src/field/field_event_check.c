@@ -418,7 +418,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
         return EVENT_CommWasTalkedTo(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }
       //ミッション結果を受信していないかチェック
-      if(MISSION_RecvAchieve(&intcomm->mission) == TRUE){
+      if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
         return EVENT_CommMissionResult(gsys, fieldWork, intcomm, fmmdl_player, req.heapID);
       }

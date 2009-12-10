@@ -23,6 +23,7 @@
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
+#include "msg/msg_mission_monolith.h"
 #include "field/field_comm/intrude_battle.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "item/itemsym.h"
@@ -35,6 +36,12 @@
 //======================================================================
 //	define
 //======================================================================
+typedef enum{
+  FIRST_TALK_RET_NULL,      ///<シーケンス実行中
+  FIRST_TALK_RET_OK,        ///<OKで終了
+  FIRST_TALK_RET_NG,        ///<NGで終了
+  FIRST_TALK_RET_CANCEL,    ///<キャンセルした
+}FIRST_TALK_RET;
 
 //======================================================================
 //	typedef struct
@@ -58,6 +65,9 @@ typedef struct
 	
 	INTRUDE_BATTLE_PARENT ibp;
 	u32 talk_netid;
+	
+	u8 first_talk_seq;
+	u8 padding[3];
 }COMMTALK_EVENT_WORK;
 
 
@@ -67,8 +77,19 @@ typedef struct
 static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk );
 
+//==============================================================================
+//  データ
+//==============================================================================
+///ミッション道具渡しのメッセージID ※TALK_TYPE順
+const u16 MissionItemMsgID[] = {
+  msg_talk_item_m_000,          //TALK_TYPE_NORMAL
+  msg_talk_item_m_000,          //TALK_TYPE_MAN
+  msg_talk_item_w_000,          //TALK_TYPE_WOMAN
+  msg_talk_item_pika_000,       //TALK_TYPE_PIKA
+};
 
 
 //======================================================================
@@ -94,24 +115,24 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	COMMTALK_EVENT_WORK *ftalk_wk;
 	GMEVENT *event;
 	
-	if(intcomm->intrude_status[talk_net_id].action_status == INTRUDE_ACTION_BINGO_BATTLE){
+	if(MISSION_CheckMissionTargetNetID(&intcomm->mission, talk_net_id) == TRUE){
+    MISSION_TYPE mission_type = MISSION_GetMissionType(&intcomm->mission);
+	  switch(mission_type){
+	  case MISSION_TYPE_ITEM:
+    default:
+    	event = GMEVENT_Create(
+    		gsys, NULL,	CommMissionItemEvent, sizeof(COMMTALK_EVENT_WORK) );
+      break;
+    }
+  }
+	else if(intcomm->intrude_status[talk_net_id].action_status == INTRUDE_ACTION_BINGO_BATTLE){
   	event = GMEVENT_Create(
   		gsys, NULL,	CommBingoEvent, sizeof(COMMTALK_EVENT_WORK) );
     Bingo_Clear_BingoBattleBeforeBuffer(Bingo_GetBingoSystemWork(intcomm));
-  	//侵入システムのアクションステータスを更新
-  	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
-    Intrude_InitTalkWork(intcomm, talk_net_id);
-  }
-  else if(MISSION_Talk_CheckAchieve(&intcomm->mission, talk_net_id) == TRUE){
-  	event = GMEVENT_Create(
-  		gsys, NULL,	CommMissionAchieveEvent, sizeof(COMMTALK_EVENT_WORK) );
   }
   else{
   	event = GMEVENT_Create(
   		gsys, NULL,	CommTalkEvent, sizeof(COMMTALK_EVENT_WORK) );
-  	//侵入システムのアクションステータスを更新
-  	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
-    Intrude_InitTalkWork(intcomm, talk_net_id);
   }
 	ftalk_wk = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
@@ -125,7 +146,102 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	
   IntrudeEventPrint_SetupFieldMsg(&ftalk_wk->iem, gsys);
 
+	//侵入システムのアクションステータスを更新
+	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
+  Intrude_InitTalkWork(intcomm, talk_net_id);
+
 	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * 会話を始める時の最初の相手のリアクション待ちなどの処理を一括して行う
+ *
+ * @param   iem		
+ * @param   seq		
+ *
+ * @retval  FIRST_TALK_RET		
+ */
+//--------------------------------------------------------------
+static FIRST_TALK_RET _FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_EVENT_MSGWORK *iem, u8 *seq)
+{
+  enum{
+    SEQ_FIRST_TALK,
+    SEQ_TALK_SEND,
+    SEQ_TALK_WAIT,
+    SEQ_TALK_RECV_WAIT,
+    SEQ_TALK_NG,
+    SEQ_TALK_NG_MSGWAIT,
+    SEQ_TALK_NG_LAST,
+    SEQ_END_OK,
+    SEQ_END_NG,
+    SEQ_END_CANCEL,
+  };
+  
+  switch(*seq){
+	case SEQ_FIRST_TALK:
+    IntrudeEventPrint_StartStream(iem, msg_intrude_000);
+		(*seq)++;
+		break;
+	case SEQ_TALK_SEND:
+	  if(IntrudeSend_Talk(intcomm, intcomm->talk.talk_netid) == TRUE){
+      (*seq)++;
+    }
+    break;
+	case SEQ_TALK_WAIT:
+    if(IntrudeEventPrint_WaitStream(iem) == TRUE){
+			(*seq)++;
+		}
+		break;
+	case SEQ_TALK_RECV_WAIT:
+	  {
+      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
+      switch(talk_status){
+      case INTRUDE_TALK_STATUS_OK:
+        *seq = SEQ_END_OK;
+        break;
+      case INTRUDE_TALK_STATUS_NG:
+      case INTRUDE_TALK_STATUS_CANCEL:
+        *seq = SEQ_TALK_NG;
+        break;
+      default:  //まだ返事が来ていない
+        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+            *seq = SEQ_END_CANCEL;
+          }
+        }
+        break;
+      }
+    }
+		break;
+
+  case SEQ_TALK_NG:   //断られた
+    IntrudeEventPrint_StartStream(iem, msg_intrude_002);
+		(*seq)++;
+    break;
+  case SEQ_TALK_NG_MSGWAIT:
+    if(IntrudeEventPrint_WaitStream(iem) == TRUE){
+			(*seq)++;
+		}
+		break;
+	case SEQ_TALK_NG_LAST:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+			(*seq) = SEQ_END_NG;
+		}
+	  break;
+	
+	case SEQ_END_OK:
+	  return FIRST_TALK_RET_OK;
+	case SEQ_END_NG:
+	  return FIRST_TALK_RET_NG;
+	case SEQ_END_CANCEL:
+	  return FIRST_TALK_RET_CANCEL;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  
+  return FIRST_TALK_RET_NULL;
 }
 
 //--------------------------------------------------------------
@@ -144,9 +260,6 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 	INTRUDE_COMM_SYS_PTR intcomm;
   enum{
     SEQ_FIRST_TALK,
-    SEQ_TALK_SEND,
-    SEQ_TALK_WAIT,
-    SEQ_TALK_RECV_WAIT,
     SEQ_TALK_OK,
     SEQ_TALK_OK_MSGWAIT,
     SEQ_MENU_INIT,
@@ -177,41 +290,22 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 
 	switch( *seq ){
 	case SEQ_FIRST_TALK:
-    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_000);
-		(*seq)++;
-		break;
-	case SEQ_TALK_SEND:
-	  if(IntrudeSend_Talk(talk->intcomm->talk.talk_netid) == TRUE){
-      (*seq)++;
-    }
-    break;
-	case SEQ_TALK_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
-			(*seq)++;
-		}
-		break;
-	case SEQ_TALK_RECV_WAIT:
 	  {
-      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(talk->intcomm);
-      switch(talk_status){
-      case INTRUDE_TALK_STATUS_OK:
+      FIRST_TALK_RET first_ret = _FirstTalkSeq(intcomm, &talk->iem, &talk->first_talk_seq);
+      switch(first_ret){
+      case FIRST_TALK_RET_OK:
         *seq = SEQ_TALK_OK;
         break;
-      case INTRUDE_TALK_STATUS_NG:
-      case INTRUDE_TALK_STATUS_CANCEL:
-        *seq = SEQ_TALK_NG;
+      case FIRST_TALK_RET_NG:
+        *seq = SEQ_FINISH;
         break;
-      default:  //まだ返事が来ていない
-        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(talk->intcomm->talk.talk_netid) == TRUE){
-            *seq = SEQ_TALK_CANCEL;
-          }
-        }
+      case FIRST_TALK_RET_CANCEL:
+        *seq = SEQ_TALK_CANCEL;
         break;
       }
     }
-		break;
-	
+    break;
+
   case SEQ_TALK_OK:   //返事OK
     IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_003);
 		(*seq)++;
@@ -487,12 +581,12 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
     (*seq)++;
     break;
 	case SEQ_SEND_ACHIEVE:
-    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
       (*seq)++;
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_RecvAchieve(&intcomm->mission) == TRUE){
+		if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
       (*seq)++;
     }
     break;
@@ -531,6 +625,97 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
       }
       MISSION_Init(&intcomm->mission);
     }
+
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
+    Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
+    return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：道具：話し掛けイベント
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk )
+{
+	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+	enum{
+    SEQ_FIRST_TALK,
+    SEQ_SEND_ACHIEVE,
+    SEQ_RECV_WAIT,
+    SEQ_MSG_INIT,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_END,
+  };
+	
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+    if((*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  }
+
+	switch( *seq ){
+	case SEQ_FIRST_TALK:
+	  {
+      FIRST_TALK_RET first_ret = _FirstTalkSeq(intcomm, &talk->iem, &talk->first_talk_seq);
+      switch(first_ret){
+      case FIRST_TALK_RET_OK:
+        *seq = SEQ_SEND_ACHIEVE;
+        break;
+      case FIRST_TALK_RET_NG:
+        *seq = SEQ_END;
+        break;
+      case FIRST_TALK_RET_CANCEL:
+        *seq = SEQ_END;
+        break;
+      }
+    }
+    break;
+
+	case SEQ_SEND_ACHIEVE:
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
+      (*seq)++;
+    }
+    break;
+  case SEQ_RECV_WAIT:
+		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_INIT:
+    MISSIONDATA_Wordset(intcomm,
+       MISSION_GetRecvData(&intcomm->mission), talk->iem.wordset, talk->heapID);
+    IntrudeEventPrint_StartStream(&talk->iem, MissionItemMsgID[0] + 0);
+		(*seq)++;
+		break;
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
+    Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
@@ -589,63 +774,87 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
-    SEQ_MSG_INIT,
-    SEQ_MSG_WAIT,
-    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_KEY_WAIT,
+    SEQ_POINT_GET_CHECK,
+    SEQ_POINT_GET,
+    SEQ_POINT_GET_MSG_WAIT,
+    SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
     SEQ_END,
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
-    if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
-      *seq = SEQ_MSG_WAIT;
+    if((*seq) < SEQ_POINT_GET_MSG_WAIT){
+      *seq = SEQ_END;
       talk->error = TRUE;
     }
   }
 
 	switch( *seq ){
   case SEQ_INIT:
+    IntrudeEventPrint_SetupMsgWin(&talk->iem, gsys, 1, 1, 32-2, 16);
+    
+    MISSIONDATA_Wordset(intcomm,
+       &(MISSION_GetResultData(&intcomm->mission))->mission_data, talk->iem.wordset, talk->heapID);
+    {
+      u16 explain_msgid, title_msgid;
+      const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+      
+      title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
+      explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
+      
+      IntrudeEventPrint_PrintMsgWin_MissionMono(&talk->iem, title_msgid, 8, 0);
+      IntrudeEventPrint_PrintMsgWin_MissionMono(&talk->iem, explain_msgid, 8, 16);
+    }
     (*seq)++;
     break;
-  case SEQ_MSG_INIT:
-    {
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.result.mission_data.target_netid);
-      MYSTATUS *achieve_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.result.achieve_netid);
-      int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
-      u16 msg_id;
-      
-      msg_id = MISSION_GetAchieveMsgID(&intcomm->mission, my_netid);
-
-      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
-      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, achieve_myst );
-
-      IntrudeEventPrint_StartStream(&talk->iem, msg_id);
-    }
-		(*seq)++;
-		break;
-  case SEQ_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
-      *seq = SEQ_MSG_END_BUTTON_WAIT;
+  case SEQ_KEY_WAIT:
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
+      IntrudeEventPrint_ExitMsgWin(&talk->iem);
+      (*seq) = SEQ_POINT_GET_CHECK;
     }
     break;
-  case SEQ_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+
+  case SEQ_POINT_GET_CHECK:   //報酬ゲットしたか
+    if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
+      *seq = SEQ_POINT_GET;
+    }
+    else{
       *seq = SEQ_END;
     }
     break;
-  case SEQ_END:
-    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-    if(intcomm != NULL){
-      //※check　ミッションが一つしかないので、ここで全回復
-      if(intcomm->mission.data.target_netid == GAMEDATA_GetIntrudeMyID(gdata)){
-        STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
-      }
+  case SEQ_POINT_GET:         //報酬ゲット
+    WORDSET_RegisterNumber( talk->iem.wordset, 0, 
+      MISSION_GetResultPoint(intcomm, &intcomm->mission), 
+      3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys003);
+    (*seq)++;
+    break;
+  case SEQ_POINT_GET_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_POINT_GET_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
       if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
         intcomm->send_occupy = TRUE;
       }
-      MISSION_Init(&intcomm->mission);
+      (*seq) = SEQ_END;
     }
+    break;
+
+  case SEQ_END:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+
+  #if 0
+    //※check　ミッションが一つしかないので、ここで全回復
+    if(intcomm->mission.data.target_netid == GAMEDATA_GetIntrudeMyID(gdata)){
+      STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
+    }
+  #endif
+    MISSION_Init(&intcomm->mission);
+
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;

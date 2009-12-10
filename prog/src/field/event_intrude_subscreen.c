@@ -243,6 +243,7 @@ static GMEVENT_RESULT MissionPutEvent( GMEVENT *event, int *seq, void *wk )
     break;
   case SEQ_MSG_INIT:
     {
+    #if 0
       GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
       MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
       u16 msg_id;
@@ -253,6 +254,9 @@ static GMEVENT_RESULT MissionPutEvent( GMEVENT *event, int *seq, void *wk )
       }
 
       IntrudeEventPrint_StartStream(&talk->iem, msg_id);
+    #else
+      IntrudeEventPrint_StartStreamMission(&talk->iem, intcomm);
+    #endif
     }
 		(*seq)++;
 		break;

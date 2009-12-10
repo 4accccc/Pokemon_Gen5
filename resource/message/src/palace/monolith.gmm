@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-11-26T11:48:59"/>
+	<create user="matsuda" host="W00142" date="2009-12-09T12:33:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,54 +364,6 @@
 		<comment>状態画面</comment>
 		<language name="JPN" width="256">たいざいじかん：　[2:01:２桁:0]：[2:01:２桁:1]</language>
 		<language name="JPN_KANJI" width="256">たいざいじかん：　[2:01:２桁:0]：[2:01:２桁:1]</language>
-	</row>
-
-	<row id="msg_mono_mistype_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">しょうりミッション</language>
-		<language name="JPN_KANJI" width="256">しょうりミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">わざミッション</language>
-		<language name="JPN_KANJI" width="256">わざミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">きそミッション</language>
-		<language name="JPN_KANJI" width="256">きそミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">おおきさミッション</language>
-		<language name="JPN_KANJI" width="256">おおきさミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">ぞくせいミッション</language>
-		<language name="JPN_KANJI" width="256">ぞくせいミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">どうぐミッション</language>
-		<language name="JPN_KANJI" width="256">どうぐミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">はっせいミッション</language>
-		<language name="JPN_KANJI" width="256">はっせいミッション</language>
-	</row>
-
-	<row id="msg_mono_mistype_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">せいかくミッション</language>
-		<language name="JPN_KANJI" width="256">せいかくミッション</language>
 	</row>
 
 	<row id="msg_mono_mis_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

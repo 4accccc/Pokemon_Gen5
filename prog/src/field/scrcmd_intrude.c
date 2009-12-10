@@ -199,7 +199,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
       u32 msg_id;
 
       msg_id = MISSION_GetMissionMsgID(&intcomm->mission);
-      if(ems->error == FALSE && intcomm->mission.data.mission_no != MISSION_NO_NULL){
+      if(ems->error == FALSE && intcomm->mission.data.accept_netid != INTRUDE_NETID_NULL){
         WORDSET_RegisterPlayerName( ems->iem.wordset, 0, target_myst );
       }
 

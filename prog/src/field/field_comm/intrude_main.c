@@ -667,14 +667,15 @@ void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid)
  *
  * @param   intcomm		
  * @param   net_id		エントリー者のNetID
+ * @retval  TRUE:話が出来る。　FALSE:話が出来ない
  */
 //==================================================================
-void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
 {
   if((intcomm->recv_profile & (1 << net_id)) == 0){
     OS_TPrintf("話しかけられたけど、まだプロフィールを受信していないので断る\n");
     intcomm->answer_talk_ng_bit |= 1 << net_id;
-    return;
+    return FALSE;
   }
 
   switch(intcomm->intrude_status_mine.action_status){
@@ -682,6 +683,7 @@ void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
     if(intcomm->talk.talk_netid == INTRUDE_NETID_NULL){
       intcomm->talk.talk_netid = net_id;
       intcomm->talk.talk_status = INTRUDE_TALK_STATUS_OK;
+      return TRUE;
     }
     else{
       intcomm->answer_talk_ng_bit |= 1 << net_id;
@@ -691,6 +693,8 @@ void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
     intcomm->answer_talk_ng_bit |= 1 << net_id;
     break;
   }
+  
+  return FALSE;
 }
 
 //==================================================================

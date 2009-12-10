@@ -43,6 +43,12 @@ typedef enum{
   INTRUDE_ACTION_BINGO_BATTLE_INTRUSION,  ///<ビンゴバトル乱入参加
 }INTRUDE_ACTION;
 
+///会話タイプ
+typedef enum{
+  INTRUDE_TALK_TYPE_NORMAL,         ///<通常会話
+  INTRUDE_TALK_TYPE_MISSION,        ///<ミッション用の会話
+}INTRUDE_TALK_TYPE;
+
 ///会話ステータス
 typedef enum{
   INTRUDE_TALK_STATUS_NULL,         ///<初期値(何もしていない状態)
@@ -71,10 +77,6 @@ enum{
 
 ///ミッションが発動していない時のミッション番号
 #define MISSION_NO_NULL     (0xff)
-///ミッション失敗
-#define MISSION_NO_FAIL     (0xfe)
-///ミッション最大数
-#define MISSION_NO_MAX      (1)
 
 
 //==============================================================================
@@ -103,6 +105,15 @@ typedef struct{
   INTRUDE_STATUS status;
 }INTRUDE_PROFILE;
 
+///話しかける最初のデータ
+typedef struct{
+  u8 talk_type;               ///<INTRUDE_TALK_TYPE
+  u8 padding[3];
+  union{  //talk_typeによって変化する内容
+    MISSION_DATA mdata;
+  };
+}INTRUDE_TALK_FIRST_ATTACK;
+
 ///会話用ワーク
 typedef struct{
   u8 talk_netid;              ///<話しかけた相手のNetID
@@ -120,6 +131,7 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報
   COMM_PLAYER_PACKAGE backup_player_pack[FIELD_COMM_MEMBER_MAX];  ///<Backup座標データ(座標変換をしていない)
+  INTRUDE_TALK_FIRST_ATTACK recv_talk_first_attack;
   INTRUDE_TALK   talk;
   INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
   
