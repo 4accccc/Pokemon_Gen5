@@ -4686,7 +4686,33 @@
   .macro  _ASM_GYM_DRAGON_INIT
   .short  EV_SEQ_GYM_DRAGON_INIT
   .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジムギミック発動
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_CALL_GMK(head, arm) _ASM_GYM_DRAGON_CALL_GMK head, arm
+
+  .macro  _ASM_GYM_DRAGON_CALL_GMK head, arm
+  .short  EV_SEQ_GYM_DRAGON_CALL_GMK
+  .short  \head
+  .short  \arm
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジム自機飛び降り
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_JUMP_DOWN(dir) _ASM_GYM_DRAGON_JUMP_DOWN dir
+
+  .macro  _ASM_GYM_DRAGON_JUMP_DOWN dir
+  .short  EV_SEQ_GYM_DRAGON_JUMP_DOWN
+  .short  \dir
+  .endm
   
+
 //======================================================================
 //
 //  モデルアニメ関連

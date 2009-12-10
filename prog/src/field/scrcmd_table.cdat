@@ -699,8 +699,8 @@
 
   //ƒhƒ‰ƒSƒ“ƒWƒ€
   DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
+  DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
   NO_CMD()
 
 
