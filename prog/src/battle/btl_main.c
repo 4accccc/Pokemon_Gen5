@@ -87,6 +87,7 @@ struct _BTL_MAIN_MODULE {
   BTL_SERVER*   server;
   BTL_CLIENT*   client[ BTL_CLIENT_MAX ];
   BTL_TRAINER_DATA   trainerParam[ BTL_CLIENT_MAX ];
+  const MYSTATUS*    playerStatus;
 
   // サーバが計算時に書き換えても良い一時使用パラメータ領域と、
   // サーバコマンドを受け取ったクライアントが実際に書き換えるパラメータ領域
@@ -210,6 +211,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
+      wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
 
       if( !(wk->setupParam->fRecordPlay) ){
         GFL_STD_RandGeneralInit( &wk->randomContext );
@@ -480,8 +482,8 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 
   // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->partyPlayer );
-  srcParty_Set( wk, 1, sp->partyEnemy1 );
+  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
+  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -495,7 +497,7 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
   wk->ImServer = TRUE;
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
@@ -592,8 +594,8 @@ static BOOL setup_alone_double( int* seq, void* work )
   wk->ImServer = TRUE;
 
   // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->partyPlayer );
-  srcParty_Set( wk, 1, sp->partyEnemy1 );
+  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
+  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -606,7 +608,7 @@ static BOOL setup_alone_double( int* seq, void* work )
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
@@ -684,8 +686,8 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
   // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->partyPlayer );
-  srcParty_Set( wk, 1, sp->partyEnemy1 );
+  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
+  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -698,7 +700,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
@@ -754,8 +756,8 @@ static BOOL setup_alone_rotation( int* seq, void* work )
 //  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
   // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->partyPlayer );
-  srcParty_Set( wk, 1, sp->partyEnemy1 );
+  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
+  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -768,7 +770,7 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
@@ -1057,7 +1059,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 2:
-    if( BTL_NET_StartNotifyPartyData(sp->partyPlayer) ){
+    if( BTL_NET_StartNotifyPartyData(sp->party[ BTL_CLIENT_PLAYER ]) ){
       (*seq)++;
     }
     break;
@@ -1126,7 +1128,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 2:
-    if( BTL_NET_StartNotifyPlayerData(sp->statusPlayer) ){
+    if( BTL_NET_StartNotifyPlayerData(wk->playerStatus) ){
       (*seq)++;
     }
     break;
@@ -1562,7 +1564,7 @@ const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MODULE* wk
 //=============================================================================================
 const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE * wk )
 {
-  return wk->setupParam->statusPlayer;
+  return wk->playerStatus;
 }
 
 //=============================================================================================
@@ -3072,8 +3074,8 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 
     srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
-    BTL_Printf("%p の結果を %p に書き戻し\nsrc_member..\n", srcParty, wk->setupParam->partyPlayer);
-    PokeParty_Copy( srcParty, wk->setupParam->partyPlayer );
+    BTL_Printf("%p の結果を %p に書き戻し\nsrc_member..\n", srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ]);
+    PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ] );
     {
       u32 i;
       POKEMON_PARAM* pp;
@@ -3091,7 +3093,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 
     srcParty_RefrectBtlParty( wk, clientID );
     srcParty = srcParty_Get( wk, clientID );
-    PokeParty_Copy( srcParty, wk->setupParam->partyEnemy1 );
+    PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_ENEMY1 ] );
   }
 }
 

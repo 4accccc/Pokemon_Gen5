@@ -1556,7 +1556,6 @@ FS_EXTERN_OVERLAY(battle);
   case SEQ_BTL_START:
     setDebugParams( &wk->saveData, &wk->setupParam );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
-    printPartyInfo( wk->setupParam.partyEnemy1 );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
     (*seq) = SEQ_BTL_RETURN;
     break;
@@ -1587,6 +1586,9 @@ FS_EXTERN_OVERLAY(battle);
   }
   return FALSE;
 }
+
+//static void Record_SaveParty_Start( DEBUG_BTL_WORK* wk,
+
 /**
  *  BATTLE_SETUP_PARAM の録画データセーブ開始
  */

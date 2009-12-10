@@ -50,17 +50,52 @@ typedef struct{
  */
 struct _BTLREC_SETUP_SUBSET {
 
-  u8 work[336];   ///< @todo 内容未定
-
+  GFL_STD_RandContext   randomContext;
+  BTL_FIELD_SITUATION   fieldSituation;
+  CONFIG                config;
+  u8  competitor;
+  u8  rule;
+  u8  fMultiMode;
 };
+
+/**
+  *  録画セーブ用トレーナーデータ
+ */
+typedef struct {
+  u32     ai_bit;
+  u16     tr_id;
+  u16     tr_type;
+  u16     use_item[ BSP_TRAINERDATA_ITEM_MAX ]; // u16x4 = 8byte
+  /// 16 byte
+
+  STRCODE name[BUFLEN_PERSON_NAME];  // <-32byte
+
+  PMS_DATA  win_word;   //戦闘終了時勝利メッセージ <-8byte
+  PMS_DATA  lose_word;  //戦闘終了時負けメッセージ <-8byte
+
+}BTLREC_TRAINER_STATUS;
+
+
+typedef enum {
+  BTLREC_CLIENTSTATUS_NONE,
+  BTLREC_CLIENTSTATUS_PLAYER,
+  BTLREC_CLIENTSTATUS_TRAINER,
+}BtlRecClientStatusType;
+
+typedef struct {
+  BtlRecClientStatusType    type;
+  union {
+    MYSTATUS                player;
+    BTLREC_TRAINER_STATUS   trainer;
+  };
+}BTLREC_CLIENT_STATUS;
 
 /**
   *  クライアント操作内容保存バッファ
  */
 struct _BTLREC_OPERATION_BUFFER {
-
-  u8  buffer[ BTLREC_OPERATION_BUFFER_SIZE ];
-
+  u32  size;
+  u8   buffer[ BTLREC_OPERATION_BUFFER_SIZE ];
 };
 
 //----------------------------------------------------------
@@ -72,9 +107,10 @@ typedef struct _BATTLE_REC_WORK {
   BTLREC_SETUP_SUBSET       setupSubset;   ///< バトル画面セットアップパラメータのサブセット
   BTLREC_OPERATION_BUFFER   opBuffer;      ///< クライアント操作内容の保存バッファ
 
-  REC_POKEPARTY     rec_party[BTL_CLIENT_MAX];
-  MYSTATUS          my_status[BTL_CLIENT_MAX];
-  CONFIG            config;
+  REC_POKEPARTY         rec_party[ BTL_CLIENT_MAX ];
+  BTLREC_CLIENT_STATUS  clientStatus[ BTL_CLIENT_MAX ];
+//  MYSTATUS          my_status[ BTL_CLIENT_MAX ];
+
   u16 magic_key;
   u16 padding;
 

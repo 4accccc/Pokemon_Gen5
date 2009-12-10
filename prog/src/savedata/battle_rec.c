@@ -17,6 +17,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "savedata/battle_rec.h"
+#include "battle/battle.h"
 
 #include "../battle/btl_common.h"
 #include "../battle/btl_net.h"
@@ -30,25 +31,31 @@
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*/
-//==============================================================================
-//  Globals
-//==============================================================================
-
-//==============================================================================
-//  Globals
-//==============================================================================
+/*--------------------------------------------------------------------------*/
+/* Globals                                                                  */
+/*--------------------------------------------------------------------------*/
 BATTLE_REC_SAVEDATA * brs=NULL;
 
-
-//==============================================================================
-//  プロトタイプ宣言
-//==============================================================================
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
 static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, const BATTLE_REC_WORK *rec, int rec_mode, int counter);
 static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *src);
-static void PokeParty_to_RecPokeParty(const POKEPARTY *party, REC_POKEPARTY *rec_party);
-static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party);
-static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src);
+static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
+static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
+static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party);
+static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
+static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer );
+static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer );
+static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+
 
 
 //------------------------------------------------------------------
@@ -354,7 +361,7 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, 
   BATTLE_REC_WORK *rec;
   SAVE_RESULT result;
   u16 test_crc;
-  
+
   switch(*work0){
   case 0:
     //データがないときは、何もしない
@@ -381,7 +388,7 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, 
       rec->crc.crc16ccitt_hash + ((rec->crc.crc16ccitt_hash ^ 0xffff) << 16));
     //ここに引っかかる場合はCRCの開始位置が構造体上で4バイトアライメントされていない
     GF_ASSERT(rec->crc.crc16ccitt_hash == test_crc);
-    
+
     *work1 = 0;
     (*work0)++;
     break;
@@ -895,7 +902,7 @@ void BattleRec_BattleParamCreate(BATTLE_PARAM *bp,SAVE_CONTROL_WORK *sv)
  * @param   rec_party   変換後のデータ代入先
  */
 //--------------------------------------------------------------
-static void PokeParty_to_RecPokeParty(const POKEPARTY *party, REC_POKEPARTY *rec_party)
+static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party )
 {
   int i;
   POKEMON_PARAM *pp;
@@ -955,6 +962,22 @@ BTLREC_SETUP_SUBSET*  BattleRec_GetSetupSubsetPtr( void )
   GF_ASSERT(brs);
   return &(brs->rec.setupSubset);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //--------------------------------------------------------------
 /**
@@ -1154,5 +1177,201 @@ BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id)
 void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp)
 {
   GFL_HEAP_FreeMemory(brhp);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=============================================================================================
+/**
+ * バトルセットアップパラメータを録画セーブデータに変換して録画セーブバッファに格納する
+ *
+ * @param   setup   バトルセットアップパラメータ
+ */
+//=============================================================================================
+void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
+{
+  BATTLE_REC_WORK  *rec = &brs->rec;
+
+  store_Party( setup, rec );
+  store_ClientStatus( setup, rec );
+  store_OperationBuffer( setup, rec );
+  store_SetupSubset( setup, rec );
+}
+
+//=============================================================================================
+/**
+ * 録画セーブバッファからバトルセットアップパラメータを復元する
+ *
+ * @param   setup   [out] 復元先
+ * @param   heapID
+ */
+//=============================================================================================
+void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
+{
+  BATTLE_REC_WORK  *rec = &brs->rec;
+
+  restore_Party( setup, rec, heapID );
+  restore_ClientStatus( setup, rec, heapID );
+  restore_OperationBuffer( setup, rec, heapID );
+  restore_SetupSubset( setup, rec, heapID );
+
+}
+
+static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+{
+  // パーティデータを格納
+  u32 i;
+  for(i=0; i<BTL_CLIENT_NUM; ++i)
+  {
+    if( setup->party[i] ){
+      PokeParty_to_RecPokeParty( setup->party[i], &(rec->rec_party[i]) );
+    }
+  }
+}
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
+{
+  // パーティデータを復元
+  u32 i;
+  for(i=0; i<BTL_CLIENT_NUM; ++i)
+  {
+    if( setup->party[i] ){
+      RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i] );
+    }
+  }
+}
+
+
+static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+{
+  u32 i;
+  for(i=0; i<NELEMS(setup->playerStatus); ++i)
+  {
+    if( setup->playerStatus[i] ){
+      MyStatus_Copy( setup->playerStatus[i], &rec->clientStatus[i].player );
+      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
+    }
+    else if( setup->tr_data[i] ){
+      store_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
+      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
+    }
+    else{
+      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
+    }
+  }
+}
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+{
+  u32 i;
+  for(i=0; i<NELEMS(setup->playerStatus); ++i)
+  {
+    switch( rec->clientStatus[i].type ){
+    case BTLREC_CLIENTSTATUS_PLAYER:
+      MyStatus_Copy( &rec->clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
+      break;
+
+    case BTLREC_CLIENTSTATUS_TRAINER:
+      restore_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
+      break;
+    }
+  }
+}
+
+/**
+ *  バトルセットアップ用トレーナーデータを録画セーブ用に変換して格納
+ */
+static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer )
+{
+  u32 i;
+
+  recTrainer->tr_id     = bspTrainer->tr_id;
+  recTrainer->tr_type   = bspTrainer->tr_type;
+  recTrainer->ai_bit    = bspTrainer->ai_bit;
+  recTrainer->win_word  = bspTrainer->win_word;
+  recTrainer->lose_word = bspTrainer->lose_word;
+
+  for(i=0; i<NELEMS(recTrainer->use_item); ++i){
+    recTrainer->use_item[i] = bspTrainer->use_item[i];
+  }
+
+  GFL_STR_GetStringCode( bspTrainer->name, recTrainer->name, NELEMS(recTrainer->name) );
+}
+static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer )
+{
+  u32 i;
+
+  bspTrainer->tr_id     = recTrainer->tr_id;
+  bspTrainer->tr_type   = recTrainer->tr_type;
+  bspTrainer->ai_bit    = recTrainer->ai_bit;
+  bspTrainer->win_word  = recTrainer->win_word;
+  bspTrainer->lose_word = recTrainer->lose_word;
+
+  for(i=0; i<NELEMS(bspTrainer->use_item); ++i){
+    bspTrainer->use_item[i] = recTrainer->use_item[i];
+  }
+
+  GFL_STR_SetStringCode( bspTrainer->name, recTrainer->name );
+
+}
+/**
+ *  操作バッファ格納
+ */
+static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+{
+  if( (setup->recBuffer != NULL)
+  &&  (setup->recDataSize < sizeof(rec->opBuffer.buffer))
+  ){
+    rec->opBuffer.size = setup->recDataSize;
+    GFL_STD_MemCopy( setup->recBuffer, rec->opBuffer.buffer, setup->recDataSize );
+    return TRUE;
+  }
+  return FALSE;
+}
+static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+{
+  setup->recDataSize = rec->opBuffer.size;
+  GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
+  return TRUE;
+}
+/**
+ *  セットアップパラメータ復元データ格納
+ */
+static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+{
+  rec->setupSubset.fieldSituation = setup->fieldSituation;
+  rec->setupSubset.randomContext = setup->recRandContext;
+
+  rec->setupSubset.competitor = setup->competitor;
+  rec->setupSubset.rule = setup->rule;
+  rec->setupSubset.fMultiMode = setup->multiMode;
+
+  CONFIG_Copy( setup->configData, &rec->setupSubset.config );
+
+  return TRUE;
+}
+/**
+ *  セットアップパラメータ復元
+ */
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+{
+  setup->fieldSituation = rec->setupSubset.fieldSituation;
+  setup->recRandContext = rec->setupSubset.randomContext;
+
+  setup->competitor = rec->setupSubset.competitor;
+  setup->rule = rec->setupSubset.rule;
+  setup->multiMode = rec->setupSubset.fMultiMode;
+
+  CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
+
+  return TRUE;
 }
 

@@ -10,6 +10,7 @@
 
 #include "savedata/gds_profile.h" //GDS_PROFILE_PTR定義
 #include "net_app/gds/gds_battle_rec_sub.h"
+#include "battle/battle.h"
 
 //==============================================================================
 //  定数定義
@@ -234,6 +235,10 @@ extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, B
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
 extern BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id);
 extern void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp);
+
+
+extern void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup );
+extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID );
 
 //==============================================================================
 //  一部関数をbattle_rec_ov.cに移動した為、外部公開する必要になったもの

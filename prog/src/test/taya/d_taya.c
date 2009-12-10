@@ -956,7 +956,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
         MYITEM_AddItem( para->itemData, ITEM_HAIPAABOORU, 4, HEAPID_CORE );
         MYITEM_AddItem( para->itemData, ITEM_KIZUGUSURI, 4, HEAPID_CORE );
 
-        set_test_playername( (MYSTATUS*)(para->statusPlayer) );
+        set_test_playername( (MYSTATUS*)(para->playerStatus[BTL_CLIENT_PLAYER]) );
       }
 
       if( wk->testPokeEditFlag )
@@ -967,7 +967,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
       GFL_HEAP_FreeMemory( wk->partyEnemy );
       GFL_HEAP_FreeMemory( wk->partyPlayer );
-      
+
       PMSND_PlayBGM( para->musicDefault );
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
@@ -976,9 +976,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
   case 2:
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-      TAYA_Printf( "free adrs=%p & %p\n", para->partyPlayer, para->partyEnemy1);
-      GFL_HEAP_FreeMemory( para->partyPlayer );
-      GFL_HEAP_FreeMemory( para->partyEnemy1 );
+      GFL_HEAP_FreeMemory( para->party[BTL_CLIENT_PLAYER] );
+      GFL_HEAP_FreeMemory( para->party[BTL_CLIENT_ENEMY1] );
       {
         BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
         switch( para->result ){
@@ -1182,11 +1181,11 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       }
 
       BTL_SETUP_Single_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS, HEAPID_CORE );
-     
+
       BATTLE_PARAM_SetPokeParty( para, wk->partyPlayer, BTL_CLIENT_PLAYER );
       GFL_HEAP_FreeMemory( wk->partyPlayer );
 
-      set_test_playername( (MYSTATUS*)(para->statusPlayer) );
+      set_test_playername( (MYSTATUS*)(para->playerStatus[BTL_CLIENT_PLAYER]) );
 
       DEBUG_PerformanceSetActive( FALSE );
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
@@ -1352,16 +1351,16 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 */
       switch( para->netID ){
       case 0:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+        setup_party( HEAPID_CORE, para->party[BTL_CLIENT_PLAYER], MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
         break;
       case 1:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
+        setup_party( HEAPID_CORE, para->party[BTL_CLIENT_PLAYER], MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
         break;
       case 2:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_BAKUUDA, MONSNO_DONKARASU, MONSNO_SANDAASU, 0 );
+        setup_party( HEAPID_CORE, para->party[BTL_CLIENT_PLAYER], MONSNO_BAKUUDA, MONSNO_DONKARASU, MONSNO_SANDAASU, 0 );
         break;
       case 3:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_HERAKUROSU, MONSNO_GENGAA, MONSNO_EAAMUDO, 0 );
+        setup_party( HEAPID_CORE, para->party[BTL_CLIENT_PLAYER], MONSNO_HERAKUROSU, MONSNO_GENGAA, MONSNO_EAAMUDO, 0 );
         break;
       }
 

@@ -79,19 +79,12 @@ void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp )
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
 {
   int i;
-  if(bp->partyPlayer){
-    GFL_HEAP_FreeMemory(bp->partyPlayer);
-  }
-  if(bp->partyPartner){
-    GFL_HEAP_FreeMemory(bp->partyPartner);
-  }
-  if(bp->partyEnemy1){
-    GFL_HEAP_FreeMemory(bp->partyEnemy1);
-  }
-  if(bp->partyEnemy2){
-    GFL_HEAP_FreeMemory(bp->partyEnemy2);
-  }
-  for( i = 0;i < BTL_CLIENT_NUM;i++){
+
+  for( i = 0;i < BTL_CLIENT_NUM;i++)
+  {
+    if( bp->party[i] ){
+      GFL_HEAP_FreeMemory( bp->party[i] );
+    }
     if(bp->tr_data[i] != NULL){
       BSP_TRAINER_DATA_Delete( bp->tr_data[i]);
     }
@@ -110,22 +103,10 @@ void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
  */
 void BATTLE_PARAM_SetPokeParty( BATTLE_SETUP_PARAM* bp, const POKEPARTY* party, BTL_CLIENT_ID client )
 {
+  GF_ASSERT(client<BTL_CLIENT_NUM);
   GF_ASSERT( party );
 
-  switch( client ){
-  case BTL_CLIENT_PLAYER:
-    PokeParty_Copy( party, bp->partyPlayer );
-    break;
-  case BTL_CLIENT_PARTNER:
-    PokeParty_Copy( party, bp->partyPartner );
-    break;
-  case BTL_CLIENT_ENEMY1:
-    PokeParty_Copy( party, bp->partyEnemy1 );
-    break;
-  case BTL_CLIENT_ENEMY2:
-    PokeParty_Copy( party, bp->partyEnemy2 );
-    break;
-  }
+  PokeParty_Copy( party, bp->party[ client ] );
 }
 
 /*
@@ -133,18 +114,8 @@ void BATTLE_PARAM_SetPokeParty( BATTLE_SETUP_PARAM* bp, const POKEPARTY* party, 
  */
 POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_ID client )
 {
-  switch( client ){
-  case BTL_CLIENT_PLAYER:
-    return bp->partyPlayer;
-  case BTL_CLIENT_PARTNER:
-    return bp->partyPartner;
-  case BTL_CLIENT_ENEMY1:
-    return bp->partyEnemy1;
-  case BTL_CLIENT_ENEMY2:
-    return bp->partyEnemy2;
-  }
-  GF_ASSERT(0);
-  return NULL;
+  GF_ASSERT(client<BTL_CLIENT_NUM);
+  return bp->party[ client ];
 }
 
 /*
@@ -212,8 +183,8 @@ static void setup_player_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEA
   BSP_TRAINER_DATA* tr_data;
   PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork( gameData );
 
-  dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
-  PokeParty_Copy( GAMEDATA_GetMyPokemon( gameData ), dst->partyPlayer );
+  dst->party[ BTL_CLIENT_PLAYER ] = PokeParty_AllocPartyWork( heapID );
+  PokeParty_Copy( GAMEDATA_GetMyPokemon( gameData ), dst->party[ BTL_CLIENT_PLAYER ] );
 
   dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
   tr_data = dst->tr_data[BTL_CLIENT_PLAYER];
@@ -224,6 +195,8 @@ static void setup_player_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEA
 
 static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD_SITUATION* sit )
 {
+  u32 i;
+
   dst->netHandle = NULL;
   dst->commMode = BTL_COMM_NONE;
   dst->commPos = 0;
@@ -232,12 +205,12 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->recBuffer = NULL;
   dst->fRecordPlay = FALSE;
 
-  dst->partyPlayer = NULL;
-  dst->partyEnemy1 = NULL;
-  dst->partyPartner = NULL;
-  dst->partyEnemy2 = NULL;
+  for(i=0; i<BTL_CLIENT_NUM; ++i){
+    dst->party[i] = NULL;
+    dst->playerStatus[i] = NULL;
+  }
 
-  dst->statusPlayer = GAMEDATA_GetMyStatus( gameData );
+  dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
   dst->itemData     = GAMEDATA_GetMyItem( gameData );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
   dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
@@ -278,9 +251,9 @@ void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
   setup_common( bp, gameData, (BTL_FIELD_SITUATION*)sit );
   setup_player_param( bp, gameData, heapID );
 
-  bp->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
+  bp->party[ BTL_CLIENT_ENEMY1 ] = PokeParty_AllocPartyWork( heapID );
   if( partyEnemy != NULL ){
-    PokeParty_Copy( partyEnemy, bp->partyEnemy1 );
+    PokeParty_Copy( partyEnemy, bp->party[ BTL_CLIENT_ENEMY1 ] );
   }
 
   bp->competitor = BTL_COMPETITOR_WILD;
@@ -374,7 +347,7 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_SINGLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -396,7 +369,7 @@ void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 //=============================================================================================
 /**
@@ -416,7 +389,7 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_TRIPLE, sit, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -437,7 +410,7 @@ void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_ROTATION, sit, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -460,8 +433,8 @@ void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
   dst->multiMode = TRUE;
 }
 
@@ -485,9 +458,9 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->partyPartner, partner, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
   dst->multiMode = TRUE;
 }
 

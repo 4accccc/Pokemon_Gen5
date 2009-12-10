@@ -111,12 +111,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
       MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
 
-      PokeParty_Copy( param->btlResult->partyPlayer, party );
+      PokeParty_Copy( param->btlResult->party[ BTL_CLIENT_PLAYER ], party );
 
       //ポケルス感染チェック
       //通信対戦では感染チェックをしない
       if( param->btlResult->competitor != BTL_COMPETITOR_COMM )
-      { 
+      {
         //感染チェック
         POKERUS_CheckCatchPokerus( party );
         //伝染チェック
@@ -129,14 +129,14 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       if( param->btlResult->result == BTL_RESULT_CAPTURE )
       {
         wk->pp = PokeParty_GetMemberPointer(
-                                param->btlResult->partyEnemy1, param->btlResult->capturedPokeIdx );
+                                param->btlResult->party[ BTL_CLIENT_ENEMY1 ], param->btlResult->capturedPokeIdx );
 
-        // 親名セットしてるけど、本来はエンカウント前にフィールで設定すべき？-
+        // 親名セットしてるけど、本来はエンカウント前にフィールド側で設定すべき？
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
         // @todo 今は必ず名前入力させているが、いずれ確認画面を作る。
-				GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
         wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
 
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
@@ -153,7 +153,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
     }
     NAMEIN_FreeParam( wk->nameinParam );
-		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     wk->nameinParam = NULL;
     (*seq)++;
     break;
