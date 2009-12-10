@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-09T12:43:15"/>
+	<create user="taya" host="W00146" date="2009-12-10T20:36:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -333,7 +333,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -678,6 +678,16 @@
 	<row id="BTL_STRID_STD_CriticalHit">
 		<language name="JPN" width="216">きゅうしょに　あたった！</language>
 		<language name="JPN_KANJI" width="216">急所に当たった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_CommSupport">
+		<comment>通信サポートによるHP回復</comment>
+		<language name="JPN" width="216">たすけにきた　[1:00:トレーナー名:0]の　おかげで
+[1:02:ポケモンニックネーム:1]の▽
+たいりょくが　かいふくした！</language>
+		<language name="JPN_KANJI" width="216">助けにきた　[1:00:トレーナー名:0]の　おかげで
+[1:02:ポケモンニックネーム:1]の▽
+体力が　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_ShineStart">
