@@ -115,6 +115,9 @@ EVENT_START ev_prg_c03r0801_timeup
 	//望さんスクリプト終了
 	_PL_BOAT_END()
 
+	//ブラックアウト
+	_MAP_FADE_BLACK_OUT()
+
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
 	
