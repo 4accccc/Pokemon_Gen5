@@ -483,10 +483,17 @@ void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
     if( old_monsno != next_monsno )
     {
       u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+      BOOL chg_nickname = pppAct_check_nickname( ppp );
 
       PPP_Put( ppp, ID_PARA_monsno, next_monsno );
       change_monsno_sub_tokusei( ppp, next_monsno, old_monsno );
       change_monsno_sub_sex( ppp, next_monsno, old_monsno );
+      //デフォルト名のままなら、ニックネームも書き換える
+      if( chg_nickname == FALSE )
+      { 
+        GFL_MSG_GetStringRaw( GlobalMsg_PokeName, next_monsno, StrBuffer, NELEMS(StrBuffer) );
+        PPP_Put( ppp, ID_PARA_nickname_raw, (u32)StrBuffer );
+      }
     }
   }
   PPP_FastModeOff( ppp, fast_flag );
@@ -2995,7 +3002,7 @@ static BOOL pppAct_check_nickname( POKEMON_PASO_PARAM* ppp )
   ppp3 = (POKEMON_PASO_PARAM3*)POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
 
   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, ppp1->monsno, StrBuffer, NELEMS(StrBuffer) );
-  return STRTOOL_Comp( StrBuffer, ppp3->nickname );
+  return !STRTOOL_Comp( StrBuffer, ppp3->nickname );
 }
 
 //============================================================================================
