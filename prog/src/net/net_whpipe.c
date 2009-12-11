@@ -1747,7 +1747,7 @@ static void _connectAutoFunc(GFL_NETWL* pNetWL)
 	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 	u16 mode[]={WH_CONNECTMODE_DS_CHILD,WH_CONNECTMODE_MP_CHILD};
 
-	if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
+	if (WH_GetSystemState() == WH_SYSSTATE_IDLE || WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
 		WH_ChildConnectAuto(mode[pInit->bMPMode], _pNetWL->connectMac, 0);
 		//        GFI_NET_BeaconSetScanCallback(pNetWL->pCallback);
 		//    GFL_NETWL* pNetWL = _pNetWL;
