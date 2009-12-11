@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-12-07T21:56:37"/>
+	<create user="ohno" host="W00141" date="2009-12-11T13:22:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -397,7 +397,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="882"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -450,8 +450,8 @@
 
 	<row id="START_MENU_STR_ITEM_06">
 		<comment>ポケモンドリームワールド用アカウント作成</comment>
-		<language name="JPN" font=" 1:font_system" width="192">ポケモンドリームワールドせってい</language>
-		<language name="JPN_KANJI">ポケモンドリームワールド設定</language>
+		<language name="JPN" font=" 1:font_system" width="192">ゲームシンクせってい</language>
+		<language name="JPN_KANJI">ゲームシンクせってい</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_01_02">

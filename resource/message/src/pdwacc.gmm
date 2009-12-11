@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-12-07T22:52:25"/>
+	<create user="ohno" host="W00141" date="2009-12-11T15:13:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -344,15 +344,17 @@
 	</row>
 
 	<row id="PDWACC_003">
-		<language name="JPN" width="256">もどる</language>
-		<language name="JPN_KANJI" width="256">戻る</language>
+		<language name="JPN" width="256">ゲームシンクで　あそぶための　
+データをつくります。よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクで遊ぶ為のデータを作成します
+よろしいですか？</language>
 	</row>
 
 	<row id="PDWACC_004">
-		<language name="JPN" width="256">ここまでの　かつやくを
-ポケモンレポートに　かきこみますか？</language>
-		<language name="JPN_KANJI" width="256">ここまでの　かつやくを
-ポケモンレポートに　書き込みますか？</language>
+		<language name="JPN" width="256">さくせいしています
+しばらくおまちください</language>
+		<language name="JPN_KANJI" width="256">さくせいしています
+しばらくおまちください</language>
 	</row>
 
 	<row id="PDWACC_005">
@@ -373,22 +375,27 @@
 	</row>
 
 	<row id="PDWACC_008">
-		<language name="JPN" width="256">ねかしつけているところです
-しばらくおまちください</language>
-		<language name="JPN_KANJI" width="256">寝かしつけている所です
-しばらくお待ちください。</language>
+		<language name="JPN" width="256">ポケモン大好きクラブ
+にアクセスして上のアクセスコードを
+入力するとゲームシンクの設定が
+おこなえます。
+
+この画面を閉じてもメニューから
+ゲームシンク設定を選ぶと
+上のコードはいつでも見る事ができます。</language>
+		<language name="JPN_KANJI" width="256">ポケモン大好きクラブ
+にアクセスして上のアクセスコードを
+入力するとゲームシンクの設定が
+おこなえます。
+
+この画面を閉じてもメニューから
+ゲームシンク設定を選ぶと
+上のコードはいつでも見る事ができます。</language>
 	</row>
 
 	<row id="PDWACC_009">
-		<language name="JPN" width="256">ゲームシンクが かんりょう しました</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクが完了しました</language>
-	</row>
-
-	<row id="PDWACC_010">
-		<language name="JPN" width="256">ぽけもんを　おこして
-よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを起こして
-よろしいですか？</language>
+		<language name="JPN" width="256">ゲームシンクIDコード</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクIDコード</language>
 	</row>
 
 	<flowchart-group-list>
