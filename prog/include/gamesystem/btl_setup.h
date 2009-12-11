@@ -11,6 +11,7 @@
 
 #include "battle/battle.h"
 #include "gamesystem/game_data.h"
+#include "savedata/battle_rec.h"
 
 /*
  *  @brief  戦闘パラメータワーク生成
@@ -131,6 +132,11 @@ extern void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
 
+
+//////////////////////////////////////////////
+// 録画データ復元
+//////////////////////////////////////////////
+extern void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR recData, GAMEDATA* gameData, HEAPID heapID );
 
 //-----------------------------------------------------------------------------
 /*

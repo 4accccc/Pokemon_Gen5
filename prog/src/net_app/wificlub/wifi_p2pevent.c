@@ -191,8 +191,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE_START:
     pClub->para.rule = BTL_RULE_SINGLE;
     pClub->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    pClub->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-    pClub->para.commPos = pClub->para.netID;
+    pClub->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
     PMSND_PlayBGM(pClub->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);

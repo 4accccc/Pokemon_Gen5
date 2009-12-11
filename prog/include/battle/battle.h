@@ -194,7 +194,6 @@ typedef struct {
   GFL_NETHANDLE*  netHandle;
   BtlCommMode     commMode;
   u8              commPos;    ///< 通信対戦なら自分の立ち位置（非通信時は無視）
-  u8              netID;      ///< NetID
   u8              multiMode;  ///< ダブルの時、１だとマルチバトル。
   u8              fRecordPlay;///< TRUEだと録画データ再生モード
 

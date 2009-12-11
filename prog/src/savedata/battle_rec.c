@@ -1224,12 +1224,18 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
   restore_ClientStatus( setup, rec, heapID );
   restore_OperationBuffer( setup, rec, heapID );
   restore_SetupSubset( setup, rec, heapID );
-
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * パーティデータ：録画セーブデータ化して格納
+ *
+ * @param   setup
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
 static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
-  // パーティデータを格納
   u32 i;
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
@@ -1238,9 +1244,17 @@ static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * パーティデータ：録画セーブデータ復元
+ *
+ * @param   setup
+ * @param   rec
+ * @param   heapID
+ */
+//----------------------------------------------------------------------------------
 static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
 {
-  // パーティデータを復元
   u32 i;
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
@@ -1250,7 +1264,14 @@ static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec
   }
 }
 
-
+//----------------------------------------------------------------------------------
+/**
+ * クライアントステータス：録画セーブデータ化して格納
+ *
+ * @param   setup
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
 static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   u32 i;
@@ -1269,6 +1290,15 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * クライアントステータス：録画セーブデータから復元
+ *
+ * @param   setup
+ * @param   rec
+ * @param   heapID
+ */
+//----------------------------------------------------------------------------------
 static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
 {
   u32 i;
@@ -1276,10 +1306,12 @@ static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WO
   {
     switch( rec->clientStatus[i].type ){
     case BTLREC_CLIENTSTATUS_PLAYER:
+      GF_ASSERT(setup->playerStatus[i]!=NULL);
       MyStatus_Copy( &rec->clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
       break;
 
     case BTLREC_CLIENTSTATUS_TRAINER:
+      GF_ASSERT(setup->tr_data[i]!=NULL);
       restore_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
       break;
     }
@@ -1287,7 +1319,7 @@ static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WO
 }
 
 /**
- *  バトルセットアップ用トレーナーデータを録画セーブ用に変換して格納
+ *  トレーナーデータ：録画セーブデータ用に変換して格納
  */
 static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer )
 {
@@ -1305,6 +1337,9 @@ static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINE
 
   GFL_STR_GetStringCode( bspTrainer->name, recTrainer->name, NELEMS(recTrainer->name) );
 }
+/**
+ *  トレーナーデータ：録画セーブデータから復元
+ */
 static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer )
 {
   u32 i;
@@ -1320,11 +1355,17 @@ static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAI
   }
 
   GFL_STR_SetStringCode( bspTrainer->name, recTrainer->name );
-
 }
+//----------------------------------------------------------------------------------
 /**
- *  操作バッファ格納
+ * 操作バッファ：録画セーブデータ用に変換して格納
+ *
+ * @param   setup
+ * @param   rec
+ *
+ * @retval  BOOL
  */
+//----------------------------------------------------------------------------------
 static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   if( (setup->recBuffer != NULL)
@@ -1336,15 +1377,33 @@ static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_W
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 操作バッファ：録画セーブデータから復元
+ *
+ * @param   setup
+ * @param   rec
+ * @param   heapID
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
 {
   setup->recDataSize = rec->opBuffer.size;
   GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
   return TRUE;
 }
+//----------------------------------------------------------------------------------
 /**
- *  セットアップパラメータ復元データ格納
+ * セットアップパラメータ復元データを録画セーブデータ変換して格納
+ *
+ * @param   setup
+ * @param   rec
+ *
+ * @retval  BOOL
  */
+//----------------------------------------------------------------------------------
 static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   rec->setupSubset.fieldSituation = setup->fieldSituation;
@@ -1358,9 +1417,17 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
 
   return TRUE;
 }
+//----------------------------------------------------------------------------------
 /**
- *  セットアップパラメータ復元
+ * セットアップパラメータ復元
+ *
+ * @param   setup
+ * @param   rec
+ * @param   heapID
+ *
+ * @retval  BOOL
  */
+//----------------------------------------------------------------------------------
 static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
 {
   setup->fieldSituation = rec->setupSubset.fieldSituation;

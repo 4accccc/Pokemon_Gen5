@@ -203,7 +203,6 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->netHandle = NULL;
   dst->commMode = BTL_COMM_NONE;
   dst->commPos = 0;
-  dst->netID = 0;
   dst->multiMode = 0;
   dst->recBuffer = NULL;
   dst->fRecordPlay = FALSE;
@@ -323,7 +322,6 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
 
   dst->netHandle = netHandle;
   dst->commMode = commMode;
-  dst->netID = GFL_NET_GetNetID( netHandle );
   dst->multiMode = multi;
 
   // 録画データ生成のため、対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
@@ -585,6 +583,30 @@ void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_CommTrainer( dst, gameData, BTL_RULE_ROTATION, FALSE, netHandle, commMode, heapID );
 }
 
+
+//=============================================================================================
+/**
+ * 録画データ再生用の初期化処理
+ *
+ * @param   dst
+ * @param   recData
+ * @param   gameData
+ * @param   heapID
+ */
+//=============================================================================================
+void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR recData, GAMEDATA* gameData, HEAPID heapID )
+{
+  GFL_STD_MemClear( dst, sizeof(BATTLE_SETUP_PARAM) );
+  {
+    u32 i;
+    for(i=0; i<BTL_CLIENT_NUM; ++i)
+    {
+      dst->party[i] = PokeParty_AllocPartyWork( heapID );
+      dst->playerStatus[i] = MyStatus_AllocWork( heapID );
+      dst->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
+    }
+  }
+}
 
 /*
  *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え

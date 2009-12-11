@@ -1349,7 +1349,7 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
       para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
       para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
 */
-      switch( para->netID ){
+      switch( GFL_NET_GetNetID(netHandle) ){
       case 0:
         setup_party( HEAPID_CORE, para->party[BTL_CLIENT_PLAYER], MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
         break;

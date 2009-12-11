@@ -212,8 +212,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-    dbw->para.commPos = dbw->para.netID;
+    dbw->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
 
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
