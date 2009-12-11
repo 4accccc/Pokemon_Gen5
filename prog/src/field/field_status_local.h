@@ -31,6 +31,16 @@ typedef enum{
   MAPMODE_MAX,    ///<最大値　
 }MAPMODE;
 
+//------------------------------------------------------------------
+/**
+ * @briefPROCアクション
+ */
+//------------------------------------------------------------------
+typedef enum{
+  PROC_ACTION_FIELD,    ///<フィールド中
+  PROC_ACTION_BATTLE,   ///<戦闘中
+}PROC_ACTION;
+
 //======================================================================
 //======================================================================
 //------------------------------------------------------------------
@@ -87,6 +97,12 @@ u8 FIELD_STATUS_GetSeasonDispLast( const FIELD_STATUS * fldstatus );
 //------------------------------------------------------------------
 extern void FIELD_STATUS_SetReserveScript( FIELD_STATUS * fldstatus, u16 scr_id );
 extern u16 FIELD_STATUS_GetReserveScript( const FIELD_STATUS * fldstatus );
+
+//------------------------------------------------------------------
+/// PROCアクション
+//------------------------------------------------------------------
+extern PROC_ACTION FIELD_STATUS_SetProcAction( FIELD_STATUS * fldstatus, PROC_ACTION action);
+extern PROC_ACTION FIELD_STATUS_GetProcAction( const FIELD_STATUS * fldstatus );
 
 //------------------------------------------------------------------
 // フィールド技関連

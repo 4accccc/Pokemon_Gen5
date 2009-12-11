@@ -34,6 +34,8 @@ struct _FIELD_STATUS{
   BOOL seasonDispFlag;  // 表示フラグ
   u8   seasonDispLast;  // 最後に表示した季節 PMSEASON_xxxx
 
+  u8 proc_action;       // フィールド中か、戦闘中か、、等 PROC_ACTION_xxxx
+  
   ///予約スクリプトID
   u16 reserved_script_id;
 };
@@ -236,5 +238,34 @@ u16 FIELD_STATUS_GetReserveScript( const FIELD_STATUS * fldstatus )
   return fldstatus->reserved_script_id;
 }
 
+//==================================================================
+/**
+ * PROCアクションをセット
+ *
+ * @param   fldstatus		
+ * @param   action		    PROC_ACTION_xxxx
+ *
+ * @retval  PROC_ACTION		セット前のPROCアクション
+ */
+//==================================================================
+PROC_ACTION FIELD_STATUS_SetProcAction( FIELD_STATUS * fldstatus, PROC_ACTION action)
+{
+  PROC_ACTION old_action = fldstatus->proc_action;
+  fldstatus->proc_action = action;
+  return old_action;
+}
 
+//==================================================================
+/**
+ * PROCアクションを取得
+ *
+ * @param   fldstatus		
+ *
+ * @retval  PROC_ACTION		PROC_ACTION_xxxx
+ */
+//==================================================================
+PROC_ACTION FIELD_STATUS_GetProcAction( const FIELD_STATUS * fldstatus )
+{
+  return fldstatus->proc_action;
+}
 

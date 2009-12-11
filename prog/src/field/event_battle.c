@@ -229,6 +229,12 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 2:
+    //侵入システムに戦闘中であることを伝える
+    {
+      FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
+      FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_BATTLE );
+      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+    }
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
@@ -240,6 +246,12 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 4:
+    //侵入システムにフィールド中であることを伝える
+    {
+      FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
+      FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_FIELD );
+      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+    }
     bew->timeWait = BATTLE_BGM_FADEOUT_WAIT; // 戦闘ＢＧＭフェードアウト
     PMSND_FadeOutBGM( BATTLE_BGM_FADEOUT_WAIT );
     (*seq) ++;
