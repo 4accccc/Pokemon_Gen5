@@ -16,6 +16,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "savedata/dreamworld_data.h"
 #include "net_app/wifi_login.h"
 #include "system/main.h"      //GFL_HEAPID_APP参照
 
@@ -27,6 +28,7 @@ typedef struct {
   GAMEDATA      *gameData;
   PDWACC_PROCWORK pwdaccWork;
   HEAPID heapID;
+  int state;
 } PDWACCMAIN_WORK;
 
 
@@ -56,7 +58,19 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_STD_MemClear(pWork, sizeof(PDWACCMAIN_WORK));
   pWork->heapID = HEAPID_PDWACC;
   pWork->gameData = GAMEDATA_Create( HEAPID_PDWACC );
-  (*seq) = 0;
+
+  {
+    BOOL bIn = DREAMWORLD_SV_GetSignin(DREAMWORLD_SV_GetDreamWorldSaveData(GAMEDATA_GetSaveControlWork(pWork->gameData)));
+
+    if(bIn){
+      pWork->state = _WIFI_ACCOUNT;  //カード表示
+      pWork->pwdaccWork.type = PDWACC_DISPPASS;
+    }
+    else{  //接続にいく
+      pWork->state = _WIFI_LOGIN;
+      pWork->pwdaccWork.type = PDWACC_GETACC;
+    }
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -71,7 +85,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
 {
   PDWACCMAIN_WORK* pWork = mywk;
 
-  switch (*seq) {
+  switch (pWork->state) {
   case _WIFI_LOGIN:
     pWork->login.gsys = NULL;
     pWork->login.gamedata = pWork->gameData;
@@ -79,14 +93,15 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
 
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &pWork->login);
 
-    (*seq)++;
+    pWork->state++;
     break;
 
   case _WIFI_ACCOUNT:
     pWork->pwdaccWork.gameData = pWork->gameData;
     pWork->pwdaccWork.heapID = pWork->heapID;
+    
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
-    (*seq)++;
+    pWork->state++;
     break;
 
   default:

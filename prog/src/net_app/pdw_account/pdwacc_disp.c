@@ -42,6 +42,9 @@
 #include "pdwacc_local.h"
 #include "msg/msg_gtsnego.h"
 //#include "pdwacc.naix"
+#include "gsync.naix"  //@todo 素材を借用
+
+
 #include "box_gra.naix"
 
 #include "pdwacc_poke.cdat"
@@ -223,7 +226,7 @@ PDWACC_DISP_WORK* PDWACC_DISP_Init(HEAPID id)
   //_TOUCHBAR_Init(pWork);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
   
   return pWork;
 }
@@ -235,7 +238,6 @@ void PDWACC_DISP_Main(PDWACC_DISP_WORK* pWork)
     pWork->scroll_index=0;
   }
   GFL_CLACT_SYS_Main();
-  _blendSmoke(pWork);
 }
 
 void PDWACC_DISP_End(PDWACC_DISP_WORK* pWork)
@@ -296,10 +298,10 @@ static void settingSubBgControl(PDWACC_DISP_WORK* pWork)
 		GFL_BG_SetVisible( frame, VISIBLE_ON );
   }
   {
-    int frame = GFL_BG_FRAME3_M;
+    int frame = GFL_BG_FRAME1_M;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
       };
 
@@ -386,30 +388,30 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 static void dispInit(PDWACC_DISP_WORK* pWork)
 {
-#if 0
+#if 1
 	{
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_PDWACC, pWork->heapID );
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pdwacc_pdwacc_bg_NCLR,
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_gsync_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_pdwacc_pdwacc_bg_NCGR,
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gsync_gsync_bg_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
 
     // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_pdwacc_downner_bg_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_downner_bg_NSCR,
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pdwacc_pdwacc_bg_NCLR,
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_gsync_bg_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
-    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_pdwacc_pdwacc_bg_NCGR,
+    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gsync_gsync_bg_NCGR,
                                                                   GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
 
     // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_pdwacc_upper_bg_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_upper_bg_NSCR,
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
@@ -671,77 +673,5 @@ static void dreamSmoke_HBlank( GFL_TCB* p_tcb, void* p_work )
 
 
 
-void PDWACC_DISP_DreamSmokeBgStart(PDWACC_DISP_WORK* pWork)
-{
-#if 0
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_PDWACC, pWork->heapID );
-
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 0, 16);
-  
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
-    p_handle, NARC_pdwacc_downner_bg2_NSCR,
-    GFL_BG_FRAME3_M, 0,
-    GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
-    pWork->heapID);
-
-  GFL_ARC_CloseDataHandle(p_handle);
-
-
-  pWork->p_hblank = GFUser_HIntr_CreateTCB( dreamSmoke_HBlank, pWork, 0 );
-  LASTER_ScrollMakeSinTbl( pWork->scroll, 192, GFL_CALC_GET_ROTA_NUM(8), 1.5*FX32_ONE );
-#endif
-
-}
-
-
-
-void PDWACC_DISP_BlendSmokeStart(PDWACC_DISP_WORK* pWork,BOOL bFadein)
-{
-  if(bFadein){
-    pWork->blendCount = 0;
-    pWork->blendStart = 1;
-  }
-  else{
-    pWork->blendCount =16*FX32_ONE;
-    pWork->blendStart =-1;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	→開放
- *	@param	POKEMON_TRADE_WORK
- *	@return	none
- */
-//-----------------------------------------------------------------------------
-
-static void _blendSmoke(PDWACC_DISP_WORK* pWork)
-{
-  int i=0;
-
-  if(pWork->blendStart==0){
-    return;
-  }
-  pWork->blendCount +=  _SMOKE_FADE_TIME * pWork->blendStart;
-  i = FX_Whole(pWork->blendCount);
-
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-  if(i > 16){
-    G2_BlendNone();
-    pWork->blendStart = 0;
-    return;
-  }
-  else if(i < 0){
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-    G2_BlendNone();
-    pWork->blendStart = 0;
-    return;
-  }
-
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , i, 16);
-
-
-
-}
 
 

@@ -150,12 +150,13 @@ static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc state, int line)
 
 
 
-static void _wakeupActio8(PDWACC_WORK* pWork)
+static void _createAccount8(PDWACC_WORK* pWork)
 {
   if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
+    PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(NULL);
   }
 }
@@ -168,22 +169,20 @@ static void _wakeupActio8(PDWACC_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction7(PDWACC_WORK* pWork)
+static void _createAccount7(PDWACC_WORK* pWork)
 {
+  int i;
+  s32 id = SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
+  u16 crc = GFL_STD_CrcCalc( &id, 4 );
+  u64 code = id + crc * 0x100000000;
+  OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
 
-  PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_005);
-  //  PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_rug_ani3,NANR_pdwacc_obj_rug_ani4);
-
-  //  PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_bed,NANR_pdwacc_obj_bed_ani);
-  PDWACC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
-
-
-  PDWACC_DISP_PokemonIconCreate(pWork->pDispWork, PP_GetPPPPointer(pWork->pp),CLSYS_DRAW_MAIN);
-  PDWACC_DISP_PokemonIconJump(pWork->pDispWork);
-
-  PMSND_PlaySE(SEQ_SE_SYS_25);
-
-  _CHANGE_STATE(_wakeupActio8);
+  PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+  
+  PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork,code);
+  PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
+  
+  _CHANGE_STATE(_createAccount8);
 }
 
 //------------------------------------------------------------------------------
@@ -193,7 +192,7 @@ static void _wakeupAction7(PDWACC_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction6(PDWACC_WORK* pWork)
+static void _createAccount6(PDWACC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
@@ -205,49 +204,45 @@ static void _wakeupAction6(PDWACC_WORK* pWork)
       }
 
 
-      _CHANGE_STATE(_wakeupAction7);
+      _CHANGE_STATE(_createAccount7);
     }
   }
   else{
-    _CHANGE_STATE(_wakeupAction7);
+    _CHANGE_STATE(_createAccount7);
   }
 }
 
-static void _wakeupAction5(PDWACC_WORK* pWork)
+static void _createAccount5(PDWACC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD, pWork->pNHTTPRap)){
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
-        _CHANGE_STATE(_wakeupAction6);
+        _CHANGE_STATE(_createAccount6);
       }
     }
   }
   else{
     if(GFL_UI_KEY_GetTrg()){
-      _CHANGE_STATE(_wakeupAction6);
+      _CHANGE_STATE(_createAccount6);
     }
   }
 }
 
-static void _wakeupActio4_2(PDWACC_WORK* pWork)
+static void _createAccount4_2(PDWACC_WORK* pWork)
 {
   if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  _CHANGE_STATE(_wakeupAction5);
+  _CHANGE_STATE(_createAccount5);
 }
 
 
-static void _wakeupAction4(PDWACC_WORK* pWork)
+static void _createAccount4(PDWACC_WORK* pWork)
 {
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_004);
-//  PDWACC_DISP_ObjEnd(pWork->pDispWork, NANR_pdwacc_obj_zzz_ani);
-  PDWACC_DISP_DreamSmokeBgStart(pWork->pDispWork);
-  PDWACC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
-  // PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_rug_ani3,NANR_pdwacc_obj_rug_ani2);
-  PMSND_PlaySE(SEQ_SE_SYS_24);
+  //PMSND_PlaySE(SEQ_SE_SYS_24);
 
-  _CHANGE_STATE(_wakeupActio4_2);
+  _CHANGE_STATE(_createAccount4_2);
 
 }
 
@@ -259,13 +254,13 @@ static void _wakeupAction4(PDWACC_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction3(PDWACC_WORK* pWork)
+static void _createAccount3(PDWACC_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
-      _CHANGE_STATE(_wakeupAction4);
+      _CHANGE_STATE(_createAccount4);
     }
     else{
       //@todo 切断処理へ
@@ -284,36 +279,34 @@ static void _wakeupAction3(PDWACC_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction2(PDWACC_WORK* pWork)
+static void _createAccount2(PDWACC_WORK* pWork)
 {
   if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
   pWork->pAppTask = PDWACC_MESSAGE_YesNoStart(pWork->pMessageWork,PDWACC_YESNOTYPE_INFO);
 
-  _CHANGE_STATE(_wakeupAction3);
+  _CHANGE_STATE(_createAccount3);
 }
 
 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン起こし処理
+ * @brief   アカウント作る
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction1(PDWACC_WORK* pWork)
+static void _createAccount1(PDWACC_WORK* pWork)
 {
 
-  //PDWACC_DISP_ObjInit(pWork->pDispWork, NANR_pdwacc_obj_rug_ani3);
-  //PDWACC_DISP_ObjInit(pWork->pDispWork, NANR_pdwacc_obj_zzz_ani);
-
+//  PDWACC_MESSAGE_SystemMessageDisp();
+  
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_003);
-  PMSND_PlaySE(SEQ_SE_SYS_26);
+  //PMSND_PlaySE(SEQ_SE_SYS_26);
 
-  _CHANGE_STATE(_wakeupAction2);
-
+  _CHANGE_STATE(_createAccount2);
 }
 
 //------------------------------------------------------------------------------
@@ -331,14 +324,20 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
       {
         EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
 
-
       }
-      _CHANGE_STATE(_wakeupAction1);
+
+
+      //アカウントがあったら表示に
+
+      //アカウントがなければ作成に
+      _CHANGE_STATE(_createAccount1);
+
+
     }
   }
-  else{
-    _CHANGE_STATE(_wakeupAction1);
-  }
+
+  
+  
 
 }
 
@@ -371,261 +370,36 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   データアップロード完了
+ * @brief   アクセスコード表示
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _upeffectLoop8(PDWACC_WORK* pWork)
+static void _dispAccCode2(PDWACC_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(NULL);
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   データアップロード完了
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _upeffectLoop7(PDWACC_WORK* pWork)
-{
-  if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  PMSND_PlaySE(SEQ_SE_SYS_26);
-  _CHANGE_STATE(_upeffectLoop8);
-
 }
 
 //------------------------------------------------------------------------------
 /**
- * @brief   眠る完了
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _upeffectLoop6(PDWACC_WORK* pWork)
-{
-  if(pWork->pTopAddr){
-    GFL_HEAP_FreeMemory(pWork->pTopAddr);
-  }
-
-
-  PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_002);
-  //PDWACC_DISP_ObjInit(pWork->pDispWork, NANR_pdwacc_obj_zzz_ani);
-  PDWACC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
-  //  PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_rug_ani1,NANR_pdwacc_obj_rug_ani3);
-  PMSND_PlaySE(SEQ_SE_SYS_25);
-
-  _CHANGE_STATE(_upeffectLoop7);
-}
-
-static void _upeffectLoop5(PDWACC_WORK* pWork)
-{
-  if(GFL_NET_IsInit()){
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-        int d,j;
-        u32 size;
-
-        OS_TPrintf("%d \n",	pEvent->rom_code);
-        OS_TPrintf("%d \n",	 pEvent->country_code);
-        OS_TPrintf("%d \n",	pEvent->id);
-        OS_TPrintf("%d \n",	pEvent->send_flag);
-        OS_TPrintf("%d \n",	pEvent->dec_code);
-        OS_TPrintf("%d \n",	 pEvent->cat_id);
-        OS_TPrintf("%d \n",	 pEvent->present);
-        OS_TPrintf("%d \n",	pEvent->status);
-
-      }
-      _CHANGE_STATE(_upeffectLoop6);
-    }
-  }
-  else{
-    _CHANGE_STATE(_upeffectLoop6);
-  }
-
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   データアップロード中
+ * @brief   アクセスコード表示
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _upeffectLoop4(PDWACC_WORK* pWork)
-{
-  if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
-      if(0){
-        u32 size;
-        u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
-        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
-      }
-      else{
-/*        ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_PDWACC, pWork->heapID );
-        u32 size;
-        pWork->pTopAddr = GFL_ARCHDL_UTIL_LoadEx(p_handle,NARC_pdwacc_save3_bin,FALSE,pWork->heapID,&size );
-        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->pTopAddr, 0x80000 );
-        GFL_ARC_CloseDataHandle(p_handle);*/
-      }
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
-        _CHANGE_STATE(_upeffectLoop5);
-      }
-    }
-  }
-  else{
-    if(GFL_UI_KEY_GetTrg()){
-      _CHANGE_STATE(_upeffectLoop5);
-    }
-  }
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   眠るエフェクト中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _upeffectLoop3(PDWACC_WORK* pWork)
+static void _dispAccCode(PDWACC_WORK* pWork)
 {
 
-  pWork->countTimer--;
-  if(pWork->countTimer==0){
-    PDWACC_DISP_DreamSmokeBgStart(pWork->pDispWork);
-
-    PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_001);
-
-    PDWACC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
-    //  PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_rug_ani1,NANR_pdwacc_obj_rug_ani2);
-
-    PMSND_PlaySE(SEQ_SE_SYS_24);
-
-    //    pWork->countTimer = _DREAMSMOKE_TIME;
-    _CHANGE_STATE(_upeffectLoop4);
-  }
-}
+  
+  PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
+  
+  _CHANGE_STATE(_dispAccCode2);
 
 
-//------------------------------------------------------------------------------
-/**
- * @brief   眠るエフェクト中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _upeffectLoop2(PDWACC_WORK* pWork)
-{
-  pWork->countTimer--;
-  if(pWork->countTimer==0){
-    //PDWACC_DISP_ObjInit(pWork->pDispWork, NANR_pdwacc_obj_rug_ani1);
-    pWork->countTimer = _DREAMSMOKE_TIME;
-    _CHANGE_STATE(_upeffectLoop3);
-  }
 
 }
 
 
-//------------------------------------------------------------------------------
-/**
- * @brief   眠るエフェクト中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _upeffectLoop1(PDWACC_WORK* pWork)
-{
-  pWork->countTimer--;
-  if(pWork->countTimer==0){
-    // PDWACC_DISP_ObjChange(pWork->pDispWork,NANR_pdwacc_obj_bed,NANR_pdwacc_obj_bed_ani);
 
-    //PDWACC_DISP_ObjInit(pWork->pDispWork,NANR_pdwacc_obj_kemuri_r);
-    //PDWACC_DISP_ObjInit(pWork->pDispWork,NANR_pdwacc_obj_kemuri_l);
-
-    pWork->countTimer = _HAND_UP_TIME;
-    _CHANGE_STATE(_upeffectLoop2);
-  }
-}
-
-
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   眠るエフェクト中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _upeffectLoop(PDWACC_WORK* pWork)
-{
-  pWork->countTimer--;
-  if(pWork->countTimer==0){
-    PDWACC_DISP_HandInit(pWork->pDispWork);
-    PDWACC_DISP_PokemonIconMove(pWork->pDispWork);
-    pWork->countTimer = _BEDIN_TIME;
-    _CHANGE_STATE(_upeffectLoop1);
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   眠るエフェクト開始
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _upeffectStart(PDWACC_WORK* pWork)
-{
-  PDWACC_DISP_PokemonIconCreate(pWork->pDispWork, PP_GetPPPPointer(pWork->pp),CLSYS_DRAW_SUB);
-  pWork->countTimer=10;
-
-  _CHANGE_STATE(_upeffectLoop);
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   ポケモンを眠るエリアに移動
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _BoxPokeMove(PDWACC_WORK* pWork)
-{
-  POKEMON_PASO_PARAM* ppp;
-  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-
-  GF_ASSERT(DREAMWORLD_SV_GetSleepPokemonFlg(pDream)==FALSE);
-
-  if(pWork->pp){
-    GFL_HEAP_FreeMemory(pWork->pp);
-  }
-
-  ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
-  GF_ASSERT(ppp);
-  if(ppp){
-    POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
-    DREAMWORLD_SV_SetSleepPokemon(pDream, pp);
-    pWork->pp = pp;
-    BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
-    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
-  }
-  _CHANGE_STATE(_upeffectStart);
-
-}
 
 FS_EXTERN_OVERLAY(dpw_common);
 
@@ -651,11 +425,17 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
 
-  _CHANGE_STATE(_ghttpInfoWait0);
-
+  switch(pParent->type){
+  case PDWACC_GETACC:
+    _CHANGE_STATE(_ghttpInfoWait0);
+    break;
+  case PDWACC_DISPPASS:
+    _CHANGE_STATE(_createAccount7);
+    break;
+  }
+  
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = PDWACC_MESSAGE_Init(pWork->heapID, NARC_message_pdwacc_dat);
-
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );

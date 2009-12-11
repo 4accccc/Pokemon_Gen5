@@ -79,6 +79,11 @@
 #define FBMP_COL_WHITE    (15)
 
 
+#define _MESSAGE_NO_FRAME  (GFL_BG_FRAME1_M)
+#define _MESSAGE_INFO_FRAME (GFL_BG_FRAME1_S)
+#define _MESSAGE_SYSTEM_FRAME (GFL_BG_FRAME2_S)
+
+
 typedef enum{
   _MESSAGE_LEVEL,
   _MESSAGE_MY,
@@ -98,9 +103,9 @@ typedef struct {
 
 
 struct _PDWACC_MESSAGE_WORK {
-  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
+  u32 bgcharNo;
   u32 bgchar2S;  //SystemMsg
-  u32 bgchar1M; //info
+  u32 bgcharInfoMessage; //info
 
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
@@ -112,11 +117,14 @@ struct _PDWACC_MESSAGE_WORK {
   STRBUF* pStrBuf;
   int msgidx[_MESSAGE_INDEX_MAX];
 
+  GFL_BMPWIN* noDispWin;
+  GFL_BMPWIN* noTitleDispWin;
   GFL_BMPWIN* infoDispWin;
   GFL_BMPWIN* systemDispWin;
   GFL_BMPWIN* mainDispWin[_BMP_WINDOW_NUM];
 
   PRINT_STREAM* pStream;
+  PRINT_STREAM* pStreamNo;
   GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
 
@@ -154,9 +162,9 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                              pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-//  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  pWork->bgchar1M = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgcharNo = BmpWinFrame_GraphicSetAreaMan(_MESSAGE_NO_FRAME, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgcharInfoMessage = BmpWinFrame_GraphicSetAreaMan(_MESSAGE_INFO_FRAME, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(_MESSAGE_SYSTEM_FRAME, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -181,11 +189,11 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
 {
   int i;
 
-//  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-//                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M),
-                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar1M));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
+  GFL_BG_FreeCharacterArea(_MESSAGE_NO_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgcharNo),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgcharNo));
+  GFL_BG_FreeCharacterArea(_MESSAGE_INFO_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgcharInfoMessage),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgcharInfoMessage));
+  GFL_BG_FreeCharacterArea(_MESSAGE_SYSTEM_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
   _ButtonSafeDelete(pWork);
 
@@ -233,7 +241,7 @@ void PDWACC_MESSAGE_InfoMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
 
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME1_S ,
+      _MESSAGE_INFO_FRAME ,
       1 , 3, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
@@ -245,11 +253,11 @@ void PDWACC_MESSAGE_InfoMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
-  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M), _BUTTON_WIN_PAL );
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgcharInfoMessage), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(_MESSAGE_INFO_FRAME);
 }
 
 
@@ -291,9 +299,13 @@ BOOL PDWACC_MESSAGE_InfoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork)
 
 void PDWACC_MESSAGE_InfoMessageEnd(PDWACC_MESSAGE_WORK* pWork)
 {
-  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  if(pWork->infoDispWin){
+    BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+    GFL_BG_LoadScreenV_Req(_MESSAGE_INFO_FRAME);
+    GFL_BMPWIN_Delete(pWork->infoDispWin);
+    pWork->infoDispWin=NULL;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -374,7 +386,7 @@ void PDWACC_MESSAGE_SystemMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
 
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_S , 1 , 3, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+      _MESSAGE_SYSTEM_FRAME , 1 , 3, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->systemDispWin;
 
@@ -386,7 +398,7 @@ void PDWACC_MESSAGE_SystemMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  GFL_BG_LoadScreenV_Req(_MESSAGE_SYSTEM_FRAME);
 }
 
 
@@ -401,7 +413,7 @@ void PDWACC_MESSAGE_SystemMessageEnd(PDWACC_MESSAGE_WORK* pWork)
 {
   BmpWinFrame_Clear(pWork->systemDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->systemDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  GFL_BG_LoadScreenV_Req(_MESSAGE_SYSTEM_FRAME);
 }
 
 
@@ -449,7 +461,7 @@ static int PDWACC_MESSAGE_Disp(PDWACC_MESSAGE_WORK* pWork,int msgid,int x,int y)
   for(i=0;i<_BMP_WINDOW_NUM;i++){
     if(pWork->mainDispWin[i]==NULL){
       pWork->mainDispWin[i] = GFL_BMPWIN_Create(
-        GFL_BG_FRAME2_S , x , y, 20 , 2 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+        _MESSAGE_SYSTEM_FRAME , x , y, 20 , 2 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
 
       pwin = pWork->mainDispWin[i];
 
@@ -484,7 +496,7 @@ static void PDWACC_MESSAGE_DispMsgChange(PDWACC_MESSAGE_WORK* pWork,int msgid,in
 static void PDWACC_MESSAGE_DispTransReq(PDWACC_MESSAGE_WORK* pWork)
 {
 
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  GFL_BG_LoadScreenV_Req(_MESSAGE_SYSTEM_FRAME);
 }
 
 //------------------------------------------------------------------------------
@@ -502,9 +514,97 @@ void PDWACC_MESSAGE_DispClear(PDWACC_MESSAGE_WORK* pWork)
     if(pWork->mainDispWin[i]!=NULL){
       BmpWinFrame_Clear(pWork->mainDispWin[i], WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->mainDispWin[i]);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+      GFL_BG_LoadScreenV_Req(_MESSAGE_SYSTEM_FRAME);
     }
   }
 }
 
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アクセスコード表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
+{
+  GFL_BMPWIN* pwin;
+  int i;
+  STRCODE buff[]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46};
+  STRCODE disp[13*sizeof(STRCODE)];
+
+  GFL_STD_MemFill(disp,0xff,sizeof(disp));
+  for(i=0;i<12;i++){
+    u64 moji = (code >> (i*4)) & 0xf;
+    disp[i]=buff[moji];
+  }
+  GFL_STR_SetStringCode(pWork->pStrBuf,disp);
+  
+  //GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+
+  if(pWork->noDispWin==NULL){
+    pWork->noDispWin = GFL_BMPWIN_Create(
+      _MESSAGE_NO_FRAME ,
+      1 , 8, 30 ,4 ,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->noDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle);
+
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgcharNo), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+
+  
+  if(pWork->noTitleDispWin==NULL){
+    pWork->noTitleDispWin = GFL_BMPWIN_Create(
+      _MESSAGE_NO_FRAME ,
+      3 , 5, 26 , 2,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->noTitleDispWin;
+  GFL_FONTSYS_SetColor(15, 14, 0);
+  GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle);
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+
+
+  GFL_BG_LoadScreenV_Req(_MESSAGE_INFO_FRAME);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの終了待ち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+BOOL PDWACC_MESSAGE_NoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork)
+{
+  return TRUE;// 終わっている
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ消去
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void PDWACC_MESSAGE_NoMessageEnd(PDWACC_MESSAGE_WORK* pWork)
+{
+  if(pWork->noDispWin){
+    GFL_BMPWIN_Delete(pWork->noDispWin);
+    GFL_BMPWIN_Delete(pWork->noTitleDispWin);
+  }
+}
 

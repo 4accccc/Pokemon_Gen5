@@ -218,7 +218,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 struct _IRC_BATTLE_MATCH {
   EVENT_IRCBATTLE_WORK* pBattleWork;
-	StateFunc* state;      ///< ハンドルのプログラム状態
+  StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
@@ -252,6 +252,9 @@ struct _IRC_BATTLE_MATCH {
   BOOL ircmatchflg;
   BOOL ircmatchanim;
   int ircmatchanimCount;
+
+  BOOL irccenterflg;
+
   BOOL ircCenterAnim;
   int ircCenterAnimCount;
 };
@@ -340,7 +343,7 @@ static void _CLACT_SetResource(IRC_BATTLE_MATCH* pWork)
 }
 
 static void _CLACT_SetAnim(IRC_BATTLE_MATCH* pWork,int x,int y,int no,int anm)
-{  
+{
   if(pWork->curIcon[no]==NULL){
     GFL_CLWK_DATA cellInitData;
 
@@ -350,10 +353,10 @@ static void _CLACT_SetAnim(IRC_BATTLE_MATCH* pWork,int x,int y,int no,int anm)
     cellInitData.softpri = no;
     cellInitData.bgpri = 1;
     pWork->curIcon[no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                         pWork->cellRes[CHAR_DS],
-                                                         pWork->cellRes[PLT_DS],
-                                                         pWork->cellRes[ANM_DS],
-                                                         &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+                                              pWork->cellRes[CHAR_DS],
+                                              pWork->cellRes[PLT_DS],
+                                              pWork->cellRes[ANM_DS],
+                                              &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
   }
@@ -364,10 +367,13 @@ static void _CLACT_SetAnim(IRC_BATTLE_MATCH* pWork,int x,int y,int no,int anm)
 static void _CLACT_AddPos(IRC_BATTLE_MATCH* pWork,int x,int y,int no)
 {
   GFL_CLACTPOS apos;
-  GFL_CLACT_WK_GetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
-  apos.x+=x;
-  apos.y+=y;
-  GFL_CLACT_WK_SetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
+
+  if(pWork->curIcon[no]){
+    GFL_CLACT_WK_GetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
+    apos.x+=x;
+    apos.y+=y;
+    GFL_CLACT_WK_SetPos(pWork->curIcon[no],&apos,CLSYS_DEFREND_MAIN);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -381,7 +387,7 @@ static void _CLACT_AddPos(IRC_BATTLE_MATCH* pWork,int x,int y,int no)
 static void _CLACT_Release(IRC_BATTLE_MATCH* pWork)
 {
   int i=0;
-   
+
   for(i = 0 ; i < _CELL_DISP_NUM ;i++){
     if(pWork->curIcon[i]!=NULL){
       GFL_CLACT_WK_Remove(pWork->curIcon[i]);
@@ -431,6 +437,7 @@ static void _connectCallBack(void* pWk, int netID)
 //--------------------------------------------------------------
 /**
  * @brief   赤外線終了ワイヤレス開始コールバック
+            このコールバックは赤外線の一回のマッチング後に必ず呼ばれる。
  * @param   pCtl    デバッグワーク
  * @retval  none
  */
@@ -441,22 +448,20 @@ static void _ircConnectEndCallback(void* pWk)
   IRC_BATTLE_MATCH *pWork = pWk;
   int no;
 
+  OS_TPrintf("_ircConnectEndCallback\n");
 
-  OS_TPrintf("-----------------\n");
-  pWork->ircmatchflg=TRUE;
-  pWork->ircmatchanim=TRUE;
-/*  
-  _buttonWindowDelete(pWork);
-  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-  {
-    int aMsgBuff[]={IRCBTL_STR_30};
-    _msgWindowCreate(aMsgBuff, pWork);
+  if(pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MULTH){
+    pWork->ircmatchflg=TRUE;
+    pWork->ircmatchanim=TRUE;
   }
-  else{
-    int aMsgBuff[]={IRCBTL_STR_31};
-    _msgWindowCreate(aMsgBuff, pWork);
+  else if(pWork->bParent){
+    if(pWork->ircCenterAnimCount!=0){
+      pWork->ircmatchflg=TRUE;
+      pWork->ircmatchanim=TRUE;
+    }
   }
-*/
+
+
 }
 
 //--------------------------------------------------------------
@@ -489,7 +494,24 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
 
   pWork->bParent = bParent;
   //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
-  _CHANGE_STATE(pWork,_ircPreConnect);
+
+  pWork->irccenterflg=TRUE;
+  pWork->ircCenterAnim=TRUE;
+
+
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH){
+    if(!bParent){
+      pWork->ircmatchflg=TRUE;
+      pWork->ircmatchanim=TRUE;
+    }
+  }
+  OS_TPrintf("_wirelessPreConnectCallback\n");
+
+  //  _CHANGE_STATE(pWork,_ircMatchWait);
+
+
+
+  //  _CHANGE_STATE(pWork,_ircPreConnect);
 }
 
 
@@ -540,7 +562,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
       };
 
     GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
-  //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -554,7 +576,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
       };
 
     GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
-//    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    //    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -683,10 +705,10 @@ static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork)
 {
   int i;
 
-	if(pWork->buttonWin[0]){
-		GFL_BMPWIN_Delete(pWork->buttonWin[0]);
-	}
-	pWork->buttonWin[0]=NULL;
+  if(pWork->buttonWin[0]){
+    GFL_BMPWIN_Delete(pWork->buttonWin[0]);
+  }
+  pWork->buttonWin[0]=NULL;
 }
 
 
@@ -729,7 +751,7 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_ir_demo_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
     pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_ir_demo_NCGR,
-                                                                  GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
+                                                                   GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
 
     if(EVENTIRCBTL_ENTRYMODE_MULTH==pWork->selectType){ //1vs1
       GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo1_NSCR,
@@ -743,7 +765,7 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
-    
+
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
@@ -766,16 +788,16 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   {
-		if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-		{
-			int aMsgBuff[]={IRCBTL_STR_17};
-			_msgWindowCreate(aMsgBuff, pWork);
-		}
-		else
-		{
-			int aMsgBuff[]={IRCBTL_STR_09};
-			_msgWindowCreate(aMsgBuff, pWork);
-		}
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+    {
+      int aMsgBuff[]={IRCBTL_STR_17};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else
+    {
+      int aMsgBuff[]={IRCBTL_STR_09};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
   }
 
   GFL_CLACT_SYS_Create(	&GFL_CLSYSINIT_DEF_DIVSCREEN, &_defVBTbl, pWork->heapID );
@@ -786,32 +808,32 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
 
   _CLACT_SetResource(pWork);
 
-//  if(EVENTIRCBTL_ENTRYMODE_MULTH)
+  //  if(EVENTIRCBTL_ENTRYMODE_MULTH)
 
   if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
     int keisu=4;
-  
+
     _CLACT_SetAnim(pWork,88,72,CELL_IRDS2,NANR_ir_ani_CellAnime3);  //左
     _CLACT_SetAnim(pWork,88+keisu,72+keisu,CELL_IRWAVE1,NANR_ir_ani_CellAnime0);
 
 
     _CLACT_SetAnim(pWork,168,      110,CELL_IRDS1,NANR_ir_ani_CellAnime2); //右
     _CLACT_SetAnim(pWork,168-keisu,110-keisu,CELL_IRWAVE2,NANR_ir_ani_CellAnime1);
-  
+
   }
   else{ //2vs2
     int keisu=4;
     int kei2=16;
-  
+
     _CLACT_SetAnim(pWork, kei2+ 88,        -kei2+72,CELL_IRDS2,NANR_ir_ani_CellAnime3);  //左
-    _CLACT_SetAnim(pWork, kei2+ 88+keisu,  -kei2+72+keisu,CELL_IRWAVE1,NANR_ir_ani_CellAnime0);
-   // _CLACT_SetAnim(pWork, -kei2+ 88,        kei2+72,CELL_IRDS4,NANR_ir_ani_CellAnime3);  //左
+    _CLACT_SetAnim(pWork, kei2+ 88+keisu,  -kei2+72+keisu,CELL_IRWAVE2,NANR_ir_ani_CellAnime0);
+    // _CLACT_SetAnim(pWork, -kei2+ 88,        kei2+72,CELL_IRDS4,NANR_ir_ani_CellAnime3);  //左
     _CLACT_SetAnim(pWork, -kei2+ 88+keisu,  kei2+72+keisu,CELL_IRWAVE3,NANR_ir_ani_CellAnime0);
 
- //   _CLACT_SetAnim(pWork, kei2+ 168,       -kei2+   110,CELL_IRDS1,NANR_ir_ani_CellAnime2); //右
-    _CLACT_SetAnim(pWork, kei2+ 168-keisu, -kei2+   110-keisu,CELL_IRWAVE2,NANR_ir_ani_CellAnime1);
-    _CLACT_SetAnim(pWork,-kei2+168,         kei2+   110,CELL_IRDS3,NANR_ir_ani_CellAnime2); //右
-    _CLACT_SetAnim(pWork,-kei2+168-keisu,   kei2+   110-keisu,CELL_IRWAVE4,NANR_ir_ani_CellAnime1);
+    //   _CLACT_SetAnim(pWork, kei2+ 168,       -kei2+   110,CELL_IRDS3,NANR_ir_ani_CellAnime2); //右
+    _CLACT_SetAnim(pWork, kei2+ 168-keisu, -kei2+   110-keisu,CELL_IRWAVE4,NANR_ir_ani_CellAnime1);
+    _CLACT_SetAnim(pWork,-kei2+168,         kei2+   110,CELL_IRDS1,NANR_ir_ani_CellAnime2); //右
+    _CLACT_SetAnim(pWork,-kei2+168-keisu,   kei2+   110-keisu,CELL_IRWAVE1,NANR_ir_ani_CellAnime1);
   }
 
 
@@ -854,18 +876,18 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
     case EVENTIRCBTL_ENTRYMODE_TRI:
-			net_ini_data.gsid = WB_NET_IRCBATTLE;
+      net_ini_data.gsid = WB_NET_IRCBATTLE;
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
-			net_ini_data.gsid = WB_NET_IRCBATTLE;
+      net_ini_data.gsid = WB_NET_IRCBATTLE;
       net_ini_data.maxConnectNum = 4;
       break;
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
-			net_ini_data.gsid = WB_NET_IRCFRIEND;
-			break;
+      net_ini_data.gsid = WB_NET_IRCFRIEND;
+      break;
     case EVENTIRCBTL_ENTRYMODE_TRADE:
-			net_ini_data.gsid = WB_NET_IRCTRADE;
-			break;
+      net_ini_data.gsid = WB_NET_IRCTRADE;
+      break;
     default:
       GF_ASSERT(0);
       break;
@@ -925,18 +947,18 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
   {
     if(ret == 0)
     { // はいを選択した場合
-			EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
-			_buttonWindowDelete(pWork);
-			GFL_NET_Exit(NULL);
-			_CHANGE_STATE(pWork,NULL);
+      EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
+      _buttonWindowDelete(pWork);
+      GFL_NET_Exit(NULL);
+      _CHANGE_STATE(pWork,NULL);
     }
     else
     {  // いいえを選択した場合
-			int aMsgBuff[]={IRCBTL_STR_09};
-			_buttonWindowDelete(pWork);
-			_msgWindowCreate(aMsgBuff, pWork);
-			_CHANGE_STATE(pWork,_ircMatchWait);
-		}
+      int aMsgBuff[]={IRCBTL_STR_09};
+      _buttonWindowDelete(pWork);
+      _msgWindowCreate(aMsgBuff, pWork);
+      _CHANGE_STATE(pWork,_ircMatchWait);
+    }
   }
 }
 
@@ -951,13 +973,13 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
 
 static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
 {
-	if(GFL_UI_KEY_GetTrg() != 0){
-		
-		
-		EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
-		GFL_NET_Exit(NULL);
-		_CHANGE_STATE(pWork,NULL);
-	}
+  if(GFL_UI_KEY_GetTrg() != 0){
+
+
+    EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(pWork,NULL);
+  }
 }
 
 
@@ -971,9 +993,9 @@ static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
 #define	FLD_YESNO_WIN_PY	( 13 )
 
 static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
-	GFL_BG_FRAME2_S, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY+6,
-	12, 512
-	};
+  GFL_BG_FRAME2_S, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY+6,
+  12, 512
+  };
 
 
 
@@ -984,77 +1006,100 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
 
   if(pWork->ircCenterAnim){  //4台の時2台を真ん中に
+
+    _buttonWindowDelete(pWork);
+    if(pWork->irccenterflg == TRUE){
+
+      if(pWork->bParent){  //リーダー
+        int aMsgBuff[]={IRCBTL_STR_12};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
+      else{
+        int aMsgBuff[]={IRCBTL_STR_13};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
+
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE3]);
+      pWork->curIcon[CELL_IRWAVE3]=NULL;
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE4]);
+      pWork->curIcon[CELL_IRWAVE4]=NULL;
+      pWork->irccenterflg =FALSE;
+    }
+
+
     pWork->ircCenterAnimCount++;
 
     _CLACT_AddPos(pWork, -2,+2,CELL_IRDS2);
-    _CLACT_AddPos(pWork, 2,-2,CELL_IRDS3);
+    _CLACT_AddPos(pWork, 2,-2,CELL_IRDS1);
+    _CLACT_AddPos(pWork, -2,+2,CELL_IRWAVE2);
+    _CLACT_AddPos(pWork, 2,-2,CELL_IRWAVE1);
 
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 16-(pWork->ircCenterAnimCount*2), 16);
-    
+
     if(pWork->ircCenterAnimCount>8){
       pWork->ircCenterAnim=FALSE;
       GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
     }
 
-  }
-  else if(pWork->ircmatchanim==TRUE){  //2台の時お互いを引く
-    pWork->ircmatchanimCount++;
-    if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
-      _CLACT_AddPos(pWork, 2, 1,CELL_IRDS1);
-      _CLACT_AddPos(pWork,-2,-1,CELL_IRDS2);
-    }
-    if(pWork->ircmatchanimCount > 25){;
-      pWork->ircmatchanim=FALSE;
-    }
+
 
   }
-  if(pWork->ircmatchflg==TRUE){
-    _buttonWindowDelete(pWork);
-    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-    {
-      int aMsgBuff[]={IRCBTL_STR_30};
-      _msgWindowCreate(aMsgBuff, pWork);
-    }
-    else{
-      int aMsgBuff[]={IRCBTL_STR_31};
-      _msgWindowCreate(aMsgBuff, pWork);
-    }
-    if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
+  else if(pWork->ircmatchanim==TRUE){  //2台の時お互いを引く
+    if(pWork->ircmatchflg==TRUE){
+      _buttonWindowDelete(pWork);
+      if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+      {
+        int aMsgBuff[]={IRCBTL_STR_30};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
+      else{
+        int aMsgBuff[]={IRCBTL_STR_31};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
       GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE1]);
       pWork->curIcon[CELL_IRWAVE1]=NULL;
       GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE2]);
       pWork->curIcon[CELL_IRWAVE2]=NULL;
+      pWork->ircmatchflg=FALSE;
     }
-    pWork->ircmatchflg=FALSE;
+    pWork->ircmatchanimCount++;
+    //if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
+    _CLACT_AddPos(pWork, 2, 1,CELL_IRDS1);
+    _CLACT_AddPos(pWork,-2,-1,CELL_IRDS2);
+    //    }
+    if(pWork->ircmatchanimCount > 25){;
+      pWork->ircmatchanim=FALSE;
+    }
   }
-  
-	if(GFL_NET_IsInit()){
-		if(GFL_NET_NEG_TYPE_TYPE_ERROR==GFL_NET_HANDLE_GetNegotiationType(GFL_NET_HANDLE_GetCurrentHandle())){  ///< モードが異なる接続エラー
-			int aMsgBuff[]={IRCBTL_STR_25};
-			_buttonWindowDelete(pWork);
-			_msgWindowCreate(aMsgBuff, pWork);
-			_CHANGE_STATE(pWork,_ircEndKeyWait);
-			return;
-		}
-	}
-	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
-		int aMsgBuff[]={IRCBTL_STR_16};
-		_buttonWindowDelete(pWork);
 
-		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-																	0x20*12, 0x20, pWork->heapID);
 
-		_msgWindowCreate(aMsgBuff, pWork);
+  if(GFL_NET_IsInit()){
+    if(GFL_NET_NEG_TYPE_TYPE_ERROR==GFL_NET_HANDLE_GetNegotiationType(GFL_NET_HANDLE_GetCurrentHandle())){  ///< モードが異なる接続エラー
+      int aMsgBuff[]={IRCBTL_STR_25};
+      _buttonWindowDelete(pWork);
+      _msgWindowCreate(aMsgBuff, pWork);
+      _CHANGE_STATE(pWork,_ircEndKeyWait);
+      return;
+    }
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+    int aMsgBuff[]={IRCBTL_STR_16};
+    _buttonWindowDelete(pWork);
+
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                  0x20*12, 0x20, pWork->heapID);
+
+    _msgWindowCreate(aMsgBuff, pWork);
     BmpWinFrame_GraphicSet(
       GFL_BG_FRAME2_S, 512-24, 11, 0, pWork->heapID );
 
-		GFL_FONTSYS_SetColor( 1, 2, 15 );
+    GFL_FONTSYS_SetColor( 1, 2, 15 );
 
-		pWork->pYesNoWork =
-			BmpMenu_YesNoSelectInit(&_yesNoBmpDatSys2, 512-24, 11, 0, pWork->heapID );
-		GFL_FONTSYS_SetDefaultColor();
-		_CHANGE_STATE(pWork,_ircExitWait);
-	}
+    pWork->pYesNoWork =
+      BmpMenu_YesNoSelectInit(&_yesNoBmpDatSys2, 512-24, 11, 0, pWork->heapID );
+    GFL_FONTSYS_SetDefaultColor();
+    _CHANGE_STATE(pWork,_ircExitWait);
+  }
 
 
 }
@@ -1067,19 +1112,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircPreConnect(IRC_BATTLE_MATCH* pWork)
 {
-  _buttonWindowDelete(pWork);
-
-  if(pWork->bParent){  //リーダー
-    int aMsgBuff[]={IRCBTL_STR_12};
-    _msgWindowCreate(aMsgBuff, pWork);
-  }
-  else{
-    int aMsgBuff[]={IRCBTL_STR_13};
-    _msgWindowCreate(aMsgBuff, pWork);
-  }
-
-  pWork->ircCenterAnim=TRUE;
-  _CHANGE_STATE(pWork,_ircMatchWait);
 }
 
 //------------------------------------------------------------------------------
@@ -1097,7 +1129,7 @@ static void _ircStartTiming(IRC_BATTLE_MATCH* pWork)
   //    }
   // ワイプ終了待ち
 
-  
+
 #if 1
   _CHANGE_STATE(pWork,NULL);
 
@@ -1178,7 +1210,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
   {
     IRC_BATTLE_MATCH *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MATCH ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MATCH));
-		pWork->pBattleWork = pwk;
+    pWork->pBattleWork = pwk;
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
     _CHANGE_STATE( pWork, _modeInit);

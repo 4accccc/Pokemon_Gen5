@@ -19,10 +19,17 @@
 
 typedef struct _PDWACC_WORK PDWACC_WORK;
 
+typedef enum{
+  PDWACC_GETACC,
+  PDWACC_DISPPASS,
+  
+} PDWACC_TYPE_ENUM;
+
 
 typedef struct {
   GAMEDATA  *gameData;
   HEAPID heapID;
+  int type;
 } PDWACC_PROCWORK;
 
 

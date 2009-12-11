@@ -44,6 +44,13 @@ extern void PDWACC_MESSAGE_DispLevelChange(PDWACC_MESSAGE_WORK* pWork,int no);
 extern void PDWACC_MESSAGE_DispMyChange(PDWACC_MESSAGE_WORK* pWork,int no);
 extern void PDWACC_MESSAGE_DispFriendChange(PDWACC_MESSAGE_WORK* pWork,int no);
 
+extern void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code);
+extern BOOL PDWACC_MESSAGE_NoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork);
+extern void PDWACC_MESSAGE_NoMessageEnd(PDWACC_MESSAGE_WORK* pWork);
+
+
+
+
 extern APP_TASKMENU_WORK* PDWACC_MESSAGE_SearchButtonStart(PDWACC_MESSAGE_WORK* pWork);
 
 
