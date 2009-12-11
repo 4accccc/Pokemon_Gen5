@@ -32,6 +32,7 @@
 #include "btlv_core.h"
 
 //バトルバッグとバトルポケモンリストをオーバーレイ化
+FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
 
@@ -617,6 +618,8 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+  wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
+  wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
 
   {
@@ -641,6 +644,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   switch( wk->selectItemSeq ){
   case 0:
     BTLV_SCD_FadeOut( wk->scrnD );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
   case 1:
@@ -685,6 +689,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     }
     break;
   default:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq = 0;
     return TRUE;
   }
@@ -740,6 +745,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
   switch( wk->selectItemSeq ){
   case 1:
     BTLV_SCD_FadeOut( wk->scrnD );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
 
@@ -786,6 +792,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   case 6:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
       wk->selectItemSeq = 0;
       return TRUE;
     }
@@ -1707,6 +1714,8 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.chg_waza = waza;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+  wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
+  wk->plistData.pfd = BTLV_EFFECT_GetPfd();
 
   wk->selectItemSeq = 0;
 }
