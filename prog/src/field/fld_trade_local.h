@@ -15,6 +15,7 @@ typedef struct
 {
 	u32 monsno;			    // モンスターナンバー
   u32 formno;         // フォームナンバー
+  u32 level;          // レベル
 	u32 hp_rnd;			    // HP乱数
 	u32 at_rnd;			    // 攻撃乱数
 	u32 df_rnd;			    // 防御乱数

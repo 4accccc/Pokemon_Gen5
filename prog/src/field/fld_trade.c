@@ -101,7 +101,7 @@ struct _FLD_TRADE_WORK
 static STRBUF* GetTradeMsgData( u32 heapID, u32 idx );
 
 static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 level, u32 trade_no, u32 zone_id, int heapID );
+	                           u32 trade_no, u32 zone_id, int heapID );
 
 static void PP_Dump( const POKEMON_PARAM* pp );
 static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp );
@@ -478,14 +478,13 @@ static STRBUF* GetTradeMsgData( u32 heapID, u32 str_id )
  *
  *	@param	pp		    ポケモンパラム
  *	@param	data		  データ
- *	@param	level			レベル
  *	@param	trade_no	tradeナンバー
  *	@param	zoneID		トレーナーメモに記載するゾーンID
  *	@param	heapID		heapID
  */
 //-----------------------------------------------------------------------------
 static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 level, u32 trade_no, u32 zone_id, int heapID )
+	                           u32 trade_no, u32 zone_id, int heapID )
 {
 	STRBUF* strbuf;
 	u32 placeid; 
@@ -497,7 +496,7 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
 	// モンスターナンバー　レベル　固体乱数　ID設定
 	PP_SetupEx( pp, 
               data->monsno, 
-              level, 
+              data->level, 
               data->mons_id, 
               PTL_SETUP_POW_AUTO, 
               personal_rnd );
@@ -628,6 +627,7 @@ static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
   OBATA_Printf( "--------------------------------------------- FTP\n" );
   OBATA_Printf( "monsno = %d\n", ftp->monsno );
   OBATA_Printf( "formno = %d\n", ftp->formno );
+  OBATA_Printf( "level = %d\n", ftp->level );
   OBATA_Printf( "hp_rnd = %d\n", ftp->hp_rnd );
   OBATA_Printf( "at_rnd = %d\n", ftp->at_rnd );
   OBATA_Printf( "df_rnd = %d\n", ftp->df_rnd );
@@ -683,13 +683,10 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
       u16             zone_id = FIELDMAP_GetZoneID( fieldmap );
-      POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-      POKEMON_PARAM*       pp = PokeParty_GetMemberPointer( party, work->partyPos );
-      u32               level = PP_Get( pp, ID_PARA_level, NULL );
        
       work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_WORLD, work->tradeNo );
       SetPokemonParam( work->tradeWork->p_pp, work->tradeWork->p_pokedata, 
-                      level, work->tradeNo, zone_id, HEAPID_WORLD );
+                       work->tradeNo, zone_id, HEAPID_WORLD );
     }
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );
