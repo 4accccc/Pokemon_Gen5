@@ -13,6 +13,7 @@
 #include "weather.h"
 
 #include "field_skill.h"
+#include "fld3d_ci.h"
 #include "eventwork.h"
 
 #include "script.h"
@@ -27,6 +28,7 @@
 #define AMAIKAORI_PAL_IDX   ( 1 ) 
 
 typedef enum{
+ SEQ_CUTIN,
  SEQ_WEATHER_CHECK,
  SEQ_ENCOUNT_CHECK,
  SEQ_ENCOUNT_FAILED,
@@ -79,13 +81,21 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
 	AMAIKAORI_WORK * wk = work;
 	
   switch (*seq) {
+  case SEQ_CUTIN:
+    if(wk->poke_pos < 6){
+      GMEVENT *cutin_ev;
+      cutin_ev = FLD3D_CI_CreatePokeCutInEvtTemoti( wk->gsys, FIELDMAP_GetFld3dCiPtr(wk->fieldWork), wk->poke_pos );
+      GMEVENT_CallEvent( event, cutin_ev );
+    }
+    *seq = SEQ_WEATHER_CHECK;
+    break;
 	case SEQ_WEATHER_CHECK:
     if( amaikaori_WeatherCheck( wk ) == FALSE){
       *seq = SEQ_WEATHER_ERR;
       break;
     }
     //エフェクト起動
-//    EVENT_FieldAmaikaoriEffectCall( event, wk->gsys );
+    EVENT_FieldAmaikaoriEffectCall( event, wk->gsys );
     *seq = SEQ_ENCOUNT_CHECK;
     break;
   case SEQ_ENCOUNT_CHECK:
@@ -199,12 +209,11 @@ static void amaikaori_BGResInit( AMAIKAORI_EFFECT* wk )
 	};
   GFL_BG_SetVisible( wk->bg_frm, VISIBLE_OFF ); //いったん表示Off
 
-	GFL_BG_SetBGControl( wk->bg_frm, &bgcntText, GFL_BG_MODE_TEXT );
+//	GFL_BG_SetBGControl( wk->bg_frm, &bgcntText, GFL_BG_MODE_TEXT );
 		
   GFL_BG_LoadPalette( wk->bg_frm, pal, sizeof(16)*2, AMAIKAORI_PAL_IDX*0x20);
-	GFL_BG_FillCharacter( wk->bg_frm, 0x00, 1, 0 );
-	GFL_BG_FillCharacter( wk->bg_frm, 0x01, 1, 1 );
-	GFL_BG_FillScreen( wk->bg_frm,0x0001, 0, 0, 32, 32, AMAIKAORI_PAL_IDX );
+	GFL_BG_FillCharacter( wk->bg_frm, 0x01, 1, 0x100 );
+	GFL_BG_FillScreen( wk->bg_frm,0x0100, 0, 0, 32, 32, AMAIKAORI_PAL_IDX );
 	GFL_BG_LoadScreenReq( wk->bg_frm );
 	
   //ＢＧコントロール設定
@@ -222,8 +231,8 @@ static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk)
   GFL_BG_LoadPalette( wk->bg_frm, pal, sizeof(16)*2, AMAIKAORI_PAL_IDX*0x20);
 	GFL_BG_FillScreen( wk->bg_frm,0x0000, 0, 0, 32, 32, AMAIKAORI_PAL_IDX );
 	GFL_BG_LoadScreenReq( wk->bg_frm );
-  GFL_BG_FillCharacterRelease( wk->bg_frm, 2, 0 );
+  GFL_BG_FillCharacterRelease( wk->bg_frm, 1, 0x100 );
 
-  GFL_BG_FreeBGControl( wk->bg_frm );
+//  GFL_BG_FreeBGControl( wk->bg_frm );
 }
 

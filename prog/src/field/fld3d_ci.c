@@ -387,6 +387,37 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
 
 //--------------------------------------------------------------------------------------------
 /**
+ * ポケモンカットインイベント作成(手持ちPOKEPARTYから)
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @param   pos         カットインのターゲットにする手持ちポケモンindex
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GMEVENT *FLD3D_CI_CreatePokeCutInEvtTemoti( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, u8 pos )
+{
+  GMEVENT * event;
+  GAMEDATA *gdata =  GAMESYSTEM_GetGameData( gsys );
+
+  {
+    POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+
+    int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    int formno = PP_Get( pp, ID_PARA_form_no, NULL );
+    int sex = PP_Get( pp, ID_PARA_sex, NULL );
+    int rare = PP_CheckRare( pp );
+    int egg = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+
+    event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, monsno,formno,sex,rare,egg);
+  }
+  return event;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * カットインイベント
  *
  * @param   event       イベントポインタ
