@@ -520,6 +520,7 @@ const GFL_PROC_DATA   DebugFightProcData = {
   DebugFightProcQuit,
 };
 
+FS_EXTERN_OVERLAY(battle_recorder);
 
 //--------------------------------------------------------------------------
 /**
@@ -536,6 +537,8 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     u32 pp_size = POKETOOL_GetWorkSize();
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_recorder));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x11000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
@@ -579,6 +582,8 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_SYS );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_recorder));
 
   return GFL_PROC_RES_FINISH;
 }

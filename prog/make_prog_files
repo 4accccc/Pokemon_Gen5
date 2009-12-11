@@ -119,6 +119,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/mcss_tool.c \
         poke_tool/poke_tool.c \
 	poke_tool/pp_to_rpp.c \
+	poke_tool/rpp_to_pp.c \
         poke_tool/poke_regulation.c \
         poke_tool/pokeparty.c \
         poke_tool/poke_personal.c \
@@ -639,17 +640,6 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 
-# 戦闘デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_DEV_WIRELESS
-SRCS_OVERLAY_DEBUG_FIGHT   = test/taya/debug_fight.c
-
-
-#デバッグポケモン作成
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEBUG_FIGHT
-SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 
 
 # 曽我部デバッグ
@@ -1226,8 +1216,21 @@ SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
                                 net_app/battle_recorder/br_codein.c \
                                 net_app/battle_recorder/br_codein_disp.c \
                                 net_app/battle_recorder/br_codein_pv.c \
-                                net_app/battle_recorder/br_fade.c \
-																poke_tool/rpp_to_pp.c
+                                net_app/battle_recorder/br_fade.c
+
+
+# 戦闘デバッグ
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+SRCS_OVERLAY_DEBUG_FIGHT   = test/taya/debug_fight.c
+
+
+#デバッグポケモン作成
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEBUG_FIGHT
+SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
+
 
 # デバッグデータ作成
 #===> SRCS_OVERLAY_FIELDMAP
