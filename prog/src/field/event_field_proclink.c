@@ -1121,6 +1121,14 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
     wk->param->select_param = EVENT_ITEMUSE_CALL_PALACEJUMP;
     return RETURNFUNC_RESULT_USE_ITEM;
 
+  case BAG_NEXTPROC_AMAIMITU:
+    wk->param->select_param = EVENT_ITEMUSE_CALL_AMAIMITU;
+    return RETURNFUNC_RESULT_USE_ITEM;
+
+  case BAG_NEXTPROC_TURIZAO:
+    wk->param->select_param = EVENT_ITEMUSE_CALL_TURIZAO;
+    return RETURNFUNC_RESULT_USE_ITEM;
+
   case BAG_NEXTPROC_ANANUKENOHIMO:
     wk->param->select_param = EVENT_ITEMUSE_CALL_ANANUKENOHIMO;
     return RETURNFUNC_RESULT_USE_ITEM;

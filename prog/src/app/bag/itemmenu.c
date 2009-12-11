@@ -879,6 +879,14 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  //あなぬけのヒモ
       _CHANGE_STATE(pWork,NULL);
     }
+    else if(pWork->ret_item == ITEM_AMAIMITU){
+      pWork->ret_code = BAG_NEXTPROC_AMAIMITU;  //あまいミツ
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if(pWork->ret_item == ITEM_BORONOTURIZAO){
+      pWork->ret_code = BAG_NEXTPROC_TURIZAO;  //つりざお
+      _CHANGE_STATE(pWork,NULL);
+    }
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
       _CHANGE_STATE(pWork,NULL);
