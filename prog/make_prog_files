@@ -747,11 +747,14 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
-			battle/app/b_app_tool.c \
 			poke_tool/pp_to_rpp.c
 
-# バトル用バッグ
+# バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_B_APP = battle/app/b_app_tool.c
+
+# バトル用バッグ
+#===> SRCS_OVERLAY_BATTLE_B_APP
 SRCS_OVERLAY_BATTLE_BAG = battle/app/b_bag_bmp.c \
 			battle/app/b_bag_item.c \
 			battle/app/b_bag_anm.c \
@@ -760,7 +763,7 @@ SRCS_OVERLAY_BATTLE_BAG = battle/app/b_bag_bmp.c \
 			battle/app/b_bag_ui.c
 
 # バトル用ポケモンリスト
-#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_B_APP
 SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 			battle/app/b_plist_bmp.c \
 			battle/app/b_plist_obj.c \
@@ -1238,6 +1241,13 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c
+
+#進化デモ
+#===> SRCS_OVERLAY_WIFINOTE
+#===> SRCS_OVERLAY_TITLE
+#===> SRCS_OVERLAY_BATTLE_RETURN
+#===> SRCS_OVERLAY_BOX
+SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN
