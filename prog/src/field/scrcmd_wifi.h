@@ -62,7 +62,7 @@ extern VMCMD_RESULT EvCmdWifiClubEventCall( VMHANDLE* core, void* wk );
 
 //--------------------------------------------------------------------
 /**
- * @brief   GTSネゴシエーションイベントを呼び出す
+ * @brief   GTSイベントを呼び出す
  *
  * @param	core 仮想マシン制御構造体へのポインタ
  * @param wk   SCRCMD_WORKへのポインタ
@@ -71,6 +71,18 @@ extern VMCMD_RESULT EvCmdWifiClubEventCall( VMHANDLE* core, void* wk );
  */
 //--------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdWifiGTSEventCall( VMHANDLE* core, void* wk );
+
+//--------------------------------------------------------------------
+/**
+ * @brief   GTSネゴシエーションイベントを呼び出す
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdWifiGTSNegoEventCall( VMHANDLE* core, void* wk );
 
 //--------------------------------------------------------------------
 /**

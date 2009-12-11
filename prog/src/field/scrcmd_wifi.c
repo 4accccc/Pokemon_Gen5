@@ -132,6 +132,27 @@ VMCMD_RESULT EvCmdWifiGTSEventCall( VMHANDLE* core, void* wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
+//  SCRIPT_CallEvent( sc, EVENT_GTSNego( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
+  
+	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief   GTSネゴシエーションイベントを呼び出す
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdWifiGTSNegoEventCall( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
   SCRIPT_CallEvent( sc, EVENT_GTSNego( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す

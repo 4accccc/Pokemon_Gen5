@@ -11,6 +11,7 @@
   .include  "msg_wifi_counter_scr.h"
   .include  "wifi_counter_scr_local.h"
   .include  "btl_util_scr_local.h"
+  .include  "pokecen_scr_def.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
 
@@ -458,6 +459,10 @@ sub_wifi_global_terminal:
       _CALL sub_gterminal_gts  //GTS
       $i_seq = $reg_return
  
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO THEN
+      _CALL sub_gterminal_gts_nego  //GTSネゴシエーション
+      $i_seq = $reg_return
+ 
     CASE SEQ_SUB_GTERMINAL_BTL_VIDEO THEN
       _CALL sub_gterminal_btl_video  //バトルビデオ
       $i_seq = $reg_return
@@ -491,10 +496,11 @@ sub_gterminal_menu:
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_gterminal_win01, SEQ_SUB_GTERMINAL_GTS)	        //GTS
-	_BMPMENU_MAKE_LIST( msg_gterminal_win02, SEQ_SUB_GTERMINAL_BTL_VIDEO )	//バトルビデオ
-	_BMPMENU_MAKE_LIST( msg_gterminal_win03, SEQ_SUB_GTERMINAL_MUSICAL )    //ミュージカルショット
-	_BMPMENU_MAKE_LIST( msg_gterminal_win04, SEQ_SUB_GTERMINAL_EXP )	      //説明を聞く
-	_BMPMENU_MAKE_LIST( msg_gterminal_win05, SEQ_SUB_GTERMINAL_RETURN )     //もどる
+	_BMPMENU_MAKE_LIST( msg_gterminal_win02, SEQ_SUB_GTERMINAL_GTS_NEGO)	  //GTSネゴシエーション
+	_BMPMENU_MAKE_LIST( msg_gterminal_win03, SEQ_SUB_GTERMINAL_BTL_VIDEO )	//バトルビデオ
+	_BMPMENU_MAKE_LIST( msg_gterminal_win04, SEQ_SUB_GTERMINAL_MUSICAL )    //ミュージカルショット
+	_BMPMENU_MAKE_LIST( msg_gterminal_win05, SEQ_SUB_GTERMINAL_EXP )	      //説明を聞く
+	_BMPMENU_MAKE_LIST( msg_gterminal_win06, SEQ_SUB_GTERMINAL_RETURN )     //もどる
 		
 	//メニュー表示
 	_BMPMENU_START()
@@ -633,17 +639,153 @@ sub_gterminal_gts_exchange:
 
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE() 
+//  _WIFI_GTS_EVENT_CALL()
+  _FIELD_OPEN() 
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  _CALL sub_anm_wifi_counter_out
+
+  $reg_return = SEQ_SUB_GTERMINAL_GTS_EXIT
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS-NEGO
+//--------------------------------------------------------------
+sub_gterminal_gts_nego:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+
+  _SYSWIN_MSG_DOWN( msg_gterminal_gtsnego_01 )
+
+  $i_seq = SEQ_SUB_GTERMINAL_GTS_NEGO_MENU
+  $i_loop = TRUE
+
+  WHILE $i_loop == TRUE
+    SWITCH  $i_seq
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO_MENU THEN
+      _CALL sub_gterminal_gts_nego_menu  //メニュー表示
+      $i_seq = $reg_return
+    
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO_EXP THEN
+      _CALL sub_gterminal_gts_nego_exp  //説明を聞く
+      $i_seq = $reg_return
+ 
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO_EXCHANGE THEN
+      _CALL sub_gterminal_gts_nego_exchange  //交換
+      $i_seq = $reg_return
+
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO_RETURN THEN
+      //Wi-Fiカウンターをご利用ですか？
+      _SYSWIN_MSG_DOWN( msg_wifi_counter_01 )
+      $reg_return = SEQ_SUB_GTERMINAL_MENU
+      $i_loop = FALSE
+    
+    CASE SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT THEN
+      $reg_return = SEQ_SUB_GTERMINAL_EXIT
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS-NEGO：メニュー表示
+//--------------------------------------------------------------
+sub_gterminal_gts_nego_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+  //分岐・交換/説明を聞く/やめる
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+	_BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_win01, SEQ_SUB_GTERMINAL_GTS_NEGO_EXCHANGE )    //交換
+	_BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_win02, SEQ_SUB_GTERMINAL_GTS_NEGO_EXP )	      //説明を聞く
+	_BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_win03, SEQ_SUB_GTERMINAL_GTS_NEGO_RETURN )     //もどる
+		
+	//メニュー表示
+	_BMPMENU_START()
+
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_NEGO_RETURN
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS-NEGO：説明を聞く
+//--------------------------------------------------------------
+sub_gterminal_gts_nego_exp:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  _SYSWIN_MSG_DOWN( msg_gterminal_gtsnego_exp )
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    //分岐・預ける/探す/わかった
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_exp_win01, 0 )   //預ける
+	  _BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_exp_win02, 1 )   //探す
+	  _BMPMENU_MAKE_LIST( msg_gterminal_gtsnego_exp_win03, 2 )   //わかった
+		
+	  //メニュー表示
+  	_BMPMENU_START()
+
+    IF $i_ret == 0 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_gtsnego_exp01 )
+    ELSIF $i_ret == 1 THEN
+      _SYSWIN_MSG_DOWN( msg_gterminal_gtsnego_exp02 )
+    ELSE
+      $i_loop = FALSE
+    ENDIF
+  ENDWHILE
+
+  //ネゴシエーションに入りますか？
+  _SYSWIN_MSG_DOWN( msg_gterminal_gtsnego_01 )
+  $reg_return = SEQ_SUB_GTERMINAL_MENU
+}
+_RET
+
+//--------------------------------------------------------------
+//グローバルターミナル：GTS-NEGO：交換
+//--------------------------------------------------------------
+sub_gterminal_gts_nego_exchange:
+{
+  DEFINE_LOCAL  i_ret
   
-  _WIFI_GTS_EVENT_CALL()
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT
+    _RET
+  ENDIF
+ 
+  //入り口移動アニメ
+  _CALL sub_anm_wifi_counter_in
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  
+  _WIFI_GTS_NEGO_EVENT_CALL()
   
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
-  //ポケモングローバル交換しますか？
-  _SYSWIN_MSG_DOWN( msg_gterminal_gts_01 )
-  $reg_return = SEQ_SUB_GTERMINAL_GTS_RETURN
+  $reg_return = SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT
 }
 _RET
 
@@ -814,9 +956,11 @@ sub_anm_wifi_counter_in:
 {
   _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
   _SYSWIN_CLOSE()
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
-  _OBJ_ANIME_WAIT()
+  _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
+
+//  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
+//  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
+//  _OBJ_ANIME_WAIT()
 }
 _RET
 
@@ -825,8 +969,9 @@ _RET
 //==============================================================
 sub_anm_wifi_counter_out:
 {
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
+  _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_OUT
+//  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
+//  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
 }
 _RET
 
@@ -840,11 +985,11 @@ _ANIME_LABEL	anm_wifi_counter_p01
 	//_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	ACMD_END,0
 

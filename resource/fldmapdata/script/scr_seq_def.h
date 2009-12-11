@@ -5263,7 +5263,7 @@
 
 //--------------------------------------------------------------------
 /**
- * @brief   Wi-Fi GTSネゴシエーションイベントを呼び出す
+ * @brief   Wi-Fi GTSイベントを呼び出す
  */
 //--------------------------------------------------------------------
 #define _WIFI_GTS_EVENT_CALL( ) _ASM_WIFI_GTS_EVENT_CALL
@@ -5271,6 +5271,18 @@
   .macro  _ASM_WIFI_GTS_EVENT_CALL
   .short  EV_SEQ_WIFI_GTS_EVENT_CALL
   .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fi GTSネゴシエーションイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_GTS_NEGO_EVENT_CALL( ) _ASM_WIFI_GTS_NEGO_EVENT_CALL
+
+  .macro  _ASM_WIFI_GTS_NEGO_EVENT_CALL
+  .short  EV_SEQ_WIFI_GTS_NEGO_EVENT_CALL
+  .endm
+
 
 //--------------------------------------------------------------------
 /**

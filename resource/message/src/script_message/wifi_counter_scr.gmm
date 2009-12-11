@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-10T17:24:49"/>
+	<create user="iwasawa" host="W00157" date="2009-12-10T21:32:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,65 +356,6 @@ Wi-Fi P2P接続画面へ</comment>
 		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_wifi_counter_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>・仮ＩＤで、ともだちてちょうに友達の登録がない場合
-の受付メッセージ
-メッセージ後、はい・いいえの選択
-「はい」
-　→レポート書くかどうか質問。
-　　レポートを書かない場合は msg_wifi_club_01_02へ
-　　レポートを書いたあとは、msg_wifi_club_01_04へ
-「いいえ」ならmsg_wifi_club_01_02</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉコネクションは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おきゃくさまの　ともだちコードだけ
-うけとりますか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉコネクションは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おきゃくさまの　ともだちコードだけ
-うけとりますか？[2:00:１桁:0]</language>
-	</row>
-
-	<row id="msg_wifi_counter_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>・本ＩＤで、ともだちてちょうに友達の登録がない場合
-の受付メッセージ
-フィールドへもどる</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉコネクションは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おともだちを　とうろく　してから
-おこしください</language>
-		<language name="JPN_KANJI" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉコネクションは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おともだちを　とうろく　してから
-おこしください</language>
-	</row>
-
 	<row id="msg_wifi_counter_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
@@ -542,25 +483,32 @@ C-Gear入手前</comment>
 	<row id="msg_gterminal_win02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<comment>グローバルターミナルメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
+		<language name="JPN" width="256">ＧＴＳネゴシエーション</language>
+		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーション</language>
+	</row>
+
+	<row id="msg_gterminal_win03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<comment>グローバルターミナルメインメニュー</comment>
+		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">バトルビデオ</language>
 		<language name="JPN_KANJI" width="256">バトルビデオ</language>
 	</row>
 
-	<row id="msg_gterminal_win03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="msg_gterminal_win04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<comment>グローバルターミナルメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">ミュージカルショット</language>
 		<language name="JPN_KANJI" width="256">ミュージカルショット</language>
 	</row>
 
-	<row id="msg_gterminal_win04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="msg_gterminal_win05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<comment>グローバルターミナルメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
 		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
 	</row>
 
-	<row id="msg_gterminal_win05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="msg_gterminal_win06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<comment>グローバルターミナルメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">もどる</language>
@@ -657,6 +605,98 @@ C-Gear入手前</comment>
 	<row id="msg_gterminal_gts_exp_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<comment>GTS 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">わかった</language>
+		<language name="JPN_KANJI" width="256">わかった</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">ポケモン　グローバル　こうかん
+こうしょうを　かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモン　グローバル　交換
+交渉を　開始　しますか？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGOメニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">こうしょうを　かいし　する</language>
+		<language name="JPN_KANJI" width="256">交渉を　開始する</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGOメニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGOメニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">ＧＴＳネゴシエーションでは
+・・・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーションでは
+・・・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">ネゴシエーションとは
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ネゴシエーションとは
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">こうかん　じょうけん　には
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">こうかん　じょうけん　には
+・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+くわしい　せつめいを
+ごきぼうですか？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">ネゴシエーションって？</language>
+		<language name="JPN_KANJI" width="256">ネゴシエーションって？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">こうかん　じょうけんって？</language>
+		<language name="JPN_KANJI" width="256">こうかん　じょうけんって？</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO 説明メニュー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">わかった</language>
 		<language name="JPN_KANJI" width="256">わかった</language>
 	</row>

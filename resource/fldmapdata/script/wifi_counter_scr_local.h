@@ -29,9 +29,10 @@
 ///グローバルターミナルシーケンス
 #define SEQ_SUB_GTERMINAL_MENU        (0)
 #define SEQ_SUB_GTERMINAL_GTS         (1)
-#define SEQ_SUB_GTERMINAL_BTL_VIDEO   (2)
-#define SEQ_SUB_GTERMINAL_MUSICAL     (3)
-#define SEQ_SUB_GTERMINAL_EXP         (4)
+#define SEQ_SUB_GTERMINAL_GTS_NEGO    (2)
+#define SEQ_SUB_GTERMINAL_BTL_VIDEO   (3)
+#define SEQ_SUB_GTERMINAL_MUSICAL     (4)
+#define SEQ_SUB_GTERMINAL_EXP         (5)
 #define SEQ_SUB_GTERMINAL_RETURN      (0xFE)
 #define SEQ_SUB_GTERMINAL_EXIT        (0xFF)
 
@@ -42,8 +43,10 @@
 #define SEQ_SUB_GTERMINAL_GTS_RETURN      (0xFE)
 #define SEQ_SUB_GTERMINAL_GTS_EXIT        (0xFF)
 
-///グローバルターミナル:GTS：説明を聞くシーケンス
-#define SEQ_SUB_GTERMINAL_GTS_EXP_MENU        (0)
-#define SEQ_SUB_GTERMINAL_GTS_EXP_MAIN        (1)
-#define SEQ_SUB_GTERMINAL_GTS_EXP_RETURN      (0xFF)
+///グローバルターミナル:GTSシーケンス
+#define SEQ_SUB_GTERMINAL_GTS_NEGO_MENU        (0)
+#define SEQ_SUB_GTERMINAL_GTS_NEGO_EXP         (1)
+#define SEQ_SUB_GTERMINAL_GTS_NEGO_EXCHANGE    (2)
+#define SEQ_SUB_GTERMINAL_GTS_NEGO_RETURN      (0xFE)
+#define SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT        (0xFF)
 
