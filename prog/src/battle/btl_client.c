@@ -2547,7 +2547,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       break;
   case 3:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
-      PMSND_PlayBGM( SEQ_ME_LVUP );
+      PMSND_PlaySE( SEQ_SE_LVUP );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
       wk->wazaoboe_index = 0;
@@ -2563,6 +2563,10 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       if( wk->wazaoboe_no == PTL_WAZAOBOE_NONE )
       {
         return TRUE;
+      }
+      else if( wk->wazaoboe_no == PTL_WAZASET_SAME )
+      { 
+        break;
       }
       else if( wk->wazaoboe_no & PTL_WAZAOBOE_FULL )
       {
@@ -2590,7 +2594,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 6:
     //‹ZŠo‚¦ˆ—
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
-      PMSND_PlayBGM( SEQ_ME_LVUP );
+      PMSND_PlaySE( SEQ_SE_LVUP );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq) = 4;
