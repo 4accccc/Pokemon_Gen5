@@ -913,6 +913,7 @@ static void getFixWinVtxPosX( int px, int sx, int side, u16* ex1, u16* ex2 )
 	}
 }
 
+#define Y_OFFS	(3)
 static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 														const int				targetScrx,
 														const int				targetScry,
@@ -934,14 +935,14 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 		tail_length = ((sx>=16)&&(sy>=16))? 16 : sy;	//tailïùdefault = 16
 
 		if(targetScry < py){
-			ey1 = py + 1;
-			ey2 = py + 1;
+			ey1 = py + Y_OFFS;
+			ey2 = py + Y_OFFS;
 			ex1 = px + sx/2 - tail_length/2;
 			ex2 = px + sx/2 + tail_length/2;
 			tailPat = TAIL_SETPAT_U;
 		} else if(targetScry > (py + sy)){
-			ey1 = py + sy - 1;
-			ey2 = py + sy - 1;
+			ey1 = py + sy - Y_OFFS;
+			ey2 = py + sy - Y_OFFS;
 			ex1 = px + sx/2 - tail_length/2;
 			ex2 = px + sx/2 + tail_length/2;
 			tailPat = TAIL_SETPAT_D;
@@ -966,8 +967,8 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 	case TALKWIN_SETPAT_FIX_U:
 		{
 			int side;
-			ey1 = py + sy - 1;
-			ey2 = py + sy - 1;
+			ey1 = py + sy - 1 - Y_OFFS;
+			ey2 = py + sy - 1 - Y_OFFS;
 
 			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
 				if(targetScrx < 128){
@@ -992,8 +993,8 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 	case TALKWIN_SETPAT_FIX_D:
 		{
 			int side;
-			ey1 = py + 1;
-			ey2 = py + 1;
+			ey1 = py + 1 + Y_OFFS;
+			ey2 = py + 1 + Y_OFFS;
 
 			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
 				if(targetScrx < 128){
@@ -1550,6 +1551,7 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 #define L_CHR (4)
 #define R_CHR (4 + FLIP_H)
 #define SPC_CHR (5)
+#define CONNECT_CHR (2)
 
 static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
@@ -1667,7 +1669,8 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 #if TALKWIN_MODE
 #else
 	{
-		u16	nullChr = (wplt | SPC_CHR+chrOffs);
+		//u16	nullChr = (wplt | SPC_CHR+chrOffs);
+		u16	nullChr = (wplt | CONNECT_CHR+chrOffs);
 
 		switch(tmsgwin->tailData.tailPat){
 		case TAIL_SETPAT_U:
@@ -1677,16 +1680,19 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		break;
 		case TAIL_SETPAT_D:
 			if(overD == FALSE){
+				nullChr |= FLIP_V;
 				GFL_BG_FillScreen(frameID, nullChr, px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
 			}
 		break;
 		case TAIL_SETPAT_L:
 			if(overL == FALSE){
+				nullChr = (wplt | SPC_CHR+chrOffs);
 				GFL_BG_FillScreen(frameID, nullChr, px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_R:
 			if(overR == FALSE){
+				nullChr = (wplt | SPC_CHR+chrOffs);
 				GFL_BG_FillScreen(frameID, nullChr, px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
 			}
 			break;
@@ -1698,6 +1704,7 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			break;
 		case TAIL_SETPAT_FIX_DL:
 			if(overU == FALSE){
+				nullChr |= FLIP_V;
 				GFL_BG_FillScreen
 					(frameID, nullChr, px + TWIN_FIX_TAIL_X, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
 			}
@@ -1710,6 +1717,7 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			break;
 		case TAIL_SETPAT_FIX_DR:
 			if(overD == FALSE){
+				nullChr |= FLIP_V;
 				GFL_BG_FillScreen
 					(frameID, nullChr, px + sx - TWIN_FIX_TAIL_X -2, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
 			}
