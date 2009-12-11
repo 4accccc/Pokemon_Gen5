@@ -28,6 +28,7 @@
 #include "field/field_const.h"
 #include "intrude_mission.h"
 #include "poke_tool/monsno_def.h"
+#include "field/field_status_local.h"  // for FIELD_STATUS_
 
 
 //==============================================================================
@@ -39,6 +40,7 @@
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
+static void Intrude_CheckFieldProcAction(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
@@ -200,7 +202,9 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
     }
   }
 
-  
+  //フィールドステータスのPROCアクションを反映
+  Intrude_CheckFieldProcAction(intcomm);
+
   //プロフィール要求リクエストを受けているなら送信
   if(intcomm->profile_req == TRUE){
     Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
@@ -222,6 +226,40 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
     if(IntrudeSend_OccupyInfo(intcomm) == TRUE){
       intcomm->send_occupy = FALSE;
     }
+  }
+
+  //プレイヤーステータス送信
+  if(intcomm->send_status == TRUE){
+    IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドステータスのPROCアクションの変更を反映する
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void Intrude_CheckFieldProcAction(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus(gamedata);
+  PROC_ACTION proc_action = FIELD_STATUS_GetProcAction( fldstatus );
+
+  switch(proc_action){
+  case PROC_ACTION_FIELD:
+    if(intcomm->intrude_status_mine.action_status == INTRUDE_ACTION_BATTLE){
+      Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_FIELD);
+      intcomm->send_status = TRUE;
+    }
+    break;
+  case PROC_ACTION_BATTLE:
+    if(intcomm->intrude_status_mine.action_status == INTRUDE_ACTION_FIELD){
+      Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_BATTLE);
+      intcomm->send_status = TRUE;
+    }
+    break;
   }
 }
 
@@ -315,6 +353,7 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm)
 void Intrude_SetActionStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_ACTION action)
 {
   intcomm->intrude_status_mine.action_status = action;
+  OS_TPrintf("set intrude action status = %d\n", action);
 }
 
 //==================================================================

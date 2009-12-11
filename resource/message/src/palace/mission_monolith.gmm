@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-09T12:32:38"/>
+	<create user="matsuda" host="W00142" date="2009-12-10T20:57:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -490,14 +490,14 @@
 
 	<row id="plc_mism_03_01" back-color="#ff8080,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -508,14 +508,14 @@
 
 	<row id="plc_mism_03_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -526,14 +526,14 @@
 
 	<row id="plc_mism_03_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
@@ -544,14 +544,14 @@
 
 	<row id="plc_mism_03_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 かくとくポイント
 １い　[2:02:３桁:3]ｐ　　２い　[2:02:３桁:4]ｐ
 ３い　[2:02:３桁:5]ｐ　　４い　[2:02:３桁:6]ｐ</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！
 
 せいげんじかん　[2:02:３桁:2]びょう
 

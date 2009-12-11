@@ -46,7 +46,7 @@ static void _IntrudeRecv_MissionAchieveAnswer(const int netID, const int size, c
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _IntrudeRecv_Test(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -78,6 +78,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
   {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
   {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
+  {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -1299,5 +1300,57 @@ BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid, INTRUDE_CMD_TARGET_TIMING, sizeof(timing_no), &timing_no, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：通信相手をサポート
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const SUPPORT_TYPE *support_type = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  COMM_PLAYER_SUPPORT *cps = GAMEDATA_GetCommPlayerSupportPtr(gamedata);
+  
+  if((intcomm->recv_profile & (1 << netID)) == 0){
+    OS_TPrintf("受信：プレイヤーサポート：プロフィール未受信の為、受け取らない netID=%d\n", netID);
+    return;
+  }
+  
+  OS_TPrintf("受信：プレイヤーサポート netID=%d, type=%d\n", netID, *support_type);
+  COMM_PLAYER_SUPPORT_SetParam(cps, *support_type, GAMEDATA_GetMyStatusPlayer(gamedata, netID));
+}
+
+//==================================================================
+/**
+ * データ送信：通信相手をサポート
+ *
+ * @param   intcomm		
+ * @param   send_netid    サポート相手
+ * @param   support_type  サポートタイプ(SUPPORT_TYPE_???)
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_PlayerSupport(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, SUPPORT_TYPE support_type)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid, INTRUDE_CMD_PLAYER_SUPPORT, sizeof(support_type), &support_type, 
+    FALSE, FALSE, FALSE);
 }
 

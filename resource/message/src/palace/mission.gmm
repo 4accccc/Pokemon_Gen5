@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-11-20T15:37:16"/>
+	<create user="matsuda" host="W00142" date="2009-12-10T20:57:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1396" top="257" right="2101" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="148" right="738" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="238" right="1280" bottom="862" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -362,26 +362,26 @@
 
 	<row id="plc_mis_03_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
 	</row>
 
 	<row id="plc_mis_03_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
 	</row>
 
 	<row id="plc_mis_03_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
 	</row>
 
 	<row id="plc_mis_03_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>基礎</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:00:トレーナー名:0]に　あいさつせよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　バトルちゅうに　かいふくしろ！</language>
 	</row>
 
 	<row id="plc_mis_04_01">

@@ -39,6 +39,7 @@ enum{
 typedef enum{
   INTRUDE_ACTION_FIELD,                   ///<フィールド
   INTRUDE_ACTION_TALK,                    ///<話中
+  INTRUDE_ACTION_BATTLE,                  ///<戦闘中
   INTRUDE_ACTION_BINGO_BATTLE,            ///<ビンゴバトル中
   INTRUDE_ACTION_BINGO_BATTLE_INTRUSION,  ///<ビンゴバトル乱入参加
 }INTRUDE_ACTION;

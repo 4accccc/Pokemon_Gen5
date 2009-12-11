@@ -117,9 +117,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   if(Intrude_SetSendStatus(intcomm) == TRUE){
     intcomm->send_status = TRUE;
   }
-  if(intcomm->send_status == TRUE){
-    IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
-  }
 
   CommPlayer_Update(intcomm->cps);
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
@@ -136,8 +133,9 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
       }
       else{
         CommPlayer_SetParam(intcomm->cps, i, &intcomm->intrude_status[i].player_pack);
-        //ビンゴバトル中なら「！」を表示
-        if(intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BINGO_BATTLE){
+        //バトル or ビンゴバトル中なら「！」を表示
+        if(intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BATTLE
+            || intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BINGO_BATTLE){
           CommPlayer_SetGyoeTask(intcomm->cps, i);
         }
       }

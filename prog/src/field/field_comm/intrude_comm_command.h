@@ -45,6 +45,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
   INTRUDE_CMD_OCCUPY_INFO,                    ///<占拠情報
   INTRUDE_CMD_TARGET_TIMING,                  ///<相手指定のタイミングコマンド
+  INTRUDE_CMD_PLAYER_SUPPORT,                 ///<通信相手をサポート
   
   INTRUDE_CMD_MAX,
   INTRUDE_CMD_NUM = INTRUDE_CMD_MAX - INTRUDE_CMD_START,
@@ -86,4 +87,6 @@ extern BOOL IntrudeSend_MissionAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm,
 extern BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);
+extern BOOL IntrudeSend_PlayerSupport(
+  INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, SUPPORT_TYPE support_type);
 

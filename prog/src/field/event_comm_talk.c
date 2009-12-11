@@ -78,6 +78,7 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk );
 
 //==============================================================================
@@ -89,6 +90,14 @@ const u16 MissionItemMsgID[] = {
   msg_talk_item_m_000,          //TALK_TYPE_MAN
   msg_talk_item_w_000,          //TALK_TYPE_WOMAN
   msg_talk_item_pika_000,       //TALK_TYPE_PIKA
+};
+
+///ミッションBasicのメッセージID ※TALK_TYPE順
+const u16 MissionBasicMsgID[] = {
+  msg_talk_life_m_000,          //TALK_TYPE_NORMAL
+  msg_talk_life_m_000,          //TALK_TYPE_MAN
+  msg_talk_life_w_000,          //TALK_TYPE_WOMAN
+  msg_talk_life_pika_000,       //TALK_TYPE_PIKA
 };
 
 
@@ -113,7 +122,7 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
 {
 	COMMTALK_EVENT_WORK *ftalk_wk;
-	GMEVENT *event;
+	GMEVENT *event = NULL;
 	
 	if(MISSION_CheckMissionTargetNetID(&intcomm->mission, talk_net_id) == TRUE){
     MISSION_TYPE mission_type = MISSION_GetMissionType(&intcomm->mission);
@@ -123,17 +132,27 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
     	event = GMEVENT_Create(
     		gsys, NULL,	CommMissionItemEvent, sizeof(COMMTALK_EVENT_WORK) );
       break;
+    case MISSION_TYPE_BASIC:
+      if(intcomm->intrude_status[talk_net_id].action_status == INTRUDE_ACTION_BATTLE){
+      	event = GMEVENT_Create(
+      		gsys, NULL,	CommMissionBasicEvent, sizeof(COMMTALK_EVENT_WORK) );
+      }
+      break;
     }
   }
-	else if(intcomm->intrude_status[talk_net_id].action_status == INTRUDE_ACTION_BINGO_BATTLE){
-  	event = GMEVENT_Create(
-  		gsys, NULL,	CommBingoEvent, sizeof(COMMTALK_EVENT_WORK) );
-    Bingo_Clear_BingoBattleBeforeBuffer(Bingo_GetBingoSystemWork(intcomm));
+	
+	if(event == NULL){
+  	if(intcomm->intrude_status[talk_net_id].action_status == INTRUDE_ACTION_BINGO_BATTLE){
+    	event = GMEVENT_Create(
+    		gsys, NULL,	CommBingoEvent, sizeof(COMMTALK_EVENT_WORK) );
+      Bingo_Clear_BingoBattleBeforeBuffer(Bingo_GetBingoSystemWork(intcomm));
+    }
+    else{
+    	event = GMEVENT_Create(
+    		gsys, NULL,	CommTalkEvent, sizeof(COMMTALK_EVENT_WORK) );
+    }
   }
-  else{
-  	event = GMEVENT_Create(
-  		gsys, NULL,	CommTalkEvent, sizeof(COMMTALK_EVENT_WORK) );
-  }
+  
 	ftalk_wk = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
 	
@@ -701,6 +720,81 @@ static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk )
     IntrudeEventPrint_StartStream(&talk->iem, MissionItemMsgID[0] + 0);
 		(*seq)++;
 		break;
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
+    Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
+    return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：戦闘中回復：話し掛けイベント
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk )
+{
+	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+	enum{
+    SEQ_INIT,
+    SEQ_SEND_PLAYER_SUPPORT,
+    SEQ_SEND_ACHIEVE,
+    SEQ_RECV_WAIT,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_END,
+  };
+	
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+    if((*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  }
+
+	switch( *seq ){
+  case SEQ_INIT:
+    MISSIONDATA_Wordset(intcomm,
+       &(MISSION_GetResultData(&intcomm->mission))->mission_data, talk->iem.wordset, talk->heapID);
+    IntrudeEventPrint_StartStream(&talk->iem, MissionBasicMsgID[0] + 0);
+    (*seq)++;
+    break;
+	case SEQ_SEND_PLAYER_SUPPORT:
+	  if(IntrudeSend_PlayerSupport(intcomm, talk->talk_netid, SUPPORT_TYPE_RECOVER_FULL) == TRUE){
+      (*seq)++;
+    }
+    break;
+	case SEQ_SEND_ACHIEVE:
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
+      (*seq)++;
+    }
+    break;
+  case SEQ_RECV_WAIT:
+		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+      (*seq)++;
+    }
+    break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
       *seq = SEQ_MSG_END_BUTTON_WAIT;

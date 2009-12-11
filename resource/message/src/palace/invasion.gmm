@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-09T22:29:35"/>
+	<create user="matsuda" host="W00142" date="2009-12-11T11:47:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -603,6 +603,11 @@
 		<language name="JPN_KANJI" width="256">[2:02:３桁:0]ポイント　ゲット！</language>
 	</row>
 
+	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションせいこう！</language>
+		<language name="JPN_KANJI" width="256">ミッションせいこう！</language>
+	</row>
+
 	<row id="msg_invasion_mission000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">げんざい　ミッションは　ありません</language>
 		<language name="JPN_KANJI" width="256">現在　ミッションは　ありません</language>
@@ -719,6 +724,37 @@
 [1:00:トレーナー名:1]から
 [1:09:どうぐ名:0]を　もらった！▽
 たいせつに　つかってピカ！</language>
+	</row>
+
+	<row id="msg_talk_life_m_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>戦闘回復：話しかけた側
+
+主人公男
+※タグの数値はmission.gmmに合わせること</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
+	</row>
+
+	<row id="msg_talk_life_w_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>戦闘回復：話しかけた側
+主人公女
+※タグの数値はmission.gmmに合わせること</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
+	</row>
+
+	<row id="msg_talk_life_pika_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>戦闘回復：話しかけた側
+ピカチュウ
+※タグの数値はmission.gmmに合わせること</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
+がんばれ　[1:00:トレーナー名:0]！</language>
 	</row>
 
 	<flowchart-group-list>
