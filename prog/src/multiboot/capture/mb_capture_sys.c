@@ -184,6 +184,8 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   
   PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
 
+  GFL_NET_WirelessIconEasyXY( 256-16 , 0 , FALSE , work->heapId );
+
 #if MB_CAP_DEB
   MB_CAPTURE_InitDebug( work );
 #endif
@@ -198,6 +200,9 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 #if MB_CAP_DEB
   MB_CAPTURE_TermDebug( work );
 #endif
+
+  GFL_NET_WirelessIconEasyEnd();
+  PMSND_StopBGM();
 
   MB_TPrintf("Debug AllCapture!!!\n");
   for( i=0;i<MB_CAP_POKE_NUM;i++ )

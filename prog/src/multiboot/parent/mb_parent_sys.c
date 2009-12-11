@@ -34,6 +34,7 @@
 #define MB_PARENT_FRAME_MSG (GFL_BG_FRAME1_M)
 #define MB_PARENT_FRAME_BG  (GFL_BG_FRAME3_M)
 
+#define MB_PARENT_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_PARENT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 //======================================================================
@@ -65,6 +66,11 @@ typedef enum
   MPS_SAVE_INIT,
   MPS_SAVE_MAIN,
   MPS_SAVE_TERM,
+
+  MPS_WAIT_NEXT_GAME_CONFIRM,
+
+  MPS_EXIT_COMM,
+  MPS_WAIT_EXIT_COMM,
 
 }MB_PARENT_STATE;
 
@@ -107,6 +113,7 @@ typedef struct
   MB_PARENT_STATE state;
   u8              subState;
   u8              saveWaitCnt;
+  BOOL            isSendGameData;
   
   //SendImage
   u16    *romTitleStr;  //DLROMタイトル
@@ -169,10 +176,11 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   MB_PARENT_InitGraphic( work );
   MB_PARENT_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , FILE_MSGID_MB );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
+  work->isSendGameData = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -282,13 +290,17 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     break;
 
   case MPS_SEND_GAMEDATA_SEND:
-    MB_COMM_InitSendGameData( work->commWork , work->gameData , work->gameDataSize );
     work->state = MPS_WAIT_SELBOX;
     break;
     
   case MPS_WAIT_SELBOX:
     if( MB_COMM_GetChildState(work->commWork) == MCCS_SELECT_BOX )
     {
+      if( work->isSendGameData == FALSE )
+      {
+        work->isSendGameData = TRUE;
+        MB_COMM_InitSendGameData( work->commWork , work->gameData , work->gameDataSize );
+      }
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_03 , MSGSPEED_GetWait() );
       work->state = MPS_WAIT_FINISH_SELBOX;
     }
@@ -318,7 +330,11 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
       work->state = MPS_WAIT_SEND_POKE;
     }
-    //TODO 一気に次のゲームへ飛ぶ場合がある
+    else
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_NEXT_GAME )
+    {
+      work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
+    }
     break;
 
   case MPS_WAIT_SEND_POKE:
@@ -347,8 +363,33 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 
   case MPS_SAVE_TERM:
     MB_PARENT_SaveTerm( work );
+    work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
     break;
 
+  case MPS_WAIT_NEXT_GAME_CONFIRM:
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_SELECT_BOX )
+    {
+      MB_COMM_ResetFlag( work->commWork);
+      work->state = MPS_WAIT_SELBOX;
+    }
+    else
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME )
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+      work->state = MPS_EXIT_COMM;
+    }
+    break;
+  
+  case MPS_EXIT_COMM:
+    MB_COMM_ExitComm( work->commWork );
+    work->state = MPS_WAIT_EXIT_COMM;
+    break;
+  case MPS_WAIT_EXIT_COMM:
+    if( MB_COMM_IsFinishComm( work->commWork ) == TRUE )
+    {
+      return TRUE;
+    }
+    break;
   }
 
   MB_MSG_MessageMain( work->msgWork );
@@ -410,6 +451,13 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG1 SUB (メッセージ
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -422,6 +470,7 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     MB_PARENT_SetupBgFunc( &header_main1 , MB_PARENT_FRAME_MSG , GFL_BG_MODE_TEXT );
     //MB_PARENT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_main3 , MB_PARENT_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_PARENT_SetupBgFunc( &header_sub1  , MB_PARENT_FRAME_SUB_MSG, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub3  , MB_PARENT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
   }
@@ -433,6 +482,7 @@ static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work )
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BG );
+  GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_MSG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 }
@@ -770,6 +820,7 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
 static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work )
 {
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
+  MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_08 , MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------

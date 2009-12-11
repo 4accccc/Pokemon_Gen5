@@ -57,7 +57,7 @@ LLIBRARIES		=  	gflib.a
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
-LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
+LLIBRARY_DIRS	+= ./library/spl/$(TWL_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ TARGET_BIN		=	main.bin
 SRCS			=	main.c $(PARENT_SRC)/system/gfl_use.c $(PARENT_SRC)/system/machine_use.c
 
 include make_prog_files
--include overlay/overlay_files
+#-include overlay/overlay_files
 
 ## xyzzyでエラージャンプを行う
 ifeq	($(USERNAME),ohno)
@@ -158,11 +158,11 @@ include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
 #	ruby overlay/overlaytool.rb
 #	//touch $(MAKEFILE)
 
-overlay/main.lsf:	make_prog_files
-	ruby overlay/overlaytool.rb
+#overlay/main.lsf:	make_prog_files
+#	ruby overlay/overlaytool.rb
 
-overlay/overlay_files:	make_prog_files
-	ruby overlay/overlaytool.rb
+#overlay/overlay_files:	make_prog_files
+#	ruby overlay/overlaytool.rb
 
 
 #マルチブート対応のMAKEをするかどうかをフラグで判定

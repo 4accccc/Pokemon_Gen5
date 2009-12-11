@@ -50,6 +50,8 @@ typedef enum
   MCCS_SEND_POKE,
   MCCS_NEXT_GAME,
 
+  MCCS_END_GAME,
+
 }MB_COMM_CHILD_STATE;
 
 //======================================================================
@@ -91,6 +93,8 @@ extern const BOOL MB_COMM_IsPostGameData( const MB_COMM_WORK* commWork );
 
 extern void MB_COMM_SetChildState( MB_COMM_WORK* commWork , MB_COMM_CHILD_STATE state );
 extern const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork );
+
+extern void MB_COMM_ResetFlag( MB_COMM_WORK* commWork );
 
 extern const BOOL MB_COMM_GetIsReadyChildStartSave( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_GetIsFinishChildFirstSave( const MB_COMM_WORK* commWork );

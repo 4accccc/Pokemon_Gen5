@@ -184,6 +184,11 @@ Property
 	#### END
 }
 
+AppendProperty
+{
+  GameCardNitroMode TRUE
+}
+
 RomSpec
 {
 	Offset		0x00000000

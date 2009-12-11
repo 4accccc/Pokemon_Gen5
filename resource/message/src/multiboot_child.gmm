@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T17:22:57"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T19:00:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,6 +363,24 @@ WB側のDSの説明に従って下さい。</language>
 でんげんをきらないでください。</language>
 		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
 でんげんをきらないでください。</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_05">
+		<language name="JPN" width="208">レポートに　かきこみました</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込みました</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_06">
+		<language name="JPN" width="208">もういちど　あそびますか？</language>
+		<language name="JPN_KANJI" width="208">もう一度　遊びますか？</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_07">
+		<language name="JPN" width="208">ゲームを　しゅうりょうします
+でんげんを　きって　しゅうりょうして
+ください</language>
+		<language name="JPN_KANJI" width="208">ゲームを　終了します
+電源を切って　終了してください</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SYS_01">

@@ -95,7 +95,8 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
       dataWork->cardType = CARD_TYPE_GS;
     }
     else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
-             STD_CompareString( headerData->game_name , "SKEL" ) == 0 )
+             STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
+             STD_CompareString( headerData->game_name , "dlplay" ) == 0 )
     {
       //MBでバグROMかsrl直起動
       dataWork->cardType = CARD_TYPE_DUMMY;
@@ -111,6 +112,17 @@ void  MB_DATA_TermSystem( MB_DATA_WORK *dataWork )
   GFL_HEAP_FreeMemory( dataWork->pData );
   GFL_HEAP_FreeMemory( dataWork->pDataMirror );
   GFL_HEAP_FreeMemory( dataWork );
+}
+
+//セーブ触る前の初期化
+void  MB_DATA_ResetSaveLoad( MB_DATA_WORK *dataWork )
+{
+  dataWork->mainSeq = 0;
+  dataWork->subSeq   = 0;
+  dataWork->isFinishSaveFirst = FALSE;
+  dataWork->isFinishSaveSecond = FALSE;
+  dataWork->permitLastSaveFirst = FALSE;
+  dataWork->permitLastSaveSecond = FALSE;
 }
 
 //セーブデータの読み込み

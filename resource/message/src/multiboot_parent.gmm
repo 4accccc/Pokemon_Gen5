@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T00:17:54"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T19:00:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -381,6 +381,16 @@
 でんげんをきらないでください。</language>
 		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
 でんげんをきらないでください。</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_08">
+		<language name="JPN" width="208">レポートに　かきこみました</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込みました</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_09">
+		<language name="JPN" width="208">ゲームを　しゅうりょうします</language>
+		<language name="JPN_KANJI" width="208">ゲームを　終了します</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_TITLE">

@@ -26,7 +26,7 @@
 
 #ifndef MULTI_BOOT_MAKE
 #include "test/ariizumi/ari_debug.h"
-#define MB_COMM_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
+#define MB_COMM_TPrintf(...) (void)((MB_TPrintf(__VA_ARGS__)))
 #else
 #define MB_COMM_TPrintf(...) (void)((MB_TPrintf(__VA_ARGS__)))
 #endif //MULTI_BOOT_MAKE
@@ -367,6 +367,24 @@ const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork )
 //--------------------------------------------------------------
 // 保存系ステートの主得
 //--------------------------------------------------------------
+void MB_COMM_ResetFlag( MB_COMM_WORK* commWork )
+{
+  commWork->isPostPokeData = FALSE;
+
+  commWork->isPost_PostPokeData = FALSE;
+
+  commWork->isReadyChildStatSave = FALSE;
+  commWork->isFinishChildFirstSave = FALSE;
+  commWork->isFinishChildSecondSave = FALSE;
+  commWork->isFinishChildSave = FALSE;
+  commWork->isPermitStartSave = FALSE;
+  commWork->isPermitFirstSave = FALSE;
+  commWork->isPermitSecondSave = FALSE;
+  commWork->isPermitFinishSave = FALSE;
+  
+  commWork->saveWaitCnt = 0;
+  
+}
 const BOOL MB_COMM_GetIsReadyChildStartSave( const MB_COMM_WORK* commWork )
 {
   return commWork->isReadyChildStatSave;
@@ -411,6 +429,7 @@ const u8 MB_COMM_GetSaveWaitTime( const MB_COMM_WORK* commWork )
 //--------------------------------------------------------------
 void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size )
 {
+  MB_TPrintf("Send GameData.\n");
   GFL_NET_LDATA_SetSendData( gameData , size , 0x02 , TRUE );
 }
 

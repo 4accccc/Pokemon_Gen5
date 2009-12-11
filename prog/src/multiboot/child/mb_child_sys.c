@@ -38,6 +38,7 @@
 #define MB_CHILD_FRAME_MSG (GFL_BG_FRAME1_M)
 #define MB_CHILD_FRAME_BG  (GFL_BG_FRAME3_M)
 
+#define MB_CHILD_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_CHILD_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 //======================================================================
@@ -85,6 +86,13 @@ typedef enum
   MCS_SAVE_MAIN,
   MCS_SAVE_TERM,
 
+  MCS_SAVE_FINISH_WAIT,
+  MCS_DIPS_NEXT_GAME_CONFIRM,
+  MCS_WAIT_NEXT_GAME_CONFIRM,
+
+  MCS_WAIT_EXIT_COMM,
+  MCS_EXIT_GAME,
+  
   MCS_ERROR,
   
 }MB_CHILD_STATE;
@@ -184,7 +192,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -308,26 +316,24 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     }
     break;
   case MCS_CHECK_ROM:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    work->dataWork = MB_DATA_InitSystem( work->heapId );
+    work->cardType = MB_DATA_GetCardType( work->dataWork );
+    MB_DATA_ResetSaveLoad( work->dataWork );
+    if( work->cardType == CARD_TYPE_DUMMY )
     {
-      work->dataWork = MB_DATA_InitSystem( work->heapId );
-      work->cardType = MB_DATA_GetCardType( work->dataWork );
-      if( work->cardType == CARD_TYPE_DUMMY )
-      {
-        MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_DEB_01 );
-        work->state = MCS_SELECT_ROM;
-      }
-      else
-      if( work->cardType == CARD_TYPE_INVALID )
-      {
-        //ROM違う！
-        MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_02 );
-        work->state = MCS_ERROR;
-      }
-      else
-      {
-        work->state = MCS_LOAD_DATA;
-      }
+      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_DEB_01 );
+      work->state = MCS_SELECT_ROM;
+    }
+    else
+    if( work->cardType == CARD_TYPE_INVALID )
+    {
+      //ROM違う！
+      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_02 );
+      work->state = MCS_ERROR;
+    }
+    else
+    {
+      work->state = MCS_LOAD_DATA;
     }
     break;
   
@@ -337,13 +343,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       MB_DATA_SetCardType( work->dataWork , CARD_TYPE_DP );
       work->state = MCS_LOAD_DATA;
+      //work->cardType = CARD_TYPE_DP;
     }
     else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
     {
       MB_DATA_SetCardType( work->dataWork , CARD_TYPE_PT );
       work->state = MCS_LOAD_DATA;
-      work->cardType = CARD_TYPE_PT;
     }
     else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -418,7 +424,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
 
@@ -512,7 +518,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     PMSND_InitMultiBoot( work->sndData );
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , FILE_MSGID_MB );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
     break;
@@ -542,8 +548,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
       else
       {
-        //TODO 分岐修正
-        work->state = MCS_TRANS_POKE_INIT;
+        work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
+        MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
       }
     }
     break;
@@ -563,6 +569,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
           
           //元データのpppを消す
           MB_DATA_ClearBoxPPP( work->dataWork , tray , idx );
+          //読んでおいた方も消す
+          PPP_Clear( work->boxPoke[tray][idx] );
         }
       }
     }
@@ -593,6 +601,52 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_SaveTerm( work );
     break;
 
+  case MCS_SAVE_FINISH_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
+    {
+      if( GFL_UI_TP_GetTrg() == TRUE )
+      {
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
+        MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
+        work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
+      }
+    }
+    break;
+  
+  case MCS_DIPS_NEXT_GAME_CONFIRM:
+    if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
+    {
+      MB_MSG_DispYesNo( work->msgWork );
+      work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
+    }
+    break;
+  case MCS_WAIT_NEXT_GAME_CONFIRM:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        work->state = MCS_SELECT_FADEOUT;
+        MB_COMM_SetChildState( work->commWork , MCCS_SELECT_BOX );
+        MB_MSG_ClearYesNo( work->msgWork );
+        MB_COMM_ResetFlag( work->commWork);
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+        work->state = MCS_WAIT_EXIT_COMM;
+        MB_MSG_ClearYesNo( work->msgWork );
+      }
+    }
+    break;
+  
+  case MCS_WAIT_EXIT_COMM:
+    work->state = MCS_EXIT_GAME;
+    break;
+
+  case MCS_EXIT_GAME:
+    break;
   }
   
   if( work->msgWork != NULL )
@@ -660,6 +714,13 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG1 SUB (メッセージ
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -672,6 +733,7 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
     MB_CHILD_SetupBgFunc( &header_main1 , MB_CHILD_FRAME_MSG , GFL_BG_MODE_TEXT );
     //MB_CHILD_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
     MB_CHILD_SetupBgFunc( &header_main3 , MB_CHILD_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_CHILD_SetupBgFunc( &header_sub1  , MB_CHILD_FRAME_SUB_MSG , GFL_BG_MODE_TEXT );
     MB_CHILD_SetupBgFunc( &header_sub3  , MB_CHILD_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
   }
@@ -680,6 +742,7 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
 
 static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work )
 {
+  GFL_BG_FreeBGControl( MB_CHILD_FRAME_SUB_MSG );
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_BG );
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_SUB_BG );
@@ -756,6 +819,7 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
 {
+  MB_DATA_ResetSaveLoad( work->dataWork );
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_04 );
 
 }
@@ -765,6 +829,8 @@ static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
 {
+  MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_05 , work->initData->msgSpeed );
+  work->state = MCS_SAVE_FINISH_WAIT;
 }
 
 //--------------------------------------------------------------

@@ -75,7 +75,7 @@ typedef struct _MB_MSG_WORK MB_MSG_WORK;
 //======================================================================
 #pragma mark [> proto
 
-extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u32 datId );
+extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u8 selFrame , const u32 datId );
 extern void MB_MSG_MessageTerm( MB_MSG_WORK *work );
 extern void MB_MSG_MessageMain( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type );

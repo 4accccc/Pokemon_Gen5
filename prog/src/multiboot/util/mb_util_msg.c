@@ -35,6 +35,7 @@ struct _MB_MSG_WORK
 {
   HEAPID heapId;
   u8     frame;
+  u8     selFrame;
   MB_MSG_WIN_TYPE type;
   
   //メッセージ用
@@ -62,12 +63,13 @@ struct _MB_MSG_WORK
 //--------------------------------------------------------------
 //  メッセージ系 初期化
 //--------------------------------------------------------------
-MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u32 datId )
+MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFrame , const u32 datId )
 {
   
   MB_MSG_WORK* msgWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MB_MSG_WORK ) );
   msgWork->heapId = heapId;
   msgWork->frame = frame;
+  msgWork->selFrame = selFrame;
   //メッセージ用処理
   msgWork->msgWin = NULL;
   
@@ -89,7 +91,7 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u32 datI
   
   //YesNo用
   msgWork->printQue = PRINTSYS_QUE_Create( msgWork->heapId );
-  msgWork->takmenures  = APP_TASKMENU_RES_Create( frame, MB_MSG_PLT_MAIN_TASKMENU, msgWork->fontHandle, msgWork->printQue, msgWork->heapId );
+  msgWork->takmenures  = APP_TASKMENU_RES_Create( msgWork->selFrame, MB_MSG_PLT_MAIN_TASKMENU, msgWork->fontHandle, msgWork->printQue, msgWork->heapId );
   msgWork->yesNoWork = NULL;
   
   msgWork->isUpdateQue = FALSE;

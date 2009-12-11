@@ -93,7 +93,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(sndobjects) $(imdobj) $(eobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(sndobjects) $(eobjects) $(aobjects) $(imdobj)
 	nnsarc -r -l -n -i $(targetname) -S makelist.scr
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -106,6 +106,8 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
+	rm -f *.NCER
+	rm -f *.NANR
 	rm -f *.NCGR
 	rm -f *.NCLR
 	rm -f *.narc

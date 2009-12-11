@@ -42,3 +42,8 @@ Autoload DTCM
 	Object		$(OBJS_AUTOLOAD) (.data)
 	Object		$(OBJS_AUTOLOAD) (.bss)
 }
+
+Autoload MCS_EX
+{
+  Address		0x02400000
+}

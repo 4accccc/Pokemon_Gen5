@@ -203,9 +203,9 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitCell( work );
 
 #ifndef MULTI_BOOT_MAKE
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat );
 #else
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat );
 #endif
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
 
@@ -576,6 +576,7 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
   {
     const DLPLAY_CARD_TYPE type = work->initWork->cardType;
     work->iconArcHandle = MB_ICON_GetArcHandle( work->heapId , type );
+    OS_TPrintf("[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->iconArcHandle));
     work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
                                 MB_ICON_GetPltResId( type ) , 
                                 CLSYS_DRAW_MAIN , 
