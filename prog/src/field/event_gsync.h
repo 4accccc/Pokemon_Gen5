@@ -14,6 +14,8 @@
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
 #include "net_app/wifi_login.h"
+#include "app/box2.h"
+#include "app/box_mode.h"
 
 
 typedef enum{
@@ -35,6 +37,7 @@ typedef struct {
   u16 boxNo;
   u16 boxIndex;
   WIFILOGIN_PARAM aLoginWork;
+  BOX2_GFL_PROC_PARAM boxParam;
 } EVENT_GSYNC_WORK;
 
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);

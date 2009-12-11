@@ -73,10 +73,13 @@ static CPSCaInfo* cainfos[] = {
 
 struct _NHTTP_RAP_WORK {
   NHTTPConnectionHandle   handle;
+  int a;
   char getbuffer[_GET_MAXSIZE];
+  int b;
   char urlbuff[_URL_BUFFER];
-
+  int c;
   HEAPID heapID;
+  int d;
   u32 profileid;
 };
 
@@ -286,12 +289,24 @@ NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid)
 {
   NHTTP_RAP_WORK* pWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(NHTTP_RAP_WORK) );
   pWork->profileid=profileid;
+
+  pWork->a=1234;
+  pWork->b=1323;
+  pWork->c=1222;
+  pWork->d=1444;
+
+  
   return pWork;
 }
 
 
 void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 {
+  OS_TPrintf("%d\n", pWork->a);
+  OS_TPrintf("%d\n", pWork->b);
+  OS_TPrintf("%d\n", pWork->c);
+  OS_TPrintf("%d\n", pWork->d);
+  
   GFL_HEAP_FreeMemory(pWork);
 }
 

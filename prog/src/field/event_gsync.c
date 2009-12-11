@@ -39,6 +39,11 @@
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+
+#include "savedata/dreamworld_data.h"
+
+
+
 //============================================================================================
 //============================================================================================
 
@@ -73,6 +78,8 @@ enum _EVENT_IRCBATTLE {
   _WAIT_GAMESYNCLOGIN,
   _GAMESYNC_MAINPROC,
   _WAIT_GAMESYNC_MAINPROC,
+  _GAMESYNC_CALLBOX,
+  _GAMESYNC_CALLBOX_WAIT,
 };
 
 
@@ -180,13 +187,16 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _WAIT_GAMESYNCLOGIN:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
-    {
-      (*seq)=_GAMESYNC_MAINPROC;
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      if(FALSE==DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SV_GetDreamWorldSaveData(dbw->ctrl))){
+        (*seq)=_GAMESYNC_CALLBOX;
+      }
+      else{
+        (*seq)=_GAMESYNC_MAINPROC;
+      }
     }
     break;
-  case _GAMESYNC_MAINPROC:
-    dbw->selectType=GSYNC_CALLTYPE_BOXSET;  //@todo ポケモンセット後のテスト中
+ case _GAMESYNC_MAINPROC:
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, dbw);
     (*seq)++;
     break;
@@ -196,6 +206,25 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       (*seq)=_CALL_GAMESYNC_MENU;
     }
+    break;
+  case _GAMESYNC_CALLBOX:
+    dbw->boxParam.gamedata = GAMESYSTEM_GetGameData( gsys );
+    dbw->boxParam.sv_box = GAMEDATA_GetBoxManager(dbw->boxParam.gamedata);
+    dbw->boxParam.pokeparty = GAMEDATA_GetMyPokemon(dbw->boxParam.gamedata);			// 手持ちモケモン
+    dbw->boxParam.myitem = GAMEDATA_GetMyItem(dbw->boxParam.gamedata);					// 所持アイテム（バッグで使用）
+    dbw->boxParam.mystatus = GAMEDATA_GetMyStatus(dbw->boxParam.gamedata);				// プレイヤーデータ（バッグで使用）
+    dbw->boxParam.cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(dbw->boxParam.gamedata));								// コンフィグデータ
+    dbw->boxParam.zknMode = 0;								// 図鑑ナンバー表示モード
+    dbw->boxParam.callMode = BOX_MODE_SLEEP;	// 寝かせる;					// 呼び出しモード
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
+    (*seq)++;
+    break;
+  case _GAMESYNC_CALLBOX_WAIT:
+    dbw->boxNo = dbw->boxParam.retTray;      		// 終了時に開いていたトレイ（寝かせる用）
+    dbw->boxIndex = dbw->boxParam.retPoke;   		// 終了時に選択された位置（寝かせる用）
+    dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
+    (*seq) = _GAMESYNC_MAINPROC;
+    
     break;
   default:
     GF_ASSERT(0);

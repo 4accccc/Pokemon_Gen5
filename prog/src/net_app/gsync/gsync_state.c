@@ -49,7 +49,7 @@ SEQ_SE_SYS_24			アップ・ダウンロード
 SEQ_SE_SYS_25			アップロード完了音
 SEQ_SE_SYS_26			ポケモン眠る
 */
-
+#define _ZZZCOUNT (110)
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
@@ -110,6 +110,7 @@ struct _G_SYNC_WORK {
   int getdataCount;
   int countTimer;
   BOOL bEnd;
+  int zzzCount;
 };
 
 
@@ -278,6 +279,13 @@ static void _wakeupAction4(G_SYNC_WORK* pWork)
 
 static void _wakeupAction3(G_SYNC_WORK* pWork)
 {
+
+  if(pWork->zzzCount%_ZZZCOUNT==0){
+    PMSND_PlaySE(SEQ_SE_SYS_26);
+  }
+  pWork->zzzCount++;
+
+  
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
@@ -395,6 +403,12 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
 
 static void _upeffectLoop8(G_SYNC_WORK* pWork)
 {
+
+  if(pWork->zzzCount%_ZZZCOUNT==0){
+    PMSND_PlaySE(SEQ_SE_SYS_26);
+  }
+  pWork->zzzCount++;
+
   if(GFL_UI_KEY_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
@@ -414,7 +428,6 @@ static void _upeffectLoop7(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  PMSND_PlaySE(SEQ_SE_SYS_26);
   _CHANGE_STATE(_upeffectLoop8);
 
 }
@@ -429,13 +442,14 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
 {
   if(pWork->pTopAddr){
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
+    pWork->pTopAddr = NULL;
   }
 
   
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_002);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
-    GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);
+  GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);
   PMSND_PlaySE(SEQ_SE_SYS_25);
 
   _CHANGE_STATE(_upeffectLoop7);
@@ -484,9 +498,6 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  //test
-    _CHANGE_STATE(_upeffectLoop6);
-  return;
 
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
@@ -634,6 +645,7 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
 
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
+    pWork->pp=NULL;
   }
 
   ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
@@ -782,7 +794,6 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   if(pWork->pTopAddr){
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
-
 
   NHTTP_RAP_End(pWork->pNHTTPRap);
 
