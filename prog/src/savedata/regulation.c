@@ -15,23 +15,22 @@
 #include "savedata/regulation.h"
 #include "poke_tool/monsno_def.h"
 
-
-// 最大数のレギュレーション確保
+//選手証
 struct _REGULATION_DATA {
   REGULATION regulation_buff;
-  STRCODE cupname[36+1];  //大会名（36文字＋EOM）
-short no;//大会No.
-char code;//国コード：
-char ver;//カセットバージョン：
-char start_year;//開始年：00-99
-char start_month;//開始月：01-12
-char start_day;//開始日：01-31
-char end_year;//終了年：00-99
-char end_month;//終了月：01-12
-char end_day;//終了日：01-31
-char status;  //大会状態：０未開催／１開催中／２終了
-short rating;//大会用レーティング
-short rd;//大会用RD
+  STRCODE cupname[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + 1];  //大会名（72文字＋EOM）
+  short no;//大会No.
+  char code;//国コード：
+  char ver;//カセットバージョン：
+  char start_year;//開始年：00-99
+  char start_month;//開始月：01-12
+  char start_day;//開始日：01-31
+  char end_year;//終了年：00-99
+  char end_month;//終了月：01-12
+  char end_day;//終了日：01-31
+  char status;  //大会状態：０未開催／１開催中／２終了
+  short rating;//大会用レーティング
+  short rd;//大会用RD
 };
 
 
