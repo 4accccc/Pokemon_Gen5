@@ -82,14 +82,16 @@ enum {
 	NARC_buildmodel_anime_pcmachine01_nsbta = 68,
 	NARC_buildmodel_anime_pcmachine01_nsbtp = 69,
 	NARC_buildmodel_anime_quicksand_01_nsbta = 70,
-	NARC_buildmodel_anime_t1_labo_01_nsbca = 71,
-	NARC_buildmodel_anime_time_anime1_nsbtp = 72,
-	NARC_buildmodel_anime_time_anime2_nsbtp = 73,
-	NARC_buildmodel_anime_time_anime3_nsbtp = 74,
-	NARC_buildmodel_anime_time_anime4_nsbtp = 75,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 76,
-	NARC_buildmodel_anime_warp01_nsbta = 77,
-	NARC_buildmodel_anime_warp02_nsbta = 78
+	NARC_buildmodel_anime_t01_kira_off_nsbta = 71,
+	NARC_buildmodel_anime_t01_kira_on_nsbta = 72,
+	NARC_buildmodel_anime_t1_labo_01_nsbca = 73,
+	NARC_buildmodel_anime_time_anime1_nsbtp = 74,
+	NARC_buildmodel_anime_time_anime2_nsbtp = 75,
+	NARC_buildmodel_anime_time_anime3_nsbtp = 76,
+	NARC_buildmodel_anime_time_anime4_nsbtp = 77,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 78,
+	NARC_buildmodel_anime_warp01_nsbta = 79,
+	NARC_buildmodel_anime_warp02_nsbta = 80
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */

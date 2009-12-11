@@ -191,3 +191,4 @@
 "nsbmdfiles/outwarp01.nsbmd"
 "nsbmdfiles/outwarp02.nsbmd"
 "nsbmdfiles/outwarp03.nsbmd"
+"nsbmdfiles/t01_kira.nsbmd"

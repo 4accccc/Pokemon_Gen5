@@ -192,4 +192,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/outwarp01.nsbmd \
 	$(RESDIR)/outwarp02.nsbmd \
 	$(RESDIR)/outwarp03.nsbmd \
+	$(RESDIR)/t01_kira.nsbmd \
 
