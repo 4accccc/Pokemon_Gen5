@@ -16,6 +16,9 @@
 #include "system/main.h"
 #include "font/font.naix"
 #include "message.naix"
+#include "poke_tool/monsno_def.h"
+
+#include "demo/shinka_demo.h"
 
 enum{
   BACK_COL = 0,
@@ -47,6 +50,7 @@ typedef struct
   GFL_FONT      *font;
   int         key_repeat_speed;
   int         key_repeat_wait;
+  void*       param;
 }SOGA_WORK;
 
 static  void  TextPrint( SOGA_WORK *wk );
@@ -69,6 +73,7 @@ static	const	SOGA_PROC_TABLE	spt[]={
 	{ DSMSG_TRAINER_VIEWER,	&TrainerViewerProcData },
 	{ DSMSG_BATTLE_TEST,	&DebugBattleTestProcData },
 	{ DSMSG_CAPTURE,		&CaptureTestProcData },
+	{ DSMSG_CAPTURE,		&ShinkaDemoProcData },
 };
 
 //--------------------------------------------------------------------------
@@ -193,6 +198,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
   TextPrint( wk );
 
+  (*seq) = 0;
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -209,15 +216,33 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
   int tp = GFL_UI_TP_GetTrg();
   SOGA_WORK* wk = mywk;
 
-  if( ( trg & PAD_KEY_UP ) && ( wk->pos > 0 ) ){
-    wk->pos--;
-  }
-  else if( ( trg & PAD_KEY_DOWN ) && ( wk->pos < NELEMS( spt ) - 1 ) ){
-    wk->pos++;
-  }
-  else if( trg & PAD_BUTTON_A ){
-    wk->seq_no = 1;
-    return GFL_PROC_RES_FINISH;
+  switch( (*seq) ){ 
+  case 0:
+    if( ( trg & PAD_KEY_UP ) && ( wk->pos > 0 ) ){
+      wk->pos--;
+    }
+    else if( ( trg & PAD_KEY_DOWN ) && ( wk->pos < NELEMS( spt ) - 1 ) ){
+      wk->pos++;
+    }
+    else if( trg & PAD_BUTTON_A ){
+      wk->seq_no = 1;
+      if( wk->pos == 5 )
+      { 
+        POKEPARTY* ppt = PokeParty_AllocPartyWork( wk->heapID );
+        POKEMON_PARAM* pp = PP_Create( MONSNO_TUTININ, 1, 0, wk->heapID );
+        PokeParty_Add( ppt, pp );
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+        wk->param = SHINKADEMO_AllocParam( wk->heapID, ppt, MONSNO_TEKKANIN, 0, 0 );
+        GFL_PROC_SysCallProc( NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->param );
+        (*seq)++;
+      }
+      else
+      { 
+        return GFL_PROC_RES_FINISH;
+      }
+    }
+  case 1:
+    break;
   }
 
   if( trg ){
