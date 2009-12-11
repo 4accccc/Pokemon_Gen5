@@ -445,7 +445,18 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     // BGMフェードアウト終了待ち
     {
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE ){ (*seq)++; }
+      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE )
+      { 
+        PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+        PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+        // @todo BGM変更リクエストを投げるタイミングをルール化する。
+        // 現在、それぞれのマップチェンジイベント内でBGM変更リクエストを投げているが、
+        // それを忘れている場合の保険として、Core内でもリクエストを出す。
+        // よって、1度のマップチェンジ内で2回呼ばれることもある。
+        // ==>同じBGMのリクエストなら問題ない。
+        FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
+        (*seq)++;
+      }
     }
     break;
   case 4:
