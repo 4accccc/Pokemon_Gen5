@@ -14,7 +14,7 @@
 #define BOX_MODE_SEIRI				( 2 )		///< せいり
 #define BOX_MODE_ITEM					( 3 )		///< どうぐせいり
 #define BOX_MODE_BATTLE				( 4 )		///< バトルボックス
-#define BOX_MODE_SLEEP				( 5)		///< 
+#define BOX_MODE_SLEEP				( 5 )		///< ねかせる
 //#define BOX_MODE_COMPARE			( 4 )		///< つよさくらべ
 
 // ボックス画面終了モード

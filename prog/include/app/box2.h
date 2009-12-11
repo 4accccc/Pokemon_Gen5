@@ -28,6 +28,8 @@
 
 typedef int BOX_MODE;
 
+#define	BOX_RET_SEL_NONE		( 0xff )		// 何も選択されなかった
+
 // 外部設定データ
 typedef struct {
 	// [in]
@@ -43,7 +45,9 @@ typedef struct {
 	BOX_MODE	callMode;					// 呼び出しモード
 
 	// [out]
-	u32 retMode;								// 終了モード
+	u16 retMode;								// 終了モード
+	u8	retTray;								// 終了時に開いていたトレイ（寝かせる用）
+	u8	retPoke;								// 終了時に選択された位置（寝かせる用）
 
 /*
 	// [in] 

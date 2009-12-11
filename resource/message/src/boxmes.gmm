@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-12-08T17:25:36"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-12-11T13:55:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -651,6 +651,12 @@
 		<language name="JPN_KANJI" font=" 1:small" width="48">バトルボックス</language>
 	</row>
 
+	<row id="msg_boxmes_03_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>上画面タイトル</comment>
+		<language name="JPN" font=" 1:small" width="48">ねかすポケモンをえらぶ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">ねかすポケモンをえらぶ</language>
+	</row>
+
 	<row id="msg_boxmes_04_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
 		<comment>メールを他に移動しようとしたとき</comment>
 		<language name="JPN" font=" 1:small" width="48">メールは　いどうできません！</language>
@@ -701,6 +707,13 @@
 	<row id="msg_boxmes_06_07" back-color="#00ffff,,,,,,#00ffff,#ff0000,,#00ffff,#ff0000,,#00ffff,,,#00ffff,,">
 		<language name="JPN" font=" 1:small" width="216">タマゴは　えらべません！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">タマゴは　えらべません！</language>
+	</row>
+
+	<row id="msg_boxmes_06_08" back-color="#00ffff,,,,,,#00ffff,#ff0000,,#00ffff,#ff0000,,#00ffff,,,#00ffff,,">
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]を　ねむらせます
+よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]を　ねむらせます
+よろしいですか？</language>
 	</row>
 
 	<flowchart-group-list>

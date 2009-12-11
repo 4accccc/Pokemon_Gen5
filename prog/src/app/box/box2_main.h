@@ -235,10 +235,10 @@ enum {
 	BOX2BMPWIN_ID_MSG1,			// メッセージ１
 	BOX2BMPWIN_ID_MSG2,			// メッセージ２
 	BOX2BMPWIN_ID_MSG3,			// メッセージ３
+	BOX2BMPWIN_ID_MSG4,			// メッセージ４
 // ↑使用確定-----------------------------------------------------
 
 
-	BOX2BMPWIN_ID_MSG4,			// メッセージ４
 
 	BOX2BMPWIN_ID_BOXMV_MENU,	// ボックス移動のメニュー
 

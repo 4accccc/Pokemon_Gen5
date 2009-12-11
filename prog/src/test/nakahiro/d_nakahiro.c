@@ -27,7 +27,7 @@
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 6 )
+#define	TOP_MENU_SIZ	( 7 )
 
 typedef struct {
 	u32	main_seq;
@@ -62,6 +62,7 @@ enum {
 	MAIN_SEQ_BOX_CALL3,
 	MAIN_SEQ_BOX_CALL4,
 	MAIN_SEQ_BOX_CALL5,
+	MAIN_SEQ_BOX_CALL6,
 	MAIN_SEQ_MOVIE_CALL,
 
 	MAIN_SEQ_END,
@@ -265,6 +266,19 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->box_data.callMode  = BOX_MODE_BATTLE;
 		SetBoxPoke( wk );
 //		SetPartyPoke( wk );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case MAIN_SEQ_BOX_CALL6:
+		wk->box_data.gamedata  = wk->gamedata;
+		wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
+		wk->box_data.pokeparty = GAMEDATA_GetMyPokemon( wk->gamedata );
+		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
+		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
+		wk->box_data.callMode  = BOX_MODE_SLEEP;
+		SetBoxPoke( wk );
+		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;

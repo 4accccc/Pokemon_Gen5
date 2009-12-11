@@ -40,6 +40,8 @@ enum {
 
 	BOX2UI_INIT_ID_BATTLEBOX_MAIN,			// バトルボックス・メイン
 	BOX2UI_INIT_ID_BATTLEBOX_PARTY,			// バトルボックス・パーティ操作メイン
+
+	BOX2UI_INIT_ID_SLEEP_MAIN,					// 寝かせる・メイン
 };
 
 // ボタンＩＤ
@@ -208,11 +210,15 @@ enum {
 	BOX2UI_ITEM_PARTY_MENU2,			// 10: バッグへ or もたせる
 	BOX2UI_ITEM_PARTY_CLOSE,			// 11: とじる
 
+	// 寝かせる
+	BOX2UI_SLEEP_MAIN_POKE1 = 0,	// 00: ポケモン
+	BOX2UI_SLEEP_MAIN_NAME = BOX2UI_SLEEP_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: ボックス名
+	BOX2UI_SLEEP_MAIN_LEFT,			// 31: トレイ切り替え矢印・左
+	BOX2UI_SLEEP_MAIN_RIGHT,		// 32: トレイ切り替え矢印・右
+	BOX2UI_SLEEP_MAIN_RETURN,		// 33: 戻る
 
-
-
-
-
+	BOX2UI_SLEEP_MAIN_SET,			// 34: ねかせる
+	BOX2UI_SLEEP_MAIN_CLOSE,		// 35: やめる
 
 	// ボックステーマ変更
 	BOX2UI_BOXTHEMA_MENU1 = 0,		// 00: ジャンプする
@@ -546,3 +552,5 @@ extern BOOL BOX2UI_HitCheckPartyFrameLeft(void);
 extern u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk );
 
 extern u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk );
+
+extern u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk );

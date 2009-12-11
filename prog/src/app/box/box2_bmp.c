@@ -242,6 +242,12 @@
 // メッセージ３
 #define	BMPWIN_MSG3_SX		( 19 )
 #define	BMPWIN_MSG3_SY		( 2 )
+// メッセージ４
+#define	BMPWIN_MSG4_PX		( 1 )
+#define	BMPWIN_MSG4_PY		( 19 )
+#define	BMPWIN_MSG4_SX		( 30 )
+#define	BMPWIN_MSG4_SY		( 4 )
+
 
 // ボックス移動のメニュー
 #define	BMPWIN_BOXMV_MENU_FRM	( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
@@ -459,13 +465,13 @@ static const u8	BoxBmpWinData[][6] =
 		BMPWIN_MSG1_FRM, BMPWIN_MSG1_PX, BMPWIN_MSG1_PY,
 		BMPWIN_MSG3_SX, BMPWIN_MSG3_SY, BMPWIN_MSG1_PAL,
 	},
-
-
-
 	{	// メッセージ４
-		BMPWIN_MSG1_FRM, BMPWIN_MSG1_PX, BMPWIN_MSG1_PY,
-		BMPWIN_MSG1_SX, BMPWIN_MSG1_SY, BMPWIN_MSG1_PAL,
+		BMPWIN_MSG1_FRM, BMPWIN_MSG4_PX, BMPWIN_MSG4_PY,
+		BMPWIN_MSG4_SX, BMPWIN_MSG4_SY, BMPWIN_MSG1_PAL,
 	},
+
+
+
 
 	{	// ボックス移動のメニュー
 		BMPWIN_BOXMV_MENU_FRM, BMPWIN_BOXMV_MENU_PX, BMPWIN_BOXMV_MENU_PY,
@@ -2639,4 +2645,10 @@ void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
 	}
 
 	SysMesPut( syswk, str, winID );
+}
+
+void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk )
+{
+	WORDSET_RegisterPokeNickNamePPP( syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+	SysMesPut( syswk, msg_boxmes_06_08, BOX2BMPWIN_ID_MSG4 );
 }

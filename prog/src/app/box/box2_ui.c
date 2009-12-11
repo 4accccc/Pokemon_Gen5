@@ -57,6 +57,7 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
 static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos );
+static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
 static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos );
@@ -79,6 +80,7 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
 
 static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
+static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
 static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos );
@@ -86,6 +88,7 @@ static void BoxItemArrangeMainCallBack_Move( void * work, int now_pos, int old_p
 
 static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
+static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
 static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos );
@@ -105,6 +108,11 @@ static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos )
 
 static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BattleBoxPartyMainCallBack_Move( void * work, int now_pos, int old_pos );
+static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_pos );
+
+static void SleepMainCallBack_On( void * work, int now_pos, int old_pos );
+static void SleepMainCallBack_Move( void * work, int now_pos, int old_pos );
+static void SleepMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
 
 //============================================================================================
@@ -136,7 +144,7 @@ static const CURSORMOVE_CALLBACK PartyOutMainCallBack = {
 	PartyOutMainCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Move,
-	CursorMoveCallBack_Touch
+	PartyOutMainCallBack_Touch
 };
 
 // あずける・ボックス選択
@@ -426,7 +434,7 @@ static const CURSORMOVE_CALLBACK BoxArrangePartyPokeCallBack = {
 	BoxArrangePartyMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePartyMoveCallBack_Move,
-	CursorMoveCallBack_Touch
+	BoxArrangePartyMoveCallBack_Touch,
 };
 
 // ボックス整理・ポケモン移動（手持ちポケモン）
@@ -575,7 +583,7 @@ static const CURSORMOVE_CALLBACK BoxItemArrangePartyPokeCallBack = {
 	BoxItemArrangePartyMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxItemArrangePartyMoveCallBack_Move,
-	CursorMoveCallBack_Touch
+	BoxItemArrangePartyMoveCallBack_Touch,
 };
 
 // ボックスジャンプ
@@ -598,15 +606,6 @@ static const CURSORMOVE_CALLBACK BoxJumpCallBack = {
 	BoxJumpCallBack_Move,
 	BoxJumpCallBack_Touch
 };
-
-/*
-// Ｙステータスボタンチェック
-static const GFL_UI_TP_HITTBL YStatusHitTbl[] =
-{
-	{ 168, 191, 0, 135 },
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
 
 // バトルボックス・メイン
 static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
@@ -695,9 +694,64 @@ static const CURSORMOVE_CALLBACK BattleBoxPartyMainCallBack = {
 	BattleBoxPartyMainCallBack_On,
 	CursorMoveCallBack_Off,
 	BattleBoxPartyMainCallBack_Move,
-	CursorMoveCallBack_Touch
+	BattleBoxPartyMainCallBack_Touch,
 };
 
+// 寝かせる・メイン
+static const CURSORMOVE_DATA SleepMainCursorMoveData[] =
+{
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  6, 5, 1, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },		// 00: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  7, 0, 2, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  8, 1, 3, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  9, 2, 4, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30, 10, 3, 5, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30, 11, 4, 0, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	0, 12, 11,  7, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 06: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	1, 13,  6,  8, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	2, 14,  7,  9, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	3, 15,  8, 10, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	4, 16,  9, 11, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	5, 17, 10,  6, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 6, 18, 17, 13, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 12: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 7, 19, 12, 14, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 8, 20, 13, 15, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 9, 21, 14, 16, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	10, 22, 15, 17, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	11, 23, 16, 12, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	12, 24, 23, 19, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 18: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	13, 25, 18, 20, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	14, 26, 19, 21, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	15, 27, 20, 22, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	16, 28, 21, 23, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	17, 29, 22, 18, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	18, 30, 29, 25, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 24: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	19, 30, 24, 26, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	20, 30, 25, 27, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	21, 30, 26, 28, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 30, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 30, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+
+	{  84,  16, 0, 0,	24, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+
+	{ 0, 0, 0, 0,	33, 33, 33, 33, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 33: 戻る
+
+	{ 212, 112, 0, 0,	35, 35, 34, 34, { 112, 135, 168, 255 } },	// 34: ねかせる
+	{ 212, 136, 0, 0,	34, 34, 35, 35, { 136, 159, 168, 255 } },	// 35: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
+};
+static const CURSORMOVE_CALLBACK SleepMainCallBack = {
+	SleepMainCallBack_On,
+	CursorMoveCallBack_Off,
+	SleepMainCallBack_Move,
+	SleepMainCallBack_Touch
+};
 
 
 
@@ -776,6 +830,11 @@ static const MOVE_DATA_TBL MoveDataTable[] =
 		BattleBoxPartyMainCursorMoveData,
 		&BattleBoxPartyMainCallBack
 	},
+
+	{	// ねかせる・メイン
+		SleepMainCursorMoveData,
+		&SleepMainCallBack
+	},
 };
 
 
@@ -806,9 +865,11 @@ void BOX2UI_CursorMoveInit( BOX2_SYS_WORK * syswk )
 	case BOX_MODE_ITEM:
 		id = BOX2UI_INIT_ID_ITEM_MAIN;
 		break;
-
 	case BOX_MODE_BATTLE:
 		id = BOX2UI_INIT_ID_BATTLEBOX_MAIN;
+		break;
+	case BOX_MODE_SLEEP:
+		id = BOX2UI_INIT_ID_SLEEP_MAIN;
 		break;
 	}
 
@@ -1064,6 +1125,17 @@ static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos )
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 
 	CursorObjMove( syswk, now_pos );
+}
+
+static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( now_pos == BOX2UI_PTOUT_MAIN_RETURN1 ||		// 06: 戻る１
+			now_pos == BOX2UI_PTOUT_MAIN_RETURN2 ){		// 07: 戻る２
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -1362,11 +1434,14 @@ static void PartyInMainCallBack_Touch( void * work, int now_pos, int old_pos )
 		CursorObjMove( syswk, now_pos );
 	}
 */
+
 	BOX2_SYS_WORK * syswk = work;
 
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
+	if( now_pos == BOX2UI_PTIN_MAIN_RETURN1 ||
+			now_pos == BOX2UI_PTIN_MAIN_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -1506,9 +1581,11 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
+	if( now_pos == BOX2UI_ARRANGE_MAIN_RETURN1 ||
+			now_pos == BOX2UI_ARRANGE_MAIN_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -1945,6 +2022,17 @@ static void BoxArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 }
 
+static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( now_pos == BOX2UI_ARRANGE_PARTY_RETURN1 ||		// 06: 戻る１
+			now_pos == BOX2UI_ARRANGE_PARTY_RETURN2 ){		// 07: 戻る２
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
+}
+
 //============================================================================================
 //============================================================================================
 
@@ -2322,9 +2410,11 @@ static void BoxItemArrangeMainCallBack_Touch( void * work, int now_pos, int old_
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
+	if( now_pos == BOX2UI_ITEM_MAIN_RETURN1 ||
+			now_pos == BOX2UI_ITEM_MAIN_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -2434,6 +2524,17 @@ static void BoxItemArrangePartyMoveCallBack_Move( void * work, int now_pos, int 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+}
+
+static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( now_pos == BOX2UI_ITEM_PARTY_RETURN1 ||
+			now_pos == BOX2UI_ITEM_PARTY_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -2972,9 +3073,11 @@ static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
+	if( now_pos == BOX2UI_BATTLEBOX_MAIN_RETURN1 ||
+			now_pos == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
 }
 
 
@@ -3080,6 +3183,149 @@ static void BattleBoxPartyMainCallBack_Move( void * work, int now_pos, int old_p
 
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 }
+
+static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( now_pos == BOX2UI_BATTLEBOX_PARTY_RETURN1 ||
+			now_pos == BOX2UI_BATTLEBOX_PARTY_RETURN2 ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
+}
+
+
+//============================================================================================
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 「寝かすポケモンをえらぶ」メイン操作
+ *
+ * @param	syswk	ボックス画面システムワーク
+ *
+ * @return	動作結果
+ */
+//--------------------------------------------------------------------------------------------
+u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
+{
+	u32	ret;
+	u8	now;
+
+	now = CURSORMOVE_PosGet( syswk->app->cmwk );
+	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
+
+	// メニュー非表示
+	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+		if( ret >= BOX2UI_SLEEP_MAIN_SET && ret <= BOX2UI_SLEEP_MAIN_CLOSE ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
+		}
+	// メニュー表示中
+	}else{
+		if( ret == BOX2UI_SLEEP_MAIN_NAME || ret == BOX2UI_SLEEP_MAIN_RETURN ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
+		}
+		if( ret == CURSORMOVE_CANCEL ){
+			return BOX2UI_SLEEP_MAIN_CLOSE;
+		}
+	}
+
+	return ret;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 「寝かすポケモンをえらぶ」メイン操作コールバック関数：カーソル表示時
+ *
+ * @param	work		ボックス画面システムワーク
+ * @param	now_pos		現在の位置
+ * @param	old_pos		前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SleepMainCallBack_On( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
+		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+			switch( now_pos ){
+			case BOX2UI_SLEEP_MAIN_LEFT:
+			case BOX2UI_SLEEP_MAIN_RIGHT:
+				now_pos = BOX2UI_SLEEP_MAIN_NAME;
+				break;
+
+			case BOX2UI_SLEEP_MAIN_NAME:
+			case BOX2UI_SLEEP_MAIN_RETURN:
+				break;
+
+			default:
+				if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+					now_pos = syswk->get_pos;
+				}else{
+					now_pos = BOX2UI_SLEEP_MAIN_POKE1;
+				}
+			}
+		}else{
+			if( now_pos != BOX2UI_SLEEP_MAIN_SET ||
+					now_pos != BOX2UI_SLEEP_MAIN_CLOSE ){
+				now_pos = BOX2UI_SLEEP_MAIN_SET;
+			}
+		}
+	}
+
+	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
+
+	CursorObjMove( syswk, now_pos );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 「寝かすポケモンをえらぶ」メイン操作コールバック関数：カーソル移動時
+ *
+ * @param	work		ボックス画面システムワーク
+ * @param	now_pos		現在の位置
+ * @param	old_pos		前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SleepMainCallBack_Move( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
+
+	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 「寝かすポケモンをえらぶ」メイン操作コールバック関数：タッチ時
+ *
+ * @param	work		ボックス画面システムワーク
+ * @param	now_pos		現在の位置
+ * @param	old_pos		前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SleepMainCallBack_Touch( void * work, int now_pos, int old_pos )
+{
+	BOX2_SYS_WORK * syswk = work;
+
+	if( now_pos == BOX2UI_SLEEP_MAIN_RETURN ){
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
+}
+
 
 
 //============================================================================================

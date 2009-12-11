@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-12-08T15:37:47"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-12-11T12:24:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -809,6 +809,12 @@
 		<comment>メニュー（バトルボックス）</comment>
 		<language name="JPN" font=" 1:small" width="72">いどうする</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
+	</row>
+
+	<row id="mes_boxbutton_02_10" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>メニュー</comment>
+		<language name="JPN" font=" 1:small" width="72">ねかせる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ねかせる</language>
 	</row>
 
 	<row id="mes_boxbutton_03_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">

@@ -759,3 +759,5 @@ extern void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID );
 extern void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID );
 
 extern void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID );
+
+extern void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk );
