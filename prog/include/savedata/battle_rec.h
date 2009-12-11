@@ -238,7 +238,7 @@ extern void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp);
 
 
 extern void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup );
-extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID );
+extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup );
 
 //==============================================================================
 //  一部関数をbattle_rec_ov.cに移動した為、外部公開する必要になったもの

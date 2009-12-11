@@ -606,6 +606,7 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR r
       dst->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
     }
   }
+  BattleRec_RestoreSetupParam( dst );
 }
 
 /*

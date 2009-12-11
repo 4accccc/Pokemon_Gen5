@@ -433,7 +433,6 @@ struct _DEBUG_BTL_WORK {
   const POKEMON_PARAM*  clipPoke;
   HEAPID          heapID;
   u8              fNetConnect;
-  u8              fPlayerPartyAllocated;
   u8              pageNum;
   pMainProc       mainProc;
   int             mainSeq;
@@ -497,7 +496,7 @@ static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam );
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
-static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
+static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
 static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* setup );
 static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
@@ -1412,6 +1411,7 @@ FS_EXTERN_OVERLAY(battle);
     SEQ_BTL_RETURN,
     SEQ_BTL_SAVING,
     SEQ_BTL_RELEASE,
+    SEQ_WAIT_BEEP,
   };
 
   enum {
@@ -1467,8 +1467,21 @@ FS_EXTERN_OVERLAY(battle);
 
   // バトルパラメータセット
   case SEQ_SETUP_START:
+
     BATTLE_PARAM_Init( &wk->setupParam );
-    wk->fPlayerPartyAllocated = FALSE;
+
+    // 録画再生
+    if( wk->saveData.recMode == DBF_RECMODE_PLAY )
+    {
+      if( LoadRecord(wk, wk->saveData.recBufID, &wk->setupParam) ){
+        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
+        (*seq) = SEQ_BTL_START;
+      }else{
+        PMSND_PlaySE( SEQ_SE_BEEP );
+        (*seq) = SEQ_WAIT_BEEP;
+      }
+      break;
+    }
 
     // 野生
     if( btltype_IsWild(wk->saveData.btlType) )
@@ -1541,15 +1554,6 @@ FS_EXTERN_OVERLAY(battle);
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
-    if( wk->saveData.recMode == DBF_RECMODE_REC ){
-      BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
-    }
-    else if( wk->saveData.recMode == DBF_RECMODE_PLAY ){
-      BTL_SETUP_AllocRecBuffer( &wk->setupParam, HEAPID_BTL_DEBUG_SYS );
-      LoadRecord( wk, wk->saveData.recBufID, &wk->setupParam );
-      BTL_SETUP_SetRecordPlayMode( &wk->setupParam );
-      TAYA_Printf("バトルパラメータを録画再生モードにした\n");
-    }
     (*seq) = SEQ_BTL_START;
     break;
 
@@ -1583,6 +1587,12 @@ FS_EXTERN_OVERLAY(battle);
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
     break;
+
+  case SEQ_WAIT_BEEP:
+    if( !PMSND_CheckPlaySE() ){
+      setMainProc( wk, mainProc_Root );
+    }
+    break;
   }
   return FALSE;
 }
@@ -1594,49 +1604,26 @@ FS_EXTERN_OVERLAY(battle);
  */
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam )
 {
-  u8* dataPtr = (u8*)BattleRec_GetOperationBufferPtr();
+  BattleRec_StoreSetupParam( setupParam );
 
-  *((u32*)dataPtr) = setupParam->recDataSize;
-  TAYA_Printf("録画データセーブ準備:WorkPtr=%p, dataSize=%dbyte, ptr=%p, dump=%08x\n", dataPtr, *dataPtr, dataPtr, *dataPtr);
-  dataPtr += sizeof(u32);
-  GFL_STD_MemCopy( &setupParam->recRandContext, dataPtr, sizeof(setupParam->recRandContext) );
-  dataPtr += sizeof(setupParam->recRandContext);
-  GFL_STD_MemCopy( setupParam->recBuffer, dataPtr, setupParam->recDataSize );
+  TAYA_Printf("*** 録画データバッファダンプ（書き込み直後）***\n");
+  {
+    u8* p = (u8*)BattleRec_GetOperationBufferPtr();
+    u32 i;
+    for(i=0; i<32; ++i)
+    {
+      TAYA_Printf("%02x,", p[i]);
+      if( (i==15) || (i==31)){
+        TAYA_Printf("\n");
+      }
+    }
+  }
 
   wk->saveCtrl = GAMEDATA_GetSaveControlWork( wk->gameData );
   wk->saveSeq0 = 0;
   wk->saveSeq1 = 0;
-
-  wk->recDataSize = setupParam->recDataSize;
-  GFL_STD_MemCopy( setupParam->recBuffer, wk->recBuffer, wk->recDataSize );
-  wk->recRand = setupParam->recRandContext;
-
-  // 保存すべきデータをダンプ出力している（仮データ配列作成のため）
-  {
-    u32 i;
-    u8* rcp;
-
-    TAYA_Printf("**** Kari Rec Data ****\n");
-    for(i=0; i<setupParam->recDataSize; ++i){
-      TAYA_Printf("0x%02x,", setupParam->recBuffer[i]);
-      if((i+1)%16 == 0){
-        TAYA_Printf("\n");
-      }
-    }
-    TAYA_Printf("\n");
-
-    TAYA_Printf("**** Kari RAND Data ****\n");
-    rcp = (u8*)(&setupParam->recRandContext);
-    for(i=0; i<sizeof(setupParam->recRandContext); ++i){
-      TAYA_Printf("0x%02x,", rcp[i]);
-      if((i+1)%16 == 0){
-        TAYA_Printf("\n");
-      }
-    }
-    TAYA_Printf("\n");
-  }
-
 }
+
 /**
  *  BATTLE_SETUP_PARAM の録画データセーブ終了待ち
  */
@@ -1665,52 +1652,21 @@ static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
 /**
  *  BATTLE_SETUP_PARAM に録画データをロードしてセッティング
  */
-static void LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
+static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
 {
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( wk->gameData );
   LOAD_RESULT result;
 
-  TAYA_Printf("ロードする\n");
   BattleRec_Load( sv, wk->heapID, &result, bufID );
   if( result == LOAD_RESULT_OK )
   {
-    u8* dataPtr = (u8*)BattleRec_GetOperationBufferPtr();
-
-
-    dst->recDataSize = *((u32*)dataPtr);
-    TAYA_Printf("ロードできた ptr=%p, size=%d\n", dataPtr, dst->recDataSize);
-    dataPtr += sizeof(u32);
-    GFL_STD_MemCopy( dataPtr, &dst->recRandContext, sizeof(dst->recRandContext) );
-    dataPtr += sizeof(dst->recRandContext);
-    GFL_STD_MemCopy( dataPtr, dst->recBuffer, dst->recDataSize );
-
-    {
-      u32* p = (u32*)BattleRec_GetOperationBufferPtr();
-      TAYA_Printf("録画データ読み込み完了 (bufID=%d, %dbyte, ptr=%p, dump=%08x)\n", bufID, dst->recDataSize, p, *p);
-    }
+    TAYA_Printf("録画データが正しくロードできた\n");
+    BTL_SETUP_InitForRecordPlay( dst, BattleRec_WorkPtrGet(), wk->gameData, wk->heapID );
+    return TRUE;
   }
   else
   {
-//    #define _TEST_REC_1ST
-    static const u8 kariRecData[] = {
-      0x12,0x01,0xf1,0x64,0x00,0x00,0x21,0x41,0x17,0x00,0x00,0x12,0x01,0xb1,0x25,0x00,
-      0x00,0x21,0x41,0x08,0x00,0x00,0x12,0x01,0xf1,0x01,0x00,0x00,0x21,0x41,0x08,0x00,
-      0x00,
-    };
-    static const u8 kariRecRand[] = {
-      0x46, 0x11, 0x82, 0x3e, 0xda, 0x39, 0xd2, 0x50,
-      0x65, 0x89, 0x07, 0x6c, 0x65, 0x8b, 0x58, 0x5d,
-      0xc3, 0x9e, 0x26, 0x00, 0x00, 0x00, 0x00, 0x00,
-    };
-
-    dst->recDataSize = sizeof(kariRecData);
-    GFL_STD_MemCopy( kariRecData, dst->recBuffer, sizeof(kariRecData) );
-    GFL_STD_MemCopy( kariRecRand, &(dst->recRandContext), sizeof(kariRecRand) );
-
-    {
-      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
-      TAYA_Printf("録画データ読み込み失敗: bufID=%d,  ResultCode=%d, dataPtr=%p, dump=%08x\n", bufID, result, dataPtr, *dataPtr );
-    }
+    return FALSE;
   }
 }
 /**

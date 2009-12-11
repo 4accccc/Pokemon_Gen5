@@ -46,15 +46,15 @@ static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
 static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
 static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party);
 static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
 static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
 static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer );
 static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer );
 static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
 static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID );
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
 
 
 
@@ -1213,17 +1213,16 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
  * 録画セーブバッファからバトルセットアップパラメータを復元する
  *
  * @param   setup   [out] 復元先
- * @param   heapID
  */
 //=============================================================================================
-void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
+void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup )
 {
   BATTLE_REC_WORK  *rec = &brs->rec;
 
-  restore_Party( setup, rec, heapID );
-  restore_ClientStatus( setup, rec, heapID );
-  restore_OperationBuffer( setup, rec, heapID );
-  restore_SetupSubset( setup, rec, heapID );
+  restore_Party( setup, rec );
+  restore_ClientStatus( setup, rec );
+  restore_OperationBuffer( setup, rec );
+  restore_SetupSubset( setup, rec );
 }
 
 //----------------------------------------------------------------------------------
@@ -1250,10 +1249,9 @@ static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
  *
  * @param   setup
  * @param   rec
- * @param   heapID
  */
 //----------------------------------------------------------------------------------
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   u32 i;
   for(i=0; i<BTL_CLIENT_NUM; ++i)
@@ -1296,10 +1294,9 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
  *
  * @param   setup
  * @param   rec
- * @param   heapID
  */
 //----------------------------------------------------------------------------------
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
 {
   u32 i;
   for(i=0; i<NELEMS(setup->playerStatus); ++i)
@@ -1383,12 +1380,11 @@ static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_W
  *
  * @param   setup
  * @param   rec
- * @param   heapID
  *
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
 {
   setup->recDataSize = rec->opBuffer.size;
   GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
@@ -1423,12 +1419,11 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
  *
  * @param   setup
  * @param   rec
- * @param   heapID
  *
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec, HEAPID heapID )
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
 {
   setup->fieldSituation = rec->setupSubset.fieldSituation;
   setup->recRandContext = rec->setupSubset.randomContext;
