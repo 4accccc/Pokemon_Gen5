@@ -1436,7 +1436,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 //		Snd_SePlay( SE_BOX2_DECIDE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_ARRANGE_MAIN_GET:			// 36: ‚Â‚©‚Þ
 /*
@@ -3278,8 +3278,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 //		Snd_SePlay( SE_BOX2_DECIDE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_ARRANGE_PARTY_GET:				// 09: ‚Â‚©‚Þ
 //		Snd_SePlay( SE_BOX2_DECIDE );
@@ -4804,7 +4803,6 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	ret = BOX2UI_HitTrayPokeTrg();
-
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -4867,7 +4865,7 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_PTIN_MAIN_RETURN2:		// 34: –ß‚é‚Q
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_PTIN_MAIN_TSURETEIKU:	// 35: ‚Â‚ê‚Ä‚¢‚­
 //			Snd_SePlay( SE_BOX2_DECIDE );
@@ -5290,7 +5288,7 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 //		Snd_SePlay( SE_BOX2_DECIDE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_PTOUT_MAIN_AZUKERU:		// 08: ‚ ‚¸‚¯‚é
 //		Snd_SePlay( SE_BOX2_DECIDE );
@@ -6376,7 +6374,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 //		Snd_SePlay( SE_BOX2_DECIDE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_ITEM_MAIN_MENU1:				// 36: ‚¢‚Ç‚¤‚·‚é
 //		Snd_SePlay( SE_BOX2_OPEN_PARTY_TRAY );
@@ -7735,8 +7733,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 //		Snd_SePlay( SE_BOX2_DECIDE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_ITEM_PARTY_MENU1:			// 09: ‚¢‚Ç‚¤‚·‚é
 //		Snd_SePlay( SE_BOX2_DECIDE );
@@ -11729,12 +11726,16 @@ static int MainSeq_ArrangePartyPokeGetExit( BOX2_SYS_WORK * syswk )
 	case 0:
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
-		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		BOX2MAIN_PokeInfoOff( syswk );
-//		BOX2BGWFRM_PartyPokeFrameOutSet( syswk->app->wfrm );
-		BOX2BGWFRM_PartyPokeFrameLeftMoveSet( syswk->app->wfrm );
-		syswk->app->sub_seq++;
+		if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->pokechg_mode == 0 ){
+			BOX2BGWFRM_PartyPokeFrameOutSet( syswk->app->wfrm );
+			syswk->app->sub_seq = 2;
+		}else{
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
+			BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
+			BOX2BGWFRM_PartyPokeFrameLeftMoveSet( syswk->app->wfrm );
+			syswk->app->sub_seq = 1;
+		}
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
 
 	case 1:
@@ -11755,6 +11756,19 @@ static int MainSeq_ArrangePartyPokeGetExit( BOX2_SYS_WORK * syswk )
 				BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_PARTY, pos );
 				return BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
 			}
+		}
+
+	case 2:
+		syswk->app->sub_seq = 0;
+		{
+			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+				pos = 0;
+			}
+			BOX2MAIN_PokeInfoPut( syswk, pos );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_MAIN, pos );
+			return BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 		}
 	}
 
@@ -12425,10 +12439,11 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_BATTLEBOX_MAIN_RETURN2:	// 35: –ß‚é‚Q
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_BATTLEBOX_MAIN_GET:			// 36: ‚¢‚Ç‚¤‚·‚é
 //		Snd_SePlay( SE_BOX2_DECIDE );
+		syswk->pokechg_mode = 0;
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT) );
 
 	case BOX2UI_BATTLEBOX_MAIN_STATUS:	// 37: ‚æ‚¤‚·‚ð‚Ý‚é
@@ -12660,9 +12675,10 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_BATTLEBOX_PARTY_RETURN2:		// 08: –ß‚é‚Q
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_BATTLEBOX_PARTY_GET:				// 09: ‚¢‚Ç‚¤‚·‚é
+		syswk->pokechg_mode = 1;
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT) );
 
 	case BOX2UI_BATTLEBOX_PARTY_STATUS:			// 10: ‚æ‚¤‚·‚ð‚Ý‚é
@@ -12839,7 +12855,7 @@ static int MainSeq_SleepMain( BOX2_SYS_WORK * syswk )
 		syswk->dat->retMode = BOX_END_MODE_MENU;
 		syswk->dat->retTray = BOX_RET_SEL_NONE;
 		syswk->dat->retPoke = BOX_RET_SEL_NONE;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
 
 	case BOX2UI_SLEEP_MAIN_SET:			// 34: ‚Ë‚©‚¹‚é
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_SLEEP_MENU_SET) );

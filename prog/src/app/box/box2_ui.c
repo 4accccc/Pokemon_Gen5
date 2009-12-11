@@ -1069,6 +1069,13 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 				CursorObjMove( syswk, now );
 				return CURSORMOVE_NONE;
 			}
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				return BOX2UI_PTOUT_MAIN_RETURN1;
+			}
+			if( ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
+				CURSORMOVE_PosSet( syswk->app->cmwk, now );
+				return BOX2UI_PTOUT_MAIN_RETURN2;
+			}
 		}else{
 			if( ret == BOX2UI_PTOUT_MAIN_RETURN1 || ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
 				CURSORMOVE_PosSet( syswk->app->cmwk, now );
@@ -1343,6 +1350,13 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 				CursorObjMove( syswk, now );
 				return CURSORMOVE_NONE;
 			}
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				return BOX2UI_PTIN_MAIN_RETURN1;
+			}
+			if( ret == BOX2UI_PTIN_MAIN_RETURN2 ){
+				CURSORMOVE_PosSet( syswk->app->cmwk, now );
+				return BOX2UI_PTIN_MAIN_RETURN2;
+			}
 		}else{
 			if( ret == BOX2UI_PTIN_MAIN_RETURN1 ||
 					ret == BOX2UI_PTIN_MAIN_RETURN2 ){
@@ -1471,6 +1485,13 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, now );
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_ARRANGE_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_ARRANGE_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_ARRANGE_MAIN_RETURN2;
 		}
 	// メニュー表示中
 	}else{
@@ -1916,6 +1937,13 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_ARRANGE_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_ARRANGE_PARTY_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_ARRANGE_PARTY_RETURN2;
+		}
 	}else{
 		if( ret == BOX2UI_ARRANGE_PARTY_BOXLIST ||
 				ret == BOX2UI_ARRANGE_PARTY_RETURN1 ||
@@ -2302,6 +2330,13 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_ITEM_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_ITEM_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_ITEM_MAIN_RETURN2;
+		}
 	}else{
 		if( ret == BOX2UI_ITEM_MAIN_PARTY ||
 				ret == BOX2UI_ITEM_MAIN_RETURN1 ||
@@ -2445,6 +2480,13 @@ u32 BOX2UI_BoxItemArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, now );
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_ITEM_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_ITEM_PARTY_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_ITEM_PARTY_RETURN2;
 		}
 	}else{
 		if( ret == BOX2UI_ITEM_PARTY_BOXLIST ||
@@ -2966,9 +3008,17 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_BATTLEBOX_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_BATTLEBOX_MAIN_RETURN2;
+		}
 	// メニュー表示中
 	}else{
-		if( ret == BOX2UI_BATTLEBOX_MAIN_PARTY ||
+		if( ret == BOX2UI_BATTLEBOX_MAIN_NAME ||
+				ret == BOX2UI_BATTLEBOX_MAIN_PARTY ||
 				ret == BOX2UI_BATTLEBOX_MAIN_RETURN1 ||
 				ret == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
 			CURSORMOVE_PosSet( syswk->app->cmwk, now );
@@ -3107,6 +3157,13 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			return BOX2UI_BATTLEBOX_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_BATTLEBOX_PARTY_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_BATTLEBOX_PARTY_RETURN2;
+		}
 	}else{
 		if( ret == BOX2UI_BATTLEBOX_PARTY_BOXLIST ||
 				ret == BOX2UI_BATTLEBOX_PARTY_RETURN1 ||
@@ -3222,6 +3279,10 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, now );
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
+		}
+		if( ret == BOX2UI_SLEEP_MAIN_RETURN ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_SLEEP_MAIN_RETURN;
 		}
 	// メニュー表示中
 	}else{
@@ -3650,110 +3711,3 @@ BOOL BOX2UI_HitCheckPartyFrameLeft(void)
 
 
 
-
-#if 0
-//============================================================================================
-/**
- * @file	box2_tp.c
- * @brief	新ボックス画面 タッチパネル関連
- * @author	Hiroyuki Nakamura
- * @date	08.05.30
- */
-//============================================================================================
-#include <gflib.h>
-//↑[GS_CONVERT_TAG]
-
-#include "gflib/touchpanel.h"
-
-#include "box2_main.h"
-#include "box2_obj.h"
-#include "box2_tp.h"
-
-
-//============================================================================================
-//	定数定義
-//============================================================================================
-#define	TRAYPOKE_SX		( BOX2OBJ_TRAYPOKE_SX )						// トレイのポケモンのタッチ範囲サイズＸ
-#define	TRAYPOKE_SY		( 24 )										// トレイのポケモンのタッチ範囲サイズＹ
-#define	TRAYPOKE_PX		( BOX2OBJ_TRAYPOKE_PX - TRAYPOKE_SX / 2 )	// トレイのポケモンのタッチ開始座標Ｘ
-#define	TRAYPOKE_PY		( 40 )										// トレイのポケモンのタッチ開始座標Ｙ
-
-
-//============================================================================================
-//	プロトタイプ宣言
-//============================================================================================
-
-
-//============================================================================================
-//	グローバル変数
-//============================================================================================
-
-// タッチ座標テーブル：トレイのポケモン
-static const GFL_UI_TP_HITTBL TrayPokeHitTbl[] =
-//↑[GS_CONVERT_TAG]
-{
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*0, TRAYPOKE_PX+TRAYPOKE_SX*1-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*1, TRAYPOKE_PX+TRAYPOKE_SX*2-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*2, TRAYPOKE_PX+TRAYPOKE_SX*3-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*3, TRAYPOKE_PX+TRAYPOKE_SX*4-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*4, TRAYPOKE_PX+TRAYPOKE_SX*5-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*0, TRAYPOKE_PY+TRAYPOKE_SY*1-1, TRAYPOKE_PX+TRAYPOKE_SX*5, TRAYPOKE_PX+TRAYPOKE_SX*6-1 },
-
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*0, TRAYPOKE_PX+TRAYPOKE_SX*1-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*1, TRAYPOKE_PX+TRAYPOKE_SX*2-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*2, TRAYPOKE_PX+TRAYPOKE_SX*3-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*3, TRAYPOKE_PX+TRAYPOKE_SX*4-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*4, TRAYPOKE_PX+TRAYPOKE_SX*5-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*1, TRAYPOKE_PY+TRAYPOKE_SY*2-1, TRAYPOKE_PX+TRAYPOKE_SX*5, TRAYPOKE_PX+TRAYPOKE_SX*6-1 },
-
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*0, TRAYPOKE_PX+TRAYPOKE_SX*1-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*1, TRAYPOKE_PX+TRAYPOKE_SX*2-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*2, TRAYPOKE_PX+TRAYPOKE_SX*3-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*3, TRAYPOKE_PX+TRAYPOKE_SX*4-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*4, TRAYPOKE_PX+TRAYPOKE_SX*5-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*2, TRAYPOKE_PY+TRAYPOKE_SY*3-1, TRAYPOKE_PX+TRAYPOKE_SX*5, TRAYPOKE_PX+TRAYPOKE_SX*6-1 },
-
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*0, TRAYPOKE_PX+TRAYPOKE_SX*1-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*1, TRAYPOKE_PX+TRAYPOKE_SX*2-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*2, TRAYPOKE_PX+TRAYPOKE_SX*3-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*3, TRAYPOKE_PX+TRAYPOKE_SX*4-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*4, TRAYPOKE_PX+TRAYPOKE_SX*5-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*3, TRAYPOKE_PY+TRAYPOKE_SY*4-1, TRAYPOKE_PX+TRAYPOKE_SX*5, TRAYPOKE_PX+TRAYPOKE_SX*6-1 },
-
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*0, TRAYPOKE_PX+TRAYPOKE_SX*1-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*1, TRAYPOKE_PX+TRAYPOKE_SX*2-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*2, TRAYPOKE_PX+TRAYPOKE_SX*3-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*3, TRAYPOKE_PX+TRAYPOKE_SX*4-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*4, TRAYPOKE_PX+TRAYPOKE_SX*5-1 },
-	{ TRAYPOKE_PY+TRAYPOKE_SX*4, TRAYPOKE_PY+TRAYPOKE_SY*5-1, TRAYPOKE_PX+TRAYPOKE_SX*5, TRAYPOKE_PX+TRAYPOKE_SX*6-1 },
-
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-//↑[GS_CONVERT_TAG]
-};
-
-// タッチ座標テーブル：手持ちポケモン（左）
-static const GFL_UI_TP_HITTBL PartyPokeLeftHitTbl[] =
-//↑[GS_CONVERT_TAG]
-{
-	{  68-12,  68+12-1, 42-12, 42+12-1 }, {  76-12,  76+12-1, 78-12, 78+12-1 },
-	{ 100-12, 100+12-1, 42-12, 42+12-1 }, { 108-12, 108+12-1, 78-12, 78+12-1 },
-	{ 132-12, 132+12-1, 42-12, 42+12-1 }, { 140-12, 140+12-1, 78-12, 78+12-1 },
-
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-//↑[GS_CONVERT_TAG]
-};
-
-// タッチ座標テーブル：手持ちポケモン（右）
-static const GFL_UI_TP_HITTBL PartyPokeRightHitTbl[] =
-//↑[GS_CONVERT_TAG]
-{
-	{  68-12,  68+12-1, 194-12, 194+12-1 }, {  76-12,  76+12-1, 230-12, 230+12-1 },
-	{ 100-12, 100+12-1, 194-12, 194+12-1 }, { 108-12, 108+12-1, 230-12, 230+12-1 },
-	{ 132-12, 132+12-1, 194-12, 194+12-1 }, { 140-12, 140+12-1, 230-12, 230+12-1 },
-
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-//↑[GS_CONVERT_TAG]
-};
-
-
-#endif

@@ -338,45 +338,78 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		0, CLSYS_DRAW_SUB,
 	},
 
-	{	// ●
+/*
+	{	// ●（メイン）
 		{ 200, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
-		0, CLSYS_DRAW_SUB,
+		0, CLSYS_DRAW_MAIN,
 	},
-	{	// ★
+	{	// ★（メイン）
 		{ 208, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
-		0, CLSYS_DRAW_SUB,
+		0, CLSYS_DRAW_MAIN,
 	},
-	{	// ◆
+	{	// ◆（メイン）
 		{ 216, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
-		0, CLSYS_DRAW_SUB,
+		0, CLSYS_DRAW_MAIN,
 	},
-	{	// ■
+	{	// ■（メイン）
 		{ 224, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
-		0, CLSYS_DRAW_SUB,
+		0, CLSYS_DRAW_MAIN,
 	},
-	{	// ▲
+	{	// ▲（メイン）
 		{ 232, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
-		0, CLSYS_DRAW_SUB,
+		0, CLSYS_DRAW_MAIN,
 	},
-	{	// ハート
+	{	// ハート（メイン）
 		{ 240, 104, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
+		0, CLSYS_DRAW_MAIN,
+	},
+*/
+
+	{	// ●（サブ）
+		{ 200, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ★（サブ）
+		{ 208, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ◆（サブ）
+		{ 216, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ■（サブ）
+		{ 224, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ▲（サブ）
+		{ 232, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ハート（サブ）
+		{ 240, 104, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 
 	{	// レア
 		{ 160, 104, APP_COMMON_POKE_MARK_STAR_RED, 10, 1 },
-		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ポケルス
 		{ 168, 104, APP_COMMON_POKE_MARK_POKERUSU, 10, 1 },
-		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
+		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ポケルスアイコン
@@ -2270,20 +2303,20 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 																							ah, APP_COMMON_GetPokeTypePltArcIdx(),
 																							CLSYS_DRAW_SUB, PALNUM_TYPEICON_S*0x20, HEAPID_BOX_APP );
 
-	appwk->chrRes[BOX2MAIN_CHRRES_POKEMARK] = GFL_CLGRP_CGR_Register(
-																							ah,
-																							APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
-																							FALSE, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+	appwk->chrRes[BOX2MAIN_CHRRES_POKEMARK_SUB] = GFL_CLGRP_CGR_Register(
+																									ah,
+																									APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
+																									FALSE, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
 
-	appwk->celRes[BOX2MAIN_CELRES_POKEMARK] = GFL_CLGRP_CELLANIM_Register(
-																							ah,
-																							APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
-																							APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
-																							HEAPID_BOX_APP );
+	appwk->celRes[BOX2MAIN_CELRES_POKEMARK_SUB] = GFL_CLGRP_CELLANIM_Register(
+																									ah,
+																									APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
+																									APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
+																									HEAPID_BOX_APP );
 
-  appwk->palRes[BOX2MAIN_PALRES_POKEMARK] = GFL_CLGRP_PLTT_Register(
-																							ah,APP_COMMON_GetPokeMarkPltArcIdx(),
-																							CLSYS_DRAW_SUB, PALNUM_MARK_S*0x20, HEAPID_BOX_APP );
+  appwk->palRes[BOX2MAIN_PALRES_POKEMARK_SUB] = GFL_CLGRP_PLTT_Register(
+																									ah,APP_COMMON_GetPokeMarkPltArcIdx(),
+																									CLSYS_DRAW_SUB, PALNUM_MARK_S*0x20, HEAPID_BOX_APP );
 
 	appwk->chrRes[BOX2MAIN_CHRRES_POKERUSICON] = GFL_CLGRP_CGR_Register(
 																								ah,
@@ -2859,7 +2892,7 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 	appwk->clwk[BOX2OBJ_ID_TB_STATUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TB_STATUS] );
 
 	for( i=0; i<6; i++ ){
-		appwk->clwk[BOX2OBJ_ID_MARK1+i] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_MARK1+i] );
+		appwk->clwk[BOX2OBJ_ID_MARK1_S+i] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_MARK1_S+i] );
 	}
 	appwk->clwk[BOX2OBJ_ID_RARE] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_RARE] );
 	appwk->clwk[BOX2OBJ_ID_POKERUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_POKERUS] );

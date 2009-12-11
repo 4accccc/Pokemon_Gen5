@@ -3736,7 +3736,7 @@ void BOX2MAIN_SubDispMarkingChange( BOX2_SYS_WORK * syswk, u32 mark )
 		}else{
 			anm = APP_COMMON_POKE_MARK_CIRCLE_WHITE + i*2;
 		}
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_MARK1+i, anm );
+		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_MARK1_S+i, anm );
 	}
 
 /*
