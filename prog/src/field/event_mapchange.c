@@ -445,13 +445,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     // BGMフェードアウト終了待ち
     {
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE )
-      { 
-        PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-        PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-        FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
-        (*seq)++;
-      }
+      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE ){ (*seq)++; }
     }
     break;
   case 4:
