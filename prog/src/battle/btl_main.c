@@ -177,7 +177,10 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
 static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static void checkWinner( BTL_MAIN_MODULE* wk );
-static void storeRecordData( BTL_MAIN_MODULE* wk );
+static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
+static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus );
+static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
+static u8 CommClientRelation( u8 myClientID, u8 targetClientID );
 
 
 //--------------------------------------------------------------
@@ -269,7 +272,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
   {
     BTL_Printf("バトルメインプロセス終了します\n");
     checkWinner( wk );
-    storeRecordData( wk );
+    Bspstore_RecordData( wk );
     reflectPartyData( wk );
     return GFL_PROC_RES_FINISH;
   }
@@ -1073,7 +1076,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 
       PokeCon_Init( &wk->pokeconForClient, wk );
 
-      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2という想定でいいのか？たぶんダメ。
+      // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
       for(i=0; i<wk->numClients; ++i)
       {
         srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
@@ -1087,7 +1090,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     {
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk );
-      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2という想定でいいのか？たぶんダメ。
+      // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
       for(i=0; i<wk->numClients; ++i){
         PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
       }
@@ -1135,9 +1138,12 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
   case 3:
     if( BTL_NET_IsCompleteNotifyPlayerData() )
     {
+      const MYSTATUS* playerStatus;
       u32 i;
       for(i=0; i<wk->numClients; ++i){
-        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
+        playerStatus = BTL_NET_GetPlayerData( i );
+        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, playerStatus );
+        Bspstore_PlayerStatus( wk, i, playerStatus );
       }
       BTL_Printf("プレイヤーデータ相互受信できました。\n");
       (*seq)++;
@@ -2971,6 +2977,8 @@ static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* par
   {
     wk->srcParty[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
     PokeParty_Copy( party, wk->srcParty[clientID] );
+
+    Bspstore_Party( wk, clientID, party );
   }
 }
 // パーティデータ取得
@@ -3158,10 +3166,38 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
   wk->setupParam->result = result;
 }
 
+//----------------------------------------------------------------------------------------------
+// バトルパラメータへ書き戻し
+//----------------------------------------------------------------------------------------------
+
 /**
- *  録画用操作データがあればバトルパラメータに格納
+ *  通信対戦相手のパーティデータ
  */
-static void storeRecordData( BTL_MAIN_MODULE* wk )
+static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party )
+{
+  u8 relation = CommClientRelation( wk->myClientID, clientID );
+  POKEPARTY* dstParty = wk->setupParam->party[ relation ];
+  if( (dstParty != NULL)
+  &&  (PokeParty_GetPokeCount(dstParty) == 0)
+  ){
+    PokeParty_Copy( party, dstParty );
+  }
+}
+/**
+ *  通信対戦相手のプレイヤーデータ
+ */
+static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus )
+{
+  u8 relation = CommClientRelation( wk->myClientID, clientID );
+  MYSTATUS* dst = (MYSTATUS*)(wk->setupParam->playerStatus[ relation ]);
+  if( dst != NULL){
+    MyStatus_Copy( playerStatus, dst );
+  }
+}
+/**
+ *  録画用操作データがあれば格納
+ */
+static void Bspstore_RecordData( BTL_MAIN_MODULE* wk )
 {
   if( wk->setupParam->recBuffer != NULL )
   {
@@ -3176,6 +3212,36 @@ static void storeRecordData( BTL_MAIN_MODULE* wk )
       GFL_STD_MemCopy( recData, wk->setupParam->recBuffer, dataSize );
       wk->setupParam->recDataSize = dataSize;
       wk->setupParam->recRandContext = wk->randomContext;
+    }
+  }
+}
+
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * 通信相手のクライアントIDと自分のクライアントIDを比較し、関係性を返す
+ *
+ * @param   myClientID
+ * @param   targetClientID
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 CommClientRelation( u8 myClientID, u8 targetClientID )
+{
+  if( myClientID == targetClientID ){
+    return BTL_CLIENT_PLAYER;
+  }
+  else{
+    BtlSide  mySide = clientID_to_side( myClientID );
+    BtlSide  targetSide = clientID_to_side( targetClientID );
+
+    if( mySide == targetSide ){
+      return BTL_CLIENT_PARTNER;
+    }else{
+      return (targetClientID <= 1)? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
     }
   }
 }

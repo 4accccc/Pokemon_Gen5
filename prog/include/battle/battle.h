@@ -201,7 +201,7 @@ typedef struct {
   // [io] パーティデータ・対戦相手ステータス
   //（通信バトル後、録画データ生成のために操作プレイヤー以外のデータが格納される）
   POKEPARTY*        party[ BTL_CLIENT_NUM ];
-  const MYSTATUS*   playerStatus[ BTL_CLIENT_NUM ];
+  MYSTATUS*         playerStatus[ BTL_CLIENT_NUM ];
 
   // トレーナーデータ
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM];

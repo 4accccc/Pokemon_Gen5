@@ -88,6 +88,9 @@ void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
     if(bp->tr_data[i] != NULL){
       BSP_TRAINER_DATA_Delete( bp->tr_data[i]);
     }
+    if( (i != BTL_CLIENT_PLAYER) && (bp->playerStatus[i] != NULL) ){
+      GFL_HEAP_FreeMemory( bp->playerStatus[i] );
+    }
   }
   if( bp->recBuffer ){
     GFL_HEAP_FreeMemory( bp->recBuffer );
@@ -322,6 +325,23 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   dst->commMode = commMode;
   dst->netID = GFL_NET_GetNetID( netHandle );
   dst->multiMode = multi;
+
+  // 録画データ生成のため、対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
+  {
+    u32 i;
+    for(i=0; i<BTL_CLIENT_NUM; ++i)
+    {
+      if( i != BTL_CLIENT_PLAYER )
+      {
+        if( dst->playerStatus[i] == NULL ){
+          dst->playerStatus[i] = MyStatus_AllocWork( heapID );
+        }
+        if( dst->party[i] == NULL ){
+          dst->party[i] = PokeParty_AllocPartyWork( heapID );
+        }
+      }
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
