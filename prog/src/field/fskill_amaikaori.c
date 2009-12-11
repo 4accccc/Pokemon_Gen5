@@ -9,6 +9,8 @@
 #include "system/gfl_use.h"
 
 #include "system/main.h"  //HEAPID_PROC
+
+#include "sound/pm_sndsys.h"
 #include "fieldmap.h"
 #include "weather.h"
 
@@ -26,6 +28,8 @@
 
 #define AMAIKAORI_BG_FRAME  ( FLDBG_MFRM_EFF2 )
 #define AMAIKAORI_PAL_IDX   ( 1 ) 
+
+#define AMAIKAORI_SE_NO (SEQ_SE_FLD_18)
 
 typedef enum{
  SEQ_CUTIN,
@@ -57,6 +61,16 @@ static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK*
 static GMEVENT_RESULT AmaikaoriEffectEvent(GMEVENT * event, int * seq, void *work);
 static void amaikaori_BGResInit( AMAIKAORI_EFFECT* wk );
 static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk);
+
+//------------------------------------------------------------------
+/*
+ *  @brief  あまいみつイベント起動
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldAmaimitu( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
+{
+  return EVENT_FieldSkillAmaikaori( gsys, fieldmap, 0xFF );
+}
 
 //------------------------------------------------------------------
 /*
@@ -163,6 +177,7 @@ static GMEVENT_RESULT AmaikaoriEffectEvent(GMEVENT * event, int * seq, void *wor
   switch (*seq) {
   case 0:
     amaikaori_BGResInit( wk );
+    PMSND_PlaySE( AMAIKAORI_SE_NO );
     (*seq)++;
     break;
   case 1:

@@ -11,6 +11,8 @@
 #include "field/fieldmap.h"
 #include "event_mapchange.h"
 #include "arc/fieldmap/zone_id.h"
+#include "event_fishing.h"
+#include "fskill_amaikaori.h"
 
 //=============================================================================
 /**
@@ -25,6 +27,8 @@ static ItemUseEventFunc * const Event_ItemUse[ EVENT_ITEMUSE_CALL_MAX ] =
   &EVENT_CycleUse,
   &EVENT_PalaceJumpUse,
   &EVENT_ChangeMapByAnanukenohimo,
+  &EVENT_FieldAmaimitu,
+  &EVENT_FieldFishing,
 };
 
 
