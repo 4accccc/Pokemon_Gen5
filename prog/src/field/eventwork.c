@@ -24,7 +24,11 @@ struct _EVENTWORK {
 	u8	flag[EVENT_FLAG_AREA_MAX];	//フラグ
 };
 
-//セーブしないフラグ
+//------------------------------------------------------------------
+/**
+ * @brief セーブしないフラグ
+ */
+//------------------------------------------------------------------
 static u8 EventCtrlFlag[CTRLFLAG_AREA_MAX] = {};
 
 //システムフラグ範囲内チェック
@@ -51,6 +55,11 @@ void EVENTWORK_InitWork( u8 *work )
   GFL_STD_MemClear( work, sizeof(EVENTWORK) );
 }
 
+//======================================================================
+//
+//    フラグ操作関連
+//
+//======================================================================
 //------------------------------------------------------------------
 /**
  * @brief	イベントフラグをチェックする
@@ -117,6 +126,29 @@ void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no)
 
 //--------------------------------------------------------------
 /**
+ * @brief イベントフラグの領域クリア
+ * @param	ev			イベントワークへのポインタ
+ * @param	flag_no		フラグナンバー
+ * 
+ * @noto
+ * ベタな記述なので処理速度の問題があるかもしれない
+ */
+//--------------------------------------------------------------
+void EVENTWORK_ClearEventFlags( EVENTWORK * ev, u16 start_no, u16 end_no )
+{
+  int no;
+
+  GF_ASSERT( start_no < end_no );
+  GF_ASSERT( ( end_no < SCFLG_START ) || ( SCFLG_START <= start_no ) );
+
+  for ( no = start_no ; no <= end_no; no ++ )
+  {
+    EVENTWORK_ResetEventFlag( ev, no );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief	イベントフラグのアドレスを取得する
  *
  * @param	flag_no		フラグナンバー
@@ -145,6 +177,11 @@ static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no )
 	}
 }
 
+//======================================================================
+//
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * @brief	イベントワークアドレスを取得
@@ -166,4 +203,27 @@ u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no )
 	
 	return &ev->work[ work_no - SVWK_START ];
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param	ev			イベントワークへのポインタ
+ * @param	work_no		ワークナンバー
+ */
+//--------------------------------------------------------------
+void EVENTWORK_ClearEventWorks( EVENTWORK * ev, u16 start_no, u16 end_no )
+{
+  int no;
+  GF_ASSERT( start_no < end_no );
+  GF_ASSERT( SVWK_START <= start_no );
+  GF_ASSERT( end_no < SVWK_START + EVENT_WORK_AREA_MAX );
+
+  GFL_STD_MemClear(
+      EVENTWORK_GetEventWorkAdrs( ev, start_no ),
+      sizeof(u16) * (end_no - start_no) );
+}
+
+
+
+
 

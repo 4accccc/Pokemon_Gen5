@@ -1119,9 +1119,10 @@ void LocalEventFlagClear( EVENTWORK * event )
 	//ローカルフラグのクリア"8bit * 8 = 64個分"
 	//"0"は無効なナンバーなので1を渡して取得している
 	//MI_CpuClear8( EVENTWORK_GetEventFlagAdrs(event,1), LOCAL_FLAG_AREA_MAX );
-
+  EVENTWORK_ClearEventFlags( event, FH_AREA_START, FH_AREA_END );
 	//ローカルワークのクリア"32個分"
-	MI_CpuClear8( EVENTWORK_GetEventWorkAdrs(event,LOCALWORKAREA_START), 2*LOCAL_WORK_MAX );
+  EVENTWORK_ClearEventWorks( event, LOCALWORKAREA_START, LOCALWORKAREA_END );
+	//MI_CpuClear8( EVENTWORK_GetEventWorkAdrs(event,LOCALWORKAREA_START), 2*LOCAL_WORK_MAX );
 
 }
 

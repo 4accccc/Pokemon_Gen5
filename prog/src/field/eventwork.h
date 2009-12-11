@@ -59,8 +59,10 @@ extern void EVENTWORK_Init(EVENTWORK * evwk);
 extern BOOL EVENTWORK_CheckEventFlag( EVENTWORK * ev, u16 flag_no);
 extern void EVENTWORK_SetEventFlag( EVENTWORK * ev, u16 flag_no);
 extern void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no);
+extern void EVENTWORK_ClearEventFlags( EVENTWORK * ev, u16 start_no, u16 end_no );
 
 extern u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no );
+extern void EVENTWORK_ClearEventWorks( EVENTWORK * ev, u16 start_no, u16 end_no );
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
