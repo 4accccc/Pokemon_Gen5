@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-19#$
-  $Rev: 10786 $
-  $Author: okajima_manabu $
+  $Date:: 2009-09-08#$
+  $Rev: 11044 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 
 
@@ -296,6 +296,7 @@ fx32 VEC_Fx16Mag(const VecFx16 *pSrc)
   
   Returns:      none
  *---------------------------------------------------------------------------*/
+SDK_WEAK_SYMBOL
 void VEC_Normalize(const VecFx32 *pSrc, VecFx32 *pDst)
 {
     fx64    t;
@@ -335,6 +336,7 @@ void VEC_Normalize(const VecFx32 *pSrc, VecFx32 *pDst)
   
   Returns:      none
  *---------------------------------------------------------------------------*/
+SDK_WEAK_SYMBOL
 void VEC_Fx16Normalize(const VecFx16 *pSrc, VecFx16 *pDst)
 {
     fx64    t;

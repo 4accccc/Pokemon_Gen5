@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-08-20#$
-  $Rev: 10998 $
-  $Author: yada $
+  $Date:: 2009-11-24#$
+  $Rev: 11190 $
+  $Author: mizutani_nakaba $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/os.h>
@@ -86,7 +86,7 @@ extern void OSi_InitCommon(void);   // os_init.c
 static u8*  LoadImage(ImageIndex index, u32 *p_size);
 static void WaitForNextFrame(void);
 static void VBlankIntr(void);
-static void SetISBNString(const char **isbn, BOOL disp_isbn);
+static void SetISBNString(const char **isbn);
 
 static void CheckLanguageCode(void);
 static void CheckDetectFold(void);
@@ -242,7 +242,6 @@ static void VBlankIntr(void)
   Description:  ISBN 番号等を スクリーンデータ内の所定の位置に反映させる。
 
   Arguments:    isbn      - ISBN 番号等に関する文字列配列。
-                disp_isbn - TRUEでISBN番号を表示、FALSEで非表示にする。
 
   Returns:      None.
 
@@ -251,7 +250,7 @@ static void VBlankIntr(void)
                     '-'      : 5x10
                     '0'～'9' : 7x10
  *---------------------------------------------------------------------------*/
-static void SetISBNString(const char **isbn, BOOL disp_isbn)
+static void SetISBNString(const char **isbn)
 {
     s32     i, j;
     const struct
@@ -262,17 +261,17 @@ static void SetISBNString(const char **isbn, BOOL disp_isbn)
     pos[] =
     {
         {
-        80, 142, 17}
+        80, 136, 17}
         ,                              /* ISBN */
         {
-        125, 157, 12}
+        125, 151, 12}
         ,                              /* 合同登記号 */
         {
-        106, 173, 4}
-        ,                              /* 新出音管(左) */
+        106, 167, 4}
+        ,                              /* 新出＊字(左) (＊はウ冠に申) */
         {
-        139, 173, 3}
-        ,                              /* 新出音管(右) */
+        139, 167, 3}
+        ,                              /* 新出＊字(右) (＊はウ冠に申) */
     }
     ;
     const int   count = sizeof(pos) / sizeof(*pos); /* 総行数 */
@@ -283,7 +282,7 @@ static void SetISBNString(const char **isbn, BOOL disp_isbn)
     u16         width;
 
     GXOamAttr *dst = (GXOamAttr *)HW_DB_OAM;
-    for (i = disp_isbn ? 0 : 1; i < count; i++)
+    for (i = 0; i < count; i++)
     {
         pos_x = pos[i].x;
         pos_y = pos[i].y;
@@ -328,8 +327,8 @@ static void SetISBNString(const char **isbn, BOOL disp_isbn)
                             {
                                 char    ISBN[ 17 ] ,
                                 char    合同登記号[ 12 ] ,
-                                char    新出音管(左)[ 4 ] ,
-                                char    新出音管(右)[ 4 ]
+                                char    新出＊字(左)[ 4 ] , (＊はウ冠に申)
+                                char    新出＊字(右)[ 3 ]   (＊はウ冠に申)
                             }
 
                 param   -   ISBN 番号表示に関する動作を指定します。
@@ -506,7 +505,7 @@ static void DispExclusiveMessage(void)
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-SDK_WEAK_SYMBOL void OS_ShowAttentionChina(const char **isbn, OSChinaIsbn param)
+void OS_ShowAttentionChina(const char **isbn, OSChinaIsbn param)
 {
     /* レジスタ退避用構造体 */
     struct
@@ -533,6 +532,12 @@ SDK_WEAK_SYMBOL void OS_ShowAttentionChina(const char **isbn, OSChinaIsbn param)
 
     }
     shelter;
+
+    // ISBN表示しない場合はすぐに戻る
+    if ( param == OS_CHINA_ISBN_NO_DISP )
+    {
+        return;
+    }
 
     /* 前処理 */
     {
@@ -655,7 +660,7 @@ SDK_WEAK_SYMBOL void OS_ShowAttentionChina(const char **isbn, OSChinaIsbn param)
             }
 
             // ISBN文字列の表示設定
-            SetISBNString(isbn, (BOOL)(param != OS_CHINA_ISBN_NO_DISP));
+            SetISBNString(isbn);
 
             /* パレット編集 */
             *((u16 *)(HW_DB_BG_PLTT + 0)) = 0x7fff;

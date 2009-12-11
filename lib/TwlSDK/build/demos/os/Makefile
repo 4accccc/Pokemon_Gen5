@@ -11,9 +11,9 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-09-18#$
-# $Rev: 8573 $
-# $Author: okubata_ryoma $
+# $Date:: 2009-09-16#$
+# $Rev: 11056 $
+# $Author: yosizaki $
 #----------------------------------------------------------------------------
 TARGET_PLATFORM	=	TWL NITRO
 
@@ -38,7 +38,6 @@ SUBDIRS_P	=	simple-1 	\
 			exceptionDisplay-3 \
 			exceptionDisplay-4 \
 			forChina-1 \
-			forChina-fs \
 			forKorea-1 \
 			functionCost-1 \
 			functionCost-2 \

@@ -55,11 +55,6 @@ void DSP_PlaySound(const void *src, u32 len, BOOL stereo);
 </li>
 </ul>
 
-<ul>
-<li>本関数でサウンド再生を行っている最中に、他のDSPコンポーネントの機能を併用しないようにしてください。
-</li>
-</ul>
-
 <h2>参照</h2>
 <p><code>
 <a href="DSP_IsSoundPlaying.html">DSP_IsSoundPlaying</a>
@@ -68,6 +63,7 @@ void DSP_PlaySound(const void *src, u32 len, BOOL stereo);
 
 <h2>履歴</h2>
 <p>
+2009/09/03 他のコンポーネント機能と併用できない旨の注意事項を削除<br>
 2009/07/16 他のコンポーネント機能との併用についての説明追加<br>
 2008/09/25 サウンド出力が排他制御される旨を追記<br />
 2008/07/09 引数として受け取るサイズをハーフワードからバイト単位に変更<BR>

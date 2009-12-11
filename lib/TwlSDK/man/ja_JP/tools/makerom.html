@@ -82,6 +82,18 @@ ROM イメージファイルを <CODE>ROMFILE</CODE> という名前で作成します。このとき、RO
 <P><CODE>LISTFILE</CODE> で指定された ROM 構成情報から、ROM イメージを構成し <CODE>ROMFILE</CODE> で指定された名前のファイルとして出力します。</P>
 <P><CODE>ROMFILE</CODE> は省略可能です。省略時には <CODE>LISTFILE</CODE> で指定されたファイル名の拡張子部分を <CODE>.rom</CODE> としたものが、ファイル名として使用されます。</P>
 <P><CODE>-F</CODE> オプション、<CODE>-A</CODE> オプションおよび <CODE>-V</CODE> オプションは <B>1)通常起動</B> の場合と同じ動作をします。</P>
+
+<h4>4) オプション <code>-m</code></h4>
+<p><code>% makerom -m [ROMFILE] [ROMPATH] [HOSTPATH]</code></p>
+<p><code>% makerom.TWL -m [ROMFILE] [ROMPATH] [HOSTPATH]</code></p>
+<p><code>ROMFILE</code> で指定されたSRLファイル内の <code>ROMPATH</code> の位置に収録されているファイルの内容を、<code>HOSTPATH</code> で指定されたファイルの内容へ差し替えます。<br />
+既存のSRLファイルの収録データを1個だけ差し替えればよいという場合には、このオプションを使用すると効率的です。<br />
+<ul>
+<li><code>ROMPATH</code> に指定するパス名は <code>rom:/foo/bar.dat</code> などのようにROMアーカイブとしてのパスを指定する必要があります。 </li>
+<li><code>HOSTPATH</code> に指定するファイルのサイズは、差し替え対象となる <code>ROMPATH</code> のファイルサイズと同じである必要があります。</li>
+</ul>
+</p>
+
 <H3>ROM スペックファイルフォーマット</H3>
 <P>NITRO および TWL の ROM イメージ内部は簡易的なファイルシステムによって管理されています。ROM
 スペックファイルはこのファイルシステムの構成を NITRO では 4 つ、TWL では 6 つのセクションに分けて記述したテキストファイルです。なお、<FONT color="#ff0000">ROM イメージセクションは全てのセクションの最後に記述されなければなりません。</FONT>セクション定義の書式は、セクション定義開始の宣言部の後に引き続いて各セクションに関するパラメータが中括弧<CODE>{ }</CODE> で囲むという書式になっています。<BR>
@@ -701,6 +713,7 @@ TWL-SDKのmakeromツールによって自動的に0xFFが埋められます。
 <P><CODE><A href="makelcf.html">makelcf</A>, <A href="makebanner.html">makebanner</A></CODE></P>
 <H2>履歴</H2>
 <P>
+2009/09/02 -mオプションに関する説明文を追加<br />
 2009/07/27 Ratingセクションの説明に中国向けアプリへの対応についての説明を追記。<BR>
 2009/07/14 <CODE>CardRegion</CODE>の説明を追記、韓国のレーティング審査団体の説明を追記。<BR>
 2009/06/08 TWL専用ファイルの説明へのリンクを追加。<br />

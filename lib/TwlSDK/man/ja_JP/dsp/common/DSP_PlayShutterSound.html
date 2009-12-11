@@ -64,20 +64,9 @@ $TwlSDK/data/shutter_sound 以下と $TwlSDK/data/videorec_sound 以下にある 32730Hz
 <li>バッファの内容は、事前にキャッシュストアしておく必要があります。</li>
 </ul>
 </li>
-</ul>
-
-<ul>
 <li><code><A href="../../snd/sndex/SNDEX_SetIirFilter.html">SNDEX_SetIirFilter[Async]</A></code> によって設定された IIR フィルタは、シャッター音再生中の期間無効化されます。
 </li>
-</ul>
-
-<ul>
 <li>本関数で再生したシャッター音の再生完了を知るためには、<code><a href="DSP_IsShutterSoundPlaying.html">DSP_IsShutterSoundPlaying()</a></code>を使用してください。
-</li>
-</ul>
-
-<ul>
-<li>本関数でシャッター音再生を行っている最中に、他のDSPコンポーネントの機能を併用しないようにしてください。
 </li>
 </ul>
 
@@ -89,6 +78,7 @@ $TwlSDK/data/shutter_sound 以下と $TwlSDK/data/videorec_sound 以下にある 32730Hz
 
 <h2>履歴</h2>
 <p>
+2009/09/02 他のコンポーネント機能と併用できない旨の注意事項を削除<br />
 2009/07/16 他のコンポーネント機能との併用についての説明追加<br>
 2009/01/07 シャッター音の再生が成功するまで関数内部でリトライするように変更<br>
 2008/11/26 ステレオ、モノラル指定の削除<br>

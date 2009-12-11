@@ -18,6 +18,7 @@
   <dd>
 <PRE><CODE>#include &lt;nitro/fx/fx_vec.h&gt;
 
+SDK_WEAK_SYMBOL
 void VEC_Fx16Normalize(const VecFx16 * pSrc, VecFx16 * pDst);</CODE></PRE>
   </dd>
 </dl><h2>引数</h2>
@@ -42,9 +43,15 @@ void VEC_Fx16Normalize(const VecFx16 * pSrc, VecFx16 * pDst);</CODE></PRE>
 <B><I>*</I>pSrc</B>,<B><I>*pDst</I></B>は同じベクトルへのポインタでも構いません。<BR>
 除算器と平方根演算器を使用します。割り込み内で使用される場合には<A href="../../cp/div/about_div.html#use_in_intr">除算器の注意事項</A>をご確認ください。</P>
 
+<p>
+pSrcで指定するベクトルの長さが極端に小さい場合、得られる結果の誤差が大きくなります。<br />
+この関数は weak シンボルとして提供されていますので、
+ユーザが独自に同名関数を定義すれば上書きすることができます。</p>
 
 <h2>参照</h2>
 <H2>履歴</H2>
-<P>Ver. 2004/02/16</P>
+<P>
+2009/09/08 弱シンボル関数である旨を追記<br />
+2004/02/16 初版作成</P>
 </body>
 </html>

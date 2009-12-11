@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-26#$
-  $Rev: 10827 $
-  $Author: yosizaki $
+  $Date:: 2009-12-08#$
+  $Rev: 11236 $
+  $Author: okubata_ryoma $
 
  *---------------------------------------------------------------------------*/
 
@@ -119,7 +119,8 @@ CARDAccessLevel CARDi_GetAccessLevel(void)
     }
     else if (!OS_IsRunOnTwl())
     {
-        level = CARD_ACCESS_LEVEL_BACKUP;
+//        level = CARD_ACCESS_LEVEL_BACKUP;
+        level = CARD_ACCESS_LEVEL_FULL;    // ダウンロードアプリから ROM にアクセスできるように
     }
 #ifdef SDK_TWL
     else
