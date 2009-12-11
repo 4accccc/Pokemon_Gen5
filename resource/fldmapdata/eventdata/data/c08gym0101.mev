@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/10 17:21:50
+#save date:2009/12/11 14:45:41
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #type
 1
 #ID name
-C08GYM0101_DUMMY_01
+TR_C08GYM0101_F1_01
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -45,7 +45,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_02
+TR_C08GYM0101_F1_02
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -76,7 +76,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_03
+TR_C08GYM0101_F1_03
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -107,7 +107,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_04
+TR_C08GYM0101_F1_04
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -133,12 +133,12 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 0 -104
+312 0 -104
 #event number: 4
 #type
 1
 #ID name
-C08GYM0101_DUMMY_05
+TR_C08GYM0101_F1_06
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -169,7 +169,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_06
+C08GYM0101_LEADER8_01
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -200,7 +200,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_07
+TR_C08GYM0101_F2_01
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -226,12 +226,12 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 0 88
+312 96 56
 #event number: 7
 #type
 1
 #ID name
-C08GYM0101_DUMMY_08
+TR_C08GYM0101_F2_02
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -262,38 +262,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_DUMMY_09
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 -24
-#event number: 9
-#type
-1
-#ID name
-C08GYM0101_DUMMY_10
+TR_C08GYM0101_F2_03
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -320,11 +289,11 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 8 96 -200
-#event number: 10
+#event number: 9
 #type
 1
 #ID name
-C08GYM0101_DUMMY_11
+TR_C08GYM0101_F2_04
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
@@ -350,7 +319,38 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 96 -232
+184 96 -280
+#event number: 10
+#type
+1
+#ID name
+TR_C08GYM0101_F1_05
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 -136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
