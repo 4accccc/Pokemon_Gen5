@@ -44,6 +44,8 @@
 #define SP_LIFT_IDX (5)     //メインリフトインデックス
 #define EXIT_LIFT_IDX (0xff)     //出口リフトインデックス（特別扱い）
 
+#define LIFT_ON_MAX (5) //リフトに乗れる最大人数（透明人間を含む）
+
 typedef struct SHAKE_WORK_tag
 {
   u8 Seq;
@@ -73,6 +75,7 @@ typedef struct GYM_GROUND_TMP_tag
   s32 FogBaseOffset;
   s32 FogBaseSlope;
   int WallAnmWatch;
+  MMDL *LiftMmdl[LIFT_ON_MAX];
 }GYM_GROUND_TMP;
 
 typedef struct FLOOR_RECT_tag
@@ -762,6 +765,47 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    //フィールドＯＢＪ全検索
+    {
+      VecFx32 player_pos;
+      int i;
+      int count = 0;
+      u32 no = 0;
+      MMDL *mmdl;
+      MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+
+      for (i=0;i<LIFT_ON_MAX;i++)
+      {
+        tmp->LiftMmdl[i] = NULL;
+      }
+      {
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        FIELD_PLAYER_GetPos( fld_player, &player_pos );
+      }
+      while( MMDLSYS_SearchUseMMdl(mmdlsys, &mmdl, &no) == TRUE )
+      {
+        //グリッド座標を取得
+        s16 x = MMDL_GetGridPosX( mmdl );
+        s16 z = MMDL_GetGridPosZ( mmdl );
+        //内外判定
+        if ( CheckLiftHit(tmp->TargetLiftIdx, x, z) )
+        {
+          VecFx32 pos;
+          MMDL_GetVectorPos( mmdl, &pos );
+          //自機と同じ高さのＯＢＪをエントリ（多少のずれを考慮し上下1グリッドの猶予をもつことにする）
+          if ( (player_pos.y-FIELD_CONST_GRID_SIZE < pos.y) &&
+              (pos.y < player_pos.y+FIELD_CONST_GRID_SIZE)  )
+          {
+            if ( count >= LIFT_ON_MAX ){
+              GF_ASSERT(0);
+            }else{
+              tmp->LiftMmdl[count++] = mmdl;
+            }
+          }
+        }
+      }
+    }
     InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, TRUE, camera, &tmp->ShakeWork);
     (*seq)++;
     break;
@@ -809,6 +853,28 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
       status->trans.y = tmp->NowHeight;
     }
+
+    {
+      int i;
+      for (i=0;i<LIFT_ON_MAX;i++){
+        if ( tmp->LiftMmdl[i] != NULL){
+          //高さ書き換え
+          MMDL *mmdl;
+          const VecFx32 *mmdl_pos;
+          VecFx32 pos;
+          int gy;
+          mmdl = tmp->LiftMmdl[i];
+          //座標更新
+          mmdl_pos = MMDL_GetVectorPosAddress( mmdl );
+          pos = *mmdl_pos;
+          pos.y = tmp->NowHeight;
+          gy = SIZE_GRID_FX32( pos.y );
+          MMDL_SetGridPosY( mmdl, gy );
+          MMDL_SetVectorPos( mmdl, &pos );
+        }
+      }
+    }
+#if 0    
     //フィールドＯＢＪ全検索
     {
       u32 no = 0;
@@ -835,6 +901,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
         }
       }
     }
+#endif    
     break;
   case 5:
     {
