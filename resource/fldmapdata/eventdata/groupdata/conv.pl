@@ -1,7 +1,7 @@
 ###########################################################
 #
 # イベントGroup設定
-#   conv.pl excel_tab switch(0or1) outdir
+#   conv.pl excel_tab switch(0or1) outdir check_file
 #   
 # excel_tab:tab_out_direct.rbでコンバートしたもの
 # switch：0=newfile 1=overwrite
@@ -13,9 +13,9 @@
 #
 ###########################################################
 
-if( @ARGV < 3 )
+if( @ARGV < 4 )
 {
-  print( "conv.pl excel_tab switch(0or1) outdir\n" );
+  print( "conv.pl excel_tab switch(0or1) outdir check_file\n" );
   print( "0=newfile 1=overwrite\n" );
   exit(1);
 }
@@ -92,6 +92,29 @@ $DUMMY_DOOR_DIR  = "EXIT_DIR_NON";
 open( FILEIN, $ARGV[0] );
 @Exceldata = <FILEIN>;
 close( FILEIN );
+
+$excel_file_name = $ARGV[0];
+$excel_file_name =~ s/txt/xls/;
+
+#チェックリストから、自分の項目を削除
+{
+  open( CHECKLIST_FILEIN, $ARGV[3] );
+  @CHECK_LIST = <CHECKLIST_FILEIN>;
+  close( CHECKLIST_FILEIN );
+
+  open( CHECKLIST_FILEOUT, ">".$ARGV[3] );
+  foreach $one (@CHECK_LIST)
+  {
+    @list = split( " ", $one );
+    if( "".$list[0] ne "".$excel_file_name )
+    {
+      print( CHECKLIST_FILEOUT $one );
+    }
+  }
+}
+
+#チェックリストに新規依存関係を設定
+print( CHECKLIST_FILEOUT $excel_file_name );
 
 
 #コアデータ読み込み
@@ -192,6 +215,9 @@ while( &CheckNext( \@Exceldata, $ExcelIndex, \@OBJEVENT_KEY ) )
   &SetMevData_POSEVENT( \@POSEVENT_MEV, \@POSEVENT_ZONE );
   &SetMevData_DOOREVENT( \@DOOREVENT_MEV, \@DOOREVENT_ZONE, "" );
 
+  #依存ファイルに設定
+  print( CHECKLIST_FILEOUT " ".$ARGV[2]."/".$ZONE_NAME[0].".mev" );
+
   #ファイルに出力
   open( FILEOUT, ">".$ARGV[2]."/".$ZONE_NAME[0].".mev" );
 
@@ -204,6 +230,10 @@ while( &CheckNext( \@Exceldata, $ExcelIndex, \@OBJEVENT_KEY ) )
 
   close( FILEOUT );
 }
+
+#チェックリスト出力先オープン
+print( CHECKLIST_FILEOUT "\n" );
+close( CHECKLIST_FILEOUT );
 
 exit(0);
 

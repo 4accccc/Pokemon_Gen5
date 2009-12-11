@@ -32,6 +32,8 @@ include	$(PROJECT_RSCDIR)\macro_define
 XLSFILE = $(wildcard *.xls)
 TABFILE = $(XLSFILE:.xls=.txt)
 
+CHECK_LIST = check_list.list
+
 
 #------------------------------------------------------------------------------
 #	#サフィックス
@@ -45,7 +47,7 @@ ifeq	($(CONVERTUSER),true)
 #コンバート環境
 .xls.txt:
 	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_direct.rb $< > $@
-	perl conv.pl $@ 1 ../data
+	perl conv.pl $@ 1 ../data $(CHECK_LIST)
 
 endif
 
@@ -55,17 +57,25 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(targetname).txt
+do-build:	subdir check_list $(targetname).txt
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 
 ifeq	($(CONVERTUSER),true)	
+
+check_list:
+	perl check_mev.pl $(CHECK_LIST)
+
 # コピー先のnarcが古い場合実行する
 $(targetname).txt: $(TABFILE)
 	echo dummy > $(targetname).txt
+	
 else
+
+check_list:
+	echo dummy > $(targetname).txt
 
 $(targetname).txt:
 	echo dummy > $(targetname).txt
@@ -80,5 +90,9 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f *.txt
 
+ifeq	($(CONVERTUSER),true)	
 
+	rm -f $(CHECK_LIST)
+
+endif
 
