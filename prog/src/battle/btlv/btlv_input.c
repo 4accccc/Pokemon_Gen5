@@ -55,7 +55,7 @@
 #define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
                                     /** @TODO ポケモンリストが正規になったらいらなくなる */
 
-#define STANDBY_PAL        ( 0x2002 )
+#define STANDBY_PAL        ( 0x0003 )
 #define STANDBY_FADE        ( 12 )
 #define STANDBY_FADE_COLOR  ( 0x0842 )
 
