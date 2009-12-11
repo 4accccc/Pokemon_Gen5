@@ -14,6 +14,7 @@
 #include "print/printsys.h"
 #include "poke_tool/pokeparty.h"
 #include "battle/battle.h"
+#include "system/palanm.h"
 
 
 //============================================================================================
@@ -75,7 +76,8 @@ typedef struct {
 //	s32 client_no;						// クライアントNo
 //	u8	list_row[TEMOTI_POKEMAX];	// リストロウ
 //	u8	bag_page;		// バッグのページ
-
+  GFL_TCBSYS* tcb_sys;
+	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 }BPLIST_DATA;
 
 

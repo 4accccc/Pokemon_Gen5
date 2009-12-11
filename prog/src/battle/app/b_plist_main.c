@@ -446,10 +446,10 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 
   wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BPLIST_WORK) );
 
-  GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BattlePokeList_Main, wk, 100 );
+  GFL_TCB_AddTask( dat->tcb_sys, BattlePokeList_Main, wk, 100 );
 
   wk->dat = dat;
-  wk->pfd = BTLV_EFFECT_GetPfd();
+  wk->pfd = dat->pfd;
   wk->seq = SEQ_BPL_INIT;
   wk->init_poke = dat->sel_poke;
 
@@ -736,7 +736,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
 
   PaletteFadeReq(
-    wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
+    wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, wk->dat->tcb_sys );
 
 
   return ret;
@@ -1821,7 +1821,7 @@ static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
 static int BPL_SeqEndSet( BPLIST_WORK * wk )
 {
   PaletteFadeReq(
-    wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 0, 16, 0, BTLV_EFFECT_GetTCBSYS() );
+    wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 0, 16, 0, wk->dat->tcb_sys );
   return SEQ_BPL_ENDWAIT;
 }
 
