@@ -44,9 +44,9 @@ static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVE
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src);
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
 static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
-static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party);
+static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
 static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
 static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
 static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
 static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer );
@@ -926,13 +926,13 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
  * @param   party     •ÏŠ·Œã‚Ìƒf[ƒ^‘ã“üæ
  */
 //--------------------------------------------------------------
-static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party)
+static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
 {
   int i;
   POKEMON_PARAM *pp;
   u8 cb_id_para = 0;
 
-  pp = GFL_HEAP_AllocClearMemory( HEAPID_WORLD, POKETOOL_GetWorkSize() );
+  pp = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKETOOL_GetWorkSize() );
 
   PokeParty_Init(party, rec_party->PokeCountMax);
   for(i = 0; i < rec_party->PokeCount; i++){
@@ -941,7 +941,7 @@ static void RecPokeParty_to_PokeParty(REC_POKEPARTY *rec_party, POKEPARTY *party
     PokeParty_Add(party, pp);
   }
 
-  GFL_HEAP_FreeMemory(pp);
+  GFL_HEAP_FreeMemory( pp );
 }
 
 //==============================================================================
@@ -1215,11 +1215,11 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
  * @param   setup   [out] •œŒ³æ
  */
 //=============================================================================================
-void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup )
+void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
 {
   BATTLE_REC_WORK  *rec = &brs->rec;
 
-  restore_Party( setup, rec );
+  restore_Party( setup, rec, heapID );
   restore_ClientStatus( setup, rec );
   restore_OperationBuffer( setup, rec );
   restore_SetupSubset( setup, rec );
@@ -1251,13 +1251,13 @@ static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
 {
   u32 i;
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
     if( setup->party[i] ){
-      RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i] );
+      RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i], heapID );
     }
   }
 }
