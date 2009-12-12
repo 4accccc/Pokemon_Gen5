@@ -103,10 +103,10 @@
   //イベントフラグ関連
   DEF_CMD( EvCmdFlagSet, EV_SEQ_FLAG_SET )
   DEF_CMD( EvCmdFlagReset, EV_SEQ_FLAG_RESET )
-  DEF_CMD( EvCmdFlagCheckVM, EV_SEQ_FLAG_CHECK_VM )
-  DEF_CMD( EvCmdFlagCheckWk, EV_SEQ_FLAG_CHECK_WK )
+  NO_CMD()
+  NO_CMD()
 
-  DEF_CMD( EvCmdFlagSetWk, EV_SEQ_FLAG_SET_WK )
+  NO_CMD()
   DEF_CMD( EvCmdFlagCheck, EV_SEQ_FLAG_CHECK )
   NO_CMD()
   NO_CMD()
@@ -413,7 +413,7 @@
   NO_CMD()
 
   DEF_CMD( EvCmdSetWarpID, EV_SEQ_SET_WARP_ID )
-  NO_CMD()
+  DEF_CMD( EvCmdSetMapReplace, EV_SEQ_SET_MAP_REPLACE )
   NO_CMD()
   NO_CMD()
 
@@ -709,6 +709,11 @@
   NO_CMD()
   NO_CMD()
   
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   NO_CMD()
   NO_CMD()
   NO_CMD()

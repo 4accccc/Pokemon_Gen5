@@ -969,7 +969,8 @@ static VMCMD_RESULT EvCmdFlagSet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16  flag = VMGetU16( core );
+  //u16  flag = VMGetU16( core );
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
   EVENTWORK_SetEventFlag( evwork, flag );
   return VMCMD_RESULT_CONTINUE;
 }
@@ -986,25 +987,9 @@ static VMCMD_RESULT EvCmdFlagReset( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16  flag = VMGetU16( core );
+  //u16  flag = VMGetU16( core );
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
   EVENTWORK_ResetEventFlag( evwork, flag );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * フラグのチェック
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdFlagCheckVM( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16  flag = VMGetU16( core );
-  core->cmp_flag = EVENTWORK_CheckEventFlag( evwork, flag );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1020,46 +1005,13 @@ static VMCMD_RESULT EvCmdFlagCheck( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16  flag = VMGetU16( core );
+  //u16  flag = VMGetU16( core );
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   *ret_wk = EVENTWORK_CheckEventFlag( evwork, flag );
   return VMCMD_RESULT_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * ワークの値をフラグナンバーとしてフラグチェック
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdFlagCheckWk( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16 *flag_work = SCRCMD_GetVMWork( core, work );
-  u16 *ret_work  = SCRCMD_GetVMWork( core, work );
-  *ret_work = EVENTWORK_CheckEventFlag( evwork, *flag_work );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * ワークの値をフラグナンバーとしてフラグセット
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdFlagSetWk( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16 *flag_work = SCRCMD_GetVMWork( core, work );
-  EVENTWORK_SetEventFlag( evwork, *flag_work );
-  return VMCMD_RESULT_CONTINUE;
-}
 
 //======================================================================
 //  ワーク操作関連
