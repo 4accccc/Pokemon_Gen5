@@ -25,7 +25,7 @@ enum {
 
 enum {
   CMD_NOTIFY_SERVER_VER = GFL_NET_CMD_BATTLE,
-  CMD_NOTIFY_DEBUG_PARAM,
+  CMD_NOTIFY_SERVER_PARAM,
   CMD_NOTIFY_PARTY_DATA,
   CMD_NOTIFY_PLAYER_DATA,
   CMD_TO_CLIENT,
@@ -90,15 +90,15 @@ typedef struct {
   u8    myNetID;
   u8    serverNetID;
 
-  u16   debugFlagBit;
-  u8    fDebugParamReceived;
-
+  u8    fServerParamReceived;
   u8    memberCount;
   u8    recvCount;
   u8    serverCmdReceived;
   u8    clientDataReturned;
   u8    timingID;
   u8    timingSyncStartFlag;
+
+  BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
 
   // 常駐受信バッファ
   RECV_BUFFER   recvServer;
@@ -122,7 +122,7 @@ static SYSWORK* Sys;
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void recv_serverVer( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
-static void recv_debugParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static void recv_serverParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
@@ -142,7 +142,7 @@ static inline void recvBuf_clear( RECV_BUFFER* buf );
 //static const NetRecvFuncTable RecvFuncTable[] = {
 const NetRecvFuncTable BtlRecvFuncTable[] = {
     { recv_serverVer, NULL },
-    { recv_debugParam,  NULL },
+    { recv_serverParam,  NULL },
     { recv_partyData,   getbuf_partyData },
     { recv_playerData,  getbuf_playerData },
     { recv_serverCmd,   getbuf_serverCmd },
@@ -167,8 +167,7 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
     Sys->timingID = BTL_NET_TIMING_NULL;
     Sys->timingSyncStartFlag = FALSE;
 
-    Sys->debugFlagBit = 0;
-    Sys->fDebugParamReceived = FALSE;
+    Sys->fServerParamReceived = FALSE;
 
     {
       u32 i;
@@ -271,21 +270,18 @@ BOOL BTL_NET_IsServer( void )
 }
 
 
-// 全マシンにデバッグパラメータを通知する（サーバからのみ呼び出し）
-BOOL BTL_NET_NotifyDebugParam( u16 debugFlagBit )
+// 全クライアントにサーバパラメータを通知する（サーバからのみ呼び出し）
+BOOL BTL_NET_NotifyServerParam( const BTLNET_SERVER_NOTIFY_PARAM* sendParam )
 {
   TMP_SEND_BUFFER* tsbuf;
   BOOL result;
   u8 i;
 
-  tsbuf = &Sys->sendBuf[0];
-  tsbuf->val16[0] = debugFlagBit;
+  BTL_Printf("全マシンにサーバパラメータを送信\n");
 
-  BTL_Printf("全マシンにデバッグBitFlagを送信 : flag=%04x\n", tsbuf->val16[0]);
-
-  result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_DEBUG_PARAM,
-        sizeof( *tsbuf ),
-        tsbuf,
+  result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_SERVER_PARAM,
+        sizeof( *sendParam ),
+        sendParam,
         FALSE,    // 優先度を高くする
         FALSE,    // 同一コマンドがキューに無い場合のみ送信する
         FALSE     // GFL_NETライブラリの外で保持するバッファを使用
@@ -297,26 +293,25 @@ BOOL BTL_NET_NotifyDebugParam( u16 debugFlagBit )
   return result;
 }
 
-// デバッグパラメータ受信関数（サーバ→全クライアント）
-static void recv_debugParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+// サーバパラメータ受信関数（サーバ→全クライアント）
+static void recv_serverParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  if( Sys->fDebugParamReceived == FALSE )
+  if( Sys->fServerParamReceived == FALSE )
   {
-    const TMP_SEND_BUFFER* tsb = pData;
+    const BTLNET_SERVER_NOTIFY_PARAM* recvParam = pData;
 
-    BTL_Printf("netID=%d, デバッグパラメータ受信しました。バッファ内容=%d,%d,\n",
-        netID, tsb->val16[0], tsb->val16[1]);
+    BTL_Printf("netID=%d, サーバパラメータ受信しました。\n", netID);
 
-    Sys->debugFlagBit = tsb->val16[0];
-    Sys->fDebugParamReceived = TRUE;
+    Sys->serverNotifyParam = *recvParam;
+    Sys->fServerParamReceived = TRUE;
   }
 }
 
-// デバッグパラメータ受信完了したか？
-BOOL BTL_NET_IsDebugParamReceived( u16* debugFlagBit )
+// サーバパラメータ受信完了したか？
+BOOL BTL_NET_IsServerParamReceived( BTLNET_SERVER_NOTIFY_PARAM* dst )
 {
-  if( Sys->fDebugParamReceived ){
-    *debugFlagBit = Sys->debugFlagBit;
+  if( Sys->fServerParamReceived ){
+    *dst = Sys->serverNotifyParam;
     return TRUE;
   }
   return FALSE;

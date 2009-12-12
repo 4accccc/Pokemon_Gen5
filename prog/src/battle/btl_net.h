@@ -29,32 +29,16 @@ typedef enum {
 }BtlNetTiming;
 
 
+/**
+ *  サーバーになったマシンが各マシンに対し、
+ *  統一してもらうパラメータを送るのに使用する
+ */
 typedef struct {
 
-  u8  serverVersion;    ///< サーババージョン
-  u8  commPos;          ///< 対戦部屋立ち位置（マルチ等で利用）
-  u8  netID      : 4;   ///< ネットID
-  u8  pokeCount  : 4;   ///< 参加ポケモン数
-  u8  pokeData[1];      ///< ポケモンデータ部
+  GFL_STD_RandContext  randomContext;
+  u16                  debugFlagBit;
 
-}BTL_NET_INITIALIZE_DATA;
-
-typedef struct {
-
-  struct {
-    u8 netID;
-    u8 clientID;
-  }PairID[ BTL_CLIENT_MAX ];
-
-}BTL_NET_INITIALIZE_RET_DATA;
-
-
-typedef enum {
-
-  BTL_NETCMD_SUPPLY_POKEDATA = 0,
-
-}BtlNetCommand;
-
+}BTLNET_SERVER_NOTIFY_PARAM;
 
 
 extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID );
@@ -62,8 +46,8 @@ extern BOOL BTL_NET_IsInitialized( void );
 extern void BTL_NET_QuitSystem( void );
 extern BOOL BTL_NET_IsServerDetermained( void );
 extern BOOL BTL_NET_IsServer( void );
-extern BOOL BTL_NET_NotifyDebugParam( u16 debugFlagBit );
-extern BOOL BTL_NET_IsDebugParamReceived( u16* debugFlagBit );
+extern BOOL BTL_NET_NotifyServerParam( const BTLNET_SERVER_NOTIFY_PARAM* sendParam );
+extern BOOL BTL_NET_IsServerParamReceived( BTLNET_SERVER_NOTIFY_PARAM* dst );
 extern BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party );
 extern BOOL BTL_NET_IsCompleteNotifyPartyData( void );
 extern const POKEPARTY* BTL_NET_GetPartyData( int netID );

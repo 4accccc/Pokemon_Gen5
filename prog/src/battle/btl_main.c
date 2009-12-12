@@ -97,6 +97,7 @@ struct _BTL_MAIN_MODULE {
   POKEPARTY*            tmpParty;
 
   GFL_STD_RandContext   randomContext;
+  BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
 
   u8        posCoverClientID[ BTL_POS_MAX ];
   u32       bonusMoney;
@@ -954,21 +955,22 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
 
   case 1:
     // サーバマシンは各クライアントにデバッグパラメータを通知する
-    if( BTL_NET_NotifyDebugParam( wk->setupParam->DebugFlagBit ) ){
+    wk->serverNotifyParam.randomContext = wk->randomContext;
+    wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
+    if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
     }
     break;
 
   case 2:
     // デバッグパラメータ受信完了
+    if( BTL_NET_IsServerParamReceived(&wk->serverNotifyParam) )
     {
-      u16 debugFlagBit;
-      if( BTL_NET_IsDebugParamReceived(&debugFlagBit) )
-      {
-        BATTLE_SETUP_PARAM* sp = wk->setupParam;
-        sp->DebugFlagBit = debugFlagBit;
-        return TRUE;
-      }
+      BATTLE_SETUP_PARAM* sp = wk->setupParam;
+      sp->DebugFlagBit = wk->serverNotifyParam.debugFlagBit;
+      sp->recRandContext = wk->serverNotifyParam.randomContext;
+      wk->randomContext  = wk->serverNotifyParam.randomContext;
+      return TRUE;
     }
     break;
   }

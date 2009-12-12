@@ -1473,6 +1473,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
     ){
       BTL_ACTION_PARAM action = actOrder->action;
 
+      BTL_Printf("ポケ[%d =monsno:%d]のアクション実行...\n", BPP_GetID(bpp), BPP_GetMonsNo(bpp));
+
       switch( action.gen.cmd ){
       case BTL_ACTION_FIGHT:
         if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){

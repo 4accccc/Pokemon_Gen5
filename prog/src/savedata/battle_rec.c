@@ -1426,6 +1426,19 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
 
   CONFIG_Copy( setup->configData, &rec->setupSubset.config );
 
+  {
+    u32 i;
+    const u8* p = (u8*)(&(rec->setupSubset.randomContext));
+    TAYA_Printf("*** èëÇ´ñﬂÇµÇΩRandomContext ***\n");
+    for(i=0; i<sizeof(setup->recRandContext); ++i)
+    {
+      TAYA_Printf("%02x ", p[i]);
+      if( (i+1)%8 == 0 ){
+        TAYA_Printf("\n");
+      }
+    }
+  }
+
   return TRUE;
 }
 //----------------------------------------------------------------------------------
