@@ -37,8 +37,8 @@
 #define BGWF_SELMAIL_PY     ( 7 )   // 選択したメールタブ表示Ｙ座標
 
 // ボタン背景キャラ位置
-#define BTN_U_BACK_CGX_POS  ( 0x07 * 0x20 )
-#define BTN_D_BACK_CGX_POS  ( 0x0b * 0x20 )
+#define BTN_U_BACK_CGX_POS  ( 32+7 * 0x20 )
+#define BTN_D_BACK_CGX_POS  ( 32+7 * 0x20 )
 
 #define EXP_BUF_SIZE    ( 1024 )  // 汎用文字列展開領域サイズ
 
@@ -840,3 +840,36 @@ void MBMAIN_MailGraphcLoad( MAILBOX_SYS_WORK * syswk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
+#define PMS_WORD_CLACT_MAX    ( 6 )
+
+//=============================================================================================
+/**
+ * @brief 簡易会話描画システム初期化
+ *
+ * @param   syswk   メールボックスシステムワーク
+ */
+//=============================================================================================
+void MBMAIN_PmsDrawInit( MAILBOX_SYS_WORK * syswk )
+{
+  syswk->app->pmsPrintque = PRINTSYS_QUE_Create( HEAPID_MAILBOX_APP );
+  syswk->app->pmsClunit   = GFL_CLACT_UNIT_Create( PMS_WORD_CLACT_MAX, 2, HEAPID_MAILBOX_APP );
+  syswk->app->pms_draw_work = PMS_DRAW_Init( syswk->app->pmsClunit, CLSYS_DRAW_SUB, 
+                                           syswk->app->pmsPrintque, syswk->font, 
+                                           4, 3, HEAPID_MAILBOX_APP );
+}
+
+
+//=============================================================================================
+/**
+ * @brief 簡易会話描画システム解放
+ *
+ * @param   syswk   メールボックスシステムワーク
+ */
+//=============================================================================================
+void MBMAIN_PmsDrawExit( MAILBOX_SYS_WORK * syswk )
+{
+  PMS_DRAW_Exit( syswk->app->pms_draw_work );
+  PRINTSYS_QUE_Delete( syswk->app->pmsPrintque );
+  GFL_CLACT_UNIT_Delete( syswk->app->pmsClunit );
+  
+}

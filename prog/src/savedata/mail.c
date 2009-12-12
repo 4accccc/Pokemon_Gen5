@@ -259,7 +259,7 @@ void MAILDATA_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos, GAMEDATA* g
   my    = GAMEDATA_GetMyStatus( gamedata );
 
   //自機の名前
-  GFL_STD_MemCopy(MyStatus_GetMyName(my),dat->name,sizeof(dat->name));
+  GFL_STD_MemCopy( MyStatus_GetMyName(my), dat->name, sizeof(dat->name));
   //性別
   dat->sex = (u8)MyStatus_GetMySex(my);
   //トレーナーID
@@ -386,7 +386,7 @@ STRCODE* MailData_GetWriterName(MAIL_DATA* dat)
  */
 void MailData_SetWriterName(MAIL_DATA* dat,STRCODE* name)
 {
-  GFL_STD_MemCopy(dat->name,name, BUFLEN_PERSON_NAME);
+  GFL_STD_MemCopy( name, dat->name, BUFLEN_PERSON_NAME);
 }
 
 /**

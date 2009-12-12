@@ -16,6 +16,7 @@
 #include "system/bgwinfrm.h"
 #include "system/cursor_move.h"
 #include "system/selbox.h"
+#include "system/pms_draw.h"
 #include "app/mailbox.h"
 #include "app/app_taskmenu.h"
 
@@ -91,7 +92,6 @@ enum {
   MBMAIN_BMPWIN_ID_MAIL20,
 
   MBMAIN_BMPWIN_ID_SELMAIL,   // 選択メール
-  MBMAIN_BMPWIN_ID_RET,     //「やめる」
   MBMAIN_BMPWIN_ID_CLOSE,     //「とじる」
   MBMAIN_BMPWIN_ID_PAGE,      // ページ
 
@@ -199,6 +199,11 @@ typedef struct {
   APP_TASKMENU_WORK     *menuwork;
   APP_TASKMENU_ITEMWORK menuitem[4];
   APP_TASKMENU_ITEMWORK yn_menuitem[2];
+
+  // 簡易会話描画用ワーク
+  PMS_DRAW_WORK     *pms_draw_work;
+  GFL_CLUNIT        *pmsClunit;
+  PRINT_QUE         *pmsPrintque;
 
 }MAILBOX_APP_WORK;
 
@@ -500,6 +505,9 @@ extern BOOL MBMAIN_ButtonAnmMain( MAILBOX_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void MBMAIN_MailGraphcLoad( MAILBOX_SYS_WORK * syswk );
+
+extern void MBMAIN_PmsDrawInit( MAILBOX_SYS_WORK * syswk );
+extern void MBMAIN_PmsDrawExit( MAILBOX_SYS_WORK * syswk );
 
 
 #endif  // __MB_MAIN_H__

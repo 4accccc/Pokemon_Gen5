@@ -204,6 +204,10 @@ BOOL MBSEQ_Main( MAILBOX_SYS_WORK * syswk, int * seq )
     if(syswk->app->pMsgTcblSys!=NULL){
       GFL_TCBL_Main( syswk->app->pMsgTcblSys );
     }
+    if(syswk->app->pmsPrintque){
+      PMS_DRAW_Main( syswk->app->pms_draw_work );
+      PRINTSYS_QUE_Main( syswk->app->pmsPrintque );
+    }
   }
 
   return TRUE;
@@ -255,6 +259,8 @@ static int MainSeq_Init( MAILBOX_SYS_WORK * syswk )
 
   MBOBJ_Init( syswk );
 
+  MBMAIN_PmsDrawInit( syswk );
+
 //  MBMAIN_YesNoWinInit( syswk );
 
   MBUI_CursorMoveInit( syswk );
@@ -296,6 +302,8 @@ static int MainSeq_Release( MAILBOX_SYS_WORK * syswk )
   MBUI_CursorMoveExit( syswk );
 
 //  MBMAIN_YesNoWinExit( syswk );
+
+  MBMAIN_PmsDrawExit( syswk );
 
   MBOBJ_Exit( syswk );
 
@@ -424,9 +432,9 @@ static int MainSeq_YesNo( MAILBOX_SYS_WORK * syswk )
     TOUCH_SW_Reset( syswk->app->tsw );
     return YesNoFunc[syswk->app->ynID].no( syswk );
   }
+*/
 
   return MBSEQ_MAINSEQ_YESNO;
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -509,8 +517,9 @@ static int MainSeq_Start( MAILBOX_SYS_WORK * syswk )
 static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
 {
   u32 ret;
-
-  switch( MBUI_MailSelArrowCheck( syswk ) ){
+  
+  // タッチのみボタンチェック
+  switch( MBUI_MailboxTouchButtonCheck( syswk ) ){
   case 0:   // 左矢印
     if( syswk->sel_page != 0 ){
       syswk->sel_page--;
@@ -518,7 +527,7 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
       return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_L, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
     }
     return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
-
+    break;
   case 1:   // 右矢印
     if( syswk->sel_page != syswk->app->page_max ){
       syswk->sel_page++;
@@ -526,9 +535,14 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
       return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_R, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
     }
     return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
+    break;
+  case 2:   // やめる
+    PMSND_PlaySE( SND_MB_CANCEL );
+    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
+    break;
   }
 
-  ret = CURSORMOVE_Main( syswk->app->cmwk );
+  ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
   switch( ret ){
   case MBUI_MAILSEL_MAIL1:  // 00: メール１
@@ -549,38 +563,28 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
     }
     break;
 
-  case MBUI_MAILSEL_RETURN: // 10: やめる
+//  case MBUI_MAILSEL_RETURN: // 10: やめる
   case CURSORMOVE_CANCEL:   // キャンセル
     PMSND_PlaySE( SND_MB_CANCEL );
     return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
 
-  case CURSORMOVE_NONE:     // 動作なし
+  case CURSORMOVE_NO_MOVE_RIGHT:     // カーソルは動かず右が押された
     {
       u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-        if( pos == MBUI_MAILSEL_MAIL2 ||
-          pos == MBUI_MAILSEL_MAIL4 ||
-          pos == MBUI_MAILSEL_MAIL6 ||
-          pos == MBUI_MAILSEL_MAIL8 ||
-          pos == MBUI_MAILSEL_MAIL10 ){
-          if( syswk->sel_page != syswk->app->page_max ){
-            syswk->sel_page++;
-            PMSND_PlaySE( SND_MB_SELECT );
-            return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_R, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
-          }
-        }
-      }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-        if( pos == MBUI_MAILSEL_MAIL1 ||
-          pos == MBUI_MAILSEL_MAIL3 ||
-          pos == MBUI_MAILSEL_MAIL5 ||
-          pos == MBUI_MAILSEL_MAIL7 ||
-          pos == MBUI_MAILSEL_MAIL9 ){
-          if( syswk->sel_page != 0 ){
-            syswk->sel_page--;
-            PMSND_PlaySE( SND_MB_SELECT );
-            return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_L, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
-          }
-        }
+      if( syswk->sel_page != syswk->app->page_max ){
+        syswk->sel_page++;
+        PMSND_PlaySE( SND_MB_SELECT );
+        return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_R, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
+      }
+    }
+    break;
+  case CURSORMOVE_NO_MOVE_LEFT:     // カーソルは動かず左が押された
+    {
+      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+      if( syswk->sel_page != 0 ){
+        syswk->sel_page--;
+        PMSND_PlaySE( SND_MB_SELECT );
+        return ObjButtonAnmSet( syswk, MBMAIN_OBJ_ARROW_L, MBSEQ_MAINSEQ_MAIL_SELECT_PAGE_CHG );
       }
     }
     break;
@@ -592,6 +596,7 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
     PMSND_PlaySE( SND_MB_SELECT );
     break;
   }
+
 
   return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
 }
@@ -1095,9 +1100,12 @@ static void SubDispMailWrite( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static void SubDispMailClear( MAILBOX_SYS_WORK * syswk )
 {
-  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1, FALSE );
-  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON2, FALSE );
-  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON3, FALSE );
+//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1, FALSE );
+//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON2, FALSE );
+//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON3, FALSE );
+  PMS_DRAW_Clear( syswk->app->pms_draw_work, 0, FALSE );
+  PMS_DRAW_Clear( syswk->app->pms_draw_work, 1, FALSE );
+  PMS_DRAW_Clear( syswk->app->pms_draw_work, 2, FALSE );
   GFL_BG_ClearScreen( MBMAIN_BGF_MAILMES_S );
   GFL_BG_ClearScreen( MBMAIN_BGF_MAIL_S );
 }
@@ -1156,9 +1164,7 @@ static void SelMailDelete( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u16 pos )
 {
-  PLIST_DATA * pld = GFL_HEAP_AllocMemory( HEAPID_MAILBOX_SYS, sizeof(PLIST_DATA) );
-
-  MI_CpuClear8( pld, sizeof(PLIST_DATA) );
+  PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_MAILBOX_SYS, sizeof(PLIST_DATA) );
 
   pld->pp        = GAMEDATA_GetMyPokemon( syswk->dat->gamedata );
   pld->myitem    = GAMEDATA_GetMyItem( syswk->dat->gamedata );
@@ -1172,6 +1178,7 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
 
   syswk->subProcWork = pld;
 }
+FS_EXTERN_OVERLAY(pokelist);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1184,7 +1191,8 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
 //--------------------------------------------------------------------------------------------
 static int MailPokeListCall( MAILBOX_SYS_WORK * syswk )
 {
-  GFL_PROC_SysCallProc( NO_OVERLAY_ID, &PokeList_ProcData, syswk->subProcWork );
+  
+  GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, syswk->subProcWork );
   return 0;
 }
 

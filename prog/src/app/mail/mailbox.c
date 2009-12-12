@@ -26,7 +26,7 @@ const GFL_PROC_DATA MailBoxProcData = {
 static PMS_DATA debug_pms[3]={
   {1,1,{1,1} },{2,2,{2,2} },{2,2,{2,2} },
 };
-static STRCODE testname[]={ 0x3084,0x3081, 0xffff };
+static const STRCODE mailtestname[16]={ 0x3084,0x3081, 0xffff };
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -55,16 +55,14 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
   syswk->vintr_tcb = NULL;
 
   {
+    int i;
     MAIL_DATA *mail = MailData_CreateWork(HEAPID_MAILBOX_SYS);
     MailData_Clear(mail);
 //    PMSDAT_Init( pms, msg->sentence_type );
 
-    testname[0] = 0x3084;
-    testname[1] = 0x3084;
-    testname[2] = 0xFFFF;
-    MailData_SetWriterName( mail, testname);
+    MailData_SetWriterName( mail, (STRCODE*)mailtestname);
     MailData_SetDesignNo( mail, 1 );
-    PMSDAT_SetDebug(&debug_pms[0]);
+    PMSDAT_SetDebugRandomDeco(&debug_pms[0],HEAPID_MAILBOX_SYS);
     PMSDAT_SetDebug(&debug_pms[1]);
     PMSDAT_SetDebug(&debug_pms[2]);
     MailData_SetMsgByIndex( mail, &debug_pms[0], 0);
@@ -75,7 +73,10 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
       OS_Printf("メールデータは無効\n");
     }
 
-    MAIL_AddMailFormWork( syswk->sv_mail, MAILBLOCK_PASOCOM, 0, mail );
+    for(i=0;i<15;i++){
+      MAIL_AddMailFormWork( syswk->sv_mail, MAILBLOCK_PASOCOM, i, mail );
+    }
+
     GFL_HEAP_FreeMemory( mail );
 
     OS_Printf("mail num = %d\n",MAIL_GetEnableDataNum(syswk->sv_mail,MAILBLOCK_PASOCOM));
@@ -119,6 +120,8 @@ GFL_PROC_RESULT MailBoxProc_End( GFL_PROC * proc, int *seq, void *pwk, void *myw
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_CheckHeapSafe( HEAPID_MAILBOX_SYS );
+  GFL_HEAP_DeleteHeap( HEAPID_MAILBOX_SYS );
+
 
   OS_Printf( "↑↑↑↑↑　メールボックス処理終了　↑↑↑↑↑\n" );
 

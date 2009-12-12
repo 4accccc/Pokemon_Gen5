@@ -34,23 +34,6 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 //============================================================================================
 
 // ƒ[ƒ‹‘I‘ð
-static const GFL_UI_TP_HITTBL MailSelHitTbl[] =
-{
-  {   0,  31,   8, 119 },   // 00: ƒ[ƒ‹‚P
-  {   0,  31, 136, 244 },   // 01: ƒ[ƒ‹‚Q
-  {  32,  63,   8, 119 },   // 02: ƒ[ƒ‹‚R
-  {  32,  63, 136, 244 },   // 03: ƒ[ƒ‹‚S
-  {  64,  95,   8, 119 },   // 04: ƒ[ƒ‹‚T
-  {  64,  95, 136, 244 },   // 05: ƒ[ƒ‹‚U
-  {  96, 127,   8, 119 },   // 06: ƒ[ƒ‹‚V
-  {  96, 127, 136, 244 },   // 07: ƒ[ƒ‹‚W
-  { 128, 159,   8, 119 },   // 08: ƒ[ƒ‹‚X
-  { 128, 159, 136, 244 },   // 09: ƒ[ƒ‹‚P‚O
-
-  { 160, 191, 192, 255 },   // 10: ‚â‚ß‚é
-
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
 static const CURSORMOVE_DATA MailSelTbl[] =
 {
   {  64,  16, 0, 0, 0,  2, 0, 1, {   0,  31,   8, 119 },},    // 00: ƒ[ƒ‹‚P
@@ -61,10 +44,11 @@ static const CURSORMOVE_DATA MailSelTbl[] =
   { 192,  80, 0, 0, 3,  7, 4, 5, {  64,  95, 136, 244 },},    // 05: ƒ[ƒ‹‚U
   {  64, 112, 0, 0, 4,  8, 6, 7, {  96, 127,   8, 119 },},    // 06: ƒ[ƒ‹‚V
   { 192, 112, 0, 0, 5,  9, 6, 7, {  96, 127, 136, 244 },},    // 07: ƒ[ƒ‹‚W
-  {  64, 144, 0, 0, 6, 10, 8, 9, { 128, 159,   8, 119 },},    // 08: ƒ[ƒ‹‚X
-  { 192, 144, 0, 0, 7, 10, 8, 9, { 128, 159, 136, 244 },},    // 09: ƒ[ƒ‹‚P‚O
+  {  64, 144, 0, 0, 6,  8, 8, 9, { 128, 159,   8, 119 },},    // 08: ƒ[ƒ‹‚X
+  { 192, 144, 0, 0, 7,  9, 8, 9, { 128, 159, 136, 244 },},    // 09: ƒ[ƒ‹‚P‚O
+  {   0,   0, 0, 0, 0,  0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 },},
 
-  { 224, 176, 0, 0, CURSORMOVE_RETBIT|9, 10, 10, 10, { 160, 191, 192, 255 }, },   // 10: ‚â‚ß‚é
+//  { 224, 176, 0, 0, CURSORMOVE_RETBIT|9, 10, 10, 10, { 160, 191, 192, 255 }, },   // 10: ‚â‚ß‚é
 };
 static const CURSORMOVE_CALLBACK MailSelCallBack = {
   CursorMoveCallBack_On,
@@ -74,10 +58,11 @@ static const CURSORMOVE_CALLBACK MailSelCallBack = {
 };
 
 // ƒ[ƒ‹‘I‘ðƒy[ƒWØ‚è‘Ö‚¦
-static const GFL_UI_TP_HITTBL ListArrowHitTbl[] =
+static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
 {
-  { 160, 191,   8,  39 },   // 0: ¶–îˆó
-  { 160, 191,  40,  71 },   // 1: ‰E–îˆó
+  { 168, 191,   8,  8+24 },   // 0: ¶–îˆó
+  { 168, 191,  32,  32+24 },   // 1: ‰E–îˆó
+  { 168, 191, 232,  255 },   // 10: ‚â‚ß‚é
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
@@ -98,13 +83,13 @@ static const GFL_UI_TP_HITTBL MailReadHitTbl[] =
  * @return  Œ‹‰Ê
  */
 //--------------------------------------------------------------------------------------------
-u32 MBUI_MailSelArrowCheck( MAILBOX_SYS_WORK * syswk )
+u32 MBUI_MailboxTouchButtonCheck( MAILBOX_SYS_WORK * syswk )
 {
   if( syswk->app->page_max == 0 ){
     return GFL_UI_TP_HIT_NONE;
   }
 
-  return GFL_UI_TP_HitTrg( ListArrowHitTbl );
+  return GFL_UI_TP_HitTrg( TouchButtonHitTbl );
 }
 
 //--------------------------------------------------------------------------------------------

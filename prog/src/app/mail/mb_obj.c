@@ -34,18 +34,24 @@ enum {
   CHR_ID_POKEICON2,
   CHR_ID_POKEICON3,
   CHR_ID_MBOBJ,
+  CHR_ID_APP_COMMON,
+  CHR_ID_PMS,
   CHR_ID_MAX
 };
 // パレットリソースID
 enum {
   PAL_ID_POKEICON=0,  // ポケモンアイコン
   PAL_ID_MBOBJ,
+  PAL_ID_APP_COMMON,
+  PAL_ID_PMS,
   PAL_ID_MAX
 };
 // セルリソースID
 enum {
   CEL_ID_POKEICON=0,  // ポケモンアイコン
   CEL_ID_MBOBJ,
+  CEL_ID_APP_COMMON,
+  CEL_ID_PMS,
   CEL_ID_MAX
 };
 // セルアニメリソースID
@@ -126,46 +132,46 @@ static void MailBoxObjResLoad( MAILBOX_APP_WORK * appwk );
 static const CLACT_OBJECT_ADD_PARAM ClaAddPrm[] =
 {
   { // 左矢印
-    24, 176, 0,
-    0, 0, 0, CLSYS_DEFREND_MAIN,
-    { CHR_ID_MBOBJ, PAL_ID_MBOBJ, CEL_ID_MBOBJ, ANM_ID_MBOBJ, 0, 0 },
+    8, 168, 0,
+    APP_COMMON_BARICON_CURSOR_LEFT, 0, 0, CLSYS_DEFREND_MAIN,
+    { CHR_ID_APP_COMMON, PAL_ID_APP_COMMON, CEL_ID_APP_COMMON, 0, 0, 0 },
     3, 0
   },
   { // 右矢印
-    56, 176, 0,
-    1, 0, 0, CLSYS_DEFREND_MAIN,
-    { CHR_ID_MBOBJ, PAL_ID_MBOBJ, CEL_ID_MBOBJ, ANM_ID_MBOBJ, 0, 0 },
+    32, 168, 0,
+    APP_COMMON_BARICON_CURSOR_RIGHT, 0, 0, CLSYS_DEFREND_MAIN,
+    { CHR_ID_APP_COMMON, PAL_ID_APP_COMMON, CEL_ID_APP_COMMON, 0, 0, 0 },
     3, 0
   },
   { // カーソル
     64, 16, 0,
     5, 0, 1, CLSYS_DEFREND_MAIN,
-    { CHR_ID_MBOBJ, PAL_ID_MBOBJ, CEL_ID_MBOBJ, ANM_ID_MBOBJ, 0, 0 },
+    { CHR_ID_MBOBJ, PAL_ID_MBOBJ, CEL_ID_MBOBJ, 0, 0, 0 },
     1, 0
   },
   { // 戻るボタン
-    224, 176, 0,
-    2, 0, 0, CLSYS_DEFREND_MAIN,
-    { CHR_ID_MBOBJ, PAL_ID_MBOBJ, CEL_ID_MBOBJ, ANM_ID_MBOBJ, 0, 0 },
+    224, 168, 0,
+    APP_COMMON_BARICON_RETURN, 0, 0, CLSYS_DEFREND_MAIN,
+    { CHR_ID_APP_COMMON, PAL_ID_APP_COMMON, CEL_ID_APP_COMMON, 0, 0, 0 },
     3, 0
   },
 
   { // ポケモンアイコン１
     POKEICON_PX-POKEICON_SX*0, POKEICON_PY, 0,
     0, 0, 0, CLSYS_DEFREND_SUB,
-    { CHR_ID_POKEICON1, PAL_ID_POKEICON, CEL_ID_POKEICON, ANM_ID_POKEICON, 0, 0 },
+    { CHR_ID_POKEICON1, PAL_ID_POKEICON, CEL_ID_POKEICON, 0, 0, 0 },
     1, 0
   },
   { // ポケモンアイコン２
     POKEICON_PX-POKEICON_SX*1, POKEICON_PY, 0,
     0, 0, 0, CLSYS_DEFREND_SUB,
-    { CHR_ID_POKEICON2, PAL_ID_POKEICON, CEL_ID_POKEICON, ANM_ID_POKEICON, 0, 0 },
+    { CHR_ID_POKEICON2, PAL_ID_POKEICON, CEL_ID_POKEICON, 0, 0, 0 },
     1, 0
   },
   { // ポケモンアイコン３
     POKEICON_PX-POKEICON_SX*2, POKEICON_PY, 0,
     0, 0, 0, CLSYS_DEFREND_SUB,
-    { CHR_ID_POKEICON3, PAL_ID_POKEICON, CEL_ID_POKEICON, ANM_ID_POKEICON, 0, 0 },
+    { CHR_ID_POKEICON3, PAL_ID_POKEICON, CEL_ID_POKEICON, 0, 0, 0 },
     1, 0
   },
 };
@@ -371,7 +377,7 @@ static GFL_CLWK* ClactAdd( MAILBOX_APP_WORK * appwk, const CLACT_OBJECT_ADD_PARA
 {
   GFL_CLWK_DATA dat;
   dat.pos_x   = prm->x;   ///< [ X ] 座標
-  dat.pos_y   = prm->x;   ///< [ Y ] 座標
+  dat.pos_y   = prm->y;   ///< [ Y ] 座標
   dat.anmseq  = prm->anm;        ///< アニメ番号
   dat.softpri = 0;
   dat.bgpri   = 0;
@@ -676,6 +682,7 @@ static void MailBoxObjResLoad( MAILBOX_APP_WORK * appwk )
 {
   ARCHANDLE * handle = GFL_ARC_OpenDataHandle( ARCID_MAIL_GRA, HEAPID_MAILBOX_APP );
 
+  // メールボックス素材
   // Char
   appwk->clres[RES_CGR][CHR_ID_MBOBJ] = GFL_CLGRP_CGR_Register( handle,
                                             NARC_mail_gra_mailbox_obj_m_lz_NCGR, 1,
@@ -692,6 +699,24 @@ static void MailBoxObjResLoad( MAILBOX_APP_WORK * appwk )
 
   GFL_ARC_CloseDataHandle( handle );
 
+  // タッチバー素材
+  handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_MAILBOX_APP );
+
+  // Char
+  appwk->clres[RES_CGR][CHR_ID_APP_COMMON] = GFL_CLGRP_CGR_Register( handle,
+                                            APP_COMMON_GetBarIconCharArcIdx(), 0,
+                                            CLSYS_DRAW_MAIN, HEAPID_MAILBOX_APP );
+  // Pltt
+  appwk->clres[RES_PAL][PAL_ID_APP_COMMON] = GFL_CLGRP_PLTT_Register( handle,
+                                            APP_COMMON_GetBarIconPltArcIdx(),
+                                            CLSYS_DRAW_MAIN, 2*32, HEAPID_MAILBOX_APP );
+  // CellAnm
+  appwk->clres[RES_CELANM][CEL_ID_APP_COMMON] = GFL_CLGRP_CELLANIM_Register( handle,
+                                            APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K),
+                                            APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
+                                            HEAPID_MAILBOX_APP );
+  
+  GFL_ARC_CloseDataHandle( handle );
 
 }
 

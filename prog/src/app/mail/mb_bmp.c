@@ -62,7 +62,7 @@
 //「やめる」
 #define BMPWIN_RET_FRM    ( MBMAIN_BGF_STR_M )
 #define BMPWIN_RET_PX   ( 25 )
-#define BMPWIN_RET_PY   ( 21 )
+#define BMPWIN_RET_PY   ( 22 )
 #define BMPWIN_RET_SX   ( 6 )
 #define BMPWIN_RET_SY   ( 2 )
 #define BMPWIN_RET_PAL    ( 15 )
@@ -78,7 +78,7 @@
 // ページ
 #define BMPWIN_PAGE_FRM   ( MBMAIN_BGF_STR_M )
 #define BMPWIN_PAGE_PX    ( 10 )
-#define BMPWIN_PAGE_PY    ( 21 )
+#define BMPWIN_PAGE_PY    ( 22 )
 #define BMPWIN_PAGE_SX    ( 5 )
 #define BMPWIN_PAGE_SY    ( 2 )
 #define BMPWIN_PAGE_PAL   ( 15 )
@@ -124,8 +124,8 @@
 #define BMPWIN_NAME_PAL   ( MBMAIN_SBG_PAL_MAILMSE )
 #define BMPWIN_NAME_CGX   ( BMPWIN_MAILMSG3_CGX + BMPWIN_MAILMSG_SX * BMPWIN_MAILMSG_SY )
 
-#define FCOL_TCH_BLN_M01  ( PRINTSYS_LSB_Make( 3, 2, 0 ) )    // フォントカラー：タッチ青抜M01
-#define FCOL_TCH_RDN_M01  ( PRINTSYS_LSB_Make( 5, 4, 0 ) )    // フォントカラー：タッチ赤抜M01
+#define FCOL_TCH_BLN_M01  ( PRINTSYS_LSB_Make( 3, 2, 4 ) )    // フォントカラー：タッチ青抜M01
+#define FCOL_TCH_RDN_M01  ( PRINTSYS_LSB_Make( 5, 4, 4 ) )    // フォントカラー：タッチ赤抜M01
 #define FCOL_TLK_BKW_M14  ( PRINTSYS_LSB_Make( 1, 2, 15 ) )   // フォントカラー：会話黒白M14
 #define FCOL_TCH_BKN_M15  ( PRINTSYS_LSB_Make( 15, 1, 0 ) )   // フォントカラー：タッチ黒抜M15
 #define FCOL_SYS_BKN_M15  ( PRINTSYS_LSB_Make( 1, 2, 0 ) )    // フォントカラー：システム黒抜M15
@@ -254,10 +254,6 @@ static const BMPWIN_DAT BmpWinData[] =
     BMPWIN_SELMAIL_FRM, BMPWIN_SELMAIL_PX, BMPWIN_SELMAIL_PY,
     BMPWIN_SELMAIL_SX, BMPWIN_SELMAIL_SY, BMPWIN_SELMAIL_PAL, BMPWIN_SELMAIL_CGX
   },
-  { //「やめる」
-    BMPWIN_RET_FRM, BMPWIN_RET_PX, BMPWIN_RET_PY,
-    BMPWIN_RET_SX, BMPWIN_RET_SY, BMPWIN_RET_PAL, BMPWIN_RET_CGX
-  },
   { //「とじる」
     BMPWIN_CLOSE_FRM, BMPWIN_CLOSE_PX, BMPWIN_CLOSE_PY,
     BMPWIN_CLOSE_SX, BMPWIN_CLOSE_SY, BMPWIN_CLOSE_PAL, BMPWIN_CLOSE_CGX
@@ -322,7 +318,6 @@ void MBBMP_Init( MAILBOX_SYS_WORK * syswk )
   for( i=0; i<MBMAIN_BMPWIN_ID_MAX; i++ ){
 //    GF_BGL_BmpWinAddEx( syswk->app->bgl, &syswk->app->win[i], &BmpWinData[i] );
       win = &BmpWinData[i];
-      OS_Printf("bmp%d create\n", i);
       syswk->app->win[i] = GFL_BMPWIN_Create( win->frame, win->x, win->y, win->w, win->h, 
                                               win->pal, GFL_BMP_CHRAREA_GET_B );
       PRINT_UTIL_Setup( &syswk->app->printUtil[i], syswk->app->win[i] );
@@ -469,6 +464,11 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
     GFL_BMP_Print( GFL_BMPWIN_GetBmp(win), backbmp2, 
                     0, 0, 8*i, 8, 8, 8, GF_BMPPRT_NOTNUKI );
   }
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), 4 );
+//  GFL_BMP_Print( GFL_BMPWIN_GetBmp(win), backbmp1, 
+//                    0, 0, 8*i, 0, 8, 8, GF_BMPPRT_NOTNUKI );
+  // メールの色が男女で変わる
   if( MailData_GetWriterSex( md ) == 0 ){
     StrPrintCore( win, syswk->app->expbuf, util, syswk->app->printQue, 0, 0, 
                   syswk->font, FCOL_TCH_BLN_M01, STRPRINT_MODE_LEFT );
@@ -479,7 +479,8 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
 
 //  GF_BGL_BmpWinCgxOn( win );
   GFL_BMPWIN_TransVramCharacter( win ); // キャラクターのみ転送
-  
+  GFL_BMPWIN_MakeScreen( win );  
+
   // フレームにBMPを貼り付け
   BGWINFRM_BmpWinOn( syswk->app->wfrm, frmID, win );
 
@@ -509,6 +510,7 @@ void MBBMP_DefaultStrSet( MAILBOX_SYS_WORK * syswk )
   GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_TITLE] );
 
   // やめる
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_RET]), 0 );
   StrPrint(
     syswk->app, syswk->app->mman,
@@ -516,7 +518,6 @@ void MBBMP_DefaultStrSet( MAILBOX_SYS_WORK * syswk )
     BMPWIN_RET_SX*8/2, 0,
     syswk->font, FCOL_TCH_BKN_M15, STRPRINT_MODE_CENTER );
   GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_RET] );
-
   // とじる
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_CLOSE]), 0 );
   StrPrint(
@@ -524,6 +525,7 @@ void MBBMP_DefaultStrSet( MAILBOX_SYS_WORK * syswk )
     MBMAIN_BMPWIN_ID_CLOSE, msg_close,
     BMPWIN_CLOSE_SX*8/2, 0,
     syswk->font, FCOL_TCH_BKN_M15, STRPRINT_MODE_CENTER );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -537,8 +539,10 @@ void MBBMP_DefaultStrSet( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void MBBMP_ClosePut( MAILBOX_APP_WORK * appwk )
 {
+/*
   GFL_BMPWIN_ClearTransWindow_VBlank( appwk->win[MBMAIN_BMPWIN_ID_RET] );
   GFL_BMPWIN_MakeTransWindow_VBlank( appwk->win[MBMAIN_BMPWIN_ID_CLOSE] );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -552,8 +556,10 @@ void MBBMP_ClosePut( MAILBOX_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void MBBMP_ReturnPut( MAILBOX_APP_WORK * appwk )
 {
+/*  
   GFL_BMPWIN_ClearTransWindow_VBlank( appwk->win[MBMAIN_BMPWIN_ID_CLOSE] );
   GFL_BMPWIN_MakeTransWindow_VBlank( appwk->win[MBMAIN_BMPWIN_ID_RET] );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -623,6 +629,15 @@ static void SelMailNameWordSet( MAILBOX_SYS_WORK * syswk, u32 bufID )
   md  = syswk->app->mail[ syswk->lst_pos ];
 
   str = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, HEAPID_MAILBOX_APP );
+  {
+    int i;
+    STRCODE *dat = MailData_GetWriterName(md);
+    OS_Printf("mail name = ");
+    for(i=0;i<5;i++){
+      OS_Printf("%04x ",dat[i]);
+    }
+    OS_Printf("\n");
+  }
   GFL_STR_SetStringCode( str, MailData_GetWriterName(md) );
   WORDSET_RegisterWord( syswk->app->wset, 0, str, MailData_GetWriterSex(md), TRUE, PM_LANG );
   GFL_STR_DeleteBuffer( str );
@@ -760,12 +775,22 @@ void MBBMP_DeleteMsgPut( MAILBOX_SYS_WORK * syswk, u32 id )
 void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
 {
   u32 i;
+  PMS_DATA * pms;
 
+  for(i=0;i<3;i++){
+    pms = MailData_GetMsgByIndex( syswk->app->mail[syswk->lst_pos], i );
+    PMS_DRAW_Print( syswk->app->pms_draw_work, 
+                    syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i], pms, i );
+    GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
+  }
+
+/*
   for( i=0; i<MAILDAT_MSGMAX; i++ ){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i]), 0 );
     MailMesPut( syswk, MBMAIN_BMPWIN_ID_MAILMSG1+i, i );
     GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
   }
+*/
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_NAME]), 0 );
   GFL_STR_SetStringCode(
