@@ -34,8 +34,6 @@
 
 #define GIFT_DATA_CARD_TEXT_MAX		504   //説明テキスト
 
-#define MYSTERYGIFT_POKEICON	3  //ポケモンアイコン
-
 
 //------------------------------------------------------------------
 ///		贈り物データ構造体
@@ -146,17 +144,14 @@ typedef struct{
   STRCODE event_name[GIFT_DATA_CARD_TITLE_MAX];	// イベントタイトル
   s32 recv_date;				// 受信した時間
   u16 event_id;					// イベントＩＤ(最大2048件まで)
-  u16 pokemon_icon[MYSTERYGIFT_POKEICON];	// 下画面ポケモンアイコン３つ分
-  u16 pokemon_icon_up;	// 上画面ポケモンアイコン
-  u16 poke_silhouette;  // ポケモンシルエット
-  u8 poke_form;         // ポケモンシルエットのフォルム
+  u16 icon_no;          // 上画面アイコン   プレゼント かアイテム か ぽけもんかは gift_typeを見ながら決める
+  u8 form;              // pokemon_iconがポケモンだった場合 フォルムNo
   u8 card_message;      //  カードのメッセージタイプ
-  u8 pokemon_icon_up_type;  //上画面ポケモンアイコンタイプ
-  u8 pokemon_icon_type;  // 
-  u8 gift_type;        // 送られてくるタイプ
-  u8 only_one_flag:1;	 // １度だけ受信フラグ(0..何度でも受信可能 1..１回のみ)
-  u8 have:1;				 // データを受け取った場合 1
-  u8 padding:6;
+  u8 gift_type;         // 送られてくるタイプ
+  u8 only_one_flag:1;	  // １度だけ受信フラグ(0..何度でも受信可能 1..１回のみ)
+  u8 have:1;				    // データを受け取った場合 1
+  u8 rare:1;            // gift_typeがポケモンだった場合にレアかどうか
+  u8 padding:5;
   u32 dummy[4];            //予備データ16byte
 } GIFT_PACK_DATA;
 
