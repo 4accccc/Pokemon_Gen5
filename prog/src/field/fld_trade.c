@@ -690,9 +690,9 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
       u16             zone_id = FIELDMAP_GetZoneID( fieldmap );
        
-      work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_WORLD, work->tradeNo );
+      work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
       SetPokemonParam( work->tradeWork->p_pp, work->tradeWork->p_pokedata, 
-                       work->tradeNo, zone_id, HEAPID_WORLD );
+                       work->tradeNo, zone_id, HEAPID_PROC );
     }
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );
