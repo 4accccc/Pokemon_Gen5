@@ -31,6 +31,9 @@ enum
   SEQ_EXIT,   // イベント終了
 };
 
+// 回転SE
+#define SE_SPIN (SEQ_SE_FLD_35)
+
 
 //=============================================================================================
 // ■移動床
@@ -156,7 +159,9 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
       // 衝突チェック
       if( HitCheck(work) )  // if(衝突)
       { // SE停止
-        PMSND_StopSE(); 
+        SEPLAYER_ID player_id;
+        player_id = PMSND_GetSE_DefaultPlayerID( SE_SPIN );
+        PMSND_StopSE_byPlayerID( player_id ); 
         *seq = SEQ_EXIT; 
         break;
       }
@@ -332,7 +337,14 @@ static void MoveStart( EVENT_WORK* work )
   MMDL_OnStatusBit( work->mmdl, MMDL_STABIT_PAUSE_DIR );
 
   // SE再生
-  if( PMSND_CheckPlaySE() == FALSE ){ PMSND_PlaySE( SEQ_SE_FLD_35 ); }
+  {
+    SEPLAYER_ID player_id;
+    player_id = PMSND_GetSE_DefaultPlayerID( SE_SPIN );
+    if( PMSND_CheckPlaySE_byPlayerID(player_id) == FALSE )
+    { 
+      PMSND_PlaySE( SE_SPIN ); 
+    }
+  }
 }
 
 //---------------------------------------------------------------------------------------------

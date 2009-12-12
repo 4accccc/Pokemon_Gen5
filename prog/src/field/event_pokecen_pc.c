@@ -77,9 +77,10 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
     break;
   // アニメ, SE待ち
   case 1:
-    if( PMSND_CheckPlaySE() == FALSE )
     {
-      ++(*seq);
+      SEPLAYER_ID player_id;
+      player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_PC_ON );
+      if( PMSND_CheckPlaySE_byPlayerID(player_id) == FALSE ){ ++(*seq); }
     }
     break;
   // PC起動中アニメ再生
@@ -177,9 +178,10 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
     break;
   // アニメ, SE待ち
   case 1:
-    if( PMSND_CheckPlaySE() == FALSE )
     {
-      ++(*seq);
+      SEPLAYER_ID player_id;
+      player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_PC_LOGOFF );
+      if( PMSND_CheckPlaySE_byPlayerID(player_id) == FALSE ){ ++(*seq); }
     }
     break;
   case 2:
