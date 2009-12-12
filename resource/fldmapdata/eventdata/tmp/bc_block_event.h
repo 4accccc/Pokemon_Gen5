@@ -3,6 +3,9 @@
 #define ZONE_BC_BLOCK_EVENT_EVD_H
 
 #define DOOR_ID_BCIN_BUILD00              0
+#define DOOR_ID_BCIN_BUILD01              1
+#define DOOR_ID_BCIN_BUILD02              2
+#define DOOR_ID_BCIN_BUILD03              3
 
 #endif //ZONE_BC_BLOCK_EVENT_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/bc_block_event.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

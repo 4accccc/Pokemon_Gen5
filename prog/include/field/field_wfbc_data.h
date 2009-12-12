@@ -77,7 +77,7 @@ typedef enum
 //-------------------------------------
 ///	記憶する人物の数　最大数
 //=====================================
-#define FIELD_WFBC_PEOPLE_MAX ( 20 )
+#define FIELD_WFBC_PEOPLE_MAX ( 10 )
 #define FIELD_WFBC_INIT_PEOPLE_NUM ( 10 ) // 初期化での人の数を変更
 
 
@@ -220,8 +220,6 @@ typedef enum
   FIELD_WFBC_PEOPLE_ENC_POKE_MAX,
   
 } FIELD_WFBC_PEOPLE_ENC_POKE_TYPE;
-// バトルポケモンの数
-#define FIELD_WFBC_PEOPLE_BTL_POKE_MAX  (3)
 
 // メッセージの数
 #define FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX  (3)
@@ -237,7 +235,7 @@ typedef enum
 //-----------------------------------------------------------------------------
 //-------------------------------------
 ///	人物情報
-// 56バイト
+// 44バイト
 //=====================================
 typedef struct 
 {
@@ -250,10 +248,7 @@ typedef struct
   u8      enc_lv[FIELD_WFBC_PEOPLE_ENC_POKE_MAX+1];       // 4byte
   u8      enc_percent[FIELD_WFBC_PEOPLE_ENC_POKE_MAX+1];  // 4byte
   // バトルポケモン情報
-  u16     btl_monsno[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];   // 8byte
-  u8      btl_lv[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];   // 4byte
-  u8      btl_sex[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];  // 4byte
-  u8      btl_tokusei[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1]; // 4byte
+  u32     btl_trdata;   // 4byte
   // SCRIPT
   u16     script_wf; 
   u16     script_bc; 
@@ -262,6 +257,10 @@ typedef struct
   u16     goods_wf_percent;
   u16     goods_bc;
   u16     goods_bc_money;
+  // 出現確率
+  u16     hit_percent;
+  // ブロック計算補正値
+  u16     block_param;
 } FIELD_WFBC_PEOPLE_DATA;
 
 //-------------------------------------
@@ -324,7 +323,6 @@ extern FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_Create( FIELD_WFBC_PEOP
 extern void FIELD_WFBC_PEOPLE_POS_Delete( FIELD_WFBC_CORE_PEOPLE_POS* p_wk );
 
 extern const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexData( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index );
-
 
 
 

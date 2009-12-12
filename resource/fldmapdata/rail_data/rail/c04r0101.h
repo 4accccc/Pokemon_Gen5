@@ -7,3 +7,4 @@
 #define div_4_div_1_RE_LINE_0 (3)
 #define RE_LINE_4 (4)
 #define RE_LINE_5 (5)
+#define RE_LINE_6 (6)

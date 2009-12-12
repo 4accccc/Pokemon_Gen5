@@ -39,7 +39,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\bc_block_event.wms
 #hold event type:
 1
 #hold event number:
-1
+4
 #event number: 0
 #Door Event Label
 DOOR_ID_BCIN_BUILD00
@@ -54,7 +54,58 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 152
+184 0 -360
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_BCIN_BUILD01
+#Next Zone ID Name
+ZONE_ID_T01
+#Next Door ID Name
+DOOR_ID_T01_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 0 -360
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_BCIN_BUILD02
+#Next Zone ID Name
+ZONE_ID_T01
+#Next Door ID Name
+DOOR_ID_T01_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 0 -488
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_BCIN_BUILD03
+#Next Zone ID Name
+ZONE_ID_T01
+#Next Door ID Name
+DOOR_ID_T01_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 0 -488
 #size
 1 1
 #Map Event List Data End

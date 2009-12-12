@@ -2,7 +2,6 @@
 #ifndef ZONE_WF_BLOCK_EVENT_EVD_H
 #define ZONE_WF_BLOCK_EVENT_EVD_H
 
-#define DOOR_ID_WFIN_BUILD00              0
 
 #endif //ZONE_WF_BLOCK_EVENT_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/wf_block_event.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

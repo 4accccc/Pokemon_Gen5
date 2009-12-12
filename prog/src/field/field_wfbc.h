@@ -31,6 +31,7 @@ extern "C"{
 #include "field_buildmodel.h"
 
 #include "fldmmdl.h"
+#include "field_camera.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -106,6 +107,9 @@ extern int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_at
 
 // イベントデータの書換え
 extern void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID );
+
+// カメラ設定
+extern void FIELD_WFBC_SetUpCamera( const FIELD_WFBC* cp_wk, FIELD_CAMERA* p_camera, HEAPID heapID );
 
 //-------------------------------------
 ///	全体情報の設定

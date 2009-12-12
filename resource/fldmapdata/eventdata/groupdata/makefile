@@ -66,7 +66,8 @@ subdir:
 ifeq	($(CONVERTUSER),true)	
 
 check_list:
-	perl check_mev.pl $(CHECK_LIST)
+	@echo check_mev.pl
+	@perl check_mev.pl $(CHECK_LIST)
 
 # コピー先のnarcが古い場合実行する
 $(targetname).txt: $(TABFILE)

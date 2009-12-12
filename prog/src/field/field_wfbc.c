@@ -31,7 +31,7 @@
 //-------------------------------------
 ///	ブロック配置情報
 //=====================================
-#define FIELD_WFBC_BLOCK_PATCH_MAX  (20)
+#define FIELD_WFBC_BLOCK_PATCH_MAX  (16)
 #define FIELD_WFBC_BLOCK_NONE  (0xff)
 
 static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] = 
@@ -60,8 +60,19 @@ static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] =
 //=====================================
 typedef struct 
 {
-  u32 patch[FIELD_WFBC_BLOCK_PATCH_MAX+1];
+  u32 patch[FIELD_WFBC_BLOCK_PATCH_MAX];
 } FIELD_WFBC_BLOCK_PATCH;
+
+//-------------------------------------
+///	
+//=====================================
+typedef struct 
+{
+  u8 pos_x:4;   // ブロックｘ位置
+  u8 pos_z:4;   // ブロックｚ位置
+  u8 block_no;
+} WFBC_BLOCK_DATA;
+
 
 //-------------------------------------
 ///	ブロック配置情報
@@ -69,7 +80,7 @@ typedef struct
 typedef struct 
 {
   // 各グリッド位置のブロック情報
-  u8 block_data[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X];
+  WFBC_BLOCK_DATA block_data[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X];
 
   // パッチ情報
   FIELD_WFBC_BLOCK_PATCH patch[]; 
@@ -84,6 +95,15 @@ typedef struct
   // 条件
   u32 if_para;
 } FIELD_WFBC_EVENT_IF;
+
+
+//-------------------------------------
+///	カメラ情報
+//=====================================
+typedef struct 
+{
+  u16 camera_no[ FIELD_WFBC_PEOPLE_MAX+1 ];
+} FIELD_WFBC_CAMERA_SETUP;
 
 
 //-------------------------------------
@@ -290,19 +310,20 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
 //-----------------------------------------------------------------------------
 int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, u32 score, HEAPID heapID )
 {
-  u32 block_tag;
+  WFBC_BLOCK_DATA block_tag;
   const FIELD_WFBC_BLOCK_PATCH* cp_patch_data;
   FIELD_DATA_PATCH* p_patch;
   u32 local_grid_x, local_grid_z;
 
   block_tag = cp_wk->p_block->block_data[ block_z ][ block_x ];
   
-  if( block_tag != FIELD_WFBC_BLOCK_NONE )
+  if( block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
   {
-    TOMOYA_Printf( "block_tag %d\n", block_tag );
+    TOMOYA_Printf( "block_tag %d\n", block_tag.block_no );
+    TOMOYA_Printf( "block pos x %d  z %d\n", block_tag.pos_x, block_tag.pos_z );
     TOMOYA_Printf( "block_x=%d  block_z=%d\n", block_x, block_z );
     
-    GF_ASSERT( score <= FIELD_WFBC_BLOCK_PATCH_MAX );
+    GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
 
     // g3Dmapローカルのグリッド座標を求める
     local_grid_x = FIELD_WFBC_BLOCK_TO_GRID_X( block_x ) % 32;
@@ -313,16 +334,20 @@ int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIE
     TOMOYA_Printf( "build_count %d\n", build_count );
     
     // 設定
-    cp_patch_data = &cp_wk->p_block->patch[ block_tag ];
+    cp_patch_data = &cp_wk->p_block->patch[ block_tag.block_no ];
 
     // パッチ情報読み込み
     p_patch = FIELD_DATA_PATCH_Create( cp_patch_data->patch[ score ], GFL_HEAP_LOWID(heapID) );
 
     // アトリビュートのオーバーライト
-    FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, local_grid_x, local_grid_z );
+    FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, block_tag.pos_x*8, block_tag.pos_z*8, local_grid_x, local_grid_z, 8, 8 );
 
     // 配置上書き
-    build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+    if( (block_tag.pos_x == 0) && (block_tag.pos_z == 0) )
+    {
+      // 左上のブロック情報のときにのみ設定
+      build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+    }
 
     // パッチ情報破棄
     FIELD_DATA_PATCH_Delete( p_patch );
@@ -413,6 +438,36 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
   GFL_HEAP_FreeMemory( p_event_if );
   GFL_HEAP_FreeMemory( p_eventdata );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラの設定
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	p_camera  カメラ
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_SetUpCamera( const FIELD_WFBC* cp_wk, FIELD_CAMERA* p_camera, HEAPID heapID )
+{
+  FIELD_WFBC_CAMERA_SETUP* p_buff;
+  u32 people_num;
+  
+  // 読み込み
+  p_buff = GFL_ARCHDL_UTIL_Load( cp_wk->p_handle, NARC_field_wfbc_data_wb_wfbc_camera_cam, FALSE, GFL_HEAP_LOWID(heapID) );  
+
+  // 人物の数を取得
+  people_num = FIELD_WFBC_GetPeopleNum( cp_wk );
+
+  GF_ASSERT( people_num <= FIELD_WFBC_PEOPLE_MAX );
+
+  // カメラ設定
+  FIELD_CAMERA_SetCameraType( p_camera, p_buff->camera_no[ people_num ] );
+
+  GFL_HEAP_FreeMemory( p_buff );
+}
+
 
 
 //----------------------------------------------------------------------------

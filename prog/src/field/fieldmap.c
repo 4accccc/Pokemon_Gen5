@@ -2633,19 +2633,7 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, fieldWork->heapID );
     
     // カメラのセットアップ
-    {
-      u32 people_num = FIELD_WFBC_CORE_GetPeopleNum( p_core, mapmode );
-      u32 camera_type = 22;
-      if( people_num >= 5 )
-      {
-        camera_type = 23;
-      }
-      else if( people_num >= 18 )
-      {
-        camera_type = 24;
-      }
-      FIELD_CAMERA_SetCameraType( fieldWork->camera_control, camera_type );
-    }
+    FIELD_WFBC_SetUpCamera( p_wfbc, fieldWork->camera_control, fieldWork->heapID );
   }
 }
 

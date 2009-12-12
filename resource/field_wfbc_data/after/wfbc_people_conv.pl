@@ -3,7 +3,7 @@
 #
 #   WFBC  人物情報のコンバート
 #
-#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def output_header
+#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def trdata_def output_header
 #
 #
 #
@@ -11,9 +11,9 @@
 
 
 #引数　チェック
-if( @ARGV < 7 )
+if( @ARGV < 8 )
 {
-  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def output_header\n" );
+  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def trdata_def output_header\n" );
   exit(1);
 }
 
@@ -23,6 +23,7 @@ if( @ARGV < 7 )
 @MONSNO_DEF = undef;
 @SCRIPT = undef;
 @ITEM_DEF = undef;
+@TRDATA_DEF = undef;
 
 
 
@@ -46,6 +47,9 @@ open( FILEIN, $ARGV[4] );
 close( FILEIN );
 open( FILEIN, $ARGV[5] );
 @ITEM_DEF = <FILEIN>;
+close( FILEIN );
+open( FILEIN, $ARGV[6] );
+@TRDATA_DEF = <FILEIN>;
 close( FILEIN );
 
 
@@ -72,25 +76,16 @@ $PP_DATA_IDX_ENC_PERCENT_01 = 11;
 $PP_DATA_IDX_ENC_MONSNO_02 = 12;
 $PP_DATA_IDX_ENC_LV_02 = 13;
 $PP_DATA_IDX_ENC_PERCENT_02 = 14;
-$PP_DATA_IDX_BTL_MONSNO_00 = 15;
-$PP_DATA_IDX_BTL_LV_00 = 16;
-$PP_DATA_IDX_BTL_SEX_00 = 17;
-$PP_DATA_IDX_BTL_TOKUSEI_00 = 18;
-$PP_DATA_IDX_BTL_MONSNO_01 = 19;
-$PP_DATA_IDX_BTL_LV_01 = 20;
-$PP_DATA_IDX_BTL_SEX_01 = 21;
-$PP_DATA_IDX_BTL_TOKUSEI_01 = 22;
-$PP_DATA_IDX_BTL_MONSNO_02 = 23;
-$PP_DATA_IDX_BTL_LV_02 = 24;
-$PP_DATA_IDX_BTL_SEX_02 = 25;
-$PP_DATA_IDX_BTL_TOKUSEI_02 = 26;
-$PP_DATA_IDX_SCRIPT_WF_00 = 27;
-$PP_DATA_IDX_SCRIPT_BC_00 = 28;
-$PP_DATA_IDX_ITEM_WF = 29;
-$PP_DATA_IDX_ITEM_PERCENT_WF = 30;
-$PP_DATA_IDX_ITEM_BC = 31;
-$PP_DATA_IDX_ITEM_MONEY_BC = 32;
-$PP_DATA_IDX_NUM = 33;
+$PP_DATA_IDX_BTL_TRDATA = 15;
+$PP_DATA_IDX_SCRIPT_WF_00 = 16;
+$PP_DATA_IDX_SCRIPT_BC_00 = 17;
+$PP_DATA_IDX_ITEM_WF = 18;
+$PP_DATA_IDX_ITEM_PERCENT_WF = 19;
+$PP_DATA_IDX_ITEM_BC = 20;
+$PP_DATA_IDX_ITEM_MONEY_BC = 21;
+$PP_DATA_IDX_HIT_PERCENT = 22;
+$PP_DATA_IDX_BLOCK_PARAM = 23;
+$PP_DATA_IDX_NUM = 24;
 
 
 
@@ -135,7 +130,7 @@ foreach $one ( @EXCEL )
 #情報の出力
 
 #まずヘッダー
-open( FILEOUT, ">".$ARGV[6] );
+open( FILEOUT, ">".$ARGV[7] );
 
 print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
 print( FILEOUT "#pragma once\n" );
@@ -199,38 +194,9 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_ENC_PERCENT_02 ];
   print( FILEOUT pack( "C", $outnum ) );
   print( FILEOUT pack( "C", 0 ) );  #PAD
-  #BTL MONSNO
-  $outnum = &MONSNO_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_MONSNO_00 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MONSNO_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_MONSNO_01 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MONSNO_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_MONSNO_02 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  print( FILEOUT pack( "S", 0 ) );  #PAD
-  #BTL LV
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_LV_00 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_LV_01 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_LV_02 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  print( FILEOUT pack( "C", 0 ) ); #PAD
-  #性別
-  $outnum = &SEX_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_SEX_00 ] );
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = &SEX_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_SEX_01 ] );
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = &SEX_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_SEX_02 ] );
-  print( FILEOUT pack( "C", $outnum ) );
-  print( FILEOUT pack( "C", 0 ) );  #PAD
-  #特性
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_TOKUSEI_00 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_TOKUSEI_01 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_TOKUSEI_02 ];
-  print( FILEOUT pack( "C", $outnum ) );
-  print( FILEOUT pack( "C", 0 ) ); #pad
+  #BTL TRDATA
+  $outnum = &TRDATA_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_TRDATA ] );
+  print( FILEOUT pack( "I", $outnum ) );
   #スクリプト　WF
   $outnum = &SCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_WF_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
@@ -247,6 +213,13 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   print( FILEOUT pack( "S", $outnum ) );
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_ITEM_MONEY_BC ];
   print( FILEOUT pack( "S", $outnum ) );
+  #出現率
+  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_HIT_PERCENT ];
+  print( FILEOUT pack( "S", $outnum ) );
+  #ブロック計算補正値
+  $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BLOCK_PARAM ];
+  print( FILEOUT pack( "S", $outnum ) );
+
   
   close( FILEOUT );
 }
@@ -303,6 +276,31 @@ sub TRTYPE_GetIdx
   print( "trtype $name がみつかりません\n" );
   exit(1);
 }
+
+
+sub TRDATA_GetIdx
+{
+  my( $name ) = @_;
+  my( $code, @codeline );
+
+  #大文字化
+  $name = uc( $name );
+
+  foreach $code (@TRDATA_DEF)
+  {
+    $code =~ s/ +/ /g;
+    $code =~ s/ +/ /g;
+    @codeline = split( /\s/, $code );
+    if( "".$codeline[1] eq $name )
+    {
+      return $codeline[3];
+    }
+  }
+
+  print( "trdata $name がみつかりません\n" );
+  exit(1);
+}
+
 
 sub MONSNO_GetIdx
 {

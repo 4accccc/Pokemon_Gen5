@@ -149,6 +149,63 @@ void FIELD_DATA_PATCH_OverWriteAttr( const FIELD_DATA_PATCH* cp_sys, NormalVtxFo
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  サイズ分のアトリビュートを上書きする
+ *
+ *	@param	cp_sys          システム
+ *	@param	p_buff          バッファ
+ *	@param	read_grid_x     読み込みｘグリッド
+ *	@param	read_grid_z     読み込みｚグリッド
+ *	@param	write_grid_x    書き込みｘグリッド
+ *	@param	write_grid_z    書き込みｚグリッド
+ *	@param  size_grid_x     上書きｘグリッドサイズ
+ *	@param  size_grid_z     上書きｚグリッドサイズ
+ *	
+ */
+//-----------------------------------------------------------------------------
+void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtxFormat* p_buff, u32 read_grid_x, u32 read_grid_z, u32 write_grid_x, u32 write_grid_z, u32 size_grid_x, u32 size_grid_z )
+{
+  int i, j;
+  int write_index;
+  int read_index;
+  const NormalVtxFormat* cp_attr;
+  NormalVtxSt* p_write_buff;
+  const NormalVtxSt* cp_read_buff;
+  u32 addr;
+
+  // 読み込みバッファ取得
+  cp_attr = FIELD_LAND_DATA_PATCH_GetAttrData( cp_sys );
+  
+  addr = (u32)p_buff;
+  addr += sizeof(NormalVtxFormat);
+  p_write_buff = (NormalVtxSt*)(addr);
+
+  addr = (u32)cp_attr;
+  addr += sizeof(NormalVtxFormat);
+  cp_read_buff = (const NormalVtxSt*)(addr); //ヘッダー分ずらす
+
+  TOMOYA_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
+  GF_ASSERT( cp_attr->height >= (read_grid_z + size_grid_z) );
+  GF_ASSERT( cp_attr->width >= (read_grid_x + size_grid_x) );
+
+  // 情報を上書き
+  for( i=0; i<size_grid_z; i++ )
+  {
+    // 横ライン一気に書き込み
+    // 書き出し先
+    write_index = ((write_grid_z + i) * p_buff->width) + (write_grid_x);
+    GF_ASSERT( (write_grid_z + i) < p_buff->height );
+    GF_ASSERT( (write_grid_x + size_grid_x) <= p_buff->width );
+      
+    // 読み込み先
+    read_index = ((read_grid_z + i)*cp_attr->width) + read_grid_x;
+
+    GFL_STD_MemCopy( &cp_read_buff[read_index], &p_write_buff[write_index], sizeof(NormalVtxSt) * size_grid_x );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  マップ情報の部分書き換えパッチ  配置モデルの追加登録
  *
  *	@param	cp_sys          システム

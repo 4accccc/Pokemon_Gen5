@@ -46,7 +46,7 @@ foreach $one ( @CHECK_LIST_FILE )
 
     for( $i=1; $i<@list; $i++ )
     {
-      print( $list[$i]." check\n" );
+      #print( $list[$i]." check\n" );
       if( -e $list[$i] )
       {
             
