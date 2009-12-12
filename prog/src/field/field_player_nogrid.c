@@ -2315,7 +2315,7 @@ static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk )
   wk->frame         = 0;
 
   // Ç≠ÇÈÇ≠ÇÈSEí‚é~
-  PMSND_StopSE();
+  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( FIELD_PLAYER_SE_NOGRID_ICE_SPIN ) );
 }
 
 //----------------------------------------------------------------------------
