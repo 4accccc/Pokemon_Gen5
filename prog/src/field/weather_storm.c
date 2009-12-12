@@ -59,7 +59,7 @@
 
 /*== フォグ ==*/
 #define	WEATHER_STORM_FOG_TIMING		(200)							// に１回フォグテーブルを操作
-#define	WEATHER_STORM_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
+#define	WEATHER_STORM_FOG_TIMING_END	(200)							// に１回フォグテーブルを操作
 #define WEATHER_STORM_FOG_START			(1)							// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_START_END		(31)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_OFS	( 0x100 )
@@ -212,6 +212,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_
 
 	// ライト変更
 	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
+
+  // SE
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_STORM );
 	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -363,6 +366,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, W
 
 	// BGON
 	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
+
+
+  // SE
+  WEATHER_TASK_StopLoopSnd( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

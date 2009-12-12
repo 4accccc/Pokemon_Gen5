@@ -933,6 +933,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Init( WEATHER_TASK* p_wk, WEATHER_
 	// ライト変更
 	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
+  // SE
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_SNOWSTORM );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1077,6 +1079,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_InitFadeOut( WEATHER_TASK* p_wk, W
 	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
 
 
+  // SE
+  WEATHER_TASK_StopLoopSnd( p_wk );
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -1151,7 +1156,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Exit( WEATHER_TASK* p_wk, WEATHER_
 	
 	// ライト元に
 	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
-
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1341,6 +1345,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Init( WEATHER_TASK* p_wk, WEATHER
 	// ライト変更
 	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
+  // SE
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_SNOWSTORM );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1494,6 +1500,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_InitFadeOut( WEATHER_TASK* p_wk, 
 	// BGON
 	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
 
+  // SE
+  WEATHER_TASK_StopLoopSnd( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1571,7 +1579,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Exit( WEATHER_TASK* p_wk, WEATHER
 	
 	// ライト元に
 	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
-
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1748,8 +1755,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Init( WEATHER_TASK* p_wk, WEATHER_
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// 音
-//	WeatherLoopSndPlay( sys_work, SEQ_SE_DP_T_AME );	
+  // SE
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_ARARE );
 
 	// ライト変更
 	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
@@ -1885,8 +1892,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_InitFadeOut( WEATHER_TASK* p_wk, W
 	// フォグ
 	p_local_wk->work[0] = WEATHER_ARARE_FOG_START_END;	// 同じくフォグ用
 
-	// 音
-//	WeatherLoopSndStop( sys_work );
+
+  // SE
+  WEATHER_TASK_StopLoopSnd( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

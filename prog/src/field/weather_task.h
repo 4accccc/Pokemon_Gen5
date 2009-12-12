@@ -27,6 +27,10 @@ extern "C"{
 #include "field_zonefog.h"
 #include "field_3dbg.h"
 
+#include "weather_snd.h"
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *					’è”éŒ¾

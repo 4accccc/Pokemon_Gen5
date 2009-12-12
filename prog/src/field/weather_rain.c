@@ -14,7 +14,6 @@
 #include "arc/field_weather.naix"
 #include "arc/field_weather_light.naix"
 
-
 #include "weather_rain.h"
 
 //-----------------------------------------------------------------------------
@@ -125,7 +124,6 @@ enum{
 	WEATHER_SPARK_SETUP,
 	WEATHER_SPARK_SPARK,		// 雷
 	WEATHER_SPARK_SPARK_WAIT,	// 雷
-	WEATHER_SPARK_SPARK_WAIT_LIGHTHARD,	// 雷
 	WEATHER_SPARK_WAIT,
 };
 
@@ -190,6 +188,14 @@ static const u8 sc_WEATHER_SPARK_STRONG_RAND_MAX[WEATHER_SPARK_TYPE_MAX] = {
 	1,
 };
 
+// 雷によってのサウンド起動ウエイト
+static const s8 sc_WEATHER_SPARK_SND_WAIT[WEATHER_SPARK_TYPE_MAX] = 
+{
+  28,
+  13,
+  10,
+};
+
 // 雷フラッシュスピード
 #define WEATHER_SPARK_FLASHIN_SYNC	( 4 )
 static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
@@ -231,6 +237,8 @@ typedef struct {
 	u16 outsync;
 	u16 spark_power;
 	s16 wait;
+
+  s32 snd_wait;
 } SPARK_DATA;
 
 
@@ -246,6 +254,7 @@ typedef struct {
 	SPARK_DATA	spark_data[ WEATHER_SPARK_TBL_MAX ];
 
 	s32	wait;
+  s32 snd_wait;
 } WEATHER_SPARK_WORK;
 
 //-------------------------------------
@@ -418,9 +427,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_T
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// 音
-//	WeatherLoopSndPlay( sys_work, SEQ_SE_DP_T_AME );	
-
 	// ライト変更
 	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 	
@@ -454,6 +460,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIN_FOG_OFS, 
 			WEATHER_RAIN_FOG_TIMING,
 			fog_cont );
+
+      // 音
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
 		}
 	}else{
 		
@@ -507,6 +516,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_NoFade( WEATHER_TASK* p_wk, WEATHER
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_RAIN_OBJ_Add, WEATHER_RAIN_NOFADE_OBJ_START_NUM, WEATHER_RAIN_NOFADE_OBJ_START_DUST_NUM, WEATHER_RAIN_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
+  // 音
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -555,8 +567,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_InitFadeOut( WEATHER_TASK* p_wk, WE
 	// フォグ
 	p_local_wk->work[0] = WEATHER_RAIN_FOG_START_END;	// 同じくフォグ用
 
+
 	// 音
-//	WeatherLoopSndStop( sys_work );
+	WEATHER_TASK_StopLoopSnd( p_wk );	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -791,6 +804,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Init( WEATHER_TASK* p_wk, WEAT
 	p_local_wk->work[1] = 0;
 	p_local_wk->work[2] = 0;							// 風カウンタ
 
+	p_local_wk->work[4] = 39;							// 音カウンタ
+
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
@@ -817,6 +832,16 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 	// オブジェクトフェード
 	result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
 
+  if( p_local_wk->work[4] > 0 )
+  {
+    p_local_wk->work[4]--;
+    if( p_local_wk->work[4] == 0 )
+    {
+      // 音
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+    }
+  }
+
 	if(p_local_wk->work[0] > 0){
 		p_local_wk->work[0]--;			// ワーク6が０になったらフォグを動かす
 		if( p_local_wk->work[0] == 0 ){
@@ -825,6 +850,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STRAIN_FOG_OFS, 
 			WEATHER_STRAIN_FOG_TIMING,
 			fog_cont );
+
 		}
 	}else{
 		fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
@@ -832,6 +858,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 
 		// タイミングが最小になったらメインへ
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
+
 			// シーケンス変更
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
 		}
@@ -881,8 +908,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_NoFade( WEATHER_TASK* p_wk, WE
 	p_local_wk->work[1] = 0;
 	p_local_wk->work[2] = 0;							// 風カウンタ
 
-	// 音
-//	WeatherLoopSndPlay( sys_work, SEQ_SE_DP_T_OOAME );	
+  // 音
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -937,8 +964,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_InitFadeOut( WEATHER_TASK* p_w
 	
 	p_local_wk->work[0] = WEATHER_STRAIN_FOG_START_END;	// 同じくフォグ用
 
+
 	// 音
-//	WeatherLoopSndStop( sys_work );	
+	WEATHER_TASK_StopLoopSnd( p_wk );	
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -1236,6 +1264,8 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 			p_wk->wait = (p_wk->spark_data[ p_wk->spark_tbl_count ].insync/2) + GFUser_GetPublicRand( p_wk->spark_data[ p_wk->spark_tbl_count ].outsync );
 		}
 
+    p_wk->snd_wait = p_wk->spark_data[ p_wk->spark_tbl_count ].snd_wait;
+
 //		OS_TPrintf( "color %d\n", p_wk->spark_data[ p_wk->spark_tbl_count ].spark_power );
 		
 		p_wk->seq	= WEATHER_SPARK_SPARK_WAIT;
@@ -1243,19 +1273,33 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 
 	case WEATHER_SPARK_SPARK_WAIT:	// 雷
 
+    // SEの再生
+    if(p_wk->snd_wait > 0)
+    {
+      p_wk->snd_wait --;
+      if( p_wk->snd_wait == 0 )
+      {
+        // 雷SE再生
+        PMSND_PlaySE( WEATHER_SND_SE_SPARK );
+      }
+    }
+
 		if( !WEATHER_TASK_LIGHT_IsColorFade( p_sys ) ){
 			p_wk->seq	= WEATHER_SPARK_WAIT;
 		}
 		break;
 
-	case WEATHER_SPARK_SPARK_WAIT_LIGHTHARD:	// 雷
-		p_wk->wait --;
-		if( p_wk->wait <= 0 ){
-			p_wk->seq	= WEATHER_SPARK_WAIT;
-		}
-		break;
-
 	case WEATHER_SPARK_WAIT:
+    // SEの再生
+    if(p_wk->snd_wait > 0)
+    {
+      p_wk->snd_wait --;
+      if( p_wk->snd_wait == 0 )
+      {
+        // 雷SE再生
+        PMSND_PlaySE( WEATHER_SND_SE_SPARK );
+      }
+    }
 		
 		p_wk->spark_data[ p_wk->spark_tbl_count ].wait --;
 		if( p_wk->spark_data[ p_wk->spark_tbl_count ].wait <= 0 ){
@@ -1301,6 +1345,7 @@ static void WEATEHR_SPARK_SetUp_Light( WEATHER_SPARK_WORK* p_wk )
 		p_wk->spark_data[i].insync		= WEATHER_SPARK_FLASHIN_SYNC;
 		p_wk->spark_data[i].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[i].spark_power ];
 		p_wk->spark_data[i].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_LIGHT ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_LIGHT ] );
+    p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT ];
 	}
 }
 
@@ -1321,6 +1366,7 @@ static void WEATEHR_SPARK_SetUp_Hard( WEATHER_SPARK_WORK* p_wk )
 	p_wk->spark_data[0].insync		= WEATHER_SPARK_FLASHIN_SYNC;
 	p_wk->spark_data[0].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[0].spark_power ];
 	p_wk->spark_data[0].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_HARD ] );
+  p_wk->spark_data[0].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_HARD ];
 }
 
 //----------------------------------------------------------------------------
@@ -1345,12 +1391,14 @@ static void WEATEHR_SPARK_SetUp_LightAndHard( WEATHER_SPARK_WORK* p_wk )
 		p_wk->spark_data[i].insync		= WEATHER_SPARK_FLASHIN_SYNC;
 		p_wk->spark_data[i].outsync		= WEATHER_SPARK_LIGHT_HARD_OUTSYNC;
 		p_wk->spark_data[i].wait		= GFUser_GetPublicRand( WEATHER_SPARK_LIGHT_HARD_WAIT_RAND );
+    p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT ];
 	}
 
 	p_wk->spark_data[i].spark_power = sc_WEATHER_SPARK_STRONG_RAND_MIN[ WEATHER_SPARK_TYPE_LIGHT_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_STRONG_RAND_MAX[ WEATHER_SPARK_TYPE_LIGHT_HARD ] );
 	p_wk->spark_data[i].insync		= WEATHER_SPARK_FLASHIN_SYNC;
 	p_wk->spark_data[i].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[i].spark_power ];
 	p_wk->spark_data[i].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_LIGHT_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_LIGHT_HARD ] );
+  p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT_HARD ];
 }
 
 

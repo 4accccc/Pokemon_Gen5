@@ -1834,6 +1834,9 @@ static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk )
 			WEATHER_OBJ_WK_Clear( &p_wk->objbuff[i] );
 		}
 	}
+
+  // SE‚Ì’âŽ~
+  WEATHER_TASK_StopLoopSnd( p_wk );
 }
 
 
@@ -2293,6 +2296,8 @@ static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no )
 
 	p_wk->play		= TRUE;
 	p_wk->snd_no	= snd_no;
+
+  PMSND_PlaySE( p_wk->snd_no );
 }
 
 //----------------------------------------------------------------------------
@@ -2304,7 +2309,12 @@ static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no )
 //-----------------------------------------------------------------------------
 static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk )
 {
-	p_wk->play = FALSE;
+  if(p_wk->play)
+  {
+    p_wk->play = FALSE;
+
+    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( p_wk->snd_no ) );
+  }
 }
 
 
