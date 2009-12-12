@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d08r0201.h"
-  //.include  "d08r0201.h"
+  .include  "d08r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,50 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0201
+_EVENT_DATA 	ev_d08r0201_leader7_01
+_EVENT_DATA 	ev_d08r0201_hakase1_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d08r0201:
-//  _END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_d08r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START    ev_d08r0201_leader7_01	
+	
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0201_leader7_01w, msg_d08r0201_leader7_01b, D08R0201_LEADER7_01, WIN_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
 
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START    ev_d08r0201_hakase1_01	
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0201_hakase1_01 )
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+/*
+_ANIME_LABEL	anm_sage2_kuru_01
+
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
+	_OBJ_ANIME_WAIT()
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_h03_hakaim5_01)
+		_MSGWIN_CLOSE()
+		
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	D08R0201_LEADER7_01
+	D08R0201_HAKASE1_01
+
+*/

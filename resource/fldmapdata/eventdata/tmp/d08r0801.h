@@ -10,5 +10,10 @@
 #ifndef ZONE_D08R0801_EVC_H
 #define ZONE_D08R0801_EVC_H
 
+#define D08R0801_BOSS_01                   0
+#define D08R0801_SAGE2_01                  1
+#define D08R0801_HAKAIM_01                 2
+#define D08R0801_HAKAW_01                  3
+#define D08R0801_HAKAM_02                  4
 
 #endif //ZONE_D08R0801_EVC_H

@@ -21,6 +21,14 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_h03_sage2_01
 _EVENT_DATA    ev_pos_h03_sage2_02
+_EVENT_DATA    ev_pos_h03_sage2_03
+_EVENT_DATA		ev_h03_hakaim_01
+_EVENT_DATA		ev_h03_hakaim_02
+_EVENT_DATA		ev_h03_hakaim_03
+_EVENT_DATA		ev_h03_hakaim_04
+_EVENT_DATA		ev_h03_hakaiw_01
+_EVENT_DATA		ev_h03_hakaiw_02
+_EVENT_DATA		ev_h03_hakaiw_03
 _EVENT_DATA_END
 
 
@@ -31,7 +39,7 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/* 七賢人のPOSイベント1　七人抜きのイベント開始               */                                                           */
 /**************************************************************/
 EVENT_START    ev_pos_h03_sage2_01
 	
@@ -46,13 +54,11 @@ EVENT_START    ev_pos_h03_sage2_01
 	//七賢人が去っていく
 	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_saru_01)
 	_OBJ_ANIME_WAIT()
-	
-	_OBJ_POS_CHANGE( H03_SAGE2_01, 15, 0, 58, DIR_DOWN )
 
 	//===========フラグワーク操作===========//
 	
 	//h03のPOSイベント1を無効に
-	$LOCALWORK15 = 1
+	$WK_SCENE_H03 = 1
 	
 	//======================================//
 	
@@ -69,15 +75,35 @@ _ANIME_LABEL	anm_sage2_kuru_01
 //                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sage2_saru_01
-	_ANIME_DATA AC_WALK_U_8F,30
-	_ANIME_DATA AC_WALK_U_4F,10
-	_ANIME_DATA AC_WALK_U_2F,10
+	_ANIME_DATA AC_WALK_U_8F,26
+	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
-	
+
 /**************************************************************/
-/*                                                            */
+/* 七賢人のPOSイベント2　追い返される                          */                                                           
 /**************************************************************/
 EVENT_START    ev_pos_h03_sage2_02
+	
+	//七賢人が喋る
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//主人公が追い返される
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_back_01)
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back_01
+	_ANIME_DATA AC_WALK_D_8F,2
+
+/**************************************************************/
+/* 七賢人のPOSイベント3　去っていく                           */
+/**************************************************************/
+EVENT_START    ev_pos_h03_sage2_03
 	
 	//七賢人がやってくる
 	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
@@ -90,23 +116,28 @@ EVENT_START    ev_pos_h03_sage2_02
 	//【仮】画面暗転後の処理が未実装
 	//画面暗転・プラズマ団OB削除
 	_BLACK_OUT()
+	_TIME_WAIT( 30 )
 	
-//	_OBJ_DEL(C05_HAKAI_01)
-//	_OBJ_DEL(C05_HAKAI_02)
-//	_OBJ_DEL(C05_SAGE_01)
-//	_OBJ_DEL(C05_SAGE_02)
-//	_OBJ_DEL(C05_HAKAI_01)
-//	_OBJ_DEL(C05_HAKAI_02)
+	_OBJ_DEL(H03_HAKAIM_01)
+	_OBJ_DEL(H03_HAKAIM_02)
+	_OBJ_DEL(H03_HAKAIM_03)
+	_OBJ_DEL(H03_HAKAIM_04)
+	_OBJ_DEL(H03_HAKAIW_01)
+	_OBJ_DEL(H03_HAKAIW_02)
+	_OBJ_DEL(H03_HAKAIW_03)
 	_OBJ_DEL(H03_SAGE2_01)
-
-//	_FLAG_SET(FV_H03_SAGE2_01)
 	
+	//===========フラグワーク操作===========//	
+	_FLAG_SET(FV_H03_HAKAI_01)
+	//======================================//
+	
+	_TIME_WAIT( 30 )
 	_BLACK_IN()
 
 	//===========フラグワーク操作===========//
 	
 	//h03のPOSイベント1を無効に
-	$LOCALWORK15 = 2
+	$WK_SCENE_H03 = 3
 	
 	//======================================//
 	
@@ -118,4 +149,193 @@ EVENT_END
 _ANIME_LABEL	anm_sage2_saru_02
 	_ANIME_DATA AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*プラズマ団トレーナー（男）1                                 */                                                            */
+/**************************************************************/
+EVENT_START    ev_h03_hakaim_01
+
+//	IF FLAG_OFF( TRID_HAKAIM1_05) THEN 
+		
+		//トレーナー戦呼び出し
+		_TRAINER_BTL_SET( TRID_HAKAIM1_05, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIM1_05)
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+		
+		IF $SCWK_ANSWER == 6 THEN
+		
+			$WK_SCENE_H03 = 2
+			
+		ENDIF
+	
+//	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_h03_hakaim5_01)
+		_MSGWIN_CLOSE()
+//	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団トレーナー（男）2                                 */                                                            */
+/**************************************************************/
+EVENT_START    ev_h03_hakaim_02
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIM1_06, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIM1_06)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*プラズマ団トレーナー（男）3                                 */                                                           */
+/**************************************************************/
+EVENT_START    ev_h03_hakaim_03
+
+
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIM1_07, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIM1_07)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団トレーナー（男）4                                 */                                                           */
+/**************************************************************/
+EVENT_START    ev_h03_hakaim_04
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIM1_08, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIM1_08)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+	
+EVENT_END
+
+
+/**************************************************************/
+/*プラズマ団トレーナー（女）1                                 */                                                            */
+/**************************************************************/
+EVENT_START    ev_h03_hakaiw_01
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIW1_01, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIM1_08)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*プラズマ団トレーナー（女）2                                */                                                            */
+/**************************************************************/
+EVENT_START    ev_h03_hakaiw_02
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIW1_02, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIW1_02)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*プラズマ団トレーナー（女）3                                 */
+/**************************************************************/
+EVENT_START    ev_h03_hakaiw_03
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_HAKAIW1_03, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			_TRAINER_FLAG_SET(TRID_HAKAIW1_03)
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	IF $SCWK_ANSWER == 6 THEN
+	
+		$WK_SCENE_H03 = 2
+		
+	ENDIF
+
+EVENT_END
 

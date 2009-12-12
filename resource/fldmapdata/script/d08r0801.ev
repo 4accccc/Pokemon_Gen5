@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d08r0801.h"
-  //.include  "d08r0801.h"
+  .include  "d08r0801.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,107 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0801
+_EVENT_DATA    ev_d08r0801_boss_01
+_EVENT_DATA		ev_d08r0801_hakaim_01
+_EVENT_DATA		ev_d08r0801_hakaim_02
+_EVENT_DATA		ev_d08r0801_hakaiw_01
+_EVENT_DATA		ev_d08r0801_sage2_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*                           */
+/**************************************************************/
+EVENT_START    ev_d08r0801_boss_01	
+	
+	_TALK_OBJ_START()
+	
+	//Nがしゃべる
+	//まよえる　トレーナーよ
+	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_01)
+    _BALLOONWIN_CLOSE()
+	
+	//はい/いいえの選択
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER ==  SCR_NO THEN
+	
+		//Nが喋る・いいえの場合
+		//Ｎ『ボクを　からかっているね
+		_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_03)
+    	_BALLOONWIN_CLOSE()
+		
+	ELSE
+		//Nが喋る・はいの場合
+		//Ｎ『ボクに　さからうんだね
+    	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_02)
+    	_BALLOONWIN_CLOSE()
+    	
+	ENDIF
+	
+	//Nとの戦闘
+	_CALL		ev_boss_btl
+	
+	//Nが喋る
+	//Ｎ『いまの　ボクの　ともだちとでは
+	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_04)
+    _BALLOONWIN_CLOSE()
+    
+	//Nが喋る
+	//Ｎ『せかいには
+	_BALLOONWIN_OBJMSG( msg_d08r0801_sage2_01, D08R0801_SAGE2_01 )
+    _BALLOONWIN_CLOSE()
+    
+ 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_05)
+    _BALLOONWIN_CLOSE()
+
+EVENT_END
+
+//Nとの戦闘
+ev_boss_btl:
+
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_BOSS_05, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF	
+_RET
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*                           */
 /**************************************************************/
-//ev_zone_d08r0801:
-//  _END
+EVENT_START    ev_d08r0801_hakaim_01
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim1_01 )
+	
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*                           */
 /**************************************************************/
-ev_d08r0801:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START    ev_d08r0801_hakaim_02
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim2_01 )
+	
+EVENT_END
 
+/**************************************************************/
+/*                           */
+/**************************************************************/
+EVENT_START    ev_d08r0801_hakaiw_01
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaiw1_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*                           */
+/**************************************************************/
+EVENT_START    ev_d08r0801_sage2_01
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_sage2_02 )
+	
+EVENT_END

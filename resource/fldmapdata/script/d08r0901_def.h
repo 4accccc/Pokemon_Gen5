@@ -5,6 +5,6 @@
 #define _D08R0901_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D08R0901 (1)
+#define SCRID_POS_D08R0901_BOSS_01 (1)
 
 #endif //_D08R0901_DEF_H_

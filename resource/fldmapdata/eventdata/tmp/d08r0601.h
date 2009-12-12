@@ -10,5 +10,7 @@
 #ifndef ZONE_D08R0601_EVC_H
 #define ZONE_D08R0601_EVC_H
 
+#define D08R0601_RIVEL_01                  0
+#define D08R0601_LEADER7_01                1
 
 #endif //ZONE_D08R0601_EVC_H

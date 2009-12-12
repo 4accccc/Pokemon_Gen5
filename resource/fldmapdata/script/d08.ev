@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d08.h"
-  //.include  "d08.h"
+  .include  "d08.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,72 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08
+_EVENT_DATA    ev_pos_d08_hakase1_01
+_EVENT_DATA		ev_d08_hakase1_01
+_EVENT_DATA		ev_d08_support_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*                           */
+/**************************************************************/
+EVENT_START    ev_pos_d08_hakase1_01	
+	
+EVENT_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*                           */
 /**************************************************************/
-//ev_d08_flag_change:
-//  _END
+EVENT_START    ev_d08_hakase1_01	
+	
+	_TALK_OBJ_START()
+	
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ELSE	
+		_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_05)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*                           */
 /**************************************************************/
-ev_d08:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START    ev_d08_support_01	
+	
+EVENT_END
 
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+/*
+_ANIME_LABEL	anm_sage2_kuru_01
+
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
+	_OBJ_ANIME_WAIT()
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_h03_hakaim5_01)
+		_MSGWIN_CLOSE()
+		
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	D08_SUPPORT_01
+	D08_RIVEL_01
+	D08_HAKASE1_01
+	MMDL_ID_PLAYER
+
+*/

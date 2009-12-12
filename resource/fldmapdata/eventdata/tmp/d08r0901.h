@@ -9,5 +9,8 @@
 #ifndef ZONE_D08R0901_EVC_H
 #define ZONE_D08R0901_EVC_H
 
+#define D08R0901_RIVEL_01                  0
+#define D08R0901_LEADER7_01                1
+#define D08R0901_BOSS_01                   2
 
 #endif //ZONE_D08R0901_EVC_H

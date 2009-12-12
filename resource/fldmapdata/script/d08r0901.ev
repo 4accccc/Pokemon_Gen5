@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d08r0901.h"
-  //.include  "d08r0901.h"
+  .include  "d08r0901.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,108 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0901
+_EVENT_DATA    ev_pos_d08R0901_boss_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d08r0901:
-//  _END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_d08r0901:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START    ev_pos_d08R0901_boss_01	
 
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_01, D08R0901_BOSS_01,WIN_DOWN)
+	_MSGWIN_CLOSE()
+	
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( D08R0901_BOSS_01,anm_boss_idou_01)
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01)
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_03, D08R0901_BOSS_01,WIN_DOWN)
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
+	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_d08r0901_black_01, D08R0901_RIVEL_01)
+	_MSGWIN_CLOSE()
+
+	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_01, D08R0901_LEADER7_01)
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_02)
+	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_02)
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_d08r0901_black_02, D08R0901_RIVEL_01)
+	_MSGWIN_CLOSE()
+
+	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_02, D08R0901_LEADER7_01)
+	_MSGWIN_CLOSE()
+	
+	_BLACK_OUT()
+	_TIME_WAIT( 15 )
+	
+	_MAP_CHANGE( ZONE_ID_D08, 179, 149, DIR_DOWN )
+	
+	_BLACK_IN()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_idou_01
+
+	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01
+	
+	_ANIME_DATA AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_raival_idou_01
+
+	_ANIME_DATA AC_WALK_U_8F,15
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader7_idou_01
+
+	_ANIME_DATA AC_WALK_U_8F,15
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_raival_idou_02
+
+	_ANIME_DATA AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader7_idou_02
+
+	_ANIME_DATA AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/*
+D08R0901_BOSS_01
+POS_D08R0901_BOSS_01
+D08R0901_RIVEL_01
+D08R0901_LEADER7_01
+*/

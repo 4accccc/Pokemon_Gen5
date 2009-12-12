@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d08r0401.h"
-  //.include  "d08r0401.h"
+  .include  "d08r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,51 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0401
+_EVENT_DATA    ev_pos_d08r0401_rivel_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*                           */
+/**************************************************************/
+EVENT_START    ev_pos_d08r0401_rivel_01	
+	
+	_BALLOONWIN_OBJMSG( msg_d08r0401_black_01, D08R0401_RIVEL_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	_TURN_HERO_SITE()
+	_BALLOONWIN_OBJMSG( msg_d08r0401_black_02, D08R0401_RIVEL_01)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( D08R0401_RIVEL_01,anm_raival_saru_01)
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d08r0401:
-//  _END
+//--------------------------------------------------------------------
+//                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_raival_saru_01
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d08r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	_ANIME_DATA AC_WALK_U_8F,9
+	_ANIME_DATA AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+/*
+	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
+	_OBJ_ANIME_WAIT()
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_h03_hakaim5_01)
+		_MSGWIN_CLOSE()
+		
+	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	D08_SUPPORT_01
+	D08_RIVEL_01
+	D08_HAKASE1_01
+	MMDL_ID_PLAYER
+
+*/
 
