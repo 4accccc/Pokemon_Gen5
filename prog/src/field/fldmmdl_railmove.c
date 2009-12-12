@@ -178,6 +178,25 @@ void MMDL_UpdateRailMove( MMDL * mmdl )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールロケーションのアトリビュートを取得する
+ *
+ *	@param	mmdl        モデル
+ *	@param	location    ロケーション
+ *
+ *	@return マップアトリビュート
+ */
+//-----------------------------------------------------------------------------
+MAPATTR MMDL_GetRailLocationAttr( const MMDL * mmdl, const RAIL_LOCATION* location )
+{
+  const MMDLSYS* mmdlsys = MMDL_GetMMdlSys( mmdl );
+  const FLDNOGRID_MAPPER* pNOGRIDMapper = MMDLSYS_GetNOGRIDMapper( mmdlsys );
+
+  return FLDNOGRID_MAPPER_GetAttr( pNOGRIDMapper, location );
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -963,7 +982,7 @@ static void MMdl_MapAttrGroundSmokeProc_2(
 	#else
   {
     FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( mmdl );
-    FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+    FLDEFF_KEMURI_SetRailMMdl( mmdl, fectrl );
   }
   #endif
 

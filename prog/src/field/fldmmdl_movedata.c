@@ -1386,14 +1386,14 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
 	DATA_AC_RailDummy,								//AC_STAY_JUMP_D_8F
 	DATA_AC_RailDummy,								//AC_STAY_JUMP_L_8F
 	DATA_AC_RailDummy,								//AC_STAY_JUMP_R_8F
-	DATA_AC_RailDummy,								//AC_JUMP_U_1G_8F
-	DATA_AC_RailDummy,								//AC_JUMP_D_1G_8F
-	DATA_AC_RailDummy,								//AC_JUMP_L_1G_8F
-	DATA_AC_RailDummy,								//AC_JUMP_R_1G_8F
-	DATA_AC_RailDummy,								//AC_JUMP_U_2G_16F
-	DATA_AC_RailDummy,								//AC_JUMP_D_2G_16F
-	DATA_AC_RailDummy,								//AC_JUMP_L_2G_16F
-	DATA_AC_RailDummy,								//AC_JUMP_R_2G_16F
+	DATA_AC_RailJumpU_1G_8F_Tbl,								//AC_JUMP_U_1G_8F
+	DATA_AC_RailJumpD_1G_8F_Tbl,								//AC_JUMP_D_1G_8F
+	DATA_AC_RailJumpL_1G_8F_Tbl,								//AC_JUMP_L_1G_8F
+	DATA_AC_RailJumpR_1G_8F_Tbl,								//AC_JUMP_R_1G_8F
+	DATA_AC_RailJumpU_2G_16F_Tbl,								//AC_JUMP_U_2G_16F
+	DATA_AC_RailJumpD_2G_16F_Tbl,								//AC_JUMP_D_2G_16F
+	DATA_AC_RailJumpL_2G_16F_Tbl,								//AC_JUMP_L_2G_16F
+	DATA_AC_RailJumpR_2G_16F_Tbl,								//AC_JUMP_R_2G_16F
 	DATA_AC_RailDummy,									//AC_WAIT_1F
 	DATA_AC_RailDummy,									//AC_WAIT_2F
 	DATA_AC_RailDummy,									//AC_WAIT_4F

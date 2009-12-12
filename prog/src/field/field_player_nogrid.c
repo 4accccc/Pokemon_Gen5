@@ -106,7 +106,7 @@ typedef enum
 	PLAYER_SET_WALK,
 	PLAYER_SET_TURN,
 	PLAYER_SET_HITCH,
-//  PLAYER_SET_JUMP,
+  PLAYER_SET_JUMP,
 } PLAYER_SET;
 
 //--------------------------------------------------------------
@@ -262,9 +262,9 @@ static void player_SetMove_Turn(
 static void player_SetMove_Hitch(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
-/*static void player_SetMove_Jump(
+static void player_SetMove_Jump(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
-	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );//*/
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //自転車移動
 static void jikiMove_Cycle(
@@ -303,9 +303,9 @@ static void playerCycle_SetMove_Turn(
 static void playerCycle_SetMove_Hitch(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
-/*static void playerCycle_SetMove_Jump(
+static void playerCycle_SetMove_Jump(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
-	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );//*/
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
 //----------------------------------------------------------------------------
 /**
@@ -1030,10 +1030,10 @@ static void jikiMove_Normal(
 		player_SetMove_Hitch(
 			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
-/*  case PLAYER_SET_JUMP:
+  case PLAYER_SET_JUMP:
 		player_SetMove_Jump(
 			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-    break;//*/
+    break;
 	}
 }
 
@@ -1155,18 +1155,15 @@ static PLAYER_SET player_CheckMoveStart_Walk(
 		}
 
     
-/*
     if( (hit & MMDL_MOVEHITBIT_ATTR) )
     {
-      BOOL ret;
+      RAIL_LOCATION location;
       u32 attr;
-      VecFx32 pos;
       
-      MMDL_GetVectorPos( mmdl, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
-      
-      if( ret == TRUE )
+      // 1歩先のロケーション取得
+      MMDL_GetRailFrontLocation( mmdl, &location );
+      attr = MMDL_GetRailLocationAttr( mmdl, &location );
+    
       {
         u16 attr_dir = DIR_NOT;
         MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
@@ -1188,7 +1185,6 @@ static PLAYER_SET player_CheckMoveStart_Walk(
         }
       }
     }
-//*/
 	}
 	
 	return( PLAYER_SET_HITCH );
@@ -1396,7 +1392,6 @@ static void player_SetMove_Hitch(
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
 }
 
-#if 0
 //--------------------------------------------------------------
 /**
  * 移動セット ジャンプ
@@ -1422,10 +1417,7 @@ static void player_SetMove_Jump(
 	p_player->move_state = PLAYER_MOVE_WALK;
   
   FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
-  PMSND_PlaySE( SEQ_SE_DANSA );
-
 }
-#endif
 
 
 
@@ -1470,11 +1462,10 @@ static void jikiMove_Cycle(
 		playerCycle_SetMove_Hitch(
 			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
 		break;
-/*  case PLAYER_SET_JUMP:
+  case PLAYER_SET_JUMP:
 		playerCycle_SetMove_Jump(
 			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
     break;
-//*/
 	}
 }
 
@@ -1596,18 +1587,15 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
 			return( PLAYER_SET_WALK );
 		}
     
-/*
     if( (hit & MMDL_MOVEHITBIT_ATTR) )
     {
-      BOOL ret;
+      RAIL_LOCATION location;
       u32 attr;
-      VecFx32 pos;
       
-      MMDL_GetVectorPos( mmdl, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
-      
-      if( ret == TRUE )
+      // 1歩先のロケーション取得
+      MMDL_GetRailFrontLocation( mmdl, &location );
+      attr = MMDL_GetRailLocationAttr( mmdl, &location );
+    
       {
         u16 attr_dir = DIR_NOT;
         MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
@@ -1629,7 +1617,6 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
         }
       }
     }
-//*/
 	}
 	
 	return( PLAYER_SET_HITCH );
@@ -1835,7 +1822,6 @@ static void playerCycle_SetMove_Hitch(
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
 }
 
-#if 0
 //--------------------------------------------------------------
 /**
  * 移動セット ジャンプ
@@ -1861,9 +1847,7 @@ static void playerCycle_SetMove_Jump(
 	p_player->move_state = PLAYER_MOVE_WALK;
   
   FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
-  PMSND_PlaySE( SEQ_SE_DANSA );
 }
-#endif
 
 
 //======================================================================

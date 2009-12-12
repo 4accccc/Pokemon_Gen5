@@ -29,3 +29,4 @@ extern void * FLDEFF_KEMURI_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_KEMURI_Delete( FLDEFF_CTRL *fectrl, void *work );
 
 extern void FLDEFF_KEMURI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl );
+extern void FLDEFF_KEMURI_SetRailMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl );

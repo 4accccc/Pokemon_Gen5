@@ -169,6 +169,40 @@ void FLDEFF_KEMURI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
       fectrl, &DATA_kemuriTaskHeader, NULL, 0, &head, 0 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール上の動作モデル用土煙　　追加
+ *
+ *	@param	fmmdl   MMDL
+ *	@param	fectrl  FLDEFF_CTRL
+ *	@retval nothing
+ *
+ *	基本はGRID一緒ですが、エフェクトの表示位置をカメラのYAWにあわせます。
+ */
+//-----------------------------------------------------------------------------
+void FLDEFF_KEMURI_SetRailMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
+{
+  VecFx32 pos;
+  FLDEFF_KEMURI *kemu;
+  TASKHEADER_KEMURI head;
+  u16 camera_yaw;
+  const MMDLSYS * mmdlSys = MMDL_GetMMdlSys( fmmdl );
+
+  camera_yaw = MMDLSYS_GetTargetCameraAngleYaw( mmdlSys );
+  
+  MMDL_GetVectorPos( fmmdl, &pos );
+  pos.y += FX32_ONE*1;
+  pos.z += FX_Mul( FX_CosIdx( camera_yaw ), FX32_ONE*12 );
+  pos.x += FX_Mul( FX_SinIdx( camera_yaw ), FX32_ONE*12 );
+  
+  kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_KEMURI );
+  head.eff_kemuri = kemu;
+  head.pos = pos;
+  
+  FLDEFF_CTRL_AddTask(
+      fectrl, &DATA_kemuriTaskHeader, NULL, 0, &head, 0 );
+}
+
 //--------------------------------------------------------------
 /**
  * 土煙タスク　初期化

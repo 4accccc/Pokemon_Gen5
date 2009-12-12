@@ -297,4 +297,14 @@ extern int (* const DATA_AC_RailStayWalkD_2F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkL_2F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkR_2F_Tbl[])( MMDL * );
 
+// JUMPŒn
+extern int (* const DATA_AC_RailJumpU_1G_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpD_1G_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpL_1G_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpR_1G_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpU_2G_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpD_2G_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpL_2G_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailJumpR_2G_16F_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE
