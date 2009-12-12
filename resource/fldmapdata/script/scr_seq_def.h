@@ -3845,6 +3845,55 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _FIELD_POKE_TRADE
+ * @brief ゲーム内交換を実行する
+ * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
+ * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
+ *
+ * ①交換デモの再生
+ * ②手持ちポケモンの書き換え
+ * ③図鑑登録                 を実行します。
+ *
+ * trade_no に渡す値は, resource/fld_trade/fld_trade_list.h で定義.
+ */
+//--------------------------------------------------------------
+#define _FIELD_POKE_TRADE( trade_no, party_pos ) \
+    _ASM_FIELD_POKE_TRADE trade_no, party_pos
+
+    .macro  _ASM_FIELD_POKE_TRADE trade_no, party_pos
+    .short  EV_SEQ_FIELD_POKE_TRADE
+    .short  \trade_no
+    .short  \party_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FIELD_POKE_TRADE_CHECK
+ * @brief ゲーム内交換が可能かどうかをチェックする
+ * @param ret_wk    結果を受け取るワーク
+ * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
+ * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
+ *
+ * @retval FLD_TRADE_ENABLE         交換可能
+ *         FLD_TRADE_DISABLE_EGG    交換不可能(タマゴ)
+ *         FLD_TRADE_DISABLE_MONSNO 交換不可能(モンスター違い)
+ *         FLD_TRADE_DISABLE_SEX    交換不可能(性別違い)
+ *
+ *  戻り値は prog/src/field/script_def.h で定義.
+ */
+//--------------------------------------------------------------
+#define _FIELD_POKE_TRADE_CHECK( ret_wk, trade_no, party_pos ) \
+    _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
+
+    .macro  _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
+    .short  EV_SEQ_FIELD_POKE_TRADE_CHECK
+    .short  \ret_wk
+    .short  \trade_no
+    .short  \party_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_PARTY_POKE_MONSNO
  * @brief 指定した手持ちポケモンのモンスターナンバーを取得する
  * @param ret_wk 結果を受け取るワーク

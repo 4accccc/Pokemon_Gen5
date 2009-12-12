@@ -87,6 +87,9 @@
 //カメラパラメータID
 #include "../scr_cam_prm/scr_cam_prm_id.h"
 
+//ゲーム内交換ID
+#include "../../fld_trade/fld_trade_list.h"
+
 
 //--------------------------------------------------------------
 //  wb_null

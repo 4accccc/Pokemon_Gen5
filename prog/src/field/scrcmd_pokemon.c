@@ -40,6 +40,8 @@
 
 #include "fieldmap.h" 
 
+#include "fld_trade.h"  // for EVENT_FieldPokeTrade
+
 
 //======================================================================
 //  define
@@ -895,3 +897,88 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief ゲーム内交換が可能かどうかをチェックする
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
+  u16            trade_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
+  u16           party_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第三引数
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, party_pos );
+  FLD_TRADE_WORK*   trade = FLD_TRADE_WORK_Create( heap_id, trade_no );
+ 
+  // 全チェックをパスすれば交換可能
+  *ret_wk = FLD_TRADE_ENABLE;
+
+  // タマゴチェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    u32 tamago_flag = PP_Get( poke, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag == TRUE )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_EGG;
+    }
+  }
+  // モンスターNo.チェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
+    if( monsno != FLD_TRADE_WORK_GetChangeMonsno(trade) )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_MONSNO;
+    }
+  }
+  // 性別チェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    if( FLD_TRADE_WORK_GetChangeMonsSex(trade) != PM_NEUTRAL )
+    {
+      u32 sex = PP_Get( poke, ID_PARA_sex, NULL );
+      if( sex != FLD_TRADE_WORK_GetChangeMonsSex(trade) )
+      {
+        *ret_wk = FLD_TRADE_DISABLE_SEX;
+      }
+    } 
+  } 
+
+  FLD_TRADE_WORK_Delete( trade );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ゲーム内交換イベントを呼ぶ
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16       trade_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16      party_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  
+  {
+    GMEVENT *event = EVENT_FieldPokeTrade( gsys, trade_no, party_pos );
+    SCRIPT_CallEvent( scw, event );
+  } 
+  return VMCMD_RESULT_SUSPEND;
+}

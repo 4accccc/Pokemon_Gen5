@@ -61,7 +61,6 @@
 
 FS_EXTERN_OVERLAY(pokemon_trade);
 
-#include "event_name_input.h" // TEST:
 
 //-----------------------------------------------------------------------------
 /**
@@ -392,6 +391,7 @@ u32 FLD_TRADE_WORK_GetTradeMonsOyaSex( const FLD_TRADE_WORK* cwork )
 	return cwork->p_pokedata->oya_sex;
 }
 
+
 #if 0
 //----------------------------------------------------------------------------
 /**
@@ -716,13 +716,6 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       demo = EVENT_FieldSubProc( work->gsys, fieldmap, 
                                   FS_OVERLAY_ID(pokemon_trade), 
                                   &PokemonTradeDemoProcData, &work->demoParam );
-      GMEVENT_CallEvent( event, demo );
-    }
-#endif
-#if 0 // TEST:–¼‘O“ü—Í
-    {
-      GMEVENT* demo;
-      demo = EVENT_NameInput_PartyPoke( work->gsys, &work->test, 0 );
       GMEVENT_CallEvent( event, demo );
     }
 #endif

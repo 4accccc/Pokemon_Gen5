@@ -122,6 +122,7 @@ extern u32 FLD_TRADE_WORK_GetChangeMonsSex( const FLD_TRADE_WORK* cp_work );
 // 親の性別
 extern u32 FLD_TRADE_WORK_GetTradeMonsOyaSex( const FLD_TRADE_WORK* cp_work );		
 
+
 //------------
 // ■イベント
 //------------
