@@ -459,8 +459,12 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
 
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_HEAP_FreeMemory( pWork->scrTray);
-  GFL_HEAP_FreeMemory( pWork->scrTemoti);
+  if(pWork->scrTray){
+    GFL_HEAP_FreeMemory( pWork->scrTray);
+    pWork->scrTray=NULL;
+    GFL_HEAP_FreeMemory( pWork->scrTemoti);
+    pWork->scrTemoti=NULL;
+  }
 }
 
 //------------------------------------------------------------------------------
