@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_D08R0801_HAKAW_01
+SCRID_D08R0801_HAKAIW_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_D08R0801_HAKAM_02
+SCRID_D08R0801_HAKAIM_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
