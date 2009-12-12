@@ -2,7 +2,6 @@
 #ifndef ZONE_C03P02_EVD_H
 #define ZONE_C03P02_EVD_H
 
-#define DOOR_ID_C03P02_C03P08_EXIT01      0
 
 #endif //ZONE_C03P02_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
