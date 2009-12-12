@@ -249,7 +249,7 @@
 #include <nitro/cht.h>
 
 #include "net.h"
-#include "wih.h"
+#include "net/wih.h"
 #include "net_whpipe.h"
 
 /*

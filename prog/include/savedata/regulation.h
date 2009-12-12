@@ -92,17 +92,17 @@ typedef enum  {
 
 
 typedef struct{
-  STRCODE cupName[REGULATION_CUPNAME_SIZE + EOM_SIZE]; ///< カップ名
-  STRCODE ruleName[REGULATION_RULENAME_SIZE + EOM_SIZE];  ///< ルール名
+  STRCODE cupName[REGULATION_CUPNAME_SIZE + EOM_SIZE]; ///< カップ名  26
+  STRCODE ruleName[REGULATION_RULENAME_SIZE + EOM_SIZE];  ///< ルール名  52
   u8 NUM_LO; ///<    #参加数下限
   u8 NUM_HI; ///<    #参加数上限
   u8 LEVEL;  ///<    #参加レベル
   u8 LEVEL_RANGE; ///<    #レベル範囲
   u16 LEVEL_TOTAL; ///<    #レベル合計
   u8 BOTH_POKE; ///<    #同じポケモン
-  u8 BOTH_ITEM;  ///<    #同じどうぐ
-  u8 VETO_POKE_BIT[REG_POKENUM_MAX_BYTE];  ///<    #参加禁止ポケモン
-  u8 VETO_ITEM[REG_ITEMNUM_MAX_BYTE]; ///<    #持ち込み禁止道具
+  u8 BOTH_ITEM;  ///<    #同じどうぐ             60
+  u8 VETO_POKE_BIT[REG_POKENUM_MAX_BYTE];  ///<    #参加禁止ポケモン 142
+  u8 VETO_ITEM[REG_ITEMNUM_MAX_BYTE]; ///<    #持ち込み禁止道具 218
   u16 MUST_POKE;   ///<    #必須ポケモン
   u8 MUST_POKE_FORM;   ///<    #必須ポケモンフォルム
   u8 SHOOTER;    ///<    #シューター
@@ -113,7 +113,7 @@ typedef struct{
   u8 AGE_HI;  ///<    #年齢制限以下
   u8 SHOW_POKE;  ///<    #ポケモン見せ合い
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間
-  u8 BATTLE_TYPE;    ///< バトルタイプ
+  u8 BATTLE_TYPE;    ///< バトルタイプ  230
 } REGULATION;
 
 //============================================================================================

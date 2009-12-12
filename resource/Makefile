@@ -50,6 +50,7 @@ SUBDIRS	=	wmi \
 			musical \
 			infowin \
 			c_gear \
+			cg_comm \
 			gsync \
 			gtsnego \
 			bmpoam \

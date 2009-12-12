@@ -86,6 +86,7 @@
   $VERSION_WHITE  ARCID_TITLE "title.narc"  #ホワイト版タイトル
   ARCID_CONFIG_GRA  "config_gra.narc"   #設定画面用データ
   ARCID_IRCBATTLE   "ircbattle.narc"           #赤外線マッチングバトル
+  ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後
   ARCID_C_GEAR    "c_gear.narc"           #コミュニケーションギア
   ARCID_WIFI2DCHAR    "wifi2dchar.narc"
   ARCID_WIFIUNIONCHAR   "wifi_unionobj.narc"

@@ -35,6 +35,7 @@
 #include "msg/msg_ircbattle.h"
 #include "../../field/event_ircbattle.h"
 #include "ircbattle.naix"
+#include "cg_comm.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "ir_ani_NANR_LBLDEFS.h"
 
@@ -358,6 +359,19 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
+    int frame = GFL_BG_FRAME2_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -520,28 +534,29 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
                                                                   GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
 
     // サブ画面BG0スクリーン転送
-#if 0
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo1_NSCR,
-                                              GFL_BG_FRAME1_M, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
-                                              pWork->heapID);
-#endif
 
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo2_NSCR,
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
+    GFL_ARC_CloseDataHandle(p_handle);
+  }
 
-    
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_comm_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_connect_sub_NCGR,
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_cg_comm_comm_bg_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
 
     // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_connect_sub_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_cg_comm_comm_base_NSCR,
                                               GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_cg_comm_comm_base_NSCR,
+                                              GFL_BG_FRAME1_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 		GFL_ARC_CloseDataHandle(p_handle);

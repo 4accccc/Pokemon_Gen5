@@ -43,6 +43,7 @@
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 #include "savedata/wifilist.h"
 #include "gamesystem/comm_player_support.h"
+#include "net/wih_dwc.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
 
@@ -1198,11 +1199,21 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 //--------------------------------------------------------------
 SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
 {
+  SAVE_RESULT sr;
+  
   //セーブワークの情報を更新
   GAMEDATA_SaveDataUpdate(gamedata);
 
+  //ビーコンのスキャンを即時停止
+  WIH_DWC_Stop();
+
   //セーブ実行
-  return SaveControl_Save(gamedata->sv_control_ptr);
+  sr = SaveControl_Save(gamedata->sv_control_ptr);
+
+  //ビーコンのスキャンを再開
+  WIH_DWC_Restart();
+
+  return sr;
 }
 
 //--------------------------------------------------------------
@@ -1218,6 +1229,9 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
 {
   //セーブワークの情報を更新
   GAMEDATA_SaveDataUpdate(gamedata);
+
+  //ビーコンのスキャンを即時停止
+  WIH_DWC_Stop();
 
   //セーブ開始
   SaveControl_SaveAsyncInit(gamedata->sv_control_ptr);
@@ -1235,7 +1249,16 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
 //--------------------------------------------------------------
 SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 {
-  return SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
+  SAVE_RESULT sr;
+
+  sr = SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
+
+  if(sr==SAVE_RESULT_OK){
+    //ビーコンのスキャンを再開
+    WIH_DWC_Restart();
+  }
+
+  return sr;
 }
 
 //--------------------------------------------------------------

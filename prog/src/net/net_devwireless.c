@@ -10,7 +10,7 @@
 #include <nitro.h>
 #include "gflib.h"
 #include "net_whpipe.h"
-#include "wih.h"
+#include "net/wih.h"
 
 //--------------------------------------------
 //“à•”ŠÖ”ˆê——

@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	net_ds.h
+ * @file	net_whpipe.h
  * @brief	DSデバイスとのアクセス関数
  * @author	GAME FREAK Inc.
  * @date    2006.12.5
@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "gflib.h"
-#include "wih.h"
+#include <gflib.h>
+#include "net/wih.h"
 
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*GFL_NET_ConnectionCallBack) (int aid);

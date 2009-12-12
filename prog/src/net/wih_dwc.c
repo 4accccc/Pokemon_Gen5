@@ -10,7 +10,7 @@
 #include <gflib.h>
 #include <nitro/irc.h>
 #include "net/network_define.h"
-#include "wih_dwc.h"
+#include "net/wih_dwc.h"
 #include "nitroWiFi/ncfg.h"
 #include "nitroWiFi/wcm.h"
 #include "net/net_whpipe.h"
@@ -30,8 +30,9 @@ struct _WIH_DWC_WORK {
   NCFGConfigEx* cfg;
   BOOL bIrc;
   int timer;
+  BOOL bStop;
 	u16 AllBeaconNum;
-  u8 buff[200];
+  u8 buff[200];  //赤外線受信を行う仮バッファ
   
 };
 
@@ -39,15 +40,6 @@ struct _WIH_DWC_WORK {
 static void _SetScanBeaconData(WMBssDesc* pBss);
 static WIH_DWC_WORK* _localWork=NULL;
 FS_EXTERN_OVERLAY(dev_irc);
-
-
-
-static void _IRCRecvCallback(u8 *data, u8 size, u8 command, u8 value)
-{
-  _localWork->bIrc = TRUE;
-  _localWork->timer = 60*10;
-
-}
 
 
 /*---------------------------------------------------------------------------*
@@ -72,15 +64,14 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   _localWork=pWork;
 
   pWork->cfg =GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
+  NCFG_ReadConfig(&_localWork->cfg->compat, NULL);
 
-//  WCM_Init(pWork->ScanMemoryWCM, WCM_WORK_SIZE);
+// NCFG_ReadConfigEx(NCFGConfigEx* configEx, void* work); //@todo
 
-  
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 
   
-  IRC_Init(12);
- // IRC_SetRecvCallback(&_IRCRecvCallback);
+  IRC_Init(12);  //@todo 12
   
   return(pWork);
 }
@@ -99,13 +90,37 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
   WHSetWIHDWCBeaconGetFunc(NULL);
 
   IRC_Shutdown();
-  //WCM_Finish();
   GFL_NET_Align32Free(pWork->cfg);
   GFL_NET_Align32Free(pWork->ScanMemory);
   GFL_NET_Align32Free(pWork);
   _localWork=NULL;
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_irc ) );
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコン収集を停止する
+ */
+//------------------------------------------------------------------------------
+
+void WIH_DWC_Stop(void)
+{
+  _localWork->bStop=TRUE;
+  IRC_Init(12);  //@todo 12
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコン収集を再開する
+ */
+//------------------------------------------------------------------------------
+
+void WIH_DWC_Restart(void)
+{
+  _localWork->bStop=FALSE;
+  IRC_Shutdown();
+}
+
 
 /*---------------------------------------------------------------------------*
   Name:         WHSetAllBeaconFlg
@@ -147,6 +162,10 @@ void WIH_DWC_MainLoopScanBeaconData(void)
 {
   int i;
 
+  if(_localWork && _localWork->bStop){
+    return;
+  }
+  
   if(_localWork){
     for(i=0;i<_localWork->AllBeaconNum;i++){
       _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
@@ -177,9 +196,7 @@ static BOOL _scanAPReserveed( WMBssDesc* pChk )
 {
   int i;
 
-  NCFG_ReadConfig(&_localWork->cfg->compat, NULL);
 
-// NCFG_ReadConfigEx(NCFGConfigEx* configEx, void* work);
 
   for(i = 0;i < 3;i++){
     if(GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid,pChk->ssid,WM_SIZE_SSID)){
