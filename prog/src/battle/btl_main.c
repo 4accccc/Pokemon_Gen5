@@ -128,10 +128,10 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
+static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
-static BOOL cleanup_alone_double( int* seq, void* work );
 static BOOL setup_alone_triple( int* seq, void* work );
 static BOOL setup_alone_rotation( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
@@ -396,52 +396,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 // 各種モジュール解放＆削除処理ルーチンを設定
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
 {
-  #if 0
-  if( setup_param->commMode == BTL_COMM_NONE )
-  {
-    switch( setup_param->rule ){
-    case BTL_RULE_SINGLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_DOUBLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_TRIPLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_ROTATION:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    default:
-      GF_ASSERT(0);
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    }
-  }
-  else
-  {
-    switch( setup_param->rule ){
-    case BTL_RULE_SINGLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_DOUBLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_TRIPLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    case BTL_RULE_ROTATION:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    default:
-      GF_ASSERT(0);
-      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-      break;
-    }
-  }
-  #else
   BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
-  #endif
 }
 
 /**
@@ -466,6 +421,25 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
   return BBAG_MODE_NORMAL;
 }
 
+/**
+ *  スタンドアロンモードでプレイヤーのクライアントID、基本立ち位置
+ *  各クライアントのパーティデータを生成（録画再生に対応）
+ */
+static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
+{
+  wk->myClientID = sp->commPos;
+  wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
+  {
+    u8 relation_0 = CommClientRelation( wk->myClientID, 0 );
+    u8 relation_1 = CommClientRelation( wk->myClientID, 1 );
+
+    // バトル用ポケモンパラメータ＆パーティデータを生成
+    srcParty_Set( wk, 0, sp->party[ relation_0 ] );
+    srcParty_Set( wk, 1, sp->party[ relation_1 ] );
+  }
+  BTL_Printf("デバッグフラグbit=%04x\n", sp->DebugFlagBit);
+}
+
 //--------------------------------------------------------------------------
 /**
  * スタンドアローン／シングルバトル
@@ -479,14 +453,10 @@ static BOOL setup_alone_single( int* seq, void* work )
   u8 bagMode = checkBagMode( sp );
 
   wk->numClients = 2;
-  wk->myClientID = 0;
-  wk->myOrgPos = BTL_POS_1ST_0;
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
-  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
+  setup_alone_common_ClientID_and_srcParty( wk, sp );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -519,11 +489,13 @@ static BOOL setup_alone_single( int* seq, void* work )
     BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
   }
 
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
+  // 描画エンジン生成、プレイヤークライアントに関連付ける
+  {
+    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
+    BTL_Printf("viewClient = %d\n", sp->commPos);
+    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, HEAPID_BTL_VIEW );
+    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
+  }
 
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 1 );
@@ -597,12 +569,9 @@ static BOOL setup_alone_double( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
   wk->posCoverClientID[BTL_POS_1ST_1] = 0;
   wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-  wk->myOrgPos = BTL_POS_1ST_0;
-  wk->ImServer = TRUE;
 
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
-  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
+  setup_alone_common_ClientID_and_srcParty( wk, sp );
+
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -651,27 +620,6 @@ static BOOL setup_alone_double( int* seq, void* work )
 }
 //--------------------------------------------------------------------------
 /**
- * スタンドアローン／ダブルバトル：クリーンアップ
- */
-//--------------------------------------------------------------------------
-static BOOL cleanup_alone_double( int* seq, void* work )
-{
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  BTLV_Delete( wk->viewCore );
-
-  BTL_CLIENT_Delete( wk->client[0] );
-  BTL_CLIENT_Delete( wk->client[1] );
-  BTL_SERVER_Delete( wk->server );
-
-  PokeCon_Release( &wk->pokeconForClient );
-  PokeCon_Release( &wk->pokeconForServer );
-
-  return TRUE;
-}
-//--------------------------------------------------------------------------
-/**
  * スタンドアローン／トリプルバトル：セットアップ
  */
 //--------------------------------------------------------------------------
@@ -682,7 +630,6 @@ static BOOL setup_alone_triple( int* seq, void* work )
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 bagMode = checkBagMode( sp );
 
-  wk->myClientID = 0;
   wk->numClients = 2;
   wk->ImServer = TRUE;
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
@@ -692,9 +639,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_1ST_2] = 0;
   wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
-  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
+  setup_alone_common_ClientID_and_srcParty( wk, sp );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -752,9 +697,7 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 bagMode = checkBagMode( sp );
 
-  wk->myClientID = 0;
   wk->numClients = 2;
-  wk->ImServer = TRUE;
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
   wk->posCoverClientID[BTL_POS_1ST_1] = 0;
@@ -762,9 +705,8 @@ static BOOL setup_alone_rotation( int* seq, void* work )
 //  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
 //  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  srcParty_Set( wk, 0, sp->party[ BTL_CLIENT_PLAYER ] );
-  srcParty_Set( wk, 1, sp->party[ BTL_CLIENT_ENEMY1 ] );
+  setup_alone_common_ClientID_and_srcParty( wk, sp );
+
 
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
@@ -828,6 +770,8 @@ static BOOL setup_comm_single( int* seq, void* work )
     wk->numClients = 2;
     wk->posCoverClientID[BTL_POS_1ST_0] = 0;
     wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+    wk->myClientID = wk->setupParam->commPos;
+    wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     (*seq)++;
     return FALSE;
   }
@@ -878,6 +822,8 @@ static BOOL setup_comm_double( int* seq, void* work )
       wk->posCoverClientID[BTL_POS_1ST_1] = 2;
       wk->posCoverClientID[BTL_POS_2ND_1] = 3;
     }
+    wk->myClientID = wk->setupParam->commPos;
+    wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     (*seq)++;
     return FALSE;
   }
@@ -885,11 +831,9 @@ static BOOL setup_comm_double( int* seq, void* work )
     if( funcs[ *seq ]( wk, &wk->subSeq ) ){
       wk->subSeq = 0;
       ++(*seq);
-      BTL_Printf(" setupSeq ... %d\n", (*seq) );
     }
     return FALSE;
   }
-  BTL_Printf(" setupSeq ... Done\n", (*seq) );
   return TRUE;
 }
 //--------------------------------------------------------------------------
@@ -917,6 +861,8 @@ static BOOL setup_comm_rotation( int* seq, void* work )
     wk->posCoverClientID[BTL_POS_2ND_0] = 1;
     wk->posCoverClientID[BTL_POS_1ST_1] = 0;
     wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+    wk->myClientID = wk->setupParam->commPos;
+    wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     (*seq)++;
     return FALSE;
   }
@@ -924,11 +870,9 @@ static BOOL setup_comm_rotation( int* seq, void* work )
     if( funcs[ *seq ]( wk, &wk->subSeq ) ){
       wk->subSeq = 0;
       ++(*seq);
-      BTL_Printf(" setupSeq ... %d\n", (*seq) );
     }
     return FALSE;
   }
-  BTL_Printf(" setupSeq ... Done\n", (*seq) );
   return TRUE;
 }
 //--------------------------------------------------------------------------
@@ -959,6 +903,8 @@ static BOOL setup_comm_triple( int* seq, void* work )
     wk->posCoverClientID[BTL_POS_2ND_1] = 1;
     wk->posCoverClientID[BTL_POS_1ST_2] = 0;
     wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+    wk->myClientID = wk->setupParam->commPos;
+    wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     (*seq)++;
     return FALSE;
   }
@@ -1007,37 +953,24 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     break;
 
   case 1:
-    // サーバマシンは各クライアントに各々のクライアントIDと責任領域数を通知する
-    if( BTL_NET_NotifyClientID( wk->sendClientID, &wk->sendClientID, 1) ){
-      wk->sendClientID++;
-      if( wk->sendClientID >= wk->numClients ){
-        ++(*seq);
-      }
+    // サーバマシンは各クライアントにデバッグパラメータを通知する
+    if( BTL_NET_NotifyDebugParam( wk->setupParam->DebugFlagBit ) ){
+      ++(*seq);
     }
     break;
 
   case 2:
-    // 自分のクライアントIDが確定
-    if( BTL_NET_IsClientIdDetermined() )
+    // デバッグパラメータ受信完了
     {
-      const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-      u32 i;
-
-      wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
-      BTL_Printf("自分のクライアントID=%d\n", wk->myClientID);
-      wk->myOrgPos = 0;
-      for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+      u16 debugFlagBit;
+      if( BTL_NET_IsDebugParamReceived(&debugFlagBit) )
       {
-        if( wk->posCoverClientID[i] == wk->myClientID )
-        {
-          wk->myOrgPos = i;
-          break;
-        }
+        BATTLE_SETUP_PARAM* sp = wk->setupParam;
+        sp->DebugFlagBit = debugFlagBit;
+        return TRUE;
       }
-      return TRUE;
     }
     break;
-
   }
   return FALSE;
 }
@@ -2783,19 +2716,6 @@ void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
   #endif
 }
 
-//=============================================================================================
-/**
- * 自分がサーバマシンかどうかを返す
- *
- * @param   wk
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk )
-{
-  return wk->ImServer;
-}
 //=============================================================================================
 /**
  * アイテムデータポインタ取得

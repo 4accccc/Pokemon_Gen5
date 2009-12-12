@@ -25,7 +25,7 @@ enum {
 
 enum {
   CMD_NOTIFY_SERVER_VER = GFL_NET_CMD_BATTLE,
-  CMD_NOTIFY_CLIENT_ID,
+  CMD_NOTIFY_DEBUG_PARAM,
   CMD_NOTIFY_PARTY_DATA,
   CMD_NOTIFY_PLAYER_DATA,
   CMD_TO_CLIENT,
@@ -90,7 +90,8 @@ typedef struct {
   u8    myNetID;
   u8    serverNetID;
 
-  u8    myClientID[ BTL_CLIENT_MAX ];
+  u16   debugFlagBit;
+  u8    fDebugParamReceived;
 
   u8    memberCount;
   u8    recvCount;
@@ -121,7 +122,7 @@ static SYSWORK* Sys;
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void recv_serverVer( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
-static void recv_cliendID( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static void recv_debugParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
@@ -141,7 +142,7 @@ static inline void recvBuf_clear( RECV_BUFFER* buf );
 //static const NetRecvFuncTable RecvFuncTable[] = {
 const NetRecvFuncTable BtlRecvFuncTable[] = {
     { recv_serverVer, NULL },
-    { recv_cliendID,  NULL },
+    { recv_debugParam,  NULL },
     { recv_partyData,   getbuf_partyData },
     { recv_playerData,  getbuf_playerData },
     { recv_serverCmd,   getbuf_serverCmd },
@@ -166,11 +167,11 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
     Sys->timingID = BTL_NET_TIMING_NULL;
     Sys->timingSyncStartFlag = FALSE;
 
+    Sys->debugFlagBit = 0;
+    Sys->fDebugParamReceived = FALSE;
+
     {
       u32 i;
-      for(i=0; i<BTL_CLIENT_MAX; ++i){
-        Sys->myClientID[i] = BTL_CLIENT_MAX;
-      }
       for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; ++i){
         Sys->tmpLargeBuf[i] = NULL;
         Sys->tmpLargeBufUsedSize[i] = 0;
@@ -270,79 +271,57 @@ BOOL BTL_NET_IsServer( void )
 }
 
 
-// 各マシンにクライアントIDを通知する（サーバからのみ呼び出し）
-// @todo これ変。担当場所IDをClientIDと呼んでいた頃の名残がある。
-BOOL BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
+// 全マシンにデバッグパラメータを通知する（サーバからのみ呼び出し）
+BOOL BTL_NET_NotifyDebugParam( u16 debugFlagBit )
 {
-  GF_ASSERT(numCoverPos<=BTL_POSIDX_MAX);
+  TMP_SEND_BUFFER* tsbuf;
+  BOOL result;
+  u8 i;
 
+  tsbuf = &Sys->sendBuf[0];
+  tsbuf->val16[0] = debugFlagBit;
+
+  BTL_Printf("全マシンにデバッグBitFlagを送信 : flag=%04x\n", tsbuf->val16[0]);
+
+  result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_DEBUG_PARAM,
+        sizeof( *tsbuf ),
+        tsbuf,
+        FALSE,    // 優先度を高くする
+        FALSE,    // 同一コマンドがキューに無い場合のみ送信する
+        FALSE     // GFL_NETライブラリの外で保持するバッファを使用
+  );
+
+  if( result ){
+    BTL_Printf("  送信成功\n");
+  }
+  return result;
+}
+
+// デバッグパラメータ受信関数（サーバ→全クライアント）
+static void recv_debugParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  if( Sys->fDebugParamReceived == FALSE )
   {
-    TMP_SEND_BUFFER* tsbuf;
-    BOOL result;
-    u8 i;
+    const TMP_SEND_BUFFER* tsb = pData;
 
-    BTL_Printf("netID=%d のマシンにクライアントIDを通知します。受け持ち場所数は%d,\n", netID, numCoverPos );
-    BTL_Printf("  クライアントID=[ ");
+    BTL_Printf("netID=%d, デバッグパラメータ受信しました。バッファ内容=%d,%d,\n",
+        netID, tsb->val16[0], tsb->val16[1]);
 
-    tsbuf = &Sys->sendBuf[netID];
-
-    for(i=0; i<numCoverPos; i++)
-    {
-      tsbuf->val8[i+1] = clientID[i];
-      BTL_Printf("%d ", clientID[i]);
-    }
-    BTL_Printf("]\n");
-    tsbuf->val8[0] = numCoverPos;
-    tsbuf->val8[1] = *clientID;
-
-    result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_NOTIFY_CLIENT_ID,
-          sizeof( *tsbuf ),
-          tsbuf,
-          FALSE,    // 優先度を高くする
-          FALSE,    // 同一コマンドがキューに無い場合のみ送信する
-          FALSE   // GFL_NETライブラリの外で保持するバッファを使用
-    );
-
-    if( result ){
-      BTL_Printf("  送信成功：サイズ=%d, 内容=%d,%d,%d,%d\n",
-        sizeof(*tsbuf), tsbuf->val8[0], tsbuf->val8[1], tsbuf->val8[2], tsbuf->val8[3] );
-    }
-    return result;
+    Sys->debugFlagBit = tsb->val16[0];
+    Sys->fDebugParamReceived = TRUE;
   }
 }
 
-// クライアントID受信関数（サーバ→各クライアント指定）
-static void recv_cliendID( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+// デバッグパラメータ受信完了したか？
+BOOL BTL_NET_IsDebugParamReceived( u16* debugFlagBit )
 {
-  const TMP_SEND_BUFFER* tsb = pData;
-  int i;
-
-  BTL_Printf("netID=%d, クライアントID受信しました。バッファ内容=%d,%d,%d,%d, 受け持ち数は%d,\n",
-      netID, tsb->val8[0], tsb->val8[1], tsb->val8[2], tsb->val8[3], tsb->val8[0]);
-  BTL_Printf("    Pos=[ ");
-
-  for(i=0; i<tsb->val8[0]; i++)
-  {
-    Sys->myClientID[i] = tsb->val8[1+i];
-    BTL_PrintfSimple("%d ", tsb->val8[1+i]);
+  if( Sys->fDebugParamReceived ){
+    *debugFlagBit = Sys->debugFlagBit;
+    return TRUE;
   }
-  BTL_PrintfSimple("]\n");
+  return FALSE;
 }
 
-// 自分のクライアントIDが確定したか？
-BOOL BTL_NET_IsClientIdDetermined( void )
-{
-  return Sys->myClientID[0] != BTL_CLIENT_MAX;
-}
-
-// 自分の担当するクライアントIDを取得 @todo これ呼ばれてないし必要ないっぽい
-u8 BTL_NET_GetMyClientID( u8 idx )
-{
-  GF_ASSERT( idx < BTL_CLIENT_MAX );
-  GF_ASSERT( Sys->myClientID[idx] != BTL_CLIENT_MAX );
-
-  return Sys->myClientID[ idx ];
-}
 
 // パーティデータを連絡する（全マシン相互）
 BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party )

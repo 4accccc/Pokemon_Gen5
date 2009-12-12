@@ -57,7 +57,7 @@ struct _BTLREC_SETUP_SUBSET {
   u16  musicPinch;              ///< ピンチ時BGM
   u16  debugFlagBit;            ///< デバッグ機能Bitフラグ -> enum BtlDebugFlag @ battle/battle.h
   u8   competitor : 5;          ///< 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h
-  u8   myCommPos  : 3;          ///< 通信対戦時の自分の立ち位置（マルチの時、0,2なら左側／1,3なら右側になる）
+  u8   myCommPos  : 3;          ///< 通信対戦時の自分の立ち位置（マルチの時、0,2 vs 1,3 になり、0,1が左側／2,3が右側になる）
   u8   rule       : 7;          ///< ルール（シングル・ダブル・トリプル・ローテ）-> enum BtlRule @ battle/battle.h
   u8   fMultiMode :1;           ///< マルチバトルフラグ（ルールは必ずダブル）
 

@@ -29,7 +29,6 @@ extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag 
 /*------------------------------------------------------------------------------*/
 /* í êMèÓïÒ                                                                     */
 /*------------------------------------------------------------------------------*/
-extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
 extern COMM_PLAYER_SUPPORT* BTL_MAIN_GetCommSupportHandle( const BTL_MAIN_MODULE* wk );
 

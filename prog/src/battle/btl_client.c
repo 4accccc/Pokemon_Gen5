@@ -275,6 +275,12 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->viewCore = NULL;
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
 
+  {
+    const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
+    BTL_Printf("¶¬‚³‚ê‚½ClientID = %d, æ“ªƒ|ƒPƒ‚ƒ“ID=%d, monsno=%d\n",
+        wk->myID, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
+  }
+
   wk->myState = 0;
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
