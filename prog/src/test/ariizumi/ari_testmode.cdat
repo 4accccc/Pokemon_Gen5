@@ -128,9 +128,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx )
 {
-  WIFINOTE_PROC_PARAM *procParam = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof( WIFINOTE_PROC_PARAM));
-	//ゲームデータを持ってこないと起動しない
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(wifinote), &WifiNoteProcData, procParam );
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(wifinote), &WifiNoteProcData, NULL );
 	return TRUE;
 }
 

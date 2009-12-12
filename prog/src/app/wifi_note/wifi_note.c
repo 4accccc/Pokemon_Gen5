@@ -1808,7 +1808,15 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFINOTE, 0xC0000 );
   p_wk = GFL_PROC_AllocWork( proc, sizeof(WFNOTE_WK), HEAPID_WIFINOTE );
   GFL_STD_MemFill( p_wk, 0, sizeof(WFNOTE_WK) );
-  p_wk->pp = pwk;
+  if( pwk == NULL )
+  {
+    p_wk->pp = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof( WIFINOTE_PROC_PARAM));
+    p_wk->pp->pGameData = GAMEDATA_Create( GFL_HEAPID_APP );
+  }
+  else
+  {
+    p_wk->pp = pwk;
+  }
 
 //  デバッグ起動で名前が無い時用
   {
@@ -1953,6 +1961,11 @@ GFL_PROC_RESULT WifiNoteProc_End( GFL_PROC * proc, int * seq , void *pwk, void *
   Data_Exit( &p_wk->data, p_wk->pp );
 
   //GFL_HEAP_FreeMemory( p_wk->pp );  //この処理は外側で行われる
+
+  if( pwk == NULL )
+  {
+    GFL_HEAP_FreeMemory( p_wk->pp->pGameData );
+  }
 
   GFL_PROC_FreeWork( proc );        // PROCワーク開放
   GFL_HEAP_DeleteHeap( HEAPID_WIFINOTE );
