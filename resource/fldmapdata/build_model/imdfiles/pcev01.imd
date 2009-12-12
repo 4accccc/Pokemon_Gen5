@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-12-09T21:15:38"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-12T14:43:43" source="pcev02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-12-09T18:09:41" source="pcev02.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-12-12T14:43:43" source="pcev02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="5 5"
-	output_texture="all"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -34,73 +34,73 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="in02_eledoor_pl"
-		path="C:/home/wb_data3d/field/in02/map/tex/in02_eledoor.tga"
+		path="C:/home/wb_data3d/build_model/indoor/pcev01/tex/in02_eledoor.tga"
 	>
 		<bitmap size="512">
-			e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e6e1
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e0e0 e0e0 e0e0 e0e0 e0e0 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e0 e2e2 e2e2 e2e2 e2e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e2e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e3e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e3e2 e2e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e3e3 e2e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e3e2 e2e3 e3e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e3e3 e2e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e3e2 e2e3 e3e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e3e3 e2e2 e3e3 e7e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e3e2 e2e3 e3e2 e3e3 e3e7 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e3e3 e2e2 e3e3 e7e3 e7e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e4e1 e9e9 e9e9 e9e9 e9e9 e9e9 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e4e1 e9e9 e9e9 e9e9 e9e9 e9e9 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e4e1 e9e9 e9e9 e9e9 e9e9 e9e9 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e2e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e3e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e2e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e3e2 e2e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e2e2 e3e3 e2e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e3e2 e2e3 e3e2 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e2e2 e3e3 e2e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e3e2 e2e3 e3e2 e3e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e2e2 e3e3 e2e2 e3e3 e7e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e3e2 e2e3 e3e2 e3e3 e3e7 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e0e1 e3e3 e2e2 e3e3 e7e3 e7e3 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e8e1 e8e8 e8e8 e8e8 e8e8 e8e8 e6e8
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e6e5
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e6e6 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e6e5
-			e1e6 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e3e2
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a6a6 a6a6 a6a6 a6a6 a6a6 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a6 a4a4 a4a4 a4a4 a4a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a4a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a8a4 a4a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a8a8 a4a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a8a4 a4a8 a8a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a8a8 a4a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a8a4 a4a8 a8a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a8a8 a4a4 a8a8 a9a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a8a4 a4a8 a8a4 a8a8 a8a9 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a8a8 a4a4 a8a8 a9a8 a9a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a4a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a8a4 a4a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a4a4 a8a8 a4a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a8a4 a4a8 a8a4 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a4a4 a8a8 a4a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a8a4 a4a8 a8a4 a8a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a4a4 a8a8 a4a4 a8a8 a9a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a8a4 a4a8 a8a4 a8a8 a8a9 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 a6e2 a8a8 a4a4 a8a8 a9a8 a9a8 e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 ebe2 ebeb ebeb ebeb ebeb ebeb e3eb
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e3e1
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			e3e3 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e3e1
+			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="in02_kage"
@@ -108,7 +108,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="in02_kage_pl"
-		path="C:/home/wb_data3d/field/in02/map/tex/in02_kage.tga"
+		path="C:/home/wb_data3d/build_model/indoor/pcev01/tex/in02_kage.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -119,7 +119,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in02_pc_pl"
-		path="C:/home/wb_data3d/field/in02/map/tex/in02_pc.tga"
+		path="C:/home/wb_data3d/build_model/indoor/pcev01/tex/in02_pc.tga"
 	>
 		<bitmap size="32">
 			2c77 4422 2a77 4422 2b66 4422 2b66 9922
@@ -133,7 +133,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in02_pckabe_pl"
-		path="C:/home/wb_data3d/field/in02/map/tex/in02_pckabe.tga"
+		path="C:/home/wb_data3d/build_model/indoor/pcev01/tex/in02_pckabe.tga"
 	>
 		<bitmap size="64">
 			2222 2222 2222 2222 3333 3333 5555 5555
@@ -150,8 +150,8 @@
 
 <tex_palette_array size="4">
 	<tex_palette index="0" name="in02_eledoor_pl" color_size="16">
-		45a5 4e52 6247 6689 66ae 66f7 6718 6eee
-		6f7b 7777 7fff 7fff 7fff 7fff 7fff 7fff
+		7fff 66f7 4e52 6718 6247 66ae 45a5 7777
+		6689 6eee 7fff 6f7b 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="in02_kage_pl" color_size="4">
 		394a 7fff 7fff 7fff
@@ -635,15 +635,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="17.500000 33.687500"/>
+					<tex st="17.812500 33.687500"/>
 					<clr rgb="31 31 31"/>
 					<pos_s xyz="0.750000 2.875000 0.562500"/>
-					<tex st="17.500000 -1.687500"/>
+					<tex st="17.812500 -1.687500"/>
 					<clr rgb="21 20 22"/>
 					<pos_yz yz="4.750000 0.187500"/>
-					<tex st="-0.250000 -1.687500"/>
+					<tex st="0.187500 -1.687500"/>
 					<pos_xz xz="0.000000 0.437500"/>
-					<tex st="-0.250000 33.687500"/>
+					<tex st="0.187500 33.687500"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="2.875000 0.812500"/>
 				</primitive>
@@ -806,15 +806,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="17.625000 33.687500"/>
+					<tex st="17.812500 33.687500"/>
 					<clr rgb="31 31 31"/>
 					<pos_s xyz="0.000000 2.875000 0.812500"/>
-					<tex st="17.625000 -1.687500"/>
+					<tex st="17.812500 -1.687500"/>
 					<clr rgb="21 20 22"/>
 					<pos_yz yz="4.750000 0.437500"/>
-					<tex st="0.000000 -1.687500"/>
+					<tex st="0.187500 -1.687500"/>
 					<pos_xz xz="-0.750000 0.187500"/>
-					<tex st="0.000000 33.687500"/>
+					<tex st="0.187500 33.687500"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="2.875000 0.562500"/>
 				</primitive>
@@ -852,39 +852,6 @@
 
 <output_info vertex_size="210" polygon_size="78"
 	triangle_size="8" quad_size="70"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="4">
-		<ex_tex_image index="0" disp_pos="-240.000000 300.000000"/>
-		<ex_tex_image index="1" disp_pos="240.000000 300.000000"/>
-		<ex_tex_image index="2" disp_pos="120.000000 300.000000"/>
-		<ex_tex_image index="3" disp_pos="0.000000 300.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="4">
-		<ex_tex_palette index="0" disp_pos="-240.000000 360.000000"/>
-		<ex_tex_palette index="1" disp_pos="240.000000 360.000000"/>
-		<ex_tex_palette index="2" disp_pos="120.000000 360.000000"/>
-		<ex_tex_palette index="3" disp_pos="0.000000 360.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="5">
-		<ex_material index="0" disp_pos="-240.000000 240.000000"/>
-		<ex_material index="1" disp_pos="-120.000000 240.000000"/>
-		<ex_material index="2" disp_pos="0.000000 240.000000"/>
-		<ex_material index="3" disp_pos="120.000000 240.000000"/>
-		<ex_material index="4" disp_pos="240.000000 240.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="5">
-		<ex_polygon index="0" disp_pos="240.000000 180.000000"/>
-		<ex_polygon index="1" disp_pos="0.000000 180.000000"/>
-		<ex_polygon index="2" disp_pos="-240.000000 180.000000"/>
-		<ex_polygon index="3" disp_pos="120.000000 180.000000"/>
-		<ex_polygon index="4" disp_pos="-120.000000 180.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="1">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 
