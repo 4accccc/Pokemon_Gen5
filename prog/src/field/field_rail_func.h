@@ -110,6 +110,12 @@ typedef struct
 } RAIL_CAMERAFUNC_FIXALL_WORK;
 extern void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man);
 
+
+//------------------------------------------------------------------
+//  完全固定間の線形補間カメラ
+//------------------------------------------------------------------
+extern void FIELD_RAIL_CAMERAFUNC_FixAllLineCamera(const FIELD_RAIL_MAN* man);
+
 //------------------------------------------------------------------
 //  円動作カメラ
 //------------------------------------------------------------------
@@ -170,6 +176,17 @@ typedef struct
 	fx32 center_z;
 } RAIL_CAMERAFUNC_PLAYERTARGET_CIRCLE_WORK;
 extern void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man );
+
+//------------------------------------------------------------------
+//  進行方向に対するアングルを固定
+//------------------------------------------------------------------
+typedef struct
+{
+  u32 yaw;
+	u32 pitch;
+	fx32  len;
+} RAIL_CAMERAFUNC_FIXANGLE_LINEWAY;
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man );
 
 
 #ifdef _cplusplus

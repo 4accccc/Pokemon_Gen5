@@ -882,6 +882,63 @@ void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man)
   FIELD_CAMERA_SetTargetPos(cam, &target);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  FIXALL同士を線形補間するカメラ
+ *
+ *	@param	man
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAllLineCamera(const FIELD_RAIL_MAN* man)
+{
+  VecFx32 pos;
+  VecFx32 target;
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+  const RAIL_CAMERA_SET * cs;
+  const RAIL_CAMERA_SET * ce;
+	const RAIL_CAMERAFUNC_FIXALL_WORK* cp_para_s;
+	const RAIL_CAMERAFUNC_FIXALL_WORK* cp_para_e;
+	const RAIL_POINT* point_s = FIELD_RAIL_GetPointStart( work );
+	const RAIL_POINT* point_e = FIELD_RAIL_GetPointEnd( work );
+
+
+  cs = FIELD_RAIL_POINT_GetCameraSet( work, point_s );
+  ce = FIELD_RAIL_POINT_GetCameraSet( work, point_e );
+
+	cp_para_s = (const RAIL_CAMERAFUNC_FIXALL_WORK*)cs->work;
+	cp_para_e = (const RAIL_CAMERAFUNC_FIXALL_WORK*)ce->work;
+
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+
+	// 追従ターゲットNULL
+	FIELD_CAMERA_FreeTarget( FIELD_RAIL_MAN_GetCamera(man) );
+
+  {
+    u32 ofs_max = FIELD_RAIL_GetLineOfsMax(work);
+    s32 ofs = FIELD_RAIL_GetLineOfs(work);
+    
+    pos.x = FX_Div( FX_Mul( (cp_para_e->pos_x - cp_para_s->pos_x), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+    pos.y = FX_Div( FX_Mul( (cp_para_e->pos_y - cp_para_s->pos_y), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+    pos.z = FX_Div( FX_Mul( (cp_para_e->pos_z - cp_para_s->pos_z), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+    target.x = FX_Div( FX_Mul( (cp_para_e->target_x - cp_para_s->target_x), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+    target.y = FX_Div( FX_Mul( (cp_para_e->target_y - cp_para_s->target_y), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+    target.z = FX_Div( FX_Mul( (cp_para_e->target_z - cp_para_s->target_z), ofs<<FX32_SHIFT ), ofs_max<<FX32_SHIFT );
+
+    pos.x += cp_para_s->pos_x;
+    pos.y += cp_para_s->pos_y;
+    pos.z += cp_para_s->pos_z;
+    target.x += cp_para_s->target_x;
+    target.y += cp_para_s->target_y;
+    target.z += cp_para_s->target_z;
+  }
+
+  FIELD_CAMERA_SetCameraPos(cam, &pos);
+  FIELD_CAMERA_SetTargetPos(cam, &target);
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -1114,6 +1171,49 @@ void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man 
   FIELD_CAMERA_SetAnglePitch( p_camera, cp_work->pitch );
   FIELD_CAMERA_SetAngleLen( p_camera, cp_work->len );
 	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+}
+
+
+//------------------------------------------------------------------
+//  進行方向に対するアングルを固定
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_CAMERA_SET * cline;
+  FIELD_CAMERA* p_camera;
+	const RAIL_CAMERAFUNC_FIXANGLE_LINEWAY* cp_work;
+  VecFx16 way;
+  u16 front_rot;
+
+//	TOMOYA_Printf( "target x[0x%x] y[0x%x] z[0x%x]\n", cp_target->x, cp_target->y, cp_target->z );
+
+	cline = FIELD_RAIL_GetCameraSet( work );
+
+	cp_work = (const RAIL_CAMERAFUNC_FIXANGLE_LINEWAY*)cline->work;
+
+  p_camera = FIELD_RAIL_MAN_GetCamera( man );
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
+  
+	
+  // ラインの進行方向を取得
+  FIELD_RAIL_WORK_GetFrontWay( work, &way );
+  front_rot = FX_Atan2Idx( way.x, way.z );
+
+  /*
+  TOMOYA_Printf( "yaw 0x%x\n", front_rot + cp_work->yaw );
+  TOMOYA_Printf( "pitch 0x%x\n", cp_work->pitch );
+  TOMOYA_Printf( "len 0x%x\n", cp_work->len );
+  //*/
+  
+  FIELD_CAMERA_SetAnglePitch( p_camera, cp_work->pitch );
+  FIELD_CAMERA_SetAngleLen( p_camera, cp_work->len );
+	FIELD_CAMERA_SetAngleYaw( p_camera, front_rot + cp_work->yaw );
 }
 
 
