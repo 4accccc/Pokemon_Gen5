@@ -6,7 +6,8 @@ $KCODE = "SJIS"
 
 #script_offset_id.h ƒpƒX
 #EVDEF_FPATH_OFFS_ID = "../../../prog/src/field/script_offset_id.h"
-EVDEF_FPATH_OFFS_ID = "../scrid_offset/script_offset_id.h"
+#EVDEF_FPATH_OFFS_ID = "../scrid_offset/scr_offset_id.h"
+EVDEF_FPATH_OFFS_ID = ARGV[1]
 
 fname_list = ARGV[0]
 
