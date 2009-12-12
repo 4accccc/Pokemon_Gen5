@@ -37,7 +37,6 @@
 #include "msg/msg_gsync.h"
 #include "gsync.naix"
 
-
 /*
 ¡BGM¡
 
@@ -641,7 +640,7 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
   POKEMON_PASO_PARAM* ppp;
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
-  GF_ASSERT(DREAMWORLD_SV_GetSleepPokemonFlg(pDream)==FALSE);
+  //GF_ASSERT(DREAMWORLD_SV_GetSleepPokemonFlg(pDream)==FALSE);
 
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
@@ -694,7 +693,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
     switch(pParent->selectType){
-    case  GSYNC_CALLTYPE_INFO:
+    case GSYNC_CALLTYPE_INFO:
       _CHANGE_STATE(_ghttpInfoWait0);
       break;
     case GSYNC_CALLTYPE_BOXSET:
@@ -771,7 +770,6 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
     state( pWork );
     ret = GFL_PROC_RES_CONTINUE;
   }
-
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }

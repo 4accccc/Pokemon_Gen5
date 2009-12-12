@@ -43,6 +43,7 @@ typedef enum{
   GAME_COMM_STATUS_WIFI_ZONE,              ///<Wi-Fi’ÊM ”C“V“°ƒ][ƒ““™”C“V“°ŒöŽ®
   GAME_COMM_STATUS_WIFI_FREE,              ///<Wi-Fi’ÊM Œ®‚ª–³‚¢
   GAME_COMM_STATUS_WIFI_LOCK,              ///<Wi-Fi’ÊM Œ®‚ª‚ ‚é
+  GAME_COMM_STATUS_MAX
 }GAME_COMM_STATUS;
 
 

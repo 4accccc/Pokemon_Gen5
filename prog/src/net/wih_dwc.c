@@ -7,9 +7,17 @@
  */
 //=============================================================================
 
+#include <gflib.h>
+#include <nitro/irc.h>
+#include "net/network_define.h"
 #include "wih_dwc.h"
+#include "nitroWiFi/ncfg.h"
+#include "nitroWiFi/wcm.h"
+#include "net/net_whpipe.h"
 
 #define _ALLBEACON_MAX (4)
+
+#define WCM_NETWORK_CAPABILITY_PRIVACY          0x0010
 
 typedef struct{
 	WMBssDesc sBssDesc;
@@ -19,12 +27,28 @@ typedef struct{
 struct _WIH_DWC_WORK {
   _BEACONCATCH_STR aBeaconCatch[_ALLBEACON_MAX];
   void* ScanMemory;
+  NCFGConfigEx* cfg;
+  BOOL bIrc;
+  int timer;
 	u16 AllBeaconNum;
+  u8 buff[200];
+  
 };
 
 
 static void _SetScanBeaconData(WMBssDesc* pBss);
 static WIH_DWC_WORK* _localWork=NULL;
+FS_EXTERN_OVERLAY(dev_irc);
+
+
+
+static void _IRCRecvCallback(u8 *data, u8 size, u8 command, u8 value)
+{
+  _localWork->bIrc = TRUE;
+  _localWork->timer = 60*10;
+
+}
+
 
 /*---------------------------------------------------------------------------*
   Name:         WHSetAllBeaconFlg
@@ -46,6 +70,18 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   pWork->ScanMemory =GFL_NET_Align32Alloc(id ,DWC_GetParseWMBssDescWorkSize());
   WHSetWIHDWCBeaconGetFunc(_SetScanBeaconData);
   _localWork=pWork;
+
+  pWork->cfg =GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
+
+//  WCM_Init(pWork->ScanMemoryWCM, WCM_WORK_SIZE);
+
+  
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
+
+  
+  IRC_Init(12);
+ // IRC_SetRecvCallback(&_IRCRecvCallback);
+  
   return(pWork);
 }
 
@@ -62,9 +98,13 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
 
   WHSetWIHDWCBeaconGetFunc(NULL);
 
+  IRC_Shutdown();
+  //WCM_Finish();
+  GFL_NET_Align32Free(pWork->cfg);
   GFL_NET_Align32Free(pWork->ScanMemory);
   GFL_NET_Align32Free(pWork);
   _localWork=NULL;
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_irc ) );
 }
 
 /*---------------------------------------------------------------------------*
@@ -115,11 +155,94 @@ void WIH_DWC_MainLoopScanBeaconData(void)
       }
     }
   }
+  {
+    int size = IRCi_Read(_localWork->buff);
+    if(size>0){
+      _localWork->bIrc = TRUE;
+      _localWork->timer = 60;
+    }
+  }
+  IRC_Move();
 }
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ビーコンのタイプを得る
+ * @brief   本体APリストにあるビーコンかどうか
+ * @param   検査するビーコン
+ * @retval  あったらTRUE
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _scanAPReserveed( WMBssDesc* pChk )
+{
+  int i;
+
+  NCFG_ReadConfig(&_localWork->cfg->compat, NULL);
+
+// NCFG_ReadConfigEx(NCFGConfigEx* configEx, void* work);
+
+  for(i = 0;i < 3;i++){
+    if(GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid,pChk->ssid,WM_SIZE_SSID)){
+      
+ //     NET_PRINT("SSIDFIND %s\n",pChk->ssid);
+      
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/*
+　FREESPOTにつきましては、先日ご提供した関数では検知できませんので、以下
+の方法での検出をお願い致します。
+
+・FREESPOTについては、SSIDが"FREESPOT"の8文字であることをチェック
+・WMBssDescのcapaInfoのbit4が0であること(※)をチェック
+*/
+//------------------------------------------------------------------------------
+/**
+ * @brief   FREESPOT(TM)かどうか
+ * @param   検査するビーコン
+ * @retval  あったらTRUE
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _scanFreeSpot( WMBssDesc* pChk )
+{
+
+  if(pChk->ssidLength==8){
+    if(GFL_STD_MemComp("FREESPOT",pChk->ssid,8)){
+      if(!(pChk->capaInfo & WCM_NETWORK_CAPABILITY_PRIVACY)){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セキュリティービットがあるかどうか
+ * @param   検査するビーコン
+ * @retval  あったらTRUE
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _scanPrivacy( WMBssDesc* pChk )
+{
+
+  if(!(pChk->capaInfo & WCM_NETWORK_CAPABILITY_PRIVACY)){
+    return TRUE;
+  }
+  return FALSE;
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコンのタイプを得る  時間でスキャン優先順位を変える
  * @param   ビーコン数
  * @param   ヒープID
  * @retval  GAME_COMM_STATUS
@@ -130,9 +253,36 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
 {
   int i;
   int retcode = GAME_COMM_STATUS_NULL;
+  const GFLNetInitializeStruct *aNetStruct = GFL_NET_GetNETInitStruct();
 
   if(_localWork==NULL){
     return retcode;
+  }
+
+  if( _localWork->bIrc == TRUE){
+    if(_localWork->timer>0){
+      _localWork->timer--;
+    }
+    else{
+      _localWork->bIrc = FALSE;
+    }
+    return GAME_COMM_STATUS_IRC;
+  }
+  
+  for( i=0;i < aNetStruct->maxBeaconNum;i++ ){
+    if( GFL_NET_GetBeaconData( i ) != NULL ){
+      GameServiceID id = GFL_NET_WLGetGameServiceID(i);
+      switch(id){
+      case WB_NET_UNION:
+        return GAME_COMM_STATUS_WIRELESS_UN;
+      case WB_NET_FIELDMOVE_SERVICEID:
+        return GAME_COMM_STATUS_WIRELESS;
+      case WB_NET_NOP_SERVICEID:
+        break;
+      default:
+        return GAME_COMM_STATUS_WIRELESS_FU;  //@todo その他は不思議にしてある
+      }
+    }
   }
   
   for(i=0;i < _localWork->AllBeaconNum;i++){
@@ -145,7 +295,13 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
     
       DWCApInfo ap;
 
-      if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
+      if(_scanAPReserveed(bss)){
+        retcode = GAME_COMM_STATUS_WIFI;
+      }
+      else if(_scanFreeSpot(bss)){
+        retcode = GAME_COMM_STATUS_WIFI_ZONE;
+      }
+      else if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
         OS_TPrintf("DWCApInfo %d\n",ap.aptype);
         switch(ap.aptype){
         case DWC_APINFO_TYPE_USER0:
@@ -166,11 +322,24 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
           retcode = GAME_COMM_STATUS_WIFI_ZONE;
           break;
         }
-        if(retcode!=GAME_COMM_STATUS_NULL){
-          return retcode;
-        }
       }
     }
+  }
+  if(retcode!=GAME_COMM_STATUS_NULL){
+    return retcode;
+  }
+
+  for(i=0;i < _localWork->AllBeaconNum;i++){
+    _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
+    if(pS->timer == 0){
+      continue;
+    }
+    if(!_scanPrivacy(&pS->sBssDesc)){
+      return GAME_COMM_STATUS_WIFI_FREE;
+    }
+  }
+  if(_localWork->AllBeaconNum>0){
+    return GAME_COMM_STATUS_WIFI_LOCK;
   }
   ///@todo セキュリティーがかかっているかどうか
   return retcode;

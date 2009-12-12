@@ -1659,15 +1659,22 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 	{
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 		{
-			GAME_COMM_STATUS st = GameCommSys_GetCommStatus(pGC);
-      if(GAME_COMM_STATUS_NULL!=st){
-        GF_ASSERT( (sizeof(PalleteONOFFTbl)/3) >  st );
-        _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2]);
+      GAME_COMM_STATUS st = GameCommSys_GetCommStatus(pGC);
+      pWork->plt_counter++;
+      if(pWork->plt_counter>=66)
+      {
+        pWork->beacon_bit=0;
+        pWork->plt_counter=0;
       }
-      switch(st){
-			case GAME_COMM_STATUS_WIRELESS:          ///<ワイヤレス通信 パレス
-      case GAME_COMM_STATUS_WIRELESS_TR:       ///<ワイヤレス通信 トランシーバー
-      case GAME_COMM_STATUS_WIRELESS_UN:      ///<ワイヤレス通信 ユニオン
+      if(!pWork->beacon_bit){
+        if(GAME_COMM_STATUS_NULL!=st){
+          GF_ASSERT( (sizeof(PalleteONOFFTbl)/3) >  st );
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2]);
+      }
+        switch(st){
+        case GAME_COMM_STATUS_WIRELESS:          ///<ワイヤレス通信 パレス
+        case GAME_COMM_STATUS_WIRELESS_TR:       ///<ワイヤレス通信 トランシーバー
+        case GAME_COMM_STATUS_WIRELESS_UN:      ///<ワイヤレス通信 ユニオン
       case GAME_COMM_STATUS_WIRELESS_FU:       ///<ワイヤレス通信 不思議
 				pWork->beacon_bit = _CGEAR_NET_BIT_WIRELESS;
 				break;
@@ -1681,13 +1688,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 				pWork->beacon_bit = _CGEAR_NET_BIT_IR;
 				break;
 			}
+      }
 		}
 		state(pWork);
-		pWork->plt_counter++;
-		if(pWork->plt_counter>=66)
-		{
-			pWork->plt_counter=0;
-		}
 	}
 	_gearCrossObjMain(pWork);
 	

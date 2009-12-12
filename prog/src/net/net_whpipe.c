@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include "gflib.h"
+#include "net/network_define.h"
 
 #include <nitro.h>
 #include <nitro/wm.h>
@@ -1972,4 +1973,22 @@ void GFL_NET_WL_DisconnectError(void)
 }
 
 
+
+//-------------------------------------------------------------
+/**
+ * @brief   保持しているビーコンのサービス番号を返す
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
+
+GameServiceID GFL_NET_WLGetGameServiceID(u8 index)
+{
+	GFL_NETWL* pNetWL = _pNetWL;
+	if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+		_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
+		return pGF->serviceNo;
+	}
+	return WB_NET_NOP_SERVICEID;
+}
 

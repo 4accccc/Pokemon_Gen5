@@ -472,4 +472,12 @@ extern BOOL GFL_NET_WLCrossoverInit(void);
 extern void GFL_NET_WL_DisconnectError(void);
 
 
+//-------------------------------------------------------------
+/**
+ * @brief   保持しているビーコンのサービス番号を返す ビーコンがあるか確認してから使う事
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
 
+extern GameServiceID GFL_NET_WLGetGameServiceID(u8 index);

@@ -41,7 +41,7 @@ TWLDWC_LIB_MODULES_   = bm account common ac
 TWLDWC_LIB_GSMODULES_ =
 NITROVCT_LIBS = 
 TWLVCT_LIBS = 
-TWLWIFI_LIBS = 
+TWLWIFI_LIBS = libncfg$(TWL_LIBSUFFIX).a
 TWL_ADDIN_IRC_LIBS = 
 
 # JPEGライブラリをオーバーレイする為の定義

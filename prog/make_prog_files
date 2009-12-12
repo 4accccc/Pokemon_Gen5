@@ -291,12 +291,11 @@ SRCS  +=    $(SOUNDSRC) \
 # 要望・質問は森さんか大野にお願いします。
 #
 #
-# wifiプログラムのライブラリ
+# wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
 #===> main
 #LIB=>          libcps.$HYB.a
 #LIB=>          libsoc.$HYB.a
 #LIB=>          libssl.$HYB.a
-#LIB=>          libncfg.$HYB.a
 #LIB=>          libstubsssl.$HYB.a
 #LIB=>          libwcm.$HYB.a
 #LIB=>          libdwcnonport.$HYB.a
