@@ -99,7 +99,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
+    //GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _FIELD_END:
