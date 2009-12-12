@@ -421,7 +421,6 @@ _ANIME_LABEL    anm_pc_woman_move_backword
 
 _ANIME_LABEL    anm_player_move_foward
   _ANIME_DATA   AC_WALK_U_16F, 2
-  _ANIME_DATA   AC_DIR_D, 1
   _ANIME_DATA   ACMD_END,0
 
 _ANIME_LABEL    anm_player_board_elevator
