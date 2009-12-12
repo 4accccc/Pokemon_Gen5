@@ -73,7 +73,7 @@ ev_easy_item_event:
     _BALLOONWIN_CLOSE()
     
     //成功にせよ、失敗にせよフラグセット
-    _FLAG_SET_WK( SCWK_PARAM2 )
+    _FLAG_SET( SCWK_PARAM2 )
 
   ENDIF
 }

@@ -61,7 +61,8 @@ get_sodateya_state:
 
   // 初回会話フラグ
   $flag_no = FE_SODATEYA_FIRSTTALK
-  _FLAG_CHECK_WK flag_no, first_talk  
+  _FLAG_CHECK( FE_SODATEYA_FIRSTTALK, first_talk )
+  //_FLAG_CHECK_WK flag_no, first_talk  
 
   // 預けポケ最大数
   IF $scenario_flag == TRUE THEN

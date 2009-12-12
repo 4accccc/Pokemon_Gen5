@@ -745,90 +745,6 @@
   .short  \wk
   .endm
 
-//--------------------------------------------------------------
-/**
- *  _ASM_FLAG_CHECK_VM フラグチェック
- *  @param チェックするフラグナンバー
- */
-//--------------------------------------------------------------
-  .macro  _ASM_FLAG_CHECK_VM num
-  .short  EV_SEQ_FLAG_CHECK_VM
-  .short  \num
-  .endm
-
-//--------------------------------------------------------------
-/*
- *  _IF_FLAGON_JUMP フラグONの時に分岐(JUMP)
- *  @param num チェックするフラグナンバー
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_FLAGON_JUMP num,adrs
-  _ASM_FLAG_CHECK_VM \num
-  _IF_JUMP  FLGON,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_FLAGOFF_JUMP フラグOFFの時に分岐(JUMP)
- *  @param num チェックするフラグナンバー
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-
-  .macro  _IF_FLAGOFF_JUMP num,adrs
-  _ASM_FLAG_CHECK_VM \num
-  _IF_JUMP  FLGOFF,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_FLAGON_CALL フラグONの時に分岐(CALL)
- *  @param num チェックするフラグナンバー
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_FLAGON_CALL num,adrs
-  _ASM_FLAG_CHECK_VM \num
-  _IF_CALL  FLGON,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_FLAGOFF_CALL フラグOFFの時に分岐(CALL)
- *  @param num チェックするフラグナンバー
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_FLAGOFF_CALL num,adrs
-  _ASM_FLAG_CHECK_VM \num
-  _IF_CALL  FLGOFF,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- * _FLAG_CHECK_WK ワークの値をフラグナンバーとしてチェックする！
- * @param wk チェックする値が格納されたワーク
- * @param ret_wk 結果を格納するワーク
- */
-//--------------------------------------------------------------
-  .macro  _FLAG_CHECK_WK wk,ret_wk
-  .short  EV_SEQ_FLAG_CHECK_WK
-  .short  \wk
-  .short  \ret_wk
-  .endm
-
-//--------------------------------------------------------------
-/**
- * _FLAG_SET_WK ワークの値をフラグナンバーとしてセットする！
- * @param wk フラグナンバーが格納されたワーク
- */
-//--------------------------------------------------------------
-  .macro  _FLAG_SET_WK wk
-  .short  EV_SEQ_FLAG_SET_WK
-  .short  \wk
-  .endm
-
 //======================================================================
 //  ワーク操作関連
 //======================================================================
@@ -2364,7 +2280,10 @@
  *  @param tr_id セットするトレーナーID
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_FLAG_SET tr_id
+#define _TRAINER_FLAG_SET( tr_id ) \
+    _ASM_TRAINER_FLAG_SET tr_id
+
+  .macro  _ASM_TRAINER_FLAG_SET tr_id
   .short  EV_SEQ_TRAINER_FLAG_SET
   .short  \tr_id
   .endm
@@ -2375,7 +2294,10 @@
  *  @param tr_id リセットするトレーナーID
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_FLAG_RESET tr_id
+#define _TRAINER_FLAG_RESET( tr_id ) \
+    _ASM_TRAINER_FLAG_RESET tr_id
+
+  .macro  _ASM_TRAINER_FLAG_RESET tr_id
   .short  EV_SEQ_TRAINER_FLAG_RESET
   .short  \tr_id
   .endm
@@ -2386,7 +2308,7 @@
  *  @param tr_id チェックするトレーナーID
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_FLAG_CHECK tr_id
+  .macro  _ASM_TRAINER_FLAG_CHECK tr_id
   .short  EV_SEQ_TRAINER_FLAG_CHECK
   .short  \tr_id
   .endm
@@ -2399,7 +2321,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_TR_FLAGON_JUMP tr_id,adrs
-  _TRAINER_FLAG_CHECK \tr_id
+  _ASM_TRAINER_FLAG_CHECK \tr_id
   _IF_JUMP  FLGON,\adrs
   .endm
 
@@ -2411,7 +2333,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_TR_FLAGOFF_JUMP tr_id,adrs
-  _TRAINER_FLAG_CHECK \tr_id
+  _ASM_TRAINER_FLAG_CHECK \tr_id
   _IF_JUMP  FLGOFF,\adrs
   .endm
 
@@ -2423,7 +2345,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_TR_FLAGON_CALL tr_id,adrs
-  _TRAINER_FLAG_CHECK \tr_id
+  _ASM_TRAINER_FLAG_CHECK \tr_id
   _IF_CALL  FLGON,\adrs
   .endm
 
@@ -2435,7 +2357,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_TR_FLAGOFF_CALL tr_id,adrs
-  _TRAINER_FLAG_CHECK \tr_id
+  _ASM_TRAINER_FLAG_CHECK \tr_id
   _IF_CALL  FLGOFF,\adrs
   .endm
 
