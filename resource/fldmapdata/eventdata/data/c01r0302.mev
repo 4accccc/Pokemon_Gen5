@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/27 12:33:22
+#save date:2009/12/12 12:26:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0302.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/27 12:33:22
+#save date:
 2
 #hold event type:
 1
@@ -37,8 +37,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--136 0 152
+-136 0 136
 #event number: 1
 #type
 1
@@ -66,15 +68,17 @@ DIR_RIGHT
 3
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--104 0 168
+-88 0 168
 #event number: 2
 #type
 1
 #ID name
 C01R0302_POKE2_01
 #OBJ CODE Number
-POKE2
+PIKACHU
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
@@ -95,8 +99,10 @@ DIR_LEFT
 3
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 184
+-72 0 184
 #event number: 3
 #type
 1
@@ -124,13 +130,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--200 0 152
+-200 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/27 12:33:22
+#save date:
 2
 #hold event type:
 1
@@ -140,7 +148,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/27 12:33:22
+#save date:
 2
 #hold event type:
 1
@@ -150,7 +158,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/27 12:33:22
+#save date:
 2
 #hold event type:
 1
@@ -167,7 +175,11 @@ DOOR_ID_C01R0301_C01R0302_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -88 0 216
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

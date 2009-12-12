@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/04 16:30:21
+#save date:2009/12/12 11:11:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0601.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 24 -88
+24 24 -56
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 24 -104
+-24 24 -40
 #event number: 2
 #type
 1
@@ -88,7 +88,7 @@ FV_D04R0601_EVENT_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -102,7 +102,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 -56
+-24 24 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -122,24 +122,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POS_D04R0601_EVENT_01
-#Pos Script Name
-SCRID_POS_D04R0601_EVENT_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D04R0601
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 0 -24
-#size
-6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

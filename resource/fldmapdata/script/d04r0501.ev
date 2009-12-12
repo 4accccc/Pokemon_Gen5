@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0501.h"
-  //.include  "d04r0501.h"
+  .include  "d04r0501.h"
+  .include  "d04r0601_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,9 +31,21 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			D04R0601に落ちる流砂                              */
 /**************************************************************/
 ev_d04r0501_sandstream_1:
-  _MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0601, 14, 24 )
+
+//ゲーチスイベント終了していない場合
+IF $WK_SCENE_D04R0601 == 0 THEN
+	
+	//予約スクリプト【仮】名称が仮です。POSじゃないのにPOSになっている
+	_RESERVE_SCRIPT( SCRID_POS_D04R0601_EVENT_01 )
+
+//ゲーチスイベント終了している場合
+ELSE
+
+ENDIF
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0601, 14, 24 )
+
 _END
 
