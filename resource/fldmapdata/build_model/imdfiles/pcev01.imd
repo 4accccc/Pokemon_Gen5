@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-12-12T14:43:43" source="pcev02.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-12T16:19:26" source="pcev02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-12-12T14:43:43" source="pcev02.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-12-12T16:19:26" source="pcev02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -41,59 +41,59 @@
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
 			e3e3 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e3e2
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a6a6 a6a6 a6a6 a6a6 a6a6 e3eb
+			e3e3 46e2 4646 4646 4646 4646 4646 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a6 a4a4 a4a4 a4a4 a4a4 e3eb
+			e3e3 46e2 4446 4444 4444 4444 4444 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a4a4 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4444 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a4 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4844 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a8 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a8a4 a4a8 e3eb
+			e3e3 46e2 4444 4444 4444 4844 4448 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a8a8 a4a4 e3eb
+			e3e3 46e2 4444 4444 4444 4848 4444 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a8a4 a4a8 a8a4 e3eb
+			e3e3 46e2 4444 4444 4844 4448 4844 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a8a8 a4a4 a8a8 e3eb
+			e3e3 46e2 4444 4444 4848 4444 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a8a4 a4a8 a8a4 a8a8 e3eb
+			e3e3 46e2 4444 4844 4448 4844 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a8a8 a4a4 a8a8 a9a8 e3eb
+			e3e3 46e2 4444 4848 4444 4848 4948 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a8a4 a4a8 a8a4 a8a8 a8a9 e3eb
+			e3e3 46e2 4844 4448 4844 4848 4849 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a8a8 a4a4 a8a8 a9a8 a9a8 e3eb
+			e3e3 46e2 4848 4444 4848 4948 4948 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e3e3 45e2 4747 4747 4747 4747 4747 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e3e3 45e2 4747 4747 4747 4747 4747 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e3eb
+			e3e3 45e2 4747 4747 4747 4747 4747 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a4a4 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4444 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a4 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4844 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a4a4 a8a8 e3eb
+			e3e3 46e2 4444 4444 4444 4444 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a8a4 a4a8 e3eb
+			e3e3 46e2 4444 4444 4444 4844 4448 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a4a4 a8a8 a4a4 e3eb
+			e3e3 46e2 4444 4444 4444 4848 4444 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a8a4 a4a8 a8a4 e3eb
+			e3e3 46e2 4444 4444 4844 4448 4844 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a4a4 a8a8 a4a4 a8a8 e3eb
+			e3e3 46e2 4444 4444 4848 4444 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a8a4 a4a8 a8a4 a8a8 e3eb
+			e3e3 46e2 4444 4844 4448 4844 4848 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a4a4 a8a8 a4a4 a8a8 a9a8 e3eb
+			e3e3 46e2 4444 4848 4444 4848 4948 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a8a4 a4a8 a8a4 a8a8 a8a9 e3eb
+			e3e3 46e2 4844 4448 4844 4848 4849 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
-			e3e3 a6e2 a8a8 a4a4 a8a8 a9a8 a9a8 e3eb
+			e3e3 46e2 4848 4444 4848 4948 4948 e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
 			e3e3 ebe2 ebeb ebeb ebeb ebeb ebeb e3eb
 			e2e3 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
