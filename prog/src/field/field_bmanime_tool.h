@@ -35,6 +35,7 @@ extern void BMANIME_CTRL_Delete(BMANIME_CONTROL_WORK * ctrl);
 extern void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx);
 extern BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl);
 extern void BMANIME_CTRL_StopAnime( BMANIME_CONTROL_WORK * ctrl );
+extern BOOL BMANIME_CTRL_CheckSE( const BMANIME_CONTROL_WORK * ctrl );
 extern BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * se_no);
 
 extern G3DMAPOBJST * BMANIME_DIRECT_Search(

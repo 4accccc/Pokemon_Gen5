@@ -139,7 +139,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
+    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
+        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOOROUT_PLAYER_STEP;
     }
@@ -170,7 +171,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_CLOSEANIME_WAIT:
-    if (BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
+    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
+        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOOROUT_END;
     }
@@ -256,7 +258,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE)
+    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
+        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }

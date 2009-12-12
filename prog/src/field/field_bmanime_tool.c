@@ -187,6 +187,20 @@ BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+BOOL BMANIME_CTRL_CheckSE( const BMANIME_CONTROL_WORK * ctrl )
+{
+  u16 se_no;
+  SEPLAYER_ID playerID;
+  if ( BMANIME_CTRL_GetSENo( ctrl, ctrl->anm_idx, &se_no ) == FALSE )
+  {
+    return FALSE;
+  }
+  playerID = PMSND_GetSE_DefaultPlayerID( se_no );
+  return PMSND_CheckPlaySE_byPlayerID( playerID );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * se_no)
 {
   static const struct {

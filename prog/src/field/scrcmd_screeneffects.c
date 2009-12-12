@@ -558,7 +558,7 @@ static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
     return FALSE;
   }
 
-  if ( PMSND_CheckPlaySE() == FALSE )
+  if ( BMANIME_CTRL_CheckSE( ctrl ) == FALSE )
   {
     return TRUE;
   }
