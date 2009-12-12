@@ -57,8 +57,11 @@
 #include "event_fieldmap_control.h"  // for EVENT_FieldSubProc
 #include "system/main.h"  // for HEAPID_PROC
 #include "savedata/zukan_savedata.h"  // for ZUKANSAVE_xxxx
+#include "../../../resource/fld_trade/fld_trade_list.h"  // for FLD_TRADE_POKE_xxxx
 
 FS_EXTERN_OVERLAY(pokemon_trade);
+
+#include "event_name_input.h" // TEST:
 
 //-----------------------------------------------------------------------------
 /**
@@ -123,7 +126,7 @@ FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heap_id, u32 trade_no )
 	STRBUF* strbuf;
 	STRCODE str_arry[ 128 ];
 
-	GF_ASSERT( trade_no < FLD_TRADE_NUM );
+	GF_ASSERT( trade_no < FLD_TRADE_POKE_NUM );
 	
 	work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(FLD_TRADE_WORK) );
 	work->heapID   = heap_id;
@@ -560,7 +563,7 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
 	PP_Renew( pp );
 
 	// レアにならないようにデータ設定されていなかった場合NG
-  GF_ASSERT( PP_CheckRare( pp ) == FALSE );
+  GF_ASSERT( PP_CheckRare( pp ) == FALSE && "レアポケです。");
 
   // 特性が種の持ち得ないものだったらNG
   {
@@ -576,7 +579,8 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
     sp2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
     sp3 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi3 );
     POKE_PERSONAL_CloseHandle( ppd );
-    GF_ASSERT( (speabi==sp1)||(speabi==sp2)||(speabi==sp3) );
+    OBATA_Printf( "original speabi = %d, %d, %d\n", sp1, sp2, sp3 );
+    GF_ASSERT( ((speabi==sp1)||(speabi==sp2)||(speabi==sp3)) && "ありえない特性です。" );
   }
 } 
 
@@ -664,6 +668,7 @@ typedef struct
   FLD_TRADE_WORK*         tradeWork;  // 交換ワーク
   POKEMONTRADE_DEMO_PARAM demoParam;  // デモ パラメータ
 
+  u16 test;  // TEST:
 } FLD_TRADE_EVWORK;
 
 //----------------------------------------------------------------------------------------
@@ -679,6 +684,7 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
   {
   // 交換ワーク生成
   case 0:
+#if 1
     {
       GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
@@ -691,10 +697,12 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );
     FTP_Dump( work->tradeWork->p_pokedata );
+#endif
     ++(*seq);
     break;
   // 交換デモ呼び出し
   case 1:
+#if 1
     {
       GMEVENT* demo;
       GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
@@ -710,10 +718,19 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
                                   &PokemonTradeDemoProcData, &work->demoParam );
       GMEVENT_CallEvent( event, demo );
     }
+#endif
+#if 0 // TEST:名前入力
+    {
+      GMEVENT* demo;
+      demo = EVENT_NameInput_PartyPoke( work->gsys, &work->test, 0 );
+      GMEVENT_CallEvent( event, demo );
+    }
+#endif
     ++(*seq);
     break;
   // データ更新
   case 2:
+#if 1
     // 手持ちポケ上書き
     {
       GAMEDATA*  gdata = GAMESYSTEM_GetGameData( work->gsys );
@@ -727,11 +744,14 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       ZUKANSAVE_SetPokeSee( zukan, work->tradeWork->p_pp );  // 見た
       ZUKANSAVE_SetPokeGet( zukan, work->tradeWork->p_pp );  // 捕まえた
     }
+#endif
     ++(*seq);
     break;
   // 交換ワーク破棄
   case 3:
+#if 1
     FLD_TRADE_WORK_Delete( work->tradeWork );
+#endif
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
