@@ -243,22 +243,6 @@ VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief ゾーンIDを取得する
- * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = SCRCMD_WORK_GetZoneID( wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-
-//--------------------------------------------------------------
-/**
  * @brief 自分の誕生日の取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
@@ -380,6 +364,29 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 } 
 
+//======================================================================
+//
+//
+//  マップ接続関連など
+//  
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief ゾーンIDを取得する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = SCRCMD_WORK_GetZoneID( wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 //--------------------------------------------------------------
 /**
  * @brief ワープIDのセット
@@ -397,6 +404,19 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
 
   GAMEDATA_SetWarpID( gamedata, warp_id );
 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief マップ置き換えリクエスト
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetMapReplace( VMHANDLE * core, void *wk )
+{
   return VMCMD_RESULT_CONTINUE;
 }
 
