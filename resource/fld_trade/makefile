@@ -34,6 +34,12 @@ PM_VER_H_DIR		= ..\\..\\prog\\include\\
 #コピー先
 CPY_DIR	= .
 
+# バイナリデータ出力先
+BIN = ./bin
+
+# エクセルタブ区切り
+XLS_TABOUT = $(PROJECT_ROOT)/tools/exceltool/xls2xml
+
 #依存するファイル
 MAKE_FILE	= fld_trade_poke.xls \
 			      monsno_def.h \
@@ -84,7 +90,8 @@ file_cp:
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(MAKE_FILE)
-	perl conv.pl
+	ruby $(XLS_TABOUT)/tab_out.rb -tab fld_trade_poke.xls >fld_trade_poke.txt
+	ruby fld_trade_poke.rb fld_trade_poke.txt $(BIN)
 	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 	$(NAIXCUT) $(targetname).naix
 

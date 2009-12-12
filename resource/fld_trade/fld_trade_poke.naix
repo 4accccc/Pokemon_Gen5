@@ -11,19 +11,19 @@
 #define NARC_FLD_TRADE_POKE_NAIX_
 
 enum {
-	NARC_fld_trade_poke_fld_trade_00_dat = 0,
-	NARC_fld_trade_poke_fld_trade_01_dat = 1,
-	NARC_fld_trade_poke_fld_trade_02_dat = 2,
-	NARC_fld_trade_poke_fld_trade_03_dat = 3,
-	NARC_fld_trade_poke_fld_trade_04_dat = 4,
-	NARC_fld_trade_poke_fld_trade_05_dat = 5,
-	NARC_fld_trade_poke_fld_trade_06_dat = 6,
-	NARC_fld_trade_poke_fld_trade_07_dat = 7,
-	NARC_fld_trade_poke_fld_trade_08_dat = 8,
-	NARC_fld_trade_poke_fld_trade_09_dat = 9,
-	NARC_fld_trade_poke_fld_trade_10_dat = 10,
-	NARC_fld_trade_poke_fld_trade_11_dat = 11,
-	NARC_fld_trade_poke_fld_trade_12_dat = 12
+	NARC_fld_trade_poke_trade_poke_iwaaku_bin = 0,
+	NARC_fld_trade_poke_trade_poke_wanrikii_bin = 1,
+	NARC_fld_trade_poke_trade_poke_biriridama_bin = 2,
+	NARC_fld_trade_poke_trade_poke_doodorio_bin = 3,
+	NARC_fld_trade_poke_trade_poke_gyaroppu_bin = 4,
+	NARC_fld_trade_poke_trade_poke_haganeeru_bin = 5,
+	NARC_fld_trade_poke_trade_poke_tubotubo_bin = 6,
+	NARC_fld_trade_poke_trade_poke_onisuzume_bin = 7,
+	NARC_fld_trade_poke_trade_poke_reakoiru_bin = 8,
+	NARC_fld_trade_poke_trade_poke_neithio_bin = 9,
+	NARC_fld_trade_poke_trade_poke_pikatyuu_bin = 10,
+	NARC_fld_trade_poke_trade_poke_saihoon_bin = 11,
+	NARC_fld_trade_poke_trade_poke_danbaru_bin = 12
 };
 
 /* NARC_FLD_TRADE_POKE_NAIX_ */
