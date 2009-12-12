@@ -21,6 +21,8 @@ FMMDL_RESLIST_NCGIMD = \
 	woman3.imd \
 	middleman2.imd \
 	middlewoman2.imd \
+	oldman1.imd \
+	oldwoman1.imd \
 	breederm.imd \
 	breederw.imd \
 	rangerm.imd \
@@ -51,6 +53,7 @@ FMMDL_RESLIST_NCGIMD = \
 	sunglasses.imd \
 	leader1a.imd \
 	hakase2.imd \
+	icpo.imd \
 	tree.imd \
 	rock.imd \
 	monsterball.imd \
@@ -71,6 +74,11 @@ FMMDL_RESLIST_NCGIMD = \
 	blackmonolith.imd \
 	whitemonolith.imd \
 	mama.imd \
+	spider.imd \
+	pipe.imd \
+	grasssound.imd \
+	fiddle.imd \
+	guitar.imd \
 	babyboy2.imd \
 	babygirl2.imd \
 	workman2.imd \
