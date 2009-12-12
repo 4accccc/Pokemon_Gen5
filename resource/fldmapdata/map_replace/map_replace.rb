@@ -40,18 +40,18 @@ class Dict
   @@prog_syms = HeaderData.new("../../../prog/src/field/map_replace_def.h")
 
   @@types = {
-    "季節" => "MAPREPLACE_ID_SEASON",
-    "バージョン" => "MAPREPLACE_ID_VERSION",
-    "バージョン＋季節" => "MAPREPLACE_ID_SEASON_VERSION",
-    "イベント１" => "MAPREPLACE_ID_EVENT01",
-    "イベント２" => "MAPREPLACE_ID_EVENT02",
-    "イベント３" => "MAPREPLACE_ID_EVENT03",
-    "イベント４" => "MAPREPLACE_ID_EVENT04",
-    "イベント５" => "MAPREPLACE_ID_EVENT05",
-    "イベント６" => "MAPREPLACE_ID_EVENT06",
-    "イベント７" => "MAPREPLACE_ID_EVENT07",
-    "イベント８" => "MAPREPLACE_ID_EVENT08",
-    "イベント９" => "MAPREPLACE_ID_EVENT09",
+    "季節" => "MAPREPLACE_TYPE_SEASON",
+    "バージョン" => "MAPREPLACE_TYPE_VERSION",
+    "バージョン＋季節" => "MAPREPLACE_TYPE_SEASON_VERSION",
+    "イベント１" => "MAPREPLACE_TYPE_EVENT01",
+    "イベント２" => "MAPREPLACE_TYPE_EVENT02",
+    "イベント３" => "MAPREPLACE_TYPE_EVENT03",
+    "イベント４" => "MAPREPLACE_TYPE_EVENT04",
+    "イベント５" => "MAPREPLACE_TYPE_EVENT05",
+    "イベント６" => "MAPREPLACE_TYPE_EVENT06",
+    "イベント７" => "MAPREPLACE_TYPE_EVENT07",
+    "イベント８" => "MAPREPLACE_TYPE_EVENT08",
+    "イベント９" => "MAPREPLACE_TYPE_EVENT09",
   }
 
   #マップマトリックスID検索
@@ -157,13 +157,13 @@ class MapReplaceArray
 
       in_var = column[COL_VAR_A .. COL_VAR_D]
       case @type
-      when "MAPREPLACE_ID_SEASON"
+      when "MAPREPLACE_TYPE_SEASON"
         in_vars = set_var( 3, column )
-      when "MAPREPLACE_ID_VERSION"
+      when "MAPREPLACE_TYPE_VERSION"
         in_vars = set_var( 1, column )
-      when "MAPREPLACE_ID_SEASON_VERSION"
+      when "MAPREPLACE_TYPE_SEASON_VERSION"
         in_vars = set_var( 4, column )
-      when /^MAPREPLACE_ID_EVENT/
+      when /^MAPREPLACE_TYPE_EVENT/
         in_vars = set_var( 1, column )
       else
         raise FileReadError, "コンバータが未対応のタイプ指定(#{@type})です"
