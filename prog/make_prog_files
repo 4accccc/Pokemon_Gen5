@@ -87,6 +87,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/warpdata.c \
         field/location.c \
 				field/map_matrix.c \
+        field/map_replace.c \
         field/field_location.c \
         field/eventdata_system.c \
         field/field_status.c \

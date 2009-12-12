@@ -15,7 +15,7 @@
 
 #include "arc/fieldmap/map_replace.naix"
 #include "arc/fieldmap/map_replace.h"
-#include "map_replace_def.h"
+#include "map_replace.h"
 
 //======================================================================
 //	define
@@ -274,133 +274,40 @@ BOOL MAP_MATRIX_CheckVectorPosRange(
 //
 //======================================================================
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-enum {
-  REPID_BASE_KEY = 0,
-  REPID_VAR_A,
-  REPID_VAR_B,
-  REPID_VAR_C,
-  REPID_VAR_D,
-
-  REPID_MAX,
-};
-//--------------------------------------------------------------
 /**
- * @brief   マップ書き換えデータ
- */
-//--------------------------------------------------------------
-typedef struct {
-  u16 matrix_id;    ///<対象となるマトリックス指定
-  u8 layer_id;      ///<書き換えるレイヤー（地形ブロックか、マトリックスか？）
-  u8 type;          ///<書き換え条件のタイプ
-  u16 keys[ REPID_MAX ];    ///<書き換えデータ
-  u16 dummy;
-}REPLACE_DATA;
-
-//--------------------------------------------------------------
-/**
- * @brief 書き換えオフセットワーク
- */
-//--------------------------------------------------------------
-typedef struct {
-  u8 season_pos;      ///<書き換えタイプ季節の場合のオフセット値
-  u8 version_pos;     ///<書き換えタイプVer.の場合のオフセット値
-  u8 season_ver_pos;  ///<書き換えタイプ季節＋Ver.の場合のオフセット値
-  ///フラグによる書き換えの場合のオフセット値
-  u8 flag_pos[MAPREPLACE_EVENT_TYPE_NUM];
-}REPLACE_OFFSET;
-
-//--------------------------------------------------------------
-/**
- * @brief 書き換え条件オフセットの生成
- * @param offsets
- * @param gamedata
- *
- * @todo  イベントフラグの対応を行う必要がある
- */
-//--------------------------------------------------------------
-static void MapMatrix_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * gamedata )
-{
-  int i;
-  int season = GAMEDATA_GetSeasonID( gamedata );
-  offsets->season_pos = season;
-  offsets->version_pos = PM_VERSION == VERSION_BLACK? 0 : 1;
-  if (offsets->version_pos == 0 )
-  {
-    offsets->season_ver_pos = 0;
-  } else {
-    offsets->season_ver_pos = 1 + season;
-  }
-  for ( i = 0; i < MAPREPLACE_EVENT_TYPE_NUM; i++)
-  {
-    offsets->flag_pos[i] = 0; //とりあえず
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * @brief マップ置き換え処理
- * @param	pMat MAP_MATRIX
- * @param offsets   書き換えオフセット集合
- * @param rep_data  書き換えデータ
+ * @brief マップ置き換え
+ * @param	pMat	MAP_MATRIX
+ * @param ctrl  マップ置き換えデータ制御ワークへのポインタ
  */
 //--------------------------------------------------------------
 static void MapMatrix_Replace(
-    MAP_MATRIX *pMat, const REPLACE_OFFSET * offsets, const REPLACE_DATA * rep_data )
+    MAP_MATRIX *pMat, const MAPREPLACE_CTRL * ctrl )
 {
-  int i;
+  REPLACE_REQUEST req;
   u32 before, after;
-  before = rep_data->keys[ REPID_BASE_KEY ];
-  switch ( rep_data->type )
+  int i;
+  req = MAPREPLACE_GetReplaceValue( ctrl, &before, &after );
+
+  switch ( (REPLACE_REQUEST)req )
   {
-  case MAPREPLACE_ID_SEASON:
-    after = rep_data->keys[ offsets->season_pos ];
+  case REPLACE_REQ_NON:
     break;
-
-  case MAPREPLACE_ID_VERSION:
-    after = rep_data->keys[ offsets->version_pos ];
-    break;
-
-  case MAPREPLACE_ID_SEASON_VERSION:
-    after = rep_data->keys[ offsets->season_ver_pos ];
-    break;
-
-  case MAPREPLACE_ID_EVENT01:
-  case MAPREPLACE_ID_EVENT02:
-  case MAPREPLACE_ID_EVENT03:
-  case MAPREPLACE_ID_EVENT04:
-  case MAPREPLACE_ID_EVENT05:
-  case MAPREPLACE_ID_EVENT06:
-  case MAPREPLACE_ID_EVENT07:
-  case MAPREPLACE_ID_EVENT08:
-  case MAPREPLACE_ID_EVENT09:
-    after = rep_data->keys[ offsets->flag_pos[ rep_data->type - MAPREPLACE_ID_EVENT01 ] ];
-    break;
-
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-
-  if (before == after ) return;
-
-  if (rep_data->layer_id == MAPREPLACE_LAYER_MATRIX)
-  {
+  case REPLACE_REQ_MATRIX:
     MAP_MATRIX_Init( pMat, after, pMat->zone_id );
     OS_Printf("MapReplace:MATRIX: %d --> %d\n", before, after );
-  }
-  else if (rep_data->layer_id == MAPREPLACE_LAYER_MAPBLOCK) {
+    break;
+  case REPLACE_REQ_BLOCK:
     for ( i = 0; i < pMat->table_size; i++ )
     {
       if ( pMat->map_res_id_tbl[i] == before )
       {
         pMat->map_res_id_tbl[i] = after;
-        OS_Printf("MapReplace(%02d,%02d) %d->%d\n",
+        OS_Printf("MapReplace:BLOCK:(%02d,%02d) %d->%d\n",
             i % pMat->size_w, i / pMat->size_w, before, after );
       }
     }
+    break;
   }
-
 }
 
 //--------------------------------------------------------------
@@ -413,35 +320,17 @@ static void MapMatrix_Replace(
 void MAP_MATRIX_CheckReplace(
     MAP_MATRIX *pMat, GAMEDATA * gamedata )
 {
-  enum {
-    FILE_ID = NARC_map_replace_map_replace_bin
-  };
-
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle( ARCID_FLDMAP_REPLACE, pMat->heapID );
-  u16 size = GFL_ARC_GetDataSizeByHandle( handle, FILE_ID );
-  u32 count, data_max = size / MAPREPLACE_DATASIZE;
-  REPLACE_OFFSET offsets;
-  REPLACE_DATA rep_data;
-
-  SDK_COMPILER_ASSERT( sizeof(REPLACE_DATA) == MAPREPLACE_DATASIZE );
-
-  GF_ASSERT( size % MAPREPLACE_DATASIZE == 0 );
-
-  //置き換えオフセット値を事前に算出しておく
-  MapMatrix_makeReplaceOffset( &offsets, gamedata );
-
+  int count ,data_max;
+  MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( pMat->heapID, gamedata );
+  data_max = MAPREPLACE_GetDataMax( ctrl );
   for ( count = 0; count < data_max; count ++ )
   {
-    GFL_ARC_LoadDataOfsByHandle( handle, FILE_ID,
-        MAPREPLACE_DATASIZE * count, MAPREPLACE_DATASIZE, &rep_data );
-    GF_ASSERT( rep_data.layer_id < MAPREPLACE_LAYER_MAX );
-    GF_ASSERT( rep_data.type <  MAPREPLACE_ID_MAX );
-    if (rep_data.matrix_id != pMat->matrix_id ) continue;
+    u32 mat_id = MAPREPLACE_Load( ctrl, count );
+    if ( mat_id != pMat->matrix_id ) continue;
     //マトリックスが一致したら置き換え処理を行う
-    MapMatrix_Replace( pMat, &offsets, &rep_data );
+    MapMatrix_Replace( pMat, ctrl );
   }
-
-  GFL_ARC_CloseDataHandle( handle );
+  MAPREPLACE_Delete( ctrl );
 }
 
 //======================================================================
