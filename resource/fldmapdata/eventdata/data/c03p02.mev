@@ -279,23 +279,6 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-0 0 0
-#size
-1 1
+0
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
