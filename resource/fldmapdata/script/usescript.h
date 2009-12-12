@@ -90,6 +90,9 @@
 //ゲーム内交換ID
 #include "../../fld_trade/fld_trade_list.h"
 
+//マップ置き換えイベント指定ID
+#include "../../../prog/src/field/map_replace.h"
+
 
 //--------------------------------------------------------------
 //  wb_null
