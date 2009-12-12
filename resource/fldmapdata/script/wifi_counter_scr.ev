@@ -113,6 +113,10 @@ sub_wifi_counter_main:
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
       $i_loop = FALSE
+
+    //無限ループを避けるために、とりあえず
+    DEFAULT
+      $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
 }
@@ -405,15 +409,15 @@ sub_rndmatch_try:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_OUT()
+  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
   
   _WIFI_RANDOM_MATCH_EVENT_CALL()
   
   _FIELD_OPEN()
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_IN()
+  //_MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -637,13 +641,13 @@ sub_gterminal_gts_exchange:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_OUT()
+  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE() 
 //  _WIFI_GTS_EVENT_CALL()
   _FIELD_OPEN() 
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_IN()
+  //_MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -775,13 +779,13 @@ sub_gterminal_gts_nego_exchange:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_OUT()
+  //_MAP_FADE_END_CHECK()
   
   _WIFI_GTS_NEGO_EVENT_CALL()
   
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_IN()
+  //_MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -888,13 +892,13 @@ sub_gterminal_btl_recorder_call:
 
   _CALL sub_anm_wifi_counter_in
 
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_OUT()
+  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
   _WIFI_BATTLE_RECORDER_EVENT_CALL( 0 )
   _FIELD_OPEN()
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  //_MAP_FADE_BLACK_IN()
+  //_MAP_FADE_END_CHECK()
   
   _CALL sub_anm_wifi_counter_out
   $reg_return = SEQ_SUB_GTERMINAL_MENU
