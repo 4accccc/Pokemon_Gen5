@@ -38,8 +38,8 @@ ev_d04r0501_sandstream_1:
 //ゲーチスイベント終了していない場合
 IF $WK_SCENE_D04R0601 == 0 THEN
 	
-	//予約スクリプト【仮】名称が仮です。POSじゃないのにPOSになっている
-	_RESERVE_SCRIPT( SCRID_POS_D04R0601_EVENT_01 )
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D04R0601_EVENT_01 )
 
 //ゲーチスイベント終了している場合
 ELSE
