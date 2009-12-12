@@ -29,6 +29,8 @@
 #include "savedata/save_control.h"
 #include "savedata/zukan_savedata.h"
 
+#include "field/map_matrix.h"   //MAP_MATRIX
+#include "map_replace.h"    //MAPREPLACE_ChangeFlag
 
 
 //======================================================================
@@ -415,8 +417,21 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdSetMapReplace( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk )
 {
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
+
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  u16 on_off = SCRCMD_GetVMWorkValue( core, work );
+  u16 direct = SCRCMD_GetVMWorkValue( core, work );
+
+  MAPREPLACE_ChangeFlag( gamedata, id, on_off );
+  if ( direct )
+  {
+    MAP_MATRIX * pMat = GAMEDATA_GetMapMatrix( gamedata );
+    MAP_MATRIX_CheckReplace( pMat, gamedata );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 

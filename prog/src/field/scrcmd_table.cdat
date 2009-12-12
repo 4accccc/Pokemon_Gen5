@@ -413,7 +413,7 @@
   NO_CMD()
 
   DEF_CMD( EvCmdSetWarpID, EV_SEQ_SET_WARP_ID )
-  DEF_CMD( EvCmdSetMapReplace, EV_SEQ_SET_MAP_REPLACE )
+  DEF_CMD( EvCmdChangeMapReplaceFlag, EV_SEQ_CHANGE_MAP_REPLACE_FLAG )
   NO_CMD()
   NO_CMD()
 

@@ -9,14 +9,38 @@
 #pragma once
 
 //--------------------------------------------------------------
+/**
+ * @マップ書き換えの指定ID
+ */
 //--------------------------------------------------------------
+#define MAPREPLACE_ID_01  0
+#define MAPREPLACE_ID_02  1
+#define MAPREPLACE_ID_03  2
+#define MAPREPLACE_ID_04  3
+#define MAPREPLACE_ID_05  4
+#define MAPREPLACE_ID_06  5
+#define MAPREPLACE_ID_07  6
+#define MAPREPLACE_ID_08  7
+#define MAPREPLACE_ID_09  8
+#define MAPREPLACE_ID_10  9
 
+
+//*************************************************************************
+//
+//            以下は、Cプログラムでのみ参照
+//
+//*************************************************************************
+
+#ifndef __ASM_NO_DEF_
+
+//--------------------------------------------------------------
+/// マップ置き換えリクエストの種別
+//--------------------------------------------------------------
 typedef enum {
   REPLACE_REQ_NON = 0,
   REPLACE_REQ_BLOCK,
   REPLACE_REQ_MATRIX,
 }REPLACE_REQUEST;
-
 
 //--------------------------------------------------------------
 /// マップ置き換え処理制御データ
@@ -24,6 +48,7 @@ typedef enum {
 typedef struct _MAPREPLACE_CTRL MAPREPLACE_CTRL;
 
 //--------------------------------------------------------------
+//  マップ置き換え制御：生成
 //--------------------------------------------------------------
 extern MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata );
 
@@ -32,20 +57,25 @@ extern MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata )
 extern u32 MAPREPLACE_GetDataMax( const MAPREPLACE_CTRL * ctrl );
 
 //--------------------------------------------------------------
+//  マップ置き換え制御：読み込み
 //--------------------------------------------------------------
 extern u32 MAPREPLACE_Load( MAPREPLACE_CTRL * ctrl, u32 idx );
 
 //--------------------------------------------------------------
+//  マップ置き換え制御：置き換えデータの取得
 //--------------------------------------------------------------
 extern REPLACE_REQUEST MAPREPLACE_GetReplaceValue(
     const MAPREPLACE_CTRL * ctrl, u32 *before, u32 *after );
 
 //--------------------------------------------------------------
+//  マップ置き換え制御：削除
 //--------------------------------------------------------------
 extern void MAPREPLACE_Delete( MAPREPLACE_CTRL * ctrl );
 
 //--------------------------------------------------------------
+//  マップ置き換え制御：置き換え指定フラグの操作
 //--------------------------------------------------------------
-extern void MAPREPLACE_Rewrite( GAMEDATA * gamedata, u32 id, BOOL flag );
+extern void MAPREPLACE_ChangeFlag( GAMEDATA * gamedata, u32 id, BOOL flag );
 
+#endif  //__ASM_NO_DEF_
 

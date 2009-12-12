@@ -121,6 +121,7 @@ MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata )
   //REPLACE_DATA rep_data;
 
 
+  GF_ASSERT( ctrl->data_max = MAP_REPLACE_DATA_COUNT );
   GF_ASSERT( size % MAPREPLACE_DATASIZE == 0 );
 
   //置き換えオフセット値を事前に算出しておく
@@ -184,6 +185,7 @@ REPLACE_REQUEST MAPREPLACE_GetReplaceValue( const MAPREPLACE_CTRL * ctrl, u32 *b
   u32 pos;
   u32 before_val, after_val;
   before_val = rep_data->keys[ REPID_BASE_KEY ];
+  after_val = before_val;
   switch ( rep_data->type )
   {
   case MAPREPLACE_TYPE_SEASON:
@@ -198,30 +200,19 @@ REPLACE_REQUEST MAPREPLACE_GetReplaceValue( const MAPREPLACE_CTRL * ctrl, u32 *b
     after_val = rep_data->keys[ offsets->season_ver_pos ];
     break;
 
-  case MAPREPLACE_TYPE_EVENT01:
-  case MAPREPLACE_TYPE_EVENT02:
-  case MAPREPLACE_TYPE_EVENT03:
-  case MAPREPLACE_TYPE_EVENT04:
-  case MAPREPLACE_TYPE_EVENT05:
-  case MAPREPLACE_TYPE_EVENT06:
-  case MAPREPLACE_TYPE_EVENT07:
-  case MAPREPLACE_TYPE_EVENT08:
-  case MAPREPLACE_TYPE_EVENT09:
-  case MAPREPLACE_TYPE_EVENT10:
+  default:
     pos = getReplaceTablePos( rep_data->type );
     if ( pos >= 0 ) {
       after_val = rep_data->keys[ offsets->flag_pos[ pos ] ];
+      break;
     }
-    break;
-
-  default:
     GF_ASSERT(0);
     break;
   }
   *before = before_val;
   *after = after_val;
 
-  if ( before == after ) return REPLACE_REQ_NON;
+  if ( before_val == after_val ) return REPLACE_REQ_NON;
 
   if (rep_data->layer_id == MAPREPLACE_LAYER_MATRIX) {
     return REPLACE_REQ_MATRIX;
@@ -252,7 +243,8 @@ typedef enum {
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef struct {
-  u16 rep_data_type;
+  u8 rep_data_type;
+  u8 rep_data_id;
   u16 wk_id;
   u16 wk_value;
 }REPLACE_EVENT_DATA;
@@ -260,16 +252,16 @@ typedef struct {
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static const REPLACE_EVENT_DATA replaceEventTable[] = {
-  { MAPREPLACE_TYPE_EVENT01, WK_SYS_MAPREPLACE01, REPLACE_FLAG_VALUE01 },
-  { MAPREPLACE_TYPE_EVENT02, WK_SYS_MAPREPLACE02, REPLACE_FLAG_VALUE02 },
-  { MAPREPLACE_TYPE_EVENT03, WK_SYS_MAPREPLACE03, REPLACE_FLAG_VALUE03 },
-  { MAPREPLACE_TYPE_EVENT04, WK_SYS_MAPREPLACE04, REPLACE_FLAG_VALUE04 },
-  { MAPREPLACE_TYPE_EVENT05, WK_SYS_MAPREPLACE05, REPLACE_FLAG_VALUE05 },
-  { MAPREPLACE_TYPE_EVENT06, WK_SYS_MAPREPLACE06, REPLACE_FLAG_VALUE06 },
-  { MAPREPLACE_TYPE_EVENT07, WK_SYS_MAPREPLACE07, REPLACE_FLAG_VALUE07 },
-  { MAPREPLACE_TYPE_EVENT08, WK_SYS_MAPREPLACE08, REPLACE_FLAG_VALUE08 },
-  { MAPREPLACE_TYPE_EVENT09, WK_SYS_MAPREPLACE09, REPLACE_FLAG_VALUE09 },
-  { MAPREPLACE_TYPE_EVENT10, WK_SYS_MAPREPLACE10, REPLACE_FLAG_VALUE10 },
+  { MAPREPLACE_TYPE_EVENT01, MAPREPLACE_ID_01, WK_SYS_MAPREPLACE01, REPLACE_FLAG_VALUE01 },
+  { MAPREPLACE_TYPE_EVENT02, MAPREPLACE_ID_02, WK_SYS_MAPREPLACE02, REPLACE_FLAG_VALUE02 },
+  { MAPREPLACE_TYPE_EVENT03, MAPREPLACE_ID_03, WK_SYS_MAPREPLACE03, REPLACE_FLAG_VALUE03 },
+  { MAPREPLACE_TYPE_EVENT04, MAPREPLACE_ID_04, WK_SYS_MAPREPLACE04, REPLACE_FLAG_VALUE04 },
+  { MAPREPLACE_TYPE_EVENT05, MAPREPLACE_ID_05, WK_SYS_MAPREPLACE05, REPLACE_FLAG_VALUE05 },
+  { MAPREPLACE_TYPE_EVENT06, MAPREPLACE_ID_06, WK_SYS_MAPREPLACE06, REPLACE_FLAG_VALUE06 },
+  { MAPREPLACE_TYPE_EVENT07, MAPREPLACE_ID_07, WK_SYS_MAPREPLACE07, REPLACE_FLAG_VALUE07 },
+  { MAPREPLACE_TYPE_EVENT08, MAPREPLACE_ID_08, WK_SYS_MAPREPLACE08, REPLACE_FLAG_VALUE08 },
+  { MAPREPLACE_TYPE_EVENT09, MAPREPLACE_ID_09, WK_SYS_MAPREPLACE09, REPLACE_FLAG_VALUE09 },
+  { MAPREPLACE_TYPE_EVENT10, MAPREPLACE_ID_10, WK_SYS_MAPREPLACE10, REPLACE_FLAG_VALUE10 },
 };
 
 SDK_COMPILER_ASSERT( NELEMS(replaceEventTable) == MAPREPLACE_EVENT_TYPE_NUM );
@@ -277,7 +269,7 @@ SDK_COMPILER_ASSERT( NELEMS(replaceEventTable) == MAPREPLACE_EVENT_TYPE_NUM );
 //--------------------------------------------------------------
 /**
  * @brief
- * @param rep_id
+ * @param rep_type
  */
 //--------------------------------------------------------------
 static int getReplaceTablePos( MAPREPLACE_TYPE rep_type )
@@ -290,7 +282,6 @@ static int getReplaceTablePos( MAPREPLACE_TYPE rep_type )
       return i;
     }
   }
-  GF_ASSERT(0);
   return -1;
 }
 
@@ -336,15 +327,25 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * 
  * @param flag      BOOL
  */
 //--------------------------------------------------------------
-void MAPREPLACE_Rewrite( GAMEDATA * gamedata, u32 id, BOOL flag )
+void MAPREPLACE_ChangeFlag( GAMEDATA * gamedata, u32 id, BOOL flag )
 {
-  EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
-  u16 * work = EVENTWORK_GetEventWorkAdrs( ev, replaceEventTable[id].wk_id );
-  if (flag) {
-    *work = replaceEventTable[id].wk_value;
-  } else {
-    *work = 0;
+  int i;
+  for ( i = 0; i < NELEMS(replaceEventTable); i++ )
+  {
+    const REPLACE_EVENT_DATA * evData = &replaceEventTable[ i ];
+    if ( evData->rep_data_id == id )
+    {
+      EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
+      u16 * work = EVENTWORK_GetEventWorkAdrs( ev, evData->wk_id );
+      if (flag) {
+        *work = replaceEventTable[id].wk_value;
+      } else {
+        *work = 0;
+      }
+      return;
+    }
   }
+  GF_ASSERT_MSG( 0, "無効なマップ置き換えID（%d)です", id );
 }
 
 
