@@ -3670,6 +3670,29 @@
     .endm
 
 //--------------------------------------------------------------
+/**
+ * @def _CHANGE_MAPREPLACE_FLAG
+ * @brief マップ置き換えイベントのフラグ操作
+ * @param id            マップ置き換えの指定ID（prog/src/field/map_replace.h参照）
+ * @param on_off        置き換えのON/OFF指定
+ * @param direct_flag   即時反映フラグ（TRUE/FALSE)
+ *
+ * @note
+ * マップ置き換えシステムが参照するイベントフラグの操作を行うスクリプトコマンド。
+ * 即時反映フラグをTRUEに指定しても、フィールドから抜けて場面転換を行わない限りは反映しないので注意。
+ */
+//--------------------------------------------------------------
+#define _CHANGE_MAPREPLACE_FLAG( id, on_off, direct_flag ) \
+    _ASM_CHANGE_MAPREPLACE_FLAG id, on_off, direct_flag
+
+    .macro  _ASM_CHANGE_MAPREPLACE_FLAG id, on_off, direct_flag
+    .short  EV_SEQ_CHANGE_MAP_REPLACE_FLAG
+    .short  \id
+    .short  \on_off
+    .short  \direct_flag
+    .endm
+
+//--------------------------------------------------------------
 //--------------------------------------------------------------
     .macro  _ASM_SET_CGEAR_FLAG flag
     .short  EV_SEQ_SET_CGEAR_FLAG
@@ -5893,6 +5916,8 @@
  * @def _CALL_3D_DEMO
  * @brief デモ呼び出し
  * @param demo_no   デモID指定ナンバー
+ *
+ * @note  フェード処理は別途呼び出す必要がある
  */
 //--------------------------------------------------------------
 #define _CALL_3D_DEMO( demo_no )  \

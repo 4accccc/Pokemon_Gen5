@@ -279,13 +279,13 @@
  */
 //--------------------------------------------------------------
   .macro  _ASM_CALL_3D_DEMO demo_no
-  _ASM_MAP_FADE_BLACK_OUT
-  _ASM_MAP_FADE_END_CHECK
+  //_ASM_MAP_FADE_BLACK_OUT
+  //_ASM_MAP_FADE_END_CHECK
   _ASM_FIELD_CLOSE
   _ASM_DEMO_SCENE \demo_no
   _ASM_FIELD_OPEN
-  _ASM_MAP_FADE_BLACK_IN
-  _ASM_MAP_FADE_END_CHECK
+  //_ASM_MAP_FADE_BLACK_IN
+  //_ASM_MAP_FADE_END_CHECK
   .endm
 
 //--------------------------------------------------------------
