@@ -148,7 +148,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   st = SaveData_GetSituation(gd->sv_control_ptr);
   gd->start_loc = Situation_GetStartLocation(st);
   gd->entrance_loc = Situation_GetStartLocation(st);
-  gd->special_loc = Situation_GetStartLocation(st);
+  gd->special_loc = Situation_GetSpecialLocation(st);
   gd->escape_loc = Situation_GetEscapeLocation(st);
 
   // BGMî•ñæ“¾ƒVƒXƒeƒ€‚ğì¬(BGMî•ñ‚ğ“Ç‚İ‚Ş)

@@ -111,7 +111,7 @@ LOCATION * Situation_GetSpecialLocation(SITUATION * st)
 //----------------------------------------------------------
 LOCATION * Situation_GetEscapeLocation(SITUATION * st)
 {
-	return &st->special_loc;
+	return &st->escape_loc;
 }
 
 //----------------------------------------------------------
