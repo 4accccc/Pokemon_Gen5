@@ -592,6 +592,15 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
   wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
 
   BTL_Printf("REC return Action count=%d\n", numAction);
+  if( act->gen.cmd  == BTL_ACTION_FIGHT ){
+    BTL_Printf("   action=Fight, waza=%d\n", act->fight.waza);
+  }
+  if( act->gen.cmd  == BTL_ACTION_CHANGE ){
+    BTL_Printf("   action=Change, nextPokeIdx=%d\n", act->change.memberIdx);
+  }
+  if( act->gen.cmd  == BTL_ACTION_MOVE ){
+    BTL_Printf("   action=Move!\n");
+  }
 
   return TRUE;
 }
@@ -1639,7 +1648,8 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 }
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
-  return TRUE;
+  return SubProc_REC_SelectAction( wk, seq );
+//  return TRUE;
 }
 
 

@@ -251,7 +251,61 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
     clientID, type, wk->readPtr, wk->dataSize);
   return NULL;
 }
+extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
 
+//=============================================================================================
+/**
+ * ローテーションデータ１件読み込み
+ *
+ * @param   wk
+ * @param   clientID   対象クライアントID
+ *
+ * @result  BtlRotateDir  ローテーション方向
+ *
+ */
+//=============================================================================================
+BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
+{
+  BtlRecFieldType type;
+  u8 numClient, readClientID, readNumAction;
+  u32 i;
+
+  BTL_Printf("rec seek start RP= %d\n", wk->readPtr);
+  while( wk->readPtr < wk->dataSize )
+  {
+    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient );
+    if( (wk->readPtr >= wk->dataSize) ){ break; }
+    if( type != BTL_RECFIELD_ROTATION )
+    {
+      u8 readClientID, readNumAction;
+      // クライアント数分、アクションパラメータスキップ
+      for(i=0; i<numClient; ++i)
+      {
+        ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
+        wk->readPtr += (readNumAction * sizeof(BTL_ACTION_PARAM));
+        if( (wk->readPtr >= wk->dataSize) ){ break; }
+      }
+    }
+    else
+    {
+      u8 readClientID;
+      BtlRotateDir dir;
+      for(i=0; i<numClient; ++i)
+      {
+        ReadRotationTag( wk->recordData[wk->readPtr+i], &readClientID, &dir );
+        if( readClientID == clientID ){
+          break;
+        }
+      }
+      wk->readPtr += numClient;
+      if( i != numClient ){
+        return dir;
+      }
+    }
+  }
+  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, dataType=%d\n", clientID, type);
+  return BTL_ROTATEDIR_STAY;
+}
 
 
 

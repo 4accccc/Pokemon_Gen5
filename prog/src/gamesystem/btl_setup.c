@@ -632,7 +632,7 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
     GFL_HEAP_FreeMemory( (void*)(bsp->configData) );
     bsp->configData = NULL;
   }
-  BTL_SETUP_QuitForRecordPlay( bsp );
+  BATTLE_PARAM_Release( bsp );
 }
 
 
@@ -670,7 +670,7 @@ void BTL_SETUP_SetDebugFlag( BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag )
 {
   GF_ASSERT(flag < BTL_DEBUGFLAG_MAX);
 
-  dst->DebugFlag |= (1 << flag);
+  dst->DebugFlagBit |= (1 << flag);
 }
 /*
  *  @brief デバッグ用フラグ取得
@@ -679,7 +679,7 @@ BOOL BTL_SETUP_GetDebugFlag( const BATTLE_SETUP_PARAM* dst, BtlDebugFlag flag )
 {
   GF_ASSERT(flag < BTL_DEBUGFLAG_MAX);
 
-  return (dst->DebugFlag & (1 << flag)) != 0;
+  return (dst->DebugFlagBit & (1 << flag)) != 0;
 }
 
 

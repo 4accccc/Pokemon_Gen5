@@ -1421,6 +1421,8 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
   rec->setupSubset.competitor = setup->competitor;
   rec->setupSubset.rule = setup->rule;
   rec->setupSubset.fMultiMode = setup->multiMode;
+  rec->setupSubset.debugFlagBit = setup->DebugFlagBit;
+  rec->setupSubset.myCommPos = setup->commPos;
 
   CONFIG_Copy( setup->configData, &rec->setupSubset.config );
 
@@ -1446,6 +1448,8 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
   setup->competitor = rec->setupSubset.competitor;
   setup->rule = rec->setupSubset.rule;
   setup->multiMode = rec->setupSubset.fMultiMode;
+  setup->DebugFlagBit = rec->setupSubset.debugFlagBit;
+  setup->commPos = rec->setupSubset.myCommPos;
 
   CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
 

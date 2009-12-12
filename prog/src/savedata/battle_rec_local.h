@@ -50,14 +50,18 @@ typedef struct{
  */
 struct _BTLREC_SETUP_SUBSET {
 
-  GFL_STD_RandContext   randomContext;
-  BTL_FIELD_SITUATION   fieldSituation;
-  CONFIG                config;
-  u16  musicDefault;
-  u16  musicPinch;
-  u8   rule;
-  u8   competitor;
-  u8   fMultiMode;
+  GFL_STD_RandContext   randomContext;    ///< 乱数のタネ
+  BTL_FIELD_SITUATION   fieldSituation;   ///< 背景・お盆などの構築用情報
+  CONFIG                config;           ///< ユーザーコンフィグ
+  u16  musicDefault;            ///< デフォルトBGM
+  u16  musicPinch;              ///< ピンチ時BGM
+  u16  debugFlagBit;            ///< デバッグ機能Bitフラグ -> enum BtlDebugFlag @ battle/battle.h
+  u8   competitor : 5;          ///< 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h
+  u8   myCommPos  : 3;          ///< 通信対戦時の自分の立ち位置（マルチの時、0,2なら左側／1,3なら右側になる）
+  u8   rule       : 7;          ///< ルール（シングル・ダブル・トリプル・ローテ）-> enum BtlRule @ battle/battle.h
+  u8   fMultiMode :1;           ///< マルチバトルフラグ（ルールは必ずダブル）
+
+
 };
 
 /**
@@ -67,10 +71,10 @@ typedef struct {
   u32     ai_bit;
   u16     tr_id;
   u16     tr_type;
-  u16     use_item[ BSP_TRAINERDATA_ITEM_MAX ]; // u16x4 = 8byte
+  u16     use_item[ BSP_TRAINERDATA_ITEM_MAX ]; // 使用するアイテムu16x4 = 8byte
   /// 16 byte
 
-  STRCODE name[BUFLEN_PERSON_NAME];  // <-32byte
+  STRCODE name[BUFLEN_PERSON_NAME];  // トレーナー名<-32byte
 
   PMS_DATA  win_word;   //戦闘終了時勝利メッセージ <-8byte
   PMS_DATA  lose_word;  //戦闘終了時負けメッセージ <-8byte

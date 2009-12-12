@@ -83,4 +83,5 @@ typedef struct {
 
 extern void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize );
 extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction );
+extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
 
