@@ -157,6 +157,7 @@
 #define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 #define WK_SCENE_C09R0501                16546 /* 0x40a2 ポケモンリーグチャンピオンの部屋：イベント用ワーク */
 #define WK_SCENE_H03                     16547 /* 0x40a3 H03：イベント用ワーク */
+#define WK_SCENE_H03_BTLCOUNT            16548 /* 0x40a4 H03：７人抜きイベントの勝利数カウント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
