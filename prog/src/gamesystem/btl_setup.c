@@ -621,10 +621,10 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR r
 void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
 {
   if( bsp->configData ){
-    GFL_HEAP_FreeMemory( bsp->configData );
+    GFL_HEAP_FreeMemory( (void*)(bsp->configData) );
     bsp->configData = NULL;
   }
-  BTL_SETUP_QuitForRecordPlay
+  BTL_SETUP_QuitForRecordPlay( bsp );
 }
 
 
