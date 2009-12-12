@@ -912,7 +912,7 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
   rec_party->PokeCountMax = PokeParty_GetPokeCountMax(party);
   rec_party->PokeCount = PokeParty_GetPokeCount(party);
 
-  for(i = 0; i < rec_party->PokeCount; i++){
+  for(i=0; i < rec_party->PokeCount; i++){
     pp = PokeParty_GetMemberPointer(party, i);
     POKETOOL_PokePara_to_RecPokePara(pp, &rec_party->member[i]);
   }
@@ -933,6 +933,7 @@ static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *part
   u8 cb_id_para = 0;
 
   pp = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKETOOL_GetWorkSize() );
+  TAYA_Printf("RecParty pokeCnt=%d\n", rec_party->PokeCount);
 
   PokeParty_Init(party, rec_party->PokeCountMax);
   for(i = 0; i < rec_party->PokeCount; i++){
@@ -1219,6 +1220,14 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
 {
   BATTLE_REC_WORK  *rec = &brs->rec;
 
+  TAYA_Printf("*** Rec Info ***\n");
+  TAYA_Printf(" recWorkSize = %d byte\n", sizeof(BATTLE_REC_WORK));
+  TAYA_Printf("   ->setupSubset  = %d byte\n", sizeof(rec->setupSubset) );
+  TAYA_Printf("   ->opBuffer     = %d byte\n", sizeof(rec->opBuffer) );
+  TAYA_Printf("   ->clientStatus = %d byte\n", sizeof(rec->clientStatus) );
+  TAYA_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
+
+
   restore_Party( setup, rec, heapID );
   restore_ClientStatus( setup, rec );
   restore_OperationBuffer( setup, rec );
@@ -1370,6 +1379,7 @@ static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_W
   ){
     rec->opBuffer.size = setup->recDataSize;
     GFL_STD_MemCopy( setup->recBuffer, rec->opBuffer.buffer, setup->recDataSize );
+    TAYA_Printf("Store Operation Buffer %dbyte\n", rec->opBuffer.size);
     return TRUE;
   }
   return FALSE;
@@ -1387,6 +1397,7 @@ static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_W
 static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
 {
   setup->recDataSize = rec->opBuffer.size;
+  TAYA_Printf("Restore Operation Buffer %dbyte\n", setup->recDataSize );
   GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
   return TRUE;
 }
@@ -1404,6 +1415,8 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
 {
   rec->setupSubset.fieldSituation = setup->fieldSituation;
   rec->setupSubset.randomContext = setup->recRandContext;
+  rec->setupSubset.musicDefault = setup->musicDefault;
+  rec->setupSubset.musicPinch = setup->musicPinch;
 
   rec->setupSubset.competitor = setup->competitor;
   rec->setupSubset.rule = setup->rule;
@@ -1427,6 +1440,8 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
 {
   setup->fieldSituation = rec->setupSubset.fieldSituation;
   setup->recRandContext = rec->setupSubset.randomContext;
+  setup->musicDefault = rec->setupSubset.musicDefault;
+  setup->musicPinch = rec->setupSubset.musicPinch;
 
   setup->competitor = rec->setupSubset.competitor;
   setup->rule = rec->setupSubset.rule;

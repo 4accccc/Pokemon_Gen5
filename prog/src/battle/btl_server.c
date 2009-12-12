@@ -483,6 +483,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       BTL_Printf("アクション受け付け完了\n");
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
+      BTL_Printf("flow Result=%d\n", server->flowResult);
 
       if( SendActionRecord(server) ){
         (*seq)++;

@@ -53,9 +53,11 @@ struct _BTLREC_SETUP_SUBSET {
   GFL_STD_RandContext   randomContext;
   BTL_FIELD_SITUATION   fieldSituation;
   CONFIG                config;
-  u8  competitor;
-  u8  rule;
-  u8  fMultiMode;
+  u16  musicDefault;
+  u16  musicPinch;
+  u8   rule;
+  u8   competitor;
+  u8   fMultiMode;
 };
 
 /**

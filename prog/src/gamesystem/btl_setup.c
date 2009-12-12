@@ -8,6 +8,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "gamesystem/pm_season.h"
+#include "savedata/battle_rec.h"
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 #include "tr_tool/tr_tool.h"
 #include "tr_tool/trno_def.h"
@@ -18,9 +19,6 @@
 
 //------------------------------------------------------------
 //------------------------------------------------------------
-enum {
-  BTL_RECORD_BUFFER_SIZE = 4096,
-};
 
 
 ///プロトタイプ
@@ -223,7 +221,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
     SAVE_CONTROL_WORK* saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
     dst->configData = SaveData_GetConfig( saveCtrl );
   }
-  MI_CpuCopy8( sit, &dst->fieldSituation, sizeof( BTL_FIELD_SITUATION ) );
+  MI_CpuCopy8( sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
 
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
@@ -606,8 +604,30 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR r
       dst->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
     }
   }
+  // configデータをallocしているので別途解放が必要になる
+  dst->configData = CONFIG_AllocWork( heapID );
+  dst->fRecordPlay = TRUE;
+  BTL_SETUP_AllocRecBuffer( dst, heapID );
   BattleRec_RestoreSetupParam( dst, heapID );
 }
+
+//=============================================================================================
+/**
+ * 録画データ再生初期化したデータの終了処理
+ *
+ * @param   bsp
+ */
+//=============================================================================================
+void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
+{
+  if( bsp->configData ){
+    GFL_HEAP_FreeMemory( bsp->configData );
+    bsp->configData = NULL;
+  }
+  BTL_SETUP_QuitForRecordPlay
+}
+
+
 
 /*
  *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え
@@ -624,7 +644,7 @@ void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
 void BTL_SETUP_AllocRecBuffer( BATTLE_SETUP_PARAM* dst, HEAPID heapID )
 {
   if( dst->recBuffer == NULL ){
-    dst->recBuffer = GFL_HEAP_AllocMemory( heapID, BTL_RECORD_BUFFER_SIZE );
+    dst->recBuffer = GFL_HEAP_AllocMemory( heapID,  BTLREC_OPERATION_BUFFER_SIZE );
   }
 }
 /*

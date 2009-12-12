@@ -501,7 +501,11 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->ImServer = TRUE;
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  if( sp->fRecordPlay ){
+    trainerParam_StorePlayer( &wk->trainerParam[1], wk->heapID, sp->playerStatus[BTL_CLIENT_ENEMY1] );
+  }else{
+    trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  }
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1,
@@ -1077,9 +1081,11 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       PokeCon_Init( &wk->pokeconForClient, wk );
 
       // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
+      //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
       for(i=0; i<wk->numClients; ++i)
       {
         srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
+        Bspstore_Party( wk, i, BTL_NET_GetPartyData(i) );
         PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
       }
       (*seq)++;
@@ -1091,6 +1097,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk );
       // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
+      //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
       for(i=0; i<wk->numClients; ++i){
         PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
       }
@@ -2604,12 +2611,14 @@ u8 BTL_PARTY_GetMemberCount( const BTL_PARTY* party )
 u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
 {
   int i, cnt;
+
   for(i=0, cnt=0; i<party->memberCount; i++)
   {
     if( BPP_GetValue(party->member[i], BPP_HP) ){
       cnt++;
     }
   }
+  BTL_Printf("パーティ[%p]の生きてる数カウント %d/%d\n", party, cnt, party->memberCount);
   return cnt;
 }
 
@@ -2813,6 +2822,25 @@ BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->bagCursor;
 }
+//=============================================================================================
+/**
+ * 録画モード有効かチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk )
+{
+  if( (wk->setupParam->recBuffer != NULL)
+  &&  (wk->setupParam->fRecordPlay == FALSE)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //=============================================================================================
 /**
@@ -2977,8 +3005,6 @@ static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* par
   {
     wk->srcParty[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
     PokeParty_Copy( party, wk->srcParty[clientID] );
-
-    Bspstore_Party( wk, clientID, party );
   }
 }
 // パーティデータ取得
@@ -3075,6 +3101,7 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
 //----------------------------------------------------------------------------------
 static void reflectPartyData( BTL_MAIN_MODULE* wk )
 {
+  // 野生or通常トレーナー戦：経験値・レベルアップ反映のため
   if( (wk->setupParam->competitor != BTL_COMPETITOR_COMM)
   &&  (wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY)
   ){
@@ -3094,6 +3121,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     }
   }
 
+  // 野生戦：捕獲ポケモン情報のため
   if( wk->setupParam->competitor == BTL_COMPETITOR_WILD )
   {
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );
@@ -3199,7 +3227,7 @@ static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTA
  */
 static void Bspstore_RecordData( BTL_MAIN_MODULE* wk )
 {
-  if( wk->setupParam->recBuffer != NULL )
+  if( BTL_MAIN_IsRecordEnable(wk) )
   {
     BTL_CLIENT* myClient = wk->client[ wk->myClientID ];
     const void* recData;

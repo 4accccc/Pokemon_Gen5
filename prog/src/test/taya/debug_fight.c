@@ -506,6 +506,7 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void comm_dummy_callback(void* pWork);
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void btlAutoConnectCallback( void* pWork );
+static void btlExitConnectCallback( void* pWork );
 
 /*--------------------------------------------------------------------------*/
 /* Menu Table                                                               */
@@ -519,8 +520,6 @@ const GFL_PROC_DATA   DebugFightProcData = {
   DebugFightProcMain,
   DebugFightProcQuit,
 };
-
-FS_EXTERN_OVERLAY(battle_recorder);
 
 //--------------------------------------------------------------------------
 /**
@@ -537,8 +536,6 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     u32 pp_size = POKETOOL_GetWorkSize();
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
-
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_recorder));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x11000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
@@ -582,8 +579,6 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_SYS );
-
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_recorder));
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1414,6 +1409,7 @@ FS_EXTERN_OVERLAY(battle);
     SEQ_SETUP_START,
     SEQ_BTL_START,
     SEQ_BTL_RETURN,
+    SEQ_NET_EXIT_WAIT,
     SEQ_BTL_SAVING,
     SEQ_BTL_RELEASE,
     SEQ_WAIT_BEEP,
@@ -1434,7 +1430,9 @@ FS_EXTERN_OVERLAY(battle);
     savework_SetParty( &wk->saveData, wk );
 
     changeScene_start( wk );
-    if( btltype_IsComm(wk->saveData.btlType) ){
+    if( btltype_IsComm(wk->saveData.btlType)
+    &&  (wk->saveData.recMode != DBF_RECMODE_PLAY)
+    ){
       (*seq) = SEQ_COMM_START_1;
     }else{
       (*seq) = SEQ_SETUP_START;
@@ -1482,6 +1480,7 @@ FS_EXTERN_OVERLAY(battle);
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
         (*seq) = SEQ_BTL_START;
       }else{
+        // データが正しくロードできなければBEEPを鳴らしてルートへ戻す
         PMSND_PlaySE( SEQ_SE_BEEP );
         (*seq) = SEQ_WAIT_BEEP;
       }
@@ -1559,6 +1558,10 @@ FS_EXTERN_OVERLAY(battle);
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
+    if( wk->saveData.recMode == DBF_RECMODE_REC )
+    {
+      BTL_SETUP_AllocRecBuffer( &wk->setupParam, wk->heapID );
+    }
     (*seq) = SEQ_BTL_START;
     break;
 
@@ -1570,13 +1573,35 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_RETURN:
-    if( wk->saveData.recMode == DBF_RECMODE_REC )
-    {
-      SaveRecordStart( wk, &(wk->setupParam) );
-      (*seq) = SEQ_BTL_SAVING;
+    if( wk->fNetConnect ){
+      GFL_NET_Exit( btlExitConnectCallback );
     }
-    else{
-      (*seq) = SEQ_BTL_RELEASE;
+    (*seq) = SEQ_NET_EXIT_WAIT;
+    break;
+
+  case SEQ_NET_EXIT_WAIT:
+    if( wk->fNetConnect == FALSE )
+    {
+      // 録画モードならセーブシーケンスへ
+      if( wk->saveData.recMode == DBF_RECMODE_REC )
+      {
+        // 野生戦に限り、セーブ前にパーティ内のポケモンを完全回復
+        if( btltype_IsWild(wk->saveData.btlType) )
+        {
+          POKEMON_PARAM* pp;
+          u32 i, max = PokeParty_GetPokeCount( wk->setupParam.party[BTL_CLIENT_ENEMY1] );
+          for(i=0; i<max; ++i)
+          {
+            pp = PokeParty_GetMemberPointer( wk->setupParam.party[BTL_CLIENT_ENEMY1], i );
+            PP_Put( pp, ID_PARA_hp, PP_Get(pp, ID_PARA_hpmax, NULL) );
+            PP_SetSick( pp, POKESICK_NULL );
+          }
+        }
+        SaveRecordStart( wk, &(wk->setupParam) );
+        (*seq) = SEQ_BTL_SAVING;
+      }else{
+        (*seq) = SEQ_BTL_RELEASE;
+      }
     }
     break;
 
@@ -1587,7 +1612,11 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_RELEASE:
-    BATTLE_PARAM_Release( &wk->setupParam );
+    if( wk->saveData.recMode == DBF_RECMODE_PLAY ){
+      BTL_SETUP_QuitForRecordPlay( &wk->setupParam );
+    }else{
+      BATTLE_PARAM_Release( &wk->setupParam );
+    }
     changeScene_recover( wk );
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
@@ -1902,3 +1931,8 @@ static void btlAutoConnectCallback( void* pWork )
   wk->fNetConnect = TRUE;
 }
 
+static void btlExitConnectCallback( void* pWork )
+{
+  DEBUG_BTL_WORK* wk = pWork;
+  wk->fNetConnect = FALSE;
+}

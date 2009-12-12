@@ -283,12 +283,13 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
   BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
-  if( wk->myType == BTL_CLIENT_TYPE_UI ){
+  if( (wk->myType == BTL_CLIENT_TYPE_UI)
+  &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
+  ){
     wk->btlRec = BTL_REC_Create( heapID );
   }else{
     wk->btlRec = NULL;
   }
-
   return wk;
 }
 
@@ -2565,7 +2566,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         return TRUE;
       }
       else if( wk->wazaoboe_no == PTL_WAZASET_SAME )
-      { 
+      {
         break;
       }
       else if( wk->wazaoboe_no & PTL_WAZAOBOE_FULL )
