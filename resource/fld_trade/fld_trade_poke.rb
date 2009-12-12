@@ -91,12 +91,12 @@ class OutputData
                 :item, :oya_sex, :fur, :country, 
                 :change_monsno, :change_sex
   # デバッグ出力
-  def debug_out
+  def debug_out(path)
     # データが設定されていない
     if @lavel_monsno == nil then return end
     # ファイル名を生成
     monsname = @lavel_monsno.sub("MONSNO_", "").downcase
-    filename = "trade_poke_#{monsname}.txt"
+    filename = path + "/trade_poke_#{monsname}.txt"
     # ファイルに出力
     file = File::open(filename, "w")
     file.puts("MONSNO        = #{@monsno}(#{@lavel_monsno})")
@@ -139,7 +139,7 @@ class OutputData
     file = File::open( path + "/" + self.binary_filename, "wb")
     data = Array::new
     data << @monsno << @formno << @level <<
-            @hp_rnd << @df_rnd << @ag_rnd << @sa_rnd << @sd_rnd <<
+            @hp_rnd << @at_rnd << @df_rnd << @ag_rnd << @sa_rnd << @sd_rnd <<
             @tokusei << @seikaku << @sex << @id <<
             @style << @beautiful << @cute << @clever << @strong <<
             @item << @oya_sex << @fur << @country <<
@@ -398,6 +398,10 @@ column_idx.each do |idx|
   # 配列に登録
   trade_data << data
 end 
+# デバッグ出力
+trade_data.each do |data|
+  data.debug_out(ARGV[1])
+end
 # バイナリ出力
 trade_data.each do |data|
   data.binary_out(ARGV[1])
@@ -427,4 +431,5 @@ trade_data.each do |data|
   file.puts("#define #{lavel} (#{val})")
   val = val + 1
 end
+file.puts("#define FLD_TRADE_POKE_NUM (#{val})")
 file.close
