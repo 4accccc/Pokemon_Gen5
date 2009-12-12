@@ -91,6 +91,8 @@ enum{
 
   ID_EVSCR_MUSICAL_EVENT_WORK,  //ミュージカルワーク(控え室のみ有効
 
+  ID_EVSCR_SOUND_SE_FLAG,  //SOUND SE管理ワーク
+
 	ID_EVSCR_WK_END,				//ワークの終了ID
 
 	//↑↑↑↑↑ここはワークの数に影響するので注意！↑↑↑↑↑

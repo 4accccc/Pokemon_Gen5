@@ -24,6 +24,7 @@
 #include "sound/pm_wb_voice.h"
 
 #include "script.h"
+#include "script_local.h"
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
@@ -44,6 +45,10 @@
 //======================================================================
 //  proto
 //======================================================================
+// SEの停止を監視
+static void SoundSeFlag_CheckSeStop( SCRIPT_WORK * sc );
+static void SoundSeFlag_SetPlay( SCRIPT_WORK * sc, u32 se_no );
+static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc );
 
 //======================================================================
 //  コマンド BGM
@@ -267,6 +272,108 @@ VMCMD_RESULT EvCmdCtrlBgmFlagSet( VMHANDLE *core, void *wk )
 //======================================================================
 //  コマンド　SE
 //======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  監視しているSEがとまっていないかチェック　とまっていたら、フラグを落とす
+ */
+//-----------------------------------------------------------------------------
+static void SoundSeFlag_CheckSeStop( SCRIPT_WORK * sc )
+{
+  int i;
+  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+
+  // SE停止チェック
+  for( i=0; i<SEPLAYER_MAX; i++ )
+  {
+    if( (*p_sound_se_flag) & (1<<i) )
+    {
+      // 停止チェック
+      if( PMSND_CheckPlaySE_byPlayerID(i) == FALSE )
+      {
+        // 停止しているのでフラグを落とす
+        (*p_sound_se_flag) &= ~(1<<i);
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEの再生設定
+ *	
+ *	@param	sc
+ *	@param	se_no 
+ */
+//-----------------------------------------------------------------------------
+static void SoundSeFlag_SetPlay( SCRIPT_WORK * sc, u32 se_no )
+{
+  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+  SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( se_no );
+
+  (*p_sound_se_flag) |= (1<<player_id);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  監視SEの再生チェック
+ *
+ *	@param	sc    ワーク
+ *
+ *	@retval TRUE  再生中
+ *	@retval FLASE 再生なし
+ */
+//-----------------------------------------------------------------------------
+static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc )
+{
+  int i;
+  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+
+  // SE停止チェック
+  for( i=0; i<SEPLAYER_MAX; i++ )
+  {
+    if( (*p_sound_se_flag) & (1<<i) )
+    {
+      // 停止チェック
+      if( PMSND_CheckPlaySE_byPlayerID(i) == TRUE )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  // フラグのクリア
+  (*p_sound_se_flag) = 0;
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEの停止
+ *	
+ *	@param	sc
+ *	@param	se_no 
+ */
+//-----------------------------------------------------------------------------
+static void SoundSeFlag_StopSe( SCRIPT_WORK * sc )
+{
+  int i;
+  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+
+  // SE停止チェック
+  for( i=0; i<SEPLAYER_MAX; i++ )
+  {
+    if( (*p_sound_se_flag) & (1<<i) )
+    {
+      // 停止チェック
+      PMSND_StopSE_byPlayerID( i );
+    }
+  }
+
+  // フラグのクリア
+  (*p_sound_se_flag) = 0;
+}
+
 //--------------------------------------------------------------
 /**
  * ＳＥを鳴らす
@@ -276,10 +383,22 @@ VMCMD_RESULT EvCmdCtrlBgmFlagSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk )
 {
+  u16 se_no = SCRCMD_GetVMWorkValue(core,wk);
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *scriptwk = SCRCMD_WORK_GetScriptWork(work);
+
 #if 0
   Snd_SePlay( SCRCMD_VMGetWorkValue(core,wk) );
 #else //wb
-  PMSND_PlaySE( SCRCMD_GetVMWorkValue(core,wk) );
+
+  // 再生したSEがとまっていたら、監視フラグを落とす
+  SoundSeFlag_CheckSeStop( scriptwk );
+  
+  // 再生
+  PMSND_PlaySE( se_no );
+
+  // 監視開始
+  SoundSeFlag_SetPlay( scriptwk, se_no );  
 #endif
   return VMCMD_RESULT_CONTINUE;
 }
@@ -293,10 +412,12 @@ VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSeStop( VMHANDLE *core, void *wk )
 {
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *scriptwk = SCRCMD_WORK_GetScriptWork(work);
 #if 0
   Snd_SeStopBySeqNo( VMGetWorkValue(core), 0 );
 #else //wb
-  PMSND_StopSE();
+  SoundSeFlag_StopSe( scriptwk );
 #endif
   return VMCMD_RESULT_CONTINUE;
 }
@@ -310,13 +431,15 @@ VMCMD_RESULT EvCmdSeStop( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static BOOL EvWaitSe(VMHANDLE *core, void *wk)
 {
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *scriptwk = SCRCMD_WORK_GetScriptWork(work);
 #if 0
   //if( Snd_SePlayCheckAll() == 0 ){
   if( Snd_SePlayCheck(core->reg[0]) == 0 ){
     return TRUE;
   }
 #else //wb
-  if( PMSND_CheckPlaySE() == FALSE ){
+  if( SoundSeFlag_IsSePlay(scriptwk) == FALSE ){
     return TRUE;
   }
 #endif

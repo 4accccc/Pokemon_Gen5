@@ -136,6 +136,8 @@ struct _TAG_SCRIPT_WORK
 	
 	u8 win_open_flag;		//会話ウィンドウ表示フラグ(0=非表示、1=表示)
 
+  u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
+
 	BOOL win_flag;			///<戦闘結果保持用ワーク
 	
   void *mw;				//ビットマップメニューワーク
@@ -152,6 +154,8 @@ struct _TAG_SCRIPT_WORK
 
 
   MUSICAL_EVENT_WORK *musicalEventWork;
+
+  
   /*
    * 未使用・もしくはいらないワーク（前作から持ってきた
 #ifndef SCRIPT_PL_NULL
@@ -770,6 +774,10 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
   case ID_EVSCR_MUSICAL_EVENT_WORK:
   	GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
     return sc->musicalEventWork;
+
+  case ID_EVSCR_SOUND_SE_FLAG:
+    return &sc->sound_se_flag;
+      
 
 	};
 	
