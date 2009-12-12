@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-12-03T21:16:43"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-12-11T21:16:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="407" top="100" right="1112" bottom="720" maximized="no" rayout="Vertical2">
+	<dialog left="467" top="200" right="1172" bottom="816" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -317,70 +317,95 @@
 		<comment>トレーナーヒント１
 ・右部、左部で何人いるか？</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">トレーナーのばしょの　ヒント１</language>
+		<language name="JPN_KANJI" width="256">トレーナーの場所の　ヒント１</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_03">
 		<comment>長話客の説明</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">きてきが　なるまで
+はなしに　むちゅうに　なってしまう[BE:01:ページ切り替え（クリア）]
+そんな　おきゃくさんも
+せんしつに　いるよ！</language>
+		<language name="JPN_KANJI" width="256">汽笛が　鳴るまで
+話に　夢中に　なってしまう[BE:00:ページ切り替え（行送り）]
+そんな　お客さんも　船室には　いるよ</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_04">
 		<comment>甲板部の説明</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">この　かいだんを　あがれば[BE:01:ページ切り替え（クリア）]
+この　ゆうらんせん　じまんの
+てんぼうフロアに　なります</language>
+		<language name="JPN_KANJI" width="256">この　階段を　上がれば[BE:01:ページ切り替え（クリア）]
+この　遊覧船自慢の
+展望フロアに　なります</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_05">
 		<comment>トレーナーヒント２
 ・ダブルルームに何人いるか？</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">トレーナーのばしょの　ヒント２</language>
+		<language name="JPN_KANJI" width="256">トレーナーの場所の　ヒント２</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_01">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">うみの　うえを　はしっている！
+そんな　ふしぎな　ことが　できてしまう</language>
+		<language name="JPN_KANJI" width="256">海の上を　走っている！
+そんな　不思議な　事が　出来てしまう！</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_02">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">てんぼうフロアに　いくか
+せんしつで　トレーナーと　たたかうか[BE:00:ページ切り替え（行送り）]
+どっちが　いいか　まよってるんだ</language>
+		<language name="JPN_KANJI" width="256">展望フロアに　行くか
+船室で　トレーナーと　戦うか[BE:00:ページ切り替え（行送り）]
+どっちが　いいか　迷ってるんだ</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_03">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">なみの　うごきに　あわせて
+はしってるんだけどさ[BE:00:ページ切り替え（行送り）]
+なかなか　むずかしいね！</language>
+		<language name="JPN_KANJI" width="256">波の　動きに　合わせて
+走ってるんだけどさ[BE:00:ページ切り替え（行送り）]
+なかなか　難しいね</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_04">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ふねの　うえで　しょうぶを　したり
+かんぱんで　けしきを　みたり……[BE:00:ページ切り替え（行送り）]
+さいこう　だね　このふねは！</language>
+		<language name="JPN_KANJI" width="256">船の上で　勝負を　したり
+甲板で　景色を　見たり……[BE:00:ページ切り替え（行送り）]
+最高だね　この船は！</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_05">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">どの　へやに　はいるか
+まよっているんだ！</language>
+		<language name="JPN_KANJI" width="256">どの　部屋に　入るか
+迷っているんだ！</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_01">
