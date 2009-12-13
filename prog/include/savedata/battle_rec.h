@@ -9,7 +9,6 @@
 #pragma once
 
 #include "savedata/gds_profile.h" //GDS_PROFILE_PTR定義
-#include "net_app/gds/gds_battle_rec_sub.h"
 #include "battle/battle.h"
 
 //==============================================================================
@@ -39,94 +38,93 @@ enum {
 //--------------------------------------------------------------
 //  戦闘モード(施設一覧)
 //--------------------------------------------------------------
-///バトルタワー / シングル
-#define RECMODE_TOWER_SINGLE    (GT_BATTLE_MODE_TOWER_SINGLE)
-///バトルタワー / ダブル
-#define RECMODE_TOWER_DOUBLE    (GT_BATTLE_MODE_TOWER_DOUBLE)
-///バトルタワー / WIFIダウンロード
-#define RECMODE_TOWER_WIFI_DL   (GT_BATTLE_MODE_TOWER_SINGLE)
-
-///バトルファクトリー / シングル
-#define RECMODE_FACTORY_SINGLE    (GT_BATTLE_MODE_FACTORY50_SINGLE)
-///バトルファクトリー / ダブル
-#define RECMODE_FACTORY_DOUBLE    (GT_BATTLE_MODE_FACTORY50_DOUBLE)
-
-///バトルファクトリー / シングル100
-#define RECMODE_FACTORY_SINGLE100 (GT_BATTLE_MODE_FACTORY100_SINGLE)
-///バトルファクトリー / ダブル100
-#define RECMODE_FACTORY_DOUBLE100 (GT_BATTLE_MODE_FACTORY100_DOUBLE)
-
-///バトルステージ / シングル
-#define RECMODE_STAGE_SINGLE    (GT_BATTLE_MODE_STAGE_SINGLE)
-///バトルステージ / ダブル
-#define RECMODE_STAGE_DOUBLE    (GT_BATTLE_MODE_STAGE_DOUBLE)
-
-///バトルキャッスル / シングル
-#define RECMODE_CASTLE_SINGLE   (GT_BATTLE_MODE_CASTLE_SINGLE)
-///バトルキャッスル / ダブル
-#define RECMODE_CASTLE_DOUBLE   (GT_BATTLE_MODE_CASTLE_DOUBLE)
-
-///バトルルーレット / シングル
-#define RECMODE_ROULETTE_SINGLE   (GT_BATTLE_MODE_ROULETTE_SINGLE)
-///バトルルーレット / ダブル
-#define RECMODE_ROULETTE_DOUBLE   (GT_BATTLE_MODE_ROULETTE_DOUBLE)
-
-///コロシアム(通信対戦) / シングル(制限無し)
-#define RECMODE_COLOSSEUM_SINGLE      (GT_BATTLE_MODE_COLOSSEUM_SINGLE)
-///コロシアム(通信対戦) / シングル(スタンダードカップ)
-#define RECMODE_COLOSSEUM_SINGLE_STANDARD (GT_BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD)
-///コロシアム(通信対戦) / シングル(ファンシーカップ)
-#define RECMODE_COLOSSEUM_SINGLE_FANCY    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_FANCY)
-///コロシアム(通信対戦) / シングル(リトルカップ)
-#define RECMODE_COLOSSEUM_SINGLE_LITTLE   (GT_BATTLE_MODE_COLOSSEUM_SINGLE_LITTLE)
-///コロシアム(通信対戦) / シングル(ライトカップ)
-#define RECMODE_COLOSSEUM_SINGLE_LIGHT    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_LIGHT)
-///コロシアム(通信対戦) / シングル(ダブルカップ)
-#define RECMODE_COLOSSEUM_SINGLE_DOUBLE   (GT_BATTLE_MODE_COLOSSEUM_SINGLE_DOUBLE)
-///コロシアム(通信対戦) / シングル(その他のカップ)
-#define RECMODE_COLOSSEUM_SINGLE_ETC    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_ETC)
-
-///コロシアム(通信対戦) / ダブル
-#define RECMODE_COLOSSEUM_DOUBLE      (GT_BATTLE_MODE_COLOSSEUM_DOUBLE)
-///コロシアム(通信対戦) / ダブル(スタンダードカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_STANDARD (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD)
-///コロシアム(通信対戦) / ダブル(ファンシーカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_FANCY    (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_FANCY)
-///コロシアム(通信対戦) / ダブル(リトルカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_LITTLE   (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_LITTLE)
-///コロシアム(通信対戦) / ダブル(ライトカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_LIGHT    (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_LIGHT)
-///コロシアム(通信対戦) / ダブル(ダブルカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_DOUBLE   (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_DOUBLE)
-///コロシアム(通信対戦) / ダブル(その他のカップ)
-#define RECMODE_COLOSSEUM_DOUBLE_ETC    (GT_BATTLE_MODE_COLOSSEUM_DOUBLE_ETC)
-
-///コロシアム(通信対戦) / ミックス(制限無し)
-#define RECMODE_COLOSSEUM_MIX       (GT_BATTLE_MODE_COLOSSEUM_SINGLE)
-///コロシアム(通信対戦) / ミックス(スタンダードカップ)
-#define RECMODE_COLOSSEUM_MIX_STANDARD    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD)
-///コロシアム(通信対戦) / ミックス(ファンシーカップ)
-#define RECMODE_COLOSSEUM_MIX_FANCY     (GT_BATTLE_MODE_COLOSSEUM_SINGLE_FANCY)
-///コロシアム(通信対戦) / ミックス(リトルカップ)
-#define RECMODE_COLOSSEUM_MIX_LITTLE    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_LITTLE)
-///コロシアム(通信対戦) / ミックス(ライトカップ)
-#define RECMODE_COLOSSEUM_MIX_LIGHT     (GT_BATTLE_MODE_COLOSSEUM_SINGLE_LIGHT)
-///コロシアム(通信対戦) / ミックス(ダブルカップ)
-#define RECMODE_COLOSSEUM_MIX_DOUBLE    (GT_BATTLE_MODE_COLOSSEUM_SINGLE_DOUBLE)
-///コロシアム(通信対戦) / ミックス(その他のカップ)
-#define RECMODE_COLOSSEUM_MIX_ETC     (GT_BATTLE_MODE_COLOSSEUM_SINGLE_ETC)
-
-//以下、マルチモード
-#define RECMODE_TOWER_MULTI     (GT_BATTLE_MODE_TOWER_MULTI)  ///<バトルタワー / マルチ
-#define RECMODE_FACTORY_MULTI   (GT_BATTLE_MODE_FACTORY50_MULTI)  ///<バトルファクトリー / マルチ
-#define RECMODE_FACTORY_MULTI100  (GT_BATTLE_MODE_FACTORY100_MULTI)///<バトルファクトリー / マルチ100
-#define RECMODE_STAGE_MULTI     (GT_BATTLE_MODE_STAGE_MULTI)  ///<バトルステージ / マルチ
-#define RECMODE_CASTLE_MULTI    (GT_BATTLE_MODE_CASTLE_MULTI) ///<バトルキャッスル / マルチ
-#define RECMODE_ROULETTE_MULTI    (GT_BATTLE_MODE_ROULETTE_MULTI) ///<バトルルーレット / マルチ
-#define RECMODE_COLOSSEUM_MULTI   (GT_BATTLE_MODE_COLOSSEUM_MULTI)///<コロシアム(通信対戦) / マルチ
+///バトルモード
+typedef enum{
+  //コロシアム：シングル
+  BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
+  BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD,
+  BATTLE_MODE_COLOSSEUM_SINGLE_50,
+  BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
+  //コロシアム：ダブル
+  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_50,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
+  //コロシアム：トリプル
+  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_50,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
+  //コロシアム：ローテーション
+  BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
+  BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD,
+  BATTLE_MODE_COLOSSEUM_ROTATION_50,
+  BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
+  //コロシアム：マルチ
+  BATTLE_MODE_COLOSSEUM_MULTI_FREE,
+  BATTLE_MODE_COLOSSEUM_MULTI_STANDARD,
+  BATTLE_MODE_COLOSSEUM_MULTI_50,
+  BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_MULTI_STANDARD_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
+  //地下鉄
+  BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
+  BATTLE_MODE_SUBWAY_DOUBLE,
+  BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI
+  //ランダムマッチ：フリー
+  BATTLE_MODE_RANDOM_FREE_SINGLE,
+  BATTLE_MODE_RANDOM_FREE_DOUBLE,
+  BATTLE_MODE_RANDOM_FREE_TRIPLE,
+  BATTLE_MODE_RANDOM_FREE_ROTATION,
+  BATTLE_MODE_RANDOM_FREE_SHOOTER,
+  //ランダムマッチ：レーティング
+  BATTLE_MODE_RANDOM_RATING_SINGLE,
+  BATTLE_MODE_RANDOM_RATING_DOUBLE,
+  BATTLE_MODE_RANDOM_RATING_TRIPLE,
+  BATTLE_MODE_RANDOM_RATING_ROTATION,
+  BATTLE_MODE_RANDOM_RATING_SHOOTER,
+  //大会
+  BATTLE_MODE_COMPETITION_SINGLE,
+  BATTLE_MODE_COMPETITION_DOUBLE,
+  BATTLE_MODE_COMPETITION_TRIPLE,
+  BATTLE_MODE_COMPETITION_ROTATION,
+  BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
+  
+  //--------------------------------------------------------------
+  //  複数検索
+  //--------------------------------------------------------------
+  BATTLE_MODE_COLOSSEUM_SINGLE_NO_SHOOTER = 0xef,    //コロシアム/シングル　シューター無し
+  BATTLE_MODE_COLOSSEUM_SINGLE_SHOOTER = 0xf0,       //コロシアム/シングル　シューター有
+  BATTLE_MODE_COLOSSEUM_DOUBLE_NO_SHOOTER = 0xf1,    //コロシアム/ダブル　シューター無し
+  BATTLE_MODE_COLOSSEUM_DOUBLE_SHOOTER = 0xf2,       //コロシアム/ダブル　シューター有
+  BATTLE_MODE_COLOSSEUM_TRIPLE_NO_SHOOTER = 0xf3,    //コロシアム/トリプル　シューター無し
+  BATTLE_MODE_COLOSSEUM_TRIPLE_SHOOTER = 0xf4,       //コロシアム/トリプル　シューター有
+  BATTLE_MODE_COLOSSEUM_ROTATION_NO_SHOOTER = 0xf5,  //コロシアム/ローテーション　シューター無し
+  BATTLE_MODE_COLOSSEUM_ROTATION_SHOOTER = 0xf6,     //コロシアム/ローテーション　シューター有
+  BATTLE_MODE_COLOSSEUM_MULTI_NO_SHOOTER = 0xf7,     //コロシアム/ローテーション　シューター無し
+  BATTLE_MODE_COLOSSEUM_MULTI_SHOOTER = 0xf8,        //コロシアム/ローテーション　シューター有
+  BATTLE_MODE_RANDOM_SINGLE = 0xf9,                  //ランダムマッチ/シングル
+  BATTLE_MODE_RANDOM_DOUBLE = 0xfa,                  //ランダムマッチ/ダブル
+  BATTLE_MODE_RANDOM_TRIPLE = 0xfb,                  //ランダムマッチ/トリプル
+  BATTLE_MODE_RANDOM_ROTATION = 0xfc,                //ランダムマッチ/ローテーション
+  BATTLE_MODE_RANDOM_SHOOTER = 0xfd,                 //ランダムマッチ/シューター
+  BATTLE_MODE_COMPETITION = 0xfe,                    //バトル大会
+  BATTLE_MODE_NONE = 0xff,                           //指定なし
+}BATTLE_MODE;
 
 //終端
-#define RECMODE_MAX           (GT_BATTLE_MODE_ROULETTE_MULTI + 1)
+#define BATTLE_MODE_MAX           (BATTLE_MODE_COMPETITION_ROTATION_SHOOTER + 1)
 
 
 //--------------------------------------------------------------
@@ -218,7 +216,7 @@ extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *r
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
 extern SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
 extern SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num);
-extern void BattleRec_ClientTemotiGet(int rec_mode, int *client_max, int *temoti_max);
+extern void BattleRec_ClientTemotiGet(const BATTLE_REC_WORK_PTR rec, int *client_max, int *temoti_max);
 extern void BattleRec_BattleParamRec(BATTLE_PARAM *bp);
 extern void BattleRec_ServerVersionUpdate(int id_no, u32 server_version);
 extern BOOL BattleRec_ServerVersionCheck(void);

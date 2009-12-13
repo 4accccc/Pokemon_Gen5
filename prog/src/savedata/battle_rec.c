@@ -39,7 +39,7 @@ BATTLE_REC_SAVEDATA * brs=NULL;
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, const BATTLE_REC_WORK *rec, int rec_mode, int counter);
+static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, const BATTLE_REC_WORK_PTR rec, int rec_mode, int counter);
 static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *src);
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src);
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
@@ -67,6 +67,11 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
 //------------------------------------------------------------------
 void BattleRec_Init(HEAPID heapID)
 {
+#ifdef DEBUG_ONLY_FOR_matsuda
+  OS_TPrintf("BATTLE_REC_WORK size = %d\n", sizeof(BATTLE_REC_WORK));
+  OS_TPrintf("BATTLE_REC_HEADER size = %d\n", sizeof(BATTLE_REC_HEADER));
+#endif  //DEBUG_ONLY_FOR_matsuda
+
   if(brs != NULL){
     GFL_HEAP_FreeMemory(brs);
     brs = NULL;
@@ -346,7 +351,7 @@ SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work
  *
  * @param sv        セーブデータ構造体へのポインタ
  * @param heap_id   セーブシステム作成に一時的に使用するヒープID
- * @param   rec_mode    録画モード(RECMODE_???)
+ * @param   rec_mode    録画モード(BATTLE_MODE_???)
  * @param   fight_count   何戦目か
  * @param num   ロードするデータナンバー（LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…）
  * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
@@ -442,28 +447,28 @@ SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int n
 /**
  * @brief   録画モードからクライアント数と手持ち数の上限を取得
  *
- * @param   rec_mode    録画モード(RECMODE_???)
+ * @param   rec_mode    録画モード(BATTLE_MODE_???)
  * @param   client_max    クライアント数代入先
  * @param   temoti_max    手持ち最大数代入先
  */
 //--------------------------------------------------------------
-void BattleRec_ClientTemotiGet(int rec_mode, int *client_max, int *temoti_max)
+void BattleRec_ClientTemotiGet(const BATTLE_REC_WORK_PTR rec, int *client_max, int *temoti_max)
 {
-  switch(rec_mode){
-  case RECMODE_TOWER_MULTI:
-  case RECMODE_FACTORY_MULTI:
-  case RECMODE_FACTORY_MULTI100:
-  case RECMODE_STAGE_MULTI:
-  case RECMODE_CASTLE_MULTI:
-  case RECMODE_ROULETTE_MULTI:
-  case RECMODE_COLOSSEUM_MULTI:
-    *client_max = BTL_CLIENT_MAX;
+  int i;
+  
+  *client_max = 0;
+  
+  for(i = 0; i < BTL_CLIENT_MAX; i++){
+    if(rec->clientStatus[i].type != BTLREC_CLIENTSTATUS_NONE){
+      (*client_max)++;
+    }
+  }
+  
+  if((*client_max) == BTL_CLIENT_MAX){
     *temoti_max = TEMOTI_POKEMAX / 2;
-    break;
-  default:
-    *client_max = BTL_CLIENT_MAX / 2;
+  }
+  else{
     *temoti_max = TEMOTI_POKEMAX;
-    break;
   }
 }
 
@@ -473,57 +478,24 @@ void BattleRec_ClientTemotiGet(int rec_mode, int *client_max, int *temoti_max)
  *
  * @param   head    ヘッダーデータ代入先
  * @param   rec     録画データ本体
- * @param   rec_mode  録画モード(RECMODE_???)
+ * @param   rec_mode  録画モード(BATTLE_MODE_???)
  * @param   counter   何戦目か
  */
 //--------------------------------------------------------------
-static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, const BATTLE_REC_WORK *rec, int rec_mode, int counter)
+static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, const BATTLE_REC_WORK_PTR rec, int rec_mode, int counter)
 {
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-  int client, temoti, client_max, temoti_max, n, get_client, my_client;
+  int client, temoti, client_max, temoti_max, n;
   const REC_POKEPARA *para;
-  const u8  stand_table[2][4]={{0,2,3,1},{3,1,0,2}};
-  const u8  tower_table[4]={0,2,1,3};
 
   GFL_STD_MemClear(head, sizeof(BATTLE_REC_HEADER));
 
-  BattleRec_ClientTemotiGet(rec_mode, &client_max, &temoti_max);
+  BattleRec_ClientTemotiGet(rec, &client_max, &temoti_max);
 
   n = 0;
 
-  //自分のクライアントナンバー取得
-  if(rec->rbp.fight_type&FIGHT_TYPE_SIO){
-    if(rec->rbp.fight_type&FIGHT_TYPE_TOWER){
-      my_client=rec->rbp.comm_id*2;
-    }
-    else{
-      my_client=rec->rbp.comm_id;
-    }
-  }
-  else{
-    my_client=0;
-  }
-
   for(client = 0; client < client_max; client++){
-    if((rec->rbp.fight_type&FIGHT_TYPE_MULTI)&&((rec->rbp.fight_type&FIGHT_TYPE_TOWER)==0)){
-      for(get_client=0;get_client<client_max;get_client++){
-        if(rec->rbp.comm_stand_no[get_client]==
-           stand_table[rec->rbp.comm_stand_no[my_client]&1][client]){
-          break;
-        }
-      }
-    }
-    else if((rec->rbp.fight_type&FIGHT_TYPE_MULTI)&&(rec->rbp.fight_type&FIGHT_TYPE_TOWER)){
-      get_client= tower_table[client];
-    }
-    else{
-      get_client=client;
-      if(my_client&1){
-        get_client^=1;
-      }
-    }
     for(temoti = 0; temoti < temoti_max; temoti++){
-      para = &(rec->rec_party[get_client].member[temoti]);
+      para = &(rec->rec_party[client].member[temoti]);
       if(para->tamago_flag == 0 && para->fusei_tamago_flag == 0){
         head->monsno[n] = para->monsno;
         head->form_no[n] = para->form_no;
@@ -532,42 +504,8 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
     }
   }
 
-  //レギュレーションデータセット
-  switch(rec_mode){
-  case RECMODE_COLOSSEUM_SINGLE_STANDARD:   //MIXはシングルと一緒
-  case RECMODE_COLOSSEUM_DOUBLE_STANDARD:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_STANDARD));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE_FANCY:
-  case RECMODE_COLOSSEUM_DOUBLE_FANCY:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_FANCY));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE_LITTLE:
-  case RECMODE_COLOSSEUM_DOUBLE_LITTLE:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_LITTLE));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE_LIGHT:
-  case RECMODE_COLOSSEUM_DOUBLE_LIGHT:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_LIGHT));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE_DOUBLE:
-  case RECMODE_COLOSSEUM_DOUBLE_DOUBLE:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_DOUBLE));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE_ETC:
-  case RECMODE_COLOSSEUM_DOUBLE_ETC:
-    head->regulation = *(Data_GetRegulation(sv, REGULATION_NO_ETC));
-    break;
-  case RECMODE_COLOSSEUM_SINGLE:    //制限無し
-  case RECMODE_COLOSSEUM_DOUBLE:
-  default:
-    head->regulation = *(Data_GetNoLimitRegulation());
-    break;
-  }
-
   head->battle_counter = counter;
   head->mode = rec_mode;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1136,8 +1074,8 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
     return head->battle_counter;
 
   case RECHEAD_IDX_MODE:
-    if(head->mode >= RECMODE_MAX){
-      return RECMODE_COLOSSEUM_SINGLE;
+    if(head->mode >= BATTLE_MODE_MAX){
+      return BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
     }
     return head->mode;
   case RECHEAD_IDX_DATA_NUMBER:

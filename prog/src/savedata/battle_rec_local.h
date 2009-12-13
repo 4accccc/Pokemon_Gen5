@@ -106,7 +106,7 @@ struct _BTLREC_OPERATION_BUFFER {
 
 //----------------------------------------------------------
 /**
- *  録画セーブデータ本体（??? bytes）
+ *  録画セーブデータ本体（6116 bytes）
  */
 //----------------------------------------------------------
 typedef struct _BATTLE_REC_WORK {
@@ -115,7 +115,6 @@ typedef struct _BATTLE_REC_WORK {
 
   REC_POKEPARTY         rec_party[ BTL_CLIENT_MAX ];
   BTLREC_CLIENT_STATUS  clientStatus[ BTL_CLIENT_MAX ];
-//  MYSTATUS          my_status[ BTL_CLIENT_MAX ];
 
   u16 magic_key;
   u16 padding;
@@ -126,7 +125,7 @@ typedef struct _BATTLE_REC_WORK {
 
 //--------------------------------------------------------------
 /**
- *  戦闘録画のヘッダ
+ *  戦闘録画のヘッダ  (68 byte)
  */
 //--------------------------------------------------------------
 typedef struct _BATTLE_REC_HEADER{
@@ -136,8 +135,6 @@ typedef struct _BATTLE_REC_HEADER{
   u16 battle_counter; ///< 連勝数
   u8  mode;           ///< 戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
   u8  secure;         ///< TRUE:安全が保障されている。　FALSE：再生した事がない
-
-  AAA_REGULATION regulation;      ///<レギュレーションデータ    32
 
   u16 magic_key;      ///<マジックキー
   u8  work[14];      ///< 予備                    16
