@@ -223,7 +223,7 @@
   //動作モデル　イベント関連
   DEF_CMD( EvCmdObjTurn, EV_SEQ_OBJ_TURN )
   DEF_CMD( EvCmdPlayerRequest, EV_SEQ_PLAYER_REQUEST )
-  NO_CMD()
+  DEF_CMD( EvCmdPlayerUpDown, EV_SEQ_PLAYER_UPDOWN )
   NO_CMD()
   
   //視線トレーナー関連

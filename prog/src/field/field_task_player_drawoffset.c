@@ -13,6 +13,11 @@
 #include "field_player.h"
 
 
+typedef enum {
+  TRANS_TYPE_PLUS = 0,
+  TRANS_TYPE_MINUS,
+}TRANS_TYPE;
+
 //========================================================================================== 
 // ■タスクワーク
 //========================================================================================== 
@@ -20,12 +25,12 @@ typedef struct
 {
   u8             seq;       // シーケンス
   FIELDMAP_WORK* fieldmap;  // 動作対象のフィールドマップ
+  TRANS_TYPE    transType;
   u16            nowFrame;  // 動作フレーム数
   u16            endFrame;  // 最大フレーム数
   VecFx32        vecMove;   // 移動ベクトル 
 
 } TASK_WORK;
-
 
 //========================================================================================== 
 // ■非公開関数のプロトタイプ宣言
@@ -57,8 +62,16 @@ FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, cons
   work = FIELD_TASK_GetWork( task );
   work->seq      = 0;
   work->fieldmap = fieldmap;
-  work->nowFrame = 0;
-  work->endFrame = frame;
+  if (frame >= 0 )
+  {
+    work->transType = TRANS_TYPE_PLUS;
+    work->nowFrame = 0;
+    work->endFrame = frame;
+  } else {
+    work->transType = TRANS_TYPE_MINUS;
+    work->nowFrame = 0;
+    work->endFrame = -frame;
+  }
   VEC_Set( &work->vecMove, vec->x, vec->y, vec->z );
 
   return task;
@@ -86,6 +99,7 @@ static void CalcDrawOffset( VecFx32* now, u16 nowFrame, VecFx32* max, u16 maxFra
   now->x = FX_Mul( max->x, rate );
   now->y = FX_Mul( max->y, rate );
   now->z = FX_Mul( max->z, rate );
+  OS_Printf("NOW/MAX=%03d/%03d\n", nowFrame, maxFrame );
 } 
 
 
@@ -110,7 +124,13 @@ static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk )
   case 0:
     // 自機の描画オフセットを更新
     work->nowFrame++;
-    CalcDrawOffset( &offset, work->nowFrame, &work->vecMove, work->endFrame );
+    if (work->transType == TRANS_TYPE_PLUS)
+    {
+      CalcDrawOffset( &offset, work->nowFrame, &work->vecMove, work->endFrame );
+    } else if (work->transType == TRANS_TYPE_MINUS ) {
+      u16 now = work->endFrame - work->nowFrame;
+      CalcDrawOffset( &offset, now, &work->vecMove, work->endFrame );
+    }
     MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
     // 終了チェック
     if( work->endFrame <= work->nowFrame )
