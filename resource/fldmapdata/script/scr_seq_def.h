@@ -1504,6 +1504,24 @@
   .short  \reqbit
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def   自機の高さ変化演出
+ * @param type  　動かす種類
+ * @param frame   動かす長さ
+ * @param length
+ */
+//--------------------------------------------------------------
+#define _PLAYER_UPDOWN_EFFECT( type, frame, length ) \
+    _ASM_PLAYER_UPDOWN type, frame, length
+
+  .macro  _ASM_PLAYER_UPDOWN type, frame, length
+  .short  EV_SEQ_PLAYER_UPDOWN
+  .short  \type
+  .short  \frame
+  .short  \length
+  .endm
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
