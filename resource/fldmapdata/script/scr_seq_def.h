@@ -3721,6 +3721,46 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _SET_SP_LOCATION_HERE
+ * @brief 特殊接続先の設定：現在位置
+ *
+ * @note
+ * グリッドマップにしか対応していない
+ */
+//--------------------------------------------------------------
+#define _SET_SP_LOCATION_HERE() \
+      _ASM_SET_SP_LOCATION_HERE
+
+    .macro _ASM_SET_SP_LOCATION_HERE
+    .short  EV_SEQ_SET_SP_LOCATION_HERE
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_SP_LOCATION_HERE
+ * @brief 特殊接続先の設定：直接指定
+ * @param zone_id マップID指定
+ * @param dir 方向指定
+ * @param gx  X位置指定（グリッド単位）
+ * @param gy  Y位置指定（グリッド単位）
+ * @param gz  Z位置指定（グリッド単位）
+ *
+ * @note
+ * グリッドマップにしか対応していない
+ */
+//--------------------------------------------------------------
+#define _SET_SP_LOCATION_DIRECT( zone_id, dir, gx, gy, gz ) \
+      _ASM_SET_SP_LOCATION_DIRECT zone_id, dir, gx, gy, gz 
+
+    .macro _ASM_SET_SP_LOCATION_DIRECT zone_id, dir, gx, gy, gz 
+    .short  EV_SEQ_SET_SP_LOCATION_DIRECT
+    .short  \zone_id
+    .short  \dir
+    .short  \gx, \gy, \gz
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _CHANGE_MAPREPLACE_FLAG
  * @brief マップ置き換えイベントのフラグ操作
  * @param id            マップ置き換えの指定ID（prog/src/field/map_replace.h参照）
@@ -3757,6 +3797,21 @@
 //--------------------------------------------------------------
 #define _CGEAR_ON_DEMO()  \
     _ASM_CGEAR_ON_DEMO
+
+//--------------------------------------------------------------
+/**
+ * @def _GOTO_GAMECLEAR_DEMO
+ * @brief ゲームクリアデモへの移行
+ * @param mode  現在未使用：０を入れておいてください
+ */
+//--------------------------------------------------------------
+#define _GOTO_GAMECLEAR_DEMO( mode ) \
+    _ASM_GOTO_GAMECLEAR_DEMO mode
+
+    .macro  _ASM_GOTO_GAMECLEAR_DEMO mode
+    .short  EV_SEQ_GOTO_GAMECLEAR
+    .short  \mode
+    .endm
 
 //======================================================================
 //

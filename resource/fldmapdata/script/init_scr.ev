@@ -149,8 +149,16 @@ INIT_EVENT_END
 //  ※非常駐プログラム類の呼び出しは禁止なのは一緒
 //=====================================================================
 INIT_EVENT_START  ev_init_gameclear_script
-  _SET_WARP_ID( WARP_ID_T01 )
+  //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+
+  //全滅時の戻り先を自宅にする
+  _SET_WARP_ID( WARP_ID_T01 )
+  //復帰時の出現先
+  _SET_SP_LOCATION_DIRECT( ZONE_ID_T01, DIR_DOWN, 782, 0, 749 )
+  //↑で設定した特殊接続先からゲームを開始するリクエスト
+  _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
+
 INIT_EVENT_END
 
 
