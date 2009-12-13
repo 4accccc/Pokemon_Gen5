@@ -80,3 +80,13 @@ extern POKEMON_PASO_PARAM* BATTLE_BOX_SAVE_GetPPP( BATTLE_BOX_SAVE *btlBoxSave ,
 //  ボックス名取得
 //----------------------------------------------------------
 extern STRCODE* BATTLE_BOX_SAVE_GetBoxName( BATTLE_BOX_SAVE *btlBoxSave , const u32 boxIdx );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		バトルボックスにポケモンが入っているかどうか
+ * @param		sv				バトルボックスのセーブデータ
+ * @return	いたらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL BATTLE_BOX_SAVE_IsIn( BATTLE_BOX_SAVE * sv );
+

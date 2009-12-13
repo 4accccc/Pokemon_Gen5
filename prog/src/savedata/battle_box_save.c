@@ -146,6 +146,25 @@ void BATTLE_BOX_SAVE_SetPokeParty( BATTLE_BOX_SAVE * sv, POKEPARTY * party )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		バトルボックスにポケモンが入っているかどうか
+ * @param		sv				バトルボックスのセーブデータ
+ * @return	いたらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BATTLE_BOX_SAVE_IsIn( BATTLE_BOX_SAVE * sv )
+{
+	POKEMON_PASO_PARAM * ppp;
+	POKEMON_PARAM * pp;
+
+  ppp = BATTLE_BOX_SAVE_GetPPP( sv, 0, 0 );
+  if( PPP_Get( ppp, ID_PARA_poke_exist, NULL ) == 0 ){
+    return FALSE;
+  }
+	return TRUE;
+}
+
 
 //======================================================================
 //	取得系
