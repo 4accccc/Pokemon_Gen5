@@ -2371,7 +2371,7 @@
 #define SYS_FLAG_DENDOUIRI                2403 /* 0x0963 ゲームクリアフラグ（殿堂入り時にセット） */
 #define SYS_FLAG_KAIRIKI                  2404 /* 0x0964 かいりき状態フラグ */
 		/* not used  2405(0x0965) */
-		/* not used  2406(0x0966) */
+#define SYS_FLAG_SPEXIT_REQUEST           2406 /* 0x0966 特殊接続リクエスト：これがONのとき、コンティニューは特殊接続から開始 */
 		/* not used  2407(0x0967) */
 		/* not used  2408(0x0968) */
 #define SYS_FLAG_BIGFOUR_GHOSTWIN         2409 /* 0x0969 四天王(ゴースト)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
