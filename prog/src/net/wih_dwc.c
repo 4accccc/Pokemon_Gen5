@@ -105,8 +105,10 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
 
 void WIH_DWC_Stop(void)
 {
-  _localWork->bStop=TRUE;
-  IRC_Init(12);  //@todo 12
+  if(_localWork){
+    _localWork->bStop=TRUE;
+    IRC_Init(12);  //@todo 12
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -117,8 +119,10 @@ void WIH_DWC_Stop(void)
 
 void WIH_DWC_Restart(void)
 {
-  _localWork->bStop=FALSE;
-  IRC_Shutdown();
+  if(_localWork){
+    _localWork->bStop=FALSE;
+    IRC_Shutdown();
+  }
 }
 
 
