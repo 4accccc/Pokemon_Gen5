@@ -56,6 +56,7 @@
 #include "savedata/gametime.h"  // for GMTIME
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
 #include "ev_time.h"  //EVTIME_Update
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_SPEXIT_REQUEST
 
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
@@ -94,7 +95,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gamedata;
-  GAME_INIT_WORK * game_init_work;
+  GAMEINIT_MODE game_init_mode;
+  //const GAME_INIT_WORK * game_init_work;
   LOCATION loc_req;
 }FIRST_MAPIN_WORK;
 
@@ -105,7 +107,6 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
   FIRST_MAPIN_WORK * fmw = work;
   GAMESYS_WORK * gsys = fmw->gsys;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-  GAME_INIT_WORK * game_init_work = fmw->game_init_work;
   FIELDMAP_WORK * fieldmap;
   switch (*seq) {
   case 0:
@@ -114,7 +115,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
     (void)GX_DisableBankForLCDC();
 
-    switch(game_init_work->mode){
+    switch(fmw->game_init_mode){
     case GAMEINIT_MODE_FIRST:
       SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
       FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
@@ -134,12 +135,26 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       break;
 
     case GAMEINIT_MODE_CONTINUE:
-      //新しいマップモードなど機能指定を行う
-      MAPCHG_setupMapTools( gsys, &fmw->loc_req );
-      //イベント時間更新
-      EVTIME_Update( gamedata );
-      //コンティニューによるフラグ落とし処理
-      FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
+      if (EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST ) )
+      { //特殊接続リクエスト：
+        const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
+        fmw->loc_req = *spLoc;
+        EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
+        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+        //新しいマップモードなど機能指定を行う
+        MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+        //新しいマップID、初期位置をセット
+        MAPCHG_updateGameData( gsys, &fmw->loc_req );
+      }
+      else
+      {
+        //新しいマップモードなど機能指定を行う
+        MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+        //イベント時間更新
+        EVTIME_Update( gamedata );
+        //コンティニューによるフラグ落とし処理
+        FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
+      }
       break;
 
     default:
@@ -162,12 +177,12 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       BOOL outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
       u8 season = GAMEDATA_GetSeasonID( gamedata );
       FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( game_init_work->mode == GAMEINIT_MODE_DEBUG )
+      if( fmw->game_init_mode == GAMEINIT_MODE_DEBUG )
       { // デバッグスタート ==> 表示なし
         FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
-      else if( (game_init_work->mode == GAMEINIT_MODE_CONTINUE) && (outdoor != TRUE) )
+      else if( (fmw->game_init_mode == GAMEINIT_MODE_CONTINUE) && (outdoor != TRUE) )
       { // 「つづきから」で屋内にいる場合 ==> 表示なし
         FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
@@ -227,7 +242,9 @@ GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
   fmw = GMEVENT_GetEventWork(event);
   fmw->gsys = gsys;
   fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
-  fmw->game_init_work = game_init_work;
+  //fmw->game_init_work = game_init_work;
+  fmw->game_init_mode = game_init_work->mode;
+
   switch(game_init_work->mode){
   case GAMEINIT_MODE_CONTINUE:
     LOCATION_SetDirect(&fmw->loc_req, game_init_work->mapid, game_init_work->dir, 
