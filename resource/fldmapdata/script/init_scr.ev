@@ -9,6 +9,7 @@
 //  スクリプトテーブル
 //-------------------------------------------------------------
 _EVENT_DATA ev_init_script
+_EVENT_DATA ev_init_gameclear_script
 _EVENT_DATA ev_init_debug_script
 _EVENT_DATA_END
 
@@ -140,6 +141,18 @@ INIT_EVENT_START  ev_init_debug_script
   //メニュー項目「ずかん」をON
 	_FLAG_SET( SYS_FLAG_ZUKAN_GET )
 INIT_EVENT_END
+
+
+//=====================================================================
+//  ゲームクリアスクリプト
+//    ゲームクリア後のフラグ状態などを制御する
+//  ※非常駐プログラム類の呼び出しは禁止なのは一緒
+//=====================================================================
+INIT_EVENT_START  ev_init_gameclear_script
+  _SET_WARP_ID( WARP_ID_T01 )
+  _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+INIT_EVENT_END
+
 
 
 
