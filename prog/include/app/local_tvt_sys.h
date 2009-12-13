@@ -10,6 +10,8 @@
 //======================================================================
 #pragma once
 
+#include "gamesystem/game_data.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -36,9 +38,8 @@ typedef enum
 #pragma mark [> struct
 typedef struct
 {
-  LOCAL_TVT_MODE mode;
-  u8             charaType[LOCAL_TVT_MEMBER_MAX];
-  u8             bgType[LOCAL_TVT_MEMBER_MAX];
+  u16 scriptId;
+  GAMEDATA *gameData;
 }LOCAL_TVT_INIT_WORK;
 
 

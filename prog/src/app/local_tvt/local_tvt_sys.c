@@ -12,9 +12,13 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
 
 #include "arc_def.h"
 #include "local_tvt.naix"
+#include "message.naix"
+#include "font/font.naix"
 
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
@@ -23,12 +27,26 @@
 //	define
 //======================================================================
 #pragma mark [> define
-
+#define LTVT_MSG_MSGWIN_CGX (1)
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  LTMP_UP,
+  LTMP_DOWN,
+}LOCAL_TVT_MSG_POS;
 
+typedef enum
+{
+  LTS_FADEIN,
+  LTS_FADEIN_WAIT,
+  LTS_FADEOUT,
+  LTS_FADEOUT_WAIT,
+
+  LTS_MAIN,
+}LOCAL_TVT_STATE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -62,6 +80,14 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work );
+
+static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work );
+static void LOCAL_TVT_MSG_TermMessage( LOCAL_TVT_WORK *work );
+static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work );
+static const BOOL LOCAL_TVT_MSG_IsFinishMsg( LOCAL_TVT_WORK *work );
+static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS pos );
+static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId );
+
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
@@ -72,19 +98,23 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   
   work->archandle = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT , work->heapId );
   LOCAL_TVT_LoadResource( work );
+  LOCAL_TVT_MSG_InitMessage( work );
 
-  for( i=0 ; i<work->initWork->mode ; i++ )
+  for( i=0 ; i<work->mode ; i++ )
   {
     work->charaWork[i] = LOCAL_TVT_CHARA_Init( work , i );
   }
-
-  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+  
 
   work->transCnt = 0;
   work->bufNo = 1;
   work->transState = LTTS_CHARA1;
   work->transChara = NULL;
+  
+  work->state = LTS_FADEIN;
+
+  //---仮処理---
+  work->scriptIdx = 0;
 }
 
 //--------------------------------------------------------------
@@ -93,7 +123,10 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
 static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
 {
   u8 i;
-  for( i=0 ; i<work->initWork->mode ; i++ )
+
+  LOCAL_TVT_MSG_TermMessage( work );
+
+  for( i=0 ; i<work->mode ; i++ )
   {
     LOCAL_TVT_CHARA_Term( work , work->charaWork[i] );
   }
@@ -109,6 +142,57 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
 static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
 {
   u8 i;
+  
+  switch( work->state )
+  {
+  case LTS_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = LTS_FADEIN_WAIT;
+    break;
+  case LTS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->state = LTS_MAIN;
+    }
+    break;
+  case LTS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = LTS_FADEOUT_WAIT;
+    break;
+  case LTS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return TRUE;
+    }
+    break;
+
+  case LTS_MAIN:
+    //---仮処理---
+    {
+      if( LOCAL_TVT_MSG_IsFinishMsg(work) == TRUE )
+      {
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+            work->scriptIdx == 0 )
+        {
+          if( work->scriptIdx < 5 )
+          {
+            LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
+            LOCAL_TVT_MSG_DispMessage( work , work->scriptIdx );
+          }
+          else
+          {
+            work->state = LTS_FADEOUT;
+          }
+          work->scriptIdx++;
+        }
+      }
+    }
+    //---仮処理---
+    break;
+  }
+  
   
   //フリップタイミング
   if( work->transCnt < LTVT_TRANS_COUNT_MAX )
@@ -167,7 +251,7 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
         const u8 charaNo = work->transState - LTTS_CHARA1;
         LOCAL_TVT_CHARA_LoadChara( work , work->charaWork[charaNo] , work->bufNo );
         work->transChara = work->charaWork[charaNo];
-        if( work->initWork->mode == LTM_2_MEMBER &&
+        if( work->mode == LTM_2_MEMBER &&
             work->transState == LTTS_CHARA2 )
         {
           work->transState = LTTS_TRANS_WAIT;
@@ -181,10 +265,12 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
     }
   }
 
-  for( i=0 ; i<work->initWork->mode ; i++ )
+  for( i=0 ; i<work->mode ; i++ )
   {
     LOCAL_TVT_CHARA_Main( work , work->charaWork[i] );
   }
+  
+  LOCAL_TVT_MSG_UpdateMessage( work );
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -220,11 +306,18 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     static const GFL_BG_SYS_HEADER sys_data = {
         GX_DISPMODE_GRAPHICS, GX_BGMODE_5, GX_BGMODE_0, GX_BG0_AS_2D,
     };
-    // BG1 MAIN (メッセージ
+    // BG0 MAIN (メッセージ
+    static const GFL_BG_BGCNT_HEADER header_main0 = {
+      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG1 MAIN (名前
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (キャラ
@@ -243,9 +336,10 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     };
     GFL_BG_SetBGMode( &sys_data );
 
-    LOCAL_TVT_SetupBgFunc( &header_main1 , LTVT_FRAME_MESSAGE , GFL_BG_MODE_TEXT );
-    LOCAL_TVT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_256X16 );
-    LOCAL_TVT_SetupBgFunc( &header_main3 , LTVT_FRAME_BG , GFL_BG_MODE_256X16 );
+    LOCAL_TVT_SetupBgFunc( &header_main0 , LTVT_FRAME_MESSAGE , GFL_BG_MODE_TEXT );
+    LOCAL_TVT_SetupBgFunc( &header_main1 , LTVT_FRAME_NAME    , GFL_BG_MODE_TEXT );
+    LOCAL_TVT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA   , GFL_BG_MODE_256X16 );
+    LOCAL_TVT_SetupBgFunc( &header_main3 , LTVT_FRAME_BG      , GFL_BG_MODE_256X16 );
     
   }
   
@@ -255,6 +349,7 @@ static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work )
 {
   GFL_BG_FreeBGControl( LTVT_FRAME_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_CHARA );
+  GFL_BG_FreeBGControl( LTVT_FRAME_NAME );
   GFL_BG_FreeBGControl( LTVT_FRAME_MESSAGE );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -279,7 +374,7 @@ static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
 {
   u32 datId;
-  if( work->initWork->mode == LTM_2_MEMBER )
+  if( work->mode == LTM_2_MEMBER )
   {
     datId = NARC_local_tvt_local_tvt_scr_2_NSCR;
   }
@@ -298,6 +393,160 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
                                    LTVT_FRAME_BG ,
                                    0,0,FALSE,work->heapId );
 }
+
+#pragma mark [>message func
+static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
+{
+  //フォント読み込み
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  
+  //メッセージ
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_system_dat , work->heapId );
+  work->talkMsgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_01_dat , work->heapId );
+  
+  BmpWinFrame_GraphicSet( LTVT_FRAME_MESSAGE , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME , 0 , work->heapId );
+
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , LTVT_PLT_MAIN_FONT*0x20, 16*2, work->heapId );
+  GFL_FONTSYS_SetDefaultColor();
+  
+  work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
+  work->printHandle = NULL;
+  work->msgWin = NULL;
+  work->msgStr = NULL;
+  work->wordSet = NULL;
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+
+  GFL_FONTSYS_SetColor( 1,2,0xf );
+  
+}
+
+static void LOCAL_TVT_MSG_TermMessage( LOCAL_TVT_WORK *work )
+{
+  PRINTSYS_QUE_Delete( work->printQue );
+  if( work->printHandle != NULL )
+  {
+    PRINTSYS_PrintStreamDelete( work->printHandle );
+  }
+  if( work->msgStr != NULL )
+  {
+    GFL_STR_DeleteBuffer( work->msgStr );
+  }
+  if( work->wordSet != NULL )
+  {
+    WORDSET_Delete( work->wordSet );
+  }
+  GFL_MSG_Delete( work->talkMsgHandle );
+  GFL_MSG_Delete( work->msgHandle );
+  if( work->msgWin != NULL )
+  {
+    GFL_BMPWIN_Delete( work->msgWin );
+  }
+  GFL_FONT_Delete( work->fontHandle );
+  GFL_TCBL_Exit( work->tcblSys );
+
+  GFL_FONTSYS_SetDefaultColor();
+}
+
+static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work )
+{
+  GFL_TCBL_Main( work->tcblSys );
+  if( work->printHandle != NULL  )
+  {
+    if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_DONE )
+    {
+      PRINTSYS_PrintStreamDelete( work->printHandle );
+      work->printHandle = NULL;
+      GFL_STR_DeleteBuffer( work->msgStr );
+      work->msgStr = NULL;
+    }
+    else
+    if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_PAUSE )
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+          GFL_UI_TP_GetTrg() == TRUE )
+      {
+        PRINTSYS_PrintStreamReleasePause( work->printHandle );
+      }
+    }
+  }
+  PRINTSYS_QUE_Main( work->printQue );
+}
+
+static const BOOL LOCAL_TVT_MSG_IsFinishMsg( LOCAL_TVT_WORK *work )
+{
+  if( work->printHandle == NULL )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS pos )
+{
+  if( work->msgWin != NULL )
+  {
+    GFL_BMPWIN_Delete( work->msgWin );
+    work->msgWin = NULL;
+  }
+  
+  if( pos == LTMP_UP )
+  {
+    work->msgWin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
+                                      1 , 1 , 30 , 4 , 
+                                      LTVT_PLT_MAIN_FONT ,
+                                      GFL_BMP_CHRAREA_GET_B );
+  }
+  else
+  if( pos == LTMP_DOWN )
+  {
+    work->msgWin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
+                                      1 , 19 , 30 , 4 , 
+                                      LTVT_PLT_MAIN_FONT ,
+                                      GFL_BMP_CHRAREA_GET_B );
+  }
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0F );
+  GFL_BMPWIN_TransVramCharacter( work->msgWin );
+  GFL_BMPWIN_MakeScreen( work->msgWin );
+  GFL_BG_LoadScreenReq( LTVT_FRAME_MESSAGE );
+}
+
+//--------------------------------------------------------------------------
+//  メッセージ表示
+//--------------------------------------------------------------------------
+static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId )
+{
+  if( work->printHandle != NULL )
+  {
+    OS_TPrintf( "Message is not finish!!\n" );
+    PRINTSYS_PrintStreamDelete( work->printHandle );
+    work->printHandle = NULL;
+  }
+
+  {
+    if( work->msgStr != NULL )
+    {
+      GFL_STR_DeleteBuffer( work->msgStr );
+      work->msgStr = NULL;
+    }
+    
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0xf );
+    work->msgStr = GFL_MSG_CreateString( work->talkMsgHandle , msgId );
+    
+    if( work->wordSet != NULL )
+    {
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+      WORDSET_ExpandStr( work->wordSet , msgWorkStr , work->msgStr );
+      GFL_STR_DeleteBuffer( work->msgStr );
+      work->msgStr = msgWorkStr;
+    }
+    
+    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
+                        MSGSPEED_GetWait() , work->tcblSys , 2 , work->heapId , 0x0f );
+  }
+  BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME );
+}
+
 
 
 #pragma mark [>proc func
@@ -325,27 +574,30 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   if( pwk == NULL )
   {
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
-    initWork->charaType[0] = 0;
-    initWork->charaType[1] = 1;
-    initWork->charaType[2] = 2;
-    initWork->charaType[3] = 3;
-    initWork->bgType[0] = 0;
-    initWork->bgType[1] = 1;
-    initWork->bgType[2] = 2;
-    initWork->bgType[3] = 3;
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-    {
-      initWork->mode = LTM_2_MEMBER;
-    }
-    else
-    {
-      initWork->mode = LTM_4_MEMBER;
-    }
+    initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
   }
   else
   {
     initWork = pwk;
   }
+
+  work->charaType[0] = LTCT_DOCTOR_D;
+  work->charaType[1] = LTCT_SUPPORT;
+  work->charaType[2] = LTCT_RIVAL;
+  work->charaType[3] = LTCT_PLAYER_M;
+  work->bgType[0] = 0;
+  work->bgType[1] = 1;
+  work->bgType[2] = 2;
+  work->bgType[3] = 3;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    work->mode = LTM_2_MEMBER;
+  }
+  else
+  {
+    work->mode = LTM_4_MEMBER;
+  }
+
   work->heapId = HEAPID_LOCAL_TVT;
   work->initWork = initWork;
   

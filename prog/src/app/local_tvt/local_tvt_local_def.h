@@ -10,19 +10,26 @@
 //======================================================================
 #pragma once
 
-#include "app/local_tvt_sys.h"
+#include "print/printsys.h"
+#include "print/wordset.h"
 
+#include "app/local_tvt_sys.h"
+#include "local_tvt_type_def.h"
 //======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
 
-#define LTVT_FRAME_MESSAGE (GFL_BG_FRAME1_M)
+#define LTVT_FRAME_MESSAGE (GFL_BG_FRAME0_M)
+#define LTVT_FRAME_NAME    (GFL_BG_FRAME1_M)
 #define LTVT_FRAME_CHARA   (GFL_BG_FRAME2_M)
 #define LTVT_FRAME_BG      (GFL_BG_FRAME3_M)
 
 #define LTVT_CHARA_SCREEN_WIDTH (16)
 #define LTVT_CHARA_SCREEN_HEIGHT (24)
+
+#define LTVT_PLT_MAIN_FONT     (12)
+#define LTVT_PLT_MAIN_WINFRAME (13)
 
 //拡張BGは面ごとに持つので両方0からでOK
 #define LTVT_PLT_CHARA (0)
@@ -61,6 +68,11 @@ typedef struct
 {
   HEAPID heapId;
   
+  LOCAL_TVT_MODE mode;
+  u8             charaType[LOCAL_TVT_MEMBER_MAX];
+  u8             bgType[LOCAL_TVT_MEMBER_MAX];
+  
+  u8 state;
   u8 bufNo;
   u8 transCnt;
   
@@ -71,6 +83,20 @@ typedef struct
   LOCAL_TVT_CHARA *transChara;
   
   LOCAL_TVT_INIT_WORK *initWork;
+  
+  //メッセージ用
+  GFL_TCBLSYS     *tcblSys;
+  GFL_BMPWIN      *msgWin;
+  GFL_FONT        *fontHandle;
+  PRINT_STREAM    *printHandle;
+  GFL_MSGDATA     *msgHandle;
+  GFL_MSGDATA     *talkMsgHandle;
+  STRBUF          *msgStr;
+  WORDSET         *wordSet;
+  PRINT_QUE       *printQue;  
+  //---仮処理---
+  u8 scriptIdx;
+  
 }LOCAL_TVT_WORK;
 
 

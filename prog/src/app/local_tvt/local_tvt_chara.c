@@ -24,6 +24,9 @@
 
 #define LTVT_CHARA_UPDATE_CNT (40)
 
+#define LTVT_CHARA_NAME_WIDTH (16-4)
+#define LTVT_CHARA_NAME_HEIGHT (2)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -58,14 +61,18 @@ struct _LOCAL_TVT_CHARA
 
   NNSG2dCharacterData *charaData;
   void *resData;
+  
+  BOOL isUpdateQue;
+  GFL_BMPWIN  *nameWin;
 
 };
 
-static const u8 charaResList[][2] = {
-    { NARC_local_tvt_chara_01_NCLR , NARC_local_tvt_chara_01_01_NCGR },
-    { NARC_local_tvt_chara_02_NCLR , NARC_local_tvt_chara_02_01_NCGR },
-    { NARC_local_tvt_chara_03_NCLR , NARC_local_tvt_chara_03_01_NCGR },
-    { NARC_local_tvt_chara_04_NCLR , NARC_local_tvt_chara_04_01_NCGR },
+static const u8 charaResList[LTCT_MAX][2] = {
+    { NARC_local_tvt_chara_player_m_NCLR , NARC_local_tvt_chara_player_m_1_NCGR },
+    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR },
+    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR },
+    { NARC_local_tvt_chara_rival_NCLR    , NARC_local_tvt_chara_rival_1_NCGR },
+    { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR },
 };
 
 
@@ -76,6 +83,7 @@ static const u8 bgResList[][2] = {
     { NARC_local_tvt_back_04_NCLR , NARC_local_tvt_back_04_01_NCGR },
 };
 
+static const u8 LOCAL_TVT_CHARA_BASE_POS[4][2] = {{0,0},{16,0},{0,12},{16,12}};
 
 //======================================================================
 //	proto
@@ -86,6 +94,7 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
 static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
 static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId );
 static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , const u32 topOfs , const u32 transOfs , const u32 transSize );
+static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
 
 //--------------------------------------------------------------
 //	‰Šú‰»
@@ -95,18 +104,22 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
   LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( LOCAL_TVT_CHARA ) );
   
   charaWork->charaIdx = charaIdx;
-  charaWork->charaType = work->initWork->charaType[charaIdx];
-  charaWork->bgType = work->initWork->bgType[charaIdx];
+  charaWork->charaType = work->charaType[charaIdx];
+  charaWork->bgType = work->bgType[charaIdx];
   charaWork->charaAnmIdx = 0;
   charaWork->bgAnmIdx = 0;
+  charaWork->isUpdateQue = FALSE;
   
   LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
   LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
+
+  LOCAL_TVT_CHARA_DispName( work , charaWork );
   
   charaWork->state = LTCTS_WAIT_REQ;
   charaWork->resData = NULL;
   
   charaWork->anmCnt = GFUser_GetPublicRand0(LTVT_CHARA_UPDATE_CNT);
+  
   
   return charaWork;
 }
@@ -116,6 +129,7 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
 //--------------------------------------------------------------
 void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
+  GFL_BMPWIN_Delete( charaWork->nameWin );
   if( charaWork->resData != NULL )
   {
     GFL_HEAP_FreeMemory( charaWork->resData );
@@ -130,7 +144,7 @@ void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 //--------------------------------------------------------------
 void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
-  const u32 charSize = (work->initWork->mode == LTM_2_MEMBER?0x6000:0x3000);
+  const u32 charSize = (work->mode == LTM_2_MEMBER?0x6000:0x3000);
   const u32 bufOfs = (work->bufNo==0?0:LTVT_VRAM_PAGE_SIZE);
 
   switch( charaWork->state )
@@ -157,7 +171,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_BG1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType][1] + charaWork->bgAnmIdx );
+    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx );
     charaWork->state = LTCTS_BG2;
     break;
   case LTCTS_BG2:
@@ -188,6 +202,12 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
       charaWork->bgAnmIdx = !charaWork->bgAnmIdx;
     }
   }
+  if( charaWork->isUpdateQue == TRUE &&
+      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+  {
+    GFL_BMPWIN_TransVramCharacter( charaWork->nameWin );
+    charaWork->isUpdateQue = FALSE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -215,7 +235,7 @@ const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA
 static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
   u8  screenHeight;
-  if( work->initWork->mode == LTM_2_MEMBER )
+  if( work->mode == LTM_2_MEMBER )
   {
     screenHeight = LTVT_CHARA_SCREEN_HEIGHT;
   }
@@ -232,7 +252,7 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
                                       (2*16*16) ,
                                       work->heapId );
   GFL_ARCHDL_UTIL_TransVramPaletteEx( work->archandle , 
-                                      bgResList[charaWork->charaType][0] ,
+                                      bgResList[charaWork->bgType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x6000 ,
@@ -263,7 +283,7 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
 static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
   u32 charSize;
-  if( work->initWork->mode == LTM_2_MEMBER )
+  if( work->mode == LTM_2_MEMBER )
   {
     charSize = 0x6000;
   }
@@ -279,7 +299,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType][1] );
+  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
                                     0 ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,
@@ -309,4 +329,56 @@ static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_C
   //OS_TPrintf("[%d]T\n",charaWork->charaIdx);
   GFL_STD_MemCopy32( (void*)((u32)charaWork->charaData->pRawData + topOfs) , (void*)(HW_BG_VRAM + transOfs ) , transSize );
 
+}
+
+//--------------------------------------------------------------
+//	–¼‘O•\Ž¦
+//--------------------------------------------------------------
+static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+{
+  {
+    //BMPWIN‚Ìì¬
+    charaWork->nameWin = GFL_BMPWIN_Create( LTVT_FRAME_NAME , 
+                                            LOCAL_TVT_CHARA_BASE_POS[charaWork->charaIdx][0] + 2,
+                                            LOCAL_TVT_CHARA_BASE_POS[charaWork->charaIdx][1] + 1, 
+                                            LTVT_CHARA_NAME_WIDTH , 
+                                            LTVT_CHARA_NAME_HEIGHT , 
+                                            LTVT_PLT_MAIN_FONT ,
+                                            GFL_BMP_CHRAREA_GET_B );
+    
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( charaWork->nameWin ) , 0x0 );
+    GFL_BMPWIN_TransVramCharacter( charaWork->nameWin );
+    GFL_BMPWIN_MakeScreen( charaWork->nameWin );
+    GFL_BG_LoadScreenReq(LTVT_FRAME_NAME);
+  }
+  
+  {
+    //–¼‘O‘‚­
+    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , charaWork->charaType );
+    u32  strWidth;
+    if( charaWork->charaType == LTCT_PLAYER_M ||
+        charaWork->charaType == LTCT_PLAYER_F )
+    {
+      WORDSET *wordSet;
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
+      wordSet = WORDSET_Create( work->heapId );
+      
+      WORDSET_RegisterPlayerName( wordSet , 0 , mystatus );
+      WORDSET_ExpandStr( wordSet , msgWorkStr , str );
+      GFL_STR_DeleteBuffer( str );
+      
+      WORDSET_Delete( wordSet );
+      
+      str = msgWorkStr;
+    }
+    strWidth = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+    
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+                            ((LTVT_CHARA_NAME_WIDTH*8) - strWidth)/2 , 0 , str ,
+                            work->fontHandle , PRINTSYS_LSB_Make( 1,0xf,0 ) );
+    
+    charaWork->isUpdateQue = TRUE;
+    
+  }
 }
