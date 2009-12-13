@@ -92,20 +92,35 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
 {
 	COMMTALK_EVENT_WORK *ftalk_wk;
-	GMEVENT *event;
+	GMEVENT *event = NULL;
+	INTRUDE_TALK_TYPE talk_type;
 	
-	switch(intcomm->recv_talk_first_attack.talk_type){
-	default:
-	  GF_ASSERT(0);
-	  //break;
-	case INTRUDE_TALK_TYPE_NORMAL:
-  	event = GMEVENT_Create(
-  		gsys, NULL,	CommWasTalkedTo, sizeof(COMMTALK_EVENT_WORK) );
-    break;
-  case INTRUDE_TALK_TYPE_MISSION:
-  	event = GMEVENT_Create(
-  		gsys, NULL,	CommWasTalkedToMission, sizeof(COMMTALK_EVENT_WORK) );
-    break;
+	talk_type = intcomm->recv_talk_first_attack.talk_type;
+	if(talk_type == INTRUDE_TALK_TYPE_MISSION){
+    switch(intcomm->recv_talk_first_attack.mdata.cdata.type){
+    case MISSION_TYPE_ITEM:
+    	event = GMEVENT_Create(
+    		gsys, NULL,	CommWasTalkedToMission, sizeof(COMMTALK_EVENT_WORK) );
+    	break;
+    case MISSION_TYPE_BASIC:
+      //一方的に回復フラグを渡されるだけなので、話しかけられたときは通常会話にさせる
+      talk_type = INTRUDE_TALK_TYPE_NORMAL;
+      break;
+    }
+  }
+
+  if(event == NULL){
+  	switch(talk_type){
+  	default:
+  	  GF_ASSERT(0);
+  	  //break;
+  	case INTRUDE_TALK_TYPE_NORMAL:
+    	event = GMEVENT_Create(
+    		gsys, NULL,	CommWasTalkedTo, sizeof(COMMTALK_EVENT_WORK) );
+      break;
+    case INTRUDE_TALK_TYPE_MISSION: //上で処理が済んでいる
+      break;
+    }
   }
   
 	ftalk_wk = GMEVENT_GetEventWork( event );

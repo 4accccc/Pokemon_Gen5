@@ -174,10 +174,11 @@ static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid)
   connect_num = GFL_NET_GetConnectNum();
   target_no = GFUser_GetPublicRand0(connect_num - 1); // -1 = éÛíçé“ï™
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(i != accept_netid && intcomm->recv_profile & (1 << i)){
+    if(i != accept_netid && (intcomm->recv_profile & (1 << i))){
       if(target_no == 0){
         return i;
       }
+      target_no--;
     }
   }
   

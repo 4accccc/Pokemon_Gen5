@@ -32,6 +32,11 @@
 static void IntrudeEventPrint_ClearStream(INTRUDE_EVENT_MSGWORK *iem);
 static void IntrudeEventPrint_SetupMenu(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys,
   const FLDMENUFUNC_LIST *menulist, int list_max, const FLDMENUFUNC_HEADER *head);
+static void IntrudeEventPrint_SetupPrint(INTRUDE_EVENT_MSGWORK *iem);
+static void IntrudeEventPrint_ExitPrint(INTRUDE_EVENT_MSGWORK *iem);
+static void _PrintMsgWin( INTRUDE_EVENT_MSGWORK *iem, GFL_MSGDATA *msgdata, 
+  FLDMSGWIN *fldmsg_win, u16 msg_id, int x, int y );
+static void IntrudeEventPrint_ExitStream(INTRUDE_EVENT_MSGWORK *iem);
 
 
 //==============================================================================
@@ -58,7 +63,7 @@ void IntrudeEventPrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *g
   iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
   iem->msgdata_mission = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_dat );
   iem->msgdata_mission_mono = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_monolith_dat );
-  iem->msgwin_stream = FLDMSGWIN_STREAM_AddTalkWin( msgBG, iem->msgdata );
+  iem->msgBG = msgBG;
   iem->print_flag = FALSE;
 }
 
@@ -71,10 +76,15 @@ void IntrudeEventPrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *g
 //--------------------------------------------------------------
 void IntrudeEventPrint_ExitFieldMsg(INTRUDE_EVENT_MSGWORK *iem)
 {
-  IntrudeEventPrint_ExitMsgWin(iem);
+  IntrudeEventPrint_ExitStream(iem);
+  IntrudeEventPrint_ExitExtraMsgWin(iem);
+  IntrudeEventPrint_ExitPrint(iem);
   
-  if(iem->msgwin_stream != NULL){
-    FLDMSGWIN_STREAM_Delete(iem->msgwin_stream);
+  if(iem->wordset != NULL){
+    if(iem->msgwin_stream != NULL){
+      FLDMSGWIN_STREAM_Delete(iem->msgwin_stream);
+      iem->msgwin_stream = NULL;
+    }
     FLDMSGBG_DeleteMSGDATA(iem->msgdata);
     FLDMSGBG_DeleteMSGDATA(iem->msgdata_mission);
     FLDMSGBG_DeleteMSGDATA(iem->msgdata_mission_mono);
@@ -82,8 +92,42 @@ void IntrudeEventPrint_ExitFieldMsg(INTRUDE_EVENT_MSGWORK *iem)
     GFL_STR_DeleteBuffer(iem->msgbuf);
     WORDSET_Delete(iem->wordset);
     
-    iem->msgwin_stream = NULL;  //解放した事の印
+    iem->wordset = NULL;  //解放した事の印
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * プリントストリーム出力：初期設定
+ *
+ * @param   iem		
+ */
+//--------------------------------------------------------------
+static void IntrudeEventPrint_SetupStream(INTRUDE_EVENT_MSGWORK *iem)
+{
+  if(iem->msgwin_stream != NULL){
+    if(iem->print_flag == TRUE){
+      IntrudeEventPrint_ClearStream(iem);
+    }
+    return;
+  }
+  iem->msgwin_stream = FLDMSGWIN_STREAM_AddTalkWin( iem->msgBG, iem->msgdata );
+}
+
+//--------------------------------------------------------------
+/**
+ * プリントストリーム出力：削除
+ *
+ * @param   iem		
+ */
+//--------------------------------------------------------------
+static void IntrudeEventPrint_ExitStream(INTRUDE_EVENT_MSGWORK *iem)
+{
+  if(iem->msgwin_stream == NULL){
+    return;
+  }
+  FLDMSGWIN_STREAM_Delete(iem->msgwin_stream);
+  iem->msgwin_stream = NULL;
 }
 
 //--------------------------------------------------------------
@@ -96,9 +140,7 @@ void IntrudeEventPrint_ExitFieldMsg(INTRUDE_EVENT_MSGWORK *iem)
 //--------------------------------------------------------------
 static void _StartStream(INTRUDE_EVENT_MSGWORK *iem, STRBUF *strbuf)
 {
-  if(iem->print_flag == TRUE){
-    IntrudeEventPrint_ClearStream(iem);
-  }
+  IntrudeEventPrint_SetupStream(iem);
   
   FLDMSGWIN_STREAM_PrintStrBufStart( iem->msgwin_stream, 0, 0, strbuf );
   iem->print_flag = TRUE;
@@ -190,6 +232,68 @@ BOOL IntrudeEventPrint_LastKeyWait(void)
   return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ：初期設定
+ *
+ * @param   iem		
+ */
+//--------------------------------------------------------------
+static void IntrudeEventPrint_SetupPrint(INTRUDE_EVENT_MSGWORK *iem)
+{
+  if(iem->fldmsg_win == NULL){
+    iem->fldmsg_win = FLDMSGWIN_Add(iem->msgBG, iem->msgdata, 1, 19, 30, 4);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ：削除
+ *
+ * @param   iem		
+ */
+//--------------------------------------------------------------
+static void IntrudeEventPrint_ExitPrint(INTRUDE_EVENT_MSGWORK *iem)
+{
+  if(iem->fldmsg_win != NULL){
+    FLDMSGWIN_Delete(iem->fldmsg_win);
+    iem->fldmsg_win = NULL;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ：文字描画
+ *
+ * @param   iem		
+ * @param   msgdata		
+ * @param   msg_id    メッセージID
+ * @param   x		      描画位置X
+ * @param   y		      描画位置Y
+ */
+//--------------------------------------------------------------
+static void _PrintMsgWin( INTRUDE_EVENT_MSGWORK *iem, GFL_MSGDATA *msgdata, FLDMSGWIN *fldmsg_win, u16 msg_id, int x, int y )
+{
+  GFL_MSG_GetString( msgdata, msg_id, iem->tmpbuf );
+  WORDSET_ExpandStr( iem->wordset, iem->msgbuf, iem->tmpbuf );
+  FLDMSGWIN_PrintStrBuf( fldmsg_win, x, y, iem->msgbuf );
+}
+
+//==================================================================
+/**
+ * 文字一括描画
+ *
+ * @param   iem		
+ * @param   msg_id		メッセージID
+ * @param   x		      描画位置X
+ * @param   y		      描画位置Y
+ */
+//==================================================================
+void IntrudeEventPrint_Print(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id, int x, int y)
+{
+  IntrudeEventPrint_SetupPrint(iem);
+  _PrintMsgWin( iem, iem->msgdata, iem->fldmsg_win, msg_id, x, y );
+}
 
 
 
@@ -243,14 +347,13 @@ static void IntrudeEventPrint_SetupMenu(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK
   const FLDMENUFUNC_LIST *menulist, int list_max, const FLDMENUFUNC_HEADER *head)
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
   FLDMENUFUNC_LISTDATA *fldmenu_listdata;
   
   GF_ASSERT(iem->fldmenu_func == NULL && iem->msgdata != NULL);
   
   fldmenu_listdata = FLDMENUFUNC_CreateMakeListData(
       menulist, list_max, iem->msgdata, INTRUDE_EVENT_HEAPID);
-  iem->fldmenu_func = FLDMENUFUNC_AddMenu(msgBG, head, fldmenu_listdata);
+  iem->fldmenu_func = FLDMENUFUNC_AddMenu(iem->msgBG, head, fldmenu_listdata);
 }
 
 //--------------------------------------------------------------
@@ -313,10 +416,9 @@ void IntrudeEventPrint_SetupMainMenu(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *g
 void IntrudeEventPrint_SetupYesNo(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys)
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
 
   GF_ASSERT(iem->fldmenu_func == NULL && iem->msgdata != NULL);
-  iem->fldmenu_func = FLDMENUFUNC_AddYesNoMenu(msgBG, FLDMENUFUNC_YESNO_YES);
+  iem->fldmenu_func = FLDMENUFUNC_AddYesNoMenu(iem->msgBG, FLDMENUFUNC_YESNO_YES);
 }
 
 //--------------------------------------------------------------
@@ -354,7 +456,7 @@ FLDMENUFUNC_YESNO IntrudeEventPrint_SelectYesNo(INTRUDE_EVENT_MSGWORK *iem)
 //==============================================================================
 //==================================================================
 /**
- * メッセージウィンドウ：セットアップ
+ * メッセージウィンドウ(会話以外)：セットアップ
  *
  * @param   iem		
  * @param   gsys		
@@ -364,38 +466,17 @@ FLDMENUFUNC_YESNO IntrudeEventPrint_SelectYesNo(INTRUDE_EVENT_MSGWORK *iem)
  * @param   size_y		サイズY(キャラクタ単位)
  */
 //==================================================================
-void IntrudeEventPrint_SetupMsgWin(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys, int bmp_x, int bmp_y, int size_x, int size_y)
+void IntrudeEventPrint_SetupExtraMsgWin(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys, int bmp_x, int bmp_y, int size_x, int size_y)
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
 
-  GF_ASSERT(iem->fldmsg_win == NULL);
-  iem->fldmsg_win = FLDMSGWIN_Add(msgBG, iem->msgdata, bmp_x, bmp_y, size_x, size_y);
-}
-
-//--------------------------------------------------------------
-/**
- * メッセージウィンドウ：文字描画
- *
- * @param   iem		
- * @param   msgdata		
- * @param   msg_id    メッセージID
- * @param   x		      描画位置X
- * @param   y		      描画位置Y
- */
-//--------------------------------------------------------------
-static void _PrintMsgWin( INTRUDE_EVENT_MSGWORK *iem, GFL_MSGDATA *msgdata, u16 msg_id, int x, int y )
-{
-  GF_ASSERT(iem->fldmsg_win != NULL);
-  
-  GFL_MSG_GetString( msgdata, msg_id, iem->tmpbuf );
-  WORDSET_ExpandStr( iem->wordset, iem->msgbuf, iem->tmpbuf );
-  FLDMSGWIN_PrintStrBuf( iem->fldmsg_win, x, y, iem->msgbuf );
+  GF_ASSERT(iem->fldmsg_win_extra == NULL);
+  iem->fldmsg_win_extra = FLDMSGWIN_Add(iem->msgBG, iem->msgdata, bmp_x, bmp_y, size_x, size_y);
 }
 
 //==================================================================
 /**
- * メッセージウィンドウ：文字描画 mission_monolith.gmm
+ * メッセージウィンドウ(会話以外)：文字描画 mission_monolith.gmm
  *
  * @param   iem		
  * @param   msg_id    メッセージID
@@ -403,23 +484,23 @@ static void _PrintMsgWin( INTRUDE_EVENT_MSGWORK *iem, GFL_MSGDATA *msgdata, u16 
  * @param   y		      描画位置Y
  */
 //==================================================================
-void IntrudeEventPrint_PrintMsgWin_MissionMono( INTRUDE_EVENT_MSGWORK *iem, u16 msg_id, int x, int y )
+void IntrudeEventPrint_PrintExtraMsgWin_MissionMono( INTRUDE_EVENT_MSGWORK *iem, u16 msg_id, int x, int y )
 {
-  _PrintMsgWin( iem, iem->msgdata_mission_mono, msg_id, x, y );
+  _PrintMsgWin( iem, iem->msgdata_mission_mono, iem->fldmsg_win_extra, msg_id, x, y );
 }
 
 //==================================================================
 /**
- * メッセージウィンドウ：削除
+ * メッセージウィンドウ(会話以外)：削除
  *
  * @param   iem		
  */
 //==================================================================
-void IntrudeEventPrint_ExitMsgWin(INTRUDE_EVENT_MSGWORK *iem)
+void IntrudeEventPrint_ExitExtraMsgWin(INTRUDE_EVENT_MSGWORK *iem)
 {
-  if(iem->fldmsg_win == NULL){
+  if(iem->fldmsg_win_extra == NULL){
     return;
   }
-  FLDMSGWIN_Delete(iem->fldmsg_win);
-  iem->fldmsg_win = NULL;
+  FLDMSGWIN_Delete(iem->fldmsg_win_extra);
+  iem->fldmsg_win_extra = NULL;
 }

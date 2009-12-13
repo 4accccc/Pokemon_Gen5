@@ -776,7 +776,7 @@ static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk 
 	switch( *seq ){
   case SEQ_INIT:
     MISSIONDATA_Wordset(intcomm,
-       &(MISSION_GetResultData(&intcomm->mission))->mission_data, talk->iem.wordset, talk->heapID);
+       MISSION_GetRecvData(&intcomm->mission), talk->iem.wordset, talk->heapID);
     IntrudeEventPrint_StartStream(&talk->iem, MissionBasicMsgID[0] + 0);
     (*seq)++;
     break;
@@ -886,7 +886,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
 	switch( *seq ){
   case SEQ_INIT:
-    IntrudeEventPrint_SetupMsgWin(&talk->iem, gsys, 1, 1, 32-2, 16);
+    IntrudeEventPrint_SetupExtraMsgWin(&talk->iem, gsys, 1, 1, 32-2, 16);
     
     MISSIONDATA_Wordset(intcomm,
        &(MISSION_GetResultData(&intcomm->mission))->mission_data, talk->iem.wordset, talk->heapID);
@@ -897,14 +897,20 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
       explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
       
-      IntrudeEventPrint_PrintMsgWin_MissionMono(&talk->iem, title_msgid, 8, 0);
-      IntrudeEventPrint_PrintMsgWin_MissionMono(&talk->iem, explain_msgid, 8, 16);
+      IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, title_msgid, 8, 0);
+      IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, explain_msgid, 8, 16);
+      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){ //¬Œ÷
+        IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys004, 0, 0);
+      }
+      else{ //Ž¸”s
+        IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys002, 0, 0);
+      }
     }
     (*seq)++;
     break;
   case SEQ_KEY_WAIT:
     if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
-      IntrudeEventPrint_ExitMsgWin(&talk->iem);
+      IntrudeEventPrint_ExitExtraMsgWin(&talk->iem);
       (*seq) = SEQ_POINT_GET_CHECK;
     }
     break;
