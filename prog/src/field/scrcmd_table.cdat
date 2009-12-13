@@ -414,8 +414,8 @@
 
   DEF_CMD( EvCmdSetWarpID, EV_SEQ_SET_WARP_ID )
   DEF_CMD( EvCmdChangeMapReplaceFlag, EV_SEQ_CHANGE_MAP_REPLACE_FLAG )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSetSpLocationHere, EV_SEQ_SET_SP_LOCATION_HERE )
+  DEF_CMD( EvCmdSetSpLocationDirect, EV_SEQ_SET_SP_LOCATION_DIRECT )
 
   DEF_CMD( EvCmdGetZukanCount, EV_SEQ_GET_ZUKAN_COUNT )
   DEF_CMD( EvCmdSetZukanFlag, EV_SEQ_SET_ZUKAN_FLAG )
@@ -694,7 +694,7 @@
 
   DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )
   DEF_CMD( EvCmdCallTVTDemo, EV_SEQ_CALL_TVT_DEMO )
-  NO_CMD()
+  DEF_CMD( EvCmdGameClearDemo, EV_SEQ_GOTO_GAMECLEAR )
   NO_CMD()
 
   //ƒhƒ‰ƒSƒ“ƒWƒ€

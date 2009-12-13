@@ -23,3 +23,8 @@
 extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );
 
 
+//--------------------------------------------------------------
+//  ゲームクリア処理呼び出し
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk );
+

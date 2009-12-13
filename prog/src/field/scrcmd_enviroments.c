@@ -31,6 +31,7 @@
 
 #include "field/map_matrix.h"   //MAP_MATRIX
 #include "map_replace.h"    //MAPREPLACE_ChangeFlag
+#include "field/field_const.h"  //GRID_TO_FX32
 
 
 //======================================================================
@@ -408,6 +409,48 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 特殊接続先の設定：現在位置を記憶
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetSpLocationHere( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
+  LOCATION spLoc;
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gamedata );
+  const VecFx32 * vec = PLAYERWORK_getPosition( player );
+  LOCATION_SetDirect( &spLoc, PLAYERWORK_getZoneID( player ), 
+      PLAYERWORK_getDirection_Type( player ), vec->x, vec->y, vec->z );
+  GAMEDATA_SetSpecialLocation( gamedata, &spLoc );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 特殊接続先の設定：直接指定
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetSpLocationDirect( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
+  LOCATION spLoc;
+
+  u16 zone_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 dir = SCRCMD_GetVMWorkValue( core, work );
+  u16 gx = SCRCMD_GetVMWorkValue( core, work );
+  u16 gy = SCRCMD_GetVMWorkValue( core, work );
+  u16 gz = SCRCMD_GetVMWorkValue( core, work );
+
+  LOCATION_SetDirect( &spLoc, zone_id, dir, 
+      GRID_TO_FX32( gx ), GRID_TO_FX32( gy ), GRID_TO_FX32( gz ) );
+  GAMEDATA_SetSpecialLocation( gamedata, &spLoc );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**

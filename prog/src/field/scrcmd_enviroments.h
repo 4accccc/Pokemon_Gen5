@@ -26,6 +26,8 @@ extern VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdSetSpLocationHere( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSetSpLocationDirect( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk );

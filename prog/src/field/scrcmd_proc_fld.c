@@ -101,3 +101,26 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( scw, event );
   return VMCMD_RESULT_SUSPEND;
 }
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief ゲームクリア処理呼び出し
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GMEVENT * call_event;
+
+  //スクリプト終了後、指定したイベントに遷移する
+  SCRIPT_EntryNextEvent( sc, call_event );
+  
+  VM_End( core );   //スクリプト終了
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
