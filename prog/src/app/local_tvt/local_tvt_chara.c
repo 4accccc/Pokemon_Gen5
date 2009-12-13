@@ -56,6 +56,7 @@ struct _LOCAL_TVT_CHARA
   u8 charaAnmIdx;
   u8 bgAnmIdx;
   u8 anmCnt;
+  u8 nameLen;
   
   LOCAL_TVT_CHARA_TRANS_STATE state;
 
@@ -82,8 +83,6 @@ static const u8 bgResList[][2] = {
     { NARC_local_tvt_back_03_NCLR , NARC_local_tvt_back_03_01_NCGR },
     { NARC_local_tvt_back_04_NCLR , NARC_local_tvt_back_04_01_NCGR },
 };
-
-static const u8 LOCAL_TVT_CHARA_BASE_POS[4][2] = {{0,0},{16,0},{0,12},{16,12}};
 
 //======================================================================
 //	proto
@@ -355,7 +354,6 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
   {
     //–¼‘O‘‚­
     STRBUF *str = GFL_MSG_CreateString( work->msgHandle , charaWork->charaType );
-    u32  strWidth;
     if( charaWork->charaType == LTCT_PLAYER_M ||
         charaWork->charaType == LTCT_PLAYER_F )
     {
@@ -372,13 +370,19 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
       
       str = msgWorkStr;
     }
-    strWidth = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+    charaWork->nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
     
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
-                            ((LTVT_CHARA_NAME_WIDTH*8) - strWidth)/2 , 0 , str ,
+                            ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 0 , str ,
                             work->fontHandle , PRINTSYS_LSB_Make( 1,0xf,0 ) );
     
+    GFL_STR_DeleteBuffer( str );
     charaWork->isUpdateQue = TRUE;
     
   }
+}
+
+const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
+{
+  return charaWork->nameLen;
 }

@@ -28,6 +28,10 @@
 //======================================================================
 #pragma mark [> define
 #define LTVT_MSG_MSGWIN_CGX (1)
+
+
+const u8 LOCAL_TVT_CHARA_BASE_POS[LOCAL_TVT_MEMBER_MAX][2] = {{0,0},{16,0},{0,12},{16,12}};
+
 //======================================================================
 //	enum
 //======================================================================
@@ -75,11 +79,14 @@ static const GFL_DISP_VRAM vramBank = {
 static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work );
 static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work );
+static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work );
+static void LOCAL_TVT_DispRecIcon( LOCAL_TVT_WORK *work , const u8 idx );
+static void LOCAL_TVT_HideRecIcon( LOCAL_TVT_WORK *work );
 
 static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_MSG_TermMessage( LOCAL_TVT_WORK *work );
@@ -104,6 +111,8 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   {
     work->charaWork[i] = LOCAL_TVT_CHARA_Init( work , i );
   }
+
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( LOCAL_TVT_VBlankFunc , work , 8 );
   
 
   work->transCnt = 0;
@@ -124,7 +133,16 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
 {
   u8 i;
 
+  GFL_TCB_DeleteTask( work->vBlankTcb );
+
   LOCAL_TVT_MSG_TermMessage( work );
+
+  GFL_CLACT_WK_Remove( work->clwkRecIcon );
+  GFL_CLGRP_PLTT_Release( work->cellRes[LTCR_PLT] );
+  GFL_CLGRP_CGR_Release( work->cellRes[LTCR_NCG] );
+  GFL_CLGRP_CELLANIM_Release( work->cellRes[LTCR_ANM] );
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
+
 
   for( i=0 ; i<work->mode ; i++ )
   {
@@ -178,11 +196,13 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
         {
           if( work->scriptIdx < 5 )
           {
+            LOCAL_TVT_DispRecIcon( work , work->scriptIdx%2 );
             LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
             LOCAL_TVT_MSG_DispMessage( work , work->scriptIdx );
           }
           else
           {
+            LOCAL_TVT_HideRecIcon( work );
             work->state = LTS_FADEOUT;
           }
           work->scriptIdx++;
@@ -272,6 +292,10 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
   
   LOCAL_TVT_MSG_UpdateMessage( work );
   
+  //OBJの更新
+  GFL_CLACT_SYS_Main();
+
+  
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
@@ -279,7 +303,14 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
   }
   return FALSE;
 }
-
+//--------------------------------------------------------------
+//	VBlankTcb
+//--------------------------------------------------------------
+static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
+{
+  //OBJの更新
+  GFL_CLACT_SYS_VBlankFunc();
+}
 //--------------------------------------------------------------
 //  グラフィック系初期化
 //--------------------------------------------------------------
@@ -342,11 +373,22 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     LOCAL_TVT_SetupBgFunc( &header_main3 , LTVT_FRAME_BG      , GFL_BG_MODE_256X16 );
     
   }
-  
+  //OBJ系の初期化
+  {
+    GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+    GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+    
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+    //GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 4 , 0, work->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+  }
 }
 
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work )
 {
+  GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( LTVT_FRAME_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_CHARA );
   GFL_BG_FreeBGControl( LTVT_FRAME_NAME );
@@ -392,7 +434,48 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
                                    datId ,
                                    LTVT_FRAME_BG ,
                                    0,0,FALSE,work->heapId );
+  //セル
+  {
+    work->cellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterEx( work->archandle , 
+          NARC_local_tvt_local_tvt_obj_NCLR , CLSYS_DRAW_MAIN , 
+          LTVT_PLT_OBJ_MAIN*32 , 0 , 1 , work->heapId  );
+    work->cellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( work->archandle , 
+          NARC_local_tvt_local_tvt_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( work->archandle , 
+          NARC_local_tvt_local_tvt_obj_NCER , NARC_local_tvt_local_tvt_obj_NANR, work->heapId  );
+  }
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+
+    work->clwkRecIcon = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[LTCR_NCG],
+              work->cellRes[LTCR_PLT],
+              work->cellRes[LTCR_ANM],
+              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkRecIcon , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRecIcon , TRUE );
+  }
 }
+
+static void LOCAL_TVT_DispRecIcon( LOCAL_TVT_WORK *work , const u8 idx )
+{
+  const u8 nameLen = LOCAL_TVT_CHARA_GetNameLen( work->charaWork[idx] );
+  GFL_CLACTPOS pos;
+  pos.x = LOCAL_TVT_CHARA_BASE_POS[idx][0]*8 + 64 + nameLen/2 + 16;
+  pos.y = LOCAL_TVT_CHARA_BASE_POS[idx][1]*8 + 16;
+  GFL_CLACT_WK_SetPos( work->clwkRecIcon , &pos , CLSYS_DRAW_MAIN );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkRecIcon , TRUE );
+}
+static void LOCAL_TVT_HideRecIcon( LOCAL_TVT_WORK *work )
+{
+  GFL_CLACT_WK_SetDrawEnable( work->clwkRecIcon , FALSE );
+}
+
 
 #pragma mark [>message func
 static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
@@ -617,6 +700,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
 
   if( pwk == NULL )
   {
+    GAMEDATA_Delete( work->initWork->gameData );
     GFL_HEAP_FreeMemory( work->initWork );
   }
   GFL_PROC_FreeWork( proc );

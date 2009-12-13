@@ -172,6 +172,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
   }
   {
     GFL_CLWK_DATA cellInitData;
+    
     cellInitData.softpri = 10;
     cellInitData.bgpri = 0;
     cellInitData.pos_x = MB_CAP_DOWN_BALL_X;

@@ -360,10 +360,10 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
-  //DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
-  //param->demo_id = SCRCMD_GetVMWorkValue( core, wk );
-
-  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, NULL, NULL, NULL );
+  LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
+  param->scriptId = demo_id;
+  param->gameData = SCRCMD_WORK_GetGameData( work );
+  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param, NULL, NULL );
 
   return VMCMD_RESULT_SUSPEND;
 }

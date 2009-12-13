@@ -31,6 +31,8 @@
 #define LTVT_PLT_MAIN_FONT     (12)
 #define LTVT_PLT_MAIN_WINFRAME (13)
 
+#define LTVT_PLT_OBJ_MAIN     (0)
+
 //拡張BGは面ごとに持つので両方0からでOK
 #define LTVT_PLT_CHARA (0)
 #define LTVT_PLT_BG (0)
@@ -57,6 +59,15 @@ typedef enum
   LTTS_MAX,
 }LOCAL_TVT_TRANS_STATE;
 
+typedef enum
+{
+  LTCR_PLT,
+  LTCR_NCG,
+  LTCR_ANM,
+
+  LTCR_MAX,
+  
+}LOCAL_TVT_CELL_RES;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -67,7 +78,8 @@ typedef struct _LOCAL_TVT_CHARA LOCAL_TVT_CHARA;
 typedef struct
 {
   HEAPID heapId;
-  
+  GFL_TCB *vBlankTcb;
+
   LOCAL_TVT_MODE mode;
   u8             charaType[LOCAL_TVT_MEMBER_MAX];
   u8             bgType[LOCAL_TVT_MEMBER_MAX];
@@ -84,7 +96,12 @@ typedef struct
   
   LOCAL_TVT_INIT_WORK *initWork;
   
-  //メッセージ用
+
+  u32 cellRes[LTCR_MAX];
+  GFL_CLUNIT  *cellUnit;
+  GFL_CLWK    *clwkRecIcon;
+  
+    //メッセージ用
   GFL_TCBLSYS     *tcblSys;
   GFL_BMPWIN      *msgWin;
   GFL_FONT        *fontHandle;
@@ -104,4 +121,4 @@ typedef struct
 //	proto
 //======================================================================
 #pragma mark [> proto
-
+extern const u8 LOCAL_TVT_CHARA_BASE_POS[LOCAL_TVT_MEMBER_MAX][2];
