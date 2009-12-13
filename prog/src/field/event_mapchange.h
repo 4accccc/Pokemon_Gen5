@@ -27,7 +27,7 @@
  * @brief ゲーム開始イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
+extern GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
 
 //------------------------------------------------------------------
 /**

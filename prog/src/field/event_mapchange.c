@@ -57,6 +57,11 @@
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
 #include "ev_time.h"  //EVTIME_Update
 
+#ifdef PM_DEBUG
+#include "../gamesystem/debug_data.h"
+FS_EXTERN_OVERLAY(debug_data);
+#endif
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -93,13 +98,6 @@ typedef struct {
   LOCATION loc_req;
 }FIRST_MAPIN_WORK;
 
-typedef struct GMK_ASSIGN_DATA_tag
-{
-  u32 ZoneID;
-  u16 ResNum;
-  u16 ObjNum;
-}GMK_ASSIGN_DATA;
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
@@ -119,9 +117,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     switch(game_init_work->mode){
     case GAMEINIT_MODE_FIRST:
       SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
-      { 
-        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-      }
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
       //新しいマップモードなど機能指定を行う
       MAPCHG_setupMapTools( gsys, &fmw->loc_req );
       //新しいマップID、初期位置をセット
@@ -130,9 +126,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 
     case GAMEINIT_MODE_DEBUG:
       SCRIPT_CallDebugGameStartInitScript( gsys, GFL_HEAPID_APP );
-      { 
-        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-      }
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
       //新しいマップモードなど機能指定を行う
       MAPCHG_setupMapTools( gsys, &fmw->loc_req );
       //新しいマップID、初期位置をセット
@@ -224,7 +218,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
  * きちんと関数分割する必要がある
  */
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
+GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 {
   FIRST_MAPIN_WORK * fmw;
   GMEVENT * event;
@@ -242,9 +236,18 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
   case GAMEINIT_MODE_FIRST:
     LOCATION_SetGameStart(&fmw->loc_req);
     break;
+#ifdef PM_DEBUG
   case GAMEINIT_MODE_DEBUG:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
+    //適当に手持ちポケモンをAdd
+    DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+    //デバッグアイテム追加
+    DEBUG_MYITEM_MakeBag( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
+    
     LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
     break;
+#endif //PM_DEBUG
   }
   return event;
 }
@@ -1402,6 +1405,13 @@ void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
 //---------------------------------------------------------------------------
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
 {
+  typedef struct GMK_ASSIGN_DATA_tag
+  {
+    u32 ZoneID;
+    u16 ResNum;
+    u16 ObjNum;
+  }GMK_ASSIGN_DATA;
+
   GIMMICKWORK *work;
   //ギミックワーク取得
   work = GAMEDATA_GetGimmickWork(gamedata);

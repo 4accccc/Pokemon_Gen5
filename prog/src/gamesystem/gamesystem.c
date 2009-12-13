@@ -25,11 +25,6 @@
 
 #include "field/zonedata.h"
 
-#ifdef PM_DEBUG
-#include "debug_data.h"
-FS_EXTERN_OVERLAY(debug_data);
-#endif
-
 
 
 
@@ -116,33 +111,12 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GFL_STD_MemClear(gsys, work_size);
 	GameSysWork = gsys;
 	GameSystem_Init(gsys, HEAPID_WORLD, game_init);
-#if 1		/* 暫定的にプロセス登録 */
-	switch(game_init->mode){
-	case GAMEINIT_MODE_CONTINUE:
-		{
-			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
-			GAMESYSTEM_SetEvent(gsys, event);
-		}
-		break;
-	case GAMEINIT_MODE_DEBUG:
-#ifdef PM_DEBUG
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
-    //適当に手持ちポケモンをAdd
-    DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
-    //デバッグアイテム追加
-    DEBUG_MYITEM_MakeBag( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
-    
-#endif //PM_DEBUG
-    /* FALL THROUGH */
-	case GAMEINIT_MODE_FIRST:
-    {
-			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
-			GAMESYSTEM_SetEvent(gsys, event);
-    }
-		break;
-	}
-#endif
+
+  { //ゲーム開始イベントの生成
+    GMEVENT * event = EVENT_GameStart(gsys, game_init);
+    GAMESYSTEM_SetEvent(gsys, event);
+  }
+
 	return GFL_PROC_RES_FINISH;
 }
 //------------------------------------------------------------------
