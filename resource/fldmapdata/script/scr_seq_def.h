@@ -1820,53 +1820,94 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _EYE_TRAINER_MOVE_SET 視線：トレーナー移動呼び出し
+ *  @def  _EYE_TRAINER_MOVE_SET
+ *  @brief  視線：トレーナー移動呼び出し
  *  @param pos 移動させるトレーナー データ番号0,1
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-  .macro  _EYE_TRAINER_MOVE_SET  pos
+#define _EYE_TRAINER_MOVE_SET( pos ) \
+    _ASM_EYE_TRAINER_MOVE_SET pos
+
+  .macro  _ASM_EYE_TRAINER_MOVE_SET  pos
   .short  EV_SEQ_EYE_TRAINER_MOVE_SET
   .short  \pos
   .endm
  
 //--------------------------------------------------------------
 /**
- *  _EYE_TRAINER_MOVE_SET 視線：トレーナー移動　シングル
+ *  @def  _EYE_TRAINER_MOVE_SINGLE
+ *  @brief  視線：トレーナー移動　シングル
  *  @param pos 移動させるトレーナー データ番号0,1
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-  .macro  _EYE_TRAINER_MOVE_SINGLE pos
+#define _EYE_TRAINER_MOVE_SINGLE( pos ) \
+    _ASM_EYE_TRAINER_MOVE_SINGLE pos
+
+  .macro  _ASM_EYE_TRAINER_MOVE_SINGLE pos
   .short  EV_SEQ_EYE_TRAINER_MOVE_SINGLE
   .short  \pos
   .endm
  
 //--------------------------------------------------------------
 /**
- *  _EYE_TRAINER_MOVE_SET 視線：トレーナー移動　ダブル
+ *  @def  _EYE_TRAINER_MOVE_DOUBLE
+ *  @brief  視線：トレーナー移動　ダブル
  *  @param none
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-  .macro  _EYE_TRAINER_MOVE_DOUBLE
+#define _EYE_TRAINER_MOVE_DOUBLE()  \
+    _ASM_EYE_TRAINER_MOVE_DOUBLE
+
+  .macro  _ASM_EYE_TRAINER_MOVE_DOUBLE
   .short  EV_SEQ_EYE_TRAINER_MOVE_DOUBLE
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _EYE_TRAINER_TYPE_GET 視線：トレーナータイプ取得
+ *  @def  _EYE_TRAINER_TYPE_GET
+ *  @brief  視線：トレーナータイプ取得
  *  @param ret_wk トレーナータイプ格納先 SCR_EYE_TR_TYPE_SINGLE等が格納される
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-  .macro  _EYE_TRAINER_TYPE_GET ret_wk
+#define _EYE_TRAINER_TYPE_GET( ret_wk ) \
+    _ASM_EYE_TRAINER_TYPE_GET ret_wk
+
+  .macro  _ASM_EYE_TRAINER_TYPE_GET ret_wk
   .short  EV_SEQ_EYE_TRAINER_TYPE_GET
   .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------
 /**
- *  視線：トレーナーID取得
+ *  @def  _EYE_TRAINER_ID_GET
+ *  @brief  視線：トレーナーID取得
+ *  @param  pos     位置指定（SCR_EYE_TR_0 / SCR_EYE_TR_1 )
+ *  @param  ret_wk
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-  .macro  _EYE_TRAINER_ID_GET  pos,ret_wk
+#define _EYE_TRAINER_ID_GET( pos, ret_wk ) \
+  _ASM_EYE_TRAINER_ID_GET  pos,ret_wk
+  .macro  _ASM_EYE_TRAINER_ID_GET  pos,ret_wk
   .short  EV_SEQ_EYE_TRAINER_ID_GET
   .short  \pos
   .short  \ret_wk

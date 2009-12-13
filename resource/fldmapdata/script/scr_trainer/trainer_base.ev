@@ -1,11 +1,12 @@
 
+  DEFINE_LOCAL  LWK_TRAINERID
   DEFINE_LOCAL  LWK_MSGID_START
   DEFINE_LOCAL  LWK_MSGID_AFTER
   DEFINE_LOCAL  LWK_MSGID_NG
 
 //******************************************************************
 //  会話からのトレーナー戦闘
-//  SCWK_TEMP0  トレーナーID
+//  LWK_TRAINERID  トレーナーID
 //  SCWK_TEMP3  退避トレーナーID
 //******************************************************************
 EVENT_START ev_trainer_talk_battle
@@ -13,43 +14,39 @@ EVENT_START ev_trainer_talk_battle
   
   /* //wb null
   //かくれみのアニメチェック
-  _CALL ev_trainer_talk_battle_hide_pulloff
+  _CALL sub_trainer_talk_battle_hide_pulloff
   */
   
   //トレーナーID取得
-  _TRAINER_ID_GET( SCWK_TEMP0 )
+  _TRAINER_ID_GET( LWK_TRAINERID )
   
   //すでに勝利しているトレーナーかチェックして、戦闘勝利後の会話へ
-  _TRAINER_FLAG_CHECK( SCWK_TEMP0, SCWK_ANSWER )
+  _TRAINER_FLAG_CHECK( LWK_TRAINERID, SCWK_ANSWER )
   IF $SCWK_ANSWER == 1 THEN
 
-    _CALL ev_trainer_talk_after
+    _CALL sub_trainer_talk_after_normal
+    //_CALL ev_trainer_talk_after
 
   ELSE
 
-    _TRAINER_BGM_SET( SCWK_TEMP0 ) //視線曲セット
-    _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
-    _TRAINER_MSG_SET( SCWK_TEMP0, LWK_MSGID_START )
-    _CALL ev_trainer_common_11
+    _CALL sub_trainer_talk_battle
 
   ENDIF
   
 EVENT_END
 
-ev_trainer_common_11:
-  //_AB_KEYWAIT()   メッセージ側にキー送りがあるためここでのウェイトは不要
+//ev_trainer_common_11:
+sub_trainer_talk_battle:
+  _TRAINER_BGM_SET( LWK_TRAINERID ) //視線曲セット
+  _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
+  _TRAINER_MSG_SET( LWK_TRAINERID, LWK_MSGID_START )
   _BALLOONWIN_CLOSE()
   
-  /*
-  //通常、再戦トレーナーにかかわらず、
-  //戦闘後に表示方向固定の動作コードをセットするように変更(06.07.10)
-  //話しかけのみしか使えないコマンドなので注意！
-  _BTL_SEARCHER_DIR_MV_SET
-  */
+  /* _BTL_SEARCHER_DIR_MV_SET */
   
   //戦闘呼び出し
-  _TRAINER_BTL_SET( SCWK_TEMP0,0 )
-  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
+  _TRAINER_BTL_SET( LWK_TRAINERID, 0 )
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     _TRAINER_WIN()
@@ -57,12 +54,8 @@ ev_trainer_common_11:
     _TRAINER_LOSE()
   ENDIF
 
-  //これを外さないと、再戦トレーナーIDが書き換わってしまう！
-  //トレーナーID取得(一応)
-  //_TRAINER_ID_GET  SCWK_TEMP0
-  
   //トレーナーフラグセット
-  _TRAINER_FLAG_SET( SCWK_TEMP0 )
+  _TRAINER_FLAG_SET( LWK_TRAINERID )
   _RET
 
 //--------------------------------------------------------------------
@@ -71,17 +64,18 @@ ev_trainer_common_11:
 ev_trainer_talk_after:
   /*
   //話しかけたトレーナーが再戦可能かチェック
-  _REVENGE_TRAINER_SEARCH SCWK_TEMP0,SCWK_ANSWER
-  _IFVAL_JUMP        SCWK_ANSWER,NE,0,ev_trainer_revenge
+  _REVENGE_TRAINER_SEARCH LWK_TRAINERID, SCWK_ANSWER
+  IF $SCWK_ANSWER != 0 THEN
+    $LWK_TRAINERID = $SCWK_ANSWER //再戦トレーナーIDセット
+    _JUMP ev_trainer_revenge
+  ENDIF
   _JUMP        sub_trainer_talk_after_normal
   */
 
 sub_trainer_talk_after_normal:
-//  _TALK_START_SE_PLAY() //既に鳴っている
-  
   //メッセージを取得
   _TRAINER_TALK_TYPE_GET(  LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
-  _TRAINER_MSG_SET(  SCWK_TEMP0, LWK_MSGID_AFTER )
+  _TRAINER_MSG_SET(  LWK_TRAINERID, LWK_MSGID_AFTER )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
@@ -93,13 +87,26 @@ sub_trainer_talk_after_normal:
 //--------------------------------------------------------------------
 /*
 ev_trainer_revenge:
-  $SCWK_TEMP3 = $SCWK_ANSWER    //再戦トレーナーIDを退避
+  _TRAINER_BGM_SET( LWK_TRAINERID )                   //視線曲セット
+  _REVENGE_TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG ) //メッセージを取得
+  _TRAINER_MSG_SET( LWK_TRAINERID, LWK_MSGID_START )
 
-  _TRAINER_BGM_SET  SCWK_TEMP0                    //視線曲セット
-  _REVENGE_TRAINER_TALK_TYPE_GET  LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG  //メッセージを取得
-  _TRAINER_MSG_SET  SCWK_TEMP0, LWK_MSGID_START
-  $SCWK_TEMP0 = $SCWK_TEMP3    //退避していた再戦トレーナーIDをセットする
-  _JUMP   ev_trainer_common_11
+  // _BTL_SEARCHER_DIR_MV_SET
+  
+  //戦闘呼び出し
+  _TRAINER_BTL_SET( LWK_TRAINERID, 0 )
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( LWK_TRAINERID )
+  _RET
+
 */
 
 
@@ -107,7 +114,7 @@ ev_trainer_revenge:
 //かくれみのアニメ
 //--------------------------------------------------------------------
 /*
-ev_trainer_talk_battle_hide_pulloff:
+sub_trainer_talk_battle_hide_pulloff:
   //かくれみのアニメチェック
   _MOVE_CODE_GET( SCWK_ANSWER, SCWK_TARGET_OBJID ) //戻り値取得ワーク、話しかけ対象OBJID
   SWITCH $SCWK_ANSWER
@@ -141,7 +148,7 @@ _ANIME_LABEL  anm_trainer_talk_battle_hide_pulloff
 //******************************************************************
 //          視線からのトレーナー戦闘            
 //
-//  SCWK_TEMP0  トレーナーID_0
+//  LWK_TRAINERID  トレーナーID_0
 //  SCWK_TEMP1  トレーナーID_1
 //******************************************************************
 EVENT_START ev_trainer_move_battle
@@ -165,23 +172,23 @@ EVENT_END
 //シングル
 //--------------------------------------------------------------------
 ev_trainer_type_single:
+{
+  DEFINE_LOCAL  LWK_TRID
+
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID )
+
   //視線曲セット
-  _EYE_TRAINER_ID_GET SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_BGM_SET(  SCWK_TEMP0 )
+  _TRAINER_BGM_SET( LWK_TRID )
   
-  _EYE_TRAINER_MOVE_SET SCR_EYE_TR_0        //トレーナー移動処理呼び出し
-  _CALL ev_trainer_type_single_move_end_check
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_0 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE_SINGLE( SCR_EYE_TR_0 )     //移動終了待ち
 
   //移動終了後、会話へ
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_MSG_SET(  SCWK_TEMP0,TRMSG_FIGHT_START )
-  //_AB_KEYWAIT()   メッセージ側にキー送りがあるためここでのウェイトは不要
+  _TRAINER_MSG_SET(  LWK_TRID,TRMSG_FIGHT_START )
   _BALLOONWIN_CLOSE()
   
-  _TRAINER_BTL_SET(  SCWK_TEMP0,0 )
-  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
+  _TRAINER_BTL_SET( LWK_TRID, 0 )
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     _TRAINER_WIN()
@@ -190,45 +197,38 @@ ev_trainer_type_single:
   ENDIF
   
   //トレーナーフラグセット
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET(  SCWK_TEMP0 )
+  _TRAINER_FLAG_SET(  LWK_TRID )
   _RET
-
-//移動終了待ち
-ev_trainer_type_single_move_end_check:
-  _EYE_TRAINER_MOVE_SINGLE SCR_EYE_TR_0
-  _RET
+}
 
 //--------------------------------------------------------------------
 //ダブル
 //--------------------------------------------------------------------
 ev_trainer_type_double:
+{
+  DEFINE_LOCAL  LWK_TRID_01
+  DEFINE_LOCAL  LWK_TRID_02
+
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID_01 )
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_1, LWK_TRID_02 )
+
   //視線曲セット
-  _EYE_TRAINER_ID_GET SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_BGM_SET( SCWK_TEMP0 )
+  _TRAINER_BGM_SET( LWK_TRID_01 )
   
-  _EYE_TRAINER_MOVE_SET SCR_EYE_TR_0        //トレーナー移動処理呼び出し
-  _EYE_TRAINER_MOVE_SET SCR_EYE_TR_1        //トレーナー移動処理呼び出し
-  _CALL ev_trainer_type_double_move_end_check
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_0 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE_DOUBLE() //移動終了待ち
 
   //移動終了後、会話へ
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_MSG_SET(  SCWK_TEMP0,TRMSG_FIGHT_START_1 )
-//  _AB_KEYWAIT()
+  _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START_1 )
   _BALLOONWIN_CLOSE()
   
   //移動終了後、会話へ
-  _EYE_TRAINER_ID_GET SCR_EYE_TR_1,SCWK_ANSWER
-  $SCWK_TEMP1 = $SCWK_ANSWER
-  _TRAINER_MSG_SET(  SCWK_TEMP1,TRMSG_FIGHT_START_2 )
-//  _AB_KEYWAIT()
+  _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START_2 )
   _BALLOONWIN_CLOSE()
   
-//  _TRAINER_BTL_SET( SCWK_TEMP0, SCWK_TEMP1 ) 現状不具合あり シングルで対応
-  _TRAINER_BTL_SET( SCWK_TEMP0, 0 )
+  //TRID_01 == TRID_02のとき、ダブルバトルになる
+  _TRAINER_BTL_SET( LWK_TRID_01, LWK_TRID_02 )
 
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
@@ -239,57 +239,47 @@ ev_trainer_type_double:
   ENDIF
 
   //トレーナーフラグセット
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET(  SCWK_TEMP0 )
+  _TRAINER_FLAG_SET(  LWK_TRID_01 )
+  _TRAINER_FLAG_SET(  LWK_TRID_02 )
 
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
-  $SCWK_TEMP1 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET(  SCWK_TEMP1 )
   _RET
-
-//移動終了待ち
-ev_trainer_type_double_move_end_check:
-  _EYE_TRAINER_MOVE_DOUBLE
-  _RET
+}
 
 //--------------------------------------------------------------------
 //タッグ
 //--------------------------------------------------------------------
 ev_trainer_type_tag:
-/*
-  //視線曲セット
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_BGM_SET  SCWK_TEMP0
+{
+  DEFINE_LOCAL  LWK_TRID_01
+  DEFINE_LOCAL  LWK_TRID_02
 
-  _EYE_TRAINER_MOVE_SET  SCR_EYE_TR_0        //トレーナー移動処理呼び出し
-  _CALL        ev_trainer_type_tag_move_end_check_0
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID_01 )
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_1, LWK_TRID_02 )
+
+  //視線曲セット
+  _TRAINER_BGM_SET( LWK_TRID_01 )
+
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_0 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE_SINGLE( SCR_EYE_TR_0 )     //移動終了待ち
 
   //移動終了後、会話へ
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  //_TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START_1
-  _TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START
+  //_TRAINER_MSG_SET  LWK_TRAINERID,TRMSG_FIGHT_START_1
+  _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START_1 )
   _BALLOONWIN_CLOSE()
 
   //視線曲セット
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
-  $SCWK_TEMP1 = $SCWK_ANSWER
-  _TRAINER_BGM_SET  SCWK_TEMP1
+  _TRAINER_BGM_SET( LWK_TRID_02 )
 
-  _EYE_TRAINER_MOVE_SET  SCR_EYE_TR_1        //トレーナー移動処理呼び出し
-  _CALL        ev_trainer_type_tag_move_end_check_1
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE_SINGLE( SCR_EYE_TR_1 )     //移動終了待ち
 
   //移動終了後、会話へ
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
-  $SCWK_TEMP1 = $SCWK_ANSWER
   //_TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START_2
-  _TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START
+  _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START_2 )
   _BALLOONWIN_CLOSE()
 
-  _TRAINER_BTL_SET  SCWK_TEMP0,SCWK_TEMP1
-  _TRAINER_LOSE_CHECK SCWK_ANSWER
+  _TRAINER_BTL_SET( LWK_TRID_01, LWK_TRID_02 )
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     _TRAINER_WIN()
   ELSE
@@ -297,27 +287,9 @@ ev_trainer_type_tag:
   ENDIF
 
   //トレーナーフラグセット
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
-  $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET  SCWK_TEMP0
+  _TRAINER_FLAG_SET( LWK_TRID_01 )
+  _TRAINER_FLAG_SET( LWK_TRID_02 )
 
-  _EYE_TRAINER_ID_GET  SCR_EYE_TR_1,SCWK_ANSWER
-  $SCWK_TEMP1 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET  SCWK_TEMP1
-*/
-
-//移動終了待ち
-ev_trainer_type_tag_move_end_check_0:
-/*
-  _EYE_TRAINER_MOVE_CHECK  SCR_EYE_TR_0,SCWK_ANSWER
-  _IFVAL_JUMP    SCWK_ANSWER,EQ,0,ev_trainer_type_tag_move_end_check_0  //終了するまでループ
-*/
   _RET
+}
 
-//移動終了待ち
-ev_trainer_type_tag_move_end_check_1:
-/*
-  _EYE_TRAINER_MOVE_CHECK  SCR_EYE_TR_1,SCWK_ANSWER
-  _IFVAL_JUMP    SCWK_ANSWER,EQ,0,ev_trainer_type_tag_move_end_check_1  //終了するまでループ
-*/
-  _RET
