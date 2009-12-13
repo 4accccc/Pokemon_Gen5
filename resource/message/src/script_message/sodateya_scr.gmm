@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T11:46:02"/>
+	<create user="matsumiya" host="W00207" date="2009-12-13T17:57:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<language name="JPN" width="256">よくきたな！
 [1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
 		<language name="JPN_KANJI" width="256">よく来たな！
-[1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
+[1:01:ポケモン種族名:0]は　元気じゃぞ！</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_03">
@@ -485,7 +485,7 @@
 おまえさんの　かわりに
 ポケモンを　そだてて　あげるよ▼
 なにか　そだてて　ほしいのかい？</language>
-		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさんじゃ▼
+		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさん　じゃ▼
 おまえさんの　かわりに
 ポケモンを　育てて　あげるよ▼
 なにか　育てて　ほしいのかい？</language>
@@ -499,10 +499,10 @@
 おまえさんの　かわりに　ポケモンを
 そだてて　あげるよ▼
 きょうは　なにを　しにきたんだい？</language>
-		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさんじゃ▼
-おまえさんの　かわりに　ポケモンを
-そだてて　あげるよ▼
-きょうは　なにを　しにきたんだい？</language>
+		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさん　じゃ▼
+おまえさんの　代わりに
+ポケモンを　育ててあげるよ▼
+今日は　なにを　しにきたんだい？</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -629,7 +629,7 @@
 　いない→oldwoman_03</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は　そだてや　ばあさんから
 [1:01:ポケモン種族名:0]を　ひきとった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　そだてや　ばあさんから
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　育て屋ばあさん　から
 [1:01:ポケモン種族名:0]を　ひきとった！▼</language>
 	</row>
 
