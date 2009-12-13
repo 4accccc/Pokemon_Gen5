@@ -93,6 +93,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/eventdata_system.c \
         field/field_status.c \
         field/event_gameover.c \
+        field/event_gameclear.c \
         field/event_fieldmap_control.c \
         field/event_mapchange.c \
         field/event_fieldmap_menu.c \

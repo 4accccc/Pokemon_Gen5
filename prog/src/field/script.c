@@ -1340,6 +1340,18 @@ void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 
 //------------------------------------------------------------------
 /**
+ * @brief	ゲームクリア時処理のスクリプト実行
+ * @param	gsys      GAMESYS_WORK型のポインタ
+ * @param heapID    テンポラリに使用するヒープ指定
+ */
+//------------------------------------------------------------------
+void SCRIPT_CallGameClearScript( GAMESYS_WORK *gsys, HEAPID heapID )
+{
+  SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_GAMECLEAR_SCRIPT );
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	EVENTではなく特殊スクリプト実行
  * @param	gsys      GAMESYS_WORK型のポインタ
  * @param	scr_id		スクリプトID

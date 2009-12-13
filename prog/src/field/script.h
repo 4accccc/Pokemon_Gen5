@@ -119,6 +119,13 @@ extern void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heap
 
 //------------------------------------------------------------------
 /**
+ * @brief	ゲームクリア時処理のスクリプト実行
+ */
+//------------------------------------------------------------------
+extern void SCRIPT_CallGameClearScript( GAMESYS_WORK *gsys, HEAPID heapID );
+
+//------------------------------------------------------------------
+/**
  * @brief 特殊スクリプト呼び出し：フィールド復帰（初回のみ）
  * @param gsys
  * @param heapID

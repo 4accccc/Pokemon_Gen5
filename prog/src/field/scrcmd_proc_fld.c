@@ -35,8 +35,9 @@
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
-#include "../../../resource/fldmapdata/script/usescript.h"
+//#include "../../../resource/fldmapdata/script/usescript.h"
 
+#include "event_gameclear.h"  //EVENT_GameClear
 #include "app/box2.h"
 
 // ボックスプロセスデータとコールバック関数
@@ -113,8 +114,12 @@ VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
   GMEVENT * call_event;
 
+  call_event = EVENT_GameClear( gsys, GAMECLEAR_MODE_NORMAL );
   //スクリプト終了後、指定したイベントに遷移する
   SCRIPT_EntryNextEvent( sc, call_event );
   
