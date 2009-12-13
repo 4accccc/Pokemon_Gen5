@@ -141,6 +141,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         fmw->loc_req = *spLoc;
         EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
         FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+        MAPCHG_releaseMapTools( gsys );
         //新しいマップモードなど機能指定を行う
         MAPCHG_setupMapTools( gsys, &fmw->loc_req );
         //新しいマップID、初期位置をセット
