@@ -69,20 +69,20 @@ void MUSICAL_DIST_SAVE_UnloadData( SAVE_CONTROL_WORK *sv )
 void* MUSICAL_DIST_SAVE_GetProgramData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
 {
   //‰¼
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , 0 , FALSE , heapId , dataSize);
+  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 0 , FALSE , heapId , dataSize);
 }
 void* MUSICAL_DIST_SAVE_GetMessageData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
 {
   //‰¼
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , 1 , FALSE , heapId , dataSize);
+  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 1 , FALSE , heapId , dataSize);
 }
 void* MUSICAL_DIST_SAVE_GetScriptData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
 {
   //‰¼
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , 2 , FALSE , heapId , dataSize);
+  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 2 , FALSE , heapId , dataSize);
 }
 void* MUSICAL_DIST_SAVE_GetStreamingData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
 {
   //‰¼
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , 3 , FALSE , heapId , dataSize);
+  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 3 , FALSE , heapId , dataSize);
 }

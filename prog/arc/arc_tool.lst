@@ -185,7 +185,11 @@
   ARCID_FLD_RAILSETUP "fieldmap/field_rail_setup.narc"    #レールセットアップ情報
   ARCID_PC_RECOVERY "pc_recovery_anime.narc" # ポケセン回復アニメーション
   ARCID_GYM_NORMAL "fieldmap/gym_normal.narc"  #ノーマルジム
-  ARCID_MUSICAL_PROGRAM "mus_prog_data.narc"  #ミュージカルデフォルト配信データ
+  ARCID_MUSICAL_PROGRAM_01 "mus_prog_data_01.narc"  #ミュージカルデフォルトデータ
+  ARCID_MUSICAL_PROGRAM_02 "mus_prog_data_02.narc"  #ミュージカルデフォルトデータ
+  ARCID_MUSICAL_PROGRAM_03 "mus_prog_data_03.narc"  #ミュージカルデフォルトデータ
+  ARCID_MUSICAL_PROGRAM_04 "mus_prog_data_04.narc"  #ミュージカルデフォルトデータ
+  ARCID_MUSICAL_PROGRAM_05 "mus_prog_data_05.narc"  #ミュージカルデフォルトデータ
   ARCID_FLD3D_CI "fld3d_ci.narc"  #フィールド3Dカットイン用データ
   ARCID_BOX2_GRA  "box_gra.narc"   #ボックス画面グラフィック
   ARCID_FLD3D_CI_SETUP "fld3d_ci_setup.narc"  #フィールド3Dカットインセットアップ用データ

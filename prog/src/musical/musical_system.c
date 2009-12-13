@@ -254,13 +254,23 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   GFL_HEAP_FreeMemory( distData );
 }
 
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID heapId )
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
 {
   //FIXME:セーブデータからの取得
-  distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
-  distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
-  distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
-  distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
+  {
+    distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
+    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
+    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
+    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+  }
+  else
+  {
+    distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
+    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
+    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
+    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+  }
 }
 
 #pragma mark [>proc 
@@ -289,7 +299,7 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   }
   else
   {
-    MUSICAL_SYSTEM_LoadDistributeData( work->distData , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData( work->distData , 0 , HEAPID_MUSICAL_STRM );
     work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
     work->state = MPS_INIT_DRESSUP;
     work->commWork = NULL;
@@ -369,7 +379,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
         break;
       
       case MCM_PARENT:  //仮
-        MUSICAL_SYSTEM_LoadDistributeData( work->distData , HEAPID_MUSICAL_STRM );
+        MUSICAL_SYSTEM_LoadDistributeData( work->distData , 0 , HEAPID_MUSICAL_STRM );
         work->state = MPS_INIT_DRESSUP_SEND_MUSICAL_IDX;
         break;
 

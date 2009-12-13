@@ -1,3 +1,4 @@
 #現在デフォルトはフォルダ直下にあるものをコピーします。
+#5個コピーにしたので直下から変えないでください。
+#その代わりに mus_prog_copy_arc.bat でフォルダから直下にコピーします。
 COPY_TARGET_PATH = .
-#COPY_TARGET_PATH = p01

@@ -400,7 +400,7 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
   evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
-  MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , HEAPID_MUSICAL_STRM );
+  MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
   evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
   evWork->commWork = NULL;
 }

@@ -19,6 +19,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_musical_recept_single
+_EVENT_DATA		ev_musical_change_program
 _EVENT_DATA		ev_musical_fan_01
 _EVENT_DATA		ev_musical_fan_02
 _EVENT_DATA		ev_musical_fan_03
@@ -57,6 +58,37 @@ EVENT_START	ev_musical_recept_single
     _BALLOONWIN_CLOSE()
 
   ENDIF
+
+EVENT_END
+
+
+/*************************************************************/
+/*						脚本家								 */
+/*************************************************************/
+EVENT_START	ev_musical_change_program
+
+  _TALK_OBJ_START()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_msucail_program_01, 0 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_02, 1 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_03, 2 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_04, 3 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_05, 4 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_06, 5 )
+	_BMPMENU_MAKE_LIST( msg_msucail_program_07, 6 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	_BALLOONWIN_CLOSE()
+
+	IF $SCWK_ANSWER == 6 THEN
+		//NoFunction!
+	ELSE
+		_SET_MUSICAL_VALUE_SELECT_PROGRAM( SCWK_ANSWER )
+	ENDIF
 
 EVENT_END
 

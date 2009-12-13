@@ -85,5 +85,7 @@ extern const MUSICAL_CONDITION_TYPE MUSICAL_SAVE_GetMaxBefConditionType( MUSICAL
 extern void MUSICAL_SAVE_SetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType , const u8 value );
 extern const u8 MUSICAL_SAVE_GetBefPoint( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetBefPoint( MUSICAL_SAVE *musSave , const u8 point );
+extern const u8 MUSICAL_SAVE_GetProgramNumber( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetProgramNumber( MUSICAL_SAVE *musSave , const u8 num );
 
 

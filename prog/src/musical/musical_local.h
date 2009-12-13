@@ -10,6 +10,9 @@
 #ifndef	MUSICAL_LOCAL_H_
 #define	MUSICAL_LOCAL_H_
 
+//デフォルトでROMに入っている配信データ
+#define MUS_PROGRAM_LOCAL_NUM (5)
+
 //ミュージカルデバッグ用
 #define USE_MUSICAL_EDIT (1)
 
@@ -41,9 +44,11 @@ typedef enum
 //#define MUS_POKE_GRP_TO_ROT(val) (val*(360/32)*65536/360);
 #define MUS_POKE_GRP_TO_ROT(val) (val*(65536/32))	//360を通分
 
-//配信されてくるデータ
+//データパック
 typedef struct
 {
+  u8 programNo;
+  
   void *programData;
   void *messageData;
   void *scriptData;
@@ -56,6 +61,6 @@ typedef struct
 
 MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );
 void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData );
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId );
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID strmHeapId);
 
 #endif	//MUSICAL_LOCAL_H_

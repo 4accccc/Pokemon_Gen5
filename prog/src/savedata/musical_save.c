@@ -47,6 +47,7 @@ void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *musSave)
 	{
     musSave->fanState[i].type = MCT_MAX;
   }
+  musSave->programNumber = 0;
 }
 
 //----------------------------------------------------------
@@ -201,5 +202,15 @@ const u8 MUSICAL_SAVE_GetBefPoint( const MUSICAL_SAVE *musSave )
 void MUSICAL_SAVE_SetBefPoint( MUSICAL_SAVE *musSave , const u8 point )
 {
   musSave->befPoint = point;
+}
+
+const u8 MUSICAL_SAVE_GetProgramNumber( const MUSICAL_SAVE *musSave )
+{
+  return musSave->programNumber;
+}
+
+void MUSICAL_SAVE_SetProgramNumber( MUSICAL_SAVE *musSave , const u8 num )
+{
+  musSave->programNumber = num;
 }
 

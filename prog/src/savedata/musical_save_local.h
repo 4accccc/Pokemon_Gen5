@@ -35,7 +35,10 @@ struct _MUSICAL_SAVE {
   //‘O‰ñ•]‰¿“_
   u8 befPoint;
   
-  u8 padding[3];
+  //‘I‘ğ‚µ‚Ä‚¢‚é‰‰–Ú”Ô†
+  u8 programNumber;
+  
+  u8 padding[2];
 };
 
 #endif //MUSICAL_SAVE_LOCAL_H__

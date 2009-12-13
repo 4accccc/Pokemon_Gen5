@@ -41,6 +41,8 @@
 #define MUSICAL_VALUE_TOPNUM  (1)   //トップ回数
 #define MUSICAL_VALUE_LAST_POINT (2)  //最終評価点
 #define MUSICAL_VALUE_LAST_CONDITION (3)  //最終コンディション
+#define MUSICAL_VALUE_PROGRAM_NUMBER (4)  //選択演目番号
+#define MUSICAL_VALUE_SET_PROGRAM_NUMBER (5)  //選択演目番号設定
 
 //_GET_MUSICAL_FAN_VALUE 用
 #define MUSICAL_VALUE_FAN_TYPE (0)  //見た目

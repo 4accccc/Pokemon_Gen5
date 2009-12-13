@@ -15,5 +15,6 @@
 #define C04R0201_FAN_05                    3
 #define C04R0201_FAN_02                    4
 #define C04R0201_FAN_03                    5
+#define MUSICAL_CHANGE_PROGRAM             6
 
 #endif //ZONE_C04R0201_EVC_H

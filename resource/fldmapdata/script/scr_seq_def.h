@@ -3079,7 +3079,7 @@
 
   .macro  _ASM_GET_MUSICAL_VALUE_LAST_POINT retVal
   .short EV_SEQ_GET_MUSICAL_VALUE
-  .byte 3
+  .byte 2
   .short 0
   .short \retVal
   .endm
@@ -3095,9 +3095,41 @@
 
   .macro  _ASM_GET_MUSICAL_VALUE_LAST_CONDITION retVal
   .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 3
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_SELECT_PROGRAM ミュージカル：選択演目番号
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_SELECT_PROGRAM( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_SELECT_PROGRAM retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_SELECT_PROGRAM retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
   .byte 4
   .short 0
   .short \retVal
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ *  _SET_MUSICAL_VALUE_SELECT_PROGRAM ミュージカル：選択演目番号設定
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _SET_MUSICAL_VALUE_SELECT_PROGRAM( setVal ) \
+    _ASM_SET_MUSICAL_VALUE_SELECT_PROGRAM setVal
+
+  .macro  _ASM_SET_MUSICAL_VALUE_SELECT_PROGRAM setVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 5
+  .short \setVal
+  .short 0
   .endm
 
 //--------------------------------------------------------------

@@ -34,14 +34,26 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/mus_prog_data_01.narc $(TARGETDIR)/mus_prog_data_02.narc  $(TARGETDIR)/mus_prog_data_03.narc  $(TARGETDIR)/mus_prog_data_04.narc  $(TARGETDIR)/mus_prog_data_05.narc
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(COPY_TARGET_PATH)/$(targetname).narc
-	$(COPY) $(COPY_TARGET_PATH)/$(targetname).narc $(TARGETDIR)
+$(TARGETDIR)/mus_prog_data_01.narc: $(COPY_TARGET_PATH)/mus_prog_data_01.narc
+	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_01.narc $(TARGETDIR)
+
+$(TARGETDIR)/mus_prog_data_02.narc: $(COPY_TARGET_PATH)/mus_prog_data_02.narc
+	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_02.narc $(TARGETDIR)
+
+$(TARGETDIR)/mus_prog_data_03.narc: $(COPY_TARGET_PATH)/mus_prog_data_03.narc
+	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_03.narc $(TARGETDIR)
+
+$(TARGETDIR)/mus_prog_data_04.narc: $(COPY_TARGET_PATH)/mus_prog_data_04.narc
+	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_04.narc $(TARGETDIR)
+
+$(TARGETDIR)/mus_prog_data_05.narc: $(COPY_TARGET_PATH)/mus_prog_data_05.narc
+	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_05.narc $(TARGETDIR)
 
 
 #------------------------------------------------------------------------------
@@ -50,7 +62,10 @@ $(TARGETDIR)/$(targetname).narc: $(COPY_TARGET_PATH)/$(targetname).narc
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/mus_prog_data_01.narc
+	rm -f $(TARGETDIR)/mus_prog_data_02.narc
+	rm -f $(TARGETDIR)/mus_prog_data_03.narc
+	rm -f $(TARGETDIR)/mus_prog_data_04.narc
+	rm -f $(TARGETDIR)/mus_prog_data_05.narc
 
 

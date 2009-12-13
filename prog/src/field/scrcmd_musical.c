@@ -169,6 +169,32 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
     *ret_wk = MUSICAL_SAVE_GetBefPoint( musSave );
     break;
   case MUSICAL_VALUE_LAST_CONDITION://最終コンディション
+    {
+      u8 i;
+      u8 max = 0;
+      u8 maxIdx = MCT_MAX;
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        const u8 val = MUSICAL_SAVE_GetBefCondition( musSave , i );
+        if( val > max )
+        {
+          max = val;
+          maxIdx = i;
+        }
+        else if( val == max )
+        {
+          //同点があった場合はその他へ
+          maxIdx = MCT_MAX;
+        }
+      }
+      *ret_wk = maxIdx;
+    }
+    break;
+  case MUSICAL_VALUE_PROGRAM_NUMBER:  //選択演目番号
+    *ret_wk = MUSICAL_SAVE_GetProgramNumber( musSave );
+    break;
+  case MUSICAL_VALUE_SET_PROGRAM_NUMBER:  //選択演目番号設定
+    MUSICAL_SAVE_SetProgramNumber( musSave , val );
     break;
   }
 

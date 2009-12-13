@@ -267,8 +267,8 @@ EVENT_START ev_c04r0202_mus_1st
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
-	_BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT( )
+	_MAP_FADE_END_CHECK()
 
 EVENT_END
 
@@ -277,8 +277,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_2nd
 
-	_BLACK_IN( )
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_IN( )
+	_MAP_FADE_END_CHECK()
 
 	//記憶されてるので1回で良い？
 	//_CALL npc_pos_set_routine
@@ -287,8 +287,8 @@ EVENT_START ev_c04r0202_mus_2nd
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
-	_BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT( )
+	_MAP_FADE_END_CHECK()
 
 EVENT_END
 
@@ -299,8 +299,8 @@ EVENT_START ev_c04r0202_mus_3rd
 
 	DEFINE_LOCAL isLoop		//ループチェック
 
-	_BLACK_IN( )
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_IN( )
+	_MAP_FADE_END_CHECK()
 
 	//記憶されてるので1回で良い？
 	//_CALL npc_pos_set_routine
@@ -347,8 +347,8 @@ EVENT_START ev_c04r0202_mus_3rd
 	 ENDSWITCH
 	_OBJ_ANIME_WAIT()
 */	
-	_BLACK_OUT( )
-	_DISP_FADE_END_CHECK()
+//	_MAP_FADE_BLACK_OUT( )
+//	_MAP_FADE_END_CHECK()
 
 EVENT_END
 
