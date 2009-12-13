@@ -18,65 +18,41 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
 
-#include "event_gameover.h"
+#include "event_gameclear.h"  //GAMECLEAR_MODE
 
 #include "system/main.h"  //HEAPID_～
 
 #include "system/brightness.h"
 
-//#include "system/snd_tool.h"
-//#include "fld_bgm.h"
-
-//#include "system/window.h"
 #include "system/wipe.h"
 
-#include "warpdata.h"			//WARPDATA_～
+//#include "warpdata.h"			//WARPDATA_～
 #include "script.h"       //SCRIPT_CallScript
-#include "event_fieldmap_control.h" //
+//#include "event_fieldmap_control.h" //
 #include "event_mapchange.h"
-
-#include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
 
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
-//#include "situation_local.h"		//Situation_Get～
-//#include "scr_tool.h"
-//#include "mapdefine.h"
-//#include "..\fielddata\script\common_scr_def.h"		//SCRID_GAME_OVER_RECOVER_PC
-//#include "sysflag.h"
-//#include "fld_flg_init.h"			//FldFlgInit_GameOver
-//#include "system/savedata.h"
-//#include "poketool/pokeparty.h"
-//#include "poketool\status_rcv.h"
-
 #include "field/field_msgbg.h"
 #include "system/bmp_winframe.h"
 
-#include "event_gameclear.h"  //GAMECLEAR_MODE
 #include "sound/pm_sndsys.h"  //PMSND_
+
 //==============================================================================================
 //
-//	全滅関連
+//	メッセージ表示関連
 //
 //==============================================================================================
-//#include "system/fontproc.h"						
-//#include "system/msgdata.h"							//MSGMAN_TYPE_DIRECT
-//#include "system/wordset.h"							//WORDSET_Create
 #include "print/wordset.h"
 
-//#include "fld_bmp.h"						
 
-//#include "msgdata/msg.naix"							//NARC_msg_??_dat
-//#include "msgdata/msg_gameover.h"					//msg_all_dead_??
-//#include "arc/
-//#include "system/arc_util.h"
-//#include "system/font_arc.h"
 #include "font/font.naix" //NARC_font_large_gftr
-#include "message.naix"
-#include "msg/msg_gameover.h"
-
-#include "arc/fieldmap/zone_id.h"
+//#include "message.naix"
+//#include "msg/msg_gameover.h"
+#include "arc/script_message.naix"
+#include "msg/script/msg_common_scr.h"
+//#include "arc/fieldmap/zone_id.h"
 
 
 //==============================================================================================
@@ -213,7 +189,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
     //メッセージデータマネージャー作成
     wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-        ARCID_MESSAGE, wk->arc_id, wk->heapID);
+        ARCID_SCRIPT_MESSAGE, wk->arc_id, wk->heapID);
     wk->wordset = WORDSET_Create( wk->heapID );
 
     //ビットマップ追加
@@ -461,6 +437,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		break;
 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
+    gcwk->msg_id = msg_common_report_07;
     GMEVENT_CallProc( event, NO_OVERLAY_ID, &GameClearMsgProcData, gcwk );
     (*seq) ++;
 		break;
@@ -490,6 +467,11 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 
 	case GMCLEAR_SEQ_SAVE_END:
 		//
+    if (gcwk->saveSuccessFlag) {
+      gcwk->msg_id = msg_common_report_04;
+    } else {
+      gcwk->msg_id = msg_common_report_06;
+    }
     GMEVENT_CallProc( event, NO_OVERLAY_ID, &GameClearMsgProcData, gcwk );
 		(*seq) ++;
 		break;
@@ -549,8 +531,8 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   gcwk = GMEVENT_GetEventWork( event );
   gcwk->gsys = gsys;
   gcwk->clear_mode = mode;
-  gcwk->arc_id = NARC_message_gameover_dat;
-  gcwk->msg_id = msg_all_dead_04;
+  gcwk->arc_id = NARC_script_message_common_scr_dat;
+  gcwk->msg_id = msg_common_report_06;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
 
   return event;
