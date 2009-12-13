@@ -398,6 +398,12 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
   
 	partner_id = 0;
 	
+  //　話しかけからダブルバトルへの対応
+  // tr_id_0 == tr_id_1のとき、ダブルバトルが成立する
+  if (tr_id_1 == 0 && SCRIPT_CheckTrainer2vs2Type( tr_id_0 ) == 1 )
+  {
+    tr_id_1 = tr_id_0;
+  }
   {
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
