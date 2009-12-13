@@ -2322,62 +2322,21 @@
 
 //--------------------------------------------------------------
 /**
- *  _TRAINER_FLAG_CHECK トレーナーフラグチェック
- *  @param tr_id チェックするトレーナーID
+ *  @def  _TRAINER_FLAG_CHECK
+ *  @brief  トレーナーフラグチェック
+ *  @param  tr_id   チェックするトレーナーID
+ *  @param  ret_wk  値を受け取るワーク
  */
 //--------------------------------------------------------------
-  .macro  _ASM_TRAINER_FLAG_CHECK tr_id
+#define _TRAINER_FLAG_CHECK( tr_id, ret_wk )  \
+    _ASM_TRAINER_FLAG_CHECK tr_id, ret_wk
+
+  .macro  _ASM_TRAINER_FLAG_CHECK tr_id, ret_wk
   .short  EV_SEQ_TRAINER_FLAG_CHECK
   .short  \tr_id
+  .short  \ret_wk
   .endm
 
-//--------------------------------------------------------------
-/**
- *  _IF_TR_FLAGON_JUMP フラグONの時に分岐(JUMP)
- *  @param tr_id トレーナーID
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_TR_FLAGON_JUMP tr_id,adrs
-  _ASM_TRAINER_FLAG_CHECK \tr_id
-  _IF_JUMP  FLGON,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_TR_FLAGOFF_JUMP フラグOFFの時に分岐(JUMP)
- *  @param tr_id トレーナーID
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_TR_FLAGOFF_JUMP tr_id,adrs
-  _ASM_TRAINER_FLAG_CHECK \tr_id
-  _IF_JUMP  FLGOFF,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_TR_FLAGON_CALL フラグONの時に分岐(CALL)
- *  @param tr_id トレーナーID
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_TR_FLAGON_CALL tr_id,adrs
-  _ASM_TRAINER_FLAG_CHECK \tr_id
-  _IF_CALL  FLGON,\adrs
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _IF_TR_FLAGOFF_CALL フラグOFFの時に分岐(CALL)
- *  @param tr_id トレーナーID
- *  @param adrs 条件が一致していた際のジャンプ先アドレス
- */
-//--------------------------------------------------------------
-  .macro  _IF_TR_FLAGOFF_CALL tr_id,adrs
-  _ASM_TRAINER_FLAG_CHECK \tr_id
-  _IF_CALL  FLGOFF,\adrs
-  .endm
 
 //======================================================================
 //  サウンド BGM

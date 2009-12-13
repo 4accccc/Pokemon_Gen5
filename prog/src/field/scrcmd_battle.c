@@ -77,7 +77,9 @@ VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
   u16 flag = SCRCMD_GetVMWorkValue(core,work);  //トレーナーIDを渡す！ ワークナンバーを渡すのはダメ！
-  core->cmp_flag = SCRIPT_CheckEventFlagTrainer( ev, flag );
+  u16 * ret_wk = SCRCMD_GetVMWork(core,work);
+  *ret_wk = SCRIPT_CheckEventFlagTrainer( ev, flag );
+  //core->cmp_flag = SCRIPT_CheckEventFlagTrainer( ev, flag );
   return VMCMD_RESULT_CONTINUE;
 }
 
