@@ -22,8 +22,8 @@
 #define	TRTYPE_WAITER    ( 8 )    //ウエーター
 #define	TRTYPE_WAITRESS    ( 9 )    //ウエートレス
 #define	TRTYPE_LEADER1A    ( 10 )    //ジムリーダー
-#define	TRTYPE_LEADER1B    ( 11 )    //ジムリーダー
-#define	TRTYPE_LEADER1C    ( 12 )    //ジムリーダー
+#define	TRTYPE_LEADER1C    ( 11 )    //ジムリーダー
+#define	TRTYPE_LEADER1B    ( 12 )    //ジムリーダー
 #define	TRTYPE_CHILDCARE    ( 13 )    //ほいくし
 #define	TRTYPE_KINDERGARTENW    ( 14 )    //ようちえん
 #define	TRTYPE_KINDERGARTENM    ( 15 )    //ようちえん

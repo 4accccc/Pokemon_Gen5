@@ -389,11 +389,11 @@
 		<language name="JPN" width="216">ジムリーダー</language>
 	</row>
 
-	<row id="MSG_TRTYPE_LEADER1B">
+	<row id="MSG_TRTYPE_LEADER1C">
 		<language name="JPN" width="216">ジムリーダー</language>
 	</row>
 
-	<row id="MSG_TRTYPE_LEADER1C">
+	<row id="MSG_TRTYPE_LEADER1B">
 		<language name="JPN" width="216">ジムリーダー</language>
 	</row>
 
