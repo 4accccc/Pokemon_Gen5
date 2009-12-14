@@ -395,7 +395,7 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work );
 static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const BOOL inVanish);
 static MMDL *SeatchMmdl(FIELDMAP_WORK *fieldWork, const int inObjID);
 static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVanish);
-
+static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_DIR inDir);
 
 //--------------------------------------------------------------
 /**
@@ -972,8 +972,8 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 3:
     {
-      //レールチェンジ処理
-      ;
+      //首の向きと操作した首のインデックッスからレールの進行状態を変更する
+      SetRailSt(fieldWork, tmp->TrgtHead, tmp->DraWk->HeadDir);
     }
     (*seq)++;
     break;
@@ -1154,4 +1154,47 @@ static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVan
   MMDL *mmdl;
   mmdl = SeatchMmdl(fieldWork, inObjID);
   if (mmdl != NULL) MMDL_SetStatusBitVanish(mmdl, inVanish);
+}
+
+//--------------------------------------------------------------
+/**
+ * レールの進入不可を制御
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inHeadIdx   竜の首インデックス　0～2
+ * @param   inDir       首の向き
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_DIR inDir)
+{
+  u32 on_line_idx, off_line_idx1, off_line_idx2;
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+  switch(inHeadIdx){
+  case 0:
+    on_line_idx = 0;
+    off_line_idx1 = 0;
+    off_line_idx2 = 0;
+    break;
+  case 1:
+    on_line_idx = 0;
+    off_line_idx1 = 0;
+    off_line_idx2 = 0;
+    break;
+  case 2:
+    on_line_idx = 0;
+    off_line_idx1 = 0;
+    off_line_idx2 = 0;
+    break;
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+
+  return ;
+
+  //進入可能レールセット
+  FLDNOGRID_MAPPER_SetLineActive( p_mapper, on_line_idx, TRUE );
+  //進入不可レールセット
+  FLDNOGRID_MAPPER_SetLineActive( p_mapper, off_line_idx1, FALSE );
+  FLDNOGRID_MAPPER_SetLineActive( p_mapper, off_line_idx2, FALSE );
 }
