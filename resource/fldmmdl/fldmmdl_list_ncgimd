@@ -90,6 +90,8 @@ FMMDL_RESLIST_NCGIMD = \
 	cutinheroine.imd \
 	hurahero.imd \
 	huraheroine.imd \
+	fishhero.imd \
+	fishheroine.imd \
 	leader1b.imd \
 	leader1c.imd \
 	leader8b.imd \
