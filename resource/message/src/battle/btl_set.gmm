@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-10T17:43:07"/>
+	<create user="taya" host="W00146" date="2009-12-14T23:24:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3537,26 +3537,26 @@
 
 	<row id="BTL_STRID_SET_OnnenDone">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 	</row>
 	<row id="BTL_STRID_SET_OnnenDone_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 	</row>
 	<row id="BTL_STRID_SET_OnnenDone_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-[1:07:わざ名:1]は
+[1:07:わざ名:1]は▽
 おんねんで　ＰＰが０になった！</language>
 	</row>
 
