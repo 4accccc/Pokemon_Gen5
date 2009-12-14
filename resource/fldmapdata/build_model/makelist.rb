@@ -128,7 +128,7 @@ class BMData
   #------------------------------------------------------------------------------
   def getProgID(prog_name)
     if prog_name == "Å~" then
-      return 0xffff
+      return 0
     elsif prog_name =~/\d+/ then
      return Integer(prog_name)
     else
