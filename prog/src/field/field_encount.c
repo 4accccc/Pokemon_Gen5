@@ -285,9 +285,11 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
   //道具＆特性によるエンカウント率変動(@todo 釣りに影響するの？)
-  per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
-  if( enc_GetPercentRand() < per ){
-    return( NULL );
+  if( enc_type != ENC_TYPE_EFFECT ){
+    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+    if( enc_GetPercentRand() < per ){
+      return( NULL );
+    }
   }
 
   { //移動ポケモンチェック( @todo 移動ポケモンは釣りでエンカウントするの？)

@@ -21,6 +21,10 @@ _EVENT_DATA     ev_fld_ev_spray_effect_end
 _EVENT_DATA     ev_fld_ev_amaikaori_enc_failed
 _EVENT_DATA     ev_fld_ev_amaikaori_weather_error
 _EVENT_DATA     ev_fld_ev_effect_enc_item_get
+_EVENT_DATA     ev_fld_ev_fishing_success
+_EVENT_DATA     ev_fld_ev_fishing_failed_encount
+_EVENT_DATA     ev_fld_ev_fishing_failed_too_early
+_EVENT_DATA     ev_fld_ev_fishing_failed_too_slow
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -75,5 +79,48 @@ EVENT_START ev_fld_ev_effect_enc_item_get
   DEFINE_LOCAL  i_itemno
   _GET_EFFECT_ENCOUNT_ITEM( i_itemno )
   _ITEM_EVENT_FIELD( i_itemno, 1)
+}
+EVENT_END
+
+//==============================================================
+/// 
+///
+///       釣りイベント
+///
+///
+//==============================================================
+//エンカウント成功
+EVENT_START ev_fld_ev_fishing_success
+{
+  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_01 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//エンカウント失敗
+EVENT_START ev_fld_ev_fishing_failed_encount
+{
+  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_02 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//エンカウント失敗　早すぎた
+EVENT_START ev_fld_ev_fishing_failed_too_early
+{
+  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_03 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//エンカウント失敗　遅すぎた　
+EVENT_START ev_fld_ev_fishing_failed_too_slow
+{
+  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_04 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
 }
 EVENT_END

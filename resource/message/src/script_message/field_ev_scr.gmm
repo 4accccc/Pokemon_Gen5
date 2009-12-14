@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-27T17:36:44"/>
+	<create user="iwasawa" host="W00157" date="2009-12-14T18:49:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="33" top="35" right="721" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="513"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="526"/>
@@ -314,6 +314,30 @@
 あまいかおりは　きえてしまった……</language>
 		<language name="JPN_KANJI" width="256">何故だか
 あまいかおりは　消えてしまった……</language>
+	</row>
+
+	<row id="msg_fld_ev_fishing_01" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>釣竿</comment>
+		<language name="JPN" width="256">ポケモンを　つりあげた！</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　釣り上げた！</language>
+	</row>
+
+	<row id="msg_fld_ev_fishing_02" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>釣竿</comment>
+		<language name="JPN" width="256">つれないなあ……</language>
+		<language name="JPN_KANJI" width="256">釣れないなあ……</language>
+	</row>
+
+	<row id="msg_fld_ev_fishing_03" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>釣竿</comment>
+		<language name="JPN" width="256">つりざおを　あげるのが　はやすぎた！</language>
+		<language name="JPN_KANJI" width="256">釣ざおを　上げるのが　早すぎた！</language>
+	</row>
+
+	<row id="msg_fld_ev_fishing_04" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<comment>釣竿</comment>
+		<language name="JPN" width="256">つりざおを　あげるのが　おそすぎた！</language>
+		<language name="JPN_KANJI" width="256">釣ざおを　上げるのが　遅すぎた！</language>
 	</row>
 
 	<flowchart-group-list>
