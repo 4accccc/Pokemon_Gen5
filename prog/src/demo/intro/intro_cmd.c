@@ -61,6 +61,7 @@ struct _INTRO_CMD_WORK {
 };
 
 // コマンド
+static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, int* param );
 static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, int* param);
@@ -73,12 +74,33 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param );
 static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() = 
 { 
   NULL, // null
+  CMD_SET_SCENE,
   CMD_BG_LOAD,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
   NULL, // end
 };
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, int* param )
+{
+  // 次のシーン
+  wk->scene_id = param[0];
+  // コマンドセット
+  wk->cmd_idx = 0;
+
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -278,26 +300,17 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
       // コマンド終了判定
       if( data->type == INTRO_CMD_TYPE_END )
       {
-        // 次のシーン
-        wk->scene_id++;
-          
-        HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
-        
-        // 終了チェック
-        if( wk->scene_id >= Intro_DATA_GetSceneMax() )
-        {
-          // 終了
-          return FALSE;
-        }
-        else
-        {
-          // コマンドセット
-          wk->cmd_idx = 0;
-          data = Intro_DATA_GetCmdData( wk->scene_id );
-        }
+        // 終了
+        return FALSE;
       }
-      
-      HOSAKA_Printf("cmd_idx=%d\n",wk->cmd_idx);
+      else if( data->type == INTRO_CMD_TYPE_SET_SCENE )
+      {
+        // CMD_SET_SCENE
+        c_cmdtbl[ data->type ]( wk, data->param );
+                
+        HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
+        data = Intro_DATA_GetCmdData( wk->scene_id );
+      }
 
       // 次のコマンドを差しておく
       wk->cmd_idx++;
@@ -348,7 +361,8 @@ static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data )
 
         is_store = TRUE;
           
-        OS_TPrintf("store [%d] cmd type=%d [%d,%d,%d,%d]\n", i, data->type,
+        // cmd_idxはこの段階で次のIDを指しているので-1
+        OS_TPrintf("store [%d] cmd_idx=%d type=%d [%d,%d,%d,%d]\n", i, wk->cmd_idx-1, data->type,
             data->param[0],
             data->param[1],
             data->param[2],
@@ -396,7 +410,7 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
       {
         // 終了したコマンドを消去
         wk->store[i] = NULL;
-        HOSAKA_Printf("store [%d] is kill \n", i );
+        HOSAKA_Printf("store [%d] is finish \n", i );
       }
     }
   }

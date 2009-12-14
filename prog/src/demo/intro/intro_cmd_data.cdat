@@ -11,16 +11,23 @@
 
 // コマンド定義 >> demo3d_cmd_def.h
 
+// シーン init
+static const INTRO_CMD_DATA c_intro_scene_init[] = 
+{ 
+  { INTRO_CMD_TYPE_BG_LOAD, },
+
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
+};
+
 // シーン 00 
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
-  { INTRO_CMD_TYPE_BG_LOAD, },
-//  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_75, }, CMD_READ_NEXT },
-//  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_74, }, CMD_READ_END },
+  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
 
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
 };
 
+#if 0
 // シーン 01 
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
@@ -28,6 +35,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
 };
+#endif 
 
 #if 0
 // シーン 02 
@@ -39,10 +47,10 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 };
 #endif
 
-static const INTRO_CMD_DATA* c_intro_scene_access_tbl[] = 
+static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] = 
 { 
+  c_intro_scene_init,
   c_intro_scene_00,
-  c_intro_scene_01,
 };
 
 

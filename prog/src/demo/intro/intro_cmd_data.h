@@ -17,7 +17,12 @@
  *								íËêîíËã`
  */
 //=============================================================================
-typedef u16 INTRO_SCENE_ID;
+typedef enum
+{ 
+  INTRO_SCENE_ID_INIT = 0,
+  INTRO_SCENE_ID_00,
+  INTRO_SCENE_ID_MAX,
+} INTRO_SCENE_ID;
 
 #define INTRO_CMD_PARAM_MAX (4)
 
