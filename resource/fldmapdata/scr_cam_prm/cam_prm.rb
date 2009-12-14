@@ -1,5 +1,13 @@
 $KCODE = "SJIS"
 
+def SetValid(ary, str)
+  if str == "ON" then
+    ary << 1
+  else
+    ary << 0
+  end
+end
+
 csv_file = open(ARGV.shift,"r")
 
 h_file_name = ARGV.shift
@@ -47,19 +55,21 @@ while line = csv_file.gets
   ary << column[1].to_i   #pitch
   ary << column[2].to_i   #yaw
   ary << column[3].to_i   #distance
-  ary << 0   #pos x dummy
-  ary << 0   #pos y dummy
-  ary << 0   #pos z dummy
+  ary << column[4].to_i   #pos x
+  ary << column[5].to_i   #pos y
+  ary << column[6].to_i   #pos z
 
   ary << 0   #shift check
-  ary << 1   #pitch check
-  ary << 1   #yaw check
-  ary << 1   #distance check
+  SetValid(ary, column[7].chomp("\n").chomp("\r")) #pitch check
+  SetValid(ary, column[8].chomp("\n").chomp("\r")) #yaw check
+  SetValid(ary, column[9].chomp("\n").chomp("\r")) #distance check
   ary << 0   #Fovy check
-  ary << 0   #pos check
+  SetValid(ary, column[10].chomp("\n").chomp("\r")) #pos check
+
   pack_str = ary.pack("S2L4L6")	#44byte
   bin_file.write(pack_str)
   
   index += 1
 end
+
 
