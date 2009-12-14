@@ -635,7 +635,7 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       anm_idx = GetWatchAnmIdx(gmk_sv_work, tmp->TargetIdx);
       //↓アニメ終了判定
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, obj_idx, anm_idx);
-      //スイッチアニメ終了待ち
+      //アニメ終了待ち
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
         //次回に備え、アニメ切り替え
