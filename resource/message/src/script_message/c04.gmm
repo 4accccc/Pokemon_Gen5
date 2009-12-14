@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-14T18:51:31"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T22:17:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -426,7 +426,7 @@
 	<row id="msg_c04_white_02" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
-　ItemNo000「アクセサリーいれ」</comment>
+　ItemNo435「アクセサリーいれ」</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
 		<language name="JPN" width="256">あたしさ　いいもの　もらったんだ！
