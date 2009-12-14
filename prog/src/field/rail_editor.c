@@ -1368,15 +1368,12 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER* p_nogridMapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	RAIL_LOCATION location;
 	RE_MCS_RAIL_DATA* p_data = (RE_MCS_RAIL_DATA*)p_wk->p_recv->rail;	
-	void* p_setdata;
 
 	// ロケーション取得
 	FIELD_PLAYER_NOGRID_GetLocation( p_wk->p_railplayer, &location );
 
 	// ノーグリッドマップにデータ設定
-	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->rail_size  - 8) );
-	GFL_STD_MemCopy( p_data->rail, p_setdata, (p_wk->p_recv->rail_size  - 8) );
-  FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( p_nogridMapper, p_setdata, (p_wk->p_recv->rail_size  - 8) );
+  FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( p_nogridMapper, p_data->rail, (p_wk->p_recv->rail_size  - 8), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
 
 	// ロケーション設定
   {
@@ -1413,14 +1410,8 @@ static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	RE_MCS_AREA_DATA* p_data = (RE_MCS_AREA_DATA*)p_wk->p_recv->area;	
-	void* p_setdata;
-
-	// areaローダーに設定
-	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->area_size - 8) );
-	GFL_STD_MemCopy( p_data->area, p_setdata, (p_wk->p_recv->area_size - 8) );
-
   // 設定
-  FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( p_mapper, p_setdata, (p_wk->p_recv->area_size - 8) );
+  FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( p_mapper, p_data->area, (p_wk->p_recv->area_size - 8), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
 }
 
 //----------------------------------------------------------------------------
@@ -1434,14 +1425,10 @@ static void RE_Reflect_Attr( DEBUG_RAIL_EDITOR* p_wk )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	RE_MCS_ATTR_DATA* p_data = (RE_MCS_ATTR_DATA*)p_wk->p_recv->attr;	
-	void* p_setdata;
 
-	// areaローダーに設定
-	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->attr_size - 4) );
-	GFL_STD_MemCopy( p_data->attr, p_setdata, (p_wk->p_recv->attr_size - 4) );
 
   // 設定
-  FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( p_mapper, p_setdata, (p_wk->p_recv->attr_size - 4), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
+  FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( p_mapper, p_data->attr, (p_wk->p_recv->attr_size - 4), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
 }
 
 

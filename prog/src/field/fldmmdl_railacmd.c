@@ -866,7 +866,7 @@ static void AcJumpWorkInitMain(
 	if( val == 0 ){												//‚»‚Ìê
 		MMDL_UpdateGridPosCurrent( mmdl );
 	}else{
-    MMDL_ReqRailMove( mmdl, dir, wait );
+    MMDL_ReqRailMove( mmdl, dir, GRID_FRAME_8 );
 		MMDL_Rail_UpdateGridPosDir( mmdl, dir );					//ˆÚ“®
 	}
 	
@@ -935,7 +935,7 @@ static int AC_Jump_1( MMDL * mmdl )
 			
 		if( work->dest_val >= GRID_FX32 ){						//‚PƒOƒŠƒbƒhˆÚ“®
 			work->dest_val = 0;
-      MMDL_ReqRailMove( mmdl, work->dir, work->wait );
+      MMDL_ReqRailMove( mmdl, work->dir, GRID_FRAME_8 );
 			MMDL_Rail_UpdateGridPosDir( mmdl, work->dir );
 			MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
 		}
@@ -1068,7 +1068,7 @@ static int AC_JumpR1G8F_0( MMDL * mmdl )
 static int AC_JumpU2G16F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_8,
-		GRID_FRAME_8*2, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
+		GRID_FRAME_16, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
 }

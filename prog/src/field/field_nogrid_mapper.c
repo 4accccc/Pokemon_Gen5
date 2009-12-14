@@ -481,17 +481,25 @@ const RAIL_ATTR_DATA* FLDNOGRID_MAPPER_GetRailAttrData( const FLDNOGRID_MAPPER* 
  *	@brief  レールbinaryの読み込み
  *
  *	@param	p_mapper    マッパー
- *	@param	p_dat       データ
+ *	@param	cp_dat       データ
  *	@param	size        データサイズ
+ *	@param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size )
+void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, const void* cp_dat, u32 size, HEAPID heapID )
 {
+  void * p_buff;
+  
   GF_ASSERT( p_mapper );
-  GF_ASSERT( p_dat );
+  GF_ASSERT( cp_dat );
 
   FIELD_RAIL_LOADER_Clear( p_mapper->p_railLoader );
-  FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_mapper->p_railLoader, p_dat, size );
+
+  // バッファ確保
+  p_buff = GFL_HEAP_AllocClearMemory( heapID, size );
+	GFL_STD_MemCopy( cp_dat, p_buff, size );
+  
+  FIELD_RAIL_LOADER_DEBUG_LoadBinary( p_mapper->p_railLoader, p_buff, size );
 
   FIELD_RAIL_MAN_Clear( p_mapper->p_railMan );
 	FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
@@ -506,13 +514,19 @@ void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, void* p_
  *	@param	size      データサイズ
  */
 //-----------------------------------------------------------------------------
-void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size )
+void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, const void* cp_dat, u32 size, HEAPID heapID )
 {
+  void * p_buff;
+
   GF_ASSERT( p_mapper );
-  GF_ASSERT( p_dat );
+  GF_ASSERT( cp_dat );
 
   FLD_SCENEAREA_LOADER_Clear( p_mapper->p_areaLoader );
-  FLD_SCENEAREA_LOADER_LoadBinary( p_mapper->p_areaLoader, p_dat, size );
+
+  p_buff = GFL_HEAP_AllocClearMemory( heapID, size );
+	GFL_STD_MemCopy( cp_dat, p_buff, size );
+  
+  FLD_SCENEAREA_LOADER_LoadBinary( p_mapper->p_areaLoader, p_buff, size );
 
 
 	FLD_SCENEAREA_Release( p_mapper->p_areaMan );
@@ -528,11 +542,16 @@ void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_
  *	@brief  アトリビュートbinaryの読み込み
  */
 //-----------------------------------------------------------------------------
-void FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size, u32 heapID )
+void FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( FLDNOGRID_MAPPER* p_mapper, const void* cp_dat, u32 size, HEAPID heapID )
 {
+  void * p_buff;
+
   RAIL_ATTR_Release( p_mapper->p_attr );
   
-  RAIL_ATTR_DEBUG_LoadBynary( p_mapper->p_attr, p_dat, size, heapID );
+  p_buff = GFL_HEAP_AllocClearMemory( heapID, size );
+	GFL_STD_MemCopy( cp_dat, p_buff, size );
+
+  RAIL_ATTR_DEBUG_LoadBynary( p_mapper->p_attr, p_buff, size, heapID );
 }
 
 
