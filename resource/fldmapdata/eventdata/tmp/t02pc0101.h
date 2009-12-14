@@ -14,7 +14,7 @@
 
 #define T02PC0101_SHOPM1_02                0
 #define T02PC0101_PCWOMAN                  1
-#define T02PC0101_DOCTOR                   2
+#define T02PC0101_HAKASE2_01               2
 #define T02PC0101_WOMAN1                   3
 #define T02PC0101_SUPPORT_01               4
 #define T02PC0101_SHOPM1_01                5

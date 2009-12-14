@@ -31,7 +31,7 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	//ブラックイン
 	_MAP_FADE_BLACK_IN()
 
-	//乗船アニメ
+	//下船アニメ
 	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
 	_OBJ_ANIME_WAIT()
@@ -46,14 +46,12 @@ EVENT_END
 //			下船アニメ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cabin_out
-	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_out
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
-	
-
 
 /**************************************************************/
 /*			遊覧船受付員	C03P16	イベントスクリプト		  */
@@ -80,9 +78,6 @@ _TALK_OBJ_START()
 			//ヒウンゆうらんせん　じまんの
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_03 )
 			_BALLOONWIN_CLOSE()
-		
-		//分岐：いいえ処理
-		ELSE
 		
 		ENDIF
 
@@ -127,14 +122,11 @@ EVENT_END
 //			乗船アニメ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cabin_in
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_in
 	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 	

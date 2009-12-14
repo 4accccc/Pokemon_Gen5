@@ -15,11 +15,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_t02pc0101_scene_change_01		//博士ポケセン案内
+_EVENT_DATA		ev_scene_t02pc0101_hakaseguide_01
 _EVENT_DATA		ev_t02pc0101_woman1_1
 _EVENT_DATA		ev_t02pc0101_support_01
 _EVENT_DATA		ev_t02pc0101_shop
 _EVENT_DATA		ev_init_t02pc0101
+_EVENT_DATA		ev_scene_t02pc0101_hakaseguide_02
+_EVENT_DATA		ev_pos_t02pc0101_kaifuku_01
 _EVENT_DATA_END
 
 
@@ -31,16 +33,12 @@ INIT_EVENT_START	ev_init_t02pc0101
 	//演説イベントが終わっていない場合
 	IF $WK_SCENE_T02 <= 1 THEN
 		//イベント状況によりOBJの表示位置変更
-		IF $WK_SCENE_T02PC0101 == 1 THEN
+		IF $WK_SCENE_T02PC0101 == 3 THEN
 			//博士の案内イベント後
 			//サポート：位置変更
 			_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
-		ELSE
 	
 		ENDIF
-
-	//演説イベントが終わっている場合
-	ELSE
 	
 	ENDIF
 
@@ -49,115 +47,38 @@ INIT_EVENT_END
 /**************************************************************/
 /*     博士によるポケセン案内イベント                         */
 /**************************************************************/
-EVENT_START   ev_t02pc0101_scene_change_01
+EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	//ポケセン案内イベント
 	
 	//博士：気付く、近づく
-	_OBJ_ANIME( T02PC0101_DOCTOR, anm_hakase_tikaduku )
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_tikaduku )
 	_OBJ_ANIME_WAIT()
 	
 	//ここがポケモンセンター！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_01, T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：カウンターの真横に動く、自機：カウンター前に移動、サポート：自機真横に移動
-	_OBJ_ANIME( T02PC0101_DOCTOR, anm_hakase_counter )
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_counter )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_counter )
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：自機に気付いて横に行く
 	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_counter )
 	_OBJ_ANIME_WAIT()
-	
+
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_counter1 )
+	_OBJ_ANIME_WAIT()
+
 	//ポケモンセンターの凄いところ！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_02,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_02,T02PC0101_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
-
-	//【仮】自機がカウンターで会話を起こさず移動した場合引き戻される
-	
-		//POSイベントにして、ポケセン案内イベントを２個に分ける
-
-		//【仮】ちょっと　どこへ　いくと　いうんだい？
-	
-	//【仮】回復処理
-	
-	//博士：パソコンの前（１マス隣）に移動、自機：パソコンの前に移動、サポート：自機真横に移動
-	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_pc )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_pc )
-	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_pc )
-	_OBJ_ANIME_WAIT()
-	
-	//こいつはパソコン！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR )
-	_BALLOONWIN_CLOSE()
-	
-	//サポート：博士の方に向く
-	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_jump )
-	_OBJ_ANIME_WAIT()
-	
-	//はかせ……　がめんの「だれかのパソコン」って
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//なるほど……　いい　しつもんだ
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_05,T02PC0101_DOCTOR )
-	_BALLOONWIN_CLOSE()
-	
-	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
-	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_friendly )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_friendly )
-	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_friendly )
-	_OBJ_ANIME_WAIT()
-	
-	//こちらは　フレンドリィショップ！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_06,T02PC0101_DOCTOR )
-	_BALLOONWIN_CLOSE()
-	
-	//よーしよしよし！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_07,T02PC0101_DOCTOR )
-	_BALLOONWIN_CLOSE()
-	
-	//博士、立ち去る
-	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_sayonara )
-	_OBJ_ANIME_WAIT()
-	
-	//博士の動作モデルを削除する
-	_OBJ_DEL( T02PC0101_DOCTOR )
-
-	//階段ＳＥ再生
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
-
-	//サポート：自機のほうに向く、自機：サポートに向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_muku )
-	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_muku )
-	_OBJ_ANIME_WAIT()
-	
-	//あたし　ちょっと　のんびり　していくね
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//サポート：ショップに向く
-	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_shop )
-	_OBJ_ANIME_WAIT()
 
 	//=========フラグワーク操作==========//
 	
-	//博士案内イベント終了
+	//博士案内イベント次へ
 	$WK_SCENE_T02PC0101 = 1
 	
-	//ライバルストッパー終了
-	$WK_SCENE_T02 = 1	
-	//ライバルストッパー解除
-	_FLAG_SET( FV_T02_RIVAL )
-
-	//演説イベントフラグ開始
-	_FLAG_RESET( FV_T02_SAGE )
-	_FLAG_RESET( FV_T02_HAKAI )
-	_FLAG_RESET( FV_T02_NNN )
-	_FLAG_RESET( FV_T02_RIVAL_02 )
-	_FLAG_RESET( FV_T02_MAN )
-
 	//===================================//
 
 EVENT_END
@@ -196,6 +117,152 @@ _ANIME_LABEL	anm_support_counter
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
+
+//-------------------------------------------------------------
+//     博士、自機のほうを向いて喋る        
+//-------------------------------------------------------------
+_ANIME_LABEL	anm_hakase_counter1
+	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		ポケセン案内イベント	回復ストッパー				  */
+/**************************************************************/
+EVENT_START		ev_pos_t02pc0101_kaifuku_01
+
+	//博士：！マークを出して、下を向く
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase2_kiduku )
+	_OBJ_ANIME_WAIT()
+	
+	//自機：上を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakase2_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ちょっと　どこへ　行くのよ！？
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_03 , T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//自機：一歩戻る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
+	
+	//博士：上を向く
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase2_dir_u )
+	_OBJ_ANIME_WAIT()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		博士：！マーク⇒下を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_kiduku
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		自機：一歩戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_player_back
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_U_16F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		上を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_dir_u
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		ACMD_END,0
+
+
+/**************************************************************/
+/*     博士によるポケセン案内イベント２                         */
+/**************************************************************/
+//【メモ】T02PC0101にて初めて回復をした際にWK_SCENE_T02PC0101 = 2になります。
+EVENT_START   ev_scene_t02pc0101_hakaseguide_02
+	
+	//博士：パソコンの前（１マス隣）に移動、自機：パソコンの前に移動、サポート：自機真横に移動
+	_OBJ_ANIME( T02PC0101_HAKASE2_01,anm_hakase_pc )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_pc )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_pc )
+	_OBJ_ANIME_WAIT()
+	
+	//こいつはパソコン！
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_04,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：博士の方に向く
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//はかせ……　がめんの「だれかのパソコン」って
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//なるほど……　いい　しつもんだ
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_05,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
+	_OBJ_ANIME( T02PC0101_HAKASE2_01,anm_hakase_friendly )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_friendly )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_friendly )
+	_OBJ_ANIME_WAIT()
+	
+	//こちらは　フレンドリィショップ！
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_06,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//よーしよしよし！
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_07,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//博士、立ち去る
+	_OBJ_ANIME( T02PC0101_HAKASE2_01,anm_hakase_sayonara )
+	_OBJ_ANIME_WAIT()
+	
+	//博士の動作モデルを削除する
+	_OBJ_DEL( T02PC0101_HAKASE2_01 )
+
+	//階段ＳＥ再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//サポート：自機のほうに向く、自機：サポートに向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_muku )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_muku )
+	_OBJ_ANIME_WAIT()
+	
+	//あたし　ちょっと　のんびり　していくね
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：ショップに向く
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_shop )
+	_OBJ_ANIME_WAIT()
+
+	//=========フラグワーク操作==========//
+	
+	//博士案内イベント終了
+	$WK_SCENE_T02PC0101 = 3
+	
+	//ライバルストッパー終了
+	$WK_SCENE_T02 = 1	
+	//ライバルストッパー解除
+	_FLAG_SET( FV_T02_RIVAL )
+
+	//演説イベントフラグ開始
+	_FLAG_RESET( FV_T02_SAGE )
+	_FLAG_RESET( FV_T02_HAKAI )
+	_FLAG_RESET( FV_T02_NNN )
+	_FLAG_RESET( FV_T02_RIVAL_02 )
+	_FLAG_RESET( FV_T02_MAN )
+
+	//===================================//
+
+EVENT_END
 	
 //-------------------------------------------------------------
 //    博士、パソコン前まで移動                  

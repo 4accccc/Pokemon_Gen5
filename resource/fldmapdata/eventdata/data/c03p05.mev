@@ -288,7 +288,7 @@ ZONE_ID_C03P11
 #Next Door ID Name
 DOOR_ID_C03P11_C03P05_EXIT01
 #Door Direction
-EXIT_DIR_NON
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #Pos Type
@@ -296,7 +296,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 -40 0 -248
 #size
-1 1
+6 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C03P05_C03P08_EXIT01

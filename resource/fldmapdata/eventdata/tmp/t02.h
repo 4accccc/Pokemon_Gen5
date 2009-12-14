@@ -28,5 +28,12 @@
 #define T02_RIVAL_02                      11
 #define T02_N_01                          12
 #define T02_BOODLE_02                     13
+#define T02_HAKAIM_04                     14
+#define T02_HAKAIW_02                     15
+#define T02_HAKAIW_03                     16
+#define T02_HAKAIM_03                     17
+#define T02_HAKAIM_02                     18
+#define T02_HAKAIM_05                     19
+#define T02_HAKAIM_06                     20
 
 #endif //ZONE_T02_EVC_H
