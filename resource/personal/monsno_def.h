@@ -738,6 +738,3 @@
 #define		FORMNO_ARUSEUSU_DRAGON				( 16 )
 #define		FORMNO_ARUSEUSU_AKU				( 17 )
 
-//オニソコ
-#define		FORMNO_ONISOKO_WEST				( 0 )
-
