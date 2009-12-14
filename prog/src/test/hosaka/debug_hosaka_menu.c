@@ -14,12 +14,14 @@
  *							プロトタイプ宣言
  */
 //=============================================================================
+static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
 // メニューリスト
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
+	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -31,6 +33,19 @@ static TESTMODE_MENU_LIST menuHosaka[] =
  *								static関数
  */
 //=============================================================================
+
+// イントロデモ
+#include "demo/intro.h"
+static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
+{
+  INTRO_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(INTRO_PARAM) );
+
+  initParam->save_ctrl = SaveControl_GetPointer();
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(intro), &ProcData_Intro, initParam);
+
+  return TRUE;
+}
 
 // 簡易会話 選択
 #include "app/pms_select.h"

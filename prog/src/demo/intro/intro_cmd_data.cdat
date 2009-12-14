@@ -1,0 +1,47 @@
+//=============================================================================
+/**
+ *
+ *	@file		intro_cmd_data.cdat
+ *	@brief  デモ3D用コマンドデータ
+ *	@author	hosaka genya
+ *	@data		2009.12.09
+ *
+ */
+//=============================================================================
+
+// コマンド定義 >> demo3d_cmd_def.h
+
+// シーン 00 
+static const INTRO_CMD_DATA c_intro_scene_00[] = 
+{ 
+  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_NEXT },
+  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_NEXT },
+  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_END },
+
+  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+};
+
+// シーン 01 
+static const INTRO_CMD_DATA c_intro_scene_01[] =
+{
+  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
+  
+  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+};
+
+// シーン 02 
+static const INTRO_CMD_DATA c_intro_scene_02[] =
+{
+  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
+  
+  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+};
+
+
+static const INTRO_CMD_DATA* c_intro_scene_access_tbl[] = 
+{ 
+  c_intro_scene_00,
+  c_intro_scene_01,
+};
+
+
