@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-12-10T22:42:34"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T19:10:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -316,7 +316,7 @@
 イッシュちほうの　おおきな　はし
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ５ばんめのはしを　まわり
-ヒウンシティへ　もどる　ふねです[BE:01:ページ切り替え（クリア）]
+ヒウンシティに　もどる　ふねです[BE:01:ページ切り替え（クリア）]
 じょうせんじかんは
 ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
 きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
@@ -324,7 +324,7 @@
 イッシュ地方の　大きな橋
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ５番目の橋を　まわり
-ヒウンシティへ　戻ります[BE:01:ページ切り替え（クリア）]
+ヒウンシティに　戻ります[BE:01:ページ切り替え（クリア）]
 乗船時間は　全部で　５回
 ボォォォォォォォ！　と[BE:00:ページ切り替え（行送り）]
 汽笛で　お知らせ　いたします[BE:01:ページ切り替え（クリア）]</language>
@@ -355,9 +355,9 @@
 ・いいえ→cabinguide06</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">ヒウンゆうらんせんへ
+		<language name="JPN" width="256">ヒウンゆうらんせん　に
 おのりに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒウン遊覧船へ
+		<language name="JPN_KANJI" width="256">ヒウン遊覧船に
 お乗りに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
