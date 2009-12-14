@@ -22,6 +22,7 @@ _EVENT_DATA_END
 // ローカルワーク
 //----------------------------------------------------------------------
 DEFINE_LOCAL SEL_POS            // ポケモンリスト選択位置
+DEFINE_LOCAL END_MSG            // 最後のメッセージＩＤ
 
 EVENT_START ev_namechange
     _TALK_OBJ_START()
@@ -38,10 +39,10 @@ EVENT_START ev_namechange
 
 EVENT_END
 
+//対象ポケモン選択
 select_poke:
     //「どのポケモンをうらなう？」
     _BALLOONWIN_TALKOBJ_MSG( msg_namechange_02 )
-    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
     //ポケモン選択
@@ -55,13 +56,14 @@ select_poke:
     ENDIF
 _RET
 
+//ポケモンのチェック⇒名前入力
 check_poke:
     //タマゴチェックする
     _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
     IF $SCWK_ANSWER == TRUE THEN
       //タマゴなので終了
-      _BALLOONWIN_TALKOBJ_MSG( msg_namechange_09 )
-      _BALLOONWIN_CLOSE()
+      $END_MSG = msg_namechange_09
+      _CALL end_msg
     ELSE
       //ニックネーム取得
       _TEMOTI_NICK_NAME( 0, SEL_POS )
@@ -69,8 +71,8 @@ check_poke:
       _CHECK_POKE_OWNER( SCWK_ANSWER, SEL_POS )
       IF $SCWK_ANSWER == FALSE THEN
         //主ではないので終了
-        _BALLOONWIN_TALKOBJ_MSG( msg_namechange_08 )
-        _BALLOONWIN_CLOSE()
+        $END_MSG = msg_namechange_08
+        _CALL end_msg
       ELSE
         _BALLOONWIN_TALKOBJ_MSG( msg_namechange_03 )
         _YES_NO_WIN( SCWK_ANSWER )
@@ -82,8 +84,7 @@ check_poke:
         ENDIF
         
         //「どんなニックネームにしようかな」
-        _BALLOONWIN_TALKOBJ_MSG( msg_namechange_02 )
-        _AB_KEYWAIT()
+        _BALLOONWIN_TALKOBJ_MSG( msg_namechange_04 )
         _BALLOONWIN_CLOSE()
 
         _CALL input_name
@@ -91,6 +92,7 @@ check_poke:
     ENDIF
 _RET
 
+//名前入力開始
 input_name:
     //名前入力
     _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS )
@@ -99,21 +101,28 @@ input_name:
     _TEMOTI_NICK_NAME( 0, SEL_POS )
 
     IF $SCWK_ANSWER == FALSE THEN
-      //終了
       //「おなじようにみえるが」
-      _BALLOONWIN_TALKOBJ_MSG( msg_namechange_07 )
-      _BALLOONWIN_CLOSE()
-    ENDIF
+      $END_MSG = msg_namechange_07
+      _CALL end_msg
+    ELSE
+      //「まえよりいいなまえ」
+      $END_MSG = msg_namechange_05
+      _CALL end_msg
+    ENDIF  
+_RET
 
-    //「まえよりいいなまえ」
-    _BALLOONWIN_TALKOBJ_MSG( msg_namechange_05 )
+//判断師の最後の言葉共通処理
+end_msg:
+    _BALLOONWIN_TALKOBJ_MSG( END_MSG )
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 _RET
 
+//お別れの言葉
 see_you:
     //「またきなさいよ」
-    _BALLOONWIN_TALKOBJ_MSG( msg_namechange_06 )
-    _BALLOONWIN_CLOSE()
+    $END_MSG = msg_namechange_06
+    _CALL end_msg
 _RET
 
 
