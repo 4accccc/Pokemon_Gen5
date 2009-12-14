@@ -1682,7 +1682,10 @@ BOOL WH_EndScan(void)
 		return FALSE;
 	}
   if(_pWmInfo->startScan!=0){
-    OS_TPrintf("----%d\n",_pWmInfo->startScan);
+#if defined(DEBUG_ONLY_FOR_matsuda)||defined(DEBUG_ONLY_FOR_ohno)  //テスト中 ビーコンスキャン強制終了
+    WM_EndScan(WH_StateOutEndScan);
+    NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
+#endif
     _pWmInfo->startScan=0;
     return FALSE;
   }
