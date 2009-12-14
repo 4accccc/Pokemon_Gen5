@@ -1888,7 +1888,8 @@ static void _crossScanWait(GFL_NETWL* pNetWL)
 
 static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
 {
-  if(GFL_NET_WLIsStateIdle()){
+  if((WH_GetSystemState() == WH_SYSSTATE_IDLE) ||
+     (WH_GetSystemState() == WH_SYSSTATE_SCANNING)){
     u8 ch[]={1,7,13};
 //    pNetWL->crossChannel++;
     pNetWL->crossChannel = GFUser_GetPublicRand(elementof(ch));
