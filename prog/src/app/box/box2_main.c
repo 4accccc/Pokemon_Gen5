@@ -52,7 +52,8 @@
 #define	WALL_CGX_POS1		( 1024 - WALL_CHR_SIZ )						// 壁紙キャラ転送位置１
 #define	WALL_CGX_POS2		( WALL_CGX_POS1 - WALL_CHR_SIZ )	// 壁紙キャラ転送位置２
 #define	WALL_PUT_SPACE	( WALL_SX + 2 )										// 壁紙配置間隔
-#define	WALL_SPACE_CHR	( 0x1001 )												// 壁紙隙間キャラ
+#define	WALL_SPACE_CHR	( (BOX2MAIN_BG_PAL_WALL1<<12)+WALL_CGX_POS1+0x2b )	// 壁紙隙間キャラ
+#define	WALL_SPTAG_CHR	( (BOX2MAIN_BG_PAL_WALL1<<12)+WALL_CGX_POS1+0x54 )	// 壁紙隙間キャラ
 #define	WALL_TITLE_POS	( WALL_SX )												// ボックス名表示キャラ位置
 #define	WALL_TITLE_SY		( 3 )															// ボックス名表示Ｙサイズ
 
@@ -3292,6 +3293,8 @@ static void WallScreenLoad( BOX2_SYS_WORK * syswk, u32 id, u32 px, u32 cgx, u32 
 
 	GFL_BG_FillScreen(
 		GFL_BG_FRAME3_M, WALL_SPACE_CHR, x, 0, 2, WALL_SY, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen(
+		GFL_BG_FRAME3_M, WALL_SPTAG_CHR, x, 5, 2, 1, GFL_BG_SCRWRT_PALIN );
 }
 
 //--------------------------------------------------------------------------------------------
