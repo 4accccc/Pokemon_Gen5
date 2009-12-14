@@ -39,7 +39,8 @@
 #include "event_comm_talk.h"      //EVENT_CommTalk
 #include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
-#include "event_intrude_subscreen.h"      //EVENT_ChangeIntrudeSubScreen
+#include "event_intrude_subscreen.h"
+#include "event_subscreen.h"      //EVENT_ChangeSubScreen
 #include "event_shortcut_menu.h"	//EVENT_ShortCutMenu
 
 #include "system/main.h"    //HEAPID_FIELDMAP
@@ -1924,7 +1925,7 @@ static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *f
   GMEVENT* event = NULL;
   
   if(subscreen_mode != FIELD_SUBSCREEN_MODE_MAX){
-    event = EVENT_ChangeIntrudeSubScreen(gsys, fieldWork, subscreen_mode);
+    event = EVENT_ChangeSubScreen(gsys, fieldWork, subscreen_mode);
   }
   return event;
 }
@@ -1966,6 +1967,13 @@ static GMEVENT * checkSubScreenEvent(
     break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT:
     event = EVENT_IntrudeMissionPut(gsys, fieldWork, FIELDMAP_GetHeapID(fieldWork));
+    break;
+  
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
+    break;
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR:
+    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);
     break;
     
 #if PM_DEBUG
