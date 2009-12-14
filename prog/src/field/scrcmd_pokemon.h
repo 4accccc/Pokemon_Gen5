@@ -47,3 +47,6 @@ extern VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk );
+

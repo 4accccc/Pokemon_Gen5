@@ -58,8 +58,8 @@ check_poke:
     ELSE
       //ニックネーム取得
       _TEMOTI_NICK_NAME( 0, SEL_POS )
-      //親判定する@todo
-      $SCWK_ANSWER = TRUE
+      //親判定する
+      _CHECK_POKE_OWNER( SCWK_ANSWER, SEL_POS )
       IF $SCWK_ANSWER == FALSE THEN
         //主ではないので終了
         _BALLOONWIN_TALKOBJ_MSG( msg_namechange_08 )

@@ -982,3 +982,42 @@ VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk )
   } 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 指定の手持ちポケモンの親が自分かどうかをチェックする
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
+  u16*         ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
+  int             max = PokeParty_GetPokeCountMax( party );
+  MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
+  u32     id = 0;
+  POKEMON_PARAM* param = NULL;
+
+  // ポケモン指定に対する例外処理
+  if( (pos < 0) || (max <= pos) )
+  {
+    *ret_wk = FALSE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // ID取得
+  param       = PokeParty_GetMemberPointer( party, pos );
+  id = PP_Get( param, ID_PARA_id_no, NULL );
+
+  // 結果を格納
+  if ( id != MyStatus_GetID(status) ) *ret_wk = FALSE;    //親は他人
+  else  *ret_wk = TRUE;     //自分が親
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

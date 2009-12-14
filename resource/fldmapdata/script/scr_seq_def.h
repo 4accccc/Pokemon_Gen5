@@ -4330,7 +4330,26 @@
   .short  \pos
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_POKE_OWNER
+ * @brief 手持ちポケモンの親が自分かをチェック
+ * @param ret_wk  チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @retval  TRUE    チェックしたポケモンの親は自分
+ * @retval  FALSE   チェックしたポケモンの親は他人
+ */
+//--------------------------------------------------------------
+#define _CHECK_POKE_OWNER( ret_wk, pos ) \
+    _ASM_CHECK_POKE_OWNER ret_wk, pos
 
+
+  .macro  _ASM_CHECK_POKE_OWNER ret_wk, pos
+  .short  EV_SEQ_CHECK_POKE_OWNER
+  .short  \ret_wk
+  .short  \pos
+  .endm
+  
 //======================================================================
 // お金
 //======================================================================
