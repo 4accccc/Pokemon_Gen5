@@ -217,8 +217,6 @@ EVENT_START	ev_pos_c07gym0101_switch_01
 	 _SE_PLAY( SEQ_SE_FLD_64 )
 	//スイッチアニメ
 	_GYM_ICE_SW_ANM(0)
-	//障害物のアニメＳＥ
-	 _SE_PLAY( SEQ_SE_FLD_65 )
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(0)
 	
@@ -261,8 +259,6 @@ EVENT_START	ev_pos_c07gym0101_switch_02
 	 _SE_PLAY( SEQ_SE_FLD_64 )
 	//スイッチアニメ
 	_GYM_ICE_SW_ANM(1)
-	//障害物のアニメＳＥ
-	 _SE_PLAY( SEQ_SE_FLD_65 )
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(1)
 
@@ -305,8 +301,6 @@ EVENT_START	ev_pos_c07gym0101_switch_03
 	 _SE_PLAY( SEQ_SE_FLD_64 )
 	//スイッチアニメ
 	_GYM_ICE_SW_ANM(2)
-	//障害物のアニメＳＥ
-	 _SE_PLAY( SEQ_SE_FLD_65 )
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(2)
 

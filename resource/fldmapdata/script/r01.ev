@@ -35,6 +35,8 @@ _EVENT_DATA_END
 
 EVENT_START   ev_r01_poke_getdemo_01
 
+
+
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
@@ -164,6 +166,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_OBJ_DEL( R01_RIVAL_01 )
 	_OBJ_DEL( R01_SUPPORT_01 )
 
+
 //==================================//
 
 	//博士＆ライバル＆サポートを非表示
@@ -175,6 +178,8 @@ EVENT_START   ev_r01_poke_getdemo_01
 	$WK_SCENE_R01 = 1
 
 //==================================//
+
+
 
 EVENT_END
 
@@ -276,17 +281,43 @@ _BALLOONWIN_OBJMSG_POS( msg_r01_white_10,R01_SUPPORT_02 , WIN_DOWN )
 _YES_NO_WIN( SCWK_ANSWER )
 _BALLOONWIN_CLOSE()
 
-//【仮】捕獲ポケモン数カウント処理未実装：レスにより分岐
+//「はい」
 IF $SCWK_ANSWER == SCR_YES THEN
-	//「はい」
 
 	//ライバル来る
 	_OBJ_ANIME( R01_RIVEL_02,anm_r01_count_rival_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//一緒だね
-	_BALLOONWIN_OBJMSG_POS(msg_r01_white_13,R01_SUPPORT_02 , WIN_DOWN )
-	_BALLOONWIN_CLOSE()
+	//手持ちポケモン数をカウント
+	DEFINE_LOCAL LWK_TEMOCHI
+	_GET_PARTY_POKE_COUNT( LWK_TEMOCHI  , POKECOUNT_MODE_TOTAL )
+	//BOXポケモン数をカウント
+	DEFINE_LOCAL LWK_BOX
+	_GET_BOX_POKE_COUNT( LWK_BOX  , POKECOUNT_MODE_TOTAL )
+	
+	
+	//手持ちとBOXの数を足す
+	$LWK_TEMOCHI += $LWK_BOX
+	//最初の1匹だけ引く
+	$LWK_TEMOCHI -= 1
+	//セリフ内に格納
+	_NUMBER( 0 , LWK_TEMOCHI , 1 )
+	
+	//1匹以下
+	IF $LWK_TEMOCHI <= 1 THEN
+		_BALLOONWIN_OBJMSG_POS(msg_r01_white_14,R01_SUPPORT_02 , WIN_DOWN )
+		_BALLOONWIN_CLOSE()
+	//2匹以上
+	ELSIF $LWK_TEMOCHI == 2 THEN
+		_BALLOONWIN_OBJMSG_POS(msg_r01_white_13,R01_SUPPORT_02 , WIN_DOWN )
+		_BALLOONWIN_CLOSE()
+	//3匹以上
+	ELSE
+		_BALLOONWIN_OBJMSG_POS(msg_r01_white_12,R01_SUPPORT_02 , WIN_DOWN )
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
+	//ライバル話す
 	_BALLOONWIN_OBJMSG_POS(msg_r01_black_11,R01_RIVEL_02 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
