@@ -193,4 +193,14 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/outwarp02.nsbmd \
 	$(RESDIR)/outwarp03.nsbmd \
 	$(RESDIR)/t01_kira.nsbmd \
+	$(RESDIR)/c03_slamp_01.nsbmd \
+	$(RESDIR)/c03_slamp_02.nsbmd \
+	$(RESDIR)/c03_slamp_03.nsbmd \
+	$(RESDIR)/c03_fountain_01.nsbmd \
+	$(RESDIR)/c03__gym_01.nsbmd \
+	$(RESDIR)/c03__ship_01.nsbmd \
+	$(RESDIR)/c03__ship_02.nsbmd \
+	$(RESDIR)/c03__ship_03.nsbmd \
+	$(RESDIR)/c03__ship_04.nsbmd \
+	$(RESDIR)/c03__ship_05.nsbmd \
 
