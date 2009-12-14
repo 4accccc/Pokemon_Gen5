@@ -49,6 +49,10 @@
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
+#include "app/mailbox.h"
+FS_EXTERN_OVERLAY(app_mail);
+
+
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
 ////////////////////////////////////////////////////////////////
@@ -269,6 +273,27 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
 
   EVFUNC_CallSubProc( core, work,
     FS_OVERLAY_ID(bag), &ItemMenuProcData, bp, callback_BagProcFunc, bcw);
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   メールボックス画面プロセスを呼び出します
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = wk;
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  MAILBOX_PARAM param;
+  
+  param.gamedata = gdata;
+  EVFUNC_CallSubProc(core, work, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &param, NULL, NULL);
   
   return VMCMD_RESULT_SUSPEND;
 }

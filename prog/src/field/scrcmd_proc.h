@@ -99,6 +99,15 @@ extern VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 /**
+ * @brief   メールボックス画面プロセスを呼び出します
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk );
+
+//--------------------------------------------------------------
+/**
  * @brief   モノリス画面プロセスを呼び出します
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT

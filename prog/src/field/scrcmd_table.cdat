@@ -570,7 +570,7 @@
 
   DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
   DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )
-  NO_CMD()
+  DEF_CMD( EvCmdCallMailBoxProc, EV_SEQ_CALL_MAILBOX_PROC )
   NO_CMD()
   
   //バトルサブウェイ関連
@@ -709,7 +709,8 @@
   NO_CMD()
   NO_CMD()
   
-  NO_CMD()
+  // ポケモンリーグ フロント
+  DEF_CMD( EvCmdLeagueFrontLiftDown, EV_SEQ_LEAGUE_FRONT_LIFT_DOWN )
   NO_CMD()
   NO_CMD()
   NO_CMD()

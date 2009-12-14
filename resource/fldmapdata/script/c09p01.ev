@@ -27,11 +27,25 @@ _EVENT_DATA_END
 /*						エレベーター						*/
 /************************************************************/
 EVENT_START	ev_bg_c09p01_elevator_01
-	_TALK_START_SE_PLAY()
-	
-	_PLAINWIN_MSG_DOWN( msg_c09p01_elevator_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
+{
+  DEFINE_LOCAL f_ghost
+  DEFINE_LOCAL f_evil
+  DEFINE_LOCAL f_fight
+  DEFINE_LOCAL f_esper
+
+  _FLAG_CHECK( SYS_FLAG_BIGFOUR_GHOSTWIN, f_ghost )
+  _FLAG_CHECK( SYS_FLAG_BIGFOUR_EVILWIN, f_evil )
+  _FLAG_CHECK( SYS_FLAG_BIGFOUR_FIGHTWIN, f_fight )
+  _FLAG_CHECK( SYS_FLAG_BIGFOUR_ESPWIN, f_esper )
+
+  IF ($f_ghost==TRUE) && ($f_evil==TRUE) && ($f_fight==TRUE) && ($f_esper==TRUE) THEN
+    _LEAGUE_FRONT_LIFT_DOWN()
+  ELSE
+    _TALK_START_SE_PLAY() 
+    _PLAINWIN_MSG_DOWN( msg_c09p01_elevator_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE() 
+  ENDIF
+}
 EVENT_END
 

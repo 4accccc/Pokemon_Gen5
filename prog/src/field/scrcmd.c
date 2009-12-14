@@ -68,6 +68,7 @@
 #include "scrcmd_fourkings.h"
 #include "scrcmd_pl_boat.h"
 #include "scrcmd_bsubway.h"
+#include "scrcmd_league_front.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
