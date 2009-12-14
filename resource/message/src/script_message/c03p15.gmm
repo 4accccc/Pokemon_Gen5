@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-12-09T14:55:05"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T19:50:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="210"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,30 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c03p15_woman1_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>♀
+・12月ロム用仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">ムシャクシャしてさ
+このヤロー！　って　きぶんのとき[BE:00:ページ切り替え（行送り）]
+ここで　さけぶの！[BE:01:ページ切り替え（クリア）]
+……もちろん　ひとりっきりでよ</language>
+		<language name="JPN_KANJI" width="256">ムシャクシャしてさ
+このヤロー！　って　気分のとき[BE:00:ページ切り替え（行送り）]
+ここで　叫ぶの！[BE:01:ページ切り替え（クリア）]
+……もちろん　ひとりっきりでよ</language>
+	</row>
+
+	<row id="msg_c03p15_gentleman_01" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♂
+・12月ロム用仮メッセージ</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
+		<language name="JPN" width="256">ときどき　ですがね
+ここに　みしらぬ　ふねが　とまります[BE:01:ページ切り替え（クリア）]
+どこに　いくんでしょうなあ</language>
+		<language name="JPN_KANJI" width="256">ときどき　ですがね
+ここに　見知らぬ　船が　泊まります[BE:01:ページ切り替え（クリア）]
+どこに　行くんでしょうなあ</language>
 	</row>
 
 	<flowchart-group-list>
