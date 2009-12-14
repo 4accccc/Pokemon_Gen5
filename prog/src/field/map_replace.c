@@ -310,7 +310,8 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * 
   for ( i = 0; i < MAPREPLACE_EVENT_TYPE_NUM; i++)
   {
     const REPLACE_EVENT_DATA * evData = &replaceEventTable[ i ];
-    if ( *(EVENTWORK_GetEventWorkAdrs( ev, evData[i].wk_id ) ) == evData[i].wk_value )
+    u16 * work = EVENTWORK_GetEventWorkAdrs( ev, evData->wk_id );
+    if ( *work == evData->wk_value )
     {
       offsets->flag_pos[i] = 1;
     } else {
@@ -338,10 +339,11 @@ void MAPREPLACE_ChangeFlag( GAMEDATA * gamedata, u32 id, BOOL flag )
       EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
       u16 * work = EVENTWORK_GetEventWorkAdrs( ev, evData->wk_id );
       if (flag) {
-        *work = replaceEventTable[id].wk_value;
+        *work = evData->wk_value;
       } else {
         *work = 0;
       }
+      OS_Printf("REPLACE EVENT(%d) SET: %04x\n", id, evData->wk_value );
       return;
     }
   }
