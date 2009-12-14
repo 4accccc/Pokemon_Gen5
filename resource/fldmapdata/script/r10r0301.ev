@@ -149,7 +149,11 @@ ev_sub_gate_open_demo:
       //ゲートアニメ制御
       _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 15, 7 )
       _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+      _SE_PLAY( SEQ_SE_FLD_93 )
       _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+      _SE_STOP()
+      _SE_PLAY( SEQ_SE_FLD_94 )
+      _SE_WAIT()
 
       //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
       _BALLOONWIN_OBJMSG( msg_r10r0301_badge_03, R10R0301_VETERANM )
