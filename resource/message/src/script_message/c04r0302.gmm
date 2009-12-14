@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T17:38:09"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T16:44:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="179"/>
+		<comment position="4" width="235"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04r0302_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0302_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・このマップに入ると
 　カメラ移動してッサポートを中心に
@@ -307,7 +307,7 @@
 こっちだよ　こっち！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0302_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_white_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・Ｎとの戦闘後
 ・ｃ05ジムバッジ入手の
@@ -322,7 +322,7 @@
 もうしばらく　ここにいるね！</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04r0302_boss_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・上記white_01のスクリプトで
 　主人公がサポートに隣接すると
@@ -332,7 +332,7 @@
 		<language name="JPN_KANJI" width="256">（みらいよちの演出）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boss_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合いメッセージ表示
 ・はい/いいえの選択
@@ -348,7 +348,7 @@
 人間の　醜さに　気づいたかい？</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boss_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
@@ -359,7 +359,7 @@
 本当かどうか　確かめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boss_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
@@ -384,7 +384,7 @@
 そのことを　教えてあげるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boss_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後
 ･メッセージ表示後、画面左方向へ
@@ -407,7 +407,7 @@
 では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0302_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_girl4_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">プロって　れんしゅうを　みるだけでも
@@ -416,7 +416,7 @@
 すごいって　わかるんだねー</language>
 	</row>
 
-	<row id="msg_c04r0302_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boy2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">やきゅうがうまくて　ポケモンがつよい！
@@ -425,7 +425,7 @@
 そんな　大人に　なりたいや！</language>
 	</row>
 
-	<row id="msg_c04r0302_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_woman3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">グラウンドの　うえでは
@@ -434,7 +434,7 @@
 いつでも　真剣勝負！</language>
 	</row>
 
-	<row id="msg_c04r0302_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_mountain_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">しろいボール　ひとつで

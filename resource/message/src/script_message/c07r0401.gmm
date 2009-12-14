@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-01T14:06:21"/>
+	<create user="matsumiya" host="W00207" date="2009-12-13T18:06:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,19 +310,12 @@
 会長なので　あります！</language>
 	</row>
 
-	<row id="msg_c07r0401_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：がんばり屋
-・先頭のポケモンをチェック
-　努力値がマックス→woman1_02
-　努力値がマックスでない→woman1_05
-　「がんばリボン」を所有→_woman1_06
-・0＝ポケモン名（先頭のポケモン）</comment>
+	<row id="msg_c07r0401_woman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMAN1
 普通女性</attribute>
-		<language name="JPN" width="256">あら？
-きみの　[1:01:ポケモン種族名:0]……▼</language>
-		<language name="JPN_KANJI" width="256">あら？
-きみの　[1:01:ポケモン種族名:0]……▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

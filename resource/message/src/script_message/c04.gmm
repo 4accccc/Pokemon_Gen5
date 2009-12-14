@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-07T18:13:13"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T18:51:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="220"/>
+		<comment position="4" width="306"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="126">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -292,65 +292,186 @@
 	</lock>
 
 
-	<row id="msg_c04_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・pos（GRIDX=427~433、GRIDZ=476）を踏むとメッセージ表示
+・続けてhakaim2_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『じいさん！　あんたが
+そだてや　ってのは　しっているんだ！[BE:01:ページ切り替え（クリア）]
+なんたって　オレたち
+プラズマだん　だからさ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『じいさん！　あんたが
+そだてや　ってのは　しっているんだ！[BE:01:ページ切り替え（クリア）]
+なんたって　オレたち
+プラズマだん　だからさ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてoldman_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『オレたちは
+ポケモンを　すくいだしている！[BE:01:ページ切り替え（クリア）]
+あんたが　しごとを　やめれば
+たすかる　ポケモンも　いるってことだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『オレたちは
+ポケモンを　すくいだしている！[BE:01:ページ切り替え（クリア）]
+あんたが　しごとを　やめれば
+たすかる　ポケモンも　いるってことだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_oldman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・メッセージ表示後、左右を振り向いてから
+　頭上に！マーク表示
+・その後、主人公に隣接しoldman_02</comment>
+		<attribute name="キャラ指定">OLDMAN
+育て屋じいさん</attribute>
+		<language name="JPN" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_oldman_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,,">
+		<comment>♂
+・続けてhakaim1_02</comment>
+		<attribute name="キャラ指定">OLDMAN
+育て屋じいさん</attribute>
+		<language name="JPN" width="256">おお！　トレーナーさん
+たすけてくれんか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！　トレーナーさん
+たすけてくれんか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、戦闘に
+・ただしすごく弱くてOK（ポケセンに行く前なので）</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『だれだろうが
+ポケモンを　たすけるという　もくてき[BE:00:ページ切り替え（行送り）]
+じゃまだては　させねえよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『だれだろうが
+ポケモンを　たすけるという　もくてき[BE:00:ページ切り替え（行送り）]
+じゃまだては　させねえよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_hakaim1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘後、フィールドに復帰してこのメッセージ表示
+・続けてhakaim2_02</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_hakaim2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・表示後、画面上（できれば右寄り）に移動
+・画面外に消えるとoldman_03</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『なんだ　コイツ！
+ひとまず　にげると　するか！[BE:01:ページ切り替え（クリア）]
+ゆうえんちで　まちあわせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『なんだ　コイツ！
+ひとまず　にげるとするか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_oldman_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・メッセージ表示後、アイテム入手処理
+　ItemNo421「わざマシン「そらをとぶ」」入手処理（暫定）</comment>
+		<attribute name="キャラ指定">OLDMAN
+育て屋じいさん</attribute>
+		<language name="JPN" width="256">じいさん『ありがとうよ！[BE:01:ページ切り替え（クリア）]
+こいつは　きもちだ
+えんりょせずに　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じいさん『ありがとうよ！[BE:01:ページ切り替え（クリア）]
+こいつは　きもちだ
+えんりょせずに　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_oldman_04" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・アイテム入手後、自動で表示
+・表示後、4番道路側に移動
+・消えると入れ替わりで、サポート登場
+　続けてwhite_01</comment>
+		<attribute name="キャラ指定">OLDMAN
+育て屋じいさん</attribute>
+		<language name="JPN" width="256">じいさん『わしは　３ばんどうろで
+そだてやを　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
+そだててほしい　ポケモンが　いれば
+えんりょせずに　もってくるんじゃ！[BE:01:ページ切り替え（クリア）]
+……ふう　かんこうに　きて
+エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じいさん『わしは　３ばんどうろで
+そだてやを　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
+そだててほしい　ポケモンが　いれば
+えんりょせずに　もってくるんじゃ！[BE:01:ページ切り替え（クリア）]
+……ふう　かんこうに　きて
+エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_white_01" text-color="#000000,,,#ff0000,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ
-・ジムバッジ入手後
-　r05側ゲート前のPOSを踏むと
-　メッセージ表示後に
-　サポートが出現（出現場所未定）</comment>
+・ゲートをでたところでメッセージ表示
+・続けて隣接してwhite_02</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
 		<language name="JPN" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_02" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・メッセージ表示後
-　サポートを戦闘に球場まで連れ歩き</comment>
+・アイテム入手処理
+　ItemNo000「アクセサリーいれ」</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">あたしさ　やきゅうが　みたいの
-というわけで　いっしょに　きてね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あたしさ　野球が　観たいの
-というわけで　一緒に　来てね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">あたしさ　いいもの　もらったんだ！
+アナタにも　わけてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あたしさ　いいもの　もらったんだ！
+アナタにも　わけてあげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・球場前につくとメッセージ表示
-・表示後、サポートだけ球場内に</comment>
+・アイテム入手後、自動で表示
+・表示後、その場で一回転アニメ
+・続けてwhite_04</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『ここだよ！
-ベースボールパーク！　たのしみ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ここだよ！
-ベースボールパーク！　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">その　アクセサリーいれが　あれば
+ポケモンに　つけてあげる　グッズを[BE:00:ページ切り替え（行送り）]
+たっくさん　もちあるけるんだって！[BE:01:ページ切り替え（クリア）]
+あたし　ここにある
+ミュージカルに　いくつもりなの！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">その　アクセサリーいれが　あれば
+ポケモンに　つけてあげる　グッズを[BE:00:ページ切り替え（行送り）]
+たっくさん　もちあるけるんだって！[BE:01:ページ切り替え（クリア）]
+あたし　ここにある
+ミュージカルに　いくつもりなの！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_04" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・r05側ゲート前のPOSを踏むと
-　メッセージ表示後に
-　サポートが出現（出現場所未定）
-・あとはmsg_c04_white_02での
-　スクリプトと同じ処理</comment>
+・表示後、画面上に移動
+・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
-さっき　いっしょに　やきゅうを
-みようって　いったでしょ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
-さっき　一緒に
-野球を観ようって　言ったでしょ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ライモンシティって
+みどころ　たっくさん　なんだって！[BE:01:ページ切り替え（クリア）]
+じゃあねー！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ライモンシティって
+みどころ　たっくさん　なんだって！[BE:01:ページ切り替え（クリア）]
+じゃあねー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ
-・Ｎとの戦闘後
-・POSはmsg_c04_white_01と同じ</comment>
+・c04ジムバッジ入手後
+・pos（GRIDX=384、GRIDZ=437~439）を踏むと発動</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『おそくなって　ゴメン[BE:01:ページ切り替え（クリア）]
@@ -361,24 +482,23 @@
 勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・メッセージ表示後
-　r05側のゲートに消えていく
+・メッセージ表示後、r05側のゲートに消えていく
 ・動作モデルが消えると主人公操作可能</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">さ　ホドモエシティに
 いけるように　してあげる[BE:01:ページ切り替え（クリア）]
 それじゃ　ワタシ
-５ばんどうろで　まっているから[BE:01:ページ切り替え（クリア）]</language>
+５ばんどうろで　まってるね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さ　ホドモエシティに
 行けるように　してあげる[BE:01:ページ切り替え（クリア）]
 ワタシ　５番道路の
-橋の前で　待っているから[BE:01:ページ切り替え（クリア）]</language>
+橋の前で　待ってるね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_footballm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_footballm_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FOOTBALLM
@@ -393,7 +513,7 @@
 足を　運んでみてくれ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_clown_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
@@ -410,7 +530,7 @@
 そこかしらに　トレーナーがいますから</language>
 	</row>
 
-	<row id="msg_c04_badman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_badman_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BADMAN
@@ -425,7 +545,7 @@
 もっと鍛えて　挑戦してやるよ！！</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middleman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
@@ -436,7 +556,7 @@
 圧倒されて　声もでないぞ</language>
 	</row>
 
-	<row id="msg_c04_backpackerw_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_backpackerw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BACKPACKERW
@@ -447,7 +567,7 @@
 いるだけで　気持ちも　ゴージャス！！</language>
 	</row>
 
-	<row id="msg_c04_girl3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_girl3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ
 ・babygirl1、middlewoman1とセット</comment>
@@ -459,7 +579,7 @@
 遊園地に　連れてきてもらったの！</language>
 	</row>
 
-	<row id="msg_c04_babygirl1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1
@@ -470,7 +590,7 @@
 あたし　かんらんしゃ　だいすきッ！！</language>
 	</row>
 
-	<row id="msg_c04_middlewoman1_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middlewoman1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
@@ -481,7 +601,7 @@
 ジェットコースターなんですって！？</language>
 	</row>
 
-	<row id="msg_c04_sign1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ライモンシティ
@@ -490,28 +610,28 @@
 稲妻きらめく　輝きの街</language>
 	</row>
 
-	<row id="msg_c04_sign2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ビッグスタジアム</language>
 		<language name="JPN_KANJI" width="256">ビッグスタジアム</language>
 	</row>
 
-	<row id="msg_c04_sign3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">リトルコート</language>
 		<language name="JPN_KANJI" width="256">リトルコート</language>
 	</row>
 
-	<row id="msg_c04_sign4_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign4_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ライモン　ファンパーク</language>
 		<language name="JPN_KANJI" width="256">ライモン　ファンパーク</language>
 	</row>
 
-	<row id="msg_c04_sign5_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign5_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ミュージカル　ホール</language>

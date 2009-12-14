@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-02T17:56:43"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T17:43:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="211"/>
+		<comment position="4" width="282"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="-1" top="239" right="704" bottom="859" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -294,36 +294,73 @@
 
 	<row id="msg_c02r0301_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・No000「アクセサリーいれ」入手前</comment>
+・ポケモン交換前
+・はい/いいえの選択肢表示
+　はい→ポケモン選択画面
+　いいえ→woman2_04
+・0＝渡すポケモン
+・1＝もらうポケモン</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
-		<language name="JPN" width="256">むさくるしい　そうこ　だけど
-ステキな　おみせに　しちゃうから！[BE:01:ページ切り替え（クリア）]
-うるものは　きまっているの[BE:01:ページ切り替え（クリア）]
-ポケモンに　つける　アクセサリーよ！</language>
-		<language name="JPN_KANJI" width="256">むさくるしい　倉庫だけど
-ステキな　お店に　しちゃうから！[BE:01:ページ切り替え（クリア）]
-売るものは　決まっているの[BE:01:ページ切り替え（クリア）]
-ポケモンに　つける　アクセサリーよ！</language>
+		<language name="JPN" width="256">ねえねえ　あなた
+[1:01:ポケモン種族名:0]　って　ポケモン　もってる？▼
+よかったら　あたしの　[1:01:ポケモン種族名:1]と
+あなたの　[1:01:ポケモン種族名:0]　こうかん　しよ？</language>
+		<language name="JPN_KANJI" width="256">ねえねえ　あなた
+[1:01:ポケモン種族名:0]　って　ポケモン　もってる？▼
+よかったら　あたしの　[1:01:ポケモン種族名:1]と
+あなたの　[1:01:ポケモン種族名:0]　交換しよ？</language>
 	</row>
 
 	<row id="msg_c02r0301_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・No000「アクセサリーいれ」入手後
-　初回メッセージ</comment>
-		<language name="JPN" width="256">アクセサリー</language>
-		<language name="JPN_KANJI" width="256">ようやく　売るものが　そろったわ！[BE:01:ページ切り替え（クリア）]
-あら　あなた！
-アクセサリーいれを　もっているのね[BE:00:ページ切り替え（行送り）]
-よかったら　なにか　買わない?</language>
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　交換デモ開始
+　終了後、以下のメッセージを自動表示
+・0＝渡すポケモン
+・1＝もらうポケモン</comment>
+		<language name="JPN" width="256">うふふ！　あたしの
+[1:01:ポケモン種族名:1]　だいじにしてね！▼
+あたしも　もらった
+[1:01:ポケモン種族名:0]　だいじに　するから！</language>
+		<language name="JPN_KANJI" width="256">うふふ！　あたしの
+[1:01:ポケモン種族名:1]　大事にしてね！▼
+あたしも　もらった
+[1:01:ポケモン種族名:0]　大事にするから！</language>
 	</row>
 
 	<row id="msg_c02r0301_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・No000「アクセサリーいれ」入手後
-　2回目以降</comment>
-		<language name="JPN" width="256">アクセサリー</language>
-		<language name="JPN_KANJI" width="256">アクセサリー</language>
+・ポケモン交換
+・0＝渡すポケモン</comment>
+		<language name="JPN" width="256">あたしが　ほしいのは
+[1:01:ポケモン種族名:0]　なんだけど……</language>
+		<language name="JPN_KANJI" width="256">あたしが　ほしいのは
+[1:01:ポケモン種族名:0]　なんだけど……</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_04">
+		<comment>♀
+・いいえ選択
+　もしくはポケモン選択画面で「やめる」を選択</comment>
+		<language name="JPN" width="256">だめなら　しかたないな……▼
+でも　きが　かわったら
+ポケモン　こうかん　しようね！</language>
+		<language name="JPN_KANJI" width="256">だめなら　しかたないな……▼
+でも　気が　変わったら
+ポケモン交換　しようね！</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_05">
+		<comment>♀
+・ポケモン交換後</comment>
+		<language name="JPN" width="256">ポケモンの　おかげで
+あたしと　あなた▽
+おともだちに　なれたよね！</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　おかげで
+あたしと　あなた▽
+おともだちに　なれたよね！</language>
 	</row>
 
 	<row id="msg_c02r0301_girl1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

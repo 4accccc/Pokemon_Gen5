@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T12:47:40"/>
+	<create user="matsumiya" host="W00207" date="2009-12-14T17:15:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="292"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,112 @@
 	</lock>
 
 
-	<row id="msg_c04p01_clown1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・pos（GRIDX=20.GRIDZ=12^16）を踏むと
+　画面右から登場してメッセージ表示
+・表示後、画面左へ連れて行かれる（暫定）</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『……キミは　プラズマだんを
+さがして　いるんだろう？[BE:01:ページ切り替え（クリア）]
+ならば　かんらんしゃに　のればいい
+たかい　ところからで　あれば[BE:00:ページ切り替え（行送り）]
+みのがすことも　ないだろう[BE:01:ページ切り替え（クリア）]
+こっちに　きたまえ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……キミは　プラズマだんを
+さがして　いるんだろう？[BE:01:ページ切り替え（クリア）]
+ならば　かんらんしゃに　のればいい
+たかい　ところからで　あれば[BE:00:ページ切り替え（行送り）]
+みのがすことも　ないだろう[BE:01:ページ切り替え（クリア）]
+こっちに　きたまえ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04p01_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後、観覧車に乗る演出
+・観覧車デモに切り替え
+　観覧車内でのメッセージは別ファイルで管理予定</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『さあ　のりたまえ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『さあ　乗りたまえ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04p01_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・観覧車から降りてきて
+　主人公と向き合いメッセージ表示
+・はい/いいえの選択
+　どちらを選んだか保存しておく</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
+たびをつづけて　キミは
+きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
+にんげんの　みにくさに　きづいたかい？</language>
+		<language name="JPN_KANJI" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
+旅を続けて　キミは
+きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
+人間の　醜さに　気づいたかい？</language>
+	</row>
+
+	<row id="msg_c04p01_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・はい選択時
+・トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『その　へんじ……　ほんとうか
+どうか　たしかめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『その返事……
+本当かどうか　確かめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04p01_boss_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・いいえ選択時
+・トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
+にんげんは　うらおもてが　ありすぎる
+じぶんを　よりよく　みせようと[BE:00:ページ切り替え（行送り）]
+むりをする……　ときには　ウソをつく[BE:01:ページ切り替え（クリア）]
+ポケモンのように
+しぜんで　いられない[BE:01:ページ切り替え（クリア）]
+キミが　しょうぶで　まけそうになったとき
+どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
+そのことを　おしえてあげるよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
+人間は　裏表が　ありすぎる
+自分を　より良く見せようと[BE:00:ページ切り替え（行送り）]
+無理をする……　時にはウソをつく[BE:01:ページ切り替え（クリア）]
+ポケモンのように
+自然で　いられない[BE:01:ページ切り替え（クリア）]
+キミが　勝負で　負けそうになったとき
+どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
+そのことを　教えてあげるよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04p01_boss_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・戦闘後
+･メッセージ表示後、c04方面に移動
+・画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『いま　しょうぶの　さなかに
+みえた　みらいの　ビジョン……[BE:01:ページ切り替え（クリア）]
+そうか……　キミは
+そんな　しめいを　もつのか[BE:01:ページ切り替え（クリア）]
+なるほど……　それが
+ボクが　とくべき　すうしき……[BE:00:ページ切り替え（行送り）]
+では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『今　勝負の　さなかに
+見えた　未来のビジョン……[BE:01:ページ切り替え（クリア）]
+そうか……
+キミは　そんな使命を　持つのか[BE:01:ページ切り替え（クリア）]
+なるほど……
+それが　ボクが解くべき　数式……[BE:00:ページ切り替え（行送り）]
+では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04p01_clown1_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
