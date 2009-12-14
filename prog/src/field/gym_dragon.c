@@ -36,6 +36,9 @@
 #define ARM_ANM_NUM  (2)
 #define BTN_ANM_NUM  (1)
 
+#define JUMP_COUNT  (8)
+#define JUMP_MOVE_X  (FX32_ONE*2)
+
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
 #define FLOOR_VISIBLE_HEIGHT    (5*FIELD_CONST_GRID_FX32_SIZE)
@@ -108,7 +111,9 @@ typedef struct ANM_PLAY_WORK_tag
   u8 ObjIdx;
   u8 AnmNum;
   u8 AllAnmNum;
-  u8 dummy;
+  u8 JumpCount;
+  fx32 JumpDownX;
+  fx32 JumpDownBaseY;
   int AnmOfs[ANM_PLAY_MAX];
 }ANM_PLAY_WORK;
 
@@ -380,6 +385,8 @@ static const int ArmAnmTbl[3/*DRA_ARM_MAX*/][ARM_DIR_MAX] =
   {2, 3},     //RIGHT ARM
   {0,0},
 };
+
+static const int JumpY[JUMP_COUNT] = { 8,16,8,0,-8,-16,-24,-48 };
 
 static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
     const int inIdx, const VecFx32 *inPos, const u16 *inRad,
@@ -725,8 +732,8 @@ GMEVENT *GYM_DRAGON_CreateJumpDownEvt(GAMESYS_WORK *gsys, const int inDir)
 
   GYM_DRAGON_TMP *tmp;
   GYM_DRAGON_SV_WORK *gmk_sv_work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   {
-    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
@@ -735,6 +742,19 @@ GMEVENT *GYM_DRAGON_CreateJumpDownEvt(GAMESYS_WORK *gsys, const int inDir)
 
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, JumpDownEvt, 0 );
+  {
+    ANM_PLAY_WORK *play_work = &tmp->AnmPlayWk;
+    play_work->JumpCount = 0;
+    play_work->JumpDownX = JUMP_MOVE_X;
+    {
+      VecFx32 pos;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+      play_work->JumpDownBaseY = pos.y;
+    }
+    if (inDir == DIR_LEFT) play_work->JumpDownX *= -1;
+  }
 
   return event;
 
@@ -1078,7 +1098,7 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_DRAGON_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
-
+  ANM_PLAY_WORK *play_work = &tmp->AnmPlayWk;
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
@@ -1087,8 +1107,21 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    //終了
-    return GMEVENT_RES_FINISH;
+    {
+      VecFx32 pos;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+      pos.x += play_work->JumpDownX;
+      pos.y = play_work->JumpDownBaseY + (JumpY[play_work->JumpCount]*FX32_ONE);
+      FIELD_PLAYER_SetPos( fld_player, &pos );
+      play_work->JumpCount++;
+      if ( play_work->JumpCount >= JUMP_COUNT)
+      {
+        //終了
+        return GMEVENT_RES_FINISH;
+      }
+    }
   }
   
   return GMEVENT_RES_CONTINUE;
