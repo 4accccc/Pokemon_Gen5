@@ -86,3 +86,27 @@ def GetDir( dir )
   # 指定された向きが定義されていない場合
   abort("向き:#{dir}は定義されていません")
 end
+
+#-------------------------------------------------------------------------------------
+# @brief フラグIDを取得する
+# @param flag フラグIDを表す文字列
+# @return 指定したフラグIDの値
+#-------------------------------------------------------------------------------------
+def GetFlagID( flag )
+
+  # 定義ファイルを開く
+  filename = ENV["PROJECT_RSCDIR"] + "fldmapdata/flagwork/flag_define.h"
+  file = File.open( filename, "r" )
+
+  # 指定されたフラグIDを検索
+  file.each do |line|
+		if line.index(/#define.*#{flag}\s*(\d*)\s*/) != nil then 
+			return $1.to_i
+		end
+  end
+  file.close
+
+  # 指定されたフラグIDが定義されていない場合
+  abort("フラグID:#{flag}は定義されていません")
+
+end
