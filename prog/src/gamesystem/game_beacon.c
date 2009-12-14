@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
+#include "msg/msg_beacon_status.h"
 
 
 //==============================================================================
@@ -51,6 +52,7 @@ typedef struct{
 typedef struct{
   GAMEBEACON_SEND_MANAGER send;       ///<送信ビーコン管理
   GAMEBEACON_LOG log[GAMEBEACON_LOG_MAX]; ///<ログ(チェーンバッファ)
+  u32 log_count;                      ///<ログ全体の受信件数をカウント
   s8 start_log;                       ///<ログのチェーン開始位置
   s8 end_log;                         ///<ログのチェーン終端位置
   s8 log_num;                         ///<ログ件数
@@ -233,7 +235,8 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
   
   BeaconInfo_Set(bsys, info);
-  OS_TPrintf("セット完了\n");
+  bsys->log_count++;
+  OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
   return TRUE;
 }
 
@@ -278,6 +281,18 @@ const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no)
   return BeaconInfo_Get(GameBeaconSys, log_no);
 }
 
+//==================================================================
+/**
+ * 現在までのトータル受信ログ件数を取得
+ *
+ * @retval  u32		
+ */
+//==================================================================
+u32 GAMEBEACON_Get_LogCount(void)
+{
+  return GameBeaconSys->log_count;
+}
+
 //--------------------------------------------------------------
 /**
  * 送信ビーコンに初期データをセット
@@ -308,6 +323,58 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
   send->info.send_counter++;
   send->life = 0;
+}
+
+//==================================================================
+/**
+ * ビーコン情報の内容をWORDSETする
+ *
+ * @param   info		        対象のビーコン情報へのポインタ
+ * @param   wordset		
+ * @param   temp_heap_id		内部でテンポラリとして使用するヒープID
+ */
+//==================================================================
+void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id)
+{
+  STRBUF *name_strbuf = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, temp_heap_id);
+  STRBUF *nickname_strbuf = GFL_STR_CreateBuffer(BUFLEN_POKEMON_NAME, temp_heap_id);
+
+	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->name, BUFLEN_PERSON_NAME);
+  WORDSET_RegisterWord(wordset, 0, name_strbuf, 0, TRUE, PM_LANG);
+
+  switch(info->action_no){
+  case GAMEBEACON_ACTION_APPEAL:               ///<「ちかくにいます」
+  case GAMEBEACON_ACTION_CONGRATULATIONS:      ///<「おめでとう！」
+    break;
+  case GAMEBEACON_ACTION_POKE_EVOLUTION:       ///<ポケモン進化
+  case GAMEBEACON_ACTION_POKE_LVUP:            ///<ポケモンレベルアップ
+  case GAMEBEACON_ACTION_POKE_GET:             ///<ポケモン捕獲
+  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->nickname, BUFLEN_POKEMON_NAME);
+    WORDSET_RegisterWord(wordset, 1, name_strbuf, 0, TRUE, PM_LANG);
+    break;
+  case GAMEBEACON_ACTION_UNION_IN:             ///<ユニオンルーム入室
+  case GAMEBEACON_ACTION_UNION_OUT:            ///<ユニオンルーム退室
+    break;
+  }
+
+  GFL_STR_DeleteBuffer(name_strbuf);
+  GFL_STR_DeleteBuffer(nickname_strbuf);
+}
+
+//==================================================================
+/**
+ * ビーコン情報から表示するメッセージIDを取得する
+ *
+ * @param   info		対象のビーコン情報へのポインタ
+ */
+//==================================================================
+u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info)
+{
+  if(info->action_no == GAMEBEACON_ACTION_NULL || info->action_no >= GAMEBEACON_ACTION_MAX){
+    GF_ASSERT_MSG(0, "action_no = %d\n", info->action_no);
+    return msg_beacon_001;
+  }
+  return msg_beacon_001 + info->action_no - GAMEBEACON_ACTION_APPEAL;
 }
 
 //==================================================================

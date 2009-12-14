@@ -10,6 +10,7 @@
 
 #include "buflen.h"
 #include "gamesystem/gamedata_def.h"
+#include "print/wordset.h"
 
 
 //==============================================================================
@@ -47,6 +48,9 @@ extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);
 
 extern BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info);
 extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);
+extern u32 GAMEBEACON_Get_LogCount(void);
+extern void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
+extern u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info);
 
 //--------------------------------------------------------------
 //  ビーコンセット

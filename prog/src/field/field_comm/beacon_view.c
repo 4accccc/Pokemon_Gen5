@@ -17,7 +17,7 @@
 #include "font/font.naix"
 #include "field/beacon_view.h"
 #include "print\printsys.h"
-
+#include "message.naix"
 
 
 //==============================================================================
@@ -35,8 +35,17 @@
 ///すれ違い通信状態参照画面管理ワーク
 typedef struct _BEACON_VIEW{
   GAMESYS_WORK *gsys;
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  WORDSET *wordset;
+  GFL_MSGDATA *mm_status;
+  STRBUF *strbuf_temp;
+  STRBUF *strbuf_expand;
+  
   GFL_BMPWIN *win[VIEW_LOG_MAX];
   PRINT_UTIL print_util[VIEW_LOG_MAX];
+  
+  u32 log_count;
 }BEACON_VIEW;
 
 
@@ -119,10 +128,39 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR view)
 void BEACON_VIEW_Update(BEACON_VIEW_PTR view)
 {
   const GAMEBEACON_INFO *info;
-  int i;
+  u32 old_log_count;
+  s32 new_log_num, copy_src, copy_dest, write_start;
   
-  for(i = 0; i < VIEW_LOG_MAX; i++){
-    info = GAMEBEACON_Get_BeaconLog(i);
+  PRINTSYS_QUE_Main(view->printQue);
+  
+  //BMP描画
+  {
+    old_log_count = view->log_count;
+    view->log_count = GAMEBEACON_Get_LogCount();
+    new_log_num = view->log_count - old_log_count;  //更新されたログ件数
+    
+    copy_dest = 0;
+    for(copy_src = new_log_num; copy_src < VIEW_LOG_MAX; copy_src++){
+      GFL_BMP_Copy( GFL_BMPWIN_GetBmp(view->win[copy_src]), 
+        GFL_BMPWIN_GetBmp(view->win[copy_dest]) );
+      copy_dest++;
+    }
+    
+    write_start = new_log_num - 1;
+    if(write_start >= VIEW_LOG_MAX){
+      write_start = VIEW_LOG_MAX - 1;
+    }
+    for( ; copy_dest < VIEW_LOG_MAX; copy_dest++){
+      info = GAMEBEACON_Get_BeaconLog(write_start);
+      if(info != NULL){
+        GFL_MSG_GetString(view->mm_status, GAMEBEACON_GetMsgID(info), view->strbuf_temp);
+        GAMEBEACON_Wordset(info, view->wordset, HEAPID_FIELDMAP);
+        WORDSET_ExpandStr( view->wordset, view->strbuf_expand, view->strbuf_temp );
+        PRINT_UTIL_Print( &view->print_util[copy_dest], view->printQue, 0, 0, 
+          view->strbuf_expand, view->fontHandle );
+      }
+      write_start++;
+    }
   }
 }
 
@@ -151,7 +189,16 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR view)
 //--------------------------------------------------------------
 static void _BeaconView_SystemSetup(BEACON_VIEW_PTR view)
 {
-  ;
+	view->printQue = PRINTSYS_QUE_Create( HEAPID_FIELDMAP );
+	view->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
+  view->wordset = WORDSET_Create(HEAPID_FIELDMAP);
+
+	view->mm_status = GFL_MSG_Create(
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_beacon_status_dat, HEAPID_FIELDMAP);
+
+  view->strbuf_temp = GFL_STR_CreateBuffer(128, HEAPID_FIELDMAP);
+  view->strbuf_expand = GFL_STR_CreateBuffer(128, HEAPID_FIELDMAP);
 }
 
 //--------------------------------------------------------------
@@ -163,7 +210,14 @@ static void _BeaconView_SystemSetup(BEACON_VIEW_PTR view)
 //--------------------------------------------------------------
 static void _BeaconView_SystemExit(BEACON_VIEW_PTR view)
 {
-  ;
+  GFL_STR_DeleteBuffer(view->strbuf_temp);
+  GFL_STR_DeleteBuffer(view->strbuf_expand);
+
+  GFL_MSG_Delete(view->mm_status);
+  
+	WORDSET_Delete(view->wordset);
+  GFL_FONT_Delete(view->fontHandle);
+  PRINTSYS_QUE_Delete(view->printQue);
 }
 
 //--------------------------------------------------------------
