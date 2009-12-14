@@ -17,11 +17,24 @@ ARC_TARGET_DATA = \
 	cut_get2_item.nsbca \
 	gym1.spa \
 	gymbadge1.nsbmd \
-	badgecase_1.nsbmd \
 	gymbadge1.nsbca \
-	gymbadge1.nsbta \
-	badgecase_1.nsbta \
-	badgecase_1.nsbma \
-	badgecase_1.nsbca \
 	poke_ci.nsbmd \
-	poke_ci.nsbca
+	poke_ci.nsbca \
+	gymbadge2.nsbmd \
+	gymbadge2.nsbca \
+	gymbadge3.nsbmd \
+	gymbadge3.nsbca \
+	gymbadge4.nsbmd \
+	gymbadge4.nsbca \
+	gymbadge5.nsbmd \
+	gymbadge5.nsbca \
+	gymbadge6.nsbmd \
+	gymbadge6.nsbca \
+	gymbadge7.nsbmd \
+	gymbadge7.nsbca \
+	gymbadge8.nsbmd \
+	gymbadge8.nsbca \
+	fly_out1.nsbmd \
+	fly_out1.nsbca \
+	fly_in1.nsbmd \
+	fly_in1.nsbca

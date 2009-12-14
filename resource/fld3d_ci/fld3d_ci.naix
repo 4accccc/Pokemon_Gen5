@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-11-25T10:05:36
+	Update:2009-12-14T21:33:38
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -29,14 +29,27 @@ enum {
 	NARC_fld3d_ci_cut_get2_item_nsbca = 15,
 	NARC_fld3d_ci_gym1_spa = 16,
 	NARC_fld3d_ci_gymbadge1_nsbmd = 17,
-	NARC_fld3d_ci_badgecase_1_nsbmd = 18,
-	NARC_fld3d_ci_gymbadge1_nsbca = 19,
-	NARC_fld3d_ci_gymbadge1_nsbta = 20,
-	NARC_fld3d_ci_badgecase_1_nsbta = 21,
-	NARC_fld3d_ci_badgecase_1_nsbma = 22,
-	NARC_fld3d_ci_badgecase_1_nsbca = 23,
-	NARC_fld3d_ci_poke_ci_nsbmd = 24,
-	NARC_fld3d_ci_poke_ci_nsbca = 25
+	NARC_fld3d_ci_gymbadge1_nsbca = 18,
+	NARC_fld3d_ci_poke_ci_nsbmd = 19,
+	NARC_fld3d_ci_poke_ci_nsbca = 20,
+	NARC_fld3d_ci_gymbadge2_nsbmd = 21,
+	NARC_fld3d_ci_gymbadge2_nsbca = 22,
+	NARC_fld3d_ci_gymbadge3_nsbmd = 23,
+	NARC_fld3d_ci_gymbadge3_nsbca = 24,
+	NARC_fld3d_ci_gymbadge4_nsbmd = 25,
+	NARC_fld3d_ci_gymbadge4_nsbca = 26,
+	NARC_fld3d_ci_gymbadge5_nsbmd = 27,
+	NARC_fld3d_ci_gymbadge5_nsbca = 28,
+	NARC_fld3d_ci_gymbadge6_nsbmd = 29,
+	NARC_fld3d_ci_gymbadge6_nsbca = 30,
+	NARC_fld3d_ci_gymbadge7_nsbmd = 31,
+	NARC_fld3d_ci_gymbadge7_nsbca = 32,
+	NARC_fld3d_ci_gymbadge8_nsbmd = 33,
+	NARC_fld3d_ci_gymbadge8_nsbca = 34,
+	NARC_fld3d_ci_fly_out1_nsbmd = 35,
+	NARC_fld3d_ci_fly_out1_nsbca = 36,
+	NARC_fld3d_ci_fly_in1_nsbmd = 37,
+	NARC_fld3d_ci_fly_in1_nsbca = 38
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
