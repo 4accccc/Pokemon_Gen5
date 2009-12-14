@@ -31,6 +31,8 @@
 
 #define AMAIKAORI_SE_NO (SEQ_SE_FLD_18)
 
+#define ALPHA_2ND (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_OBJ)
+
 typedef enum{
  SEQ_CUTIN,
  SEQ_WEATHER_CHECK,
@@ -232,7 +234,7 @@ static void amaikaori_BGResInit( AMAIKAORI_EFFECT* wk )
 	GFL_BG_LoadScreenReq( wk->bg_frm );
 	
   //‚a‚fƒRƒ“ƒgƒ[ƒ‹Ý’è
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0, wk->evy, (16-wk->evy) );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, ALPHA_2ND, wk->evy, (16-wk->evy) );
   GFL_BG_SetVisible( wk->bg_frm, VISIBLE_ON );
 }
 
