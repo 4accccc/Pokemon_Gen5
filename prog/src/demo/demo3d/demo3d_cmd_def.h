@@ -27,6 +27,7 @@ typedef enum
   //======================================================
   DEMO3D_CMD_TYPE_SE_STOP,
   DEMO3D_CMD_TYPE_END, ///< コマンド終了
+  DEMO3D_CMD_TYPE_MAX,
 } DEMO3D_CMD_TYPE;
 
 #define DEMO3D_CMD_PARAM_MAX (4) ///< 初期化パラメータの最大値

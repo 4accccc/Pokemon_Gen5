@@ -73,7 +73,7 @@ static void CMD_SE_STOP(int* param);
 //--------------------------------------------------------------
 ///	コマンドテーブル (関数ポインタテーブル)
 //==============================================================
-static void (*c_cmdtbl[])() = 
+static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() = 
 { 
   NULL, // null
   CMD_SE,

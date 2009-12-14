@@ -199,8 +199,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
-  // 60FPS‚É‚à‚Ç‚·
-  GFL_UI_ChangeFrameRate( GFL_UI_FRAMERATE_60 );
   
   Demo3D_CMD_Exit( wk->cmd );
 

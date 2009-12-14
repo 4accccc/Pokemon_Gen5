@@ -2,8 +2,8 @@
 /**
  *
  *	@file		demo3d_cmd.h
- *	@brief
- *	@author		hosaka genya
+ *	@brief  3Dデモコマンド
+ *	@author	hosaka genya
  *	@data		2009.12.09
  *
  */
