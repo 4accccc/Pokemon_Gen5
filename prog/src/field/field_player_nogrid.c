@@ -93,6 +93,8 @@ typedef enum
   UNDER_ICE, //滑る床
   UNDER_ICE_L, //滑る床 左回転
   UNDER_ICE_R, //滑る床 右回転
+  UNDER_ICE_JUMP_L, //滑る床 左ジャンプ
+  UNDER_ICE_JUMP_R, //滑る床 右ジャンプ
   UNDER_MAX,
 }UNDER;
 
@@ -202,6 +204,8 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid );
 static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 
 
 static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug ) = 
@@ -210,6 +214,9 @@ static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *
   nogrid_ControlUnderIce,
   nogrid_ControlUnderIceSpinL,
   nogrid_ControlUnderIceSpinR,
+  nogrid_ControlUnderIceJumpL,
+  nogrid_ControlUnderIceJumpR,
+ 
 };
 
 
@@ -2073,6 +2080,15 @@ static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
     {
       return ( UNDER_ICE_R );
     }
+
+    if( RAIL_ATTR_VALUE_CheckIceJumpL(val) == TRUE )
+    {
+      return ( UNDER_ICE_JUMP_L );
+    }
+    if( RAIL_ATTR_VALUE_CheckIceJumpR(val) == TRUE )
+    {
+      return ( UNDER_ICE_JUMP_R );
+    }
   }
   
   return( UNDER_NONE );
@@ -2274,6 +2290,48 @@ static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 	  return( jiki_dir );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷すべり　＋　ジャンプ音
+ *
+ *	@param	nogrid
+ *	@param	dir
+ *	@param	debug 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  if( dir == DIR_LEFT )
+  {
+    PMSND_PlaySE( SEQ_SE_DANSA );
+  }
+  return nogrid_ControlUnderIce( nogrid, dir, debug );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷すべり＋ジャンプ音
+ *
+ *	@param	nogrid
+ *	@param	dir
+ *	@param	debug 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+
+  if( dir == DIR_RIGHT )
+  {
+    PMSND_PlaySE( SEQ_SE_DANSA );
+  }
+  return nogrid_ControlUnderIce( nogrid, dir, debug );
+}
+
 
 
 

@@ -60,6 +60,8 @@ extern BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val );
 extern BOOL RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( const MAPATTR_VALUE val );
 extern BOOL RAIL_ATTR_VALUE_CheckIceSpinL( const MAPATTR_VALUE val );
 extern BOOL RAIL_ATTR_VALUE_CheckIceSpinR( const MAPATTR_VALUE val );
+extern BOOL RAIL_ATTR_VALUE_CheckIceJumpL( const MAPATTR_VALUE val );
+extern BOOL RAIL_ATTR_VALUE_CheckIceJumpR( const MAPATTR_VALUE val );
 
 
 #ifdef PM_DEBUG

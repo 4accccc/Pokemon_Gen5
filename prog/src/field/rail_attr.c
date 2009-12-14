@@ -314,6 +314,43 @@ BOOL RAIL_ATTR_VALUE_CheckIceSpinR( const MAPATTR_VALUE val )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷　左方向ジャンプ　
+ *
+ *	@param	val 
+ *
+ *	@retval TRUE FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckIceJumpL( const MAPATTR_VALUE val )
+{
+  if( (val == 0xa7) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷　右方向ジャンプ　
+ *
+ *	@param	val 
+ *
+ *	@retval TRUE  FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckIceJumpR( const MAPATTR_VALUE val )
+{
+  if( (val == 0xa6) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 
 
 #ifdef PM_DEBUG

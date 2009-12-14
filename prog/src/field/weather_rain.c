@@ -238,7 +238,8 @@ typedef struct {
 	u16 spark_power;
 	s16 wait;
 
-  s32 snd_wait;
+  s16 snd_wait;
+  u16 snd_se;
 } SPARK_DATA;
 
 
@@ -254,7 +255,8 @@ typedef struct {
 	SPARK_DATA	spark_data[ WEATHER_SPARK_TBL_MAX ];
 
 	s32	wait;
-  s32 snd_wait;
+  s16 snd_wait;
+  s16 snd_se;
 } WEATHER_SPARK_WORK;
 
 //-------------------------------------
@@ -1265,6 +1267,7 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 		}
 
     p_wk->snd_wait = p_wk->spark_data[ p_wk->spark_tbl_count ].snd_wait;
+    p_wk->snd_se = p_wk->spark_data[ p_wk->spark_tbl_count ].snd_se;
 
 //		OS_TPrintf( "color %d\n", p_wk->spark_data[ p_wk->spark_tbl_count ].spark_power );
 		
@@ -1280,7 +1283,7 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
       if( p_wk->snd_wait == 0 )
       {
         // —‹SEÄ¶
-        PMSND_PlaySE( WEATHER_SND_SE_SPARK );
+        PMSND_PlaySE( p_wk->snd_se );
       }
     }
 
@@ -1297,7 +1300,7 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
       if( p_wk->snd_wait == 0 )
       {
         // —‹SEÄ¶
-        PMSND_PlaySE( WEATHER_SND_SE_SPARK );
+        PMSND_PlaySE( p_wk->snd_se );
       }
     }
 		
@@ -1346,6 +1349,7 @@ static void WEATEHR_SPARK_SetUp_Light( WEATHER_SPARK_WORK* p_wk )
 		p_wk->spark_data[i].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[i].spark_power ];
 		p_wk->spark_data[i].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_LIGHT ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_LIGHT ] );
     p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT ];
+    p_wk->spark_data[i].snd_se    = WEATHER_SND_SE_SPARK_SML;
 	}
 }
 
@@ -1367,6 +1371,7 @@ static void WEATEHR_SPARK_SetUp_Hard( WEATHER_SPARK_WORK* p_wk )
 	p_wk->spark_data[0].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[0].spark_power ];
 	p_wk->spark_data[0].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_HARD ] );
   p_wk->spark_data[0].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_HARD ];
+  p_wk->spark_data[0].snd_se    = WEATHER_SND_SE_SPARK;
 }
 
 //----------------------------------------------------------------------------
@@ -1391,7 +1396,8 @@ static void WEATEHR_SPARK_SetUp_LightAndHard( WEATHER_SPARK_WORK* p_wk )
 		p_wk->spark_data[i].insync		= WEATHER_SPARK_FLASHIN_SYNC;
 		p_wk->spark_data[i].outsync		= WEATHER_SPARK_LIGHT_HARD_OUTSYNC;
 		p_wk->spark_data[i].wait		= GFUser_GetPublicRand( WEATHER_SPARK_LIGHT_HARD_WAIT_RAND );
-    p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT ];
+    p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT_HARD ];
+    p_wk->spark_data[i].snd_se    = WEATHER_SND_SE_SPARK_SML;
 	}
 
 	p_wk->spark_data[i].spark_power = sc_WEATHER_SPARK_STRONG_RAND_MIN[ WEATHER_SPARK_TYPE_LIGHT_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_STRONG_RAND_MAX[ WEATHER_SPARK_TYPE_LIGHT_HARD ] );
@@ -1399,6 +1405,7 @@ static void WEATEHR_SPARK_SetUp_LightAndHard( WEATHER_SPARK_WORK* p_wk )
 	p_wk->spark_data[i].outsync		= sc_WEATHER_SPARK_FLASHOUT_SYNC[ p_wk->spark_data[i].spark_power ];
 	p_wk->spark_data[i].wait		= sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[ WEATHER_SPARK_TYPE_LIGHT_HARD ] + GFUser_GetPublicRand( sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[ WEATHER_SPARK_TYPE_LIGHT_HARD ] );
   p_wk->spark_data[i].snd_wait = sc_WEATHER_SPARK_SND_WAIT[ WEATHER_SPARK_TYPE_LIGHT_HARD ];
+  p_wk->spark_data[i].snd_se    = WEATHER_SND_SE_SPARK;
 }
 
 

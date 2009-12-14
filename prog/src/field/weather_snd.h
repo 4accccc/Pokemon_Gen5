@@ -33,7 +33,8 @@ extern "C"{
 #define WEATHER_SND_SE_HIGHRAIN   ( SEQ_SE_FLD_31 )
 
 // óãSE
-#define WEATHER_SND_SE_SPARK  ( SEQ_SE_FLD_33 )
+#define WEATHER_SND_SE_SPARK      ( SEQ_SE_FLD_33 )
+#define WEATHER_SND_SE_SPARK_SML  ( SEQ_SE_FLD_34 )
 
 // çªóíSE
 #define WEATHER_SND_SE_STORM  ( SEQ_SE_FLD_84 )

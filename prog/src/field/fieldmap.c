@@ -2619,9 +2619,8 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     }
     else
     {
-      //@TODO 最終的には通信相手のデータに変更
-      //p_core = GAMEDATA_GetWFBCCoreData( fieldWork->gamedata, GAMEDATA_WFBC_ID_COMM );
-      p_core = GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata );
+      // 通信相手の情報を取得
+      p_core = GAMEDATA_GetWFBCCoreData( fieldWork->gamedata, GAMEDATA_WFBC_ID_COMM );
     }
     FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, mapmode );
 
