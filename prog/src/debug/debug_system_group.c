@@ -86,8 +86,8 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   
   //System下
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUPID_RTC , "RTC" , DEBUGWIN_GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターON",DEBWIN_Update_PMeterOn , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターOFF",DEBWIN_Update_PMeterOff , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroup( ふかメーターON",DEBWIN_Update_PMeterOn , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroup( "ふかメーターOFF",DEBWIN_Update_PMeterOff , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
 
@@ -98,8 +98,8 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_hour   ,DEBWIN_Draw_RTC_hour   , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_minute ,DEBWIN_Draw_RTC_minute , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_sec    ,DEBWIN_Draw_RTC_sec    , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroup( "適用",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroup( "現在時刻取得",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroup( "てきよう",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroup( "しゅとく",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   
   DEBUG_FLG_CreateDebugGoupe( heapId );
 }
@@ -144,11 +144,11 @@ static void DEBWIN_Draw_Pause( void* userWork , DEBUGWIN_ITEM* item )
   const BOOL flg = DEBUG_PAUSE_GetEnable();
   if( flg == TRUE )
   {
-    DEBUGWIN_ITEM_SetNameV( item , "ポーズ機能[現在ON]" );
+    DEBUGWIN_ITEM_SetNameV( item , "ポーズ[ON]" );
   }
   else
   {
-    DEBUGWIN_ITEM_SetNameV( item , "ポーズ機能[現在OFF]" );
+    DEBUGWIN_ITEM_SetNameV( item , "ポーズ[OFF]" );
   }
 }
 
@@ -179,11 +179,11 @@ static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item )
   const u8 langId = GFL_MSGSYS_GetLangID();
   if( langId == 0 )
   {
-    DEBUGWIN_ITEM_SetNameV( item , "漢字モード[現在OFF]" );
+    DEBUGWIN_ITEM_SetNameV( item , "かんじモード[OFF]" );
   }
   else
   {
-    DEBUGWIN_ITEM_SetNameV( item , "漢字モード[現在ON]" );
+    DEBUGWIN_ITEM_SetNameV( item , "かんじモード[ON]" );
   }
 }
 
@@ -241,32 +241,32 @@ static void DEBWIN_Update_RTC_get( void* userWork , DEBUGWIN_ITEM* item )
 static void DEBWIN_Draw_RTC_year( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "年[%4d]",work->rtcDate.year+2000 );
+  DEBUGWIN_ITEM_SetNameV( item , "ねん[%4d]",work->rtcDate.year+2000 );
 }
 static void DEBWIN_Draw_RTC_month( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "月[%2d]",work->rtcDate.month );
+  DEBUGWIN_ITEM_SetNameV( item , "つき[%2d]",work->rtcDate.month );
 }
 static void DEBWIN_Draw_RTC_day( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "日[%2d]",work->rtcDate.day );
+  DEBUGWIN_ITEM_SetNameV( item , "にち[%2d]",work->rtcDate.day );
 }
 static void DEBWIN_Draw_RTC_hour( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "時[%2d]",work->rtcTime.hour );
+  DEBUGWIN_ITEM_SetNameV( item , "じ[%2d]",work->rtcTime.hour );
 }
 static void DEBWIN_Draw_RTC_minute( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "分[%2d]",work->rtcTime.minute );
+  DEBUGWIN_ITEM_SetNameV( item , "ふん[%2d]",work->rtcTime.minute );
 }
 static void DEBWIN_Draw_RTC_sec( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "秒[%2d]",work->rtcTime.second );
+  DEBUGWIN_ITEM_SetNameV( item , "びょう[%2d]",work->rtcTime.second );
 }
 
 #pragma mark [> util
