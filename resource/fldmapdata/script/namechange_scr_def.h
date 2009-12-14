@@ -5,5 +5,6 @@
 #define _NAMECHANGE_SCR_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_NAMECHANGE (2225)
 
 #endif //_NAMECHANGE_SCR_DEF_H_
