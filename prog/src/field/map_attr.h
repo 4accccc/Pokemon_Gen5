@@ -97,6 +97,7 @@ extern BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season );
 
 extern BOOL MAPATTR_VALUE_CheckMonoGround( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSeasonGround1( const MAPATTR_VALUE val );

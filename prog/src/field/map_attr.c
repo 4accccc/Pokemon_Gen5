@@ -8,6 +8,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "gamesystem/pm_season.h"
 #include "field_g3d_mapper.h"
 #include "map_attr.h"
 
@@ -122,6 +123,11 @@ BOOL MAPATTR_GetHitchFlag( const MAPATTR attr )
   }
   return FALSE;
 }
+
+
+//======================================================================
+//  アトリビュートフラグ　識別
+//======================================================================
 
 //======================================================================
 //  アトリビュートバリュー　識別
@@ -613,18 +619,37 @@ BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val )
 }
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　雪系アトリビュート
+ * アトリビュートバリュー　チェック　水系アトリビュート
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 {
-  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
+  if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
     return( TRUE );
   }
   return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　水系アトリビュート(四季変化考慮)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season )
+{
+  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
+    return( TRUE );
+  }
+  if( (val == MATTR_WATER_S01) && season != PMSEASON_WINTER ){
+    return;
+  }
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　通常地面
