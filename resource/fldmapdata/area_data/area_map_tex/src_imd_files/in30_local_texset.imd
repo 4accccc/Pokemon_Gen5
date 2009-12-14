@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-07T19:43:17" source="in30_local_texset.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-14T11:59:55" source="in30_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-07T19:43:17" source="in30_local_texset.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-12-14T11:59:55" source="in30_local_texset.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,16 +38,16 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/ice_gake01.tga"
 	>
 		<bitmap size="256">
-			221b f222 cccc f1b2 cddc bb1f 11bb bbbb
-			21bb c222 ceec 2bbf eddf a00f b7aa b000
-			bbbb bbbb ccc1 b001 edc2 9aa1 0588 b000
-			070b 0bbb 11b0 07bb 1cc1 8950 7588 0aa7
-			00a0 a700 bb07 770b bc20 343a a888 a995
-			070a 5a70 77a6 a677 bc17 3435 9483 a999
-			7aaa 9600 6599 a669 0f07 8449 4339 a983
-			a656 9577 6584 6588 67a7 9434 4489 9444
-			6594 896a 3444 6584 9666 8434 3489 8444
-			6584 895a 4444 5984 9555 8334 3338 4444
+			c21b cccc dddd dddd dddd ccdd cccc bbcc
+			21bb c222 dddc ddcd dddd bccd b7ab b000
+			bbbb bbbb ddc1 dcbc dddd bbcd 0588 b000
+			070b 0bbb ccb0 cbbb dddd 8bcc 7588 0aa7
+			00a0 a700 bb07 c00b cddc 3abc a888 a995
+			070a 5a70 77a6 b777 cccc 3abc 9483 a999
+			7aaa 9600 6559 7969 0bb0 84ab 4339 a983
+			a656 9577 6588 9588 777a 9439 4489 9444
+			6594 896a 3444 6584 4449 8434 3489 8444
+			6584 895a 4444 5984 4995 8334 3338 4444
 			5584 4966 4444 5988 8995 4333 3334 4344
 			5584 9555 4489 5988 8995 3333 3333 3348
 			5584 6a55 4485 9984 4895 3333 4333 3348
@@ -80,11 +80,11 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/ice_gake02.tga"
 	>
 		<bitmap size="256">
-			0055 8118 1118 0881 8888 8888 8808 0088
-			7765 5556 5500 0055 0675 0000 8888 5055
-			7760 7777 7676 5777 7777 6666 6666 6666
-			7600 7777 4477 4777 6674 6666 6677 6666
-			6500 7777 4477 9444 5644 6666 6666 5666
+			5055 5555 4455 9999 5554 8855 9994 0004
+			7765 5556 4455 9994 0544 0550 9948 5055
+			7760 5577 7555 9947 7775 5555 4455 6666
+			7600 5577 4455 9447 6674 5556 4655 6666
+			6500 5777 4477 9444 5644 5566 6655 5666
 			6080 6777 9466 9999 5549 6555 5556 0666
 			0811 6676 4466 9444 8544 6550 0805 0565
 			8111 5566 5665 4750 8574 5500 8180 8065
@@ -122,70 +122,70 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/ice_gake03.tga"
 	>
 		<bitmap size="512">
-			3333 2222 2222 3333 2222 2222 2232 3322
-			2222 2222 3222 2366 2222 3222 6633 2333
-			2222 2232 9622 6bdb 2222 3222 a996 2336
-			3666 2233 e932 be87 2226 6332 98df 2336
-			a999 2226 8f62 ed87 3339 9663 e57d 2369
-			99fb 3226 8963 8787 36ab 8f66 8555 269c
-			aaaa aa6a 8933 88d7 66fe 8b66 5447 a9fd
-			9a99 aaa9 df66 8888 6ace db33 775d fccd
-			999f a999 5da6 8888 6ace db33 785d b888
-			f99f a999 58a6 dd88 6ace db63 4447 e775
-			f99f a9ff 7d96 cced 3ace 7e66 1447 d775
-			ffbf abcb 78f6 dded 3acc 7da3 1145 d884
-			bbcc abbb 57f6 7788 6abc 5da3 1145 8754
-			ccd8 abde 5796 88e8 3abe 7da3 1455 5754
-			eed8 afbc 8893 cbce 3a9c dea3 1577 5885
-			ccec 6fcc cc93 bffc 3aaf eca3 5788 8de8
-			bbcb 6fcb cc93 b9fc 3aaf eca3 78dd ede8
-			eebf ad88 ccf6 99fb 3aa9 eba3 78dd becd
-			8ddb 9857 ced9 cbbc a99b 7d96 45ee edd7
-			77db f855 edd9 bbbe 9b9f d8ba 5477 d888
-			558c c754 cddb bbbe 9bff 87ca 548d 8877
-			457d 8755 cc8d bbbe 9b9f 8ef6 54dd 5414
-			558e 8775 ee87 bbce af9f 8b96 4585 d874
-			778d d888 e878 cbbe 699b c996 458d bbd7
-			578d d888 e858 cbbc a99b cf9a 877d efbd
-			57dd 88dd cc77 cbbc c99b dcff 7448 7fbd
-			57dd 5575 ece7 ebbc cb9e 8dee 5447 7ed7
-			58ee 7775 eee7 cbbc ccbe ddde 5447 8d85
-			7dcc 7774 e877 cbbc cebc deec 5447 8d85
-			8cbf 8874 e877 ffbc ccbf dccc 7557 dd75
-			8bf9 ee75 e87d ffbc bbbf dbcc 5755 d855
-			8b99 bcd5 cdde 9fbc bbff dbcc 4755 d854
-			eb99 bbe8 eeec ffce cb99 8cce d854 fcd8
-			ff99 bbce eccc ffce cb99 5cce 8754 9bc8
-			f999 bfcb ecec fbed eb99 4dce 8444 9fbe
-			f999 bbbf eeec bced deff 18ce d441 9fbc
-			99f9 bbff eede beed debb 17ed d541 99fc
-			9ffb cbff eedd beed debb 17ce d541 99fc
-			9fbc bb99 eed8 edcd dcbb 47bd 8545 99be
-			fbcc bbff ee88 dddd 8dbb 78fc 7447 ffbd
-			cccd ccbb 7778 ed88 8db9 77bf 7447 eeed
-			bcbd cccb 7778 be88 edc9 77cb 7415 edd8
-			bbcd cccb 8878 fbee eeef 548d 7445 e887
-			bcde ddcc 8857 bece ceef 548e 5444 d888
-			887d dded 7757 e878 cedb 447e 5444 d888
-			8741 8887 7777 ced8 cedc 755d 5555 7ddd
-			5510 eec8 88d8 9fce bbcb 877e 5777 7eee
-			7544 fbc8 bbcc 9fbb cbbf ed8d eddd dffb
-			7554 fbc8 fbbb 9fbb cfff ee8d fbce dbff
-			5455 9d74 bff9 9bcb ccb9 ccdd bbbc dbff
-			4114 fe41 fbbf cbcb 8dbb 8d75 eebb 5efb
-			1111 be40 cbcf ceec 47bf c871 beee 77cf
-			0011 c840 bbbf becc 48df e754 eebb 47dc
-			0000 d840 b9bb ecbb 4ddd ddd8 88ec 0115
-			0000 d741 bffe ceee 8eee dcdd 58d7 4454
-			0000 cd41 bfbe cdee bcbb ecee 477d 5555
-			0000 cd41 b9be d777 bbff eedd 5778 1555
-			0000 d841 a6cd cd78 dbff 7878 5115 0555
-			0000 7540 a6f8 d85e 8bff 5554 1111 0111
-			0000 7541 aab8 d84c 8bfc 1111 1111 0011
-			0000 7441 a988 d85f 5cce 1000 4111 0111
-			0000 7441 9b87 8789 5dee 1000 4111 0111
-			0000 5441 bd77 778b 48dd 0000 1111 0111
-			0000 5411 7775 7788 4777 0000 1110 0001
+			2221 2222 1332 1111 3211 5233 2255 2222
+			2222 2222 1332 1188 3211 5233 2855 2222
+			5222 2222 8332 1188 3211 5233 bb85 2218
+			1822 2222 8332 1188 3211 5233 ba82 5118
+			8bb2 2222 8332 11a8 2111 5233 f792 518b
+			bbbb 2228 8832 11a9 2111 5233 a778 58bd
+			bbbb 2228 8833 18e9 2111 5233 7668 bbce
+			bbbb 2228 8833 1aaa 2111 5233 9978 cdde
+			bbbc 2288 8833 8aaa 2111 5553 9a78 caaa
+			cbbc 2288 7883 8eaa 2111 5253 6668 f997
+			cbbc 228c 9883 ddfe 2111 5253 4669 e997
+			cccc 228c 9883 eefe 2111 8253 4467 eaa6
+			ccdd 228c 7883 99aa 2118 8223 4467 a976
+			ddea 288f 7983 aafa 2118 8223 4677 7976
+			ffea 288d aa83 dcdf 111d 8223 4799 7aa7
+			ddfd 28dd dd83 cccd 111c f523 79aa aefa
+			ccdc 28dc dd88 cbcd 118c f823 9aee fefa
+			ffcc 88aa ddc8 bbcc 118b f821 9aee cfde
+			aeec 8879 dfe8 dccd 118c 9811 67ff fee9
+			99ec 8a77 fee8 cccf 18cc ea11 7699 eaaa
+			77ad 8976 deec cccf 18cc a911 76ae aa99
+			679e 8977 ddae cccf 1cbc af51 76ee 7646
+			77af a997 ffa9 ccdf 1cbc ac51 67a7 ea96
+			99ae aaaa fa9a dccf 8bbc db51 67ae cce9
+			79ae eaaa fa7a dccd bbbc dcb1 a99e fcce
+			79ee aaee dd99 dccd dbbc edc5 966a 9cce
+			79ee 7797 fdf9 fccd dcbf aef8 7669 9fe9
+			7aff 9997 fff9 dccd ddcf eeef 7669 aea7
+			9edd 9996 fa99 dccd dfcd effd 7669 aea7
+			adcc aa96 fa99 cccd ddcc eddd 9779 ee97
+			accb ff97 fa9e cccd cccc ecdd 7977 ea77
+			acbb cde7 deef bccd cccc ecdd 6977 ea76
+			fcbb ccfa fffd ccdf dcbb addf ea76 cdea
+			ccbb ccdf fddd ccdf dcbb 7ddf a976 bcda
+			cbbb ccdc fdfd ccfe fcbb 6edf a666 bccf
+			cbbb cccc fffd cdfe efcc 4adf e664 bccd
+			bbcb cccc ffef cffe efcc 49fe e764 bbcd
+			bccc dccc ffee cffe efcc 49df e764 bbcd
+			bccd ccbb ffea fede edcc 69ce a767 bbcf
+			ccdd cccc ffaa eeee aecc 9acd 9669 ccce
+			ddde ddcc 999a feaa aecb 99cc 9669 fffe
+			cdce dddc 999a cfaa fedb 99dc 9647 feea
+			ccde dddc aa9a ccff fffc 76ae 9667 faa9
+			cdef eedd aa79 cfdf dffc 76af 7666 eaaa
+			aa9e eefe 9979 fa9a dfec 669f 7666 eaaa
+			a964 aaa9 9999 dfea dfed 977e 7777 9eee
+			7740 ffda aaea bcdf ccdc a99f 7999 9fff
+			9766 ccda ccdd bccc dccc feae feee eccc
+			9776 ccda cccc bccc dccc ffae ccdf eccc
+			7677 be96 cccb bcdc ddcb ddee cccd eccc
+			6446 cf64 cccc dcdc aecc ae97 ffcc 7fcc
+			4444 cf60 dcdc dffd 69cc da94 cfff 99dc
+			0044 da60 cccc cfdd 6aec f976 ffcc 69ed
+			0000 ea60 cbcc fdcc 6eee eeea aafd 0447
+			0000 e964 cccf dfff afff edee 7ae9 6676
+			0000 de64 cccf deff cdcc fdff 699e 7777
+			0000 de64 cbcf e999 cccc ffee 799a 4777
+			0000 ea64 b8de de9a eccc 9a9a 7447 0777
+			0000 9760 b8ca ea7f accc 7776 4444 0444
+			0000 9764 bbca ea6d accd 4444 4444 0044
+			0000 9664 bbaa ea7c 7ddf 4000 6444 0444
+			0000 9664 bca9 a9ab 7eff 4000 6444 0444
+			0000 7664 ce99 99ac 6aee 0000 4444 0444
+			0000 7644 9997 99aa 6999 0000 4440 0004
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="ice_gake04"
@@ -270,38 +270,38 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30_dan01.tga"
 	>
 		<bitmap size="256">
-			a753 2220 cccc cccc cccc cccc cccc cccc
-			a753 c220 9999 9999 9999 9999 9999 9999
-			a753 9c20 9999 9999 9999 9999 9999 9999
-			a753 9c20 9999 9999 9999 9999 9999 9999
-			a753 99e0 9999 9999 9999 9999 9999 9999
-			a753 eee0 eeee eeee eeee eeee eeee eeee
-			a753 fff0 ffff ffff ffff ffff ffff ffff
-			a753 ff20 ffff ffff ffff ffff ffff ffff
-			b843 ff20 ffff ffff ffff ffff ffff ffff
-			b843 f220 ffff ffff ffff ffff ffff ffff
-			d843 2221 eeee eeee eeee eeee eeee eeee
-			d863 2221 cccc cccc cccc cccc cccc cccc
-			d863 c221 9999 9999 9999 9999 9999 9999
-			d863 9c21 9999 9999 9999 9999 9999 9999
-			d863 9c21 9999 9999 9999 9999 9999 9999
-			d863 99e1 9999 9999 9999 9999 9999 9999
-			d863 eee1 eeee eeee eeee eeee eeee eeee
-			d863 fff1 ffff ffff ffff ffff ffff ffff
-			d863 ff21 ffff ffff ffff ffff ffff ffff
-			d863 ff21 ffff ffff ffff ffff ffff ffff
-			b863 f220 ffff ffff ffff ffff ffff ffff
-			b863 2220 cccc cccc cccc cccc cccc cccc
-			b863 2220 cccc cccc cccc cccc cccc cccc
-			b863 c220 9999 9999 9999 9999 9999 9999
-			b863 9c20 9999 9999 9999 9999 9999 9999
-			a763 9c20 9999 9999 9999 9999 9999 9999
-			a763 99e0 9999 9999 9999 9999 9999 9999
-			a763 eee0 eeee eeee eeee eeee eeee eeee
-			a753 fff0 ffff ffff ffff ffff ffff ffff
-			a753 ff20 ffff ffff ffff ffff ffff ffff
-			a753 ff20 ffff ffff ffff ffff ffff ffff
-			a753 f220 ffff ffff ffff ffff ffff ffff
+			9533 0002 bbbb bbbb bbbb bbbb bbbb bbbb
+			9533 b002 8888 8888 8888 8888 8888 8888
+			9533 8b02 8888 8888 8888 8888 8888 8888
+			9533 8b02 8888 8888 8888 8888 8888 8888
+			9533 77d2 7777 7777 7777 7777 7777 7777
+			9533 ddd2 dddd dddd dddd dddd dddd dddd
+			9533 eee2 eeee eeee eeee eeee eeee eeee
+			9533 ee02 eeee eeee eeee e22e eeee eeee
+			a633 ee02 eeee eeee eeee e222 eeee eeee
+			a633 e002 eeee eeee eeee eeee eeee eeee
+			c633 0001 dddd dddd dddd dddd dddd dddd
+			c643 0001 bbbb bbbb bbbb bbbb bbbb bbbb
+			c643 b001 8888 8888 8888 8888 8888 8888
+			c643 8b01 8888 8888 8888 8888 8888 8888
+			c643 8b01 8888 8888 8888 8888 8888 8888
+			c643 77d1 7777 7777 7777 7777 7777 7777
+			c643 ddd1 dddd dddd dddd dddd dddd dddd
+			c643 eee1 eeee eeee eeee eeee eeee eeee
+			c643 ee01 eeee eeee eeee eeee eeee eeee
+			c643 ee01 eeee eeee eeee eeee eeee eeee
+			a643 e002 eeee eeee eeee eeee eeee eeee
+			a643 0002 dddd dddd dddd dddd dddd dddd
+			a643 0002 bbbb bbbb bbbb bbbb bbbb bbbb
+			a643 b002 8888 8888 8888 8888 8888 8888
+			a643 8b02 8888 8888 8888 8888 8888 8888
+			9543 8b02 8888 8888 8888 8888 8888 8888
+			9543 77d2 7777 7777 7777 7777 7777 7777
+			9543 ddd2 dddd dddd dddd dddd dddd dddd
+			9533 eee2 eeee eeee eeee eeee eeee eeee
+			9533 ee02 eeee eeee eeee eeee eeee eeee
+			9533 ee02 eeee eeee eeee eeee eeee eeee
+			9533 e002 eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="in30_mat01"
@@ -330,14 +330,14 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30_mat02.tga"
 	>
 		<bitmap size="64">
-			1111 1111 1111 1111 0011 1110 0111 1100
-			0001 2221 1222 1000 1001 2222 2222 1001
-			2101 2222 2222 1012 2101 1122 2211 1012
-			2101 0012 2100 1012 1101 0001 1000 1011
-			2101 0012 2100 1012 2101 1122 2211 1012
-			2101 2222 2222 1012 1001 2222 2222 1001
-			0001 2221 1222 1000 0001 1110 0111 1000
-			0011 1110 0111 1100 1111 1111 1111 1111
+			2222 2222 2222 2222 0012 1110 0111 2100
+			0002 3331 1333 2000 1002 3333 3333 2001
+			3102 3333 3333 2013 3102 1133 3311 2013
+			3102 0013 3100 2013 1102 0001 1000 2011
+			3102 0013 3100 2013 3102 1133 3311 2013
+			3102 3333 3333 2013 1002 3333 3333 2001
+			0002 3331 1333 2000 0002 1110 0111 2000
+			0012 1110 0111 2100 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="in30_rock01"
@@ -961,144 +961,88 @@
 	</tex_image>
 	<tex_image index="13" name="in30_yuka04"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="in30_yuka04_pl"
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30_yuka04.tga"
 	>
-		<bitmap size="128">
-			0808 0707 0606 0606 0606 0606 0707 0808
-			0708 0606 0303 0301 0303 0301 0606 0807
-			0607 0303 0300 0103 0100 0103 0304 0706
-			0607 0200 0103 0001 0101 0301 0401 0706
-			0607 0403 0101 0100 0100 0100 0104 0706
-			0306 0105 0100 0000 0001 0000 0301 0706
-			0306 0101 0100 0000 0000 0001 0401 0706
-			0306 0104 0003 0000 0003 0100 0100 0604
-			0306 0104 0000 0000 0000 0000 0301 0604
-			0106 0004 0000 0000 0100 0000 0301 0601
-			0106 0100 0000 0001 0000 0000 0101 0601
-			0006 0004 0001 0000 0001 0100 0101 0601
-			0106 0101 0101 0100 0100 0100 0100 0706
-			0607 0101 0101 0001 0001 0101 0101 0706
-			0708 0606 0606 0101 0101 0001 0601 0707
-			0808 0707 0707 0606 0606 0606 0706 0807
+		<bitmap size="64">
+			aacc 7777 7777 ccaa 77ac 1511 1511 ca87
+			1179 5116 5156 a814 2679 6551 1555 a745
+			4179 5655 5656 a754 5317 6656 6665 a715
+			5517 6656 6566 a745 5417 6661 5661 7456
+			5417 6666 6666 7415 6457 6666 6656 7515
+			5657 6566 6666 7555 6467 6665 5665 7555
+			5557 5655 5656 a756 5589 6555 5565 a755
+			779c 5577 6555 bb75 99cc 7799 7777 c097
 		</bitmap>
 	</tex_image>
 	<tex_image index="14" name="in30gake_01"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="in30gake_01_pl"
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30gake_01.tga"
 	>
-		<bitmap size="512">
-			0e0e 0e08 0f0f 0f08 0f0f 090e 0505 0a0a
-			0705 0e09 0f0f 0f0f 0f0f 0607 0706 0e0e
-			0e0e 0e08 0f0f 0f08 0f0f 0f0f 0b06 0503
-			0403 0f0e 0f0f 0f0f 070f 0606 070d 0e0e
-			0e0e 0e08 0e0e 080e 0f0f 0e0e 0d08 0a03
-			0e0a 0f0e 0f0f 0f0f 0607 0606 0c07 0808
-			0e0e 0e08 080e 080e 0f0f 0808 0c08 0a0a
-			0e0b 0e0e 0f0f 0d08 060d 0706 0404 0808
-			080e 0e09 0e0e 0f08 0e0f 0808 0b09 0003
-			0e0c 080e 0808 0709 0606 0c06 0b0b 0808
-			080e 0e09 0e0e 0f08 080f 0808 0707 0305
-			0806 080e 0808 0609 0606 0b0c 0b07 0808
-			0908 0909 0e0e 0f0e 080f 0d09 0c07 0304
-			0c0b 0e08 0908 0609 0606 0404 0b07 0909
-			0908 0909 0e0e 0f0e 0d0f 0c07 0c0c 030c
-			0503 0e08 0808 060d 0d06 0c0c 0b04 090d
-			0909 0808 0e08 0e0e 0c0e 0c0c 0c0c 0b04
-			0b05 0809 0e0e 0c07 040c 0b0b 0a04 0d0c
-			0909 0609 0e08 0e0e 0c0d 0c0c 070c 0c04
-			0b0b 0804 0908 0c0c 040c 0b05 0a0b 0d0c
-			080d 0908 0907 090f 0c0c 070c 0d0c 0b05
-			0b0b 0804 0708 070c 0b0c 040b 0504 0d05
-			080c 0808 0c09 0d06 0c0c 070c 0707 030b
-			0b03 0904 0d08 040c 040c 0c0c 050c 0d05
-			0805 0e0e 090e 0b09 0c07 0707 0707 0304
-			0b00 090c 0808 0d06 0b0c 0c0c 050c 0c03
-			0805 0e0e 080e 0709 070c 0707 0c07 0305
-			0b00 090c 0908 0609 0c0d 0c0c 050b 0003
-			0905 0808 0908 0709 0705 0707 0c07 0a05
-			0b02 090c 0908 0909 0c0d 0707 0b04 0005
-			0905 0808 0908 0d09 0705 0d0d 050c 0005
-			0a02 0607 0809 0909 070c 0c07 0504 0305
-			0703 0909 0d09 0c0d 0505 0405 050b 0205
-			0201 0704 0806 0909 0407 040c 050b 0a05
-			040a 0909 0d09 0a0b 0003 0a00 050b 0205
-			0201 0c05 0807 0609 0706 0b04 050b 0005
-			030a 0d07 050d 0c05 0c07 0003 0505 0105
-			0201 040a 090c 0606 0b0d 0b0b 050b 0005
-			0003 0503 0503 0807 0808 0708 0500 010a
-			0201 0c0a 0909 0606 040b 0b05 050b 0105
-			0000 000a 0905 0e08 0808 0d08 0305 0100
-			0002 0b0a 0806 0909 0b07 0b0b 0505 010a
-			0000 0b00 0809 0e08 0e0e 0606 0a05 0102
-			0202 0c03 080d 0908 0b0d 040b 0505 0200
-			0000 0600 0808 0e09 090e 0c0c 0005 0102
-			0201 0c03 0d0c 0d09 0b07 050b 0305 0202
-			0a00 0903 0908 0e09 0c08 050c 0005 0102
-			0201 050a 0c0c 0c0c 0b0c 050c 0a05 0202
-			0005 0d05 0c0d 0809 0509 0005 0200 0101
-			0101 0500 0c05 0c0c 0c0c 0505 0005 0201
-			0005 0d05 0c0d 0d0d 050c 0005 0100 0201
-			0102 0301 0505 0c0c 050c 050c 0203 0101
-			0500 0c00 0c0c 0c0c 0c0c 0000 0300 0500
-			020b 0a0a 0505 0505 0c0c 000c 0000 0102
-			0d05 0c0c 0c0c 0c0c 0c0c 0000 0d0a 0f0e
-			090f 0c00 050c 0c0c 0909 0009 0700 0202
-			080d 0c08 0d0c 0d0d 0d0d 0909 0f09 0f0f
-			0f0f 0009 0c0c 0c0c 000c 0900 0909 0609
-			0f0e 090e 0909 0909 0f09 0f0f 0f0f 0f0f
-			0f0f 090f 0000 0000 0900 0909 0f09 0f0f
-			0f0f 080e 0f08 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0d09 0909 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+		<bitmap size="256">
+			f8ee ffff ccff aa53 e965 ffff 678f ee75
+			eeee ffff cfff 53bc fe66 ffff 6678 ee75
+			eeee ffff ceff a33c fee6 8fff 5667 88c5
+			eeee fffe 88ff aa3c eee6 d8ff 566d 8845
+			eeee ffee 88ef 63cc eee6 ddde 5566 88b5
+			eeee feee 888f 63cc eeee 66ee 5566 88b5
+			eee8 eeee c888 63cc eeee 66ee 5546 99b5
+			eee8 8eee c788 63cc eeee 66ee 5556 9db5
+			ee99 8eee cc88 63cc eeee 666e 5554 dca5
+			e999 8eee ccc8 c3cc eee6 666e 5555 dc45
+			988d 9ee7 cccc b3cc eee6 466e 4455 d444
+			888c d6c9 cccc 355c ee63 446e 4444 d444
+			ee85 c99e cccc 345c e660 444e 7774 c344
+			ee85 c98e cccc 3555 66b0 7746 7777 0377
+			8895 7998 5ccc a555 66b2 7776 7777 0577
+			8895 d998 5ccc 0555 67a2 7766 7777 3557
+			9973 cdd9 55c5 2555 6421 7666 7777 a55b
+			994a abd9 a003 255b 6521 7666 7777 055b
+			d73a c55d 03c7 1555 6a21 6666 b777 055b
+			5303 ee53 788e 1a50 6a21 6666 b577 155b
+			0a00 ee95 d88e 1035 6a02 6666 bbb7 1a55
+			1000 e889 66ee 12a5 c322 6666 4bb7 2055
+			1102 e988 cc9e 1205 c321 d66c 5bb7 2235
+			9122 e998 5cc8 1205 5a21 cccc 5cbc 22a5
+			d122 89cd 0559 1120 5011 ccc5 55cc 2105
+			1122 ddcd 055c 2110 3112 cc55 5c5c 1123
+			1122 ccc1 00cc 5030 aa2b 5555 0ccc 1200
+			ccd5 cccc 00cc feda c09f cc5c 0999 2270
+			c88d dddc 99dd fff9 09ff cccc 900c 6999
+			9efe 9999 fff9 ffff 9fff 0000 9990 fff9
+			8eff fff8 ffff ffff ffff d9ff ff99 ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
 		</bitmap>
 	</tex_image>
 	<tex_image index="15" name="in30gake_02"
 		width="32" height="16" original_width="32" original_height="16"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="in30gake_02_pl"
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30gake_02.tga"
 	>
-		<bitmap size="256">
-			1413 1414 1414 1414 1414 1414 1414 1414
-			1414 1414 1414 1313 1313 1313 1313 1313
-			1413 1414 1414 1414 1314 1213 1312 1414
-			1414 1414 1314 1312 1312 1313 1313 1313
-			1313 1414 1414 1214 1212 1112 1210 1413
-			1414 1414 1311 1213 1313 1313 1313 1313
-			1313 1413 1314 1010 1010 0e0c 100f 1212
-			1413 1314 1212 0f12 120d 1313 1313 1313
-			1313 1011 1414 0e0c 0f0f 0f0f 1010 1212
-			1312 1113 1211 0c11 110a 1312 1313 1313
-			1313 1012 1010 0f0f 0f0f 0e0f 0e0d 1212
-			1312 1213 1212 0b0c 0b0b 130d 1313 1313
-			1211 1010 100f 0f10 0d0f 0b09 0b0b 120f
-			1212 1212 0b11 0b09 0b0d 0c0b 1414 1013
-			0d0c 0f0e 0f0f 070c 0404 0303 0c09 100b
-			1212 1111 080c 0e07 0607 0d0b 100f 1013
-			0d0c 0d0d 050c 0404 0604 0202 0e09 0b0d
-			100b 0d12 0a0b 080e 0205 0b07 0b07 1013
-			0c06 0a0d 0403 0505 0606 0202 0602 0d08
-			0b0c 0d0f 0e0d 0608 0206 0602 0402 0b0b
-			0202 0408 0605 0606 0409 0202 0202 0303
-			0a08 0e0e 070b 0906 0404 0204 0202 0404
-			0202 0504 0606 0b05 060b 0204 0202 0303
-			0502 000a 0404 0b08 0606 0206 0202 0202
-			0202 0504 0405 0b04 090b 0409 0204 0302
-			0204 0103 0703 0b09 0909 0404 0204 0404
-			0202 0503 0504 0b06 0b0b 060b 0206 0202
-			0202 0302 0b04 0b09 0b0b 0606 0206 0606
-			0202 0402 0605 0b09 0b0b 090b 0406 0202
-			0202 0402 0b06 0b0b 0b0b 0909 0406 0606
-			0202 0602 0606 0b0b 0b0b 0b0b 0606 0202
-			0202 0602 0b06 0b0b 0b0b 0b0b 0606 0606
+		<bitmap size="128">
+			0001 0000 0000 0000 0000 2200 2222 2222
+			0002 0000 3310 0014 0000 3310 2224 2222
+			0012 4000 4434 0245 0000 3324 2222 2222
+			0122 5510 6855 4355 2002 5433 2236 2222
+			5411 6700 5555 4455 4233 8434 2448 2222
+			5311 5555 6555 3467 3223 8743 3688 2222
+			5544 5555 8965 4588 4443 8984 7887 5200
+			5678 9755 cdcc 5879 4434 6997 78aa 5255
+			6667 bbb7 ddab 8769 7458 9688 8adb 528a
+			877a babc ddaa 69ad 6587 a967 adda 88bd
+			c9dd aaab ddb9 ccdd 6689 9aa8 dbbb bbdd
+			bbdd 8baa dba8 ccdd f8bd 89cb daaa dddd
+			acdd 8bba b998 cddb ecdc 899c bb99 bbdb
+			acdd 8abc a888 ddda cddd 898b aa88 aada
+			bddd 89ab 9888 ddba cddd 888a 9988 aaba
+			addd 88aa 8888 ddaa addd 888a 8888 aaaa
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="in30yuka_01"
@@ -1149,22 +1093,22 @@
 		5294 41f0 5ad6 739c 6f7b 6b5a 6739 6318
 	</tex_palette>
 	<tex_palette index="2" name="ice_gake03_pl" color_size="16">
-		18a6 1cc7 4e52 4631 20e7 2108 41ef 2509
-		2929 358c 39ce 316b 2d4b 292a 2d4a 316c
+		18a6 4611 4a52 5294 1cc7 4e52 20e7 2108
+		41ef 2509 2929 35ad 316b 2d4b 292a 2d4a
 	</tex_palette>
 	<tex_palette index="3" name="ice_gake04_pl" color_size="16">
 		03ae 14a4 2527 3589 41ec 5270 4a4d 5ed4
 		6737 6316 6b58 56b2 6f9b 7bfe 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="in30_dan01_pl" color_size="16">
-		318c 2d6b 2d6b 7fff 7bde 77bd 739c 6318
-		5ad6 4a52 4631 4631 4210 3def 3def 318c
+		2529 294a 2d6b 7fff 7fff 6f7b 6318 5294
+		4a52 4a52 4631 4210 3def 3def 2d6b 7fff
 	</tex_palette>
 	<tex_palette index="5" name="in30_mat01_pl" color_size="8">
 		2492 2895 28b3 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="in30_mat02_pl" color_size="8">
-		51a3 5a06 6683 7fff 7fff 7fff 7fff 7fff
+		51a3 5a06 72cf 6683 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="in30_rock01_pl" color_size="16">
 		7fff 7bde 739c 739c 6739 6739 5ef7 5ad6
@@ -1193,17 +1137,16 @@
 		7bde 77bd 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="13" name="in30_yuka04_pl" color_size="16">
-		318e 35cf 39f0 39f1 3df1 3e11 56b6 6f7b
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		6f7b 39f1 39f0 3e11 3df1 35cf 318e 56b6
+		56b6 6f7b 6f7b 6f7b 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="in30gake_01_pl" color_size="16">
 		20e8 18a5 1cc6 2508 294a 2529 318c 2d6b
 		39ce 358c 2108 2529 294a 2d6b 3def 4a52
 	</tex_palette>
-	<tex_palette index="15" name="in30gake_02_pl" color_size="24">
-		2529 294a 2d6b 318c 35ad 39ce 3def 4210
-		4631 4a52 4e73 5294 56b5 5ad6 5ef7 6318
-		6739 6b5a 6f7b 739c 77bd 7fff 7fff 7fff
+	<tex_palette index="15" name="in30gake_02_pl" color_size="16">
+		77bd 739c 739c 6f7b 6f7b 6318 5ef7 56b5
+		5294 4631 3def 35ad 318c 2d6b 294a 2529
 	</tex_palette>
 	<tex_palette index="16" name="in30yuka_01_pl" color_size="8">
 		6318 6739 6b5a 6f7b 739c 77bd 7fff 7fff
@@ -1215,7 +1158,7 @@
 </tex_palette_array>
 
 <material_array size="18">
-	<material index="0" name="ice_gake01"
+	<material index="0" name="ice_gake021"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1239,7 +1182,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="ice_gake02"
+	<material index="1" name="ice_gake023"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1263,7 +1206,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="ice_gake03"
+	<material index="2" name="ice_gake025"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1287,7 +1230,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="ice_gake04"
+	<material index="3" name="ice_gake027"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1311,7 +1254,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in30_dan01"
+	<material index="4" name="in30_dan06"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1335,7 +1278,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in30_mat01"
+	<material index="5" name="in30_mat011"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1359,7 +1302,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in30_mat02"
+	<material index="6" name="in30_mat013"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1383,7 +1326,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in30_rock01"
+	<material index="7" name="in30_rock06"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1407,7 +1350,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in30_yuka01"
+	<material index="8" name="in30_yuka021"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1431,7 +1374,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in30_yuka02"
+	<material index="9" name="in30_yuka023"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1455,55 +1398,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in30_yuka02_2"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="9"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="11" name="in30_yuka02_3"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="10"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="12" name="in30_yuka03"
+	<material index="10" name="in30_yuka025"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1527,7 +1422,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="in30_yuka04"
+	<material index="11" name="in30_yuka027"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1551,7 +1446,55 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="in30gake_01"
+	<material index="12" name="in30_yuka02_12"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="10" tex_palette_idx="9"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="13" name="in30_yuka02_14"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="11" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="14" name="in30gake_011"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1575,7 +1518,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="in30gake_02"
+	<material index="15" name="in30gake_013"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1599,7 +1542,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="in30yuka_01"
+	<material index="16" name="in30yuka_06"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1623,7 +1566,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="Ì___Ý_è_1"
+	<material index="17" name="Ì___Ý_è_6"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2171,10 +2114,10 @@
 		<display index="7" material="7" polygon="10" priority="0"/>
 		<display index="8" material="8" polygon="11" priority="0"/>
 		<display index="9" material="9" polygon="12" priority="0"/>
-		<display index="10" material="10" polygon="13" priority="0"/>
-		<display index="11" material="11" polygon="14" priority="0"/>
-		<display index="12" material="12" polygon="15" priority="0"/>
-		<display index="13" material="13" polygon="16" priority="0"/>
+		<display index="10" material="10" polygon="15" priority="0"/>
+		<display index="11" material="11" polygon="16" priority="0"/>
+		<display index="12" material="12" polygon="13" priority="0"/>
+		<display index="13" material="13" polygon="14" priority="0"/>
 		<display index="14" material="14" polygon="4" priority="0"/>
 		<display index="15" material="15" polygon="5" priority="0"/>
 		<display index="16" material="16" polygon="6" priority="0"/>
