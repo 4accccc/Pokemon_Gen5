@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2009 12/09 (Wed) 19:11
+# @date  2009 12/14 (Mon) 17:39
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -13,8 +13,8 @@
 UNIQ_SCRIPTFILES = \
 	common_scr.ev \
 	pokecen_scr.ev \
-	btl_util_scr.ev \
 	sodateya_scr.ev \
+	namechange_scr.ev \
 	eggevent_scr.ev \
 	poke_waza.ev \
 	bg_attr.ev \
@@ -31,6 +31,7 @@ UNIQ_SCRIPTFILES = \
 	field_ev_scr.ev \
 	c3center_scr.ev \
 	gate_scr.ev \
+	btl_util_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
@@ -38,6 +39,7 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	common_scr.ev \
 	pokecen_scr.ev \
 	sodateya_scr.ev \
+	namechange_scr.ev \
 	trainer.ev \
 	fld_item.ev \
 	hiden.ev \
