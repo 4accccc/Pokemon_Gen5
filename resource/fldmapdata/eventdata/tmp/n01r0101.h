@@ -9,5 +9,18 @@
 #ifndef ZONE_N01R0101_EVC_H
 #define ZONE_N01R0101_EVC_H
 
+#define N01R0101_SAGE2_07                  0
+#define N01R0101_SAGE2_05                  1
+#define N01R0101_SAGE2_03                  2
+#define N01R0101_SAGE2_02                  3
+#define N01R0101_SAGE2_04                  4
+#define N01R0101_SAGE2_06                  5
+#define N01R0101_LEADER5_01                6
+#define N01R0101_LEADER2_01                7
+#define N01R0101_LEADER4_01                8
+#define N01R0101_LEADER3_01                9
+#define N01R0101_LEADER7_01               10
+#define N01R0101_LEADER6_01               11
+#define N01R0101_LEADER8W_01              12
 
 #endif //ZONE_N01R0101_EVC_H

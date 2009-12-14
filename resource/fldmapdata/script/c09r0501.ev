@@ -33,7 +33,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
-	_CAMERA_MOVE( 9944,0,970752,1081344,114688,466944,15 )
+	_CAMERA_MOVE( 9944,0,970752,1081344,114688,466944,45 )
 	
 	//主人公：上へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_nevent_ply_move_01 )
@@ -62,16 +62,23 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_MSGWIN_CLOSE()
 	
 	//チャンピオン：なんと 悲しいことを…
-	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_01, C09R0501_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_01, C09R0501_CHAMPION_01, WIN_DOWN )
 	_MSGWIN_CLOSE()
 	
 	//Ｎ
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_04, C09R0501_N_01 )
 	_MSGWIN_CLOSE()
 	
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )	//カメラ復帰移動
+	
 	//Ｎ：主人公に気づく
 	_OBJ_ANIME( C09R0501_N_01, anm_nevent_n_look_01 )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 	
 	//Ｎ：そうか まだキミがいたか
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_05, C09R0501_N_01 )
@@ -85,20 +92,20 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_07, C09R0501_N_01 )
 	_MSGWIN_CLOSE()
 	
-	_BLACK_OUT()
+	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-	
-
 	//【仮】Ｎ城出現デモ=============================
+	
+	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる【仮】クリア時にフラグリセットするイベントが未実装
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
 	
 	//ここでコール
+	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
 	
 	//【仮】Ｎ城出現デモ=============================
 	
-	_BLACK_IN()
+	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
 	//あれが僕のお城…
@@ -119,7 +126,10 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
 	
 	//ライバル：登場
-	_OBJ_ANIME( C09R0501_RIVAL_01, anm_nevent_n_goaway_01 )
+	_FLAG_RESET( FV_C09R0501_RIVAL_01 )
+	_OBJ_ADD( C09R0501_RIVAL_01 )
+	
+	_OBJ_ANIME( C09R0501_RIVAL_01, anm_nevent_rival_move_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//じいさんボロボロだな
@@ -127,21 +137,29 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_MSGWIN_CLOSE()
 	
 	//チャンピオン：ライバルをみる
-	_OBJ_ANIME( C09R0501_CHAMPION_01, anm_nevent_n_goaway_01 )
+	_OBJ_ANIME( C09R0501_CHAMPION_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//よくぞここまで…
+	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_02, C09R0501_CHAMPION_01 )
+	_MSGWIN_CLOSE()
 	
 	
 	//まあな ポケモンリーグを勝ち抜いたよ
+	_BALLOONWIN_OBJMSG( msg_c09r0501_black_02, C09R0501_RIVAL_01 )
+	_MSGWIN_CLOSE()
 	
 	
 	//やるではないか
+	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_03, C09R0501_CHAMPION_01 )
+	_MSGWIN_CLOSE()
 	
 	
 	//プレイヤー名！Ｎをぶっとばしてこいよ！
 	_PLAYER_NAME( 0 )
-	
+	_BALLOONWIN_OBJMSG( msg_c09r0501_black_03, C09R0501_RIVAL_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 	//========================================//
 	
@@ -200,7 +218,7 @@ _ANIME_LABEL	anm_nevent_n_goaway_01
 //ライバル：登場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_nevent_rival_move_01
-	_ANIME_DATA	AC_WALK_U_4F,9
+	_ANIME_DATA	AC_WALK_U_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -209,10 +227,7 @@ _ANIME_LABEL	anm_nevent_rival_move_01
 /*					チャンピオン（クリア前）				*/
 /************************************************************/
 EVENT_START	ev_c09r0501_champion_01
-	
-	
-	
-	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c09r0501_champion_04 )
 EVENT_END
 
 
@@ -228,6 +243,7 @@ EVENT_END
 /*						ライバル							*/
 /************************************************************/
 EVENT_START	ev_c09r0501_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c09r0501_black_04 )
 EVENT_END
 
 
