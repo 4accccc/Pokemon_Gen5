@@ -148,6 +148,8 @@ typedef struct _FIELD_BMODEL FIELD_BMODEL;
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+extern u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(
+    const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

@@ -298,7 +298,6 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id);
 static void BMINFO_init(BMINFO * bmInfo);
 //アニメデータの取得処理
 static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo);
-static BOOL BMINFO_isDoor(const BMINFO * bmInfo);
 
 static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data);
 static void BMANIME_init(FIELD_BMANIME_DATA * data);
@@ -647,6 +646,20 @@ void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmo
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel )
+{
+  int i;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
+  {
+    if (man->bmodels[i] == bmodel)
+    {
+      return i + 1;
+    }
+  }
+  return 0;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man)
 {
   return &man->g3dMapObj;
@@ -770,6 +783,7 @@ static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data)
       count ++;
     }
   }
+  GF_ASSERT( count == data->anmset_num * data->ptn_count );
   return count;
 }
 //------------------------------------------------------------------
@@ -878,23 +892,11 @@ static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo)
 {
   return &bmInfo->animeData;
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
-{
-  switch (bmInfo->prog_id)
-  {
-  case BM_PROG_ID_DOOR_AUTO:
-  case BM_PROG_ID_DOOR_NORMAL:
-  case BM_PROG_ID_BADGEGATE:
-  case BM_PROG_ID_PCELEVATOR:
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
 
 //------------------------------------------------------------------
+/**
+ * @brief 検索IDの取得
+ */
 //------------------------------------------------------------------
 static BM_SEARCH_ID BMINFO_getSearchID( const BMINFO * bmInfo )
 {
@@ -910,52 +912,12 @@ static BM_SEARCH_ID BMINFO_getSearchID( const BMINFO * bmInfo )
     BM_SEARCH_ID_PCEV_DOOR,   //BM_PROG_ID_PCEV_DOOR,
     BM_SEARCH_ID_PCEV_FLOOR,  //BM_PROG_ID_PCEV_FLOOR,
   };
+  if ( bmInfo->prog_id >= BM_PROG_ID_MAX )
+  {
+    GF_ASSERT_MSG(0, "配置モデルプログラム指定(%d)のエラーです\n", bmInfo->prog_id );
+    return BM_SEARCH_ID_NULL;
+  }
   return search_id[ bmInfo->prog_id ];
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL BMINFO_isSandStream(const BMINFO * bmInfo)
-{
-  switch (bmInfo->prog_id)
-  {
-  case BM_PROG_ID_SANDSTREAM:
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL BMINFO_isPcMachine(const BMINFO * bmInfo)
-{
-  switch (bmInfo->prog_id)
-  {
-  case BM_PROG_ID_PCMACHINE:
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL BMINFO_isPc(const BMINFO * bmInfo)
-{
-  switch (bmInfo->prog_id)
-  {
-  case BM_PROG_ID_PC:
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static BOOL BMINFO_isPCElavator(const BMINFO * bmInfo)
-{
-  return (bmInfo->prog_id == BM_PROG_ID_PCELEVATOR );
 }
 
 //============================================================================================
@@ -1484,7 +1446,6 @@ static void applyNormalAnime( OBJ_HND * objHdl, u32 anmNo )
   int i;
   const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
   u32 setNo = anmData->anmset_num * anmNo;
-  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
   for (i = 0; i < anmData->anmset_num; i++) {
     GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
     GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, setNo + i );
@@ -1498,7 +1459,6 @@ static void applyLoopAnime( OBJ_HND * objHdl, u32 anmNo )
   int i;
   const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
   u32 setNo = anmData->anmset_num * anmNo;
-  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
   for (i = 0; i < anmData->anmset_num; i++) {
     GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
     GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, setNo + i );
@@ -1514,7 +1474,6 @@ static void applyReverseAnime( OBJ_HND * objHdl, u32 anmNo )
   int i;
   const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
   u32 setNo = anmData->anmset_num * anmNo;
-  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
   for ( i = 0; i < anmData->anmset_num; i++ ) {
     GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, setNo + i );
     {
@@ -1533,7 +1492,6 @@ static void applyStopAnime( OBJ_HND * objHdl, u32 anmNo )
   int i;
   const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objHdl->res->bmInfo);
   u32 setNo = anmData->anmset_num * anmNo;
-  GF_ASSERT( anmData->anmset_num * anmData->ptn_count == BMANIME_getCount(anmData) );
   for ( i = 0; i < anmData->anmset_num; i++ ) {
     if (objHdl->anmMode[setNo + i] != BM_ANMMODE_NOTHING) {
       objHdl->anmMode[setNo + i] = BM_ANMMODE_STOP;
@@ -1582,23 +1540,10 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
   case BMANM_REQ_START:
     disableAllAnime( objHdl );
     applyNormalAnime( objHdl, anmNo );
-    //GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
-    //GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, anmNo );
-    //objHdl->anmMode[anmNo] = BM_ANMMODE_TEMPORARY;
     break;
   case BMANM_REQ_REVERSE_START:
     disableAllAnime( objHdl );
     applyReverseAnime( objHdl, anmNo );
-#if 0
-    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
-    {
-      GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, anmNo );
-      NNSG3dAnmObj * anmObj = GFL_G3D_ANIME_GetAnmObj( g3Danm );
-      fx32 num = NNS_G3dAnmObjGetNumFrame( anmObj );
-      GFL_G3D_OBJECT_SetAnimeFrame(objHdl->g3Dobj, anmNo, (const int*)&num );
-    }
-    objHdl->anmMode[anmNo] = BM_ANMMODE_REVERSE;
-#endif
     break;
   case BMANM_REQ_LOOP:
     disableAllAnime( objHdl );
@@ -1606,11 +1551,6 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
     break;
   case BMANM_REQ_STOP:
     applyStopAnime( objHdl, anmNo );
-#if 0
-    if (objHdl->anmMode[anmNo] != BM_ANMMODE_NOTHING) {
-      objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
-    }
-#endif
     break;
   case BMANM_REQ_END:
     disableAllAnime( objHdl );
