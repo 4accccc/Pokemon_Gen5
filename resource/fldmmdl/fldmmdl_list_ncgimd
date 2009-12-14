@@ -18,11 +18,18 @@ FMMDL_RESLIST_NCGIMD = \
 	girl4.imd \
 	man2.imd \
 	woman1.imd \
+	woman2.imd \
 	woman3.imd \
+	middleman1.imd \
 	middleman2.imd \
+	middlewoman1.imd \
 	middlewoman2.imd \
 	oldman1.imd \
 	oldwoman1.imd \
+	trainerm.imd \
+	trainerw.imd \
+	veteranm.imd \
+	veteranw.imd \
 	breederm.imd \
 	breederw.imd \
 	rangerm.imd \
@@ -31,19 +38,29 @@ FMMDL_RESLIST_NCGIMD = \
 	swimmerw.imd \
 	waiter.imd \
 	waitress.imd \
+	gentleman.imd \
+	lady.imd \
+	fighterw.imd \
 	backpackerm.imd \
 	backpackerw.imd \
 	doctor.imd \
 	nurse.imd \
 	businessman.imd \
 	ol.imd \
+	clown.imd \
 	baseballm.imd \
 	soccerm.imd \
 	footballm.imd \
 	tennisw.imd \
+	mountman.imd \
+	maid.imd \
 	baker.imd \
 	workman.imd \
+	railman.imd \
+	cleaningm.imd \
+	delivery.imd \
 	pilot.imd \
+	policeman.imd \
 	assistantm.imd \
 	assistantw.imd \
 	informationm.imd \
