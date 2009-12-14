@@ -68,7 +68,7 @@ EVENT_END
 /*				ÉäÉÖÉEÇÃòrÇ…èÊÇÈ ÇPäKç∂ÇÃó≥Åiç∂ë§Åj			*/
 /************************************************************/
 EVENT_START	ev_pos_c08gym0101_gimmick_02
-  _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
+  _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(0, 1)
 EVENT_END
 
