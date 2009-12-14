@@ -81,7 +81,7 @@
 #define	BMPWIN_SEIKAKU_STR_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
 // 性格
 #define	BMPWIN_SEIKAKU_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_SEIKAKU_PX		( 1 )
+#define	BMPWIN_SEIKAKU_PX		( 2 )
 #define	BMPWIN_SEIKAKU_PY		( 14 )
 #define	BMPWIN_SEIKAKU_SX		( 8 )
 #define	BMPWIN_SEIKAKU_SY		( 2 )
@@ -95,7 +95,7 @@
 #define	BMPWIN_TOKUSEI_STR_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
 // 特性
 #define	BMPWIN_TOKUSEI_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_TOKUSEI_PX		( 1 )
+#define	BMPWIN_TOKUSEI_PX		( 2 )
 #define	BMPWIN_TOKUSEI_PY		( 18 )
 #define	BMPWIN_TOKUSEI_SX		( 11 )
 #define	BMPWIN_TOKUSEI_SY		( 2 )
@@ -109,7 +109,7 @@
 #define	BMPWIN_ITEM_STR_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
 // 持ち物
 #define	BMPWIN_ITEM_FRM		( GFL_BG_FRAME0_S )
-#define	BMPWIN_ITEM_PX		( 1 )
+#define	BMPWIN_ITEM_PX		( 2 )
 #define	BMPWIN_ITEM_PY		( 22 )
 #define	BMPWIN_ITEM_SX		( 12 )
 #define	BMPWIN_ITEM_SY		( 2 )
@@ -214,16 +214,24 @@
 
 // マーキング決定
 #define	BMPWIN_MARK_ENTER_FRM		( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
-#define	BMPWIN_MARK_ENTER_PX		( 2 )
+//#define	BMPWIN_MARK_ENTER_PX		( 2 )
+//#define	BMPWIN_MARK_ENTER_PY		( 9 )
+//#define	BMPWIN_MARK_ENTER_SX		( 7 )
+//#define	BMPWIN_MARK_ENTER_SY		( 3 )
+#define	BMPWIN_MARK_ENTER_PX		( 0 )
 #define	BMPWIN_MARK_ENTER_PY		( 9 )
-#define	BMPWIN_MARK_ENTER_SX		( 7 )
+#define	BMPWIN_MARK_ENTER_SX		( 11 )
 #define	BMPWIN_MARK_ENTER_SY		( 3 )
 #define	BMPWIN_MARK_ENTER_PAL		( 1 )
 // マーキングキャンセル
 #define	BMPWIN_MARK_CANCEL_FRM	( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
-#define	BMPWIN_MARK_CANCEL_PX		( 2 )
+//#define	BMPWIN_MARK_CANCEL_PX		( 2 )
+//#define	BMPWIN_MARK_CANCEL_PY		( 12 )
+//#define	BMPWIN_MARK_CANCEL_SX		( 7 )
+//#define	BMPWIN_MARK_CANCEL_SY		( 3 )
+#define	BMPWIN_MARK_CANCEL_PX		( 0 )
 #define	BMPWIN_MARK_CANCEL_PY		( 12 )
-#define	BMPWIN_MARK_CANCEL_SX		( 7 )
+#define	BMPWIN_MARK_CANCEL_SX		( 11 )
 #define	BMPWIN_MARK_CANCEL_SY		( 3 )
 #define	BMPWIN_MARK_CANCEL_PAL	( 1 )
 
@@ -1891,6 +1899,7 @@ void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
  *	マーキングフレーム、手持ちポケモンフレームなど
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void FrmStrPut( BOX2_APP_WORK * appwk, u32 winID, u32 strID )
 {
 	STRBUF * str;
@@ -1906,6 +1915,7 @@ static void FrmStrPut( BOX2_APP_WORK * appwk, u32 winID, u32 strID )
 
 //	GFL_BMPWIN_TransVramCharacter( &appwk->win[winID] );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1916,10 +1926,25 @@ static void FrmStrPut( BOX2_APP_WORK * appwk, u32 winID, u32 strID )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_MarkingButtonPut( BOX2_APP_WORK * appwk )
+void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk )
 {
+/*
 	FrmStrPut( appwk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
 	FrmStrPut( appwk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
+*/
+	ButtonPut_S( syswk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
+	ButtonPut_S( syswk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
+
+	BGWINFRM_PaletteChange(
+		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
+		BMPWIN_MARK_ENTER_PX, BMPWIN_MARK_ENTER_PY,
+		BMPWIN_MARK_ENTER_SX, BMPWIN_MARK_ENTER_SY,
+		BOX2MAIN_BG_PAL_SELWIN );
+	BGWINFRM_PaletteChange(
+		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
+		BMPWIN_MARK_CANCEL_PX, BMPWIN_MARK_CANCEL_PY,
+		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY,
+		BOX2MAIN_BG_PAL_SELWIN );
 }
 
 
@@ -1933,11 +1958,11 @@ void BOX2BMP_MarkingButtonPut( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk )
+void BOX2BMP_MarkingButtonFrmPut( BOX2_SYS_WORK * syswk )
 {
-	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_MARK, appwk->win[BMPWIN_MARK_ENTER].win );
-	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_MARK, appwk->win[BMPWIN_MARK_CANCEL].win );
-	BOX2BMP_MarkingButtonPut( appwk );
+	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_ENTER].win );
+	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_CANCEL].win );
+	BOX2BMP_MarkingButtonPut( syswk );
 }
 
 

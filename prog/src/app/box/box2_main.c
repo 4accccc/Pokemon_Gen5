@@ -611,39 +611,17 @@ void BOX2MAIN_BgExit( BOX2_SYS_WORK * syswk )
 void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 {
 	ARCHANDLE * ah;
-
-	// タッチバー
-	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
-		ah, APP_COMMON_GetBarCharArcIdx(), GFL_BG_FRAME0_M, 0, FALSE, HEAPID_BOX_APP );
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, APP_COMMON_GetBarPltArcIdx(), PALTYPE_MAIN_BG,
-		BOX2MAIN_BG_PAL_TOUCH_BAR*0x20, 0x20, HEAPID_BOX_APP );
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, APP_COMMON_GetBarScrnArcIdx(),
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_BOX_APP );
-	GFL_BG_ChangeScreenPalette(
-		GFL_BG_FRAME0_M, BOX2MAIN_TOUCH_BAR_PX, BOX2MAIN_TOUCH_BAR_PY,
-		BOX2MAIN_TOUCH_BAR_SX, BOX2MAIN_TOUCH_BAR_SY, BOX2MAIN_BG_PAL_TOUCH_BAR );
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
-
-	GFL_ARC_CloseDataHandle( ah );
+	GFL_ARCUTIL_TRANSINFO  info;
 
 	ah = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, HEAPID_BOX_APP );
-
-/*
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_box_m_bg1_lz_NCGR, GFL_BG_FRAME0_M, 0, 0, TRUE, HEAPID_BOX_APP );
-*/
-
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_box_gra_box_m_bg1_lz_NCGR, GFL_BG_FRAME1_M, 0, 0, TRUE, HEAPID_BOX_APP );
 
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+//	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
 		ah, NARC_box_gra_box_m_bg2_lz_NCGR,
-		GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_BOX_APP );
+		GFL_BG_FRAME2_M, 0, TRUE, HEAPID_BOX_APP );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_box_gra_box_m_bg2_lz_NSCR,
 		GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_BOX_APP );
@@ -658,11 +636,6 @@ void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_box_gra_box_m_bg_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_BOX_APP );
 
-/*
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_selwin_lz_NCGR, GFL_BG_FRAME0_M,
-		BOX2MAIN_SELWIN_CGX_POS, BOX2MAIN_SELWIN_CGX_SIZ*0x20*2, TRUE, HEAPID_BOX_APP );
-*/
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_box_gra_selwin_lz_NCGR, GFL_BG_FRAME1_M,
 		BOX2MAIN_SELWIN_CGX_POS, BOX2MAIN_SELWIN_CGX_SIZ*0x20*2, TRUE, HEAPID_BOX_APP );
@@ -685,6 +658,48 @@ void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_box_gra_box_s_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_BOX_APP );
 
+	GFL_ARC_CloseDataHandle( ah );
+
+	// タッチバー
+	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_BOX_APP );
+
+	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+		ah, APP_COMMON_GetBarCharArcIdx(), GFL_BG_FRAME0_M, 0, FALSE, HEAPID_BOX_APP );
+	GFL_ARCHDL_UTIL_TransVramPalette(
+		ah, APP_COMMON_GetBarPltArcIdx(), PALTYPE_MAIN_BG,
+		BOX2MAIN_BG_PAL_TOUCH_BAR*0x20, 0x20, HEAPID_BOX_APP );
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, APP_COMMON_GetBarScrnArcIdx(),
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_BOX_APP );
+	GFL_BG_ChangeScreenPalette(
+		GFL_BG_FRAME0_M, BOX2MAIN_TOUCH_BAR_PX, BOX2MAIN_TOUCH_BAR_PY,
+		BOX2MAIN_TOUCH_BAR_SX, BOX2MAIN_TOUCH_BAR_SY, BOX2MAIN_BG_PAL_TOUCH_BAR );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+
+	info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+					ah, APP_COMMON_GetBarCharArcIdx(), GFL_BG_FRAME2_M, 0, FALSE, HEAPID_BOX_APP );
+
+	GFL_ARC_CloseDataHandle( ah );
+
+	{	// タッチバーをBG2に展開
+		u16 * scr0;
+		u16 * scr2;
+		u32	i;
+
+		scr0 = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+		scr2 = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME2_M );
+
+		scr0 = &scr0[ BOX2MAIN_TOUCH_BAR_PY*BOX2MAIN_TOUCH_BAR_SX+BOX2MAIN_TOUCH_BAR_PX ];
+		scr2 = &scr2[ BOX2MAIN_TOUCH_BAR_PY*BOX2MAIN_TOUCH_BAR_SX+BOX2MAIN_TOUCH_BAR_PX ];
+
+		for( i=0; i<BOX2MAIN_TOUCH_BAR_SX*BOX2MAIN_TOUCH_BAR_SY; i++ ){
+			scr2[i] = scr0[i] + info;
+		}
+
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+	}
+
+
 	syswk->app->syswinInfo = BmpWinFrame_GraphicSetAreaMan(
 														GFL_BG_FRAME0_M,
 														BOX2MAIN_BG_PAL_SYSWIN,
@@ -698,8 +713,6 @@ void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		BOX2MAIN_BG_PAL_SYSFNT_S*0x20, 0x20, HEAPID_BOX_APP );
-
-	GFL_ARC_CloseDataHandle( ah );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3712,8 +3725,28 @@ void BOX2MAIN_PokeSelectOff( BOX2_SYS_WORK * syswk )
 
 
 //============================================================================================
-//	上画面マーキング
+//	マーキング
 //============================================================================================
+
+static void MarkingChange( BOX2_SYS_WORK * syswk, u32 id, u32 mark )
+{
+	u16	anm;
+	u16	i;
+
+	for( i=0; i<6; i++ ){
+		if( mark & (1<<i) ){
+			anm = APP_COMMON_POKE_MARK_CIRCLE_BLACK + i*2;
+		}else{
+			anm = APP_COMMON_POKE_MARK_CIRCLE_WHITE + i*2;
+		}
+		BOX2OBJ_AnmSet( syswk->app, id+i, anm );
+	}
+}
+
+void BOX2MAIN_MainDispMarkingChange( BOX2_SYS_WORK * syswk, u32 mark )
+{
+	MarkingChange( syswk, BOX2OBJ_ID_MARK1, mark );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3727,34 +3760,7 @@ void BOX2MAIN_PokeSelectOff( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2MAIN_SubDispMarkingChange( BOX2_SYS_WORK * syswk, u32 mark )
 {
-	u16	anm;
-	u16	i;
-
-	for( i=0; i<6; i++ ){
-		if( mark & (1<<i) ){
-			anm = APP_COMMON_POKE_MARK_CIRCLE_BLACK + i*2;
-		}else{
-			anm = APP_COMMON_POKE_MARK_CIRCLE_WHITE + i*2;
-		}
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_MARK1_S+i, anm );
-	}
-
-/*
-	u16	chr;
-	u16	i;
-
-	for( i=0; i<6; i++ ){
-		if( mark & (1<<i) ){
-			chr = SUBDISP_MARK_ON_CHAR + i;
-		}else{
-			chr = SUBDISP_MARK_OFF_CHAR + i;
-		}
-		GFL_BG_FillScreen(
-			GFL_BG_FRAME1_S, chr,
-			SUBDISP_MARK_PX+i, SUBDISP_MARK_PY, 1, 1, SUBDISP_MARK_PAL );
-	}
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-*/
+	MarkingChange( syswk, BOX2OBJ_ID_MARK1_S, mark );
 }
 
 // レア・ポケルスマーク表示
@@ -5005,7 +5011,7 @@ int BOX2MAIN_VFuncPokeFreeMenuMove( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_VFuncMarkingFrameMove( BOX2_SYS_WORK * syswk )
 {
-	return BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK );
+	return BOX2BGWFRM_MarkingFrameMove( syswk );
 }
 
 //--------------------------------------------------------------------------------------------

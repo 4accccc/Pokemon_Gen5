@@ -169,7 +169,7 @@ void BGWINFRM_FrameSet( BGWINFRM_WORK * wk, u32 index, u16 * scr )
 {
 	BGWINFRM * win = &wk->win[index];
 
-	MI_CpuCopy16( scr, win->scr, win->sx*win->sy*2 );
+	GFL_STD_MemCopy16( scr, win->scr, win->sx*win->sy*2 );
 }
 
 //--------------------------------------------------------------------------------------------

@@ -1099,3 +1099,6 @@ extern void BOX2OBJ_FontOamResetBmp( BOX2_APP_WORK * appwk, GFL_BMPWIN * win, u3
 
 extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status );
 extern void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk );
+
+
+extern void BOX2OBJ_MarkingScroll( BOX2_SYS_WORK * syswk );

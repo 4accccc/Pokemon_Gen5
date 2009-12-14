@@ -107,6 +107,8 @@ extern BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_MarkingFrameOutSet( BGWINFRM_WORK * wk );
 
+extern int BOX2BGWFRM_MarkingFrameMove( BOX2_SYS_WORK * syswk );
+
 extern void BOX2BGWFRM_PartyPokeFrameInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_PartyPokeFrameOutSet( BGWINFRM_WORK * wk );

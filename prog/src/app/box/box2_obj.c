@@ -40,13 +40,15 @@
 #define	PALNUM_POKEICON		( PALNUM_TRAYICON + PALSIZ_TRAYICON )		// パレット番号：ポケモンアイコン
 #define	PALSIZ_POKEICON		( POKEICON_PAL_MAX )										// パレット数：ポケモンアイコン
 #define	PALNUM_BOXOBJ			( PALNUM_POKEICON + PALSIZ_POKEICON )		// パレット番号：その他のＯＢＪ
-#define	PALSIZ_BOXOBJ			( 3 )																		// パレット数：その他のＯＢＪ
+#define	PALSIZ_BOXOBJ			( 2 )																		// パレット数：その他のＯＢＪ
 #define	PALNUM_TOUCH_BAR	( PALNUM_BOXOBJ + PALSIZ_BOXOBJ )				// パレット番号：タッチバー
 #define	PALSIZ_TOUCH_BAR	( 4 )																		// パレット数：タッチバー
 #define	PALNUM_ITEMICON		( PALNUM_TOUCH_BAR + PALSIZ_TOUCH_BAR )	// パレット番号：アイテムアイコン
 #define	PALSIZ_ITEMICON		( 1 )																		// パレット数：アイテムアイコン
+#define	PALNUM_MARK				( PALNUM_ITEMICON + PALSIZ_ITEMICON )		// パレット番号：アイテムアイコン
+#define	PALSIZ_MARK				( 1 )																		// パレット数：アイテムアイコン
 
-#define	PALNUM_OUTLINE		( 2 )										// パレット番号：アウトラインカーソル（リソースのオフセット）
+#define	PALNUM_OUTLINE		( 1 )										// パレット番号：アウトラインカーソル（リソースのオフセット）
 #define	PALNUM_TB_STATUS	( 3 )										// パレット番号：タッチバーステータス（リソースのオフセット）
 #define	PLANUM_TRAYPOKE		( PALNUM_TRAYICON + 2 )		// パレット番号：トレイアイコンに表示するドット
 
@@ -259,18 +261,6 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
-/*
-	{	// ボックス移動矢印（左）
-		{ 12, -21, BOX2OBJ_ANM_L_ARROW_OFF, 5, 1 },
-		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
-		0, CLSYS_DRAW_MAIN,
-	},
-	{	// ボックス移動矢印（右）
-		{ 244, -21, BOX2OBJ_ANM_R_ARROW_OFF, 5, 1 },
-		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
-		0, CLSYS_DRAW_MAIN,
-	},
-*/
 	{	// トレイカーソル
 		{ /*BOX2OBJ_TRAYICON_PX*/0, -21, BOX2OBJ_ANM_TRAY_CURSOR, 6, 1 },
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
@@ -281,13 +271,6 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
-/*
-	{	// トレイ矢印
-		{ BOXNAME_OBJ_PX, BOXNAME_OBJ_PY, BOX2OBJ_ANM_TRAY_ARROW, 5, 1 },
-		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
-		0, CLSYS_DRAW_MAIN,
-	},
-*/
 
 	{	// 手カーソル
 		{ 128, 128, BOX2OBJ_ANM_HAND_NORMAL, 0, 0 },
@@ -338,66 +321,64 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		0, CLSYS_DRAW_SUB,
 	},
 
-/*
 	{	// ●（メイン）
-		{ 200, 104, 0, 10, 1 },
+		{ 192, 200, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// ★（メイン）
-		{ 208, 104, 0, 10, 1 },
+		{ 224, 200, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// ◆（メイン）
-		{ 216, 104, 0, 10, 1 },
+		{ 192, 224, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// ■（メイン）
-		{ 224, 104, 0, 10, 1 },
+		{ 224, 224, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// ▲（メイン）
-		{ 232, 104, 0, 10, 1 },
+		{ 192, 248, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
 	{	// ハート（メイン）
-		{ 240, 104, 0, 10, 1 },
+		{ 224, 248, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK, BOX2MAIN_PALRES_POKEMARK, BOX2MAIN_CELRES_POKEMARK,
 		0, CLSYS_DRAW_MAIN,
 	},
-*/
 
 	{	// ●（サブ）
-		{ 200, 104, 0, 10, 1 },
+		{ 200, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ★（サブ）
-		{ 208, 104, 0, 10, 1 },
+		{ 208, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ◆（サブ）
-		{ 216, 104, 0, 10, 1 },
+		{ 216, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ■（サブ）
-		{ 224, 104, 0, 10, 1 },
+		{ 224, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ▲（サブ）
-		{ 232, 104, 0, 10, 1 },
+		{ 232, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
 	{	// ハート（サブ）
-		{ 240, 104, 0, 10, 1 },
+		{ 240, 103, 0, 10, 1 },
 		BOX2MAIN_CHRRES_POKEMARK_SUB, BOX2MAIN_PALRES_POKEMARK_SUB, BOX2MAIN_CELRES_POKEMARK_SUB,
 		0, CLSYS_DRAW_SUB,
 	},
@@ -2333,6 +2314,21 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
 																								ah, APP_COMMON_GetPokerusPltArcIdx(),
 																								CLSYS_DRAW_SUB, PALNUM_POKERUS_S*0x20, HEAPID_BOX_APP );
 
+	appwk->chrRes[BOX2MAIN_CHRRES_POKEMARK] = GFL_CLGRP_CGR_Register(
+																							ah,
+																							APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K),
+																							FALSE, CLSYS_DRAW_MAIN, HEAPID_BOX_APP );
+
+	appwk->celRes[BOX2MAIN_CELRES_POKEMARK] = GFL_CLGRP_CELLANIM_Register(
+																							ah,
+																							APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K),
+																							APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K),
+																							HEAPID_BOX_APP );
+
+  appwk->palRes[BOX2MAIN_PALRES_POKEMARK] = GFL_CLGRP_PLTT_Register(
+																							ah,APP_COMMON_GetPokeMarkPltArcIdx(),
+																							CLSYS_DRAW_MAIN, PALNUM_MARK*0x20, HEAPID_BOX_APP );
+
   GFL_ARC_CloseDataHandle( ah );
 }
 
@@ -2892,6 +2888,7 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 	appwk->clwk[BOX2OBJ_ID_TB_STATUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TB_STATUS] );
 
 	for( i=0; i<6; i++ ){
+		appwk->clwk[BOX2OBJ_ID_MARK1+i]   = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_MARK1+i] );
 		appwk->clwk[BOX2OBJ_ID_MARK1_S+i] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_MARK1_S+i] );
 	}
 	appwk->clwk[BOX2OBJ_ID_RARE] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_RARE] );
@@ -3170,6 +3167,34 @@ void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg )
 {
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_L_ARROW, flg );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_R_ARROW, flg );
+}
+
+
+//============================================================================================
+//	マーキング
+//============================================================================================
+#define	MARK_SWITCH_PX	( 23 )
+#define	MARK_SWITCH_PY	( 8 )
+#define	MARK_SWITCH_SX	( 32 )
+#define	MARK_SWITCH_SY	( 24 )
+
+void BOX2OBJ_MarkingScroll( BOX2_SYS_WORK * syswk )
+{
+	u32	i;
+	s16	px, py;
+	s8	wx, wy;
+
+	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, &wx, &wy );
+	px = wx * 8 + MARK_SWITCH_PX;
+	py = wy * 8 + MARK_SWITCH_PY;
+
+	for( i=0; i<6; i++ ){
+		BOX2OBJ_SetPos(
+			syswk->app, BOX2OBJ_ID_MARK1+i,
+			px + MARK_SWITCH_SX * ( i & 1 ),
+			py + MARK_SWITCH_SY * ( i / 2 ),
+			CLSYS_DEFREND_MAIN );
+	}
 }
 
 
@@ -4092,7 +4117,7 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 	finit.x = 0;
 	finit.y = 0;
 	finit.pltt_index = appwk->palRes[BOX2MAIN_PALRES_BOXOBJ];
-	finit.pal_offset = 1;		// pltt_indexのパレット内でのオフセット
+	finit.pal_offset = 0;		// pltt_indexのパレット内でのオフセット
 	finit.soft_pri = 4;			// ソフトプライオリティ
 	finit.bg_pri = 1;				// BGプライオリティ
 //	finit.setSerface = CLSYS_DEFREND_MAIN;

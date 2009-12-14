@@ -454,6 +454,8 @@ static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk );
 static int BoxArg_SleepYes( BOX2_SYS_WORK * syswk );
 static int BoxArg_SleepNo( BOX2_SYS_WORK * syswk );
 
+static void MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
+
 
 //============================================================================================
 //	グローバル変数
@@ -2336,8 +2338,9 @@ static int MainSeq_MarkingInit( BOX2_SYS_WORK * syswk )
 
 	case 1:
 		syswk->app->pokeMark = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_mark, NULL );
-		BOX2BGWFRM_MarkingFramePut( syswk );
+//		BOX2BGWFRM_MarkingFramePut( syswk );
 //		BOX2BMP_MarkingButtonPut( syswk->app );
+		BOX2MAIN_MainDispMarkingChange( syswk, syswk->app->pokeMark );
 		BOX2BGWFRM_MarkingFrameInSet( syswk->app->wfrm );
 		syswk->app->sub_seq++;
 		return VFuncSet( syswk, BOX2MAIN_VFuncMarkingFrameMove, BOX2SEQ_MAINSEQ_MARKING_INIT );
@@ -2370,27 +2373,27 @@ static int MainSeq_MarkingMain( BOX2_SYS_WORK * syswk )
 	switch( CURSORMOVE_MainCont(syswk->app->cmwk) ){
 	case BOX2UI_MARKING_MARK1:		// 00: ●
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 0 );
+		MarkingSwitch( syswk, 0 );
 		break;
 	case BOX2UI_MARKING_MARK2:		// 01: ▲
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 1 );
+		MarkingSwitch( syswk, 1 );
 		break;
 	case BOX2UI_MARKING_MARK3:		// 02: ■
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 2 );
+		MarkingSwitch( syswk, 2 );
 		break;
 	case BOX2UI_MARKING_MARK4:		// 03: ハート
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 3 );
+		MarkingSwitch( syswk, 3 );
 		break;
 	case BOX2UI_MARKING_MARK5:		// 04: ★
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 4 );
+		MarkingSwitch( syswk, 4 );
 		break;
 	case BOX2UI_MARKING_MARK6:		// 05: ◆
 //		Snd_SePlay( SE_BOX2_DECIDE );
-		BOX2BGWFRM_MarkingSwitch( syswk, 5 );
+		MarkingSwitch( syswk, 5 );
 		break;
 
 	case BOX2UI_MARKING_ENTER:		// 06:「けってい」
@@ -11133,19 +11136,19 @@ static int MarkingButtonAnmSet( BOX2_SYS_WORK * syswk, u32 no, int next )
 {
 	syswk->app->bawk.btn_mode = BOX2MAIN_BTN_ANM_MODE_BG;
 	syswk->app->bawk.btn_id   = BGWINFRM_BGFrameGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK );
-	syswk->app->bawk.btn_pal1 = 3;
-	syswk->app->bawk.btn_pal2 = 2;
+	syswk->app->bawk.btn_pal1 = BOX2MAIN_BG_PAL_SELWIN + 1;
+	syswk->app->bawk.btn_pal2 = BOX2MAIN_BG_PAL_SELWIN;
 	syswk->app->bawk.btn_seq  = 0;
 	syswk->app->bawk.btn_cnt  = 0;
 
 	if( no == 0 ){
-		syswk->app->bawk.btn_py = 16;
+		syswk->app->bawk.btn_py = 14;
 	}else{
-		syswk->app->bawk.btn_py = 20;
+		syswk->app->bawk.btn_py = 17;
 	}
-	syswk->app->bawk.btn_px = 22;
-	syswk->app->bawk.btn_sx = 9;
-	syswk->app->bawk.btn_sy = 4;
+	syswk->app->bawk.btn_px = 21;
+	syswk->app->bawk.btn_sx = 11;
+	syswk->app->bawk.btn_sy = 3;
 
 	syswk->next_seq = next;
 	return BOX2SEQ_MAINSEQ_BUTTON_ANM;
@@ -13017,4 +13020,10 @@ static int BoxArg_SleepNo( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
 	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 	return BOX2SEQ_MAINSEQ_SLEEP_MAIN;
+}
+
+static void MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	syswk->app->pokeMark ^= (1<<pos);
+	BOX2MAIN_MainDispMarkingChange( syswk, syswk->app->pokeMark );
 }

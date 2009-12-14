@@ -251,7 +251,7 @@ extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk );
+extern void BOX2BMP_MarkingButtonFrmPut( BOX2_SYS_WORK * syswk );
 
 
 
@@ -510,20 +510,9 @@ extern void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_MarkingButtonPut( BOX2_APP_WORK * appwk );
+extern void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk );
 
 
-
-//--------------------------------------------------------------------------------------------
-/**
- * マーキングフレームににBMPWINをセット
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk );
 
 
 //--------------------------------------------------------------------------------------------

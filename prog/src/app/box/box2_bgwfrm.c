@@ -222,7 +222,7 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 */
 
 	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MARK, NARC_box_gra_box_mark_bg_lz_NSCR );
-	BOX2BMP_MarkingButtonFrmPut( syswk->app );
+	BOX2BMP_MarkingButtonFrmPut( syswk );
 
 	PokeMenuInitPosSet( appwk->wfrm );
 	BoxMoveButtonInitPut( appwk->wfrm );
@@ -454,14 +454,10 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 {
 	u32	party_mv;
 	s8	x1, y1, x2, y2;
-	BOOL	ret;
 
 	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY, &x1, &y1 );
 
 	party_mv = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY );
-//	ret_mv   = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-//	ret_mv   = 0;
-//	BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN );
 
 	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY, &x2, &y2 );
 
@@ -469,14 +465,11 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_PartyPokeIconScroll2( syswk );
 	}
 
-//	if( party_mv == 0 && ret_mv == 0 ){
 	if( party_mv == 0 ){
-		ret = FALSE;
-	}else{
-		ret = TRUE;
+		return FALSE;
 	}
 
-	return ret;
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1140,6 +1133,7 @@ void BOX2BGWFRM_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void MarkingScrPut( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	u16 * scr;
@@ -1159,6 +1153,7 @@ static void MarkingScrPut( BOX2_SYS_WORK * syswk, u32 pos )
 
 	*scr = ( *scr & 0xf000 ) + chr;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1171,11 +1166,13 @@ static void MarkingScrPut( BOX2_SYS_WORK * syswk, u32 pos )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_MarkingFramePut( BOX2_SYS_WORK * syswk )
 {
+/*
 	u32	i;
 
 	for( i=0; i<POKEPARA_MARKING_ELEMS_MAX; i++ ){
 		MarkingScrPut( syswk, i );
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1190,9 +1187,11 @@ void BOX2BGWFRM_MarkingFramePut( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos )
 {
+/*
 	syswk->app->pokeMark ^= (1<<pos);
 	MarkingScrPut( syswk, pos );
 	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, WINFRM_MARK_PX, WINFRM_MARK_PY );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1223,6 +1222,35 @@ void BOX2BGWFRM_MarkingFrameOutSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MARK, 0, 1, WINFRM_MARK_MV_CNT );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * マーキングフレーム移動
+ *
+ * @param	syswk	ボックス画面システムワーク
+ *
+ * @retval	"TRUE = 移動中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+int BOX2BGWFRM_MarkingFrameMove( BOX2_SYS_WORK * syswk )
+{
+	u32	mv;
+	s8	x1, y1, x2, y2;
+
+	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, &x1, &y1 );
+
+	mv = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK );
+
+	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, &x2, &y2 );
+
+	if( x1 != x2 || y1 != y2 ){
+		BOX2OBJ_MarkingScroll( syswk );
+	}
+
+	return mv;
+}
+
 
 
 //============================================================================================
