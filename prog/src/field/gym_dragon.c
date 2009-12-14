@@ -25,6 +25,7 @@
 
 //#include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE
 //#include "fieldmap_ctrl_hybrid.h" //for FIELDMAP_CTRL_HYBRID
+#include "../../../resource/fldmapdata/eventdata/define/total_header.h" //for OBJID
 
 #define GYM_DRAGON_UNIT_IDX (0)
 #define GYM_DRAGON_TMP_ASSIGN_ID  (1)
@@ -118,6 +119,7 @@ typedef struct GYM_DRAGON_TMP_tag
   DRA_ARM TrgtArm;
   DRAGON_WORK *DraWk;
   ANM_PLAY_WORK AnmPlayWk;
+  BOOL FloorVanish;
 }GYM_DRAGON_TMP;
 
 //リソースの並び順番
@@ -390,6 +392,9 @@ static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk);
 static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir);
 static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work );
 
+static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const BOOL inVanish);
+static MMDL *SeatchMmdl(FIELDMAP_WORK *fieldWork, const int inObjID);
+static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVanish);
 
 
 //--------------------------------------------------------------
@@ -465,12 +470,9 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
     else vanish = TRUE;       //2階の床と竜を非表示
 
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_L_ARM_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_R_ARM_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, vanish );
+    VanishFloor(ptr, fieldWork, vanish);
+
+    tmp->FloorVanish = vanish;
   }
 }
 
@@ -652,12 +654,11 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
     else vanish = TRUE;       //2階の床と竜を非表示
 
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_L_ARM_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_R_ARM_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, vanish );
-    FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, vanish );
+    if (tmp->FloorVanish != vanish)
+    {
+      VanishFloor(ptr, fieldWork, vanish);
+      tmp->FloorVanish = vanish;
+    }
   }
 
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
@@ -1091,4 +1092,66 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
   }
   
   return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * フロアの表示・非表示
+ * @param	  ptr         拡張ＯＢＪ管理ポインタ
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inVanish    バニッシュフラグ　　TRUEで非表示
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const BOOL inVanish)
+{
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, inVanish );
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_HEAD_3, inVanish );
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_L_ARM_3, inVanish );
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_R_ARM_3, inVanish );
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, inVanish );
+  FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, inVanish );
+  
+  SetObjVanish(fieldWork, C08GYM0101_LEADER8_01, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_01, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_02, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_03, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_04, inVanish);
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドモデルの検索
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inObjID     ＯＢＪＩＤ
+ * @return  MMDL        モデルポインタ
+ */
+//--------------------------------------------------------------
+static MMDL *SeatchMmdl(FIELDMAP_WORK *fieldWork, const int inObjID)
+{
+  u32 no = 0;
+	MMDL *mmdl;
+  MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
+		if( MMDL_GetOBJID(mmdl) == inObjID ){
+			return( mmdl );
+		}
+	}
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * ＯＢＪの表示・非表示
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inObjID     ＯＢＪＩＤ
+ * @param   inVanish    バニッシュフラグ　　TRUEで非表示
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVanish)
+{
+  MMDL *mmdl;
+  mmdl = SeatchMmdl(fieldWork, inObjID);
+  if (mmdl != NULL) MMDL_SetStatusBitVanish(mmdl, inVanish);
 }
