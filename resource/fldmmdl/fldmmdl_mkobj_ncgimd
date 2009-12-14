@@ -278,10 +278,10 @@
 	@echo convert ncg_imd sunglasses
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sunglasses.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
-#leader1a.imd
-./mmdl_res/leader1a.imd: ./mmdl_nchara/leader1a.ncg ./mmdl_nchara/leader1a.ncl
-	@echo convert ncg_imd leader1a
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1a.ncg ./mmdl_res ./mmdl_res/ncg4x4pcwoman1.imd 4 4 9
+#leader1c.imd
+./mmdl_res/leader1c.imd: ./mmdl_nchara/leader1c.ncg ./mmdl_nchara/leader1c.ncl
+	@echo convert ncg_imd leader1c
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1c.ncg ./mmdl_res ./mmdl_res/ncg4x4pcwoman1.imd 4 4 9
 
 #hakase2.imd
 ./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl
@@ -468,10 +468,10 @@
 	@echo convert ncg_imd leader1b
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1b.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
-#leader1c.imd
-./mmdl_res/leader1c.imd: ./mmdl_nchara/leader1c.ncg ./mmdl_nchara/leader1c.ncl
-	@echo convert ncg_imd leader1c
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1c.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+#leader1a.imd
+./mmdl_res/leader1a.imd: ./mmdl_nchara/leader1a.ncg ./mmdl_nchara/leader1a.ncl
+	@echo convert ncg_imd leader1a
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1a.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #leader8b.imd
 ./mmdl_res/leader8b.imd: ./mmdl_nchara/leader8b.ncg ./mmdl_nchara/leader8b.ncl

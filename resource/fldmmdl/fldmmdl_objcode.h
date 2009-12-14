@@ -90,7 +90,7 @@
 #define WIFISW (0x52) //82(82,total 82) Wifi係員♀
 #define SUNGLASSES (0x53) //83(83,total 83) サングラス
 #define AMBRELLA (0x54) //84(84,total 84) パラソル
-#define LEADER1A (0x55) //85(85,total 85) ジムリーダー１a
+#define LEADER1C (0x55) //85(85,total 85) ジムリーダー１c
 #define LEADER2 (0x56) //86(86,total 86) ジムリーダー２
 #define LEADER3 (0x57) //87(87,total 87) ジムリーダー３
 #define LEADER4 (0x58) //88(88,total 88) ジムリーダー４
@@ -184,7 +184,7 @@
 #define WKOBJCODE14 (0xb0) //176(176,total 176) ワーク参照型コード
 #define WKOBJCODE15 (0xb1) //177(177,total 177) ワーク参照型コード
 #define LEADER1B (0xb2) //178(178,total 178) ジムリーダー１b
-#define LEADER1C (0xb3) //179(179,total 179) ジムリーダー１c
+#define LEADER1A (0xb3) //179(179,total 179) ジムリーダー１a
 #define LEADER8B (0xb4) //180(180,total 180) ジムリーダー８b
 #define CORN (0xb5) //181(181,total 181) コーン
 #define NINJA (0xb6) //182(182,total 182) 忍者

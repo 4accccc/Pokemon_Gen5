@@ -55,7 +55,7 @@ FMMDL_RESLIST_NCGIMD = \
 	wifism.imd \
 	wifisw.imd \
 	sunglasses.imd \
-	leader1a.imd \
+	leader1c.imd \
 	hakase2.imd \
 	icpo.imd \
 	tree.imd \
@@ -93,7 +93,7 @@ FMMDL_RESLIST_NCGIMD = \
 	fishhero.imd \
 	fishheroine.imd \
 	leader1b.imd \
-	leader1c.imd \
+	leader1a.imd \
 	leader8b.imd \
 	corn.imd \
 	ninja.imd \
