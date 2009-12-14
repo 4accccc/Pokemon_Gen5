@@ -108,6 +108,14 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
 //     (*seq) = _GAMESYNC_MAINPROC;
     break;
   case _CALL_GAMESYNC_MENU:
+
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
+      dbw->push=TRUE;
+    }
+
     dbw->isEndProc = FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
     (*seq)++;

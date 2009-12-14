@@ -57,6 +57,7 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
 #define _BUTTON_WIN_CENTERY (13)   //
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
@@ -69,42 +70,8 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 #define _SUBSCREEN_PALLET	(0xE)
 
 
-//#define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
-//#define	_BUTTON_WIN_CGX	( 2 )
 
-
-//#define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
-
-
-
-typedef struct {
-  int leftx;
-  int lefty;
-  int width;
-  int height;
-} _WINDOWPOS;
-
-
-static _WINDOWPOS wind4[]={
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*4), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*3), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*2), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-};
-
-
-static const GFL_UI_TP_HITTBL bttndata[] = {
-  //上下左右
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
+#include "ircbattlemenu.cdat"
 
 
 
@@ -159,7 +126,7 @@ enum _BATTLETYPE_SELECT {
   _SELECTBT_SINGLE = 0,
   _SELECTBT_DOUBLE,
   _SELECTBT_TRI,
-  _SELECTBT_EXIT
+  _SELECTBT_ROTATE,
 };
 
 
@@ -213,7 +180,7 @@ struct _IRC_BATTLE_MENU {
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
 
-
+  int yoffset;
   GFL_BMPWIN* infoDispWin;
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;
@@ -236,7 +203,7 @@ struct _IRC_BATTLE_MENU {
 //-----------------------------------------------
 static void _changeState(IRC_BATTLE_MENU* pWork,StateFunc* state);
 static void _changeStateDebug(IRC_BATTLE_MENU* pWork,StateFunc* state, int line);
-static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork);
+static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _WINDOWPOS* pos);
 static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork);
 static void _modeSelectMenuWait(IRC_BATTLE_MENU* pWork);
 static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork);
@@ -247,10 +214,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
-static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
-static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork);
-static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork);
 static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork);
+static void _touchScreenChange(IRC_BATTLE_MENU* pWork,int no);
+static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -347,7 +313,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -363,7 +329,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -393,7 +359,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
+static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _WINDOWPOS* pos)
 {
   int i;
   u32 cgx;
@@ -404,28 +370,36 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-	
-  for(i=0;i < num;i++){
-    _WINDOWPOS* pos = wind4;
 
-		GFL_FONTSYS_SetDefaultColor();
-		if(pWork->buttonWin[i]==NULL){
-			pWork->buttonWin[i] = GFL_BMPWIN_Create(
-				frame,
-				pos[i].leftx, pos[i].lefty,
-				pos[i].width, pos[i].height,
-				_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  for(i = 0;i < _WINDOW_MAXNUM;i++){
+		if(pWork->buttonWin[i]){
+			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
 		}
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
-    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-//    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-		BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+    pWork->buttonWin[i] = NULL;
+  }
 
+  for(i=0;i < num;i++){
+    GFL_FONTSYS_SetColor(0xe,0xf,3);
+//    GFL_FONTSYS_SetDefaultColor();
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+      frame,
+      pos[i].leftx, pos[i].lefty,
+      pos[i].width, pos[i].height,
+      _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+//      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
 
+ //   PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
+     //                   pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
+//void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
+
+    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   }
 
 
@@ -434,15 +408,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
 	}
   pWork->pButton = NULL;
 	 
-  for(i = num;i < _WINDOW_MAXNUM;i++){
-		if(pWork->buttonWin[i]){
-			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
-			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
-			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		}
-    pWork->buttonWin[i] = NULL;
-  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 	 
 }
 
@@ -555,8 +521,8 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_cg_comm_comm_base_NSCR,
-                                              GFL_BG_FRAME1_S, 0,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_cg_comm_comm_ir_btn_NSCR,
+                                              GFL_BG_FRAME2_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 		GFL_ARC_CloseDataHandle(p_handle);
@@ -572,18 +538,41 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   文字表示パネル変更
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _touchScreenChange(IRC_BATTLE_MENU* pWork,int no)
+{
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, no,
+                                            GFL_BG_FRAME2_S, 0,
+                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                            pWork->heapID);
+		GFL_ARC_CloseDataHandle(p_handle);
+  }
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   モードセレクト画面初期化
  * @retval  none
  */
 //------------------------------------------------------------------------------
 static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
-	int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_03};
-	
-	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+	int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_14};
 
-	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork, wind_irmain);
+
+	pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
 	pWork->touch = &_modeSelectMenuButtonCallback;
+
+  _ReturnButtonStart(pWork);
+  
 
 	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 
@@ -628,6 +617,8 @@ static void _modeFadeout(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
+  BOOL ret = FALSE;
+  
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
@@ -638,7 +629,8 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
       _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
     }
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-    return TRUE;
+    ret = TRUE;
+    break;
   case _SELECTMODE_POKE_CHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
@@ -646,25 +638,32 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
       _CHANGE_STATE(pWork,_modeReportInit);
     }
     else{
-      _CHANGE_STATE(pWork,_modeSelectChangeInit);
+      _CHANGE_STATE(pWork,NULL);
     }
-    return TRUE;
+    ret = TRUE;
+    break;
 	case _SELECTMODE_COMPATIBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
     _CHANGE_STATE(pWork,NULL);        // 相性診断モードへ移るために終了
-		return TRUE;
-  case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
-    return TRUE;
+    ret = TRUE;
+    break;
+  case 3:
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
+      _CHANGE_STATE(pWork,_modeReportInit);
+    }
+    else{
+      _CHANGE_STATE(pWork,NULL);
+    }
+    ret = TRUE;
+    break;
   default:
     break;
   }
-  return FALSE;
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  pWork->pAppTask=NULL;
+  return ret;
 }
 
 //------------------------------------------------------------------------------
@@ -675,77 +674,20 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(IRC_BATTLE_MENU* pWork)
 {
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    if(selectno==0){
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    return;
+  }
 	if(WIPE_SYS_EndCheck()){
 		GFL_BMN_Main( pWork->pButton );
 	}
 }
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork)
-{
-  int aMsgBuff[]={IRCBTL_STR_18, IRCBTL_STR_14, IRCBTL_STR_03};
-
-  _buttonWindowCreate(NELEMS(aMsgBuff),aMsgBuff,pWork);
-
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectChangeButtonCallback;
-
-  _CHANGE_STATE(pWork,_modeSelectChangWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
-{
-  switch(bttnid){
-	case _CHANGE_TRADE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    return TRUE;
-	case _CHANGE_FRIENDCHANGE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    return TRUE;
-  case _ENTRYNUM_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-	default:
-    break;
-  }
-  return FALSE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork)
-{
-  GFL_BMN_Main( pWork->pButton );
-
-}
-
-
-
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -755,13 +697,17 @@ static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05,IRCBTL_STR_03};
+  int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05};
 
-  _buttonWindowCreate(3,aMsgBuff,pWork);
+  _touchScreenChange( pWork, NARC_cg_comm_comm_vs1_btn_NSCR);
 
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+  _buttonWindowCreate(2, aMsgBuff, pWork, wind_irvs1);
+
+  pWork->pButton = GFL_BMN_Create( btn_irvs1, _BttnCallBack, pWork,  pWork->heapID );
   pWork->touch = &_modeSelectEntryNumButtonCallback;
 
+  _ReturnButtonStart(pWork);
+  
   _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
 
 }
@@ -774,25 +720,26 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
+  BOOL ret = TRUE;
+  
   switch(bttnid){
   case _ENTRYNUM_DOUBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
-    return TRUE;
+    ret = TRUE;
+    break;
   case _ENTRYNUM_FOUR:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
     _CHANGE_STATE(pWork,NULL);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-  case _ENTRYNUM_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-    return TRUE;
+    ret = TRUE;
+    break;
   default:
     break;
   }
-  return FALSE;
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  pWork->pAppTask=NULL;
+  return ret;
 }
 
 
@@ -805,13 +752,17 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_06,IRCBTL_STR_07,IRCBTL_STR_08,IRCBTL_STR_03};
+  int aMsgBuff[]={IRCBTL_STR_06,IRCBTL_STR_07,IRCBTL_STR_08,IRCBTL_STR_32};
 
-  _buttonWindowCreate(4,aMsgBuff,pWork);
+  _touchScreenChange( pWork, NARC_cg_comm_comm_vs2_btn_NSCR);
 
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+  _buttonWindowCreate(4,aMsgBuff,pWork,wind_irvs2);
+
+  pWork->pButton = GFL_BMN_Create( btn_irvs2, _BttnCallBack, pWork,  pWork->heapID );
   pWork->touch = &_modeSelectBattleTypeButtonCallback;
 
+  _ReturnButtonStart(pWork);
+  
   _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
 
 }
@@ -824,36 +775,40 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
+  BOOL ret=FALSE;
+  
   switch(bttnid){
   case _SELECTBT_SINGLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-  //  _buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-        _CHANGE_STATE(pWork,NULL);
-
+    _CHANGE_STATE(pWork,NULL);
+    ret=TRUE;
     break;
   case _SELECTBT_DOUBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
-    //_buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
     _CHANGE_STATE(pWork,NULL);
+    ret=TRUE;
     break;
   case _SELECTBT_TRI:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
-    //_buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
     _CHANGE_STATE(pWork,NULL);
+    ret=TRUE;
+    break;
+  case _SELECTBT_ROTATE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_ROTATE;
+    _CHANGE_STATE(pWork,NULL);
+    ret=TRUE;
     break;
   default:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    //_buttonWindowDelete(pWork);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
     break;
   }
-  return TRUE;
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  pWork->pAppTask=NULL;
+
+  return ret;
 }
 
 //------------------------------------------------------------------------------
@@ -864,7 +819,20 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
 //------------------------------------------------------------------------------
 static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 {
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    if(selectno==0){
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    return;
+  }
   GFL_BMN_Main( pWork->pButton );
+
+
 }
 
 
@@ -960,7 +928,6 @@ static void _CLACT_Release(IRC_BATTLE_MENU* pWork)
  */
 //------------------------------------------------------------------------------
 
-#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
 static void _YesNoStart(IRC_BATTLE_MENU* pWork)
@@ -980,15 +947,46 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_27, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_28, pWork->appitem[1].str);
-  pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+
   pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
 }
+
+
+static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  1;
+  appinit.itemWork =  &pWork->appitem[0];
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 23;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
+
+  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1066,12 +1064,13 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
   //    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
+
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
   
   GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_26, pWork->pStrBuf );
   
   _infoMessageDisp(pWork);
 
-  
   _CHANGE_STATE(pWork,_modeReportWait);
 }
 
@@ -1095,16 +1094,13 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
 			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-
-      
       if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
         _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
       }
-      else if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE){
-        _CHANGE_STATE(pWork,_modeSelectChangeInit);
+      else if(( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE) || (pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND)){
+        _CHANGE_STATE(pWork,NULL);
       }
       pWork->IsIrc = TRUE;  //赤外線接続開始
-//      _CHANGE_STATE(pWork,NULL);
     }
   }
 }
@@ -1247,8 +1243,8 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
     {
-			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
-			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
+//			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
+	//		INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
 		}
     _CLACT_SetResource(pWork);
 
@@ -1286,8 +1282,12 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
 
+
+  GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
+  pWork->yoffset--;
+
   //	ConnectBGPalAnm_Main(&pWork->cbp);
-	INFOWIN_Update();
+	//INFOWIN_Update();
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
@@ -1316,7 +1316,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   GFL_PROC_FreeWork(proc);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
-	INFOWIN_Exit();
+	//INFOWIN_Exit();
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);

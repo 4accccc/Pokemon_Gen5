@@ -28,6 +28,7 @@
 
 #include "msg/msg_ircbattle.h"
 #include "ircbattle.naix"
+#include "cg_comm.naix"
 #include "net_app/connect_anm.h"
 #include "../../field/event_ircbattle.h"
 #include "ir_ani_NANR_LBLDEFS.h"
@@ -257,6 +258,7 @@ struct _IRC_BATTLE_MATCH {
 
   BOOL ircCenterAnim;
   int ircCenterAnimCount;
+  int yoffset;
 };
 
 
@@ -589,7 +591,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+   // GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     //		GFL_BG_LoadScreenReq( frame );
     //        GFL_BG_ClearFrame(frame);
@@ -620,7 +622,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -764,23 +766,24 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
-
-
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
-    // サブ画面BG0キャラ転送
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_connect_sub_NCGR,
-                                                                  GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
-
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_connect_sub_NSCR,
-                                              GFL_BG_FRAME0_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                              pWork->heapID);
-
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_comm_bg_NCLR,
+                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+    // サブ画面BG0キャラ転送
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_cg_comm_comm_bg_NCGR,
+                                                                  GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_cg_comm_comm_base_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+		GFL_ARC_CloseDataHandle(p_handle);
+	}
 
 
   pWork->bgchar2 = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
@@ -876,6 +879,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
     case EVENTIRCBTL_ENTRYMODE_TRI:
+    case EVENTIRCBTL_ENTRYMODE_ROTATE:
       net_ini_data.gsid = WB_NET_IRCBATTLE;
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
@@ -1234,6 +1238,8 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
     state(pWork);
     retCode = GFL_PROC_RES_CONTINUE;
   }
+  GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
+  pWork->yoffset--;
   ConnectBGPalAnm_Main(&pWork->cbp);
   GFL_CLACT_SYS_Main();
 

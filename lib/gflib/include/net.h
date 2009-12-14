@@ -102,7 +102,7 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 #define GFL_NET_NO_PARENTMACHINE (0)  ///< 親機の番号
 
 
-#define GFL_NET_CHILD_MAX  ( 15 )    ///<  子機最大数 15->7に
+#define GFL_NET_CHILD_MAX  ( 7 )    ///<  子機最大数 15->7に
 #define GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)  ///< 機最大数
 #define GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1) ///<   通信ハンドル最大数  子機全部＋親機 分
 

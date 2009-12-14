@@ -15,6 +15,8 @@
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/btl_setup.h"
+
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
@@ -36,6 +38,7 @@
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+#include "savedata/battle_box_save.h"
 //============================================================================================
 //============================================================================================
 
@@ -86,6 +89,8 @@ enum _EVENT_IRCBATTLE {
 
 struct _EVENT_IRCBATTLE_WORK{
   GAMESYS_WORK * gsys;
+  GAMEDATA* gamedata;
+  POKEPARTY* pParty;
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   int selectType;
@@ -94,7 +99,7 @@ struct _EVENT_IRCBATTLE_WORK{
 #if PM_DEBUG
   int debugseq;
 #endif
-  BATTLE_SETUP_PARAM para;
+  BATTLE_SETUP_PARAM* para;
 };
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
@@ -194,34 +199,38 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _CALL_BATTLE:
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
-      dbw->para.rule = BTL_RULE_SINGLE;
+      BTL_SETUP_Single_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
-      dbw->para.rule = BTL_RULE_DOUBLE;
+      BTL_SETUP_Double_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_TRI:
-      dbw->para.rule = BTL_RULE_TRIPLE;
+      BTL_SETUP_Triple_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+      break;
+    case EVENTIRCBTL_ENTRYMODE_ROTATE:
+      BTL_SETUP_Rotation_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
-      dbw->para.multiMode = 1;
-      dbw->para.rule = BTL_RULE_DOUBLE;
+      BTL_SETUP_Multi_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle(),
+                            BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
+      dbw->para->multiMode = 1;
+      dbw->para->rule = BTL_RULE_DOUBLE;
       NET_PRINT("multiMode\n");
       break;
     default:
       GF_ASSERT(0);
       break;
     }
-    dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    dbw->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+    BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
 
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para.musicDefault );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para->musicDefault );
       dbw->push=TRUE;
     }
 
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
+    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
 //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;
@@ -332,8 +341,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
 {
   GMEVENT * event = prevevent;
-  BATTLE_SETUP_PARAM * para;
   EVENT_IRCBATTLE_WORK * dbw;
+  BATTLE_BOX_SAVE * bxsv;
 
   if(bCreate){
     event = GMEVENT_Create(gsys, NULL, EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK));
@@ -342,27 +351,20 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
     GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
   }
   dbw = GMEVENT_GetEventWork(event);
-  dbw->ctrl = SaveControl_GetPointer();
+  dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) );  //SaveControl_GetPointer();
+  dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
-  para = &dbw->para;
-  {
-    para->rule = BTL_RULE_SINGLE;
-    para->competitor = BTL_COMPETITOR_COMM;
 
-    para->commMode = BTL_COMM_DS;
-    para->multiMode = 0;
+  dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
 
-    para->party[ BTL_CLIENT_PLAYER ] = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
-    para->party[ BTL_CLIENT_ENEMY1 ] = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-    para->party[ BTL_CLIENT_PARTNER ] = NULL;  ///< 2vs2時の味方AI（不要ならnull）
-    para->party[ BTL_CLIENT_ENEMY2 ] = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
-    para->playerStatus[ BTL_CLIENT_PLAYER ] =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-
-    para->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
-
-    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->party[ BTL_CLIENT_PLAYER ]);
+  bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
+  if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
+    dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
+    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
+  }
+  else{
+    dbw->pParty  = BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC );
   }
   return event;
 }
@@ -370,10 +372,8 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 {
-  BATTLE_SETUP_PARAM * para;
-
-  para = &dbw->para;
-  GFL_HEAP_FreeMemory(para->party[ BTL_CLIENT_PLAYER ]);
+  GFL_HEAP_FreeMemory(dbw->pParty);
+  BATTLE_PARAM_Delete(dbw->para);
 }
 
 
