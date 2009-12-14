@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-14T20:36:41"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-14T22:10:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="159" top="127" right="845" bottom="692" maximized="no" rayout="Vertical2">
+	<dialog left="159" top="132" right="842" bottom="692" maximized="no" rayout="Vertical2">
 		<comment-input left="783" top="637" right="1130" bottom="789" visible="yes"/>
 		<tag-palette left="574" top="159" right="1066" bottom="571" visible="no"/>
-		<band id="0" index="0" style="0000" width="511"/>
+		<band id="0" index="0" style="0000" width="508"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="678"/>
-		<band id="3" index="3" style="0000" width="678"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="675"/>
+		<band id="3" index="3" style="0000" width="675"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1391,7 +1391,7 @@
 	<row id="syachi_mystery_01_020" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>カード選択</comment>
 		<language name="JPN" width="216">いれかえるカードを　えらんでください</language>
-		<language name="JPN_KANJI">カードを　すてました</language>
+		<language name="JPN_KANJI">いれかえるカードを　えらんでください</language>
 	</row>
 
 	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1540,6 +1540,154 @@
 		<comment>ふしぎカード　受信時のガイド表示</comment>
 		<language name="JPN" width="80">Ａ：おわる</language>
 		<language name="JPN_KANJI">Ａ：おわる</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_00_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：0
+受け取り前</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_00_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：0
+受け取り後</comment>
+		<language name="JPN" width="216">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_01_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：1
+受け取り前</comment>
+		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_01_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：1
+受け取り後</comment>
+		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_02_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：2
+受け取り前</comment>
+		<language name="JPN" width="216">イベントに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">イベントに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_02_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：2
+受け取り後</comment>
+		<language name="JPN" width="216">イベントに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">イベントに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_03_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：3
+受け取り前</comment>
+		<language name="JPN" width="216">ポケモンの　イベントに　きれてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンの　イベントに　きれてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_03_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：3
+受け取り後</comment>
+		<language name="JPN" width="216">ポケモンの　イベントに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンの　イベントに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_04_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：4
+受け取り前</comment>
+		<language name="JPN" width="216">ダウンロード　してくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ダウンロード　してくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_04_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：4
+受け取り後</comment>
+		<language name="JPN" width="216">ダウンロード　してくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ダウンロード　してくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_05_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：5
+受け取り前</comment>
+		<language name="JPN" width="216">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_05_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ＩＤ：5
+受け取り後</comment>
+		<language name="JPN" width="216">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
 	</row>
 
 	<flowchart-group-list>
