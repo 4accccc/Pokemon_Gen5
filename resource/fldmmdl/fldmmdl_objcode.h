@@ -135,8 +135,8 @@
 #define POKE16 (0x7f) //127(127,total 127) ポケモン１６
 #define POKE17 (0x80) //128(128,total 128) ポケモン１７
 #define POKE18 (0x81) //129(129,total 129) ポケモン１８
-#define POKE19 (0x82) //130(130,total 130) ポケモン１９
-#define POKE20 (0x83) //131(131,total 131) ポケモン２０
+#define SHIN (0x82) //130(130,total 130) シン
+#define MU (0x83) //131(131,total 131) ム
 #define ACCORDION (0x84) //132(132,total 132) アコーディオン奏者
 #define BASKETM (0x85) //133(133,total 133) バスケ選手
 #define SUPPORT (0x86) //134(134,total 134) サポート
