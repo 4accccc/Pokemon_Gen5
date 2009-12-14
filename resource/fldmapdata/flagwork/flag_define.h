@@ -622,7 +622,7 @@
 #define FV_C05GYM0101_CORN                 598 /* 0x0256 地面ジム：ストッパー */
 #define FV_C09R0501_CHAMPION_02            599 /* 0x0257 チャンピオンの部屋：ゲームクリア後のチャンピオン */
 #define FV_C09R0501_RIVAL_01               600 /* 0x0258 チャンピオンの部屋：N城出現イベントのライバル */
-		/* not used   601(0x0259) */
+#define FV_N01R0101_LEADERS_01             601 /* 0x0259 N城１F大広間：７人衆と対峙するジムリーダー達 */
 		/* not used   602(0x025a) */
 		/* not used   603(0x025b) */
 		/* not used   604(0x025c) */
