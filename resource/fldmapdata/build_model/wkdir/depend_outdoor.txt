@@ -203,4 +203,10 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c03__ship_03.nsbmd \
 	$(RESDIR)/c03__ship_04.nsbmd \
 	$(RESDIR)/c03__ship_05.nsbmd \
+	$(RESDIR)/c03_gym_01.nsbmd \
+	$(RESDIR)/c03_ship_01.nsbmd \
+	$(RESDIR)/c03_ship_02.nsbmd \
+	$(RESDIR)/c03_ship_03.nsbmd \
+	$(RESDIR)/c03_ship_04.nsbmd \
+	$(RESDIR)/c03_ship_05.nsbmd \
 
