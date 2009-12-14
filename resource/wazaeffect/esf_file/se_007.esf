@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_007_heart.spa
 #001
 %00
 パーティクルデータロード	be_se_007_heart
-パーティクル再生（正射影）	be_se_007_heart	BE_SE_007_HEART_SE_007_HEART	攻撃側	0:2:0
+パーティクル再生（正射影）	be_se_007_heart	BE_SE_007_HEART_SE_007_HEART	攻撃側	方向無し	0:2:0
 エフェクト終了待ち	すべて
 エフェクト終了
 &

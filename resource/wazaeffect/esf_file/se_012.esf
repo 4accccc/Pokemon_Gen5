@@ -13,7 +13,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_012_ball_up.spa
 #001
 %00
 パーティクルデータロード	be_se_012_ball_up
-パーティクル再生（正射影）	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	0:0:0
+パーティクル再生（正射影）	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	方向無し	0:0:0
 エフェクト終了待ち	すべて
 エフェクト終了
 &
