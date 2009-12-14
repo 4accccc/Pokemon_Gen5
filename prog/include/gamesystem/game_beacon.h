@@ -30,6 +30,9 @@ typedef struct{
   u32 trainer_id;                           ///<トレーナーID
   STRCODE name[BUFLEN_PERSON_NAME];         ///<トレーナー名
   
+  GXRgb favorite_color;                     ///<本体情報の色
+  u16 padding;
+  
   //action_noによってセットされるものが変わる
   union{
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
@@ -49,6 +52,7 @@ extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);
 extern BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info);
 extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);
 extern u32 GAMEBEACON_Get_LogCount(void);
+extern BOOL GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, int log_no);
 extern void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
 extern u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info);
 

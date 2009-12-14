@@ -261,7 +261,7 @@ static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no)
   
   log_pos = bsys->end_log - log_no;
   if(log_pos < 0){
-    log_pos = GAMEBEACON_LOG_MAX - log_pos;
+    log_pos = GAMEBEACON_LOG_MAX + log_pos;
   }
   return &bsys->log[log_pos].info;
 }
@@ -293,6 +293,29 @@ u32 GAMEBEACON_Get_LogCount(void)
   return GameBeaconSys->log_count;
 }
 
+//==================================================================
+/**
+ * ログからビーコン情報のお気に入りの色を取得する
+ *
+ * @param   dest_buf		色の代入先へのポインタ
+ * @param   log_no      最新のログから遡って何件目のログを取得したいか
+ *                      (0だと最新：0～GAMEBEACON_LOG_MAX-1)
+ *
+ * @retval  BOOL		TRUE:ビーコン情報が存在している
+ * @retval  BOOL		FALSE:ビーコン情報が無いため、色の取得が出来ない
+ */
+//==================================================================
+BOOL GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, int log_no)
+{
+  GAMEBEACON_INFO *info = BeaconInfo_Get(GameBeaconSys, log_no);
+  if(info != NULL){
+    *dest_buf = info->favorite_color;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 //--------------------------------------------------------------
 /**
  * 送信ビーコンに初期データをセット
@@ -309,6 +332,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->action_no = GAMEBEACON_ACTION_APPEAL;
   MyStatus_CopyNameStrCode( myst, info->name, BUFLEN_PERSON_NAME );
   info->trainer_id = MyStatus_GetID(myst);
+  info->favorite_color = *(OS_GetFavoriteColorTable());
 }
 
 //--------------------------------------------------------------
