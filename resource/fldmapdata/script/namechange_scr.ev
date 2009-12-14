@@ -81,13 +81,12 @@ check_poke:
         IF $SCWK_ANSWER == 1 THEN
           //終了
           _CALL see_you
-        ENDIF
-        
-        //「どんなニックネームにしようかな」
-        _BALLOONWIN_TALKOBJ_MSG( msg_namechange_04 )
-        _BALLOONWIN_CLOSE()
-
-        _CALL input_name
+        ELSE
+          //「どんなニックネームにしようかな」
+          _BALLOONWIN_TALKOBJ_MSG( msg_namechange_04 )
+          _BALLOONWIN_CLOSE()
+          _CALL input_name
+        ENDIF  
       ENDIF
     ENDIF
 _RET
