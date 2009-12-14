@@ -20,7 +20,6 @@
 #include "./pt_save.dat"  //mb_data_pt.c 以外で読むな
 #include "./dp_save.dat"  //mb_data_pt.c 以外で読むな
 
-#define PT_SAVE_SIZE (SECTOR_SIZE * SECTOR_MAX)
 //======================================================================
 //  define
 //======================================================================
@@ -49,15 +48,11 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork );
 
 u32   MB_DATA_PT_GetStartAddress( const PT_GMDATA_ID id );
 u32   MB_DATA_DP_GetStartAddress( const PT_GMDATA_ID id );
-u32   MB_DATA_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type );
-static  BOOL MB_DATA_CheckDataCorrect( SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork );
-static u8 MB_DATA_PT_CompareFooterData( SAVE_FOOTER *fData , BOOL fCorr ,
-                       SAVE_FOOTER *sData , BOOL sCorr ,
+static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork );
+static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
+                       PT_SAVE_FOOTER *sData , BOOL sCorr ,
                        u8 *pos );
 
-const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type );
-const u32 MB_DATA_GetBoxDataSize( const DLPLAY_CARD_TYPE type );
-const u32 MB_DATA_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type );
 
 
 //  データの読み込み
@@ -114,11 +109,11 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       //各ブロックのCRCをチェック(一応通常データも見ておく
       u8 i;
       const u32 boxStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_BOXDATA , dataWork->cardType );
-      SAVE_FOOTER *footer[4];
-      footer[PT_MAIN_FIRST] = (SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
-      footer[PT_BOX_FIRST]  = (SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
-      footer[PT_MAIN_SECOND]= (SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
-      footer[PT_BOX_SECOND] = (SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
+      PT_SAVE_FOOTER *footer[4];
+      footer[PT_MAIN_FIRST] = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
+      footer[PT_BOX_FIRST]  = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
+      footer[PT_MAIN_SECOND]= (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
+      footer[PT_BOX_SECOND] = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
 #if DEB_ARI
       for( i=0;i<4;i++ ){
         MB_DATA_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
@@ -127,7 +122,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       }
 #endif
       {
-        const BOOL isCorrectData = MB_DATA_CheckDataCorrect( &footer[0] , dataWork );
+        const BOOL isCorrectData = MB_DATA_PT_CheckDataCorrect( &footer[0] , dataWork );
         if( isCorrectData == TRUE )
         {
           if( dataWork->boxSavePos == DDS_FIRST )
@@ -216,24 +211,24 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       //footerの加工
       //BOX
       {
-        SAVE_FOOTER *boxFooter,*mainFooter;
+        PT_SAVE_FOOTER *boxFooter,*mainFooter;
         if( dataWork->boxSavePos == DDS_FIRST ){
-          boxFooter = (SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
+          boxFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
         }
         else{
-          boxFooter = (SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
+          boxFooter = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
         }
 
         if( dataWork->mainSavePos == DDS_FIRST ){
-          mainFooter = (SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
-          mainFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pData, mainFooter->size - sizeof(SAVE_FOOTER) );
+          mainFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
+          mainFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pData, mainFooter->size - sizeof(PT_SAVE_FOOTER) );
         }
         else{
-          mainFooter = (SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
-          mainFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pDataMirror, mainFooter->size - sizeof(SAVE_FOOTER) );
+          mainFooter = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
+          mainFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pDataMirror, mainFooter->size - sizeof(PT_SAVE_FOOTER) );
         }
 
-        boxFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pBoxData, boxFooter->size - sizeof(SAVE_FOOTER) );
+        boxFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pBoxData, boxFooter->size - sizeof(PT_SAVE_FOOTER) );
         GF_ASSERT( boxFooter->g_count == mainFooter->g_count );
         boxFooter->g_count++;
         mainFooter->g_count++;
@@ -280,7 +275,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
       u32 saveAddress;
-      const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( SAVE_FOOTER );
+      const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( PT_SAVE_FOOTER );
       GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
@@ -329,7 +324,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
   case 5: //最後のセーブ
     {
       u32 saveAddress;
-      const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( SAVE_FOOTER );
+      const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( PT_SAVE_FOOTER );
       GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
@@ -369,7 +364,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
 }
 
 //データの関連性、整合性をチェックする
-static  BOOL MB_DATA_CheckDataCorrect( SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork )
+static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork )
 {
   u8 i;
   u8  mainDataNum,boxDataNum;
@@ -413,7 +408,7 @@ static  BOOL MB_DATA_CheckDataCorrect( SAVE_FOOTER **pFooterArr , MB_DATA_WORK *
       //サイズが正しいのを確認してからやらないとマズイ
       const u16 crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_ 
           , ( i<2 ? dataWork->pData+addOfs : dataWork->pDataMirror+addOfs )
-          , pFooterArr[i]->size - sizeof(SAVE_FOOTER) );
+          , pFooterArr[i]->size - sizeof(PT_SAVE_FOOTER) );
       MB_DATA_TPrintf("Data[%d] crc[%d]:[%d]\n",i,pFooterArr[i]->crc,crc);
       if( pFooterArr[i]->crc != crc ){
         MB_DATA_TPrintf(" crc check is NG!!\n");
@@ -484,8 +479,8 @@ static  BOOL MB_DATA_CheckDataCorrect( SAVE_FOOTER **pFooterArr , MB_DATA_WORK *
 }
 
 //データの新しいほうと、正しい個数を取得
-static u8 MB_DATA_PT_CompareFooterData( SAVE_FOOTER *fData , BOOL fCorr ,
-                       SAVE_FOOTER *sData , BOOL sCorr ,
+static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
+                       PT_SAVE_FOOTER *sData , BOOL sCorr ,
                        u8 *pos )
 {
   if( fCorr == TRUE && sCorr == TRUE )
@@ -578,68 +573,9 @@ u32   MB_DATA_DP_GetStartAddress( const PT_GMDATA_ID id )
   }
   return temp;
 }
-
-//ダイパプラチナで共通化するための関数
-u32   MB_DATA_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type )
-{
-  if( type == CARD_TYPE_DP ){
-    return MB_DATA_DP_GetStartAddress( id );
-  }
-  else if( type == CARD_TYPE_PT ){
-    return MB_DATA_PT_GetStartAddress( id );
-  }
-  
-  GF_ASSERT( NULL );
-  return 0;
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 //  各種ROMごとの数値取得関数
 //////////////////////////////////////////////////////////////////////////////////////////////
-const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type )
-{
-  GF_ASSERT( type < CARD_TYPE_INVALID );
-  {
-    const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , PT_SAVE_SIZE };
-    return sizeArr[type];
-  }
-}
-
-const u32 MB_DATA_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
-{
-  GF_ASSERT( type < CARD_TYPE_INVALID );
-  switch( type )
-  {
-  case CARD_TYPE_DP:
-    return MB_DATA_DP_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - MB_DATA_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
-    break;
-  case CARD_TYPE_PT:
-    return MB_DATA_PT_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - MB_DATA_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
-    break;
-  case CARD_TYPE_GS:
-    return 0;
-    break;
-  }
-  return 0;
-}
-
-const u32 MB_DATA_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
-{
-  GF_ASSERT( type < CARD_TYPE_INVALID );
-  switch( type )
-  {
-  case CARD_TYPE_DP:
-    return MB_DATA_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
-    break;
-  case CARD_TYPE_PT:
-    return MB_DATA_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
-    break;
-  case CARD_TYPE_GS:
-    return 0;
-    break;
-  }
-  return 0;
-}
 
 void* MB_DATA_PT_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
 {

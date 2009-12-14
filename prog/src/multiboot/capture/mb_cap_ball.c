@@ -224,6 +224,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
         }
         if( isHitAnyPoke == FALSE )
         {
+          VecFx32 effPos = ballWork->pos;
+          
+          effPos.y -= ballWork->height;
+          effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
+          MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
           PMSND_PlaySE( MB_SND_GRASS_SHAKE );
         }
         //周囲の方向チェック
@@ -277,6 +282,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
   }
   if( isHitAny == FALSE )
   {
+    VecFx32 effPos = ballWork->pos;
+    
+    effPos.y -= ballWork->height;
+    effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
+    MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
     PMSND_PlaySE( MB_SND_BALL_NO_HIT );
   }
 }

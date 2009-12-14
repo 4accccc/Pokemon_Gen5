@@ -17,6 +17,7 @@
 
 #include "multiboot/mb_data_main.h"
 #include "./mb_data_pt.h"
+#include "./mb_data_gs.h"
 
 //======================================================================
 //  define
@@ -96,7 +97,8 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     }
     else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
              STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
-             STD_CompareString( headerData->game_name , "dlplay" ) == 0 )
+             STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
+             STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
     {
       //MBでバグROMかsrl直起動
       dataWork->cardType = CARD_TYPE_DUMMY;
@@ -140,7 +142,7 @@ BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork )
     break;
 
   case CARD_TYPE_GS:
-    return TRUE;
+    return MB_DATA_GS_LoadData( dataWork );
     break;
   }
   return FALSE;
@@ -160,7 +162,7 @@ BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork )
     break;
 
   case CARD_TYPE_GS:
-    return TRUE;
+    return MB_DATA_GS_SaveData( dataWork );
     break;
   }
   return FALSE;
@@ -180,7 +182,7 @@ void* MB_DATA_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
     break;
 
   case CARD_TYPE_GS:
-    return NULL;
+    return MB_DATA_GS_GetBoxPPP( dataWork , tray , idx );
     break;
   }
   return NULL;
@@ -199,7 +201,7 @@ u16* MB_DATA_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
     break;
 
   case CARD_TYPE_GS:
-    return NULL;
+    return MB_DATA_GS_GetBoxName( dataWork , tray );
     break;
   }
   return NULL;
@@ -220,8 +222,72 @@ void MB_DATA_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx 
     break;
 
   case CARD_TYPE_GS:
+    MB_DATA_GS_ClearBoxPPP( dataWork , tray , idx );
     break;
   }
+}
+
+
+//ダイパプラチナで共通化するための関数
+u32   MB_DATA_GetStartAddress( const u16 id , DLPLAY_CARD_TYPE type )
+{
+  if( type == CARD_TYPE_DP ){
+    return MB_DATA_DP_GetStartAddress( id );
+  }
+  else if( type == CARD_TYPE_PT ){
+    return MB_DATA_PT_GetStartAddress( id );
+  }
+  else if( type == CARD_TYPE_GS ){
+    return MB_DATA_GS_GetStartAddress( id );
+  }
+  
+  GF_ASSERT( NULL );
+  return 0;
+}
+
+const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type )
+{
+  GF_ASSERT( type < CARD_TYPE_INVALID );
+  {
+    const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , GS_SAVE_SIZE };
+    return sizeArr[type];
+  }
+}
+
+const u32 MB_DATA_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
+{
+  GF_ASSERT( type < CARD_TYPE_INVALID );
+  switch( type )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_DP_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - MB_DATA_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
+    break;
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - MB_DATA_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
+    break;
+  case CARD_TYPE_GS:
+    return MB_DATA_GS_GetStartAddress( GS_GMDATA_BOX_FOOTER ) - MB_DATA_GS_GetStartAddress( GS_GMDATA_ID_BOXDATA );
+    break;
+  }
+  return 0;
+}
+
+const u32 MB_DATA_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
+{
+  GF_ASSERT( type < CARD_TYPE_INVALID );
+  switch( type )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
+    break;
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
+    break;
+  case CARD_TYPE_GS:
+    return MB_DATA_GS_GetStartAddress( GS_GMDATA_ID_BOXDATA );
+    break;
+  }
+  return 0;
 }
 
 //刺さっているカードの種類の取得設定(設定はデバッグ用

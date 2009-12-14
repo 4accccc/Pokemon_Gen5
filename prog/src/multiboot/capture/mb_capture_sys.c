@@ -38,6 +38,14 @@
 #define MB_CAP_TARGET_ANM_SPEED (6)
 #define MB_CAP_TARGET_ANM_FRAME (6)
 
+#define MB_CAP_TIME_GAUGE_POS_X (7)
+#define MB_CAP_TIME_GAUGE_POS_Y (2)
+#define MB_CAP_TIME_GAUGE_WIDTH_CHARA (18)
+#define MB_CAP_TIME_GAUGE_WIDTH (MB_CAP_TIME_GAUGE_WIDTH_CHARA*8)
+#define MB_CAP_TIME_GAUGE_CHARA_G (0x01 + 0x2000)
+#define MB_CAP_TIME_GAUGE_CHARA_Y (0x21 + 0x2000)
+#define MB_CAP_TIME_GAUGE_CHARA_R (0x41 + 0x2000)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -48,6 +56,8 @@ typedef enum
   MSS_WAIT_FADEIN,
   MSS_FADEOUT,
   MSS_WAIT_FADEOUT,
+
+  MSS_GAME_MAIN,
   
 }MB_CAPTURE_STATE;
 
@@ -84,6 +94,7 @@ struct _MB_CAPTURE_WORK
   fx32 befPullLen;
   u16  befRotAngle;
 
+  u16 gameTime;
   u16 bonusTime;
   
   VecFx32 targetPos;
@@ -120,6 +131,9 @@ static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_TermUpper( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work );
+
+static void MB_CAPTURE_InitTime( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -167,7 +181,6 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->isShotBall = FALSE;
   work->targetAnmCnt = 0;
   work->targetAnmFrame = 0;
-  work->bonusTime = 0;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     work->initWork->isCapture[i] = FALSE;
@@ -181,6 +194,8 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   {
     work->effWork[i] = NULL;
   }
+  
+  MB_CAPTURE_InitTime( work );
   
   PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
 
@@ -261,6 +276,7 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   case MSS_WAIT_FADEIN:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
+      work->state = MSS_GAME_MAIN;
     }
     break;
 
@@ -276,6 +292,15 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
       return TRUE;
     }
     break;
+    
+  case MSS_GAME_MAIN:
+    {
+      MB_CAPTURE_UpdateTime( work );
+      if( work->gameTime == 0 )
+      {
+        work->state = MSS_FADEOUT;
+      }
+    }
   }
 
   for( i=0;i<MB_CAP_OBJ_NUM;i++ )
@@ -915,7 +940,86 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
   }
 }
 
+#pragma mark [>time func
+//--------------------------------------------------------------
+//  時間初期化
+//--------------------------------------------------------------
+static void MB_CAPTURE_InitTime( MB_CAPTURE_WORK *work )
+{
+  u8 i;
+  u16 transScr[MB_CAP_TIME_GAUGE_WIDTH_CHARA];
+  
+  work->bonusTime = 0;
+  work->gameTime = MB_CAP_GAMETIME;
+  
+  for( i=0;i<MB_CAP_TIME_GAUGE_WIDTH_CHARA;i++ )
+  {
+    transScr[i] = MB_CAP_TIME_GAUGE_CHARA_G;
+  }
+  GFL_BG_WriteScreen( MB_CAPTURE_FRAME_FRAME , 
+                      &transScr ,
+                      MB_CAP_TIME_GAUGE_POS_X ,
+                      MB_CAP_TIME_GAUGE_POS_Y ,
+                      MB_CAP_TIME_GAUGE_WIDTH_CHARA ,
+                      1 );
+}
 
+//--------------------------------------------------------------
+//  時間更新
+//--------------------------------------------------------------
+static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
+{
+  u16 transScr[MB_CAP_TIME_GAUGE_WIDTH_CHARA];
+
+  if( work->gameTime > 0 )
+  {
+    work->gameTime--;
+  }
+  
+  //転送データの更新
+  {
+    u8 i;
+    u16 baseChara;
+    u16 len = work->gameTime * MB_CAP_TIME_GAUGE_WIDTH / MB_CAP_GAMETIME;
+    len += 1; //補正
+    if( work->gameTime <= MB_CAP_RED_TIME )
+    {
+      baseChara = MB_CAP_TIME_GAUGE_CHARA_R;
+    }
+    else
+    if( work->gameTime <= MB_CAP_YELLOW_TIME )
+    {
+      baseChara = MB_CAP_TIME_GAUGE_CHARA_Y;
+    }
+    else
+    {
+      baseChara = MB_CAP_TIME_GAUGE_CHARA_G;
+    }
+    
+    for( i=0;i<MB_CAP_TIME_GAUGE_WIDTH_CHARA;i++ )
+    {
+      if( len >= 8 )
+      {
+        transScr[i] = baseChara;
+        len -= 8;
+      }
+      else
+      {
+        transScr[i] = baseChara + (8-len);
+        len = 0;
+      }
+    }
+  }
+
+  //絵の更新
+  GFL_BG_WriteScreen( MB_CAPTURE_FRAME_FRAME , 
+                      &transScr ,
+                      MB_CAP_TIME_GAUGE_POS_X ,
+                      MB_CAP_TIME_GAUGE_POS_Y ,
+                      MB_CAP_TIME_GAUGE_WIDTH_CHARA ,
+                      1 );
+  GFL_BG_LoadScreenReq( MB_CAPTURE_FRAME_FRAME );
+}
 
 #pragma mark [>proc func
 static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );

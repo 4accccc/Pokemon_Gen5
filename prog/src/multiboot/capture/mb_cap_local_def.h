@@ -102,6 +102,14 @@ extern u16 MB_CAP_TARGET_RAND_DOWN;
 #define MB_CAP_UPPER_BALL_LEN_MIN ( MB_CAP_UPPER_BALL_POS_BASE_Y-192 )
 #define MB_CAP_UPPER_BALL_LEN_MAX ((int)( MB_CAP_UPPER_BALL_POS_BASE_Y*1.2f ))
 
+//------------------------------------------------------
+//ŽžŠÔ
+//------------------------------------------------------
+#define MB_CAP_GAMETIME    (120*60)
+#define MB_CAP_YELLOW_TIME (60*60)
+#define MB_CAP_RED_TIME    (20*60)
+
+
 
 //------------------------------------------------------
 //ƒ|ƒPƒ‚ƒ“ŠÖŒW

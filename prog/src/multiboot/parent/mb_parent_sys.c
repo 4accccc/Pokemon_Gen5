@@ -181,6 +181,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   work->isSendGameData = FALSE;
+  work->gameData = NULL;
 }
 
 //--------------------------------------------------------------
@@ -188,6 +189,10 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
+  if( work->gameData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->gameData );
+  }
   MB_COMM_DeleteSystem( work->commWork );
 
   MB_MSG_MessageTerm( work->msgWork );

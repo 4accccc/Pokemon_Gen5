@@ -40,6 +40,7 @@ SRCS	+= \
         $(PARENT_SRC)/multiboot/capture/mb_cap_effect.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_pt.c \
+		$(PARENT_SRC)/multiboot/util/mb_data_gs.c \
 		$(PARENT_SRC)/multiboot/util/mb_poke_icon.c \
 		$(PARENT_SRC)/multiboot/util/mb_util_msg.c \
         $(PARENT_SRC)/multiboot/util/mb_util.c

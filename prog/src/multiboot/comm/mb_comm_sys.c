@@ -154,6 +154,7 @@ void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork )
   {
     GFL_HEAP_FreeMemory( commWork->initData );
   }
+  GFL_HEAP_FreeMemory( commWork->pppPackData );
   GFL_HEAP_FreeMemory( commWork );
 }
 

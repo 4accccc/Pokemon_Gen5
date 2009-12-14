@@ -1,11 +1,14 @@
 
+#pragma once
+
 #define CRC_LOADCHECK (1)
 //---------------------------------------------------------------------------
 /// セーブに使用しているセクタ数
 //---------------------------------------------------------------------------
-#define SAVE_PAGE_MAX   (32)
+#define PT_SAVE_PAGE_MAX   (32)
 
-#define SAVE_SECTOR_SIZE  (0x1000)
+#define PT_SAVE_SECTOR_SIZE  (0x1000)
+
 //---------------------------------------------------------------------------
 /// セーブ項目の定義
 //---------------------------------------------------------------------------
@@ -63,8 +66,8 @@ typedef enum {
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 #define MAGIC_NUMBER_PT (0x20060623)
-#define SECTOR_SIZE   (SAVE_SECTOR_SIZE)
-#define SECTOR_MAX    (SAVE_PAGE_MAX)
+#define PT_SECTOR_SIZE   (PT_SAVE_SECTOR_SIZE)
+#define PT_SECTOR_MAX    (PT_SAVE_PAGE_MAX)
 
 #define FIRST_MIRROR_START  (0)
 #define SECOND_MIRROR_START (64)
@@ -75,7 +78,11 @@ typedef enum {
 
 #define HEAPID_SAVE_TEMP  (HEAPID_BASE_APP)
 
-#define SEC_DATA_SIZE   SECTOR_SIZE
+#define SEC_DATA_SIZE   PT_SECTOR_SIZE
+
+#define PT_SAVE_SIZE (PT_SECTOR_SIZE * PT_SECTOR_MAX)
+
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 typedef struct {
@@ -85,7 +92,7 @@ typedef struct {
   u32 magic_number; ///<マジックナンバー
   u8 blk_id;      ///<対象のブロック指定ID
   u16 crc;      ///<データ全体のCRC値
-}SAVE_FOOTER;
+}PT_SAVE_FOOTER;
 
 //---------------------------------------------------------------------------
 /**
@@ -94,10 +101,11 @@ typedef struct {
  * 実際のセーブされる部分の構造
  */
 //---------------------------------------------------------------------------
+/*
 typedef struct {
-  u8 data[SECTOR_SIZE * SECTOR_MAX];  ///<実際のデータ保持領域
+  u8 data[PT_SECTOR_SIZE * PT_SECTOR_MAX];  ///<実際のデータ保持領域
 }SAVEWORK;
-
+*/
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 #define PT_BOX_MAX_TRAY      (18)
