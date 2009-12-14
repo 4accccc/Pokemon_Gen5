@@ -154,7 +154,7 @@ static GFL_PROC_RESULT FieldMapProcEnd
   //※check　フィールドが無い間はビーコンサーチしない
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH
       || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_DEBUG_SCANONLY){
-    GameCommSys_ExitReq(game_comm);
+  //  GameCommSys_ExitReq(game_comm);
   }
 
 	FIELDMAP_Delete(fpwk->fieldWork);
