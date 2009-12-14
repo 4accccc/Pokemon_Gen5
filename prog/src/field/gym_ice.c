@@ -22,7 +22,7 @@
 #include "../../../resource/fldmapdata/gimmick/gym_ice/gym_ice_local_def.h"
 
 //#include "sound/pm_sndsys.h"
-//#include "gym_ice_se_def.h"
+#include "gym_ice_se_def.h"
 
 #include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE
 #include "fieldmap_ctrl_hybrid.h" //for FIELDMAP_CTRL_HYBRID
@@ -622,6 +622,9 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, obj_idx, anm_idx );
       //アニメ停止解除
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      //SE再生
+      PMSND_PlaySE_byPlayerID( GYM_ICE_SE_GMK_MOVE, SEPLAYER_SE1 );
+
     }
     (*seq)++;
     break;
@@ -638,6 +641,8 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       //アニメ終了待ち
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
+        //SEストップ
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
         //次回に備え、アニメ切り替え
         SetupWallSwAnm(ptr, !gmk_sv_work->WallMoved[tmp->TargetIdx], tmp->TargetIdx, OBJ_KIND_WALL);
         //セーブワーク書き換え
