@@ -26,6 +26,8 @@
 #include "event_fieldmap_control.h"
 #include "field/zonedata.h"    //for ZONEDATA_～
 
+#include "../../../resource/fld3d_ci/fldci_id_def.h"
+
 #define FLYSKY_CAM_MOVE_FRAME (10)
 
 typedef struct SORAWOTOBU_WORK_tag{
@@ -134,7 +136,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
       GMEVENT *child;
       //カットイン演出開始
-      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, 0);
+      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, FLDCIID_FLY_OUT);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }
@@ -234,7 +236,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
       GMEVENT *child;
       //カットイン演出開始
-      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, 0);
+      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, FLDCIID_FLY_IN);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }
