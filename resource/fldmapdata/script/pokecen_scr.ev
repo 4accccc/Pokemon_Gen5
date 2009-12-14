@@ -88,6 +88,12 @@ EVENT_START   ev_heal_p01
   IF $LWK_RECOVER_YESNO == SCR_YES THEN
     //預ける場合
     
+    //↓↓↓↓↓T02のポケセンでの案内イベント用特別処理↓↓↓↓↓  
+    IF $WK_SCENE_T02PC0101 == 1 THEN
+      $WK_SCENE_T02PC0101 = 2
+    ENDIF
+    //↑↑↑↑↑T02のポケセンでの案内イベント用特別処理↑↑↑↑↑ 
+
     _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
     _OBJ_ANIME_WAIT()
