@@ -79,6 +79,13 @@ static int sub_TimeKeyWait( FISHING_WORK* wk, u32 time );
 static void sub_SetGyoeAnime( FISHING_WORK* wk );
 static void sub_DelGyoeAnime( FISHING_WORK* wk );
 
+static const VecFx32 DATA_FishingFormOfs[] = {
+ { FX32_CONST(0),0,FX32_CONST(0) }, //up
+ { FX32_CONST(0),0,FX32_CONST(0) }, //down
+ { FX32_CONST(-6),0,FX32_CONST(0) }, //left
+ { FX32_CONST(6),0,FX32_CONST(0) }, //right
+};
+
 /*
  *  @brief  釣りができるポジションかチェック
  */
@@ -103,10 +110,13 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
   //岸チェック
   if( MAPATTR_VALUE_CheckShore( MAPATTR_GetAttrValue( gridData.attr ) ) == TRUE ){ //岸
     MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 ); //もう一歩先
-    FIELD_PLAYER_GetDirPos( player, dir, &pos );
+    if( FLDMAPPER_GetGridData( mapper, &pos, &gridData) == FALSE){
+      return FALSE;
+    }
   }
   //アトリビュートチェック
-  if( MAPATTR_VALUE_CheckWaterTypeSeason( MAPATTR_GetAttrValue( gridData.attr ),GAMEDATA_GetSeasonID( gdata ))){
+  if( !MAPATTR_VALUE_CheckWaterTypeSeason(
+        MAPATTR_GetAttrValue( gridData.attr ),GAMEDATA_GetSeasonID( gdata ))){
     return FALSE;
   }
   outPos->x = pos.x;
@@ -142,7 +152,7 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 
   //ポジションチェック
   if( FieldFishingCheckPos( wk->gdata, wk->fieldWork, &wk->target_pos ) == FALSE){
-    return NULL;
+    wk->enc_type = 1;
   }
   wk->pos.gx = SIZE_GRID_FX32(wk->target_pos.x);
   wk->pos.gy = SIZE_GRID_FX32(wk->target_pos.y);
@@ -164,6 +174,10 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 	
   switch (*seq) {
   case SEQ_FISHING_START:
+    if(wk->enc_type){ //仮処理
+      *seq = SEQ_END;
+      break;
+    }
     MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 
     //エンカウントチェック
@@ -171,6 +185,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
+    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &DATA_FishingFormOfs[MMDL_GetDirDisp( wk->player_mmdl )]);
     (*seq)++;
     break;
 
@@ -244,6 +259,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
 	case SEQ_END:
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_NORMAL );
+    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &DATA_FishingFormOfs[0]);
     MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 		return GMEVENT_RES_FINISH;
 	}
