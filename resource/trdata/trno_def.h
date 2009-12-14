@@ -290,6 +290,7 @@
 #define	TRID_HAKAIM1_09   ( 276 ) 
 #define	TRID_HAKAIM1_10   ( 277 ) 
 #define	TRID_HAKAIW1_04   ( 278 ) 
+#define	TRID_HAKAIM1_11   ( 279 ) 
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
