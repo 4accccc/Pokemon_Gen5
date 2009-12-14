@@ -378,7 +378,22 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
           dir = EXIT_DIR_UP;
         }
 
-        GAMEDATA_SetSeasonID(gdata, ret);
+        { //DS‚Ì•Û‚µ‚Ä‚¢‚éRTC‚ğ’¼ÚG‚Á‚Ä‚¢‚é
+          u16 now_season = GAMEDATA_GetSeasonID( gdata );
+          RTCDate date;
+          GFL_RTC_GetDate( &date );
+          if ( now_season < ret ) {
+            date.month += ret - now_season;
+          } else {
+            date.month += PMSEASON_TOTAL + ret - now_season;
+          }
+          if (date.month > 12 ) {
+            date.month = 1;
+            date.year += 1;
+          }
+          RTC_SetDate( &date );
+        }
+        //GAMEDATA_SetSeasonID(gdata, ret);
         if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_GRID )
         {
           mapchange_event = EVENT_ChangeMapPos(
