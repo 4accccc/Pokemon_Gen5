@@ -328,7 +328,6 @@ sub_rndmatch_try_select:
   $lwk_rm_regu_idx = $i_ret
   $lwk_rm_regulation = REG_RND_SINGLE
   $lwk_rm_regulation += $i_ret
-  _DEBUG_PRINT_WK( lwk_rm_regulation )
   $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
 }
 _RET
@@ -380,7 +379,6 @@ sub_rndmatch_try:
   DEFINE_LOCAL  i_msg
 
   //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
-  _DEBUG_PRINT_WK( lwk_rm_regulation )
   _BTL_UTIL_PARTY_SELECT_CALL( lwk_rm_regulation, i_ret )
 
   IF $i_ret == BTL_UTIL_PARTY_SELECT_CANCEL THEN
@@ -388,7 +386,6 @@ sub_rndmatch_try:
     _RET
   ELSIF $i_ret == BTL_UTIL_PARTY_SELECT_NG THEN
     //参加できるポケモンがいません
-    _DEBUG_PRINT_WK( lwk_rm_regulation )
     _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( lwk_rm_regulation )
     $reg_return = SEQ_SUB_RNDMATCH_EXIT
     _RET
@@ -409,15 +406,9 @@ sub_rndmatch_try:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  //_MAP_FADE_BLACK_OUT()
-  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
-  
   _WIFI_RANDOM_MATCH_EVENT_CALL()
-  
   _FIELD_OPEN()
-  //_MAP_FADE_BLACK_IN()
-  //_MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -641,13 +632,9 @@ sub_gterminal_gts_exchange:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  //_MAP_FADE_BLACK_OUT()
-  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE() 
 //  _WIFI_GTS_EVENT_CALL()
   _FIELD_OPEN() 
-  //_MAP_FADE_BLACK_IN()
-  //_MAP_FADE_END_CHECK()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -779,14 +766,8 @@ sub_gterminal_gts_nego_exchange:
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  //_MAP_FADE_BLACK_OUT()
-  //_MAP_FADE_END_CHECK()
-  
   _WIFI_GTS_NEGO_EVENT_CALL()
   
-  //_MAP_FADE_BLACK_IN()
-  //_MAP_FADE_END_CHECK()
-
   _CALL sub_anm_wifi_counter_out
 
   $reg_return = SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT
@@ -892,13 +873,9 @@ sub_gterminal_btl_recorder_call:
 
   _CALL sub_anm_wifi_counter_in
 
-  //_MAP_FADE_BLACK_OUT()
-  //_MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
   _WIFI_BATTLE_RECORDER_EVENT_CALL( 0 )
   _FIELD_OPEN()
-  //_MAP_FADE_BLACK_IN()
-  //_MAP_FADE_END_CHECK()
   
   _CALL sub_anm_wifi_counter_out
   $reg_return = SEQ_SUB_GTERMINAL_MENU
@@ -937,17 +914,6 @@ _RET
 
 } //WIFI_COUNTER_END
 
-//==============================================================
-//サブルーチン：〆のメッセージ
-//==============================================================
-sub_wifi_counter_goodbye:
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 ) //お辞儀アニメ
-  _OBJ_ANIME_WAIT()
-  _SYSWIN_MSG_DOWN( msg_wifi_counter_02 ) //それではまたお越しください
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-_RET
-
 //===================================================================================
 /////////////////////////////////////////////////////////////////////////////////////
 //アニメデータ
@@ -961,10 +927,6 @@ sub_anm_wifi_counter_in:
   _SYSWIN_MSG_DOWN( msg_wifi_counter_04 )
   _SYSWIN_CLOSE()
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
-
-//  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-//  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
-//  _OBJ_ANIME_WAIT()
 }
 _RET
 
@@ -974,26 +936,6 @@ _RET
 sub_anm_wifi_counter_out:
 {
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_OUT
-//  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_counter_p01 )
-//  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_counter_p01 )
 }
 _RET
-
-
-//--------------------------------------------------------------------
-//通信部屋へ誘導
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_counter_p01
-//【仮】  ジョーイさんお辞儀アニメが未対応
-	//_ANIME_DATA	AC_PC_BOW,1
-	//_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	ACMD_END,0
 
