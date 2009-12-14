@@ -351,7 +351,10 @@ EVENT_START ev_union
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL sub_pokecen_elevator_in
-    // @todo 移動アニメ
+    //復帰時の出現先＝＝ここにする
+    _SET_SP_LOCATION_HERE()
+    //↑で設定した特殊接続先からゲームを開始するリクエスト
+    _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
     // マップチェンジ
     _MAP_CHANGE_TO_UNION()
   ENDIF
@@ -391,21 +394,26 @@ sub_pokecen_elevator_in:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_foward )
   _OBJ_ANIME_WAIT()
 //エレベータードア開く
+  _SE_PLAY( SEQ_SE_FLD_22 )
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_OPEN )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+  _SE_WAIT()
 
 //プレイヤー、エレベーターに乗り込む
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_board_elevator )
   _OBJ_ANIME_WAIT()
 
 //エレベータードア閉まる
+  _SE_PLAY( SEQ_SE_FLD_22 )
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_CLOSE )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+  _SE_WAIT()
 
   _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
 
   _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
 //エレベーター下降アニメ
+  _SE_PLAY( SEQ_SE_FLD_23 )
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_DOWN )
   _PLAYER_UPDOWN_EFFECT( 0, 60, 64 )
 
@@ -413,6 +421,7 @@ sub_pokecen_elevator_in:
 
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+  _SE_STOP()
 
   _BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
   _RET
@@ -450,6 +459,7 @@ sub_pokecen_elevator_out:
   _PLAYER_POS_GET( BASEX, BASEZ )
   _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
 //エレベーター上昇アニメ
+  _SE_PLAY( SEQ_SE_FLD_23 )
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
   _PLAYER_UPDOWN_EFFECT( 1, 60, 64 )
 
@@ -457,13 +467,16 @@ sub_pokecen_elevator_out:
 
   _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
 	_MAP_FADE_END_CHECK()
+  _SE_STOP()
 
   _BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
 
   _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_PCEV_DOOR, BASEX, BASEZ )
 //エレベータードア開く
+  _SE_PLAY( SEQ_SE_FLD_22 )
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_OPEN )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+  _SE_WAIT()
 
 //プレイヤー、3歩進む
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_return_strait )
@@ -474,8 +487,10 @@ sub_pokecen_elevator_out:
   _OBJ_ANIME_WAIT()
 
 //エレベータードア閉まる
+  _SE_PLAY( SEQ_SE_FLD_22 )
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_CLOSE )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+  _SE_WAIT()
 
   _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
   _RET
