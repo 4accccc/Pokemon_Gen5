@@ -21,6 +21,8 @@ targetname2	= fld3d_ci_setup
 NARCNAME2	= $(targetname2).narc
 NAIXNAME2	= $(targetname2).naix
 
+HEADER_FILE	= fldci_id_def.h
+
 #ツールパス
 
 XLS_CNV = ../../tools/exceltool/xls2xml/tab_out.rb
@@ -66,7 +68,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build: $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc
+do-build: $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc $(HEADER_FILE)
 	
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -79,6 +81,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(targetname).naix
 	@rm -f $(targetname2).narc
 	@rm -f $(targetname2).naix
+	@rm -f $(HEADER_FILE)
 	@rm -f bin/*.bin
 endif
 
@@ -117,6 +120,9 @@ $(targetname2).narc: $(CSV_DATA) $(FLD_CI_LIST)
 	@echo __NAKE TARGET2
 	ruby setupdat.rb $(CSV_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt
+
+$(HEADER_FILE): $(CSV_DATA)
+	ruby make_header.rb $(CSV_DATA) $(HEADER_FILE)
 
 #3Dアニメコンバート
 %.nsbmd: data/%.imd
