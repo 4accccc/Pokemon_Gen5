@@ -9,6 +9,7 @@
 #pragma once
 
 #include "buflen.h"
+#include "gamesystem/game_beacon.h"
 
 //==============================================================================
 //  型定義
@@ -19,8 +20,9 @@ typedef struct _GAME_BEACON_SYS * GAME_BEACON_SYS_PTR;
 enum
 {
   GBS_BEACONN_TYPE_NONE,
-  GBS_BEACONN_TYPE_PLACE,
-  GBS_BEACONN_TYPE_MESSAGE,
+  GBS_BEACONN_TYPE_PALACE,        ///<パレスのビーコン
+  GBS_BEACONN_TYPE_INFO,          ///<インフォメーション
+  GBS_BEACONN_TYPE_MESSAGE,       ///<メッセージのビーコン
 
   GBS_BEACONN_TYPE_MAX,
 };
@@ -41,6 +43,7 @@ typedef struct
   u8 beacon_type;     ///<ビーコンの種類 GBS_BEACONN_TYPE
   union
   {
+    GAMEBEACON_INFO info;
     struct MESSAGE_DATA
     {
       u16 word[BEACON_MESSAGE_DATA_WORD_NUM];

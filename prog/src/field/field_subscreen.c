@@ -25,6 +25,7 @@
 #include "test/camera_adjust_view.h"
 #include "net_app/union/union_subdisp.h"
 #include "field/intrude_subdisp.h"
+#include "field/beacon_view.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -66,6 +67,7 @@ struct _FIELD_SUBSCREEN_WORK {
     NO_GEAR_WORK* nogearWork;
     UNION_SUBDISP_PTR unisubWork;
     INTRUDE_SUBDISP_PTR intsubWork;
+    BEACON_VIEW_PTR beaconViewWork;
 		GFL_CAMADJUST * gflCamAdjust;
 		GFL_SNDVIEWER * gflSndViewer;
 		void * checker;
@@ -117,6 +119,11 @@ static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+
+static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCREEN_MODE prevMode);
+static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
@@ -171,6 +178,14 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_intrude_subscreen,
 		draw_intrude_subscreen ,
 		exit_intrude_subscreen,
+		NULL ,
+	},
+	{	
+		FIELD_SUBSCREEN_BEACON_VIEW,
+		init_beacon_view_subscreen,
+		update_beacon_view_subscreen,
+		draw_beacon_view_subscreen ,
+		exit_beacon_view_subscreen,
 		NULL ,
 	},
 	{	
@@ -881,6 +896,49 @@ static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 	INTRUDE_SUBDISP_Draw(pWork->intsubWork);
 }
 
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の初期化
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
+{
+  pWork->beaconViewWork = BEACON_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  BEACON_VIEW_Exit(pWork->beaconViewWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  BEACON_VIEW_Update(pWork->beaconViewWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+	BEACON_VIEW_Draw(pWork->beaconViewWork);
+}
 
 //=============================================================================
 //=============================================================================

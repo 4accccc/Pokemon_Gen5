@@ -16,6 +16,7 @@
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/iss_sys.h"
+#include "gamesystem/game_beacon.h"
 
 #include "gamesystem/game_init.h"
 
@@ -245,6 +246,7 @@ static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
 	GAMESYS_WORK_Init(gsys, heapID, init_param);
+	GAMEBEACON_Setting(gsys->gamedata);
 }
 
 //------------------------------------------------------------------

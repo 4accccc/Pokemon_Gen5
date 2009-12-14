@@ -192,6 +192,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/point_sel.c \
         system/cursor_move.c \
         gamesystem/game_comm.c \
+        gamesystem/game_beacon.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
         test/tetsu/debug_common.c \
@@ -456,6 +457,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         net_app/union/union_subdisp.c \
         field/field_comm/intrude_subdisp.c \
         field/field_comm/intrude_message.c \
+        field/field_comm/beacon_view.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \

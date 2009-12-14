@@ -19,7 +19,7 @@
 
 ///ユニオン受信コマンド番号　　※Union_CommPacketTblと並びを同じにしておくこと！！
 enum INTRUDE_CMD{
-  INTRUDE_CMD_START = GFL_NET_CMD_FIELD,
+  INTRUDE_CMD_START = GFL_NET_CMD_PALACE,
   
   INTRUDE_CMD_SHUTDOWN = INTRUDE_CMD_START,   ///<切断
   INTRUDE_CMD_MEMBER_NUM,                     ///<侵入参加人数

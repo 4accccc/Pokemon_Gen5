@@ -26,6 +26,7 @@
 #include "system/wipe.h"
 #include "system/brightness.h"
 #include "gamesystem\msgspeed.h"
+#include "gamesystem\game_beacon.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -235,7 +236,10 @@ static	void	GameInit(void)
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
-
+	
+	//ゲーム中ビーコンスキャン制御
+  GAMEBEACON_Init(GFL_HEAPID_APP);
+  
 }
 
 //------------------------------------------------------------------
@@ -257,6 +261,8 @@ static	void	GameMain(void)
 	PMSND_Main();
 	PMVOICE_Main();
 	SND_STRM_Main();
+	
+	GAMEBEACON_Update();
 }
 
 //------------------------------------------------------------------
@@ -270,6 +276,7 @@ static	void	GameExit(void)
 	//デバッグシステム
 	DEBUGWIN_ExitSystem();
 #endif PM_DEBUG
+  GAMEBEACON_Exit();
 	SND_STRM_Exit();
 	PMVOICE_Exit();
 	PMSND_Exit();

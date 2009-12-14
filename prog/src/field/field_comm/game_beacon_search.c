@@ -107,7 +107,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	4,//_BCON_GET_NUM,  // 最大ビーコン収集数
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
-	GFL_NET_TYPE_WIRELESS_SCANONLY,		//通信タイプの指定
+	GFL_NET_TYPE_WIRELESS,  //GFL_NET_TYPE_WIRELESS_SCANONLY,		//通信タイプの指定
 	FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
 #if GFL_NET_IRC
@@ -262,7 +262,8 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   if(target != NULL){ //対象が見つかった
 #endif
     switch(target->gsid){
-    case WB_NET_FIELDMOVE_SERVICEID:  //侵入(パレス)
+    case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
+    case WB_NET_FIELDMOVE_SERVICEID:
       {
         FIELD_INVALID_PARENT_WORK *invalid_parent;
         int i;
@@ -306,7 +307,8 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     return NULL;
   }
   if(gbs->status == GBS_STATUS_INIT){
-    GFL_NET_StartBeaconScan();
+//    GFL_NET_StartBeaconScan();
+    GFL_NET_Changeover(NULL);
     gbs->status = GBS_STATUS_UPDATE;
     return NULL;
   }
@@ -317,7 +319,8 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     
     beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
     if(beacon != NULL){
-      if( beacon->beacon_type == GBS_BEACONN_TYPE_PLACE ){
+      OS_TPrintf("beacon->type = %d\n", beacon->beacon_type);
+      if( beacon->beacon_type == GBS_BEACONN_TYPE_PALACE ){
         int i;
         u8 *mac_address;
         
@@ -329,6 +332,9 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
         for(i = 0; i < 6; i++){
           target->macAddress[i] = mac_address[i];
         }
+      }
+      else if(beacon->beacon_type == GBS_BEACONN_TYPE_INFO){
+        GAMEBEACON_SetRecvBeacon(&beacon->info);
       }
     }
   }
@@ -360,6 +366,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
   	{
+      OS_TPrintf("beacon hakken!\n");
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
     		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
@@ -396,7 +403,12 @@ static void* GameBeacon_GetBeaconData(void* pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   GameBeacon_SetBeaconParam(&gbs->beacon_send_data);
+#if 0
   FIELD_BEACON_MSG_SetBeaconMessage( gbs->fbmSys , &gbs->beacon_send_data );
+#else
+  GAMEBEACON_SendDataCopy(&gbs->beacon_send_data.info);
+  gbs->beacon_send_data.beacon_type = GBS_BEACONN_TYPE_INFO;
+#endif
   return &gbs->beacon_send_data;
 }
 
@@ -443,7 +455,12 @@ int GameBeacon_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-  return (GameServiceID1==GameServiceID2);
+  OS_TPrintf("ServiceID1 = %d, ID2 = %d\n", GameServiceID1, GameServiceID2);
+  if((GameServiceID1 == WB_NET_FIELDMOVE_SERVICEID || GameServiceID1 == WB_NET_PALACE_SERVICEID)
+      && (GameServiceID2==WB_NET_FIELDMOVE_SERVICEID || GameServiceID2==WB_NET_PALACE_SERVICEID)){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

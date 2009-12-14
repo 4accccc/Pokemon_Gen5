@@ -91,7 +91,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
   FALSE,    // MP通信＝親子型通信モードかどうか
   GFL_NET_TYPE_WIRELESS,    //通信タイプの指定
   TRUE,   // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_FIELDMOVE_SERVICEID, //GameServiceID
+  WB_NET_PALACE_SERVICEID, //GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
@@ -455,11 +455,11 @@ static void * IntrudeComm_GetBeaconData(void* pWork)
 //--------------------------------------------------------------
 static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon)
 {
-  beacon->gsid = WB_NET_FIELDMOVE_SERVICEID;
+  beacon->gsid = WB_NET_PALACE_SERVICEID;
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
   beacon->error = GFL_NET_SystemGetErrorCode();
-  beacon->beacon_type = GBS_BEACONN_TYPE_PLACE;
+  beacon->beacon_type = GBS_BEACONN_TYPE_PALACE;
 }
 
 //--------------------------------------------------------------
