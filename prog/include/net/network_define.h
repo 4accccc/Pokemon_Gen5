@@ -129,6 +129,7 @@ extern u32 GFLR_NET_GetGGID(void);
 enum NetworkServiceID_e {
   WB_NET_NOP_SERVICEID = 0,
   WB_NET_BATTLE_SERVICEID,       ///< バトル用ID
+  WB_NET_PALACE_SERVICEID,       ///< パレス
   WB_NET_FIELDMOVE_SERVICEID,  ///< サンプルのフィールド移動
   WB_NET_MULTIBOOT_SERVICEID,  ///< ダウンロード通信のボックス取得
   WB_NET_DEBUG_OHNO_SERVICEID,
@@ -169,6 +170,7 @@ enum NetworkServiceID_e {
 enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_BASE = (WB_NET_NOP_SERVICEID<<8),  ///< ベースコマンド開始番号
   GFL_NET_CMD_BATTLE = (WB_NET_BATTLE_SERVICEID<<8),   ///< バトル開始番号
+  GFL_NET_CMD_PALACE = (WB_NET_PALACE_SERVICEID<<8),   ///< パレスのベース開始番号
   GFL_NET_CMD_FIELD = (WB_NET_FIELDMOVE_SERVICEID<<8),   ///< フィールドのベース開始番号
   GFL_NET_CMD_MULTIBOOT = (WB_NET_MULTIBOOT_SERVICEID<<8),   ///< フィールドのベース開始番号
   GFL_NET_CMD_DEBUG_OHNO = (WB_NET_DEBUG_OHNO_SERVICEID<<8),

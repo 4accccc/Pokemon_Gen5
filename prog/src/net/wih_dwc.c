@@ -297,6 +297,7 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
       case WB_NET_UNION:
         return GAME_COMM_STATUS_WIRELESS_UN;
       case WB_NET_FIELDMOVE_SERVICEID:
+      case WB_NET_PALACE_SERVICEID:
         return GAME_COMM_STATUS_WIRELESS;
       case WB_NET_NOP_SERVICEID:
         break;
