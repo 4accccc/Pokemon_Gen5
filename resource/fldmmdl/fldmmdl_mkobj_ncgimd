@@ -138,6 +138,16 @@
 	@echo convert ncg_imd rangerw
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rangerw.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#swimmerm.imd
+./mmdl_res/swimmerm.imd: ./mmdl_nchara/swimmerm.ncg ./mmdl_nchara/swimmerm.ncl
+	@echo convert ncg_imd swimmerm
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swimmerm.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#swimmerw.imd
+./mmdl_res/swimmerw.imd: ./mmdl_nchara/swimmerw.ncg ./mmdl_nchara/swimmerw.ncl
+	@echo convert ncg_imd swimmerw
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swimmerw.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #waiter.imd
 ./mmdl_res/waiter.imd: ./mmdl_nchara/waiter.ncg ./mmdl_nchara/waiter.ncl
 	@echo convert ncg_imd waiter
@@ -167,6 +177,16 @@
 ./mmdl_res/nurse.imd: ./mmdl_nchara/nurse.ncg ./mmdl_nchara/nurse.ncl
 	@echo convert ncg_imd nurse
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/nurse.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#businessman.imd
+./mmdl_res/businessman.imd: ./mmdl_nchara/businessman.ncg ./mmdl_nchara/businessman.ncl
+	@echo convert ncg_imd businessman
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/businessman.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#ol.imd
+./mmdl_res/ol.imd: ./mmdl_nchara/ol.ncg ./mmdl_nchara/ol.ncl
+	@echo convert ncg_imd ol
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ol.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #baseballm.imd
 ./mmdl_res/baseballm.imd: ./mmdl_nchara/baseballm.ncg ./mmdl_nchara/baseballm.ncl

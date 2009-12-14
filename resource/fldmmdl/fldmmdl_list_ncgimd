@@ -27,12 +27,16 @@ FMMDL_RESLIST_NCGIMD = \
 	breederw.imd \
 	rangerm.imd \
 	rangerw.imd \
+	swimmerm.imd \
+	swimmerw.imd \
 	waiter.imd \
 	waitress.imd \
 	backpackerm.imd \
 	backpackerw.imd \
 	doctor.imd \
 	nurse.imd \
+	businessman.imd \
+	ol.imd \
 	baseballm.imd \
 	soccerm.imd \
 	footballm.imd \
