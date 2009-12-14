@@ -1014,6 +1014,9 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   param       = PokeParty_GetMemberPointer( party, pos );
   id = PP_Get( param, ID_PARA_id_no, NULL );
 
+  NOZOMU_Printf("poke_id = %d\n",id);
+  NOZOMU_Printf("my_id = %d\n",MyStatus_GetID(status) );
+
   // Œ‹‰Ê‚ğŠi”[
   if ( id != MyStatus_GetID(status) ) *ret_wk = FALSE;    //e‚Í‘¼l
   else  *ret_wk = TRUE;     //©•ª‚ªe
