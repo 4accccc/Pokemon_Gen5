@@ -990,11 +990,16 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
 
   beeiw->vmh = vmh;
   beeiw->src = ( int )VMGetU32( vmh );
-  beeiw->dst = beeiw->src;
+  beeiw->dst = ( int )VMGetU32( vmh );
   beeiw->ofs.x = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.z = ( fx32 )VMGetU32( vmh );
   beeiw->ortho_mode = 1;
+
+  if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
+  {
+    beeiw->dst = beeiw->src;
+  }
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
 
@@ -2953,6 +2958,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   if( beeiw->ortho_mode )
   {
     EFFVM_CalcPosOrtho( &src, &beeiw->ofs );
+    EFFVM_CalcPosOrtho( &dst, &beeiw->ofs );
   }
   else
   { 
@@ -3083,6 +3089,14 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
   }
+  else
+  { 
+    //正射影ではZで拡縮しないので、向こう側の再生時小さくする補正を入れる
+    if( ( beeiw->ortho_mode ) && ( beeiw->src & 1 ) )
+    { 
+      GFL_PTC_SetEmitterBaseScale( emit, FX16_HALF );
+    }
+  }
 
   GFL_PTC_SetEmitterPosition( emit, &src );
 
@@ -3154,6 +3168,11 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
 static  void  EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit )
 { 
   BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK* )GFL_PTC_GetTempPtr();
+
+  if( ( beecmw->ortho_mode ) && ( beecmw->center_pos.z < 0 ) )
+  {  
+    GFL_PTC_SetEmitterBaseScale( emit, FX16_HALF );
+  }
 
   //エミッタにテンポラリワークを設定
   GFL_PTC_SetUserData( emit, beecmw );

@@ -643,24 +643,28 @@ ex)
 /**
  * @brief	パーティクル再生（正射影）
  *
- * #param_num	4
+ * #param_num	5
  * @param	num				再生パーティクルナンバー
  * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
+ * @param	dir	      パーティクルの向き
  * @param	ofs			  パーティクル再生オフセット
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
  * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB	BTLEFF_PARTICLE_PLAY_POS_A  BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C  BTLEFF_PARTICLE_PLAY_POS_D  BTLEFF_PARTICLE_PLAY_POS_E  BTLEFF_PARTICLE_PLAY_POS_F
+ * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側	攻撃側－  防御側－  POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS  BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
  * #param	VALUE_VECFX32 ofs_x ofs_y ofs_z
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, ofs_x, ofs_y, ofs_z
+	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z
 	.short	EC_PARTICLE_PLAY_ORTHO
 	.long		\num
 	.long		\index
 	.long		\start_pos
+	.long		\dir
 	.long		\ofs_x
 	.long		\ofs_y
 	.long		\ofs_z
