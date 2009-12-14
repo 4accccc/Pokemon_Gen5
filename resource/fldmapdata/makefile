@@ -18,6 +18,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					mm_list \
 					eventdata/groupdata \
 					eventdata/define \
+					scr_cam_prm \
 					script \
 					effect \
 					rail_data \
@@ -27,7 +28,6 @@ SUBDIRS	=	zonetable/zoneindex \
 					gimmick \
 					camera_scroll \
 					camera_scene \
-					scr_cam_prm \
 					pushrock \
 					eventdata/binary \
 					zonetable/fieldskill_mapeffect \
