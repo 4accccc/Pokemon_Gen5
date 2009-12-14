@@ -159,6 +159,7 @@
 #define WK_SCENE_H03                     16547 /* 0x40a3 H03：イベント用ワーク */
 #define WK_SCENE_H03_BTLCOUNT            16548 /* 0x40a4 H03：７人抜きイベントの勝利数カウント用ワーク */
 #define WK_SCENE_N01R0101                16549 /* 0x40a5 N城１F大広間：イベント用ワーク */
+#define WK_SCENE_N01R0201                16550 /* 0x40a6 N城２F大広間：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 

@@ -5,6 +5,7 @@
 #define _N01R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_N01R0201 (1)
+#define SCRID_POS_N01R0201_GUIDE_01 (1)
+#define SCRID_N01R0201_NINJA_01 (2)
 
 #endif //_N01R0201_DEF_H_
