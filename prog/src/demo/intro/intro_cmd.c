@@ -21,6 +21,8 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "intro_sys.h"
+
 #include "intro_graphic.h"
 
 //データ
@@ -37,7 +39,7 @@
 //=============================================================================
 enum
 { 
-  STORE_NUM = 8,
+  STORE_NUM = 8,  ///< 同時実行コマンドの限界数
 };
 
 
@@ -59,6 +61,7 @@ struct _INTRO_CMD_WORK {
 };
 
 // コマンド
+static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param );
@@ -70,6 +73,7 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param );
 static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() = 
 { 
   NULL, // null
+  CMD_BG_LOAD,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
@@ -86,9 +90,35 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_GRAPHIC_LOAD( INTRO_CMD_WORK* wk, int* param )
+#include "mictest.naix"
+static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param )
 {
+  //@TODO とりあえずマイクテストのリソース
+  HEAPID heap_id;
+	ARCHANDLE	*handle;
 
+  heap_id = wk->heap_id;
+	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heap_id );
+
+	// 上下画面ＢＧパレット転送
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+	
+  //	----- 下画面 -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
+						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
+						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
+
+	//	----- 上画面 -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
+						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
+						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
+
+	GFL_ARC_CloseDataHandle( handle );
+
+  return TRUE;
 }
 
 //-----------------------------------------------------------------------------

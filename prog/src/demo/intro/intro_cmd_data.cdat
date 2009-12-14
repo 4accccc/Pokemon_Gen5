@@ -14,9 +14,9 @@
 // シーン 00 
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
-  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_NEXT },
-  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_NEXT },
-  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_79, }, CMD_READ_END },
+  { INTRO_CMD_TYPE_BG_LOAD, },
+//  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_75, }, CMD_READ_NEXT },
+//  { INTRO_CMD_TYPE_SE,      { SEQ_SE_FLD_74, }, CMD_READ_END },
 
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
 };
@@ -29,6 +29,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
 };
 
+#if 0
 // シーン 02 
 static const INTRO_CMD_DATA c_intro_scene_02[] =
 {
@@ -36,7 +37,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
   
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
 };
-
+#endif
 
 static const INTRO_CMD_DATA* c_intro_scene_access_tbl[] = 
 { 

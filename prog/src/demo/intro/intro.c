@@ -34,6 +34,9 @@
 //INFOWIN
 #include "infowin/infowin.h"
 
+//ローカルヘッダ
+#include "intro_sys.h"
+
 //描画設定
 #include "intro_graphic.h"
 
@@ -45,14 +48,11 @@
 
 #include "message.naix"
 
-#include "mictest.naix"
-
 #include "intro_cmd.h"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-#define INTRO_BG
 //#define INTRO_INFOWIN
 //#define INTRO_TOUCHBAR
 //#define INTRO_TASKMENU
@@ -66,62 +66,13 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
-enum
-{ 
-  INTRO_HEAP_SIZE = 0x100000,  ///< ヒープサイズ
-};
 
-//-------------------------------------
-///	フレーム
-//=====================================
-enum
-{	
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
-	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
-	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
-  BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
-};
-//-------------------------------------
-///	パレット
-//=====================================
-enum
-{	
-	//メインBG
-	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_POKE_M				= 1,
-	PLTID_BG_TASKMENU_M		= 11,
-	PLTID_BG_TOUCHBAR_M		= 13,
-	PLTID_BG_INFOWIN_M		= 15,
-	//サブBG
-	PLTID_BG_BACK_S				=	0,
-
-	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
-	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
-	PLTID_OBJ_TOWNMAP_M	= 14,		
-	//サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 5本使用
-};
 
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
-//--------------------------------------------------------------
-///	BG管理ワーク
-//==============================================================
-typedef struct 
-{
-	int dummy;
-} INTRO_BG_WORK;
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -131,8 +82,6 @@ typedef struct
   HEAPID heapID;
 
   INTRO_PARAM*        param;
-
-	INTRO_BG_WORK				wk_bg;
 
 	//描画設定
 	INTRO_GRAPHIC_WORK	*graphic;
@@ -192,9 +141,6 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
-#ifdef  INTRO_BG
-static void Intro_BG_LoadResource( INTRO_BG_WORK* wk, HEAPID heapID );
-#endif // INTRO_BG
 
 #ifdef INTRO_INFOWIN
 //-------------------------------------
@@ -287,11 +233,6 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
-
-#ifdef INTRO_BG
-	//BGリソース読み込み
-	Intro_BG_LoadResource( &wk->wk_bg, wk->heapID );
-#endif // INTRO_BG
 
   //3D 初期化
   wk->cmd = Intro_CMD_Init( wk->heapID );
@@ -458,46 +399,6 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
  *								static関数
  */
 //=============================================================================
-
-#ifdef INTRO_BG
-//-----------------------------------------------------------------------------
-/**
- *	@brief  BG管理モジュール リソース読み込み
- *
- *	@param	INTRO_BG_WORK* wk BG管理ワーク
- *	@param	heapID  ヒープID 
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void Intro_BG_LoadResource( INTRO_BG_WORK* wk, HEAPID heapID )
-{
-  //@TODO とりあえずマイクテストのリソース
-	ARCHANDLE	*handle;
-
-	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heapID );
-
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heapID );
-	
-  //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
-
-	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );		
-
-	GFL_ARC_CloseDataHandle( handle );
-}
-#endif // INTRO_BG
-
-
 
 
 #ifdef INTRO_INFOWIN
