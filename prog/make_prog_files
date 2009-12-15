@@ -225,6 +225,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
         field/field_encount_st.c \
+        field/move_pokemon.c \
         field/field_skill.c \
 	      app/waza_oshie/waza_oshie.c \
         field/scrcmd_network.c \
@@ -419,6 +420,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/enc_pokeset.c \
         field/field_encount.c \
         field/effect_encount.c \
+        field/fld_move_poke.c \
         field/map_attr.c \
         field/fld_scenearea.c \
         field/fld_scenearea_loader.c \

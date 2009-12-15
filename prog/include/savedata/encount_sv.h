@@ -9,18 +9,16 @@
 
 #include "savedata/save_control.h"
 
-#define ENC_RND_SEED_GENERATE	(1)
-#define ENC_RND_SEED_UNKNOWN	(0)		//使わないけど一応
-
 //移動ポケモンパラメータＩＤ
 #define MP_PARAM_ZONE_ID	(1)		//ゾーンＩＤ
 #define MP_PARAM_POW_RND	(2)		//パワー乱数
 #define MP_PARAM_PER_RND	(3)		//個性乱数
 #define MP_PARAM_MONSNO		(4)		//モンスターナンバー
-#define MP_PARAM_HP			(5)		//ＨＰ
-#define MP_PARAM_LV			(6)		//ＬＶ
-#define MP_PARAM_COND		(7)		//状態異常
-#define MP_PARAM_ENC		(8)		//エンカウントフラグ（現在移動中かどうか）
+#define MP_PARAM_HP			  (5)		//ＨＰ
+#define MP_PARAM_LV			  (6)		//ＬＶ
+#define MP_PARAM_COND		  (7)		//状態異常
+#define MP_PARAM_ENC		  (8)		//エンカウントフラグ（現在移動中かどうか）
+#define MP_PARAM_MV_TYPE	(9)		//移動タイプ
 
 typedef struct ENC_SV_DATA_tag * ENC_SV_PTR;
 typedef struct MV_POKE_DATA_tag * MPD_PTR;
@@ -34,6 +32,10 @@ extern u8 EncDataSave_GetGenerateZoneIdx( ENC_SV_PTR inEncData );
 
 extern void EncDataSave_UpdatePlayerZoneHist(ENC_SV_PTR ioEncData, const int inZoneID);
 extern int EncDataSave_GetPlayerOldZone(ENC_SV_PTR inEncData);
+
+extern u8 EncDataSave_GetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke);
+extern void EncDataSave_SetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke,u8 status);
+
 extern u8 EncDataSave_GetMovePokeZoneIdx(ENC_SV_PTR inEncData, const u8 inTargetPoke);
 extern void EncDataSave_SetMovePokeZoneIdx(	ENC_SV_PTR outEncData,
 											const u8 inTargetPoke,

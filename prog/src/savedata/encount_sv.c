@@ -26,7 +26,9 @@ typedef struct PLAYER_ZONE_HIST_tag
 //移動ポケモンデータ(20)
 typedef struct MV_POKE_DATA_tag{
 
-	int zoneID;			//ゾーンＩＤ
+	u16 zoneID;			//ゾーンＩＤ
+  u16 dummy;
+
 	u32	pow_rnd;		// パワー乱数
 	u32	personal_rnd;	// 個性乱数
 
@@ -37,16 +39,16 @@ typedef struct MV_POKE_DATA_tag{
 	u8	cond;			// 状態異常
 
 	u8	encount_f;		// エンカウントフラグ
-	u8	dummy;
+	u8	move_type;    //移動ルーチンタイプ
 
 }MV_POKE_DATA;
 
 typedef struct ENC_SV_DATA_tag
 {
-	int GenerateRandSeed;		//大量発生ランダムの種
 	PLAYER_ZONE_HIST	PlayerZoneHist;	//ゾーン履歴
 	MV_POKE_DATA	MovePokeData[MOVE_POKE_MAX];	//移動ポケモンデータ
 	u8 MovePokeZoneIdx[MOVE_POKE_MAX];	//移動ポケモン現在ゾーンインデックス
+	u8 MovePokeStatus[MOVE_POKE_MAX];	//移動ポケモン捕獲状況
 	u8 GenerateZoneIdx;					//大量発生発動フラグ
 	u8 SprayCount;						//スプレー有効歩数(最大250歩)
 	
@@ -172,6 +174,39 @@ void EncDataSave_UpdatePlayerZoneHist(ENC_SV_PTR ioEncData, const int inzoneID)
 int EncDataSave_GetPlayerOldZone(ENC_SV_PTR inEncData)
 {
 	return inEncData->PlayerZoneHist.oldZone;
+}
+
+//==============================================================================
+/**
+ * 指定移動ポケモンの捕獲状況を取得する
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inTargetPoke	移動ポケモン(0～2)
+ *
+ * @return	u8	捕獲ステータス field/move_pokemon_def.h MVPOKE_STATE_XXX	
+ */
+//==============================================================================
+u8 EncDataSave_GetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke)
+{
+	GF_ASSERT(inTargetPoke<MOVE_POKE_MAX);
+	
+	return inEncData->MovePokeStatus[inTargetPoke];
+}
+
+//==============================================================================
+/**
+ * 指定移動ポケモンの捕獲状況をセットする
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inTargetPoke	移動ポケモン(0～2)
+ * @param	status 捕獲ステータス field/move_pokemon_def.h MVPOKE_STATE_XXX	
+ */
+//==============================================================================
+void EncDataSave_SetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke,u8 status)
+{
+	GF_ASSERT(inTargetPoke<MOVE_POKE_MAX);
+	
+	inEncData->MovePokeStatus[inTargetPoke] = status;
 }
 
 //==============================================================================
@@ -303,6 +338,9 @@ u32 EncDataSave_GetMovePokeDataParam(const MPD_PTR inMPData, const u8 inParamID)
 	case MP_PARAM_ENC:				//エンカウントフラグ
 		val = inMPData->encount_f;
 		break;
+  case MP_PARAM_MV_TYPE:		//移動タイプ
+		val = inMPData->move_type;
+		break;
 	default:
 		GF_ASSERT(0);
 		return 0;
@@ -326,7 +364,7 @@ void EncDataSave_SetMovePokeDataParam(MPD_PTR outMPData, const u8 inParamID, con
 	u32 val;
 	switch(inParamID){
 	case MP_PARAM_ZONE_ID:			//出現ゾーン
-		outMPData->zoneID = inVal;
+		outMPData->zoneID = (u16)inVal;
 		break;
 	case MP_PARAM_POW_RND:			//パワー乱数
 		outMPData->pow_rnd = inVal;
@@ -348,6 +386,9 @@ void EncDataSave_SetMovePokeDataParam(MPD_PTR outMPData, const u8 inParamID, con
 		break;
 	case MP_PARAM_ENC:				//エンカウントフラグ
 		outMPData->encount_f = inVal;
+		break;
+  case MP_PARAM_MV_TYPE:		//移動タイプ
+		outMPData->move_type = inVal;
 		break;
 	default:
 		GF_ASSERT(0);

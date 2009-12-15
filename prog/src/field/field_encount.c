@@ -39,22 +39,11 @@
 //======================================================================
 //  define
 //======================================================================
-#define CALC_SHIFT (8) ///<計算シフト値
-#define WALK_COUNT_GLOBAL (8) ///<エンカウントしない歩数
-#define WALK_COUNT_MAX (0xffff) ///<歩数カウント最大
-#define NEXT_PERCENT (40) ///<エンカウントする基本確率
-#define WALK_NEXT_PERCENT (5) ///<歩数カウント失敗で次の処理に進む確率
-
-#define CYCLE_PERCENT (30) ///<自転車に乗っているときの加算確率
-
 #define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
 
 //--------------------------------------------------------------
 /// エンカウントデータ要素
 //--------------------------------------------------------------
-#ifdef DEBUG_ONLY_FOR_kagaya
-#endif
-
 //======================================================================
 //  proto
 //======================================================================
@@ -65,6 +54,8 @@ static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* spa,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl );
+static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp,
+    BATTLE_SETUP_PARAM *bsp, HEAPID heapID, MPD_PTR mpd );
 
 static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
 
@@ -145,6 +136,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   ENCOUNT_LOCATION enc_loc;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
   ENCPOKE_FLD_PARAM fld_spa;
+  MPD_PTR mpd = NULL;
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
 
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
@@ -186,22 +178,29 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     }
   }
 
-  { //移動ポケモンチェック
-
+  if( enc_type != ENC_TYPE_EFFECT ){ //移動ポケモンチェック
+    mpd = ENCPOKE_GetMovePokeEncountData( enc->encdata,
+              &fld_spa, FIELDMAP_GetZoneID( enc->fwork ) ); 
   }
+  if( mpd != NULL){
+    //バトルパラメータセット
+    bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
+    enc_CreateBattleParamMovePoke( enc, &fld_spa, bp, HEAPID_BTLPARAM, mpd );
 
-  //エンカウントデータ生成
-  MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
-  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata,
+  }else{
+    //エンカウントデータ生成
+    MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
+    enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata,
               &fld_spa, FIELDMAP_GetZoneID( enc->fwork ),poke_tbl );
 
-  if( enc_num == 0 ){ //エンカウント失敗
-    return NULL;
-  }
+    if( enc_num == 0 ){ //エンカウント失敗
+      return NULL;
+    }
 
-  //バトルパラメータセット
-  bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
-  enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+    //バトルパラメータセット
+    bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
+    enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+  }
 
   // プレイヤー座標更新＆歩数カウントクリア
   encwork_SetPlayerPos( ewk, fplayer);
@@ -524,15 +523,12 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl )
 {
-  GAMEDATA *gdata = enc->gdata;
-
   //エネミーパーティ生成
   {
     int i;
     BTL_FIELD_SITUATION sit;
     POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( heapID );
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
-    MYSTATUS* myStatus = GAMEDATA_GetMyStatus( gdata );
 
     for(i = 0;i < ((u8)(efp->enc_double_f)+1);i++){
       ENCPOKE_PPSetup( pp, efp, &inPokeTbl[i] );
@@ -540,11 +536,36 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     }
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
-    BTL_SETUP_Wild( bsp, gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
+    BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
 
     GFL_HEAP_FreeMemory( pp );
     GFL_HEAP_FreeMemory( partyEnemy );
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルパラム作成(移動ポケモン用)
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp,
+    BATTLE_SETUP_PARAM *bsp, HEAPID heapID, MPD_PTR mpd )
+{
+  //エネミーパーティ生成
+  BTL_FIELD_SITUATION sit;
+  POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( heapID );
+  POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemoryLo( heapID, POKETOOL_GetWorkSize() );
+
+  ENCPOKE_PPSetupMovePoke( pp, efp, mpd );
+  PokeParty_Add( partyEnemy, pp );
+
+  BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
+  BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE, heapID );
+
+  GFL_HEAP_FreeMemory( pp );
+  GFL_HEAP_FreeMemory( partyEnemy );
 }
 
 //--------------------------------------------------------------

@@ -26,7 +26,8 @@
 #include "tr_tool/tr_tool.h"
 #include "item/itemsym.h"
 #include "savedata/encount_sv.h"
-
+#include "move_pokemon_def.h"
+#include "move_pokemon.h"
 #include "enc_pokeset.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -73,6 +74,7 @@ static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 //プロトタイプ
 static u32 eps_GetPercentRand( void );
 static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp, const WEATHER_NO weather );
+static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level );
 static const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata );
 static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable);
 
@@ -229,15 +231,8 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
 
   for(i = 0;i < efp->enc_poke_num;i++){
     eps_PokeLottery( efp, enc_tbl, &outPokeTbl[num] );
-    if(!efp->enc_force_f){
-      //特性によるレベル差戦闘回避
-      if(efp->spa_low_lv_rm && (efp->spray_lv - outPokeTbl[num].level) >= 5){
-        continue;
-      }
-      //スプレーチェック
-      if(efp->spray_f && (outPokeTbl[num].level <= efp->spray_lv)){
-        continue;
-      }
+    if( encpoke_CheckEncountAvoid( efp, outPokeTbl[num].level)){
+      continue;
     }
     num++;
   }
@@ -266,6 +261,48 @@ int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PA
   num = ENCPOKE_GetEncountPoke( efp, enc_tbl, outPokeTbl );
 
   return num;
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動ポケモンエンカウト抽選
+ *
+ * @param enc       エンカウントシステムポインタ
+ * @param efp       エンカウント情報構造体ポインタ
+ * @param inProb    計算元の確率
+ * @return  変動後の確率
+ */
+//--------------------------------------------------------------
+MPD_PTR ENCPOKE_GetMovePokeEncountData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, u16 zone_id )
+{
+  ENC_SV_PTR data;
+	MPD_PTR temp[MOVE_POKE_MAX];
+	u8 i, enc_count;
+
+	//同じ場所にいる移動ポケモンを取得
+	enc_count = 0;
+	for( i = 0; i < MOVE_POKE_MAX; i++){
+    MPD_PTR mpd;
+		if( !EncDataSave_IsMovePokeValid( efp->enc_save,i) ){
+      continue;
+    }
+    mpd = EncDataSave_GetMovePokeDataPtr( efp->enc_save, i );
+		if( zone_id != EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_ZONE_ID )){
+      continue;
+		}
+    if( encpoke_CheckEncountAvoid( efp,
+          EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_LV))){
+      continue;
+    }
+		temp[enc_count++] = mpd;
+	}
+
+	if (enc_count == 0 || GFUser_GetPublicRand0(1000) < 500){
+		return NULL;
+	}
+	
+  //ランダムで選出
+	return temp[ GFUser_GetPublicRand0(enc_count) ];
 }
 
 //----------------------------------------------------------------------------
@@ -399,6 +436,23 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
 }
 
 /*
+ *  @brief  エンカウント移動ポケモン　POKEPARA生成
+ */
+void ENCPOKE_PPSetupMovePoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, MPD_PTR mpd )
+{
+  {
+	  u16 monsno = EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_MONSNO);
+	  u8 lv = EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_LV);
+	  u32 pow_rnd = EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_POW_RND);
+	  u32 per_rnd = EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_PER_RND);
+
+    PP_SetupEx( pp, monsno, lv, efp->myID, pow_rnd, per_rnd );
+  }
+	PP_Put( pp, ID_PARA_condition, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_COND) );		// コンディション
+	PP_Put( pp, ID_PARA_hp, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_HP) );		// HP
+}
+
+/*
  *  @brief  現在大量発生が起きているゾーンIDを返す
  *
  *  @retval 0xFFFF  大量発生が起きていない(クリア前)
@@ -499,6 +553,29 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
   }
 }
 
+//--------------------------------------------------------------
+/*
+ *  @brief  レベル差戦闘回避チェック
+ *
+ *  @retval NULL  大量発生が起きていない(クリア前)
+ *  @retval それ以外  発生している大量発生パラメータ
+ */
+//--------------------------------------------------------------
+static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level )
+{
+  if(efp->enc_force_f){
+    return FALSE;
+  }
+  //特性によるレベル差戦闘回避
+  if(efp->spa_low_lv_rm && (efp->spray_lv - level) >= 5){
+    return TRUE;
+  }
+  //スプレーチェック
+  if(efp->spray_f && (level <= efp->spray_lv)){
+    return TRUE;
+  } 
+  return FALSE;
+}
 
 //--------------------------------------------------------------
 /*
@@ -508,7 +585,7 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
  *  @retval それ以外  発生している大量発生パラメータ
  */
 //--------------------------------------------------------------
-const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata )
+static const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata )
 {
   const GENERATE_ENCOUNT* gene;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork((GAMEDATA*)gdata);
