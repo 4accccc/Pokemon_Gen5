@@ -2821,8 +2821,8 @@
 	</row>
 
 	<row id="ITEMNAME_538">
-		<language name="JPN" width="256">クリティＣ２</language>
-		<language name="JPN_KANJI" width="256">クリティＣ２</language>
+		<language name="JPN" width="256">クリティカット２</language>
+		<language name="JPN_KANJI" width="256">クリティカット２</language>
 	</row>
 
 	<row id="ITEMNAME_539">
@@ -2831,13 +2831,13 @@
 	</row>
 
 	<row id="ITEMNAME_540">
-		<language name="JPN" width="256">スペシャルＵ２</language>
-		<language name="JPN_KANJI" width="256">スペシャルＵ２</language>
+		<language name="JPN" width="256">ＳＰアップ２</language>
+		<language name="JPN_KANJI" width="256">ＳＰアップ２</language>
 	</row>
 
 	<row id="ITEMNAME_541">
-		<language name="JPN" width="256">スペシャルＧ２</language>
-		<language name="JPN_KANJI" width="256">スペシャルＧ２</language>
+		<language name="JPN" width="256">ＳＰガード２</language>
+		<language name="JPN_KANJI" width="256">ＳＰガード２</language>
 	</row>
 
 	<row id="ITEMNAME_542">
@@ -2861,13 +2861,13 @@
 	</row>
 
 	<row id="ITEMNAME_546">
-		<language name="JPN" width="256">スペシャルＵ３</language>
-		<language name="JPN_KANJI" width="256">スペシャルＵ３</language>
+		<language name="JPN" width="256">ＳＰアップ３</language>
+		<language name="JPN_KANJI" width="256">ＳＰアップ３</language>
 	</row>
 
 	<row id="ITEMNAME_547">
-		<language name="JPN" width="256">スペシャルＧ３</language>
-		<language name="JPN_KANJI" width="256">スペシャルＧ３</language>
+		<language name="JPN" width="256">ＳＰガード３</language>
+		<language name="JPN_KANJI" width="256">ＳＰガード３</language>
 	</row>
 
 	<row id="ITEMNAME_548">
@@ -2891,13 +2891,13 @@
 	</row>
 
 	<row id="ITEMNAME_552">
-		<language name="JPN" width="256">スペシャルＵ６</language>
-		<language name="JPN_KANJI" width="256">スペシャルＵ６</language>
+		<language name="JPN" width="256">ＳＰアップ６</language>
+		<language name="JPN_KANJI" width="256">ＳＰアップ６</language>
 	</row>
 
 	<row id="ITEMNAME_553">
-		<language name="JPN" width="256">スペシャルＧ６</language>
-		<language name="JPN_KANJI" width="256">スペシャルＧ６</language>
+		<language name="JPN" width="256">ＳＰガード６</language>
+		<language name="JPN_KANJI" width="256">ＳＰガード６</language>
 	</row>
 
 	<row id="ITEMNAME_554">
@@ -2936,8 +2936,8 @@
 	</row>
 
 	<row id="ITEMNAME_561">
-		<language name="JPN" width="256">クリティＣ３</language>
-		<language name="JPN_KANJI" width="256">クリティＣ３</language>
+		<language name="JPN" width="256">クリティカット３</language>
+		<language name="JPN_KANJI" width="256">クリティカット３</language>
 	</row>
 
 	<row id="ITEMNAME_562">

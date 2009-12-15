@@ -52,10 +52,10 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 
 	{ ITEM_PIIPIIEIDO, 3 },				// ピーピーエイド
 	{ ITEM_AITEMUKOORU, 3 },			// アイテムコール
-	{ ITEM_KURITHIc2, 3 },				// クリティＣ２
+	{ ITEM_KURITHIKATTO2, 3 },		// クリティカット２
 	{ ITEM_SUPIIDAA2, 3 },				// スピーダー２
-	{ ITEM_SUPESYARUu2, 3 },			// スペシャルＵ２
-	{ ITEM_SUPESYARUg2, 3 },			// スペシャルＧ２
+	{ ITEM_spAPPU2, 3 },					// ＳＰアップ２
+	{ ITEM_spGAADO2, 3 },					// ＳＰガード２
 	{ ITEM_DHIFENDAA2, 3 },				// ディフェンダー２
 	{ ITEM_PURASUPAWAA2, 3 },			// プラスパワー２
 	{ ITEM_YOKUATAARU2, 3 },			// ヨクアタール２
@@ -68,10 +68,10 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 	{ ITEM_YAKEDONAOSI, 4 },			// やけどなおし
 
 	{ ITEM_SUKIRUKOORU, 5 },			// スキルコール
-	{ ITEM_KURITHIc3, 5 },				// クリティＣ３
+	{ ITEM_KURITHIKATTO3, 5 },		// クリティカット３
 	{ ITEM_SUPIIDAA3, 5 },				// スピーダー３
-	{ ITEM_SUPESYARUu3, 5 },			// スペシャルＵ３
-	{ ITEM_SUPESYARUg3, 5 },			// スペシャルＧ３
+	{ ITEM_spAPPU3, 5 },					// ＳＰアップ３
+	{ ITEM_spGAADO3, 5 },					// ＳＰガード３
 	{ ITEM_DHIFENDAA3, 5 },				// ディフェンダー３
 	{ ITEM_PURASUPAWAA3, 5 },			// プラスパワー３
 	{ ITEM_YOKUATAARU3, 5 },			// ヨクアタール３
@@ -92,8 +92,8 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 	{ ITEM_GENKINOKAKERA, 11 },		// げんきのかけら
 
 	{ ITEM_SUPIIDAA6, 12 },				// スピーダー６
-	{ ITEM_SUPESYARUu6, 12 },			// スペシャルＵ６
-	{ ITEM_SUPESYARUg6, 12 },			// スペシャルＧ６
+	{ ITEM_spAPPU6, 12 },					// ＳＰアップ６
+	{ ITEM_spGAADO6, 12 },				// ＳＰガード６
 	{ ITEM_DHIFENDAA6, 12 },			// ディフェンダー６
 	{ ITEM_PURASUPAWAA6, 12 },		// プラスパワー６
 	{ ITEM_YOKUATAARU6, 12 },			// ヨクアタール６
