@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-15T16:21:45"/>
+	<create user="taya" host="W00146" date="2009-12-16T03:04:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2611,6 +2611,25 @@
 [1:07:わざ名:1]の　こうげきを　うけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　攻撃を受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_JyuryokuFall">
+		<comment>じゅうりょく</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じゅうりょくの　えいきょうで▽
+くうちゅうに　いられなくなった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+じゅうりょくの影響で▽
+空中に　いられなくなった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_JyuryokuWazaFail">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じゅうりょくが　つよくて▽
+[1:07:わざ名:1]が　だせない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+じゅうりょくが　強くて▽
+[1:07:わざ名:1]が　出せない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MirrorType">
