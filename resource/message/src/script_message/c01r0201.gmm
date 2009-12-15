@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T13:50:22"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T20:15:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,11 +301,11 @@
 		<language name="JPN" width="256">おっ！　きみの　ポケモン
 なんだか　よさげな　かんじじゃん！[BE:01:ページ切り替え（クリア）]
 でもね　これを　もたせてあげると
-もっともっと　よさげに　なるよ！</language>
+もっともっと　よさげに　なるよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おっ！　君の　ポケモン
 なんだか　よさげな　感じじゃん！[BE:01:ページ切り替え（クリア）]
 でもね　これを　持たせてあげると
-もっともっと　よさげに　なるよ！</language>
+もっともっと　よさげに　なるよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0201_bigman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
