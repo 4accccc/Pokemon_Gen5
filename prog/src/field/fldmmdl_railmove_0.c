@@ -705,20 +705,25 @@ MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* loca
   grid_r = MMDL_GET_RAILGRID_R( grid_r );
 
 	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
-		if( old_hit ){
-      MMDL_GetOldRailLocation( mmdl, &old_location );
-      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &old_location, &mdl_pos );
 
-			if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
-				return( mmdl );
-			}
-		}
-		
-    MMDL_GetRailLocation( mmdl, &mdl_location );
-    FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
-    if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
-      return( mmdl );
-		}
+    if( !MMDL_CheckStatusBit( mmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
+    {
+
+      if( old_hit ){
+        MMDL_GetOldRailLocation( mmdl, &old_location );
+        FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &old_location, &mdl_pos );
+
+        if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
+          return( mmdl );
+        }
+      }
+      
+      MMDL_GetRailLocation( mmdl, &mdl_location );
+      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+      if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
+        return( mmdl );
+      }
+    }
 	}
 	
 	return( NULL );
