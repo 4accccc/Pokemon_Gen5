@@ -431,20 +431,17 @@ static GMEVENT_RESULT FlySkyBrightInEvent(GMEVENT * event, int *seq, void * work
     { 
       GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
       FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
-
-      if( few->season_flag == FIELD_FADE_SEASON_ON )  // if(四季表示指定有)
-      {
-        if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示フラグON)
-        { // 四季表示
-          u8 start, end;
-          start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
-          end   = GAMEDATA_GetSeasonID( gdata );
-          GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
-          FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-          FIELD_STATUS_SetSeasonDispLast( fstatus, end );
-          *seq = 2;
-          break;
-        }
+      // if(四季表示指定有 && 季節表示フラグON)
+      if( (few->season_flag == FIELD_FADE_SEASON_ON) && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  
+      { // 四季表示
+        u8 start, end;
+        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+        end   = GAMEDATA_GetSeasonID( gdata );
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+        *seq = 2;
+        break;
       }
       else
       {
