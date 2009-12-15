@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="fuchino" host="W00152" date="2009-12-15T23:36:27"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,12 +22,145 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+
+<tex_image_array size="3">
+	<tex_image index="0" name="c01michi_a"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette4"
+		color0_mode="color"
+		palette_name="c01michi_a_pl"
+		path="C:/home/wb_data3d/field/out02/chip/c01michi_a.tga"
+	>
+		<bitmap size="512">
+			5690 5555 5555 0695 5690 5555 5555 0695
+			5a40 5555 5555 01a5 5a40 5555 5555 01a5
+			6901 5555 5555 4069 6901 5555 5555 4069
+			a406 0155 5550 901a a406 0155 5550 901a
+			901a 0016 9400 a406 901a 0016 9400 a406
+			4069 0002 8000 6901 4069 0002 8000 6901
+			01a5 9000 0006 5a40 01a5 9000 0006 5a40
+			0695 a900 006a 5690 0695 a900 006a 5690
+			0a55 5a90 06a5 55a0 0a55 5a90 06a5 55a0
+			0155 05a4 1a50 5540 0155 55a4 1a55 5540
+			0155 0169 6940 5540 0155 5569 6955 5540
+			0055 015a a540 5500 0055 555a a555 5500
+			4055 0156 9540 5501 4055 5556 9555 5501
+			8055 0156 9540 5502 8055 5556 9555 5502
+			9015 0555 5550 5406 9015 5555 5555 5406
+			a015 5555 5555 540a a015 5555 5555 540a
+			a015 5005 5005 540a a015 5555 5555 540a
+			9015 4001 4001 5406 9015 5555 5555 5406
+			8055 4001 4001 5502 8055 5556 9555 5502
+			4055 4002 8001 5501 4055 5556 9555 5501
+			0055 4002 8001 5500 0055 555a a555 5500
+			0155 5009 6005 5540 0155 5569 6955 5540
+			0155 55a4 1a55 5540 0155 55a4 1a55 5540
+			0a55 5a90 06a5 55a0 0a55 5a90 06a5 55a0
+			0695 a900 006a 5690 0695 a900 006a 5690
+			01a5 9000 0006 5a40 01a5 9000 0006 5a40
+			4069 0002 8000 6901 4069 0002 8000 6901
+			901a 0016 9400 a406 901a 0016 9400 a406
+			a406 0155 5540 901a a406 0155 5540 901a
+			6901 5555 5555 4069 6901 5555 5555 4069
+			5a40 5555 5555 01a5 5a40 5555 5555 01a5
+			5690 5555 5555 0695 5690 5555 5555 0695
+			5690 5555 5555 0695 5690 5555 5555 0695
+			5a40 5555 5555 01a5 5a40 5555 5555 01a5
+			6901 5555 5555 4069 6901 5555 5555 4069
+			a406 0155 5550 901a a406 0155 5550 901a
+			901a 0016 9400 a406 901a 0016 9400 a406
+			4069 0002 8000 6901 4069 0002 8000 6901
+			01a5 9000 0006 5a40 01a5 9000 0006 5a40
+			0695 a900 006a 5690 0695 a900 006a 5690
+			0a55 5a90 06a5 55a0 0a55 5a90 06a5 55a0
+			0155 55a4 1a55 5540 0155 05a4 1a50 5540
+			0155 5569 6955 5540 0155 0169 6940 5540
+			0055 555a a555 5500 0055 015a a540 5500
+			4055 5556 9555 5501 4055 0156 9540 5501
+			8055 5556 9555 5502 8055 0156 9540 5502
+			9015 5555 5555 5406 9015 0555 5550 5406
+			a015 5555 5555 540a a015 5555 5555 540a
+			a015 5555 5555 540a a015 5005 5005 540a
+			9015 5555 5555 5406 9015 4001 4001 5406
+			8055 5556 9555 5502 8055 4001 4001 5502
+			4055 5556 9555 5501 4055 4002 8001 5501
+			0055 555a a555 5500 0055 4002 8001 5500
+			0155 5569 6955 5540 0155 5009 6005 5540
+			0155 55a4 1a55 5540 0155 55a4 1a55 5540
+			0a55 5a90 06a5 55a0 0a55 5a90 06a5 55a0
+			0695 a900 006a 5690 0695 a900 006a 5690
+			01a5 9000 0006 5a40 01a5 9000 0006 5a40
+			4069 0002 8000 6901 4069 0002 8000 6901
+			901a 0016 9400 a406 901a 0016 9400 a406
+			a406 0155 5540 901a a406 0155 5540 901a
+			6901 5555 5555 4069 6901 5555 5555 4069
+			5a40 5555 5555 01a5 5a40 5555 5555 01a5
+			5690 5555 5555 0695 5690 5555 5555 0695
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="c01michi_b"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="c01michi_b_pl"
+		path="C:/home/wb_data3d/field/out02/chip/c01michi_b.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 1111 1111 1111
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="c01yuka_a"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="c01yuka_a_pl"
+		path="C:/home/wb_data3d/field/out02/chip/c01yuka_a.tga"
+	>
+		<bitmap size="128">
+			5690 5555 5555 0695 5a40 5555 5555 01a5
+			6902 5555 5555 8069 a40b 5555 5555 e01a
+			902f 5556 9555 f806 40be 555a a555 be01
+			02fa 5569 6955 af80 0bea 55a4 1a55 abe0
+			2faa 5690 0695 aaf8 beaa 5a40 01a5 aabe
+			faaa 6902 8069 aaaf eaaa a40b e01a aaab
+			aaaa 902f f806 aaaa aaaa 40be be01 aaaa
+			aaaa 02fa af80 aaaa aaaa 0bea abe0 aaaa
+			aaaa 0bea abe0 aaaa aaaa 02fa af80 aaaa
+			aaaa 40be be01 aaaa aaaa 902f f806 aaaa
+			eaaa a40b e01a aaab faaa 6902 8069 aaaf
+			beaa 5a40 01a5 aabe 2faa 5690 0695 aaf8
+			0bea 55a4 1a55 abe0 02fa 5569 6955 af80
+			40be 555a a555 be01 902f 5556 9555 f806
+			a40b 5555 5555 e01a 6902 5555 5555 8069
+			5a40 5555 5555 01a5 5690 5555 5555 0695
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="3">
+	<tex_palette index="0" name="c01michi_a_pl" color_size="4">
+		62f6 6717 6b38 7fff
+	</tex_palette>
+	<tex_palette index="1" name="c01michi_b_pl" color_size="8">
+		6737 6b58 6f79 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="c01yuka_a_pl" color_size="4">
+		6717 6b38 6f59 777a
+	</tex_palette>
+</tex_palette_array>
 
 <material_array size="1">
 	<material index="0" name="lambert1"
@@ -131,6 +264,29 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="3">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="3">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
