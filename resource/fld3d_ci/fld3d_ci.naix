@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-12-15T18:34:49
+	Update:2009-12-15T23:05:52
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -27,32 +27,34 @@ enum {
 	NARC_fld3d_ci_cut_get2_item_nsbta = 13,
 	NARC_fld3d_ci_cut_get2_item_nsbma = 14,
 	NARC_fld3d_ci_cut_get2_item_nsbca = 15,
-	NARC_fld3d_ci_gym1_spa = 16,
-	NARC_fld3d_ci_gymbadge1_nsbmd = 17,
-	NARC_fld3d_ci_gymbadge1_nsbca = 18,
-	NARC_fld3d_ci_poke_ci_nsbmd = 19,
-	NARC_fld3d_ci_poke_ci2_nsbmd = 20,
-	NARC_fld3d_ci_poke_ci_nsbca = 21,
-	NARC_fld3d_ci_poke_ci2_nsbca = 22,
-	NARC_fld3d_ci_poke_ci2_nsbta = 23,
-	NARC_fld3d_ci_gymbadge2_nsbmd = 24,
-	NARC_fld3d_ci_gymbadge2_nsbca = 25,
-	NARC_fld3d_ci_gymbadge3_nsbmd = 26,
-	NARC_fld3d_ci_gymbadge3_nsbca = 27,
+	NARC_fld3d_ci_gymbadge1_nsbmd = 16,
+	NARC_fld3d_ci_gymbadge1_nsbca = 17,
+	NARC_fld3d_ci_poke_ci_nsbmd = 18,
+	NARC_fld3d_ci_poke_ci2_nsbmd = 19,
+	NARC_fld3d_ci_poke_ci_nsbca = 20,
+	NARC_fld3d_ci_poke_ci2_nsbca = 21,
+	NARC_fld3d_ci_poke_ci2_nsbta = 22,
+	NARC_fld3d_ci_gymbadge2_nsbmd = 23,
+	NARC_fld3d_ci_gymbadge2_nsbca = 24,
+	NARC_fld3d_ci_gymbadge3_nsbmd = 25,
+	NARC_fld3d_ci_gymbadge3_nsbca = 26,
+	NARC_fld3d_ci_gym1_spa = 27,
 	NARC_fld3d_ci_gymbadge4_nsbmd = 28,
 	NARC_fld3d_ci_gymbadge4_nsbca = 29,
-	NARC_fld3d_ci_gymbadge5_nsbmd = 30,
-	NARC_fld3d_ci_gymbadge5_nsbca = 31,
-	NARC_fld3d_ci_gymbadge6_nsbmd = 32,
-	NARC_fld3d_ci_gymbadge6_nsbca = 33,
-	NARC_fld3d_ci_gymbadge7_nsbmd = 34,
-	NARC_fld3d_ci_gymbadge7_nsbca = 35,
-	NARC_fld3d_ci_gymbadge8_nsbmd = 36,
-	NARC_fld3d_ci_gymbadge8_nsbca = 37,
-	NARC_fld3d_ci_fly_out1_nsbmd = 38,
-	NARC_fld3d_ci_fly_out1_nsbca = 39,
-	NARC_fld3d_ci_fly_in1_nsbmd = 40,
-	NARC_fld3d_ci_fly_in1_nsbca = 41
+	NARC_fld3d_ci_gymbadge4_nsbtp = 30,
+	NARC_fld3d_ci_gymbadge4_nsbma = 31,
+	NARC_fld3d_ci_gymbadge5_nsbmd = 32,
+	NARC_fld3d_ci_gymbadge5_nsbca = 33,
+	NARC_fld3d_ci_gymbadge6_nsbmd = 34,
+	NARC_fld3d_ci_gymbadge6_nsbca = 35,
+	NARC_fld3d_ci_gymbadge7_nsbmd = 36,
+	NARC_fld3d_ci_gymbadge7_nsbca = 37,
+	NARC_fld3d_ci_gymbadge8_nsbmd = 38,
+	NARC_fld3d_ci_gymbadge8_nsbca = 39,
+	NARC_fld3d_ci_fly_out1_nsbmd = 40,
+	NARC_fld3d_ci_fly_out1_nsbca = 41,
+	NARC_fld3d_ci_fly_in1_nsbmd = 42,
+	NARC_fld3d_ci_fly_in1_nsbca = 43
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
