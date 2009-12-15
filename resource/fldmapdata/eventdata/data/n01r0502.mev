@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/01 13:24:59
+#save date:2009/12/15 0:01:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #SECTION START:OBJ_EVENT
@@ -29,7 +29,109 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#Pos Event Label
+POS_N01R0502_JUMPUP_01
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPUP
+#Pos Check Type
+POS_CHECK_TYPE_UP
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -568
+#size
+3 1
+#event number: 1
+#Pos Event Label
+POS_N01R0502_JUMPUP_02
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPUP
+#Pos Check Type
+POS_CHECK_TYPE_UP
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -504
+#size
+3 1
+#event number: 2
+#Pos Event Label
+POS_N01R0502_JUMPUP_03
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPUP
+#Pos Check Type
+POS_CHECK_TYPE_UP
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -440
+#size
+3 1
+#event number: 3
+#Pos Event Label
+POS_N01R0502_JUMPDOWN_01
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPDOWN
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -520
+#size
+3 1
+#event number: 4
+#Pos Event Label
+POS_N01R0502_JUMPDOWN_02
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPDOWN
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -456
+#size
+3 1
+#event number: 5
+#Pos Event Label
+POS_N01R0502_JUMPDOWN_03
+#Pos Script Name
+SCRID_POS_N01R0502_JUMPDOWN
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -392
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

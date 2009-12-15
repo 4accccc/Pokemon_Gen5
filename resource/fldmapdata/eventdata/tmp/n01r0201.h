@@ -13,6 +13,5 @@
 #ifndef ZONE_N01R0201_EVC_H
 #define ZONE_N01R0201_EVC_H
 
-#define N01R0201_NINJA_01                  0
 
 #endif //ZONE_N01R0201_EVC_H

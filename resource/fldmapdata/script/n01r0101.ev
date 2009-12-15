@@ -41,6 +41,10 @@ _EVENT_DATA_END
 /************************************************************/
 EVENT_START	ev_scene_n01r0101_sagevsleader
 	
+	//主人公：前へ進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
 	//７人衆２：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage2_move_01 )
 	_OBJ_ANIME_WAIT()
@@ -176,6 +180,13 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	
 	
 EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：上へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //７人衆：前へ

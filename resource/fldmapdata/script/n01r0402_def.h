@@ -5,6 +5,6 @@
 #define _N01R0402_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_N01R0402 (1)
+#define SCRID_BG_N01R0402_GOODS_01 (1)
 
 #endif //_N01R0402_DEF_H_

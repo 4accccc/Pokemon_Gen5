@@ -20,7 +20,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_n01r0201_guide_01
-_EVENT_DATA    ev_n01r0201_NINJA_01
 _EVENT_DATA_END
 
 
@@ -28,13 +27,66 @@ _EVENT_DATA_END
 /*						POSイベント						*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0201_guide_01
+	
+	//？？？『少しの間 おまえの自由をいただく！』
+	_PLAINWIN_MSG_DOWN( msg_n01r0201_ninja_01 )
+	_MSGWIN_CLOSE()
+	
+	//主人公：回復部屋の前へ移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ登場【仮】表示する演出が未定
+	_OBJ_ADD_EX( 21, 13, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//主人公：気づく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//わたしはダークトリニティ
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_02, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//主人公＆ダークトリニティ：上を向く
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staywalk_u )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staywalk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//まずはあの部屋で休むがよい
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_03, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ダークトリニティ消える【仮】消す演出が未定
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	
 EVENT_END
 
+//--------------------------------------------------------------------
+//主人公：回復部屋の前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
 
-/************************************************************/
-/*						ダークトリニティ						*/
-/************************************************************/
-EVENT_START	ev_n01r0201_NINJA_01
-EVENT_END
+//--------------------------------------------------------------------
+//主人公：気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_look_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//方向転換（共有）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staywalk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
