@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T21:43:01"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T21:45:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -731,7 +731,7 @@
 人が　いるのも　納得だよ</language>
 	</row>
 
-	<row id="msg_c07_iss1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_iss1_01" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ISS用
 ・GRIDX=212、GRIDZ=220
@@ -747,7 +747,7 @@
 ２ひきの　ドラゴン！</language>
 	</row>
 
-	<row id="msg_c07_iss2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_iss2_01" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ISS用
 ・こいつの初期配置はGRIDX=212、GRIDZ=222</comment>
@@ -758,18 +758,18 @@
 まわって　ねじれて♪</language>
 	</row>
 
-	<row id="msg_c07_iss3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_iss3_01" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ISS用
 ・こいつの初期配置はGRIDX=210、GRIDZ=222</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
-		<language name="JPN" width="256">せかいは　ぐるぐる
-まざるよ　ぐるぐる</language>
-		<language name="JPN_KANJI" width="256">せかいは　ぐるぐる
-まざるよ　ぐるぐる</language>
+		<language name="JPN" width="256">ぐるぐる　わかれて
+ぐるぐる　まざって</language>
+		<language name="JPN_KANJI" width="256">ぐるぐる　わかれて
+ぐるぐる　まざって</language>
 	</row>
 
-	<row id="msg_c07_iss4_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c07_iss4_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ISS用
 ・こいつの初期配置はGRIDX=212、GRIDZ=220</comment>
