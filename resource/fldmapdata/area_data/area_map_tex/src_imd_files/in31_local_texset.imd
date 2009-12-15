@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-12-08T19:26:38" source="untitled"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-12-15T16:37:18" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="tanoue_reiko" host="W00192" date="2009-12-08T19:26:38" source="untitled"/>
+<original_create user="tanoue_reiko" host="W00192" date="2009-12-15T16:37:18" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,52 +27,62 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-0.500000 0.000000 -0.500000" whd="5.000000 0.000000 1.000000"/>
+<box_test pos_scale="4" xyz="2.500000 0.000000 -0.500000" whd="5.000000 0.000000 1.000000"/>
 
 <tex_image_array size="5">
 	<tex_image index="0" name="gym08_d_01"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
+		format="palette4"
 		color0_mode="color"
 		palette_name="gym08_d_01_pl"
 		path="C:/home/wb_data3d/field/in31/map/tex/gym08_d_01.tga"
 	>
-		<bitmap size="256">
-			1000 0000 0000 0000 0000 0000 0000 0000
-			1112 1110 1111 0011 1011 1110 1100 1101
-			2222 2222 2222 2222 2222 d222 2ddd 2222
-			222e 2222 2222 2222 2222 dd22 dddd 2222
-			eeee ddde eedd eeee eeee ddee dddd ee2e
-			eeee dddd eddd eeee eeee ddee dddd eeee
-			ffff dddd fddd eeff fffe dfef eddd feee
-			ffff 9999 f999 ffff ffff ffff ffff ffff
-			ffff 9999 f999 ffff ffff ffff ffff ffff
-			bbbb 999b bb99 bbbb 9bbb b999 bbbb bbbb
-			bbbb bbbb bbbb bbbb 99bb 9999 bbbb bbbb
-			bbbb bbbb bbbb bbbb ccbb cccc bbbb bbbb
-			cbbb bbcc ccbb cccc ccbc cccc bbbb bbbb
-			ccbb accc ccca cccc cacc accc bbbb bbbb
-			ccaa accc ccca cccc aacc aaaa aaaa baaa
-			88aa a888 888a 8888 aa88 88aa 8888 aaac
-			8aaa aa88 888a 8888 aa88 888a 8888 aa88
-			aaaa aaaa 888a 8888 aa88 888a 8888 aa88
-			7777 7777 6667 6666 7766 6667 6666 aa86
-			6777 6666 6677 6666 7776 6667 6666 7766
-			6677 6666 7776 7777 7777 6677 6666 7776
-			5577 5555 7775 5777 5555 7777 7777 7777
-			5577 5555 3335 5533 5555 3335 7773 7777
-			5533 5555 3335 5533 5555 3335 3333 7733
-			5333 5555 3333 5533 5555 3335 3333 3555
-			3333 3333 3333 5333 5555 3333 5333 5555
-			3333 3333 3333 3343 3333 3333 5333 5555
-			4433 4444 3333 4444 3344 4443 3334 3555
-			4443 4444 4444 4444 4444 4444 3444 4443
-			4444 4444 4444 4444 4444 4444 4444 4444
-			4444 4444 4444 4444 4444 4444 4344 4444
-			4433 4444 4444 4444 4444 4444 3334 4443
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="gym08_miz"
+	<tex_image index="1" name="gym08_d_02"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="gym08_d_02_pl"
+		path="C:/home/wb_data3d/field/in31/map/tex/gym08_d_02.tga"
+	>
+		<bitmap size="128">
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+			001b 0000 0000 e400 001b 0000 0000 e400
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="gym08_miz"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -210,7 +220,7 @@
 			1110 7777 1177 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="gym08_yuka"
+	<tex_image index="3" name="gym08_yuka"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -224,7 +234,7 @@
 			555b e555 555b e555 aaab eaaa ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="gym08_yuka2"
+	<tex_image index="4" name="gym08_yuka2"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -238,39 +248,24 @@
 			a965 596a aa95 56aa 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="tbutton"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="tbutton_pl"
-		path="C:/home/wb_data3d/field/in31/map/tex/tbutton.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="5">
-	<tex_palette index="0" name="gym08_d_01_pl" color_size="16">
-		2d48 2d48 2d48 1462 1062 1c83 24c4 1483
-		28e5 3948 1cc5 20e6 3126 4189 2928 2507
+	<tex_palette index="0" name="gym08_d_01_pl" color_size="4">
+		2d48 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="gym08_miz_pl" color_size="16">
+	<tex_palette index="1" name="gym08_d_02_pl" color_size="4">
+		356a 398b 3dab 41cc
+	</tex_palette>
+	<tex_palette index="2" name="gym08_miz_pl" color_size="16">
 		4185 3d65 45a6 4186 45a5 41a5 3d85 4165
 		4166 3d66 4585 49c6 4184 41a6 45c5 41a4
 	</tex_palette>
-	<tex_palette index="2" name="gym08_yuka2_pl" color_size="4">
+	<tex_palette index="3" name="gym08_yuka2_pl" color_size="4">
 		5a7f 565f 5ebf 6b1f
 	</tex_palette>
-	<tex_palette index="3" name="gym08_yuka_pl" color_size="4">
+	<tex_palette index="4" name="gym08_yuka_pl" color_size="4">
 		6739 6739 5ef7 5ad6
-	</tex_palette>
-	<tex_palette index="4" name="tbutton_pl" color_size="4">
-		1b3e 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -299,7 +294,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="gym08_miz"
+	<material index="1" name="gym08_d_03"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -323,7 +318,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="gym08_yuka"
+	<material index="2" name="gym08_miz"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -340,14 +335,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="3"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="gym08_yuka2"
+	<material index="3" name="gym08_yuka"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -364,14 +359,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="2"
+		tex_image_idx="3" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="tbutton"
+	<material index="4" name="gym08_yuka2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -388,7 +383,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="4" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -447,12 +442,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="64.000000 64.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="64.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -474,12 +469,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 64.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="64.000000 64.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="64.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -558,71 +553,11 @@
 		display_size="0"
 	>
 	</node>
-	<node index="1" name="pPlane1" kind="mesh"
+	<node index="1" name="pPlane4" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="2"
 		brother_prev="-1"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
-	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-	</node>
-	<node index="2" name="pPlane2" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="3"
-		brother_prev="1"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="16.000000 0.000000 0.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
-	>
-		<display index="0" material="1" polygon="1" priority="0"/>
-	</node>
-	<node index="3" name="pPlane3" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="4"
-		brother_prev="2"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="32.000000 0.000000 0.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
-	>
-		<display index="0" material="2" polygon="2" priority="0"/>
-	</node>
-	<node index="4" name="pPlane4" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="5"
-		brother_prev="3"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -636,9 +571,69 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="pPlane5" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="64.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="1" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="pPlane6" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="4"
+		brother_prev="2"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="80.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="2" polygon="2" priority="0"/>
+	</node>
+	<node index="4" name="pPlane7" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="5"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="96.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
 		<display index="0" material="3" polygon="3" priority="0"/>
 	</node>
-	<node index="5" name="pPlane5" kind="mesh"
+	<node index="5" name="pPlane8" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
@@ -647,7 +642,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="64.000000 0.000000 0.000000"
+		translate="112.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
