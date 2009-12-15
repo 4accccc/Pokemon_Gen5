@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-12-10T22:08:04" source="out01_local_texset.mb"/>
+	<create user="fuchino" host="W00152" date="2009-12-14T22:52:32"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="9 9"
 	compress_material="on" material_size="8 8"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 1.750000" whd="4.000000 0.000000 1.500000"/>
 
-<tex_image_array size="8">
+<tex_image_array size="18">
 	<tex_image index="0" name="sea_jimen"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
@@ -238,9 +238,302 @@
 			0690 0690 0690 0690 5695 aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
+	<tex_image index="8" name="t02_kabe01"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02_kabe01_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02_kabe01.tga"
+	>
+		<bitmap size="256">
+			ffff ffff ffff ffff aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			5555 5555 5555 5555 5555 5555 5555 5555
+			0000 0000 0000 0000 0000 0000 0000 0000
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 9555 555a 5569 aa55 aa55 a56a 56aa
+			aaaa aa9a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa96 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a5aa aaaa aaaa aaaa a5a5 aaaa aaaa
+			6aaa aaa5 aaaa aaaa 6aaa aaa9 aaaa 5aaa
+			aaaa aaaa aaaa 5aaa 6aaa aaa9 aaaa 6aaa
+			6aa9 aaa9 aaaa 6aaa aaa5 aaaa aaaa aaaa
+			aaa5 aaaa aaaa aaaa aaaa aaaa 5aaa aaaa
+			aaaa aaaa 96aa aaaa aaaa aaaa 95aa aaaa
+			aaaa aaaa a5aa aaaa aaaa aaaa aa96 aaaa
+			aaaa aaaa aa96 aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 9aaa aaaa aaaa aaaa 9aaa aaaa aaaa
+			aaaa 96aa aaaa aaaa 6aaa a595 aaaa a956
+			55aa a955 55aa 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="t02_kabe02"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="t02_kabe02_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02_kabe02.tga"
+	>
+		<bitmap size="512">
+			2226 2222 2222 2222 2222 2222 2222 2222
+			1113 1111 1111 1111 1111 1111 1111 1111
+			1113 1111 1111 1111 1111 1111 1111 1111
+			1113 1111 1111 4441 1111 1111 1111 1111
+			1113 1111 1111 4444 1144 1111 1111 1111
+			1113 1111 4411 4444 4444 1144 1111 4441
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			6665 6666 6666 6666 6666 6666 6666 6666
+			6665 6666 6666 6666 6666 6666 6666 6666
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 4444 4444 4444 4444 4444
+			4443 4444 4444 1444 4411 4444 4114 4444
+			4443 1111 4444 1111 1111 1111 1111 4441
+			1113 1111 1111 1111 1111 1111 1111 1111
+			1113 1111 1111 1111 1111 4111 4444 4444
+			1113 1111 1111 1111 1111 6664 7666 7777
+			1113 1111 1111 1111 7611 7777 7777 7777
+			1113 1111 1111 1111 7761 7777 7777 7777
+			1113 1111 1111 7111 7777 8888 8888 8888
+			1113 1111 1111 7611 a877 aaaa aaaa aaaa
+			1113 1111 1111 8861 aaaa aaaa aaaa aaaa
+			1113 1111 1111 7781 889a 8888 9888 89aa
+			1113 1111 1111 8771 888a 8888 8888 88aa
+			1113 1111 1111 a771 888a 8888 8888 88aa
+			1113 1111 1111 a774 889a 8888 9888 89aa
+			1113 1111 1111 a876 aaaa aaaa aaaa aaaa
+			1113 1111 6111 aa77 aaaa aaaa aaaa aaaa
+			1113 1111 7411 8877 8888 aa98 8889 8888
+			1113 1111 7711 8887 8888 aa88 8888 8888
+			1113 1111 7711 8887 8888 aa88 8888 8888
+			1113 1111 7711 8888 8888 aa98 8889 8888
+			1113 1111 8741 aaaa aaaa aaaa aaaa aaaa
+			1113 1111 8761 aaaa aaaa aaaa aaaa aaaa
+			1113 1111 8776 a988 889a 8888 9888 89aa
+			1113 1111 8878 a888 888a 8888 8888 88aa
+			1113 4111 8888 a888 888a 8888 8888 88aa
+			1113 6111 8888 a988 889a 8888 9888 89aa
+			1113 7611 aaa7 aaaa aaaa aaaa aaaa aaaa
+			1113 7711 aaaa aaaa aaaa aaaa aaaa aaaa
+			1113 7711 9aa8 8888 8888 aa98 8889 8888
+			1113 7711 8aa8 8888 8888 aa88 8888 8888
+			1113 7761 8aa8 8888 8888 aa88 8888 8888
+			1113 8771 8aa8 8888 8888 aa88 8888 8888
+			1113 8771 9aa8 8888 8888 aa98 8889 8888
+			1113 a874 aaaa aaaa aaaa aaaa aaaa aaaa
+			1113 a876 aaaa aaaa aaaa aaaa aaaa aaaa
+			1113 8776 8888 a988 889a 8888 9888 89aa
+			4443 8776 8888 a888 888a 8888 8888 88aa
+			4443 7776 8888 a888 888a 8888 8888 88aa
+			4443 7776 8887 a888 888a 8888 8888 88aa
+			4443 6376 8776 a988 889a 8888 9888 89aa
+			6443 6633 a666 aaaa aaaa aaaa aaaa aaaa
+			5665 4465 6644 aaaa aaaa aaaa aaaa aaaa
+			5365 4463 6444 8888 6668 8886 8888 8888
+			5565 1146 4411 7777 1135 8861 6663 7773
+			5555 1163 3411 0000 6355 0066 6116 0036
+			5555 4635 0364 0000 3550 0033 1160 0056
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="t02_ki_sita"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02_ki_sita_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02_ki_sita.tga"
+	>
+		<bitmap size="128">
+			aaaa aaaa aaaa aaaa fffa ffeb abff aaaa
+			ffee ffeb ebff bbff ffbe ffeb ebff beff
+			aafe aaaa eaaa bfbf 0afe 0000 a000 bfaa
+			42fe 5555 0155 bfa0 52fe 5555 5555 bf81
+			52fe 5555 4155 bf81 52aa 5555 4155 aa81
+			52aa 5055 5555 aaa1 52fe 5055 5555 afe1
+			52fe 5555 5555 afe1 12fe 5554 5555 afe1
+			12fe 5554 5555 afe1 52fe 5555 5555 afe1
+			52fe 5555 5555 afe1 52fe 5555 5555 afe1
+			52fe 5555 5555 afe1 52fe 5555 0555 afe1
+			52fe 5555 0555 afe1 42aa 5555 5555 aaa1
+			4aaa 5541 5555 aa81 4bfa 5541 5541 bf85
+			4bfa 5555 5541 bf85 0bfa 0001 4000 bf81
+			2bfa aaa0 0aaa bfa0 aafa ffea abff bfaa
+			ffba ffeb ebff beff ffea ffeb ebff bbff
+			fffa aaab eaaa afff aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="t02_kiwa"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02_kiwa_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02_kiwa.tga"
+	>
+		<bitmap size="8">
+			5555 aaaa aaaa ffff ffff aaaa 5555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="t02kaidan"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="t02kaidan_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02kaidan.tga"
+	>
+		<bitmap size="128">
+			a88a 6655 6666 6666 6666 6666 4445 0233
+			a88a 6655 9999 9999 9999 7999 5556 0234
+			a88a 9665 9999 9999 9999 7999 5556 1245
+			a88a 9965 9999 9999 9999 7999 5556 2345
+			a88a 9966 9999 9999 9999 7999 5556 2455
+			a88a 9976 9999 9999 9999 7999 5556 2455
+			a88a bb76 bbbb bbbb bbbb 7bbb 5556 2555
+			a88a 6666 6666 6666 6666 6666 5556 3555
+			a88a 3333 3333 3333 3333 3333 1113 1111
+			a88a 2221 2222 2222 2222 2222 1112 1111
+			a88a 2221 2222 2222 2222 2222 2222 1222
+			a88a 3332 3333 3333 3333 3333 2223 1222
+			a88a 3332 3333 3333 3333 3333 2223 0122
+			a88a 3321 3333 3333 3333 3333 2223 0122
+			a88a 3321 3333 3333 3333 3333 2223 0122
+			a88a 3321 3333 3333 3333 3333 2223 0012
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="t02kusa"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="t02kusa_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02kusa.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 3300 0014 0000 0000
+			3500 3446 3200 0013 4b00 f79e 347f 0056
+			8700 56b6 a787 0015 b200 9b99 8aaa 0059
+			4000 b66b ab9d 0035 4000 bbba 6d9b 0003
+			5000 bbca 6cdb 0003 7000 8bb9 49bb 0006
+			9400 64f5 e98b 0005 4a00 7323 e448 0001
+			1400 9200 632f 0000 0000 7000 5302 0000
+			0000 e000 0100 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="t02michi_a"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02michi_a_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02michi_a.tga"
+	>
+		<bitmap size="128">
+			5555 4015 0005 0500 f955 aaab aaaa 1592
+			be59 aaaa aaaa 15a1 55fd aaa9 aaaa 16a4
+			55ad aaaa aaaa 1aa9 aaa9 aaaa 6aaa 1aaa
+			aaa9 9aaa 9aaa 1aaa aaa9 aaaa 9aaa 1aaa
+			aaa8 aaaa a6aa 2aaa aaa8 aaaa aaaa 2aaa
+			aaa8 aaaa 6a1a 2955 aaa4 aaaa 5a42 2aaf
+			aaa4 aaaa 6a91 2efe aaa4 aaaa aaa4 2aaa
+			aa94 aaaa aaaa 2aaa aa90 aaaa aaaa 2aaa
+			aa90 aaaa aaaa 2aaa aa90 aaaa aaaa 2aaa
+			aa90 aaaa aaaa 2aaa aa94 aaaa aaaa 2aaa
+			aaa9 aaaa a6aa 2aaa aaa9 9aaa 8aaa 2aaa
+			aaa4 a6aa 1aaa 2aa9 aaa1 a6aa 6aaa 2950
+			aa91 a9aa aaaa 06a8 6a45 aa50 aaaa 0aa9
+			0019 aaf9 6aaa 0aa9 5419 aabd 5aaa 2aaa
+			5505 aaad 965a 16aa 5551 aaae b155 15aa
+			5554 56ae b015 155a 5000 0000 0000 4000
+		</bitmap>
+	</tex_image>
+	<tex_image index="15" name="t02michi_a2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02michi_a2_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02michi_a2.tga"
+	>
+		<bitmap size="32">
+			ffff ffff ffff ffff ff9f ffff ff54 7fff
+			ff95 5eff fa95 aabf faa9 aa9f ea6a a54f
+			aa9a aa57 a556 6957 a915 6a57 9555 1594
+			5569 a595 951a 89a9 9406 aaaa a511 a0aa
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="t02michi_b"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="t02michi_b_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02michi_b.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 5800 0000 0000 0000 0000
+			0000 0000 0000 5800 0001 0000 0000 0000
+			0000 0000 0000 5800 0001 0000 0000 0000
+			0000 0000 0000 5800 0011 0000 0000 0000
+			0000 0000 0000 5800 031e 0000 0000 0000
+			0000 0000 0000 5800 031e 0000 0000 0000
+			0000 0000 0000 4800 031e 0000 0000 0000
+			0000 0000 8000 4883 0311 0000 0000 0000
+			0000 0000 8830 a888 0311 0000 0000 0000
+			0000 0000 8830 5588 0371 0000 0000 0000
+			0000 0000 8003 a588 0301 0000 0000 0000
+			0000 0000 8080 a588 0301 0000 0300 0000
+			0000 0000 8808 a558 032e 0333 0300 0000
+			0000 8880 5885 f558 3320 0033 0333 0000
+			8888 8888 5888 9555 8404 4038 8844 8888
+			5555 a565 aa5a 9aaa a44a 444a 5555 5555
+			1010 1111 1111 900e 44d4 0d4d 1110 10ee
+			3000 0333 1220 9e11 11ee 1111 1111 00ee
+			3000 3000 3307 b003 1111 1111 1111 00e7
+			0000 0000 0000 b443 11e1 3333 2221 0071
+			0000 0000 0000 f433 0301 3030 3023 0333
+			0000 0000 0000 f483 3301 0000 3033 0000
+			0000 0000 0000 a883 8301 0300 0000 0000
+			0000 3300 3003 5883 0001 0000 0000 0000
+			0000 3330 0000 4380 0001 0003 0000 0000
+			0000 3333 0000 5800 07e1 0000 0000 0000
+			0000 3633 0000 5800 2111 0030 0000 0000
+			0000 3360 0000 5800 2211 0030 0000 0000
+			0000 3330 0000 5800 2211 0030 0000 0000
+			0000 0330 0000 5800 0222 0003 0000 0000
+			0000 0330 0000 5800 3330 0003 0000 0000
+			0000 0000 0000 5800 0030 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="t02michi_b2"
+		width="32" height="8" original_width="32" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="t02michi_b2_pl"
+		path="C:/home/wb_data3d/field/out01/chip/tex/t02michi_b2.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			ffff 6fff ffa5 ffab aaaa beaa aaf9 abff
+			aaaa baaa aabd aaaa feaa 6faf eabd aaab
+			affe 5abe aff9 bfff 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="8">
+<tex_palette_array size="18">
 	<tex_palette index="0" name="sea_jimen_pl" color_size="8">
 		6bbf 77df 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -268,6 +561,40 @@
 	</tex_palette>
 	<tex_palette index="7" name="t01wd_kage_pl" color_size="4">
 		7c1f 318c 18c6 7fff
+	</tex_palette>
+	<tex_palette index="8" name="t02_kabe01_pl" color_size="4">
+		4a74 52b6 5ed6 6718
+	</tex_palette>
+	<tex_palette index="9" name="t02_kabe02_pl" color_size="16">
+		7c1f 5ed6 6718 4232 52b6 39f0 4a74 298f
+		2db0 31d2 35f3 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="t02_ki_sita_pl" color_size="4">
+		3256 3698 56b5 6718
+	</tex_palette>
+	<tex_palette index="11" name="t02_kiwa_pl" color_size="4">
+		5af8 633a 6f5a 737b
+	</tex_palette>
+	<tex_palette index="12" name="t02kaidan_pl" color_size="16">
+		4a73 52b5 52d6 56f7 5f39 635a 677b 6bbc
+		6f9c 6fbc 73bd 73de 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="t02kusa_pl" color_size="16">
+		7cff 6f9c 6b7b 635a 4f37 4b16 42f5 3af4
+		36d4 2eb2 2ab2 26b1 32d3 26b2 5f59 5b38
+	</tex_palette>
+	<tex_palette index="14" name="t02michi_a2_pl" color_size="4">
+		4f3c 4f5c 537c 675a
+	</tex_palette>
+	<tex_palette index="15" name="t02michi_a_pl" color_size="4">
+		5b39 5f5a 675a 6b7b
+	</tex_palette>
+	<tex_palette index="16" name="t02michi_b2_pl" color_size="4">
+		5f18 675a 6f9c 73bd
+	</tex_palette>
+	<tex_palette index="17" name="t02michi_b_pl" color_size="16">
+		6f9c 73bd 6fbd 6b9c 6b7b 677b 6f9b 6fbc
+		679c 5f18 675a 6339 6f9d 6f7c 739d 6739
 	</tex_palette>
 </tex_palette_array>
 
@@ -875,6 +1202,81 @@
 
 <output_info vertex_size="32" polygon_size="8"
 	triangle_size="0" quad_size="8"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="18">
+		<ex_tex_image index="0" disp_pos="-420.000000 360.000000"/>
+		<ex_tex_image index="1" disp_pos="-300.000000 360.000000"/>
+		<ex_tex_image index="2" disp_pos="-180.000000 360.000000"/>
+		<ex_tex_image index="3" disp_pos="-60.000000 360.000000"/>
+		<ex_tex_image index="4" disp_pos="60.000000 360.000000"/>
+		<ex_tex_image index="5" disp_pos="180.000000 360.000000"/>
+		<ex_tex_image index="6" disp_pos="300.000000 360.000000"/>
+		<ex_tex_image index="7" disp_pos="420.000000 360.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="18">
+		<ex_tex_palette index="0" disp_pos="-420.000000 420.000000"/>
+		<ex_tex_palette index="1" disp_pos="-300.000000 420.000000"/>
+		<ex_tex_palette index="2" disp_pos="-60.000000 420.000000"/>
+		<ex_tex_palette index="3" disp_pos="-180.000000 420.000000"/>
+		<ex_tex_palette index="4" disp_pos="60.000000 420.000000"/>
+		<ex_tex_palette index="5" disp_pos="180.000000 420.000000"/>
+		<ex_tex_palette index="6" disp_pos="300.000000 420.000000"/>
+		<ex_tex_palette index="7" disp_pos="420.000000 420.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="8">
+		<ex_material index="0" disp_pos="-420.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-300.000000 300.000000"/>
+		<ex_material index="2" disp_pos="-180.000000 300.000000"/>
+		<ex_material index="3" disp_pos="-60.000000 300.000000"/>
+		<ex_material index="4" disp_pos="60.000000 300.000000"/>
+		<ex_material index="5" disp_pos="180.000000 300.000000"/>
+		<ex_material index="6" disp_pos="300.000000 300.000000"/>
+		<ex_material index="7" disp_pos="420.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="8">
+		<ex_polygon index="0" disp_pos="-420.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-300.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="-180.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="60.000000 240.000000"/>
+		<ex_polygon index="5" disp_pos="180.000000 240.000000"/>
+		<ex_polygon index="6" disp_pos="300.000000 240.000000"/>
+		<ex_polygon index="7" disp_pos="420.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="9">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-420.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-300.000000 180.000000"/>
+		<ex_node index="3" disp_pos="-180.000000 180.000000"/>
+		<ex_node index="4" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="5" disp_pos="60.000000 180.000000"/>
+		<ex_node index="6" disp_pos="180.000000 180.000000"/>
+		<ex_node index="7" disp_pos="300.000000 180.000000"/>
+		<ex_node index="8" disp_pos="420.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
