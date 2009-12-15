@@ -219,7 +219,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
   
-  OS_TPrintf("SetRecv action_NO = %d\n", info->action_no);
+//  OS_TPrintf("SetRecv action_NO = %d\n", info->action_no);
   if(info->action_no == GAMEBEACON_ACTION_NULL || info->action_no >= GAMEBEACON_ACTION_MAX){
     return FALSE;
   }
@@ -228,7 +228,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     for(i = bsys->start_log; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id 
           && bsys->log[i].info.send_counter == info->send_counter){
-        OS_TPrintf("既に受信済み\n");
+//        OS_TPrintf("既に受信済み\n");
         return FALSE; //ログに同じデータを受信済み
       }
     }

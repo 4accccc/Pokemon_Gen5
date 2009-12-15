@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "net/network_define.h"
 #include "intrude_types.h"
+#include "field\field_wfbc_data.h"
 
 
 //==============================================================================
@@ -46,6 +47,8 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_OCCUPY_INFO,                    ///<占拠情報
   INTRUDE_CMD_TARGET_TIMING,                  ///<相手指定のタイミングコマンド
   INTRUDE_CMD_PLAYER_SUPPORT,                 ///<通信相手をサポート
+  INTRUDE_CMD_WFBC_REQ,                       ///<WFBCパラメータ要求
+  INTRUDE_CMD_WFBC,                           ///<WFBCパラメータ
   
   INTRUDE_CMD_MAX,
   INTRUDE_CMD_NUM = INTRUDE_CMD_MAX - INTRUDE_CMD_START,
@@ -89,4 +92,6 @@ extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);
 extern BOOL IntrudeSend_PlayerSupport(
   INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, SUPPORT_TYPE support_type);
+extern BOOL IntrudeSend_WfbcReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid);
+extern BOOL IntrudeSend_Wfbc(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit, const FIELD_WFBC_CORE *wfbc_core);
 

@@ -201,3 +201,18 @@ u8 Intrude_GetPalaceArea(INTRUDE_COMM_SYS_PTR intcomm)
 {
   return intcomm->intrude_status_mine.palace_area;
 }
+
+//==================================================================
+/**
+ * WFBCパラメータを受信したかを取得
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		TRUE:受信した　FALSE:受信していない
+ */
+//==================================================================
+BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  return intcomm->wfbc_recv;
+}
+

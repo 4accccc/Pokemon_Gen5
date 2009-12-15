@@ -30,6 +30,8 @@ enum{
   PALACE_TOWN_SIDE_REVERSE,     ///<裏フィールド
 };
 
+///WFBCの街番号
+#define PALACE_TOWN_WFBC          (7)
 ///PalaceTownDataのデータ数
 #define PALACE_TOWN_DATA_MAX      (8)
 ///PalaceTownDataのパレス島を指定

@@ -319,7 +319,6 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     
     beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
     if(beacon != NULL){
-      OS_TPrintf("beacon->type = %d\n", beacon->beacon_type);
       if( beacon->beacon_type == GBS_BEACONN_TYPE_PALACE ){
         int i;
         u8 *mac_address;
@@ -366,7 +365,6 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
   	{
-      OS_TPrintf("beacon hakken!\n");
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
     		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);

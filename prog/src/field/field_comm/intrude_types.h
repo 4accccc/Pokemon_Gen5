@@ -163,6 +163,9 @@ typedef struct _INTRUDE_COMM_SYS{
   
   u16 other_player_timeout;   ///<自分一人になった場合、通信終了へ遷移するまでのタイムアウト
   u8 recv_target_timing_netid;  ///<相手指定タイミングコマンドの送信者のNetID
-  u8 padding;
+  u8 wfbc_req;                ///<WFBCパラメータ要求フラグ(bit管理)
+  
+  u8 wfbc_recv;               ///<TRUE:WFBCパラメータを受信した
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

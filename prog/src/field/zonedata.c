@@ -490,8 +490,8 @@ BOOL ZONEDATA_IsPalace(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsPalaceField(u16 zone_id)
 {
-  if((zone_id >= ZONE_ID_PLC04 && zone_id <= ZONE_ID_PLC10) //裏フィールド
-      || (zone_id == ZONE_ID_PALACE02)){  //ビンゴマップ
+  if((zone_id >= ZONE_ID_PLC04 && zone_id <= ZONE_ID_PLT04) //裏フィールド
+      || (zone_id == ZONE_ID_PALACE02)){      //ビンゴマップ
     return TRUE;
   }
   return FALSE;

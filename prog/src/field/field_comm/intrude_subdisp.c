@@ -22,6 +22,7 @@
 #include "intrude_work.h"
 #include "intrude_mission.h"
 #include "field/zonedata.h"
+#include "intrude_comm_command.h"
 
 
 //==============================================================================
@@ -178,7 +179,10 @@ typedef struct _INTRUDE_SUBDISP{
   u8 my_net_id;
   u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
   u8 now_bg_pal;          ///<現在のBGのパレット番号
-  u8 padding;
+  u8 wfbc_go;             ///<TRUE:WFBCへのワープを押した
+  
+  u8 wfbc_seq;
+  u8 padding[3];
   
   u32 senkyo_eff_bit;     ///<占拠エフェクト起動中の街(bit管理)
 }INTRUDE_SUBDISP;
@@ -354,6 +358,35 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   
   //タッチ判定チェック
   _IntSub_TouchUpdate(intcomm, intsub);
+  
+  //WFBCへのワープチェック
+  if(intsub->wfbc_go == TRUE){
+    int palace_area = Intrude_GetPalaceArea(intcomm);
+    
+    if(GFL_NET_IsConnectMember(palace_area) == FALSE){
+      intsub->wfbc_go = FALSE;
+      OS_TPrintf("WFBCへの飛び先相手がいなくなったのでキャンセル netID=%d\n", palace_area);
+    }
+    else{
+      switch(intsub->wfbc_seq){
+      case 0:
+        if(IntrudeSend_WfbcReq(intcomm, palace_area) == TRUE){
+          intsub->wfbc_seq++;
+        }
+        break;
+      case 1:
+        if(Intrude_GetRecvWfbc(intcomm) == TRUE){
+          FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
+          FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+
+          Intrude_SetWarpTown(game_comm, PALACE_TOWN_WFBC);
+          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+          intsub->wfbc_go = FALSE;
+        }
+        break;
+      }
+    }
+  }
   
   //BGスクリーンカラー変更チェック
   _IntSub_BGColorUpdate(intcomm, intsub);
@@ -1162,7 +1195,8 @@ static void _IntSub_ActorUpdate_Power(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_S
   
   //INCLUSION
   if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE){
+      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE
+      || ZONEDATA_IsWfbc(intcomm->intrude_status_mine.zone_id) == TRUE){
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_INCLUSION], FALSE);
   }
   else{
@@ -1359,21 +1393,29 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   
-  if(GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
+  if(intsub->wfbc_go == TRUE || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
       || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
     return;
   }
   
   //街タッチ判定
   if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE){
+      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE
+      || ZONEDATA_IsWfbc(intcomm->intrude_status_mine.zone_id) == TRUE){
     for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
       _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
         TOWN_ICON_HITRANGE_HALF, TOWN_ICON_HITRANGE_HALF, &rect);
       if(_CheckRectHit(x, y, &rect) == TRUE){
-        Intrude_SetWarpTown(game_comm, i);
-        FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-        return;
+        if(i == PALACE_TOWN_WFBC){
+          intsub->wfbc_go = TRUE;
+          intsub->wfbc_seq = 0;
+          return;
+        }
+        else{
+          Intrude_SetWarpTown(game_comm, i);
+          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+          return;
+        }
       }
     }
   }
@@ -1389,7 +1431,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   
   //ミッションアイコンタッチ判定
   if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE){
+      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE
+      || ZONEDATA_IsWfbc(intcomm->intrude_status_mine.zone_id) == TRUE){
     _SetRect(MISSION_ICON_POS_X, MISSION_ICON_POS_Y, 
       POWER_ICON_HITRANGE_HALF_X, POWER_ICON_HITRANGE_HALF_Y, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){

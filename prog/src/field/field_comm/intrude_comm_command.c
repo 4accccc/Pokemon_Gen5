@@ -47,6 +47,8 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_WfbcReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -79,6 +81,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
   {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
   {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
+  {_IntrudeRecv_WfbcReq, NULL},                //INTRUDE_CMD_WFBC_REQ
+  {_IntrudeRecv_Wfbc, NULL},                   //INTRUDE_CMD_WFBC
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -1354,3 +1358,110 @@ BOOL IntrudeSend_PlayerSupport(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, S
     FALSE, FALSE, FALSE);
 }
 
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：WFBCパラメータ要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_WfbcReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("RECIEVE：WFBC要求 net_id=%d\n", netID);
+  intcomm->wfbc_req |= 1 << netID;
+}
+
+//==================================================================
+/**
+ * データ送信：WFBCパラメータ要求
+ *
+ * @param   intcomm		
+ * @param   send_netid		要求相手のNetID
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_WfbcReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid)
+{
+  BOOL ret;
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
+  OS_TPrintf("SEND:WFBC要求  send_netid=%d\n", send_netid);
+  
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid, INTRUDE_CMD_WFBC_REQ, 0, NULL, 
+    FALSE, FALSE, FALSE);
+  if(ret == TRUE){
+    intcomm->wfbc_recv = FALSE;
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：WFBCパラメータ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const FIELD_WFBC_CORE *wfbc_core = pData;
+  FIELD_WFBC_CORE *dest_wfbc;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  
+  dest_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
+  GFL_STD_MemCopy(wfbc_core, dest_wfbc, sizeof(FIELD_WFBC_CORE));
+  
+  GF_ASSERT(intcomm->wfbc_recv == FALSE);
+  intcomm->wfbc_recv = TRUE;
+  OS_TPrintf("RECEIVE: WFBCパラメータ netID = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：WFBCパラメータ
+ *
+ * @param   intcomm		
+ * @param   send_netid_bit		送信先(Bit指定)
+ * @param   wfbc_core		      WFBCパラメータへのポインタ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_Wfbc(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit, const FIELD_WFBC_CORE *wfbc_core)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
+  ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid_bit, INTRUDE_CMD_WFBC, sizeof(FIELD_WFBC_CORE), wfbc_core,
+    FALSE, FALSE, FALSE);
+  if(ret == TRUE){
+    OS_TPrintf("SEND：WFBCパラメータ send_netid_bit = %d\n", send_netid_bit);
+  }
+  return ret;
+}

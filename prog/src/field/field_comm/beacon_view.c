@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "gamesystem/gamesystem.h"
+#include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
@@ -35,6 +36,7 @@
 ///すれ違い通信状態参照画面管理ワーク
 typedef struct _BEACON_VIEW{
   GAMESYS_WORK *gsys;
+  FIELD_SUBSCREEN_WORK *subscreen;
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
   WORDSET *wordset;
@@ -78,13 +80,14 @@ static void _BeaconView_BmpWinDelete(BEACON_VIEW_PTR view);
  * @retval  BEACON_VIEW_PTR		
  */
 //==================================================================
-BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys)
+BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subscreen)
 {
   BEACON_VIEW_PTR view;
   ARCHANDLE *handle;
   
   view = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(BEACON_VIEW));
   view->gsys = gsys;
+  view->subscreen = subscreen;
   
   
   handle = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_FIELDMAP);
@@ -131,6 +134,10 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR view)
   u32 old_log_count;
   s32 new_log_num, copy_src, copy_dest, write_start;
   
+  if(GFL_UI_TP_GetTrg()){
+    FIELD_SUBSCREEN_SetAction(view->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
+  }
+
   PRINTSYS_QUE_Main(view->printQue);
   
   //BMP描画

@@ -44,6 +44,7 @@ static void Intrude_CheckFieldProcAction(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
+static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 
@@ -130,14 +131,14 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     },
   },
   {
-    ZONE_ID_C02,    //※check C10が無いのでとりあえずC02
-    ZONE_ID_PLC10, 
+    ZONE_ID_BCWFTEST,    //※check WFBCに表裏別のゾーンIDが無いのでとりあえず同じのを指定
+    ZONE_ID_BCWFTEST, 
     0x19*8, 0x11*8,
     {
-      10456/16,9448/16, 0, 
-      10104/16,9448/16, 0, 
-      10104/16,9608/16, 0, 
-      10616/16,9608/16, 0, 
+      5,4, 0, 
+      5,4, 0, 
+      29,28, 0, 
+      29,28, 0, 
     },
   },
 };
@@ -227,6 +228,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
       intcomm->send_occupy = FALSE;
     }
   }
+  //WFBC送信リクエストがあれば送信
+  Intrude_CheckWfbcReq(intcomm);
 
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
@@ -334,6 +337,24 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm)
       else{
         intcomm->answer_talk_ng_bit ^= 1 << net_id;
       }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * WFBC送信リクエストがあれば送信
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+
+  if(intcomm->wfbc_req != 0){
+    if(IntrudeSend_Wfbc(intcomm, intcomm->wfbc_req, GAMEDATA_GetMyWFBCCoreData(gamedata)) == TRUE){
+      intcomm->wfbc_req = 0;
     }
   }
 }
@@ -825,6 +846,7 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
 #else
 
   if(subscreen_mode == FIELD_SUBSCREEN_NORMAL){
+//    return FIELD_SUBSCREEN_BEACON_VIEW;
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
         && GameCommSys_CheckSystemWaiting(game_comm) == FALSE && GFL_NET_GetConnectNum() > 1){
       return FIELD_SUBSCREEN_INTRUDE;
