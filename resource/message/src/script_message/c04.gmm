@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-14T22:17:59"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T16:52:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -624,11 +624,11 @@
 		<language name="JPN_KANJI" width="256">リトルコート</language>
 	</row>
 
-	<row id="msg_c04_sign4_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign4_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">ライモン　ファンパーク</language>
-		<language name="JPN_KANJI" width="256">ライモン　ファンパーク</language>
+		<language name="JPN" width="256">バトル　サブウェイ</language>
+		<language name="JPN_KANJI" width="256">バトル　サブウェイ</language>
 	</row>
 
 	<row id="msg_c04_sign5_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -636,6 +636,14 @@
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ミュージカル　ホール</language>
 		<language name="JPN_KANJI" width="256">ミュージカル　ホール</language>
+	</row>
+
+	<row id="msg_c04_sign6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>看板分類：タウンマップ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">このさき　１６ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">このさき　１６番道路</language>
 	</row>
 
 	<flowchart-group-list>
