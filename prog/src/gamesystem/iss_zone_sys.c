@@ -19,6 +19,7 @@
 #define MAX_TRACK_NO       (TRACK_NUM - 1)  // トラック番号の最大値
 #define INVALID_DATA_INDEX (0xff)           // 参照データなし
 #define MAX_VOLUME         (127)            // ボリューム最大値
+#define DEFAULT_FADE_FRAME (60)             // ゾーンデータが存在しない場合のフェード時間
 
 
 //==========================================================================================
@@ -314,7 +315,10 @@ static void StopSystem( ISS_ZONE_SYS* sys )
 static void ChangeZoneData( ISS_ZONE_SYS* sys, u16 zone_id )
 {
   u8 now;
-  u8 next;
+  u8 next; 
+  u16 now_open, now_close;    // 現在の開閉トラックビット
+  u16 next_open, next_close;  // 次  の開閉トラックビット
+  u16 fade_frame;
   ZONE_DATA* data;
 
   // 参照するゾーンデータを検索
@@ -322,13 +326,35 @@ static void ChangeZoneData( ISS_ZONE_SYS* sys, u16 zone_id )
   next = SearchZoneData( sys, zone_id ); 
   data = sys->zoneData;
 
-  // 新たに参照するデータが存在しない
-  if( next == INVALID_DATA_INDEX ) return;
+  // 現在のトラック状態を取得
+  if( now == INVALID_DATA_INDEX )  // if(現在参照しているデータがない)
+  {
+    now_open   = 0xffff;
+    now_close  = 0x0000;
+  }
+  else
+  {
+    now_open  = data[now].openTrackBit;
+    now_close = data[now].closeTrackBit;
+  } 
+  // 次のトラック状態を取得
+  if( next == INVALID_DATA_INDEX )  // if(新たに参照するデータが存在しない)
+  {
+    next_open  = 0xffff;
+    next_close = 0x0000;
+    fade_frame = DEFAULT_FADE_FRAME;
+  }
+  else
+  {
+    next_open  = data[next].openTrackBit;
+    next_close = data[next].closeTrackBit;
+    fade_frame = data[next].fadeFrame;
+  }
 
   // フェード状態を更新
-  sys->fadeInTrackBit  = data[now].closeTrackBit & data[next].openTrackBit;
-  sys->fadeOutTrackBit = data[now].openTrackBit  & data[next].closeTrackBit;
-  sys->fadeFrame       = data[next].fadeFrame;
+  sys->fadeInTrackBit  = now_close & next_open;
+  sys->fadeOutTrackBit = now_open  & next_close;
+  sys->fadeFrame       = fade_frame;
   sys->fadeCount       = 0;
 
   // 参照先データのインデックスを更新
