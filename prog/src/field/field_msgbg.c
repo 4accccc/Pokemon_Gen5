@@ -1471,9 +1471,11 @@ u32 FLDMENUFUNC_GetListMenuHeight(
   u32 num = FLDMENUFUNC_GetListMax( listData );
   len = num * font_size;
   c = len / 8;
+  if( (len & 0x07) ){ c++; }
   if( space ){ c += ((num*space)/8)+1; }
   return( c );
 }
+
 
 //--------------------------------------------------------------
 /**
