@@ -3,9 +3,6 @@
 #define ZONE_D07_EVD_H
 
 #define DOOR_ID_D07_D07R0201_EXIT01       0
-#define DOOR_ID_D07_D07R0201_EXIT04       1
-#define DOOR_ID_D07_D07R0201_EXIT03       2
-#define DOOR_ID_D07_D07R0201_EXIT02       3
 
 #endif //ZONE_D07_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -26,6 +26,7 @@ _EVENT_DATA    ev_c08_fighterm_01
 _EVENT_DATA    ev_c08_boy2_01
 _EVENT_DATA    ev_c08_woman1_01
 _EVENT_DATA    ev_c08_iss_01
+_EVENT_DATA    ev_bg_c08_board_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -265,4 +266,11 @@ EVENT_START   ev_c08_iss_01
 	_BALLOONWIN_OBJMSG_WB( msg_c08_iss_01w , msg_c08_iss_01b , C08_ISS_01 , WIN_NONE)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* ’¬ŠÅ”Â                                                       */
+/**************************************************************/
+EVENT_START   ev_bg_c08_board_01
+	_EASY_BGWIN_MSG( msg_c08_sign1_01, TYPE_TOWN )
 EVENT_END

@@ -12,5 +12,6 @@
 #define SCRID_C08_BOY2_01 (5)
 #define SCRID_C08_WOMAN1_01 (6)
 #define SCRID_C08_ISS_01 (7)
+#define SCRID_BG_C08_BOARD_01 (8)
 
 #endif //_C08_DEF_H_
