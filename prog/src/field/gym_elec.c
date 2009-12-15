@@ -697,6 +697,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         //1回再生設定
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+        //フレームセット
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, gmk_sv_work->CapDat[i].AnmFrame );
       }
       //スイッチアニメの適用
       obj_idx = OBJ_SW_1+i;
@@ -709,8 +711,14 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, 1);
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-        //フレームセット  @todo
-        ;
+        //ラストフレームセット
+        {
+          EXP_OBJ_ANM_CNT_PTR valid_anm;
+          fx32 last;
+          valid_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+          last = FLD_EXP_OBJ_GetAnimeLastFrame(valid_anm);
+          FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, last );
+        }
       }
       //レールアニメの適用
       obj_idx = OBJ_RL_1+i;
@@ -723,17 +731,18 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, 1);
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-        //フレームセット  @todo
-        ;
+        //ラストフレームセット
+        {
+          EXP_OBJ_ANM_CNT_PTR valid_anm;
+          fx32 last;
+          valid_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+          last = FLD_EXP_OBJ_GetAnimeLastFrame(valid_anm);
+          FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, last );
+        }
       }
     }
   }
   
-  //@todo
-  //レールアニメリ変更クエスト消化ＴＣＢ作成
-  ;
-  //リクエストチェック後ＴＣＢ実行
-  ;
   tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   //カプセル停止制御ＴＣＢ追加
   {
@@ -1693,7 +1702,6 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     }
   }
 
-  //@todo
   //ＳＥ制御
   if ( (tmp->RadeRaleIdx == 2)||(tmp->RadeRaleIdx == 3)||(tmp->RadeRaleIdx == 4)||(tmp->RadeRaleIdx == 5) )
   {
