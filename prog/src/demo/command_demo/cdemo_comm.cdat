@@ -259,8 +259,8 @@ static const int CommandSize[] = {
 // コマンドデータ
 static const int CommandData[] = {
 
-#if ( PM_VERSION == VERSION_BLACK )
-#else
+//#if ( PM_VERSION == VERSION_BLACK )
+//#else
 	COMM_BLACK_IN,		1, 1,
 //	COMM_FADE_MAIN,
 
@@ -274,7 +274,7 @@ static const int CommandData[] = {
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
-#endif
+//#endif
 
 	COMM_END,
 };
