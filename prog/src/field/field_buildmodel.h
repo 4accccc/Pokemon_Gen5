@@ -146,8 +146,6 @@ typedef struct _FIELD_BMODEL FIELD_BMODEL;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
-extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(
     const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel );
 
@@ -173,7 +171,7 @@ extern BM_SEARCH_ID G3DMAPOBJST_getSearchID(
 extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
 extern void G3DMAPOBJST_setAnime(
     FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req );
-extern void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst);
+extern void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst);
 
 //============================================================================================
 //============================================================================================

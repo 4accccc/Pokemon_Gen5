@@ -219,25 +219,11 @@ static void SetupEvent(
     if( objst )
     {
       work->machineObjSt = objst[0];
-      GD3MAPOBJST_getPos( objst[0], &work->machinePos );
+      G3DMAPOBJST_getPos( objst[0], &work->machinePos );
     }
     GFL_HEAP_FreeMemory( objst ); 
   }
 
-  // ボールの配置モデルを作成
-  {
-    int i;
-    BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mball01_nsbmd;
-    GFL_G3D_OBJSTATUS status;
-    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-    GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-
-    for( i=0; i<BALL_NUM; i++ )
-    {
-      VEC_Add( &work->machinePos, &ball_offset[i], &status.trans );
-      work->ballBM[i] = FIELD_BMODEL_Create_Direct( work->bmMan, bmodel_id, &status );
-    }
-  }
 }
 
 //----------------------------------------------------------------------------------------
@@ -253,13 +239,8 @@ static void ExitEvent( RECOVERY_WORK* work )
 
   // ボールの配置モデルを破棄
   { 
-    // 配置したモデルを解除
-    for( i=0; i<work->setBallNum; i++ )
-    {
-      FIELD_BMODEL_MAN_releaseBuildModel( work->bmMan, work->ballBM[i] );
-    }
     // 作成したモデルを削除
-    for( i=0; i<BALL_NUM; i++ )
+    for( i=0; i<work->pokemonNum; i++ )
     {
       FIELD_BMODEL_Delete( work->ballBM[i] );
     }
@@ -298,7 +279,15 @@ static void SetMonsterBall( RECOVERY_WORK* work )
 
   // 配置モデルを登録
   index = work->setBallNum; 
-  FIELD_BMODEL_MAN_EntryBuildModel( work->bmMan, work->ballBM[index] );
+  //FIELD_BMODEL_MAN_EntryBuildModel( work->bmMan, work->ballBM[index] );
+  {
+      BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mball01_nsbmd;
+      GFL_G3D_OBJSTATUS status;
+      VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+      GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+      VEC_Add( &work->machinePos, &ball_offset[index], &status.trans );
+      work->ballBM[index] = FIELD_BMODEL_Create_Direct( work->bmMan, bmodel_id, &status );
+  }
 
   // セットしたボールの数をインクリメント
   work->setBallNum++;

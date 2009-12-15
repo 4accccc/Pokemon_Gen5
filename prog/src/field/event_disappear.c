@@ -246,7 +246,6 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       {
         work->bmSandStream = FIELD_BMODEL_Create( man, objst[0] );        // •¡»
         G3DMAPOBJST_changeViewFlag( objst[0], FALSE );                    // Á‹Ž
-        FIELD_BMODEL_MAN_EntryBuildModel( man, work->bmSandStream );      // “o˜^
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );  // Ä¶
       }
       else
@@ -329,9 +328,6 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     // “o˜^‚µ‚½”z’uƒ‚ƒfƒ‹‚ðÁ‹Ž
     if( work->bmSandStream )
     {
-      FLDMAPPER*     mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
-      FIELD_BMODEL_MAN* man = FLDMAPPER_GetBuildModelManager( mapper );
-      FIELD_BMODEL_MAN_releaseBuildModel( man, work->bmSandStream );
       FIELD_BMODEL_Delete( work->bmSandStream );
     }
     return GMEVENT_RES_FINISH;

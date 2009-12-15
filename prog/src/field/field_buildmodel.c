@@ -161,14 +161,6 @@ typedef struct {
 }OBJ_HND;
 
 //------------------------------------------------------------------
-/// 配置モデル制御ワーク（外部からの制御用）
-//------------------------------------------------------------------
-struct _FIELD_BMODEL {
-  OBJ_HND objHdl;         ///<モデル制御オブジェクト
-  GFL_G3D_OBJSTATUS g3dObjStatus; ///<表示制御オブジェクト
-};
-
-//------------------------------------------------------------------
 /**
  * GFL_G3D_MAPの保持するGFL_G3D_MAP_GLOBALOBJ_STを
  * 参照、コントロールするためのラッパーオブジェクト
@@ -180,6 +172,15 @@ struct _G3DMAPOBJST{
   u16 index;              ///<所属g3Dmap内でのインデックス
   u16 viewFlag;           ///<可視設定フラグ
   GFL_G3D_MAP_GLOBALOBJ_ST * objSt; ///<実オブジェクトへのポインタ
+};
+
+//------------------------------------------------------------------
+/// 配置モデル制御ワーク（外部からの制御用）
+//------------------------------------------------------------------
+struct _FIELD_BMODEL {
+  FIELD_BMODEL_MAN * man; ///<マネジャーへのポインタ
+  OBJ_HND objHdl;         ///<モデル制御オブジェクト
+  GFL_G3D_OBJSTATUS g3dObjStatus; ///<表示制御オブジェクト
 };
 
 //------------------------------------------------------------------
@@ -292,7 +293,7 @@ static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
+static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
 
 static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id);
 static void BMINFO_init(BMINFO * bmInfo);
@@ -336,6 +337,9 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
 static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
 
 static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
+
+static void BMODELMAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+static void BMODELMAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 
 //============================================================================================
 //
@@ -499,8 +503,8 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 //    外部公開関数：
 //
 //============================================================================================
-static u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
-static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+static u8 BMODELMAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
+static BOOL BMODELMAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entryNo);
 
 //------------------------------------------------------------------
@@ -509,14 +513,14 @@ static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
  * @param man 配置モデルマネジャーへのポインタ
  */
 //------------------------------------------------------------------
-static u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
+static u8 BMODELMAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 {	
   return BMIDtoEntryNo( man, id );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
+static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
 {
   u16 entryNo = BMIDtoEntryNo( man, bm_id );
   return &man->bmInfo[entryNo];
@@ -524,12 +528,12 @@ static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, B
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+static BOOL BMODELMAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entryNo)
 {
   u16 submodel_id;
   const BMINFO * bmInfo;
-  bmInfo = FIELD_BMODEL_MAN_GetBMInfo( man, bm_id );
+  bmInfo = BMODELMAN_GetBMInfo( man, bm_id );
   submodel_id = bmInfo->sub_bm_id;
   if (submodel_id == BM_SUBMODEL_NULL_ID)
   {
@@ -577,7 +581,7 @@ void FIELD_BMODEL_MAN_ResistAllMapObjects
 
     FIELD_BMODEL_MAN_ResistMapObject(man, g3Dmap, &objStatus[dataCount], resistCount);
 
-    if (TRUE == FIELD_BMODEL_MAN_GetSubModel(man,
+    if (TRUE == BMODELMAN_GetSubModel(man,
           objStatus[dataCount].resourceID, &status.trans, &status.id) )
     {
       TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", dataCount, status.id);
@@ -615,7 +619,7 @@ void FIELD_BMODEL_MAN_ResistMapObject
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
+static void BMODELMAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
 {
   int i;
   for (i = 0; i < BMODEL_USE_MAX; i++)
@@ -630,7 +634,7 @@ void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * b
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
+static void BMODELMAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel)
 {
   int i;
   for (i = 0; i < BMODEL_USE_MAX; i++)
@@ -1093,7 +1097,7 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_
 	GFL_G3D_RES* resTex;
 
   //配置モデルに対応した情報へのポインタをセット
-  objRes->bmInfo = FIELD_BMODEL_MAN_GetBMInfo(man, bm_id);
+  objRes->bmInfo = BMODELMAN_GetBMInfo(man, bm_id);
 
   //モデルデータ生成
 	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( man->mdl_arc_id, bm_id );
@@ -1761,7 +1765,7 @@ void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_id
 //------------------------------------------------------------------
 /// 配置モデル実データ：位置取得
 //------------------------------------------------------------------
-void GD3MAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
+void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
 {
   VecFx32 pos;
   GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
@@ -1787,6 +1791,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
   VecFx32 drawOffset;
 
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
+  bmodel->man = man;
 
   //ローテーション設定
   {
@@ -1806,6 +1811,8 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
   GF_ASSERT( status->id < man->objRes_Count );
   objRes = &man->objRes[status->id];
   OBJHND_initialize( man, &bmodel->objHdl, objRes );
+
+  BMODELMAN_EntryBuildModel( man, bmodel );
   return bmodel;
 }
 
@@ -1827,12 +1834,15 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
 
   // インスタンス生成
   bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
+  bmodel->man = man;
   // 表示ステータス設定
   bmodel->g3dObjStatus = *status;
   // モデル制御オブジェクトを作成
   entryNo = man->BMIDToEntryTable[bmodel_id];
   objRes = &(man->objRes[entryNo]);
   OBJHND_initialize( man, &bmodel->objHdl, objRes );
+
+  BMODELMAN_EntryBuildModel( man, bmodel );
   return bmodel;
 }
 
@@ -1840,6 +1850,8 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
 //------------------------------------------------------------------
 void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 {
+  BMODELMAN_releaseBuildModel( bmodel->man, bmodel );
+
   OBJHND_finalize( &bmodel->objHdl );
 
   GFL_HEAP_FreeMemory(bmodel);

@@ -49,11 +49,9 @@ SDK_COMPILER_ASSERT( SCR_BMID_PCEV_FLOOR == BM_SEARCH_ID_PCEV_FLOOR );
  */
 //------------------------------------------------------------------
 struct _BMANIME_CONTROL_WORK {
-  FIELD_BMODEL_MAN * man;   ///<配置モデルマネジャーへのポインタ
   FIELD_BMODEL * entry;     ///<クローンで生成したオブジェクト
   G3DMAPOBJST * obj;        ///<オリジナルとなる配置モデルへの参照
   u16 anm_idx;              ///<アニメ指定
-  u16 se_flag;
 };
 
 enum {
@@ -117,16 +115,13 @@ BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(
   if (obj == NULL) return NULL;
   entry = FIELD_BMODEL_Create( bmodel_man, obj );
   if (entry == NULL) return NULL;
-  FIELD_BMODEL_MAN_EntryBuildModel( bmodel_man, entry );
   G3DMAPOBJST_changeViewFlag(obj, FALSE);
 
   ctrl = GFL_HEAP_AllocClearMemory(
       FIELD_BMODEL_MAN_GetHeapID(bmodel_man), sizeof(BMANIME_CONTROL_WORK) );
-  ctrl->man = bmodel_man;
   ctrl->obj = obj;
   ctrl->entry = entry;
   ctrl->anm_idx = NO_ANIME_IDX;
-  ctrl->se_flag = FALSE;
   return ctrl;
 }
 
@@ -137,7 +132,6 @@ void BMANIME_CTRL_Delete(BMANIME_CONTROL_WORK * ctrl)
   if (ctrl == NULL) return;
   if (ctrl->entry)
   {
-    FIELD_BMODEL_MAN_releaseBuildModel( ctrl->man, ctrl->entry );
     FIELD_BMODEL_Delete( ctrl->entry );
     ctrl->entry = NULL;
   }
@@ -226,7 +220,7 @@ BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * 
     if (SeTbl[i].prog_id == id)
     {
       *se_no = SeTbl[i].seID[anm_idx];
-      TAMADA_Printf("BMANIME_PROG_ID(%d) SE(%d)\n", id, *se_no);
+      //TAMADA_Printf("BMANIME_PROG_ID(%d) SE(%d)\n", id, *se_no);
       return TRUE;
     }
   }
