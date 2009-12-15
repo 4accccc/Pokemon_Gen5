@@ -89,20 +89,7 @@ static BOOL IsGimmickIDEntried( int gmk_id )
 
 //==========================================================================================
 // ■定数
-//==========================================================================================
-// ニュース番号
-typedef enum {
-  NEWS_DATE,         // 日付
-  NEWS_WEATHER,      // 天気
-  NEWS_PROPAGATION,  // 大量発生
-  NEWS_INFO_A,       // 情報A
-  NEWS_INFO_B,       // 情報B
-  NEWS_INFO_C,       // 情報C
-  NEWS_CM,           // 一言CM
-  NEWS_NUM,
-  NEWS_MAX = NEWS_NUM -1
-} NEWS_INDEX; 
-
+//========================================================================================== 
 // 一度に表示する地域情報の数
 #define LOCAL_INFO_NUM (3)
 
@@ -117,15 +104,6 @@ typedef enum {
 
 // 一度に表示するジム情報の最大数
 #define GYM_NEWS_MAX_NUM (4)
-
-// ジム情報の追加場所
-static const NEWS_INDEX gym_news_idx[GYM_NEWS_MAX_NUM] = 
-{ 
-  NEWS_PROPAGATION, 
-  NEWS_INFO_A, 
-  NEWS_INFO_B, 
-  NEWS_INFO_C
-};
 
 
 //==========================================================================================
@@ -225,8 +203,21 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 //==========================================================================================
 // ■ニュースパラメータ
 //==========================================================================================
+// ニュース登録番号
+typedef enum {
+  NEWS_INDEX_DATE,         // 日付
+  NEWS_INDEX_WEATHER,      // 天気
+  NEWS_INDEX_PROPAGATION,  // 大量発生
+  NEWS_INDEX_INFO_A,       // 情報A
+  NEWS_INDEX_INFO_B,       // 情報B
+  NEWS_INDEX_INFO_C,       // 情報C
+  NEWS_INDEX_CM,           // 一言CM
+  NEWS_INDEX_NUM,
+  NEWS_INDEX_MAX = NEWS_INDEX_NUM -1
+} NEWS_INDEX; 
+
 // スクロール・アニメーション・インデックス
-static u16 news_anm_index[NEWS_NUM] = 
+static u16 news_anm_index[NEWS_INDEX_NUM] = 
 {
   ANM_ELBOARD_DATE,        // 日付
   ANM_ELBOARD_WEATHER,     // 天気
@@ -237,7 +228,7 @@ static u16 news_anm_index[NEWS_NUM] =
   ANM_ELBOARD_CM,          // 一言CM
 };
 // テクスチャ名
-static char* news_tex_name[NEWS_NUM] =
+static char* news_tex_name[NEWS_INDEX_NUM] =
 {
   "gelboard_1",
   "gelboard_2",
@@ -248,7 +239,7 @@ static char* news_tex_name[NEWS_NUM] =
   "gelboard_7",
 };
 // パレット名
-static char* news_plt_name[NEWS_NUM] =
+static char* news_plt_name[NEWS_INDEX_NUM] =
 {
   "gelboard_1_pl",
   "gelboard_2_pl",
@@ -269,6 +260,15 @@ u32 str_id_weather[WEATHER_NO_NUM] =
   msg_gate_snowstorm, // 吹雪
   msg_gate_arare,     // 霰
   msg_gate_mirage,    // 蜃気楼
+};
+
+// ジム情報の登録場所
+static const NEWS_INDEX gym_news_idx[GYM_NEWS_MAX_NUM] = 
+{ 
+  NEWS_INDEX_PROPAGATION, 
+  NEWS_INDEX_INFO_A, 
+  NEWS_INDEX_INFO_B, 
+  NEWS_INDEX_INFO_C
 };
 
 
@@ -307,6 +307,17 @@ typedef struct
   u8                spNewsDataNum;  // 臨時ニュースデータ数
 
 } GATEWORK;
+
+
+//==========================================================================================
+// ■ギミック セーブワーク
+//==========================================================================================
+typedef struct
+{
+  GATEWORK* gateWork;  // ギミック管理ワークへのポインタ
+  u32 padding[32];
+
+} SAVEWORK;
 
 
 //==========================================================================================
@@ -696,6 +707,8 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワークのアドレスを記憶
   gmk_save[0] = (int)work; 
+
+  GATE_GIMMICK_Elboard_Recovery( fieldmap );
 }
 
 //------------------------------------------------------------------------------------------
@@ -725,7 +738,7 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   {
     ELBOARD_PARAM param;
     param.heapID       = heap_id;
-    param.maxNewsNum   = NEWS_NUM;
+    param.maxNewsNum   = NEWS_INDEX_NUM;
     param.dispSize     = DISPLAY_SIZE;
     param.newsInterval = NEWS_INTERVAL;
     param.g3dObj       = FLD_EXP_OBJ_GetUnitObj( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
@@ -740,6 +753,9 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   }
   // 臨時ニュースデータを取得
   LoadSpNewsData( work );
+
+  // ニュースセットアップ
+  SetupElboardNews( work );
 
   // 電光掲示板を配置
   { 
@@ -1096,9 +1112,9 @@ static void AddNews_DATE( GATEWORK* work )
   WORDSET_RegisterNumber( wordset, 1, date.day,   2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
 
   // ニュースパラメータを作成
-  news.animeIndex = news_anm_index[NEWS_DATE];
-  news.texName    = news_tex_name[NEWS_DATE];
-  news.pltName    = news_plt_name[NEWS_DATE];
+  news.animeIndex = news_anm_index[NEWS_INDEX_DATE];
+  news.texName    = news_tex_name[NEWS_INDEX_DATE];
+  news.pltName    = news_plt_name[NEWS_INDEX_DATE];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = work->gateData->msgID_date;
@@ -1192,9 +1208,9 @@ static void AddNews_WEATHER( GATEWORK* work )
   }
 
   // ニュースパラメータを作成
-  news.animeIndex = news_anm_index[NEWS_WEATHER];
-  news.texName    = news_tex_name[NEWS_WEATHER];
-  news.pltName    = news_plt_name[NEWS_WEATHER];
+  news.animeIndex = news_anm_index[NEWS_INDEX_WEATHER];
+  news.texName    = news_tex_name[NEWS_INDEX_WEATHER];
+  news.pltName    = news_plt_name[NEWS_INDEX_WEATHER];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = work->gateData->msgID_weather;
@@ -1248,9 +1264,9 @@ static void AddNews_PROPAGATION( GATEWORK* work )
   }
 
   // ニュースパラメータを作成
-  news.animeIndex = news_anm_index[NEWS_PROPAGATION];
-  news.texName    = news_tex_name[NEWS_PROPAGATION];
-  news.pltName    = news_plt_name[NEWS_PROPAGATION];
+  news.animeIndex = news_anm_index[NEWS_INDEX_PROPAGATION];
+  news.texName    = news_tex_name[NEWS_INDEX_PROPAGATION];
+  news.pltName    = news_plt_name[NEWS_INDEX_PROPAGATION];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = work->gateData->msgID_propagation;
@@ -1319,23 +1335,23 @@ static void AddNews_INFO( GATEWORK* work )
     break;
   }
 
-  news[0].animeIndex = news_anm_index[NEWS_INFO_A];
-  news[0].texName    = news_tex_name[NEWS_INFO_A];
-  news[0].pltName    = news_plt_name[NEWS_INFO_A];
+  news[0].animeIndex = news_anm_index[NEWS_INDEX_INFO_A];
+  news[0].texName    = news_tex_name[NEWS_INDEX_INFO_A];
+  news[0].pltName    = news_plt_name[NEWS_INDEX_INFO_A];
   news[0].msgArcID   = ARCID_MESSAGE;
   news[0].msgDatID   = NARC_message_gate_dat;
   news[0].wordset    = NULL;
 
-  news[1].animeIndex = news_anm_index[NEWS_INFO_B];
-  news[1].texName    = news_tex_name[NEWS_INFO_B];
-  news[1].pltName    = news_plt_name[NEWS_INFO_B];
+  news[1].animeIndex = news_anm_index[NEWS_INDEX_INFO_B];
+  news[1].texName    = news_tex_name[NEWS_INDEX_INFO_B];
+  news[1].pltName    = news_plt_name[NEWS_INDEX_INFO_B];
   news[1].msgArcID   = ARCID_MESSAGE;
   news[1].msgDatID   = NARC_message_gate_dat;
   news[1].wordset    = NULL;
 
-  news[2].animeIndex = news_anm_index[NEWS_INFO_C];
-  news[2].texName    = news_tex_name[NEWS_INFO_C];
-  news[2].pltName    = news_plt_name[NEWS_INFO_C];
+  news[2].animeIndex = news_anm_index[NEWS_INDEX_INFO_C];
+  news[2].texName    = news_tex_name[NEWS_INDEX_INFO_C];
+  news[2].pltName    = news_plt_name[NEWS_INDEX_INFO_C];
   news[2].msgArcID   = ARCID_MESSAGE;
   news[2].msgDatID   = NARC_message_gate_dat;
   news[2].wordset    = NULL;
@@ -1373,9 +1389,9 @@ static void AddNews_CM( GATEWORK* work )
   case RTC_WEEK_FRIDAY:    news.msgStrID = work->gateData->msgID_cmFri;  break;
   case RTC_WEEK_SATURDAY:  news.msgStrID = work->gateData->msgID_cmSat;  break;
   }
-  news.animeIndex = news_anm_index[NEWS_CM];
-  news.texName    = news_tex_name[NEWS_CM];
-  news.pltName    = news_plt_name[NEWS_CM];
+  news.animeIndex = news_anm_index[NEWS_INDEX_CM];
+  news.texName    = news_tex_name[NEWS_INDEX_CM];
+  news.pltName    = news_plt_name[NEWS_INDEX_CM];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.wordset    = NULL;
@@ -1404,8 +1420,8 @@ static void AddNews_SPECIAL( GATEWORK* work )
   // ニュースを追加
   switch( news->newsType )
   {
-  case SPNEWS_TYPE_DIRECT: AddSpNews_DIRECT( work, news, NEWS_INFO_A );  break;
-  case SPNEWS_TYPE_CHAMP:  AddSpNews_CHAMP( work, news, NEWS_INFO_A );   break;
+  case SPNEWS_TYPE_DIRECT: AddSpNews_DIRECT( work, news, NEWS_INDEX_INFO_A );  break;
+  case SPNEWS_TYPE_CHAMP:  AddSpNews_CHAMP( work, news, NEWS_INDEX_INFO_A );   break;
   case SPNEWS_TYPE_GYM:    AddSpNews_GYM( work );                        break;
   }
 } 
