@@ -356,13 +356,27 @@ void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID )
 /**
  *	@brief  1日の切り替え管理
  *
- *	@param	p_wk  ワーク
+ *	@param	p_wk      ワーク
+ *	@param  diff_day  経過日数
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk )
+void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk, s32 diff_day )
 {
   int i;
   BOOL result;
+
+  // 日にちがおかしくないかチェック
+  if( diff_day <= 0 )
+  {
+    // おかしい
+    GF_ASSERT(0);
+    diff_day = 1;
+  }
+
+  if( diff_day > FIELD_WFBC_MOOD_SUB_DAY_MAX )
+  {
+    diff_day = FIELD_WFBC_MOOD_SUB_DAY_MAX;
+  }
   
   // 全員のMoodをFIELD_WFBC_MOOD_SUB減らす
   // マスクのクリア
@@ -373,7 +387,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk )
       // バトル、各種加算を可能とする。
       p_wk->people[i].one_day_msk = FIELD_WFBC_ONEDAY_MSK_INIT;
       
-      result = WFBC_CORE_People_AddMood( &p_wk->people[i], FIELD_WFBC_MOOD_SUB );
+      result = WFBC_CORE_People_AddMood( &p_wk->people[i], FIELD_WFBC_MOOD_SUB * diff_day );
       if( result )
       {
         // 背面世界側のワークに格納後クリア

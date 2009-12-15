@@ -2304,7 +2304,10 @@ static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 //-----------------------------------------------------------------------------
 static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
-  if( dir == DIR_LEFT )
+  // Œü‚¢‚Ä‚¢‚é•ûŒü‚ðŽæ“¾
+  u16 move_dir = MMDL_GetDirMove( nogrid->p_mmdl );
+  
+  if( move_dir == DIR_LEFT )
   {
     PMSND_PlaySE( SEQ_SE_DANSA );
   }
@@ -2324,8 +2327,9 @@ static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 //-----------------------------------------------------------------------------
 static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
-
-  if( dir == DIR_RIGHT )
+  u16 move_dir = MMDL_GetDirMove( nogrid->p_mmdl );
+  
+  if( move_dir == DIR_RIGHT )
   {
     PMSND_PlaySE( SEQ_SE_DANSA );
   }

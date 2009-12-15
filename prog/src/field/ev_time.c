@@ -175,6 +175,12 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 //		SysWorkUpdatePokeLot(gdata->savedata, diff_days);
 	}
 
+  // WFBC人物
+  {
+    FIELD_WFBC_CORE* p_wfbc_core = GAMEDATA_GetMyWFBCCoreData( gdata );
+    FIELD_WFBC_CORE_CalcOneDataStart( p_wfbc_core, diff_days );
+  }
+
 	//WIFI通信履歴データの更新処理
 //	WIFIHISTORY_Update(SaveData_GetWifiHistory(gdata->savedata));
 

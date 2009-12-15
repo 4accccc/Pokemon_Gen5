@@ -76,6 +76,8 @@ static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
 static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 
+static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc );
+
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req );
 
@@ -1234,10 +1236,12 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
-  MAPCHG_loadMMdlWFBC( gamedata, &loc );
 
   //フィールド技　マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, &loc );
+
+  // WFBCの設定
+  MAPCHG_SetUpWfbc( gamedata, &loc );
 }
 
 //--------------------------------------------------------------
@@ -1279,9 +1283,8 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
     }
     else
     {
-      // @TODO 最終的には、通信相手のデータに変更
-      //cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
-      cp_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
+      // 通信相手のデータに変更
+      cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
     }
     p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
 
@@ -1305,6 +1308,40 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
     MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCのセットアップ処理
+ *
+ *	@param	gamedata
+ *	@param	loc 
+ */
+//-----------------------------------------------------------------------------
+static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
+{
+  if( !ZONEDATA_IsWfbc( loc->zone_id ) )
+  {
+    return ;
+  }
+
+  MAPCHG_loadMMdlWFBC( gamedata, loc );
+
+  // まちに入った！加算
+  {
+    FIELD_WFBC_CORE* p_wfbc;
+    const FIELD_STATUS* cp_fs = GAMEDATA_GetFieldStatus( gamedata );
+    MAPMODE mapmode = FIELD_STATUS_GetMapMode( cp_fs );
+
+
+    if( mapmode == MAPMODE_NORMAL )
+    {
+      p_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
+
+      // 街に入った加算
+      FIELD_WFBC_CORE_CalcMoodInTown( p_wfbc );
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**

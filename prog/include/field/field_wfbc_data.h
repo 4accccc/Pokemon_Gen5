@@ -89,6 +89,8 @@ typedef enum
 #define FIELD_WFBC_MOOD_ADD_TALK    ( 10 )  // 話をすると1日1回足される値
 #define FIELD_WFBC_MOOD_SUB         ( -5 ) // 1日1回減る値
 
+#define FIELD_WFBC_MOOD_SUB_DAY_MAX ( FIELD_WFBC_MOOD_MAX / MATH_ABS(FIELD_WFBC_MOOD_SUB) + 1 ) // 引く日にちの最大値 + 1は割り切れないときの予備
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -161,7 +163,7 @@ extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmo
 // ソートに使用するテンポラリワークを生成するためのheapIDです。
 extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
 // 1日の切り替え管理
-extern void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk );
+extern void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk, s32 diff_day );
 // 街に入った！計算
 extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ
