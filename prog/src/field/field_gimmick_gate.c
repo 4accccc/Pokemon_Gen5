@@ -91,9 +91,8 @@ static BOOL IsGimmickIDEntried( int gmk_id )
 // ■定数
 //==========================================================================================
 // ニュース番号
-typedef enum
-{
-  NEWS_DATE,         // 日時
+typedef enum {
+  NEWS_DATE,         // 日付
   NEWS_WEATHER,      // 天気
   NEWS_PROPAGATION,  // 大量発生
   NEWS_INFO_A,       // 情報A
@@ -116,6 +115,17 @@ typedef enum
 // ニュース間の間隔(文字数)
 #define NEWS_INTERVAL (3)
 
+// 一度に表示するジム情報の最大数
+#define GYM_NEWS_MAX_NUM (4)
+
+// ジム情報の追加場所
+static const NEWS_INDEX gym_news_idx[GYM_NEWS_MAX_NUM] = 
+{ 
+  NEWS_PROPAGATION, 
+  NEWS_INFO_A, 
+  NEWS_INFO_B, 
+  NEWS_INFO_C
+};
 
 
 //==========================================================================================
@@ -292,9 +302,10 @@ typedef struct
   FIELDMAP_WORK*         fieldmap;  // フィールドマップ
   GOBJ_ELBOARD*           elboard;  // 電光掲示板管理オブジェクト
   u32               recoveryFrame;  // 復帰フレーム
-  u8                spNewsDataNum;  // 臨時ニュースデータ数
   ELBOARD_ZONE_DATA*     gateData;  // ゲートデータ
   ELBOARD_SPNEWS_DATA* spNewsData;  // 臨時ニュースデータ
+  u8                spNewsDataNum;  // 臨時ニュースデータ数
+
 } GATEWORK;
 
 
@@ -311,18 +322,22 @@ static void LoadSpNewsData( GATEWORK* work );
 static void DeleteSpNewsData( GATEWORK* work );
 static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data );
 static void SetupElboardNews( GATEWORK* work );
-static void SetupElboardSpecialNews( GATEWORK* work );
+static void SetupElboardNews_Normal( GATEWORK* work );
+static void SetupElboardNews_Special( GATEWORK* work );
+static const ELBOARD_SPNEWS_DATA* SearchTopNews( GATEWORK* work );
+static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work );
 static BOOL CheckSpecialNews( GATEWORK* work );
-static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
-static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data, 
-                                 const GAMEDATA* gdata );
-static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
-static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
-static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
-static void AddNews_DIRECT( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
-static void AddNews_CHAMP( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
-static void AddSpNews( GOBJ_ELBOARD* elboard, 
-                       const ELBOARD_SPNEWS_DATA* data_array, u8 data_num );
+static void AddNews_DATE( GATEWORK* work );
+static void AddNews_PROPAGATION( GATEWORK* work );
+static void AddNews_WEATHER( GATEWORK* work );
+static void AddNews_INFO( GATEWORK* work );
+static void AddNews_CM( GATEWORK* work );
+static void AddNews_SPECIAL( GATEWORK* work );
+static void AddSpNews_DIRECT( GATEWORK* work,
+                              const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx );
+static void AddSpNews_CHAMP( GATEWORK* work,
+                             const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx );
+static void AddSpNews_GYM( GATEWORK* work );
 
 
 //==========================================================================================
@@ -444,29 +459,8 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
-  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
-  if( IsGimmickIDEntried( gmk_id ) != TRUE ){ return; }
-
-  // すでに他のニュースが登録されている場合
-  {
-    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
-    if( num != 0 )
-    {
-      OBATA_Printf( "======================================\n" );
-      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
-      OBATA_Printf( "======================================\n" );
-      return;
-    }
-  } 
-  // データが取得できなかったら, 以降の処理を中断
-  if( !work->gateData ){ return; }
-
-  // ニュースを追加
-  AddNews_DATE( work->elboard, work->gateData );                // 日付
-  AddNews_WEATHER( work->elboard, work->gateData );             // 天気
-  AddNews_PROPAGATION( work->elboard, work->gateData, gdata );  // 大量発生
-  AddNews_INFO( work->elboard, work->gateData );                // 地域情報
-  AddNews_CM( work->elboard, work->gateData );                  // 一言CM
+  // 平常ニュースを構成
+  SetupElboardNews_Normal( work );
 }
 
 //------------------------------------------------------------------------------------------
@@ -848,8 +842,10 @@ static void LoadSpNewsData( GATEWORK* work )
   {
     int data_idx;
     int data_num;
+
     // データ数取得
     data_num = GFL_ARC_GetDataFileCnt( ARCID_ELBOARD_SPNEWS );
+
     // 各データを取得
     work->spNewsData = GFL_HEAP_AllocMemory( work->heapID, 
                                              sizeof(ELBOARD_SPNEWS_DATA) * data_num );
@@ -917,16 +913,58 @@ static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data )
 //------------------------------------------------------------------------------------------
 static void SetupElboardNews( GATEWORK* work )
 {
+  if( CheckSpecialNews(work) )  // if(臨時ニュース有)
+  { // 臨時ニュース
+    SetupElboardNews_Special( work ); 
+  }
+  else
+  { // 平常ニュース
+    SetupElboardNews_Normal( work );
+  }
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 掲示板に臨時ニュースを設定する
+ * @brief 掲示板に表示する情報を 平常ニュースで構成する
  *
  * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void SetupElboardSpecialNews( GATEWORK* work )
+static void SetupElboardNews_Normal( GATEWORK* work )
+{
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+
+  // すでに他のニュースが登録されている場合
+  {
+    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
+    if( num != 0 )
+    {
+      OBATA_Printf( "======================================\n" );
+      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
+      OBATA_Printf( "======================================\n" );
+      return;
+    }
+  } 
+  // データを持っていない
+  if( !work->gateData ){ return; }
+
+  // ニュースを追加
+  AddNews_DATE( work );         // 日付
+  AddNews_WEATHER( work );      // 天気
+  AddNews_PROPAGATION( work );  // 大量発生
+  AddNews_INFO( work );         // 地域情報
+  AddNews_CM( work );           // 一言CM
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板に表示する情報を 臨時ニュースで構成する
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void SetupElboardNews_Special( GATEWORK* work )
 { 
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
@@ -946,11 +984,82 @@ static void SetupElboardSpecialNews( GATEWORK* work )
   if( !work->spNewsData ){ return; }
 
   // ニュースを追加
-  AddNews_DATE( work->elboard, work->gateData );                // 日付
-  AddNews_WEATHER( work->elboard, work->gateData );             // 天気
-  AddNews_PROPAGATION( work->elboard, work->gateData, gdata );  // 大量発生
-  //AddNews_SPECIAL( work->elboard, work->gateData );             // 臨時ニュース
-  AddNews_CM( work->elboard, work->gateData );                  // 一言CM
+  AddNews_DATE( work );         // 日付
+  AddNews_WEATHER( work );      // 天気
+  AddNews_PROPAGATION( work );  // 大量発生
+  AddNews_SPECIAL( work );      // 臨時ニュース
+  AddNews_CM( work );           // 一言CM
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 表示すべきニュースの中で, 最も優先順位の高い臨時ニュースを検索する
+ *
+ * @param work ギミック管理ワーク
+ *
+ * @return 最も優先順位の高い, 表示すべき臨時ニュース
+ *         表示すべきニュースがない場合 NULL
+ */
+//------------------------------------------------------------------------------------------
+static const ELBOARD_SPNEWS_DATA* SearchTopNews( GATEWORK* work )
+{
+  int i;
+  u32        zone_id = FIELDMAP_GetZoneID( work->fieldmap );
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata );
+
+  // データを持っていない
+  if( !work->spNewsData ){ return NULL; }
+
+  // 臨時ニュースデータを検索
+  for( i=0; i<work->spNewsDataNum; i++ )
+  { 
+    BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
+    BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
+    if( flag_hit && zone_hit )  // if(フラグON && ゾーン一致)
+    {
+      return &work->spNewsData[i];
+    }
+  }
+  return NULL;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 表示すべきニュースの中で, 最も優先順位の高い臨時ジムニュースを検索する
+ *
+ * @param work ギミック管理ワーク
+ *
+ * @return 最も優先順位の高い, 表示すべき臨時ニュース
+ *         表示すべきニュースがない場合 NULL
+ */
+//------------------------------------------------------------------------------------------
+static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work )
+{
+  int i;
+  u32        zone_id = FIELDMAP_GetZoneID( work->fieldmap );
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata );
+
+  // データを持っていない
+  if( !work->spNewsData ){ return NULL; }
+
+  // 臨時ニュースデータを検索
+  for( i=0; i<work->spNewsDataNum; i++ )
+  { 
+    BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
+    BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
+    if( flag_hit && zone_hit )  // if(フラグON && ゾーン一致)
+    {
+      if( work->spNewsData[i].newsType == SPNEWS_TYPE_GYM )  // if(ジムニュース)
+      {
+        return &work->spNewsData[i];
+      }
+    }
+  }
+  return NULL;
 }
 
 //------------------------------------------------------------------------------------------
@@ -964,43 +1073,24 @@ static void SetupElboardSpecialNews( GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static BOOL CheckSpecialNews( GATEWORK* work )
 {
-  int i;
-  u32        zone_id = FIELDMAP_GetZoneID( work->fieldmap );
-  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
-  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-  EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata );
-
-  // 臨時ニュースデータを検索
-  for( i=0; i<work->spNewsDataNum; i++ )
-  { 
-    BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
-    BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
-    if( flag_hit && zone_hit )  // if(フラグON && ゾーン一致)
-    {
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return (SearchTopNews(work) != NULL);
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 掲示板のニュースを追加する(日付)
+ * @brief 掲示板のニュースを追加する(日付)
  *
- * @param elboard 追加する掲示板
- * @param data    電光掲示板データ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+static void AddNews_DATE( GATEWORK* work )
 {
-  HEAPID heap_id; 
   NEWS_PARAM news;
   WORDSET* wordset;
   RTCDate date;
 
   // ワードセット作成
-  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
-  wordset = WORDSET_Create( heap_id );
+  wordset = WORDSET_Create( work->heapID );
   RTC_GetDate( &date );
   WORDSET_RegisterNumber( wordset, 0, date.month, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
   WORDSET_RegisterNumber( wordset, 1, date.day,   2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
@@ -1011,11 +1101,11 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.pltName    = news_plt_name[NEWS_DATE];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = data->msgID_date;
+  news.msgStrID   = work->gateData->msgID_date;
   news.wordset    = wordset;
 
   // ニュースを追加
-  GOBJ_ELBOARD_AddNews( elboard, &news );
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
@@ -1023,34 +1113,26 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 掲示板のニュースを追加する(天気)
+ * @brief 掲示板のニュースを追加する(天気)
  *
- * @param elboard 追加する掲示板
- * @param data    電光掲示板データ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+static void AddNews_WEATHER( GATEWORK* work )
 {
   int i;
-  HEAPID heap_id;
   NEWS_PARAM news;
   WORDSET* wordset;
   u32 zone_id[WEATHER_ZONE_NUM];
 
   // 表示するゾーンリストを作成
-  zone_id[0] = data->zoneID_weather_1;
-  zone_id[1] = data->zoneID_weather_2;
-  zone_id[2] = data->zoneID_weather_3;
-  zone_id[3] = data->zoneID_weather_4;
-
-  for( i=0; i<WEATHER_ZONE_NUM; i++ )
-  {
-    OBATA_Printf( "zone_id[%d] = %d\n", i, zone_id[i] );
-  }
+  zone_id[0] = work->gateData->zoneID_weather_1;
+  zone_id[1] = work->gateData->zoneID_weather_2;
+  zone_id[2] = work->gateData->zoneID_weather_3;
+  zone_id[3] = work->gateData->zoneID_weather_4;
 
   // ワードセット作成
-  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
-  wordset = WORDSET_CreateEx( WEATHER_ZONE_NUM, 256, heap_id );
+  wordset = WORDSET_CreateEx( WEATHER_ZONE_NUM, 256, work->heapID );
 
   // ワードセット登録処理
   {
@@ -1059,9 +1141,9 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
 
     // メッセージデータ ハンドルオープン
     msg_place_name = GFL_MSG_Create( 
-        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, heap_id ); 
+        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, work->heapID ); 
     msg_gate = GFL_MSG_Create( 
-        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_gate_dat, heap_id ); 
+        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_gate_dat, work->heapID ); 
 
     // 各ゾーンの地名＋天気を登録
     for( i=0; i<WEATHER_ZONE_NUM; i++ )
@@ -1079,19 +1161,17 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
       {
         int str_id = ZONEDATA_GetPlaceNameID( zone_id[i] );
         strbuf_zone = GFL_MSG_CreateString( msg_place_name, str_id );
-        OBATA_Printf( "str_id = %d\n", str_id );
       }
       // 天気を取得
       {
         int weather = ZONEDATA_GetWeatherID( zone_id[i] );
         strbuf_weather = GFL_MSG_CreateString( msg_gate, str_id_weather[weather] );
-        OBATA_Printf( "weather = %d\n", weather );
       }
       // 地名＋天気のセットを作成
       {
-        WORDSET* wordset_expand = WORDSET_CreateEx( 2, 256, heap_id );
+        WORDSET* wordset_expand = WORDSET_CreateEx( 2, 256, work->heapID );
         STRBUF* strbuf_expand = GFL_MSG_CreateString( msg_gate, msg_gate_weather );
-        strbuf_set = GFL_STR_CreateBuffer( 64, heap_id );
+        strbuf_set = GFL_STR_CreateBuffer( 64, work->heapID );
         WORDSET_RegisterWord( wordset_expand, 0, strbuf_zone, 0, TRUE, 0 );
         WORDSET_RegisterWord( wordset_expand, 1, strbuf_weather, 0, TRUE, 0 );
         WORDSET_ExpandStr( wordset_expand, strbuf_set, strbuf_expand );
@@ -1117,13 +1197,11 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
   news.pltName    = news_plt_name[NEWS_WEATHER];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = data->msgID_weather;
+  news.msgStrID   = work->gateData->msgID_weather;
   news.wordset    = wordset;
 
-  OBATA_Printf( "msgStrID = %d\n", data->msgID_weather );
-
   // ニュースを追加
-  GOBJ_ELBOARD_AddNews( elboard, &news );
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
@@ -1131,29 +1209,28 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 掲示板のニュースを追加する(大量発生)
+ * @brief 掲示板のニュースを追加する(大量発生)
  *
- * @param elboard 追加する掲示板
- * @param data    電光掲示板データ
- * @param gdata   ゲームデータ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data, 
-                                 const GAMEDATA* gdata )
+static void AddNews_PROPAGATION( GATEWORK* work )
 {
-  HEAPID heap_id; 
+  GAMESYS_WORK* gsys;
+  GAMEDATA* gdata;
   NEWS_PARAM news;
   WORDSET* wordset;
   u16 zone_id;
 
   // 大量発生が起きているゾーンを取得
+  gsys    = FIELDMAP_GetGameSysWork( work->fieldmap );
+  gdata   = GAMESYSTEM_GetGameData( gsys );
   zone_id = ENCPOKE_GetGenerateZone( gdata ); 
   // 大量発生が起きていない
   if( zone_id == 0xFFFF ){ return; }
 
   // ワードセット作成
-  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
-  wordset = WORDSET_Create( heap_id );
+  wordset = WORDSET_Create( work->heapID );
 
   // ワードセットに地名をセット
   {
@@ -1162,7 +1239,7 @@ static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA*
     STRBUF* zone_name;
 
     msg_place_name = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-                                     ARCID_MESSAGE, NARC_message_place_name_dat, heap_id ); 
+                                     ARCID_MESSAGE, NARC_message_place_name_dat, work->heapID ); 
     str_id         = ZONEDATA_GetPlaceNameID( zone_id );
     zone_name      = GFL_MSG_CreateString( msg_place_name, str_id );
     WORDSET_RegisterWord( wordset, 0, zone_name, 0, TRUE, 0 );
@@ -1176,11 +1253,11 @@ static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA*
   news.pltName    = news_plt_name[NEWS_PROPAGATION];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = data->msgID_propagation;
+  news.msgStrID   = work->gateData->msgID_propagation;
   news.wordset    = wordset;
 
   // ニュースを追加
-  GOBJ_ELBOARD_AddNews( elboard, &news );
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
@@ -1188,13 +1265,12 @@ static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA*
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 掲示板のニュースを追加する(地域情報)
+ * @brief 掲示板のニュースを追加する(地域情報)
  *
- * @param elboard 追加する掲示板
- * @param data    電光掲示板データ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+static void AddNews_INFO( GATEWORK* work )
 {
   int i;
   NEWS_PARAM news[LOCAL_INFO_NUM];
@@ -1207,39 +1283,39 @@ static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   switch( date.week )
   {
   case RTC_WEEK_SUNDAY:    
-    news[0].msgStrID = data->msgID_infoG;  
-    news[1].msgStrID = data->msgID_infoH;  
-    news[2].msgStrID = data->msgID_infoI;  
+    news[0].msgStrID = work->gateData->msgID_infoG;  
+    news[1].msgStrID = work->gateData->msgID_infoH;  
+    news[2].msgStrID = work->gateData->msgID_infoI;  
     break;
   case RTC_WEEK_MONDAY:    
-    news[0].msgStrID = data->msgID_infoD;  
-    news[1].msgStrID = data->msgID_infoE;  
-    news[2].msgStrID = data->msgID_infoF;  
+    news[0].msgStrID = work->gateData->msgID_infoD;  
+    news[1].msgStrID = work->gateData->msgID_infoE;  
+    news[2].msgStrID = work->gateData->msgID_infoF;  
     break;
   case RTC_WEEK_TUESDAY:   
-    news[0].msgStrID = data->msgID_infoA;  
-    news[1].msgStrID = data->msgID_infoB;  
-    news[2].msgStrID = data->msgID_infoC;  
+    news[0].msgStrID = work->gateData->msgID_infoA;  
+    news[1].msgStrID = work->gateData->msgID_infoB;  
+    news[2].msgStrID = work->gateData->msgID_infoC;  
     break;
   case RTC_WEEK_WEDNESDAY: 
-    news[0].msgStrID = data->msgID_infoE;  
-    news[1].msgStrID = data->msgID_infoF;  
-    news[2].msgStrID = data->msgID_infoG;  
+    news[0].msgStrID = work->gateData->msgID_infoE;  
+    news[1].msgStrID = work->gateData->msgID_infoF;  
+    news[2].msgStrID = work->gateData->msgID_infoG;  
     break;
   case RTC_WEEK_THURSDAY:  
-    news[0].msgStrID = data->msgID_infoB;  
-    news[1].msgStrID = data->msgID_infoC;  
-    news[2].msgStrID = data->msgID_infoD;  
+    news[0].msgStrID = work->gateData->msgID_infoB;  
+    news[1].msgStrID = work->gateData->msgID_infoC;  
+    news[2].msgStrID = work->gateData->msgID_infoD;  
     break;
   case RTC_WEEK_FRIDAY:    
-    news[0].msgStrID = data->msgID_infoF;  
-    news[1].msgStrID = data->msgID_infoG;  
-    news[2].msgStrID = data->msgID_infoH;  
+    news[0].msgStrID = work->gateData->msgID_infoF;  
+    news[1].msgStrID = work->gateData->msgID_infoG;  
+    news[2].msgStrID = work->gateData->msgID_infoH;  
     break;
   case RTC_WEEK_SATURDAY:  
-    news[0].msgStrID = data->msgID_infoC;  
-    news[1].msgStrID = data->msgID_infoD;  
-    news[2].msgStrID = data->msgID_infoE;  
+    news[0].msgStrID = work->gateData->msgID_infoC;  
+    news[1].msgStrID = work->gateData->msgID_infoD;  
+    news[2].msgStrID = work->gateData->msgID_infoE;  
     break;
   }
 
@@ -1267,18 +1343,18 @@ static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   // ニュースを追加
   for( i=0; i<LOCAL_INFO_NUM; i++ )
   {
-    GOBJ_ELBOARD_AddNews( elboard, &news[i] );
+    GOBJ_ELBOARD_AddNews( work->elboard, &news[i] );
   }
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 掲示板のニュースを追加する(一言CM)
+ * @brief 掲示板のニュースを追加する(一言CM)
  *
- * @param elboard 追加する掲示板
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+static void AddNews_CM( GATEWORK* work )
 {
   NEWS_PARAM news;
   RTCDate date;
@@ -1289,13 +1365,13 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   // 曜日に応じたCMを選択
   switch( date.week )
   {
-  case RTC_WEEK_SUNDAY:    news.msgStrID = data->msgID_cmSun;  break;
-  case RTC_WEEK_MONDAY:    news.msgStrID = data->msgID_cmMon;  break;
-  case RTC_WEEK_TUESDAY:   news.msgStrID = data->msgID_cmTue;  break;
-  case RTC_WEEK_WEDNESDAY: news.msgStrID = data->msgID_cmWed;  break;
-  case RTC_WEEK_THURSDAY:  news.msgStrID = data->msgID_cmThu;  break;
-  case RTC_WEEK_FRIDAY:    news.msgStrID = data->msgID_cmFri;  break;
-  case RTC_WEEK_SATURDAY:  news.msgStrID = data->msgID_cmSat;  break;
+  case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_cmSun;  break;
+  case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_cmMon;  break;
+  case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_cmTue;  break;
+  case RTC_WEEK_WEDNESDAY: news.msgStrID = work->gateData->msgID_cmWed;  break;
+  case RTC_WEEK_THURSDAY:  news.msgStrID = work->gateData->msgID_cmThu;  break;
+  case RTC_WEEK_FRIDAY:    news.msgStrID = work->gateData->msgID_cmFri;  break;
+  case RTC_WEEK_SATURDAY:  news.msgStrID = work->gateData->msgID_cmSat;  break;
   }
   news.animeIndex = news_anm_index[NEWS_CM];
   news.texName    = news_tex_name[NEWS_CM];
@@ -1305,5 +1381,146 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.wordset    = NULL;
   
   // ニュースを追加
-  GOBJ_ELBOARD_AddNews( elboard, &news );
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
 } 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板のニュースを追加する(臨時ニュース)
+ * 
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void AddNews_SPECIAL( GATEWORK* work )
+{
+  const ELBOARD_SPNEWS_DATA* news;
+
+  // 最も優先順位の高いニュースを取得
+  news = SearchTopNews( work );
+
+  // 臨時ニュースなし
+  if( news == NULL ){ return; }
+
+  // ニュースを追加
+  switch( news->newsType )
+  {
+  case SPNEWS_TYPE_DIRECT: AddSpNews_DIRECT( work, news, NEWS_INFO_A );  break;
+  case SPNEWS_TYPE_CHAMP:  AddSpNews_CHAMP( work, news, NEWS_INFO_A );   break;
+  case SPNEWS_TYPE_GYM:    AddSpNews_GYM( work );                        break;
+  }
+} 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板の臨時ニュースを追加する(メッセージそのまま)
+ *
+ * @param work     ギミック管理ワーク
+ * @param spnews   臨時ニュースデータ
+ * @param news_idx ニュースの追加場所を指定
+ */
+//------------------------------------------------------------------------------------------
+static void AddSpNews_DIRECT( GATEWORK* work, 
+                              const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx )
+{
+  NEWS_PARAM news;
+
+  news.animeIndex = news_anm_index[news_idx];
+  news.texName    = news_tex_name[news_idx];
+  news.pltName    = news_plt_name[news_idx];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.msgStrID   = spnews->msgID;
+  news.wordset    = NULL;
+  
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // フラグ操作
+  if( spnews->flagControl == FLAG_CONTROL_RESET )
+  { // フラグを落とす
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata ); 
+    EVENTWORK_ResetEventFlag( evwork, spnews->flag );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板の臨時ニュースを追加する(チャンピオン情報)
+ *
+ * @param work     ギミック管理ワーク
+ * @param spnews   臨時ニュースデータ
+ * @param news_idx ニュースの追加場所を指定
+ *
+ * @todo ポケモン名を正しくセットする
+ */
+//------------------------------------------------------------------------------------------
+static void AddSpNews_CHAMP( GATEWORK* work,
+                             const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx )
+{
+  HEAPID heap_id; 
+  NEWS_PARAM news;
+  WORDSET* wordset;
+
+  // ワードセット作成
+  heap_id = GOBJ_ELBOARD_GetHeapID( work->elboard );
+  wordset = WORDSET_Create( heap_id );
+
+  // ポケモン名をセット
+  WORDSET_RegisterPokeMonsNameNo( wordset, 0, 1 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 1, 2 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 2, 3 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 3, 4 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 4, 5 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 5, 6 );
+
+  // ニュースパラメータを作成
+  news.animeIndex = news_anm_index[news_idx];
+  news.texName    = news_tex_name[news_idx];
+  news.pltName    = news_plt_name[news_idx];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.msgStrID   = spnews->msgID;
+  news.wordset    = wordset;
+
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // ワードセット破棄
+  WORDSET_Delete( wordset );
+
+  // フラグ操作
+  if( spnews->flagControl == FLAG_CONTROL_RESET )
+  { // フラグを落とす
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata ); 
+    EVENTWORK_ResetEventFlag( evwork, spnews->flag );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板の臨時ニュースを追加する(ジム情報)
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void AddSpNews_GYM( GATEWORK* work )
+{
+  // ニュース追加場所
+  const ELBOARD_SPNEWS_DATA* news;
+  int count = 0;
+
+  // 全てのジムニュースを表示する
+  news = SearchGymNews( work ); 
+  while( news && count<NELEMS(gym_news_idx) )
+  {
+    // ニュースを追加
+    AddSpNews_DIRECT( work, news, gym_news_idx[count++] );
+
+    // 次のジムニュースを取得
+    news = SearchGymNews( work );
+  }
+}

@@ -51,7 +51,7 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
  * @return Žw’èƒ][ƒ“‚Éˆê’v‚·‚éê‡ TRUE, ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
 //--------------------------------------------------------------------------------------
-BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( ELBOARD_SPNEWS_DATA* news, u32 zone_id )
+BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone_id )
 {
   // if(‘S•”–³Œø’l)
   if( (news->zoneID_1 == ZONE_ID_MAX) &&  

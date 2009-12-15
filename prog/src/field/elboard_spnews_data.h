@@ -66,4 +66,4 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
  * @return éwíËÉ]Å[ÉìÇ…àÍívÇ∑ÇÈèÍçá TRUE, ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
  */
 //--------------------------------------------------------------------------------------
-BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( ELBOARD_SPNEWS_DATA* news, u32 zone_id );
+BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone_id );
