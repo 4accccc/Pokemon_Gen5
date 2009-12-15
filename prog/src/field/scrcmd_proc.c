@@ -277,6 +277,24 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief メールボックス画面プロセス終了後のコールバック関数
+ */
+//--------------------------------------------------------------
+typedef struct
+{
+  MAILBOX_PARAM* mailbox_param;
+
+} MAILBOX_CALLBACK_WORK;
+
+static void EvCmdCallMailBoxProc_CallBack( void* work )
+{
+  MAILBOX_CALLBACK_WORK* cbw = work;
+  GFL_HEAP_FreeMemory( cbw->mailbox_param );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   メールボックス画面プロセスを呼び出します
@@ -286,15 +304,25 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = wk;
-  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-  MAILBOX_PARAM param;
+  SCRCMD_WORK*       work = wk;
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  MAILBOX_PARAM* param;
+  MAILBOX_CALLBACK_WORK* cbw;
+  GMEVENT* event;
   
-  param.gamedata = gdata;
-  EVFUNC_CallSubProc(core, work, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &param, NULL, NULL);
-  
+  param = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_PARAM) ); 
+  cbw   = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_CALLBACK_WORK) );
+  param->gamedata    = gdata;
+  cbw->mailbox_param = param;
+
+  event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+                                       FS_OVERLAY_ID(app_mail), &MailBoxProcData, param,
+                                       EvCmdCallMailBoxProc_CallBack, cbw );
+  SCRIPT_CallEvent( sc, event );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
