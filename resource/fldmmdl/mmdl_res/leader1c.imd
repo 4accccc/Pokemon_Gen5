@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+	<create date='2009-10-26T23:09:07' host='W00154A' user='lee_hyunjung' source='pcwoman1.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+<original_create date='2009-10-26T23:09:07' host='W00154A' user='lee_hyunjung' source='pcwoman1.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='7'>
-	<tex_image name='woman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.1.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+<tex_image_array size='9'>
+	<tex_image name='pcwoman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.1.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.2.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.2.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 8000 0008 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0000 0ff0 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.3.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.3.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.4.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.4.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0ff0 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.5.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.5.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -196,7 +196,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.6.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.6.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -232,7 +232,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.7.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='pcwoman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.7.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -268,10 +268,82 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
+	<tex_image name='pcwoman1.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.8.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 667f f766 0000 0000 0000 
+			0000 0000 7f00 7656 6567 00f7 0000 0000 
+			0000 0000 67f0 f765 567f 0f76 0000 0000 
+			0000 0000 67f0 5ff5 5ff5 0f76 0000 0000 
+			0000 0000 678f 685f f586 f876 0000 0000 
+			0000 0000 778f 6668 8666 f877 0000 0000 
+			0000 0000 788f aa67 77aa f887 0000 0000 
+			0000 f000 78ab bba8 8abb ba87 000f 0000 
+			0000 f000 88ab cccb bccc ba88 000f 0000 
+			0000 f000 a8fa cccc cccc af8a 000f 0000 
+			0000 0000 baff cccc cccc ffab 0000 0000 
+			0000 0000 baf0 ccff ffcc 0fab 0000 0000 
+			0000 0000 af00 cccc cccc 00fa 0000 0000 
+			0000 0000 f000 ccba abcc 000f 0000 0000 
+			0000 0000 0000 afff fffa 0000 0000 0000 
+			0000 0000 f000 682e ff86 0000 0000 0000 
+			0000 0000 f000 68ee efbc 000f 0000 0000 
+			0000 0000 f000 ddde e2cc 000f 0000 0000 
+			0000 0000 0000 dddf e22f 00fd 0000 0000 
+			0000 0000 f000 2223 2222 00fb 0000 0000 
+			0000 0000 f000 2223 3222 000f 0000 0000 
+			0000 0000 f000 2233 3322 000f 0000 0000 
+			0000 0000 0000 f33f f33f 0000 0000 0000 
+			0000 0000 0000 faaf faaf 0000 0000 0000 
+			0000 0000 0000 0ff0 0ff0 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='pcwoman1.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/pcwoman1/pcwoman1.9.tga' palette_name='pcwoman1' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 667f f766 0000 0000 0000 
+			0000 0000 7f00 7656 6567 00f7 0000 0000 
+			0000 0000 67f0 7765 5677 0f76 0000 0000 
+			0000 0000 67f0 7765 5677 0f76 0000 0000 
+			0000 0000 678f f765 567f f876 0000 0000 
+			0000 0000 678f 5ff5 5ff5 f876 0000 0000 
+			0000 0000 678f 685f f586 f876 0000 0000 
+			0000 f000 77ab 6668 8666 ba77 000f 0000 
+			0000 f000 78ab aa67 77aa ba87 000f 0000 
+			0000 f000 78fa ccba abcc af87 000f 0000 
+			0000 0000 88ff cccb bccc ff88 0000 0000 
+			0000 0000 a8f0 ccbb bbcc 0f8a 0000 0000 
+			0000 0000 af00 bbff ffbb 00fa 0000 0000 
+			0000 0000 f000 bbbb bbbb 000f 0000 0000 
+			0000 0000 f000 affe effa 00fe 0000 0000 
+			0000 0000 f000 68ee ffbc 00fe 0000 0000 
+			0000 0000 f000 ddde f2cc 000f 0000 0000 
+			0000 0000 f000 eeef 222f 0000 0000 0000 
+			0000 0000 f000 2223 2222 000f 0000 0000 
+			0000 0000 f000 2233 3322 000f 0000 0000 
+			0000 0000 0000 f33f f33f 0000 0000 0000 
+			0000 0000 0000 faaf faaf 0000 0000 0000 
+			0000 0000 0000 0ff0 0ff0 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='woman1' color_size='16' index='0'>
+	<tex_palette name='pcwoman1' color_size='16' index='0'>
 		5a4e 294a 1ce7 14a5 12f9 168c 0de7 09a5 
 		0943 106c 192f 3a7a 5f5f 7fff 6af5 0000 
 	</tex_palette>
