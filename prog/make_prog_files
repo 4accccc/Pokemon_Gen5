@@ -668,8 +668,8 @@ SRCS_OVERLAY_TITLE  = title/title.c \
         title/startmenu.c \
         title/game_start.c \
         title/select_moji_mode.c \
+        title/corporate.c \
         savedata/save_control_intr.c
-
 
 # testmode
 #===> SRCS_OVERLAY_TITLE
