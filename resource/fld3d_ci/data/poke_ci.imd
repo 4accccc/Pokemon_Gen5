@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-11-24T21:28:44" source="poke_ci.mb"/>
+	<create user="unno" host="W00199" date="2009-12-15T11:48:15" source="poke_ci.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-11-24T21:28:44" source="poke_ci.mb"/>
+<original_create user="unno" host="W00199" date="2009-12-15T11:48:15" source="poke_ci.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="2"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="2.750000 -0.750000 0.000000" whd="1.500000 1.500000 0.000000"/>
+<box_test pos_scale="4" xyz="4.500000 -1.500000 0.000000" whd="3.000000 3.000000 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="poke_ci"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="poke_ci_pl"
-		path="C:/0_WB/cut_in/mb/souceimages/poke_ci.tga"
+		path="C:/0_WB/cut_in/mb/poke_ci/tex/poke_ci.tga"
 	>
 		<bitmap size="4096">
 			1111 1111 3333 3333 1111 1111 3333 3333
@@ -631,7 +631,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="224.000000 0.000000 0.000000"
+		translate="96.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
