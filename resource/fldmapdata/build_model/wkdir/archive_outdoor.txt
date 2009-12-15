@@ -210,3 +210,4 @@
 "nsbmdfiles/c03_ship_05.nsbmd"
 "nsbmdfiles/h05_elevator.nsbmd"
 "nsbmdfiles/door_h05.nsbmd"
+"nsbmdfiles/h05_panel.nsbmd"
