@@ -184,29 +184,29 @@ static const u8 sc_RAILLINE_DIR_CHANGE_TBL[ RAIL_KEY_MAX ][ DIR_MAX4 ] =
   },
   // RAIL_KEY_UP
   {
-    DIR_DOWN,
     DIR_UP,
+    DIR_DOWN,
     DIR_LEFT,
     DIR_RIGHT,
   },
   // RAIL_KEY_RIGHT
   {
-    DIR_RIGHT,
     DIR_LEFT,
+    DIR_RIGHT,
     DIR_DOWN,
     DIR_UP,
   },
   // RAIL_KEY_DOWN
   {
-    DIR_UP,
     DIR_DOWN,
+    DIR_UP,
     DIR_RIGHT,
     DIR_LEFT,
   },
   // RAIL_KEY_LEFT
   {
-    DIR_LEFT,
     DIR_RIGHT,
+    DIR_LEFT,
     DIR_UP,
     DIR_DOWN,
   },
