@@ -15,7 +15,6 @@
 #define SCRID_BG_R05_BOARD_01 (8)
 #define SCRID_BG_R05_BOARD_02 (9)
 #define SCRID_BG_R05_BOARD_03 (10)
-#define SCRID_BG_R05_BOARD_04 (11)
-#define SCRID_INIT_R05 (12)
+#define SCRID_INIT_R05 (11)
 
 #endif //_R05_DEF_H_

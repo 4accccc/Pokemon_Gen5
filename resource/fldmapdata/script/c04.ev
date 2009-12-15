@@ -296,7 +296,7 @@ EVENT_END
 /*							看板							*/
 /************************************************************/
 EVENT_START	ev_bg_c04_board_01
-	_EASY_MSG( msg_c04_sign1_01 )	//簡易メッセージＢＧ用
+	_EASY_BGWIN_MSG( msg_c04_sign1_01, TYPE_TOWN )
 EVENT_END
 
 
@@ -304,7 +304,7 @@ EVENT_END
 /*							看板							*/
 /************************************************************/
 EVENT_START	ev_bg_c04_board_02
-	_EASY_MSG( msg_c04_sign2_01 )	//簡易メッセージＢＧ用
+	_EASY_BGWIN_MSG( msg_c04_sign2_01, TYPE_POST )
 EVENT_END
 
 
@@ -312,7 +312,7 @@ EVENT_END
 /*							看板							*/
 /************************************************************/
 EVENT_START	ev_bg_c04_board_03
-	_EASY_MSG( msg_c04_sign3_01 )	//簡易メッセージＢＧ用
+	_EASY_BGWIN_MSG( msg_c04_sign3_01, TYPE_POST )
 EVENT_END
 
 
@@ -320,7 +320,7 @@ EVENT_END
 /*							看板							*/
 /************************************************************/
 EVENT_START	ev_bg_c04_board_04
-	_EASY_MSG( msg_c04_sign4_01 )	//簡易メッセージＢＧ用
+	_EASY_BGWIN_MSG( msg_c04_sign4_01, TYPE_POST )
 EVENT_END
 
 
@@ -328,7 +328,7 @@ EVENT_END
 /*							看板							*/
 /************************************************************/
 EVENT_START	ev_bg_c04_board_05
-	_EASY_MSG( msg_c04_sign5_01 )	//簡易メッセージＢＧ用
+	_EASY_BGWIN_MSG( msg_c04_sign5_01, TYPE_POST )
 EVENT_END
 
 

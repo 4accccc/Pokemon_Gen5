@@ -29,7 +29,6 @@ _EVENT_DATA    ev_r05_cameraman_01
 _EVENT_DATA    ev_bg_r05_board_01
 _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
-_EVENT_DATA    ev_bg_r05_board_04
 _EVENT_DATA    ev_init_r05
 _EVENT_DATA_END
 
@@ -458,7 +457,7 @@ EVENT_END
 /*							ŠÅ”Â							*/
 /************************************************************/
 EVENT_START	ev_bg_r05_board_01
-	_EASY_MSG( msg_r05_sign1_01 )
+	_EASY_BGWIN_MSG( msg_r05_sign1_01, TYPE_ROAD )
 EVENT_END
 
 
@@ -466,7 +465,7 @@ EVENT_END
 /*							ŠÅ”Â							*/
 /************************************************************/
 EVENT_START	ev_bg_r05_board_02
-	_EASY_MSG( msg_r05_sign2_01 )
+	_EASY_BGWIN_MSG( msg_r05_sign2_01, TYPE_POST )
 EVENT_END
 
 
@@ -474,15 +473,7 @@ EVENT_END
 /*							ŠÅ”Â							*/
 /************************************************************/
 EVENT_START	ev_bg_r05_board_03
-	_EASY_MSG( msg_r05_sign3_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							ŠÅ”Â							*/
-/************************************************************/
-EVENT_START	ev_bg_r05_board_04
-	_EASY_MSG( msg_r05_sign4_01 )
+	_EASY_BGWIN_MSG( msg_r05_sign3_01, TYPE_INFO )
 EVENT_END
 
 

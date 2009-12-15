@@ -543,29 +543,48 @@ _ANIME_LABEL	anm_pokeget_support_goaway_01
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_game_01
-	_EASY_MSG( msg_t01r0102_game_01 )	//簡易メッセージＢＧ用
+	_TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  T01R0102 TVのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_tv_01
-	_EASY_MSG( msg_t01r0102_tv_01 )	//簡易メッセージＢＧ用
+	_TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_tv_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 /**************************************************************/
 /*  T01R0102 PCのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_pc_01
+	_TALK_START_SE_PLAY()
+	
 	_PLAYER_NAME( 0 )
-	_EASY_MSG( msg_t01r0102_pc_01 )	//簡易メッセージＢＧ用
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_pc_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 /**************************************************************/
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_bed_01
-	_EASY_MSG( msg_t01r0102_bed_01 )	//簡易メッセージＢＧ用
+	_TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 
