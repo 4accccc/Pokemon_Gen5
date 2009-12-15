@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: title1.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-12-13T19:01:17
+ *****************************************************************************/
+
+#ifndef NARC_TITLE1_NAIX_
+#define NARC_TITLE1_NAIX_
+
+enum {
+	NARC_title1_h01_all_00002_nsbmd = 0,
+	NARC_title1_wbpm_nsbmd = 1,
+	NARC_title1_wbpm_nsbca = 2
+};
+
+/* NARC_TITLE1_NAIX_ */
+#endif

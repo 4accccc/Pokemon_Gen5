@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: corp.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-12-15T18:00:11
+ *****************************************************************************/
+
+#ifndef NARC_CORP_NAIX_
+#define NARC_CORP_NAIX_
+
+enum {
+	NARC_corp_corp_NCLR = 0,
+	NARC_corp_credit_u_NCGR = 1,
+	NARC_corp_credit_u_NSCR = 2,
+	NARC_corp_logo_d_NCGR = 3,
+	NARC_corp_logo_d_NSCR = 4
+};
+
+/* NARC_CORP_NAIX_ */
+#endif
