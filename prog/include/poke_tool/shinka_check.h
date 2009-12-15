@@ -21,16 +21,55 @@ typedef enum{
 }SHINKA_PARAM;
 
 typedef enum{
-  SHINKA_COND_LEVELUP = 0,  //レベルアップによる進化
-  SHINKA_COND_TUUSHIN,      //通信による進化
-  SHINKA_COND_ITEM,         //アイテムによる進化
-  SHINKA_COND_ITEM_CHECK,   //アイテムによる進化（かわらずのいしを装備していてもチェックはする）
+  SHINKA_TYPE_LEVELUP = 0,  //レベルアップによる進化
+  SHINKA_TYPE_TUUSHIN,      //通信による進化
+  SHINKA_TYPE_ITEM,         //アイテムによる進化
+  SHINKA_TYPE_ITEM_CHECK,   //アイテムによる進化（かわらずのいしを装備していてもチェックはする）
 
-  SHINKA_COND_MAX,
+  SHINKA_TYPE_MAX,
+
   SHINKA_COND_START = 0,
+  SHINKA_COND_MAX = 7,
+}SHINKA_TYPE;
+
+//=========================================================================
+//		進化条件定義
+//=========================================================================
+typedef enum
+{ 
+  SHINKA_COND_NONE = 0,
+  SHINKA_COND_FRIEND_HIGH,
+  SHINKA_COND_FRIEND_HIGH_NOON,
+  SHINKA_COND_FRIEND_HIGH_NIGHT,
+  SHINKA_COND_LEVELUP,
+  SHINKA_COND_TUUSHIN,
+  SHINKA_COND_TUUSHIN_ITEM,
+  SHINKA_COND_ITEM,
+  SHINKA_COND_SPECIAL_POW,
+  SHINKA_COND_SPECIAL_EVEN,
+  SHINKA_COND_SPECIAL_DEF,
+  SHINKA_COND_SPECIAL_RND_EVEN,
+  SHINKA_COND_SPECIAL_RND_ODD,
+  SHINKA_COND_SPECIAL_LEVELUP,
+  SHINKA_COND_SPECIAL_NUKENIN,
+  SHINKA_COND_SPECIAL_BEAUTIFUL,
+  SHINKA_COND_ITEM_MALE,
+  SHINKA_COND_ITEM_FEMALE,
+  SHINKA_COND_SOUBI_NOON,
+  SHINKA_COND_SOUBI_NIGHT,
+  SHINKA_COND_WAZA,
+  SHINKA_COND_POKEMON,
+  SHINKA_COND_MALE,
+  SHINKA_COND_FEMALE,
+  SHINKA_COND_PLACE_TENGANZAN,
+  SHINKA_COND_PLACE_KOKE,
+  SHINKA_COND_PLACE_ICE,
 }SHINKA_COND;
 
-extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_COND cond, u16 param,
-                                  SHINKA_COND *shinka_cond, HEAPID heapID );
+#define	SHINKA_MAX	    ( 7 )	  //進化分岐のMAX
+#define SHINKA_FRIEND   ( 220 ) //進化に必要ななつき度
+
+extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param,
+                                  SHINKA_COND *cond, HEAPID heapID );
 extern  ARCHANDLE*  SHINKA_GetArcHandle( HEAPID heapID );
 extern  u16         SHINKA_GetParamByHandle( ARCHANDLE* handle, int mons_no, int index, SHINKA_PARAM param );
