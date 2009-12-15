@@ -117,3 +117,4 @@
 "nsbmdfiles/c09_02_yuka.nsbmd"
 "nsbmdfiles/c09_03_cart.nsbmd"
 "nsbmdfiles/c09_04_sta.nsbmd"
+"nsbmdfiles/c09_02_light.nsbmd"
