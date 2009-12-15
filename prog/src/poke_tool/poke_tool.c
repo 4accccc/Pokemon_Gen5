@@ -499,6 +499,64 @@ void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
   PPP_FastModeOff( ppp, fast_flag );
 }
 
+//=============================================================================================
+/**
+ * フォルムナンバーを書き換える。
+ * 必要に応じて計算し直す必要のあるパラメータも合わせて変更する
+ *
+ * @param   pp
+ * @param   formno
+ */
+//=============================================================================================
+BOOL PP_ChangeFormNo( POKEMON_PARAM* pp, u16 formno )
+{
+  BOOL  ret;
+  u8 fast_flag = PP_FastModeOn( pp );
+  {
+    ret = PPP_ChangeFormNo( &pp->ppp, formno );
+    if( ret == TRUE )
+    { 
+      PP_Renew( pp );
+    }
+  }
+  PP_FastModeOff( pp, fast_flag );
+
+  return ret;
+}
+//=============================================================================================
+/**
+ * フォルムナンバーを書き換える。
+ * 必要に応じて計算し直す必要のあるパラメータも合わせて変更する
+ *
+ * @param   ppp
+ * @param   next_formno   書き換え後のフォルムナンバー
+ */
+//=============================================================================================
+BOOL PPP_ChangeFormNo( POKEMON_PASO_PARAM* ppp, u16 next_formno )
+{
+  BOOL  ret = FALSE;
+  u8 fast_flag = PPP_FastModeOn( ppp );
+  {
+    u16 old_formno = PPP_Get( ppp, ID_PARA_form_no, NULL );
+    if( old_formno != next_formno )
+    {
+      u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+      u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, NULL );
+
+      //ポケモン毎固有のチェックを後ほど
+
+      PPP_Put( ppp, ID_PARA_form_no, next_formno );
+      change_monsno_sub_tokusei( ppp, mons_no, mons_no );
+      change_monsno_sub_sex( ppp, mons_no, mons_no );
+
+      ret = TRUE;
+    }
+  }
+  PPP_FastModeOff( ppp, fast_flag );
+
+  return ret;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * モンスターナンバー書き換え後の とくせい 変化処理
