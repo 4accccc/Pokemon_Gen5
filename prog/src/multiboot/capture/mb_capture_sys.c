@@ -79,6 +79,7 @@ struct _MB_CAPTURE_WORK
   
   MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
+  MB_CAP_OBJ  *starWork;
   MB_CAP_BALL  *ballWork[MB_CAP_BALL_NUM];
   MB_CAP_EFFECT  *effWork[MB_CAP_EFFECT_NUM];
   MB_CAP_DOWN *downWork;
@@ -96,6 +97,9 @@ struct _MB_CAPTURE_WORK
 
   u16 gameTime;
   u16 bonusTime;
+  
+  BOOL isCreateStar;
+  BOOL isUpdateStar;
   
   VecFx32 targetPos;
   
@@ -544,6 +548,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_kusamura2_nsbtx ,
       NARC_mb_capture_gra_cap_obj_wood_nsbtx ,
       NARC_mb_capture_gra_cap_obj_water_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_star_nsbtx ,
       NARC_mb_capture_gra_cap_obj_hit_nsbtx ,
       NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,
       NARC_mb_capture_gra_cap_obj_getefect_nsbtx ,
@@ -556,6 +561,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_32x32 ,
       GFL_BBD_TEXSIZDEF_32x32 ,
       GFL_BBD_TEXSIZDEF_64x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
@@ -625,6 +631,12 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_L_LEFT );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
+  
+  initWork.type = MCOT_STAR;
+  initWork.pos.x = FX32_CONST( 300 );
+  initWork.pos.y = FX32_CONST( 64 );
+  work->starWork = MB_CAP_OBJ_CreateObject( work , &initWork );
+  MB_CAP_OBJ_SetEnable( work , work->starWork , FALSE );
 }
 
 //--------------------------------------------------------------
@@ -633,6 +645,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
 {
   int i;
+  MB_CAP_OBJ_DeleteObject( work , work->starWork );
   for( i=0;i<MB_CAP_OBJ_NUM;i++ )
   {
     MB_CAP_OBJ_DeleteObject( work , work->objWork[i] );
@@ -951,7 +964,9 @@ static void MB_CAPTURE_InitTime( MB_CAPTURE_WORK *work )
   
   work->bonusTime = 0;
   work->gameTime = MB_CAP_GAMETIME;
-  
+  work->isCreateStar = FALSE;
+  work->isUpdateStar = FALSE;
+
   for( i=0;i<MB_CAP_TIME_GAUGE_WIDTH_CHARA;i++ )
   {
     transScr[i] = MB_CAP_TIME_GAUGE_CHARA_G;
@@ -970,10 +985,33 @@ static void MB_CAPTURE_InitTime( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
 {
   u16 transScr[MB_CAP_TIME_GAUGE_WIDTH_CHARA];
-
+  const u16 befBonusTime = work->bonusTime;
+  const u16 befGameTime = work->gameTime;
+  
   if( work->gameTime > 0 )
   {
     work->gameTime--;
+  }
+  
+  if( work->bonusTime > 0 )
+  {
+    work->bonusTime--;
+  }
+  if( work->bonusTime == 0 && befBonusTime != 0 )
+  {
+    PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
+    if( work->gameTime <= MB_CAP_RED_TIME )
+    {
+      PMSND_SetStatusBGM( 285 , 85 , PMSND_NOEFFECT );
+    }
+  }
+  if( befGameTime > MB_CAP_RED_TIME &&
+      work->gameTime <= MB_CAP_RED_TIME &&
+      work->bonusTime == 0 )
+  {
+    PMSND_StopBGM( );
+    PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
+    PMSND_SetStatusBGM( 285 , 85 , PMSND_NOEFFECT );
   }
   
   //転送データの更新
@@ -1019,7 +1057,34 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
                       MB_CAP_TIME_GAUGE_WIDTH_CHARA ,
                       1 );
   GFL_BG_LoadScreenReq( MB_CAPTURE_FRAME_FRAME );
+  
+  //ボーナス
+  if( work->isCreateStar == FALSE &&
+      work->gameTime <= MB_CAP_YELLOW_TIME )
+  {
+    work->isCreateStar = TRUE;
+    work->isUpdateStar = TRUE;
+    MB_CAP_OBJ_SetEnable( work , work->starWork , TRUE );
+  }
+  if( work->isUpdateStar == TRUE )
+  {
+    MB_CAP_OBJ_UpdateObject_Star( work , work->starWork );
+  }
 }
+
+//--------------------------------------------------------------
+//  スターと当たった処理
+//--------------------------------------------------------------
+void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
+{
+  work->bonusTime = MB_CAP_BONUSTIME;
+  MB_CAP_OBJ_SetEnable( work , starWork , FALSE );
+  work->isUpdateStar = FALSE;
+    
+  PMSND_SetStatusBGM( 256 , 0 , PMSND_NOEFFECT );
+  PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
+}
+
 
 #pragma mark [>proc func
 static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
@@ -1162,6 +1227,11 @@ MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx )
 {
   return work->objWork[idx];
 }
+MB_CAP_OBJ* MB_CAPTURE_GetStarWork( MB_CAPTURE_WORK *work )
+{
+  return work->starWork;
+}
+
 MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx )
 {
   return work->pokeWork[idx];
@@ -1270,6 +1340,8 @@ int BgmPitch = 0;
 static const BOOL MB_CAPTURE_Debug_UpdateValue_u16( u16 *val );
 static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val );
 static const BOOL MB_CAPTURE_Debug_UpdateValue_int( int *val );
+static void MCD_U_GameTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_GameTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item );
@@ -1308,6 +1380,7 @@ static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_POKE , "POKE" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BGM  , "BGM" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
 
+  DEBUGWIN_AddItemToGroupEx( MCD_U_GameTime ,MCD_D_GameTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_BonusTime ,MCD_D_BonusTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroup( "ResetPoke" , MCD_U_ResetPoke , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
 
@@ -1339,6 +1412,7 @@ static const BOOL MB_CAPTURE_Debug_UpdateValue_u16( u16 *val )
 {
   u16 value;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ value = 10; }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){ value = 100; }
   else{ value = 1; }
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
@@ -1357,6 +1431,7 @@ static const BOOL MB_CAPTURE_Debug_UpdateValue_int( int *val )
 {
   int value;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ value = 10; }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){ value = 100; }
   else{ value = 1; }
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
@@ -1375,6 +1450,7 @@ static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val )
 {
   fx32 value;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){value = FX32_ONE;}
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){ value = FX32_ONE*100; }
   else{value = FX32_CONST(0.1f);}
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
@@ -1390,6 +1466,23 @@ static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val )
   return FALSE;
 }
 
+static void MCD_U_GameTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &work->gameTime );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_GameTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "GameTime[%d]",work->gameTime );
+}
+
 static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
 {
   MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
@@ -1398,18 +1491,6 @@ static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
   if( ret == TRUE )
   {
     DEBUGWIN_RefreshScreen();
-    
-    if( work->bonusTime > 0 &&
-        befTime == 0 )
-    {
-      PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
-    }
-    else
-    if( work->bonusTime == 0 &&
-        befTime > 0 )
-    {
-      PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
-    }
   }
 }
 

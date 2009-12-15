@@ -76,6 +76,7 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
 static void MB_CAP_BALL_CheckHitObj_CheckSide( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork , 
                 const s8 idxX , const s8 idxY , const s8 ofsX , const s8 ofsY );
 static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
+static void MB_CAP_BALL_CheckHitStar_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 
 static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
@@ -248,7 +249,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
         //上の木
         const s8 idxX = (i-MB_CAP_OBJ_SUB_U_START);
         const s8 idxY = -1;
+        VecFx32 effPos = ballWork->pos;
+        effPos.y -= ballWork->height;
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , 1 );
+        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_BALL_HIT_WOOD );
       }
       else
@@ -257,7 +262,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
         //下の草(下の水)
         const s8 idxX = (i-MB_CAP_OBJ_SUB_D_START);
         const s8 idxY = MB_CAP_OBJ_Y_NUM;
+        VecFx32 effPos = ballWork->pos;
+        effPos.y -= ballWork->height;
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , -1 );
+        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       else
@@ -266,7 +275,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
         //右の草
         const s8 idxX = MB_CAP_OBJ_X_NUM;
         const s8 idxY = (i-MB_CAP_OBJ_SUB_R_START);
+        VecFx32 effPos = ballWork->pos;
+        effPos.y -= ballWork->height;
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , -1 , 0 );
+        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       else
@@ -275,7 +288,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
         //左の草
         const s8 idxX = -1;
         const s8 idxY = (i-MB_CAP_OBJ_SUB_L_START);
+        VecFx32 effPos = ballWork->pos;
+        effPos.y -= ballWork->height;
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 1 , 0 );
+        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
     }
@@ -386,6 +403,30 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
   }
 }
 
+//--------------------------------------------------------------
+//	スターとポケモンの当たり判定(飛んでる時
+//--------------------------------------------------------------
+static void MB_CAP_BALL_CheckHitStar_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  int i;
+  MB_CAP_OBJ *starWork = MB_CAPTURE_GetStarWork( capWork );
+  MB_CAP_HIT_WORK ballHit,starHit;
+  
+  if( MB_CAP_OBJ_GetEnable( capWork , starWork ) == TRUE )
+  {
+    BOOL isHit;
+    //スターとの当たり判定
+    MB_CAP_BALL_GetHitWork( ballWork , &ballHit );
+    MB_CAP_OBJ_GetHitWork( starWork , &starHit );
+    isHit = MB_CAPTURE_CheckHit( &ballHit , &starHit );
+    if( isHit == TRUE )
+    {
+      MB_CAPTURE_HitStarFunc( capWork , starWork );
+    }
+  }
+}
+
 #pragma mark [>state func
 //--------------------------------------------------------------
 //	ステート:飛んでる
@@ -439,6 +480,7 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
   {
     //通常の当たり判定
     MB_CAP_BALL_CheckHitPoke_Shooting( capWork , ballWork );
+    MB_CAP_BALL_CheckHitStar_Shooting( capWork , ballWork );
   }
 }
 

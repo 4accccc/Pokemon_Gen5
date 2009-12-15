@@ -23,7 +23,9 @@
 #define MB_CAP_OBJ_ANM_SPD (4)
 #define MB_CAP_OBJ_ANM_FRAME (4)
 
-
+#define MB_CAP_OBJ_STAR_SPD (FX32_CONST(0.5))
+#define MB_CAP_OBJ_STAR_ROT (0x400)
+#define MB_CAP_OBJ_STAR_HEIGHT (16)
 //======================================================================
 //	enum
 //======================================================================
@@ -37,12 +39,18 @@
 struct _MB_CAP_OBJ
 {
   BOOL isPlayAnime;
+  BOOL isEnable;
   u16 anmCnt;
   int objIdx;
   
   VecFx32 pos;
   
   MB_CAP_OBJ_TYPE objType;
+  
+  //星用
+  s8  moveDir;
+  u16 rad;
+  fx32 height;
 };
 
 //======================================================================
@@ -53,7 +61,7 @@ struct _MB_CAP_OBJ
 //--------------------------------------------------------------
 //	オブジェクト作成
 //--------------------------------------------------------------
-MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_WORK *initWork )
+MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_WORK *initWork )
 {
   const HEAPID heapId = MB_CAPTURE_GetHeapId( capWork );
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
@@ -77,6 +85,23 @@ MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
   objWork->isPlayAnime = FALSE;
   objWork->anmCnt = 0;
   objWork->objType = initWork->type;
+  objWork->isEnable = TRUE;
+  
+  if( objWork->objType == MCOT_STAR )
+  {
+    //-1 or +1
+    objWork->moveDir = GFUser_GetPublicRand0(2)*2-1;
+    if( objWork->moveDir == -1 )
+    {
+      objWork->pos.x = FX32_CONST(256+32);
+    }
+    else
+    {
+      objWork->pos.x = FX32_CONST(-32);
+    }
+    objWork->pos.y = FX32_CONST( 64+GFUser_GetPublicRand0(64) );
+    objWork->pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z ) + objWork->pos.y;
+  }
   
   return objWork;
 }
@@ -113,6 +138,29 @@ void MB_CAP_OBJ_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
 }
 
 //--------------------------------------------------------------
+//	オブジェクト更新(星用
+//--------------------------------------------------------------
+void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  VecFx32 pos;
+  
+  objWork->pos.x += MB_CAP_OBJ_STAR_SPD*objWork->moveDir;
+  
+  pos = objWork->pos;
+
+  objWork->rad += MB_CAP_OBJ_STAR_ROT;
+  if( objWork->rad >= 0x8000 )
+  {
+    objWork->rad -= 0x8000;
+  }
+  //高さ計算
+  pos.y -= FX_SinIdx( objWork->rad ) * MB_CAP_OBJ_STAR_HEIGHT;
+  GFL_BBD_SetObjectTrans( bbdSys , objWork->objIdx , &pos );
+}
+
+
+//--------------------------------------------------------------
 //  当たり判定作成
 //--------------------------------------------------------------
 void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork )
@@ -133,3 +181,17 @@ void MB_CAP_OBJ_StartAnime( MB_CAP_OBJ *objWork )
   objWork->anmCnt = 0;
 }
 
+//--------------------------------------------------------------
+//  有効・無効設定
+//--------------------------------------------------------------
+void MB_CAP_OBJ_SetEnable( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork , const BOOL flg )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+
+  objWork->isEnable = flg;
+  GFL_BBD_SetObjectDrawEnable( bbdSys , objWork->objIdx , &flg );
+}
+const BOOL MB_CAP_OBJ_GetEnable( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
+{
+  return objWork->isEnable;
+}

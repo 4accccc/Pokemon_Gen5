@@ -109,6 +109,7 @@ extern u16 MB_CAP_TARGET_RAND_DOWN;
 #define MB_CAP_YELLOW_TIME (60*60)
 #define MB_CAP_RED_TIME    (20*60)
 
+#define MB_CAP_BONUSTIME    (10*60)
 
 
 //------------------------------------------------------
@@ -181,6 +182,7 @@ typedef enum
   MCBR_OBJ_GRASS_SIDE,
   MCBR_OBJ_WOOD,
   MCBR_OBJ_WATER,
+  MCBR_OBJ_STAR,
 
   //ˆÈ‰ºEFF‚Í•À‚Ñ‚ðEFFECT‚ÌTYPE’è‹`‚Æ‚ ‚í‚¹‚é
   MCBR_EFF_HIT,
@@ -229,8 +231,10 @@ extern ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work );
 extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work );
 extern const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType );
 extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx );
+extern MB_CAP_OBJ* MB_CAPTURE_GetStarWork( MB_CAPTURE_WORK *work );
 extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
 extern const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work );
+extern void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
 extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );

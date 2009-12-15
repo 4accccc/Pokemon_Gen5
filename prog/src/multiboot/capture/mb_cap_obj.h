@@ -27,6 +27,7 @@ typedef enum
   MCOT_GRASS_SIDE,
   MCOT_WOOD,
   MCOT_WATER,
+  MCOT_STAR,
   
   MCOT_MAX,
 }MB_CAP_OBJ_TYPE;
@@ -53,6 +54,9 @@ typedef struct
 extern MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_WORK *initWork );
 extern void MB_CAP_OBJ_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork );
 extern void MB_CAP_OBJ_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork );
+extern void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork );
 extern void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork );
 extern void MB_CAP_OBJ_StartAnime( MB_CAP_OBJ *objWork );
+extern void MB_CAP_OBJ_SetEnable( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork , const BOOL flg );
+extern const BOOL MB_CAP_OBJ_GetEnable( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork );
 
