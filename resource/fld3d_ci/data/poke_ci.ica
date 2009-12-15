@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-12-15T11:48:15" source="poke_ci.mb"/>
+	<create user="unno" host="W00199" date="2009-12-15T18:34:31" source="poke_ci.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,11 +11,11 @@
 <body>
 
 <node_anm_info
-	frame_size="31"
+	frame_size="38"
 	scaling_rule="standard"
 	magnify="1.000000"
 	tool_start_frame="0"
-	tool_end_frame="30"
+	tool_end_frame="37"
 	interpolation="frame"
 	compress_node="merge" node_size="1 1"
 	frame_step_mode="1"
@@ -32,11 +32,11 @@
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="31">
-	96.000000 94.867432 91.508545 86.263428 79.472412 71.475342 62.612305 53.223633 43.649170 34.229492
-	25.304199 17.213379 10.297607 4.896729 1.350830 0.000000 -0.043213 -0.039795 -0.210205 -0.774658
-	-1.953613 -3.967041 -7.035645 -11.379395 -17.218750 -24.774170 -34.265625 -45.913574 -59.938477 -76.560547
-	-96.000000
+<node_translate_data size="38">
+	96.000000 93.717285 89.512695 83.693604 76.568115 68.444092 59.629150 50.431396 41.158447 32.117920
+	23.618164 15.966553 9.471191 4.439697 1.180176 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 -3.595947 -13.375244 -27.651611 -44.738770
+	-62.950195 -80.599365 -96.000000 -96.000000 -96.000000 -96.000000 -96.000000 -96.000000
 </node_translate_data>
 
 <node_anm_array size="1">
@@ -47,7 +47,7 @@
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
-		<translate_x frame_step="1" data_size="31" data_head="0"/>
+		<translate_x frame_step="1" data_size="38" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="15"/>
 		<translate_z frame_step="1" data_size="1" data_head="15"/>
 	</node_anm>
