@@ -248,4 +248,3 @@
 "seat01.bin"
 "baseball01.bin"
 "seat02.bin"
-"DUN0202.bin"
