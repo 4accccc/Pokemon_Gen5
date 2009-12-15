@@ -52,7 +52,11 @@ EVENT_START		ev_r04_stop_01
 	//ジムバッジを取得している場合
 	ELSE
 
-		//トランシーバーを取得している場合
+		_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_03 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+		/*//トランシーバーを取得している場合
 		IF FLAG_ON( FH_01) THEN
 			
 			//ポケモンしょうぶを　いどんでくる……　そんな　さぎょういんも　いるぞ！
@@ -69,7 +73,7 @@ EVENT_START		ev_r04_stop_01
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF
-
+		*/
 	ENDIF
 
 EVENT_END
@@ -184,15 +188,15 @@ IF $SCWK_TEMP0 == 0 THEN
 //ジムバッジを取得している場合
 ELSE
 
-	//トランシーバーを取得している場合
-	IF FLAG_ON( FH_01) THEN
+	/*//トランシーバーを取得している場合
+	IF FLAG_ON( FH_01) THEN*/
 			
 	//ポケモンしょうぶを　いどんでくる……　そんな　さぎょういんも　いるぞ！
 		_BALLOONWIN_OBJMSG( msg_r04_stop_03 , R04_STOP_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
-	//トランシーバーを取得していない場合
+	/*//トランシーバーを取得していない場合
 	ELSE
 		
 		//なんだ？　ヒウンシティの　バトルカンパニーに　いっていない　やつに
@@ -201,7 +205,7 @@ ELSE
 		_BALLOONWIN_CLOSE()
 		
 	ENDIF
-
+	*/
 ENDIF
 
 _RET

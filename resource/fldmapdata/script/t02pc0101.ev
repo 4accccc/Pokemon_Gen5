@@ -7,6 +7,7 @@
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02pc0101.h"
   .include  "t02pc0101.h"
+  .include	"t02_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -250,8 +251,10 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	
 	//ライバルストッパー終了
 	$WK_SCENE_T02 = 1	
+	
 	//ライバルストッパー解除
 	_FLAG_SET( FV_T02_RIVAL )
+	_FLAG_SET( FV_T02_HAKASE )
 
 	//演説イベントフラグ開始
 	_FLAG_RESET( FV_T02_SAGE )

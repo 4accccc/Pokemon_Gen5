@@ -5,6 +5,6 @@
 #define _C03P14_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C03P14 (1)
+#define SCRID_C03P14_GIRL4_01 (1)
 
 #endif //_C03P14_DEF_H_

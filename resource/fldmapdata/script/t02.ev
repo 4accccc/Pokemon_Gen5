@@ -25,17 +25,18 @@ _EVENT_DATA		ev_t02_hakaiw_01
 _EVENT_DATA		ev_pos_t02_hakai_stop
 _EVENT_DATA		ev_t02_hakase_guide
 _EVENT_DATA		ev_t02_rival_01
-_EVENT_DATA		ev_pos_t02_rival_speech
+_EVENT_DATA		ev_pos_t02_rival_speech1
 _EVENT_DATA		ev_bg_t02_sign1_01
 _EVENT_DATA		ev_bg_t02_sign2_01
-
+_EVENT_DATA		ev_scene_t02_speech_01
+_EVENT_DATA		ev_pos_t02_rival_speech2
 _EVENT_DATA_END
 
 /**************************************************************/
 /*  BABYGIRL1_1	じゃんけん少女								  */
 /**************************************************************/
 EVENT_START   ev_t02_babygirl1_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
 	
 	//ねえねえ　ポケモンじゃんけん　しようよ！
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_01 )
@@ -432,10 +433,76 @@ EVENT_START   ev_t02_rival_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02_black_01 )
 EVENT_END
 
+/**************************************************************/
+/*			群集	演説イベント前に移動					  */
+/**************************************************************/
+EVENT_START		ev_scene_t02_speech_01
+//T02PC0101の博士案内イベントでの予約スクリプト
+
+	//群集・下を向きながら
+	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_d_talk )
+	_OBJ_ANIME_WAIT()
+
+	//なんか　ひろばで　はじまるらしいぞ
+	_BALLOONWIN_OBJMSG( msg_t02_boodle_06 , T02_BOODLE_02 )
+	_BALLOONWIN_CLOSE()
+	
+	//群集・上を向きながら
+	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_u_talk )
+	_OBJ_ANIME_WAIT()
+	
+	//んじゃ　ちょいと　いってみるかね
+	_BALLOONWIN_OBJMSG( msg_t02_boodle_07 , T02_BOODLE_01 )
+	_BALLOONWIN_CLOSE()	
+	
+	//群集：広場へ移動
+	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_go )
+	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_go )
+	_OBJ_ANIME_WAIT()
+
+	//他のNPCも所定の場所へ移動
+	_OBJ_POS_CHANGE( T02_BOODLE_01, 785, 0, 657, DIR_LEFT )
+	_OBJ_POS_CHANGE( T02_BOODLE_02, 785, 0, 655, DIR_LEFT )
+
+	//========================================/
+
+	//シーンチェンジイベント終了
+	$WK_SCENE_T02 = 2
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		群集	広場へ移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boodle_go
+	_ANIME_DATA		AC_WALK_L_8F,6
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_boodle_d_talk
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_boodle_u_talk
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
 /************************************************************/
 /*	七賢者ゲーチス　演説									*/
 /************************************************************/
-EVENT_START   ev_pos_t02_rival_speech
+EVENT_START   ev_pos_t02_rival_speech1
+
+	//ライバル：自機に気付く
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME_WAIT()
+
+	//おい　こっち！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
 
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_SPEECH_X
@@ -444,171 +511,204 @@ EVENT_START   ev_pos_t02_rival_speech
 	//主人公位置取得
 	_PLAYER_POS_GET( LWK_SPEECH_X,LWK_SPEECH_Z )
 	
-	//Z軸が647なら
-	IF $LWK_SPEECH_Z == 647 THEN
+	//X軸が787なら
+	IF $LWK_SPEECH_X == 787 THEN
 
-		//ライバル：主人公に気付き、近づく
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_647come )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_787go )
 		_OBJ_ANIME_WAIT()
 
-		//おい　なんだか　おもしろい　はなしが
-		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-		_BALLOONWIN_CLOSE()
+	//X軸が788なら
+	ELSIF $LWK_SPEECH_X == 788 THEN
 
-		//ライバル・自機：連れ歩き
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_647follow )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_647follow )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_788go )
 		_OBJ_ANIME_WAIT()
 
-	//Z軸が648なら
-	ELSIF $LWK_SPEECH_Z == 648 THEN
+	//X軸が789なら
+	ELSIF $LWK_SPEECH_X == 789 THEN
 
-		//ライバル：主人公に気付き、近づく
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_648come )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_789go )
 		_OBJ_ANIME_WAIT()
 
-		//おい　なんだか　おもしろい　はなしが
-		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-		_BALLOONWIN_CLOSE()
+	//X軸が790なら
+	ELSIF $LWK_SPEECH_X == 790 THEN
 
-		//ライバル・自機：連れ歩き
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_648follow )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_648follow )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_790go )
 		_OBJ_ANIME_WAIT()
 
-	//Z軸が649なら
-	ELSIF $LWK_SPEECH_Z == 649 THEN
+	//X軸が791なら
+	ELSIF $LWK_SPEECH_X == 791 THEN
 
-		//ライバル：主人公に気付き、近づく
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_649come )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_791go )
 		_OBJ_ANIME_WAIT()
 
-		//おい　なんだか　おもしろい　はなしが
-		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-		_BALLOONWIN_CLOSE()
-
-		//ライバル・自機：連れ歩き
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_649follow )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_649follow )
-		_OBJ_ANIME_WAIT()
-
-	//Z軸が650なら
+	//X軸が792なら
 	ELSE
 
-		//ライバル：主人公に気付き、近づく
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_650come )
-		_OBJ_ANIME_WAIT()
-
-		//おい　なんだか　おもしろい　はなしが
-		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-		_BALLOONWIN_CLOSE()
-
-		//ライバル・自機：連れ歩き
-		_OBJ_ANIME( T02_RIVAL_02, anm_rival_650follow )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_650follow )
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_792go )
 		_OBJ_ANIME_WAIT()
 	
 	ENDIF
 
-	//【仮】10月ROM～カメラ移動～
+	_CALL t02_speech
+
+
+t02_speech:
+
+	//ライバル、広場の方へ向く
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//ゲーチス入場
+	_OBJ_ANIME( T02_SAGE_01, anm_sage1_in )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in )
+	_OBJ_ANIME_WAIT()
 
 	//わたくしの　なまえは　ゲーチス
-	_BALLOONWIN_OBJMSG( msg_t02_sage1_01 , T02_SAGE_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage1_01 , T02_SAGE_01 ,WIN_DOWN )
 	
 	//群集「えっ？」
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01 , 22 , 5 , 1 ) 
+	_SUBWIN_MSG( msg_t02_boodle_01 , 15 , 5 , 1 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 12 , 2 )
+	_SUBWIN_MSG( msg_t02_boodle_01a , 18 , 10 , 2 )
 
 	//10フレーム待機した後ウィンドウを消す
 	_TIME_WAIT( 10 )
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 5 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 1 )
-	_TIME_WAIT( 5 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 2 )
 
 	//われわれ　人間は　ポケモンと　ともに
-	//【仮】ゲーチス：左右に動く
-	_BALLOONWIN_OBJMSG( msg_t02_sage2_02 , T02_SAGE_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage2_02 , T02_SAGE_01,WIN_DOWN )
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move )
-	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
-
+	_BALLOONWIN_CLOSE()
+	
 	//トレーナーは　ポケモンに　好き勝手　命令している
-	_BALLOONWIN_OBJMSG( msg_t02_sage3_03 , T02_SAGE_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage3_03 , T02_SAGE_01,WIN_DOWN )
 	
 	//群集：ざわざわ……
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 18 , 5 , 3 ) 
+	_SUBWIN_MSG( msg_t02_boodle_02 , 12 , 5 , 3 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 16 , 12 , 4 )
+	_SUBWIN_MSG( msg_t02_boodle_02a , 14 , 12 , 4 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_02b , 20 , 7 , 5)
 
 	//10フレーム待機した後ウィンドウを消す
 	_TIME_WAIT( 10 )
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 5 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 3 )
-	_TIME_WAIT( 5 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 4 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_CLOSE( 5 )
 
 	//いいですか　みなさん　ポケモンは　人間とは　異なり
-	_BALLOONWIN_OBJMSG( msg_t02_sage4_04 , T02_SAGE_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_04 , T02_SAGE_01,WIN_DOWN )
 	
 	//群集：？
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 22 , 5 , 5 ) 
+	_SUBWIN_MSG( msg_t02_boodle_03 , 12 , 5 , 6 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 20 , 12 , 6 )
+	_SUBWIN_MSG( msg_t02_boodle_03a , 16 , 10 , 7 )
 
 	//10フレーム待機した後ウィンドウを消す
 	_TIME_WAIT( 10 )
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 5 )
-	_SUBWIN_CLOSE( 5 )
-	_TIME_WAIT( 5 )
+	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 6 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_CLOSE( 7 )
 
 	//そうです！　ポケモンを　解放することです！
-	_BALLOONWIN_OBJMSG( msg_t02_sage4_05 , T02_SAGE_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_05 , T02_SAGE_01,WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 
 	//ゲーチス・団員：ゲートへ移動
 	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave )
-	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_leave )
-	_OBJ_ANIME( T02_HAKAIM_01, anm_hakai_leave )
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakai_leave )
+	_OBJ_ANIME( T02_HAKAIM_02, anm_hakai_leave )
+	_OBJ_ANIME( T02_HAKAIM_03, anm_hakai_leave )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakai_leave )
+	_OBJ_ANIME( T02_HAKAIM_05, anm_hakai_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_06, anm_hakai_leave2 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakai_leave2 )
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス・団員のＯＢＪを消す
 	_OBJ_DEL( T02_SAGE_01 )
 	_OBJ_DEL( T02_HAKAIW_01 )
+	_OBJ_DEL( T02_HAKAIW_02 )
+	_OBJ_DEL( T02_HAKAIW_03 )
 	_OBJ_DEL( T02_HAKAIM_01 )
+	_OBJ_DEL( T02_HAKAIM_02 )
+	_OBJ_DEL( T02_HAKAIM_03 )
+	_OBJ_DEL( T02_HAKAIM_04 )
+	_OBJ_DEL( T02_HAKAIM_05 )
+	_OBJ_DEL( T02_HAKAIM_06 )
 	
 	//群集おじいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_01, anm_boodle1_look )
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T02_BOODLE_01, anm_boodle2_look )
 
 	//今の　演説　わしたちは　どうすれば　いいんだ
 	_BALLOONWIN_OBJMSG( msg_t02_boodle_04 , T02_BOODLE_01 )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 
 	//群集おにいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_02, anm_boodle2_look )
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T02_BOODLE_02, anm_boodle1_look )
 	
 	//ポケモンを　解放って　そんな話　ありえないでしょ！
 	_BALLOONWIN_OBJMSG( msg_t02_boodle_05 , T02_BOODLE_02 )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
-
+	
 	//群集：街の方へ移動
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle1_leave )
 	_OBJ_ANIME( T02_BOODLE_02, anm_boodle2_leave )
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T02_BOODLE_03, anm_boodle3_leave )
+	_OBJ_ANIME( T02_BOODLE_04, anm_boodle4_leave )
+	_OBJ_ANIME( T02_BOODLE_05, anm_boodle1_leave )
+	_OBJ_ANIME( T02_BOODLE_06, anm_boodle2_leave )
+	_OBJ_ANIME( T02_BOODLE_07, anm_boodle3_leave )
+	_OBJ_ANIME( T02_BOODLE_08, anm_boodle4_leave )
+	_TIME_WAIT( 10 )
+	
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
 
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT( 20 )
+	
 	//群集消す
 	_OBJ_DEL( T02_BOODLE_01 )
 	_OBJ_DEL( T02_BOODLE_02 )
+	_OBJ_DEL( T02_BOODLE_03 )
+	_OBJ_DEL( T02_BOODLE_04 )
+	_OBJ_DEL( T02_BOODLE_05 )
+	_OBJ_DEL( T02_BOODLE_06 )
+	_OBJ_DEL( T02_BOODLE_07 )
+	_OBJ_DEL( T02_BOODLE_08 )
+	
+	//画面暗転解除
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//ライバル：自機と向き合う
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME_WAIT()
 
 	//Ｎ：自機の真横に移動
 	_OBJ_ANIME( T02_N_01, anm_n_come )
@@ -618,7 +718,12 @@ EVENT_START   ev_pos_t02_rival_speech
 	_BALLOONWIN_OBJMSG( msg_t02_boss_01 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
 
-	//えっ！？　ポケモンが　話しているんですか？
+	//自機・ライバル：Nの方へ向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_u )
+	_OBJ_ANIME_WAIT()
+
+	//ポケモンが　はなした……　ですか？
 	_BALLOONWIN_OBJMSG( msg_t02_black_03 , T02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
@@ -655,12 +760,18 @@ EVENT_START   ev_pos_t02_rival_speech
 	_OBJ_ANIME( T02_N_01, anm_n_leave )
 	_OBJ_ANIME_WAIT()
 	
+	//ライバル：自機の方へ向く
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+	
 	//なんか　オレのせいで　変な話に　なっちゃった
 	_BALLOONWIN_OBJMSG( msg_t02_black_05 , T02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：２番道路へ移動
 	_OBJ_ANIME( T02_RIVAL_02, anm_rival_leave )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 
 	//Ｎ・ライバルのＯＢＪを消す
@@ -670,7 +781,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	//============================================//
 	
 	//演説イベント終了
-	$WK_SCENE_T02 = 2
+	$WK_SCENE_T02 = 3
 	
 	//Ｎとライバルのバニッシュフラグセット
 	_FLAG_SET( FV_T02_NNN )
@@ -681,86 +792,88 @@ EVENT_START   ev_pos_t02_rival_speech
 	_FLAG_SET( FV_T02_SAGE )
 
 	//============================================//
-	
+_RET
+
 EVENT_END
 	
 //--------------------------------------------------------------
-//	ライバル　気付いて、近づく
+//	自機：ライバルの後ろへ行く
 //--------------------------------------------------------------
-_ANIME_LABEL anm_rival_647come
-	_ANIME_DATA		AC_DIR_R,1
+_ANIME_LABEL anm_player_787go
 	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_rival_648come
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_rival_649come
-	_ANIME_DATA		AC_DIR_D,1
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_WALK_D_8F,2
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_rival_650come
-	_ANIME_DATA		AC_DIR_D,1
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_WALK_D_8F,3
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
-	_ANIME_DATA		ACMD_END,0
-
-//---------------------------------------------------------------
-//	ライバル・自機　自機を連れ歩き
-//---------------------------------------------------------------
-_ANIME_LABEL anm_rival_647follow
 	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
-_ANIME_LABEL anm_player_647follow
+
+_ANIME_LABEL anm_player_788go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,2
 	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL anm_rival_648follow
+_ANIME_LABEL anm_player_789go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,3
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_790go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,4
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_791go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,5
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_792go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_L_8F,6
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		方向変化
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		ACMD_END,0
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		ACMD_END,0
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		ゲーチス登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_in
+	_ANIME_DATA		AC_WALK_R_8F,4
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim_in
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-_ANIME_LABEL anm_player_648follow
-	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
 	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_rival_649follow
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-_ANIME_LABEL anm_player_649follow
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_rival_650follow
-	_ANIME_DATA		AC_WALK_U_8F,3
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-_ANIME_LABEL anm_player_650follow
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-
-//--------------------------------------------------------------
-//	群集　その場ジャンプ
-//--------------------------------------------------------------
-_ANIME_LABEL anm_boodle_jump
-	_ANIME_DATA		AC_STAY_JUMP_L_16F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -781,13 +894,20 @@ _ANIME_LABEL anm_sage_move
 //	ゲーチス・団員　２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_sage1_leave
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
-	_ANIME_DATA		AC_WALK_L_8F,5
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,8
 	_ANIME_DATA		ACMD_END,0
 	
 _ANIME_LABEL anm_hakai_leave
-	_ANIME_DATA		AC_WAIT_16F,2
-	_ANIME_DATA		AC_WALK_L_8F,5
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave2
+	_ANIME_DATA		AC_WAIT_8F,3
+	_ANIME_DATA		AC_WALK_U_8F,9
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -815,35 +935,44 @@ _ANIME_LABEL anm_boodle2_look
 //	群集　町の中へ移動
 //--------------------------------------------------------------
 _ANIME_LABEL anm_boodle1_leave
-	_ANIME_DATA		AC_WALK_R_8F,2
-	_ANIME_DATA		AC_WALK_D_8F,2
-	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		AC_WALK_R_8F,6
+	_ANIME_DATA		AC_WALK_U_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_boodle2_leave
-	_ANIME_DATA		AC_WALK_R_8F,9
+	_ANIME_DATA		AC_WALK_R_8F,4
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_boodle3_leave
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_boodle4_leave
+	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
 //	Ｎ	自機に近づく
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_come
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
 //	Ｎ	２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_leave
-	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_WALK_U_8F,10
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
 //	ライバル	２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_rival_leave
-	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_WALK_U_8F,10
 	_ANIME_DATA		ACMD_END,0
 
 /**************************************************************/
@@ -859,4 +988,85 @@ EVENT_END
 EVENT_START   ev_bg_t02_sign2_01
 	_EASY_BGWIN_MSG( msg_t02_sign2_01,TYPE_POST )
 EVENT_END
+
+
+/************************************************************/
+/*	七賢者ゲーチス　演説									*/
+/************************************************************/
+EVENT_START   ev_pos_t02_rival_speech2
+
+	//ライバル：自機に気付く
+	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME_WAIT()
+
+	//おい　こっち！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_SPEECH_X1
+	DEFINE_LOCAL	LWK_SPEECH_Z1
+
+	//主人公位置取得
+	_PLAYER_POS_GET( LWK_SPEECH_X1,LWK_SPEECH_Z1 )
+	
+	//Z軸が658なら
+	IF $LWK_SPEECH_Z1 == 658 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_658go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が659なら
+	ELSIF $LWK_SPEECH_Z1 == 659 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_659go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が660なら
+	ELSIF $LWK_SPEECH_Z1 == 660 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_660go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が661なら
+	ELSE
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_661go )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
+
+	_CALL t02_speech
+
+EVENT_END
+	
+//--------------------------------------------------------------
+//	自機：ライバルの後ろへ行く
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_658go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_659go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_660go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_661go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
 

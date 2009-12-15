@@ -35,5 +35,11 @@
 #define T02_HAKAIM_02                     18
 #define T02_HAKAIM_05                     19
 #define T02_HAKAIM_06                     20
+#define T02_BOODLE_03                     21
+#define T02_BOODLE_04                     22
+#define T02_BOODLE_06                     23
+#define T02_BOODLE_05                     24
+#define T02_BOODLE_08                     25
+#define T02_BOODLE_07                     26
 
 #endif //ZONE_T02_EVC_H

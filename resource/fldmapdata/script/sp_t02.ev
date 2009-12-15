@@ -14,7 +14,10 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_t02_tbl
 _SP_EVENT_DATA_END
 
-
-
+//テーブル定義
+sp_t02_tbl:
+	_SCENE_CHANGE_DATA		WK_SCENE_T02,1,SCRID_SCENE_T02_SPEECH_01
+	_SCENE_CHANGE_END

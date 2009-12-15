@@ -9,5 +9,7 @@
 #ifndef ZONE_C03P15_EVC_H
 #define ZONE_C03P15_EVC_H
 
+#define C03P15_WOMAN1_01                   0
+#define C03P15_GENTLEMAN_01                1
 
 #endif //ZONE_C03P15_EVC_H

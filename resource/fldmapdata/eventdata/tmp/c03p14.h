@@ -9,5 +9,6 @@
 #ifndef ZONE_C03P14_EVC_H
 #define ZONE_C03P14_EVC_H
 
+#define C03P14_GIRL4_01                    0
 
 #endif //ZONE_C03P14_EVC_H

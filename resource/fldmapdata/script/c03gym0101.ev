@@ -595,8 +595,13 @@ EVENT_END
 /************************************************************/
 //トレーナーが出現するスイッチ（右上）
 EVENT_START	ev_pos_c03gym0101_switch_08
+	
+	//SE_WAITはev_prg_c03gym0101_tr1_btlにて
+	_SE_PLAY( SEQ_SE_FLD_58 )
+	
 	//トレーナートラップ起動
 	_GYM_INSECT_TR_TRAP_ON( 0 )
+	
 EVENT_END
 
 
@@ -616,9 +621,9 @@ EVENT_START	ev_prg_c03gym0101_tr1_btl
 	//対戦済みかチェック
 	IF FLAG_OFF( FE_C03GYM_TRBTL1 ) THEN
 		//対戦前の処理【仮】
-		_SE_PLAY( SEQ_SE_FLD_58 )
+		
 		_SE_WAIT()
-
+		
 		_FLAG_SET( FE_C03GYM_TRBTL1 )
 
 		//戦闘前メッセージ
