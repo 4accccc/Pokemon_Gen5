@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/09 11:40:14
+#save date:2009/12/15 12:52:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-712 0 -40
+840 0 -40
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-728 0 -40
+856 0 -40
 #event number: 3
 #type
 1
@@ -452,7 +452,7 @@ TR_BREEDERMN_01
 #OBJ CODE Number
 BREEDERM
 #MOVE CODE Number
-MV_DOWN
+MV_UP
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -460,7 +460,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_BREEDERM_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 3
 #Parameter 1 Number
@@ -474,7 +474,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -40
+712 0 -88
 #event number: 15
 #type
 1
@@ -483,7 +483,7 @@ TR_BREEDERW_01
 #OBJ CODE Number
 BREEDERW
 #MOVE CODE Number
-MV_UP
+MV_RND_DL
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -491,9 +491,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_BREEDERW_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
-4
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -505,7 +505,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 16 -104
+168 16 104
 #event number: 16
 #type
 1
