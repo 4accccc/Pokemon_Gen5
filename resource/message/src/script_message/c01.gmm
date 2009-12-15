@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-08T16:51:01"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T20:18:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,28 +297,27 @@
 ・ジムバッジ取得後
 　POS（ジムの前）でイベント開始
 ・主人公に隣接してメッセージ表示
-・表示後、連れ歩きで
-　ｃ01ｒ0101へ</comment>
+・表示後、連れ歩きでｃ01ｒ0101へ</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">ヤッホー！
 アタシは　マコモ[BE:01:ページ切り替え（クリア）]
 アララギはかせに　たのまれて
 アナタに　わたすものが　あるんだ[BE:00:ページ切り替え（行送り）]
-ちょっと　ついてきて！</language>
+ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤッホー！
 アタシは　マコモ[BE:01:ページ切り替え（クリア）]
 アララギ博士に　頼まれて
 アナタに　渡すものが　あるんだ[BE:00:ページ切り替え（行送り）]
-ちょっと　ついてきて！</language>
+ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・削除予定ラベル</comment>
 		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01_musical_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -548,8 +547,8 @@
 	</row>
 
 	<row id="msg_c01_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ランダムメッセージのテスト</comment>
+		<comment>♀
+・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">えーっとね　えーっとね[BE:01:ページ切り替え（クリア）]
 くさタイプの　ポケモンは
@@ -562,8 +561,8 @@
 	</row>
 
 	<row id="msg_c01_babygirl1_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ランダムメッセージのテスト</comment>
+		<comment>♀
+・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">えーっとね　えーっとね[BE:01:ページ切り替え（クリア）]
 みずタイプの　ポケモンは
@@ -576,8 +575,8 @@
 	</row>
 
 	<row id="msg_c01_babygirl1_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ランダムメッセージのテスト</comment>
+		<comment>♀
+・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">えーっとね　えーっとね[BE:01:ページ切り替え（クリア）]
 ほのおタイプの　ポケモンは
