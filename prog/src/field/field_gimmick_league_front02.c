@@ -26,6 +26,7 @@
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  // ギミックデータのアーカイブID
 
 // リフト座標
+#define HALF_GRID ((FIELD_CONST_GRID_SIZE / 2) << FX32_SHIFT)
 #define LIFT_POS_X_GRID (30)
 #define LIFT_POS_Z_GRID (81)
 #define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
@@ -34,9 +35,9 @@
 #define PLAYER_OFS_X (0)
 #define PLAYER_OFS_Y (0)
 #define PLAYER_OFS_Z ((FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT)
-#define PLAYER_POS_X (LIFT_POS_X + PLAYER_OFS_X)
+#define PLAYER_POS_X (LIFT_POS_X + PLAYER_OFS_X + HALF_GRID)
 #define PLAYER_POS_Y (LIFT_POS_Y + PLAYER_OFS_Y)
-#define PLAYER_POS_Z (LIFT_POS_Z + PLAYER_OFS_Z)
+#define PLAYER_POS_Z (LIFT_POS_Z + PLAYER_OFS_Z + HALF_GRID)
 
 // ギミックワークのデータインデックス
 typedef enum{
@@ -325,6 +326,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
                                                NARC_league_front_pl_ele_01_ica_bin );
     }
+#if 1
     { // 自機座標初期化
       FIELD_PLAYER* player;
       VecFx32 pos;
@@ -332,6 +334,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       VEC_Set( &pos, PLAYER_POS_X, PLAYER_POS_Y, PLAYER_POS_Z );
       FIELD_PLAYER_SetPos( player, &pos );
     }
+#endif
     ++(*seq);
     break;
   // フェードイン
@@ -345,6 +348,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     break;
   // アニメ終了待ち
   case 2:
+#if 1
     // 自機, リフトの座標を更新
     {
       VecFx32 trans, pos;
@@ -362,6 +366,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = trans.y;
       FIELD_PLAYER_SetPos( player, &pos );
     }
+#endif
     // アニメーション更新
     if( ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE ) )  // if(アニメ終了)
     { 
@@ -371,6 +376,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     break;
   // 終了処理
   case 3:
+#if 1
     // 自機を着地させる
     {
       VecFx32 pos;
@@ -384,6 +390,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = height;
       FIELD_PLAYER_SetPos( player, &pos );
     }
+#endif
     ++(*seq); 
     break;
   // 終了
