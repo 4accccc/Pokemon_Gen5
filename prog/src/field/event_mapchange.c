@@ -399,6 +399,10 @@ static void CheckSeasonChange( MAPCHANGE_WORK* work )
   {
     FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
   }
+  else
+  {
+    FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+  }
 }
 //------------------------------------------------------------------
 /**
