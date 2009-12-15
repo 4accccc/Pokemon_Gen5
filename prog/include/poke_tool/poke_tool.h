@@ -670,6 +670,10 @@ extern  void  PPP_Clear( POKEMON_PASO_PARAM *ppp );
 extern void PP_ChangeMonsNo( POKEMON_PARAM* ppp, u16 monsno );
 extern void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 monsno );
 
+// フォルムナンバー書き換え
+extern BOOL PP_ChangeFormNo( POKEMON_PARAM* ppp, u16 formno );
+extern BOOL PPP_ChangeFormNo( POKEMON_PASO_PARAM* ppp, u16 formno );
+
 // PPP部分からPP部分を再計算
 extern  void  PP_Renew( POKEMON_PARAM *pp );
 
