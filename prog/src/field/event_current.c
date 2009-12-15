@@ -426,6 +426,8 @@ static void SplashCheck( EVENT_WORK* work )
     type = NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH;
     FIELD_PLAYER_GetPos( work->player, &pos );
     FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( fectrl, type, &pos );
+    // SEÄ¶
+    PMSND_PlaySE( SEQ_SE_FLD_83 );
 
     // ƒWƒƒƒ“ƒvI—¹
     work->rock = NULL;
