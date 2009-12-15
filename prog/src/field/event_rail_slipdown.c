@@ -13,6 +13,9 @@
 
 #include "gflib.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 #include "arc/fieldmap/zone_id.h"
 
 #include "field/field_const.h"
@@ -52,6 +55,12 @@ enum
 ///	1フレームでのずり落ち距離
 //=====================================
 #define RAILSLIPDOWN_ONE_DIST ( FX32_CONST(8) )
+
+
+//-------------------------------------
+///	ずり落ちSE再生
+//=====================================
+#define RAILSLIPDOWN_SE ( SEQ_SE_FLD_92 )
 
 
 //-----------------------------------------------------------------------------
@@ -243,6 +252,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
 
       p_slipdown->count = 0;
 
+      PMSND_PlaySE( RAILSLIPDOWN_SE );
+
       (*p_seq) = EV_RAILSLIPDOWN_SLIPDOWN_START;
     }
     
@@ -295,6 +306,10 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
     break;
     
   case EV_RAILSLIPDOWN_END:            // 終了
+
+    // プレイヤーID
+    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( RAILSLIPDOWN_SE ) );
+    
     {
       VecFx32 pos;
 
