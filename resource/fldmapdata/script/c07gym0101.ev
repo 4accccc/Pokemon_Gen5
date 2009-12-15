@@ -112,8 +112,8 @@ EVENT_START		ev_c07gym0101_leader7_01
 		
 		//============フラグワーク操作=============//
 	
-		//D08イベント開始
-		$WK_SCENE_D08 = 1
+		//d08 リュウラセンのイベント起動
+		$WK_SCENE_D08_LEGEND = 1
 		
 		//C07のライバル・サポートを表示
 		_FLAG_RESET( FV_C07_RIVAL_01 )

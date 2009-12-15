@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 12:25:15
+#save date:2009/12/15 18:54:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -471,7 +471,7 @@ SCRID_POS_C07_LEADER7_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D08
+WK_SCENE_D08_LEGEND
 #Event Trigger Work Value
 1
 #Pos Type
