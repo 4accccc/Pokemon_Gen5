@@ -21,10 +21,10 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c08gym0101					//再利用してください
 _EVENT_DATA		ev_zone_c08gym0101
-_EVENT_DATA		ev_pos_c08gym0101_gimmick_00	//１階右の竜（左側）
-_EVENT_DATA		ev_pos_c08gym0101_gimmick_01	//１階右の竜（右側）
-_EVENT_DATA		ev_pos_c08gym0101_gimmick_02	//１階左の竜（左側）
-_EVENT_DATA		ev_pos_c08gym0101_gimmick_03	//１階左の竜（右側）
+_EVENT_DATA		ev_pos_c08gym0101_gimmick_00	//１階左の竜（左側）
+_EVENT_DATA		ev_pos_c08gym0101_gimmick_01	//１階左の竜（右側）
+_EVENT_DATA		ev_pos_c08gym0101_gimmick_02	//１階右の竜（左側）
+_EVENT_DATA		ev_pos_c08gym0101_gimmick_03	//１階右の竜（右側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_04	//２階の竜（左側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_05	//２階の竜（右側）
 _EVENT_DATA_END
@@ -45,42 +45,37 @@ INIT_EVENT_END
 EVENT_START	ev_c08gym0101
 EVENT_END
 
-
-/************************************************************/
-/*				リュウの腕に乗る １階右の竜（左側）			*/
-/************************************************************/
-EVENT_START	ev_pos_c08gym0101_gimmick_00
-  _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
-  _GYM_DRAGON_CALL_GMK(1, 0)
-EVENT_END
-
-
-/************************************************************/
-/*				リュウの腕に乗る １階右の竜（右側）			*/
-/************************************************************/
-EVENT_START	ev_pos_c08gym0101_gimmick_01
-  _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
-  _GYM_DRAGON_CALL_GMK(1, 1)
-EVENT_END
-
-
 /************************************************************/
 /*				リュウの腕に乗る １階左の竜（左側）			*/
 /************************************************************/
-EVENT_START	ev_pos_c08gym0101_gimmick_02
+EVENT_START	ev_pos_c08gym0101_gimmick_00
   _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(0, 1)
 EVENT_END
 
-
 /************************************************************/
 /*				リュウの腕に乗る １階左の竜（右側）			*/
 /************************************************************/
-EVENT_START	ev_pos_c08gym0101_gimmick_03
+EVENT_START	ev_pos_c08gym0101_gimmick_01
   _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
   _GYM_DRAGON_CALL_GMK(0, 0)
 EVENT_END
 
+/************************************************************/
+/*				リュウの腕に乗る １階右の竜（左側）			*/
+/************************************************************/
+EVENT_START	ev_pos_c08gym0101_gimmick_02
+  _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
+  _GYM_DRAGON_CALL_GMK(1, 0)
+EVENT_END
+
+/************************************************************/
+/*				リュウの腕に乗る １階右の竜（右側）			*/
+/************************************************************/
+EVENT_START	ev_pos_c08gym0101_gimmick_03
+  _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
+  _GYM_DRAGON_CALL_GMK(1, 1)
+EVENT_END
 
 /************************************************************/
 /*				リュウの腕に乗る ２階の竜（左側）			*/
@@ -89,7 +84,6 @@ EVENT_START	ev_pos_c08gym0101_gimmick_04
   _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(2, 0)
 EVENT_END
-
 
 /************************************************************/
 /*				リュウの腕に乗る ２階の竜（右側）			*/
