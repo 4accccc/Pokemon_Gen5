@@ -2065,9 +2065,9 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player )
 
   if( GFL_STD_MemComp( &now, &old, sizeof(RAIL_LOCATION) ) == 0 )
   {
-    return TRUE;
+    return FALSE;
   }
-  return FALSE;
+  return TRUE;
 }
 
 //--------------------------------------------------------------

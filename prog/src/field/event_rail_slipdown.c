@@ -46,7 +46,7 @@ enum
 ///	‚¸‚è—Ž‚¿•ûŒü
 //  Y‚ª1‚©‚í‚é‚²‚Æ‚Ì‚w‚y•ûŒü‚ÌˆÚ“®‹——£
 //=====================================
-#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(2) )
+#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1250f) )
 
 //-------------------------------------
 ///	1ƒtƒŒ[ƒ€‚Å‚Ì‚¸‚è—Ž‚¿‹——£
@@ -192,8 +192,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
 //*/
 
       // ‰º‚èæ
-      dist_y = p_slipdown->start_pos.y;
-      p_slipdown->end_pos.y = 0;
+      dist_y = p_slipdown->start_pos.y + FX32_CONST(10.0f);
+      p_slipdown->end_pos.y = -FX32_CONST(10.0f);
       p_slipdown->end_pos.x = p_slipdown->start_pos.x + FX_Mul( front_way.x, FX_Mul( RAILSLIPDOWN_MOVE_XZ, dist_y ) );
       p_slipdown->end_pos.z = p_slipdown->start_pos.z + FX_Mul( front_way.z, FX_Mul( RAILSLIPDOWN_MOVE_XZ, dist_y ) );
 
