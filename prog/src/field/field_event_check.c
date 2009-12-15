@@ -1,7 +1,7 @@
 //======================================================================
 /**
  * @file  field_event_check.c
- * @brief
+ * @brief フィールドでのイベント起動チェック処理群
  * @author  tamada GAME FREAK inc.
  * @date  2009.06.09
  *
@@ -105,15 +105,15 @@ extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 //======================================================================
 //======================================================================
 
-extern u16 EVENTDATA_CheckTalkBGEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
-    const VecFx32 *pos, u16 talk_dir );
 
 //======================================================================
 //======================================================================
 #define FRONT_TALKOBJ_HEIGHT_DIFF (FX32_CONST(16)) //話しかけ可能なOBJのY値差分
 
 //--------------------------------------------------------------
+/**
+ * @brief 判定チェック用パラメータ
+ */
 //--------------------------------------------------------------
 typedef struct {
   HEAPID heapID;              ///<ヒープID
@@ -147,7 +147,14 @@ typedef struct {
 
 //======================================================================
 //======================================================================
-//event
+//--------------------------------------------------------------
+//
+//--------------------------------------------------------------
+static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
+
+//--------------------------------------------------------------
+//  個別イベントチェック
+//--------------------------------------------------------------
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
 static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
@@ -168,11 +175,8 @@ static GMEVENT * checkSubScreenEvent(
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 
-static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
-
 static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos);
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir);
-static BOOL checkDirection(u16 player_dir, u16 exit_dir);
 static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
 static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
 static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
@@ -201,9 +205,9 @@ static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir );
 static GMEVENT* checkPosEvent_OnlyDirection( EV_REQUEST * req );
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 //レール用
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work );
 
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
@@ -225,13 +229,14 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
 
 //--------------------------------------------------------------
 /**
- * イベント　イベント起動チェック
+ * @brief　イベント起動チェック：通常用
  * @param	gsys GAMESYS_WORK
  * @param work FIELDMAP_WORK
  * @retval GMEVENT NULL=イベント無し
  */
 //--------------------------------------------------------------
-static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *eff_delete_flag, BOOL *menu_open_flag )
+static GMEVENT * FIELD_EVENT_CheckNormal(
+    GAMESYS_WORK *gsys, void *work, BOOL *eff_delete_flag, BOOL *menu_open_flag )
 {
 	
   EV_REQUEST req;
@@ -244,16 +249,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
   //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
 
-  //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
-  //EFFECT_ENC_CheckObjHit( encount );
-
-  //デバッグ用チェック
+//☆☆☆デバッグ用チェックを最優先とする
 #ifdef  PM_DEBUG
   event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
   if (event != NULL) {
     return event;
   }
-#endif //debug
+#endif //PM_DEBUG
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
@@ -265,8 +267,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
     }
     event = SCRIPT_SearchSceneScript( gsys, req.heapID );
     if (event){
-      *eff_delete_flag = TRUE;
-      //EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
     }
   }
@@ -289,8 +290,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
     BOOL flag = FIELD_EVENT_Check2vs2Battle( gsys );
     event = EVENT_CheckTrainerEye( fieldWork, flag );
     if( event != NULL ){
-      *eff_delete_flag = TRUE;
-      //EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
     }
   }
@@ -302,8 +302,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
     // POSイベントチェック
     event = checkPosEvent( &req );
     if( event != NULL ){
-      *eff_delete_flag = TRUE;
-      //EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
     } 
     //座標接続チェック
@@ -388,25 +387,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
 //☆☆☆会話チェック
 
 	///通信用会話処理(仮
-#if 0 //※check　侵入通信変更の為、暫定Fix
-  {
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    
-    if(commSys != NULL){
-      //話しかける側
-      if( req.talkRequest ){
-        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
-          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
-        }
-      }
-
-      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
-        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
-      }
-    }
-  }
-#else
   {
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
     INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
@@ -433,7 +413,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
       }
     }
   }
-#endif
 
 	//フィールド話し掛けチェック
   if( req.talkRequest )
@@ -445,8 +424,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
         MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
-        *eff_delete_flag = TRUE;
-        //EFFECT_ENC_EffectDelete( encount );
+        *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
         return EVENT_FieldTalk( gsys, fieldWork,
           scr_id, fmmdl_player, fmmdl_talk, req.heapID );
       }
@@ -485,14 +463,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *
     if( req.player_state == PLAYER_MOVE_STATE_END ||
         req.player_state == PLAYER_MOVE_STATE_OFF )
     {
-#if 0
-      if( req.key_trg & PAD_BUTTON_SELECT ){
-        event = checkEvent_PlayerNaminoriStart( &req, gsys, fieldWork );
-        if( event != NULL ){
-          return event;
-       }
-      }
-#endif
       #ifdef PM_DEBUG
       if( !(req.debugRequest) ){
         event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
@@ -621,6 +591,8 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 }
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
  * イベント起動チェック：ユニオンorコロシアム
  *
@@ -629,7 +601,7 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
  *
  * @retval  GMEVENT *		
  */
-//======================================================================
+//--------------------------------------------------------------
 GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 {
   EV_REQUEST req;
@@ -725,6 +697,8 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
  * イベント起動チェック：ノーグリッドマップ
  *
@@ -733,7 +707,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
  *
  *	@return
  */
-//======================================================================
+//--------------------------------------------------------------
 GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 {
 	GMEVENT *event;
@@ -755,12 +729,242 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	return event;
 }
 
+//--------------------------------------------------------------
+/**
+ *	@brief  ノーグリッドマップ、　イベントチェック
+ */
+//--------------------------------------------------------------
+static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
+{
+  EV_REQUEST req;
+	GMEVENT *event;
+	FIELDMAP_WORK *fieldWork = work;
+  
+  setupRequest( &req, gsys, fieldWork );
+
+  
+  //デバッグ用チェック
+#ifdef  PM_DEBUG
+  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
+  if (event != NULL) {
+    return event;
+  }
+#endif //debug
+
+//☆☆☆特殊スクリプト起動チェックがここに入る
+    /* 今はない */
+
+
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(DebugBGInitEnd,"ERROR:BG NOT INITIALIZE");    //BG初期化監視フラグ
+  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:CALLED MAP FADE REQ");   //マップフェードリクエストフラグ
+#endif  
+
+//☆☆☆トレーナー視線チェックがここに入る
+  if( !(req.debugRequest) ){
+/*
+    event = EVENT_CheckTrainerEye( fieldWork, FALSE );
+    if( event != NULL ){
+      return event;
+    }
+//*/
+  }
+
+//☆☆☆一歩移動チェックがここから
+  //座標イベントチェック
+  if( req.moveRequest )
+  {
+    //*
+    RAIL_LOCATION pos;
+    const MMDL* player = FIELD_PLAYER_GetMMdl( req.field_player );
+    u16 id;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    MMDL_GetRailLocation( player, &pos );
+    
+    id = EVENTDATA_CheckPosEventRailLocation( req.evdata, evwork, &pos );
+    
+    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+      return event;
+    }
+    //*/
+
+    //座標接続チェック
+    event = checkRailExit(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+
+    //汎用一歩移動イベントチェック群
+    event = checkMoveEvent(&req, fieldWork);
+    if ( event != NULL) {
+      return event;
+    }
+  }
+
+
+	
+//☆☆☆ステップチェック（一歩移動or振り向き）がここから
+  //戦闘移行チェック
+  {
+    GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
+    if(enc_event != NULL){
+      return enc_event;
+    }
+  }
+  
+
+  //看板イベントチェック
+  if( req.stepRequest ){
+    //*
+    u16 id;
+    RAIL_LOCATION pos;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+    u16 dir = MMDL_GetDirDisp( fmmdl );
+  
+    // 1歩前のレールロケーション取得
+    MMDL_GetRailFrontLocation( fmmdl, &pos );
+  
+    {
+      //OBJ看板チェック
+    }
+    
+    id = EVENTDATA_CheckTalkBoardEventRailLocation( req.evdata, evwork, &pos, dir );
+    
+    if( id != EVENTDATA_ID_NONE ){
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+    }
+    //*/
+  }
+  
+//☆☆☆自機状態イベントチェックがここから
+    /* 今はない */
+
+//☆☆☆会話チェック
+	//フィールド話し掛けチェック
+  if( req.talkRequest )
+  {
+    { //OBJ話し掛け
+      MMDL *fmmdl_talk = getRailFrontTalkOBJ( &req, fieldWork );
+      if( fmmdl_talk != NULL )
+      {
+        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
+        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+        
+        FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
+        return EVENT_FieldTalk( gsys, fieldWork,
+          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+      }
+    }
+    
+    { //BG話し掛け
+      u16 id;
+      RAIL_LOCATION pos;
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+      u16 dir = MMDL_GetDirDisp( fmmdl );
+      
+      MMDL_GetRailFrontLocation( fmmdl, &pos );
+      id = EVENTDATA_CheckTalkBGEventRailLocation( req.evdata, evwork, &pos, dir );
+      
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
+    }
+    /*
+    { //BG Attribute 話しかけ
+      u16 id = checkTalkAttrEvent( &req, fieldWork );
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
+
+    }
+    //*/
+  }
+
+
+//☆☆☆押し込み操作チェック（マットでのマップ遷移など）
+	//キー入力接続チェック
+  if (req.pushRequest) {
+    event = checkRailPushExit(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+
+    event = checkRailSlipDown(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+  }
+  
+//☆☆☆自機位置に関係ないキー入力イベントチェック
+  //便利ボタンチェック
+  if( req.convRequest ){
+		if(WIPE_SYS_EndCheck()){
+			if( EVENT_ShortCutMenu_IsOpen(gsys) )
+			{	
+				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+				if( event != NULL ){
+					return event;
+				}
+			}
+		}
+  }
+  
+  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
+  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+		if(WIPE_SYS_EndCheck()){
+      return EVENT_FieldCommErrorProc(gsys, fieldWork);
+    }
+  }
+
+	//メニュー起動チェック
+	if( req.menuRequest ){
+		if(WIPE_SYS_EndCheck()){
+  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
+		}
+	}
+
+	//侵入によるサブスクリーン切り替えイベント起動チェック
+	if(WIPE_SYS_EndCheck()){
+    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
+    if(event != NULL){
+      return event;
+    }
+  }
+
+	//サブスクリーンからのイベント起動チェック
+	event = checkSubScreenEvent(gsys, fieldWork);
+	if( event != NULL )
+  {
+		return event;
+	}
+  
+  /*	
+	//デバッグ：パレスで木に触れたらワープ
+  {
+    GMEVENT *ev;
+    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
+    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
+    if(ev != NULL){
+      return ev;
+    }
+	}
+  //*/
+	return NULL;
+}
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
  *	@brief  イベント起動チェック：ハイブリッドマップ
  */
-//======================================================================
+//--------------------------------------------------------------
 GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
 {
 	FIELDMAP_WORK *fieldWork = work;
@@ -790,6 +994,7 @@ GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
  * @brief 判定用パラメータの生成
  *
  *
+ * @note
  * 現状チェックごとに生成しているが実はほとんどの値は初期化時に一度だけでもいいのかも。
  */
 //--------------------------------------------------------------
@@ -1158,11 +1363,13 @@ static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GA
   return NULL;
 }
 
-//==============================================================================
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
  * 1歩ごとのスプレー効果減算
  */
-//==============================================================================
+//--------------------------------------------------------------
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
@@ -1178,11 +1385,13 @@ static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMED
 	return NULL;
 }
 
-//==============================================================================
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
 /**
  * 1歩ごとのエンカウントエフェクト起動チェック
  */
-//==============================================================================
+//--------------------------------------------------------------
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
@@ -1304,7 +1513,7 @@ static GMEVENT * checkExit(EV_REQUEST * req,
   {
     const CONNECT_DATA * cnct;
     cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
-    if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
+    if ( CONNECTDATA_IsClosedExit(cnct) == TRUE || CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
     {
       return NULL;
     }
@@ -1417,15 +1626,9 @@ static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos)
 //--------------------------------------------------------------
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir)
 {
-  EXIT_DIR dir;
+  EXIT_DIR exit_dir;
 
-  dir = CONNECTDATA_GetExitDir( cnct );
-  return checkDirection( player_dir, dir );
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static BOOL checkDirection(u16 player_dir, u16 exit_dir)
-{
+  exit_dir = CONNECTDATA_GetExitDir( cnct );
   if (
       (player_dir == DIR_UP && exit_dir == EXIT_DIR_DOWN) ||
       (player_dir == DIR_DOWN && exit_dir == EXIT_DIR_UP) ||
@@ -1455,24 +1658,22 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 	
   //目の前が通行不可でない場合、チェックしない
   setFrontPos(req, &front_pos);
-#if 1
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &front_pos) );
-    //MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
     if (!(flag & MAPATTR_FLAGBIT_HITCH))
     {
       return NULL;
     }
   }
-#endif
+
 
   //足元チェック（マット）
   idx = getConnectID(req, req->now_pos);
   if (idx != EXIT_ID_NONE)
   {
     const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
-    if (CONNECTDATA_GetExitType(cnct) == EXIT_TYPE_MAT)
+    if ( CONNECTDATA_IsClosedExit(cnct) == FALSE && CONNECTDATA_GetExitType(cnct) == EXIT_TYPE_MAT )
     {
       rememberExitInfo(req, fieldWork, idx, req->now_pos);
       return getChangeMapEvent(req, fieldWork, idx, req->now_pos);
@@ -1554,256 +1755,6 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 }
 
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  ノーグリッドマップ、　イベントチェック
- */
-//-----------------------------------------------------------------------------
-static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
-{
-  EV_REQUEST req;
-	GMEVENT *event;
-	FIELDMAP_WORK *fieldWork = work;
-  
-  setupRequest( &req, gsys, fieldWork );
-
-  
-  //デバッグ用チェック
-#ifdef  PM_DEBUG
-  event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
-  if (event != NULL) {
-    return event;
-  }
-#endif //debug
-
-//☆☆☆特殊スクリプト起動チェックがここに入る
-    /* 今はない */
-
-
-#ifdef PM_DEBUG
-  GF_ASSERT_MSG(DebugBGInitEnd,"ERROR:BG NOT INITIALIZE");    //BG初期化監視フラグ
-  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:CALLED MAP FADE REQ");   //マップフェードリクエストフラグ
-#endif  
-
-//☆☆☆トレーナー視線チェックがここに入る
-  if( !(req.debugRequest) ){
-/*
-    event = EVENT_CheckTrainerEye( fieldWork, FALSE );
-    if( event != NULL ){
-      return event;
-    }
-//*/
-  }
-
-//☆☆☆一歩移動チェックがここから
-  //座標イベントチェック
-  if( req.moveRequest )
-  {
-    //*
-    RAIL_LOCATION pos;
-    const MMDL* player = FIELD_PLAYER_GetMMdl( req.field_player );
-    u16 id;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    MMDL_GetRailLocation( player, &pos );
-    
-    id = EVENTDATA_CheckPosEventRailLocation( req.evdata, evwork, &pos );
-    
-    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-      return event;
-    }
-    //*/
-
-    //座標接続チェック
-    event = checkRailExit(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
-
-    //汎用一歩移動イベントチェック群
-    event = checkMoveEvent(&req, fieldWork);
-    if ( event != NULL) {
-      return event;
-    }
-  }
-
-
-	
-//☆☆☆ステップチェック（一歩移動or振り向き）がここから
-  //戦闘移行チェック
-  {
-    GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
-    if(enc_event != NULL){
-      return enc_event;
-    }
-  }
-  
-
-  //看板イベントチェック
-  if( req.stepRequest ){
-    //*
-    u16 id;
-    RAIL_LOCATION pos;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-    u16 dir = MMDL_GetDirDisp( fmmdl );
-  
-    // 1歩前のレールロケーション取得
-    MMDL_GetRailFrontLocation( fmmdl, &pos );
-  
-    {
-      //OBJ看板チェック
-    }
-    
-    id = EVENTDATA_CheckTalkBoardEventRailLocation( req.evdata, evwork, &pos, dir );
-    
-    if( id != EVENTDATA_ID_NONE ){
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-    }
-    //*/
-  }
-  
-//☆☆☆自機状態イベントチェックがここから
-    /* 今はない */
-
-//☆☆☆会話チェック
-
-	///通信用会話処理(仮
-#if 0 //※check　侵入通信変更の為、暫定Fix
-  {
-    FIELD_COMM_MAIN * commSys = FIELDMAP_GetCommSys(fieldWork);
-    
-    if(commSys != NULL){
-      //話しかける側
-      if( req.talkRequest ){
-        if( FIELD_COMM_MAIN_CanTalk( commSys ) == TRUE ){
-          return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , commSys );
-        }
-      }
-
-      //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
-      if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
-        return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
-      }
-    }
-  }
-#endif
-
-	//フィールド話し掛けチェック
-  if( req.talkRequest )
-  {
-    { //OBJ話し掛け
-      MMDL *fmmdl_talk = getRailFrontTalkOBJ( &req, fieldWork );
-      if( fmmdl_talk != NULL )
-      {
-        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
-        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-        
-        FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
-        return EVENT_FieldTalk( gsys, fieldWork,
-          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
-      }
-    }
-    
-    { //BG話し掛け
-      u16 id;
-      RAIL_LOCATION pos;
-      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-      u16 dir = MMDL_GetDirDisp( fmmdl );
-      
-      MMDL_GetRailFrontLocation( fmmdl, &pos );
-      id = EVENTDATA_CheckTalkBGEventRailLocation( req.evdata, evwork, &pos, dir );
-      
-      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-        return event;
-      }
-    }
-    /*
-    { //BG Attribute 話しかけ
-      u16 id = checkTalkAttrEvent( &req, fieldWork );
-      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-        return event;
-      }
-
-    }
-    //*/
-  }
-
-
-//☆☆☆押し込み操作チェック（マットでのマップ遷移など）
-	//キー入力接続チェック
-  if (req.pushRequest) {
-    event = checkRailPushExit(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
-
-    event = checkRailSlipDown(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
-  }
-  
-//☆☆☆自機位置に関係ないキー入力イベントチェック
-  //便利ボタンチェック
-  if( req.convRequest ){
-		if(WIPE_SYS_EndCheck()){
-			if( EVENT_ShortCutMenu_IsOpen(gsys) )
-			{	
-				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
-				if( event != NULL ){
-					return event;
-				}
-			}
-		}
-  }
-  
-  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
-  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
-		if(WIPE_SYS_EndCheck()){
-      return EVENT_FieldCommErrorProc(gsys, fieldWork);
-    }
-  }
-
-	//メニュー起動チェック
-	if( req.menuRequest ){
-		if(WIPE_SYS_EndCheck()){
-  			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
-		}
-	}
-
-	//侵入によるサブスクリーン切り替えイベント起動チェック
-	if(WIPE_SYS_EndCheck()){
-    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
-    if(event != NULL){
-      return event;
-    }
-  }
-
-	//サブスクリーンからのイベント起動チェック
-	event = checkSubScreenEvent(gsys, fieldWork);
-	if( event != NULL )
-  {
-		return event;
-	}
-  
-  /*	
-	//デバッグ：パレスで木に触れたらワープ
-  {
-    GMEVENT *ev;
-    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
-    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
-    if(ev != NULL){
-      return ev;
-    }
-	}
-  //*/
-	return NULL;
-}
 
 //--------------------------------------------------------------
 /**
@@ -1839,7 +1790,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
 
   // 乗っただけで起動するのかチェック
   cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
-  if( CONNECTDATA_GetExitType( cnct ) != EXIT_TYPE_NONE )
+  if( CONNECTDATA_IsClosedExit(cnct) == TRUE || CONNECTDATA_GetExitType( cnct ) != EXIT_TYPE_NONE )
   {
     return NULL;
   }
@@ -1848,11 +1799,11 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   return getRailChangeMapEvent(req, fieldWork, idx, &pos);
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  ノーグリッドマップ　レールシステム上での押し込み出入り口判定
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
   int idx;
@@ -1877,7 +1828,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   if (idx != EXIT_ID_NONE){
     cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
 
-    if( checkConnectExitDir( cnct, req->player_dir ) )
+    if( CONNECTDATA_IsClosedExit(cnct) == FALSE && checkConnectExitDir( cnct, req->player_dir ) )
     {
       if( CONNECTDATA_GetExitType( cnct ) == EXIT_TYPE_MAT)
       {
@@ -1898,7 +1849,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   
   cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
 
-  if( checkConnectExitDir( cnct, req->player_dir ) )
+  if( CONNECTDATA_IsClosedExit(cnct) == FALSE && checkConnectExitDir( cnct, req->player_dir ) )
   {
     rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_posは移動不可なので、posにする
     return getRailChangeMapEvent(req, fieldWork, idx, &pos);
@@ -2036,11 +1987,11 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レールずり落ちチェック
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
   const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
@@ -2065,11 +2016,11 @@ static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   return NULL;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レールマップの出入り口情報を保存
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc)
 {
 	//マップ遷移発生の場合、出入口を記憶しておく
@@ -2079,11 +2030,11 @@ static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWo
   GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レールのマップ変更イベントを取得する
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
     const RAIL_LOCATION* loc)
 {
@@ -2094,14 +2045,14 @@ static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * f
   return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct, exit_ofs);
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レールマップ目の前に移動してるかチェック
  *
  *	@retval TRUE    している
  *	@retval FALSE   していない
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player )
 {
   RAIL_LOCATION now;
@@ -2505,7 +2456,7 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
 }
 
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  レールマップでの、目の前のモデルを取得
  *
@@ -2514,7 +2465,7 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
  *
  *	@return
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
 {
   MMDL *mmdl;
