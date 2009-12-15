@@ -35,10 +35,13 @@
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/townmap.h" //TOWNMAP_PARAM
 #include "app/wifi_note.h" //
+#include "app/mailtool.h" //MAIL_PARAM
 
 //アーカイブ
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
+
+#include "item/item.h"  //ITEM_GetMailDesign
 
 //自分
 #include "field/event_field_proclink.h"
@@ -51,6 +54,7 @@ FS_EXTERN_OVERLAY(townmap);
 FS_EXTERN_OVERLAY(wifinote);
 FS_EXTERN_OVERLAY(pokelist);
 
+FS_EXTERN_OVERLAY(app_mail);
 //=============================================================================
 /**
  *          定数宣言
@@ -67,6 +71,13 @@ typedef enum
   RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
   RETURNFUNC_RESULT_NEXT,   //次のプロセスへ行く
 } RETURNFUNC_RESULT;
+
+typedef enum
+{
+  PROCLINK_MODE_LIST_TO_MAIL_CREATE,  //手紙を持たせる→作成画面
+  PROCLINK_MODE_LIST_TO_MAIL_VIEW,    //手紙を見る→View画面
+  PROCLINK_MODE_BAG_TO_MAIL_CREATE,   //手紙を持たせる→作成画面
+}PROCLINK_TAKEOVER_MODE;  //PROC変更の際持ち越せない値保存用
 //=============================================================================
 /**
  *          構造体宣言
@@ -114,7 +125,10 @@ struct _PROCLINK_WORK
   //アプリ間で引継ぎが必要なパラメータ
   ITEMCHECK_WORK            icwk;     //アイテム使用時に検査する情報が含まれている
   FLDSKILL_CHECK_WORK       scwk;     //フィールドスキルが使用可能がどうかの情報
-} ;
+  u8                        sel_poke; //メール画面で引き継げないので用意
+  u8                        item_no;  //メール画面で引き継げないので用意
+  PROCLINK_TAKEOVER_MODE    mode;     //メール画面で引き継げないので用意
+};
 
 
 //=============================================================================
@@ -162,6 +176,9 @@ static void FMenuEvent_Report( PROCLINK_WORK* wk, u32 param );
 //WiFiノート
 static void * FMenuCallProc_WifiNote(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_adrs);
+//メール画面
+static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
+static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs);
 
 //-------------------------------------
 /// レポートと図鑑のイベント
@@ -263,6 +280,14 @@ static const struct
     &WifiNoteProcData,
     FMenuCallProc_WifiNote,
     FMenuReturnProc_WifiNote,
+    NULL,
+  },
+  //EVENT_PROCLINK_CALL_MAIL
+  { 
+    NO_OVERLAY_ID,
+    &MailSysProcData,
+    FMenuCallProc_Mail,
+    FMenuReturnProc_Mail,
     NULL,
   },
 
@@ -672,6 +697,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->pp = GAMEDATA_GetMyPokemon( gmData);
   plistData->scwk = wk->scwk;
   plistData->myitem   = GAMEDATA_GetMyItem( gmData);    // アイテムデータ
+  plistData->mailblock = GAMEDATA_GetMailBlock( gmData);
   plistData->mode     = PL_MODE_FIELD;
   plistData->ret_sel  = wk->param->select_poke;
   plistData->waza = 0;
@@ -752,8 +778,31 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     default:
       GF_ASSERT( 0 );
     }
-
   }
+  else
+  if( pre == EVENT_PROCLINK_CALL_MAIL )
+  {
+    //メールを持たせる処理(書かなかった場合はメールのTermで分岐してる
+    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
+    {
+      plistData->mode = PL_MODE_MAILSET;
+      plistData->ret_sel = wk->sel_poke;
+      plistData->item = wk->item_no;
+    }
+    else
+    if( wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )
+    {
+      plistData->mode = PL_MODE_MAILSET_BAG;
+      plistData->ret_sel = wk->sel_poke;
+      plistData->item = wk->item_no;
+    }
+    else
+    {
+      //メールを見たとき
+      //特に無し。
+    }
+  }
+
   return plistData;
 }
 //----------------------------------------------------------------------------
@@ -812,6 +861,12 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_WAZASET:  //忘れる技選択
     wk->next_type = EVENT_PROCLINK_CALL_STATUS;
     return RETURNFUNC_RESULT_NEXT;
+    
+  case PL_RET_MAILSET:
+  case PL_RET_MAILREAD:
+    wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+    return RETURNFUNC_RESULT_NEXT;
+    break;
 
   case PL_RET_IAIGIRI:     // メニュー 技：いあいぎり
   case PL_RET_NAMINORI:    // メニュー 技：なみのり
@@ -1426,7 +1481,99 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
     return RETURNFUNC_RESULT_NEXT;
   }
 }
+//-------------------------------------
+/// メール画面
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CALL関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param   起動時引数
+ *  @param  pre     一つ前のプロック
+ *  @param  void* pre_param_adrs  一つ前のプロックパラメータ
+ *
+ *  @return プロセスパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
+{ 
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+  MAIL_PARAM *mailParam;
+  
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
 
+  if( pre == EVENT_PROCLINK_CALL_POKELIST )
+  {
+    //バッグ(メール選択)→リスト→メール画面
+    const PLIST_DATA *plistData = pre_param_adrs;
+    const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
+    wk->sel_poke = plistData->ret_sel;
+    wk->item_no = plistData->item;
+    if( plistData->ret_mode == PL_RET_MAILSET )
+    {
+      wk->mode = PROCLINK_MODE_LIST_TO_MAIL_CREATE;
+      mailParam = MAILSYS_GetWorkCreate( gmData, 
+                                         MAILBLOCK_TEMOTI, 
+                                         plistData->ret_sel,
+                                         ITEM_GetMailDesign( plistData->item ) ,
+                                         HEAPID_PROC );
+    }
+    else
+    {
+      wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
+      OS_TPrintf("MailPos[%d]\n",plistData->ret_sel);
+      mailParam = MailSys_GetWorkViewPoke( gmData, PokeParty_GetMemberPointer(party,plistData->ret_sel), HEAPID_PROC );
+    }
+  }
+
+  return mailParam;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  RETURN関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param_adrs  自分のプロックパラメータ
+ *
+ *  @return   RETURNFUNC_RESULT_RETURN,     //メニューに戻る
+ *            RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
+ *            RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
+ *            RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
+ *            RETURNFUNC_RESULT_NEXT,       //次のプロセスへ行く
+ */ 
+//-----------------------------------------------------------------------------
+static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs)
+{ 
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+  MAIL_PARAM *mailParam = (MAIL_PARAM*)param_adrs;
+  
+  if( wk->pre_type == EVENT_PROCLINK_CALL_POKELIST )
+  { 
+    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
+    {
+      const BOOL isCreate = MailSys_IsDataCreate( mailParam );
+      if( isCreate == TRUE )
+      {
+        const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
+        MailSys_PushDataToSavePoke( mailParam , PokeParty_GetMemberPointer(party,wk->sel_poke) );
+        wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+      }
+      else
+      {
+        wk->next_type = EVENT_PROCLINK_CALL_BAG;
+      }
+    }
+    else
+    {
+      wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+    return RETURNFUNC_RESULT_NEXT;
+  }
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+  return RETURNFUNC_RESULT_RETURN;
+}
 //=============================================================================
 /**
  *  レポートと図鑑のイベント

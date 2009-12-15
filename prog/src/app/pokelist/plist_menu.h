@@ -24,12 +24,15 @@ typedef enum
   PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
   PMIT_CHANGE,  //入れ替え
   PMIT_ITEM,    //持ち物
+  PMIT_MAIL,    //メール(持ち物の代わりに出る
   PMIT_CLOSE,   //閉じる
   PMIT_LEAVE,   //預ける(育てや
   PMIT_SET_JOIN,    //参加する(参加しない)
-
   PMIT_GIVE,    //持たせる
   PMIT_TAKE,    //預かる
+
+  PMIT_MAIL_READ,    //メールを読む
+  PMIT_MAIL_TAKE,    //メールを取る
   
   PMIT_YES,    //はい
   PMIT_NO,     //いいえ

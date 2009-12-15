@@ -16,6 +16,7 @@
 #include "arc_def.h"
 #include "msg/msg_pokelist.h"
 
+#include "item/item.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_regulation.h"
 #include "pokeicon/pokeicon.h"
@@ -597,6 +598,14 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     if( itemId != 0 )
     {
       GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , TRUE );
+      if( ITEM_CheckMail( itemId ) == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( plateWork->itemIcon , 1 );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( plateWork->itemIcon , 0 );
+      }
     }
     else
     {

@@ -22,6 +22,8 @@
 
 #include "pokeicon/pokeicon.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/mail.h"
+#include "savedata/mail_util.h"
 #include "savedata/regulation.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
@@ -198,11 +200,17 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
 static void PLIST_HPANMCB_SkillRecoverHpFirst( PLIST_WORK *work );
 static void PLIST_HPANMCB_SkillRecoverHpSecond( PLIST_WORK *work );
 
+static void PLIST_MSGCB_TakeMail( PLIST_WORK *work );
+static void PLIST_MSGCB_TakeMailCB( PLIST_WORK *work , const int retVal );
+static void PLIST_MSGCB_TakeMail_Confirm( PLIST_WORK *work );
+static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal );
+
 //外部数値操作
 static void PLIST_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
 static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
-static void PLIST_SubItem( PLIST_WORK *work , u16 itemNo );
-static void PLIST_AddItem( PLIST_WORK *work , u16 itemNo );
+static void PLIST_SetPokeItem( PLIST_WORK *work , POKEMON_PARAM *pp , u16 itemNo );
+static void PLIST_SubBagItem( PLIST_WORK *work , u16 itemNo );
+static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo );
 
 //デバッグメニュー
 static void PLIST_InitDebug( PLIST_WORK *work );
@@ -1019,7 +1027,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_FIELD:
   case PL_MODE_SHINKA:
   case PL_MODE_ITEMSET:
-  case PL_MODE_MAILSET:
+  case PL_MODE_MAILBOX:
   case PL_MODE_WAZASET:
   case PL_MODE_SODATEYA:
     //選択画面へ
@@ -1114,7 +1122,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
-        PLIST_SubItem( work , work->plData->item );
+        PLIST_SubBagItem( work , work->plData->item );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
         //ついでにモードをフィールドに戻してしまう
         work->plData->mode = PL_MODE_FIELD;
@@ -1128,6 +1136,37 @@ static void PLIST_InitMode( PLIST_WORK *work )
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
       }
+    }
+    work->nextMainSeq = PSMS_MSG_WAIT;
+    work->mainSeq = PSMS_FADEIN;
+    work->canExit = TRUE;
+    break;
+  
+  //メール画面からの戻り
+  case PL_MODE_MAILSET:
+  case PL_MODE_MAILSET_BAG:
+    {
+      work->pokeCursor = work->plData->ret_sel;
+      work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+      if( work->plData->mode == PL_MODE_MAILSET )
+      {
+        //バッグからリストを呼んだのでバッグに戻る
+        work->plData->ret_mode = PL_RET_BAG;
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
+      }
+      else
+      {
+        //リストからバッグを呼んでいったので、選択に戻る
+        work->plData->mode = PL_MODE_FIELD;
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      }
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
     }
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;
@@ -1166,7 +1205,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     break;
   
   case PL_MODE_ITEMSET:
-  case PL_MODE_MAILSET:
+  case PL_MODE_MAILBOX:
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_03 );
     work->canExit = FALSE;
@@ -1255,32 +1294,77 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     break;
 
   case PL_MODE_ITEMSET:
-  case PL_MODE_MAILSET:
     {
       //FIXME メール処理
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       if( itemNo == 0 )
       {
+        if( ITEM_CheckMail( work->plData->item ) == TRUE )
+        {
+          work->mainSeq = PSMS_FADEOUT;
+          work->plData->ret_sel = work->pokeCursor;
+          work->plData->ret_mode = PL_RET_MAILSET;
+        }
+        else
+        {
+          work->plData->ret_mode = PL_RET_BAG;
+          
+          PLIST_MSG_CreateWordSet( work , work->msgWork );
+          PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+          PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
+          PLIST_MSG_DeleteWordSet( work , work->msgWork );
+          
+          PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+          PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        }
+      }
+      else
+      if( ITEM_CheckMail( itemNo ) == TRUE )
+      {
+        //メールをはずさないと道具がもてない
         work->plData->ret_mode = PL_RET_BAG;
-        
-        PLIST_MSG_CreateWordSet( work , work->msgWork );
-        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
-        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
-        PLIST_MSG_DeleteWordSet( work , work->msgWork );
-        
-        PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
-        PLIST_SubItem( work , work->plData->item );
-        PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_27 , FALSE , PLIST_MSGCB_ExitCommon );
       }
       else
       {
+        //持ち変える？
         PLIST_MSG_CreateWordSet( work , work->msgWork );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
         PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
         PLIST_MessageWaitInit( work , mes_pokelist_04_28 , FALSE , PLIST_MSGCB_ItemSet_CheckChangeItem );
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
+      }
+    }
+    break;
+
+  case PL_MODE_MAILBOX:
+    {
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      if( itemNo == 0 )
+      {
+        //実データのセット
+        MAIL_DATA* mailData = MAIL_AllocMailData( work->plData->mailblock ,
+                                                  MAILBLOCK_PASOCOM ,
+                                                  work->plData->ret_sel,
+                                                  work->heapId );
+
+        PP_Put( work->selectPokePara , ID_PARA_mail_data , (u32)mailData );
+        GFL_HEAP_FreeMemory( mailData );
+
+        //アイテム番号のセット
+        PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
+        
+        //メール削除処理
+        MAIL_DelMailData( work->plData->mailblock , MAILBLOCK_PASOCOM , work->plData->ret_sel );
+        
+        PLIST_MessageWaitInit( work , mes_pokelist_04_64 , FALSE , PLIST_MSGCB_ExitCommon );
+      }
+      else
+      {
+        //道具を持ってるのでメールをもてない！
+        PLIST_MessageWaitInit( work , mes_pokelist_04_65 , FALSE , PLIST_MSGCB_ExitCommon );
       }
     }
     break;
@@ -1299,7 +1383,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_LearnSkillEmpty( work , work->selectPokePara );
       if( work->plData->item != 0 )
       {
-        PLIST_SubItem( work , work->plData->item );
+        PLIST_SubBagItem( work , work->plData->item );
       }
       PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
@@ -1364,6 +1448,15 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     itemArr[3] = PMIT_ITEM;
     itemArr[4] = PMIT_CLOSE;
     itemArr[5] = PMIT_END_LIST;
+    
+    //メール持ってるかチェック
+    {
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      if( ITEM_CheckMail( itemNo ) == TRUE )
+      {
+        itemArr[3] = PMIT_MAIL;
+      }
+    }
     
     PLIST_MSG_CreateWordSet( work , work->msgWork );
     PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
@@ -2399,6 +2492,17 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
     }
     break;
+    
+  case PMIT_MAIL:
+    {
+      PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_MAIL_READ,PMIT_MAIL_TAKE,PMIT_CLOSE,PMIT_END_LIST};
+      PLIST_SelectMenuInit( work );
+      //先にメニューを開くと、bmpの確保順がずれてゴミが見える・・・
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
+      PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
+    }
+    break;
 
   case PMIT_STATSU:
     work->mainSeq = PSMS_FADEOUT;
@@ -2457,7 +2561,6 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     
   case PMIT_TAKE:
     {
-      //FIXME メール処理
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       if( itemNo == 0 )
       {
@@ -2475,7 +2578,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
         PP_Put( work->selectPokePara , ID_PARA_item , 0 );
-        PLIST_AddItem( work , itemNo );
+        PLIST_AddBagItem( work , itemNo );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
       }
     }
@@ -2485,6 +2588,16 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = work->pokeCursor;
     work->plData->ret_mode = PL_RET_ITEMSET;
+    break;
+
+  case PMIT_MAIL_READ:    //メールを読む
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_MAILREAD;
+    break;
+    
+  case PMIT_MAIL_TAKE:    //メールを取る
+    PLIST_MessageWaitInit( work , mes_pokelist_04_01 , FALSE , PLIST_MSGCB_TakeMail );
     break;
 
   case PMIT_LEAVE:
@@ -2990,7 +3103,7 @@ static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
   PLIST_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
   if( work->plData->item != 0 )
   {
-    PLIST_SubItem( work , work->plData->item );
+    PLIST_SubBagItem( work , work->plData->item );
   }
 }
 
@@ -3006,30 +3119,37 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
   {
     //はいアイテム入れ替え
     const u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
-
-    PLIST_MSG_CloseWindow( work , work->msgWork );
-
-    PLIST_MSG_CreateWordSet( work , work->msgWork );
-    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , haveItemNo );
-    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , work->plData->item );
-    if( work->plData->mode == PL_MODE_ITEMSET_RET )
+    if( ITEM_CheckMail( work->plData->item ) == TRUE )
     {
-      //リストから開始なので戻る
-      //ついでにモードをフィールドに戻してしまう
-      work->plData->mode = PL_MODE_FIELD;
-      PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      //メール処理
+      work->plData->ret_sel = work->pokeCursor;
+      work->mainSeq = PSMS_FADEOUT;
+      work->plData->ret_mode = PL_RET_MAILSET;
     }
     else
     {
-      //アイテムから来たので終了
-      work->plData->ret_mode = PL_RET_BAG;
-      PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
-    }
-    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      PLIST_MSG_CloseWindow( work , work->msgWork );
 
-    PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
-    PLIST_SubItem( work , work->plData->item );
-    PLIST_AddItem( work , work->plData->item );
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , haveItemNo );
+      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , work->plData->item );
+      if( work->plData->mode == PL_MODE_ITEMSET_RET )
+      {
+        //リストから開始なので戻る
+        //ついでにモードをフィールドに戻してしまう
+        work->plData->mode = PL_MODE_FIELD;
+        PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      }
+      else
+      {
+        //アイテムから来たので終了
+        work->plData->ret_mode = PL_RET_BAG;
+        PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
+      }
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+    }
   }
   else
   {
@@ -3095,6 +3215,71 @@ static void PLIST_HPANMCB_SkillRecoverHpSecond( PLIST_WORK *work )
     PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
   }
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+
+
+//メールを預かりますか？
+static void PLIST_MSGCB_TakeMail( PLIST_WORK *work )
+{
+  PLIST_YesNoWaitInit( work , PLIST_MSGCB_TakeMailCB );
+}
+
+static void PLIST_MSGCB_TakeMailCB( PLIST_WORK *work , const int retVal )
+{
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+
+  if( retVal == PMIT_YES )
+  {
+    //はい→預ける
+    const int emptyBoxId = MAIL_SearchNullID( work->plData->mailblock , MAILBLOCK_PASOCOM );
+    if( emptyBoxId >= 0 )
+    {
+      MAIL_DATA *mailData  = MailData_CreateWork(work->heapId);
+      PP_Get( work->selectPokePara , ID_PARA_mail_data , mailData );
+      MAIL_AddMailFormWork( work->plData->mailblock , MAILBLOCK_PASOCOM , emptyBoxId , mailData );
+      GFL_HEAP_FreeMemory( mailData );
+      PP_Put( work->selectPokePara , ID_PARA_item , 0 );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+      
+      PLIST_MessageWaitInit( work , mes_pokelist_04_02 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    }
+    else
+    {
+      //BOX一杯！
+      PLIST_MessageWaitInit( work , mes_pokelist_04_04 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    }
+  }
+  else
+  {
+    //いいえ→消えるけどOK？
+    PLIST_MessageWaitInit( work , mes_pokelist_04_03 , TRUE , PLIST_MSGCB_TakeMail_Confirm );
+  }
+}
+
+//メール取る：消えるけどOK?
+static void PLIST_MSGCB_TakeMail_Confirm( PLIST_WORK *work )
+{
+  PLIST_YesNoWaitInit( work , PLIST_MSGCB_TakeMail_ConfirmCB );
+}
+
+static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal )
+{
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+
+  if( retVal == PMIT_YES )
+  {
+    //はい→消す
+    PP_Put( work->selectPokePara , ID_PARA_item , 0 );
+    PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_05 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+  }
+  else
+  {
+    //いいえ→戻る
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+    work->mainSeq = PSMS_SELECT_POKE;
+    PLIST_InitMode_Select( work );
+  }
 }
 
 #pragma mark [>force exit
@@ -3192,13 +3377,25 @@ static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos
   PP_SetWazaPos( pp , work->plData->waza , pos );
 }
 
+//アイテムを持たせる処理
+//持っている場合はアイテムをリストに戻します。
+static void PLIST_SetPokeItem( PLIST_WORK *work , POKEMON_PARAM *pp , u16 itemNo )
+{
+  const u32 haveNo = PP_Get( pp , ID_PARA_item , NULL );
+  if( haveNo != 0 )
+  {
+    PLIST_AddBagItem( work , haveNo );
+  }
+  PP_Put( pp , ID_PARA_item , itemNo );
+  PLIST_SubBagItem( work , itemNo );
+}
 //アイテムを消費する
-static void PLIST_SubItem( PLIST_WORK *work , u16 itemNo )
+static void PLIST_SubBagItem( PLIST_WORK *work , u16 itemNo )
 {
   MYITEM_SubItem( work->plData->myitem , itemNo , 1 , work->heapId );
 }
 //アイテムを増やす
-static void PLIST_AddItem( PLIST_WORK *work , u16 itemNo )
+static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo )
 {
   MYITEM_AddItem( work->plData->myitem , itemNo , 1 , work->heapId );
 }

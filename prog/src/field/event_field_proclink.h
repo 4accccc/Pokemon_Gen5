@@ -43,6 +43,7 @@ typedef enum
   EVENT_PROCLINK_CALL_STATUS,       //ステータス
   EVENT_PROCLINK_CALL_TOWNMAP,      //タウンマップ
   EVENT_PROCLINK_CALL_WIFINOTE,     //ともだち手帳
+  EVENT_PROCLINK_CALL_MAIL,        //メール画面
 
   EVENT_PROCLINK_CALL_MAX           //.c内で使用
 } EVENT_PROCLINK_CALL_TYPE;

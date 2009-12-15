@@ -270,6 +270,11 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       menuWork->itemArr[menuWork->itemNum] = PMIT_ITEM;
       menuWork->itemNum += 1;
       break;
+      
+    case  PMIT_MAIL:   //メール(持ち物の代わりに出る
+      menuWork->itemArr[menuWork->itemNum] = PMIT_MAIL;
+      menuWork->itemNum += 1;
+      break;
 
     case PMIT_CLOSE:   //閉じる
       menuWork->itemArr[menuWork->itemNum] = PMIT_CLOSE;
@@ -307,6 +312,16 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
 
     case PMIT_TAKE:   //預かる
       menuWork->itemArr[menuWork->itemNum] = PMIT_TAKE;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_MAIL_READ:    //メールを読む
+      menuWork->itemArr[menuWork->itemNum] = PMIT_MAIL_READ;
+      menuWork->itemNum += 1;
+      break;
+
+    case PMIT_MAIL_TAKE:    //メールを取る
+      menuWork->itemArr[menuWork->itemNum] = PMIT_MAIL_TAKE;
       menuWork->itemNum += 1;
       break;
 
@@ -364,11 +379,14 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     0 ,          //PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
     mes_pokelist_05_01 ,  //PMIT_CHANGE,  //入れ替え
     mes_pokelist_05_03 ,  //PMIT_ITEM,    //持ち物
+    mes_pokelist_05_04 ,  //PMIT_MAIL,    //メール(持ち物の代わりに出る
     mes_pokelist_05_08 ,  //PMIT_CLOSE,   //閉じる
     mes_pokelist_05_07 ,  //PMIT_LEAVE,   //預ける(育てや
     0 ,          //PMIT_SET_JOIN,    //参加する(参加しない)
     mes_pokelist_05_16 ,  //  PMIT_GIVE,    //持たせる
     mes_pokelist_05_17 ,  //  PMIT_TAKE,    //預かる
+    mes_pokelist_05_05 ,  //  PMIT_MAIL_READ,    //メールを読む
+    mes_pokelist_05_06 ,  //  PMIT_MAIL_TAKE,    //メールを取る
     mes_pokelist_yes ,  //  PMIT_YES,    //はい
     mes_pokelist_no ,   //  PMIT_NO,    //いいえ
     0 ,          //PMIT_WAZA_1,   //技スロット１
