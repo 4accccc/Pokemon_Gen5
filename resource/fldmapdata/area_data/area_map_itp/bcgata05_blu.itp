@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-01T22:37:04" source="bcgata05_00_00_016.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-10T19:33:24" source="bcgata05_00_00_017.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,10 +11,10 @@
 <body>
 
 <tex_pattern_info
-	frame_size="8"
+	frame_size="9"
 	tool_start_frame="1"
-	tool_end_frame="8"
-	compress_material="on" material_size="1 1"
+	tool_end_frame="9"
+	compress_material="on" material_size="2 2"
 />
 
 <tex_pattern_list_data image_size="4" palette_size="4">
@@ -29,19 +29,20 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="4">
-		0 1 4 6
+	<frame_idx size="8">
+		0 2 5 7 0 2 5 7
 	</frame_idx>
-	<image_idx size="4">
-		0 1 2 3
+	<image_idx size="8">
+		0 1 2 3 1 2 3 0
 	</image_idx>
-	<palette_idx size="4">
-		0 1 2 3
+	<palette_idx size="8">
+		0 1 2 3 1 2 3 0
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="1">
+<tex_pattern_anm_array size="2">
 	<tex_pattern_anm index="0" material_name="lambert69" data_size="4" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="lambert77" data_size="4" data_head="4"/>
 </tex_pattern_anm_array>
 
 </body>
