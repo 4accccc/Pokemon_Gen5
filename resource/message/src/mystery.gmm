@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-12-15T22:49:04"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-15T23:51:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,7 +469,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="675"/>
 		<band id="3" index="3" style="0000" width="675"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1189,10 +1189,10 @@
 	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>カードを削除しないで出ようとしたときのメッセージ</comment>
 		<language name="JPN" width="216">カードを　すてないと
-おくりものを　もらえません▽
+おくりものを　もらえません[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 		<language name="JPN_KANJI">カードを　すてないと
-おくりものを　もらえません▽
+おくりものを　もらえません[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 	</row>
 
@@ -1334,10 +1334,10 @@
 
 	<row id="syachi_mystery_01_015" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>贈り物データを書き込み完了</comment>
-		<language name="JPN" width="216">おくりものを　うけとりました！▼
+		<language name="JPN" width="216">おくりものを　うけとりました！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
 はいたついん　から　うけとってね！</language>
-		<language name="JPN_KANJI">おくりものを　うけとりました！▼
+		<language name="JPN_KANJI">おくりものを　うけとりました！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
 はいたついん　から　うけとってね！</language>
 	</row>
@@ -1394,20 +1394,40 @@
 		<language name="JPN_KANJI">いれかえるカードを　えらんでください</language>
 	</row>
 
+	<row id="syachi_mystery_01_021" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>カード削除最終確認</comment>
+		<language name="JPN" width="216">この カードを　すてても
+よろしいですか？</language>
+		<language name="JPN_KANJI">この カードを　すてても
+よろしいですか？</language>
+	</row>
+
+	<row id="syachi_mystery_01_021_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：はい</comment>
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="syachi_mystery_01_021_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>選択項目：いいえ</comment>
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
 	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ＮＧメッセージ
 配達員の贈り物が一杯</comment>
 		<language name="JPN" width="216">はいたついんが　もっている
-おくりものが　いっぱい　です！▼
+おくりものが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターに　いる
-はいたついんから▽
-おくりもの　を　うけとって▼
+はいたついんから[BE:00:ページ切り替え（行送り）]
+おくりもの　を　うけとって[BE:00:ページ切り替え（行送り）]
 レポートを　かいてから　きてください</language>
 		<language name="JPN_KANJI">はいたついんが　もっている
-おくりものが　いっぱい　です！▼
+おくりものが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターに　いる
-はいたついんから▽
-おくりもの　を　うけとって▼
+はいたついんから[BE:00:ページ切り替え（行送り）]
+おくりもの　を　うけとって[BE:00:ページ切り替え（行送り）]
 レポートを　かいてから　きてください</language>
 	</row>
 
@@ -1415,10 +1435,10 @@
 		<comment>ＮＧメッセージ
 一度受信済みで再受信ＮＧのもの</comment>
 		<language name="JPN" width="216">この　おくりもの　は
-いちど　うけとった　ことが　あるので▽
+いちど　うけとった　ことが　あるので[BE:00:ページ切り替え（行送り）]
 うけとる　ことが　できません！</language>
 		<language name="JPN_KANJI">この　おくりもの　は
-いちど　うけとった　ことが　あるので▽
+いちど　うけとった　ことが　あるので[BE:00:ページ切り替え（行送り）]
 うけとる　ことが　できません！</language>
 	</row>
 
@@ -1440,14 +1460,14 @@
 	<row id="syachi_mystery_err_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ＮＧメッセージ
 不思議カードが一杯</comment>
-		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！▼
+		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
 おくりものを
-うけとる　ことが　できません！▼
+うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]
 ふしぎカードを
 せいりしますか？</language>
-		<language name="JPN_KANJI">ふしぎなカードが　いっぱい　です！▼
+		<language name="JPN_KANJI">ふしぎなカードが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
 おくりものを
-うけとる　ことが　できません！▼
+うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]
 ふしぎカードを
 せいりしますか？</language>
 	</row>
@@ -1466,23 +1486,23 @@
 
 	<row id="syachi_mystery_err_006" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">おくりものを　うけとるのに
-しっぱい　しました▼
+しっぱい　しました[BE:01:ページ切り替え（クリア）]
 Ａボタンを　おすと
 タイトルに　もどります</language>
 		<language name="JPN_KANJI">おくりものを　うけとるのに
-しっぱい　しました▼
+しっぱい　しました[BE:01:ページ切り替え（クリア）]
 Ａボタンを　おすと
 タイトルに　もどります</language>
 	</row>
 
 	<row id="syachi_mystery_err_007" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">おくりものを　みつけましたが
-このバージョンでは▽
-うけとることが　できません▽
+このバージョンでは[BE:00:ページ切り替え（行送り）]
+うけとることが　できません[BE:00:ページ切り替え（行送り）]
 Ａボタンで　メニューに　もどります</language>
 		<language name="JPN_KANJI">おくりものを　みつけましたが
-このバージョンでは▽
-うけとることが　できません▽
+このバージョンでは[BE:00:ページ切り替え（行送り）]
+うけとることが　できません[BE:00:ページ切り替え（行送り）]
 Ａボタンで　メニューに　もどります</language>
 	</row>
 
