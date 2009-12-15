@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T17:17:40"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T22:40:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="692"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -342,10 +342,10 @@
 ・表示後、うろうろしてから
 　次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……それにしても
+		<language name="JPN" width="256">ブラッカー『……それにしても
 せっかく　チャンピオンに　なれたのに[BE:00:ページ切り替え（行送り）]
 じぶんから　やめるのは　おかしいよな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……それにしても
+		<language name="JPN_KANJI" width="256">ブラッカー『……それにしても
 せっかく　チャンピオンに　なれたのに[BE:00:ページ切り替え（行送り）]
 自分から辞めるのは　おかしいよな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -354,12 +354,10 @@
 		<comment>♂
 ・メッセージ表示後、
 　ライバルだけ、コンテナの奥へ移動</comment>
-		<language name="JPN" width="256">クロック『……じっとしてても
-さむいだけだな[BE:01:ページ切り替え（クリア）]
-コンテナの　なかを　たんさくするか[BE:01:ページ切り替え（クリア）]　</language>
-		<language name="JPN_KANJI" width="256">クロック『……じっとしてても
-寒いだけだな[BE:01:ページ切り替え（クリア）]
-中を　探索するか[BE:01:ページ切り替え（クリア）]　</language>
+		<language name="JPN" width="256">ブラッカー『……さっさと
+コンテナの　なかを　しらべるか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……さて
+さっさと　中を　探索するか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d05r0101_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
