@@ -26,7 +26,7 @@ static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
 
 
-#define TRAY_ALL_USE_BIT	((1<<BOX_MAX_TRAY)-1)
+//#define TRAY_ALL_USE_BIT	((1<<BOX_MAX_TRAY)-1)
 //#define TRAY_ALL_USE_BIT	(0b111111111111111111)
 
 //フラッシュのページをまたがないように1トレー分のデータを256バイトアライメントする
@@ -40,7 +40,7 @@ struct _BOX_SAVEDATA{
 //	BOX_TRAY_DATA		btd[BOX_MAX_TRAY];  //WBよりトレーが個別のセーブになります。
 	//ここより下のデータが２５６バイトアライメントされたところにマッピングされる
 	u32			currentTrayNumber;								//4
-	u32			UseBoxBits;										//4
+//	u32			UseBoxBits;										//4
 	STRCODE	trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*24 = 960
 	u8			wallPaper[BOX_MAX_TRAY];						//24
 	u8			daisukiBitFlag;									//1
@@ -60,7 +60,7 @@ struct _BOX_SAVEDATA{
 #ifdef PM_DEBUG
 #ifdef _NITRO
 SDK_COMPILER_ASSERT(sizeof(BOX_TRAY_DATA) == 4080); //ヘッダ分減らしました
-SDK_COMPILER_ASSERT(sizeof(BOX_SAVEDATA) == 0x3e4);
+SDK_COMPILER_ASSERT(sizeof(BOX_SAVEDATA) == 0x3e0);
 #endif
 #endif
 
@@ -94,7 +94,6 @@ void BOXDAT_Init( BOX_SAVEDATA* boxdat )
 //------------------------------------------------------------------
 u32 BOXDAT_GetTotalSize( void )
 {
-
 	OS_Printf("ボックスデータサイズ%x\n",sizeof( BOX_SAVEDATA ));
 	return sizeof( BOX_SAVEDATA );
 }
@@ -179,7 +178,7 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 		if( BOXDAT_PutPokemonBox( box, b, poke ) )
 		{
 			//SaveData_RequestTotalSave();	//金銀で変更
-			BOXDAT_SetTrayUseBit( box, b);
+//			BOXDAT_SetTrayUseBit( box, b);
 			return TRUE;
 		}
 
@@ -195,7 +194,7 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 	if( boxData->trayMax != BOX_MAX_TRAY ){
 		BOXDAT_PutPokemonBox( box, boxData->trayMax, poke );
 		//SaveData_RequestTotalSave();	//金銀で変更
-		BOXDAT_SetTrayUseBit( box, boxData->trayMax );
+//		BOXDAT_SetTrayUseBit( box, boxData->trayMax );
 		boxData->trayMax += BOX_MIN_TRAY;
 		return TRUE;
 	}
@@ -233,7 +232,7 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
 		{
 			trayData->ppp[i] = *poke;
 			//SaveData_RequestTotalSave();	//金銀で変更
-			BOXDAT_SetTrayUseBit( box, trayNum);
+//			BOXDAT_SetTrayUseBit( box, trayNum);
 			return TRUE;
 		}
 	}
@@ -266,7 +265,7 @@ BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON
     BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 		trayData->ppp[pos] = *poke;
 		//SaveData_RequestTotalSave();	金銀で変更
-		BOXDAT_SetTrayUseBit( box, trayNum);	
+//		BOXDAT_SetTrayUseBit( box, trayNum);	
 		return TRUE;
 	}else{
 		GF_ASSERT(0);
@@ -295,8 +294,8 @@ void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 tray1, u32 pos1, u32 tray2, u
 	tray1Data->ppp[pos1] = tray2Data->ppp[pos2];
 	tray2Data->ppp[pos2] = tmp;
 	//SaveData_RequestTotalSave();	金銀で変更
-	BOXDAT_SetTrayUseBit( box, tray1 );
-	BOXDAT_SetTrayUseBit( box, tray2 );
+//	BOXDAT_SetTrayUseBit( box, tray1 );
+//	BOXDAT_SetTrayUseBit( box, tray2 );
 }
 
 //------------------------------------------------------------------
@@ -322,7 +321,7 @@ void BOXDAT_ClearPokemon( BOX_MANAGER* box, u32 trayNum, u32 pos )
     BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 		PPP_Clear( &(trayData->ppp[pos]) );
 		//SaveData_RequestTotalSave();	金銀で変更
-		BOXDAT_SetTrayUseBit( box, trayNum);
+//		BOXDAT_SetTrayUseBit( box, trayNum);
 	}
 	else
 	{
@@ -874,7 +873,7 @@ void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int param, u32 
   trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 	PPP_Put( (POKEMON_PASO_PARAM*)(&trayData->ppp[pos]), param, arg );
 	//SaveData_RequestTotalSave();	//金銀で変更
-	BOXDAT_SetTrayUseBit( box, trayNum);
+//	BOXDAT_SetTrayUseBit( box, trayNum);
 
 }
 
@@ -996,6 +995,7 @@ u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box )
  * @retval  none
  */
 //------------------------------------------------------------------
+/*
 void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx)
 {
 	u8 bit;
@@ -1011,6 +1011,7 @@ void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx)
 
 	boxData->UseBoxBits |= data;
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -1022,12 +1023,14 @@ void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx)
  * @retval  none
  */
 //------------------------------------------------------------------
+/*
 void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box)
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	boxData->UseBoxBits = TRAY_ALL_USE_BIT;
 	OS_Printf("全ビットオン%x\n",boxData->UseBoxBits);
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -1039,12 +1042,14 @@ void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box)
  * @retval  none
  */
 //------------------------------------------------------------------
+/*
 void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box)
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	boxData->UseBoxBits = 0;
 	OS_Printf("トレー編集ビット全クリア\n");
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -1055,11 +1060,13 @@ void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box)
  * @retval  u32		編集ビット群
  */
 //------------------------------------------------------------------
+/*
 u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box)
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	return boxData->UseBoxBits;
 }
+*/
 
 //------------------------------------------------------------------
 /**

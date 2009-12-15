@@ -1082,9 +1082,11 @@ void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, u32 tray, int prm, u3
 		return;
 	}
 	PPP_Put( ppp, prm, buf );
+/*
 	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 		BOXDAT_SetTrayUseBit( syswk->dat->sv_box, tray );
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -4051,9 +4053,11 @@ int BOX2MAIN_PokeStatusExit( BOX2_SYS_WORK * syswk )
 		}
 	}
 
+/*
 	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && pst->waza_chg == TRUE ){
 		BOXDAT_SetTrayUseBit( syswk->dat->sv_box, syswk->tray );
 	}
+*/
 
 //	GFL_OVERLAY_Unload( FS_OVERLAY_ID(poke_status) );
 	GFL_HEAP_FreeMemory( syswk->subProcWork );

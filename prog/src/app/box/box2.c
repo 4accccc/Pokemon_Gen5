@@ -146,18 +146,15 @@ static GFL_PROC_RESULT Box2Proc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT Box2Proc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-//	BOX2_SYS_WORK * syswk = mywk;
+	BOX2_SYS_WORK * syswk = mywk;
+
+	BOXDAT_SetCureentTrayNumber( syswk->dat->sv_box, syswk->tray );		// カレントトレイ更新
 
 //	GFL_HEAP_FreeMemory( syswk->getPP );
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_BOX_SYS );
 
 	OS_Printf( "↑↑↑↑↑　ボックス処理終了　↑↑↑↑↑\n" );
-
-/*
-
-	BOXDAT_SetCureentTrayNumber( syswk->box, syswk->tray );		// カレントトレイ更新
-*/
 
 	return GFL_PROC_RES_FINISH;
 }

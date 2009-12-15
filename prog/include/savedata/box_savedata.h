@@ -204,10 +204,10 @@ extern BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number );
 extern u32  BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box );
 
 
-extern void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx);
-extern void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box);
-extern void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box);
-extern u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box);
+//extern void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx);
+//extern void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box);
+//extern void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box);
+//extern u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box);
 extern u32 BOXDAT_GetOneBoxDataSize(void);
 extern void BOXDAT_CheckBoxDummyData(BOX_MANAGER* box);
 

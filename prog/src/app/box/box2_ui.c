@@ -3618,8 +3618,24 @@ u32 BOX2UI_HitCheckContTrayArrow(void)
 	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_LEFT], 2 );
 }
 
+
+
+
+
+
+
+static const GFL_UI_TP_HITTBL PokeGetTrayScrollHitTbl[] =
+{
+	{   0,  21, 173, 255 },
+	{ 148, 167, 173, 255 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
 u32 BOX2UI_HitCheckContTrayIconScroll(void)
 {
+	return GFL_UI_TP_HitCont( PokeGetTrayScrollHitTbl );
+
+/*
 	u32	ret = HitCheckCont( &BoxArrangePokeMoveCursorMoveData[BOX2UI_ARRANGE_PGT_TRAY1], 6 );
 
 	if( ret != GFL_UI_TP_HIT_NONE ){
@@ -3632,6 +3648,7 @@ u32 BOX2UI_HitCheckContTrayIconScroll(void)
 		}
 	}
 	return GFL_UI_TP_HIT_NONE;
+*/
 }
 
 
