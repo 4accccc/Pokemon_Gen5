@@ -156,8 +156,8 @@ pc_mail_box:
     _BMPMENU_MAKE_LIST( msg_pc_mail_window_02, msg_pc_mail_window_02 )  // せつぞくを きる
     _BMPMENU_START()
     // 選択に応じた処理
-    // @todo メールボックス呼び出し処理
     SWITCH $select_pos
+    CASE msg_pc_mail_window_01 THEN _CALL_MAILBOX_PROC()
     CASE msg_pc_mail_window_02 THEN $exit = TRUE
     CASE EV_WIN_B_CANCEL       THEN $exit = TRUE
     ENDSWITCH 

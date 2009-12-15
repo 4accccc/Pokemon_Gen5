@@ -115,6 +115,22 @@
 #endif
 
 
+#include "event_mapchange.h"  // TEST:
+#include "field_gimmick_league_front01.h"  // TEST:
+#include "field_gimmick_league_front02.h"  // TEST:
+#include "fldeff_iaigiri.h" // TEST:
+#include "event_pokecen_pc.h" // TEST:
+#include "fld_trade.h"  // TEST:
+#include "net_app/pokemontrade.h" // TEST:
+#include "event_fieldmap_control.h" // TEST:
+#include "app/mailbox.h"  // TEST:
+
+// TEST:
+FS_EXTERN_OVERLAY(pokemon_trade);
+FS_EXTERN_OVERLAY(app_mail);
+extern const GFL_PROC_DATA PokemonTradeDemoProcData;
+
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -902,6 +918,74 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
     PL_BOAT_Main(*wk_ptr);
   }
+
+
+  // TEST: 3Dマッパー情報表示
+  { 
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( trg & PAD_BUTTON_START )
+    {
+      FLDMAPPER_DebugPrint( fieldWork->g3Dmapper );
+    }
+  }
+
+#if 1
+  // TEST: イベント呼び出し
+  {
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_L )
+    {
+      if( trg & PAD_BUTTON_A )
+      {
+        GMEVENT* event;
+        //event = EVENT_ChangeMapByAnanukenohimo( gsys );
+        //event = LEAGUE_FRONT_01_GIMMICK_GetLiftDownEvent( gsys, fieldWork );
+        //event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( gsys, fieldWork );
+        //event = EVENT_PokecenPcOn( NULL, gsys, fieldWork );
+        //event = EVENT_PokecenPcOff( gsys, fieldWork );
+        event = EVENT_FieldPokeTrade( gsys, 0, 0 );
+        GAMESYSTEM_SetEvent( gsys, event );
+      }
+      if( trg & PAD_BUTTON_B )
+      {
+        GMEVENT* event;
+        GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+        MAILBOX_PARAM* mbox_param;
+        mbox_param = GFL_HEAP_AllocMemory(HEAPID_WORLD, sizeof(MAILBOX_PARAM));
+        mbox_param->gamedata = gdata;
+        event = EVENT_FieldSubProc( gsys, fieldWork, FS_OVERLAY_ID(app_mail), 
+            &MailBoxProcData, mbox_param );
+        GAMESYSTEM_SetEvent( gsys, event );
+      }
+    }
+  }
+#endif
+#if 0
+  // TEST: 動作モデル
+  {
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_R )
+    {
+      if( trg & PAD_BUTTON_A )
+      {
+        MMDL* mmdl;
+        mmdl = FIELD_PLAYER_GetMMdl( fieldWork->field_player ); 
+        MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+        MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_MOVE );
+        MMDL_SetAcmd( mmdl, AC_DASH_R_4F );
+      }
+      if( trg & PAD_BUTTON_B )
+      {
+        MMDL* mmdl;
+        mmdl = FIELD_PLAYER_GetMMdl( fieldWork->field_player ); 
+        MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+      }
+    }
+  }
+#endif
 
   return MAINSEQ_RESULT_CONTINUE;
 }

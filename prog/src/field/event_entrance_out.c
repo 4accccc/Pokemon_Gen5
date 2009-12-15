@@ -259,7 +259,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( iss_type_now == ISS_TYPE_DUNGEON )
       {
-        FIELD_SOUND_FadeInPopBGM( fsnd, 20 );
+        FIELD_SOUND_FadeInBGM( fsnd, bgm_now, 20 );
       }
     }
     ++ *seq;

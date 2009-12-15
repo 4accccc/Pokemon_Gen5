@@ -223,7 +223,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
       if( ( iss_type_next == ISS_TYPE_DUNGEON ) &&
           ( iss_type_now == ISS_TYPE_DUNGEON ) )
       {
-        FIELD_SOUND_FadeOutPushBGM( fsnd, 20 );
+        FIELD_SOUND_FadeOutBGM( fsnd, 20 );
       }
     }
     ++ *seq;

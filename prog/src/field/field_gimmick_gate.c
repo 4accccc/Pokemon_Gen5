@@ -321,6 +321,8 @@ static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_DIRECT( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
 static void AddNews_CHAMP( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
+static void AddSpNews( GOBJ_ELBOARD* elboard, 
+                       const ELBOARD_SPNEWS_DATA* data_array, u8 data_num );
 
 
 //==========================================================================================
@@ -968,27 +970,14 @@ static BOOL CheckSpecialNews( GATEWORK* work )
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata );
 
+  // 臨時ニュースデータを検索
   for( i=0; i<work->spNewsDataNum; i++ )
   { 
     BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
     BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
     if( flag_hit && zone_hit )  // if(フラグON && ゾーン一致)
     {
-      u32 zone_1, zone_2, zone_3, zone_4;
-      zone_1 = work->spNewsData[i].zoneID_1;
-      zone_2 = work->spNewsData[i].zoneID_2;
-      zone_3 = work->spNewsData[i].zoneID_3;
-      zone_4 = work->spNewsData[i].zoneID_4;
-      if( (zone_1 == ZONE_ID_MAX) && 
-          (zone_2 == ZONE_ID_MAX) &&
-          (zone_3 == ZONE_ID_MAX) && 
-          (zone_4 == ZONE_ID_MAX) )
-      {
-        return TRUE; 
-      }
-      else
-      {
-      }
+      return TRUE;
     }
   }
   return FALSE;

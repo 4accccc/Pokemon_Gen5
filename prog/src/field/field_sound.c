@@ -44,18 +44,20 @@ struct _TAG_FIELD_SOUND
   u16 play_event_bgm; // イベントBGM再生中
   s16 push_count; // BGM Pushカウント
 
-  FS_STATE state; // 現在の状態
-  u32 nextBGMNo;  // 次に再生するBGM
-  u16 fadeInFrame;  // フェードインフレーム数 
-  u16 fadeOutFrame; // フェードアウトフレーム数
-  BOOL fadeInPop;
-  BOOL fadeOutPush;
+  FS_STATE   state;  // 現在の状態
+  u32      nextBGM;  // 次に再生するBGM
+  u16  fadeInFrame;  // フェードインフレーム数 
+  u16 fadeOutFrame;  // フェードアウトフレーム数
+  BOOL   reqFadeIn;  // リクエスト(フェードイン) 
+  BOOL  reqFadeOut;  // リクエスト(フェードアウト) 
+  BOOL      reqPop;  // リクエスト(ポップ)
+  BOOL     reqPush;  // リクエスト(プッシュ)
 };
 
 //======================================================================
 //  proto
 //======================================================================
-static u32 fsnd_GetMapBGMIndex( GAMEDATA *gdata, u32 zone_id );
+static u32 fsnd_GetMapBGM( GAMEDATA *gdata, u32 zone_id );
 static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max );
 static void fsnd_PopBGM( FIELD_SOUND *fsnd );
 static void fsnd_UpdateBGM_PLAY( FIELD_SOUND* fsnd );
@@ -77,10 +79,12 @@ FIELD_SOUND * FIELD_SOUND_Create( HEAPID heapID )
 {
   FIELD_SOUND *fsnd;
   fsnd = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_SOUND) );
-  fsnd->state = FS_STATE_STOP;
-  fsnd->nextBGMNo = 0;
-  fsnd->fadeInPop = FALSE;
-  fsnd->fadeOutPush = FALSE;
+  fsnd->state      = FS_STATE_STOP;
+  fsnd->nextBGM    = 0;
+  fsnd->reqFadeIn  = FALSE;
+  fsnd->reqFadeOut = FALSE;
+  fsnd->reqPop     = FALSE;
+  fsnd->reqPush    = FALSE;
   return( fsnd );
 }
 
@@ -134,16 +138,16 @@ void FIELD_SOUND_PlayBGM( u32 bgmNo )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_PlayNextBGM_Ex( 
-    FIELD_SOUND* fsnd, u32 bgmNo, u16 fadeOutFrame, u16 fadeInFrame )
+void FIELD_SOUND_PlayNextBGM_Ex( FIELD_SOUND* fsnd, u32 bgmNo, 
+                                 u16 fadeOutFrame, u16 fadeInFrame )
 { 
-  if( fsnd->fadeInPop || fsnd->fadeOutPush )
+  // 何らかのリクエストがある場合, BGM変更リクエストは無効とする
+  if( fsnd->reqFadeIn || fsnd->reqFadeOut || fsnd->reqPop || fsnd->reqPush )
   {
     return;
-  }
-
-  // 次のBGMリクエストを更新
-  fsnd->nextBGMNo    = bgmNo;
+  } 
+  // リクエストを更新
+  fsnd->nextBGM      = bgmNo;
   fsnd->fadeInFrame  = fadeInFrame; 
   fsnd->fadeOutFrame = fadeOutFrame; 
 }
@@ -158,8 +162,8 @@ void FIELD_SOUND_PlayNextBGM_Ex(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_ChangePlayZoneBGM(
-    FIELD_SOUND* fsnd, GAMEDATA* gdata, PLAYER_MOVE_FORM form, u32 zone_id )
+void FIELD_SOUND_ChangePlayZoneBGM( FIELD_SOUND* fsnd, GAMEDATA* gdata, 
+                                    PLAYER_MOVE_FORM form, u32 zone_id )
 {
   // 自機フォームなどを考慮し, 指定ゾーンで再生すべきBGMを決定
   u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
@@ -279,10 +283,10 @@ void FIELD_SOUND_UpdateBGM( FIELD_SOUND* fsnd )
 //----------------------------------------------------------------------
 static void fsnd_UpdateBGM_PLAY( FIELD_SOUND* fsnd )
 {
-  u32 now = PMSND_GetNextBGMsoundNo();  // 現BGM
+  u32 now_bgm = PMSND_GetNextBGMsoundNo();
 
-  // BGM変更リクエスト有 ==> フェードアウト開始
-  if( now != fsnd->nextBGMNo )
+  // BGM変更 or フェードアウト
+  if( (now_bgm != fsnd->nextBGM) || ( fsnd->reqFadeOut ) )
   {
     PMSND_FadeOutBGM( fsnd->fadeOutFrame );
     fsnd->state = FS_STATE_FADE_OUT; 
@@ -297,18 +301,14 @@ static void fsnd_UpdateBGM_PLAY( FIELD_SOUND* fsnd )
 //----------------------------------------------------------------------
 static void fsnd_UpdateBGM_FADE_OUT( FIELD_SOUND* fsnd )
 {
-  // フェード終了 ==> 停止
-  if( PMSND_CheckFadeOnBGM() != TRUE )
-  {
-    if( fsnd->fadeOutPush )
-    { // BGM退避
+  if( PMSND_CheckFadeOnBGM() != TRUE )  // if(フェード終了)
+  { 
+    if( fsnd->reqPush )  // if(プッシュリクエスト)
+    { 
       fsnd_PushBGM( fsnd, FSND_PUSHCOUNT_BASEBGM );
-    }
-    else 
-    { // BGM停止
-      PMSND_StopBGM();
-    }
-    fsnd->state = FS_STATE_STOP;
+    } 
+    fsnd->reqFadeOut = FALSE;
+    fsnd->state      = FS_STATE_STOP;
     // DEBUG:
     OBATA_Printf( "FIELD_SOUND: stop\n" );
   }
@@ -321,18 +321,25 @@ static void fsnd_UpdateBGM_FADE_OUT( FIELD_SOUND* fsnd )
 static void fsnd_UpdateBGM_STOP( FIELD_SOUND* fsnd )
 {
   BOOL fade_start = FALSE;
+  u32  now_bgm    = PMSND_GetNextBGMsoundNo();
 
   // Popリクエスト有 ==> フェードイン開始
-  if( fsnd->fadeInPop )
+  if( fsnd->reqPop )
   { // BGM復帰
     fsnd_PopBGM( fsnd );
     PMSND_FadeInBGM( fsnd->fadeInFrame );
     fade_start = TRUE;
   }
-  // BGM変更リクエスト有 ==> フェードイン開始
-  else if( fsnd->nextBGMNo != 0 )
-  { // BGM再生開始
-    PMSND_PlayNextBGM( fsnd->nextBGMNo, 0, fsnd->fadeInFrame ); 
+  // BGM変更リクエスト有
+  else if( fsnd->nextBGM && fsnd->nextBGM != now_bgm )
+  { 
+    PMSND_PlayNextBGM( fsnd->nextBGM, 0, fsnd->fadeInFrame );
+    fade_start = TRUE;
+  }
+  // フェードインリクエスト有 ==> フェードイン開始
+  else if( fsnd->reqFadeIn )
+  { 
+    PMSND_FadeInBGM( fsnd->fadeInFrame );
     fade_start = TRUE;
   }
 
@@ -354,7 +361,8 @@ static void fsnd_UpdateBGM_FADE_IN( FIELD_SOUND* fsnd )
   // フェード終了 ==> 再生中
   if( PMSND_CheckFadeOnBGM() != TRUE )
   {
-    fsnd->state = FS_STATE_PLAY;
+    fsnd->reqFadeIn = FALSE;
+    fsnd->state     = FS_STATE_PLAY;
     // DEBUG:
     OBATA_Printf( "FIELD_SOUND: play\n" );
   }
@@ -375,8 +383,9 @@ static void fsnd_UpdateBGM_FADE_IN( FIELD_SOUND* fsnd )
 void FIELD_SOUND_FadeInBGM( FIELD_SOUND* fsnd, u32 bgmNo, u16 frames )
 {
   fsnd->state       = FS_STATE_STOP;
-  fsnd->nextBGMNo   = bgmNo;
+  fsnd->nextBGM     = bgmNo;
   fsnd->fadeInFrame = frames;
+  fsnd->reqFadeIn   = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -389,7 +398,7 @@ void FIELD_SOUND_FadeInBGM( FIELD_SOUND* fsnd, u32 bgmNo, u16 frames )
 void FIELD_SOUND_FadeInPopBGM( FIELD_SOUND* fsnd, u16 frames )
 {
   FIELD_SOUND_FadeInBGM( fsnd, 0, frames );
-  fsnd->fadeInPop = TRUE;
+  fsnd->reqPop = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -401,7 +410,10 @@ void FIELD_SOUND_FadeInPopBGM( FIELD_SOUND* fsnd, u16 frames )
 //--------------------------------------------------------------
 void FIELD_SOUND_FadeOutBGM( FIELD_SOUND* fsnd, u16 frames )
 {
-  FIELD_SOUND_PlayNextBGM_Ex( fsnd, 0, frames, 0 );
+  fsnd->state        = FS_STATE_PLAY;
+  fsnd->fadeOutFrame = frames;
+  fsnd->reqFadeOut   = TRUE;
+  //FIELD_SOUND_PlayNextBGM_Ex( fsnd, 0, frames, 0 );
 }
 
 //--------------------------------------------------------------
@@ -414,7 +426,7 @@ void FIELD_SOUND_FadeOutBGM( FIELD_SOUND* fsnd, u16 frames )
 void FIELD_SOUND_FadeOutPushBGM( FIELD_SOUND* fsnd, u16 frames )
 {
   FIELD_SOUND_FadeOutBGM( fsnd, frames );
-  fsnd->fadeOutPush = TRUE;
+  fsnd->reqPush = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -511,7 +523,7 @@ u32 FIELD_SOUND_GetFieldBGMNo(
     return( SEQ_BGM_BICYCLE );
   }
   
-  return( fsnd_GetMapBGMIndex(gdata,zone_id) );
+  return( fsnd_GetMapBGM(gdata,zone_id) );
 }
 
 //======================================================================
@@ -567,7 +579,7 @@ FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND *fsnd )
  * @retval u16 BGM Index
  */
 //--------------------------------------------------------------
-static u32 fsnd_GetMapBGMIndex( GAMEDATA *gdata, u32 zone_id )
+static u32 fsnd_GetMapBGM( GAMEDATA *gdata, u32 zone_id )
 {
   u16 idx = ZONEDATA_GetBGMID( zone_id, GAMEDATA_GetSeasonID(gdata) );
   return( idx );
@@ -594,9 +606,12 @@ static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max )
   PMSND_PushBGM();
   fsnd->push_count++;
   // 監視状態を停止
-  fsnd->state = FS_STATE_STOP;
-  fsnd->nextBGMNo = 0;
-  fsnd->fadeOutPush = FALSE;
+  fsnd->state      = FS_STATE_STOP;
+  fsnd->nextBGM    = 0;
+  fsnd->reqFadeIn  = FALSE;
+  fsnd->reqFadeOut = FALSE;
+  fsnd->reqPush    = FALSE;
+  fsnd->reqPop     = FALSE;
 
   // DEBUG:
   OBATA_Printf( "FIELD_SOUND: push BGM\n" );
@@ -622,9 +637,12 @@ static void fsnd_PopBGM( FIELD_SOUND *fsnd )
   PMSND_PauseBGM( FALSE );
   fsnd->push_count--;
   // 監視状態を復帰
-  fsnd->state = FS_STATE_PLAY;
-  fsnd->nextBGMNo = PMSND_GetBGMsoundNo();
-  fsnd->fadeInPop = FALSE;
+  fsnd->state      = FS_STATE_PLAY;
+  fsnd->nextBGM    = PMSND_GetBGMsoundNo();
+  fsnd->reqFadeIn  = FALSE;
+  fsnd->reqFadeOut = FALSE;
+  fsnd->reqPush    = FALSE;
+  fsnd->reqPop     = FALSE;
 
   // DEBUG:
   OBATA_Printf( "FIELD_SOUND: pop BGM\n" );
