@@ -1,13 +1,20 @@
 EFFSEQ
-$0003
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_441.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
 ポケモンアニメ	攻撃側	アニメストップ
-BGのパレットフェード	すべて	0	12	1	6:0:6
+BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
+エフェクト終了待ち	すべて
+BGのロード	bg_056_juzu
+BGのスクロール	常に	-20	0	200	1	0
+BGの表示/非表示	フィールド	非表示
+BGの表示/非表示	お盆	非表示
+BGの表示/非表示	エフェクト	表示
 制御モード変更	継続
 SE再生	SEQ_SE_W157_03	PSG	0	-700	120	0	0
 SE再生	SEQ_SE_DUMMY5	PSG	80	0	0	0	0
@@ -42,7 +49,10 @@ SEパン	SE2	追従	攻撃側	防御側	75	50:0:0
 タイマーによるウエイト	30
 ポケモンパレットフェード	防御側	12	0	1	12:0:12
 エフェクト終了待ち	すべて
-BGのパレットフェード	すべて	12	0	1	6:0:6
+BGのパレットフェード	すべて	13	0	1	0:0:0
+BGの表示/非表示	フィールド	表示
+BGの表示/非表示	お盆	表示
+BGの表示/非表示	エフェクト	非表示
 ポケモンアニメ	攻撃側	アニメスタート
 ポケモンアニメ	防御側	アニメスタート
 カメラ移動	追従	初期位置	16	0	12
