@@ -399,8 +399,6 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
 //------------------------------------------------------------------------------------------
 /**
  * @brief ‘ÞêƒCƒxƒ“ƒgˆ—ŠÖ”( ‚ ‚È‚ð‚Ù‚é )
- *
- * @todo »‰ŒSE‚ÌÄ¶
  */
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
@@ -430,6 +428,8 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
       FIELD_TASK_MAN_AddTask( man, rot, rot_up );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
       FIELD_TASK_MAN_AddTask( man, fade_out, rot_up );
+      // SEÄ¶
+      PMSND_PlaySE( SEQ_SE_FLD_80 );
     }
     work->frame = 0;
     ++( *seq );
