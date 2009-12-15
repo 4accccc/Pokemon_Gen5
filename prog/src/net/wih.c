@@ -1683,11 +1683,17 @@ BOOL WH_EndScan(void)
 	}
   if(_pWmInfo->startScan!=0){
 #if defined(DEBUG_ONLY_FOR_matsuda)||defined(DEBUG_ONLY_FOR_ohno)  //テスト中 ビーコンスキャン強制終了
-    WM_EndScan(WH_StateOutEndScan);
+    
+    if (!WH_StateInStartScan()) {
+      WH_ChangeSysState(WH_SYSSTATE_ERROR);
+    }
+
+
+    //WM_EndScan(WH_StateOutEndScan);
     NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
 #endif
     _pWmInfo->startScan=0;
-    return FALSE;
+//    return FALSE;
   }
 	_pWmInfo->sAutoConnectFlag = FALSE;
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);

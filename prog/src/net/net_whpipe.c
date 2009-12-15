@@ -621,32 +621,6 @@ BOOL GFL_NET_WLFinalize(void)
 	return FALSE;
 }
 
-#if 0
-//-------------------------------------------------------------
-/**
- * @brief   通信切断を行う  ただしメモリー開放を行わない
- * @param   切断の場合TRUE
- * @retval  none
- */
-//-------------------------------------------------------------
-void GFL_NET_WLStealth(BOOL bStalth)
-{
-	GFL_NETWL* pNetWL = _pNetWL;
-	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
-
-	if(!pNetWL){
-		return;
-	}
-	if(bStalth){
-		pNetWL->disconnectType = _DISCONNECT_SECRET;
-	}
-	else{
-		pNetWL->disconnectType = _DISCONNECT_NONE;
-		_whInitialize(pInit->netHeapID, pNetWL);  // 無線駆動再開
-	}
-}
-#endif
-
 //-------------------------------------------------------------
 /**
  * @brief   通信の全てを消す
