@@ -3452,7 +3452,7 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NerainoMato( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_TYPE_CHECK,     handler_NerainoMato },   // タイプ相性による無効化チェック
+    { BTL_EVENT_CHECK_AFFINITY,     handler_NerainoMato },   // タイプ相性による無効化チェック
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -3463,9 +3463,7 @@ static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   // 自分が防御側の時、相性により無効化されていれば有効に書き換え
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_NOEFFECT_FLAG) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
   }
 }
 //------------------------------------------------------------------------------

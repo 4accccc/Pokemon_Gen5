@@ -533,8 +533,9 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           BtlPokePos pos = BTL_SVFLOW_GetCapturedPokePos( server->flowWork );
           BTL_Printf("ƒ|ƒP•ß‚Ü‚¦‚Ü‚µ‚½ pos=%d\n", pos);
           BTL_MAIN_NotifyCapturedPokePos( server->mainModule, pos );
+          setMainProc( server, ServerMain_ExitBattle );
+          return FALSE;
         }
-        return TRUE;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
         BTL_Printf("Œˆ’…‚ª‚Â‚¢‚½I\n");
         setMainProc( server, ServerMain_ExitBattle );

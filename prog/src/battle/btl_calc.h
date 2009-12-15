@@ -33,6 +33,8 @@ typedef enum {
   BTL_TYPEAFF_200,
   BTL_TYPEAFF_400,
 
+  BTL_TYPEAFF_MAX,
+
 }BtlTypeAff;
 //--------------------------------------------------------------------
 /**
@@ -70,6 +72,7 @@ static inline BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
   return BTL_TYPEAFF_ABOUT_NONE;
 }
 
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
@@ -80,7 +83,9 @@ extern u16 BTL_CALC_StatusRank( u16 defaultVal, u8 rank );
 extern u8 BTL_CALC_HitPer( u8 defPer, u8 rank );
 extern BOOL BTL_CALC_CheckCritical( u8 rank );
 
-extern BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType );
+extern BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
+extern BtlTypeAff BTL_CALC_TypeAffMul( BtlTypeAff aff1, BtlTypeAff aff2 );
+
 extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 
 extern u8 BTL_CALC_HitCountMax( u8 numHitMax );

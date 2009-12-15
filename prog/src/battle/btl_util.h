@@ -150,7 +150,7 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurn( u8 turns )
 /*
  *  ターン数型（パラメータ付き）作成
  */
-static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurnParam( u8 turns, u8 param )
+static inline BPP_SICK_CONT BPP_SICKCONT_MakeTurnParam( u8 turns, u16 param )
 {
   BPP_SICK_CONT  cont;
   cont.raw = 0;

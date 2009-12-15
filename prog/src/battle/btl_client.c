@@ -2303,7 +2303,7 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
       case BTL_WEATHER_RAIN:  msgID = BTL_STRID_STD_RainStart; break;
       case BTL_WEATHER_SAND:  msgID = BTL_STRID_STD_StormStart; break;
       case BTL_WEATHER_SNOW:  msgID = BTL_STRID_STD_SnowStart; break;
-      case BTL_WEATHER_MIST:  msgID = BTL_STRID_STD_MistStart; break;
+//      case BTL_WEATHER_MIST:  msgID = BTL_STRID_STD_MistStart; break;
       default:
         GF_ASSERT(0); // ‚¨‚©‚µ‚È“VŒóID
         return TRUE;
@@ -2339,7 +2339,7 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
       case BTL_WEATHER_RAIN:  msgID = BTL_STRID_STD_RainEnd; break;
       case BTL_WEATHER_SAND:  msgID = BTL_STRID_STD_StormEnd; break;
       case BTL_WEATHER_SNOW:  msgID = BTL_STRID_STD_SnowEnd; break;
-      case BTL_WEATHER_MIST:  msgID = BTL_STRID_STD_MistEnd; break;
+//      case BTL_WEATHER_MIST:  msgID = BTL_STRID_STD_MistEnd; break;
       default:
         GF_ASSERT(0); // ‚¨‚©‚µ‚È“VŒóID
         return TRUE;

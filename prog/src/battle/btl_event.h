@@ -56,7 +56,6 @@ typedef enum {
   BTL_EVENT_WAZA_EXECUTE_DONE,      ///< ワザ出し処理終了
   BTL_EVENT_WAZA_PARAM,             ///< ワザパラメータチェック
   BTL_EVENT_DECIDE_TARGET,          ///< ワザ対象決定
-  BTL_EVENT_NOEFFECT_TYPE_CHECK,    ///< ワザ無効化（タイプによる）チェックハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L1,      ///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L2,      ///< ワザ無効化チェック（lv2 = 必中にも勝つ）ハンドラ
   BTL_EVENT_CHECK_MAMORU_BREAK,     ///< まもる無効化チェック
@@ -75,7 +74,6 @@ typedef enum {
   BTL_EVENT_DEFENDER_GUARD,         ///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
   BTL_EVENT_CHECK_AFFINITY,         ///< 相性計算
   BTL_EVENT_ATTACKER_TYPE,          ///< 攻撃側ポケタイプ
-  BTL_EVENT_DEFENDER_TYPE,          ///< 防御側ポケタイプ
   BTL_EVENT_TYPEMATCH_RATIO,        ///< 攻撃側タイプ一致時倍率
   BTL_EVENT_WAZA_ATK_TYPE,          ///< 攻撃側ポケタイプチェックハンドラ
   BTL_EVENT_WAZA_DEF_TYPE,          ///< 防御側ポケタイプチェックハンドラ
@@ -189,6 +187,7 @@ typedef enum {
   BTL_EVAR_SP_PRIORITY_A,
   BTL_EVAR_SP_PRIORITY_B,
   BTL_EVAR_WAZAID,
+  BTL_EVAR_POKE_TYPE,
   BTL_EVAR_WAZA_TYPE,
   BTL_EVAR_WAZA_IDX,
   BTL_EVAR_WAZA_PRI,
@@ -197,7 +196,6 @@ typedef enum {
   BTL_EVAR_SICKID,
   BTL_EVAR_SICK_CONT,
   BTL_EVAR_STATUS_TYPE,
-  BTL_EVAR_POKE_TYPE,
   BTL_EVAR_VOLUME,
   BTL_EVAR_POKE_HIDE,
   BTL_EVAR_FAIL_CAUSE,
@@ -235,6 +233,8 @@ typedef enum {
   BTL_EVAR_ITEMUSE_FLAG,
   BTL_EVAR_TRICK_FLAG,
   BTL_EVAR_GEN_FLAG,
+  BTL_EVAR_FLAT_FLAG,
+  BTL_EVAR_FLATMASTER_FLAG,
 
   BTL_EVAR_MAX,
 

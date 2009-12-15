@@ -632,8 +632,6 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
   case WEATHER_NO_SNOWSTORM:
   case WEATHER_NO_ARARE:
     return BTL_WEATHER_SNOW;
-  case WEATHER_NO_MIRAGE:
-    return BTL_WEATHER_MIST;
   }
   return BTL_WEATHER_NONE;
 }
@@ -658,7 +656,7 @@ static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GA
 
   //“VŒó
   sit->weather = btlparam_GetBattleWeather( fieldWork );
-  
+
   sit->season = GAMEDATA_GetSeasonID( gdata );
 }
 

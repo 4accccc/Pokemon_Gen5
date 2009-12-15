@@ -3493,18 +3493,16 @@ static void handler_Kimottama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ゴーストタイプへの無効化を解除
-    u8 defID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    const BTL_POKEPARAM* defender = BTL_SVFTOOL_GetPokeParam( flowWk, defID );
-    if( BPP_IsMatchType(defender, POKETYPE_GHOST ) )
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKE_TYPE) == POKETYPE_GHOST )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
     }
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kimottama( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-     { BTL_EVENT_NOEFFECT_TYPE_CHECK,        handler_Kimottama },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_CHECK_AFFINITY,        handler_Kimottama },  // タイプによる無効化チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

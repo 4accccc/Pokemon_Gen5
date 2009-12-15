@@ -131,6 +131,9 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->smallFontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr,
             GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
+//  BTL_Printf("ƒtƒHƒ“ƒg‚‚³=%d, %d\n",
+//    GFL_FONT_GetLineHeight(core->largeFontHandle), GFL_FONT_GetLineHeight(core->smallFontHandle));
+
   core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
 
   core->scrnU = BTLV_SCU_Create( core, core->mainModule, pokeCon, core->tcbl,

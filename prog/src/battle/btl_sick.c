@@ -428,9 +428,15 @@ void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKE
   if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
-    PokeType type = BPP_SICKCONT_GetParam( cont );
-    if( BPP_IsMatchType(defender, type) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
+    PokeType flatType = BPP_SICKCONT_GetParam( cont );
+    PokeType pokeType = BTL_EVENTVAR_GetValue( BTL_EVAR_POKE_TYPE );
+    if( flatType == pokeType )
+    {
+      if( !BPP_SICKCONT_GetFlag(cont) ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+      }else{
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLATMASTER_FLAG, TRUE );
+      }
     }
   }
 }

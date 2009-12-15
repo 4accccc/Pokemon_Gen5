@@ -214,43 +214,66 @@ static const u8 TypeAffTbl[ POKETYPE_NUMS ][ POKETYPE_NUMS ] = {
  *  タイプ相性計算
  */
 //--------------------------------------------------------------
-BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType )
+BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType )
 {
-  enum {
-    RESULT_0   = 0,
-    RESULT_25  = 1,
-    RESULT_50  = 2,
-    RESULT_100 = 4,
-    RESULT_200 = 8,
-    RESULT_400 = 16,
-  };
-
-
-  PokeType defType1, defType2;
   u8 result;
 
-  PokeTypePair_Split( defenderType, &defType1, &defType2 );
-  result = TypeAffTbl[ wazaType ][ defType1 ];
-  if( defType2 != defType1 )
-  {
-    result = (result * TypeAffTbl[ wazaType ][ defType2 ]) / x1;
-  }
+  result = TypeAffTbl[ wazaType ][ pokeType ];
 
   switch( result ){
-  case RESULT_0:    return BTL_TYPEAFF_0;
-  case RESULT_25:   return BTL_TYPEAFF_25;
-  case RESULT_50:   return BTL_TYPEAFF_50;
-  case RESULT_100:  return BTL_TYPEAFF_100;
-  case RESULT_200:  return BTL_TYPEAFF_200;
-  case RESULT_400:  return BTL_TYPEAFF_400;
+  case x0:    return BTL_TYPEAFF_0;
+  case xH:    return BTL_TYPEAFF_50;
+  case x1:    return BTL_TYPEAFF_100;
+  case x2:    return BTL_TYPEAFF_200;
   }
 
-  {
-    BTL_Printf("wazaType=%d, pokeType1=%d, pokeType2=%d, defType=%04x\n", wazaType, defType1, defType2, defenderType);
-    GF_ASSERT(0);
-  }
-  return BTL_TYPEAFF_100;
+  GF_ASSERT(0);
+  return BTL_TYPEAFF_0;
 }
+//=============================================================================================
+/**
+ * 相性値の掛け合わせ（２タイプあるポケモン対応）
+ *
+ * @param   aff1
+ * @param   aff2
+ *
+ * @retval  BtlTypeAff    掛け合わせ後の相性値
+ */
+//=============================================================================================
+BtlTypeAff BTL_CALC_TypeAffMul( BtlTypeAff aff1, BtlTypeAff aff2 )
+{
+  enum {
+    VALUE_0   = 0,
+    VALUE_25  = 1,
+    VALUE_50  = 2,
+    VALUE_100 = 4,
+    VALUE_200 = 8,
+    VALUE_400 = 16,
+  };
+
+  static const u8 valueTable[ BTL_TYPEAFF_MAX ] = {
+    VALUE_0,  VALUE_25, VALUE_50, VALUE_100, VALUE_200, VALUE_400
+  };
+  u32 mulValue;
+
+  GF_ASSERT(aff1<BTL_TYPEAFF_MAX);
+  GF_ASSERT(aff2<BTL_TYPEAFF_MAX);
+
+  mulValue = (valueTable[ aff1 ] * valueTable[ aff2 ]) / VALUE_100;
+
+  switch( mulValue ){
+  case VALUE_0:    return BTL_TYPEAFF_0;
+  case VALUE_25:   return BTL_TYPEAFF_25;
+  case VALUE_50:   return BTL_TYPEAFF_50;
+  case VALUE_100:  return BTL_TYPEAFF_100;
+  case VALUE_200:  return BTL_TYPEAFF_200;
+  case VALUE_400:  return BTL_TYPEAFF_400;
+  default:
+    GF_ASSERT(0);
+    return BTL_TYPEAFF_0;
+  }
+}
+
 //--------------------------------------------------------------
 /**
  *  相性ダメージ計算

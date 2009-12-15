@@ -84,7 +84,6 @@ typedef enum {
   BTL_WEATHER_RAIN,     ///< ‚ ‚ß
   BTL_WEATHER_SNOW,     ///< ‚ ‚ç‚ê
   BTL_WEATHER_SAND,     ///< ‚·‚È‚ ‚ç‚µ
-  BTL_WEATHER_MIST,     ///< ‚«‚è
 
   BTL_WEATHER_MAX,
 
