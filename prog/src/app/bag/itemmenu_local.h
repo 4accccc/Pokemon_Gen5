@@ -257,7 +257,7 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _PAL_WIN01_CELL (0)     // リストウィンドウ用パレット転送位置
 #define _PAL_CUR_CELL (1)       // スライドバーつまみ カーソル用パレット転送位置
 #define _PAL_CUR_CELL_NUM (2)
-#define _PAL_MENU_CHECKBOX_CELL (14)  // チェックボックスのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
 #define _PAL_SORT_CELL (3)      // ソートボタンのパレット展開位置
 #define _PAL_SORT_CELL_NUM (2)  // ソートボタンのパレット本数
 #define _PAL_BAG_PARTS_CELL (10)      // バッグのパーツCELLのパレット展開位置

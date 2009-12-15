@@ -1070,9 +1070,10 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       continue;
     }
 
+    // ƒŠƒXƒg˜g
     {
       void * itemdata;
-      u8 backColor = 0x0;
+      u8 backColor = 0x1;
 
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 
