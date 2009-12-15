@@ -98,7 +98,7 @@ static GMEVENT_RESULT FieldBrightOutEvent(GMEVENT * event, int *seq, void * work
 	FADE_EVENT_WORK * few = work;
 	switch (*seq) {
 	case 0:
-    GFL_FADE_SetMasterBrightReq( few->brightFadeMode, 0, 16, 0);
+    GFL_FADE_SetMasterBrightReq( few->brightFadeMode, 0, 16, few->wait_type);
 		(*seq) ++;
 		break;
 	case 1:
@@ -274,6 +274,7 @@ GMEVENT* EVENT_FlySkyBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
   few->fieldmap  = fieldmap;
 	few->fade_type = type;
   few->wait_type = wait;
+  few->brightFadeMode = GetBrightFadeMode( type );
 
 	return event;
 }
@@ -447,7 +448,7 @@ static GMEVENT_RESULT FlySkyBrightInEvent(GMEVENT * event, int *seq, void * work
       }
       else
       {
-        GFL_FADE_SetMasterBrightReq(few->brightFadeMode, 16, 0, 0);
+        GFL_FADE_SetMasterBrightReq(few->brightFadeMode, 16, 0, few->wait_type);
         // BGモード設定と表示設定の復帰
         {
           int mv = GFL_DISP_GetMainVisible();
@@ -597,6 +598,7 @@ GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
   few->fieldmap  = fieldmap;
 	few->fade_type = type;
   few->wait_type = wait;
+  few->brightFadeMode = GetBrightFadeMode( type );
 
 	return event;
 }
