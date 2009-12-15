@@ -94,6 +94,15 @@ extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION *
 extern BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect);
 
 //------------------------------------------------------------------
+/**
+ * @brief 無効出入口のチェック
+ * @retval  TRUE  無効出入口
+ * @retval  FALSE 有効な出入口
+ */
+//------------------------------------------------------------------
+extern BOOL CONNECTDATA_IsClosedExit( const CONNECT_DATA * connect );
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 extern LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const VecFx32 * pos);
 extern LOC_EXIT_OFS CONNECTDATA_GetRailExitOfs(const CONNECT_DATA * connect, const RAIL_LOCATION* loc);

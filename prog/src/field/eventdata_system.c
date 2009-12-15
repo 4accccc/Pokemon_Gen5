@@ -778,9 +778,8 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
     if( ConnectData_GPOS_IsHit( cnct, pos ) )
     {
-  		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-      
-	  	//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+  		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",
+          cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
 		  return i;
     }
 	}
@@ -794,9 +793,8 @@ int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, con
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
     if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
     {
-      TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-      
-      //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+      TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",
+          cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
       return i;
     }
 	}
@@ -905,7 +903,6 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
       }
       if ( len > HIT_RANGE) continue;
       TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-      //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
       return i;
     }
 	}
@@ -950,6 +947,19 @@ EXIT_DIR CONNECTDATA_GetExitDir(const CONNECT_DATA * connect)
 EXIT_TYPE CONNECTDATA_GetExitType(const CONNECT_DATA * connect)
 {
   return connect->exit_type;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 無効出入口のチェック
+ * @retval  TRUE  無効出入口
+ * @retval  FALSE 有効な出入口
+ */
+//------------------------------------------------------------------
+BOOL CONNECTDATA_IsClosedExit( const CONNECT_DATA * connect )
+{
+  return ( connect->link_zone_id == ZONE_ID_NONE )
+    || ( connect->link_exit_id == EXIT_ID_NONE );
 }
 
 //============================================================================================
@@ -1622,10 +1632,8 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS e
 
   cp_pos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
 
-  p_pos->x = (cp_pos->x +  CONNECT_POS_OFS_X)<<FX32_SHIFT;
-  //p_pos->x = (cp_pos->x + (cp_pos->sizex/2) + CONNECT_POS_OFS_X)<<FX32_SHIFT;
+  p_pos->x = (cp_pos->x + CONNECT_POS_OFS_X)<<FX32_SHIFT;
   p_pos->y = (cp_pos->y + CONNECT_POS_OFS_Y)<<FX32_SHIFT;
-  //p_pos->z = (cp_pos->z + (cp_pos->sizez/2) + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
   p_pos->z = (cp_pos->z + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
 
   // 両方のサイズが1以上ならアサート
