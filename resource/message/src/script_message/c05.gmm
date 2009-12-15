@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T18:19:03"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T20:58:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -410,10 +410,8 @@
 		<comment>♂
 ・このメッセージ削除</comment>
 		<attribute name="キャラクター">WORKMANその１</attribute>
-		<language name="JPN" width="256">はい！　ヤーコンさん
-コンテナまで　つれていきます！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">はい！　ヤーコンさん
-コンテナまで　連れて行きます！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
