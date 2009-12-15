@@ -24,6 +24,7 @@ SUBDIRS	=	wmi \
 			fldmmdl \
 			encount \
 			field_wfbc_data/before \
+			fld3d_ci \
 			fldmapdata\
 			pokegra\
 			battle\
@@ -88,7 +89,6 @@ SUBDIRS	=	wmi \
 		  regulation \
 			mictest \
 			pokemon_center \
-			fld3d_ci \
 			namein \
             box \
 			battle_championship \
