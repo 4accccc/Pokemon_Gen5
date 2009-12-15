@@ -773,6 +773,8 @@ static void setup_view( DMP_MAINWORK* wk )
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
 
+
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
   GFL_BMP_Clear( wk->bmp, 0x0f );
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BG_LoadScreenReq( PRINT_FRAME );
@@ -1017,7 +1019,7 @@ static void update_dst( DMP_MAINWORK* wk )
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
     PP_Put( wk->dst, ID_PARA_item, item );
   }
-  { 
+  {
     u8  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
     PP_Put( wk->dst, ID_PARA_seikaku, seikaku );
   }
