@@ -31,11 +31,9 @@
 
 #include "event_encount_effect.h"
 #include "effect_encount.h"
-
 #include "field_sound.h"
-
 #include "event_gameover.h" //EVENT_NormalLose
-
+#include "move_pokemon.h"
 #include "event_battle_return.h"
 
 #include "script_def.h"   //SCR_BATTLE_～
@@ -445,6 +443,10 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
 static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata)
 {
   GAMEDATA_SetLastBattleResult( gamedata, bew->battle_param->result );
+
+  //移動ポケモン戦闘後処理
+  MP_SetAfterBattle( gamedata, bew->battle_param);
+  
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
 }

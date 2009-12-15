@@ -20,6 +20,8 @@ extern void MP_RecoverMovePoke( GAMEDATA* gdata );
 extern u16  MP_GetMovePokeZone(const u8 inIndex);
 extern BOOL MP_CheckMovePoke(ENC_SV_PTR inEncData);
 extern void MP_UpdatePlayerZoneHist(ENC_SV_PTR inEncData, const int inZone);
+extern void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp);
+
 
 extern u8 MP_MonsNoToMovePokeID(u16 monsno);
 

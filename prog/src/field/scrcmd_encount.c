@@ -21,6 +21,7 @@
 #include "scrcmd_work.h"
 
 #include "event_battle.h"
+#include "move_pokemon.h"
 
 #include "scrcmd_encount.h"
 #include "effect_encount.h"
@@ -108,6 +109,29 @@ VMCMD_RESULT EvCmdGetEffectEncountItem( VMHANDLE* core, void* wk )
   u16*  ret_work = SCRCMD_GetVMWork( core, work );
   *ret_work = EFFECT_ENC_GetEffectEncountItem( FIELDMAP_GetEncount(fwork) );
   IWASAWA_Printf("GetEffectEncountItem %d\n",*ret_work);
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief 移動ポケモン　移動開始 
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * コマンドの戻り値 game_comm.h GAME_COMM_NO_NULL 他
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+	
+  u8 move_poke = (u8)SCRCMD_GetVMWorkValue( core, work );
+
+  MP_AddMovePoke( gdata, move_poke ); 
 	return VMCMD_RESULT_CONTINUE;
 }
 

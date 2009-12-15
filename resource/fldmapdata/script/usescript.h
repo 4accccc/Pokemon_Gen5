@@ -59,6 +59,9 @@
 //フィールド通信の種類定義
 #include "../../../prog/include/gamesystem/game_comm.h"
 
+//移動ポケモン定義
+#include "../../../prog/src/field/move_pokemon_def.h"
+
 //性別、ロムバージョンなどの定義
 #include "../../../prog/include/pm_version.h"
 

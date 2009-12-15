@@ -11,10 +11,8 @@
 #include "savedata/save_tbl.h"
 #include "savedata/encount_sv.h"
 #include "system/gfl_use.h"
-//#include "field/move_pokemon_def.h"
+#include "field/move_pokemon_def.h"
 #include "field/generate_enc_def.h"
-
-#define MOVE_POKE_MAX (3) ///@todo
 
 //©‹@‚Ìƒ][ƒ“‘«Õ
 typedef struct PLAYER_ZONE_HIST_tag

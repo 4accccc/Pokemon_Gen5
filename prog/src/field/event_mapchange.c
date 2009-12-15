@@ -39,7 +39,7 @@
 #include "fieldmap/zone_id.h"   //¦check@ƒ†ƒjƒIƒ“‚ÌSubScreenİ’èb’è‘Îˆ‚Ìˆ×
 
 #include "warpdata.h"
-
+#include "move_pokemon.h"
 #include "field_sound.h"
 
 #include "event_entrance_in.h"

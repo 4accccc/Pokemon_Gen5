@@ -6115,6 +6115,22 @@
   .short  EV_SEQ_CALL_TVT_DEMO
   .short  \demo_no
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_MOVE_POKEMON
+ * @brief 移動ポケモン追加
+ * @param move_poke    結果を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _ADD_MOVE_POKEMON( move_poke )   \
+    _ASM_ADD_MOVE_POKEMON move_poke
+
+    .macro  _ASM_ADD_MOVE_POKEMON move_poke
+    .short  EV_SEQ_ADD_MOVE_POKEMON
+    .short  \move_poke
+    .endm
+
   
   
 //======================================================================

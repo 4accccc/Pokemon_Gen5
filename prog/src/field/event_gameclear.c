@@ -39,6 +39,8 @@
 
 #include "sound/pm_sndsys.h"  //PMSND_
 
+#include "move_pokemon.h"
+
 //==============================================================================================
 //
 //	メッセージ表示関連
@@ -534,6 +536,9 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   gcwk->arc_id = NARC_script_message_common_scr_dat;
   gcwk->msg_id = msg_common_report_06;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
+
+  //移動ポケモン復活チェック
+  MP_RecoverMovePoke( gamedata );
 
   return event;
 }

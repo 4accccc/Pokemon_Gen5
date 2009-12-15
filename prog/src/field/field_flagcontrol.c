@@ -16,7 +16,7 @@
 
 #include "field/zonedata.h"
 #include "field_status_local.h"
-
+#include "move_pokemon.h"
 
 #include "field_flagcontrol.h"
 
@@ -49,6 +49,15 @@
 //-----------------------------------------------------------------------------
 void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork)
 {
+	//移動ポケモン処理
+	{
+		ENC_SV_PTR data;
+		data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+		MP_UpdatePlayerZoneHist(data, FIELDMAP_GetZoneID( fieldWork ));		//ゾーン履歴を更新
+    
+    //歩いて移動した場合は移動ポケモンの移動処理
+		MP_MovePokemonNeighboring( data );//移動ポケモン隣接移動
+	}
 
 /* PLATUNUM
 	//--冒険ノート用更新処理
@@ -67,14 +76,8 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
 	fsys->encount.walk_count = 0;
 	//サファリにいないときの処理
 	if ( !SysFlag_SafariCheck(SaveData_GetEventWork(fsys->savedata)) ){
-		//移動ポケモン処理(サファリ内ゾーン切り替えのときは履歴を積まない)
-		ENC_SV_PTR data;
-		data = EncDataSave_GetSaveDataPtr(fsys->savedata);
-		MP_UpdatePlayerZoneHist(data, fsys->location->zone_id);		//ゾーン履歴を更新
-		//歩いて移動した場合は移動ポケモンの移動処理
-		MP_MovePokemonNeighboring(data);//移動ポケモン隣接移動
 	}
-//*/
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -93,6 +96,12 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
   {
     // フラッシュOFF
 		FIELD_STATUS_SetFieldSkillFlash(fldstatus, FALSE);
+	}
+	//移動ポケモン処理
+	{
+		ENC_SV_PTR data;
+		data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+		MP_UpdatePlayerZoneHist(data, zone_id);		//ゾーン履歴を更新
 	}
 
 /* PLATINUM
@@ -119,12 +128,6 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 	EncDataSave_SetVidro( EncDataSave_GetSaveDataPtr(fsys->savedata), VIDRO_NONE );
 	//エンカウント歩数クリア
 	fsys->encount.walk_count = 0;
-	//移動ポケモン処理
-	{
-		ENC_SV_PTR data;
-		data = EncDataSave_GetSaveDataPtr(fsys->savedata);
-		MP_UpdatePlayerZoneHist(data, fsys->location->zone_id);		//ゾーン履歴を更新
-	}
 	//ダンジョンでない場合、フラッシュ状態フラグと霧払い状態フラグをクリア
 	if (!ZoneData_IsDungeon(fsys->location->zone_id)) {
 		EVENTWORK * ev = SaveData_GetEventWork(fsys->savedata);
@@ -163,12 +166,17 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 
 void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 {
+  //移動ポケモン処理
+	{
+		ENC_SV_PTR data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	  //移動ポケモン全部ジャンプ
+	  MP_JumpMovePokemonAll( data );
+	}
+
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
-	//移動ポケモン全部ジャンプ
-	MP_JumpMovePokemonAll(EncDataSave_GetSaveDataPtr(fsys->savedata));
-//*/
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -180,12 +188,17 @@ void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 //-----------------------------------------------------------------------------
 void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 {
+  //移動ポケモン処理
+	{
+		ENC_SV_PTR data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	  //移動ポケモン全部ジャンプ
+	  MP_JumpMovePokemonAll( data );
+	}
+
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
-	//移動ポケモン全部ジャンプ
-	MP_JumpMovePokemonAll(EncDataSave_GetSaveDataPtr(fsys->savedata));
-//*/
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -201,7 +214,7 @@ void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
-//*/
+*/
 }
 
 
@@ -233,9 +246,11 @@ void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 //-----------------------------------------------------------------------------
 void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata, u16 zone_id)
 {
-/*
-	//移動ポケモン全部ジャンプ
-	MP_JumpMovePokemonAll(EncDataSave_GetSaveDataPtr(fsys->savedata));
-//*/
+  //移動ポケモン処理
+	{
+		ENC_SV_PTR data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	  //移動ポケモン全部ジャンプ
+	  MP_JumpMovePokemonAll( data );
+	}
 }
 

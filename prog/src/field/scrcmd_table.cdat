@@ -720,6 +720,9 @@
   NO_CMD()
   NO_CMD()
 
+  //移動ポケモン
+  DEF_CMD( EvCmdAddMovePokemon, EV_SEQ_ADD_MOVE_POKEMON )
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

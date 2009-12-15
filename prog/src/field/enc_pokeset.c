@@ -275,7 +275,6 @@ int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PA
 //--------------------------------------------------------------
 MPD_PTR ENCPOKE_GetMovePokeEncountData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, u16 zone_id )
 {
-  ENC_SV_PTR data;
 	MPD_PTR temp[MOVE_POKE_MAX];
 	u8 i, enc_count;
 
