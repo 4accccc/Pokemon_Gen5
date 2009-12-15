@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-14T22:10:32"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-12-15T22:49:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1359,7 +1359,7 @@
 	<row id="syachi_mystery_menu_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>選択項目：入れ替え</comment>
 		<language name="JPN" width="216">いれかえる</language>
-		<language name="JPN_KANJI">ひとつまえと　いれかえ</language>
+		<language name="JPN_KANJI">いれかえる</language>
 	</row>
 
 	<row id="syachi_mystery_menu_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1540,6 +1540,11 @@
 		<comment>ふしぎカード　受信時のガイド表示</comment>
 		<language name="JPN" width="80">Ａ：おわる</language>
 		<language name="JPN_KANJI">Ａ：おわる</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_00_00" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="80">　</language>
+		<language name="JPN_KANJI">　</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_00_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
