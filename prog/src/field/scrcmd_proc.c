@@ -52,6 +52,10 @@
 #include "app/mailbox.h"
 FS_EXTERN_OVERLAY(app_mail);
 
+#include "app/waza_oshie.h"
+FS_EXTERN_OVERLAY(waza_oshie);
+
+
 
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
@@ -156,7 +160,7 @@ static BOOL callproc_WaitSubProcEnd( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   CALL_PROC_WORK* cpw = (CALL_PROC_WORK*)SCRIPT_SetSubProcWorkPointer( sc );
 
-	if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+  if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
     return FALSE;
   }
   if(cpw->cb_func != NULL){
@@ -192,7 +196,7 @@ BOOL EVFUNC_WaitSubProcEndNonFree( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 
-	if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+  if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
     return FALSE;
   }
   return TRUE;
@@ -326,6 +330,70 @@ VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief 技思い出し画面プロセス終了後のコールバック関数
+ */
+//--------------------------------------------------------------
+typedef struct
+{
+  WAZAOSHIE_DATA *waza_remind_dat;
+
+} WAZA_REMIND_CALLBACK_WORK;
+
+static void EvCmdCallWazaRemindProc_CallBack( void* work )
+{
+  WAZA_REMIND_CALLBACK_WORK* wrwk = work;
+  GFL_HEAP_FreeMemory( wrwk->waza_remind_dat->waza_tbl );
+  WAZAOSHIE_DataFree( wrwk->waza_remind_dat );
+  // wrwkはPROC呼び出しイベントルーチン内で解放される
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技思い出し画面プロセスを呼び出します
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon(gdata);
+  POKEMON_PARAM*       pp = PokeParty_GetMemberPointer( party, 0);
+  MYSTATUS*      mystatus = GAMEDATA_GetMyStatus( gdata );
+  WAZAOSHIE_DATA* param;
+  WAZA_REMIND_CALLBACK_WORK* wrwk;
+  GMEVENT* event;
+  u16 *waza_tbl = WAZAOSHIE_GetRemaindWaza( pp, HEAPID_PROC );
+  
+  param =WAZAOSHIE_DataAlloc( HEAPID_PROC );
+  param->pp            = pp;
+  param->myst          = mystatus;
+  param->cfg           = NULL;
+  param->gsys          = gsys;
+  param->waza_tbl      = waza_tbl;
+  param->pos           = 0;    // スクリプトから何匹目のポケモンを指定するか貰う
+  param->scr           = 0;    // スクロールポイント
+  param->page          = 0; // 戦闘技表示
+  param->mode          = WAZAOSHIE_MODE_REMIND;  // 技思い出しモード
+
+  wrwk  = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_CALLBACK_WORK) );
+  wrwk->waza_remind_dat = param;
+  
+  event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+                                       FS_OVERLAY_ID(waza_oshie), &WazaOshieProcData, param,
+                                       EvCmdCallWazaRemindProc_CallBack, wrwk );
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   モノリス画面プロセスを呼び出します
@@ -382,7 +450,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * @brief   デモ呼び出し
- * @param	core		仮想マシン制御構造体へのポインタ
+ * @param core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  */
@@ -404,7 +472,7 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * @brief   TVトランシーバーデモ呼び出し
- * @param	core		仮想マシン制御構造体へのポインタ
+ * @param core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  */

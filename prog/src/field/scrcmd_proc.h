@@ -105,6 +105,7 @@ extern VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk );
  */
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 /**
