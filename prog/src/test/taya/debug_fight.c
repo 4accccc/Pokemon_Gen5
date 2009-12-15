@@ -464,6 +464,7 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID );
 static void deleteTemporaryModules( DEBUG_BTL_WORK* wk );
 static void changeScene_start( DEBUG_BTL_WORK* wk );
 static void changeScene_recover( DEBUG_BTL_WORK* wk );
+static void setupBagItem( GAMEDATA* gameData, HEAPID heapID );
 static void savework_Init( DEBUG_BTL_SAVEDATA* saveData );
 static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx );
 static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk );
@@ -559,6 +560,8 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   savework_Init( &wk->saveData );
   wk->pageNum = 0;
   wk->selectItem = SELITEM_POKE_SELF_1;
+
+  setupBagItem( wk->gameData, wk->heapID );
 
   setMainProc( wk, mainProc_Setup );
 
@@ -773,6 +776,48 @@ static void changeScene_recover( DEBUG_BTL_WORK* wk )
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * バトルに持っていくバッグの中身をセット
+ *
+ * @param   gameData
+ */
+//----------------------------------------------------------------------------------
+static void setupBagItem( GAMEDATA* gameData, HEAPID heapID )
+{
+  MYITEM* myItem = GAMEDATA_GetMyItem( gameData );
+
+  MYITEM_AddItem( myItem, ITEM_MASUTAABOORU, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_HAIPAABOORU,  99, heapID );
+  MYITEM_AddItem( myItem, ITEM_NESUTOBOORU,  99, heapID );
+  MYITEM_AddItem( myItem, ITEM_KIZUGUSURI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_DOKUKESI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_YAKEDONAOSI,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_KOORINAOSI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_NEMUKEZAMASI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_MAHINAOSI,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_KAIHUKUNOKUSURI,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_MANTANNOKUSURI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_SUGOIKIZUGUSURI,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_IIKIZUGUSURI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_NANDEMONAOSI,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_GENKINOKAKERA,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_GENKINOKATAMARI,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_OISIIMIZU,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_SAIKOSOODA,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_MIKKUSUORE,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_MOOMOOMIRUKU,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_TIKARANOKONA,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_TIKARANONEKKO,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_BANNOUGONA,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_HUKKATUSOU,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PIIPIIEIDO,    99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PIIPIIRIKABAA,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PIIPIIEIDAA,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PIIPIIMAKKUSU,   99, heapID );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * セーブデータ初期化
@@ -811,7 +856,6 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY2_1 );
   PP_Setup( pp, MONSNO_MAMANBOU, 5, 0 );
-
 }
 
 static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx )
@@ -822,6 +866,7 @@ static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u3
     return (POKEMON_PARAM*)&saveData->pokeParaArea[ pokeIdx*ppSize ];
   }
 }
+
 static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk )
 {
   POKEMON_PARAM* pp;
@@ -862,8 +907,6 @@ static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk 
       PokeParty_Add( wk->partyEnemy2, pp );
     }
   }
-
-
 }
 
 //----------------------------------------------------------------------------------
@@ -929,7 +972,6 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_REC_BUF:
     save->recBufID = loopValue( save->recBufID+incValue, 0, 3 );
     break;
-
 
   case SELITEM_MUST_TUIKA:
     save->fMustTuika ^= 1;
@@ -1136,8 +1178,6 @@ static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf )
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+flag, buf );
 }
 
-
-
 //----------------------------------------------------------------------------------
 /**
  * メインプロセス：画面初期構築
@@ -1174,7 +1214,6 @@ static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq )
 
   GX_SetMasterBrightness( 0 );
   GXS_SetMasterBrightness( 0 );
-
 
   return FALSE;
 }
