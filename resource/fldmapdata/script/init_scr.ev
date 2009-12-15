@@ -111,6 +111,19 @@ init_flags:
 	//D03R0101:ライバル１・D08のイベント後まで非表示
 	_FLAG_SET( FV_D03R0101_RIVAL_01 )
 	
+	//D08：リュウラセンの塔の外フィールド・ジム7クリアまで
+	//ライバル、サポート、ジムリーダー7を非表示
+	//D080901イベント後まで、チャンピオン非表示
+	_FLAG_SET( FV_D08_RIVAL_01 )
+	_FLAG_SET( FV_D08_SUPORT_01 )
+	_FLAG_SET( FV_D08_CHAMPION_01 )
+	_FLAG_SET( FV_D08_LEADER7_01 )
+	_FLAG_SET( FV_D08R0901_EVENT_01 )
+	
+	//C02のサポート、ライバル、チャンピオン、アロエ、博士（父）、博士（娘）
+	//D04R601のイベント終了まで非表示
+	_FLAG_SET(FV_C02_STONEEVENT_01)
+	
 	//D03R0101:ライバル２・チャンピオン・D04R0601のイベント後まで非表示
 	_FLAG_SET( FV_D03R0101_RIVAL_02 )
 	_FLAG_SET( FV_D03R0101_CHAMPION_01 )
@@ -157,7 +170,7 @@ INIT_EVENT_START  ev_init_gameclear_script
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
   //古代の城のマップ変化
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_DUN04, TRUE, FALSE )
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, FALSE )
 
   //全滅時の戻り先を自宅にする
   _SET_WARP_ID( WARP_ID_T01 )
