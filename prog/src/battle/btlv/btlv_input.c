@@ -48,12 +48,10 @@
 #define BG_CLEAR_CODE     (0x8000 / 0x20 - 1)   ///BGスクリーンのクリアコード（キャラクタの一番後ろを指定）
 
 #define INFOWIN_PAL_NO  ( 0x0f )  //情報ステータスバーパレット
+#define BMPWIN_PAL_NO  ( 0x0d )   //BMPWINパレット
 
 #define WAZATYPEICON_COMP_CHAR  ( 0 )
 #define WAZATYPEICON_OAMSIZE    ( 32 * 8 )
-
-#define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
-                                    /** @TODO ポケモンリストが正規になったらいらなくなる */
 
 #define STANDBY_PAL        ( 0x0003 )
 #define STANDBY_FADE        ( 12 )
@@ -755,7 +753,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   BTLV_INPUT_CreateCursorOBJ( biw );
 
   //ビットマップ初期化
-  biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 4, 32, 12, 0, GFL_BMP_CHRAREA_GET_B );
+  biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 4, 32, 12, BMPWIN_PAL_NO, GFL_BMP_CHRAREA_GET_B );
   biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
