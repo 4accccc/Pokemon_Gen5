@@ -16,10 +16,13 @@
 #include "savedata\box_savedata.h"
 #include "app\name_input.h"
 #include "poke_tool\pokerus.h"
+#include "app/zukan_toroku.h"
 
 // local includes --------------------
 #include "event_battle_return.h"
 
+// オーバーレイ
+FS_EXTERN_OVERLAY(zukan_toroku);
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -36,6 +39,7 @@ typedef struct {
   NAMEIN_PARAM*     nameinParam;
   STRBUF*           strbuf;
   POKEMON_PARAM*    pp;
+  ZUKAN_TOROKU_PARAM zukan_toroku_param;
 
   HEAPID  heapID;
 
@@ -123,8 +127,6 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         POKERUS_CheckContagion( party );
       }
 
-      // @todo 図鑑フラグをセットする
-
       // 捕獲した
       if( param->btlResult->result == BTL_RESULT_CAPTURE )
       {
@@ -135,19 +137,56 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
-        // @todo 今は必ず名前入力させているが、いずれ確認画面を作る。
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
-
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
+        // 図鑑登録画面 or 命名確認画面 へ
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
+#if 0  // つくりかけ
+        if( 1 )
+        {
+          // @todo 図鑑フラグをセットする
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU );
+        }
+        else
+        {
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME );
+        }
+        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
+#endif  // #if 0  // つくりかけ
         (*seq)++;
       }else{
-        (*seq) = 3;
+        (*seq) = 4;
       }
     }
     break;
 
   case 1:
+    {
+      BOOL nickname = TRUE;
+#if 0  // つくりかけ
+      BOOL nickname = FALSE;
+      if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
+      {
+        nickname = TRUE;
+      }
+#endif  // #if 0  // つくりかけ
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
+
+      if( nickname )
+      {
+        // 名前入力画面へ
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
+        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
+
+        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
+        (*seq)++;
+      }
+      else
+      {
+        (*seq) = 3;
+      }
+    }
+    break;
+
+  case 2:
     if( !NAMEIN_IsCancel(wk->nameinParam) ){
       NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
       PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
@@ -158,7 +197,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     (*seq)++;
     break;
 
-  case 2:
+  case 3:
     {
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
 

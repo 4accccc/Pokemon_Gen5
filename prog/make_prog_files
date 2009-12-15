@@ -129,6 +129,7 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/poke_personal.c \
         poke_tool/pokerus.c \
         poke_tool/shinka_check.c \
+        poke_tool/pokefoot.c \
         pokeicon/pokeicon.c \
         waza_tool/waza_tool.c \
         print/printsys.c \
@@ -697,6 +698,7 @@ SRCS_OVERLAY_TRADE  = trade/trade.c \
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_BATTLE_RETURN =	field/event_battle_return.c
 
 # ƒoƒgƒ‹
@@ -1298,6 +1300,14 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_graphic.c \
 					 demo/intro/intro_cmd.c \
 					 demo/intro/intro_cmd_data.c
+
+# }ŠÓ“o˜^
+#===> SRCS_OVERLAY_BATTLE_RETURN
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_ZUKAN_TOROKU = app/zukan/entry/zukan_toroku.c \
+                            app/zukan/entry/zukan_toroku_graphic.c \
+                            app/zukan/entry/zukan_nickname.c \
+                            app/zukan/info/zukan_info.c
 
 
 

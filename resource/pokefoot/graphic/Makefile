@@ -4,7 +4,7 @@
 #**
 ##-----------------------------------------------------------------------------
 
-USERS	= matsuda
+USERS	= matsuda kawada_koji
 
 SUBDIRS		=
 
@@ -36,10 +36,10 @@ poke_foot_000.NCER: poke_foot_000.nce
 	g2dcvtr poke_foot_000.nce
 	ntrcomp -l 2 -o poke_foot_000_lzh.NCGR poke_foot_000.NCGR
 	mv poke_foot_000_lzh.NCGR poke_foot_000.NCGR
-	ntrcomp -l 2 -o poke_foot_000_lzh.NCER poke_foot_000.NCER
-	mv poke_foot_000_lzh.NCER poke_foot_000.NCER
-	ntrcomp -l 2 -o poke_foot_000_lzh.NANR poke_foot_000.NANR
-	mv poke_foot_000_lzh.NANR poke_foot_000.NANR
+#	ntrcomp -l 2 -o poke_foot_000_lzh.NCER poke_foot_000.NCER
+#	mv poke_foot_000_lzh.NCER poke_foot_000.NCER
+#	ntrcomp -l 2 -o poke_foot_000_lzh.NANR poke_foot_000.NANR
+#	mv poke_foot_000_lzh.NANR poke_foot_000.NANR
 
 #do-build: $(POKEGRA:.nce=.NCER)
 %.NCER: %.nce
