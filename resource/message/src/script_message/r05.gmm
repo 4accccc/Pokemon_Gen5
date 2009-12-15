@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:42:01"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T22:45:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -662,14 +662,14 @@
 	<row id="msg_r05_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">５ばんどうろ</language>
-		<language name="JPN_KANJI" width="256">５番道路</language>
+		<language name="JPN" width="256">ホドモエのはねばし</language>
+		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
 	</row>
 
 	<row id="msg_r05_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋</comment>
-		<language name="JPN" width="256">ホドモエのはねばし</language>
-		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
+		<language name="JPN" width="256">おとくな　けいじばん</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
 	</row>
 
 	<row id="msg_r05_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
