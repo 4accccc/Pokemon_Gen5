@@ -82,7 +82,6 @@ struct _SHINKA_DEMO_PARAM
   u16               after_mons_no;        //進化後のポケモンナンバー
   u8                shinka_pos;           //進化するポケモンのPOKEPARTY内の位置
   u8                shinka_cond;          //進化条件（ヌケニンチェックに使用）
-  BOOL              shinka_execute_flag;  //進化デモ中かどうか？
 };
 
 
@@ -125,16 +124,16 @@ SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam( HEAPID heapID, const POKEPARTY* ppt, 
 
 //------------------------------------------------------------------
 /**
- * 進化デモ起動中かチェック
+ * 進化デモ用パラメータワーク解放
  *
- * @param   wk  SHINKA_DEMO_PARAM構造体
+ * @param   sdp           パラメータワーク構造体
  *
- * @retval  TRUE:起動中 FALSE:終了
+ * @retval  SHINKA_DEMO_PARAM
  */
 //------------------------------------------------------------------
-BOOL  SHINKADEMO_CheckExecute( SHINKA_DEMO_PARAM* param )
+void  SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp )
 { 
-  return param->shinka_execute_flag;
+  GFL_HEAP_FreeMemory( sdp );
 }
 
 //--------------------------------------------------------------------------
@@ -226,8 +225,6 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
   (*seq) = 0;
-
-  wk->param->shinka_execute_flag = TRUE;
 
   //VBlank関数
   wk->v_tcb = GFUser_VIntr_CreateTCB( SHINKADEMO_VBlank, wk, 1 );
@@ -489,8 +486,6 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
 
   GFL_BG_Exit();
   GFL_BMPWIN_Exit();
-
-  wk->param->shinka_execute_flag = FALSE;
 
   GFL_PROC_FreeWork( proc );
 
