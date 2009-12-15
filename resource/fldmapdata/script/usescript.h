@@ -21,10 +21,6 @@
 #include "item_get_scr_def.h"
 #include "btl_util_scr_def.h"
 
-//スクリプト内共通定義ヘッダファイル
-//最初の3体タイプわけなど
-#include "user_define.h"
-
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
 #include "../../../prog/arc/fieldmap/fldmmdl_objcode.h"
@@ -94,13 +90,17 @@
 #include "../../../prog/src/field/map_replace.h"
 
 
+
+
+//スクリプト内共通定義ヘッダファイル
+//最初の3体タイプわけなど
+#include "user_define.h"
+
 //--------------------------------------------------------------
 //  wb_null
 //--------------------------------------------------------------
 #if 0
 //include/field
-#include "../../../include/field/evwkdef.h"
-#include "../../../include/field/poketch_app_no.h"	//ポケッチアプリナンバー
 #include "../../../include/field/weather_no.h"		//天候ナンバー
 
 #include "../../../include/system/brightness.h"		//輝度
@@ -167,15 +167,7 @@
 //	共通メッセージ関連
 //======================================================================
 #include "../../message/dst/script/msg_common_scr.h"
-#include "../../message/dst/script/msg_common_scr.h"
-//#include "../../../prog/include/msg/script/msg_common_scr.h"
 
-#if 0 //wb null
-#include "../../../include/msgdata/msg_common_scr.h"
-#include "../../../include/msgdata/msg_ev_win.h"
-#include "../../../include/msgdata/msg_gameover.h"
-//#include "msglist.h"
-#endif //wb null
 
 //======================================================================
 //	define
