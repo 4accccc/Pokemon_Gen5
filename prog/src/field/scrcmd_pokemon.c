@@ -485,7 +485,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
-  u16*      target_monsno = SCRCMD_GetVMWork( core, work );
+  u16      target_monsno = SCRCMD_GetVMWorkValue( core, work );
   u16*      ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
@@ -495,7 +495,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
   total = PokeParty_GetPokeCount( party );
   num = 0;
 
-  if ( (0<*target_monsno)&&(*target_monsno<=MONSNO_END) )
+  if ( (0<target_monsno)&&(target_monsno<=MONSNO_END) )
   {
     int i;
     for (i=0;i<total;i++)
@@ -509,7 +509,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
           u16 monsno;
           //モンスターナンバーを取得
           monsno = PP_Get(pp,ID_PARA_monsno,NULL);
-          if (monsno == *target_monsno) num++;
+          if (monsno == target_monsno) num++;
         }
       }
     }
@@ -523,7 +523,6 @@ VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
   }
   return VMCMD_RESULT_CONTINUE;
 } 
-
 
 //--------------------------------------------------------------
 /**
@@ -563,6 +562,61 @@ extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
   }
 
   *ret_wk = (u16)num;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 指定モンスターナンバーのポケモンが手持ちのどこにいるかを取得（先頭から数えて始めに見つかった位置を返す）
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPosByMonsNo( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16      target_monsno = SCRCMD_GetVMWorkValue( core, work );
+  u16*      ret_wk = SCRCMD_GetVMWork( core, work );
+  u16*      pos = SCRCMD_GetVMWork( core, work );
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+  
+  u16 num,total;
+
+  total = PokeParty_GetPokeCount( party );
+  num = 0;
+
+  if ( (0<target_monsno)&&(target_monsno<=MONSNO_END) )
+  {
+    int i;
+    for (i=0;i<total;i++)
+    {
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
+      if (pp != NULL)
+      {
+        u32 tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+        if (!tamago_flag)    //タマゴチェック
+        {
+          u16 monsno;
+          //モンスターナンバーを取得
+          monsno = PP_Get(pp,ID_PARA_monsno,NULL);
+          if (monsno == target_monsno) break;
+        }
+      }
+    }
+
+    if (i < total)
+    {
+      *ret_wk = TRUE;
+      *pos = i;
+    }else *ret_wk = FALSE;
+  }
+  else
+  {
+    GF_ASSERT(0);
+    *ret_wk = FALSE;
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1097,12 +1151,11 @@ VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk )
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
   
   POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
-  BOOL fastMode = PP_FastModeOn( pp );
+  BOOL rc;
 
-  PP_ChangeFormNo( pp, formno );
+  rc = PP_ChangeFormNo( pp, formno );
+  GF_ASSERT(rc);
   
-  PP_FastModeOff( pp , fastMode );
-
   //図鑑登録「見た」
   {
     ZUKAN_SAVEDATA *zw = GAMEDATA_GetZukanSave( gdata );

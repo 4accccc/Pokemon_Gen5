@@ -4383,6 +4383,23 @@
   .short  \formno
   .endm
   
+//--------------------------------------------------------------
+/**
+ * @def _GET_PARTY_POS_BY_MONSNO
+ * @brief 指定モンスターナンバーのポケが手持ちのどこにいるかを調べる
+ * @param monsno  探すモンスターナンバー
+ * @param ret_wk  TRUEなら発見 FALSEなら未発見
+ * @param pos     発見したポケモンの位置（０～５）
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_POS( monsno, ret_wk, pos ) _ASM_GET_PARTY_POS monsno, ret_wk, pos
+
+  .macro  _ASM_GET_PARTY_POS monsno, ret_wk, pos
+  .short  EV_SEQ_GET_PARTY_POS_BY_MONSNO
+  .short  \monsno
+  .short  \ret_wk
+  .short  \pos
+  .endm
 
 //======================================================================
 // お金

@@ -493,7 +493,7 @@
   DEF_CMD( EvCmdChkPokeWaza, EV_SEQ_CHK_POKE_WAZA )
   DEF_CMD( EvCmdChkPokeWazaGroup, EV_SEQ_CHK_POKE_WAZA_GROUP )
   DEF_CMD( EvCmdChgFormNo, EV_SEQ_CHG_FORM_NO )
-  NO_CMD()
+  DEF_CMD( EvCmdGetPartyPosByMonsNo, EV_SEQ_GET_PARTY_POS_BY_MONSNO )
 
 
   // ボックス関連
