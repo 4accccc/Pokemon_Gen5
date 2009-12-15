@@ -1,0 +1,127 @@
+//======================================================================
+//                deox_change_scr.ev
+//
+//    スクリプトファイル：deox_change_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_deox_change_scr.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_deox_change
+_EVENT_DATA_END
+
+//----------------------------------------------------------------------
+// ローカルワーク
+//----------------------------------------------------------------------
+DEFINE_LOCAL SEL_POS            // ポケモンリスト選択位置
+DEFINE_LOCAL END_MSG            // 最後のメッセージＩＤ
+
+EVENT_START ev_deox_change
+
+  //ローカルワーク定義
+  DEFINE_LOCAL DEO_NUM            // 手持ちデオキシスの数
+
+  //デオキシスいるか
+  _GET_PARTY_POKE_COUNT_BY_MONSNO(MONSNO_DEOKISISU, DEO_NUM)
+
+  IF $DEO_NUM == 0 THEN
+    //デオキシスいないときのメッセージ
+    $END_MSG = msg_deoxys_09
+    _CALL end_msg
+  ELSE
+    //隕石に近づける？
+    _SYSWIN_MSG_DOWN(msg_deoxys_01)
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
+    IF $SCWK_ANSWER == 0 THEN
+      //手持ちのデオキシスは2匹以上か？
+      IF $DEO_NUM == 1 THEN
+        //フォルムチェンジシーケンスコール
+        _CALL form_change
+      ELSE  
+        //「デオキシス選んで」
+        _SYSWIN_MSG_DOWN(msg_deoxys_02)
+        _SYSWIN_CLOSE()
+        //ポケモン選択
+        _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
+        IF $SCWK_ANSWER == TRUE THEN
+          _CALL check_poke
+        ENDIF
+      ENDIF
+    ENDIF
+  ENDIF  
+
+EVENT_END
+
+//ポケモンのチェック⇒フォルム変更
+check_poke:
+
+DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
+  //タマゴチェックする
+  _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
+  IF $SCWK_ANSWER == TRUE THEN
+    //タマゴなので終了
+    $END_MSG = msg_deoxys_04
+    _CALL end_msg
+  ELSE
+    _GET_PARTY_POKE_MONSNO( SEL_MONS_NO, SEL_POS )
+    //選んだのはデオキシス？
+    IF $SEL_MONS_NO == MONSNO_DEOKISISU THEN
+      //フォルムチェンジシーケンスコール
+      _CALL form_change
+    ELSE
+      //「デオキシスではない」
+      $END_MSG = msg_deoxys_03
+      _CALL end_msg
+    ENDIF
+  ENDIF
+_RET
+
+//フォルムチェンジ実行
+form_change:
+  //ローカルワーク定義
+  DEFINE_LOCAL FORM_NO            // フォルムナンバー
+  DEFINE_LOCAL FORM_MSG            // フォルム別メッセージＩＤ
+
+  //現在のフォルムを取得
+  _GET_PARTY_POKE_FORMNO( FORM_NO, SEL_POS )
+  //フォルムをインクリメント
+  $FORM_NO += 1
+  //結果、フォルムナンバー3をこえたら、0に戻す
+  IF $FORM_NO > 3 THEN
+    $FORM_NO = 0
+  ENDIF
+
+  //フォルムチェンジ(図鑑登録含む)
+ _CHANGE_FORM_NO( SEL_POS, FORM_NO )
+
+  //フォルム別にメッセージを変更
+  IF $FORM_NO == 0 THEN
+    $FORM_MSG = msg_deoxys_05    //ノーマル
+  ELSIF $FORM_NO == 1 THEN
+    $FORM_MSG = msg_deoxys_06    //アタック
+  ELSIF $FORM_NO == 2 THEN
+    $FORM_MSG = msg_deoxys_07    //ディフェンス
+  ELSIF $FORM_NO == 3 THEN
+    $FORM_MSG = msg_deoxys_08    //スピード
+  ELSE
+    //ここにきたら不正
+    $FORM_MSG = msg_deoxys_05    //ノーマルにしとく
+  ENDIF
+
+  _SYSWIN_MSG_DOWN(FORM_MSG)
+  _SYSWIN_CLOSE()
+_RET
+
+//最終メッセージ共通処理
+end_msg:
+  _SYSWIN_MSG_DOWN( END_MSG )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+_RET

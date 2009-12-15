@@ -26,6 +26,7 @@ extern VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdGetPartyFrontPoke( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk );
@@ -49,4 +50,5 @@ extern VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk );
 

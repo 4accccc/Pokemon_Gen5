@@ -3951,6 +3951,24 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_PARTY_POKE_COUNT_BY_MONSNO
+ * @brief 指定モンスターナンバーのポケが手持ちに何匹いるかを返す(タマゴは除外)
+ * @param monsno  対象モンスターナンバー
+ * @param ret_wk  結果を受け取るワーク
+ * @retval  0～6
+ */
+//--------------------------------------------------------------  
+#define _GET_PARTY_POKE_COUNT_BY_MONSNO(monsno, ret_wk) \
+    _ASM_GET_PARTY_POKE_COUNT_BY_MONSNO monsno, ret_wk
+
+  .macro  _ASM_GET_PARTY_POKE_COUNT_BY_MONSNO monsno, ret_wk
+  .short  EV_SEQ_GET_PARTY_POKE_COUNT_BY_MONSNO
+  .short  \monsno
+  .short  \ret_wk
+  .endm  
+
+//--------------------------------------------------------------
+/**
  * @def _GET_PARTY_FRONT_POKEMON
  * @brief 手持ちの先頭ポケモンがいる位置を取得
  * @param ret_wk チェック結果を受け取るワーク（0～5の数値で返します）
@@ -4343,13 +4361,29 @@
 #define _CHECK_POKE_OWNER( ret_wk, pos ) \
     _ASM_CHECK_POKE_OWNER ret_wk, pos
 
-
   .macro  _ASM_CHECK_POKE_OWNER ret_wk, pos
   .short  EV_SEQ_CHECK_POKE_OWNER
   .short  \ret_wk
   .short  \pos
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHANGE_FORM_NO
+ * @brief 手持ちポケモンのフォルムチェンジ
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @param formno    フォルムナンバー
+ */
+//--------------------------------------------------------------
+#define _CHANGE_FORM_NO( pos, formno ) _ASM_CHANGE_FORM_NO pos, formno
+
+  .macro  _ASM_CHANGE_FORM_NO pos, formno
+  .short  EV_SEQ_CHG_FORM_NO
+  .short  \pos
+  .short  \formno
+  .endm
   
+
 //======================================================================
 // お金
 //======================================================================
