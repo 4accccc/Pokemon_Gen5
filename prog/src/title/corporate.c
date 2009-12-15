@@ -253,7 +253,7 @@ GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 	
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+//	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
 	return GFL_PROC_RES_FINISH;
 }
 

@@ -25,6 +25,8 @@ static GFL_PROC_RESULT TitleControlProcEnd( GFL_PROC * proc, int * seq, void * p
 //==============================================================================
 //	ÉfÅ[É^
 //==============================================================================
+extern const GFL_PROC_DATA CorpProcData;
+
 const GFL_PROC_DATA TitleControlProcData = {
 	TitleControlProcInit,
 	TitleControlProcMain,
@@ -65,12 +67,16 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 {
 	switch( *seq  ){
 	case 0:
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &CorpProcData, NULL);
 		*seq = 1;
 		break;
 	case 1:
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		*seq = 2;
 		break;
+	case 2:
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;
 }
