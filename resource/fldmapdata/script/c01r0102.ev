@@ -209,5 +209,7 @@ EVENT_END
 /*  C01R0102 本棚のイベントスクリプト						  */
 /**************************************************************/
 EVENT_START   ev_c01r0102_books_01
-	_EASY_MSG( msg_c01r0101_books_01 )
+	_SYSWIN_MSG_DOWN   ( msg_c01r0101_books_01 )
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
 EVENT_END

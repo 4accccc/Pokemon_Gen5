@@ -139,9 +139,35 @@ EVENT_START   ev_debug_ando
 EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*				杉中のデバッグメニュー						  */
 /**************************************************************/
 EVENT_START   ev_debug_suginaka
+	$SCWK_TEMP0 = 0
+	
+	WHILE $SCWK_TEMP0 != 428
+
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_01, 0 )	//くさ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 1 )	//みず
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 2 )	//ほのお
+		_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+	
+		IF $SCWK_ANSWER == 0 THEN
+			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
+		ELSIF $SCWK_ANSWER == 1 THEN
+			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+		ELSIF $SCWK_ANSWER == 2 THEN
+			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+		ELSE
+			$SCWK_TEMP0 = 428
+		ENDIF
+	
+	ENDWHILE
+	
 EVENT_END
 
 /**************************************************************/

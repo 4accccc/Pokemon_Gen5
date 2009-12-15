@@ -12,9 +12,9 @@
 #define ZONE_C01GYM0101_EVC_H
 
 #define C01GYM0101_SUNGLASSES_01           0
-#define C01GYM0101_LEADER1_01              1
-#define C01GYM0101_LEADER1_02              2
-#define C01GYM0101_LEADER1_03              3
+#define C01GYM0101_LEADER1A_01             1
+#define C01GYM0101_LEADER1B_01             2
+#define C01GYM0101_LEADER1C_01             3
 #define C01GYM0101_CURTAIN_01A             4
 #define C01GYM0101_CURTAIN_02A             5
 #define C01GYM0101_CURTAIN_02G             6
