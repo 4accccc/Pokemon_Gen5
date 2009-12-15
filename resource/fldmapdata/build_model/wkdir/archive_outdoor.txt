@@ -208,3 +208,5 @@
 "nsbmdfiles/c03_ship_03.nsbmd"
 "nsbmdfiles/c03_ship_04.nsbmd"
 "nsbmdfiles/c03_ship_05.nsbmd"
+"nsbmdfiles/h05_elevator.nsbmd"
+"nsbmdfiles/door_h05.nsbmd"
