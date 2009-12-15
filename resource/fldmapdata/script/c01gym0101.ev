@@ -223,9 +223,9 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1C_01 )
 	_BALLOONWIN_CLOSE()
 	
-	/*//デント：お辞儀
+	//デント：お辞儀
 	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_shibai )
-	_OBJ_ANIME_WAIT()*/
+	_OBJ_ANIME_WAIT()
 	
 	//ポッドとコーンのバニッシュフラグをreset、オブジェクトを出現させる。
 	_FLAG_RESET( FV_C01GYM0101_LEADERS )

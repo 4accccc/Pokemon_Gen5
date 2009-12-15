@@ -222,7 +222,9 @@ EVENT_START   ev_pos_t02_hakai_stop
 	//自機ライバルの方へ向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right )
 	_OBJ_ANIME_WAIT()
-	
+
+	_PLAYER_NAME(0)
+
 	//おい　ポケモンセンターの　まえで
 	_BALLOONWIN_OBJMSG( msg_t02_black_01 , T02_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
@@ -426,6 +428,7 @@ _ANIME_LABEL anm_player_pokecen_right
 /*			ライバル　ポケセン案内前						*/
 /************************************************************/
 EVENT_START   ev_t02_rival_01
+	_PLAYER_NAME(0)
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02_black_01 )
 EVENT_END
 

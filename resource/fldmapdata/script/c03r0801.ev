@@ -137,7 +137,9 @@ _ANIME_LABEL	anm_cabin_kari
 /*		—V——‘DƒJƒM‚Ì‚©‚©‚Á‚½•”‰®							  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0801_lock_01
-	_EASY_MSG( msg_bg_c03r0801_lock_01 )
+		_SYSWIN_MSG_DOWN( msg_bg_c03r0801_lock_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/

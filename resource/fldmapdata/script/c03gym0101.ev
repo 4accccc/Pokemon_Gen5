@@ -262,16 +262,20 @@ EVENT_START	ev_bg_c03gym0101_statue_01
 
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
-	
-		_EASY_MSG ( msg_c03gym0101_statue_01 )
+		_PLAYER_NAME( 0 )
+		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
 	
 	//ジムバッジを取得している場合
 	ELSE
 		
 		_PLAYER_NAME( 0 )
-		_EASY_MSG ( msg_c03gym0101_statue_02 )
+		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
 		
 	ENDIF
+	
+	_LAST_KEYWAIT()	
+	_SYSWIN_CLOSE()
+	
 EVENT_END
 
 /************************************************************/
@@ -284,16 +288,20 @@ EVENT_START	ev_bg_c03gym0101_statue_02
 
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
-	
-		_EASY_MSG ( msg_c03gym0101_statue_01 )
+		_PLAYER_NAME( 0 )
+		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
 	
 	//ジムバッジを取得している場合
 	ELSE
 		
 		_PLAYER_NAME( 0 )
-		_EASY_MSG ( msg_c03gym0101_statue_02 )
+		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
 		
 	ENDIF
+
+	_LAST_KEYWAIT()	
+	_SYSWIN_CLOSE()
+
 EVENT_END
 
 /************************************************************/
