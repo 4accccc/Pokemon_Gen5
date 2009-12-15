@@ -545,7 +545,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_scr.c \
         field/scrcmd_bsubway.c \
         field/fld_trade.c \
-        field/scrcmd_league_front.c
+        field/scrcmd_league_front.c \
+        field/elboard_spnews_data.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

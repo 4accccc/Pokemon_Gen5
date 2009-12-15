@@ -23,6 +23,7 @@
 #include "savedata/gimmickwork.h"
 #include "gimmick_obj_elboard.h"
 #include "elboard_zone_data.h"
+#include "elboard_spnews_data.h"
 #include "arc/gate.naix"
 #include "field_gimmick_def.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
@@ -287,9 +288,13 @@ static u16 monitor_anime[MONITOR_ANIME_NUM] =
 //==========================================================================================
 typedef struct
 { 
-  HEAPID         heapID;  // 使用するヒープID
-  GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
-  u32     recoveryFrame;  // 復帰フレーム
+  HEAPID                   heapID;  // 使用するヒープID
+  FIELDMAP_WORK*         fieldmap;  // フィールドマップ
+  GOBJ_ELBOARD*           elboard;  // 電光掲示板管理オブジェクト
+  u32               recoveryFrame;  // 復帰フレーム
+  u8                spNewsDataNum;  // 臨時ニュースデータ数
+  ELBOARD_ZONE_DATA*     gateData;  // ゲートデータ
+  ELBOARD_SPNEWS_DATA* spNewsData;  // 臨時ニュースデータ
 } GATEWORK;
 
 
@@ -299,14 +304,23 @@ typedef struct
 static void GimmickSave( FIELDMAP_WORK* fieldmap );
 static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap );
 static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap );
-static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap );
+static void DeleteGateWork( GATEWORK* work );
+static BOOL LoadGateData( GATEWORK* work, FIELDMAP_WORK* fieldmap );
+static void DeleteGateData( GATEWORK* work );
+static void LoadSpNewsData( GATEWORK* work );
+static void DeleteSpNewsData( GATEWORK* work );
 static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data );
+static void SetupElboardNews( GATEWORK* work );
+static void SetupElboardSpecialNews( GATEWORK* work );
+static BOOL CheckSpecialNews( GATEWORK* work );
 static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data, 
                                  const GAMEDATA* gdata );
 static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
+static void AddNews_DIRECT( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
+static void AddNews_CHAMP( GOBJ_ELBOARD* elboard, const ELBOARD_SPNEWS_DATA* data );
 
 
 //==========================================================================================
@@ -320,13 +334,12 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 //------------------------------------------------------------------------------------------
 void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
-  u32* gmk_save;  // ギミックの実セーブデータ
-  GATEWORK* work;  // GATEギミック管理ワーク
   HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  GATEWORK*                work = NULL;  // GATEギミック管理ワーク
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_ELBOARD], EXPOBJ_UNIT_ELBOARD );
@@ -345,7 +358,6 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
-  int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
@@ -363,7 +375,7 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   }
 
   // ギミック管理ワークを破棄
-  GFL_HEAP_FreeMemory( work );
+  DeleteGateWork( work );
 }
 
 //------------------------------------------------------------------------------------------
@@ -389,6 +401,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
 
+#if 0
   // TEST:
   {
     int key = GFL_UI_KEY_GetCont();
@@ -405,6 +418,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       }
     }
   }
+#endif
 }
 
 
@@ -427,13 +441,9 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
-  ELBOARD_ZONE_DATA elboard_data;
 
   // 電光掲示板が登録されていない場所で呼ばれたら何もしない
-  if( IsGimmickIDEntried( gmk_id ) != TRUE )
-  {
-    return;
-  }
+  if( IsGimmickIDEntried( gmk_id ) != TRUE ){ return; }
 
   // すでに他のニュースが登録されている場合
   {
@@ -445,21 +455,16 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
       OBATA_Printf( "======================================\n" );
       return;
     }
-  }
-
-  // 電光掲示板データを取得
-  if( !LoadGateData( &elboard_data, fieldmap ) )
-  {
-    // データが取得できなかったら, 以降の処理を中断
-    return;
-  }
+  } 
+  // データが取得できなかったら, 以降の処理を中断
+  if( !work->gateData ){ return; }
 
   // ニュースを追加
-  AddNews_DATE( work->elboard, &elboard_data );                // 日付
-  AddNews_WEATHER( work->elboard, &elboard_data );             // 天気
-  AddNews_PROPAGATION( work->elboard, &elboard_data, gdata );  // 大量発生
-  AddNews_INFO( work->elboard, &elboard_data );                // 地域情報
-  AddNews_CM( work->elboard, &elboard_data );                  // 一言CM
+  AddNews_DATE( work->elboard, work->gateData );                // 日付
+  AddNews_WEATHER( work->elboard, work->gateData );             // 天気
+  AddNews_PROPAGATION( work->elboard, work->gateData, gdata );  // 大量発生
+  AddNews_INFO( work->elboard, work->gateData );                // 地域情報
+  AddNews_CM( work->elboard, work->gateData );                  // 一言CM
 }
 
 //------------------------------------------------------------------------------------------
@@ -471,8 +476,8 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
  * @param wordset  指定メッセージに展開するワードセット
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_AddSpecialNews( 
-    FIELDMAP_WORK* fieldmap, u32 str_id, WORDSET* wordset )
+void GATE_GIMMICK_Elboard_AddSpecialNews( FIELDMAP_WORK* fieldmap, 
+                                          u32 str_id, WORDSET* wordset )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
@@ -482,10 +487,7 @@ void GATE_GIMMICK_Elboard_AddSpecialNews(
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // 電光掲示板が登録されていない場所で呼ばれたら何もしない
-  if( IsGimmickIDEntried( gmk_id ) != TRUE )
-  {
-    return;
-  }
+  if( IsGimmickIDEntried( gmk_id ) != TRUE ){ return; }
 
   // ニュースを追加
   {
@@ -552,13 +554,18 @@ void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
 {
-  ELBOARD_ZONE_DATA elboard_data;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
+  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
   fx32 val_len;
   u16 val_pitch, val_yaw;
   VecFx32 val_target;
 
   // 電光掲示板データを取得
-  if( !LoadGateData(&elboard_data, fieldmap) )
+  if( !work->gateData )
   { // 取得失敗
     OBATA_Printf( "==========================================\n" );
     OBATA_Printf( "GIMMICK-GATE: 電光掲示板データの取得に失敗\n" );
@@ -566,7 +573,7 @@ void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
     return;
   }
   // 電光掲示板の向きでカメラの回転を決定
-  switch( elboard_data.dir )
+  switch( work->gateData->dir )
   {
   case DIR_DOWN:
     val_pitch = 0x0ee5;
@@ -706,29 +713,18 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
 {
-  int i;
   GATEWORK*                work = NULL;
   HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  ELBOARD_ZONE_DATA elboard_data;
 
   // ギミック管理ワークを作成
   work = (GATEWORK*)GFL_HEAP_AllocMemory( heap_id, sizeof(GATEWORK) );
   GFL_STD_MemClear( work, sizeof(GATEWORK) );
 
-  // 電光掲示板データを取得
-  if( !LoadGateData( &elboard_data, fieldmap ) )
-  {
-    // データが取得できなかったら, 以降の初期化を中断
-    return work;
-  }
+  // 初期化
+  work->heapID   = heap_id;
+  work->fieldmap = fieldmap;
 
-  // 電光掲示板を配置
-  { 
-    GFL_G3D_OBJSTATUS* status = 
-      FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
-    SetElboardPos( status, &elboard_data );
-  } 
   // 電光掲示板管理ワークを作成
   {
     ELBOARD_PARAM param;
@@ -740,30 +736,60 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
     work->elboard      = GOBJ_ELBOARD_Create( &param );
   } 
 
+  // 電光掲示板データを取得
+  if( !LoadGateData( work, fieldmap ) )
+  {
+    // データが取得できなかったら, 以降の初期化を中断
+    return work;
+  }
+  // 臨時ニュースデータを取得
+  LoadSpNewsData( work );
+
+  // 電光掲示板を配置
+  { 
+    GFL_G3D_OBJSTATUS* status = 
+      FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
+    SetElboardPos( status, work->gateData );
+  } 
+
   // モニター・アニメーション開始
   FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD, 
-                           monitor_anime[elboard_data.monitorAnimeIndex], TRUE ); 
-
-  // ヒープIDを記憶
-  work->heapID = heap_id;
+                           monitor_anime[work->gateData->monitorAnimeIndex], TRUE ); 
 
   return work;
 }
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief ギミック管理ワークを破棄する
+ *
+ * @param work 破棄するワーク
+ */
+//------------------------------------------------------------------------------------------
+static void DeleteGateWork( GATEWORK* work )
+{
+  DeleteGateData( work );      // ゲートデータ
+  DeleteSpNewsData( work );    // 臨時ニュースデータ
+  GFL_HEAP_FreeMemory( work ); // 本体
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief ゾーンに応じた電光掲示板データを取得する
  *
- * @param buf      読み込んだデータの格納先
+ * @param work     読み込んだデータを保持するワーク
  * @param fieldmap フィールドマップ
  *
  * @return データが正しく読み込めたら TRUE
  */
 //------------------------------------------------------------------------------------------
-static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap )
+static BOOL LoadGateData( GATEWORK* work, FIELDMAP_WORK* fieldmap )
 {
   int i;
   u16 zone_id;
+
+  // すでに読み込まれている
+  if( work->gateData ){ return FALSE; }
 
   // ゾーンIDを取得
   zone_id = FIELDMAP_GetZoneID( fieldmap );
@@ -774,16 +800,80 @@ static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap )
     if( entry_table[i].zone_id == zone_id )
     {
       // 電光掲示板データを読み込む
-      ELBOARD_ZONE_DATA_Load( buf, ARCID_GATE_GIMMICK, entry_table[i].dat_id );
+      work->gateData = GFL_HEAP_AllocMemory( work->heapID, sizeof(ELBOARD_ZONE_DATA) );
+      ELBOARD_ZONE_DATA_Load( work->gateData, ARCID_GATE_GIMMICK, entry_table[i].dat_id );
       return TRUE;
     }
   } 
 
   // 現在のゾーンに対応する電光掲示板データが登録されていない場合
-  OBATA_Printf( "---------------------------------------------\n" );
+  OBATA_Printf( "=============================================\n" );
   OBATA_Printf( "error: 電光掲示板データが登録されていません。\n" );
-  OBATA_Printf( "---------------------------------------------\n" );
+  OBATA_Printf( "=============================================\n" );
   return FALSE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ゲートデータを破棄する
+ *
+ * @param work 破棄するゲートデータを保持するワーク
+ */
+//------------------------------------------------------------------------------------------
+static void DeleteGateData( GATEWORK* work )
+{
+  if( work->gateData )
+  {
+    GFL_HEAP_FreeMemory( work->gateData );
+    work->gateData = NULL;
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 臨時ニュースデータを読み込む
+ *
+ * @param work 読み込んだデータを保持するワーク
+ */
+//------------------------------------------------------------------------------------------
+static void LoadSpNewsData( GATEWORK* work )
+{
+
+  // すでに読み込まれている
+  if( work->spNewsData ){ return; }
+
+  // 全データを読み込み
+  {
+    int data_idx;
+    int data_num;
+    // データ数取得
+    data_num = GFL_ARC_GetDataFileCnt( ARCID_ELBOARD_SPNEWS );
+    // 各データを取得
+    work->spNewsData = GFL_HEAP_AllocMemory( work->heapID, 
+                                             sizeof(ELBOARD_SPNEWS_DATA) * data_num );
+    for( data_idx=0; data_idx<data_num; data_idx++ )
+    {
+      ELBOARD_SPNEWS_DATA_Load( &work->spNewsData[data_idx], ARCID_ELBOARD_SPNEWS, data_idx );
+    }
+    work->spNewsDataNum = data_num;
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 臨時ニュースデータを破棄する
+ *
+ * @param 破棄するデータを保持するワーク
+ */
+//------------------------------------------------------------------------------------------
+static void DeleteSpNewsData( GATEWORK* work )
+{
+  if( work->spNewsData )
+  {
+    GFL_HEAP_FreeMemory( work->spNewsData );
+    work->spNewsData = NULL;
+    work->spNewsDataNum = 0;
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -814,6 +904,94 @@ static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data )
   }
   rot *= 182;  // 65536÷360 = 182.044...
   GFL_CALC3D_MTX_CreateRot( 0, rot, 0, &status->rotate );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 電光掲示板 ニュースセットアップ
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void SetupElboardNews( GATEWORK* work )
+{
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板に臨時ニュースを設定する
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void SetupElboardSpecialNews( GATEWORK* work )
+{ 
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+
+  // すでに他のニュースが登録されている場合
+  {
+    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
+    if( num != 0 )
+    {
+      OBATA_Printf( "======================================\n" );
+      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
+      OBATA_Printf( "======================================\n" );
+      return;
+    }
+  } 
+  // データを持っていない
+  if( !work->spNewsData ){ return; }
+
+  // ニュースを追加
+  AddNews_DATE( work->elboard, work->gateData );                // 日付
+  AddNews_WEATHER( work->elboard, work->gateData );             // 天気
+  AddNews_PROPAGATION( work->elboard, work->gateData, gdata );  // 大量発生
+  //AddNews_SPECIAL( work->elboard, work->gateData );             // 臨時ニュース
+  AddNews_CM( work->elboard, work->gateData );                  // 一言CM
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 臨時ニュースの有無を調べる
+ *
+ * @param work ギミック管理ワーク
+ *
+ * @return 表示すべき臨時ニュースがある場合 TRUE, そうでなければ FALSE
+ */
+//------------------------------------------------------------------------------------------
+static BOOL CheckSpecialNews( GATEWORK* work )
+{
+  int i;
+  u32        zone_id = FIELDMAP_GetZoneID( work->fieldmap );
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata );
+
+  for( i=0; i<work->spNewsDataNum; i++ )
+  { 
+    BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
+    BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
+    if( flag_hit && zone_hit )  // if(フラグON && ゾーン一致)
+    {
+      u32 zone_1, zone_2, zone_3, zone_4;
+      zone_1 = work->spNewsData[i].zoneID_1;
+      zone_2 = work->spNewsData[i].zoneID_2;
+      zone_3 = work->spNewsData[i].zoneID_3;
+      zone_4 = work->spNewsData[i].zoneID_4;
+      if( (zone_1 == ZONE_ID_MAX) && 
+          (zone_2 == ZONE_ID_MAX) &&
+          (zone_3 == ZONE_ID_MAX) && 
+          (zone_4 == ZONE_ID_MAX) )
+      {
+        return TRUE; 
+      }
+      else
+      {
+      }
+    }
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------------------
@@ -1139,4 +1317,4 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
-}
+} 
