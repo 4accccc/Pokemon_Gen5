@@ -590,7 +590,8 @@ EVENT_END
 
 EVENT_START		 ev_bg_c02gym0101_plate_01
 	
-	_EASY_MSG(msg_c02gym0101_plate_01)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01)
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 /**************************************************************/
@@ -598,40 +599,51 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_02
 
-	_EASY_MSG(msg_c02gym0101_plate_02)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_02)
+	_MSGWIN_CLOSE()	
+
 EVENT_END
 /**************************************************************/
 /*     展示物の解説プレート3               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_03
 
-	_EASY_MSG(msg_c02gym0101_plate_03)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_03)
+	_MSGWIN_CLOSE()
+
 EVENT_END
 /**************************************************************/
 /*     展示物の解説プレート4               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_04
 
-	_EASY_MSG(msg_c02gym0101_plate_04)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_04)
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 /**************************************************************/
 /*     展示物の解説プレート5               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_05
 
-	_EASY_MSG(msg_c02gym0101_plate_05)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_05)
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 /**************************************************************/
 /*     展示物の解説プレート6               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_06
 
-	_EASY_MSG(msg_c02gym0101_plate_06)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_06)
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 /**************************************************************/
 /*     展示物の解説プレート7               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_07
 
-	_EASY_MSG(msg_c02gym0101_plate_07)
+	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_07)
+	_MSGWIN_CLOSE()
 EVENT_END
