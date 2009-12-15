@@ -52,6 +52,11 @@ static  void  GameVBlankFunc(void);
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
 #endif
+//------------------------------------------------------------------
+//	外部関数宣言
+//------------------------------------------------------------------
+extern const	GFL_PROC_DATA CorpProcData;
+FS_EXTERN_OVERLAY(title);
 
 //------------------------------------------------------------------
 /**
@@ -197,7 +202,6 @@ static	void	GameInit(void)
 	//セーブ関連初期化
 	SaveControl_SystemInit(HEAPID_SAVE);
 
-
 	// 通信のデバッグプリントを行う定義
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_ohno)||defined(DEBUG_ONLY_FOR_toru_nagihashi)
@@ -210,7 +214,8 @@ static	void	GameInit(void)
 #if 0
 	TestModeSet();	//←サンプルデバッグモード
 #else
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
+	//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
+	GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &CorpProcData, NULL);
 #endif
 
 	/* 文字描画システム初期化 */
