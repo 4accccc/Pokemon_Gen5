@@ -12,14 +12,17 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "msg/msg_intro.h"  // for GMM Index
+
 // 文字列関連
 #include "font/font.naix"
+#include "message.naix"
 #include "print/gf_font.h"
 #include "print/wordset.h"
-#include "print/printsys.h" //PRINT_QUE
+#include "print/printsys.h" // for PRINT_QUE
 
 //アーカイブ
-#include "arc_def.h"
+#include "arc_def.h" // for ARCID_XXX
 
 #include "intro_sys.h"
 
@@ -28,7 +31,9 @@
 //データ
 #include "intro_cmd_data.h"
 
-#include "intro_cmd.h"
+#include "intro_msg.h" // for INTRO_MSG_WORK
+
+#include "intro_cmd.h" // for extern宣言
 
 #include "sound/pm_sndsys.h" // for SEQ_SE_XXX
 
@@ -48,6 +53,15 @@ enum
  *								構造体定義
  */
 //=============================================================================
+
+//--------------------------------------------------------------
+///	
+//==============================================================
+typedef struct {
+  int   seq;      // コマンド内シーケンス
+  void* wk_user;  // ユーザーワーク
+} INTRO_STORE_DATA;
+
 //--------------------------------------------------------------
 ///	コマンドワーク
 //==============================================================
@@ -57,15 +71,21 @@ struct _INTRO_CMD_WORK {
   // [PRIVATE]
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
+  // @TODO  時間があったらリファクタ
+  // INTRO_STORE_DATAを特定タイミングで初期化し、
+  // その時に INTRO_CMD_WORK へのポインタも持たせる形式の方がスッキリする
+  INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
+  INTRO_MSG_WORK* wk_msg;
 };
 
 // コマンド
-static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, int* param );
-static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param );
-static BOOL CMD_SE( INTRO_CMD_WORK* wk, int* param );
-static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, int* param);
-static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param );
+static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
+static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -79,12 +99,13 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
+  CMD_SELECT_MOJI,
   NULL, // end
 };
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  次のシーンをセット
  *
  *	@param	INTRO_CMD_WORK* wk
  *	@param	param 
@@ -92,7 +113,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, int* param )
+static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   // 次のシーン
   wk->scene_id = param[0];
@@ -113,7 +134,7 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, int* param )
  */
 //-----------------------------------------------------------------------------
 #include "mictest.naix"
-static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param )
+static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   //@TODO とりあえずマイクテストのリソース
   HEAPID heap_id;
@@ -154,7 +175,7 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, int* param )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_SE( INTRO_CMD_WORK* wk, int* param )
+static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   int player_no;
 
@@ -187,7 +208,7 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, int* param )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, int* param)
+static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param)
 {
   int player_no;
 
@@ -208,7 +229,7 @@ static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, int* param)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param )
+static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   if( GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg() )
   {
@@ -216,6 +237,65 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, int* param )
   }
 
   return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  漢字／ひらがなモードを決定
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+//  const INTRO_SELECT_UI_RETURN ret = INTRO_SELECT_UpdateUI( wk->wk_msg );
+
+  switch( sdat->seq )
+  {
+  case 0:
+//   INTRO_SELECT_Setup( wk->wk_msg, msg_kanamode_01, msg_kanamode_window_01, msg_kanamode_window_02 );
+    INTRO_MSG_SetPrint( wk->wk_msg, msg_kanamode_01 );
+    sdat->seq++;
+    break;
+
+  case 1:
+    if( INTRO_MSG_IsPrintEnd( wk->wk_msg ) )
+    {
+      return TRUE;
+      sdat->seq++;
+    }
+    break;
+
+#if 0
+  case 2:
+    if( ret != INTRO_SELECT_UI_RET_CONTINUE )
+    {
+      if( ret == INTRO_SELECT_UI_RET_TRUE )
+      {
+        GFL_MSGSYS_SetLangID( 0 );
+//      CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_HIRAGANA );
+      }
+      else
+      {
+        GFL_MSGSYS_SetLangID( 1 );
+//      CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_KANJI );
+      }
+//    SEL_MODE_ExitItem( wk );
+    
+      return TRUE;
+    }
+    break;
+#endif 
+
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+
 }
 
 //=============================================================================
@@ -252,6 +332,9 @@ INTRO_CMD_WORK* Intro_CMD_Init( HEAPID heap_id )
   // メンバ初期化
   wk->heap_id = heap_id;
 
+  // 選択肢モジュール初期化
+  wk->wk_msg = INTRO_MSG_Create( heap_id );
+
   return wk;
 }
 
@@ -266,6 +349,8 @@ INTRO_CMD_WORK* Intro_CMD_Init( HEAPID heap_id )
 //-----------------------------------------------------------------------------
 void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 {
+  // 選択肢モジュール破棄
+  INTRO_MSG_Exit( wk->wk_msg );
 
   // ヒープ開放
   GFL_HEAP_FreeMemory( wk );
@@ -282,6 +367,8 @@ void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 //-----------------------------------------------------------------------------
 BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
 {
+  INTRO_MSG_Main( wk->wk_msg );
+
   // ストアされたコマンドを実行
   if( cmd_store_exec( wk ) == FALSE )
   {
@@ -306,7 +393,7 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
       else if( data->type == INTRO_CMD_TYPE_SET_SCENE )
       {
         // CMD_SET_SCENE
-        c_cmdtbl[ data->type ]( wk, data->param );
+        c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
                 
         HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
         data = Intro_DATA_GetCmdData( wk->scene_id );
@@ -401,7 +488,7 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
 
       data = wk->store[i];
 
-      if( c_cmdtbl[ data->type ]( wk, data->param ) == FALSE )
+      if( c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param ) == FALSE )
       {
         // 一個でも実行中のものがあれば次ループも実行
         is_continue = TRUE;
@@ -410,6 +497,8 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
       {
         // 終了したコマンドを消去
         wk->store[i] = NULL;
+        // シーケンスをクリア
+        wk->store_data[i].seq = 0; 
         HOSAKA_Printf("store [%d] is finish \n", i );
       }
     }

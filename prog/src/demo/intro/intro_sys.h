@@ -25,7 +25,7 @@ enum
 //=====================================
 enum
 {	
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_TEXT_M	= GFL_BG_FRAME1_M,
 	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
@@ -39,6 +39,8 @@ enum
 	//ÉÅÉCÉìBG
 	PLTID_BG_BACK_M				= 0,
 	PLTID_BG_POKE_M				= 1,
+	PLTID_BG_TEXT_WIN_M	  = 9,
+	PLTID_BG_TEXT_M	      = 10,
 	PLTID_BG_TASKMENU_M		= 11,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,

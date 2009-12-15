@@ -1300,7 +1300,8 @@ SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
 SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_graphic.c \
 					 demo/intro/intro_cmd.c \
-					 demo/intro/intro_cmd_data.c
+					 demo/intro/intro_cmd_data.c \
+           demo/intro/intro_msg.c
 
 # }ŠÓ“o˜^
 #===> SRCS_OVERLAY_BATTLE_RETURN

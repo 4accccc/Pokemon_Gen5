@@ -15,13 +15,15 @@
 static const INTRO_CMD_DATA c_intro_scene_init[] = 
 { 
   { INTRO_CMD_TYPE_BG_LOAD, },
-
+  // ↑ROMアクセスはここまで↑
+  // 初回セーブデータ初期化コマンド開始
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
 };
 
 // シーン 00 
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
+  { INTRO_CMD_TYPE_SELECT_MOJI }, // 漢字／ひらがな選択
   { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
 
   { INTRO_CMD_TYPE_END, }, ///< コマンド終了
