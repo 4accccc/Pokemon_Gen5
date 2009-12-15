@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-14T23:24:52"/>
+	<create user="taya" host="W00146" date="2009-12-15T16:21:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3215,26 +3215,26 @@
 
 	<row id="BTL_STRID_SET_IchamonWarn">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 つづけて　おなじ　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 続けて　同じ技が　出せない！</language>
 	</row>
 	<row id="BTL_STRID_SET_IchamonWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 つづけて　おなじ　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 続けて　同じ技が　出せない！</language>
 	</row>
 	<row id="BTL_STRID_SET_IchamonWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 つづけて　おなじ　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-いちゃもんを　つけられたので
+いちゃもんを　つけられたので▽
 続けて　同じ技が　出せない！</language>
 	</row>
 

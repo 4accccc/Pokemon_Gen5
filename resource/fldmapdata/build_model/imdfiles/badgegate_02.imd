@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-14T22:02:00" source="badgegate_02_011.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-15T17:42:55" source="badgegate_02_011.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-14T22:02:00" source="badgegate_02_011.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-15T17:42:55" source="badgegate_02_011.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -241,7 +241,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="20"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -265,7 +265,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -313,7 +313,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="19"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -337,7 +337,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="19"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -361,7 +361,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -385,7 +385,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="20"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
