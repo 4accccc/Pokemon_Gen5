@@ -782,9 +782,9 @@ $(DIR_TEMP)/map06_06.nsbmd: $(DIR_RES)/map06_06.imd
 	@$(G3DCVTR) $(DIR_RES)/map06_06.imd -o $(DIR_TEMP)/map06_06.nsbmd
 
 #map05_05
-$(DIR_OUTPUT)/map05_05.3dppack: $(DIR_TEMP)/map05_05.nsbmd $(DIR_RES)/map05_05.bin $(DIR_RES)/map05_05_ex.bin $(DIR_RES)/map05_05.3dmd
+$(DIR_OUTPUT)/map05_05.3dppack: $(DIR_TEMP)/map05_05.nsbmd $(DIR_RES)/map05_05.bin $(DIR_RES)/map05_05.3dmd
 	@echo create 3dppack map05_05
-	@$(BINLINKER) $(DIR_TEMP)/map05_05.nsbmd $(DIR_RES)/map05_05.bin $(DIR_RES)/map05_05_ex.bin $(DIR_RES)/map05_05.3dmd $(DIR_OUTPUT)/map05_05.3dppack GC
+	@$(BINLINKER) $(DIR_TEMP)/map05_05.nsbmd $(DIR_RES)/map05_05.bin $(DIR_RES)/map05_05.3dmd $(DIR_OUTPUT)/map05_05.3dppack WB
 
 $(DIR_TEMP)/map05_05.nsbmd: $(DIR_RES)/map05_05.imd
 	@echo create_nsbmd map05_05
@@ -4641,6 +4641,15 @@ $(DIR_OUTPUT)/m_dun0809_01_01.3dppack: $(DIR_TEMP)/m_dun0809_01_01.nsbmd $(DIR_R
 $(DIR_TEMP)/m_dun0809_01_01.nsbmd: $(DIR_RES)/m_dun0809_01_01.imd
 	@echo create_nsbmd m_dun0809_01_01
 	@$(G3DCVTR) $(DIR_RES)/m_dun0809_01_01.imd -o $(DIR_TEMP)/m_dun0809_01_01.nsbmd
+
+#m_dun0202_00_00
+$(DIR_OUTPUT)/m_dun0202_00_00.3dppack: $(DIR_TEMP)/m_dun0202_00_00.nsbmd $(DIR_RES)/m_dun0202_00_00.bin $(DIR_RES)/m_dun0202_00_00.3dmd
+	@echo create 3dppack m_dun0202_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_dun0202_00_00.nsbmd $(DIR_RES)/m_dun0202_00_00.bin $(DIR_RES)/m_dun0202_00_00.3dmd $(DIR_OUTPUT)/m_dun0202_00_00.3dppack WB
+
+$(DIR_TEMP)/m_dun0202_00_00.nsbmd: $(DIR_RES)/m_dun0202_00_00.imd
+	@echo create_nsbmd m_dun0202_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_dun0202_00_00.imd -o $(DIR_TEMP)/m_dun0202_00_00.nsbmd
 
 #m_ruin01_00_00
 $(DIR_OUTPUT)/m_ruin01_00_00.3dppack: $(DIR_TEMP)/m_ruin01_00_00.nsbmd $(DIR_RES)/m_ruin01_00_00.bin $(DIR_RES)/m_ruin01_00_00.3dmd
