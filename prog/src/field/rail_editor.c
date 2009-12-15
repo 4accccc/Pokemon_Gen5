@@ -372,6 +372,15 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 	{
 	// 初期化
 	case RAIL_EDITOR_SEQ_INIT:
+    // メモリをあけるためにCギアさようなら
+    {
+      FIELD_SUBSCREEN_WORK * subscreen;
+      
+
+      // カメラ操作は下画面で行う
+      subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
+      FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NOGEAR);
+    }
 
 //		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
 
@@ -2270,7 +2279,7 @@ static void RE_ExitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 
 		// カメラ操作は下画面で行う
 		subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
-		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
+		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NOGEAR);
 	}
 }
 //----------------------------------------------------------------------------
@@ -2295,7 +2304,7 @@ static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 
 		// カメラ操作は下画面で行う
 		subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
-		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
+		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NOGEAR);
 	}
 
 	// カメラアングルモードに戻す
