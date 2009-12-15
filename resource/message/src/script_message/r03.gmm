@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T18:44:37"/>
+	<create user="matsumiya" host="W00207" date="2009-12-15T22:43:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,11 +314,11 @@
 0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『よう　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-オレも　トライバッジ　てにいれたんだ
-ちょいと　うでだめしに　つきあえよ[BE:01:ページ切り替え（クリア）]</language>
+オレも　トライバッジ　てにいれた
+ちょっと　うでだめしに　つきあえよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『よう　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-オレも　トライバッジ　手に入れたんだ
-ちょいと　腕試しに　つきあえよ[BE:01:ページ切り替え（クリア）]</language>
+オレも　トライバッジ　手に入れた
+ちょっと　腕試しに　つきあえよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
