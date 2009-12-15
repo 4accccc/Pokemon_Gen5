@@ -254,6 +254,21 @@ void  BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw )
 void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
 {
   MCSS_Main( bmw->mcss_sys );
+  //まばたき
+  { 
+    BtlvMcssPos pos;
+
+    for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+    { 
+      if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
+      { 
+        if( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 )
+        { 
+          BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
+        }
+      }
+    }
+  }
 }
 
 //============================================================================================
@@ -703,11 +718,11 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
 {
   BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
 
-  pmtw->bmw       = bmw;
+  pmtw->bmw           = bmw;
   pmtw->position      = position;
-  pmtw->emw.move_type   = type;
+  pmtw->emw.move_type = type;
   pmtw->emw.wait      = 0;
-  pmtw->emw.wait_tmp    = wait;
+  pmtw->emw.wait_tmp  = wait;
   pmtw->emw.count     = count * 2;  //閉じて開くを1回とカウントするために倍しておく
 
   switch( type ){
