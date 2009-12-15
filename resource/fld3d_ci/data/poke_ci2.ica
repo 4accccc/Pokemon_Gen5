@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-12-15T11:48:24" source="poke_ci.mb"/>
+	<create user="unno" host="W00199" date="2009-12-15T12:07:19" source="poke_ci.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,7 +17,7 @@
 	tool_start_frame="0"
 	tool_end_frame="30"
 	interpolation="frame"
-	compress_node="merge" node_size="1 1"
+	compress_node="none" node_size="1 1"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
