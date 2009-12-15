@@ -9,6 +9,7 @@
 //=============================================================================================
 
 #include "waza_tool\wazano_def.h"
+#include "btl_util.h"
 #include "btl_wazarec.h"
 
 
@@ -48,6 +49,7 @@ void BTL_WAZAREC_Add( BTL_WAZAREC* rec, WazaID waza, u32 turn, u8 pokeID )
   rec->record[ rec->ptr ].pokeID = pokeID;
   rec->record[ rec->ptr ].fEffective = FALSE;
   rec->ptr++;
+  BTL_Printf( "ワザ[%d]記録、turn=%d, ptr=%d\n", waza, turn, rec->ptr );
   if( rec->ptr >= NELEMS(rec->record) ){
     rec->ptr = 0;
   }
@@ -67,28 +69,6 @@ void BTL_WAZAREC_SetEffectiveLast( BTL_WAZAREC* rec )
   }
   rec->record[ ptr ].fEffective = TRUE;
 }
-//=============================================================================================
-/**
- * ターン終了で記録を更新
- *
- * @param   rec
- */
-//=============================================================================================
-void BTL_WAZAREC_EndTurn( BTL_WAZAREC* rec )
-{
-  int i;
-  for(i=NELEMS(rec->record)-1; i>0; --i)
-  {
-    rec->record[i] = rec->record[i-1];
-  }
-
-  GFL_STD_MemClear( &rec->record[0], sizeof(rec->record[0]) );
-  for(i=0; i<NELEMS(rec->record); ++i){
-    rec->record[i].wazaID = WAZANO_NULL;
-  }
-  rec->ptr = 0;
-}
-
 
 //=============================================================================================
 /**
@@ -105,14 +85,18 @@ BOOL BTL_WAZAREC_IsUsedWaza( const BTL_WAZAREC* rec, WazaID waza, u32 turn )
 {
   int p = rec->ptr;
 
+  BTL_Printf("WAZAREC:check Waza=%d, turn=%d\n", waza, turn);
+
   while( 1 )
   {
     if( --p < 0 ){
       p = NELEMS(rec->record) - 1;
     }
     if( (p == rec->ptr) || (rec->record[p].wazaID == WAZANO_NULL) ){
+      BTL_Printf("  seek p=%d, rec_ptr=%d, ... break;\n", p, rec->ptr);
       break;
     }
+    BTL_Printf("  ..HIT:Ptr=%d, turn=%d, waza=%d\n", p, rec->record[p].turn, rec->record[p].wazaID);
     if( (rec->record[p].wazaID == waza) && (rec->record[p].turn == turn) ){
       return TRUE;
     }

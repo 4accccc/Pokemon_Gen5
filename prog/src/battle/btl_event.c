@@ -61,11 +61,12 @@ struct _BTL_EVENT_FACTOR {
   BtlEventSkipCheckHandler  skipCheckHandler;
   u32       priority;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
-  u16       subID;
-  u8        pokeID;
-  u8        callingFlag : 1;      ///< 呼び出し中を再呼び出ししないためのフラグ
-  u8        sleepFlag : 1;        ///< 休眠
-  u8        dummy     : 6;
+  u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
+  u8        pokeID;     ///< ポケ依存イベントならポケID／それ以外BTL_POKEID_NULL
+  u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
+  u8        callingFlag    : 1;      ///< 呼び出し中を再呼び出ししないためのフラグ
+  u8        sleepFlag      : 1;      ///< 休眠フラグ
+  u8        dummy          : 6;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -145,6 +146,19 @@ void BTL_EVENT_StartTurn( void )
   }
 }
 
+/**
+ *  ファクタータイプがポケ依存するタイプか判定
+ */
+static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
+{
+  if( (factorType == BTL_EVENT_FACTOR_WAZA)
+  ||  (factorType == BTL_EVENT_FACTOR_TOKUSEI)
+  ||  (factorType == BTL_EVENT_FACTOR_ITEM)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //=============================================================================================
 /**
@@ -159,7 +173,7 @@ void BTL_EVENT_StartTurn( void )
  * @retval  BTL_EVENT_FACTOR*
  */
 //=============================================================================================
-BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 pokeID, const BtlEventHandlerTable* handlerTable )
+BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 dependID, const BtlEventHandlerTable* handlerTable )
 {
   BTL_EVENT_FACTOR* newFactor;
 
@@ -171,12 +185,20 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->prev = NULL;
     newFactor->next = NULL;
     newFactor->handlerTable = handlerTable;
-    newFactor->pokeID = pokeID;
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
+    newFactor->dependID = dependID;
+    if( isDependPokeFactorType(factorType) ){
+      newFactor->pokeID = dependID;
+    }else{
+      newFactor->pokeID = BTL_POKEID_NULL;
+    }
+
     GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
+
+    BTL_Printf("イベント登録 依存ポケID=%d\n", newFactor->pokeID);
 
     // 最初の登録
     if( FirstFactorPtr == NULL )
@@ -263,16 +285,23 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 //=============================================================================================
 void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri )
 {
-  const BtlEventHandlerTable* handlerTable = factor->handlerTable;
-  BtlEventFactorType type = factor->factorType;
-  u16 subID = factor->subID;
+  if( factor->pokeID != BTL_POKEID_NULL )
+  {
+    const BtlEventHandlerTable* handlerTable = factor->handlerTable;
+    BtlEventFactorType type = factor->factorType;
+    u16 subID = factor->subID;
 
-  BTL_EVENT_FACTOR_Remove( factor );
-  BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable );
+    BTL_EVENT_FACTOR_Remove( factor );
+    BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable );
+  }
+  else
+  {
+    GF_ASSERT(0); // ポケ依存しない要素を操作しようとした
+  }
 }
 //=============================================================================================
 /**
- * サブID（とくせいID，アイテムID等、要素タイプに準じる）を返す
+ * 実体ID（ワザID、とくせいID，アイテムID等、要素タイプに準じる）を返す
  *
  * @param   factor
  *
@@ -381,7 +410,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
           if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
           {
             factor->callingFlag = TRUE;
-            tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+            tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
             factor->callingFlag = FALSE;
           }
           break;
@@ -397,14 +426,17 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
  */
 static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID )
 {
-  const BTL_POKEPARAM* bpp;
+  const BTL_POKEPARAM* bpp = NULL;
 
-  bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
+  BTL_Printf("イベント関連ポケID=%d\n", factor->pokeID);
+  if( factor->pokeID != BTL_POKEID_NULL ){
+    bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
+  }
 
   // とくせいハンドラ
   if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI )
   {
-    if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){  // 「いえき」状態のポケモンは呼び出さない
+    if( bpp && BPP_CheckSick(bpp, WAZASICK_IEKI) ){  // 「いえき」状態のポケモンは呼び出さない
       return TRUE;
     }
   }
@@ -415,7 +447,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) ){  // 「マジックルーム」発動状態なら呼び出さない
       return TRUE;
     }
-    if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){  // 「さしおさえ」状態のポケモンは呼び出さない
+    if( bpp && BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){  // 「さしおさえ」状態のポケモンは呼び出さない
       return TRUE;
     }
   }
@@ -427,7 +459,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
     {
       if( fp->skipCheckHandler != NULL ){
-        if( factor->skipCheckHandler( factor, factor->factorType, eventID, factor->subID, factor->pokeID) ){
+        if( factor->skipCheckHandler( factor, factor->factorType, eventID, factor->subID, factor->dependID) ){
           return TRUE;
         }
       }
@@ -473,13 +505,13 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactorType factorType )
   }
   return NULL;
 }
-BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 pokeID )
+BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 dependID )
 {
   BTL_EVENT_FACTOR* factor;
 
   for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
   {
-    if( (factor->factorType == factorType) && (factor->pokeID == pokeID) )
+    if( (factor->factorType == factorType) && (factor->dependID == dependID) )
     {
       return factor;
     }
@@ -491,12 +523,12 @@ BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
 {
   if( factor ){
     BtlEventFactorType type = factor->factorType;
-    u8 pokeID = factor->pokeID;
+    u8 dependID = factor->dependID;
 
     factor = factor->next;
     while( factor ){
-      if( (factor->factorType == type) && (factor->pokeID == pokeID) ){
-        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかったよ\n", type, pokeID );
+      if( (factor->factorType == type) && (factor->dependID == dependID) ){
+        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかったよ\n", type, dependID );
         return factor;
       }
       factor = factor->next;

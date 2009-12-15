@@ -2410,7 +2410,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetClientPokeDataConst( const BTL_POKE_CONTAINE
 BTL_POKEPARAM* BTL_POKECON_GetPokeParam( BTL_POKE_CONTAINER* wk, u8 pokeID )
 {
   GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
-  GF_ASSERT(wk->pokeParam[pokeID]);
+  GF_ASSERT_MSG(wk->pokeParam[pokeID], "invalid pokeID(%d)", pokeID);
   return wk->pokeParam[ pokeID ];
 }
 const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk, u8 pokeID )

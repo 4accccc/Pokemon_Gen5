@@ -404,7 +404,7 @@ static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect
 }
 static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
-  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_FAIL_FLAG, TRUE );

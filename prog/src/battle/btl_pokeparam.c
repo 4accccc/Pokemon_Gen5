@@ -22,9 +22,9 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  RANK_STATUS_MIN = 0,
-  RANK_STATUS_MAX = 12,
-  RANK_STATUS_DEF = 6,
+  RANK_STATUS_MIN = BPP_RANK_STATUS_MIN,
+  RANK_STATUS_MAX = BPP_RANK_STATUS_MAX,
+  RANK_STATUS_DEF = BPP_RANK_STATUS_DEFAULT,
 
   RANK_CRITICAL_MIN = 0,
   RANK_CRITICAL_MAX = 4,

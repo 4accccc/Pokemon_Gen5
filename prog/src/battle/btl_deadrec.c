@@ -8,6 +8,7 @@
  */
 //=============================================================================================
 
+#include "btl_util.h"
 #include "btl_deadrec.h"
 
 /**
@@ -28,7 +29,7 @@ void BTL_DEADREC_StartTurn( BTL_DEADREC* wk )
   {
     wk->record[i] = wk->record[i-1];
   }
-  GFL_STD_MemClear( &wk->record[i], sizeof(wk->record[0]) );
+  GFL_STD_MemClear( &wk->record[0], sizeof(wk->record[0]) );
 }
 
 /**
@@ -51,6 +52,7 @@ void BTL_DEADREC_Add( BTL_DEADREC* wk, u8 pokeID )
 u8 BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn )
 {
   if( turn < BTL_DEADREC_TURN_MAX ){
+    BTL_Printf("%dターン前に死んだポケの数( %d )を返す\n", turn, wk->record[ turn ].cnt);
     return wk->record[ turn ].cnt;
   }else{
     GF_ASSERT(0);

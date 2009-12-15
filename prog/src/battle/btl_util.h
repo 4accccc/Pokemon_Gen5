@@ -12,8 +12,9 @@
 
 
 #include "poke_tool/poketype.h"
-
+#include "waza_tool/wazadata.h"
 #include "btl_const.h"
+#include "btl_common.h"
 
 //===================================================================
 // 単純なプロセス処理構造

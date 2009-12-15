@@ -34,7 +34,6 @@ typedef struct {
 extern void BTL_WAZAREC_Init( BTL_WAZAREC* rec );
 extern void BTL_WAZAREC_Add( BTL_WAZAREC* rec, WazaID waza, u32 turn, u8 pokeID );
 extern void BTL_WAZAREC_SetEffectiveLast( BTL_WAZAREC* rec );
-extern void BTL_WAZAREC_EndTurn( BTL_WAZAREC* rec );
 
 extern BOOL BTL_WAZAREC_IsUsedWaza( const BTL_WAZAREC* rec, WazaID waza, u32 turn );
 extern u32 BTL_WAZAREC_GetUsedWazaCount( const BTL_WAZAREC* rec, WazaID waza, u32 turn );

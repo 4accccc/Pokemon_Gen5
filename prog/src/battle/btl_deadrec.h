@@ -12,7 +12,7 @@
 #include "btl_common.h"
 
 enum {
-  BTL_DEADREC_TURN_MAX = 2,   ///< 記録ターン数
+  BTL_DEADREC_TURN_MAX = 4,   ///< 記録ターン数
 };
 
 /**

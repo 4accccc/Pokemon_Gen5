@@ -63,8 +63,18 @@ typedef enum {
   BPP_RANKVALUE_END = BPP_AGILITY_RANK,
   BPP_RANKVALUE_RANGE = (BPP_RANKVALUE_END - BPP_RANKVALUE_START) + 1,
 
-
 }BppValueID;
+
+//--------------------------------------------------------------
+/**
+ *  ランク効果値の上限・下限・デフォルト値
+ */
+//--------------------------------------------------------------
+enum {
+  BPP_RANK_STATUS_MIN = 0,
+  BPP_RANK_STATUS_MAX = 12,
+  BPP_RANK_STATUS_DEFAULT = 6,
+};
 
 //--------------------------------------------------------------
 /**
