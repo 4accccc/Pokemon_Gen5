@@ -17,6 +17,7 @@
 #include "font/font.naix"
 
 #include "app/box2.h"
+#include "app/zukan.h"
 #include "demo/command_demo.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
@@ -27,7 +28,7 @@
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 7 )
+#define	TOP_MENU_SIZ	( 9 )
 
 typedef struct {
 	u32	main_seq;
@@ -50,6 +51,8 @@ typedef struct {
 
 	COMMANDDEMO_DATA	cdemo_data;
 
+	ZUKAN_PARAM	zkn_data;
+
 }NAKAHIRO_MAIN_WORK;
 
 enum {
@@ -63,7 +66,11 @@ enum {
 	MAIN_SEQ_BOX_CALL4,
 	MAIN_SEQ_BOX_CALL5,
 	MAIN_SEQ_BOX_CALL6,
+
 	MAIN_SEQ_MOVIE_CALL,
+
+	MAIN_SEQ_ZUKAN_CALL,
+	MAIN_SEQ_ZKNLIST_CALL,
 
 	MAIN_SEQ_END,
 };
@@ -285,6 +292,19 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 	case MAIN_SEQ_MOVIE_CALL:
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &wk->cdemo_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+
+	case MAIN_SEQ_ZUKAN_CALL:
+		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case MAIN_SEQ_ZKNLIST_CALL:
+		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
 	}
