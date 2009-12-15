@@ -1317,6 +1317,7 @@ BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work )
 void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
 {
   FIELD_RAIL_WORK* local_work;
+  BOOL line_ofs_plus;
   GF_ASSERT( work );
   
 
@@ -1327,9 +1328,11 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
   {
     VecFx32 pos;
     s32 line_ofs_tmp = local_work->line_ofs;
-    if( local_work->line_ofs == 0 ){
+    if( local_work->line_ofs < RAIL_WALK_OFS ){
+      line_ofs_plus = TRUE;
       local_work->line_ofs += RAIL_WALK_OFS;
     }else{
+      line_ofs_plus = FALSE;
       local_work->line_ofs -= RAIL_WALK_OFS;
     }
 
@@ -1339,7 +1342,7 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
     // Œ³‚É–ß‚·
     local_work->line_ofs = line_ofs_tmp;
 
-    if( local_work->line_ofs == 0 ){
+    if( line_ofs_plus ){
       VEC_Subtract( &local_work->pos, &pos, &pos );
     }else{
       VEC_Subtract( &pos, &local_work->pos, &pos );
