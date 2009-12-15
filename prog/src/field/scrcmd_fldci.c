@@ -46,7 +46,6 @@ VMCMD_RESULT EvCmdFldCi_CallCutin( VMHANDLE *core, void *wk )
 
   cutin_no = VMGetU16( core );
 
-  cutin_no = 0;
   //カットインイベントをコール
   {
     GMEVENT *call_event;
