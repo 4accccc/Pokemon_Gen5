@@ -706,7 +706,7 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 
   WO_DispExit( wk );
 
-  GFL_TCB_DeleteTask( wk->vBlankTcb );
+//  GFL_TCB_DeleteTask( wk->vBlankTcb );
 
   GFL_TCBL_Exit( wk->pMsgTcblSys );
 
@@ -976,6 +976,9 @@ static void WO_BgExit( void )
 
   //上画面をメイン,下画面をサブに戻す
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+
+  // BG処理解放
+  GFL_BG_Exit();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2892,7 +2895,11 @@ static void WO_3DMain(WO_3DWORK* wk)
 //--------------------------------------------------------------------------------------------
 static void WO_3DRelease( WO_3DWORK * wk )
 {
+  // カメラ設定解放
   GFL_G3D_CAMERA_Delete(wk->camera);    // @@@camera
+
+  // G3Dシステム終了
+  GFL_G3D_Exit();
 //  SoftSpriteEnd(wk->ssm);
 //  MI_CpuClear8(wk,sizeof(WO_3DWORK));
 }
