@@ -59,12 +59,12 @@ enum{
 ///フレーム番号
 enum{
 	//メイン画面
-	FRAME_LOGO_M = GFL_BG_FRAME3_M,		///<タイトルロゴのBGフレーム
+	FRAME_LOGO_S = GFL_BG_FRAME3_M,		///<サブ画面タイトルロゴのBGフレーム
 	FRAME_MIST_M = GFL_BG_FRAME1_M,		///<霧
 	
 	//サブ画面
 	FRAME_MSG_S = GFL_BG_FRAME1_S,		///<メッセージフレーム
-	FRAME_LOGO_S = GFL_BG_FRAME3_S,		///<サブ画面タイトルロゴのBGフレーム
+	FRAME_LOGO_M = GFL_BG_FRAME3_S,		///<タイトルロゴのBGフレーム
 };
 
 //--------------------------------------------------------------
@@ -73,23 +73,30 @@ enum{
 #define DTCM_SIZE		(0x1000)
 
 static const GFL_G3D_LOOKAT cameraLookAt = {
-	{ FX32_ONE*40, FX32_ONE * 200, (FX32_ONE * 330) },	//カメラの位置(＝視点)
-	{ 0, FX32_ONE, 0 },							//カメラの上方向
-	{ 0, 0, 0 },								//カメラの焦点(＝注視点)
+	{ -252.446045*FX32_ONE, 268.627930*FX32_ONE, 721.645996*FX32_ONE },	//カメラの位置(＝視点)
+	{ 0, FX32_ONE, 0 },												//カメラの上方向
+	{ 110.435803*FX32_ONE, 1395.428467*FX32_ONE, 279.511475*FX32_ONE },	//カメラの焦点(＝注視点)
+
 };
-#define cameraPerspway	( 0x0b60 )
-#define cameraAspect	( FX32_ONE )
-#define cameraNear		( 1 << FX32_SHIFT )
+#define cameraPerspway	( 30/2 * PERSPWAY_COEFFICIENT )
+#define cameraAspect	( FX32_ONE * 4/3 )
+#define cameraNear		( 32 << FX32_SHIFT )
 #define cameraFar		( 2048 << FX32_SHIFT )
 
 #define g3DanmRotateSpeed	( 0x100 )
 #define g3DanmFrameSpeed	( FX32_ONE )
 
-static const GFL_G3D_OBJSTATUS status0 = {
-	{ 0, 0, 0 },								//座標
-	{ FX32_ONE*7/8, FX32_ONE*7/8, FX32_ONE*7/8 },		//スケール
-	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
-//	{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },	//回転
+static const GFL_G3D_OBJSTATUS drawStatus[] = {
+	{
+		{ 0, 0, 0 },																				//座標
+		{ FX32_ONE, FX32_ONE, FX32_ONE },										//スケール
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+	},
+	{
+		{ 0xfffebef9, 0x00378800, 0x0019a82f },	//座標
+		{ 0x3000, 0x3000, 0x3000 },											//スケール
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },					//回転
+	},
 };
 
 //==============================================================================
@@ -133,9 +140,8 @@ typedef struct {
 	void	*icon_anm_res;
 	
 	GFL_G3D_UTIL*			g3Dutil;
-	u16						g3DutilUnitIdx;
-	GFL_G3D_OBJSTATUS		gira_status;
-	GFL_TCB *vintr_tcb;
+	u16								g3DutilUnitIdx;
+	GFL_TCB						*vintr_tcb;
 }TITLE_WORK;
 
 
@@ -154,9 +160,9 @@ static void Local_BGGraphicLoad(TITLE_WORK *tw);
 static void Local_MessagePut(TITLE_WORK *tw, int win_index, STRBUF *strbuf, int x, int y);
 static void Local_MsgLoadPushStart(TITLE_WORK *tw);
 static void Local_3DSetting(TITLE_WORK *tw);
-static void Local_GirathinaLoad(TITLE_WORK *tw);
-static void Local_Draw3D(TITLE_WORK *tw);
-static void Local_GirathinaFree(TITLE_WORK *tw);
+static void Local_Load3Dobject(TITLE_WORK *tw);
+static void Local_Draw3Dobject(TITLE_WORK *tw);
+static void Local_Free3Dobject(TITLE_WORK *tw);
 static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 //==============================================================================
@@ -180,52 +186,53 @@ const GFL_PROC_DATA TitleProcData = {
 //--------------------------------------------------------------
 //	3D
 //--------------------------------------------------------------
+#include "title1.naix"
+
 enum{
-	G3DRES_GIRA_BMD = 0,
-	G3DRES_GIRA_BTA,
-	G3DRES_GIRA_BCA,
+	G3DRES_BRIDGE_BMD = 0,
+	G3DRES_PM_BMD,
+	G3DRES_PM_BCA,
 };
 
 //読み込む3Dリソース
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{ ARCID_TITLE, NARC_title_title_gira_nsbmd, GFL_G3D_UTIL_RESARC },
-	{ ARCID_TITLE, NARC_title_title_gira_nsbta, GFL_G3D_UTIL_RESARC },
-	{ ARCID_TITLE, NARC_title_title_gira_nsbca, GFL_G3D_UTIL_RESARC },
+	{ ARCID_TITLETEST, NARC_title1_h01_all_00002_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_TITLETEST, NARC_title1_wbpm_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_TITLETEST, NARC_title1_wbpm_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
-	{
-		G3DRES_GIRA_BTA, 	//アニメリソースID
-		0,					//アニメデータID(リソース内部INDEX)
-	},
-	{
-		G3DRES_GIRA_BCA, 	//アニメリソースID
-		0,					//アニメデータID(リソース内部INDEX)
-	},
+	{ G3DRES_PM_BCA, 0	},
 };
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{
-		G3DRES_GIRA_BMD, 			//モデルリソースID
-		0, 							//モデルデータID(リソース内部INDEX)
-		G3DRES_GIRA_BMD, 			//テクスチャリソースID
+		G3DRES_BRIDGE_BMD, 		//モデルリソースID
+		0,										//モデルデータID(リソース内部INDEX)
+		G3DRES_BRIDGE_BMD, 		//テクスチャリソースID
+		NULL,									//アニメテーブル(複数指定のため)
+		0,										//アニメリソース数
+	},
+	{
+		G3DRES_PM_BMD,				//モデルリソースID
+		0,										//モデルデータID(リソース内部INDEX)
+		G3DRES_PM_BMD,				//テクスチャリソースID
 		g3Dutil_anm1Tbl, 			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
 	},
 };
 
 static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
-	g3Dutil_resTbl,				//リソーステーブル
+	g3Dutil_resTbl,						//リソーステーブル
 	NELEMS(g3Dutil_resTbl),		//リソース数
-	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	g3Dutil_objTbl,						//オブジェクト設定テーブル
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
 
 #define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
 #define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
-
 
 //==============================================================================
 //
@@ -266,7 +273,8 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 	GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
 
 	// 上下画面設定
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	//GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
 	GFL_DISP_SetDispOn();
 
 	//TCB作成
@@ -288,7 +296,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 	//3D設定
 	Local_3DSetting(tw);
-	Local_GirathinaLoad(tw);
+	Local_Load3Dobject(tw);
 	
 	GFL_BG_SetVisible(FRAME_LOGO_M, VISIBLE_ON);
 //	GFL_BG_SetVisible(FRAME_MIST_M, VISIBLE_ON);
@@ -365,7 +373,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		break;
 	}
 	
-	Local_Draw3D(tw);
+	Local_Draw3Dobject(tw);
 	
 	GFL_CLACT_SYS_Main();
 	return GFL_PROC_RES_CONTINUE;
@@ -391,7 +399,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 		GFL_BMPWIN_Delete(tw->drawwin[i].win);
 	}
 
-	Local_GirathinaFree(tw);
+	Local_Free3Dobject(tw);
 	GFL_G3D_Exit();
 
 	PRINTSYS_QUE_Delete(tw->printQue);
@@ -427,19 +435,20 @@ static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
 //	
 //==============================================================================
 static const GFL_DISP_VRAM vramBank = {
-	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	GX_VRAM_BG_128_D,								// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,					// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,						// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,			// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,								// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,				// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,						// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,		// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_01_AB,							// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,					// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_64K,			// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,			// サブOBJマッピングモード
 };
+
 //--------------------------------------------------------------
 /**
  * @brief   VRAMバンク＆モード設定
@@ -547,6 +556,8 @@ static void Local_BGGraphicLoad(TITLE_WORK *tw)
 		ARCID_TITLE, NARC_title_wb_logo_bk_NSCR, FRAME_LOGO_S, 0, 0, 0, HEAPID_TITLE_DEMO);
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_TITLE, NARC_title_wb_logo_bk_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
+
+	GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M, GX_RGB(25, 31, 31));
 }
 
 //--------------------------------------------------------------
@@ -559,16 +570,16 @@ static void Local_3DSetting(TITLE_WORK *tw)
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
 						DTCM_SIZE, HEAPID_TITLE_DEMO, NULL );
-//	GFL_BG_SetBGControl3D(BGPRI_3D);
+	GFL_BG_SetBGControl3D(BGPRI_3D);
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ギラティナをロード
+ * @brief   3Dobjectをロード
  * @param   tw		タイトルワークへのポインタ
  */
 //--------------------------------------------------------------
-static void Local_GirathinaLoad(TITLE_WORK *tw)
+static void Local_Load3Dobject(TITLE_WORK *tw)
 {
 	u16 objIdx;
 	
@@ -577,11 +588,8 @@ static void Local_GirathinaLoad(TITLE_WORK *tw)
 
 	//アニメーションを有効にする
 	objIdx = GFL_G3D_UTIL_GetUnitObjIdx( tw->g3Dutil, tw->g3DutilUnitIdx );
-	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(tw->g3Dutil, objIdx), 0); 
-	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(tw->g3Dutil, objIdx), 1); 
+	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(tw->g3Dutil, objIdx+1), 0); 
 	OS_TPrintf("3d objIdx = %d\n", objIdx);
-
-	tw->gira_status = status0;
 
 	//カメラセット
 	{
@@ -596,36 +604,42 @@ static void Local_GirathinaLoad(TITLE_WORK *tw)
 
 //--------------------------------------------------------------
 /**
- * @brief   3D描画
+ * @brief   3Dobject描画
  * @param   tw		タイトルワークへのポインタ
  */
 //--------------------------------------------------------------
-static void Local_Draw3D(TITLE_WORK *tw)
+static void Local_Draw3Dobject(TITLE_WORK *tw)
 {
-	GFL_G3D_OBJ* g3Dobj;
-	u16				objIdx;
+	GFL_G3D_OBJ*	g3Dobj;
+	u16						objIdx;
 
 	objIdx = GFL_G3D_UTIL_GetUnitObjIdx( tw->g3Dutil, tw->g3DutilUnitIdx );
-	g3Dobj = GFL_G3D_UTIL_GetObjHandle( tw->g3Dutil, objIdx + 0 );
 
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
-		GFL_G3D_DRAW_DrawObject( g3Dobj, &tw->gira_status );
+		int i;
+
+		for(i=0; i<NELEMS(g3Dutil_objTbl); i++){
+			g3Dobj = GFL_G3D_UTIL_GetObjHandle( tw->g3Dutil, objIdx + i );
+			GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus[i]);
+		}
 	}
 	GFL_G3D_DRAW_End();
 
-	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE/2 );	//BTA	/2=プラチナの1/30アニメの為
-	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 1, FX32_ONE/2 );	//BCA
+	{
+		g3Dobj = GFL_G3D_UTIL_GetObjHandle( tw->g3Dutil, objIdx + 1 );
+		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
+	}
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ギラティナをアンロード
+ * @brief   3Dobjectをアンロード
  * @param   tw		タイトルワークへのポインタ
  */
 //--------------------------------------------------------------
-static void Local_GirathinaFree(TITLE_WORK *tw)
+static void Local_Free3Dobject(TITLE_WORK *tw)
 {
 	GFL_G3D_UTIL_DelUnit( tw->g3Dutil, tw->g3DutilUnitIdx );
 	GFL_G3D_UTIL_Delete( tw->g3Dutil );
@@ -664,10 +678,17 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 	int i;
 
 	//BMPWIN作成
+#if 0
 	tw->drawwin[WIN_PUSH_JPN].win 
 		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 10, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
 	tw->drawwin[WIN_PUSH_ENG].win 
 		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 12, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
+#else
+	tw->drawwin[WIN_PUSH_JPN].win 
+		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 16, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
+	tw->drawwin[WIN_PUSH_ENG].win 
+		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 18, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
+#endif
 	for(i = 0; i < WIN_MAX; i++){
 		tw->drawwin[i].bmp = GFL_BMPWIN_GetBmp(tw->drawwin[i].win);
 		GFL_BMP_Clear( tw->drawwin[i].bmp, 0x00 );
@@ -696,8 +717,11 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
 		0x20*D_FONT_PALNO, 0x20, HEAPID_TITLE_DEMO);
 #else	//白字にする
-	GFL_STD_MemFill16((void*)(HW_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
-	GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
+	//GFL_STD_MemFill16((void*)(HW_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
+	//GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
+	//緑字にする
+	GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), GX_RGB(0, 20, 0), 0x20-2);
+	GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+6), GX_RGB(0, 31, 0), 2);
 #endif
 	
 	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
