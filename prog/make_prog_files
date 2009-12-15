@@ -103,6 +103,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_ircbattle.c \
         field/event_gsync.c \
         field/event_gtsnego.c \
+        field/event_cg_wireless.c \
         field/event_wifibattlematch.c \
         field/event_debug_wifimatch.c \
         field/event_fldmmdl_control.c \
@@ -990,6 +991,13 @@ SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
 ##      mystery/comm_mystery_card.c \
 ##      mystery/mysterylib.c \
 ##      mystery/beacondownload.c
+
+
+# CGEAR WIRELESS
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_CG_WIRELESS   = net_app/cg_wireless/cg_wireless_menu.c
+
+
 
 
 # GAMESYNC

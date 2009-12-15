@@ -31,6 +31,7 @@
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle
 #include "event_gsync.h"         //EVENT_GSync
+#include "event_cg_wireless.h"         //EVENT_CG_Wireless
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "rail_editor.h"
@@ -1962,6 +1963,9 @@ static GMEVENT * checkSubScreenEvent(
   case FIELD_SUBSCREEN_ACTION_GSYNC:
     event = EVENT_GSync(gsys, fieldWork, NULL, TRUE);
     break;
+  case FIELD_SUBSCREEN_ACTION_WIRELESS:
+    event = EVENT_CG_Wireless(gsys, fieldWork, NULL, TRUE);
+    break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
     event = EVENT_IntrudeTownWarp(gsys, fieldWork);
     break;
@@ -1976,7 +1980,7 @@ static GMEVENT * checkSubScreenEvent(
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);
     break;
     
-#if PM_DEBUG
+#if 0
   case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
 		event = DEBUG_PalaceJamp(fieldWork , gsys, FIELDMAP_GetFieldPlayer(fieldWork));
 		break;

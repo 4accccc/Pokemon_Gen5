@@ -212,13 +212,13 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
         mwk->state = FMENUSTATE_EXIT_MENU;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       }
-      else
+/*      else
       if( action == FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP )
       {
         //キャンセル+パレスジャンプ
         mwk->state = FMENUSTATE_EXIT_MENU;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
-      }
+      }*/
     }
     break;
   case FMENUSTATE_DECIDE_ITEM:

@@ -118,14 +118,6 @@ typedef struct {
 
 
 
-static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
-	//タッチパネル全部
-	{	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },
-	{ 18, 18+16, 208-16, 208+24-16 },
-	{GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
-
-
 // 表示OAMの時間とかの最大
 #define _CLACT_TIMEPARTS_MAX (9)
 
@@ -137,6 +129,18 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 
 // タイプ
 #define _CLACT_TYPE_MAX (3)
+
+static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
+	//タッチパネル全部
+	{	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },
+	{ 18, 18+16, 208-16, 208+24-16 },
+	{ 18, 18+16, 40, 40+32 },
+	{ 180, 180+24, 44, 44+16*_CLACT_CROSS_MAX },
+  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+};
+
+
+
 
 //-------------------------------------------------------------------------
 ///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
@@ -908,16 +912,26 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	
 	switch( event ){
 	case GFL_BMN_EVENT_TOUCH:
-		if(bttnid == 1){
-			pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
-			_editMarkONOFF(pWork, pWork->bPanelEdit);
-		}
-		else{
-			if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+    switch(bttnid){
+    case 0:
+      if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
 				pWork->tpx = touchx;
 				pWork->tpy = touchy;
 			}
 			pWork->cellMoveCreateCount = 0;
+      break;
+    case 1:
+      pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
+			_editMarkONOFF(pWork, pWork->bPanelEdit);
+      break;
+    case 2:
+      GAMEBEACON_Set_Congratulations();
+      OS_TPrintf("t2\n");
+      break;
+    case 3:
+      FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
+      OS_TPrintf("t3\n");
+      return;
 		}
 		break;
 	case GFL_BMN_EVENT_HOLD:
@@ -965,13 +979,14 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		break;
 
 	case GFL_BMN_EVENT_RELEASE:		///< 離された瞬間
-		touchx=pWork->tpx;
+
+    touchx=pWork->tpx;
 		touchy=pWork->tpy;
 		pWork->tpx=0;
 		pWork->tpy=0;
 		type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);  // ギアのタイプ分析
 		if(type == CGEAR_PANELTYPE_MAX){
-			return;
+      return;
 		}
 
 		if(pWork->cellMove){
@@ -1008,15 +1023,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
 				break;
 			case CGEAR_PANELTYPE_WIRELESS:
-        //デバッグ機能はきりました
-//				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
+        FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
-//#if DEBUG_ONLY_FOR_ohno
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
-//#endif
 				break;
-			}
+      }
 		}
 		break;
 
@@ -1191,12 +1203,15 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
 	for(i=0;i < _CLACT_CROSS_MAX ;i++)
 	{
     GFL_CLWK* cp_wk =  pWork->cellCross[i];
-    if(pWork->crossColor[i]!=0){
-      u8 col = pWork->crossColor[i]-1;
+    GXRgb dest_buf;
+    if(GAMEBEACON_Get_FavoriteColor(&dest_buf, i)){
+//      if(pWork->crossColor[i] != 0){
+      u8 col = dest_buf; //pWork->crossColor[i] - 1;
       GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  col){
         GFL_CLACT_WK_SetAnmIndex( cp_wk,col);
       }
+  //    }
     }
     else{
       GFL_CLACT_WK_SetDrawEnable( cp_wk, FALSE );
@@ -1670,7 +1685,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         if(GAME_COMM_STATUS_NULL!=st){
           GF_ASSERT( (sizeof(PalleteONOFFTbl)/3) >  st );
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2]);
-      }
+        }
         switch(st){
         case GAME_COMM_STATUS_WIRELESS:          ///<ワイヤレス通信 パレス
         case GAME_COMM_STATUS_WIRELESS_TR:       ///<ワイヤレス通信 トランシーバー
@@ -1715,7 +1730,7 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
 		_CHANGE_STATE(pWork,_modeSelectAnimInit);
 		break;
-	case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
+	case FIELD_SUBSCREEN_ACTION_WIRELESS:
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
 		_CHANGE_STATE(pWork,_modeSelectAnimInit);
 		break;

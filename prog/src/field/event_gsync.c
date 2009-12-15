@@ -256,9 +256,9 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
     GMEVENT_Change( event,EVENT_GSyncMain, sizeof(EVENT_GSYNC_WORK) );
   }
   dbw = GMEVENT_GetEventWork(event);
-  dbw->ctrl = SaveControl_GetPointer();
-  dbw->gsys = gsys;
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
+  dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
+  dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
   dbw->aLoginWork.gsys=gsys;
   dbw->aLoginWork.gamedata = GAMESYSTEM_GetGameData(gsys);

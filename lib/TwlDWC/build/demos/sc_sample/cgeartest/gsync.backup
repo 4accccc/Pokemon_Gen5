@@ -1,0 +1,23 @@
+#!/usr/bin/ruby
+## 
+##
+##
+
+require "cgi"
+#require 'mysql'
+
+#db = Mysql::new("host", "user", "passwd", "db")
+#db = Mysql::new("localhost", "user", "passwd", "db")
+
+cgi = CGI.new
+dataname = cgi["dataname"]   # => database uniqe name
+databin = cgi["pokedata"]   # => poke savedata
+
+
+p dataname
+p databin
+
+#db.query("insert into pokemonsavedata values ('橋本', 26, '広報部')")
+
+
+
