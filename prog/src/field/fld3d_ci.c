@@ -14,6 +14,8 @@
 
 #include "../../../resource/fld3d_ci/fldci_id_def.h"
 
+#include "sound/pm_wb_voice.h"   //for PMV_PlayVoice
+
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
 #define ANM_TYPE_MAX  (4)
@@ -28,6 +30,9 @@
 #define TEXSIZ_S  (128)
 #define TEXSIZ_T  (128)
 #define TEXVRAMSIZ		(TEXSIZ_S/8 * TEXSIZ_T/8 * 0x20)	// chrNum_x * chrNum_y * chrSiz
+
+
+#define POKE_VOICE_WAIT (5)
 
 #ifdef PM_DEBUG
 
@@ -75,6 +80,8 @@ typedef struct FLD3D_CI_tag
   int Sex;
   int Rare;
   BOOL Egg;
+
+  int SePlayWait;
 
   SETUP_CALLBACK SetupCallBack;
 }FLD3D_CI;
@@ -312,6 +319,7 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
   ptr->FormNo = 0;
   ptr->Sex = 0;
   ptr->Rare = 0;
+  ptr->SePlayWait = POKE_VOICE_WAIT;
 
   GAMESYSTEM_SetEvent(gsys, event);
 }
@@ -339,6 +347,8 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
   ptr->SetupCallBack = NULL;
+  //ＳＥ無しでセット
+  ptr->SePlayWait = 0;
   //イベント作成
   {
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
@@ -381,6 +391,7 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   ptr->Sex = inSex;
   ptr->Rare = inRare;
   ptr->Egg  = inEgg;
+  ptr->SePlayWait = POKE_VOICE_WAIT;
 
   return event;
 }
@@ -527,7 +538,20 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //3Ｄモデル2アニメ再生
       rc3 = PlayMdlAnm2(ptr);
 
+      //鳴き声再生    @todo
+      {
+        if (ptr->SePlayWait)
+        {
+          ptr->SePlayWait--;
+          if ( ptr->SePlayWait == 0 )
+          {
+            PMV_PlayVoice( ptr->MonsNo, ptr->FormNo );
+          }
+        }
+      }
+
       if (rc1&&rc2&&rc3){
+        PMV_StopVoice();    //鳴き声なっているならストップ  @todo
         (*seq)++;
       }
     }
