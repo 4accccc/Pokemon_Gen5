@@ -11,4 +11,6 @@ static const ENTRY_DATA entry_table[] =
   { ZONE_ID_D06R0101, 2 },
   { ZONE_ID_D06R0201, 3 },
   { ZONE_ID_D06R0301, 4 },
+  { ZONE_ID_R03R0301, 5 },
+  { ZONE_ID_R03R0302, 6 },
 };
