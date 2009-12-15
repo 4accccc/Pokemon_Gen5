@@ -46,6 +46,11 @@ enum{
 ///下画面フォントパレット番号
 #define MONOLITH_BG_DOWN_FONT_PALNO   (MONOLITH_BG_UP_FONT_PALNO)
 
+///文字色のデフォルト設定
+#define MONOLITH_FONT_DEFCOLOR_LETTER   (2)
+#define MONOLITH_FONT_DEFCOLOR_SHADOW   (1)
+#define MONOLITH_FONT_DEFCOLOR_BACK     (0)
+
 ///共通素材Indexへのアクセス
 typedef enum{
   COMMON_RESOURCE_INDEX_UP,     ///<上画面用共通素材INDEXへのアクセス

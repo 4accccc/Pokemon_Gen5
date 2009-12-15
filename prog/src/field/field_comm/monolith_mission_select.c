@@ -16,6 +16,8 @@
 #include "intrude_comm_command.h"
 #include "msg/msg_monolith.h"
 #include "monolith.naix"
+#include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
 
 
 //==============================================================================
@@ -38,16 +40,24 @@ enum{
   VIEW_ENFORCEMENT,     ///<ミッション実施中画面
 };
 
+///BMP枠のパレット番号
+#define BMPWIN_FRAME_PALNO        (MONOLITH_BG_DOWN_FONT_PALNO - 1)
+///BMP枠のキャラクタ開始位置
+#define BMPWIN_FRAME_START_CGX    (1)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
 ///ミッション説明画面制御ワーク
 typedef struct{
+  GFL_BMPWIN *bmpwin;
+  STRBUF *strbuf_stream;
+  PRINT_STREAM *print_stream;
   GFL_CLWK *act_town[INTRUDE_TOWN_MAX]; ///<街アイコンアクターへのポインタ
   GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
   PANEL_ACTOR panel[_PANEL_MAX];
   u8 no_select;           ///<ミッション受注済み。選択はもう出来ない
-  u8 padding;
+  u8 order_end;           ///<TRUE:ミッションを受注して終了
 }MONOLITH_MSSELECT_WORK;
 
 //==============================================================================
@@ -72,6 +82,11 @@ static void _Msselect_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSE
 static void _Msselect_CancelIconDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_CancelIconUpdate(MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw, int view_mode);
+static void _Setup_BmpWinCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup);
+static void _Setup_BmpWinDelete(MONOLITH_MSSELECT_WORK *mmw);
+static void _Set_MsgStream(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup, u16 msg_id);
+static BOOL _Wait_MsgStream(MONOLITH_MSSELECT_WORK *mmw);
+static void _Clear_MsgStream(MONOLITH_MSSELECT_WORK *mmw);
 
 
 //==============================================================================
@@ -234,6 +249,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
   //BG
   _Setup_BGFrameSetting();
   _Setup_BGGraphicLoad(appwk->setup);
+  _Setup_BmpWinCreate(mmw, appwk->setup);
   //OBJ
   _TownIcon_AllCreate(mmw, appwk);
   _Msselect_PanelCreate(appwk, mmw);
@@ -262,6 +278,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     SEQ_NO_SELECT,
     SEQ_ORDER,
     SEQ_ORDER_WAIT,
+    SEQ_ORDER_OK_STREAM_WAIT,
+    SEQ_ORDER_NG_STREAM_WAIT,
     SEQ_FINISH,
   };
   
@@ -291,6 +309,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 
       if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){
         OS_TPrintf("誰かがミッションを受注した\n");
+        _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
         mmw->no_select = TRUE;
         *seq = SEQ_NO_SELECT;
         break;
@@ -340,18 +359,39 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       
       result = MISSION_GetRecvEntryAnswer(&appwk->parent->intcomm->mission);
       if(result == MISSION_ENTRY_RESULT_OK){
-        *seq = SEQ_NO_SELECT;
-        _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_002);
+        *seq = SEQ_ORDER_OK_STREAM_WAIT;
       }
       else if(result == MISSION_ENTRY_RESULT_NG){
-        *seq = SEQ_TOP;
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_002);
+        *seq = SEQ_ORDER_NG_STREAM_WAIT;
+      }
+    }
+    break;
+  case SEQ_ORDER_OK_STREAM_WAIT:
+  case SEQ_ORDER_NG_STREAM_WAIT:
+    if(_Wait_MsgStream(mmw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mmw);
+        if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
+          mmw->order_end = TRUE;
+          *seq = SEQ_FINISH;
+        }
+        else{
+          *seq = SEQ_TOP;
+        }
       }
     }
     break;
 
   case SEQ_FINISH:
     if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
-      appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      if(mmw->order_end == TRUE){
+        appwk->next_menu_index = MONOLITH_MENU_END;
+      }
+      else{
+        appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      }
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -375,11 +415,19 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_End( GFL_PROC * proc, int * seq
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
   
+  if(mmw->print_stream != NULL){
+    PRINTSYS_PrintStreamDelete(mmw->print_stream);
+  }
+  if(mmw->strbuf_stream != NULL){
+    GFL_STR_DeleteBuffer(mmw->strbuf_stream);
+  }
+
   //OBJ
   _Msselect_CancelIconDelete(mmw);
   _Msselect_PanelDelete(mmw);
   _TownIcon_AllDelete(mmw);
   //BG
+  _Setup_BmpWinDelete(mmw);
   _Setup_BGFrameExit();
   
   GFL_PROC_FreeWork(proc);
@@ -398,6 +446,12 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_End( GFL_PROC * proc, int * seq
 static void _Setup_BGFrameSetting(void)
 {
 	static const GFL_BG_BGCNT_HEADER bgcnt_frame[] = {
+		{//GFL_BG_FRAME1_S
+			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x0c000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		},
 		{//GFL_BG_FRAME2_S
 			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -406,9 +460,12 @@ static void _Setup_BGFrameSetting(void)
 		},
 	};
 
-	GFL_BG_SetBGControl( GFL_BG_FRAME2_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME1_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME2_S,   &bgcnt_frame[1],   GFL_BG_MODE_TEXT );
 
+	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
 	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
 
@@ -419,7 +476,9 @@ static void _Setup_BGFrameSetting(void)
 //--------------------------------------------------------------
 static void _Setup_BGFrameExit(void)
 {
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
 	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_OFF);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
 }
 
@@ -436,6 +495,113 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
 		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_MONOLITH);
 
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN作成
+ *
+ * @param   mmw		
+ * @param   setup		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpWinCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup)
+{
+  GFL_BMP_DATA *bmp;
+
+  BmpWinFrame_CgxSet( GFL_BG_FRAME1_S, BMPWIN_FRAME_START_CGX, MENU_TYPE_SYSTEM, HEAPID_MONOLITH );
+  PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(), 
+    HEAPID_MONOLITH, FADE_SUB_BG, 0x20, BMPWIN_FRAME_PALNO * 16, 0);
+  
+	mmw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
+		1,19,30,4, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
+
+	bmp = GFL_BMPWIN_GetBmp( mmw->bmpwin );
+	
+	GFL_BMP_Clear( bmp, 0xff );
+//	GFL_BMPWIN_TransVramCharacter( mmw->bmpwin );
+	GFL_BMPWIN_MakeScreen( mmw->bmpwin );
+//	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+	
+	BmpWinFrame_Write( mmw->bmpwin, WINDOW_TRANS_ON, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN削除
+ *
+ * @param   mmw		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpWinDelete(MONOLITH_MSSELECT_WORK *mmw)
+{
+  GFL_BMPWIN_Delete(mmw->bmpwin);
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ出力開始
+ *
+ * @param   mmw		
+ * @param   setup		
+ */
+//--------------------------------------------------------------
+static void _Set_MsgStream(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup, u16 msg_id)
+{
+  GF_ASSERT(mmw->print_stream == NULL);
+  
+  GFL_FONTSYS_SetColor( 1, 2, 15 );
+
+  mmw->strbuf_stream = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
+  
+  mmw->print_stream = PRINTSYS_PrintStream(
+    mmw->bmpwin, 0, 0, mmw->strbuf_stream, setup->font_handle,
+    MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
+
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ出力完了待ち
+ *
+ * @param   mmw		
+ *
+ * @retval  BOOL		TRUE:出力完了
+ */
+//--------------------------------------------------------------
+static BOOL _Wait_MsgStream(MONOLITH_MSSELECT_WORK *mmw)
+{
+  if(PRINTSYS_PrintStreamGetState( mmw->print_stream ) == PRINTSTREAM_STATE_DONE ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージクリア
+ *
+ * @param   mmw		
+ */
+//--------------------------------------------------------------
+static void _Clear_MsgStream(MONOLITH_MSSELECT_WORK *mmw)
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mmw->bmpwin );
+
+  GF_ASSERT(mmw->print_stream != NULL);
+  PRINTSYS_PrintStreamDelete(mmw->print_stream);
+  mmw->print_stream = NULL;
+  
+  GFL_STR_DeleteBuffer(mmw->strbuf_stream);
+  mmw->strbuf_stream = NULL;
+  
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+  GFL_BMP_Clear(bmp, 0xff);
+	GFL_BMPWIN_TransVramCharacter( mmw->bmpwin );
+
+  GFL_FONTSYS_SetColor( 
+    MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
 }
 
 //--------------------------------------------------------------

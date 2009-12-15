@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-09T12:33:26"/>
+	<create user="matsuda" host="W00142" date="2009-12-15T16:48:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -376,6 +376,18 @@
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">ミッションを　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">ミッションを　じっしちゅう</language>
+	</row>
+
+	<row id="msg_mono_mis_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション画面</comment>
+		<language name="JPN" width="256">ミッションを　かいし　します！</language>
+		<language name="JPN_KANJI" width="256">ミッションを　かいし　します！</language>
+	</row>
+
+	<row id="msg_mono_mis_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション画面</comment>
+		<language name="JPN" width="256">ミッションを　じゅちゅう　できませんでした</language>
+		<language name="JPN_KANJI" width="256">ミッションを　じゅちゅう　できませんでした</language>
 	</row>
 
 	<row id="msg_mono_pow_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

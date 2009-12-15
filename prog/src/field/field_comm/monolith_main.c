@@ -248,6 +248,9 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
         monosys->proc_up_occ = TRUE;
       }
       if(monosys->proc_down_occ == FALSE){
+        GFL_FONTSYS_SetColor(   //ˆê‰ž•¶ŽšF‚ð•W€‚É–ß‚·ˆ—‚ð“ü‚ê‚Ä‚¨‚­
+          MONOLITH_FONT_DEFCOLOR_LETTER, 
+          MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
         GFL_PROC_LOCAL_CallProc(monosys->procsys_down, NO_OVERLAY_ID, 
           MonolithProcTbl[monosys->menu_index].proc_down, &monosys->app_parent);
         monosys->proc_down_occ = TRUE;
@@ -536,7 +539,8 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
 static void _Setup_MessageSetting(MONOLITH_SETUP *setup)
 {
 //	GFL_FONTSYS_Init();
-  GFL_FONTSYS_SetColor( 2, 1, 0 );
+  GFL_FONTSYS_SetColor( 
+    MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
 
 	setup->tcbl_sys = GFL_TCBL_Init(HEAPID_MONOLITH, HEAPID_MONOLITH, 4, 32);
 	setup->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,

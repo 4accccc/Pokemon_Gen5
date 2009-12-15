@@ -28,7 +28,7 @@ enum{
 
 ///アクターBGプライオリティ
 enum{
-  BGPRI_PANEL = 0,
+  BGPRI_PANEL = 1,
 };
 
 ///パネル(大)BMPFONT座標X
