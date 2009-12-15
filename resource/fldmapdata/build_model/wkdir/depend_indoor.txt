@@ -113,4 +113,9 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d6_yuka_biri02.nsbmd \
 	$(RESDIR)/d6_yuka_biri03.nsbmd \
 	$(RESDIR)/pcev02.nsbmd \
+	$(RESDIR)/warp04.nsbmd \
+	$(RESDIR)/c09_01_obj.nsbmd \
+	$(RESDIR)/c09_02_yuka.nsbmd \
+	$(RESDIR)/c09_03_cart.nsbmd \
+	$(RESDIR)/c09_04_sta.nsbmd \
 

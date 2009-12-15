@@ -112,3 +112,8 @@
 "nsbmdfiles/d6_yuka_biri02.nsbmd"
 "nsbmdfiles/d6_yuka_biri03.nsbmd"
 "nsbmdfiles/pcev02.nsbmd"
+"nsbmdfiles/warp04.nsbmd"
+"nsbmdfiles/c09_01_obj.nsbmd"
+"nsbmdfiles/c09_02_yuka.nsbmd"
+"nsbmdfiles/c09_03_cart.nsbmd"
+"nsbmdfiles/c09_04_sta.nsbmd"
