@@ -2231,17 +2231,38 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
  */
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
-  return TRUE;
+  BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+  u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,  pos );
+
+  switch( *seq ){
+  case 0:
+    BTLV_StartRankDownEffect( wk->viewCore, vpos );
+    break;
+  case 1:
+    if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 /**
  * 【アクション】能力ランクアップ
  */
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  // @@@ まだです
-//  BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
-  return TRUE;
+  BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+  u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+  switch( *seq ){
+  case 0:
+    BTLV_StartRankUpEffect( wk->viewCore, vpos );
+    break;
+  case 1:
+    if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 /**
  *  【アクション】天候による一斉ダメージ処理

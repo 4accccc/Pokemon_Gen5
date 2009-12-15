@@ -1157,9 +1157,10 @@ static void handler_Juryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_FLDEFF, pokeID );
     param->effect = BTL_FLDEFF_JURYOKU;
     param->cont = BPP_SICKCONT_MakeTurn( 5 );
-
     param->exStr.type = BTL_STRTYPE_STD;
     param->exStr.ID = BTL_STRID_STD_Jyuryoku;
+
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_JURYOKU_CHECK, pokeID );
   }
 }
 //----------------------------------------------------------------------------------
@@ -7282,6 +7283,7 @@ static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
     sick_param->poke_cnt = 1;
     sick_param->pokeID[0] = pokeID;
+    sick_param->fStdMsgDisable = TRUE;
     sick_param->sickID = WAZASICK_MIYABURU;
     sick_param->sickCont = BPP_SICKCONT_MakeTurnParam( 1, POKETYPE_HIKOU );
     BPP_SICKCONT_SetFlag( &sick_param->sickCont, TRUE );

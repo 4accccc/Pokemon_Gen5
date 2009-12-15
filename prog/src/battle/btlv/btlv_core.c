@@ -1307,9 +1307,17 @@ BOOL BTLV_TokWin_Renew_Wait( BTLV_CORE* wk, BtlPokePos pos )
 
 
 
-void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 pokeID, BppValueID statusType )
+void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 vpos )
 {
-//  printf("Å´Å´Å´Ç–Ç„ÇÈÇÈÅc\n");
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_STATUS_DOWN );
+}
+void BTLV_StartRankUpEffect( BTLV_CORE* wk, u8 vpos )
+{
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_STATUS_UP );
+}
+BOOL BTLV_WaitRankEffect( BTLV_CORE* wk, u8 vpos )
+{
+  return !BTLV_EFFECT_CheckExist( vpos );
 }
 
 

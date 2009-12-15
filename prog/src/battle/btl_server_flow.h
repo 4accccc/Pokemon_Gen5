@@ -246,6 +246,7 @@ typedef enum {
   BTL_HANDEX_SWAP_POKE,         ///< 場に出ているポケモン同士を入れ替える
   BTL_HANDEX_HENSIN,            ///< へんしんする
   BTL_HANDEX_FAKE_BREAK,        ///< イリュージョン解除
+  BTL_HANDEX_JURYOKU_CHECK,     ///< じゅうりょく発動時のチェック処理
 
   BTL_HANDEX_MAX,
 
@@ -388,6 +389,7 @@ typedef struct {
  BPP_SICK_CONT  sickCont;            ///< 状態異常継続パラメータ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   poke_cnt;                      ///< 対象ポケモン数
+ u8   fStdMsgDisable;                ///< 標準メッセージオフ
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ表示（標準メッセージはオフ）
 }BTL_HANDEX_PARAM_ADD_SICK;

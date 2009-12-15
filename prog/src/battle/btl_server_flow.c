@@ -637,6 +637,7 @@ static u8 scproc_HandEx_sendLast( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -3747,6 +3748,14 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
     &&  (WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIMPLE_RECOVER)
     ){
       cause = SV_WAZAFAIL_KAIHUKUHUUJI;
+      break;
+    }
+
+    // じゅうりょくチェック
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU)
+    &&  (WAZADATA_GetFlag(waza, WAZAFLAG_Flying))
+    ){
+      cause = SV_WAZAFAIL_JURYOKU;
       break;
     }
 
@@ -6988,6 +6997,9 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Fumin, pokeID );
     SCQUE_PUT_TOKWIN_OUT( wk->que, pokeID );
     break;
+  case SV_WAZAFAIL_JURYOKU:
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuWazaFail, pokeID, waza );
+    break;
   default:
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail, pokeID );
     break;
@@ -7805,8 +7817,8 @@ static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   WazaID waza, SV_WazaFailCause cause )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_CAUSE, cause );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_FAIL );
   BTL_EVENTVAR_Pop();
@@ -8563,7 +8575,7 @@ static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
   }
 
   affinity = BTL_CALC_TypeAff( waza_type, poke_type );
-  if( (affinity < BTL_TYPEAFF_0) && (flatFlag) ){
+  if( (affinity == BTL_TYPEAFF_0) && (flatFlag) ){
     return BTL_TYPEAFF_100;
   }
 
@@ -9951,6 +9963,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SWAP_POKE,        sizeof(BTL_HANDEX_PARAM_SWAP_POKE)       },
     { BTL_HANDEX_HENSIN,           sizeof(BTL_HANDEX_PARAM_HENSIN)          },
     { BTL_HANDEX_FAKE_BREAK,       sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)      },
+    { BTL_HANDEX_JURYOKU_CHECK,    sizeof(BTL_HANDEX_JURYOKU_CHECK)         },
   };
   u32 size, i;
 
@@ -10128,6 +10141,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_SWAP_POKE:        fPrevSucceed = scproc_HandEx_swapPoke( wk, handEx_header ); break;
     case BTL_HANDEX_HENSIN:           fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
     case BTL_HANDEX_FAKE_BREAK:       fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
+    case BTL_HANDEX_JURYOKU_CHECK:    fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -10362,7 +10376,7 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   u32 i;
 
   u8 result = 0;
-  u8 fDefaultMsg = (HANDEX_STR_IsEnable(&param->exStr) == FALSE);
+  u8 fDefaultMsg = ( (HANDEX_STR_IsEnable(&param->exStr) == FALSE) && (param->fStdMsgDisable == FALSE) );
 
   for(i=0; i<param->poke_cnt; ++i)
   {
@@ -11265,6 +11279,44 @@ static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
     return 1;
   }
   return 0;
+}
+/**
+ * じゅうりょく発動時チェック（そらとぶ・ダイビング＆ふゆうフラグを落とす）
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  u8 pokeID[ BTL_POS_MAX ];
+  u8 cnt, pos, fFall, i;
+  BtlExPos exPos;
+  BTL_POKEPARAM* bpp;
+
+  pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param_header->userPokeID );
+  exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ALL, pos );
+  cnt = BTL_SVFTOOL_ExpandPokeID( wk, exPos, pokeID );
+  for(i=0; i<cnt; ++i)
+  {
+    bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID[i] );
+    fFall = FALSE;
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_SORAWOTOBU) ){
+      scPut_ResetContFlag( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
+      fFall = TRUE;
+    }
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_DIVING) ){
+      scPut_ResetContFlag( wk, bpp, BPP_CONTFLG_DIVING );
+      fFall = TRUE;
+    }
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) ){
+      scPut_ResetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
+      fFall = TRUE;
+    }
+
+    if( fFall ){
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuFall, pokeID[i] );
+    }
+  }
+
+  return 1;
 }
 
 
