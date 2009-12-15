@@ -61,6 +61,8 @@
 #define _DEBUG_ALONETEST (15)
 #elif DEBUG_ONLY_FOR_iwasawa
 #define _DEBUG_ALONETEST (16)
+#elif DEBUG_ONLY_FOR_ohmori
+#define _DEBUG_ALONETEST (17)
 #else
 #define _DEBUG_ALONETEST (0)
 #endif
@@ -337,10 +339,8 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
 
 #ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
-	if(pNetWL->mineDebugNo!=0){
-		if(pGF->debugAloneTest != pNetWL->mineDebugNo){
-			return FALSE;   //パレスの為
-		}
+	if(pGF->debugAloneTest != pNetWL->mineDebugNo){
+		return FALSE;   //パレスの為
 	}
 #endif
 	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
