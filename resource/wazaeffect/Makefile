@@ -89,7 +89,7 @@ $(NARCNAME1): $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	$(NAIXCUT) $(NAIXNAME1)
 
 $(NARCNAME2): $(notdir $(WAZAEFFSRCS:.esf=.bin))
-	nnsarc -c -l -n -i $(NARCNAME2) be_*.bin
+	nnsarc -c -l -n -i $(NARCNAME2) be_*.bin se_*.bin
 	$(NAIXCUT) $(NAIXNAME2)
 
 endif
