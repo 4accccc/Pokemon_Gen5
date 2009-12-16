@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-09T22:47:36"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T18:33:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,32 +309,38 @@
 		<comment>♂
 ・続けてsage4_01</comment>
 		<attribute name="キャラ指定">七人衆３</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">たいどう　すたれて
+じんぎ　あり[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">大道　廃れて　仁義あり[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage5_01</comment>
 		<attribute name="キャラ指定">七人衆４</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">いちを　しりて
+にを　しらず[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">一を知りて　二を知らず[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage5_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage6_01</comment>
 		<attribute name="キャラ指定">七人衆５</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">あやまちて　あらためざる
+これを　あやまちと　いう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">過ちて　改めざる
+是を　過ちと　いう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage7_01</comment>
 		<attribute name="キャラ指定">七人衆６</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">くんしは　ぎに　さとり
+しょうじんは　りに　さとる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">君子は　義に　さとり
+小人は　利に　さとる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage7_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -342,8 +348,9 @@
 ・メッセージ表示後、七人衆全員
 　主人公を囲む位置に移動しsage2_02に</comment>
 		<attribute name="キャラ指定">七人衆７</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">てんに　ふつか　なく
+たみに　ふたりの　おう　なし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">天に二日なく　民に二王なし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -412,9 +419,9 @@
 		<language name="JPN" width="256">アロエ『わるいねえ……[BE:01:ページ切り替え（クリア）]
 わたしらの　ほうが　つよいのに
 かずまで　おおくってさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アロエ『わるいねえ……[BE:01:ページ切り替え（クリア）]
-わたしらの　ほうが　つよいのに
-かずまで　おおくってさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アロエ『悪いねえ……[BE:01:ページ切り替え（クリア）]
+わたしらの　ほうが　強いのに
+人数まで　多くってさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -431,10 +438,10 @@
 		<attribute name="キャラ指定">ジムリーダー
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『プラズマだんの　こと……[BE:01:ページ切り替え（クリア）]
-なにも　しないのって
+ほうっておくのって
 ジムリーダーとして　ひどいでしょ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『プラズマだんの　こと……[BE:01:ページ切り替え（クリア）]
-なにも　しないのって
+		<language name="JPN_KANJI" width="256">カミツレ『プラズマ団の　こと……[BE:01:ページ切り替え（クリア）]
+放っておくのって
 ジムリーダーとして　ひどいでしょ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -445,10 +452,10 @@
 アーティ</attribute>
 		<language name="JPN" width="256">アーティ『……なまえ
 わすれちゃったけど　おんなのこに[BE:00:ページ切り替え（行送り）]
-たのまれちゃったもんね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アーティ『……なまえ
-わすれちゃったけど　おんなのこに[BE:00:ページ切り替え（行送り）]
-たのまれちゃったもんね[BE:01:ページ切り替え（クリア）]</language>
+たのまれちゃったのも　あるし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アーティ『……名前
+忘れちゃったけど　女の子に[BE:00:ページ切り替え（行送り）]
+頼まれちゃったのも　あるし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_leader7_01">
@@ -466,7 +473,7 @@
 		<attribute name="キャラ指定">ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">フウロ『だいじょうぶ　だって！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フウロ『だいじょうぶ　だって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フウロ『大丈夫　だって！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_leader8b_01">
@@ -489,9 +496,9 @@
 		<language name="JPN" width="256">シャガ『ライトストーンを　もつ　ものよ
 ドラゴンに　えらばれた　ものよ[BE:00:ページ切り替え（行送り）]
 さきに　すすみなさい[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">シャガ『ライトストーンを　もつ　ものよ
-ドラゴンに　えらばれた　ものよ[BE:00:ページ切り替え（行送り）]
-さきに　すすみなさい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">シャガ『ライトストーンを　持つ　者よ
+ドラゴンに　選ばれた　者よ[BE:00:ページ切り替え（行送り）]
+先に　進みなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_leader8a_01b">
@@ -503,9 +510,9 @@
 		<language name="JPN" width="256">シャガ『ダークストーンを　もつ　ものよ
 ドラゴンに　えらばれた　ものよ[BE:00:ページ切り替え（行送り）]
 さきに　すすみなさい[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">シャガ『ダークストーンを　もつ　ものよ
-ドラゴンに　えらばれた　ものよ[BE:00:ページ切り替え（行送り）]
-さきに　すすみなさい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">シャガ『ダークストーンを　持つ　者よ
+ドラゴンに　選ばれた　者よ[BE:00:ページ切り替え（行送り）]
+先に　進みなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_sage2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -513,8 +520,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆２</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -522,8 +529,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆３</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage4_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -531,8 +538,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆４</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage5_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -540,8 +547,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆５</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -549,8 +556,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆６</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage7_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -558,8 +565,8 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七人衆７</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
+		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
 	<row id="msg_n01r0101_leader2_02">
@@ -567,8 +574,10 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ</language>
+		<language name="JPN" width="256">アロエ『これまでも　これからも
+わたしらは　ポケモンと　いっしょさ</language>
+		<language name="JPN_KANJI" width="256">アロエ『これまでも　これからも
+わたしらは　ポケモンと　いっしょさ</language>
 	</row>
 
 	<row id="msg_n01r0101_leader3_02">
@@ -576,8 +585,14 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">アーティ『仮メッセージ</language>
+		<language name="JPN" width="256">アーティ『きみの　ポケモン
+きみのために　がんばってるんだろ？[BE:01:ページ切り替え（クリア）]
+どうして　そんな　ポケモンと
+わかれなくちゃ　いけないんだい？</language>
+		<language name="JPN_KANJI" width="256">アーティ『きみの　ポケモン
+きみのために　がんばってるんだろ？[BE:01:ページ切り替え（クリア）]
+どうして　そんな　ポケモンと
+わかれなくちゃ　いけないんだい？</language>
 	</row>
 
 	<row id="msg_n01r0101_leader4_02">
@@ -585,8 +600,8 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ</language>
+		<language name="JPN" width="256">カミツレ『……しつこいのね</language>
+		<language name="JPN_KANJI" width="256">カミツレ『……しつこいのね</language>
 	</row>
 
 	<row id="msg_n01r0101_leader5_04">
@@ -607,8 +622,8 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ</language>
+		<language name="JPN" width="256">フウロ『いまよ！　アクロバット！！</language>
+		<language name="JPN_KANJI" width="256">フウロ『いまよ！　アクロバット！！</language>
 	</row>
 
 	<row id="msg_n01r0101_leader7_02">
@@ -616,8 +631,8 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">ハチク『仮メッセージ</language>
+		<language name="JPN" width="256">ハチク『……！</language>
+		<language name="JPN_KANJI" width="256">ハチク『……！</language>
 	</row>
 
 	<row id="msg_n01r0101_leader8b_02">
@@ -625,8 +640,10 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ</language>
+		<language name="JPN" width="256">アイリス『まけないもん！
+ぜったい　ぜったい　ぜったい！！</language>
+		<language name="JPN_KANJI" width="256">アイリス『まけないもん！
+ぜったい　ぜったい　ぜったい！！</language>
 	</row>
 
 	<row id="msg_n01r0101_leader8a_02">
@@ -634,8 +651,12 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
-		<language name="JPN" width="256">シャガ『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">シャガ『仮メッセージ</language>
+		<language name="JPN" width="256">シャガ『そなたたちの　かんがえも
+わからんでも　ないが……[BE:01:ページ切り替え（クリア）]
+その　やりかたは　ゆるせん</language>
+		<language name="JPN_KANJI" width="256">シャガ『そなたたちの　かんがえも
+わからんでも　ないが……[BE:01:ページ切り替え（クリア）]
+その　やりかたは　ゆるせん</language>
 	</row>
 
 	<flowchart-group-list>
