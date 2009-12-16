@@ -730,6 +730,8 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.sel_poke = 0;
     wk->plistData.chg_waza = 0;
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+	  wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
+	  wk->plistData.pfd = BTLV_EFFECT_GetPfd();
 
     wk->selectItemSeq = 1;
   }
