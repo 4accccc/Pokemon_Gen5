@@ -2855,9 +2855,9 @@
  *	@param ret_wk åãâ ë„ì¸êÊ TRUE=ê¨å˜ FALSE=é∏îs
  */
 //--------------------------------------------------------------
-#define _SUB_ITEM( item_no,num,ret_wk ) _ASM_SUB_ITEM item_no,num_ret_wk
+#define _SUB_ITEM( item_no,num,ret_wk ) _ASM_SUB_ITEM item_no,num,ret_wk
 
-	.macro	_ASM_SUB_ITEM item_no, num, ret_wk
+	.macro	_ASM_SUB_ITEM item_no,num,ret_wk
 	.short	EV_SEQ_SUB_ITEM
 	.short	\item_no
 	.short	\num
