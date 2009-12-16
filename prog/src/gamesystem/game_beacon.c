@@ -16,7 +16,7 @@
 //  定数定義
 //==============================================================================
 ///ビーコン寿命
-#define LIFE_TIME     (10 * 60)
+#define LIFE_TIME     (15 * 60)
 
 ///行動番号
 typedef enum{
@@ -226,10 +226,12 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   
   if(bsys->start_log <= bsys->end_log){
     for(i = bsys->start_log; i <= bsys->end_log; i++){
-      if(bsys->log[i].info.trainer_id == info->trainer_id 
-          && bsys->log[i].info.send_counter == info->send_counter){
+      if(bsys->log[i].info.trainer_id == info->trainer_id){
+        if(info->action_no == GAMEBEACON_ACTION_APPEAL 
+            || bsys->log[i].info.send_counter == info->send_counter){
 //        OS_TPrintf("既に受信済み\n");
-        return FALSE; //ログに同じデータを受信済み
+          return FALSE; //ログに同じデータを受信済み
+        }
       }
     }
   }

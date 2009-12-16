@@ -28,7 +28,7 @@
 #define FONT_PAL    (14)
 
 ///表示するログ件数
-#define VIEW_LOG_MAX    (3)
+#define VIEW_LOG_MAX    (4)
 
 //==============================================================================
 //  構造体定義
@@ -133,12 +133,16 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR view)
   const GAMEBEACON_INFO *info;
   u32 old_log_count;
   s32 new_log_num, copy_src, copy_dest, write_start;
+  int i;
   
   if(GFL_UI_TP_GetTrg()){
     FIELD_SUBSCREEN_SetAction(view->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
   }
 
   PRINTSYS_QUE_Main(view->printQue);
+  for(i = 0; i < VIEW_LOG_MAX; i++){
+    PRINT_UTIL_Trans( &view->print_util[i], view->printQue );
+  }
   
   //BMP描画
   {
@@ -146,27 +150,37 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR view)
     view->log_count = GAMEBEACON_Get_LogCount();
     new_log_num = view->log_count - old_log_count;  //更新されたログ件数
     
-    copy_dest = 0;
-    for(copy_src = new_log_num; copy_src < VIEW_LOG_MAX; copy_src++){
-      GFL_BMP_Copy( GFL_BMPWIN_GetBmp(view->win[copy_src]), 
-        GFL_BMPWIN_GetBmp(view->win[copy_dest]) );
-      copy_dest++;
-    }
-    
-    write_start = new_log_num - 1;
-    if(write_start >= VIEW_LOG_MAX){
-      write_start = VIEW_LOG_MAX - 1;
-    }
-    for( ; copy_dest < VIEW_LOG_MAX; copy_dest++){
-      info = GAMEBEACON_Get_BeaconLog(write_start);
-      if(info != NULL){
-        GFL_MSG_GetString(view->mm_status, GAMEBEACON_GetMsgID(info), view->strbuf_temp);
-        GAMEBEACON_Wordset(info, view->wordset, HEAPID_FIELDMAP);
-        WORDSET_ExpandStr( view->wordset, view->strbuf_expand, view->strbuf_temp );
-        PRINT_UTIL_Print( &view->print_util[copy_dest], view->printQue, 0, 0, 
-          view->strbuf_expand, view->fontHandle );
+    if(new_log_num > 0){
+      copy_dest = 0;
+      for(copy_src = new_log_num; copy_src < VIEW_LOG_MAX; copy_src++){
+        GFL_BMP_DATA *bmp_src, *bmp_dest;
+        
+        bmp_src = GFL_BMPWIN_GetBmp(view->win[copy_src]);
+        bmp_dest = GFL_BMPWIN_GetBmp(view->win[copy_dest]);
+        GFL_BMP_Copy( bmp_src, bmp_dest );
+        GFL_BMPWIN_TransVramCharacter( view->win[copy_dest] );
+        copy_dest++;
       }
-      write_start++;
+      
+      write_start = new_log_num - 1;
+      if(write_start >= VIEW_LOG_MAX){
+        write_start = VIEW_LOG_MAX - 1;
+      }
+      for( ; copy_dest < VIEW_LOG_MAX; copy_dest++){
+        info = GAMEBEACON_Get_BeaconLog(write_start);
+        if(info != NULL){
+          GFL_BMP_Clear( GFL_BMPWIN_GetBmp(view->win[copy_dest]), 0x00 );
+          GFL_MSG_GetString(view->mm_status, GAMEBEACON_GetMsgID(info), view->strbuf_temp);
+          GAMEBEACON_Wordset(info, view->wordset, HEAPID_FIELDMAP);
+          WORDSET_ExpandStr( view->wordset, view->strbuf_expand, view->strbuf_temp );
+          PRINT_UTIL_PrintColor( &view->print_util[copy_dest], view->printQue, 0, 0, 
+            view->strbuf_expand, view->fontHandle, PRINTSYS_LSB_Make( 15, 2, 0 ) );
+        }
+        write_start--;
+        if(write_start < 0){
+          break;
+        }
+      }
     }
   }
 }
@@ -356,9 +370,10 @@ static void _BeaconView_BmpWinCreate(BEACON_VIEW_PTR view)
   int i;
   
   for(i = 0; i < VIEW_LOG_MAX; i++){
-    view->win[i] = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 2, 2 + 2*i, 28, 2, 
+    view->win[i] = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 2, 2 + 5*i, 28, 4, 
       FONT_PAL, GFL_BMP_CHRAREA_GET_B );
     PRINT_UTIL_Setup( &view->print_util[i], view->win[i] );
+    GFL_BMPWIN_MakeTransWindow(view->win[i]);
   }
 }
 
