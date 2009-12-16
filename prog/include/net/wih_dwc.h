@@ -33,6 +33,7 @@ extern void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork);
 
 extern void WIH_DWC_MainLoopScanBeaconData(void);
 extern GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void);
+extern GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void);
 
 
 extern void WIH_DWC_Stop(void);
