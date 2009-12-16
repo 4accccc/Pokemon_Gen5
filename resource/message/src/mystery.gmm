@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-15T23:51:04"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-16T22:56:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1119,10 +1119,10 @@
 	<row id="syachi_mystery_01_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>通信開始確認</comment>
 		<language name="JPN" width="216">ふしぎなおくりものを　うけとるため
-つうしんを　かいしします▽
+つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 		<language name="JPN_KANJI">ふしぎなおくりものを　うけとるため
-つうしんを　かいしします▽
+つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 	</row>
 
