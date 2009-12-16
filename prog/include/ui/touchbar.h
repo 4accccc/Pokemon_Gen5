@@ -95,6 +95,7 @@ typedef enum
 //=====================================
 #define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
 #define TOUCHBAR_SE_CANCEL	(SEQ_SE_CANCEL1)
+#define TOUCHBAR_SE_CLOSE	  (SEQ_SE_CLOSE1)
 #define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
 //=============================================================================
