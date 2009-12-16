@@ -23,18 +23,11 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
-#define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  // ギミックデータのアーカイブID
+// ギミックデータのアーカイブID
+#define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
-// リフト座標
-#define HALF_GRID ((FIELD_CONST_GRID_SIZE / 2) << FX32_SHIFT)
-#define LIFT_POS_X_GRID (30)
-#define LIFT_POS_Z_GRID (81)
-#define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
-#define LIFT_POS_Y (2 << FX32_SHIFT)
-#define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
-#define PLAYER_OFS_X (0)
-#define PLAYER_OFS_Y (0)
-#define PLAYER_OFS_Z ((FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT)
+// ライトがリフトと一緒に降下するかどうか
+#define LIGHT_DOWN
 
 // ギミックワークのデータインデックス
 typedef enum{
@@ -51,14 +44,34 @@ typedef enum{
 // リソース
 //----------
 typedef enum{
-  RES_LIFT_NSBMD,  // リフトのモデル
-  RES_LIFT_NSBTA,  // リフトのテクスチャアニメーション
+  RES_LIFT_NSBMD,             // リフトのモデル
+  RES_LIFT_NSBTA,             // リフトのテクスチャアニメーション
+#ifdef LIGHT_DOWN
+  RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
+  RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
+  RES_LIGHT_EVIL_NSBMD,       // ライト(悪)      モデル
+  RES_LIGHT_EVIL_ON_NSBTA,    // ライト(悪)      ON
+  RES_LIGHT_GHOST_NSBMD,      // ライト(ゴースト)モデル
+  RES_LIGHT_GHOST_ON_NSBTA,   // ライト(ゴースト)ON
+  RES_LIGHT_ESPER_NSBMD,      // ライト(エスパー)モデル
+  RES_LIGHT_ESPER_ON_NSBTA,   // ライト(エスパー)ON
+#endif
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
-  {ARCID, NARC_league_front_pl_ele_01_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_01_nsbta, GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_01_nsbmd,    GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_01_nsbta,    GFL_G3D_UTIL_RESARC},
+#ifdef LIGHT_DOWN
+  {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite2_nsbmd,     GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite2_on_nsbta,  GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite3_nsbmd,     GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite3_on_nsbta,  GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_lite4_nsbmd,     GFL_G3D_UTIL_RESARC}, 
+  {ARCID, NARC_league_front_pl_lite4_on_nsbta,  GFL_G3D_UTIL_RESARC}, 
+#endif
 }; 
 //------------------------
 // アニメーション(リフト)
@@ -71,16 +84,69 @@ static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] =
 {
   {RES_LIFT_NSBTA, 0},
 }; 
+#ifdef LIGHT_DOWN
+//------------------------
+// アニメーション(ライト)
+//------------------------
+// 格闘
+typedef enum{
+  LIGHT_FIGHT_ANM_ON,   // ON
+  LIGHT_FIGHT_ANM_NUM
+} LIGHT_FIGHT_ANM_INDEX;
+static const GFL_G3D_UTIL_ANM anm_table_light_fight[LIGHT_FIGHT_ANM_NUM] = 
+{
+  {RES_LIGHT_FIGHT_ON_NSBTA,  0},
+};
+// 悪
+typedef enum{
+  LIGHT_EVIL_ANM_ON,   // ON
+  LIGHT_EVIL_ANM_NUM
+} LIGHT_EVIL_ANM_INDEX;
+static const GFL_G3D_UTIL_ANM anm_table_light_evil[LIGHT_EVIL_ANM_NUM] = 
+{
+  {RES_LIGHT_EVIL_ON_NSBTA,  0},
+};
+// ゴースト
+typedef enum{
+  LIGHT_GHOST_ANM_ON,   // ON
+  LIGHT_GHOST_ANM_NUM
+} LIGHT_GHOST_ANM_INDEX;
+static const GFL_G3D_UTIL_ANM anm_table_light_ghost[LIGHT_GHOST_ANM_NUM] = 
+{
+  {RES_LIGHT_GHOST_ON_NSBTA,  0},
+};
+// エスパー
+typedef enum{
+  LIGHT_ESPER_ANM_ON,   // ON
+  LIGHT_ESPER_ANM_NUM
+} LIGHT_ESPER_ANM_INDEX;
+static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] = 
+{
+  {RES_LIGHT_ESPER_ON_NSBTA,  0},
+};
+#endif
 //-------------
 // オブジェクト
 //-------------
 typedef enum{
-  OBJ_LIFT,  // リフト
+  OBJ_LIFT,         // リフト
+#ifdef LIGHT_DOWN
+  OBJ_LIGHT_FIGHT,  // ライト(格闘)
+  OBJ_LIGHT_EVIL,   // ライト(悪)
+  OBJ_LIGHT_GHOST,  // ライト(ゴースト)
+  OBJ_LIGHT_ESPER,  // ライト(エスパー)
+#endif
   OBJ_NUM
 } OBJ_INDEX;
 static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
 {
-  {RES_LIFT_NSBMD, 0, RES_LIFT_NSBMD, anm_table_lift, LIFT_ANM_NUM},  // リフト
+  {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
+#ifdef LIGHT_DOWN
+  {RES_LIGHT_FIGHT_NSBMD, 0, RES_LIGHT_FIGHT_NSBMD, anm_table_light_fight, LIGHT_FIGHT_ANM_NUM},
+  {RES_LIGHT_EVIL_NSBMD,  0, RES_LIGHT_EVIL_NSBMD,  anm_table_light_evil,  LIGHT_EVIL_ANM_NUM},
+  {RES_LIGHT_GHOST_NSBMD, 0, RES_LIGHT_GHOST_NSBMD, anm_table_light_ghost, LIGHT_GHOST_ANM_NUM},
+  {RES_LIGHT_ESPER_NSBMD, 0, RES_LIGHT_ESPER_NSBMD, anm_table_light_esper, LIGHT_ESPER_ANM_NUM},
+#endif
 }; 
 //----------
 // ユニット
@@ -94,6 +160,60 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
   {res_table, RES_NUM, obj_table, OBJ_NUM},
 };
 
+
+//==========================================================================================
+// ■各オブジェの配置
+//========================================================================================== 
+// リフト座標
+#define HALF_GRID ((FIELD_CONST_GRID_SIZE / 2) << FX32_SHIFT)
+#define LIFT_POS_X_GRID (30)
+#define LIFT_POS_Z_GRID (81)
+#define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIFT_POS_Y (2 << FX32_SHIFT)
+#define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define PLAYER_OFS_X (0)
+#define PLAYER_OFS_Y (0)
+#define PLAYER_OFS_Z ((FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT)
+// ライト座標(格闘)
+#define LIGHT_FIGHT_POS_X_GRID (27)
+#define LIGHT_FIGHT_POS_Y_GRID (0)
+#define LIGHT_FIGHT_POS_Z_GRID (78)
+#define LIGHT_FIGHT_POS_X ((LIGHT_FIGHT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_FIGHT_POS_Y ((LIGHT_FIGHT_POS_Y_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_FIGHT_POS_Z ((LIGHT_FIGHT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+// ライト座標(悪)
+#define LIGHT_EVIL_POS_X_GRID (33)
+#define LIGHT_EVIL_POS_Y_GRID (0)
+#define LIGHT_EVIL_POS_Z_GRID (78)
+#define LIGHT_EVIL_POS_X ((LIGHT_EVIL_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_EVIL_POS_Y ((LIGHT_EVIL_POS_Y_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_EVIL_POS_Z ((LIGHT_EVIL_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+// ライト座標(ゴースト)
+#define LIGHT_GHOST_POS_X_GRID (27)
+#define LIGHT_GHOST_POS_Y_GRID (0)
+#define LIGHT_GHOST_POS_Z_GRID (83)
+#define LIGHT_GHOST_POS_X ((LIGHT_GHOST_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_GHOST_POS_Y ((LIGHT_GHOST_POS_Y_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_GHOST_POS_Z ((LIGHT_GHOST_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+// ライト座標(エスパー)
+#define LIGHT_ESPER_POS_X_GRID (33)
+#define LIGHT_ESPER_POS_Y_GRID (0)
+#define LIGHT_ESPER_POS_Z_GRID (83)
+#define LIGHT_ESPER_POS_X ((LIGHT_ESPER_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_ESPER_POS_Y ((LIGHT_ESPER_POS_Y_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+#define LIGHT_ESPER_POS_Z ((LIGHT_ESPER_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
+
+// 配置座標
+static const VecFx32 obj_pos[OBJ_NUM] = 
+{
+  {LIFT_POS_X,        LIFT_POS_Y,        LIFT_POS_Z},
+#ifdef LIGHT_DOWN
+  {LIGHT_FIGHT_POS_X, LIGHT_FIGHT_POS_Y, LIGHT_FIGHT_POS_Z},
+  {LIGHT_EVIL_POS_X,  LIGHT_EVIL_POS_Y,  LIGHT_EVIL_POS_Z},
+  {LIGHT_GHOST_POS_X, LIGHT_GHOST_POS_Y, LIGHT_GHOST_POS_Z},
+  {LIGHT_ESPER_POS_X, LIGHT_ESPER_POS_Y, LIGHT_ESPER_POS_Z},
+#endif
+};
 
 //==========================================================================================
 // ■ギミックワーク
@@ -260,29 +380,15 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
   // リフトのアニメーション初期化
   FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_TA, TRUE );
 
-  // リフトの座標をアニメ最終フレームの値で初期化
+  // 各オブジェの配置
   {
-    ICA_ANIME* anime; 
-    VecFx32 trans;
-    u32 max_frame;
-    anime = ICA_ANIME_CreateAlloc( work->heapID,
-                                   ARCID, NARC_league_front_pl_ele_01_ica_bin );
-    max_frame = ICA_ANIME_GetMaxFrame( anime );
-    ICA_ANIME_GetTranslateAt( anime, &trans, max_frame - 1 );
-    {
-      GFL_G3D_OBJSTATUS* objstatus;
-      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-      exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
-      VEC_Set( &objstatus->trans, trans.x, trans.y, trans.z );
-    }
-    ICA_ANIME_Delete( anime );
-  }
-  // @todo icaにx,zの情報が入ったら以下の処理は削除する
-  {
+    int obj_idx;
     GFL_G3D_OBJSTATUS* objstatus;
-    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
-    VEC_Set( &objstatus->trans, LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z );
+    for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+    {
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, obj_idx );
+      VEC_Set( &objstatus->trans, obj_pos[obj_idx].x, obj_pos[obj_idx].y, obj_pos[obj_idx].z );
+    }
   }
 
   // DEBUG:
@@ -338,20 +444,19 @@ static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
   // アニメーションを進める
   anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
 
-  // リフトの座標を更新
-  if( !anime_end )
+  // リフト・ライトの座標を更新
   {
+    int obj_idx;
     VecFx32 trans;
-    GFL_G3D_OBJSTATUS* objstatus;
-    FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-    exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
     ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-    VEC_Set( &objstatus->trans, trans.x, trans.y, trans.z );
-
-    // @todo icaにx,zの情報が入ったら以下の処理は削除する
-    objstatus->trans.x = LIFT_POS_X;
-    objstatus->trans.z = LIFT_POS_Z;
+    for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+    {
+      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+      GFL_G3D_OBJSTATUS* objstatus;
+      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, obj_idx );
+      objstatus->trans.y = trans.y; 
+    }
   }
   return anime_end;
 }
@@ -365,23 +470,19 @@ static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
 {
   FIELD_PLAYER* player;
   VecFx32 pos, trans;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  GFL_G3D_OBJSTATUS* objstatus;
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+  objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
   player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  ICA_ANIME_GetTranslate( work->liftAnime, &trans );
   VEC_Set( &pos, 
-      trans.x + PLAYER_OFS_X, 
-      trans.y + PLAYER_OFS_Y, 
-      trans.z + PLAYER_OFS_Z );
-  // @todo icaにx,zの情報が入ったら以下の処理は削除する
-  {
-    pos.x = LIFT_POS_X + PLAYER_OFS_X;
-    pos.z = LIFT_POS_Z + PLAYER_OFS_Z;
-  }
+           objstatus->trans.x + PLAYER_OFS_X, 
+           objstatus->trans.y + PLAYER_OFS_Y, 
+           objstatus->trans.z + PLAYER_OFS_Z );
   // x, z座標がグリッドの中心になるように調整
   pos.x = GRID_TO_FX32( FX32_TO_GRID(pos.x) ) + HALF_GRID;
   pos.z = GRID_TO_FX32( FX32_TO_GRID(pos.z) ) + HALF_GRID;
   FIELD_PLAYER_SetPos( player, &pos );
-  // DEBUG:
-  OBATA_Printf( "pos = %d, %d, %d\n", FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
 }
 
 //------------------------------------------------------------------------------------------

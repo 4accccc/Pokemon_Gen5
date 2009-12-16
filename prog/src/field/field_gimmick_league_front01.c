@@ -30,6 +30,9 @@
 // ギミックデータのアーカイブID
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
+// 四天王ライトがリフトと一緒に降下するかどうか
+#define LIGHT_DOWN
+
 // ギミックワークのデータインデックス
 typedef enum{
   GIMMICKWORK_DATA_WORK_ADRS,  // LF01ギミック管理ワークのアドレス
@@ -186,8 +189,7 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 
 //==========================================================================================
 // ■各オブジェの配置
-//==========================================================================================
-
+//========================================================================================== 
 // リフト座標
 #define LIFT_POS_X_GRID (32)
 #define LIFT_POS_Y_GRID (0)
@@ -534,8 +536,16 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
       objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
       objstatus->trans.y = trans.y;
+#ifdef LIGHT_DOWN
       // ライト
-#if 1
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_FIGHT );
+      objstatus->trans.y = trans.y;
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_EVIL );
+      objstatus->trans.y = trans.y;
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_GHOST );
+      objstatus->trans.y = trans.y;
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_ESPER );
+      objstatus->trans.y = trans.y;
 #endif
       // 自機
       player = FIELDMAP_GetFieldPlayer( work->fieldmap );
