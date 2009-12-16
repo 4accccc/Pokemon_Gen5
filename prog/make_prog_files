@@ -354,7 +354,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_data.c \
         field/field_event_check.c \
 				field/field_buildmodel.c \
-        field/field_bmanime_tool.c \
 				field/field_g3d_mapper.c \
 				field/field_camera.c \
 				field/field_msgbg.c \
