@@ -199,9 +199,9 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     {
       POKEPARTY* Party = SaveData_GetTemotiPokemon(pWork->pSaveData);
-      for(i = 0 ; i < PokeParty_GetPokeCountMax(Party) ; i++){
+      for(i = 0 ; i < 6 ; i++){
         pAddr = (u8*)PokeParty_GetMemberPointer( Party, i );
-        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","T POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
+        OS_TPrintf("\"%s%d\",\"0x%x\",\"%d\"\n","PARTY_POKEMON",i, (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
       }
     }
 
@@ -211,7 +211,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       for(i=0;i<BOX_MAX_TRAY;i++){
         for(j=0;j<BOX_MAX_POS;j++){
           pAddr = (u8*)BOXDAT_GetPokeDataAddress(pBox, i, j);
-          OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","B POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
+          OS_TPrintf("\"%s%d\",\"0x%x\",\"%d\"\n","BOX_POKEMON",i*BOX_MAX_POS+j, (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
         }
       }
     }
