@@ -849,7 +849,7 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
           {
             static const GFL_SKB_SETUP setup = {
               STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
-              GFL_SKB_MODE_KATAKANA, TRUE, 0,
+              GFL_SKB_MODE_KATAKANA, TRUE, 0, PAD_BUTTON_START,
               PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
             };
             wk->skbSetup = setup;
@@ -1510,6 +1510,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
   }
 
   switch( reaction ){
+
   case GFL_SKB_REACTION_QUIT:
     if( wk->index == -1 )
     {
@@ -1550,8 +1551,11 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     fSearchReq = TRUE;
     break;
   case GFL_SKB_REACTION_NONE:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-      fSearchReq = TRUE;
+    {
+      u16 key = GFL_UI_KEY_GetTrg();
+      if( key & PAD_BUTTON_SELECT ){
+        fSearchReq = TRUE;
+      }
     }
     break;
   }

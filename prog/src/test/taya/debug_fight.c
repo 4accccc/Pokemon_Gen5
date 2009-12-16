@@ -431,6 +431,8 @@ struct _DEBUG_BTL_WORK {
   POKEPARTY*      partyEnemy1;
   POKEPARTY*      partyEnemy2;
   const POKEMON_PARAM*  clipPoke;
+  SelectItem      clipItem;
+  void*           ppTmpWork;
   HEAPID          heapID;
   u8              fNetConnect;
   u8              pageNum;
@@ -553,6 +555,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   wk->partyFriend = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyEnemy2 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->clipPoke = NULL;
+  wk->ppTmpWork = GFL_HEAP_AllocMemory( HEAPID_BTL_DEBUG_SYS, POKETOOL_GetWorkSize() );
 
   initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
@@ -576,6 +579,7 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 {
   DEBUG_BTL_WORK* wk = mywk;
 
+  GFL_HEAP_FreeMemory( wk->ppTmpWork );
   deleteTemporaryModules( wk );
   quitGraphicSystems();
   BattleRec_Exit();
@@ -1316,6 +1320,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     // コピー
     if( wk->clipPoke == NULL ){
       wk->clipPoke = savework_GetPokeParaArea( &wk->saveData, wk->selectItem );
+      wk->clipItem = wk->selectItem;
       if( wk->clipPoke != NULL )
       {
         printClipMark( wk );
@@ -1324,11 +1329,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     // ペースト
     else
     {
-      POKEMON_PARAM* dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem );
-      if( dst != wk->clipPoke )
+      POKEMON_PARAM* pointPoke = savework_GetPokeParaArea( &wk->saveData, wk->selectItem );
+      if( pointPoke != wk->clipPoke )
       {
-        GFL_STD_MemCopy32( wk->clipPoke, dst, POKETOOL_GetWorkSize() );
+        u32 PPSize = POKETOOL_GetWorkSize();
+        GFL_STD_MemCopy32( wk->clipPoke,   wk->ppTmpWork, PPSize );
+        GFL_STD_MemCopy32( pointPoke,      (void*)(wk->clipPoke),  PPSize );
+        GFL_STD_MemCopy32( wk->ppTmpWork,  pointPoke,     PPSize );
         PrintItem( wk, wk->selectItem, TRUE );
+        PrintItem( wk, wk->clipItem, FALSE );
         clearClipMark( wk );
         wk->clipPoke = NULL;
       }

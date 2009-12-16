@@ -186,7 +186,7 @@ static BOOL sub_search( EVENT_DEBUGITEM_WORK* wk, const STRBUF* word, int dir, i
 
 static const GFL_SKB_SETUP setup = {
   100, GFL_SKB_STRTYPE_STRBUF,
-  GFL_SKB_MODE_KATAKANA, TRUE, 0,
+  GFL_SKB_MODE_KATAKANA, TRUE, 0, 0,
   PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
 };
 

@@ -33,16 +33,17 @@ typedef enum {
 //　設定定義
 //　文字列バッファは文字列長さ*sizeof(u16)を確保すること
 typedef struct {
-  u32       strlen;     //文字列格納長さ
-  GFL_SKB_STRTYPE strtype;    //文字列格納タイプ
+  u32       strlen;       //文字列格納長さ
+  GFL_SKB_STRTYPE strtype;//文字列格納タイプ
 
   GFL_SKB_MODE  mode;     //初期モード
   BOOL      modeChange;   //モード変更可否フラグ
-  u32       cancelKey;    //中断キー判定トリガ(0で中断不可)
+  u16       cancelKey;    //中断キー判定トリガ（不要なら0でよい。その場合は中断不可)
+  u16       decideKey;    //確定キー判定トリガ（不要なら0でよい。その場合はタッチパネル操作でのみ確定可）
 
-  GFL_DISPUT_BGID   bgID;     //使用BGVRAMID
-  GFL_DISPUT_PALID  bgPalID;    //使用BGパレットID
-  GFL_DISPUT_PALID  bgPalID_on;   //使用BGパレットID
+  GFL_DISPUT_BGID   bgID;        //使用BGVRAMID
+  GFL_DISPUT_PALID  bgPalID;     //使用BGパレットID
+  GFL_DISPUT_PALID  bgPalID_on;  //使用BGパレットID
 
 }GFL_SKB_SETUP;
 
