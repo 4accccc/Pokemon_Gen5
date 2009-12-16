@@ -1202,7 +1202,7 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man )
 	
   // ƒ‰ƒCƒ“‚Ìis•ûŒü‚ðŽæ“¾
   FIELD_RAIL_WORK_GetFrontWay( work, &way );
-  front_rot = FX_Atan2Idx( way.x, way.z );
+  front_rot = FX_Atan2Idx( -way.x, -way.z );
 
   /*
   TOMOYA_Printf( "yaw 0x%x\n", front_rot + cp_work->yaw );
