@@ -11,49 +11,120 @@
 
 // コマンド定義 >> demo3d_cmd_def.h
 
+#include "msg/msg_intro.h"  // for GMM Index
+
 // シーン init
 static const INTRO_CMD_DATA c_intro_scene_init[] = 
 { 
   { INTRO_CMD_TYPE_BG_LOAD, },
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING } },
   // ↑ROMアクセスはここまで↑
-  // 初回セーブデータ初期化コマンド開始
+  
+  // @TODO 初回セーブデータ初期化コマンド開始
+  
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
 };
 
 // シーン 00 
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
   { INTRO_CMD_TYPE_SELECT_MOJI }, // 漢字／ひらがな選択
-  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
-
-  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+  
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_01 }, // シーン01へ
 };
 
-#if 0
 // シーン 01 
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
+  // @TODO ブラックイン
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_02 } }, // わたし　アララギと　いいます
   
-  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
 };
-#endif 
 
-#if 0
 // シーン 02 
 static const INTRO_CMD_DATA c_intro_scene_02[] =
 {
-  { INTRO_CMD_TYPE_KEY_WAIT }, ///< キーウェイト
+  // @TODO ポケモン出現演出
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_03 } }, // そう！　この　せかいには
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_04 } }, // ふしぎな　ちからを　ひめている
   
-  { INTRO_CMD_TYPE_END, }, ///< コマンド終了
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_03 }, // シーン03へ
 };
-#endif
+
+// シーン 03 
+static const INTRO_CMD_DATA c_intro_scene_03[] =
+{
+  // ポケモン出現演出
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_05 } }, // さて　わたしの　はなしは
+  // @TODO 博士 非表示（フェードあり）
+  
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_04 }, // シーン04へ
+};
+
+// シーン 04 
+static const INTRO_CMD_DATA c_intro_scene_04[] =
+{
+  // @TODO 主人公 立ち絵 スライドイン
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_gender_01 } }, // あなたは　おとこのこ？
+  // @TODO 性別選択
+  // @TODO 性別 決定演出
+  
+  // @TODO 選択肢 確認メッセージ
+
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 }, //@TODO 分岐
+};
+
+// シーン 05
+static const INTRO_CMD_DATA c_intro_scene_05[] = 
+{ 
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_01 } }, // なまえも しりたいな
+
+  // @TODO 呼び出し 名前入力 
+  
+  // @TODO 分岐 確認メッセージ
+
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 }, //@TODO 分岐
+};
+
+// シーン 06
+static const INTRO_CMD_DATA c_intro_scene_06[] = 
+{ 
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_06 } }, // [トレーナー名]と いう　なまえ！
+
+  // @TODO 分岐
+  
+  // @TODO A:セーブ初期化が終わっていなければ、初期化待ち
+  // @TODO B:スルー
+  
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_07 } }, // [トレーナー名]！！
+
+  // 博士＆MSGウィンドウ 非表示（フェードアウト）
+
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_07 },
+};
+
+// シーン 07
+static const INTRO_CMD_DATA c_intro_scene_07[] = 
+{ 
+  // @TODO 主人公立ち絵：（フェードイン）
+  // @TODO 主人公立ち絵→フィールドOBJへ
+  { INTRO_CMD_TYPE_END }, ///< 終了
+};
 
 static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] = 
 { 
   c_intro_scene_init,
   c_intro_scene_00,
+  c_intro_scene_01,
+  c_intro_scene_02,
+  c_intro_scene_03,
+  c_intro_scene_04,
+  c_intro_scene_05,
+  c_intro_scene_06,
+  c_intro_scene_07,
 };
 
 

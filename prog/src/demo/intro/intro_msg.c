@@ -36,7 +36,10 @@
 enum
 { 
   CGX_BMPWIN_FRAME_POS = 1,
+  STRBUF_SIZE = 1600,
 };
+
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
 
 //=============================================================================
 /**
@@ -68,7 +71,7 @@ struct _INTRO_MSG_WORK {
  *							プロトタイプ宣言
  */
 //=============================================================================
-static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDATA *MsgManager, u32 strID, HEAPID heapID );
+//static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDATA *MsgManager, u32 strID, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -109,11 +112,11 @@ INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, HEAPID heap_id )
   // フレームウィンドウ用のキャラを用意
   BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_FIELD, heap_id );
 
-  wk->strbuf      = GFL_STR_CreateBuffer( 200, wk->heap_id );
-  wk->exp_strbuf  = GFL_STR_CreateBuffer( 200, wk->heap_id );
-
   // フォントを展開
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, wk->heap_id );
+
+  wk->strbuf      = GFL_STR_CreateBuffer( STRBUF_SIZE, wk->heap_id );
+  wk->exp_strbuf  = GFL_STR_CreateBuffer( STRBUF_SIZE, wk->heap_id );
 
   return wk;
 }
@@ -131,6 +134,8 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 {
   GFL_STR_DeleteBuffer( wk->strbuf );
   GFL_STR_DeleteBuffer( wk->exp_strbuf );
+  
+  GFL_FONT_Delete( wk->font );
 
   // まだ終了していない文字列表示が会った場合は破棄
   if( wk->print_stream )
@@ -146,7 +151,7 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
   GFL_TCBL_Exit( wk->msg_tcblsys );
 
   PRINTSYS_QUE_Delete( wk->print_que );
-
+  
   GFL_MSG_Delete( wk->msghandle );
 
   WORDSET_Delete( wk->wordset );
@@ -206,22 +211,6 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callba
   GFL_STR_CheckBufferValid( wk->strbuf ); ///< 破損チェック
 #endif
 
-#if 0
-  {
-    const STRCODE* p = NULL;
-    
-    GFL_STR_SetStringCode( wk->strbuf, p );
-
-    while( *p != GFL_STR_GetEOMCode() )
-    {
-      HOSAKA_Printf("%x ", *p );
-      p++;
-    };
-
-    HOSAKA_Printf("\n");
-  }
-#endif
-
   // コールバックでWORDSET
   if( callback_func )
   {
@@ -265,15 +254,23 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
   {
     switch( state )
     {
-    case PRINTSTREAM_STATE_DONE :
+    case PRINTSTREAM_STATE_DONE : // 終了
       PRINTSYS_PrintStreamDelete( wk->print_stream );
       wk->print_stream = NULL;
       return TRUE;
 
-    case PRINTSTREAM_STATE_PAUSE :
+    case PRINTSTREAM_STATE_PAUSE : // キー入力待ち
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
       {
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
+      }
+      break;
+
+    case PRINTSTREAM_STATE_RUNNING :  // 実行中
+      // メッセージスキップ
+      if( GFL_UI_KEY_GetCont() & MSG_SKIP_BTN )
+      {
+        PRINTSYS_PrintStreamShortWait( wk->print_stream, 0 );
       }
       break;
 
@@ -297,7 +294,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
  */
 //=============================================================================
 
-//@TODO WBにはないのでとりあえずここに実体をおく
+#if 0
 //----------------------------------------------------------------------------
 /**
  *  @brief  文字列展開しつつMSGを取得
@@ -323,4 +320,5 @@ static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDA
 
   return dst;
 }
+#endif
 

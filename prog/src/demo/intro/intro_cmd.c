@@ -88,6 +88,7 @@ static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
@@ -103,6 +104,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
+  CMD_PRINT_MSG,
   CMD_SELECT_MOJI,
   NULL, // end
 };
@@ -178,6 +180,8 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   GFL_SOUND_PlayBGM( param[0] );
+
+  return TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -256,6 +260,37 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  メッセージ表示
+ *
+ *	@param	param[0] str_id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  switch( sdat->seq )
+  {
+    case 0:
+      INTRO_MSG_SetPrint( wk->wk_msg, param[0], NULL, NULL );
+      sdat->seq++;
+      break;
+
+    case 1:
+    if( INTRO_MSG_PrintProc( wk->wk_msg ) )
+    {
+      return TRUE;
+    }
+    break;
+
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  漢字／ひらがなモードを決定
  *
  *	@param	INTRO_CMD_WORK* wk
@@ -267,11 +302,13 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 //-----------------------------------------------------------------------------
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-
+  // @TODO
+  return TRUE;
+  
   switch( sdat->seq )
   {
   case 0:
-    INTRO_MSG_SetPrint( wk->wk_msg, msg_kanamode_01, NULL, NULL );
+    INTRO_MSG_SetPrint( wk->wk_msg, param[0], NULL, NULL );
     sdat->seq++;
     break;
 
@@ -396,20 +433,24 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
       
       data = Intro_DATA_GetCmdData( wk->scene_id );
       data += wk->cmd_idx;
+      
+      // シーン変更
+      if( data->type == INTRO_CMD_TYPE_SET_SCENE )
+      {
+        // CMD_SET_SCENE
+        c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
+                
+        HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
+
+        // 次のシーンの先頭コマンド
+        data = Intro_DATA_GetCmdData( wk->scene_id );
+      }
 
       // コマンド終了判定
       if( data->type == INTRO_CMD_TYPE_END )
       {
         // 終了
         return FALSE;
-      }
-      else if( data->type == INTRO_CMD_TYPE_SET_SCENE )
-      {
-        // CMD_SET_SCENE
-        c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
-                
-        HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
-        data = Intro_DATA_GetCmdData( wk->scene_id );
       }
 
       // 次のコマンドを差しておく
