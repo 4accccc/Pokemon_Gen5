@@ -24,6 +24,8 @@
 //アーカイブ
 #include "arc_def.h" // for ARCID_XXX
 
+#include "intro.naix"
+
 #include "intro_sys.h"
 
 #include "intro_graphic.h"
@@ -135,30 +137,28 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
  *	@retval
  */
 //-----------------------------------------------------------------------------
-#include "mictest.naix"
 static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  //@TODO とりあえずマイクテストのリソース
   HEAPID heap_id;
 	ARCHANDLE	*handle;
 
   heap_id = wk->heap_id;
-	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heap_id );
+	handle	= GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
 	
   //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_intro_intro_bg_NCGR,
 						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_intro_intro_bg_main_NSCR,
 						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
 
 	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_intro_intro_bg_NCGR,
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_intro_intro_bg_sub_NSCR,
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
 
 	GFL_ARC_CloseDataHandle( handle );

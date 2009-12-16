@@ -212,12 +212,12 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 	param	= pwk;
 
 	//ƒq[ƒvì¬
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, INTRO_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(INTRO_MAIN_WORK), HEAPID_UI_DEBUG );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_INTRO, INTRO_HEAP_SIZE );
+  wk = GFL_PROC_AllocWork( proc, sizeof(INTRO_MAIN_WORK), HEAPID_INTRO );
   GFL_STD_MemClear( wk, sizeof(INTRO_MAIN_WORK) );
 
   // ‰Šú‰»
-  wk->heapID      = HEAPID_UI_DEBUG;
+  wk->heapID      = HEAPID_INTRO;
   wk->param       = param;
 	
 	//•`‰æİ’è‰Šú‰»
