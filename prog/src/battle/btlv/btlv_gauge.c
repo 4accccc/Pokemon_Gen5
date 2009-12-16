@@ -1451,6 +1451,11 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
     APP_COMMON_ST_ICON_YAKEDO,      // 火傷
     APP_COMMON_ST_ICON_DOKU,        // 毒
   };
+  //ゲージが存在しないときはなにもせずにリターン
+  if( bgw->bgcl[ pos ].status_clwk == NULL )
+  { 
+    return;
+  }
   if( sick == POKESICK_NULL )
   {
     GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, FALSE );
