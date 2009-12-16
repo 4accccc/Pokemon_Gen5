@@ -87,6 +87,9 @@ extern void FIELD_BMODEL_MAN_ResistMapObject
 //  アニメ制御関連
 //
 //============================================================================================
+//------------------------------------------------------------------
+/// アニメリクエスト用定義
+//------------------------------------------------------------------
 typedef enum {
   BMANM_REQ_START = 0,
   BMANM_REQ_REVERSE_START,
@@ -97,6 +100,17 @@ typedef enum {
   BMANM_REQ_MAX,
 }BMANM_REQUEST;
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  //アニメデータの定義順に依存している。
+  BMANM_INDEX_DOOR_OPEN = 0,
+  BMANM_INDEX_DOOR_CLOSE,
+
+  BMANM_INDEX_MAX = 4,
+
+  BMANM_INDEX_NULL = 0xffff,
+};
 
 //============================================================================================
 //============================================================================================
@@ -149,22 +163,68 @@ typedef struct _FIELD_BMODEL FIELD_BMODEL;
 extern u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(
     const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel );
 
+//============================================================================================
+//
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
 extern FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
     FIELD_BMODEL_MAN * man, BMODEL_ID bmodel_id, const GFL_G3D_OBJSTATUS* status );
+extern FIELD_BMODEL * FIELD_BMODEL_Create_Search(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
+extern void FIELD_BMODEL_SetCurrentAnime( FIELD_BMODEL * bmodel, BMANM_REQUEST req );
+inline static void FIELD_BMODEL_StartAnime( FIELD_BMODEL * bmodel, u32 idx )
+{
+  FIELD_BMODEL_SetAnime( bmodel, idx, BMANM_REQ_START );
+}
+inline static void FIELD_BMODEL_StartCurrentAnime( FIELD_BMODEL * bmodel )
+{
+  FIELD_BMODEL_SetCurrentAnime( bmodel, BMANM_REQ_START );
+}
+inline static void FIELD_BMODEL_StopAnime( FIELD_BMODEL * bmodel, u32 idx )
+{
+  FIELD_BMODEL_SetAnime( bmodel, idx, BMANM_REQ_STOP );
+}
+inline static void FIELD_BMODEL_StopCurrentAnime( FIELD_BMODEL * bmodel )
+{
+  FIELD_BMODEL_SetCurrentAnime( bmodel, BMANM_REQ_STOP );
+}
+
+extern BOOL FIELD_BMODEL_WaitAnime( FIELD_BMODEL * bmodel, u32 idx );
+extern BOOL FIELD_BMODEL_WaitCurrentAnime( FIELD_BMODEL * bmodel );
+
 extern BOOL FIELD_BMODEL_GetAnimeStatus( const FIELD_BMODEL * bmodel, u32 idx);
+extern BOOL FIELD_BMODEL_GetCurrentAnimeStatus( const FIELD_BMODEL * bmodel );
 extern BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel);
+extern const G3DMAPOBJST * FIELD_BMODEL_GetG3DMAPOBJST( const FIELD_BMODEL * bmodel );
 
+extern BOOL FIELD_BMODEL_GetSENo(const FIELD_BMODEL * bmodel, u32 anm_idx, u16 * se_no);
+extern BOOL FIELD_BMODEL_GetCurrentSENo( const FIELD_BMODEL * bmodel, u16 * se_no );
+extern BOOL FIELD_BMODEL_CheckCurrentSE( const FIELD_BMODEL * bmodel );
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //  配置モデル実データのアクセス関数
 //------------------------------------------------------------------
 extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 ( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num );
+
+extern G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusRect(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const FLDHIT_RECT * rect );
+extern G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusPos(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos );
 
 extern BM_SEARCH_ID G3DMAPOBJST_getSearchID(
     const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj );

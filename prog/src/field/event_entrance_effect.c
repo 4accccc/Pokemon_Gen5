@@ -18,7 +18,6 @@
 #include "fieldmap.h"
 #include "field_player.h"
 #include "field_buildmodel.h"
-#include "field_bmanime_tool.h"
 
 #include "event_mapchange.h"        //MAPCHANGE_setPlayerVanish
 #include "event_fieldmap_control.h" //EVENT_FieldFadeOut
@@ -50,7 +49,7 @@ typedef struct {
   //以下はシーケンス動作中にセットされる
   //FIELD_BMODEL * entry;
   //G3DMAPOBJST * obj;
-  BMANIME_CONTROL_WORK * ctrl;
+  FIELD_BMODEL * ctrl;
 }FIELD_DOOR_ANIME_WORK;
 
 //------------------------------------------------------------------
@@ -95,12 +94,12 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_START:
-    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
+    fdaw->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
     if (fdaw->ctrl)
     {
       u16 seNo;
-      BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_OPEN );
-      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      FIELD_BMODEL_StartAnime( fdaw->ctrl, BMANM_INDEX_DOOR_OPEN );
+      if( FIELD_BMODEL_GetCurrentSENo( fdaw->ctrl, &seNo) )
       {
         PMSND_PlaySE( seNo );
       }
@@ -139,8 +138,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
-        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
+    if ( FIELD_BMODEL_WaitCurrentAnime( fdaw->ctrl ) == TRUE
+        && FIELD_BMODEL_CheckCurrentSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOOROUT_PLAYER_STEP;
     }
@@ -161,8 +160,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     else
     { //ドアを閉じるアニメ適用
       u16 seNo;
-      BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_CLOSE );
-      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_CLOSE, &seNo) )
+      FIELD_BMODEL_StartAnime( fdaw->ctrl, BMANM_INDEX_DOOR_CLOSE );
+      if( FIELD_BMODEL_GetCurrentSENo( fdaw->ctrl, &seNo) )
       {
         PMSND_PlaySE( seNo );
       }
@@ -171,15 +170,15 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_CLOSEANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
-        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
+    if ( FIELD_BMODEL_WaitCurrentAnime( fdaw->ctrl ) == TRUE
+        && FIELD_BMODEL_CheckCurrentSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOOROUT_END;
     }
     break;
 
   case SEQ_DOOROUT_END:
-    BMANIME_CTRL_Delete( fdaw->ctrl );
+    FIELD_BMODEL_Delete( fdaw->ctrl );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -232,12 +231,12 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
   switch (*seq)
   { 
   case SEQ_DOORIN_OPENANIME_START:
-    fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
+    fdaw->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
     if (fdaw->ctrl)
     {
       u16 seNo;
-      BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_OPEN );
-      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      FIELD_BMODEL_StartAnime( fdaw->ctrl, BMANM_INDEX_DOOR_OPEN );
+      if( FIELD_BMODEL_GetCurrentSENo( fdaw->ctrl, &seNo) )
       {
         PMSND_PlaySE( seNo );
       }
@@ -258,8 +257,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE
-        && BMANIME_CTRL_CheckSE( fdaw->ctrl ) == FALSE )
+    if ( FIELD_BMODEL_WaitCurrentAnime( fdaw->ctrl ) == TRUE
+        && FIELD_BMODEL_CheckCurrentSE( fdaw->ctrl ) == FALSE )
     {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }
@@ -296,7 +295,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOORIN_END:
     EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
-    BMANIME_CTRL_Delete( fdaw->ctrl );
+    FIELD_BMODEL_Delete( fdaw->ctrl );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

@@ -245,7 +245,6 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       if( objst[0] )
       {
         work->bmSandStream = FIELD_BMODEL_Create( man, objst[0] );        // ï°êª
-        G3DMAPOBJST_changeViewFlag( objst[0], FALSE );                    // è¡ãé
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );  // çƒê∂
       }
       else

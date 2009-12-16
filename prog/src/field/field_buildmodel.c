@@ -34,6 +34,8 @@
 
 #include "map/dp3format.h"
 
+#include "sound/pm_sndsys.h"  //PMSND_
+#include "sound/wb_sound_data.sadl" //SE指定
 
 //============================================================================================
 //  DEBUG リソースメモリ使用量の検査
@@ -179,6 +181,8 @@ struct _G3DMAPOBJST{
 //------------------------------------------------------------------
 struct _FIELD_BMODEL {
   FIELD_BMODEL_MAN * man; ///<マネジャーへのポインタ
+  u32 currentAnmIdx;    ///<アニメNo保持（最新のもの）
+  G3DMAPOBJST * objst;  ///<元となったOBJSTへのポインタ
   OBJ_HND objHdl;         ///<モデル制御オブジェクト
   GFL_G3D_OBJSTATUS g3dObjStatus; ///<表示制御オブジェクト
 };
@@ -341,6 +345,7 @@ static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
 static void BMODELMAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 static void BMODELMAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 
+static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
 //============================================================================================
 //
 //
@@ -1720,6 +1725,59 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 指定位置付近の配置モデルを検索する
+ * @param bmodel_man  配置モデルマネジャーへのポインタ
+ * @param id          検索ID（BM_SEARCH_ID参照）
+ * @param rect         検索位置
+ * @retval NULL   見つからなかった
+ * @retval G3DMAPOBJST *  見つけたドア配置モデルへの参照
+ *
+ * @note
+ * 内部でFIELD_BMODEL_MAN_CreateObjStatusListを使用し、見つけた先頭の要素を返している
+ */
+//------------------------------------------------------------------
+G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusRect(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const FLDHIT_RECT * rect)
+{
+  G3DMAPOBJST * entry = NULL;
+  G3DMAPOBJST ** array;
+  u32 result_num;
+
+  GF_ASSERT( id < BM_SEARCH_ID_MAX );
+  {
+    //矩形範囲内の配置モデルリストを生成する
+    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, rect, id, &result_num);
+  }
+  entry = array[0];
+  //矩形範囲内の配置モデルリストを解放する
+  GFL_HEAP_FreeMemory(array);
+  return entry;
+}
+//------------------------------------------------------------------
+/**
+ * @brief 指定位置付近の配置モデルを検索する
+ * @param bmodel_man  配置モデルマネジャーへのポインタ
+ * @param id          検索ID（BM_SEARCH_ID参照）
+ * @param pos         検索位置
+ * @retval NULL   見つからなかった
+ * @retval G3DMAPOBJST *  見つけたドア配置モデルへの参照
+ *
+ * @note
+ * 内部でFIELD_BMODEL_MAN_CreateObjStatusListを使用し、見つけた先頭の要素を返している
+ */
+//------------------------------------------------------------------
+G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusPos(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos)
+{
+  //検索矩形を作成
+  FLDHIT_RECT rect;
+  makeRect(&rect, pos);
+  return FIELD_BMODEL_MAN_SearchObjStatusRect( bmodel_man, id, &rect );
+}
+
+
+//------------------------------------------------------------------
 /// 配置モデル実データ：検索IDの取得
 //------------------------------------------------------------------
 BM_SEARCH_ID G3DMAPOBJST_getSearchID( const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj )
@@ -1784,7 +1842,7 @@ void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
+FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
 {
   const OBJ_RES * objRes;
   const GFL_G3D_MAP_GLOBALOBJ_ST * status = obj->objSt;
@@ -1792,6 +1850,8 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
 
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
   bmodel->man = man;
+  bmodel->objst = obj;
+  bmodel->currentAnmIdx = BMANM_INDEX_NULL;
 
   //ローテーション設定
   {
@@ -1813,7 +1873,22 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
   OBJHND_initialize( man, &bmodel->objHdl, objRes );
 
   BMODELMAN_EntryBuildModel( man, bmodel );
+  G3DMAPOBJST_changeViewFlag( bmodel->objst, FALSE ); //コピー元を非表示にする
   return bmodel;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+FIELD_BMODEL * FIELD_BMODEL_Create_Search(
+    FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos )
+{
+  G3DMAPOBJST * obj;
+  FIELD_BMODEL * entry;
+
+  obj = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, id, pos );
+  if (obj == NULL) return NULL;
+  entry = FIELD_BMODEL_Create( bmodel_man, obj );
+
+  return entry;
 }
 
 //------------------------------------------------------------------
@@ -1835,6 +1910,9 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
   // インスタンス生成
   bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
   bmodel->man = man;
+  bmodel->objst = NULL;
+  bmodel->currentAnmIdx = BMANM_INDEX_NULL;
+
   // 表示ステータス設定
   bmodel->g3dObjStatus = *status;
   // モデル制御オブジェクトを作成
@@ -1850,38 +1928,175 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
 //------------------------------------------------------------------
 void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 {
+  if ( bmodel == NULL ) return;
   BMODELMAN_releaseBuildModel( bmodel->man, bmodel );
 
   OBJHND_finalize( &bmodel->objHdl );
+  if ( bmodel->objst ) {
+    G3DMAPOBJST_changeViewFlag( bmodel->objst, TRUE ); //コピー元を再表示する
+  }
 
   GFL_HEAP_FreeMemory(bmodel);
 }
 
 //------------------------------------------------------------------
+/// 配置モデル：アニメ変更
 //------------------------------------------------------------------
 void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req)
 {
+  if ( bmodel == NULL ) return;
+  bmodel->currentAnmIdx = idx;
   OBJHND_setAnime(&bmodel->objHdl, idx, req);
 }
 
 //------------------------------------------------------------------
+/// 配置モデル：アニメ変更（直前のインデックス対象）
+//------------------------------------------------------------------
+void FIELD_BMODEL_SetCurrentAnime( FIELD_BMODEL * bmodel, BMANM_REQUEST req )
+{
+  if ( bmodel == NULL ) return;
+  OBJHND_setAnime(&bmodel->objHdl, bmodel->currentAnmIdx, req);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_WaitAnime( FIELD_BMODEL * bmodel, u32 idx )
+{
+  if (bmodel == NULL) return TRUE;
+  if ( FIELD_BMODEL_GetAnimeStatus( bmodel, idx ) == TRUE )
+  {
+    FIELD_BMODEL_SetAnime( bmodel, idx, BMANM_REQ_STOP );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_WaitCurrentAnime( FIELD_BMODEL * bmodel )
+{
+  if (bmodel == NULL) return TRUE;
+  if ( FIELD_BMODEL_GetCurrentAnimeStatus( bmodel) == TRUE )
+  {
+    FIELD_BMODEL_SetCurrentAnime( bmodel, BMANM_REQ_STOP );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+/// 配置モデル：アニメ状態取得
 //------------------------------------------------------------------
 BOOL FIELD_BMODEL_GetAnimeStatus( const FIELD_BMODEL * bmodel, u32 idx)
 {
+  if ( bmodel == NULL ) return FALSE;
   return OBJHND_getAnimeStatus( &bmodel->objHdl, idx );
+}
+
+//------------------------------------------------------------------
+/// 配置モデル：アニメ状態取得（直前のインデックス対象）
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_GetCurrentAnimeStatus( const FIELD_BMODEL * bmodel )
+{
+  if ( bmodel == NULL ) return FALSE;
+  return OBJHND_getAnimeStatus( &bmodel->objHdl, bmodel->currentAnmIdx );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel)
 {
+  if ( bmodel == NULL ) return BM_PROG_ID_NONE;
   return bmodel->objHdl.res->bmInfo->prog_id;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const G3DMAPOBJST * FIELD_BMODEL_GetG3DMAPOBJST( const FIELD_BMODEL * bmodel )
+{
+  if ( bmodel == NULL ) return NULL;
+  return bmodel->objst;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
 {
+  if ( bmodel == NULL ) return;
   GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデルに対応付けされたSEの取得
+ */
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_GetSENo( const FIELD_BMODEL * bmodel, u32 anm_idx, u16 * se_no )
+{
+  static const struct {
+    u16 prog_id;
+    u16 seID[BMANM_INDEX_MAX];
+  } SeTbl[] = {
+    { BM_PROG_ID_DOOR_NORMAL, { SEQ_SE_FLD_20, SEQ_SE_FLD_21 } },
+    { BM_PROG_ID_DOOR_AUTO,   { SEQ_SE_FLD_22, SEQ_SE_FLD_22 } },
+    //{ BM_PROG_ID_BADGEGATE,   { SEQ_SE_FLD_20, SEQ_SE_FLD_21 } },
+    { BM_PROG_ID_PCELEVATOR,  { SEQ_SE_FLD_22, SEQ_SE_FLD_22 } },
+  };
+  int i;
+  BM_PROG_ID id;
+
+  if ( bmodel == NULL ) return FALSE;
+  id = FIELD_BMODEL_GetProgID( bmodel );
+  *se_no = 0;
+  if ( anm_idx >= BMANM_INDEX_MAX )
+  {
+    TAMADA_Printf( "anm_idx(%d) >= BMANM_INDEX_MAX\n", anm_idx );
+    return FALSE;
+  }
+  for (i = 0; i < NELEMS(SeTbl); i++)
+  {
+    if (SeTbl[i].prog_id == id)
+    {
+      *se_no = SeTbl[i].seID[anm_idx];
+      //TAMADA_Printf("BMANIME_PROG_ID(%d) SE(%d)\n", id, *se_no);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//------------------------------------------------------------------
+/// 配置モデル：現在のアニメ対応SEの取得
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_GetCurrentSENo( const FIELD_BMODEL * bmodel, u16 * se_no )
+{
+  if ( bmodel == NULL ) return FALSE;
+  return FIELD_BMODEL_GetSENo( bmodel, bmodel->currentAnmIdx, se_no );
+}
+
+//------------------------------------------------------------------
+/// 配置モデル：対応SEの終了チェック
+//------------------------------------------------------------------
+BOOL FIELD_BMODEL_CheckCurrentSE( const FIELD_BMODEL * bmodel )
+{
+  u16 se_no;
+  SEPLAYER_ID playerID;
+  if ( FIELD_BMODEL_GetCurrentSENo( bmodel, &se_no ) == FALSE )
+  {
+    return FALSE;
+  }
+  playerID = PMSND_GetSE_DefaultPlayerID( se_no );
+  return PMSND_CheckPlaySE_byPlayerID( playerID );
+}
+
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
+{
+  enum { RECT_SIZE = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT };
+  rect->top = pos->z - RECT_SIZE;
+  rect->bottom = pos->z + RECT_SIZE;
+  rect->left = pos->x - RECT_SIZE;
+  rect->right = pos->x + RECT_SIZE;
 }
 
 
@@ -1904,3 +2119,17 @@ u32 FIELD_BMODEL_MAN_GetUseResourceMemorySize(void)
 }
 
 #endif
+
+#include "script_def.h"
+//プログラム内参照の定義とスクリプト内参照の定義がずれていたらassert
+SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_OPEN == BMANM_INDEX_DOOR_OPEN );
+SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_CLOSE == BMANM_INDEX_DOOR_CLOSE );
+
+SDK_COMPILER_ASSERT( SCR_BMID_NULL == BM_SEARCH_ID_NULL );
+SDK_COMPILER_ASSERT( SCR_BMID_DOOR == BM_SEARCH_ID_DOOR );
+SDK_COMPILER_ASSERT( SCR_BMID_SANDSTREAM == BM_SEARCH_ID_SANDSTREAM );
+SDK_COMPILER_ASSERT( SCR_BMID_PCMACHINE == BM_SEARCH_ID_PCMACHINE );
+SDK_COMPILER_ASSERT( SCR_BMID_PC == BM_SEARCH_ID_PC );
+SDK_COMPILER_ASSERT( SCR_BMID_PCEV_DOOR == BM_SEARCH_ID_PCEV_DOOR );
+SDK_COMPILER_ASSERT( SCR_BMID_PCEV_FLOOR == BM_SEARCH_ID_PCEV_FLOOR );
+

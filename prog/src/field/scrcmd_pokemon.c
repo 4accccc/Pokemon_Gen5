@@ -5,7 +5,6 @@
  * @date  2009.09.15
  * @author	tamada GAMEFREAK inc.
  *
- * @todo  ポケルスチェックの確認が行われていない
  */
 //======================================================================
 
@@ -130,6 +129,12 @@ VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
   POKEMON_PARAM * pp = getTemotiPP( wk, pos );
   *ret_wk = POKETOOL_GetMezaPa_Type( pp );
 
+#if 0
+  if (PP_CheckWazaMachine( pp, MACHINE_NO ) == FALSE)
+  {
+    *ret_wk = 0xffff;
+  }
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 

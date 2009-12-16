@@ -40,4 +40,3 @@ typedef enum {
 }BMANIME_PROG_TYPE;
 
 
-

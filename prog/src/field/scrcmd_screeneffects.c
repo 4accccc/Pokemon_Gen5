@@ -29,7 +29,6 @@
 
 #include "field_g3d_mapper.h" //FLDMAPPPER
 #include "field_buildmodel.h"
-#include "field_bmanime_tool.h"
 
 #include "field/field_const.h"
 #include "sound/pm_sndsys.h"      //PMSND_PlaySE, PMSND_CheckPlaySE
@@ -339,9 +338,9 @@ VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  entry = BMANIME_DIRECT_Search( bmodel_man, bm_id, &pos );
-  G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
-  G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
+  entry = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, bm_id, &pos );
+  G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
+  G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -426,15 +425,15 @@ VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
   FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
 
-  BMANIME_CONTROL_WORK * ctrl;
+  FIELD_BMODEL * bmodel;
 
   pos.x = GRID_TO_FX32( gx );
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  ctrl = BMANIME_CTRL_Create( bmodel_man, bm_id, &pos );
+  bmodel = FIELD_BMODEL_Create_Search( bmodel_man, bm_id, &pos );
 
-  reserveKey( ctrl, DOOR_ANIME_KEY_01 );
+  reserveKey( bmodel, DOOR_ANIME_KEY_01 );
 
   *ret_wk = DOOR_ANIME_KEY_01;
 
@@ -454,12 +453,12 @@ VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  BMANIME_CONTROL_WORK * ctrl;
+  FIELD_BMODEL * bmodel;
 
-  ctrl = getMemory( anime_id );
-  if ( ctrl )
+  bmodel = getMemory( anime_id );
+  if ( bmodel )
   {
-    BMANIME_CTRL_Delete( ctrl );
+    FIELD_BMODEL_Delete( bmodel );
   }
   releaseKey( anime_id );
 
@@ -479,14 +478,14 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
-  BMANIME_CONTROL_WORK * ctrl;
+  FIELD_BMODEL * bmodel;
   u16 seNo;
 
-  ctrl = getMemory( anime_id );
-  if (ctrl != NULL)
+  bmodel = getMemory( anime_id );
+  if (bmodel != NULL)
   {
-    BMANIME_CTRL_SetAnime( ctrl, anime_type );
-    if( BMANIME_CTRL_GetSENo( ctrl, anime_type, &seNo) )
+    FIELD_BMODEL_SetAnime( bmodel, anime_type, BMANM_REQ_START );
+    if( FIELD_BMODEL_GetCurrentSENo( bmodel, &seNo ) )
     {
       PMSND_PlaySE( seNo );
     }
@@ -508,13 +507,13 @@ VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
   //u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
-  BMANIME_CONTROL_WORK * ctrl;
+  FIELD_BMODEL * bmodel;
   u16 seNo;
 
-  ctrl = getMemory( anime_id );
-  if (ctrl != NULL)
+  bmodel = getMemory( anime_id );
+  if (bmodel != NULL)
   {
-    BMANIME_CTRL_StopAnime( ctrl );
+    FIELD_BMODEL_StopCurrentAnime( bmodel );
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -551,14 +550,15 @@ VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
 {
-  BMANIME_CONTROL_WORK * ctrl;
-  ctrl = getMemory( DOOR_ANIME_KEY_01 );  //Žè”²‚«
-  if ( ctrl != NULL && BMANIME_CTRL_WaitAnime( ctrl ) == FALSE)
+  FIELD_BMODEL * bmodel;
+  bmodel = getMemory( DOOR_ANIME_KEY_01 );  //Žè”²‚«
+  if ( bmodel == NULL ) return TRUE;
+  if ( FIELD_BMODEL_WaitCurrentAnime( bmodel ) == FALSE)
   {
     return FALSE;
   }
 
-  if ( BMANIME_CTRL_CheckSE( ctrl ) == FALSE )
+  if ( FIELD_BMODEL_CheckCurrentSE( bmodel ) == FALSE )
   {
     return TRUE;
   }
