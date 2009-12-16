@@ -26,6 +26,8 @@
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
 #include "net_app/cg_wireless_menu.h"
+#include "field_comm/intrude_work.h"
+#include "field_comm/intrude_main.h"
 
 
 
@@ -71,6 +73,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     break;
   case _FIELD_FADE_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    dbw->fieldmap=NULL;  //fieldmap‚¨‚í‚è
     (*seq) = _CALL_CG_WIRELESS_MENU;
     break;
   case _CALL_CG_WIRELESS_MENU:
@@ -89,16 +92,10 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       break;
     }
     switch(dbw->selectType){
-    case WIRELESS_CALLTYPE_PALACE:
-      {
-        FIELD_SUBSCREEN_WORK * subscreen;
-        subscreen = FIELDMAP_GetFieldSubscreenWork(dbw->fieldmap);
-        FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-      }
-
-      (*seq) = _FIELD_FADEOUT;   //@@todo”ò‚Ñæ‚ð‘‚­
+    case CG_WIRELESS_RETURNMODE_PALACE:
+      (*seq) = _FIELD_FADEOUT;
       break;
-    case  WIRELESS_CALLTYPE_TV:
+    case  CG_WIRELESS_RETURNMODE_TV:
       (*seq) = _FIELD_FADEOUT;   //@@todo”ò‚Ñæ‚ð‘‚­
       break;
     default:
@@ -117,6 +114,18 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
+      GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      dbw->fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+
+      if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
+        if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
+          FIELD_SUBSCREEN_WORK * subscreen;
+          subscreen = FIELDMAP_GetFieldSubscreenWork(dbw->fieldmap);
+          FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+          Intrude_SetWarpTown(pComm, PALACE_TOWN_DATA_PALACE);
+        }
+      }
+
       fade_event = EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }

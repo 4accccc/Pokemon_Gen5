@@ -52,8 +52,7 @@
 #define APP_TASKMENU_PLATE_NCG_MARK_RET		(9)
 #define APP_TASKMENU_PLATE_NCG_WIDTH		(3)
 
-//プレートのアニメ。sin使うので0～0xFFFFのループ
-#define APP_TASKMENU_ANIME_VALUE (0x400)
+//プレートのアニメ
 #define APP_TASKMENU_ANIME_S_R (5)
 #define APP_TASKMENU_ANIME_S_G (10)
 #define APP_TASKMENU_ANIME_S_B (13)

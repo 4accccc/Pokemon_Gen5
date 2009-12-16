@@ -26,6 +26,9 @@
 //デフォルト文字色カラー
 #define APP_TASKMENU_ITEM_MSGCOLOR	(PRINTSYS_LSB_Make(0xe,0xf,0x3))
 
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define APP_TASKMENU_ANIME_VALUE (0x400)
+
 //単発まどの種類
 typedef enum
 {	

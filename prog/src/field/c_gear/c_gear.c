@@ -135,7 +135,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 	{	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },
 	{ 18, 18+16, 208-16, 208+24-16 },
 	{ 18, 18+16, 40, 40+32 },
-	{ 180, 180+24, 44, 44+16*_CLACT_CROSS_MAX },
+	{ 160, 160+24, 44, 44+16*_CLACT_CROSS_MAX },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 

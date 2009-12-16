@@ -46,7 +46,9 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
 const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
 const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
-const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=";  //POST
+const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //POST
+
+  //rom, langcode, dreamw 
 
 typedef struct{
   const char* url;
@@ -127,7 +129,7 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
-  char pidbuff[20];
+  char pidbuff[_URL_BUFFER];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
@@ -140,9 +142,14 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   GFL_STD_MemCopy(urltable[urlno].url, pWork->urlbuff, GFL_STD_StrLen(urltable[urlno].url));
 
   if(urlno==NHTTPRAP_URL_UPLOAD){
-    STD_TSNPrintf(pidbuff,20,"%d", pWork->profileid);
+    GFL_STD_MemCopy(pWork->urlbuff, pidbuff, _URL_BUFFER);
+//  //rom, langcode, dreamw 
+    
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
     GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
   }
+
+  
   NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
   handle = NHTTPCreateConnection( pWork->urlbuff,
                                   urltable[urlno].type,
