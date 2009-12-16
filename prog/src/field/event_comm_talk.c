@@ -968,7 +968,9 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
     }
   #endif
-    MISSION_Init(&intcomm->mission);
+    if(intcomm != NULL){
+      MISSION_Init(&intcomm->mission);
+    }
 
     return GMEVENT_RES_FINISH;
   }
