@@ -81,14 +81,15 @@ enum {
 //------------------------------------------------
 enum
 { 
-  PALNUM_OBJ_M_COMMON   = 0x0, ///< 2本使用(旧OBJ)
-  PALNUM_OBJ_M_MENU     = 0x2, 
-  PALLINE_NUM_OBJ_M_MENU = 3,   ///< 3本使用
+//PALNUM_OBJ_M_MENU   = 0x2, 
+//PALLINE_NUM_OBJ_M_MENU = 3,   ///< 3本使用
 
-  PALNUM_OBJ_M_PMSDRAW  = 0x5, ///< 5本使用
-  PALNUM_OBJ_M_TOUCHBAR = 0xa, ///< 3本使用
+  PALNUM_OBJ_M_COMMON   = 0x0, ///< 6本使用(旧OBJ)
+
+  PALNUM_OBJ_M_PMSDRAW  = 0x7, ///< 5本使用
+  PALNUM_OBJ_M_TOUCHBAR = 0xc, ///< 3本使用
   
-  PALNUM_OBJ_S_PMSDRAW  = 0x5, ///< 5本使用
+  PALNUM_OBJ_S_PMSDRAW  = 0x7, ///< 5本使用
 };
 
 //------------------------------------------------

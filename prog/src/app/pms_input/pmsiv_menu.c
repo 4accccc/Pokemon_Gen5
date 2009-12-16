@@ -709,9 +709,11 @@ static void _clwk_create( PMSIV_MENU* wk )
 
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
 
-  wk->resCell.pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_pmsi_pms2_obj_main_NCLR, CLSYS_DRAW_MAIN,
-      0x20*PALNUM_OBJ_M_MENU, 0, PALLINE_NUM_OBJ_M_MENU, HEAPID_PMS_INPUT_VIEW );
+  // パレットIDのみ共通素材
+  PMSIView_SetupDefaultActHeader( wk->vwk, &wk->resCell, 0, 0 );
 
+//  wk->resCell.pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_pmsi_pms2_obj_main_NCLR, CLSYS_DRAW_MAIN,
+//      0x20*PALNUM_OBJ_M_MENU, 0, PALLINE_NUM_OBJ_M_MENU, HEAPID_PMS_INPUT_VIEW );
   wk->resCell.ncgIdx = GFL_CLGRP_CGR_Register( p_handle, NARC_pmsi_pms2_obj_main_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_PMS_INPUT_VIEW );
   wk->resCell.anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_pmsi_pms2_obj_main_NCER, NARC_pmsi_pms2_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
 	
@@ -750,7 +752,7 @@ static void _clwk_create( PMSIV_MENU* wk )
 static void _clwk_delete( PMSIV_MENU* wk )
 {
   // リソース
-  GFL_CLGRP_PLTT_Release( wk->resCell.pltIdx );
+//  GFL_CLGRP_PLTT_Release( wk->resCell.pltIdx );
 	GFL_CLGRP_CGR_Release( wk->resCell.ncgIdx );
 	GFL_CLGRP_CELLANIM_Release( wk->resCell.anmIdx );
 }

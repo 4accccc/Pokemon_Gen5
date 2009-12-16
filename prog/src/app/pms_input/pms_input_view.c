@@ -559,7 +559,6 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 	}
 }
 
-
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：描画終了
@@ -1832,6 +1831,7 @@ void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header
 	header->pMCABank = NULL;
 	header->flag = FALSE;
 #endif
+  GF_ASSERT( vwk );
   GF_ASSERT( lcd < 2 );
 	*header = vwk->resCell[lcd];
 }
