@@ -66,7 +66,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  DEMO3D_HEAP_SIZE = 0x120000,  ///< ヒープサイズ
+  DEMO3D_HEAP_SIZE = 0x130000,  ///< ヒープサイズ
 };
 
 //-------------------------------------
@@ -266,12 +266,12 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GF_ASSERT( param->demo_id != DEMO3D_ID_NULL && param->demo_id < DEMO3D_ID_MAX );
 
 	//ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, DEMO3D_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(DEMO3D_MAIN_WORK), HEAPID_UI_DEBUG );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DEMO3D, DEMO3D_HEAP_SIZE );
+  wk = GFL_PROC_AllocWork( proc, sizeof(DEMO3D_MAIN_WORK), HEAPID_DEMO3D );
   GFL_STD_MemClear( wk, sizeof(DEMO3D_MAIN_WORK) );
 
   // 初期化
-  wk->heapID      = HEAPID_UI_DEBUG;
+  wk->heapID      = HEAPID_DEMO3D;
   wk->param       = param;
 	
 	//描画設定初期化

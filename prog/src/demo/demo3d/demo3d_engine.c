@@ -143,7 +143,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
 
   // icaアニメフレーム初期化
-  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->start_frame) );
+  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(start_frame) );
 
   // 3D管理ユーティリティーの生成
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
