@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T11:48:21"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:19:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="28" top="175" right="733" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="30" top="272" right="735" bottom="892" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,18 +301,16 @@
 ・研究所前まで移動したら
 　msg_t01_black_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-すこしでも　はやく
-ポケモンと　いっしょに[BE:00:ページ切り替え（行送り）]
-どこかに　いきたい　きもち[BE:01:ページ切り替え（クリア）]
-オレにも　よくわかるけど
-まず　アララギはかせに　あいにいこう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-少しでも　はやく
-ポケモンと　一緒に[BE:00:ページ切り替え（行送り）]
-どこかに　行きたい　気持ちは[BE:01:ページ切り替え（クリア）]
-オレにも　よくわかるけど　先に
-アララギ博士に　会いに行こうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+ポケモンと　いっしょに
+どこかに　いきたい　きもち[BE:00:ページ切り替え（行送り）]
+わかるけどさ……[BE:01:ページ切り替え（クリア）]
+まず　アララギはかせに　あおうぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+ポケモンと　一緒に
+どこかに　行きたい　気持ち[BE:00:ページ切り替え（行送り）]
+よくわかるけど[BE:01:ページ切り替え（クリア）]
+まず　アララギ博士に　会おうぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -320,14 +318,14 @@
 ・話しかけたとき
 （図鑑入手まで繰り返し）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『わるいけど　ホワイティの
+		<language name="JPN" width="256">ブラッカー『わるいけど　ホワイティの
 いえまで　いってくれないか？[BE:01:ページ切り替え（クリア）]
 あいつ……　きっと
 いえで　のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『悪いけど　ホワイティの
+		<language name="JPN_KANJI" width="256">ブラッカー『悪いけど　ホワイティの
 家まで　行ってくれないか？[BE:01:ページ切り替え（クリア）]
-いつもどおり　絶対　家で
-のんびり　しているはずだから[BE:01:ページ切り替え（クリア）]</language>
+いいつ……　きっと
+家で　のんびり　しているからさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_white_01">
@@ -345,21 +343,18 @@
 　主人公と向き合ってこのメッセージ表示
 ・画面切り替えで研究所内へ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『ん……
-なんか　あった？[BE:01:ページ切り替え（クリア）]
-まあ　いいか[BE:01:ページ切り替え（クリア）]
-みんな　そろったし
-なかに　はいろう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『ん……
-なんか　あった？[BE:01:ページ切り替え（クリア）]
-まあ　いいか[BE:01:ページ切り替え（クリア）]
-みんな　そろったし
-中に　入ろう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『ん……
+なんか　あったか？[BE:01:ページ切り替え（クリア）]
+まあ　いいか
+さ！　はかせに　あうぞ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ん……
+なんか　あったか？[BE:01:ページ切り替え（クリア）]
+まあ　いいか
+さ！　博士に　会うぞ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_bigman_01">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">かがくの　ちからって　すげー！[BE:01:ページ切り替え（クリア）]
@@ -372,7 +367,6 @@
 
 	<row id="msg_t01_woman2_01">
 		<comment>♂
-・仮メッセージ
 ・はい・いいえの選択肢表示
 　はいだと文字モード切替</comment>
 		<attribute name="キャラ指定">WOMAN2
