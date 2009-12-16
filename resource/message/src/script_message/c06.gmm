@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T21:39:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T18:00:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -387,10 +387,10 @@
 （この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">ふむう……
-ギアンは　つかまえて　おらぬのか[BE:01:ページ切り替え（クリア）]
+ギアルは　つかまえて　おらぬのか[BE:01:ページ切り替え（クリア）]
 だが　たいした　ポケモンずかん　だ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ふむう……
-ギアンは　捕まえて　おらぬのか[BE:01:ページ切り替え（クリア）]
+ギアルは　捕まえて　おらぬのか[BE:01:ページ切り替え（クリア）]
 だが　たいした　ポケモン図鑑　だ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
