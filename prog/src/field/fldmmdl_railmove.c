@@ -216,11 +216,11 @@ u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw )
   u16 dir;
   static const u8 data_angle16_4[16] =
   {
-    DIR_UP,
-    DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT,
-    DIR_DOWN, DIR_DOWN,
+    DIR_DOWN,
     DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT,
-    DIR_UP,
+    DIR_UP, DIR_UP,
+    DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT,
+    DIR_DOWN,
   };
 
   dir = MMDL_GetDirDisp( mmdl );

@@ -2200,6 +2200,9 @@ static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL de
   // ƒXƒsƒ“’â~
   nogrid_OffMoveBitSpinL(nogrid);
   nogrid_OffMoveBitSpinR(nogrid);
+
+  // Œü‚«‚ğ‡‚í‚¹‚é
+  MMDL_SetDirDisp( mmdl, jiki_dir );
   
   {
 	  u16 code = MMDL_ChangeDirAcmdCode( jiki_dir, AC_WALK_U_4F );

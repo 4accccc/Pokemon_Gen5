@@ -1343,9 +1343,9 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
     local_work->line_ofs = line_ofs_tmp;
 
     if( line_ofs_plus ){
-      VEC_Subtract( &local_work->pos, &pos, &pos );
-    }else{
       VEC_Subtract( &pos, &local_work->pos, &pos );
+    }else{
+      VEC_Subtract( &local_work->pos, &pos, &pos );
     }
     VEC_Normalize( &pos, &pos );
     VEC_Fx16Set( way, pos.x, pos.y, pos.z );
