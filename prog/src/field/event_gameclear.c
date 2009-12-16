@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file	event_gameclear.c
- * @brief	イベント：全滅処理
+ * @brief	イベント：ゲームクリア処理
  * @date  2009.12.14
  * @author	tamada GAME FREAK inc.
  *
@@ -50,11 +50,10 @@
 
 
 #include "font/font.naix" //NARC_font_large_gftr
-//#include "message.naix"
-//#include "msg/msg_gameover.h"
-#include "arc/script_message.naix"
-#include "msg/script/msg_common_scr.h"
-//#include "arc/fieldmap/zone_id.h"
+#include "message.naix"
+#include "msg/msg_gameclear.h"
+//#include "arc/script_message.naix"
+//#include "msg/script/msg_common_scr.h"
 
 
 //==============================================================================================
@@ -81,14 +80,16 @@ typedef struct{
   HEAPID heapID;
   u16 arc_id;
   u16 msg_id;
+  GAMEDATA * gamedata;
   const MYSTATUS * mystatus;
 
+  GFL_FONT * fontHandle;
 	GFL_MSGDATA* msgman;						//メッセージマネージャー
 	WORDSET* wordset;								//単語セット
 	GFL_BMPWIN *bmpwin;							//BMPウィンドウデータ
 
-  PRINT_QUE *printQue;
-  GFL_FONT * fontHandle;
+  BOOL saveSuccessFlag;
+
 }GAMECLEAR_MSG_WORK;
 
 
@@ -102,19 +103,19 @@ enum { //コンパイルを通すためにとりあえず
   FBMP_COL_NULL = 0,
   FBMP_COL_BLACK = 0xf,
   FBMP_COL_BLK_SDW = 2,
+
+  PALNO_FONT = 1,//FBMP_COL_BLACK,
+  PALNO_FONTSHADOW = FBMP_COL_BLK_SDW,
+  PALNO_BACKGROUND = 15,//FBMP_COL_NULL,
 };
 //----------------------------------------------------------------------------------------------
 //	BMPウィンドウ
 //----------------------------------------------------------------------------------------------
 enum{
 	GAME_OVER_BMPWIN_FRAME	= GFL_BG_FRAME0_M,
-	//GAME_OVER_BMPWIN_PX1	= 1,//2,
-	//GAME_OVER_BMPWIN_PY1	= 1,//2,
-	//GAME_OVER_BMPWIN_SX		= 29,//25,
-	//GAME_OVER_BMPWIN_SY		= 19,//18,
-	GAME_OVER_BMPWIN_PX1	= 4,
+	GAME_OVER_BMPWIN_PX1	= 3,
 	GAME_OVER_BMPWIN_PY1	= 5,
-	GAME_OVER_BMPWIN_SX		= 25,
+	GAME_OVER_BMPWIN_SX		= 28,
 	GAME_OVER_BMPWIN_SY		= 15,
 	GAME_OVER_BMPWIN_PL		= FLD_SYSFONT_PAL,
 	GAME_OVER_BMPWIN_CH		= 1,
@@ -156,6 +157,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void *
   gcmwk->heapID = HEAPID_GAMEOVER_MSG;
   gcmwk->arc_id = gcwk->arc_id;
   gcmwk->msg_id = gcwk->msg_id;
+  gcmwk->gamedata = GAMESYSTEM_GetGameData( gcwk->gsys );
   gcmwk->mystatus = gcwk->mystatus;
   
   return GFL_PROC_RES_FINISH;
@@ -176,11 +178,6 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
     (void)GX_DisableBankForLCDC();
 
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_WHITE);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_WHITE);
-    WIPE_ResetWndMask(WIPE_DISP_MAIN);
-    WIPE_ResetWndMask(WIPE_DISP_SUB);
-
     setup_bg_sys( wk->heapID );
 
 		wk->fontHandle = GFL_FONT_Create(
@@ -188,10 +185,9 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
       NARC_font_large_gftr, //新フォントID
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-    wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
     //メッセージデータマネージャー作成
     wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-        ARCID_SCRIPT_MESSAGE, wk->arc_id, wk->heapID);
+        ARCID_MESSAGE, wk->arc_id, wk->heapID);
     wk->wordset = WORDSET_Create( wk->heapID );
 
     //ビットマップ追加
@@ -203,7 +199,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
       GAME_OVER_BMPWIN_CH							//ウインドウキャラ領域の開始キャラクタナンバー
     );
 
-    scr_msg_print( wk, wk->msg_id, 0, 0 );
+    scr_msg_print( wk, msg_gameclear_01, 0, 0 );
 
     GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
 
@@ -212,19 +208,17 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
 	//メッセージ転送待ち
 	case 1:
-    PRINTSYS_QUE_Main( wk->printQue );
-    if( PRINTSYS_QUE_IsFinished( wk->printQue ) == TRUE )
     {
-      WIPE_SYS_Start(WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_MAX,
-          WIPE_FADE_WHITE, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
       G2_BlendNone();
+      GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
     }
 		(*seq)++;
 		break;
 
 	//メイン画面フェードイン待ち
 	case 2:
-		if (WIPE_SYS_EndCheck()) {
+    if( GFL_FADE_CheckFade() == FALSE ) {
 			(*seq)++;
 		}
 		break;
@@ -232,24 +226,70 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 	//キー待ち
 	case 3:
 		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
-			WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-					WIPE_FADE_BLACK, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
+      scr_msg_print( wk, msg_gameclear_report_01, 0, 0 );
+      GAMEDATA_SaveAsyncStart( wk->gamedata );
+      (*seq) ++;
+    }
+    break;
+  case 4:
+    {
+      // 分割セーブ実行
+      SAVE_RESULT result = GAMEDATA_SaveAsyncMain( wk->gamedata );
+
+      // 結果を返す
+      switch( result )
+      {
+      case SAVE_RESULT_CONTINUE:
+      case SAVE_RESULT_LAST:
+        break;
+      case SAVE_RESULT_OK:
+        wk->saveSuccessFlag = TRUE;
+        (*seq) ++;
+        break;
+      case SAVE_RESULT_NG:
+        wk->saveSuccessFlag = FALSE;
+        (*seq) ++;
+        break;
+      }
+    }
+    break;
+
+  case 5:
+    if (wk->saveSuccessFlag) {
+      scr_msg_print( wk, msg_gameclear_report_02, 0, 0 );
+    } else {
+      scr_msg_print( wk, msg_gameclear_report_03, 0, 0 );
+    }
+    (*seq) ++;
+    break;
+
+  case 6:
+		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+      scr_msg_print( wk, msg_gameclear_02, 0, 0 );
+      (*seq) ++;
+    }
+    break;
+
+  case 7:
+		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+      GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
 			(*seq)++;
 		}
 		break;
 
 	//メイン画面フェードアウト待ち
-	case 4:
-		if (WIPE_SYS_EndCheck()) {
+	case 8:
+    if( GFL_FADE_CheckFade() == FALSE ) {
 
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin), FBMP_COL_NULL );		//塗りつぶし
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );		//塗りつぶし
 
 			(*seq)++;
 		}
 		break;
 
 	//終了開放
-	case 5:
+	case 9:
 		BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
 		GFL_BMPWIN_Delete( wk->bmpwin );
 
@@ -257,7 +297,6 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 		GFL_MSG_Delete( wk->msgman );
 		GFL_BG_FreeBGControl( GAME_OVER_BMPWIN_FRAME );
 
-    PRINTSYS_QUE_Delete( wk->printQue ); 
     GFL_FONT_Delete( wk->fontHandle );
 
     release_bg_sys();
@@ -315,7 +354,7 @@ static void setup_bg_sys( HEAPID heapID )
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_MAIN_BG, 
 																0x20*GAME_OVER_BMPWIN_PL, 0x20, heapID );
 
-	GFL_BG_SetBackGroundColor(GAME_OVER_BMPWIN_FRAME,0x7FFF);
+	GFL_BG_SetBackGroundColor(GAME_OVER_BMPWIN_FRAME,0);
 
   GFL_BMPWIN_Init( heapID );
 }
@@ -341,11 +380,11 @@ static void release_bg_sys( void )
 //--------------------------------------------------------------
 static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 {
-  PRINTSYS_LSB lsb = PRINTSYS_LSB_Make(FBMP_COL_BLACK,FBMP_COL_BLK_SDW,FBMP_COL_NULL);
+  PRINTSYS_LSB lsb = PRINTSYS_LSB_Make( PALNO_FONT, PALNO_FONTSHADOW, PALNO_BACKGROUND);
 	STRBUF* tmp_buf = GFL_STR_CreateBuffer( GAME_OVER_MSG_BUF_SIZE, wk->heapID );
 	STRBUF* tmp_buf2= GFL_STR_CreateBuffer( GAME_OVER_MSG_BUF_SIZE, wk->heapID );
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin), FBMP_COL_NULL );			//塗りつぶし
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );			//塗りつぶし
 
 	GFL_MSG_GetString( wk->msgman, msg_id, tmp_buf );
 
@@ -353,12 +392,15 @@ static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
   WORDSET_RegisterPlayerName( wk->wordset, 0, wk->mystatus );
 
 	WORDSET_ExpandStr( wk->wordset, tmp_buf2, tmp_buf );
-  PRINTSYS_PrintQueColor( wk->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ) , x , y ,
-                          tmp_buf2, wk->fontHandle ,
-                          lsb );
+  GFL_FONTSYS_SetColor( PALNO_FONT, PALNO_FONTSHADOW,  PALNO_BACKGROUND );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->bmpwin ), x, y, tmp_buf2, wk->fontHandle );
 
 	GFL_STR_DeleteBuffer( tmp_buf );
 	GFL_STR_DeleteBuffer( tmp_buf2 );
+
+  GFL_BMPWIN_TransVramCharacter( wk->bmpwin );  //transfer characters
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( wk->bmpwin ) );  //transfer screen
+
 	return;
 }
 
@@ -408,43 +450,49 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
       FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
       GMEVENT * new_event = DEBUG_EVENT_GameEnd( gcwk->gsys, fieldmap );
       GMEVENT_CallEvent( event, new_event );
-      //call_event = EVENT_FieldFadeOut( gcwk->gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
-      //GMEVENT_CallEvent( event, call_event );
     }
 		(*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_DENDOU_DEMO:
     if ( PMSND_CheckFadeOnBGM() == FALSE ) break;
+    GFL_FADE_SetMasterBrightReq( 
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+        0, 16, -16 );
     SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC );
+#if 0
     { //殿堂入りの代わりにNの城デモ
       DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
       param->demo_id = DEMO3D_ID_N_CASTLE;
       GMEVENT_CallProc( event, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param );
       gcwk->pWork = param;
     }
+#endif
 
 		(*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_SAVE_START:
+    //GFL_HEAP_FreeMemory( gcwk->pWork );
+
     //「上書きします」とか表示する予定
-    GFL_HEAP_FreeMemory( gcwk->pWork );
-		//警告BG以外を表示オフ
-		SetBrightness( BRIGHTNESS_BLACK, (PLANEMASK_ALL^PLANEMASK_BG3), MASK_MAIN_DISPLAY);
-		SetBrightness( BRIGHTNESS_BLACK, PLANEMASK_ALL, MASK_SUB_DISPLAY);
+
 		//
-    GAMEDATA_SaveAsyncStart( gamedata );
+    //GAMEDATA_SaveAsyncStart( gamedata );
     (*seq) ++;
 		break;
 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
-    gcwk->msg_id = msg_common_report_07;
+//    gcwk->msg_id = msg_common_report_07;
     GMEVENT_CallProc( event, NO_OVERLAY_ID, &GameClearMsgProcData, gcwk );
     (*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_SAVE_MAIN:
+    return GMEVENT_RES_FINISH;
+#if 0
+    gcwk->saveSuccessFlag = TRUE;
+    (*seq) ++;
     {
       // 分割セーブ実行
       SAVE_RESULT result = GAMEDATA_SaveAsyncMain( gamedata );
@@ -465,8 +513,10 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
         break;
       }
     }
+#endif
 		break;
 
+#if 0
 	case GMCLEAR_SEQ_SAVE_END:
 		//
     if (gcwk->saveSuccessFlag) {
@@ -502,11 +552,12 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
       gcwk->pWork = ltwk;
       GMEVENT_CallProc( event, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, ltwk );
     }
+#endif
 		(*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_END:
-    GFL_HEAP_FreeMemory( gcwk->pWork );
+    //GFL_HEAP_FreeMemory( gcwk->pWork );
     return GMEVENT_RES_FINISH;
 
   case GMCLEAR_SEQ_END + 1:
@@ -533,8 +584,8 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   gcwk = GMEVENT_GetEventWork( event );
   gcwk->gsys = gsys;
   gcwk->clear_mode = mode;
-  gcwk->arc_id = NARC_script_message_common_scr_dat;
-  gcwk->msg_id = msg_common_report_06;
+  gcwk->arc_id = NARC_message_gameclear_dat;
+  //gcwk->msg_id = msg_common_report_06;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
 
   //移動ポケモン復活チェック
