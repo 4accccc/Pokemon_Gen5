@@ -328,7 +328,7 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
 	GFL_ARC_SeekDataByHandle( ArcHandle, data_ofs );
 	GFL_ARC_LoadDataByHandleContinue( ArcHandle, sizeof(POKEMON_PERSONAL_DATA), &ppd );
 
-  if( ( ppd.form_index == 0 ) || ( ppd.form_max <= form_no ) )
+  if( ( ppd.form_index == 0 ) || ( ppd.form_max <= form_no ) || ( form_no == 0 ) )
   { 
     return mons_no;
   }
