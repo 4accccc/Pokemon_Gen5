@@ -348,63 +348,32 @@ VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
 //======================================================================
 //
 //
-//    ドアアニメ
+//    配置モデルアニメ
 //
 //
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-typedef u16 MEMKEY;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef struct {
-  MEMKEY key;
-  void * memory;
-}MEM_RES;
-
-//--------------------------------------------------------------
-/**
- * @brief ドアアニメを確保するためのキー
- * @todo  キーで管理するメモリ機構を用意し、そちらに移行する
- */
-//--------------------------------------------------------------
-static MEM_RES memRes = { 0, NULL };
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void reserveKey(void * mem, MEMKEY key)
-{
-  GF_ASSERT_MSG(memRes.key == 0, "アニメ管理領域が確保できません!!\n");
-  memRes.key = key;
-  memRes.memory = mem;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void releaseKey(MEMKEY key)
-{
-  GF_ASSERT_MSG( memRes.key == key, "不正な管理番号です\n");
-  memRes.key = 0;
-  memRes.memory = NULL;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void * getMemory(MEMKEY key)
-{
-  GF_ASSERT_MSG( memRes.key == key, "不正な管理番号です\n");
-  return memRes.memory;
-}
+static u16 bmodel_unique_key;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk );
-enum { DOOR_ANIME_KEY_01 = 0x03fa };
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static FIELD_BMODEL_MAN * getBModelMan( SCRCMD_WORK * wk )
+{
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
+  return bmodel_man;
+}
 
 //--------------------------------------------------------------
 /**
- * @brief ドアアニメ制御：ハンドル生成処理
+ * @brief 配置モデルアニメ制御：ハンドル生成処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -417,7 +386,6 @@ VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
   u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
-  MEMKEY key;
   VecFx32 pos;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -432,17 +400,14 @@ VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
   pos.z = GRID_TO_FX32( gz );
 
   bmodel = FIELD_BMODEL_Create_Search( bmodel_man, bm_id, &pos );
-
-  reserveKey( bmodel, DOOR_ANIME_KEY_01 );
-
-  *ret_wk = DOOR_ANIME_KEY_01;
+  *ret_wk = FIELD_BMODEL_MAN_GetUniqKey( bmodel_man, bmodel );
 
   return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ドアアニメ制御：ハンドル削除処理
+ * @brief   配置モデルアニメ制御：ハンドル削除処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -453,21 +418,21 @@ VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
 
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( wk );
   FIELD_BMODEL * bmodel;
 
-  bmodel = getMemory( anime_id );
+  bmodel = FIELD_BMODEL_MAN_GetBModelByUniqKey( bmodel_man, anime_id );
   if ( bmodel )
   {
     FIELD_BMODEL_Delete( bmodel );
   }
-  releaseKey( anime_id );
 
   return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief ドアアニメ制御：アニメセット
+ * @brief 配置モデルアニメ制御：アニメセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -478,10 +443,11 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( wk );
   FIELD_BMODEL * bmodel;
   u16 seNo;
 
-  bmodel = getMemory( anime_id );
+  bmodel = FIELD_BMODEL_MAN_GetBModelByUniqKey( bmodel_man, anime_id );
   if (bmodel != NULL)
   {
     FIELD_BMODEL_SetAnime( bmodel, anime_type, BMANM_REQ_START );
@@ -496,7 +462,7 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief ドアアニメ制御：アニメセット
+ * @brief 配置モデルアニメ制御：アニメセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -506,11 +472,11 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
-  //u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( wk );
   FIELD_BMODEL * bmodel;
   u16 seNo;
 
-  bmodel = getMemory( anime_id );
+  bmodel = FIELD_BMODEL_MAN_GetBModelByUniqKey( bmodel_man, anime_id );
   if (bmodel != NULL)
   {
     FIELD_BMODEL_StopCurrentAnime( bmodel );
@@ -522,7 +488,7 @@ VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief ドアアニメ制御：アニメウェイト
+ * @brief 配置モデルアニメ制御：アニメウェイト
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -535,6 +501,7 @@ VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 {
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  bmodel_unique_key = anime_id;
   VMCMD_SetWait( core, evWaitBModelAnime );
 
   return VMCMD_RESULT_SUSPEND;
@@ -542,7 +509,7 @@ VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief   ドアアニメ終了待ち関数
+ * @brief   配置モデルアニメ終了待ち関数
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param   wk      SCRCMD_WORKへのポインタ
  * @return  BOOL  TRUEのとき終了
@@ -550,8 +517,9 @@ VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
 {
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( wk );
   FIELD_BMODEL * bmodel;
-  bmodel = getMemory( DOOR_ANIME_KEY_01 );  //手抜き
+  bmodel = FIELD_BMODEL_MAN_GetBModelByUniqKey( bmodel_man, bmodel_unique_key );  //手抜き
   if ( bmodel == NULL ) return TRUE;
   if ( FIELD_BMODEL_WaitCurrentAnime( bmodel ) == FALSE)
   {

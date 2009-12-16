@@ -81,12 +81,26 @@ enum {
 
   MAPBLOCK_MAX = 9,
 };
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
 
+//------------------------------------------------------------------
+//  外部制御可能な配置モデルの登録上限
+//------------------------------------------------------------------
 enum { BMODEL_USE_MAX = 6 };
 
+//------------------------------------------------------------------
+//  配置モデル登録キー用の定義
+//------------------------------------------------------------------
+enum {
+  BMODEL_UNIQ_VALUE = 0xA5A0,
+  BMODEL_UNIQ_MASK  = 0xfff0,
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 enum{ 
   FILEID_BMODEL_ANIMEDATA = NARC_buildmodel_info_buildmodel_anime_bin,
   FILEID_BMINFO_OUTDOOR = NARC_buildmodel_info_buildmodel_outdoor_bin,
@@ -402,6 +416,14 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 {	
+  int i;
+  for (i = 0; i < BMODEL_USE_MAX; i++)
+  {
+    if (man->bmodels[i])
+    {
+      FIELD_BMODEL_Delete(man->bmodels[i]);
+    }
+  }
   deleteFullTimeObjHandle( man, &man->g3dMapObj );
   deleteAllResource( man );
 
@@ -430,13 +452,10 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
     }
   }
 
-  //アニメーションコントロール（暫定でフレームループさせているだけ）
-
   for( i=0; i<man->objHdl_Count; i++ ){
     OBJ_HND * objHdl = &man->objHdl[i];
     OBJHND_animate( man, objHdl );
   }
-
 }
 
 //------------------------------------------------------------------
@@ -655,16 +674,29 @@ static void BMODELMAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmo
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel )
+FIELD_BMODEL * FIELD_BMODEL_MAN_GetBModelByUniqKey( FIELD_BMODEL_MAN * man, u16 uniq_key )
+{
+  u16 masked =(uniq_key & BMODEL_UNIQ_MASK );
+  u16 raw_key = ( uniq_key & ~BMODEL_UNIQ_MASK );
+  if ( masked != BMODEL_UNIQ_MASK ) return NULL;
+  if (raw_key >= BMODEL_USE_MAX ) return NULL;
+  return man->bmodels[ raw_key ];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 FIELD_BMODEL_MAN_GetUniqKey( FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel )
 {
   int i;
+  if ( bmodel == NULL ) return 0;
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
     if (man->bmodels[i] == bmodel)
     {
-      return i + 1;
+      return ( i | BMODEL_UNIQ_MASK );
     }
   }
+  GF_ASSERT(0);
   return 0;
 }
 //------------------------------------------------------------------

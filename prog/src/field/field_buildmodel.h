@@ -115,8 +115,11 @@ enum {
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
-/// プログラム指定ID
-//コンバータから参照されているので記述ルールには注意。
+/**
+ * @brief プログラム指定ID
+ * @note
+ * コンバータから参照されているので記述ルールには注意。
+ */
 //------------------------------------------------------------------
 typedef enum {
   BM_PROG_ID_NONE = 0,
@@ -133,8 +136,12 @@ typedef enum {
   BM_PROG_ID_MAX,
 }BM_PROG_ID;
 //------------------------------------------------------------------
-/// 検索用指定ID
-//スクリプトのSCR_BMID_と一対一対応なので注意
+/**
+ * @brief 検索用指定ID
+ * @note
+ * BM_PROG_IDをさらにグループ化したもの。
+ * スクリプトのSCR_BMID_と一対一対応なので注意
+ */
 //------------------------------------------------------------------
 typedef enum {
   BM_SEARCH_ID_NULL = 0,
@@ -158,17 +165,19 @@ typedef struct _G3DMAPOBJST G3DMAPOBJST;
 //------------------------------------------------------------------
 typedef struct _FIELD_BMODEL FIELD_BMODEL;
 
+//============================================================================================
+//
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u32 FIELD_BMODEL_MAN_GetBuildModelEntryID(
-    const FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel );
+extern u16 FIELD_BMODEL_MAN_GetUniqKey( FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bmodel );
 
-//============================================================================================
-//
-//
-//
-//============================================================================================
+extern FIELD_BMODEL * FIELD_BMODEL_MAN_GetBModelByUniqKey(
+    FIELD_BMODEL_MAN * man, u16 uniq_key );
 //------------------------------------------------------------------
+//  配置モデル：生成
 //------------------------------------------------------------------
 extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
 extern FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
@@ -177,10 +186,12 @@ extern FIELD_BMODEL * FIELD_BMODEL_Create_Search(
     FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos );
 
 //------------------------------------------------------------------
+//  配置モデル：削除
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
 
 //------------------------------------------------------------------
+//  配置モデル：制御
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
 extern void FIELD_BMODEL_SetCurrentAnime( FIELD_BMODEL * bmodel, BMANM_REQUEST req );
@@ -216,7 +227,7 @@ extern BOOL FIELD_BMODEL_CheckCurrentSE( const FIELD_BMODEL * bmodel );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
-//  配置モデル実データのアクセス関数
+//  配置モデル実データ：検索関数
 //------------------------------------------------------------------
 extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 ( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num );
@@ -226,6 +237,9 @@ extern G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusRect(
 extern G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusPos(
     FIELD_BMODEL_MAN * bmodel_man, BM_SEARCH_ID id, const VecFx32 * pos );
 
+//------------------------------------------------------------------
+//  配置モデル実データ：アクセス関数
+//------------------------------------------------------------------
 extern BM_SEARCH_ID G3DMAPOBJST_getSearchID(
     const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj );
 extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
