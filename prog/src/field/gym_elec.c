@@ -71,10 +71,12 @@
 #define OBJ3D_Y  (2*FIELD_CONST_GRID_FX32_SIZE)
 
 
-#define UP_SE_FRM1  (757760)
-#define DOWN_SE_FRM1  (1015808)
-#define UP_SE_FRM2  (1036288)
-#define DOWN_SE_FRM2  (1294336)
+#define UP_SE_FRM1  (782336)
+#define TOP_SE_STOP_FRM1  (962560)
+#define DOWN_SE_FRM1  (1044480)
+#define UP_SE_FRM2  (1081344)
+#define TOP_SE_STOP_FRM2  (1249280)
+#define DOWN_SE_FRM2  (1343488)
 
 #define LOOP_SE_FRM1  (724992)
 #define LOOP_SE_FRM2  (720896)
@@ -1715,6 +1717,10 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
+      }else if(frm == TOP_SE_STOP_FRM1){
+        //昇りSEストップ
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       }else if(frm == DOWN_SE_FRM1){
         //下りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_DROP);
@@ -1726,6 +1732,10 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
+      }else if(frm == TOP_SE_STOP_FRM2){
+        //昇りSEストップ
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       }else if(frm == DOWN_SE_FRM2){
         //下りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_DROP);
