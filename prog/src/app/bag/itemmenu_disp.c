@@ -1661,7 +1661,8 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
-#if 0
+
+#if 1
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 #else
 
@@ -1689,8 +1690,10 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
   //    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
 
 
+#if 0
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+#endif 
 
 
 #endif
