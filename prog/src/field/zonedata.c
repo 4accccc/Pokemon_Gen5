@@ -517,7 +517,7 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
 {
-  return (zone_id == ZONE_ID_BCWFTEST);
+  return ((zone_id == ZONE_ID_BCWFTEST) || (zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10));
 }
 
 //------------------------------------------------------------------

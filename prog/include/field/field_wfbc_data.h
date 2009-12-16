@@ -122,6 +122,7 @@ typedef struct
 {
   u16 data_in;  // TRUE FALSE
   u16 type;     // FIELD_WFBC_CORE_TYPE
+  u32 random_no;// äXÇÃÉâÉìÉ_ÉÄêî
   FIELD_WFBC_CORE_PEOPLE people[FIELD_WFBC_PEOPLE_MAX];
   FIELD_WFBC_CORE_PEOPLE back_people[FIELD_WFBC_PEOPLE_MAX];
 } FIELD_WFBC_CORE;

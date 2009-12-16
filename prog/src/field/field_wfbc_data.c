@@ -177,6 +177,8 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
 #endif  // PM_VERSION == VERSION_BLACK
 
+  p_wk->random_no = MyStatus_GetID( cp_mystatus );
+
   p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heapID) );
   cp_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_loader );
 

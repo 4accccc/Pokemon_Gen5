@@ -17,6 +17,8 @@
 #include "arc/field_wfbc_data.naix"
 #include "arc/fieldmap/eventdata.naix"
 
+#include "field/field_const.h"
+
 #include "field_wfbc.h"
 #include "land_data_patch.h"
 
@@ -142,6 +144,13 @@ struct _FIELD_WFBC
 
   // 人物位置情報
   FIELD_WFBC_CORE_PEOPLE_POS* p_pos;
+
+  // 乱数データ
+  // 配置ブロックの計算に使用
+  // その他の用途では使用しないこと！！！
+  GFL_STD_RandContext randData;
+  u16 block_rand_max;
+  u16 block_pattern_num;
 };
 
 
@@ -295,7 +304,7 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
 /**
  *	@brief  配置ブロックの設定
  *
- *	@param	cp_wk     ワーク
+ *	@param	p_wk     ワーク
  *	@param  p_attr    アトリビュート
  *	@param	p_bm      buildmodel
  *	@param	g3Dmap    マップブロック管理
@@ -308,20 +317,49 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
  *	@retval build_count 追加後
  */
 //-----------------------------------------------------------------------------
-int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, u32 score, HEAPID heapID )
+int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID )
 {
   WFBC_BLOCK_DATA block_tag;
   const FIELD_WFBC_BLOCK_PATCH* cp_patch_data;
   FIELD_DATA_PATCH* p_patch;
   u32 local_grid_x, local_grid_z;
+  u8 tbl_index;
+  s32 score;
 
-  block_tag = cp_wk->p_block->block_data[ block_z ][ block_x ];
+  block_tag = p_wk->p_block->block_data[ block_z ][ block_x ];
   
   if( block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
   {
     TOMOYA_Printf( "block_tag %d\n", block_tag.block_no );
     TOMOYA_Printf( "block pos x %d  z %d\n", block_tag.pos_x, block_tag.pos_z );
     TOMOYA_Printf( "block_x=%d  block_z=%d\n", block_x, block_z );
+
+    // ブロックのスコアを計算
+    // ブロックの左上で計算
+    {
+      u32 block_lefttop_x, block_lefttop_z;
+      block_lefttop_x = block_x - block_tag.pos_x;
+      block_lefttop_z = block_z - block_tag.pos_z;
+      
+      // （（WFにいる全てのOBJのNOの合計　＋　ブロック左上のＸ座標＋　ブロック左上のY座標） / (ブロック左上のＸ座標+1) /(ブロック左上のY座標+1) +２ ）／２
+      tbl_index = p_wk->block_pattern_num;
+      tbl_index += block_lefttop_x + block_lefttop_z;
+      tbl_index /= (block_lefttop_x+1) + (block_lefttop_z+1) + 2;
+      tbl_index %= 2;
+
+      // （OBJの人数×0.8）＋ランダム（０～１）
+      score = FIELD_WFBC_GetPeopleNum( p_wk );
+      score = (score * 8) / 10;
+      score += GFL_STD_Rand( &p_wk->randData, p_wk->block_rand_max );
+
+      if( score >= (FIELD_WFBC_BLOCK_PATCH_MAX/2) )
+      {
+        score = (FIELD_WFBC_BLOCK_PATCH_MAX/2)-1;
+      }
+      
+      score += tbl_index*(FIELD_WFBC_BLOCK_PATCH_MAX/2);
+    }
+    
     
     GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
 
@@ -334,7 +372,7 @@ int FIELD_WFBC_SetUpBlock( const FIELD_WFBC* cp_wk, NormalVtxFormat* p_attr, FIE
     TOMOYA_Printf( "build_count %d\n", build_count );
     
     // 設定
-    cp_patch_data = &cp_wk->p_block->patch[ block_tag.block_no ];
+    cp_patch_data = &p_wk->p_block->patch[ block_tag.block_no ];
 
     // パッチ情報読み込み
     p_patch = FIELD_DATA_PATCH_Create( cp_patch_data->patch[ score ], GFL_HEAP_LOWID(heapID) );
@@ -678,6 +716,7 @@ static void WFBC_InitSystem( FIELD_WFBC* p_wk, HEAPID heapID )
     // 人物位置情報を生成
     p_wk->p_pos = FIELD_WFBC_PEOPLE_POS_Create( p_wk->p_loader, p_wk->type, heapID );
   }
+
 }
 
 //----------------------------------------------------------------------------
@@ -734,6 +773,7 @@ static void WFBC_Clear( FIELD_WFBC* p_wk )
   {
     GFL_STD_MemClear( p_wk->p_block, FIELD_WFBC_BLOCK_BUFF_SIZE );
   }
+
 }
 
 //----------------------------------------------------------------------------
@@ -811,6 +851,9 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
   int i;
   BOOL result;
   const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos;
+  u32 random_max;
+  u32 pattern_num;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
 
   GF_ASSERT( p_wk );
   GF_ASSERT( p_wk->p_people );
@@ -822,10 +865,13 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
   
   // 現状方WFBC情報をクリーンアップ
   WFBC_Clear( p_wk );
+  
 
   // 情報を設定
   p_wk->type    = p_buff->type;
   p_wk->mapmode = mapmode;
+  random_max    = 0;
+  pattern_num   = 0;
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
   {
     // データがあったら設定
@@ -836,7 +882,11 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
         // NPC情報読み込み
         FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->people[i].npc_id );
         cp_pos = FIELD_WFBC_PEOPLE_POS_GetIndexData( p_wk->p_pos, i );
-        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->people[i], cp_pos, FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
+        cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader );
+        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->people[i], cp_pos, cp_people_data );
+        // ブロック補正値を求める
+        random_max += cp_people_data->block_param;
+        pattern_num += p_buff->people[i].npc_id;
       }
     }
     else
@@ -846,9 +896,21 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
         // NPC情報読み込み
         FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->back_people[i].npc_id );
         cp_pos = FIELD_WFBC_PEOPLE_POS_GetIndexData( p_wk->p_pos, i );
+        cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader );
         WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->back_people[i], cp_pos, FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
+
+        // ブロック補正値を求める
+        random_max += cp_people_data->block_param;
+        pattern_num += p_buff->people[i].npc_id;
       }
     }
+  }
+
+  // random初期化
+  {
+    GFL_STD_RandInit( &p_wk->randData, (u64)((p_buff->random_no << 32) + p_buff->random_no) );
+    p_wk->block_rand_max = 2 + random_max;
+    p_wk->block_pattern_num = pattern_num;
   }
 
   // コア情報保存

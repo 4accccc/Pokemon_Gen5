@@ -117,7 +117,6 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
         int i, j;
         int block_x, block_z;
         int count;
-        int score;
         FIELD_BMODEL_MAN* p_bm = FLD_G3D_MAP_EXWORK_GetBModelMan( p_exwork );
         NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
         int map_index = FLD_G3D_MAP_EXWORK_GetMapIndex( p_exwork );
@@ -129,14 +128,12 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
         block_x = (map_index % 2) * (FIELD_WFBC_BLOCK_SIZE_X/2);
         block_z = (map_index / 2) * (FIELD_WFBC_BLOCK_SIZE_Z/2);
 
-        score = FIELD_WFBC_GetPeopleNum( p_wfbc );
-        
         count = 0;
         for( i=0; i<(FIELD_WFBC_BLOCK_SIZE_Z/2); i++ )
         {
           for( j=0; j<(FIELD_WFBC_BLOCK_SIZE_X/2); j++ )
           {
-            count = FIELD_WFBC_SetUpBlock( p_wfbc, p_attr, p_bm, g3Dmap, count, block_x + j, block_z + i, score, heapID );
+            count = FIELD_WFBC_SetUpBlock( p_wfbc, p_attr, p_bm, g3Dmap, count, block_x + j, block_z + i, heapID );
           }
         }
       }
