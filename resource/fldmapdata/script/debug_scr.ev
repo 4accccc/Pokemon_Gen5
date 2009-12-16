@@ -90,9 +90,19 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
+{
+  DEFINE_LOCAL  LWK_X
+  DEFINE_LOCAL  LWK_Z
+
+  _PLAYER_POS_GET( LWK_X, LWK_Z )
+  $LWK_X -= 5
+  _DEBUG_PRINT_WK( LWK_X )
+  _DEBUG_PRINT_WK( LWK_Z )
+  _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_NULL, LWK_X, LWK_Z, FALSE )
+}
   //_GET_ROM_VERSION( SCWK_ANSWER )
   //_DEBUG_PRINT_WK ( SCWK_ANSWER )
-  _GOTO_GAMECLEAR_DEMO( 0 )
+  //_GOTO_GAMECLEAR_DEMO( 0 )
 
   //_BGM_FADEOUT( 0, 30 )
   //_BGM_STOP()

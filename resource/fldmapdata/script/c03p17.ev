@@ -1,4 +1,3 @@
-
 //======================================================================
 //                c03p17.ev
 //
@@ -20,14 +19,49 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03p17_badman_01
+_EVENT_DATA   ev_zone_c03p17
+_EVENT_DATA   ev_init_c03p17
+_EVENT_DATA   ev_recover_c03p17
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*            特殊スクリプト                               */
 /**************************************************************/
-//ev_zone_c03p17:
-//  _END
+INIT_EVENT_START  ev_zone_c03p17
+{
+  DEFINE_LOCAL  LWK_MONTH
+  DEFINE_LOCAL  LWK_DAY
+  _GET_DATE( LWK_MONTH, LWK_DAY )
+
+//偶数の日は船が出現しない
+//その状態をマップに入ったとき、LOCALWORK1に保存しておく
+  SWITCH $LWK_DAY
+  CASE 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 THEN
+    $LOCALWORK1  = 1
+  DEFAULT
+    $LOCALWORK1  = 0
+  ENDSWITCH
+}
+INIT_EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+INIT_EVENT_START  ev_init_c03p17
+  IF $LOCALWORK1 == 1 THEN
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_NULL, 12, 25, FALSE )
+  ENDIF
+INIT_EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+INIT_EVENT_START  ev_recover_c03p17
+  IF $LOCALWORK1 == 1 THEN
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_NULL, 12, 25, FALSE )
+  ENDIF
+INIT_EVENT_END
+
+
 
 /**************************************************************/
 /* 			BADMAN	C03P17									  */

@@ -4991,6 +4991,28 @@
     .short  \gz
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _BMODEL_CHANGE_VIEW_FLAG
+ * @brief 配置モデルの表示ON/OFF
+ * @param bm_id   配置モデルの種類指定ID（script_def.hを参照）
+ * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
+ * @param gz      アニメ生成する配置モデルのZ位置（グリッド単位）
+ * @param flag    ON/OFF指定
+ *
+ */
+//--------------------------------------------------------------
+#define _BMODEL_CHANGE_VIEW_FLAG( bm_id, gx, gz, flag ) \
+    _ASM_BMODEL_CHANGE_VIEW_FLAG bm_id, gx, gz, flag
+
+    .macro  _ASM_BMODEL_CHANGE_VIEW_FLAG bm_id, gx, gz, flag
+    .short  EV_SEQ_BMODEL_CHANGE_VIEW_FLAG
+    .short  \bm_id
+    .short  \gx
+    .short  \gz
+    .short  \flag
+    .endm
+
 //======================================================================
 //
 //
