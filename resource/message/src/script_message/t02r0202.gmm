@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-26T13:19:06"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:22:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,7 +313,7 @@
 ひとって　ふしぎ　よね</language>
 		<language name="JPN_KANJI" width="256">強い　ポケモンが　好き……[BE:01:ページ切り替え（クリア）]
 それでいて
-弱い　ポケモンが　好きという
+弱い　ポケモンが　好きという[BE:00:ページ切り替え（行送り）]
 気持ちも　同時に　存在する[BE:00:ページ切り替え（行送り）]
 人って　矛盾しているのよね</language>
 	</row>
