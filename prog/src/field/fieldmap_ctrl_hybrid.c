@@ -47,7 +47,6 @@ struct _FIELDMAP_CTRL_HYBRID
 	FIELD_PLAYER_GRID*    p_player_grid;
 	FIELD_PLAYER_NOGRID*  p_player_nogrid;
 
-
   BOOL last_move;
 };
 
@@ -58,6 +57,8 @@ struct _FIELDMAP_CTRL_HYBRID
 */
 //-----------------------------------------------------------------------------
 
+static u16 mapCtrlHybrid_getKeyDir( const FIELDMAP_CTRL_HYBRID* cp_wk, u32 key_cont );
+
 static void mapCtrlHybrid_Create(
 	FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16 dir );
 static void mapCtrlHybrid_Delete( FIELDMAP_WORK* p_fieldmap );
@@ -67,12 +68,12 @@ static const VecFx32 * mapCtrlHybrid_GetCameraTarget( FIELDMAP_WORK* p_fieldmap 
 static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
 static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
 
-static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
-static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
+static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, u16 dir );
+static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, u16 dir );
 
 
 // ベースシステムの変更
-static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type, const void* cp_pos );
+static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type, const void* cp_pos, u16 dir );
 
 
 //======================================================================
@@ -150,13 +151,19 @@ FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( const FIELDMAP_C
 //-----------------------------------------------------------------------------
 void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP_WORK* p_fieldmap )
 {
+  MMDL * mmdl;
+  u16 dir;
+  
+  mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
+  dir = MMDL_GetDirDisp( mmdl );
+  
   if( p_wk->base_type == FLDMAP_BASESYS_GRID )
   {
-    mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk );
+    mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir );
   }
   else
   {
-    mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk );
+    mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir );
   }
 
   // 乗り換えたので、
@@ -210,15 +217,13 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
     // base_typeに移動システムを遷移
     if( base_type == FLDMAP_BASESYS_GRID )
     {
-      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, p_pos );
+      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, p_pos, dir );
     }
     else
     {
       const RAIL_LOCATION* cp_location = PLAYERWORK_getRailPosition( cp_playerwk );
-      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, cp_location );
+      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, cp_location, dir );
     }
-
-    FIELD_PLAYER_SetDir( p_wk->p_player, dir );
   }
 
   //カメラ座標セット
@@ -303,30 +308,46 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   int key_trg = GFL_UI_KEY_GetTrg();
   int key_cont = GFL_UI_KEY_GetCont();
   MAPATTR attr;
+  MAPATTR front_attr;
   MAPATTR_VALUE value;
+  MMDL * mmdl;
+  u16 dir;
+  
+  mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
+  dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
 
-	FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, key_trg, key_cont );
 
-  // 動作できないとき、レール動作への遷移を試みる
-  if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP) && (p_wk->last_move == TRUE) )
+  // 移動完了しているか？
+  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (p_wk->last_move) && (dir != DIR_NOT) )
   {
+
+    // 足元がHYBRID、1つ前が移動不可能？
+
     // アトリビュートの取得
     attr = FIELD_PLAYER_GetMapAttr( p_wk->p_player );
+    front_attr = FIELD_PLAYER_GetDirMapAttr( p_wk->p_player, dir );
     value = MAPATTR_GetAttrValue( attr );
 
     if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
     {
-      mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk );
-    }
+      if( MAPATTR_GetHitchFlag( front_attr ) )
+      {
+        // 動作チェンジ
+	      FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
+        
+        mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir );
 
-    p_wk->last_move = FALSE;
+        p_wk->last_move = FALSE;
+        return ;
+      }
+    }
   }
-  // 移動したら、移動したことを設定
-  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) != PLAYER_MOVE_VALUE_STOP) )
+  else if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
   {
     p_wk->last_move = TRUE;
   }
 
+	FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, key_trg, key_cont );
 }
 
 //----------------------------------------------------------------------------
@@ -339,30 +360,46 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   int key_trg = GFL_UI_KEY_GetTrg();
   int key_cont = GFL_UI_KEY_GetCont();
   MAPATTR attr;
+  MAPATTR front_attr;
   MAPATTR_VALUE value;
+  MMDL * mmdl;
+  u16 dir;
+  
+  mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
+  dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
 
-  FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
 
-  // 動作できないとき、レール動作への遷移を試みる
-  if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP) && (p_wk->last_move == TRUE) )
+
+  // 移動完了しているか？
+  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (p_wk->last_move) && (dir != DIR_NOT) )
   {
+    
+    // 足元がHYBRID、1つ前が移動不可能？
 
     // アトリビュートの取得
     attr = FIELD_PLAYER_GetMapAttr( p_wk->p_player );
+    front_attr = FIELD_PLAYER_GetDirMapAttr( p_wk->p_player, dir );
     value = MAPATTR_GetAttrValue( attr );
-    
+
     if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
     {
-      mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk );
-    }
+      if( MAPATTR_GetHitchFlag( front_attr ) )
+      {
+        // 動作チェンジ
+        FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
+        mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir );
 
-    p_wk->last_move = FALSE;
+        p_wk->last_move = FALSE;
+        return ;
+      }
+    }
   }
-  // 移動したら、移動したことを設定
-  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) != PLAYER_MOVE_VALUE_STOP) )
+  else if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
   {
     p_wk->last_move = TRUE;
   }
+
+  FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
 }
 
 //----------------------------------------------------------------------------
@@ -371,9 +408,10 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
  *
  *	@param	p_fieldmap
  *	@param	p_wk 
+ *	@param  dir 
  */
 //-----------------------------------------------------------------------------
-static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk )
+static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, u16 dir )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
@@ -395,7 +433,7 @@ static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   if( result == TRUE )
   {
     // レールに変更
-    mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location );
+    mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location, dir );
   }
 }
 
@@ -407,14 +445,14 @@ static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
  *	@param	p_wk 
  */
 //-----------------------------------------------------------------------------
-static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk )
+static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, u16 dir )
 {
   VecFx32 pos;
 
   FIELD_PLAYER_GetPos( p_wk->p_player, &pos );
   
   // グリッドに変更
-  mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos );
+  mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos, dir );
 }
 
 
@@ -429,7 +467,7 @@ static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
  *	@param  cp_pos       GRID:VecFx32*    RAIL:RAIL_LOCATION*
  */
 //-----------------------------------------------------------------------------
-static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type, const void* cp_pos )
+static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type, const void* cp_pos, u16 dir )
 {
   MMDL* p_mmdl;
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
@@ -464,7 +502,6 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
       MMDL_HEADER_POSTYPE_GRID,
     };
     VecFx32 pos = *((VecFx32*)cp_pos);
-    u32 dir = MMDL_GetDirDisp( p_mmdl );
     
     // 動作変更
     FIELD_PLAYER_NOGRID_Stop( p_wk->p_player_nogrid );
@@ -492,8 +529,38 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
 
     // カメラ設定
     FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_NOGRID_GetRailWork( p_wk->p_player_nogrid ) );
+
+    FIELD_PLAYER_SetDir( p_wk->p_player, dir );
   }
 
   p_wk->base_type = type;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力による方向を取得
+ *
+ *	@param	cp_wk       ワーク
+ *	@param	key_cont    キー
+ *
+ *	@return 方向
+ */
+//-----------------------------------------------------------------------------
+static u16 mapCtrlHybrid_getKeyDir( const FIELDMAP_CTRL_HYBRID* cp_wk, u32 key_cont )
+{
+  u16 dir = DIR_NOT;
+
+	if( (key_cont&PAD_KEY_UP) ){
+		dir = DIR_UP;
+	}else if( (key_cont&PAD_KEY_DOWN) ){
+		dir = DIR_DOWN;
+	}else if( (key_cont&PAD_KEY_LEFT) ){
+		dir = DIR_LEFT;
+	}else if( (key_cont&PAD_KEY_RIGHT) ){
+		dir = DIR_RIGHT;
+	}
+	
+  return dir;
 }
 
