@@ -26,6 +26,7 @@
 //#include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE
 //#include "fieldmap_ctrl_hybrid.h" //for FIELDMAP_CTRL_HYBRID
 #include "../../../resource/fldmapdata/eventdata/define/total_header.h" //for OBJID
+#include "rail_line/c08gym0101.h" //for RAIL
 
 #define GYM_DRAGON_UNIT_IDX (0)
 #define GYM_DRAGON_TMP_ASSIGN_ID  (1)
@@ -38,6 +39,8 @@
 
 #define JUMP_COUNT  (8)
 #define JUMP_MOVE_X  (FX32_ONE*2)
+
+#define CHECK_RAIL_NUM  (3)
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
@@ -388,6 +391,30 @@ static const int ArmAnmTbl[3/*DRA_ARM_MAX*/][ARM_DIR_MAX] =
 
 static const int JumpY[JUMP_COUNT] = { 4,8,4,0,-4,-8,-12,-16 };
 
+//レール進入不可テーブル
+static const int RailSt[DRAGON_NUM_MAX][HEAD_DIR_MAX][CHECK_RAIL_NUM] = {
+  //ON, OFF, OFF
+  {
+    { RE_LINE_38, RE_LINE_33, RE_LINE_34 },      //首の向き上
+    { RE_LINE_38, RE_LINE_33, RE_LINE_34 },      //首の向き下
+    { RE_LINE_34, RE_LINE_33, RE_LINE_38 },      //首の向き左
+    { RE_LINE_33, RE_LINE_34, RE_LINE_38 },      //首の向き右
+  },
+  {
+    { RE_LINE_11, RE_LINE_12, RE_LINE_13 },      //首の向き上
+    { RE_LINE_11, RE_LINE_12, RE_LINE_13 },      //首の向き下
+    { RE_LINE_13, RE_LINE_11, RE_LINE_12 },      //首の向き左
+    { RE_LINE_12, RE_LINE_11, RE_LINE_13 },      //首の向き右
+  },
+  {
+    { RE_LINE_53, RE_LINE_55, RE_LINE_56 },      //首の向き上
+    { RE_LINE_53, RE_LINE_55, RE_LINE_56 },      //首の向き下
+    { RE_LINE_56, RE_LINE_53, RE_LINE_55 },      //首の向き左
+    { RE_LINE_55, RE_LINE_53, RE_LINE_56 },      //首の向き右
+  },
+};
+
+
 static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
     const int inIdx, const VecFx32 *inPos, const u16 *inRad,
     const int inAnmNum, const BOOL inCulling);
@@ -480,6 +507,12 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     VanishFloor(ptr, fieldWork, vanish);
 
     tmp->FloorVanish = vanish;
+  }
+
+  //レールの進入不可設定
+  for(i=0;i<DRAGON_NUM_MAX;i++){
+    DRAGON_WORK *wk = &gmk_sv_work->DraWk[i];
+    SetRailSt(fieldWork, i, wk->HeadDir);
   }
 }
 
@@ -1200,34 +1233,32 @@ static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVan
 //--------------------------------------------------------------
 static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_DIR inDir)
 {
-  u32 on_line_idx, off_line_idx1, off_line_idx2;
+  int i;
+  u32 line_idx[CHECK_RAIL_NUM];
+  BOOL valid[CHECK_RAIL_NUM];
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
-  switch(inHeadIdx){
-  case 0:
-    on_line_idx = 0;
-    off_line_idx1 = 0;
-    off_line_idx2 = 0;
-    break;
-  case 1:
-    on_line_idx = 0;
-    off_line_idx1 = 0;
-    off_line_idx2 = 0;
-    break;
-  case 2:
-    on_line_idx = 0;
-    off_line_idx1 = 0;
-    off_line_idx2 = 0;
-    break;
-  default:
-    GF_ASSERT(0);
-    return;
+  
+  for (i=0;i<CHECK_RAIL_NUM;i++)
+  {
+    line_idx[i] = RailSt[inHeadIdx][inDir][i];
   }
 
-  return ;
+  if (inDir == HEAD_DIR_DOWN)
+  {
+    valid[0] = FALSE;
+    valid[1] = FALSE;
+    valid[2] = FALSE;
+  }
+  else
+  {
+    valid[0] = TRUE;
+    valid[1] = FALSE;
+    valid[2] = FALSE;
+  }
 
-  //進入可能レールセット
-  FLDNOGRID_MAPPER_SetLineActive( p_mapper, on_line_idx, TRUE );
-  //進入不可レールセット
-  FLDNOGRID_MAPPER_SetLineActive( p_mapper, off_line_idx1, FALSE );
-  FLDNOGRID_MAPPER_SetLineActive( p_mapper, off_line_idx2, FALSE );
+  for (i=0;i<CHECK_RAIL_NUM;i++)
+  {
+    FLDNOGRID_MAPPER_SetLineActive( p_mapper, line_idx[i], valid[i] );
+    NOZOMU_Printf("line%d = %d  Valid=%d\n",i,line_idx[i],valid[i]);
+  }
 }
