@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T12:21:11"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T21:10:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="506"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="660"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,13 +298,13 @@
 		<language name="JPN" width="256">ポケモンを　たたかわせて
 つよく　そだてる……[BE:00:ページ切り替え（行送り）]
 それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
-だけど　むりしちゃ　だめよ[BE:01:ページ切り替え（クリア）]
+だけど　むりしちゃ　ダメね[BE:01:ページ切り替え（クリア）]
 よわい　ポケモンは
 ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
 たいりょくを　かいふく　させてね</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　闘わせて　強く育てる
 それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
-だけど　無理しちゃ　だめよ[BE:01:ページ切り替え（クリア）]
+だけど　無理しちゃ　ダメね[BE:01:ページ切り替え（クリア）]
 弱い　ポケモンは
 ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
 体力を　回復　させてね</language>
