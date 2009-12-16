@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:43:04"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T18:54:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -468,6 +468,66 @@
 ここに　きてくださいね！</language>
 		<language name="JPN_KANJI" width="256">カセキを　持っていたら
 ここに　来てくださいね！</language>
+	</row>
+
+	<row id="msg_kaseki_select_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]</language>
+	</row>
+
+	<row id="msg_kaseki_select_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:1]</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:1]</language>
+	</row>
+
+	<row id="msg_kaseki_select_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">ねっこのカセキ</language>
+		<language name="JPN_KANJI" width="256">ねっこのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">ツメのカセキ</language>
+		<language name="JPN_KANJI" width="256">ツメのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">かいのカセキ</language>
+		<language name="JPN_KANJI" width="256">かいのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">こうらのカセキ</language>
+		<language name="JPN_KANJI" width="256">こうらのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">ひみつのコハク</language>
+		<language name="JPN_KANJI" width="256">ひみつのコハク</language>
+	</row>
+
+	<row id="msg_kaseki_select_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">たてのカセキ</language>
+		<language name="JPN_KANJI" width="256">たてのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">ずがいのカセキ</language>
+		<language name="JPN_KANJI" width="256">ずがいのカセキ</language>
+	</row>
+
+	<row id="msg_kaseki_select_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
