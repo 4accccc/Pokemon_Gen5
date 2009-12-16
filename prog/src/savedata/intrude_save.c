@@ -63,6 +63,7 @@ void OccupyInfo_WorkInit(OCCUPY_INFO *occupy)
   int i;
   
   GFL_STD_MemClear(occupy, sizeof(OCCUPY_INFO));
+  occupy->intrude_level = 1;  //実際の表示と合わせる為1origin化
   for(i = 0; i < INTRUDE_TOWN_MAX; i++){
     occupy->town.town_occupy[i] = OCCUPY_TOWN_NEUTRALITY;
   }
@@ -102,4 +103,21 @@ void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy)
 	INTRUDE_SAVE_WORK *intsave = SaveControl_DataPtrGet(sv, GMDATA_ID_INTRUDE);
 
   *dest_occupy = intsave->occupy;
+}
+
+//==============================================================================
+//  アクセス関数
+//==============================================================================
+//==================================================================
+/**
+ * 侵入レベルを取得
+ *
+ * @param   occupy		
+ *
+ * @retval  u32		侵入レベル(実際の表示と合わせる為1originです)
+ */
+//==================================================================
+u32 OccupyInfo_GetIntrudeLevel(const OCCUPY_INFO *occupy)
+{
+  return occupy->intrude_level;
 }
