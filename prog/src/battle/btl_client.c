@@ -1810,7 +1810,6 @@ restart:
         BTL_Printf("用意されていないコマンドNo[%d]！\n", wk->serverCmd);
         (*seq)=1;
         goto restart;
-//        return TRUE;
       }
 
       BTL_Printf( "serverCmd=%d\n", wk->serverCmd );
@@ -2135,21 +2134,12 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
     {
-      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      BTLV_StartDeadAct( wk->viewCore, pos );
-      (*seq)++;
-    }
-    break;
-
-  case 2:
-    if( BTLV_WaitDeadAct( wk->viewCore ) )
-    {
       BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_Ichigeki, args );
       (*seq)++;
     }
     break;
 
-  case 3:
+  case 2:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       return TRUE;

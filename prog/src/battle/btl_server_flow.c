@@ -404,7 +404,7 @@ static int scEvent_RankValueChange( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* ta
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
-static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, const BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
@@ -3372,7 +3372,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     scproc_Fight_EffectSick( wk, &wk->wazaParam, attacker, targetRec );
     break;
   case WAZADATA_CATEGORY_ICHIGEKI:
-    scproc_Fight_Ichigeki( wk, waza, attacker, targetRec );
+    scproc_Fight_Ichigeki( wk, &wk->wazaParam, attacker, targetRec );
     break;
   case WAZADATA_CATEGORY_PUSHOUT:
     scproc_Fight_PushOut( wk, waza, attacker, targetRec );
@@ -4018,7 +4018,6 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   {
     affAry[poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam->wazaType );
     if( affAry[ poke_cnt ] == BTL_TYPEAFF_0 ){
-      BTL_Printf("ポケ[%d]除外\n", BPP_GetID(bpp));
       scput_WazaNoEffect( wk, bpp );
       BTL_POKESET_Remove( targets, bpp );
     }
@@ -4032,7 +4031,6 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   if( poke_cnt >= 1 ){
     scproc_Fight_Damage_Determine( wk, attacker, wazaParam, targets );
   }
-
 
   if( poke_cnt == 1 )
   {
@@ -5521,7 +5519,7 @@ static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recov
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：一撃ワザ処理
 //---------------------------------------------------------------------------------------------
-static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
   BTL_POKEPARAM* target;
   u32 i = 0;
@@ -5535,13 +5533,18 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPAR
       u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
       u8 defLevel = BPP_GetValue( target, BPP_LEVEL );
       u8 targetPokeID = BPP_GetID( target );
-      if( atkLevel < defLevel )
-      {
+
+      if( atkLevel < defLevel ){
+        scput_WazaNoEffect( wk, target );
+      }
+      else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam->wazaType) == BTL_TYPEAFF_0 ){
         scput_WazaNoEffect( wk, target );
       }
       else
       {
-        if( scEvent_IchigekiCheck(wk, attacker, target, waza) )
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+
+        if( scEvent_IchigekiCheck(wk, attacker, target, wazaParam->wazaID) )
         {
           wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
           scPut_Ichigeki( wk, target );
@@ -5549,8 +5552,12 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPAR
         }
         else
         {
-          scPut_WazaAvoid( wk, target, waza );
+          if( !scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) ){
+            scPut_WazaAvoid( wk, target, wazaParam->wazaID );
+          }
         }
+
+        Hem_PopState( &wk->HEManager, hem_state );
       }
     }
   }
@@ -7199,10 +7206,6 @@ static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target )
   BPP_HpZero( target );
   SCQUE_PUT_OP_HpZero( wk->que, pokeID );
   SCQUE_PUT_ACT_WazaIchigeki( wk->que, pokeID );
-#ifdef SOGA_DEBUG
-  //一撃必殺で倒しても戦闘終了しないので、この処理が必要？
-  BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(target) );
-#endif
 }
 //--------------------------------------------------------------------------
 /**
@@ -7246,8 +7249,8 @@ static void scPut_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 effTy
   u16 minusHP = BPP_GetValue( bpp, BPP_HP );
   u8 pokeID = BPP_GetID( bpp );
 
-  BPP_HpMinus( bpp, minusHP );
-  SCQUE_PUT_OP_HpMinus( wk->que, pokeID, minusHP );
+  BPP_HpZero( bpp );
+  SCQUE_PUT_OP_HpZero( wk->que, pokeID );
   SCQUE_PUT_ACT_Kill( wk->que, pokeID, effType );
 }
 //--------------------------------------------------------------------------
@@ -8204,6 +8207,7 @@ static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         {
           per += (atLevel - defLevel);
           ret = perOccur( wk, per );
+          BTL_Printf("レベル補正命中率=%d, hit=%d\n", per, ret);
         }
       }
     }

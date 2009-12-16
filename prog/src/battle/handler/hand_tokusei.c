@@ -3186,7 +3186,16 @@ static void handler_Ganjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_FLAG, TRUE) )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param;
+
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+    }
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Ganjou( u16 pri, u16 tokID, u8 pokeID )
@@ -3237,7 +3246,7 @@ static void handler_Tennen_DefRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tennen( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ICHIGEKI_CHECK, handler_Tennen_hitRank },   // 命中率・回避率チェックハンドラ
+    { BTL_EVENT_WAZA_HIT_RANK,       handler_Tennen_hitRank }, // 命中率・回避率チェックハンドラ
     { BTL_EVENT_ATTACKER_POWER_PREV, handler_Tennen_AtkRank }, // 攻撃ランクチェックハンドラ
     { BTL_EVENT_DEFENDER_GUARD_PREV, handler_Tennen_DefRank }, // 防御ランクチェックハンドラ
     { BTL_EVENT_NULL, NULL },
