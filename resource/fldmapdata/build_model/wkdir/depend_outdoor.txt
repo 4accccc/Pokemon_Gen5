@@ -233,4 +233,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/wf_ground_02.nsbmd \
 	$(RESDIR)/wf_lake_01.nsbmd \
 	$(RESDIR)/wf_lake_02.nsbmd \
+	$(RESDIR)/door_c03.nsbmd \
 

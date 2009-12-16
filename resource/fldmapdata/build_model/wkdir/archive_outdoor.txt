@@ -232,3 +232,4 @@
 "nsbmdfiles/wf_ground_02.nsbmd"
 "nsbmdfiles/wf_lake_01.nsbmd"
 "nsbmdfiles/wf_lake_02.nsbmd"
+"nsbmdfiles/door_c03.nsbmd"
