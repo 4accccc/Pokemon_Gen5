@@ -269,11 +269,33 @@ static BOOL _scanPrivacy( WMBssDesc* pChk )
  * @retval  GAME_COMM_STATUS
  */
 //------------------------------------------------------------------------------
-
 GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
 {
   int i;
-  int retcode = GAME_COMM_STATUS_NULL;
+  GAME_COMM_STATUS_BIT bit  = WIH_DWC_GetAllBeaconTypeBit();
+
+  //最初に見つかったビットを優先度が高いと判断し、返す
+  for( i = 0; i < GAME_COMM_STATUS_MAX; i++ )
+  { 
+    if( (bit >> i) & 1 )
+    { 
+      return i;
+    }
+  }
+
+  return GAME_COMM_STATUS_NULL;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコンのタイプを得る  ビットなので、複数の状態を取得可能
+ * @retval  GAME_COMM_STATUS_BIT
+ */
+//------------------------------------------------------------------------------
+GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
+{ 
+  int i;
+  GAME_COMM_STATUS_BIT retcode = 0;
   const GFLNetInitializeStruct *aNetStruct = GFL_NET_GetNETInitStruct();
 
   if(_localWork==NULL){
@@ -287,7 +309,7 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
     else{
       _localWork->bIrc = FALSE;
     }
-    return GAME_COMM_STATUS_IRC;
+    retcode |= GAME_COMM_STATUS_BIT_IRC;
   }
   
   for( i=0;i < aNetStruct->maxBeaconNum;i++ ){
@@ -295,17 +317,20 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
       GameServiceID id = GFL_NET_WLGetGameServiceID(i);
       switch(id){
       case WB_NET_UNION:
-        return GAME_COMM_STATUS_WIRELESS_UN;
+        retcode |= GAME_COMM_STATUS_BIT_WIRELESS_UN;
+        break;
       case WB_NET_FIELDMOVE_SERVICEID:
       case WB_NET_PALACE_SERVICEID:
-        return GAME_COMM_STATUS_WIRELESS;
+        retcode |= GAME_COMM_STATUS_BIT_WIRELESS;
+        break;
       case WB_NET_NOP_SERVICEID:
         break;
       default:
-        return GAME_COMM_STATUS_WIRELESS_FU;  //@todo その他は不思議にしてある
+        retcode |= GAME_COMM_STATUS_BIT_WIRELESS_FU;  //@todo その他は不思議にしてある
       }
     }
   }
+  //NAGI_Printf( "ret %d\n", retcode );
   
   for(i=0;i < _localWork->AllBeaconNum;i++){
     _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
@@ -318,10 +343,10 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
       DWCApInfo ap;
 
       if(_scanAPReserveed(bss)){
-        retcode = GAME_COMM_STATUS_WIFI;
+        retcode |= GAME_COMM_STATUS_BIT_WIFI;
       }
       else if(_scanFreeSpot(bss)){
-        retcode = GAME_COMM_STATUS_WIFI_ZONE;
+        retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
       }
       else if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
         OS_TPrintf("DWCApInfo %d\n",ap.aptype);
@@ -335,35 +360,35 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
         case DWC_APINFO_TYPE_USER5:
 #endif //SDK_TWL
         case DWC_APINFO_TYPE_USB://          :  ニンテンドーWi-Fi USBコネクタ
-          retcode = GAME_COMM_STATUS_WIFI;
+          retcode |= GAME_COMM_STATUS_BIT_WIFI;
           break;
         case DWC_APINFO_TYPE_SHOP://         :  ニンテンドーWi-Fiステーション
         case DWC_APINFO_TYPE_FREESPOT://     :  FREESPOT（フリースポット）
         case DWC_APINFO_TYPE_WAYPORT://      :  Wayport(北米ホットスポット)※現在は使用できません
         case DWC_APINFO_TYPE_NINTENDOZONE:// : Nintendo Zone
-          retcode = GAME_COMM_STATUS_WIFI_ZONE;
+          retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
           break;
         }
       }
     }
   }
-  if(retcode!=GAME_COMM_STATUS_NULL){
+/*  if(retcode!=GAME_COMM_STATUS_NULL){
     return retcode;
   }
-
+*/
   for(i=0;i < _localWork->AllBeaconNum;i++){
     _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
     if(pS->timer == 0){
       continue;
     }
     if(!_scanPrivacy(&pS->sBssDesc)){
-      return GAME_COMM_STATUS_WIFI_FREE;
+      retcode |= GAME_COMM_STATUS_BIT_WIFI_FREE;
     }
   }
   if(_localWork->AllBeaconNum>0){
-    return GAME_COMM_STATUS_WIFI_LOCK;
+    retcode |= GAME_COMM_STATUS_BIT_WIFI_LOCK;
   }
   ///@todo セキュリティーがかかっているかどうか
+  //NAGI_Printf( "ret %d\n", retcode );
   return retcode;
 }
-
