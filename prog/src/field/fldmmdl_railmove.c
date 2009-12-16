@@ -217,9 +217,9 @@ u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw )
   static const u8 data_angle16_4[16] =
   {
     DIR_UP,
-    DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT,
-    DIR_DOWN, DIR_DOWN,
     DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT,
+    DIR_DOWN, DIR_DOWN,
+    DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT,
     DIR_UP,
   };
 
@@ -231,14 +231,11 @@ u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw )
   VEC_Fx16Normalize( &mmdl_way, &mmdl_way );
 
   // 平面方向
-  // -Zが角度０方向
-  mmdl_yaw = FX_Atan2Idx( -mmdl_way.x, -mmdl_way.z );
+  mmdl_yaw = FX_Atan2Idx( mmdl_way.x, mmdl_way.z );
 
-  // アングルも-zが０方向
-  angleYaw = angleYaw + 0x8000;
 
   // 角度の差から、角度を求める
-  diff_yaw = (s32)angleYaw - (s32)mmdl_yaw;
+  diff_yaw = (s32)mmdl_yaw - (s32)angleYaw;
   if( diff_yaw < 0 )
   {
     diff_yaw += 0x10000;  // プラスにして計算
