@@ -66,7 +66,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign1_01
 
-  _EASY_MSG(msg_r08_sign1_01) 
+  _EASY_BGWIN_MSG(msg_r08_sign1_01, TYPE_ROAD) 
 
 EVENT_END
 
@@ -75,7 +75,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign2_01
 
-  _EASY_MSG(msg_r08_sign2_01) 
+  _EASY_BGWIN_MSG(msg_r08_sign2_01, TYPE_ROAD) 
 
 EVENT_END
 
@@ -84,7 +84,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign3_01
 
-  _EASY_MSG(msg_r08_sign3_01) 
+  _EASY_BGWIN_MSG(msg_r08_sign3_01, TYPE_INFO) 
 
 EVENT_END
 

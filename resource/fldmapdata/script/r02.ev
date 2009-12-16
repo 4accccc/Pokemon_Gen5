@@ -242,7 +242,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r02_board1_01
 
-	_EASY_MSG(msg_r02_sign1_01) //ŠÅ”Â1:2”Ô“¹˜H
+	_EASY_BGWIN_MSG(msg_r02_sign1_01, TYPE_ROAD) //ŠÅ”Â1:2”Ô“¹˜H
 
 EVENT_END
 
@@ -251,7 +251,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r02_board2_01
 
-	_EASY_MSG(msg_r02_sign2_01) //ŠÅ”Â2:2”Ô“¹˜H
+	_EASY_BGWIN_MSG(msg_r02_sign2_01, TYPE_ROAD) //ŠÅ”Â2:2”Ô“¹˜H
 
 EVENT_END
 
@@ -260,7 +260,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r02_board3_01
 
-	_EASY_MSG(msg_r02_sign3_01) //ŠÅ”Â3:‚¨“¾‚ÈŒfŽ¦”Â
+	_EASY_BGWIN_MSG(msg_r02_sign3_01, TYPE_INFO) //ŠÅ”Â3:‚¨“¾‚ÈŒfŽ¦”Â
 
 EVENT_END
 

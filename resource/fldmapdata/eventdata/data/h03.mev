@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/12 17:27:05
+#save date:2009/12/14 19:44:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -51,11 +51,11 @@ HAKAIM
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIM_01
+SCRID_TRID_HAKAIM1_05
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -82,11 +82,11 @@ HAKAIM
 #MOVE CODE Number
 MV_LEFT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIM_02
+SCRID_TRID_HAKAIM1_06
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -111,13 +111,13 @@ H03_HAKAIM_03
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
-MV_DOWN
+MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
-0
+FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIM_03
+SCRID_TRID_HAKAIM1_07
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -144,11 +144,11 @@ HAKAIM
 #MOVE CODE Number
 MV_LEFT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIM_04
+SCRID_TRID_HAKAIM1_08
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -175,11 +175,11 @@ HAKAIM
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIW_01
+SCRID_TRID_HAKAIW1_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -206,11 +206,11 @@ HAKAIW
 #MOVE CODE Number
 MV_LEFT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIW_02
+SCRID_TRID_HAKAIW1_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -856
+40 0 -856
 #event number: 7
 #type
 1
@@ -235,15 +235,15 @@ H03_HAKAIW_03
 #OBJ CODE Number
 HAKAIW
 #MOVE CODE Number
-MV_DOWN
+MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 FV_H03_HAKAI_01
 #Event Script Name
-SCRID_H03_HAKAIW_03
+SCRID_TRID_HAKAIW1_03
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -840
+-40 0 -840
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -277,7 +277,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #Pos Event Label
 POS_H03_SAGE2_01
@@ -297,23 +297,6 @@ EVENTDATA_POSTYPE_GRID
 18 1
 #event number: 1
 #Pos Event Label
-POS_H03_SAGE2_03
-#Pos Script Name
-SCRID_POS_H03_SAGE2_03
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_H03
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 0 -760
-#size
-18 1
-#event number: 2
-#Pos Event Label
 POS_H03_SAGE2_02
 #Pos Script Name
 SCRID_POS_H03_SAGE2_02
@@ -328,7 +311,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -776
 #size
-1 1
+18 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

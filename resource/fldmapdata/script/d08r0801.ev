@@ -8,7 +8,7 @@
 
   .text
 
-  .include  "scr_seq_def.h"
+  .include  "scr_seq_def.h" 
   .include  "msg_d08r0801.h"
   .include  "d08r0801.h"
 
@@ -27,14 +27,14 @@ _EVENT_DATA		ev_d08r0801_sage2_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*                           */
+/* Nへの話しかけイベント                          */
 /**************************************************************/
 EVENT_START    ev_d08r0801_boss_01	
 	
 	_TALK_OBJ_START()
 	
 	//Nがしゃべる
-	//まよえる　トレーナーよ
+	//ふうん……　きみ　なんだ
 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_01)
     _BALLOONWIN_CLOSE()
 	
@@ -44,13 +44,13 @@ EVENT_START    ev_d08r0801_boss_01
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合
-		//Ｎ『ボクを　からかっているね
+		//ほんとう　かい！
 		_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_03)
     	_BALLOONWIN_CLOSE()
 		
 	ELSE
 		//Nが喋る・はいの場合
-		//Ｎ『ボクに　さからうんだね
+		//ひどい　はなし　だね
     	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_02)
     	_BALLOONWIN_CLOSE()
     	
@@ -60,18 +60,32 @@ EVENT_START    ev_d08r0801_boss_01
 	_CALL		ev_boss_btl
 	
 	//Nが喋る
-	//Ｎ『いまの　ボクの　ともだちとでは
+	//Ｎまいったな……
 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_04)
     _BALLOONWIN_CLOSE()
     
-	//Nが喋る
-	//Ｎ『せかいには
+	//七人衆が喋る
+	//ええい！　Ｎさまを　おたすけ　するのだ！
 	_BALLOONWIN_OBJMSG( msg_d08r0801_sage2_01, D08R0801_SAGE2_01 )
     _BALLOONWIN_CLOSE()
-    
+	
+	//Nが喋る
+	//そのトレーナーを　とおしてあげて
  	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_05)
     _BALLOONWIN_CLOSE()
+	
+	//Nが次のフロアに移動する。
+	_OBJ_ANIME( D08R0801_BOSS_01,anm_boss_01_idou_01)
+	_OBJ_ANIME_WAIT()
 
+	//============フラグワーク操作=============//
+	
+	//ライバルを消す
+	_OBJ_DEL( D08R0801_BOSS_01 )
+	_FLAG_SET(FV_D08R0801_BOSS_01)
+	
+	//========================================//
+	
 EVENT_END
 
 //Nとの戦闘
@@ -88,8 +102,16 @@ ev_boss_btl:
 		ENDIF	
 _RET
 
+//--------------------------------------------------------------------
+// N：次の階に移動する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_01_idou_01
+
+	_ANIME_DATA AC_WALK_L_8F,10
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
-/*                           */
+/*プラズマ団男1の話しかけイベント                           */
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaim_01
 	
@@ -98,7 +120,7 @@ EVENT_START    ev_d08r0801_hakaim_01
 EVENT_END
 
 /**************************************************************/
-/*                           */
+/*プラズマ団男2の話しかけイベント                           */
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaim_02
 	
@@ -107,7 +129,7 @@ EVENT_START    ev_d08r0801_hakaim_02
 EVENT_END
 
 /**************************************************************/
-/*                           */
+/*プラズマ団女1の話しかけイベント                           */
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaiw_01
 	
@@ -116,7 +138,7 @@ EVENT_START    ev_d08r0801_hakaiw_01
 EVENT_END
 
 /**************************************************************/
-/*                           */
+/* 七人衆の話しかけイベント                          */
 /**************************************************************/
 EVENT_START    ev_d08r0801_sage2_01
 	

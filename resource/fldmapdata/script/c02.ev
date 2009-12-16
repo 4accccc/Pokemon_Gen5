@@ -30,6 +30,9 @@ _EVENT_DATA		ev_init_c02
 _EVENT_DATA		ev_c02_leader02_01
 _EVENT_DATA		ev_pos_c02_rival_01
 _EVENT_DATA		ev_pos_c02_boss_01
+_EVENT_DATA		ev_pos_c02_stone_01
+_EVENT_DATA		ev_c02_support_02
+_EVENT_DATA		ev_c02_leader02_02
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -697,11 +700,150 @@ _ANIME_LABEL	anm_support_back
 	
 
 /**************************************************************/
-/*  C02 ジムリーダーアロエの会話用イベントスクリプト				                     */
+/*  C02 ジムリーダーアロエの会話用イベントスクリプト１				                 
 /**************************************************************/
 EVENT_START   ev_c02_leader02_01
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_leader2_07 )
+	
+EVENT_END
+
+/**************************************************************/
+/*  C02 ジムリーダーアロエの会話用イベントスクリプト２				                 
+/**************************************************************/
+EVENT_START   ev_c02_leader02_02
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_leader2_sotne_03 )
+
+EVENT_END
+
+/**************************************************************/
+/*  C02 ダークストーン・ライトストーンを入手するイベント     */
+/**************************************************************/
+EVENT_START   ev_pos_c02_stone_01
+	
+	_PLAYER_NAME(0)
+	
+	//博士（娘）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_hakase2_sotne_01, C02_HAKASE2_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //c02ジムリーダーが博物館から出てくる
+	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
+	_OBJ_ANIME_WAIT()
+
+	//c02ジムリーダーが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_sotne_01, C02_LEADER02_02 )
+    _BALLOONWIN_CLOSE()
+
+	//博士（父）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_hakase1_sotne_01, C02_HAKASE1_01 )
+    _BALLOONWIN_CLOSE()
+
+	//博士（娘）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_hakase2_sotne_02, C02_HAKASE2_01 )
+    _BALLOONWIN_CLOSE()
+
+	//サポートが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_white_sotne_01, C02_SUPPORT_02 )
+    _BALLOONWIN_CLOSE()
+    
+	//c02ジムリーダーが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_sotne_02, C02_LEADER02_02 )
+    _BALLOONWIN_CLOSE()
+    
+	//博士（父）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_hakase1_sotne_02, C02_HAKASE1_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//サポートが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_white_sotne_02, C02_SUPPORT_02 )
+    _BALLOONWIN_CLOSE()
+    
+	//チャンピオンが喋る
+	_BALLOONWIN_OBJMSG_WB( msg_c02_champion_sotne_01w, msg_c02_champion_sotne_01b, C02_CHAMPION_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//博士（娘）が喋る
+	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase2_sotne_03w, msg_c02_hakase2_sotne_03b, C02_HAKASE2_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//チャンピオンが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_champion_sotne_02, C02_CHAMPION_01 )
+    _BALLOONWIN_CLOSE()
+    
+ 	_OBJ_ANIME( C02_CHAMPION_01,  anm_champion_saru_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//博士（父）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_champion_sotne_03, C02_HAKASE1_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//チャンピオンが喋る
+	_BALLOONWIN_OBJMSG( msg_c02_champion_sotne_03, C02_CHAMPION_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//博士（父）が喋る
+	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase1_sotne_04w, msg_c02_hakase1_sotne_04b, C02_HAKASE1_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+
+	//博士（娘）が喋る
+	_BALLOONWIN_OBJMSG( msg_c02_hakase2_sotne_04, C02_HAKASE2_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //博士（父）が画面外に移動
+    //博士（娘）が画面外に移動
+	_OBJ_ANIME( C02_HAKASE1_01, anm_hakase1_saru_01 )
+	_OBJ_ANIME( C02_HAKASE2_01, anm_hakase2_saru_01 )
+	_OBJ_ANIME_WAIT()
+    
+	//==============フラグワーク操作==============//
+	_OBJ_DEL( C02_HAKASE1_01 )
+	_OBJ_DEL( C02_CHAMPION_01 )
+	_OBJ_DEL( C02_HAKASE2_01 )
+	
+	_FLAG_SET(FV_C02_STONEEVENT_01)
+	$WK_SCENE_C02 = 7
+	
+	//============================================//
+		
+EVENT_END
+
+//--------------------------------------------------------------------
+//アロエ（ジムリーダー2）：博物館から出てくる                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader2_kuru_01
+	_ANIME_DATA AC_WALK_D_8F,5,1	
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 博士（父）：去っていく                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_saru_01
+	_ANIME_DATA AC_DIR_L,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// チャンピオン：去っていく                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champion_saru_01
+	_ANIME_DATA AC_DIR_L,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 博士（娘）：去っていく                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_saru_01
+	_ANIME_DATA AC_DIR_L,1	
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*C02	サポートの会話用イベントスクリプト                    */
+/**************************************************************/
+EVENT_START   ev_c02_support_02
+	
+	_PLAYER_NAME(0)
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_white_sotne_03 )
 
 EVENT_END
 
@@ -724,7 +866,7 @@ EVENT_START   ev_c02_man2_01
 EVENT_END
 
 /**************************************************************/
-/*  C02 MIDDLEWOMAN2の会話用イベントスクリプト                      */
+/*  C02 MIDDLEWOMAN2の会話用イベントスクリプト                */
 /**************************************************************/
 EVENT_START   ev_c02_middlewoman2_01
   
@@ -733,7 +875,7 @@ EVENT_START   ev_c02_middlewoman2_01
 EVENT_END
 
 /**************************************************************/
-/*  C02 BACKPAXKERWの会話用イベントスクリプト                      */
+/*  C02 BACKPAXKERWの会話用イベントスクリプト                 */
 /**************************************************************/
 EVENT_START   ev_c02_backpacker_01
   
@@ -755,7 +897,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c02_sign1_01
 
-  _EASY_MSG( msg_c02_sign1_01 )	//簡易メッセージＢＧ用
+  _EASY_BGWIN_MSG( msg_c02_sign1_01, TYPE_TOWN)	//簡易メッセージＢＧ用
 
 EVENT_END
 

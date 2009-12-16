@@ -21,33 +21,56 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d08r0601_rivel_01
 _EVENT_DATA    ev_d08r0601_rivel_01
+_EVENT_DATA    ev_d08r0601_hakaim_01
+_EVENT_DATA    ev_d08r0601_hakaim_02
+_EVENT_DATA    ev_d08r0601_hakaiw_01
+_EVENT_DATA    ev_d08r0601_hakaiw_02
 _EVENT_DATA    ev_d08r0601_leader7_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*                                                            */
+/* ライバル、ハチクがプラズマ団を押しのける                   */
 /**************************************************************/
 EVENT_START    ev_pos_d08r0601_rivel_01	
 	
+	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
 	
+	//ライバルが喋る
+	//……まってたぜ　オレも　ハチクさんも
 	_BALLOONWIN_OBJMSG( msg_d08r0601_black_01, D08R0601_RIVEL_01)
 	_BALLOONWIN_CLOSE()
 
+	//ハチクが喋る
+	//……わたしは　へいきだ　だが　このままでは
 	_BALLOONWIN_OBJMSG( msg_d08r0601_leader7_01, D08R0601_LEADER7_01)
 	_BALLOONWIN_CLOSE()
 	
+	//ライバルが喋る
+	//でだ！　いまから　ハチクさんと　みちを
 	_BALLOONWIN_OBJMSG( msg_d08r0601_black_02, D08R0601_RIVEL_01)
 	_BALLOONWIN_CLOSE()
 	
+	//ハチクとライバルがプラズマ団を押しのける
 	_OBJ_ANIME( D08R0601_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0601_LEADER7_01,anm_leader7_idou_01)
+	_OBJ_ANIME( D08R0601_HAKAIM_01,anm_hakaim_01_idou_01)
+	_OBJ_ANIME( D08R0601_HAKAIM_02,anm_hakaim_02_idou_01)
+	_OBJ_ANIME( D08R0601_HAKAIW_01,anm_hakaiw_01_idou_01)
+	_OBJ_ANIME( D08R0601_HAKAIW_02,anm_hakaiw_02_idou_01)
 	_OBJ_ANIME_WAIT()
+	
+	//============フラグワーク操作=============//
+	
+	//ライバルとハチク、プラズマ団のPOSイベントを無効
+	$WK_SCENE_D08_LEGEND = 4 
+	
+	//========================================//
 	
 EVENT_END
 
 //--------------------------------------------------------------------
-//                     
+// ライバル：プラズマ団を押しのける                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_raival_idou_01
 
@@ -55,56 +78,100 @@ _ANIME_LABEL	anm_raival_idou_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//                     
+//ハチク：プラズマ団を押しのける                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_idou_01
 
 	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//プラズマ団下っ端男1：押しのけられる                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1	
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//プラズマ団下っ端男2：押しのけられる                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_02_idou_01
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1		
+	_ANIME_DATA AC_WALK_D_8F,3
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//プラズマ団下っ端女1：押しのけられる                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaiw_01_idou_01
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1		
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//プラズマ団下っ端女2：押しのけられる                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaiw_02_idou_01
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1		
+	_ANIME_DATA AC_WALK_D_8F,3
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
-/*                                                            */
+/* 	ライバル                                                     
 /**************************************************************/
 EVENT_START    ev_d08r0601_rivel_01	
 
+	//ライバルが喋る
+	//ライバル：どいつも　こいつも　おんなじ
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0601_black_03 )
 	
 EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* 	ハチク                                                  
 /**************************************************************/
 EVENT_START    ev_d08r0601_leader7_01	
 
+	//ハチクが喋る
+	//ハチク：……かずが　おおい　……これも
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0601_leader7_02 )
 	
 EVENT_END
 
-/*
-POS_D08R0601_RIVEL_01
-D08R0601_RIVRL_01
-D08R0601_LEADER7_01
-*/
-
-//--------------------------------------------------------------------
-//                     
-//--------------------------------------------------------------------
-/*
-_ANIME_LABEL	anm_sage2_kuru_01
-
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
-	_OBJ_ANIME_WAIT()
+/**************************************************************/
+/*	プラズマ団下っ端男1                                                           
+/**************************************************************/
+EVENT_START    ev_d08r0601_hakaim_01	
 	
-		_BALLOONWIN_TALKOBJ_MSG( msg_h03_hakaim5_01)
-		_MSGWIN_CLOSE()
-		
-	_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
-	_BALLOONWIN_CLOSE()
-	
-	D08R0201_LEADER7_01
-	D08R0201_HAKASE1_01
+EVENT_END
 
-*/
+/**************************************************************/
+/*	プラズマ団下っ端男2                                                           
+/**************************************************************/
+EVENT_START    ev_d08r0601_hakaim_02	
+	
+EVENT_END
+
+/**************************************************************/
+/*	プラズマ団下っ端女1                                                            
+/**************************************************************/
+EVENT_START    ev_d08r0601_hakaiw_01	
+	
+EVENT_END
+
+/**************************************************************/
+/*	プラズマ団下っ端女2                                                            
+/**************************************************************/
+EVENT_START    ev_d08r0601_hakaiw_02	
+
+EVENT_END
+

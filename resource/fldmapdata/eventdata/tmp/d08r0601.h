@@ -12,5 +12,9 @@
 
 #define D08R0601_RIVEL_01                  0
 #define D08R0601_LEADER7_01                1
+#define D08R0601_HAKAIW_01                 2
+#define D08R0601_HAKAIM_01                 3
+#define D08R0601_HAKAIM_02                 4
+#define D08R0601_HAKAIW_02                 5
 
 #endif //ZONE_D08R0601_EVC_H

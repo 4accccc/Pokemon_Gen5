@@ -12,5 +12,7 @@
 #define D08_HAKASE1_01                     0
 #define D08_RIVEL_01                       1
 #define D08_SUPPORT_01                     2
+#define D08_CHAMPION_01                    3
+#define D08_LEADER7_01                     4
 
 #endif //ZONE_D08_EVC_H
