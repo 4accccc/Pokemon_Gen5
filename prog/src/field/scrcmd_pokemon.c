@@ -41,6 +41,8 @@
 
 #include "fld_trade.h"  // for EVENT_FieldPokeTrade
 
+#include "app/waza_oshie.h"  // for WAZAOSHIE_xxxx
+
 
 //======================================================================
 //  define
@@ -1170,4 +1172,29 @@ VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 思い出し技の有無を取得する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第一引数(結果を受け取るワーク)
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );// コマンド第二引数(手持ち位置)
+  POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, poke_pos );
+  HEAPID          heap_id = SCRCMD_WORK_GetHeapID( work );
+  u16*               waza = NULL;
 
+  // 思い出し技の有無を返す
+  waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
+  *ret_wk = WAZAOSHIE_WazaTableChack( waza );
+  GFL_HEAP_FreeMemory( waza );
+}

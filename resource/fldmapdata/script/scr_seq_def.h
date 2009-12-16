@@ -3991,55 +3991,6 @@
 
 //--------------------------------------------------------------
 /**
- * @def _FIELD_POKE_TRADE
- * @brief ゲーム内交換を実行する
- * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
- * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
- *
- * ①交換デモの再生
- * ②手持ちポケモンの書き換え
- * ③図鑑登録                 を実行します。
- *
- * trade_no に渡す値は, resource/fld_trade/fld_trade_list.h で定義.
- */
-//--------------------------------------------------------------
-#define _FIELD_POKE_TRADE( trade_no, party_pos ) \
-    _ASM_FIELD_POKE_TRADE trade_no, party_pos
-
-    .macro  _ASM_FIELD_POKE_TRADE trade_no, party_pos
-    .short  EV_SEQ_FIELD_POKE_TRADE
-    .short  \trade_no
-    .short  \party_pos
-    .endm
-
-//--------------------------------------------------------------
-/**
- * @def _FIELD_POKE_TRADE_CHECK
- * @brief ゲーム内交換が可能かどうかをチェックする
- * @param ret_wk    結果を受け取るワーク
- * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
- * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
- *
- * @retval FLD_TRADE_ENABLE         交換可能
- *         FLD_TRADE_DISABLE_EGG    交換不可能(タマゴ)
- *         FLD_TRADE_DISABLE_MONSNO 交換不可能(モンスター違い)
- *         FLD_TRADE_DISABLE_SEX    交換不可能(性別違い)
- *
- *  戻り値は prog/src/field/script_def.h で定義.
- */
-//--------------------------------------------------------------
-#define _FIELD_POKE_TRADE_CHECK( ret_wk, trade_no, party_pos ) \
-    _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
-
-    .macro  _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
-    .short  EV_SEQ_FIELD_POKE_TRADE_CHECK
-    .short  \ret_wk
-    .short  \trade_no
-    .short  \party_pos
-    .endm
-
-//--------------------------------------------------------------
-/**
  * @def _GET_PARTY_POKE_MONSNO
  * @brief 指定した手持ちポケモンのモンスターナンバーを取得する
  * @param ret_wk 結果を受け取るワーク
@@ -6133,6 +6084,10 @@
   .short  \demo_no
   .endm
 
+//======================================================================
+//  移動ポケモン
+//======================================================================
+
 //--------------------------------------------------------------
 /**
  * @def _ADD_MOVE_POKEMON
@@ -6148,8 +6103,95 @@
     .short  \move_poke
     .endm
 
+//======================================================================
+//  交換関連
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * @def _FIELD_POKE_TRADE
+ * @brief ゲーム内交換を実行する
+ * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
+ * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
+ *
+ * ①交換デモの再生
+ * ②手持ちポケモンの書き換え
+ * ③図鑑登録                 を実行します。
+ *
+ * trade_no に渡す値は, resource/fld_trade/fld_trade_list.h で定義.
+ */
+//--------------------------------------------------------------
+#define _FIELD_POKE_TRADE( trade_no, party_pos ) \
+    _ASM_FIELD_POKE_TRADE trade_no, party_pos
+
+    .macro  _ASM_FIELD_POKE_TRADE trade_no, party_pos
+    .short  EV_SEQ_FIELD_POKE_TRADE
+    .short  \trade_no
+    .short  \party_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FIELD_POKE_TRADE_CHECK
+ * @brief ゲーム内交換が可能かどうかをチェックする
+ * @param ret_wk    結果を受け取るワーク
+ * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
+ * @param party_pos あげるポケモンを指定 (パーティ内インデックス0～5)
+ *
+ * @retval FLD_TRADE_ENABLE         交換可能
+ *         FLD_TRADE_DISABLE_EGG    交換不可能(タマゴ)
+ *         FLD_TRADE_DISABLE_MONSNO 交換不可能(モンスター違い)
+ *         FLD_TRADE_DISABLE_SEX    交換不可能(性別違い)
+ *
+ *  戻り値は prog/src/field/script_def.h で定義.
+ */
+//--------------------------------------------------------------
+#define _FIELD_POKE_TRADE_CHECK( ret_wk, trade_no, party_pos ) \
+    _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
+
+    .macro  _ASM_FIELD_POKE_TRADE_CHECK ret_wk, trade_no, party_pos
+    .short  EV_SEQ_FIELD_POKE_TRADE_CHECK
+    .short  \ret_wk
+    .short  \trade_no
+    .short  \party_pos
+    .endm
   
+//======================================================================
+// 技思い出し関連
+//======================================================================
   
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_WAZA_REMAIND
+ * @brief 思い出し技の有無をチェックする
+ * @param ret_wk 結果を受け取るワーク
+ * @param pos    判定するポケモンを手持ち位置で指定
+ * @return 指定したポケモンに思い出せる技がある場合 TRUE,
+ *         そうでなければ FALSE
+ */
+//--------------------------------------------------------------
+#define _CHECK_WAZA_REMAIND( ret_wk, pos ) \
+    _ASM_CHECK_WAZA_REMAIND ret_wk, pos
+
+  .macro _ASM_CHECK_WAZA_REMAIND ret_wk, pos
+  .short EV_SEQ_CHECK_WAZA_REMAIND
+  .short \ret_wk
+  .short \pos
+  .endm 
+
+//--------------------------------------------------------------
+/**
+ * @def _CALL_WAZA_REMAIND_PROC
+ * @brief 技思い出しプロセスを呼び出す
+ */
+//--------------------------------------------------------------
+#define _CALL_WAZA_REMAIND_PROC() \
+    _ASM_CALL_WAZA_REMAIND_PROC
+
+  .macro  _ASM_CALL_WAZA_REMAIND_PROC
+  .short  EV_SEQ_CALL_WAZA_REMAIND_PROC
+  .endm
+
 //======================================================================
 //  対戦系受付ユーティリティ
 //======================================================================

@@ -53,3 +53,5 @@ extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk );
+
