@@ -5490,6 +5490,24 @@
 </language>
 	</row>
 
+	<row id="ITEMINFO_596">
+		<language name="JPN" width="256">ポケモンの　カセキ。
+
+</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　カセキ。
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_597">
+		<language name="JPN" width="256">ポケモンの　カセキ。
+
+</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　カセキ。
+
+</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
