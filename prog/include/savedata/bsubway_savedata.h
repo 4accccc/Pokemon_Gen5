@@ -136,6 +136,20 @@ typedef struct _BSUBWAY_PLAYER_MSG  BSUBWAY_PLAYER_MSG;
 //--------------------------------------------------------------
 typedef struct _BSUBWAY_PAREPOKE_PARAM BSUBWAY_PAREPOKE_PARAM;
 
+//--------------------------------------------------------------
+/// サブウェイポケモンデータ型
+/// battle/b_tower_data.hを必要な箇所以外では
+/// includeしないで済むように定義しておく
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_POKEMON  BSUBWAY_POKEMON;
+
+//--------------------------------------------------------------
+///  サブウェイパートナーデータ型
+///  　battle/b_tower_data.hを必要な箇所以外では
+///   includeしないで済むように定義しておく
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_PARTNER_DATA  BSUBWAY_PARTNER_DATA;
+
 //======================================================================
 //  extern
 //======================================================================
@@ -149,6 +163,8 @@ extern u32 BSUBWAY_PLAYDATA_GetData(
   const BSUBWAY_PLAYDATA *bsw_play, BSWAY_PLAYDATA_ID id, void *buf );
 extern void BSUBWAY_PLAYDATA_SetData(
     BSUBWAY_PLAYDATA *bsw_play, BSWAY_PLAYDATA_ID id, const void *buf );
+extern void BSUBWAY_PLAYDATA_AddWifiRecord(
+    BSUBWAY_PLAYDATA *bsw_play, u8 down,u16 turn,u16 damage );
 
 //BSUBWAY_SCOREDATA
 extern int BSUBWAY_SCOREDATA_GetWorkSize( void );
@@ -156,9 +172,11 @@ extern void BSUBWAY_SCOREDATA_Init( BSUBWAY_SCOREDATA *bsw_score );
 extern u16 BSUBWAY_SCOREDATA_SetBattlePoint(
     BSUBWAY_SCOREDATA *bsw_score, u16 num, BSWAY_SETMODE mode );
 extern u16 BSUBWAY_SCOREDATA_SetStage(
-    BSUBWAY_SCOREDATA *bsw_score, u16 id, u16 value, BSWAY_SETMODE mode );
+    BSUBWAY_SCOREDATA *bsw_score, u16 id, BSWAY_SETMODE mode );
 extern BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     BSWAY_SCOREDATA_FLAG id, BSWAY_SETMODE mode );
+extern u8 BSUBWAY_SCOREDATA_SetWifiRank(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 
 //----
 #if 0 //wb null
@@ -183,12 +201,6 @@ extern BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
 //--------------------------------------------------------------
 //typedef struct _BSUBWAY_WIFI_DATA  BSUBWAY_WIFI_DATA;
 
-//--------------------------------------------------------------
-/// サブウェイポケモンデータ型
-/// battle/b_tower_data.hを必要な箇所以外では
-/// includeしないで済むように定義しておく
-//--------------------------------------------------------------
-//typedef struct _BSUBWAY_POKEMON  BSUBWAY_POKEMON;
 
 //--------------------------------------------------------------
 ///  サブウェイパートナーデータ型

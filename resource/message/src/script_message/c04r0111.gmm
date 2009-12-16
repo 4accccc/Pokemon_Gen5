@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="kagaya" host="W00143" date="2009-12-14T18:45:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,13 +265,13 @@
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,100 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
+	<row id="msg_c04r0111_00">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ライモンシティに　もどりますか？</language>
+		<language name="JPN_KANJI" width="256">ライモンシティに　もどりますか？</language>
+	</row>
+
+	<row id="msg_c04r0111_01">
+		<language name="JPN" width="256">では　ライモンシティへ　もどります</language>
+		<language name="JPN_KANJI" width="256">では　ライモンシティへ　もどります</language>
+	</row>
+
+	<row id="msg_c04r0111_02">
+		<language name="JPN" width="256">どうなさいますか？</language>
+		<language name="JPN_KANJI" width="256">どうなさいますか？</language>
+	</row>
+
+	<row id="msg_c04r0111_03">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">つづけて　チャレンジ</language>
+		<language name="JPN_KANJI" width="256">つづけて　チャレンジ</language>
+	</row>
+
+	<row id="msg_c04r0111_04">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">ライモンシティに　もどる</language>
+		<language name="JPN_KANJI" width="256">ライモンシティに　もどる</language>
+	</row>
+
+	<row id="msg_c04r0111_05">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">まだ　ここにいる</language>
+		<language name="JPN_KANJI" width="256">まだ　ここにいる</language>
+	</row>
+
+	<row id="msg_c04r0111_06">
+		<language name="JPN" width="256">では　いったん　ライモンシティへ
+もどります</language>
+		<language name="JPN_KANJI" width="256">では　いったん　ライモンシティへ
+もどります</language>
+	</row>
+
+	<row id="msg_c04r0111_07">
+		<language name="JPN" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+	</row>
+
+	<row id="msg_c04r0111_08">
+		<language name="JPN" width="256">７れんしょう　おめでとうメッセージ</language>
+		<language name="JPN_KANJI" width="256">７れんしょう　おめでとうメッセージ</language>
+	</row>
+
+	<row id="msg_c04r0111_09">
+		<language name="JPN" width="256">サブウェイマスターたおしたメッセージ</language>
+		<language name="JPN_KANJI" width="256">サブウェイマスターたおしたメッセージ</language>
+	</row>
+
+	<row id="msg_c04r0111_10">
+		<language name="JPN" width="256">そして　プレイヤーは
+スーパーシングルトレイン</language>
+		<language name="JPN_KANJI" width="256">そして　プレイヤーは
+スーパーシングルトレイン</language>
+	</row>
+
+	<row id="msg_c04r0111_11">
+		<language name="JPN" width="256">みごと　？をたおしたのでトロフィ</language>
+		<language name="JPN_KANJI" width="256">みごと　？をたおしたのでトロフィ</language>
+	</row>
+
+	<row id="msg_c04r0111_12">
+		<language name="JPN" width="256">せいせきを　レポートに　かきこみますので
+おまちください</language>
+		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこみますので
+おまちください</language>
+	</row>
+
+	<row id="msg_c04r0111_13">
+		<language name="JPN" width="256">シングルトレインはここでしゅうてん
+ライモンもどる</language>
+		<language name="JPN_KANJI" width="256">シングルトレインはここでしゅうてん
+ライモンもどる</language>
+	</row>
+
+	<row id="msg_c04r0111_14">
+		<language name="JPN" width="256">シングルはここでしゅうてん
+ライモンかつづけてチャレンジ</language>
+		<language name="JPN_KANJI" width="256">シングルはここでしゅうてん
+ライモンかつづけてチャレンジ</language>
+	</row>
+
+	<row id="msg_c04r0111_15">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>

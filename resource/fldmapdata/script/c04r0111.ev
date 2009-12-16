@@ -1,16 +1,15 @@
-
 //======================================================================
 //                c04r0111.ev
-//
 //    スクリプトファイル：c04r0111用
-//
+//  ギアステーションホーム　バトルサブウェイ　終点ホーム
 //======================================================================
-
+  
   .text
-
+  
   .include  "scr_seq_def.h"
   .include  "msg_c04r0111.h"
-  //.include  "c04r0111.h"
+  .include  "c04r0111.h"
+  .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +18,237 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04r0111
+//バトルサブウェイ帰還
+_EVENT_DATA    ev_c04r0111_game_after_finish
+//受付話し掛け
+_EVENT_DATA    ev_c04r0111_receipt_talk
 _EVENT_DATA_END
 
+//======================================================================
+//  パーツ　ワーク初期化
+//======================================================================
+//--------------------------------------------------------------
+//  ワーク初期化
+//--------------------------------------------------------------
+ev_bsubway_init_work_return_gate:
+  _LDVAL( WK_OTHER_SCENE_C04R0102,0 )
+  _LDVAL( WK_OTHER_SCENE_C04R0110,0 )
+  _LDVAL( WK_OTHER_SCENE_C04R0111,0 )
+  _BSUBWAY_TOOL( BSWAY_TOOL_POP_NOW_LOCATION, BSWAY_NULL,BSWAY_NULL )
+  _RET
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c04r0111:
-//  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c04r0111:
-  //とりあえず最初のラベルだけ生成している
+//======================================================================
+//  シーケンス　ライモンシティに戻る
+//======================================================================
+//--------------------------------------------------------------
+//  シーケンス　ライモンシティに戻る
+//--------------------------------------------------------------
+ev_bsubway_seq_map_change:
+  _LDVAL( WK_OTHER_SCENE_C04R0102,3 ) //c04r0102 after
+  _LDVAL( WK_OTHER_SCENE_C04R0110,0 )
+  _LDVAL( WK_OTHER_SCENE_C04R0111,0 )
+  
+  _MAP_CHANGE( ZONE_ID_C04R0102,11,9,DIR_UP )
   _END
 
+//======================================================================
+//  シーケンス　つづけて挑戦
+//======================================================================
+//--------------------------------------------------------------
+//  シーケンス　続けて挑戦
+//--------------------------------------------------------------
+ev_bsubway_seq_challenge:
+  _LDVAL( WK_OTHER_SCENE_C04R0102, 255 ) //c04r0102 error
+  _LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
+  _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
+  
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
+  _END
+  
+//=====================================================================
+//  受付　話し掛け
+//=====================================================================
+//--------------------------------------------------------------
+//  受付　話し掛け
+//--------------------------------------------------------------
+ev_c04r0111_receipt_talk:
+  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,1,ev_receipt_talk_first_clear
+  
+  //どうしますか
+  _SYSWIN_MSG_DOWN( msg_c04r0111_02 )
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_MAKE_LIST( msg_c04r0111_03, 0 ) //続ける
+  _BMPMENU_MAKE_LIST( msg_c04r0111_04, 1 ) //ライモン
+  _BMPMENU_MAKE_LIST( msg_c04r0111_05, 2 ) //まだここにいる
+  _BMPMENU_START()
+  _SYSWIN_CLOSE()
+  
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0111_receipt_continue
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_c04r0111_receipt_map_change
+  
+  _END
+
+//続ける
+ev_c04r0111_receipt_continue:
+  _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
+  _AB_KEYWAIT()
+  
+  _REPORT_EVENT_CALL( SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_seq_challenge
+  _END
+ 
+//ライモン戻る
+ev_c04r0111_receipt_map_change:
+  //一旦戻る
+  _SYSWIN_MSG_DOWN( msg_c04r0111_06 )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _JUMP ev_bsubway_seq_map_change
+  _END
+
+//初回クリア時
+ev_receipt_talk_first_clear:
+  //ライモンシティに戻るか
+  _SYSWIN_MSG_DOWN( msg_c04r0111_00 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_receipt_talk_first_clear_no
+  
+  //もどります
+  _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _JUMP ev_bsubway_seq_map_change
+  
+ev_receipt_talk_first_clear_no:
+  _SYSWIN_CLOSE()
+  _END
+
+//=====================================================================
+//  受付　対戦終了後の戻り
+//=====================================================================
+//--------------------------------------------------------------
+//  対戦後の戻り
+//--------------------------------------------------------------
+ev_c04r0111_game_after_finish:
+  //ステートクリア
+  _CALL ev_bsubway_init_work_return_gate
+  
+  //ノーマルチェック
+  //スーパーチェック
+
+//--------------------------------------------------------------
+//  ノーマル　７人抜きクリア
+//--------------------------------------------------------------
+ev_normal_clear_7:
+  //バトルポイントをプラス
+  _BSUBWAY_TOOL( BSWAY_SUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
+  
+  //メッセージタグセット
+  _PLAYER_NAME( 0 )
+  _NUMBER( 1,SCWK_TEMP0, 3 )
+  
+  //おめでとうございます
+  _SYSWIN_MSG_DOWN( msg_c04r0111_08 )
+  _AB_KEYWAIT()
+  
+  //ファンファーレ
+  _ME_PLAY( SEQ_ME_ITEM )
+  _ME_WAIT()
+  
+  //レポート
+  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
+  _REPORT_CALL( SCWK_ANSWER )
+
+  //ここが終点
+  _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _END
+  
+//--------------------------------------------------------------
+//  ノーマル　ボス倒してクリア
+//--------------------------------------------------------------
+ev_normal_clear_boss:
+  //バトルポイントをプラス
+  _BSUBWAY_TOOL( BSWAY_SUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
+  
+  //メッセージタグセット
+  _PLAYER_NAME( 0 )
+  _NUMBER( 1,SCWK_TEMP0, 3 )
+  
+  //おめでとうございます
+  _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+  _AB_KEYWAIT()
+  
+  //ファンファーレ
+  _ME_PLAY( SEQ_ME_ITEM )
+  _ME_WAIT()
+  
+  //初めてボスを倒したか
+  _LDVAL( SCWK_ANSWER, 0 )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_normal_clear_boss_save
+  
+ev_normal_clear_boss_first:
+  //スーパートレイン解除フラグを立てる
+  
+  //スーパーシングルトレインにチャレンジ可能
+  _SYSWIN_MSG_DOWN( msg_c04r0111_10 )
+  _AB_KEYWAIT()
+  
+ev_normal_clear_boss_save:
+  //ライモン戻るのみの会話に
+  _LDVAL( WK_OTHER_SCENE_C04R0111, 2 )
+  
+  //レポート
+  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
+  _REPORT_CALL( SCWK_ANSWER )
+
+  _SYSWIN_MSG_DOWN( msg_c04r0111_13 )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _END
+
+//--------------------------------------------------------------
+//  スーパー　ボス倒してクリア
+//--------------------------------------------------------------
+ev_super_clear_boss:
+  //バトルポイントをプラス
+  _BSUBWAY_TOOL( BSWAY_SUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
+  
+  //メッセージタグセット
+  _PLAYER_NAME( 0 )
+  _NUMBER( 1,SCWK_TEMP0, 3 )
+  
+  //おめでとうございます
+  _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+  _AB_KEYWAIT()
+  
+  //ファンファーレ
+  _ME_PLAY( SEQ_ME_ITEM )
+  _ME_WAIT()
+  
+  //初めてボスを倒したか
+  _LDVAL( SCWK_ANSWER, 0 )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_super_clear_boss_save
+  
+ev_super_clear_boss_first:
+  //トロフィー追加
+  
+  //トロフィーをさしあげます
+  _SYSWIN_MSG_DOWN( msg_c04r0111_11 )
+  _AB_KEYWAIT()
+  
+ev_super_clear_boss_save:
+  //レポート
+  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
+  _REPORT_CALL( SCWK_ANSWER )
+  
+  _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _END

@@ -13,10 +13,14 @@
 //#include "battle/battle_common.h"
 //#include "battle/b_tower_data.h"
 
+#include "field/location.h"
+
 #include "savedata/bsubway_savedata.h"
 #include "savedata/bsubway_savedata_def.h"
 #include "battle/bsubway_battle_data.h"
 #include "bsubway_scr_def.h"
+
+#include "event_field_proclink.h"
 
 //======================================================================
 //  define
@@ -25,6 +29,7 @@
 //======================================================================
 //  struct
 //======================================================================
+#if 0 //wb
 //--------------------------------------------------------------
 ///  LOCATION_WORK構造体
 //--------------------------------------------------------------
@@ -36,6 +41,7 @@ typedef struct
   int grid_z;
   int dir;
 }LOCATION_WORK;
+#endif
 
 //--------------------------------------------------------------
 /// バトルサブウェイ　スクリプトワーク
@@ -75,15 +81,19 @@ struct _BSUBWAY_SCRWORK
   u16  trainer[BSUBWAY_STOCK_TRAINER_MAX];  ///<対戦トレーナーNo
 
   //現在のロケーションを記憶しておく
-  LOCATION_WORK  now_location;
+  LOCATION now_location;
   
   BSUBWAY_PLAYDATA *playData;  ///<セーブデータへのポインタ
   BSUBWAY_SCOREDATA *scoreData;  ///<セーブデータへのポインタ
   
-#if 0  //wb null
+  u8 pokelist_select_num[6]; ///<ポケモン選択で取得した手持ちNo
+  u16 pokelist_result_select; ///<ポケモンリスト戻り値
+  u16 pokelist_return_mode;
+
   //対戦相手データ格納場所
   BSUBWAY_PARTNER_DATA  tr_data[2];
   
+#if 0  //wb null
   //5人衆抽選データ格納場所
   BSUBWAY_PARTNER_DATA  five_data[BSWAY_FIVE_NUM];
   
@@ -92,21 +102,21 @@ struct _BSUBWAY_SCRWORK
   
   //5人衆抽選ポケモンアイテムfixフラグ
   u8            five_item[BSWAY_FIVE_NUM];
-  
+
   //通信用データバッファ
   u16  send_buf[35];
   u16  recv_buf[35];
+#endif
   
   //プラチナで追加
   int winlose_flag;    //(LOCATION_WORKを消して、そこに入れることも可能？)
-  void* p_work;      //(LOCATION_WORKを消して、そこに入れることも可能？)
+  void *p_work;      //(LOCATION_WORKを消して、そこに入れることも可能？)
   u8  recieve_count;
   u8  mode;
   u8  first_btl_flag;    //初戦をおこなったかフラグ
   u8  dummy;
   u16  check_work;
   u16  ret_wkno;
-#endif
 };
 
 #endif  //__SUBWAY_SCR_COMMON_H__

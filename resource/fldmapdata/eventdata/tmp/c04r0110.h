@@ -8,5 +8,7 @@
 #ifndef ZONE_C04R0110_EVC_H
 #define ZONE_C04R0110_EVC_H
 
+#define C04R0110_TRAINER                   0
+#define C04R0110_HERO                      1
 
 #endif //ZONE_C04R0110_EVC_H

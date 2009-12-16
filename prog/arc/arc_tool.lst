@@ -245,3 +245,5 @@
   ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ
   ARCID_ELBOARD_SPNEWS "spnews.narc"  # 電光掲示板 臨時ニュースデータ
   ARCID_POKEFOOT_GRA "pokefoot.narc"  # ポケモン足跡グラフィックデータ
+  ARCID_PL_BTD_TR "pl_btdtr.narc" #PLバトルタワートレーナーデータ
+  ARCID_PL_BTD_PM "pl_btdpm.narc" #PLバトルタワーポケモンデータ

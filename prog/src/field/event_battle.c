@@ -178,6 +178,41 @@ GMEVENT * EVENT_TrainerBattle(
 
 //--------------------------------------------------------------
 /**
+ * バトルサブウェイトレーナーバトルイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param tr_id
+ * @param flags
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_BSubwayTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK *bew;
+  
+#if 0
+  {
+    POKEPARTY * myparty = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( myparty, 0 );
+    PP_Put( pp, ID_PARA_hp, 1 );
+  }
+#endif
+  
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+  
+  //エフェクトエンカウト　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
  * フィールドバトルイベント
  * @param event GMEVENT
  * @param seq イベントシーケンス
@@ -308,8 +343,6 @@ static GMEVENT_RESULT fieldBattleEvent(
 
   return GMEVENT_RES_CONTINUE;
 }
-
-
 
 //======================================================================
 //

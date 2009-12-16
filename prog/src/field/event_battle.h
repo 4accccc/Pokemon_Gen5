@@ -30,6 +30,9 @@ extern GMEVENT * EVENT_WildPokeBattle(
 extern GMEVENT * EVENT_TrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id0, int tr_id1, u32 flags );
 
+extern GMEVENT * EVENT_BSubwayTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
+
 //--------------------------------------------------------------
 /**
  * @brief ÅuîsñkèàóùÅvÇ∆Ç∑ÇÈÇ◊Ç´Ç©Ç«Ç§Ç©ÇÃîªíË

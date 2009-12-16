@@ -33,6 +33,8 @@
 #include "savedata/wifilist.h"
 #include "gamesystem/comm_player_support.h"
 
+#include "field/bsubway_scr_proc.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -516,4 +518,22 @@ extern PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata);
  */
 //-----------------------------------------------------------------------------
 extern WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   バトルサブウェイワーク取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	BSUBWAY_SCRWORK*
+ */
+//----------------------------------------------------------
+extern BSUBWAY_SCRWORK * GAMEDATA_GetBSubwayScrWork(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   バトルサブウェイワークセット
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	nothing
+ */
+//----------------------------------------------------------
+extern BSUBWAY_SCRWORK * GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr );
 

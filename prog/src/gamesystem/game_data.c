@@ -97,14 +97,17 @@ struct _GAMEDATA{
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
   
   FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
-
+  
   ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
-
+  
 	SHORTCUT_CURSOR	shortcut_cursor;	///<ショートカット画面のカーソル
-
+  
   GIMMICKWORK GimmickWork;      //ギミックワーク
   PL_BOAT_WORK_PTR PlBoatWorkPtr;   //遊覧船ワーク
+
   COMM_PLAYER_SUPPORT *comm_player_support;   ///<通信プレイヤーサポート
+  
+  BSUBWAY_SCRWORK *bsubway_scrwork; //バトルサブウェイワーク
 };
 
 //==============================================================================
@@ -221,7 +224,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //遊覧船ポインタをＮＵＬＬ初期化
   gd->PlBoatWorkPtr = NULL;
-
+  
+  //バトルサブウェイ NULL初期化
+  gd->bsubway_scrwork = NULL;
+  
   //通信相手からのサポートデータ
   gd->comm_player_support = COMM_PLAYER_SUPPORT_Alloc(heapID);
 
@@ -1308,6 +1314,30 @@ GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata)
 PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata)
 {
 	return &gamedata->PlBoatWorkPtr;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   バトルサブウェイワーク取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	BSUBWAY_SCRWORK*
+ */
+//----------------------------------------------------------
+BSUBWAY_SCRWORK * GAMEDATA_GetBSubwayScrWork(GAMEDATA * gamedata)
+{
+	return gamedata->bsubway_scrwork;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   バトルサブウェイワークセット
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	nothing
+ */
+//----------------------------------------------------------
+BSUBWAY_SCRWORK * GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
+{
+	gamedata->bsubway_scrwork = bsw_scr;
 }
 
 //==================================================================

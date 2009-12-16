@@ -110,6 +110,7 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/wificlub/wifi_p2pevent.c \
         field/event_wificlub.c \
         field/event_colosseum_battle.c \
+        field/event_bsubway.c \
         field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_main.c \
@@ -546,6 +547,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_pokecen_pc.c \
         field/bsubway_scr.c \
         field/scrcmd_bsubway.c \
+        field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
         field/elboard_spnews_data.c

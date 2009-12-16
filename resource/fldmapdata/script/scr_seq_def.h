@@ -6256,7 +6256,7 @@
 #define _BSUBWAY_WORK_CREATE( init, mode ) \
     _ASM_BSUBWAY_WORK_CREATE init, mode
 
-  .macro  _ASM_BSUBWAY_WORK_CREATE
+  .macro  _ASM_BSUBWAY_WORK_CREATE init, mode
   .short  EV_SEQ_BSUBWAY_WORK_CREATE
   .short  \init
   .short  \mode
@@ -6288,7 +6288,7 @@
 #define _BSUBWAY_TOOL( cmd, param, ret_wk ) \
     _ASM_BSUBWAY_TOOL cmd, param, ret_wk
 
-  .macro  _ASM_BSUBWAY_TOOL
+  .macro  _ASM_BSUBWAY_TOOL cmd, param, ret_wk
   .short  EV_SEQ_BSUBWAY_TOOL
   .short \cmd
   .short \param
