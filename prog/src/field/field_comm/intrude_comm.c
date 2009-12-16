@@ -474,7 +474,7 @@ static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon)
 //--------------------------------------------------------------
 static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-  OS_TPrintf("GameServiceID1 = %d, GameServiceID2 = %d\n", GameServiceID1, GameServiceID2);
+//  OS_TPrintf("GameServiceID1 = %d, GameServiceID2 = %d\n", GameServiceID1, GameServiceID2);
   return (GameServiceID1==GameServiceID2);
 }
 
