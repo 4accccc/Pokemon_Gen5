@@ -1,0 +1,410 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  Nintendo DS  Development environment 'pokemon_wb'
+# File:     Makefile
+#
+# Copyright 2006 GameFreak.inc  All rights reserved.
+#
+#----------------------------------------------------------------------------
+
+#export	NITRO_DEBUG=TRUE
+export MAKEROM_ROMSPEED=1TROM
+#export MAKEROM_ROMSPEED=MROM
+
+
+TWL_ARCHGEN		:=	HYBRID
+
+# NITROSDK3.0付属ののプリコンパイルを読み込まない
+NITRO_NO_STD_PCHDR = True
+
+.PHONY : source analyze overlaymap
+
+#----------------------------------------------------------------------------
+#	インクルードファイルディレクトリ
+#----------------------------------------------------------------------------
+LINCLUDES      = ./include \
+		./arc
+
+
+#----------------------------------------------------------------------------
+# GF-Library
+#----------------------------------------------------------------------------
+GFLIB_DIR		=	../lib/gflib/
+LINCLUDES		+= 	$(GFLIB_DIR)/include
+LLIBRARY_DIRS	+=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
+LLIBRARIES		+=  	gflib.a
+
+
+# wifiをオーバーレイで使用する場合のLibrary定義
+LDEPENDS_NEF += $(TWLDWC_LIB_DEPENDS)
+TWLDWC_LIB_MODULES_   = bm account common ac
+TWLDWC_LIB_GSMODULES_ =
+NITROVCT_LIBS = 
+TWLVCT_LIBS = 
+TWLWIFI_LIBS = libncfg$(TWL_LIBSUFFIX).a
+TWL_ADDIN_IRC_LIBS = 
+
+# JPEGライブラリをオーバーレイする為の定義
+
+ifneq	($(filter NITRO,$(TARGET_PLATFORM_LIST)),)
+
+NITRO_LIBS		= 									\
+				   libcard$(NITRO_LIBSUFFIX).a		\
+				   libcp$(NITRO_LIBSUFFIX).a		\
+				   libenv$(NITRO_LIBSUFFIX).a		\
+				   libext$(NITRO_LIBSUFFIX).a		\
+				   libfs$(NITRO_LIBSUFFIX).a		\
+				   libfx$(NITRO_LIBSUFFIX).a		\
+				   libgx$(NITRO_LIBSUFFIX).a		\
+				   libmath$(NITRO_LIBSUFFIX).a		\
+				   libmi$(NITRO_LIBSUFFIX).a		\
+				   libnvram$(NITRO_LIBSUFFIX).a		\
+				   libos$(NITRO_LIBSUFFIX).a		\
+				   libprc$(NITRO_LIBSUFFIX).a		\
+				   libpxi$(NITRO_LIBSUFFIX).a		\
+				   librtc$(NITRO_LIBSUFFIX).a		\
+				   libsnd$(NITRO_LIBSUFFIX).a		\
+				   libspi$(NITRO_LIBSUFFIX).a		\
+				   libstd$(NITRO_LIBSUFFIX).a		\
+				   libwfs$(NITRO_LIBSUFFIX).a		\
+				   libwm$(NITRO_LIBSUFFIX).a		\
+				   libcrypto$(NITRO_LIBSUFFIX).a	\
+				   libctrdg$(NITRO_LIBSUFFIX).a		\
+			       libcht$(NITRO_LIBSUFFIX).a		\
+				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   $(notdir $(LIBSYSCALL_))
+
+
+
+TWL_LIBS		= 								\
+				   $(notdir $(LIBSYSCALL_TWL_))
+
+TWL_LIBS += NITRO_LIBS
+
+TWL_LIBS += $(CRT0_O)
+NITRO_LIBS += $(CRT0_O)
+
+endif
+
+ifneq	($(filter TWL,$(TARGET_PLATFORM_LIST)),)
+
+NITRO_LIBS		=
+
+TWL_LIBS		= 									\
+				   libcard$(NITRO_LIBSUFFIX).a		\
+				   libcp$(NITRO_LIBSUFFIX).a		\
+				   libenv$(NITRO_LIBSUFFIX).a		\
+				   libext$(NITRO_LIBSUFFIX).a		\
+				   libfs$(NITRO_LIBSUFFIX).a		\
+				   libfx$(NITRO_LIBSUFFIX).a		\
+				   libgx$(NITRO_LIBSUFFIX).a		\
+				   libmath$(NITRO_LIBSUFFIX).a		\
+				   libmi$(NITRO_LIBSUFFIX).a		\
+				   libnvram$(NITRO_LIBSUFFIX).a		\
+				   libos$(NITRO_LIBSUFFIX).a		\
+				   libprc$(NITRO_LIBSUFFIX).a		\
+				   libpxi$(NITRO_LIBSUFFIX).a		\
+				   librtc$(NITRO_LIBSUFFIX).a		\
+				   libsnd$(NITRO_LIBSUFFIX).a		\
+				   libspi$(NITRO_LIBSUFFIX).a		\
+				   libstd$(NITRO_LIBSUFFIX).a		\
+				   libwfs$(NITRO_LIBSUFFIX).a		\
+				   libwm$(NITRO_LIBSUFFIX).a		\
+				   libcrypto$(NITRO_LIBSUFFIX).a	\
+				   libctrdg$(NITRO_LIBSUFFIX).a		\
+			       libcht$(NITRO_LIBSUFFIX).a		\
+				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   $(notdir $(LIBSYSCALL_)) \
+				   $(notdir $(LIBSYSCALL_TWL_)) \
+						$(CRT0_O)
+
+endif
+
+
+# nitrosystemをオーバーレイで使用する場合のLibrary定義
+TWLSYSTEM_LIBS = \
+		libnnsfnd$(NITRO_LIBSUFFIX).a \
+		libnnsgfd$(NITRO_LIBSUFFIX).a \
+		libnnsg2d$(NITRO_LIBSUFFIX).a \
+		libnnsg3d$(NITRO_LIBSUFFIX).a \
+		libnnssnd$(NITRO_LIBSUFFIX).a
+
+#----------------------------------------------------------------------------
+#パーティクルのためのライブラリを追加
+#----------------------------------------------------------------------------
+LLIBRARY_DIRS	+= ./library/spl/$(TWL_BUILDTYPE)
+LLIBRARIES		+= ./libjn_spl.a
+
+#----------------------------------------------------------------------------
+#	バージョン定義
+#----------------------------------------------------------------------------
+VER_FILE	=	version
+include	$(VER_FILE)
+
+#(PM_DEBUG == yes)のときのみデバッグバージョン
+ifeq	($(PM_DEBUG),yes)
+MACRO_FLAGS	+=	-DPM_DEBUG
+endif
+
+ifdef	PM_VERSION
+MACRO_FLAGS	+=	-DPM_VERSION=$(PM_VERSION)
+endif
+
+ifdef	PM_LANG
+MACRO_FLAGS	+=	-DPM_LANG=$(PM_LANG)
+endif
+
+#----------------------------------------------------------------------------
+#	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
+#----------------------------------------------------------------------------
+LCFILE_SPEC	=	overlay/main$(NITRO_LIBSUFFIX).lsf
+MAKELCF_FLAGS	+=	-DADDRESS_MAIN=0x02000000
+
+
+# 個人テスト用定義
+#ifeq	($(PM_DEBUG),yes)
+MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
+#endif
+
+# 最終的に出力されるファイル(lib/ARM9-xx/xxx/gflib.a)
+#TARGET_BIN		=	main.bin
+
+# ソースファイル
+SRCS			=	system\main.c \
+					system\machine_use.c \
+					system\gfl_use.c \
+					system\net_define.c
+
+include make_prog_files
+-include overlay/overlay_files
+
+## xyzzyでエラージャンプを行う
+ifeq	($(USERNAME),ohno)
+CCFLAGS_MSGSTYLE	?= -msgstyle gcc
+endif
+
+
+#----------------------------------------------------------------------------
+#		makelcf.exeの引数オーバー対処のため追加 by tomoya
+#----------------------------------------------------------------------------
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
+
+LCFDEF_FILE = lcf_def_twl.txt
+
+else
+
+LCFDEF_FILE = lcf_def.txt
+
+endif
+
+
+#----------------------------------------------------------------------------
+# コンパイル時の警告抑止
+#----------------------------------------------------------------------------
+#ifeq	($(USERNAME),tamada)
+#CCFLAGS_WARNING	= -w all,noerr,nounusedarg,noextracomma,\
+#	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned,noimplicit
+#else
+CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
+				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+#endif
+
+
+#----------------------------------------------------------------------------
+# 任天堂Cryptライブラリを追加
+#----------------------------------------------------------------------------
+LLIBARIES += libcrypto$(TWL_LIBSUFFIX).a
+
+#----------------------------------------------------------------------------
+#	ロムに含まれるファイルの指定  default.rsfファイルで使用している
+#----------------------------------------------------------------------------
+#ロムファイル指定(GFL)
+GFL_FILE_TREE	=	titledemo.narc \
+					skb.narc \
+					soundstatus.narc \
+					wb_sound_data.sdat \
+					gfl_font.dat \
+					dl_rom/child.srl \
+					dl_rom/icon.char \
+					dl_rom/icon.plt
+
+
+GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
+
+#ロムファイル指定(GAME)
+#GAME_FILE_TREE	= test_graphic/*.narc \
+#					*.narc
+#ロムファイル指定は、arc/arc_tool.lstに記述してください
+#その記述内容から、file_tree.incを自動生成します
+
+-include arc/file_tree.inc
+
+MAKEROM_ROMFILES = $(GAME_FILE_TREE)
+
+#リンク時の依存関係に含めるためにEDEPENDS_BINにFILE_TREEを入れておく
+EDEPENDS_BIN += $(patsubst %, filetree/%, $(GFL_FILE_TREE))
+EDEPENDS_BIN += $(patsubst %, filetree/%, $(GAME_FILE_TREE))
+
+## ------------------------------------------------------------------------------------------
+## GFL_MAKEROM_ROMFILESの定義をmakerom.exeに渡す MAKEROM_ROMFILESはデフォルトで定義されている
+## makeした後に main.nlfファイルを開けば ファイルが正しく紐付けされたかがわかる
+##-------------------------------------------------------------------------------------------
+MAKEROM_FLAGS += -DGFL_MAKEROM_ROMFILES='$(GFL_MAKEROM_ROMFILES)'
+
+#----------------------------------------------------------------------------
+#	ロムスペックファイル読み込みのため追加
+#----------------------------------------------------------------------------
+ROM_SPEC= default$(TWL_LIBSUFFIX).rsf
+
+#----------------------------------------------------------------------------
+#	ターゲットファイル設定
+#TARGET_NEF	=	main.nef	TARGET_BINに.srlを指定すると.nefも一緒に生成される
+TARGET_BIN	=	main.srl
+
+#--------------------------------------- ----------------------------
+# システム定義
+#
+
+include	$(TWLVCT_ROOT)/build/buildtools/commondefs
+
+include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/nnslibdefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
+
+ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
+
+MAKELCF_DEFS		 = -DNITROSDK_ROOT='$(ROOT_M)'									\
+					   -DTARGET_NAME='$(TARGET_NAME)'								\
+					  -DOBJS_STATIC='$(foreach OBJ,$(OBJS_STATIC_M),$(OBJ))'			\
+					  -DOBJS_AUTOLOAD='$(foreach OBJ,$(OBJS_AUTOLOAD_M),$(OBJ))'		\
+							-Mlcf_def.txt	\
+					   -DGLIBS='$(GLIBRARIES_LINK)'									\
+					   -DLLIBS='$(LLIBRARIES_LINK)'									\
+					   -DCC_LIBS='$(CC_LIBS)'										\
+					   -DCW_LIBS='$(CC_LIBS)'										\
+					   -DOBJDIR='$(OBJDIR_M)'										\
+					   -DLIBDIR='$(LIBDIR_M)'										\
+					   -DBINDIR='$(BINDIR_M)'										\
+					   -DCRT0_O='$(CRT0_O)'											\
+					   -DPROC='$(CODEGEN_PROC)'										\
+					   -DPLATFORM='$(NITRO_PLATFORM)'								\
+					   -DCODEGEN='$(NITRO_LIBSUFFIX)'								\
+					   -DLIBSUFFIX='$(NITRO_LIBSUFFIX)'								\
+					   -DBUILD='$(NITRO_BUILD_DIR)'									\
+					   -DADDRESS_STATIC='$(ADDRESS_STATIC)'							\
+					   -DADDRESS_ITCM='$(ADDRESS_ITCM)'								\
+					   -DADDRESS_DTCM='$(ADDRESS_DTCM)'
+
+endif
+
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
+
+MAKELCF_DEFS	= -DTWLSDK_ROOT='$(ROOT_M)'									\
+		  -DTARGET_NAME='$(TARGET_NAME)'								\
+		  -DOBJS_STATIC='$(foreach OBJ,$(OBJS_STATIC_M),$(OBJ))'			\
+		  -DOBJS_AUTOLOAD='$(foreach OBJ,$(OBJS_AUTOLOAD_M),$(OBJ))'		\
+			-Mlcf_def_twl.txt	\
+		  -DOBJS_LTDAUTOLOAD='$(foreach OBJ,$(OBJS_LTDAUTOLOAD_M),$(OBJ))'	\
+		  -DOBJS_LTDOVERLAY='$(foreach OBJ,$(OBJS_LTDOVERLAY_M),$(OBJ))'	\
+		  -DGLIBS='$(GLIBRARIES_LINK)'										\
+		  -DGLIBS_EX='$(GLIBRARIES_EX_LINK)'								\
+		  -DLLIBS='$(LLIBRARIES_LINK)'										\
+		  -DLLIBS_EX='$(LLIBRARIES_EX_LINK)'								\
+		  -DCC_LIBS='$(CC_LIBS)'											\
+		  -DCW_LIBS='$(CC_LIBS)'											\
+		  -DOBJDIR='$(OBJDIR_M)'											\
+		  -DLIBDIR='$(LIBDIR_M)'											\
+		  -DBINDIR='$(BINDIR_M)'											\
+		  -DCRT0_O='$(CRT0_O)'												\
+		  -DPROC='$(CODEGEN_PROC)'											\
+		  -DPLATFORM='$(TWL_PLATFORM)'										\
+		  -DCODEGEN='$(TWL_LIBSUFFIX)'										\
+		  -DARCHGEN='$(ARCHGEN_TYPE)'										\
+		  -DLIBSUFFIX='$(TWL_LIBSUFFIX)'									\
+		  -DBUILD='$(TWL_BUILD_DIR)'										\
+		  -DADDRESS_STATIC='$(ADDRESS_STATIC)'								\
+		  -DADDRESS_ITCM='$(ADDRESS_ITCM)'									\
+		  -DADDRESS_DTCM='$(ADDRESS_DTCM)'
+
+endif
+
+#----------------------------------------------------------------------------
+#	WiFi定義
+#----------------------------------------------------------------------------
+#include	$(TWLDWC_ROOT)/build/buildtools/commondefs
+#include	$(TWLDWC_ROOT)/build/buildtools/modulerules
+include	$(TWLVCT_ROOT)/build/buildtools/modulerules
+
+
+GDIRT_CLEAN += lcf_def_twl.txt lcf_def.txt ./overlay/*.lsf
+
+#--------------------------------------- ----------------------------
+programs = $(TARGETS)
+
+do-build: precompile  $(LCFDEF_FILE) $(TARGETS)
+
+
+
+
+#----------------------------------------------------------------------------
+# precompile
+#----------------------------------------------------------------------------
+PRECOMPILE_SRC		 =	include/precompile/precompile.pch
+PRECOMPILE_CC_MCH	 =	$(OBJDIR)/precompile_cc.mch
+PRECOMPILE_CCFLAGS	:=	$(CCFLAGS)
+CCFLAGS			+=	-prefix $(PRECOMPILE_CC_MCH)
+
+precompile: $(PRECOMPILE_CC_MCH)
+
+#バージョン定義ファイルが更新されたらプリコンパイルヘッダも更新する
+$(PRECOMPILE_CC_MCH):	$(VER_FILE)
+
+-include $(PRECOMPILE_CC_MCH).d
+$(PRECOMPILE_CC_MCH):%_cc.mch:
+		$(CC) $(PRECOMPILE_CCFLAGS) $(INCLUDES) $(PRECOMPILE_SRC) -MD -precompile $(PRECOMPILE_CC_MCH)
+##		$(MOVE_SRC_DEPEND)
+##		$(MV) $(DEPENDDIR)/$(*F).d $@.d
+$(OBJS):  $(PRECOMPILE_CC_MCH)
+
+CCFLAGS +=	-thumb
+
+
+
+#----------------------------------------------------------------------------
+#	ソースのみのリコンパイル
+#----------------------------------------------------------------------------
+source:
+	-$(RM) $(GDIRT_CLEAN)
+	-$(RM) $(DEPENDDIR)/*.d
+	$(MAKE)
+
+#----------------------------------------------------------------------------
+#	ソースあたりオブジェクトサイズ算出
+#----------------------------------------------------------------------------
+analyze:
+	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap|sort > analyze.result
+
+#----------------------------------------------------------------------------
+#	オーバーレイマップ可視化
+#----------------------------------------------------------------------------
+overlaymap:
+	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
+	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+filesize:
+		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nlf)
+
+#----------------------------------------------------------------------------
+#	警告フィルタの適用
+#----------------------------------------------------------------------------
+warning:
+	$(MAKE) source > result.txt
+	ruby ../tools/warning/filter.rb result.txt > fresult.txt
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+echo_buildtype:
+	@echo $(TWL_BUILDTYPE)
+
