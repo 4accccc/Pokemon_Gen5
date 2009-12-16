@@ -18,6 +18,7 @@
 #include "field/location.h"
 
 #include "field/field_const.h"
+#include "field/field_dir.h"
 
 #include "field/eventdata_type.h"
 
@@ -39,6 +40,11 @@ enum {
 //--------------------------------------------------------------
 #define DOOR_ID_JUMP_CODE	(-1)
 
+
+//--------------------------------------------------------------
+//prototype
+//--------------------------------------------------------------
+static u16 getExitDir_Dir( EXIT_DIR exit_dir );
 
 //===========================================================================
 //===========================================================================
@@ -85,6 +91,8 @@ void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs,
 //-----------------------------------------------------------------------------
 void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs, u16 rail_index, u16 line_grid, s16 width_grid)
 {
+  u16 normal_dir;
+  
 	loc->type = LOCATION_TYPE_INIT;
 	loc->zone_id = zone;
 	loc->exit_id = door;
@@ -95,7 +103,7 @@ void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS 
 	loc->location_pos.railpos.rail_index  = rail_index;
 	loc->location_pos.railpos.line_grid   = line_grid;
 	loc->location_pos.railpos.width_grid  = width_grid;
-  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( getExitDir_Dir(dir) );
 }
 
 //--------------------------------------------------------------
@@ -142,7 +150,7 @@ void LOCATION_SetDirectRail(LOCATION * loc, int zone, s16 dir, u16 rail_index, u
 	loc->location_pos.railpos.rail_index  = rail_index;
 	loc->location_pos.railpos.line_grid   = line_grid;
 	loc->location_pos.railpos.width_grid  = width_grid;
-  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( getExitDir_Dir(dir) );
 }
 
 //----------------------------------------------------------------------------
@@ -297,3 +305,40 @@ enum {
 
 
 #endif
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  exit_dir‚Ì•ûŒü‚ðŽæ“¾
+ *
+ *	@param	exit_dir 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u16 getExitDir_Dir( EXIT_DIR exit_dir )
+{
+  u16 normal_dir;
+
+  // dir‚ð•ÏŠ·
+  switch( exit_dir )
+  {
+	case EXIT_DIR_UP:
+    normal_dir = DIR_UP;
+    break;
+	case EXIT_DIR_DOWN:
+    normal_dir = DIR_DOWN;
+    break;
+	case EXIT_DIR_LEFT:
+    normal_dir = DIR_LEFT;
+    break;
+	case EXIT_DIR_RIGHT:
+    normal_dir = DIR_RIGHT;
+    break;
+  default:
+    normal_dir = DIR_DOWN;
+    break;
+  }
+  return normal_dir;
+}
+

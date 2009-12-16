@@ -1714,15 +1714,35 @@ static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* 
 static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, RAIL_LOCATION* p_location )
 {
   const CONNECT_DATA_RPOS * cp_pos;
+  u16 dir;
   
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
 
   cp_pos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
 
+  switch( cp_data->exit_dir )
+  {
+	case EXIT_DIR_UP:
+    dir = DIR_UP;
+    break;
+	case EXIT_DIR_DOWN:
+    dir = DIR_DOWN;
+    break;
+	case EXIT_DIR_LEFT:
+    dir = DIR_LEFT;
+    break;
+	case EXIT_DIR_RIGHT:
+    dir = DIR_RIGHT;
+    break;
+  default:
+    dir = DIR_DOWN;
+    break;
+  }
+
   p_location->rail_index  = cp_pos->rail_index;
   p_location->type        = FIELD_RAIL_TYPE_LINE;
-  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( cp_data->exit_dir );
+  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
 
   // 両方のサイズが1以上ならアサート
   GF_ASSERT( !((cp_pos->side_grid_size > 1) && (cp_pos->front_grid_size > 1)) );
@@ -1862,15 +1882,35 @@ static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* c
 static void BGTalkData_RPOS_GetLocation( const BG_TALK_DATA* cp_data, RAIL_LOCATION* p_location )
 {
   const BG_TALK_DATA_RPOS * cp_pos;
+  u16 dir;
   
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
 
   cp_pos = (const BG_TALK_DATA_RPOS *)cp_data->pos_buf;
 
+  switch( cp_data->dir )
+  {
+  case BG_TALK_DIR_DOWN:
+    dir = DIR_DOWN;
+    break;
+  case BG_TALK_DIR_LEFT:
+    dir = DIR_LEFT;
+    break;
+  case BG_TALK_DIR_RIGHT:
+    dir = DIR_RIGHT;
+    break;
+  case BG_TALK_DIR_UP:
+    dir = DIR_UP;
+    break;
+  default:
+    dir = DIR_UP;
+    break;
+  }
+
   p_location->rail_index  = cp_pos->rail_index;
   p_location->type        = FIELD_RAIL_TYPE_LINE;
-  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( cp_data->dir );
+  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
   p_location->width_grid  = cp_pos->side_grid;
   p_location->line_grid   = cp_pos->front_grid;
 }
