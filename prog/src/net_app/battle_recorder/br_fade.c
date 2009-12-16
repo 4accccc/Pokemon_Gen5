@@ -39,7 +39,7 @@ typedef BOOL (*BR_FADE_MAINFUNCTION)( BR_FADE_WORK * p_wk, u32 *p_seq );
 //=====================================
 struct _BR_FADE_WORK
 { 
-  BOOL            is_start;
+  BOOL            is_end;
   BR_FADE_DISPLAY display;
   BR_FADE_DIR     dir;
   u32             seq;
@@ -94,6 +94,24 @@ void BR_FADE_Exit( BR_FADE_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  フェードメイン処理
+ *
+ *	@param	BR_FADE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_Main( BR_FADE_WORK *p_wk )
+{
+  if( p_wk->MainFunction )
+  { 
+    p_wk->is_end = p_wk->MainFunction( p_wk, &p_wk->seq );
+    if( p_wk->is_end )
+    { 
+      p_wk->MainFunction  = NULL;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  フェード開始
  *
  *	@param	BR_FADE_WORK *p_wk  ワーク
@@ -120,36 +138,26 @@ void BR_FADE_StartFade( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY d
 //-----------------------------------------------------------------------------
 void BR_FADE_StartFadeEx( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY disp, BR_FADE_DIR dir, u32 sync )
 { 
-  p_wk->is_start      = TRUE;
   p_wk->display       = disp;
   p_wk->dir           = dir;
   p_wk->sync          = sync;
   p_wk->MainFunction  = Br_Fade_Factory( type );
+  p_wk->is_end        = FALSE;
+  p_wk->seq           = 0;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  フェードメイン処理
+ *	@brief  フェード終了検知
  *
- *	@param	BR_FADE_WORK *p_wk ワーク
+ *	@param	const BR_FADE_WORK *cp_wk   ワーク
  *
- *	@return TRUEならばフェード終了  FALSEならばフェード中
+ *	@return TRUEならばフェード終了  FALSEならべフェード中
  */
 //-----------------------------------------------------------------------------
-BOOL BR_FADE_MainFade( BR_FADE_WORK *p_wk )
-{
-  BOOL ret  = TRUE;
-
-  if( p_wk->is_start )
-  { 
-    ret = p_wk->MainFunction( p_wk, &p_wk->seq );
-    if( ret )
-    { 
-      p_wk->is_start  = FALSE;
-    }
-  }
-
-  return ret;
+BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk )
+{ 
+  return cp_wk->is_end;
 }
 //=============================================================================
 /**
@@ -244,27 +252,40 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
   { 
   case SEQ_AL_INIT:
     {
-      int ev1;
+      int ev1, ev2;
 
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
         ev1 = 0;
+        ev2 = 16;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev1 = BR_FADE_DEFAULT_EV2;
+        ev1 = 16;
+        ev2 = 0;
       }
 
-      G2_SetBlendAlpha(
+      if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+      { 
+        G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG0 |
+          GX_BLEND_PLANEMASK_BG3,
+          ev1,
+          ev2
+          );
+      }
+      if( p_wk->display & BR_FADE_DISPLAY_SUB )
+      { 
+        G2S_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG1,
           GX_BLEND_PLANEMASK_BG0 |
           GX_BLEND_PLANEMASK_BG1 |
-          GX_BLEND_PLANEMASK_BG2 |
-          GX_BLEND_PLANEMASK_OBJ,
-          GX_BLEND_PLANEMASK_BG3 |
-          GX_BLEND_PLANEMASK_BD,
+          GX_BLEND_PLANEMASK_BG2,
           ev1,
-          BR_FADE_DEFAULT_EV2
+          ev2
           );
+      }
 
       p_wk->cnt = 0;
       p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
@@ -274,20 +295,29 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
 
   case SEQ_AL_MAIN:
     { 
-      int ev1;
+      int ev1, ev2;
 
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
         ev1 = 0 + 16 * p_wk->cnt / p_wk->max;
+        ev2 = 16 - 16 * p_wk->cnt / p_wk->max;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
         ev1 = 16 - 16 * p_wk->cnt / p_wk->max;
+        ev2 = 0 + 16 * p_wk->cnt / p_wk->max;
       }
 
-      G2_ChangeBlendAlpha( ev1, BR_FADE_DEFAULT_EV2 );
+      if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+      { 
+        G2_ChangeBlendAlpha( ev1, ev2 );
+      }
+      if( p_wk->display & BR_FADE_DISPLAY_SUB )
+      { 
+        G2S_ChangeBlendAlpha( ev1, ev2 );
+      }
     }
-    if( p_wk->cnt++ > p_wk->max )
+    if( p_wk->cnt++ >= p_wk->max-1 )
     { 
       *p_seq  = SEQ_AL_EXIT;
     }

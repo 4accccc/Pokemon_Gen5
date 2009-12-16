@@ -62,7 +62,8 @@ typedef struct _BR_FADE_WORK BR_FADE_WORK;
 //=============================================================================
 extern BR_FADE_WORK * BR_FADE_Init( HEAPID heapID );
 extern void BR_FADE_Exit( BR_FADE_WORK *p_wk );
+extern void BR_FADE_Main( BR_FADE_WORK *p_wk );
 
 extern void BR_FADE_StartFade( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY disp, BR_FADE_DIR  dir );
 extern void BR_FADE_StartFadeEx( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY disp, BR_FADE_DIR dir, u32 sync );
-extern BOOL BR_FADE_MainFade( BR_FADE_WORK *p_wk );
+extern BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk );

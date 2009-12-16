@@ -932,7 +932,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Matching( WIFIBATTLEMATCH_WORK *p_wk,
     ///	マッチング開始
     //=====================================
   case SEQ_START_MATCHING:
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net ); 
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->btl_rule ); 
     *p_subseq = SEQ_START_MATCHING_MSG;
     break;
 
@@ -1486,7 +1486,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Matching( WIFIBATTLEMATCH_WORK *p_wk,
     ///	マッチング開始
     //=====================================
   case SEQ_START_MATCHING:
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net ); 
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->btl_rule ); 
     *p_subseq = SEQ_START_MATCHING_MSG;
     break;
 
@@ -1887,7 +1887,7 @@ static BOOL WifiBattleMatch_Debug_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTL
   switch( *p_seq )
   { 
   case 0:
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net );
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->btl_rule ); 
     (*p_seq)++;
     break;
 

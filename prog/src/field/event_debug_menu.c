@@ -3233,7 +3233,7 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
   }
 #endif
 
-  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, mode, btl_rule ) );
+  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, mode, WIFIBATTLEMATCH_POKE_TEMOTI, btl_rule ) );
   return TRUE;
 }
 

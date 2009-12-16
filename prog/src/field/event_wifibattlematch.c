@@ -34,7 +34,6 @@
 //=====================================
 enum{
   _FIELD_COMM,
-  _FIELD_FADEOUT,
   _FIELD_CLOSE,
   _CALL_WIFILOGIN,
   _WAIT_WIFILOGIN,
@@ -42,7 +41,6 @@ enum{
   _WAIT_WIFIBTLMATCH,
   _WAIT_NET_END,
   _FIELD_OPEN,
-  _FIELD_FADEIN,
   _FIELD_END
 };
 
@@ -53,9 +51,9 @@ typedef struct
 {
   GAMESYS_WORK      * gsys;
   FIELDMAP_WORK     * fieldmap;
-  SAVE_CONTROL_WORK * ctrl;
   void              * p_sub_wk;
   WIFIBATTLEMATCH_MODE mode;
+  WIFIBATTLEMATCH_POKE  poke;
   BtlRule btl_rule;
 } EVENT_WIFIBTLMATCH_WORK;
 
@@ -88,10 +86,6 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     {
       (*seq)++;
     }
-    break;
-  case _FIELD_FADEOUT:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
-    (*seq)++;
     break;
   case _FIELD_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
@@ -131,6 +125,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
       p_param->mode = dbw->mode;
       p_param->p_game_data  = GAMESYSTEM_GetGameData(gsys);
       p_param->btl_rule     = dbw->btl_rule;
+      p_param->poke         = dbw->poke;
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMaptch_ProcData, dbw->p_sub_wk );
     }
     (*seq)++;
@@ -146,10 +141,6 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     break;
   case _FIELD_OPEN:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    (*seq) ++;
-    break;
-  case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -169,7 +160,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
  *	@param	* fieldmap          フィールドマップ
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, BtlRule btl_rule )
+GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, BtlRule btl_rule )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WifiBattleMatchMain, sizeof(EVENT_WIFIBTLMATCH_WORK));
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
@@ -182,7 +173,9 @@ GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, W
     dbw = GMEVENT_GetEventWork(event);
     dbw->gsys = gsys;
     dbw->fieldmap = fieldmap;
-    dbw->ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+    dbw->mode   = mode;
+    dbw->poke   = poke;
+    dbw->btl_rule   = btl_rule;
   }
 
   return event;

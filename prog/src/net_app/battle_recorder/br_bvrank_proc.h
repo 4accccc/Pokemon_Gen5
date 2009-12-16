@@ -11,6 +11,7 @@
 #pragma once
 #include "br_proc_sys.h"
 #include "br_res.h"
+#include "br_fade.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -27,6 +28,7 @@
 //=====================================
 typedef struct 
 {
+  BR_FADE_WORK    *p_fade;      //[in]フェード
 	GFL_CLUNIT			*p_unit;			//[in]ユニット
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理

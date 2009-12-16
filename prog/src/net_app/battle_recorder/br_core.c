@@ -19,6 +19,7 @@
 #include "br_graphic.h"
 #include "br_res.h"
 #include "br_proc_sys.h"
+#include "br_fade.h"
 
 //各プロセス
 #include "br_start_proc.h"
@@ -60,6 +61,9 @@ typedef struct
 
 	//プロセス管理
 	BR_PROC_SYS			*p_procsys;
+
+  //フェード
+  BR_FADE_WORK    *p_fade;
 
 	//引数
 	BR_CORE_PARAM		*p_param;
@@ -259,6 +263,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	p_wk->p_procsys	= BR_PROC_SYS_Init( BR_PROCID_MENU, sc_procdata_tbl, 
 			BR_PROCID_MAX, p_wk, HEAPID_BATTLE_RECORDER_CORE );
 
+  //フェードプロセス
+  p_wk->p_fade  = BR_FADE_Init( HEAPID_BATTLE_RECORDER_CORE );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -276,6 +283,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  //フェードプロセス破棄
+  BR_FADE_Exit( p_wk->p_fade );
 
 	//コアプロセス破棄
 	BR_PROC_SYS_Exit(	p_wk->p_procsys );
@@ -309,6 +319,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  //フェードプロセス処理
+  BR_FADE_Main( p_wk->p_fade );
 
 	//プロセス処理
 	BR_PROC_SYS_Main( p_wk->p_procsys );
@@ -348,6 +361,7 @@ static void BR_START_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const
 	BR_CORE_WORK					*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -424,6 +438,7 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
     }
 	}
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -457,6 +472,7 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	//メニュー以外から来ない
 
   p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
   p_param->p_procsys	= p_wk->p_procsys;
   p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
   switch( preID )
@@ -526,6 +542,7 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
 	}
 */
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -567,6 +584,7 @@ static void BR_RNDMATCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 	}
 */
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -599,6 +617,7 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -631,6 +650,7 @@ static void BR_BVSEARCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -663,6 +683,7 @@ static void BR_CODEIN_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -694,6 +715,7 @@ static void BR_BVSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
 }
@@ -726,6 +748,7 @@ static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 	BR_CORE_WORK						    *p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
 }
@@ -757,6 +780,7 @@ static void BR_MUSICALSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 	BR_CORE_WORK						    *p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
 }

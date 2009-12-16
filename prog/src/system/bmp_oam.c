@@ -363,6 +363,24 @@ void BmpOam_ActorSetPos(BMPOAM_ACT_PTR bact, s16 x, s16 y)
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPOAMアクターのOBJモードをセット
+ *
+ *	@param	BMPOAM_ACT_PTR bact BMPOAMアクターへのポインタ
+ *	@param	mode                モード
+ */
+//-----------------------------------------------------------------------------
+void BmpOam_ActorSetObjMode( BMPOAM_ACT_PTR bact, GXOamMode mode )
+{ 
+	int num_y, num_x;
+	for(num_y = 0; num_y < bact->act_num_y; num_y++){
+		for(num_x = 0; num_x < bact->act_num_x; num_x++){
+      GFL_CLACT_WK_SetObjMode( bact->cap[num_x + num_y*bact->act_num_x], mode );
+		}
+	}
+}
+
 //==============================================================================
 //	ローカル関数
 //==============================================================================

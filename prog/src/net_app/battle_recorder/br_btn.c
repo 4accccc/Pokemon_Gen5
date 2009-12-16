@@ -925,6 +925,7 @@ BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLS
 		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit, 
 				cp_res->ncg, cp_res->ncl, cp_res->nce, 
 				cp_cldata, display, heapID );
+    GFL_CLACT_WK_SetObjMode( p_wk->p_clwk, GX_OAM_MODE_XLU );
 	}
 
 	//ƒtƒHƒ“ƒg
@@ -953,7 +954,8 @@ BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLS
 		actdata.draw_type		= display;
 		actdata.bg_pri			= cp_cldata->bgpri;
 		p_wk->p_oamfont	= BmpOam_ActorAdd( p_bmpoam, &actdata );
-		BmpOam_ActorBmpTrans(p_wk->p_oamfont);
+    BmpOam_ActorBmpTrans(p_wk->p_oamfont);
+    BmpOam_ActorSetObjMode( p_wk->p_oamfont, GX_OAM_MODE_XLU );
 	}
 
 	return p_wk;

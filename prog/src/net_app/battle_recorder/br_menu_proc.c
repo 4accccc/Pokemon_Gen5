@@ -161,28 +161,72 @@ static GFL_PROC_RESULT BR_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_MAIN,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_END,
+  };
+
 	BR_MENU_WORK	*p_wk	= p_wk_adrs;
 	BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
 
-	//プロセス処理
-	BR_BTN_SYS_Main( p_wk->p_btn );
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
 
-	//ボタンが押された処理
-	switch( BR_BTN_SYS_GetInput( p_wk->p_btn, &p_param->next_proc, &p_param->next_mode ) )
-	{	
-	//次のプロセスへ行く
-	case BR_BTN_SYS_INPUT_CHANGESEQ:
-		BR_PROC_SYS_Push( p_param->p_procsys, p_param->next_proc );
-		NAGI_Printf( "MENU: Next %d!\n", p_param->next_proc );
-		return GFL_PROC_RES_FINISH;
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
+   
+  case SEQ_MAIN:
+    //プロセス処理
+    BR_BTN_SYS_Main( p_wk->p_btn );
+    if( BR_BTN_SYS_GetInput( p_wk->p_btn, &p_param->next_proc, &p_param->next_mode ) != BR_BTN_SYS_INPUT_NONE )
+    { 
+      *p_seq  = SEQ_FADEOUT_START;
+    }
+    break;
 
-	case BR_BTN_SYS_INPUT_EXIT:
-		NAGI_Printf( "MENU: Exit!\n" );
-		BR_PROC_SYS_Pop( p_param->p_procsys );
-		return GFL_PROC_RES_FINISH;
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
 
-	default:
-		return GFL_PROC_RES_CONTINUE;
-	}
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    //ボタンが押された処理
+    switch( BR_BTN_SYS_GetInput( p_wk->p_btn, &p_param->next_proc, &p_param->next_mode ) )
+    {	
+      //次のプロセスへ行く
+    case BR_BTN_SYS_INPUT_CHANGESEQ:
+      BR_PROC_SYS_Push( p_param->p_procsys, p_param->next_proc );
+      NAGI_Printf( "MENU: Next %d!\n", p_param->next_proc );
+      return GFL_PROC_RES_FINISH;
+
+    case BR_BTN_SYS_INPUT_EXIT:
+      NAGI_Printf( "MENU: Exit!\n" );
+      BR_PROC_SYS_Pop( p_param->p_procsys );
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
 }
 

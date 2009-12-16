@@ -21,6 +21,10 @@
 
 #include "scrcmd_wifi_st.h"
 #include "savedata/wifilist.h"
+#include "event_wifibattlematch.h"
+#include "event_battlerecorder.h"
+#include "script_def.h"
+#include "poke_tool/regulation_def.h"
 
 //--------------------------------------------------------------------
 /**
@@ -66,9 +70,41 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
   u16 regulation = SCRCMD_GetVMWorkValue( core, work );
   u16 party = SCRCMD_GetVMWorkValue( core, work );
 
-  /*
-  SCRIPT_CallEvent( sc, EVENT_WiFiClub( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
-  */ 
+  
+  WIFIBATTLEMATCH_POKE poke;
+  BtlRule btl_rule;
+
+  switch( regulation )
+  { 
+  case REG_RND_SINGLE:
+    btl_rule  = BTL_RULE_SINGLE;
+    break;
+  case REG_RND_DOUBLE:
+    btl_rule  = BTL_RULE_DOUBLE;
+    break;
+  case REG_RND_TRIPLE:
+    btl_rule  = BTL_RULE_TRIPLE;
+    break;
+  case REG_RND_ROTATION:
+    btl_rule  = BTL_RULE_ROTATION;
+    break;
+  case REG_RND_TRIPLE_SHOOTER:
+    btl_rule  = BTL_RULE_TRIPLE;
+    break;
+  }
+
+  switch( party )
+  { 
+  case SCRCMD_BTL_PARTY_TEMOTI:
+    poke  = WIFIBATTLEMATCH_POKE_TEMOTI;
+    break;
+  case SCRCMD_BTL_PARTY_BTLBOX:
+    poke  = WIFIBATTLEMATCH_POKE_BTLBOX;
+    break;
+  }
+
+  SCRIPT_CallEvent( sc, EVENT_WifiBattleMatch( gsys, GAMESYSTEM_GetFieldMapWork(gsys), WIFIBATTLEMATCH_MODE_RANDOM, poke, btl_rule ) );
+  
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }
 
@@ -92,11 +128,11 @@ VMCMD_RESULT EvCmdWifiBattleRecorderEventCall( VMHANDLE* core, void* wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 value = SCRCMD_GetVMWorkValue( core, work );
 
-  /*
-  SCRIPT_CallEvent( sc, EVENT_WiFiClub( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
-  */
+  const BR_MODE mode = (value == SCRCMD_BTL_RECORDER_MODE_VIDEO)? BR_MODE_GLOBAL_BV:  BR_MODE_GLOBAL_MUSICAL;
+
+  SCRIPT_CallEvent( sc, EVENT_WifiBattleRecorder( gsys, GAMESYSTEM_GetFieldMapWork(gsys), mode ) );
+
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }
-

@@ -27,6 +27,15 @@ typedef enum
 
 } WIFIBATTLEMATCH_MODE;
 
+//-------------------------------------
+///	使用ポケモン
+//=====================================
+typedef enum
+{
+	WIFIBATTLEMATCH_POKE_TEMOTI,      //手持ちポケ
+	WIFIBATTLEMATCH_POKE_BTLBOX,      //バトルボックスポケ
+
+} WIFIBATTLEMATCH_POKE;
 
 //=============================================================================
 /**
@@ -41,7 +50,7 @@ typedef struct
   GAMEDATA              *p_game_data; //[in ]ゲームデータ
   BtlRule               btl_rule;     //[in ]バトルルール
 	WIFIBATTLEMATCH_MODE	mode;         //[in ]起動モード
-  POKEPARTY             *p_party;     //[in ]選択用パーティ（手持ちorバトルボックスのはず）
+  WIFIBATTLEMATCH_POKE  poke;         //[in ]選択用パーティ（手持ちorバトルボックスのはず）
 } WIFIBATTLEMATCH_PARAM;
 
 

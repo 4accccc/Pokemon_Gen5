@@ -11,6 +11,7 @@
 #pragma once
 #include "br_proc_sys.h"
 #include "br_res.h"
+#include "br_fade.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -38,6 +39,7 @@ typedef enum
 typedef struct 
 {
 	BR_RECODE_PROC_MODE	mode;					//[out]起動モード
+  BR_FADE_WORK        *p_fade;      //[in]フェード
 	BR_RES_WORK					*p_res;				//[in]リソース管理
 	BR_PROC_SYS					*p_procsys;		//[in]プロセス管理
 	GFL_CLUNIT					*p_unit;			//[in]ユニット

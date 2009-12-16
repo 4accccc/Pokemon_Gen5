@@ -123,7 +123,7 @@ typedef enum
 //=====================================
 typedef enum
 {
-  MATCHMAKE_KEY_BTL,  //ダミー
+  MATCHMAKE_KEY_BTL,  //ランダム
   MATCHMAKE_KEY_DEBUG,  //ダミー
 
   MATCHMAKE_KEY_MAX,
@@ -866,11 +866,11 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
+void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule btl_rule )
 { 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, 0 );
-  STD_TSPrintf( p_wk->filter, "bt=%d And db=%d", 0, MATCHINGKEY );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, btl_rule );
+  STD_TSPrintf( p_wk->filter, "bt=%d And db=%d", btl_rule, MATCHINGKEY );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 }
 

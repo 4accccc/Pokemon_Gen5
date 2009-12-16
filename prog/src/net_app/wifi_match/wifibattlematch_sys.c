@@ -26,6 +26,8 @@
 
 #include "net/network_define.h"
 
+#include "savedata/battle_box_save.h"
+
 //自分のモジュール
 #include "wifibattlematch_core.h"
 #include "wifibattlematch_subproc.h"
@@ -219,12 +221,14 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SYS, 0x10000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SYS, 0x15000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_SYS), HEAPID_WIFIBATTLEMATCH_SYS );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_SYS) );
   p_wk->p_param   = p_param_adrs;
+  OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->p_param->poke, p_wk->p_param->btl_rule );
+
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
 
   p_wk->p_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
@@ -253,10 +257,25 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       p_player->nation  = WIFIHISTORY_GetMyNation(p_wifi_histroy); 
       p_player->area    = WIFIHISTORY_GetMyArea(p_wifi_histroy); 
     }
-    { 
-      //@todo
-      POKEPARTY *p_temoti = GAMEDATA_GetMyPokemon(p_wk->p_param->p_game_data);
-      GFL_STD_MemCopy( p_temoti, p_player->pokeparty, PokeParty_GetWorkSize() );
+    {
+      POKEPARTY *p_temoti;
+      switch( p_wk->p_param->poke )
+      {
+      case WIFIBATTLEMATCH_POKE_TEMOTI:
+        p_temoti = GAMEDATA_GetMyPokemon(p_wk->p_param->p_game_data);
+        GFL_STD_MemCopy( p_temoti, p_player->pokeparty, PokeParty_GetWorkSize() );
+        break;
+
+      case WIFIBATTLEMATCH_POKE_BTLBOX:
+        { 
+          SAVE_CONTROL_WORK*	p_sv	= GAMEDATA_GetSaveControlWork(p_wk->p_param->p_game_data);
+          BATTLE_BOX_SAVE *p_btlbox_sv = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+          p_temoti  = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
+          GFL_STD_MemCopy( p_temoti, p_player->pokeparty, PokeParty_GetWorkSize() );
+          GFL_HEAP_FreeMemory( p_temoti );
+        }
+        break;
+      }
     }
   }
 
@@ -584,13 +603,29 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SUBPROC_PARAM    *p_param;
   WIFIBATTLEMATCH_SYS               *p_wk   = p_wk_adrs;
+  int reg_no;
 
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
 	
 
+  switch( p_wk->p_param->btl_rule  )
+  { 
+  case BTL_RULE_SINGLE:
+    reg_no  = REG_RND_SINGLE;
+    break;
+  case BTL_RULE_DOUBLE:
+    reg_no  = REG_RND_DOUBLE;
+    break;
+  case BTL_RULE_TRIPLE:
+    reg_no  = REG_RND_TRIPLE;
+    break;
+  case BTL_RULE_ROTATION:
+    reg_no  = REG_RND_ROTATION;
+    break;
+  }
 
-  p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( REG_DEBUG_BATTLE , heapID );
+  p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
   p_param->p_party    = p_wk->p_btl_party;
   p_param->gameData   = p_wk->p_param->p_game_data;
 
@@ -663,8 +698,28 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(BATTLE_SETUP_PARAM) );
 		
-  BTL_SETUP_Single_Comm( p_param, p_wk->p_param->p_game_data, 
-                         GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
+  switch( p_wk->p_param->btl_rule )
+  {
+  case BTL_RULE_SINGLE:    ///< シングル
+    BTL_SETUP_Single_Comm( p_param, p_wk->p_param->p_game_data, 
+        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
+    break;
+
+  case BTL_RULE_DOUBLE:    ///< ダブル
+    BTL_SETUP_Double_Comm( p_param, p_wk->p_param->p_game_data, 
+        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
+    break;
+
+  case BTL_RULE_TRIPLE:    ///< トリプル
+    BTL_SETUP_Triple_Comm( p_param, p_wk->p_param->p_game_data, 
+        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
+    break;
+
+  case BTL_RULE_ROTATION:  ///< ローテーション
+    BTL_SETUP_Rotation_Comm( p_param, p_wk->p_param->p_game_data, 
+        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
+    break;
+  }
 
   BATTLE_PARAM_SetPokeParty( p_param, p_wk->p_btl_party, BTL_CLIENT_PLAYER ); 
 

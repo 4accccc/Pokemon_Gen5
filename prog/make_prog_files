@@ -106,6 +106,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_gtsnego.c \
         field/event_cg_wireless.c \
         field/event_wifibattlematch.c \
+        field/event_battlerecorder.c \
         field/event_debug_wifimatch.c \
         field/event_fldmmdl_control.c \
         net_app/wificlub/wifi_p2pevent.c \
