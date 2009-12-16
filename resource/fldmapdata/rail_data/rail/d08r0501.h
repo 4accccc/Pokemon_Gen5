@@ -11,3 +11,5 @@
 #define RE_LINE_8 (7)
 #define RE_LINE_9 (8)
 #define RE_LINE_10 (9)
+#define RE_LINE_15 (10)
+#define RE_LINE_20 (11)
