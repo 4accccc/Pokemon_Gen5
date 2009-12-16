@@ -19,9 +19,10 @@
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
-
 #include "event_battle.h"
+
 #include "move_pokemon.h"
+#include "field/zonedata.h"
 
 #include "scrcmd_encount.h"
 #include "effect_encount.h"
@@ -128,10 +129,29 @@ VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+	ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
 	
   u8 move_poke = (u8)SCRCMD_GetVMWorkValue( core, work );
+	
+  if ( EncDataSave_IsMovePokeValid( enc_sv, move_poke ) == FALSE ){
+    MP_AddMovePoke( gdata, move_poke ); 
+  }
 
-  MP_AddMovePoke( gdata, move_poke ); 
+#ifdef PM_DEBUG
+  {
+    u16 zone_id;
+    char buf[ZONEDATA_NAME_LENGTH];
+    MPD_PTR mpd = EncDataSave_GetMovePokeDataPtr( enc_sv, move_poke );
+    zone_id = EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_ZONE_ID );
+    if( zone_id != MVPOKE_ZONE_NULL){
+      ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
+      OS_Printf( "move_poke %d\n->ZONE:%s\n", move_poke, buf );
+    }else{
+      OS_Printf( "move_poke %d\n->ZONE:âBÇÍÇƒÇ¢ÇÈ\n", move_poke, buf );
+    }
+    OS_Printf("->HPÅF%d\n",EncDataSave_GetMovePokeDataParam(mpd,MP_PARAM_HP));
+  }
+#endif
 	return VMCMD_RESULT_CONTINUE;
 }
 

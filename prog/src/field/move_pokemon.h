@@ -11,6 +11,7 @@
 #include "gamesystem/game_data.h"
 #include "savedata/save_control.h"
 #include "savedata/encount_sv.h"
+#include "field/move_pokemon_def.h"
 
 extern void MP_JumpMovePokemonAll(ENC_SV_PTR inEncData);
 extern void MP_JumpMovePokemon(ENC_SV_PTR inEncData, const u8 inTarget);
