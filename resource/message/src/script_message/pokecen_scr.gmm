@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T11:49:37"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:03:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -338,7 +338,7 @@
 
 	<row id="msg_pc_heal_01">
 		<comment>ポケセン回復時（夜　17：00：00～3：59：59）
-・はい／いいえの選択
+・はい/いいえの選択
 　はい　→msg_pc_heal_04
 　いいえ→msg_pc_heal_06</comment>
 		<attribute name="キャラ指定">ポケセン受付１</attribute>
@@ -353,7 +353,7 @@
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
-休ませてあげますか？</language>
+休ませて　あげますか？</language>
 	</row>
 
 	<row id="msg_pc_heal_02">
@@ -373,7 +373,7 @@
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
-休ませてあげますか？</language>
+休ませて　あげますか？</language>
 	</row>
 
 	<row id="msg_pc_heal_03">
@@ -393,7 +393,7 @@
 ここでは　ポケモンの
 体力回復を　します[BE:01:ページ切り替え（クリア）]
 あなたの　ポケモンを
-休ませてあげますか？</language>
+休ませて　あげますか？</language>
 	</row>
 
 	<row id="msg_pc_heal_04">
@@ -405,7 +405,7 @@
 		<language name="JPN" width="256">それでは
 おあずかり　いたします！</language>
 		<language name="JPN_KANJI" width="256">それでは
-お預かりいたします！</language>
+お預かり　いたします！</language>
 	</row>
 
 	<row id="msg_pc_heal_05">
