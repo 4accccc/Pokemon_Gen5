@@ -71,6 +71,7 @@ NETWORKSRC =  net/net_icondata.c \
 SRCS  +=    $(SOUNDSRC) \
         $(SAVEDATASRC) \
         $(NETWORKSRC) \
+        system/pm_version.c \
         test/matsuda/performance.c \
         system/debug_print.c \
         system/vm.c \

@@ -90,6 +90,7 @@ extern const u8 CasetteVersion;
 
 extern const u8 CasetteLanguage;
 
+extern const u8 GetVersion( void );
 #endif
 
 //=========================================================================
