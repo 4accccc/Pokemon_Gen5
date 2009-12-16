@@ -521,7 +521,7 @@ static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw, EV_MAPCHG_TYPE type )
   event = GMEVENT_Create( mcw->gsys, NULL, EVENT_FUNC_MapChangeCore, sizeof( MAPCHANGE_WORK_PTR ) );
   work  = GMEVENT_GetEventWork( event );
   *work = mcw;
-  work->mapchange_type = type;
+  mcw->mapchange_type = type;
   return event;
 }
 
