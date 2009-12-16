@@ -21,6 +21,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+#define	CDEMO_SKIP_KEY		( PAD_BUTTON_A | PAD_BUTTON_B )		// スキップボタン
 
 
 
@@ -65,7 +66,7 @@ static const pCommDemoFunc MainSeq[] = {
 //-------------------------------------------------------------------------------------------
 BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 {
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+	if( GFL_UI_KEY_GetTrg() & CDEMO_SKIP_KEY ){
 		wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
 	}
 

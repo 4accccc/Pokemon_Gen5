@@ -13,8 +13,8 @@
 #include "system\gfl_use.h"
 #include "arc_def.h"
 
+#include "corporate.h"
 #include "corp.naix"
-
 
 
 //==============================================================================
@@ -27,7 +27,9 @@ enum{
 	FRAME_LOGO = GFL_BG_FRAME1_S,
 };
 
-#define TIMER_WAIT (90)
+#define TIMER_WAIT			(90)
+#define END_TIMER_WAIT	(30)		// 終了待ち
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -41,19 +43,22 @@ typedef struct {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
+static GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+#ifdef PM_DEBUG
+static void SetEndMode( u32 * buf, u32 mode );
+#endif
 
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern const	GFL_PROC_DATA TitleProcData;
-FS_EXTERN_OVERLAY(title);
+//extern const	GFL_PROC_DATA TitleProcData;
+//FS_EXTERN_OVERLAY(title);
 
 //==============================================================================
 //	データ
 //==============================================================================
-GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 ///PROCデータ
 const GFL_PROC_DATA CorpProcData = {
@@ -114,7 +119,7 @@ static const GFL_BG_BGCNT_HEADER logoS_frame = {
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	CORP_WORK* cw;
 	
@@ -131,7 +136,7 @@ GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, void * myw
  * PROC Main
  */
 //--------------------------------------------------------------------------
-GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	CORP_WORK* cw = mywk;
 	enum{
@@ -140,6 +145,7 @@ GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * myw
 		SEQ_MAIN,
 		SEQ_NEXT,
 		SEQ_FADEOUT,
+		SEQ_WAIT,
 		SEQ_END,
 	};
 	
@@ -208,12 +214,23 @@ GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * myw
 
 #ifdef PM_DEBUG
 		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
-			cw->seq = SEQ_NEXT;
+			SetEndMode( pwk, CORPORATE_RET_SKIP );
+			cw->seq = SEQ_END;
+			break;
+		}
+		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+			SetEndMode( pwk, CORPORATE_RET_DEBUG );
+			cw->seq = SEQ_END;
 			break;
 		}
 #endif
+
 		if(cw->timer > TIMER_WAIT){
+#ifdef PM_DEBUG
+			SetEndMode( pwk, CORPORATE_RET_NORMAL );
+#endif
 			cw->seq = SEQ_NEXT;
+			cw->timer = 0;
 			break;
 		}
 		break;
@@ -228,6 +245,13 @@ GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * myw
 
 	case SEQ_FADEOUT:
 		if(GFL_FADE_CheckFade() == FALSE){
+			cw->seq = SEQ_WAIT;
+		}
+		break;
+
+	case SEQ_WAIT:
+		cw->timer++;
+		if(cw->timer > END_TIMER_WAIT){
 			cw->seq = SEQ_END;
 		}
 		break;
@@ -245,7 +269,7 @@ GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * myw
  * PROC Quit
  */
 //--------------------------------------------------------------------------
-GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	CORP_WORK* cw = mywk;
 	
@@ -256,3 +280,15 @@ GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk
 	return GFL_PROC_RES_FINISH;
 }
 
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------------------
+/**
+ * 終了モード設定
+ */
+//--------------------------------------------------------------------------
+static void SetEndMode( u32 * buf, u32 mode )
+{
+	*buf = mode;
+}
+#endif

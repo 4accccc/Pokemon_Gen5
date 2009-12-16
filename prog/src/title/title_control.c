@@ -13,6 +13,7 @@
 #include "system\main.h"
 #include "title/title.h"
 #include "demo/command_demo.h"
+#include "corporate.h"
 
 
 //==============================================================================
@@ -25,7 +26,6 @@ static GFL_PROC_RESULT TitleControlProcEnd( GFL_PROC * proc, int * seq, void * p
 //==============================================================================
 //	データ
 //==============================================================================
-extern const GFL_PROC_DATA CorpProcData;
 
 const GFL_PROC_DATA TitleControlProcData = {
 	TitleControlProcInit,
@@ -33,7 +33,10 @@ const GFL_PROC_DATA TitleControlProcData = {
 	TitleControlProcEnd,
 };
 
-static COMMANDDEMO_DATA	cdemo_data;
+#ifdef PM_DEBUG
+static u32 CorpRet;										// 社名表示処理ワーク
+#endif
+static COMMANDDEMO_DATA	cdemo_data;		// デモ処理ワーク
 
 
 //==============================================================================
@@ -65,19 +68,42 @@ static GFL_PROC_RESULT TitleControlProcInit( GFL_PROC * proc, int * seq, void * 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#ifdef PM_DEBUG
 	switch( *seq  ){
 	case 0:
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &CorpProcData, NULL);
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpRet );
 		*seq = 1;
 		break;
+
+	case 1:
+		if( CorpRet == CORPORATE_RET_NORMAL ){
+			GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		}
+		*seq = 2;
+		break;
+
+	case 2:
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
+		return GFL_PROC_RES_FINISH;
+	}
+#else
+	switch( *seq  ){
+	case 0:
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, NULL );
+		*seq = 1;
+		break;
+
 	case 1:
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
 		*seq = 2;
 		break;
+
 	case 2:
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
 		return GFL_PROC_RES_FINISH;
 	}
+#endif
+
 	return GFL_PROC_RES_CONTINUE;
 }
 

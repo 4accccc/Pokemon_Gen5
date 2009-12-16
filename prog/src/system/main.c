@@ -55,8 +55,8 @@ static void DEBUG_StackOverCheck(void);
 //------------------------------------------------------------------
 //	äOïîä÷êîêÈåæ
 //------------------------------------------------------------------
-extern const	GFL_PROC_DATA CorpProcData;
-FS_EXTERN_OVERLAY(title);
+//extern const	GFL_PROC_DATA CorpProcData;
+//FS_EXTERN_OVERLAY(title);
 
 //------------------------------------------------------------------
 /**

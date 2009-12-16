@@ -23,6 +23,9 @@
 #include "title/startmenu.h"
 #include "system\gfl_use.h"
 
+#ifdef PM_DEBUG
+#include "corporate.h"
+#endif
 
 
 //==============================================================================
@@ -41,7 +44,7 @@
 #define PUSH_TIMER_WAIT			(45)
 
 ///
-#define TOTAL_WAIT			(60*10)
+#define TOTAL_WAIT			(60*20)
 
 ///BMPウィンドウ
 enum{
@@ -310,7 +313,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		SEQ_FADEOUT,
 		SEQ_END,
 	};
-	
+
 	switch(tw->seq){
 	case SEQ_INIT:
 		DEBUG_PerformanceSetActive(TRUE);	//デバッグ：パフォーマンスメーター有効
@@ -364,6 +367,18 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		tw->totalWait = 0;
 
 		GFL_BG_SetVisible(FRAME_LOGO_M, VISIBLE_ON);
+
+#ifdef PM_DEBUG
+		if( pwk != NULL ){
+			u32 * corp = pwk;
+			if( *corp == CORPORATE_RET_DEBUG ){
+				tw->mode = PAD_BUTTON_SELECT;
+				tw->seq = SEQ_END;
+				break;
+			}
+		}
+#endif
+
 		{// FADEIN設定
 			int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
 			GFL_FADE_SetMasterBrightReq(mode, 16, 0, 2);
