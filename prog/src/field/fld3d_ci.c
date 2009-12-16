@@ -563,6 +563,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     DeleteResource(ptr, &evt_work->SetupDat);
     //3D面をオフ(キャプチャ面が見えている)
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+    //クリアカラーのアルファを元に戻す
     G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
     (*seq)++;
     break;
