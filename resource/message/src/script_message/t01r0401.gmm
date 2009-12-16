@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T17:55:09"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:12:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -625,126 +625,45 @@
 	</row>
 
 	<row id="msg_t01r0401_doctor01_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・はい／いいえ</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">アララギ[BE:01:ページ切り替え（クリア）]
-ごぞんじのとおり　わかき
-ポケモン　けんきゅうか　だ[BE:01:ページ切り替え（クリア）]
-さて……　いきなり　ポケモンの
-はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
-おくりつけて　わるかったね[BE:00:ページ切り替え（行送り）]
-おどろいたかい？</language>
-		<language name="JPN_KANJI" width="256">アララギ[BE:01:ページ切り替え（クリア）]
-ご存知のとおり　若き
-ポケモン研究家　だ[BE:01:ページ切り替え（クリア）]
-さて……　いきなり　ポケモンの
-はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
-送りつけて　悪かったね[BE:00:ページ切り替え（行送り）]
-驚いたかい？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・はい／いいえ</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">アララギ[BE:01:ページ切り替え（クリア）]
-ごぞんじのとおり　わかき
-ポケモン　けんきゅうか　だ[BE:01:ページ切り替え（クリア）]
-さて……　いきなり　ポケモンの
-はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
-おくりつけて　わるかったね[BE:00:ページ切り替え（行送り）]
-おどろいたかい？</language>
-		<language name="JPN_KANJI" width="256">アララギ[BE:01:ページ切り替え（クリア）]
-ご存知のとおり　若き
-ポケモン研究家　だ[BE:01:ページ切り替え（クリア）]
-さて……　いきなり　ポケモンの
-はいった　モンスターボールを[BE:00:ページ切り替え（行送り）]
-送りつけて　悪かったね[BE:00:ページ切り替え（行送り）]
-驚いたかい？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・はい選択時</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">あれしきの　ことで
-おどろいていたら　たいへん　だよ[BE:01:ページ切り替え（クリア）]
-なにせ　ポケモンは　とにかく
-ふしぎな　いきもの　だからさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あれしきの　ことで
-驚いていたら　大変　だよ[BE:01:ページ切り替え（クリア）]
-なにせ　ポケモンは　とにかく
-不思議な　生き物　だからさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">そうか　おどろかなかったか……[BE:01:ページ切り替え（クリア）]
-だけど　そんな　きみでも
-ポケモンには　おどろかされるよ！[BE:01:ページ切り替え（クリア）]
-なにせ　ポケモンは
-ふしぎな　いきもの　だからさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうか　驚かなかったか……[BE:01:ページ切り替え（クリア）]
-だけど　そんな　きみでも
-ポケモンには　驚かされるよ！[BE:01:ページ切り替え（クリア）]
-なにせ　ポケモンは
-不思議な　生き物　だからさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">なぜ　きみに
-ポケモンを　あげたか？[BE:01:ページ切り替え（クリア）]
-そのりゆうは　いっしょに　おくった
-ポケモンずかんに　ある！[BE:01:ページ切り替え（クリア）]
-この　イッシュちほう　では
-さまざまな　ポケモンが[BE:00:ページ切り替え（行送り）]
-いろんな　ところで　くらしている[BE:01:ページ切り替え（クリア）]
-そこで　きみに　たのみたい！[BE:01:ページ切り替え（クリア）]
-きみは　イッシュちほうの
-ポケモンたち　すべてに　であい[BE:00:ページ切り替え（行送り）]
-ポケモンずかんに　きろく　してほしい！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">なぜ　きみに
-ポケモンを　あげたか？[BE:01:ページ切り替え（クリア）]
-その理由は　一緒に　送った
-ポケモン図鑑に　ある！[BE:01:ページ切り替え（クリア）]
-この　イッシュ地方　では
-さまざまな　ポケモンが[BE:00:ページ切り替え（行送り）]
-いろんな　ところで　暮らしている[BE:01:ページ切り替え（クリア）]
-そこで　きみに　頼みたい！[BE:01:ページ切り替え（クリア）]
-きみは　イッシュ地方の
-ポケモンたち　すべてに　出会い[BE:00:ページ切り替え（行送り）]
-ポケモン図鑑に　記録してほしい！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_06" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">……ついでに[BE:01:ページ切り替え（クリア）]
-たびに　でたままの　オヤジも
-さがしてくれると　たすかるけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……ついでに[BE:01:ページ切り替え（クリア）]
-旅に　出たままの　オヤジも
-探してくれると　助かるけど[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_doctor01_07" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">さあ　さあ　さあ！
-この　せかいに　なにがあるのか[BE:01:ページ切り替え（クリア）]
-きみと！
-きみの　えらんだ　ポケモンとで！[BE:00:ページ切り替え（行送り）]
-たしかめてくれよ！！</language>
-		<language name="JPN_KANJI" width="256">さあ　さあ　さあ！
-この　世界に　なにがあるのか[BE:01:ページ切り替え（クリア）]
-きみと！
-きみの　選んだ　ポケモンとで！[BE:00:ページ切り替え（行送り）]
-確かめてくれよ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_photo_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -761,9 +680,9 @@
 ・所定のイベント以降
 　こちらのメッセージ表示</comment>
 		<attribute name="キャラ指定">写真たて</attribute>
-		<language name="JPN" width="256">ちちと　むすこ……
-ふたりの　アララギはかせの　しゃしんだ</language>
-		<language name="JPN_KANJI" width="256">父と　息子……
+		<language name="JPN" width="256">ちちと　むすめ……
+ふたりの　アララギはかせの　しゃしん</language>
+		<language name="JPN_KANJI" width="256">父と　娘……
 二人の　アララギ博士の　写真だ</language>
 	</row>
 
