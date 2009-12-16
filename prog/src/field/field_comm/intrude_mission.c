@@ -218,17 +218,24 @@ void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *
  *
  * @param   mission		代入先
  * @param   src		    セットするデータ
+ * 
+ * @retval  new_mission   TRUE:新規に受信したミッション　FALSE:受信済み or 無効なミッション
  */
 //==================================================================
-void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
+BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
 {
   MISSION_DATA *mdata = &mission->data;
+  BOOL new_mission = FALSE;
+  
+  if(mission->parent_data_recv == FALSE && src->accept_netid != INTRUDE_NETID_NULL){
+    new_mission = TRUE;
+    mission->parent_data_recv = TRUE;
+  }
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
-  mission->parent_data_recv = TRUE;
   mission->start_timer = GFL_RTC_GetTimeBySecond();
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
-    return;
+    return new_mission;
   }
   
   *mdata = *src;
@@ -238,6 +245,7 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
     return;
   }
 #endif
+  return new_mission;
 }
 
 //==================================================================

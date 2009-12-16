@@ -216,3 +216,18 @@ BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm)
   return intcomm->wfbc_recv;
 }
 
+//==================================================================
+/**
+ * 新規ミッション受信フラグを取得
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		TRUE:受信した　FALSE:受信していない
+ */
+//==================================================================
+BOOL Intrude_GetNewMissionRecvFlag(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  BOOL new_mission = intcomm->new_mission_recv;
+  intcomm->new_mission_recv = FALSE;
+  return new_mission;
+}

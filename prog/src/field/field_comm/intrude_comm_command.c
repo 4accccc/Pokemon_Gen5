@@ -996,8 +996,13 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_DATA *mdata = pData;
+  BOOL new_mission;
   
-  MISSION_SetMissionData(&intcomm->mission, mdata);
+  new_mission = MISSION_SetMissionData(&intcomm->mission, mdata);
+  if(new_mission == TRUE){  //˜A‘±ŽóM‚Åã‘‚«‚³‚ê‚È‚¢‚æ‚¤‚É’¼Ú‘ã“ü‚Í‚µ‚È‚¢
+    intcomm->new_mission_recv = TRUE;
+  }
+  OS_TPrintf("new_mission_recv = %d\n", new_mission);
 }
 
 //==================================================================

@@ -42,6 +42,7 @@ typedef enum{
   INTRUDE_ACTION_BATTLE,                  ///<戦闘中
   INTRUDE_ACTION_BINGO_BATTLE,            ///<ビンゴバトル中
   INTRUDE_ACTION_BINGO_BATTLE_INTRUSION,  ///<ビンゴバトル乱入参加
+  INTRUDE_ACTION_EFFECT,                  ///<演出中
 }INTRUDE_ACTION;
 
 ///会話タイプ
@@ -166,6 +167,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 wfbc_req;                ///<WFBCパラメータ要求フラグ(bit管理)
   
   u8 wfbc_recv;               ///<TRUE:WFBCパラメータを受信した
-  u8 padding[3];
+  u8 new_mission_recv;        ///<TRUE:新規にミッションを受信した
+  u8 padding[2];
 }INTRUDE_COMM_SYS;
 

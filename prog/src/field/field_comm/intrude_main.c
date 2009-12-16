@@ -946,17 +946,13 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 
 #if 0
   if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
-#else
-  if(sta->disguise_no == 0 || sta->disguise_no > MONSNO_ARUSEUSU){
+#else //※check　OBJCODE最大数チェックを入れる
+  if(sta->disguise_no == 0){
 #endif
     obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
   }
   else{
-  #if 0
-    obj_code = DisguiseObjCodeTbl[sta->disguise_no];
-  #else
-    obj_code = TPOKE_0001 + sta->disguise_no;
-  #endif
+    obj_code = sta->disguise_no;
   }
   
   return obj_code;

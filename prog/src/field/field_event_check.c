@@ -96,6 +96,9 @@
 
 #include "field_status_local.h" //FIELD_STATUS_GetReservedScript
 
+#include "event_intrude.h"
+#include "field_comm/intrude_work.h"
+
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
@@ -394,6 +397,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     u32 talk_netid;
     
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
+      //新規ミッションが発動していないかチェック
+      if(Intrude_GetNewMissionRecvFlag(intcomm) == TRUE 
+          && MISSION_GetRecvData(&intcomm->mission) != NULL){
+        return EVENT_Disguise(gsys, fieldWork, intcomm, req.heapID);
+      }
       //話しかけられていないかチェック
       if(IntrudeField_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
         FIELD_PLAYER_GRID_ForceStop( req.field_player );

@@ -809,14 +809,14 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
  *
  * @param   intcomm		
  * @param   gsys		
+ * @param   disguise_code      •Ï‘•Œã‚ÌOBJCODE (0‚Ìê‡‚Í’Êí‚Ìp)
  */
 //==================================================================
-void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys)
+void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys, u32 disguise_code)
 {
   FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER *fld_player;
-  int disguise_no;
-  u16 obj_code;
+  int obj_code;
   
   if(GAMESYSTEM_CheckFieldMapWork( gsys ) == FALSE){
     return;
@@ -824,18 +824,8 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   
   fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-#if 0
-  disguise_no = GFUser_GetPublicRand(DisguiseObjCodeTblMax);
-#else
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
-    disguise_no = MONSNO_BIRIRIDAMA + 1;  //+1 = ƒtƒVƒMƒ_ƒl‚Ì—Y“‚ª•ª‚©‚ê‚Ä“ü‚Á‚Ä‚¢‚éˆ×
-  }
-  else{
-    disguise_no = GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1;
-  }
-#endif
 
-  intcomm->intrude_status_mine.disguise_no = disguise_no;
+  intcomm->intrude_status_mine.disguise_no = disguise_code;
   intcomm->send_status = TRUE;
 
   obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 
