@@ -203,14 +203,29 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 //==========================================================================================
 // ■ニュースパラメータ
 //==========================================================================================
+// ニュースタイプ
+typedef enum {
+  NEWS_TYPE_NULL,         // 空
+  NEWS_TYPE_DATE,         // 日付
+  NEWS_TYPE_WEATHER,      // 天気
+  NEWS_TYPE_PROPAGATION,  // 大量発生
+  NEWS_TYPE_INFO_A,       // 地域情報A
+  NEWS_TYPE_INFO_B,       // 地域情報B
+  NEWS_TYPE_INFO_C,       // 地域情報C
+  NEWS_TYPE_CM,           // 一言CM 
+  NEWS_TYPE_SPECIAL,      // 臨時ニュース
+  NEWS_TYPE_NUM,
+  NEWS_TYPE_MAX = NEWS_TYPE_NUM - 1
+} NEWS_TYPE;
+
 // ニュース登録番号
 typedef enum {
   NEWS_INDEX_DATE,         // 日付
   NEWS_INDEX_WEATHER,      // 天気
   NEWS_INDEX_PROPAGATION,  // 大量発生
-  NEWS_INDEX_INFO_A,       // 情報A
-  NEWS_INDEX_INFO_B,       // 情報B
-  NEWS_INDEX_INFO_C,       // 情報C
+  NEWS_INDEX_INFO_A,       // 地域情報A
+  NEWS_INDEX_INFO_B,       // 地域情報B
+  NEWS_INDEX_INFO_C,       // 地域情報C
   NEWS_INDEX_CM,           // 一言CM
   NEWS_INDEX_NUM,
   NEWS_INDEX_MAX = NEWS_INDEX_NUM -1
@@ -222,9 +237,9 @@ static u16 news_anm_index[NEWS_INDEX_NUM] =
   ANM_ELBOARD_DATE,        // 日付
   ANM_ELBOARD_WEATHER,     // 天気
   ANM_ELBOARD_PROPAGATION, // 大量発生
-  ANM_ELBOARD_INFO_A,      // 情報A
-  ANM_ELBOARD_INFO_B,      // 情報B
-  ANM_ELBOARD_INFO_C,      // 情報C
+  ANM_ELBOARD_INFO_A,      // 地域情報A
+  ANM_ELBOARD_INFO_B,      // 地域情報B
+  ANM_ELBOARD_INFO_C,      // 地域情報C
   ANM_ELBOARD_CM,          // 一言CM
 };
 // テクスチャ名
@@ -294,7 +309,51 @@ static u16 monitor_anime[MONITOR_ANIME_NUM] =
 
 
 //==========================================================================================
-// ■ギミックワーク
+// ■ニュース登録状況
+//==========================================================================================
+typedef struct
+{
+  u8                          newsNum;  // 登録したニュースの数
+  NEWS_TYPE  newsType[NEWS_INDEX_NUM];  // 登録したニュース
+  u32      spNewsFlag[NEWS_INDEX_NUM];  // 登録した臨時ニュースに対応するフラグ
+
+} NEWS_ENTRY_DATA;
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 登録状況を更新する
+ *
+ * @param data 追加先のデータ
+ * @param type 追加するニュースのタイプ
+ * @param flag 臨時ニュースの場合, 対応するフラグを指定
+ */
+//------------------------------------------------------------------------------------------
+static void AddNewsEntryData( NEWS_ENTRY_DATA* data, NEWS_TYPE type, u32 flag )
+{
+  // すでに最大数が登録されている
+  if( NEWS_INDEX_NUM <= data->newsNum ){ return; }
+
+  // 登録
+  data->newsType[ data->newsNum ]   = type;
+  data->spNewsFlag[ data->newsNum ] = flag;
+  data->newsNum++;
+}
+
+
+//==========================================================================================
+// ■ギミック セーブワーク
+//==========================================================================================
+typedef struct
+{
+  void*                gateWork;  // ギミック管理ワークへのポインタ
+  u32             recoveryFrame;  // 復帰フレーム
+  NEWS_ENTRY_DATA newsEntryData;  // ニュース登録状況
+
+} SAVEWORK;
+
+
+//==========================================================================================
+// ■ギミック管理ワーク
 //==========================================================================================
 typedef struct
 { 
@@ -305,26 +364,16 @@ typedef struct
   ELBOARD_ZONE_DATA*     gateData;  // ゲートデータ
   ELBOARD_SPNEWS_DATA* spNewsData;  // 臨時ニュースデータ
   u8                spNewsDataNum;  // 臨時ニュースデータ数
+  NEWS_ENTRY_DATA   newsEntryData;  // ニュース登録状況
 
 } GATEWORK;
 
 
 //==========================================================================================
-// ■ギミック セーブワーク
-//==========================================================================================
-typedef struct
-{
-  GATEWORK* gateWork;  // ギミック管理ワークへのポインタ
-  u32 padding[32];
-
-} SAVEWORK;
-
-
-//==========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==========================================================================================
-static void GimmickSave( FIELDMAP_WORK* fieldmap );
-static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap );
+static void GimmickSave( const GATEWORK* work );
+static void GimmickLoad( GATEWORK* work );
 static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap );
 static void DeleteGateWork( GATEWORK* work );
 static BOOL LoadGateData( GATEWORK* work, FIELDMAP_WORK* fieldmap );
@@ -337,13 +386,16 @@ static void SetupElboardNews_Normal( GATEWORK* work );
 static void SetupElboardNews_Special( GATEWORK* work );
 static const ELBOARD_SPNEWS_DATA* SearchTopNews( GATEWORK* work );
 static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work );
+static const ELBOARD_SPNEWS_DATA* SearchFlagNews( GATEWORK* work, u32 flag );
 static BOOL CheckSpecialNews( GATEWORK* work );
 static void AddNews_DATE( GATEWORK* work );
 static void AddNews_PROPAGATION( GATEWORK* work );
 static void AddNews_WEATHER( GATEWORK* work );
-static void AddNews_INFO( GATEWORK* work );
+static void AddNews_INFO_A( GATEWORK* work );
+static void AddNews_INFO_B( GATEWORK* work );
+static void AddNews_INFO_C( GATEWORK* work );
 static void AddNews_CM( GATEWORK* work );
-static void AddNews_SPECIAL( GATEWORK* work );
+static void AddNews_SPECIAL( GATEWORK* work, const ELBOARD_SPNEWS_DATA* news );
 static void AddSpNews_DIRECT( GATEWORK* work,
                               const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx );
 static void AddSpNews_CHAMP( GATEWORK* work,
@@ -362,12 +414,8 @@ static void AddSpNews_GYM( GATEWORK* work );
 //------------------------------------------------------------------------------------------
 void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
-  HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
   GATEWORK*                work = NULL;  // GATEギミック管理ワーク
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_ELBOARD], EXPOBJ_UNIT_ELBOARD );
@@ -376,7 +424,28 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   work = CreateGateWork( fieldmap );
 
   // ギミックのセーブデータを読み込む
-  GimmickLoad( work, fieldmap ); 
+  GimmickLoad( work );
+
+  // ニュースセットアップ
+  {
+    GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+    GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+    GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+    int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
+    SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+
+    if( save_buf->newsEntryData.newsNum == 0 )
+    { // 新規
+      SetupElboardNews( work );
+    }
+    else
+    { // 復帰
+      GATE_GIMMICK_Elboard_Recovery( fieldmap );
+    }
+  }
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-GATE: setup\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -390,11 +459,11 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
 
   // ギミック状態をセーブ
-  GimmickSave( fieldmap );
+  GimmickSave( work );
   
   // 電光掲示板管理ワークを破棄
   if( work->elboard )
@@ -404,6 +473,9 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワークを破棄
   DeleteGateWork( work );
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-GATE: end\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -417,8 +489,8 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
 
   // 電光掲示板メイン処理
   GOBJ_ELBOARD_Main( work->elboard, FX32_ONE ); 
@@ -467,8 +539,8 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
 
   // 平常ニュースを構成
   SetupElboardNews_Normal( work );
@@ -490,8 +562,8 @@ void GATE_GIMMICK_Elboard_AddSpecialNews( FIELDMAP_WORK* fieldmap,
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
 
   // 電光掲示板が登録されていない場所で呼ばれたら何もしない
   if( IsGimmickIDEntried( gmk_id ) != TRUE ){ return; }
@@ -530,18 +602,59 @@ void GATE_GIMMICK_Elboard_AddSpecialNews( FIELDMAP_WORK* fieldmap,
 //------------------------------------------------------------------------------------------
 void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
 {
+  int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
+  NEWS_ENTRY_DATA* data = &save_buf->newsEntryData;
 
   // 電光掲示板が登録されていない場所で呼ばれたら何もしない
   if( IsGimmickIDEntried( gmk_id ) != TRUE )
   {
     return;
   } 
+
+  // フラグ復元
+  for( i=0; i<data->newsNum; i++)
+  {
+    EVENTWORK* evwork = GAMEDATA_GetEventWork( gdata );
+    if( data->newsType[i] == NEWS_TYPE_SPECIAL )
+    {
+      EVENTWORK_SetEventFlag( evwork, data->spNewsFlag[i] );
+    }
+  }
+  // 再セットアップ
+  SetupElboardNews( work );
+#if 0
+  // ニュース復帰
+  for( i=0; i<data->newsNum; i++ )
+  {
+    switch( data->newsType[i] )
+    {
+    default:                    break;
+    case NEWS_TYPE_NULL:        break;
+    case NEWS_TYPE_DATE:        AddNews_DATE(work);         break;
+    case NEWS_TYPE_WEATHER:     AddNews_WEATHER(work);      break;
+    case NEWS_TYPE_PROPAGATION: AddNews_PROPAGATION(work);  break;
+    case NEWS_TYPE_INFO_A:      AddNews_INFO_A(work);       break;
+    case NEWS_TYPE_INFO_B:      AddNews_INFO_B(work);       break;
+    case NEWS_TYPE_INFO_C:      AddNews_INFO_C(work);       break;
+    case NEWS_TYPE_CM:          AddNews_CM(work);           break;
+    case NEWS_TYPE_SPECIAL:     // 臨時ニュース
+                                {
+                                  u32 flag;
+                                  const ELBOARD_SPNEWS_DATA* news;
+                                  flag = data->spNewsFlag[i];
+                                  news = SearchFlagNews( work, flag );
+                                  AddNews_SPECIAL( work, news );
+                                }
+                                break;
+    }
+  } 
+#endif
   // 掲示板復帰処理
   GOBJ_ELBOARD_SetFrame( work->elboard, work->recoveryFrame << FX32_SHIFT );
 }
@@ -565,8 +678,8 @@ void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
   fx32 val_len;
   u16 val_pitch, val_yaw;
   VecFx32 val_target;
@@ -642,7 +755,7 @@ void GATE_GIMMICK_Camera_Reset( FIELDMAP_WORK* fieldmap, u16 frame )
   val_pitch = def_param.Angle.x;
   val_yaw   = def_param.Angle.y;
   // タスク登録
-  {
+ {
     FIELD_TASK_MAN* man;
     FIELD_TASK* zoom;
     FIELD_TASK* pitch;
@@ -669,46 +782,105 @@ void GATE_GIMMICK_Camera_Reset( FIELDMAP_WORK* fieldmap, u16 frame )
 /**
  * @brief ギミック状態を保存する
  *
-* @param fieldmap 依存するフィールドマップ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void GimmickSave( FIELDMAP_WORK* fieldmap )
+static void GimmickSave( const GATEWORK* work )
 {
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*       gwork = (GATEWORK*)save_buf->gateWork;
 
   // 掲示板の動作フレーム数を記憶
-  gmk_save[1] = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT; // 掲示板の復帰ポイント
+  save_buf->gateWork      = (void*)work;
+  save_buf->recoveryFrame = GOBJ_ELBOARD_GetFrame( gwork->elboard ) >> FX32_SHIFT; 
+  save_buf->newsEntryData = gwork->newsEntryData;
+
+  // DEBUG:
+  {
+    int i;
+    OBATA_Printf( "GIMMICK-GATE: gimmick save\n" );
+    OBATA_Printf( "-recoveryFrame = %d\n", save_buf->recoveryFrame );
+    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  save_buf->newsEntryData.newsNum );
+    for( i=0; i<NEWS_INDEX_NUM; i++ )
+    {
+      OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
+      switch( save_buf->newsEntryData.newsType[i] )
+      {
+      case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
+      case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
+      case NEWS_TYPE_WEATHER:     OBATA_Printf( "WEATHER\n" );     break;
+      case NEWS_TYPE_PROPAGATION: OBATA_Printf( "PROPAGATION\n" ); break;
+      case NEWS_TYPE_INFO_A:      OBATA_Printf( "INFO_A\n" );      break;
+      case NEWS_TYPE_INFO_B:      OBATA_Printf( "INFO_B\n" );      break;
+      case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
+      case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
+      case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
+      default:                    OBATA_Printf( "UNKNOWN\n" );     break;
+      }
+    }
+    for( i=0; i<NEWS_INDEX_NUM; i++ )
+    {
+      OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n",
+                    i, save_buf->newsEntryData.spNewsFlag[i] );
+    }
+  }
 }
 
 //------------------------------------------------------------------------------------------
 /**
  * @brief ギミックのセーブデータを読み込む
  *
- * @param work     ギミック管理ワーク
- * @param fieldmap 依存するフィールドマップ
+ * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
+static void GimmickLoad( GATEWORK* work )
 {
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  u32*         gmk_save = NULL;
+  SAVEWORK*    save_buf = NULL;
 
   // セーブデータ取得
-  gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  work->recoveryFrame = gmk_save[1];  // 掲示板の復帰ポイント
+  save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  work->recoveryFrame = save_buf->recoveryFrame;  // 掲示板の復帰ポイント
 
   // ギミック管理ワークのアドレスを記憶
-  gmk_save[0] = (int)work; 
+  save_buf->gateWork = work; 
 
-  GATE_GIMMICK_Elboard_Recovery( fieldmap );
+  // DEBUG:
+  {
+    int i;
+    OBATA_Printf( "GIMMICK-GATE: gimmick load\n" );
+    OBATA_Printf( "-recoveryFrame = %d\n", save_buf->recoveryFrame );
+    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  save_buf->newsEntryData.newsNum );
+    for( i=0; i<NEWS_INDEX_NUM; i++ )
+    {
+      OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
+      switch( save_buf->newsEntryData.newsType[i] )
+      {
+      case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
+      case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
+      case NEWS_TYPE_WEATHER:     OBATA_Printf( "WEATHER\n" );     break;
+      case NEWS_TYPE_PROPAGATION: OBATA_Printf( "PROPAGATION\n" ); break;
+      case NEWS_TYPE_INFO_A:      OBATA_Printf( "INFO_A\n" );      break;
+      case NEWS_TYPE_INFO_B:      OBATA_Printf( "INFO_B\n" );      break;
+      case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
+      case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
+      case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
+      default:                    OBATA_Printf( "UNKNOWN\n" );     break;
+      }
+    }
+    for( i=0; i<NEWS_INDEX_NUM; i++ )
+    {
+      OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n",
+                    i, save_buf->newsEntryData.spNewsFlag[i] );
+    }
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -753,9 +925,6 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   }
   // 臨時ニュースデータを取得
   LoadSpNewsData( work );
-
-  // ニュースセットアップ
-  SetupElboardNews( work );
 
   // 電光掲示板を配置
   { 
@@ -969,7 +1138,9 @@ static void SetupElboardNews_Normal( GATEWORK* work )
   AddNews_DATE( work );         // 日付
   AddNews_WEATHER( work );      // 天気
   AddNews_PROPAGATION( work );  // 大量発生
-  AddNews_INFO( work );         // 地域情報
+  AddNews_INFO_A( work );       // 地域情報A
+  AddNews_INFO_B( work );       // 地域情報B
+  AddNews_INFO_C( work );       // 地域情報C
   AddNews_CM( work );           // 一言CM
 }
 
@@ -1003,7 +1174,11 @@ static void SetupElboardNews_Special( GATEWORK* work )
   AddNews_DATE( work );         // 日付
   AddNews_WEATHER( work );      // 天気
   AddNews_PROPAGATION( work );  // 大量発生
-  AddNews_SPECIAL( work );      // 臨時ニュース
+  { // 臨時ニュース
+    const ELBOARD_SPNEWS_DATA* news;
+    news = SearchTopNews( work );
+    AddNews_SPECIAL( work, news );
+  }
   AddNews_CM( work );           // 一言CM
 }
 
@@ -1080,6 +1255,35 @@ static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief 指定したフラグに対応するニュースを検索する
+ *
+ * @param work ギミック管理ワーク
+ * @param flag 検索するフラグ
+ *
+ * @return 指定したフラグに対応するニュース
+ *         ニュースがない場合 NULL
+ */
+//------------------------------------------------------------------------------------------
+static const ELBOARD_SPNEWS_DATA* SearchFlagNews( GATEWORK* work, u32 flag )
+{
+  int i;
+
+  // データを持っていない
+  if( !work->spNewsData ){ return NULL; }
+
+  // 臨時ニュースデータを検索
+  for( i=0; i<work->spNewsDataNum; i++ )
+  { 
+    if( work->spNewsData[i].flag == flag )
+    {
+      return &work->spNewsData[i];
+    }
+  }
+  return NULL;
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief 臨時ニュースの有無を調べる
  *
  * @param work ギミック管理ワーク
@@ -1125,6 +1329,9 @@ static void AddNews_DATE( GATEWORK* work )
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_DATE, 0 );
 }
 
 //------------------------------------------------------------------------------------------
@@ -1221,6 +1428,9 @@ static void AddNews_WEATHER( GATEWORK* work )
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_WEATHER, 0 );
 }
 
 //------------------------------------------------------------------------------------------
@@ -1277,19 +1487,21 @@ static void AddNews_PROPAGATION( GATEWORK* work )
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_PROPAGATION, 0 );
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 掲示板のニュースを追加する(地域情報)
+ * @brief 掲示板のニュースを追加する(地域情報A)
  *
  * @param work ギミック管理ワーク
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_INFO( GATEWORK* work )
+static void AddNews_INFO_A( GATEWORK* work )
 {
-  int i;
-  NEWS_PARAM news[LOCAL_INFO_NUM];
+  NEWS_PARAM news;
   RTCDate date;
 
   // 日時データを取得
@@ -1298,69 +1510,109 @@ static void AddNews_INFO( GATEWORK* work )
   // 曜日に応じた情報を選択
   switch( date.week )
   {
-  case RTC_WEEK_SUNDAY:    
-    news[0].msgStrID = work->gateData->msgID_infoG;  
-    news[1].msgStrID = work->gateData->msgID_infoH;  
-    news[2].msgStrID = work->gateData->msgID_infoI;  
-    break;
-  case RTC_WEEK_MONDAY:    
-    news[0].msgStrID = work->gateData->msgID_infoD;  
-    news[1].msgStrID = work->gateData->msgID_infoE;  
-    news[2].msgStrID = work->gateData->msgID_infoF;  
-    break;
-  case RTC_WEEK_TUESDAY:   
-    news[0].msgStrID = work->gateData->msgID_infoA;  
-    news[1].msgStrID = work->gateData->msgID_infoB;  
-    news[2].msgStrID = work->gateData->msgID_infoC;  
-    break;
-  case RTC_WEEK_WEDNESDAY: 
-    news[0].msgStrID = work->gateData->msgID_infoE;  
-    news[1].msgStrID = work->gateData->msgID_infoF;  
-    news[2].msgStrID = work->gateData->msgID_infoG;  
-    break;
-  case RTC_WEEK_THURSDAY:  
-    news[0].msgStrID = work->gateData->msgID_infoB;  
-    news[1].msgStrID = work->gateData->msgID_infoC;  
-    news[2].msgStrID = work->gateData->msgID_infoD;  
-    break;
-  case RTC_WEEK_FRIDAY:    
-    news[0].msgStrID = work->gateData->msgID_infoF;  
-    news[1].msgStrID = work->gateData->msgID_infoG;  
-    news[2].msgStrID = work->gateData->msgID_infoH;  
-    break;
-  case RTC_WEEK_SATURDAY:  
-    news[0].msgStrID = work->gateData->msgID_infoC;  
-    news[1].msgStrID = work->gateData->msgID_infoD;  
-    news[2].msgStrID = work->gateData->msgID_infoE;  
-    break;
+  case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoG;  break;
+  case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoD;  break;
+  case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoA;  break;
+  case RTC_WEEK_WEDNESDAY: news.msgStrID = work->gateData->msgID_infoE;  break;
+  case RTC_WEEK_THURSDAY:  news.msgStrID = work->gateData->msgID_infoB;  break;
+  case RTC_WEEK_FRIDAY:    news.msgStrID = work->gateData->msgID_infoF;  break;
+  case RTC_WEEK_SATURDAY:  news.msgStrID = work->gateData->msgID_infoC;  break;
   }
 
-  news[0].animeIndex = news_anm_index[NEWS_INDEX_INFO_A];
-  news[0].texName    = news_tex_name[NEWS_INDEX_INFO_A];
-  news[0].pltName    = news_plt_name[NEWS_INDEX_INFO_A];
-  news[0].msgArcID   = ARCID_MESSAGE;
-  news[0].msgDatID   = NARC_message_gate_dat;
-  news[0].wordset    = NULL;
-
-  news[1].animeIndex = news_anm_index[NEWS_INDEX_INFO_B];
-  news[1].texName    = news_tex_name[NEWS_INDEX_INFO_B];
-  news[1].pltName    = news_plt_name[NEWS_INDEX_INFO_B];
-  news[1].msgArcID   = ARCID_MESSAGE;
-  news[1].msgDatID   = NARC_message_gate_dat;
-  news[1].wordset    = NULL;
-
-  news[2].animeIndex = news_anm_index[NEWS_INDEX_INFO_C];
-  news[2].texName    = news_tex_name[NEWS_INDEX_INFO_C];
-  news[2].pltName    = news_plt_name[NEWS_INDEX_INFO_C];
-  news[2].msgArcID   = ARCID_MESSAGE;
-  news[2].msgDatID   = NARC_message_gate_dat;
-  news[2].wordset    = NULL;
+  news.animeIndex = news_anm_index[NEWS_INDEX_INFO_A];
+  news.texName    = news_tex_name[NEWS_INDEX_INFO_A];
+  news.pltName    = news_plt_name[NEWS_INDEX_INFO_A];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.wordset    = NULL;
 
   // ニュースを追加
-  for( i=0; i<LOCAL_INFO_NUM; i++ )
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_INFO_A, 0 );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板のニュースを追加する(地域情報B)
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void AddNews_INFO_B( GATEWORK* work )
+{
+  NEWS_PARAM news;
+  RTCDate date;
+
+  // 日時データを取得
+  RTC_GetDate( &date ); 
+
+  // 曜日に応じた情報を選択
+  switch( date.week )
   {
-    GOBJ_ELBOARD_AddNews( work->elboard, &news[i] );
+  case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoH;  break;
+  case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoE;  break;
+  case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoB;  break;
+  case RTC_WEEK_WEDNESDAY: news.msgStrID = work->gateData->msgID_infoF;  break;
+  case RTC_WEEK_THURSDAY:  news.msgStrID = work->gateData->msgID_infoC;  break;
+  case RTC_WEEK_FRIDAY:    news.msgStrID = work->gateData->msgID_infoG;  break;
+  case RTC_WEEK_SATURDAY:  news.msgStrID = work->gateData->msgID_infoD;  break;
   }
+
+  news.animeIndex = news_anm_index[NEWS_INDEX_INFO_B];
+  news.texName    = news_tex_name[NEWS_INDEX_INFO_B];
+  news.pltName    = news_plt_name[NEWS_INDEX_INFO_B];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.wordset    = NULL;
+
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_INFO_B, 0 );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板のニュースを追加する(地域情報C)
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void AddNews_INFO_C( GATEWORK* work )
+{
+  NEWS_PARAM news;
+  RTCDate date;
+
+  // 日時データを取得
+  RTC_GetDate( &date ); 
+
+  // 曜日に応じた情報を選択
+  switch( date.week )
+  {
+  case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoI;  break;
+  case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoF;  break;
+  case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoC;  break;
+  case RTC_WEEK_WEDNESDAY: news.msgStrID = work->gateData->msgID_infoG;  break;
+  case RTC_WEEK_THURSDAY:  news.msgStrID = work->gateData->msgID_infoD;  break;
+  case RTC_WEEK_FRIDAY:    news.msgStrID = work->gateData->msgID_infoH;  break;
+  case RTC_WEEK_SATURDAY:  news.msgStrID = work->gateData->msgID_infoE;  break;
+  }
+
+  news.animeIndex = news_anm_index[NEWS_INDEX_INFO_C];
+  news.texName    = news_tex_name[NEWS_INDEX_INFO_C];
+  news.pltName    = news_plt_name[NEWS_INDEX_INFO_C];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.wordset    = NULL;
+
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_INFO_C, 0 );
 }
 
 //------------------------------------------------------------------------------------------
@@ -1398,31 +1650,27 @@ static void AddNews_CM( GATEWORK* work )
   
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( work->elboard, &news );
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_CM, 0 );
 } 
 
 //------------------------------------------------------------------------------------------
 /**
  * @brief 掲示板のニュースを追加する(臨時ニュース)
  * 
- * @param work ギミック管理ワーク
+ * @param work   ギミック管理ワーク
+ * @param news   追加する臨時ニュースデータ
  */
 //------------------------------------------------------------------------------------------
-static void AddNews_SPECIAL( GATEWORK* work )
-{
-  const ELBOARD_SPNEWS_DATA* news;
-
-  // 最も優先順位の高いニュースを取得
-  news = SearchTopNews( work );
-
-  // 臨時ニュースなし
-  if( news == NULL ){ return; }
-
+static void AddNews_SPECIAL( GATEWORK* work, const ELBOARD_SPNEWS_DATA* news )
+{ 
   // ニュースを追加
   switch( news->newsType )
   {
   case SPNEWS_TYPE_DIRECT: AddSpNews_DIRECT( work, news, NEWS_INDEX_INFO_A );  break;
   case SPNEWS_TYPE_CHAMP:  AddSpNews_CHAMP( work, news, NEWS_INDEX_INFO_A );   break;
-  case SPNEWS_TYPE_GYM:    AddSpNews_GYM( work );                        break;
+  case SPNEWS_TYPE_GYM:    AddSpNews_GYM( work );                              break;
   }
 } 
 
@@ -1459,6 +1707,9 @@ static void AddSpNews_DIRECT( GATEWORK* work,
     EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata ); 
     EVENTWORK_ResetEventFlag( evwork, spnews->flag );
   }
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_SPECIAL, spnews->flag );
 }
 
 //------------------------------------------------------------------------------------------
@@ -1514,6 +1765,9 @@ static void AddSpNews_CHAMP( GATEWORK* work,
     EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata ); 
     EVENTWORK_ResetEventFlag( evwork, spnews->flag );
   }
+
+  // 登録状況を更新
+  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_SPECIAL, spnews->flag );
 }
 
 //------------------------------------------------------------------------------------------
@@ -1538,5 +1792,5 @@ static void AddSpNews_GYM( GATEWORK* work )
 
     // 次のジムニュースを取得
     news = SearchGymNews( work );
-  }
+  } 
 }
