@@ -320,6 +320,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/wf_01_00.3dppack \
 	$(DIR_OUTPUT)/wf_00_01.3dppack \
 	$(DIR_OUTPUT)/wf_01_01.3dppack \
+	$(DIR_OUTPUT)/bc_00_00.3dppack \
+	$(DIR_OUTPUT)/bc_01_00.3dppack \
+	$(DIR_OUTPUT)/bc_00_01.3dppack \
+	$(DIR_OUTPUT)/bc_01_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
