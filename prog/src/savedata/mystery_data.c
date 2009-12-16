@@ -29,6 +29,12 @@ struct MYSTERY_DATA{
   GIFT_PACK_DATA card[GIFT_DATA_MAX];			// カード情報
 };
 
+//=============================================================================
+/**
+ *  プロトタイプ
+ */
+//=============================================================================
+static void MYSTERYDATA_FillSpaceCard( MYSTERY_DATA * fd, u32 cardindex );
 
 //============================================================================================
 //
@@ -141,7 +147,11 @@ void MYSTERYDATA_RemoveCardData(MYSTERY_DATA *fd, u32 index)
 {
   GF_ASSERT(index < GIFT_DATA_MAX);
   if(index < GIFT_DATA_MAX){
+    //消す
     fd->card[index].gift_type = MYSTERYGIFT_TYPE_NONE;
+
+    //空いた分を詰める
+    MYSTERYDATA_FillSpaceCard( fd, index );
   }
 }
 
@@ -260,6 +270,53 @@ void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 num)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カードデータを入れ替える
+ *
+ *	@param	MYSTERY_DATA * fd ふしぎセーブデータへのポインタ
+ *	@param	cardindex1        入れ替えるカード１
+ *	@param	cardindex2        入れ替えるカード２
+ */
+//-----------------------------------------------------------------------------
+void MYSTERYDATA_SwapCard( MYSTERY_DATA * fd, u32 cardindex1, u32 cardindex2 )
+{ 
+  if( MYSTERYDATA_IsExistsCard( fd, cardindex1 )
+    && MYSTERYDATA_IsExistsCard( fd, cardindex2 ) )
+  { 
+    GIFT_PACK_DATA  temp;
+    GIFT_PACK_DATA  *p_data1;
+    GIFT_PACK_DATA  *p_data2;
+
+    p_data1 = MYSTERYDATA_GetCardData( fd, cardindex1 );
+    p_data2 = MYSTERYDATA_GetCardData( fd, cardindex2 );
+
+    GFL_STD_MemCopy( p_data1, &temp, sizeof(GIFT_PACK_DATA) );
+    GFL_STD_MemCopy( p_data2, p_data1, sizeof(GIFT_PACK_DATA) );
+    GFL_STD_MemCopy( &temp, p_data2, sizeof(GIFT_PACK_DATA) );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カードデータの空きを詰める
+ *
+ *	@param	MYSTERY_DATA * fd ふしぎセーブデータへのポインタ
+ *	@param  cardindex         空きカードのインデックス
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERYDATA_FillSpaceCard( MYSTERY_DATA * fd, u32 cardindex )
+{ 
+  if( !MYSTERYDATA_IsExistsCard( fd, cardindex ) )
+  { 
+    int i;
+    for( i = cardindex; i < GIFT_DATA_MAX-1; i++ )
+    { 
+      fd->card[i] = fd->card[i+1];
+    }
+    GFL_STD_MemClear( &fd->card[i], sizeof(GIFT_PACK_DATA) );
+  }
+}
 
 //------------------------------------------------------------------
 /**

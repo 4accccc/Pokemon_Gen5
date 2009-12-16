@@ -989,14 +989,13 @@ SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
 
 
 
-### •sŽv‹c‚È‘¡‚è•¨
-###===> SRCS_OVERLAY_DPW_COMMON
-##SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
-##     mystery/comm_mystery_gift.c \
-##      mystery/comm_mystery_state.c \
-##      mystery/comm_mystery_card.c \
-##      mystery/mysterylib.c \
-##      mystery/beacondownload.c
+# •sŽv‹c‚È‘¡‚è•¨
+#===> SRCS_OVERLAY_WIFI_LOGIN
+SRCS_OVERLAY_MYSTERY = net_app/mystery/mystery.c \
+                      net_app/mystery/mystery_graphic.c \
+                      net_app/mystery/mystery_util.c \
+                      net_app/mystery/mystery_album.c \
+                      net_app/mystery/mystery_net.c
 
 
 # CGEAR WIRELESS

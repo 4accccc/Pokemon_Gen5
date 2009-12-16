@@ -131,6 +131,7 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
       p_param = dbw->p_sub_wk;
       p_param->mode   = dbw->mode;
       p_param->p_save = dbw->ctrl;
+      p_param->p_gamedata = GAMESYSTEM_GetGameData( gsys );
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifibattlematch_core), &DEBUG_WifiBattleMatch_ProcData, dbw->p_sub_wk );
     }
     (*seq)++;

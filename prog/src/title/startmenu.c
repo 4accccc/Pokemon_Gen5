@@ -31,6 +31,8 @@
 #include "battle_championship/battle_championship.h"
 #include "net_app/irc_battle.h"
 #include "test/ariizumi/ari_debug.h"
+#include "net_app/mystery.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -251,10 +253,8 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   return GFL_PROC_RES_FINISH;
 }
 
-FS_EXTERN_OVERLAY(mystery);
 FS_EXTERN_OVERLAY(pdw_acc);
    
-extern const GFL_PROC_DATA MysteryGiftProcData;
 extern const GFL_PROC_DATA PDW_ACC_MainProcData;
 
 //--------------------------------------------------------------------------
@@ -276,9 +276,8 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
       break;
       
     case SMI_MYSTERY_GIFT:  //不思議な贈り物
-      //@todo 置き換えが終わるまで一時封印
-//      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
-//      break;
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
+      break;
 
     case SMI_WIFI_SETTING: //WIFI設定
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);

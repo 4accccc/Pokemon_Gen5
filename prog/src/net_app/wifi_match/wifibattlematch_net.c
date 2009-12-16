@@ -60,6 +60,7 @@
 
 #define SAKE_STAT_INITIAL_PROFILE_ID  "INITIAL_PROFILE_ID"
 #define SAKE_STAT_NOW_PROFILE_ID      "NOW_PROFILE_ID"
+#define SAKE_STAT_LAST_LOGIN_DATETIME "LAST_LOGIN_DATETIME"
 
 //-------------------------------------
 ///	SCのシーケンス
@@ -189,7 +190,8 @@ struct _WIFIBATTLEMATCH_NET_WORK
 
   u32 seq_matchmake;
   char filter[128];
-  char search[128];
+  char where[128];
+  char orderby[128];
   MATCHMAKE_KEY_WORK  key_wk[ MATCHMAKE_KEY_MAX ];
   HEAPID heapID;
 
@@ -302,11 +304,11 @@ static const int sc_field_type[]  =
 
 static const int sc_default_value[]  =
 { 
-  1000,//"ARENA_ELO_RATING_1V1_DOUBLE",
-  1000,//"ARENA_ELO_RATING_1V1_ROTATE",
-  1000,//"ARENA_ELO_RATING_1V1_SHOOTER",
-  1000,//"ARENA_ELO_RATING_1V1_SINGLE",
-  1000,//"ARENA_ELO_RATING_1V1_TRIPLE",
+  1500,//"ARENA_ELO_RATING_1V1_DOUBLE",
+  1500,//"ARENA_ELO_RATING_1V1_ROTATE",
+  1500,//"ARENA_ELO_RATING_1V1_SHOOTER",
+  1500,//"ARENA_ELO_RATING_1V1_SINGLE",
+  1500,//"ARENA_ELO_RATING_1V1_TRIPLE",
   0,//"CHEATS_COUNTER",
   0,//"COMPLETE_MATCHES_COUNTER",
   0,//"DISCONNECTS_COUNTER",
@@ -582,9 +584,9 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
 	      DWCGdbSearchCond search_cond  =
 	      { 
 	        NULL, //WHERE     あとで入れる
-	        NULL, //ORDERBY
+	        NULL, //ORDERBY   あとで入れる
 	        0,    //結果の何番目から取得するか
-	        1,    
+	        10,
 	        NULL,
 	        0,
 	        NULL,
@@ -596,10 +598,12 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
 	
 	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
 	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
-        DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d\n", init_profileID, now_profileID );
+        DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
 	
-	      STD_TSPrintf( p_wk->search, "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
-	      search_cond.filter  = p_wk->search;
+	      STD_TSPrintf( p_wk->where, "INITIAL_PROFILE_ID = %d", init_profileID );
+	      STD_TSPrintf( p_wk->orderby, "LAST_LOGIN_DATETIME ASC" );
+	      search_cond.filter  = p_wk->where;
+	      search_cond.sort    = p_wk->orderby;
         p_wk->is_backup = FALSE;
 	      *p_result = DWC_GdbSearchRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME,
 	                                      ATLAS_GetFieldName(), ATLAS_GetFieldNameNum(),
@@ -905,6 +909,13 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2 ,WIFIBATTLEMATCH_Eval_Callback, p_wk ) != 0 )
     {
       GFL_NET_DWC_SetVChat( FALSE );
+      p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
+    }
+    break;
+
+  case WIFIBATTLEMATCH_NET_SEQ_MATCH_START2:
+    if( GFL_NET_StateStartWifiRandomMatch_RateMode() )
+    { 
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_WAIT;
     }
     break;
@@ -1042,21 +1053,15 @@ WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMAT
  *	@brief  マッチメイクを切断する
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param	is_return   ログイン後に戻るならばTRUE  完全に切断するならばFALSE
+ *	@param	is_force  強制切断のときはTRUE　状況に合わせるときはFALSE
  *
  *	@return TRUEで処理終了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_return )
+BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force )
 { 
-  if( GFL_NET_DWC_disconnect( GFL_NET_IsParentMachine() ) )
-  { 
-    if( GFL_NET_DWC_returnLobby() && is_return )
-    { 
-      return TRUE;
-    }
-  }
-  return FALSE;
+  GFL_NET_StateWifiMatchEnd(!is_force);
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -2543,6 +2548,9 @@ static void DwcRap_Gdb_GetRecordsCallback(int record_num, DWCGdbField** records,
         else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_NOW_PROFILE_ID ) )
         { 
           p_data->now_profileID  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_LAST_LOGIN_DATETIME ) )
+        { 
         }
         print_field( field );
         DEBUG_NET_Printf(" ");

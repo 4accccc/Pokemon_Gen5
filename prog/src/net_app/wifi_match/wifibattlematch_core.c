@@ -825,6 +825,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
       GF_ASSERT_MSG( result == DWC_GDB_ERROR_NONE, "GdbProcessエラー %d\n", result );
       if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
+
         //自分のデータを表示
         PLAYERINFO_RANDOMMATCH_DATA info_setup;
         GFL_CLUNIT	*p_unit;
@@ -837,6 +838,11 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
         info_setup.win_cnt  = p_wk->rnd_score.single_win;
         info_setup.lose_cnt = p_wk->rnd_score.single_lose;
         info_setup.btl_cnt  = p_wk->rnd_score.single_win + p_wk->rnd_score.single_lose; //@todo
+        if( p_wk->p_playerinfo )
+        { 
+          PLAYERINFO_RND_Exit( p_wk->p_playerinfo );
+          p_wk->p_playerinfo  = NULL;
+        }
         {
           MYSTATUS  *p_my;
           p_my  = GAMEDATA_GetMyStatus(p_param->p_param->p_game_data); 
@@ -980,6 +986,10 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Matching( WIFIBATTLEMATCH_WORK *p_wk,
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
         GFL_STD_MemCopy( p_recv_data, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
 
+        if( p_wk->p_matchinfo )
+        { 
+          MATCHINFO_Exit( p_wk->p_matchinfo );
+        }
         { 
           p_wk->p_matchinfo		= MATCHINFO_Init( p_enemy_data, p_unit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );
         }
@@ -1404,6 +1414,11 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
       info_setup.win_cnt  = p_wk->rnd_score.single_win;
       info_setup.lose_cnt = p_wk->rnd_score.single_lose;
       info_setup.btl_cnt  = p_wk->rnd_score.single_win + p_wk->rnd_score.single_lose; //@todo
+      if( p_wk->p_playerinfo )
+      { 
+        PLAYERINFO_RND_Exit( p_wk->p_playerinfo );
+        p_wk->p_playerinfo  = NULL;
+      }
       {
         MYSTATUS  *p_my;
         p_my  = GAMEDATA_GetMyStatus(p_param->p_param->p_game_data); 
@@ -1517,6 +1532,10 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Matching( WIFIBATTLEMATCH_WORK *p_wk,
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
         GFL_STD_MemCopy( p_recv_data, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
 
+        if( p_wk->p_matchinfo )
+        { 
+          MATCHINFO_Exit( p_wk->p_matchinfo );
+        }
         { 
           p_wk->p_matchinfo		= MATCHINFO_Init( p_enemy_data, p_unit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );
         }

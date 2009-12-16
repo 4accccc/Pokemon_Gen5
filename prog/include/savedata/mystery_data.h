@@ -48,6 +48,15 @@
 #define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
 
 
+//------------------------------------------------------------------
+///		受信日時
+//------------------------------------------------------------------
+#define MYSTERYGIFT_DATE_MASK_YEAR    0xFFFF
+#define MYSTERYGIFT_DATE_MASK_MONTH   0xFF
+#define MYSTERYGIFT_DATE_MASK_DAY     0xFF
+#define MYSTERYGIFT_DATE_SHIFT_YEAR   16
+#define MYSTERYGIFT_DATE_SHIFT_MONTH  8
+#define MYSTERYGIFT_DATE_SHIFT_DAY    0
 
 
 // サイズ固定用構造体
@@ -226,9 +235,6 @@ extern BOOL MYSTERYDATA_IsExistsCardAll(const MYSTERY_DATA *fd);
 //------------------------------------------------------------------
 extern BOOL MYSTERYDATA_IsHavePresent(const MYSTERY_DATA * fd, u32 cardindex);
 
-
-
-
 //------------------------------------------------------------------
 /// 指定のイベントはすでにもらったか返す
 //------------------------------------------------------------------
@@ -238,6 +244,27 @@ extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 
+
+//------------------------------------------------------------------
+/// 受信日時　年月日受け取り
+//------------------------------------------------------------------
+inline s32 MYSTERYDATA_GetYear( s32 recv_date )
+{ 
+  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_YEAR) & MYSTERYGIFT_DATE_MASK_YEAR;
+}
+inline s32 MYSTERYDATA_GetMonth( s32 recv_date )
+{ 
+  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_MONTH) & MYSTERYGIFT_DATE_MASK_MONTH;
+}
+inline s32 MYSTERYDATA_GetDay( s32 recv_date )
+{ 
+  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_DAY) & MYSTERYGIFT_DATE_MASK_DAY;
+}
+
+//------------------------------------------------------------------
+//	 指定のカードを入れ替える
+//------------------------------------------------------------------
+extern void MYSTERYDATA_SwapCard( MYSTERY_DATA * fd, u32 cardindex1, u32 cardindex2 );
 
 //------------------------------------------------------------------
 /// デバッグ用にポケモンデータをセットする関数

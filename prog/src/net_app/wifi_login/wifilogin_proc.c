@@ -901,7 +901,7 @@ static void _modeReportInit(WIFILOGIN_WORK* pWork)
 
 static void _FadeWait(WIFILOGIN_WORK* pWork)
 {
-  if(GFL_FADE_CheckFade()){
+  if(!GFL_FADE_CheckFade()){
     return;
   }
   _CHANGE_STATE(pWork,NULL);
