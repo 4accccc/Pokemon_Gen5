@@ -103,15 +103,15 @@ ev_leader4_btl:
 
 	//バッジ入手処理
 	_SET_BADGE_FLAG( BADGE_ID_04 )		//バッジフラグon
-	_PLAYER_NAME( 0 )
-	//～～はボルトバッジを入手した！
-	_SYSWIN_MSG_ALLPUT_DOWN( msg_c04gym0101_leader_03 )
-	_ME_PLAY( SEQ_ME_BADGE )
 
 	//バッジ入手演出再生
+	_ME_PLAY( SEQ_ME_BADGE )
 	_CALL_FLD3D_CUTIN( FLDCIID_GYM04 )
-
 	_ME_WAIT()
+
+	//～～はボルトバッジを入手した！
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG_DOWN( msg_c04gym0101_leader_03 )
 	_SYSWIN_CLOSE()
 
 	//ボルトバッジがあれば！
