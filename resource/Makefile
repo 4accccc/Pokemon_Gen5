@@ -111,7 +111,8 @@ SUBDIRS	=	wmi \
 			season_display \
 			zukan_gra \
 			demo3d \
-			fld_trade
+			fld_trade \
+			intro
 
 include $(RESOURCE_MACRO)
 
