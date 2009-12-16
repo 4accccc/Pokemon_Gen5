@@ -35,9 +35,6 @@
 #define PLAYER_OFS_X (0)
 #define PLAYER_OFS_Y (0)
 #define PLAYER_OFS_Z ((FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT)
-#define PLAYER_POS_X (LIFT_POS_X + PLAYER_OFS_X + HALF_GRID)
-#define PLAYER_POS_Y (LIFT_POS_Y + PLAYER_OFS_Y)
-#define PLAYER_POS_Z (LIFT_POS_Z + PLAYER_OFS_Z + HALF_GRID)
 
 // ギミックワークのデータインデックス
 typedef enum{
@@ -263,12 +260,33 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
   // リフトのアニメーション初期化
   FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_TA, TRUE );
 
-  // リフトの座標を初期化
+  // リフトの座標をアニメ最終フレームの値で初期化
+  {
+    ICA_ANIME* anime; 
+    VecFx32 trans;
+    u32 max_frame;
+    anime = ICA_ANIME_CreateAlloc( work->heapID,
+                                   ARCID, NARC_league_front_pl_ele_01_ica_bin );
+    max_frame = ICA_ANIME_GetMaxFrame( anime );
+    ICA_ANIME_GetTranslateAt( anime, &trans, max_frame - 1 );
+    {
+      GFL_G3D_OBJSTATUS* objstatus;
+      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+      exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
+      VEC_Set( &objstatus->trans, trans.x, trans.y, trans.z );
+    }
+    ICA_ANIME_Delete( anime );
+  }
+  // @todo icaにx,zの情報が入ったら以下の処理は削除する
   {
     GFL_G3D_OBJSTATUS* objstatus;
     objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
     VEC_Set( &objstatus->trans, LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z );
   }
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-LF02: init gimmick\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -309,6 +327,65 @@ typedef struct
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief  リフトの座標を更新する
+ * @return 移動が終了したら TRUE, そうでなければ　FALSE
+ */
+//------------------------------------------------------------------------------------------
+static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
+{
+  BOOL anime_end;
+
+  // アニメーションを進める
+  anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
+
+  // リフトの座標を更新
+  if( !anime_end )
+  {
+    VecFx32 trans;
+    GFL_G3D_OBJSTATUS* objstatus;
+    FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+    exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
+    ICA_ANIME_GetTranslate( work->liftAnime, &trans );
+    VEC_Set( &objstatus->trans, trans.x, trans.y, trans.z );
+
+    // @todo icaにx,zの情報が入ったら以下の処理は削除する
+    objstatus->trans.x = LIFT_POS_X;
+    objstatus->trans.z = LIFT_POS_Z;
+  }
+  return anime_end;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の座標をリフトの動きに合わせる
+ */
+//------------------------------------------------------------------------------------------
+static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
+{
+  FIELD_PLAYER* player;
+  VecFx32 pos, trans;
+  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  ICA_ANIME_GetTranslate( work->liftAnime, &trans );
+  VEC_Set( &pos, 
+      trans.x + PLAYER_OFS_X, 
+      trans.y + PLAYER_OFS_Y, 
+      trans.z + PLAYER_OFS_Z );
+  // @todo icaにx,zの情報が入ったら以下の処理は削除する
+  {
+    pos.x = LIFT_POS_X + PLAYER_OFS_X;
+    pos.z = LIFT_POS_Z + PLAYER_OFS_Z;
+  }
+  // x, z座標がグリッドの中心になるように調整
+  pos.x = GRID_TO_FX32( FX32_TO_GRID(pos.x) ) + HALF_GRID;
+  pos.z = GRID_TO_FX32( FX32_TO_GRID(pos.z) ) + HALF_GRID;
+  FIELD_PLAYER_SetPos( player, &pos );
+  // DEBUG:
+  OBATA_Printf( "pos = %d, %d, %d\n", FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief リフト降下イベント処理
  */
 //------------------------------------------------------------------------------------------
@@ -326,16 +403,11 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
                                                NARC_league_front_pl_ele_01_ica_bin );
     }
-#if 1
-    { // 自機座標初期化
-      FIELD_PLAYER* player;
-      VecFx32 pos;
-      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-      VEC_Set( &pos, PLAYER_POS_X, PLAYER_POS_Y, PLAYER_POS_Z );
-      FIELD_PLAYER_SetPos( player, &pos );
-    }
-#endif
+    // リフトと自機の座標を初期化
+    MoveLift( work );
+    SetPlayerOnLift( work );
     ++(*seq);
+    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // フェードイン
   case 1:
@@ -345,38 +417,30 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       GMEVENT_CallEvent( event, new_event );
     }
     ++(*seq);
+    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // アニメ終了待ち
   case 2:
-#if 1
-    // 自機, リフトの座標を更新
     {
-      VecFx32 trans, pos;
-      FIELD_PLAYER* player;
-      GFL_G3D_OBJSTATUS* lift_status;
-      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-      // リフト
-      ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-      lift_status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
-      lift_status->trans.y = trans.y;
-      // 自機
-      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-      FIELD_PLAYER_GetPos( player, &pos );
-      pos.y = trans.y;
-      FIELD_PLAYER_SetPos( player, &pos );
-    }
-#endif
-    // アニメーション更新
-    if( ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE ) )  // if(アニメ終了)
-    { 
-      ICA_ANIME_Delete( work->liftAnime );
-      ++(*seq); 
+      BOOL anime_end;
+
+      // リフトを動かす
+      anime_end = MoveLift( work );
+
+      // 自機をリフトに合わせる
+      if( !anime_end ){ SetPlayerOnLift( work ); }
+
+      // アニメ終了判定
+      if( anime_end )
+      { 
+        ICA_ANIME_Delete( work->liftAnime );
+        ++(*seq); 
+        OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
+      } 
     }
     break;
   // 終了処理
   case 3:
-#if 1
     // 自機を着地させる
     {
       VecFx32 pos;
@@ -390,11 +454,12 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = height;
       FIELD_PLAYER_SetPos( player, &pos );
     }
-#endif
     ++(*seq); 
+    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // 終了
   case 4:
+    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> finish\n" );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

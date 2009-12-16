@@ -383,13 +383,10 @@ static void CheckSeasonChange( MAPCHANGE_WORK* work )
   u8 last_season;
   FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( work->gamedata );
 
-  // ゲーム開始日時を取得
+  // 現在時刻から季節を求める
   scw    = GAMEDATA_GetSaveControlWork( work->gamedata );
   gmtime = SaveData_GetGameTime( scw );
-  RTC_ConvertSecondToDateTime( &date_start, &time_start, gmtime->start_sec );
-  // 現在時刻とその季節を求める
-  GFL_RTC_GetDate( &date_now );
-  work->next_season = (date_now.month + 12 - date_start.month) % PMSEASON_TOTAL;
+  work->next_season = PMSEASON_CalcSeasonID_bySec( gmtime->start_sec );
   // 最後に表示した季節を取得
   last_season = FIELD_STATUS_GetSeasonDispLast( fstatus );
   // 遷移先が屋内か屋外かを判定
