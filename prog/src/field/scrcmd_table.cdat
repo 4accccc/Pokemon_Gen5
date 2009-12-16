@@ -515,7 +515,7 @@
 
   DEF_CMD( EvCmdBModelAnimeSetFinished, EV_SEQ_BMODEL_ANIME_SET_FINISHED )
   DEF_CMD( EvCmdBModelAnimeStop, EV_SEQ_BMODEL_ANIME_STOP )
-  NO_CMD()
+  DEF_CMD( EvCmdBModelChangeViewFlag, EV_SEQ_BMODEL_CHANGE_VIEW_FLAG )
   NO_CMD()
 
   NO_CMD()

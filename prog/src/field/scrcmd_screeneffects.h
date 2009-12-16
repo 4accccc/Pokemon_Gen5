@@ -26,6 +26,7 @@ extern VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelChangeViewFlag( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk );

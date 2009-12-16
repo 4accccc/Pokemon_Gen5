@@ -320,6 +320,20 @@ VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+static FIELD_BMODEL_MAN * getBModelMan( SCRCMD_WORK * wk )
+{
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
+  return bmodel_man;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 配置モデル実データのアニメ制御：再生終了状態にする
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
 {
   u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
@@ -327,10 +341,7 @@ VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   VecFx32 pos;
   SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
-  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
 
   G3DMAPOBJST * entry = NULL;
 
@@ -341,6 +352,36 @@ VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
   entry = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, bm_id, &pos );
   G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
   G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 配置モデル実データの表示制御ON/OFF
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBModelChangeViewFlag( VMHANDLE * core, void *wk )
+{
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  VecFx32 pos;
+
+  SCRCMD_WORK *work = wk;
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
+  G3DMAPOBJST * entry = NULL;
+
+  pos.x = GRID_TO_FX32( gx );
+  pos.y = 0;
+  pos.z = GRID_TO_FX32( gz );
+
+  entry = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, bm_id, &pos );
+  if (entry)
+  {
+    G3DMAPOBJST_changeViewFlag( entry, flag );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -359,17 +400,6 @@ static u16 bmodel_unique_key;
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk );
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static FIELD_BMODEL_MAN * getBModelMan( SCRCMD_WORK * wk )
-{
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
-  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
-  return bmodel_man;
-}
 
 //--------------------------------------------------------------
 /**
