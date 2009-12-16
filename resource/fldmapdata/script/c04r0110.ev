@@ -31,6 +31,63 @@ _EVENT_DATA_END
 /********************************************************************/
 /*            FLAG_CHANGE_LABEL               */
 /********************************************************************/
+//ワーク初期化
+ev_c04r0110_init_map_change_work:
+  _FLAG_SET( FV_C04R0110_TRAINER )
+  _FLAG_SET( FV_C04R0110_PLAYER )
+  _RET
+
+//ワーク初期化　負け
+ev_playmode_init_lose:
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_lose_double
+
+playmode_init_lose_single:
+  _LDVAL( WK_OTHER_SCENE_C04R0102, 2 )
+  _RET
+
+playmode_init_lose_double:
+  _LDVAL( WK_OTHER_SCENE_C04R0104, 2 )
+  _RET
+
+//ワーク初期化　休み
+ev_playmode_init_rest:
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_rest_double
+
+playmode_init_rest_single:
+  _LDVAL( WK_OTHER_SCENE_C04R0102, 1 )
+  _RET
+
+playmode_init_rest_double:
+  _LDVAL( WK_OTHER_SCENE_C04R0104, 1 )
+  _RET
+
+//ワーク初期化　リタイア
+ev_playmode_init_retire:
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_retire_double
+
+playmode_init_retire_single:
+  _LDVAL( WK_OTHER_SCENE_C04R0102, 2 )
+  _RET
+
+playmode_init_retire_double:
+  _LDVAL( WK_OTHER_SCENE_C04R0104, 2 )
+  _RET
+
+//マップ戻り
+ev_playmode_retmap:
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_retmap_double
+
+playmode_retmap_single:
+  _MAP_CHANGE( ZONE_ID_C04R0102,13,13,DIR_RIGHT )
+  _RET
+
+playmode_retmap_double:
+  _MAP_CHANGE( ZONE_ID_C04R0104,13,13,DIR_RIGHT )
+  _RET
 
 //======================================================================
 //  初期化
@@ -48,17 +105,23 @@ INIT_EVENT_START ev_init_c04r0110
   //自機非表示
   _BSUBWAY_TOOL( BSWAY_TOOL_PLAYER_VANISH,BSWAY_NULL,BSWAY_NULL )
   
-  //ダミーOBJフラグ初期化
-  _FLAG_SET( FV_C04R0110_TRAINER )
-  _FLAG_SET( FV_C04R0110_PLAYER )
-  
   //ダミー自機出現
   _FLAG_RESET( FV_C04R0110_PLAYER )
   _BSUBWAY_TOOL( BSWAY_TOOL_GET_MINE_OBJ,BSWAY_PTCODE_MINE,LOCALWORK0 )
   _LDWK( OBJCHRWORK0,LOCALWORK0 )
   _OBJ_ADD( C04R0110_HERO )
-  _OBJ_POS_CHANGE( C04R0110_HERO, 6, 0, 7, DIR_LEFT )
   
+  _IFVAL_JUMP WK_OTHER_SCENE_C04R0110,EQ,2,ev_init_set_player_continue
+  
+  //初回　入り口から乗り込む
+  _OBJ_POS_CHANGE( C04R0110_HERO, 15, 0, 8, DIR_UP )
+  _JUMP ev_init_set_trainer
+  
+  //続き、車両から乗り込む
+ev_init_set_player_continue:
+  _OBJ_POS_CHANGE( C04R0110_HERO, 18, 0, 4, DIR_UP )
+  
+ev_init_set_trainer:
   //ボス戦闘の場合は事前にトレーナーを配置
   _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_init_leader_add
@@ -69,8 +132,8 @@ ev_init_leader_add:
   _FLAG_RESET( FV_C04R0110_TRAINER )
   _LDVAL( OBJCHRWORK1, OBJCODE_TRAINBOSS )
   _OBJ_ADD( C04R0110_TRAINER )
-  _OBJ_POS_CHANGE( C04R0110_TRAINER, 4, 0, 7, DIR_RIGHT )
-
+  _OBJ_POS_CHANGE( C04R0110_TRAINER, 7, 0, 4, DIR_RIGHT )
+  
 ev_init_c04r0110_end:
 INIT_EVENT_END
 
@@ -80,8 +143,8 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 //  乗車
 //--------------------------------------------------------------
-ev_train_entry_first:
-  _LDVAL( WK_OTHER_SCENE_C04R0110,3 )
+EVENT_START ev_train_entry_first
+  _LDVAL( WK_OTHER_SCENE_C04R0110, 0 )
   
    //マップフェード
   _MAP_FADE_BLACK_IN()
@@ -94,18 +157,28 @@ ev_train_entry_first:
   */
   
   //自機入場
-  _CALL ev_train_rooms_comanm_in
+  _CALL ev_train_anime_player_in_first
   
   //対戦へ
   _JUMP ev_train_rooms_sbtl_01
-  _END
-
+EVENT_END
+  
 //--------------------------------------------------------------
 //  乗車　続きから
 //--------------------------------------------------------------
-ev_train_entry_continue:
-  _JUMP ev_train_entry_first
-  _END
+EVENT_START ev_train_entry_continue
+  _LDVAL( WK_OTHER_SCENE_C04R0110, 0 )
+  
+   //マップフェード
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //自機入場
+  _CALL ev_train_anime_player_in_continue
+  
+  //対戦へ
+  _JUMP ev_train_rooms_sbtl_01
+EVENT_END
 
 //======================================================================
 //  シングル対戦
@@ -129,10 +202,6 @@ ev_train_rooms_sbtl_01:
   //エネミー退場
   _CALL ev_train_rooms_comanm_eneout
   
-  //プレイヤー回復マシンへ
-  _CALL ev_train_rooms_comanm_sbtl_end
-  
-  //連戦処理
   //ポケモン回復
   _CALL ev_train_rooms_common_heal
   
@@ -156,14 +225,14 @@ ev_train_rooms_sbtl_02:
   _END
 
 //--------------------------------------------------------------
-//  連戦つなぎ処理
+//  連戦つなぎ処理　自機を次の車両へ
 //--------------------------------------------------------------
 ev_train_rooms_next:
-  //自機を次の車両へ
-  
   //継続
   _LDVAL( WK_OTHER_SCENE_C04R0110, 2 )
-  
+   
+  _CALL ev_c04r0110_init_map_change_work
+
   //マップ遷移
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
@@ -189,7 +258,7 @@ ev_train_rooms_is_retire:
   _SYSWIN_MSG_DOWN( msg_c04r0110_06 )
   _YES_NO_WIN( SCWK_ANSWER )
   _SYSWIN_CLOSE()
-
+  
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_train_rooms_common_retire
   _JUMP ev_train_rooms_sbtl_02
   _END
@@ -214,11 +283,17 @@ ev_train_rooms_common_sbtl_call:
   _SYSWIN_CLOSE()
 
   //互いに近づく
-  _CALL ev_train_rooms_comanm_sbtl_start
+  _CALL ev_train_anime_battle_start
   
   //バトル呼び出し
+  /*
   _BSUBWAY_TOOL( BSWAY_SUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  */
+  _BLACK_OUT()
+  _BLACK_IN()
+  _LDVAL( SCWK_ANSWER, 1 )
+  
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _RET
 
@@ -226,7 +301,7 @@ ev_train_rooms_common_sbtl_call:
 //  負けて戻るときの処理
 //--------------------------------------------------------------
 ev_train_rooms_common_lose:
-  _LDVAL( WK_OTHER_SCENE_C04R0102, 3 )
+  _CALL ev_playmode_init_lose
   //敗戦パラメータセット
   _BSUBWAY_TOOL( BSWAY_SUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
   _JUMP ev_train_rooms_common_exit
@@ -236,7 +311,8 @@ ev_train_rooms_common_lose:
 //  クリアして戻るときの処理
 //--------------------------------------------------------------
 ev_train_rooms_common_clear_ret:
-    //クリアパラメータセット
+  _LDVAL( WK_OTHER_SCENE_C04R0111, 3 )
+  //クリアパラメータセット
   _BSUBWAY_TOOL( BSWAY_SUB_SET_CLEAR_SCORE,BSWAY_NULL,BSWAY_NULL )
   _JUMP ev_train_rooms_clear_exit
   _END
@@ -245,7 +321,7 @@ ev_train_rooms_common_clear_ret:
 //  休むときの処理
 //--------------------------------------------------------------
 ev_train_rooms_common_rest:
-  _LDVAL( WK_OTHER_SCENE_C04R0102,2 )
+  _CALL ev_playmode_init_rest
   
   //プレイデータセーブ
   _BSUBWAY_TOOL( BSWAY_SUB_SAVE_REST_PLAY_DATA, BSWAY_NULL, BSWAY_NULL )
@@ -274,9 +350,13 @@ ev_train_rooms_common_rest:
 //  リタイアするときの処理
 //--------------------------------------------------------------
 ev_train_rooms_common_retire:
-  _JUMP ev_train_rooms_common_lose
-  _END
+  _CALL ev_playmode_init_retire
 
+  //敗戦パラメータセット
+  _BSUBWAY_TOOL( BSWAY_SUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
+  _JUMP ev_train_rooms_common_exit
+  _END
+  
 //--------------------------------------------------------------
 //  シングルバトル勝利時パラメータセットコモン
 //--------------------------------------------------------------
@@ -290,6 +370,7 @@ ev_train_rooms_common_win_param:
 //=====================================================================
 //  リーダー対戦
 //=====================================================================
+/*
 //--------------------------------------------------------------
 //  リーダー対戦チェック
 //--------------------------------------------------------------
@@ -382,10 +463,12 @@ ev_train_rooms_leader_talk02_end:
   //リーダー戦の場合、必ず終わり
   _JUMP ev_train_rooms_common_clear_ret
   _END
+*/
 
 //--------------------------------------------------------------
 //  リーダー戦闘 二回目
 //--------------------------------------------------------------
+/*
 ev_train_rooms_leader_talk_01:
 //  _TALK_KEYWAIT  msg_tower_boss_03
   _JUMP ev_train_rooms_leader_talk01_end
@@ -397,65 +480,144 @@ ev_train_rooms_leader_talk_02:
   _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 2, BSWAY_NULL )
   _JUMP ev_train_rooms_leader_talk02_end
   _END
+*/
 
 //======================================================================
 //  回復
 //======================================================================
 ev_train_rooms_common_heal:
-  _SYSWIN_MSG_DOWN( msg_c04r0110_test02 )
-  _AB_KEYWAIT()
-  _ME_PLAY( SEQ_ME_ASA )
-  _ME_WAIT()
-//_PC_KAIFUKU
+  _CALL ev_train_anime_player_heal
+  _TEMOTI_POKEMON_KAIFUKU()
   _RET
   
 ev_train_rooms_common_exit:
   //ウェイト
-  _TIME_WAIT( 30 )
-  
-  //受付戻りフラグセット
-  _LDVAL( WK_OTHER_SCENE_C04R0102,1 )
+  _TIME_WAIT( 15 )
   
   //入ってきたゲート位置へ戻る
   _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE,BSWAY_NULL,SCWK_ANSWER )
-  
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_WIFI,ev_train_rooms_comexit_01
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_RETRY,ev_train_rooms_comexit_01
   
-  _MAP_CHANGE( ZONE_ID_C04R0102,11,9,DIR_UP )
+  _CALL ev_c04r0110_init_map_change_work
+  _CALL ev_playmode_retmap
   _END
 
 ev_train_rooms_comexit_01:
-  _MAP_CHANGE( ZONE_ID_C04R0102,11,9,DIR_UP )
+  _CALL ev_c04r0110_init_map_change_work
+  _CALL ev_playmode_retmap
   _END
 
 ev_train_rooms_clear_exit:
   //ウェイト
   _TIME_WAIT( 30 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 1 )
-  _MAP_CHANGE( ZONE_ID_C04R0111,2,6,DIR_UP )
+  _CALL ev_c04r0110_init_map_change_work
+  _MAP_CHANGE( ZONE_ID_C04R0111,12,14,DIR_UP )
   _END
 
 //======================================================================
 //  バトルタワーシングル対戦部屋アニメコモン
 //======================================================================
 //--------------------------------------------------------------
-//  自機入場
+//  自機乗車　初回
 //--------------------------------------------------------------
-ev_train_rooms_comanm_in:
-  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_01 )
+_ANIME_LABEL  anm_c04r0110_player_in_first
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_U_8F,4
+  _ANIME_DATA  AC_WALK_L_8F,3
+  _ANIME_DATA  ACMD_END,0
+
+ev_train_anime_player_in_first:
+  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_in_first )
   _OBJ_ANIME_WAIT()
   _RET
 
 //--------------------------------------------------------------
-//  自機と受け付け嬢　続きから始めたときの入場後
+//  自機乗車　続き
 //--------------------------------------------------------------
-ev_train_rooms_comanm_continue:
-/*
-  _OBJ_ANIME( C04R0110_PCWOMAN, anm_c04r0110_pcwoman2_02 )
-  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_05 )
+_ANIME_LABEL  anm_c04r0110_player_in_continue
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_L_8F,6
+  _ANIME_DATA  ACMD_END,0
+  
+ev_train_anime_player_in_continue:
+  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_in_continue )
   _OBJ_ANIME_WAIT()
-*/
+  _RET
+
+//--------------------------------------------------------------
+//  トレーナー乗車
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_c04r0110_trainer_in
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_U_8F,4
+  _ANIME_DATA  AC_WALK_R_8F,4
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
+  
+ev_train_anime_trainer_in:
+  _OBJ_ANIME( C04R0110_TRAINER, anm_c04r0110_trainer_in )
+  _OBJ_ANIME_WAIT()
+  _RET
+
+//--------------------------------------------------------------
+//  互いに近づく
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_c04r0110_battle_start_player
+  _ANIME_DATA  AC_WALK_L_8F,1
+  _ANIME_DATA  ACMD_END,0
+
+_ANIME_LABEL  anm_c04r0110_battle_start_trainer
+  _ANIME_DATA  AC_WALK_R_8F,1
+  _ANIME_DATA  ACMD_END,0
+  
+ev_train_anime_battle_start:
+  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_battle_start_player )
+  _OBJ_ANIME( C04R0110_TRAINER, anm_c04r0110_battle_start_trainer )
+  _OBJ_ANIME_WAIT()
+  _RET
+
+//--------------------------------------------------------------
+//  トレーナー退場
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_c04r0110_trainer_leave
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_L_8F,4
+  _ANIME_DATA  AC_WALK_D_8F,4
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
+  
+ev_train_anime_trainer_leave:
+  _OBJ_ANIME( C04R0110_TRAINER, anm_c04r0110_trainer_leave )
+  _OBJ_ANIME_WAIT()
+  _RET
+  
+//--------------------------------------------------------------
+//  自機回復マシンへ
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_c04r0110_player_heal0
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_R_8F,6
+  _ANIME_DATA  AC_WALK_U_8F,2
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
+
+_ANIME_LABEL  anm_c04r0110_player_heal1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_WALK_D_8F,2
+  _ANIME_DATA  AC_WALK_L_8F,5
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
+ 
+ev_train_anime_player_heal:
+  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_heal0 )
+  _OBJ_ANIME_WAIT()
+  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0110_test02 )
+  _ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
+  _SYSWIN_CLOSE()
+  _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_heal1 )
+  _OBJ_ANIME_WAIT()
   _RET
 
 //--------------------------------------------------------------
@@ -474,8 +636,8 @@ ev_train_rooms_comanm_enein:
   //バニッシュフラグOFF
   _FLAG_RESET( FV_C04R0110_TRAINER )
   _OBJ_ADD( C04R0110_TRAINER )
-  _OBJ_ANIME( C04R0110_TRAINER, anm_c04r0110_enemy_01 )
-  _OBJ_ANIME_WAIT()
+  _OBJ_POS_CHANGE( C04R0110_TRAINER, 3, 0, 8, DIR_UP )
+  _CALL ev_train_anime_trainer_in
   
 ev_train_room_comanm_enein_end:
   _RET
@@ -483,41 +645,45 @@ ev_train_room_comanm_enein_end:
 //--------------------------------------------------------------
 //  シングルバトル前　互いに一歩近づく
 //--------------------------------------------------------------
+/*
 ev_train_rooms_comanm_sbtl_start:
   _OBJ_ANIME( C04R0110_HERO,anm_c04r0110_player_02 )
   _OBJ_ANIME( C04R0110_TRAINER,anm_c04r0110_enemy_02 )
   _OBJ_ANIME_WAIT()
   _RET
+*/
 
 //--------------------------------------------------------------
 //  プレイヤー勝利後　エネミー退場
 //--------------------------------------------------------------
 ev_train_rooms_comanm_eneout:
-  _OBJ_ANIME( C04R0110_TRAINER,anm_c04r0110_enemy_03 )
-  _OBJ_ANIME_WAIT()
+  _CALL ev_train_anime_trainer_leave
   //バニッシュフラグON
   _FLAG_SET( FV_C04R0110_TRAINER )
   _OBJ_DEL( C04R0110_TRAINER )
   _RET
-
+  
 //--------------------------------------------------------------
 //  プレイヤー勝利後　プレイヤー振り向き
 //--------------------------------------------------------------
+/*
 ev_train_rooms_comanm_sbtl_end:
   _OBJ_ANIME( C04R0110_HERO, anm_c04r0110_player_03 )
   _OBJ_ANIME_WAIT()
   _RET
 
+*/
+
 //--------------------------------------------------------------
 //  回復後　プレイヤー振り向き＆案内嬢下がる
 //--------------------------------------------------------------
-ev_train_rooms_comanm_guide_out:
 /*
+ev_train_rooms_comanm_guide_out:
   _OBJ_ANIME( C04R0110_HERO,anm_c04r0110_player_04 )
   _OBJ_ANIME( C04R0110_PCWOMAN,anm_c04r0110_pcwoman2_03 )
   _OBJ_ANIME_WAIT()
-*/
   _RET
+*/
 
 //--------------------------------------------------------------
 //  リーダー入場
@@ -540,6 +706,7 @@ ev_train_rooms_comanm_leader_in:
 //--------------------------------------------------------------------
 //  受け付け嬢　初期位置へ移動
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_pcwoman2_01
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_DIR_L,1
@@ -548,23 +715,12 @@ _ANIME_LABEL  anm_c04r0110_pcwoman2_01
   _ANIME_DATA  AC_WALK_U_8F,3
   _ANIME_DATA  AC_DIR_R,1
   _ANIME_DATA  ACMD_END,0
-
-//--------------------------------------------------------------------
-//  自機　初期位置へ移動
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_c04r0110_player_01
-  _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,1
-  _ANIME_DATA  AC_DIR_L,1
-  _ANIME_DATA  AC_WALK_L_8F,3
-  _ANIME_DATA  AC_DIR_U,1
-  _ANIME_DATA  AC_WALK_U_8F,3
-  _ANIME_DATA  AC_DIR_R,1
-  _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  エネミー　初期位置へ移動
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_enemy_01
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
@@ -575,24 +731,30 @@ _ANIME_LABEL  anm_c04r0110_enemy_01
   _ANIME_DATA  AC_WALK_D_8F,3
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  自機　対戦前に一歩前へ
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_player_02
   _ANIME_DATA  AC_WALK_L_8F,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  エネミー　対戦前に一歩前へ
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_enemy_02
   _ANIME_DATA  AC_WALK_R_8F,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  エネミー　敗戦後退場
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_enemy_03
   _ANIME_DATA AC_DIR_L,1
   _ANIME_DATA ACMD_END,1
@@ -605,50 +767,62 @@ _ANIME_LABEL  anm_c04r0110_enemy_03
   _ANIME_DATA  AC_DIR_U,1
   _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  自機　対戦勝利後　一歩引き振り向き
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_player_03
   _ANIME_DATA  AC_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
   _ANIME_DATA  AC_WALK_L_8F,1
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  案内嬢　対戦勝利後　近づき
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_pcwoman2_02
   _ANIME_DATA  AC_WALK_R_8F,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  自機　回復後振り向き
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_player_04
   _ANIME_DATA  AC_DIR_R,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  案内嬢　回復後下がる
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_pcwoman2_03
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  AC_WALK_L_8F,1
   _ANIME_DATA  AC_DIR_R,1
   _ANIME_DATA  ACMD_END,0
-  
+*/
+
 //--------------------------------------------------------------------
 //  自機　続きから
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_player_05
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  ACMD_END,0
+*/
 
 //--------------------------------------------------------------------
 //  リーダー入場　初期位置へ移動
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL  anm_c04r0110_leader_01
   _ANIME_DATA  AC_WALK_D_16F,1
   _ANIME_DATA  AC_DIR_R,1
@@ -657,3 +831,4 @@ _ANIME_LABEL  anm_c04r0110_leader_01
   _ANIME_DATA  AC_WALK_D_16F,3
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  ACMD_END,0
+*/
