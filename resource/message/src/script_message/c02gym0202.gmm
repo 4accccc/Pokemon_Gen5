@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:54:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T17:19:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -387,12 +387,12 @@
 　c02gym0101に出現</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">？？？『たいへん！　たいへんだよ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">キダチ『たいへん！　たいへんだよ！[BE:01:ページ切り替え（クリア）]
 ママ！！　はくぶつかんの
 てんじぶつを　もっていかれた！！[BE:00:ページ切り替え（行送り）]
 ママの　だいじな
 ホネの　ひょうほんも！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『大変！　大変だよ！　ママ！！
+		<language name="JPN_KANJI" width="256">キダチ『大変！　大変だよ！　ママ！！
 博物館の　展示物が　持って行かれた！！[BE:00:ページ切り替え（行送り）]
 ママの　大事な　骨格標本も！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
