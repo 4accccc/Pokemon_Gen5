@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-07-16T20:28:45"/>
+	<create user="matsuda" host="W00142" date="2009-12-16T20:31:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -505,6 +505,102 @@
 	<row id="DEBUG_NAME_WHITE">
 		<language name="JPN" font=" 1:font_system" width="72">ホワイト</language>
 		<language name="JPN_KANJI">ホワイト</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_000">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">たろう</language>
+		<language name="JPN_KANJI">たろう</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_001">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">ひでひこ</language>
+		<language name="JPN_KANJI">ひでひこ</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_002">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">たくや</language>
+		<language name="JPN_KANJI">たくや</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_003">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">むさし</language>
+		<language name="JPN_KANJI">むさし</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_004">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">ひかる</language>
+		<language name="JPN_KANJI">ひかる</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_005">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">しゅん</language>
+		<language name="JPN_KANJI">しゅん</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_006">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">あゆむ</language>
+		<language name="JPN_KANJI">あゆむ</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_M_007">
+		<comment>侵入用のランダムで決定される名前：男の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">ゆうと</language>
+		<language name="JPN_KANJI">ゆうと</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_000">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">あやか</language>
+		<language name="JPN_KANJI">あやか</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_001">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">ゆか</language>
+		<language name="JPN_KANJI">ゆか</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_002">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">あい</language>
+		<language name="JPN_KANJI">あい</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_003">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">なつき</language>
+		<language name="JPN_KANJI">なつき</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_004">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">みほ</language>
+		<language name="JPN_KANJI">みほ</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_005">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">みき</language>
+		<language name="JPN_KANJI">みき</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_006">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">かおり</language>
+		<language name="JPN_KANJI">かおり</language>
+	</row>
+
+	<row id="DEBUG_NAME_RAND_W_007">
+		<comment>侵入用のランダムで決定される名前：女の子用</comment>
+		<language name="JPN" font=" 1:font_system" width="72">なおみ</language>
+		<language name="JPN_KANJI">なおみ</language>
 	</row>
 
 	<row id="DEBUG_NAME_MAX">

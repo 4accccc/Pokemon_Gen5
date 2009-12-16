@@ -21,6 +21,7 @@
 #include "message.naix"
 #include "msg/msg_debugname.h"
 #include "net_app/union/union_beacon_tool.h"
+#include "system/gfl_use.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 
@@ -377,6 +378,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 	GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
 	BOOL always_net;
+	int sex = 0;
 	
 	always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
 
@@ -390,14 +392,31 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
   	
   	msgman = GFL_MSG_Create( 
   	  GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, GFL_HEAPID_APP );
+#if 0
   #if PM_VERSION == VERSION_BLACK
   	namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
   #else
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
   #endif
-  	
+#else //侵入用に名前固定ではなく、ランダムで決定するようにした
+    {
+      int i;
+      for(i = 0; i < 100; i++){
+        OS_TPrintf("rand = %d\n", GFUser_GetPublicRand(2));
+      }
+    }
+    if(GFUser_GetPublicRand(2) & 1){
+      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_M_000 + GFUser_GetPublicRand(8) );
+      sex = PM_MALE;
+    }
+    else{
+      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_W_000 + GFUser_GetPublicRand(8) );
+      sex = PM_FEMALE;
+    }
+#endif
   	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
   	MyStatus_SetMyNameFromString( myStatus , namebuf );
+  	MyStatus_SetMySex(myStatus, sex);
   	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
   	MyStatus_SetTrainerView(myStatus, 
   	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
