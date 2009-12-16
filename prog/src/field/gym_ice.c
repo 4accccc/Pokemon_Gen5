@@ -643,6 +643,8 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       {
         //SEストップ
         PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        //SE再生
+        PMSND_PlaySE( GYM_ICE_SE_GMK_STOP);
         //次回に備え、アニメ切り替え
         SetupWallSwAnm(ptr, !gmk_sv_work->WallMoved[tmp->TargetIdx], tmp->TargetIdx, OBJ_KIND_WALL);
         //セーブワーク書き換え
