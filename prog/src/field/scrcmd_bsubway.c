@@ -18,7 +18,7 @@
 #include "gamesystem/game_event.h"
 
 #include "savedata/save_tbl.h"
-
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_SPEXIT_REQUEST
 #include "fieldmap.h"
 
 #include "script.h"
@@ -151,11 +151,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //リセット
   case BSWAY_TOOL_SYSTEM_RESET:
-    #if 0 //wb null
-    TowerScrTools_SystemReset();
-    #else
     OS_ResetSystem( 0 );
-    #endif
     break;
   //プレイデータクリア
   case BSWAY_TOOL_CLEAR_PLAY_DATA:
@@ -167,9 +163,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //脱出用に現在のロケーションを記憶する
   case BSWAY_TOOL_PUSH_NOW_LOCATION:
-    #if 0 //wb null
-    TowerScrTools_PushNowLocation(core->fsys);
-    #else
     {
       VecFx32 pos;
       LOCATION loc;
@@ -180,15 +173,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           0, FIELD_PLAYER_GetDir(fld_player),
           LOCATION_DEFAULT_EXIT_OFS, pos.x, pos.y, pos.z );
       GAMEDATA_SetSpecialLocation( gdata, &loc );
+      EVENTWORK_SetEventFlag(
+          GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
     }
-    #endif
     break;
   //記録したロケーションに戻す。
   case BSWAY_TOOL_POP_NOW_LOCATION:
-    #if 0 // wb null
-    //特殊接続フラグのオフのみやってた
-    TowerScrTools_PopNowLocation(core->fsys);
-    #endif
+    EVENTWORK_ResetEventFlag(
+      GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
     break;
   //連勝レコード数取得
   case BSWAY_TOOL_GET_RENSHOU_RECORD:

@@ -139,13 +139,23 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   work->return_mode = &bsw_scr->pokelist_return_mode;
 
   {
+    int reg = REG_LV50_SINGLE;
+    int type = PL_TYPE_SINGLE;
     PLIST_DATA *list = &work->list_data;
+    
     MI_CpuClear8( list, sizeof(PLIST_DATA) );
     list->pp = pp;
-    list->reg = (void*)PokeRegulation_LoadDataAlloc(
-        REG_LV50_SINGLE , HEAPID_PROC );
+    
+    switch( bsw_scr->play_mode ){
+    case BSWAY_MODE_DOUBLE:
+      reg = REG_LV50_DOUBLE;
+      type = PL_TYPE_DOUBLE;
+      break;
+    }
+    
+    list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
     list->mode = PL_MODE_BATTLE;
-    list->type = PL_TYPE_SINGLE;
+    list->type = type;
   }
   
   {

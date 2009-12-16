@@ -105,7 +105,6 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     u8 buf8;
     
     bsw_scr->play_mode = playmode;
-    bsw_scr->play_mode = playmode;
     bsw_scr->member_num = bswScr_GetMemberNum( bsw_scr->play_mode );
     bsw_scr->now_round = 1;
     bsw_scr->now_win = 0;
@@ -600,10 +599,14 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke(
   
   for( i = 0;i < wk->member_num;i++){
     //ƒ|ƒPƒ‚ƒ“‘I‘ð‚ÅŽæ“¾‚µ‚½ŽèŽ‚¿No
-    wk->member[i] = wk->pokelist_select_num[i]-1;
-    pp = PokeParty_GetMemberPointer( party, wk->member[i] );
-    wk->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
-    wk->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+    if( wk->pokelist_select_num[i] >= 6 ){
+      GF_ASSERT( 0 );
+    }else{
+      wk->member[i] = wk->pokelist_select_num[i];
+      pp = PokeParty_GetMemberPointer( party, wk->member[i] );
+      wk->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
+      wk->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+    }
   }
   
   return TRUE;
