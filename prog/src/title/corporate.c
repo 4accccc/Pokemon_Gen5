@@ -136,7 +136,6 @@ GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	CORP_WORK* cw = mywk;
 	enum{
 		SEQ_SETUP = 0,
-		SEQ_WAIT,
 		SEQ_FADEIN,
 		SEQ_MAIN,
 		SEQ_NEXT,

@@ -40,6 +40,9 @@
 ///[PUSH START BUTTON]の点滅間隔
 #define PUSH_TIMER_WAIT			(45)
 
+///
+#define TOTAL_WAIT			(60*10)
+
 ///BMPウィンドウ
 enum{
 	WIN_PUSH_JPN,			//「スタートボタンを押してください」
@@ -142,6 +145,8 @@ typedef struct {
 	GFL_G3D_UTIL*			g3Dutil;
 	u16								g3DutilUnitIdx;
 	GFL_TCB						*vintr_tcb;
+
+	u32								totalWait;
 }TITLE_WORK;
 
 
@@ -159,30 +164,55 @@ static void Local_MessagePrintMain(TITLE_WORK *tw);
 static void Local_BGGraphicLoad(TITLE_WORK *tw);
 static void Local_MessagePut(TITLE_WORK *tw, int win_index, STRBUF *strbuf, int x, int y);
 static void Local_MsgLoadPushStart(TITLE_WORK *tw);
-static void Local_3DSetting(TITLE_WORK *tw);
 static void Local_Load3Dobject(TITLE_WORK *tw);
 static void Local_Draw3Dobject(TITLE_WORK *tw);
 static void Local_Free3Dobject(TITLE_WORK *tw);
 static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
+static void Local_Main(TITLE_WORK *tw);
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern void	TestModeSet(int mode);
 extern const	GFL_PROC_DATA TestMainProcData;
 FS_EXTERN_OVERLAY(testmode);
 
+extern const	GFL_PROC_DATA CorpProcData;
+FS_EXTERN_OVERLAY(title);
 
 //==============================================================================
 //	データ
 //==============================================================================
-///タイトル画面呼び出しようのPROCデータ
+//--------------------------------------------------------------
+//	PROC
+//--------------------------------------------------------------
 const GFL_PROC_DATA TitleProcData = {
 	TitleProcInit,
 	TitleProcMain,
 	TitleProcEnd,
 };
 
+//--------------------------------------------------------------
+//	VRAM
+//--------------------------------------------------------------
+static const GFL_DISP_VRAM vramBank = {
+	GX_VRAM_BG_128_D,								// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,					// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,						// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,			// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,								// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,				// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,						// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,		// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_01_AB,							// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,					// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_64K,			// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,			// サブOBJマッピングモード
+};
+
+static const GFL_BG_SYS_HEADER sysHeader = {
+	GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+};
+	
 //--------------------------------------------------------------
 //	3D
 //--------------------------------------------------------------
@@ -255,55 +285,10 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 {
 	TITLE_WORK *tw;
 	
-	DEBUG_PerformanceSetActive(TRUE);	//デバッグ：パフォーマンスメーター有効
-	
-	// 各種効果レジスタ初期化
-	GX_SetMasterBrightness(-16);
-	GXS_SetMasterBrightness(-16);
-	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
-	GFL_DISP_GXS_SetVisibleControlDirect(0);
-	G2_BlendNone();
-	G2S_BlendNone();
-	GX_SetVisibleWnd(GX_WNDMASK_NONE);
-	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
-
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TITLE_DEMO, 0x70000 );
 	tw = GFL_PROC_AllocWork( proc, sizeof(TITLE_WORK), HEAPID_TITLE_DEMO );
 	GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
-
-	// 上下画面設定
-	//GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
-	GFL_DISP_SetDispOn();
-
-	//TCB作成
-	tw->tcbl = GFL_TCBL_Init( HEAPID_TITLE_DEMO, HEAPID_TITLE_DEMO, 4, 32 );
-
-	//VRAM設定 & BGフレーム設定
-	Local_VramSetting(tw);
-	Local_BGFrameSetting(tw);
-	Local_BGGraphicLoad(tw);
-	
-	//メッセージ関連作成
-	GFL_BMPWIN_Init( HEAPID_TITLE_DEMO );
-	GFL_FONTSYS_Init();
-	Local_MessageSetting(tw);
-	Local_MsgLoadPushStart(tw);
-
-	//アクター設定
-	Local_ActorSetting(tw);
-
-	//3D設定
-	Local_3DSetting(tw);
-	Local_Load3Dobject(tw);
-	
-	GFL_BG_SetVisible(FRAME_LOGO_M, VISIBLE_ON);
-//	GFL_BG_SetVisible(FRAME_MIST_M, VISIBLE_ON);
-//	GFL_BG_SetVisible(FRAME_LOGO_S, VISIBLE_ON);
-//	GFL_BG_SetVisible(FRAME_MSG_S, VISIBLE_ON);
-
-	tw->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, tw, 5);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -317,65 +302,154 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 {
 	TITLE_WORK* tw = mywk;
 	enum{
-		SEQ_WAIT,
+		SEQ_INIT = 0,
+		SEQ_SETUP,
 		SEQ_FADEIN,
 		SEQ_MAIN,
+		SEQ_NEXT,
 		SEQ_FADEOUT,
+		SEQ_END,
 	};
 	
-	GFL_TCBL_Main( tw->tcbl );
-	Local_MessagePrintMain(tw);
-	
-	if(tw->seq == SEQ_MAIN){
-		int trg = GFL_UI_KEY_GetTrg();
-		if(trg & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A)){
-			tw->mode = trg;
-			tw->seq = SEQ_FADEOUT;
-		}
-		if( GFL_UI_TP_GetTrg() == TRUE )
-		{
-			tw->mode = trg;
-			tw->seq = SEQ_FADEOUT;
-    }
-	}
-	
 	switch(tw->seq){
-	case SEQ_WAIT:
-		tw->wait++;
-		if(tw->wait > 30){
-			tw->master_bright = -16;
-			tw->seq++;
-		}
+	case SEQ_INIT:
+		DEBUG_PerformanceSetActive(TRUE);	//デバッグ：パフォーマンスメーター有効
+	
+		// 各種効果レジスタ初期化
+		GX_SetMasterBrightness(-16);
+		GXS_SetMasterBrightness(-16);
+		GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+		GFL_DISP_GXS_SetVisibleControlDirect(0);
+		G2_BlendNone();
+		G2S_BlendNone();
+		GX_SetVisibleWnd(GX_WNDMASK_NONE);
+		GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+
+		tw->seq = SEQ_SETUP;
 		break;
+
+	case SEQ_SETUP:
+		//VRAM設定
+		GFL_DISP_SetBank( &vramBank );
+		GFL_BG_Init( HEAPID_TITLE_DEMO );
+		GFL_BG_SetBGMode( &sysHeader );
+
+		//TCB作成
+		tw->tcbl = GFL_TCBL_Init( HEAPID_TITLE_DEMO, HEAPID_TITLE_DEMO, 4, 32 );
+
+		//VRAM設定 & BGフレーム設定
+		Local_BGFrameSetting(tw);
+		Local_BGGraphicLoad(tw);
+	
+		//メッセージ関連作成
+		GFL_BMPWIN_Init( HEAPID_TITLE_DEMO );
+		GFL_FONTSYS_Init();
+		Local_MessageSetting(tw);
+		Local_MsgLoadPushStart(tw);
+
+		//アクター設定
+		Local_ActorSetting(tw);
+		tw->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, tw, 5);
+
+		//3D設定
+		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+							DTCM_SIZE, HEAPID_TITLE_DEMO, NULL );
+		GFL_BG_SetBGControl3D(BGPRI_3D);
+		Local_Load3Dobject(tw);
+
+		// 上下画面設定
+		GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+		GFL_DISP_SetDispOn();
+
+		tw->totalWait = 0;
+
+		GFL_BG_SetVisible(FRAME_LOGO_M, VISIBLE_ON);
+		{// FADEIN設定
+			int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+			GFL_FADE_SetMasterBrightReq(mode, 16, 0, 2);
+		}
+		tw->seq = SEQ_FADEIN;
+		break;
+
 	case SEQ_FADEIN:
-		tw->master_bright++;
-		GX_SetMasterBrightness(tw->master_bright);
-		GXS_SetMasterBrightness(tw->master_bright);
-		if(tw->master_bright >= 0){
-			tw->seq++;
+		if(GFL_FADE_CheckFade() == FALSE){
+			tw->seq = SEQ_MAIN;
 		}
+		Local_Main(tw);
 		break;
+
 	case SEQ_MAIN:
+		{
+			int trg = GFL_UI_KEY_GetTrg();
+			if(trg & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A)){
+				tw->mode = trg;
+				tw->seq = SEQ_NEXT;
+			}
+			if( GFL_UI_TP_GetTrg() == TRUE )
+			{
+				tw->mode = trg;
+				tw->seq = SEQ_NEXT;
+		 }
+		}
 		tw->push_timer++;
+
 		if(tw->push_timer > PUSH_TIMER_WAIT){
 			tw->push_timer = 0;
 			tw->push_visible ^= 1;
 			GFL_BG_SetVisible(FRAME_MSG_S, tw->push_visible);
 		}
-		break;
-	case SEQ_FADEOUT:
-		tw->master_bright--;
-		GX_SetMasterBrightness(tw->master_bright);
-		GXS_SetMasterBrightness(tw->master_bright);
-		if(tw->master_bright <= -16){
-			return GFL_PROC_RES_FINISH;
+		tw->totalWait++;
+		if(tw->totalWait > TOTAL_WAIT){
+			tw->mode = 0;
+			tw->seq = SEQ_NEXT;
 		}
+		Local_Main(tw);
 		break;
+
+	case SEQ_NEXT:
+		{
+			int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+			GFL_FADE_SetMasterBrightReq(mode, 0, 16, 2);
+			tw->seq = SEQ_FADEOUT;
+		}
+		Local_Main(tw);
+		break;
+
+	case SEQ_FADEOUT:
+		if(GFL_FADE_CheckFade() == FALSE){
+			tw->seq = SEQ_END;
+		}
+		Local_Main(tw);
+		break;
+
+	case SEQ_END:
+		Local_Free3Dobject(tw);
+		GFL_G3D_Exit();
+
+		{
+			int i;
+			GFL_STR_DeleteBuffer(tw->strbuf_push_jpn);
+			GFL_STR_DeleteBuffer(tw->strbuf_push_eng);
+			for(i = 0; i < WIN_MAX; i++){
+				GFL_BMPWIN_Delete(tw->drawwin[i].win);
+			}
+		}
+		PRINTSYS_QUE_Delete(tw->printQue);
+		GFL_MSG_Delete(tw->mm);
+
+		GFL_TCB_DeleteTask(tw->vintr_tcb);
+		GFL_CLACT_UNIT_Delete(tw->clunit);
+		GFL_CLACT_SYS_Delete();
+
+		GFL_FONT_Delete(tw->fontHandle);
+		GFL_TCBL_Exit(tw->tcbl);
+	
+		GFL_BG_Exit();
+		GFL_BMPWIN_Exit();
+
+		return GFL_PROC_RES_FINISH;
 	}
-	
-	Local_Draw3Dobject(tw);
-	
-	GFL_CLACT_SYS_Main();
+
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -391,80 +465,25 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	
 	mode = tw->mode;
 	
-	GFL_TCB_DeleteTask(tw->vintr_tcb);
-	
-	GFL_STR_DeleteBuffer(tw->strbuf_push_jpn);
-	GFL_STR_DeleteBuffer(tw->strbuf_push_eng);
-	for(i = 0; i < WIN_MAX; i++){
-		GFL_BMPWIN_Delete(tw->drawwin[i].win);
-	}
-
-	Local_Free3Dobject(tw);
-	GFL_G3D_Exit();
-
-	PRINTSYS_QUE_Delete(tw->printQue);
-	GFL_MSG_Delete(tw->mm);
-
-	GFL_CLACT_UNIT_Delete(tw->clunit);
-	GFL_CLACT_SYS_Delete();
-
-	GFL_FONT_Delete(tw->fontHandle);
-	GFL_TCBL_Exit(tw->tcbl);
-	
-	GFL_BG_Exit();
-	GFL_BMPWIN_Exit();
-
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 	
-//	TestModeSet(mode);	//次のPROCとしてテスト画面を設定
-	//StartMenuへの分岐を作成しました Ari090107
-	if( mode & PAD_BUTTON_SELECT )
+	if( !mode ){
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
+	} else if( mode & PAD_BUTTON_SELECT ){
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
-	else
+	} else {
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
+	}
 	return GFL_PROC_RES_FINISH;
-}
-
-static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
-{
-	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //==============================================================================
 //	
 //==============================================================================
-static const GFL_DISP_VRAM vramBank = {
-	GX_VRAM_BG_128_D,								// メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,					// メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_128_C,						// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE,			// サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_64_E,								// メイン2DエンジンのOBJ
-	GX_VRAM_OBJEXTPLTT_NONE,				// メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,						// サブ2DエンジンのOBJ
-	GX_VRAM_SUB_OBJEXTPLTT_NONE,		// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_01_AB,							// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_01_FG,					// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_64K,			// メインOBJマッピングモード
-	GX_OBJVRAMMODE_CHAR_1D_32K,			// サブOBJマッピングモード
-};
-
-//--------------------------------------------------------------
-/**
- * @brief   VRAMバンク＆モード設定
- * @param   tw		タイトルワークへのポインタ
- */
-//--------------------------------------------------------------
-static void Local_VramSetting(TITLE_WORK *tw)
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
 {
-
-	static const GFL_BG_SYS_HEADER sysHeader = {
-		GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
-	};
-	
-	GFL_DISP_SetBank( &vramBank );
-	GFL_BG_Init( HEAPID_TITLE_DEMO );
-	GFL_BG_SetBGMode( &sysHeader );
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //--------------------------------------------------------------
@@ -558,19 +577,6 @@ static void Local_BGGraphicLoad(TITLE_WORK *tw)
 		ARCID_TITLE, NARC_title_wb_logo_bk_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
 
 	GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M, GX_RGB(25, 31, 31));
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   3D初期設定
- * @param   tw		タイトルワークへのポインタ
- */
-//--------------------------------------------------------------
-static void Local_3DSetting(TITLE_WORK *tw)
-{
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
-						DTCM_SIZE, HEAPID_TITLE_DEMO, NULL );
-	GFL_BG_SetBGControl3D(BGPRI_3D);
 }
 
 //--------------------------------------------------------------
@@ -725,6 +731,20 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 #endif
 	
 	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   メイン関数
+ * @param   tw		タイトルワークへのポインタ
+ */
+//--------------------------------------------------------------
+static void Local_Main(TITLE_WORK *tw)
+{
+	Local_Draw3Dobject(tw);
+	GFL_CLACT_SYS_Main();
+	GFL_TCBL_Main( tw->tcbl );
+	Local_MessagePrintMain(tw);
 }
 
 //--------------------------------------------------------------
