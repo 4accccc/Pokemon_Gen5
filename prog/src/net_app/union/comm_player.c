@@ -78,17 +78,6 @@ typedef struct _COMM_PLAYER_SYS{
 COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
 {
   COMM_PLAYER_SYS_PTR cps;
-  FIELDMAP_WORK *fieldWork;
-  FIELD_PLAYER * player;
-  MMDLSYS *fldMdlSys;
-
-  if(GAMESYSTEM_CheckFieldMapWork(gsys) == FALSE){
-    GF_ASSERT(0);
-    return NULL;
-  }
-  
-  fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
 
   OS_TPrintf("通信プレイヤー制御システムの生成\n");
   
@@ -99,7 +88,18 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
   cps->max = max;
   cps->gsys = gsys;
   cps->heap_id = heap_id;
-  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
+
+  if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
+    //フィールドが存在しない場合、act_ctrlはここでは作られないが
+    //CommPlayer_Popをgame_commのフィールド作成時のコールバックで呼んでおけば
+    //フィールド作成と同時に改めてact_ctrlが作られるので問題ない
+    FIELDMAP_WORK *fieldWork;
+    MMDLSYS *fldMdlSys;
+
+    fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+    cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
+  }
   
   return cps;
 }
@@ -212,6 +212,11 @@ void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index)
     return;
   }
   
+  if(cps->act_ctrl == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
   OS_TPrintf("通信プレイヤーDel index=%d\n", index);
   cps->act[index].fldeff_gyoe_task = NULL;
   FIELD_COMM_ACTOR_CTRL_DeleteActro(cps->act_ctrl, index);
@@ -230,6 +235,10 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
   int i;
   
   GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  
+  if(cps->act_ctrl == NULL){
+    return;
+  }
   
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     if(cps->act[i].occ == TRUE){
@@ -395,6 +404,7 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 //==================================================================
 BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index)
 {
+  GF_ASSERT(cps->act_ctrl != NULL);
   return FIELD_COMM_ACTOR_CTRL_SearchGridPos(cps->act_ctrl, gx, gz, out_index);
 }
 
@@ -415,7 +425,7 @@ BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index)
   FIELDMAP_WORK *fieldWork;
   FLDEFF_CTRL *fectrl;
   
-  if(act->occ == FALSE || act->fldeff_gyoe_task != NULL){
+  if(cps->act_ctrl == NULL || act->occ == FALSE || act->fldeff_gyoe_task != NULL){
     return FALSE;
   }
   
@@ -439,6 +449,7 @@ BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index)
 //==================================================================
 MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index)
 {
+  GF_ASSERT(cps->act_ctrl != NULL);
   GF_ASSERT(cps->act[index].occ == TRUE);
   return FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
 }

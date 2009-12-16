@@ -997,12 +997,20 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_DATA *mdata = pData;
   BOOL new_mission;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  ZONEID zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+  
+  if(ZONEDATA_IsPalaceField(zone_id) == FALSE && ZONEDATA_IsPalace(zone_id) == FALSE){
+    OS_TPrintf("ミッション受信：表フィールドにいるため、受け取らない\n");
+    return;
+  }
   
   new_mission = MISSION_SetMissionData(&intcomm->mission, mdata);
   if(new_mission == TRUE){  //連続受信で上書きされないように直接代入はしない
     intcomm->new_mission_recv = TRUE;
   }
-  OS_TPrintf("new_mission_recv = %d\n", new_mission);
+  
+  OS_TPrintf("ミッション受信：new_mission_recv = %d\n", new_mission);
 }
 
 //==================================================================
@@ -1163,6 +1171,11 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     return;
   }
   
+  if(MISSION_RecvCheck(&intcomm->mission) == FALSE){
+    OS_TPrintf("受信：ミッション結果：ミッションを受信していない為、結果も受け取らない\n");
+    return;
+  }
+
   OS_TPrintf("受信：ミッション結果\n");
   MISSION_SetResult(&intcomm->mission, mresult);
 }

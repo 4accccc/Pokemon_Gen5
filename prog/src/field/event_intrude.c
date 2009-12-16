@@ -214,6 +214,7 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
 void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code)
 {
   GFL_STD_MemClear(iedw, sizeof(INTRUDE_EVENT_DISGUISE_WORK));
+  iedw->gsys = gsys;
   iedw->fieldWork = fieldWork;
   iedw->disguise_code =disguise_code;
   iedw->wait_max = DISGUISE_ANM_WAIT_MAX;
