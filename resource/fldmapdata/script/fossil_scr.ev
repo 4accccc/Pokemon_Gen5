@@ -17,7 +17,7 @@ _EVENT_DATA   ev_fossil
 _EVENT_DATA_END
 
 DEFINE_LOCAL END_MSG        //ラストメッセージ
-DEFINE_LOCAL FOSSIL_NUM     //化石の所持数
+DEFINE_LOCAL FOSSIL_TYPE_NUM     //化石の所持種類数
 DEFINE_LOCAL FOSSIL_ITEM_NO   //復元する化石のアイテムナンバー
 DEFINE_LOCAL RECOVER_POKE     //復元してもらったポケモン
 
@@ -33,15 +33,15 @@ EVENT_START ev_fossil
     _CALL order
   ELSE
     //所持している化石の数を取得
-    _CALL search_fossil           //output:FOSSIL_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
+    _CALL search_fossil           //output:FOSSIL_TYPE_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
     //化石持ってるか？
-    IF $FOSSIL_NUM != 0 THEN    //持ってる
+    IF $FOSSIL_TYPE_NUM != 0 THEN    //持ってる
       //「復元する？」
       _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_02 )
       _YES_NO_WIN( SCWK_ANSWER )
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN     //復元する
-        _CALL recover_fossil
+        _CALL recover_fossil        //input:FOSSIL_TYPE_NUM io:FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、inputとして使用)
       ELSE                          //復元しない
         //「バイバイ」
         $END_MSG = msg_kaseki_05
@@ -63,27 +63,114 @@ end_msg:
   _BALLOONWIN_CLOSE()
 _RET
 
-//化石復元
+//化石復元      input:FOSSIL_TYPE_NUM io:FOSSIL_ITEM_NO
 recover_fossil:
   //化石の数が1つかどうかで分岐
-  IF $FOSSIL_NUM >= 2 THEN  //2つ以上持っている
+  IF $FOSSIL_TYPE_NUM >= 2 THEN  //2種類以上持っている
     //「どの化石を復元する？」
-    _CALL select_fossil
+    _CALL select_fossil         //output:FOSSIL_ITEM_NO  SCWK_ANSWER
+    IF $SCWK_ANSWER == TRUE THEN     //化石を選択
+      _CALL recover_fossil_core     //input:FOSSIL_ITEM_NO
+    ELSE                          //やめるもしくは、キャンセル
+      //「バイバイ」
+      $END_MSG = msg_kaseki_05
+      _CALL end_msg
+    ENDIF
+  ELSE                      //1種類
+    _CALL recover_fossil_core       //input:FOSSIL_ITEM_NO
   ENDIF
-
-  _CALL recover_fossil_core
 _RET
 
-//化石選び
+//化石選び        output:FOSSIL_ITEM_NO  SCWK_ANSWER
 select_fossil:
+  DEFINE_LOCAL LIST_SEL_RET
+  DEFINE_LOCAL LIST_ITEM_NO
   //「どの化石を復元する？」
   _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_03 )
   _BALLOONWIN_CLOSE()
 
-  $FOSSIL_ITEM_NO = 0   //@todo
+  $FOSSIL_ITEM_NO = 0
+
+  _BMPMENU_INIT( 0,0,0,1,LIST_SEL_RET )
+  
+  //ねっこのかせき
+  $LIST_ITEM_NO = ITEM_NEKKONOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_03, ITEM_NEKKONOKASEKI )
+  ENDIF
+  //ツメのかせき
+  $LIST_ITEM_NO = ITEM_TUMENOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_04, ITEM_TUMENOKASEKI )
+  ENDIF
+  //かいのかせき
+  $LIST_ITEM_NO = ITEM_KAINOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_05, ITEM_KAINOKASEKI )
+  ENDIF
+  //こうらのかせき
+  $LIST_ITEM_NO = ITEM_KOURANOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_06, ITEM_KOURANOKASEKI )
+  ENDIF
+  //ひみつのコハク
+  $LIST_ITEM_NO = ITEM_HIMITUNOKOHAKU
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_07, ITEM_HIMITUNOKOHAKU )
+  ENDIF
+  //たてのかせき
+  $LIST_ITEM_NO = ITEM_TATENOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_08, ITEM_TATENOKASEKI )
+  ENDIF
+  //ずがいのかせき
+  $LIST_ITEM_NO = ITEM_ZUGAINOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_09, ITEM_ZUGAINOKASEKI )
+  ENDIF
+  //かめのかせき
+  $LIST_ITEM_NO = ITEM_KAMENOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    //どうぐ名をタグ0にセット
+    _ITEM_NAME( 0, ITEM_KAMENOKASEKI )
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_01, ITEM_KAMENOKASEKI )
+  ENDIF
+  //とりのかせき
+  $LIST_ITEM_NO = ITEM_TORINOKASEKI
+  _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
+    //どうぐ名をタグ1にセット
+    _ITEM_NAME( 1, ITEM_TORINOKASEKI )
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_02, ITEM_TORINOKASEKI )
+  ENDIF
+  //やめる
+  _BMPMENU_MAKE_LIST( msg_kaseki_select_10, 0 )
+
+  _BMPMENU_START()
+
+  //キャンセルチェック
+  IF $LIST_SEL_RET != EV_WIN_B_CANCEL THEN
+    IF $LIST_SEL_RET != 0 THEN
+      $FOSSIL_ITEM_NO = $LIST_SEL_RET
+    ELSE
+      $FOSSIL_ITEM_NO = 0
+      $SCWK_ANSWER = FALSE
+    ENDIF
+  ELSE
+    $FOSSIL_ITEM_NO = 0
+    $SCWK_ANSWER = FALSE
+  ENDIF  
 _RET
 
-//化石復元メイン
+//化石復元メイン      input:FOSSIL_ITEM_NO
 recover_fossil_core:
   //アイテム名をタグ0にセット
   _ITEM_NAME( 0, FOSSIL_ITEM_NO )
@@ -97,10 +184,10 @@ recover_fossil_core:
   //道具名からポケモンを判別
   _CALL set_monsno_to_item    //input:FOSSIL_ITEM_NO  output:RECOVER_POKE
 
-  _CALL get_poke
+  _CALL get_poke              //input:FOSSIL_ITEM_NO RECOVER_POKE
 _RET
 
-//ポケモン取得
+//ポケモン取得     //input:FOSSIL_ITEM_NO RECOVER_POKE
 get_poke:
   DEFINE_LOCAL SEL_POS
   DEFINE_LOCAL POKE_NUM
@@ -126,8 +213,8 @@ get_poke:
     //システム：「プレーヤーはポケモンを手に入れた」
     _SYSWIN_MSG_DOWN( msg_kaseki_08 )
     _SYSWIN_CLOSE()
-    //手持ちに追加 todo
-//    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, monsno, formno, tokusei, level, itemno )
+    //手持ちに追加(Lv25)
+    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, RECOVER_POKE, 0, 0, 25, 0 )
     //ポケモン名をタグ0にセット
     _MONS_NAME(0, RECOVER_POKE)
     //システム：「ニックネームつける？」
@@ -135,7 +222,7 @@ get_poke:
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN   //ニックネームつける
-      //追加位置は追加前手持ち数
+      //追加位置は追加前の手持ち数
       $SEL_POS = POKE_NUM
       //名前入力
       _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS )
@@ -150,82 +237,85 @@ order:
   //セーブワークから復元したポケモンを判別して取得
   $FOSSIL_ITEM_NO = $WK_OTHER_KASEKI_NUM
   _CALL set_monsno_to_item      //input:FOSSIL_ITEM_NO  output:RECOVER_POKE
-  _CALL get_poke
+  _CALL get_poke                //input:FOSSIL_ITEM_NO  RECOVER_POKE
 _RET
 
 
 //所持している化石の数を調べてワークに格納する。
 //1種類しかない場合は特定のワークに有効なアイテムナンバーが入る
+//output:FOSSIL_TYPE_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
 search_fossil:
-  DEFINE_LOCAL ITEM_NUM
   DEFINE_LOCAL ITEM_NO
+
+  //初期化
+  $FOSSIL_TYPE_NUM = 0
 
   //ずがいの化石
   $ITEM_NO = ITEM_ZUGAINOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //たての化石
   $ITEM_NO = ITEM_TATENOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //かいの化石
   $ITEM_NO = ITEM_KAINOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //こうらの化石
   $ITEM_NO = ITEM_KOURANOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //ひみつのコハク
   $ITEM_NO = ITEM_HIMITUNOKOHAKU
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //ツメの化石
   $ITEM_NO = ITEM_TUMENOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //ねっこの化石
   $ITEM_NO = ITEM_NEKKONOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //かめの化石
   $ITEM_NO = ITEM_KAMENOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
   //とりの化石
   $ITEM_NO = ITEM_TORINOKASEKI
-  _GET_ITEM_NUM( ITEM_NO, ITEM_NUM )
-  $FOSSIL_NUM += $ITEM_NUM
-  IF $ITEM_NUM > 0 THEN
+  _ITEM_CHK(ITEM_NO, 1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == TRUE THEN
     $FOSSIL_ITEM_NO = $ITEM_NO
+    $FOSSIL_TYPE_NUM += 1
   ENDIF
 _RET
 
-//化石アイテムナンバーからモンスターナンバーを割り出す
+//化石アイテムナンバーからモンスターナンバーを割り出す input:FOSSIL_ITEM_NO  output:RECOVER_POKE
 set_monsno_to_item:
   IF $FOSSIL_ITEM_NO == ITEM_ZUGAINOKASEKI THEN       //ずがいのかせき
     $RECOVER_POKE = MONSNO_ZUGAIDOSU
