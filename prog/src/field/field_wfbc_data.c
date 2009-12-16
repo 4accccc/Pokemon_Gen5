@@ -1145,7 +1145,7 @@ static void WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FI
   int i;
   
   // ‚·‚×‚Ä‚P‚Â‚Ã‚Â‚¸‚ç‚µ‚ÄAæ“ª‚É’Ç‰Á
-  for( i=FIELD_WFBC_PEOPLE_MAX-1; i>0; i++ )
+  for( i=FIELD_WFBC_PEOPLE_MAX-1; i>0; i-- )
   {
     GFL_STD_MemCopy( &p_array[i-1], &p_array[i], sizeof(FIELD_WFBC_CORE_PEOPLE) );
   }
