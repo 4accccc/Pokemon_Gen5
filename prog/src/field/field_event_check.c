@@ -180,6 +180,7 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
 
 static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos);
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir);
+static BOOL checkConnectIsFreeExit( const CONNECT_DATA * cnct );
 static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
 static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
 static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
@@ -1521,7 +1522,7 @@ static GMEVENT * checkExit(EV_REQUEST * req,
   {
     const CONNECT_DATA * cnct;
     cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
-    if ( CONNECTDATA_IsClosedExit(cnct) == TRUE || CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
+    if ( CONNECTDATA_IsClosedExit(cnct) == TRUE || checkConnectIsFreeExit( cnct ) == FALSE )
     {
       return NULL;
     }
@@ -1604,7 +1605,7 @@ static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos)
 		return EXIT_ID_NONE;
 	}
 	cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
-  if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
+  if ( checkConnectIsFreeExit( cnct ) == FALSE )
   {
     if( checkConnectExitDir( cnct, req->player_dir ) == FALSE )
     {
@@ -1631,6 +1632,27 @@ static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos)
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief 踏むだけ出入口かどうかのチェック
+ * @param cnct
+ * @retval  TRUE  踏むだけ
+ * @retval  FALSE それ以外（方向や当たり判定を見る）
+ */
+//--------------------------------------------------------------
+static BOOL checkConnectIsFreeExit( const CONNECT_DATA * cnct )
+{
+  EXIT_TYPE exit_type = CONNECTDATA_GetExitType( cnct );
+  return ( exit_type == EXIT_TYPE_NONE || exit_type == EXIT_TYPE_WARP );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 出入口の持つ方向指定チェック
+ * @param cnct
+ * @param player_dir
+ * @retval  TRUE  適合している
+ * @retval  FALSE 適合していない
+ */
 //--------------------------------------------------------------
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir)
 {
@@ -1798,7 +1820,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
 
   // 乗っただけで起動するのかチェック
   cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
-  if( CONNECTDATA_IsClosedExit(cnct) == TRUE || CONNECTDATA_GetExitType( cnct ) != EXIT_TYPE_NONE )
+  if( CONNECTDATA_IsClosedExit(cnct) == TRUE || checkConnectIsFreeExit( cnct ) == FALSE  )
   {
     return NULL;
   }
