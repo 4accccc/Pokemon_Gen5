@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-16T11:40:25" source="door_c03.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="30"
+	tool_start_frame="1"
+	tool_end_frame="30"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="off" material_size="2 2"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="60">
+	0.500000 0.482666 0.465576 0.448242 0.431152 0.413818 0.396484 0.379395 0.362061 0.344727
+	0.327637 0.310303 0.293213 0.275879 0.258545 0.241455 0.224121 0.206787 0.189697 0.172363
+	0.155273 0.137939 0.120605 0.103516 0.086182 0.068848 0.051758 0.034424 0.017334 0.000000
+	-0.483398 -0.466553 -0.449951 -0.433350 -0.416748 -0.399902 -0.383301 -0.366699 -0.350098 -0.333252
+	-0.316650 -0.300049 -0.283447 -0.266602 -0.250000 -0.233398 -0.216553 -0.199951 -0.183350 -0.166748
+	-0.149902 -0.133301 -0.116699 -0.100098 -0.083252 -0.066650 -0.050049 -0.033447 -0.016602 0.000000
+</tex_translate_data>
+
+<tex_srt_anm_array size="2">
+	<tex_srt_anm index="0" material_name="l">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="30" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="29"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="r">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="30" data_head="30"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="29"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
