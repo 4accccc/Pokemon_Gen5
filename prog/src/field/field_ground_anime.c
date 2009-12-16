@@ -600,7 +600,7 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
 		fx32 max_frame;
 		
 		max_frame = NNS_G3dAnmObjGetNumFrame( p_wk->p_anmobj );
-		frame			= frame % max_frame;
+		frame			= frame % (max_frame);
 		
 		NNS_G3dAnmObjSetFrame( p_wk->p_anmobj, frame );
 	}
@@ -800,8 +800,8 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 
 		// アニメーション処理
 		p_wk->p_anime_frame[i] += speed;
-		if( p_wk->p_anime_frame[i] > (frame_max+FX32_ONE) ){
-			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max+FX32_ONE);
+		if( p_wk->p_anime_frame[i] > (frame_max) ){
+			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max);
 		}
     else
     {
