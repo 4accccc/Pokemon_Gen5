@@ -640,10 +640,10 @@
 #define FV_C04R0110_TRAINER                616 /* 0x0268 バトルサブウェイ、列車内トレイナー */
 #define FV_N01R0502_EVENT_01               617 /* 0x0269 N城謁見の間：ゲーチス、ライバル、チャンピオン */
 #define FV_D04R0101_SUNGLASSES_01          618 /* 0x026a D04遺跡のサングラス */
-		/* not used   619(0x026b) */
-		/* not used   620(0x026c) */
-		/* not used   621(0x026d) */
-		/* not used   622(0x026e) */
+#define FV_C08_SAGE1_01                    619 /* 0x026b ソウリュウシティ：ゲーヂス・ジムリーダー・チャンピオン・聴衆 */
+#define FV_C08_SUNGLASSES_01               620 /* 0x026c ソウリュウシティ：サングラス */
+#define FV_C08R0101_LEADER8A_01            621 /* 0x026d ソウリュウシティR0101：シャガ */
+#define FV_C08R0101_LEADER8B_01            622 /* 0x026e ソウリュウシティR0101：アイリス */
 		/* not used   623(0x026f) */
 		/* not used   624(0x0270) */
 		/* not used   625(0x0271) */
