@@ -390,7 +390,7 @@ static const int ArmAnmTbl[3/*DRA_ARM_MAX*/][ARM_DIR_MAX] =
   {0,0},
 };
 
-static const int JumpY[JUMP_COUNT] = { 4,8,4,0,-4,-8,-12,-16 };
+static const int JumpY[JUMP_COUNT] = { 8,16,8,0,-8,-16,-24,-32 };
 
 //レール進入不可テーブル
 static const int RailSt[DRAGON_NUM_MAX][HEAD_DIR_MAX][CHECK_RAIL_NUM] = {
