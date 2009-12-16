@@ -409,6 +409,7 @@ static BSP_TRAINER_DATA * BSP_TRAINER_DATA_Create( HEAPID heapID )
 BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
+#if 0
 	BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
@@ -610,6 +611,9 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
 	}
 #endif
 	return dst;
+#else
+  return NULL;
+#endif
 }
 
 //============================================================================
