@@ -364,8 +364,9 @@ VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数(パーティー内位置)
   POKEPARTY*        party = GAMEDATA_GetMyPokemon(gdata);
-  POKEMON_PARAM*       pp = PokeParty_GetMemberPointer( party, 0);
+  POKEMON_PARAM*       pp = PokeParty_GetMemberPointer( party, poke_pos);
   MYSTATUS*      mystatus = GAMEDATA_GetMyStatus( gdata );
   WAZAOSHIE_DATA* param;
   WAZA_REMIND_CALLBACK_WORK* wrwk;
@@ -378,7 +379,7 @@ VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
   param->cfg           = NULL;
   param->gsys          = gsys;
   param->waza_tbl      = waza_tbl;
-  param->pos           = 0;    // スクリプトから何匹目のポケモンを指定するか貰う
+  param->pos           = poke_pos;    // スクリプトから何匹目のポケモンを指定するか貰う
   param->scr           = 0;    // スクロールポイント
   param->page          = 0; // 戦闘技表示
   param->mode          = WAZAOSHIE_MODE_REMIND;  // 技思い出しモード

@@ -6183,13 +6183,15 @@
 /**
  * @def _CALL_WAZA_REMAIND_PROC
  * @brief 技思い出しプロセスを呼び出す
+ * @param pos 対象となるポケモンを手持ち位置で指定
  */
 //--------------------------------------------------------------
-#define _CALL_WAZA_REMAIND_PROC() \
-    _ASM_CALL_WAZA_REMAIND_PROC
+#define _CALL_WAZA_REMAIND_PROC( pos ) \
+    _ASM_CALL_WAZA_REMAIND_PROC pos
 
-  .macro  _ASM_CALL_WAZA_REMAIND_PROC
-  .short  EV_SEQ_CALL_WAZA_REMAIND_PROC
+  .macro _ASM_CALL_WAZA_REMAIND_PROC
+  .short EV_SEQ_CALL_WAZA_REMAIND_PROC
+  .short \pos
   .endm
 
 //======================================================================
