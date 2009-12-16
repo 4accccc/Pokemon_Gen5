@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T21:17:38"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T11:55:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,9 +312,9 @@
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ハチクから
-アイシクルバッジを　もらった！</language>
+アイシクルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ハチクから
-アイシクルバッジを　もらった！</language>
+アイシクルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c07gym0101_leader_04">

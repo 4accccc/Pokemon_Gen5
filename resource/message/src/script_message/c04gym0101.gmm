@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:46:30"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T11:54:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -325,9 +325,9 @@
 		<comment>♀
 ・ファンファーレ＋バッジ入手処理</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　カミツレから
-ボルトバッジを　もらった！</language>
+ボルトバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　カミツレから
-ボルトバッジを　もらった！</language>
+ボルトバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_04">

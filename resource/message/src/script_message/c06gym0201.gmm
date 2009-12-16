@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:06:20"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T11:55:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,9 +328,9 @@
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　フウロから
-ジェットバッジを　もらった！</language>
+ジェットバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　フウロから
-ジェットバッジを　もらった！</language>
+ジェットバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06gym0201_leader_04">

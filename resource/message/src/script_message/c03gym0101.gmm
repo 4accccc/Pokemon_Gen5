@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-25T16:30:57"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T11:54:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -341,9 +341,9 @@
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！</language>
+ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！</language>
+ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
