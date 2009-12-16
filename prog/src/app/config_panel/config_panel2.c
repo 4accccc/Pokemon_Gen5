@@ -2520,7 +2520,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     else if(  COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_CANCEL], &pos )
         && p_wk->select != APPBAR_WIN_CANCEL )
     {
-      PMSND_PlaySE( CONFIG_SE_CANCEL );
+      PMSND_PlaySE( CONFIG_SE_DECIDE );
       p_wk->select  = APPBAR_WIN_CANCEL;
       p_wk->is_decide = TRUE;
     }
@@ -4011,6 +4011,8 @@ static void SEQFUNC_SetNowConfig( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     SCROLL_GetConfigParam( &p_wk->scroll, &config );
     CONFIGPARAM_Save( &config );
   }
+
+  PMSND_PlaySE( CONFIG_SE_SAVE );
 
   SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 }
