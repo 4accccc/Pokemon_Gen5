@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 13:02:21
+#save date:2009/12/16 18:33:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -895,7 +895,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-18 7 3
+18 9 3
 #size
 1 1
 #event number: 14
@@ -912,7 +912,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-13 18 3
+13 17 3
 #size
 1 1
 #event number: 15
