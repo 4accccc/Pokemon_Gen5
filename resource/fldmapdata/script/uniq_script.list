@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2009 12/16 (Wed) 19:30
+# @date  2009 12/16 (Wed) 22:20
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -42,6 +42,7 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	pokecen_scr.ev \
 	sodateya_scr.ev \
 	namechange_scr.ev \
+	poke_waza.ev \
 	trainer.ev \
 	fld_item.ev \
 	hiden.ev \
@@ -58,7 +59,6 @@ UNIQ_TOP_EVENT_SCRFILES = \
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \
 	eggevent_scr.ev \
-	poke_waza.ev \
 	bg_attr.ev \
 	item_get_scr.ev \
 	init_scr.ev \
