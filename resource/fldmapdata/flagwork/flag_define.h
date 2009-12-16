@@ -161,7 +161,7 @@
 #define FE_D04R0201_KASEKIGET              145 /* 0x0091 D04遺跡でカセキ入手した */
 #define FE_D04R0201_KASEKITALK             146 /* 0x0092 D04遺跡でカセキくれる人に話しかけた */
 #define FE_C05PC0101_WAZA                  147 /* 0x0093 C05PC0101：ホモエドシティPC、なみのり入手フラグ */
-		/* not used   148(0x0094) */
+#define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 		/* not used   149(0x0095) */
 		/* not used   150(0x0096) */
 		/* not used   151(0x0097) */
