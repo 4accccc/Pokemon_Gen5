@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-10T20:36:07"/>
+	<create user="taya" host="W00146" date="2009-12-16T12:27:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -333,7 +333,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -889,13 +889,13 @@
 	<row id="BTL_STRID_STD_Jyuryoku">
 		<comment>じゅうりょく</comment>
 		<language name="JPN" width="216">じゅうりょくが　つよくなった！</language>
-		<language name="JPN_KANJI" width="216">重力が　強くなった！</language>
+		<language name="JPN_KANJI" width="216">じゅうりょくが　強くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_JyuryokuOff">
 		<comment>じゅうりょく　解除</comment>
 		<language name="JPN" width="216">じゅうりょくが　もとにもどった！</language>
-		<language name="JPN_KANJI" width="216">重力が　元に戻った！</language>
+		<language name="JPN_KANJI" width="216">じゅうりょくが　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_HorobiNoUta">
@@ -930,7 +930,7 @@
 		<comment>みがわり</comment>
 		<language name="JPN" width="216">しかし　みがわりを　だすには
 たいりょくが　たりなかった！</language>
-		<language name="JPN_KANJI" width="216">しかし 身代わりを出すには
+		<language name="JPN_KANJI" width="216">しかし みがわりを出すには
 体力が 足りなかった！</language>
 	</row>
 

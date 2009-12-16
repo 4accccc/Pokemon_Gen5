@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-16T03:04:57"/>
+	<create user="taya" host="W00146" date="2009-12-16T12:41:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1482,38 +1482,38 @@
 	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
 		<comment>ポケモン系状態異常メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-どく　を　あびた！</language>
+どくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 毒を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-どく　を　あびた！</language>
+どくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 毒を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-どく　を　あびた！</language>
+どくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 毒を　あびた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MoudokuGet">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-もうどく　を　あびた！</language>
+もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 猛毒　を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_MoudokuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-もうどく　を　あびた！</language>
+もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 猛毒　を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_MoudokuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-もうどく　を　あびた！</language>
+もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 猛毒　を　あびた！</language>
 	</row>
@@ -1542,19 +1542,19 @@
 
 	<row id="BTL_STRID_SET_DokuDamage">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-どく　のダメージを　うけた！</language>
+どくのダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 毒のダメージを受けた！</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-どく　のダメージを　うけた！</language>
+どくのダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 毒のダメージを受けた！</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-どく　のダメージを　うけた！</language>
+どくのダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 毒のダメージを受けた！</language>
 	</row>
@@ -1792,21 +1792,21 @@
 
 	<row id="BTL_STRID_SET_KoriAct">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-こおって　しまって　うごけない！</language>
+こおってしまって　うごけない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-凍ってしまって動けない！</language>
+凍ってしまって　動けない！</language>
 	</row>
 	<row id="BTL_STRID_SET_KoriAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-こおって　しまって　うごけない！</language>
+こおってしまって　うごけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-凍ってしまって動けない！</language>
+凍ってしまって　動けない！</language>
 	</row>
 	<row id="BTL_STRID_SET_KoriAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-こおって　しまって　うごけない！</language>
+こおってしまって　うごけない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-凍ってしまって動けない！</language>
+凍ってしまって　動けない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KoriMelt">
