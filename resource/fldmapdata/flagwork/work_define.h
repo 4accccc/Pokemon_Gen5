@@ -169,10 +169,10 @@
 
 #define WK_AREA_START                    16688 /* 0x4130  */
 
-		/* not used 16688(0x4130) */
-		/* not used 16689(0x4131) */
-		/* not used 16690(0x4132) */
-		/* not used 16691(0x4133) */
+#define WK_OTHER_SCENE_C04R0102          16688 /* 0x4130 バトルサブウェイ、シングル受付シーン制御 */
+#define WK_OTHER_SCENE_C04R0103          16689 /* 0x4131 バトルサブウェイ、ダブル受付シーン制御 */
+#define WK_OTHER_SCENE_C04R0110          16690 /* 0x4132 バトルサブウェイ、列車内シーン制御 */
+#define WK_OTHER_SCENE_C04R0111          16691 /* 0x4133 バトルサブウェイ、ホームシーン制御 */
 		/* not used 16692(0x4134) */
 		/* not used 16693(0x4135) */
 		/* not used 16694(0x4136) */
