@@ -152,11 +152,13 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
 #include "savedata/system_data_local.h"
+#include	"poke_tool/pokeparty.h"
 
 
 static void _keyWait(SAVEADDR_WORK* pWork)
 {
   {
+    int i;
     u32 size;
     u8* pAddr;
     u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
@@ -193,6 +195,25 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
       pAddr = (u8*)&pSys->profileId;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
+    }
+
+    {
+      POKEPARTY* Party = SaveData_GetTemotiPokemon(pWork->pSaveData);
+      for(i = 0 ; i < PokeParty_GetPokeCountMax(Party) ; i++){
+        pAddr = (u8*)PokeParty_GetMemberPointer( Party, i );
+        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","T POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
+      }
+    }
+
+    {
+      BOX_MANAGER* pBox = BOX_DAT_InitManager( GFL_HEAPID_APP , pWork->pSaveData);
+      int j,i;
+      for(i=0;i<BOX_MAX_TRAY;i++){
+        for(j=0;j<BOX_MAX_POS;j++){
+          pAddr = (u8*)BOXDAT_GetPokeDataAddress(pBox, i, j);
+          OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","B POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
+        }
+      }
     }
   }
 
@@ -238,6 +259,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     OS_TPrintf("%d total\n",sizetotal);
   }
 
+  _CHANGE_STATE(NULL);
 
 }
 

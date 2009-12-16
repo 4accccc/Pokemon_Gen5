@@ -651,14 +651,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
   case _SELECTMODE_PALACE:
     {
       GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-      if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
+     // if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
         pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _CHANGE_STATE(pWork,_modeButtonFlash);
-      }
-      else{
-        PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-      }
+    //  }
+     // else{
+       // PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+//      }
     }
     break;
   case _SELECTMODE_TV:
@@ -838,7 +838,6 @@ static void _infoMessageDisp(CG_WIRELESS_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReportInit(CG_WIRELESS_MENU* pWork)
 {
-
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
   GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);

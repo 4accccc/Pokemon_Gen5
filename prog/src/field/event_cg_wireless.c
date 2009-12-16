@@ -61,6 +61,8 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
 {
   EVENT_CG_WIRELESS_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
+  GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 
   switch (*seq) {
   case _FIELD_FADE_START:
@@ -78,7 +80,6 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     break;
   case _CALL_CG_WIRELESS_MENU:
     {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
       dbw->push=TRUE;
@@ -93,6 +94,9 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     }
     switch(dbw->selectType){
     case CG_WIRELESS_RETURNMODE_PALACE:
+      if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
+        GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
+      }
       (*seq) = _FIELD_FADEOUT;
       break;
     case  CG_WIRELESS_RETURNMODE_TV:
@@ -114,15 +118,14 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      FIELD_SUBSCREEN_WORK * subscreen;
+
       dbw->fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      subscreen = FIELDMAP_GetFieldSubscreenWork(dbw->fieldmap);
 
       if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
-        if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
-          FIELD_SUBSCREEN_WORK * subscreen;
-          subscreen = FIELDMAP_GetFieldSubscreenWork(dbw->fieldmap);
-          FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-          Intrude_SetWarpTown(pComm, PALACE_TOWN_DATA_PALACE);
+        if(NULL==Intrude_Check_CommConnect(pComm)){ //‚Â‚È‚ª‚Á‚Ä‚È‚¢
+          FIELD_SUBSCREEN_SetAction( subscreen , FIELD_SUBSCREEN_ACTION_PALACE_WARP);
         }
       }
 
@@ -133,7 +136,6 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     break;
   case _FIELD_END:
     if(dbw->push){
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PopBGM( fsnd );
       dbw->push=FALSE;
