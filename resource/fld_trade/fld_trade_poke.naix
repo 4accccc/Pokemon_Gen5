@@ -11,8 +11,8 @@
 #define NARC_FLD_TRADE_POKE_NAIX_
 
 enum {
-	NARC_fld_trade_poke_trade_poke_iwaaku_bin = 0,
-	NARC_fld_trade_poke_trade_poke_wanrikii_bin = 1,
+	NARC_fld_trade_poke_trade_poke_tyurine_bin = 0,
+	NARC_fld_trade_poke_trade_poke_monmen_bin = 1,
 	NARC_fld_trade_poke_trade_poke_biriridama_bin = 2,
 	NARC_fld_trade_poke_trade_poke_doodorio_bin = 3,
 	NARC_fld_trade_poke_trade_poke_gyaroppu_bin = 4,

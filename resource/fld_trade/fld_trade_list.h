@@ -8,8 +8,8 @@
  * fld_trade_poke.rb Ç…ÇÊÇËé©ìÆê∂ê¨
  */ 
 //-------------------------------------------------
-#define FLD_TRADE_POKE_IWAAKU (0)
-#define FLD_TRADE_POKE_WANRIKII (1)
+#define FLD_TRADE_POKE_TYURINE (0)
+#define FLD_TRADE_POKE_MONMEN (1)
 #define FLD_TRADE_POKE_BIRIRIDAMA (2)
 #define FLD_TRADE_POKE_DOODORIO (3)
 #define FLD_TRADE_POKE_GYAROPPU (4)
