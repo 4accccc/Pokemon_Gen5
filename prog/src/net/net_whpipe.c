@@ -64,7 +64,8 @@
 #elif DEBUG_ONLY_FOR_ohmori
 #define _DEBUG_ALONETEST (17)
 #else
-#define _DEBUG_ALONETEST (0)
+//誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
+#define _DEBUG_ALONETEST (100)
 #endif
 
 /**
