@@ -22,5 +22,6 @@
 #define N01R0101_LEADER7_01               10
 #define N01R0101_LEADER6_01               11
 #define N01R0101_LEADER8W_01              12
+#define N01R0101_LEADER8B_01              13
 
 #endif //ZONE_N01R0101_EVC_H

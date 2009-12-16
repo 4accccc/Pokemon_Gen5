@@ -138,7 +138,10 @@ init_flags:
 	_FLAG_SET( FV_C09R0501_RIVAL_01 )
 	
 	//Ｎ城１Ｆ大広間のジムリーダー（七人衆VSジムリーダーイベント中に表示）
-	_FLAG_SET( FV_C09R0501_RIVAL_01 )
+	_FLAG_SET( FV_N01R0101_LEADERS_01 )
+	
+	//Ｎ城謁見の間のゲーチス、ライバル、チャンピオン（Ｎ戦後に表示）
+	_FLAG_SET( FV_N01R0502_EVENT_01 )
 	
 	_RET
 

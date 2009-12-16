@@ -638,8 +638,8 @@
 #define FV_C02_STONEEVENT_01               614 /* 0x0266 C02フィールド：ライト/ダークストーン入手イベント 博士（父・娘）、チャンピオン、サポート、C02ジムリーダー（アロエ） */
 #define FV_C04R0110_PLAYER                 615 /* 0x0267 バトルサブウェイ、列車内プレイヤー */
 #define FV_C04R0110_TRAINER                616 /* 0x0268 バトルサブウェイ、列車内トレイナー */
-		/* not used   617(0x0269) */
-		/* not used   618(0x026a) */
+#define FV_N01R0502_EVENT_01               617 /* 0x0269 N城謁見の間：ゲーチス、ライバル、チャンピオン */
+#define FV_D04R0101_SUNGLASSES_01          618 /* 0x026a D04遺跡のサングラス */
 		/* not used   619(0x026b) */
 		/* not used   620(0x026c) */
 		/* not used   621(0x026d) */

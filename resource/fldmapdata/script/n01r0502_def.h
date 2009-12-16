@@ -5,7 +5,6 @@
 #define _N01R0502_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_POS_N01R0502_JUMPUP (1)
-#define SCRID_POS_N01R0502_JUMPDOWN (2)
+#define SCRID_POS_N01R0502_LASTBTL_01 (1)
 
 #endif //_N01R0502_DEF_H_

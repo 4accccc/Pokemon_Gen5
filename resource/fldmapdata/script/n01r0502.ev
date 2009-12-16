@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0502.h"
-  //.include  "n01r0502.h"
+  .include  "n01r0502.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,40 +19,381 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_n01r0502_jumpup
-_EVENT_DATA    ev_pos_n01r0502_jumpdown
+_EVENT_DATA    ev_pos_n01r0502_lastbtl_01
 _EVENT_DATA_END
 
 
 /************************************************************/
-/*					ジャンプギミック（上）					*/
+/*						最終イベント						*/
 /************************************************************/
-EVENT_START	ev_pos_n01r0502_jumpup
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gimmick_jump_u )
+EVENT_START	ev_pos_n01r0502_lastbtl_01
+	//主人公：Ｎ前まで歩く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
 	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//いでよシン！/ム！
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//【仮】デモ再生：パッケージポケモン登場
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//はは そいつがきみのシン/ムだね！
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	_MAP_FADE_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//【仮】デモ再生：ドラゴン対ドラゴン========================
+	
+	//謁見の間、水が干上がった状態のマップに変更
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+	
+	//【仮】ドラゴン対ドラゴンデモを再生。現状はＮ城出現デモで代用
+	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
+	
+	//==========================================================
+	
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//なんだよ！どっちが強いか教えろよ！
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_04, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//もういい！キミを叩き潰して…
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_05, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//【仮】戦闘呼び出し　全滅処理が未定
+	_TRAINER_BTL_SET( TRID_BOSS_06, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	
+	//Ｎ：後ずさり
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_boss_back_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//……どういうこと？
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_06, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：登場
+//	_FLAG_RESET( FV_N01R0502_EVENT_01 )
+//	_OBJ_ADD( N01R0502_SAGE1_01 )
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//おお！ わが おうよ！
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_01, N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//そなたに この 玉座は…
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_02, N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：Ｎの前に移動
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//所詮 私が 仕立て上げた…
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_03, N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：主人公を見る
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//…そして おめでとう！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_04, N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ライバル＆チャンピオン：登場
+//	_OBJ_ADD( N01R0502_RIVAL_01 )
+//	_OBJ_ADD( N01R0502_CHAMPION_01 )
+	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_come_01 )
+	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//～～！聞こえたけれど…
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_black_01, N01R0502_RIVAL_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：チャンピオンを見る
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//これはこれは偉大なチャンピオン
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_05, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//…なぜポケモンと人の間に
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_champion_01, N01R0502_CHAMPION_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//簡単な理由です…
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_06, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//【仮】ゲーチス：芝居
+	
+	
+	//ゲーチス：左右に往復
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//……さていずれ
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_07, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//まずは 君からですね
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_08, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//【仮】戦闘呼び出し　全滅処理が未定
+/*	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+*/	
+	
+	
+	//なぜだー
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_09, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：ゲーチスの前へ
+	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//みぐるしいよ
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_black_02, N01R0502_RIVAL_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//むぎゃっ！
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_10, N01R0502_SAGE1_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：ゲーチスを連れて行く
+	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_move_02 )
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_04 )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲーチスに教えられ…
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_07, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//チャンピオン：Ｎを見る
+	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//なぜ各地を？
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_champion_02, N01R0502_CHAMPION_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//旅だよ
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_08, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//たくさん見つかったろう
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_champion_03, N01R0502_CHAMPION_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ああ……
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_09, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎよ……
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_champion_04, N01R0502_CHAMPION_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ボクをゆるす？
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_10, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ：後ろを向く
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//クーハッハッハ！
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_11, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ボクはボクを許せない！
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_12, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ：主人公と向き合う
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公名を叫ぶ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_13, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ：上へ走る
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_boss_goaway_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ラストメッセージ【仮】シナリオの選択肢によって最後のメッセージが変わる予定
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_last_01, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ：とびおりる
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_boss_last_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲームクリア
+	_GOTO_GAMECLEAR_DEMO( 0 )
+	
 EVENT_END
 
 //--------------------------------------------------------------------
-//主人公：ジャンプ
+//その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_gimmick_jump_u
-	_ANIME_DATA	AC_JUMP_U_2G_16F,1
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-
-/************************************************************/
-/*					ジャンプギミック（下）					*/
-/************************************************************/
-EVENT_START	ev_pos_n01r0502_jumpdown
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gimmick_jump_d )
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：ジャンプ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_gimmick_jump_d
-	_ANIME_DATA	AC_JUMP_D_2G_16F,1
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：Ｎ前まで歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_walk_01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：後ずさり
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_back_01
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲーチス：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_come_01
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲーチス：Ｎの前に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_move_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル＆チャンピオン：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_come_01
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_champion_come_01
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲーチス：左右に往復
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_move_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_move_03
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：Ｎの前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：ゲーチスを連れ去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_02
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_move_04
+	_ANIME_DATA	AC_ANM_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_ANM_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：走り去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_goaway_01
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：飛び降りる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_last_01
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
 
