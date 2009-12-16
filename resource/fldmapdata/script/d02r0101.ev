@@ -394,6 +394,17 @@ _TALK_OBJ_START()
 	//盗難イベント終了
 	$WK_SCENE_D02R0101 = 2
 
+	_FLAG_RESET( FE_MUSEUM_TOUNAN )	//盗難イベントの終了
+	_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目にジムリーダー（アロエ）が戻る
+	_FLAG_RESET( FV_MUSEUM_TOUNAN )  //博物館内の骨と石が元に戻る
+	_FLAG_SET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02の町から消える
+
+	//ジムリーダーのアロエがジムに戻る
+	$WK_SCENE_C02  =  5 
+
+	//盗難事件で破壊されたマップを元にもどす
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, TRUE )
+
 	//========================================//
 
 EVENT_END

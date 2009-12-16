@@ -2,7 +2,7 @@
 #ifndef ZONE_D03_EVD_H
 #define ZONE_D03_EVD_H
 
-#define DOOR_ID_D03_D03R0101_EXIT01       0
+#define DOOR_ID_D03_D03R0201_EXIT01       0
 
 #endif //ZONE_D03_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

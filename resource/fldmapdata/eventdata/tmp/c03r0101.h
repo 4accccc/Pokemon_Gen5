@@ -9,5 +9,7 @@
 #ifndef ZONE_C03R0101_EVC_H
 #define ZONE_C03R0101_EVC_H
 
+#define C03R0101_MOUNTMAN_01               0
+#define C03R0101_POKE_01                   1
 
 #endif //ZONE_C03R0101_EVC_H

@@ -9,5 +9,6 @@
 #ifndef ZONE_C03R0301_EVC_H
 #define ZONE_C03R0301_EVC_H
 
+#define C03R0301_INFOMATIONW_01            0
 
 #endif //ZONE_C03R0301_EVC_H
