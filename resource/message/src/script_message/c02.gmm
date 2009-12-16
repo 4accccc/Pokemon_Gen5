@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-21T17:18:06"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T17:17:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="33" top="196" right="737" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="735" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="842" top="169" right="1316" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="542"/>
@@ -299,12 +299,10 @@
 ・POS＝ゲートを出てすぐあたり
 ・メッセージ表示後、ライバル戦闘で連れ歩き</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『あたらしい　まちについたら
-まず　ポケモンセンター　だよな[BE:00:ページ切り替え（行送り）]
-オレに　ついてきな！</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『新しい　街に着いたら
-まず　ポケモンセンター　だよな[BE:00:ページ切り替え（行送り）]
-オレに　ついてきな！</language>
+		<language name="JPN" width="256">ブラッカー『まちに　ついたら　まず
+ポケモンセンターだろ？　こっちこいよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『街に　着いたら　まず
+ポケモンセンターだろ？　こっち来いよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -710,7 +708,7 @@ C02ジムリーダー</attribute>
 たたかわせたく　なるよな！</language>
 		<language name="JPN_KANJI" width="256">倉庫って　でかいもんな！[BE:01:ページ切り替え（クリア）]
 ポケモンを　思う存分
-戦わせたくなるよな！</language>
+闘わせたくなるよな！</language>
 	</row>
 
 	<row id="msg_c02_middlewoman2_01">
