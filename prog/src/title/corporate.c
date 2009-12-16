@@ -222,7 +222,7 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		cw->timer++;
 
 #ifdef PM_DEBUG
-		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
+		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START)){
 			SetEndMode( pwk, CORPORATE_RET_SKIP );
 			cw->seq = SEQ_END;
 			break;
