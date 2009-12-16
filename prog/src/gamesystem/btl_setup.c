@@ -282,8 +282,6 @@ static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common( dst, gameData, sit );
   setup_player_param( dst, gameData, heapID );
 
-  dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
-
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = rule;
 }
