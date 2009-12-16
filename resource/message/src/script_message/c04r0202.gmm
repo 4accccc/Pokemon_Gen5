@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-10-29T19:09:02"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T17:58:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="930" top="399" right="1635" bottom="1019" maximized="no" rayout="Vertical2">
+	<dialog left="48" top="308" right="548" bottom="928" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1080" top="85" right="1553" bottom="483" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="699" top="-4" right="1172" bottom="394" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -348,7 +348,7 @@
 もちろん　おきゃくさんから
 ファンレターも　たくさん！▼
 じゅんばんに　わたして　いくわね！</language>
-		<language name="JPN_KANJI" width="256">お疲れ様！▼
+		<language name="JPN_KANJI" width="256">おつかれさま！▼
 ポケモンたちの　息が　
 ピッタリと　合っていた▼
 完成度の　高い　
@@ -368,7 +368,7 @@
 その　しょうこに　おきゃくさんから
 ファンレターを　あずかったの！▼
 じゅんばんに　わたして　いくわね！</language>
-		<language name="JPN_KANJI" width="256">お疲れさま！▼
+		<language name="JPN_KANJI" width="256">おつかれさま！▼
 とっても　すばらしい　
 ミュージカル　だったと　思うわ！
 その　証拠に　お客さんから
@@ -386,7 +386,7 @@
 ぶたいをみていた　おきゃくさんから
 ファンレターも　あずかったの！▼
 じゅんばんに　わたして　行くわね！</language>
-		<language name="JPN_KANJI" width="256">お疲れ様！▼
+		<language name="JPN_KANJI" width="256">おつかれさま！▼
 なかなか　良い　ミュージカル　
 だったと　おもうわ！▼
 舞台を見ていた　お客さんから
@@ -404,8 +404,8 @@
 ぶたいを　みていた　おきゃくさんから
 ファンレターを　あずかっているわ▼
 じゅんばんに　わたして　いくわね！</language>
-		<language name="JPN_KANJI" width="256">お疲れ様！▼
-一部で　すごく　盛り上がりの　ある　
+		<language name="JPN_KANJI" width="256">おつかれさま！▼
+一部で　すごく　盛り上がりの　ある
 ミュージカル　だったわね！▼
 舞台を　見ていた　お客さんから
 ファンレターを　預かっているわ▼
