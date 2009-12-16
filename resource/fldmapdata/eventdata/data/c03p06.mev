@@ -199,9 +199,9 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -88
+200 0 -56
 #size
-1 7
+1 8
 #event number: 1
 #Pos Event Label
 POS_C03CT_EXIT_04
@@ -216,7 +216,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 200
+200 0 184
 #size
 1 10
 #event number: 2
@@ -233,9 +233,9 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 0 -56
+-200 0 -40
 #size
-1 11
+1 10
 #event number: 3
 #Pos Event Label
 POS_C03CT_EXIT_02
@@ -250,9 +250,9 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 0 184
+-200 0 168
 #size
-1 7
+1 8
 #event number: 4
 #Pos Event Label
 POS_C03CT_EXIT_03
@@ -267,7 +267,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 232
+-40 0 200
 #size
 6 1
 #Map Event List Data End
@@ -294,7 +294,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 -248
+-40 0 -216
 #size
 6 1
 #Map Event List Data End

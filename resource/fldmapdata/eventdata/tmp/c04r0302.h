@@ -3,7 +3,6 @@
 #define ZONE_C04R0302_EVD_H
 
 #define DOOR_ID_C04R0302_C04R0301_EXIT01  0
-#define DOOR_ID_C04R0302_C04R0301_EXIT02  1
 
 #endif //ZONE_C04R0302_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

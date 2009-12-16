@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/27 17:49:13
+#save date:2009/12/16 17:29:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/27 17:49:13
+#save date:
 2
 #hold event type:
 1
@@ -37,8 +37,10 @@ DIR_DOWN
 1
 #Move Limit Z Number
 3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--56 0 -40
+-8 0 40
 #event number: 1
 #type
 1
@@ -66,8 +68,10 @@ DIR_UP
 2
 #Move Limit Z Number
 2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 -32 152
+-168 0 8
 #event number: 2
 #type
 1
@@ -95,8 +99,10 @@ DIR_DOWN
 1
 #Move Limit Z Number
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-40 0 -8
+-40 0 24
 #event number: 3
 #type
 1
@@ -124,13 +130,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-104 -32 120
+-136 0 24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/27 17:49:13
+#save date:
 2
 #hold event type:
 1
@@ -140,7 +148,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/27 17:49:13
+#save date:
 2
 #hold event type:
 1
@@ -150,7 +158,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/27 17:49:13
+#save date:
 2
 #hold event type:
 1
@@ -167,33 +175,45 @@ DOOR_ID_C04_C04R0401_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--24 0 -168
+-88 0 -56
+#size
+3 1
 #event number: 1
 #Door Event Label
-DOOR_ID_C04R0401_C04_EXIT03
+DOOR_ID_C04R0401_C04R0402_EXIT01
 #Next Zone ID Name
-ZONE_ID_C04
+ZONE_ID_C04R0402
 #Next Door ID Name
-DOOR_ID_C04_C04R0401_EXIT01
+DOOR_ID_C04R0402_C04R0401_EXIT01
 #Door Direction
-EXIT_DIR_UP
+EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-8 0 -168
+-72 32 232
+#size
+1 1
 #event number: 2
 #Door Event Label
-DOOR_ID_C04R0401_C04_EXIT02
+DOOR_ID_C04R0401_C04R0403_EXIT01
 #Next Zone ID Name
-ZONE_ID_C04
+ZONE_ID_C04R0403
 #Next Door ID Name
-DOOR_ID_C04_C04R0401_EXIT01
+DOOR_ID_C04R0403_C04R0401_EXIT01
 #Door Direction
-EXIT_DIR_UP
+EXIT_DIR_NON
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WARP
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--8 0 -168
+-72 -32 120
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

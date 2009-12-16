@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/24 16:31:53
+#save date:2009/12/16 17:22:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0302.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/24 16:31:53
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 56 8 -72
 #event number: 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 8 -40
 #event number: 2
@@ -95,6 +99,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -88 8 -40
 #event number: 3
@@ -124,6 +130,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 88 8 -56
 #event number: 4
@@ -153,6 +161,8 @@ DIR_LEFT
 2
 #Move Limit Z Number
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 56 56 -168
 #event number: 5
@@ -182,13 +192,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 8 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/24 16:31:53
+#save date:
 2
 #hold event type:
 1
@@ -198,7 +210,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/24 16:31:53
+#save date:
 2
 #hold event type:
 1
@@ -208,12 +220,12 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/24 16:31:53
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-2
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_C04R0302_C04R0301_EXIT01
@@ -225,20 +237,11 @@ DOOR_ID_C04R0301_C04R0302_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 56 -216
-#event number: 1
-#Door Event Label
-DOOR_ID_C04R0302_C04R0301_EXIT02
-#Next Zone ID Name
-ZONE_ID_C04R0301
-#Next Door ID Name
-DOOR_ID_C04R0301_C04R0302_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-8 56 -216
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
