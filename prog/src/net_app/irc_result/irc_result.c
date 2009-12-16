@@ -539,6 +539,15 @@ static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
 static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, BACKOBJ_COLOR color, u32 sync );
 static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
 
+typedef enum
+{ 
+  SCORE_RANK_BEST,
+  SCORE_RANK_HIGHT,
+  SCORE_RANK_LOW,
+  SCORE_RANK_BAD,
+}SCORE_RANK;
+static SCORE_RANK UTIL_GetScoreRank( u8 score );
+
 
 //汎用
 static void DEBUGRESULT_PRINT_UpDate( RESULT_MAIN_WORK *p_wk );
@@ -1902,10 +1911,12 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_START_FLASHOUT,//フラッシュ出開始
 		SEQ_WAIT_FLASHOUT,	//フラッシュ出中
 #endif
+    SEQ_INIT,
 		SEQ_START_SCALE,	//ハート拡大開始
 		SEQ_WAIT_SCALE,		//ハート拡大中
 		SEQ_MAIN,
 		SEQ_END_MSG,
+    SEQ_WAIT,
 		SEQ_END_WAIT,
 	};
 
@@ -1957,6 +1968,14 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		break;
 #endif
+  case SEQ_INIT:
+    if( p_wk->cnt++ > 30 )
+    { 
+      p_wk->cnt = 0;
+      *p_seq  = SEQ_START_SCALE;
+    }
+    break;
+
 	case SEQ_START_SCALE:
 		SCALEBG_Start( &p_wk->scalebg, 90 );
 		PMSND_PlaySE( IRCRESULT_SE_HEART_UP );
@@ -1986,8 +2005,29 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_END_MSG:
 		MSGWND_PrintNumber( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
 				p_wk->p_param->score, 2 );
+    *p_seq  = SEQ_WAIT;
+    break;
 
-		*p_seq		= SEQ_END_WAIT;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > 50 )
+    { 
+      p_wk->cnt = 0;
+      switch( UTIL_GetScoreRank(p_wk->p_param->score) )
+      { 
+      case SCORE_RANK_BEST:
+        PMSND_PlayBGM( SEQ_ME_AISHOU_H );
+        break;
+      case SCORE_RANK_HIGHT:
+        PMSND_PlayBGM( SEQ_ME_AISHOU_M );
+        break;
+      case SCORE_RANK_LOW:
+        PMSND_PlayBGM( SEQ_ME_AISHOU_L );
+        break;
+      case SCORE_RANK_BAD:
+        break;
+      }
+      *p_seq		= SEQ_END_WAIT;
+    }
 		break;
 
 	case SEQ_END_WAIT:
@@ -2274,42 +2314,36 @@ static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 sc
 	{	
 		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 	
-		if( 0 < score && score < 80 )
+		switch( UTIL_GetScoreRank(score) )
 		{	
-			NAGI_Printf( "点数を補正しました %d\n", score );
-			score	= 80;
-		}
-
-		if( score == 100 )
-		{	
+    case SCORE_RANK_BEST:
 			//読み込み
 			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_03_NCGR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
 			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_03_NSCR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-		}
-		else if( 90 <= score && score < 100 )
-		{	
+      break;
+
+    case SCORE_RANK_HIGHT:
 			//読み込み
 			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_04_NCGR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
 			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_04_NSCR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-		}
-		else if( score == 0 )
-		{
-			//読み込み
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_06_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_06_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-		}
-		else
-		{	
+
+    case SCORE_RANK_LOW:
 			//読み込み
 			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_05_NCGR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
 			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_05_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
+      break;
+
+    case SCORE_RANK_BAD:
+			//読み込み
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_06_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_06_NSCR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 		}
 
@@ -2580,6 +2614,36 @@ static BOOL BACKOBJ_IsEnd( const BACKOBJ_WORK *cp_wk )
 
 	return TRUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアを評価付け
+ *
+ *	@param	u8 score  スコア
+ *
+ *	@return スコアの評価
+ */
+//-----------------------------------------------------------------------------
+static SCORE_RANK UTIL_GetScoreRank( u8 score )
+{ 
+  if(score == 100 )
+  { 
+    return SCORE_RANK_BEST;
+  }
+  else if( 90 <= score && score < 100 )
+  { 
+    return SCORE_RANK_HIGHT;
+  }
+  else if( 0 == score )
+  { 
+    return SCORE_RANK_BAD;
+  }
+  else 
+  { 
+    return SCORE_RANK_LOW;
+  }
+}
+
 //=============================================================================
 /**
  *		背面OBJ1個
