@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T21:01:30"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T21:08:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,8 +378,8 @@
 ・続けて</comment>
 		<language name="JPN" width="256">なんか　ひろばで
 はじまるらしいぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">なんか　ひろばで
-はじまるらしいぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">なんか　広場で
+始まるらしいぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_boodle_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -389,7 +389,7 @@
 		<language name="JPN" width="256">んじゃ　ちょいと
 いってみるかね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">んじゃ　ちょいと
-いってみるかね[BE:01:ページ切り替え（クリア）]</language>
+行ってみるかね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

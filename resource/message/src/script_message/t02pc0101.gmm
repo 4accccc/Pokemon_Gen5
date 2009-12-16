@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:15:01"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T21:08:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -489,12 +489,12 @@ msg_t02pc0101_docotr_jr_03表示後
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『あたし
 ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
-かっておきたい　ものも
-いろいろ　あるから</language>
+キズぐすりとか　モンスターボール
+いろいろ　かっておきたいし</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あたし
 ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
-買っておきたい　ものも
-いろいろ　あるから</language>
+キズぐすりとか　モンスターボール
+いろいろ　買っておきたいし</language>
 	</row>
 
 	<row id="msg_t02pc0101_woman1_01">
