@@ -19,7 +19,6 @@
 #include "gamesystem/msgspeed.h"  // for MSGSPEED_GetWait
 
 #include "font/font.naix"
-#include "message.naix"
 
 //アーカイブ
 #include "arc_def.h" // for ARCID_XXX
@@ -59,6 +58,8 @@ struct _INTRO_MSG_WORK {
   GFL_FONT*     font;
   GFL_BMPWIN*   win_dispwin;
   GFL_ARCUTIL_TRANSINFO  bgchar_frame;
+  STRBUF*   strbuf;
+  STRBUF*   exp_strbuf;
 };
 
 
@@ -84,7 +85,7 @@ static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDA
  *	@retval INTRO_MSG_WORK* wk メインワーク
  */
 //-----------------------------------------------------------------------------
-INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
+INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, HEAPID heap_id )
 {
   INTRO_MSG_WORK* wk;
 
@@ -97,7 +98,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
   
   // メッセージハンドルをROMに展開しておく
-  wk->msghandle = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_intro_dat, heap_id );
+  wk->msghandle = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, msg_dat_id, heap_id );
 
   wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 1, 0 );
 
@@ -107,6 +108,12 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 
   // フレームウィンドウ用のキャラを用意
   BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_FIELD, heap_id );
+
+  wk->strbuf      = GFL_STR_CreateBuffer( 200, wk->heap_id );
+  wk->exp_strbuf  = GFL_STR_CreateBuffer( 200, wk->heap_id );
+
+  // フォントを展開
+  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, wk->heap_id );
 
   return wk;
 }
@@ -122,6 +129,9 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 //-----------------------------------------------------------------------------
 void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 {
+  GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_STR_DeleteBuffer( wk->exp_strbuf );
+
   // まだ終了していない文字列表示が会った場合は破棄
   if( wk->print_stream )
   {
@@ -170,10 +180,11 @@ void INTRO_MSG_Main( INTRO_MSG_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
+void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg )
 {
+  const u8 clear_color = 15;
   GFL_BMPWIN* win;
-  STRBUF* str;
+  int msgspeed;
 
   // ウィンドウ生成
   if( wk->win_dispwin == NULL )
@@ -181,25 +192,58 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
     wk->win_dispwin = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 1, 19, 30, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
   }
   
-  win = wk->win_dispwin;
+  msgspeed  = MSGSPEED_GetWait();
+  win       = wk->win_dispwin;
 
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), 15);
-  GFL_FONTSYS_SetColor(1, 2, 15);
+  HOSAKA_Printf("msgspeed = %d str_id=%d \n", msgspeed, str_id);
 
-  str = MSGDAT_UTIL_AllocExpandString( wk->wordset, wk->msghandle, str_id, wk->heap_id );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), clear_color);
+  GFL_FONTSYS_SetColor(1, 2, clear_color);
 
-  wk->print_stream = PRINTSYS_PrintStream( win, 0, 0, str, wk->font, MSGSPEED_GetWait(),
-                                           wk->msg_tcblsys, 1, wk->heap_id, 15 );
+  GFL_MSG_GetString( wk->msghandle, str_id, wk->strbuf );
 
-  GFL_STR_DeleteBuffer( str );
-  
+#ifdef PM_DEBUG
+  GFL_STR_CheckBufferValid( wk->strbuf ); ///< 破損チェック
+#endif
+
+#if 0
+  {
+    const STRCODE* p = NULL;
+    
+    GFL_STR_SetStringCode( wk->strbuf, p );
+
+    while( *p != GFL_STR_GetEOMCode() )
+    {
+      HOSAKA_Printf("%x ", *p );
+      p++;
+    };
+
+    HOSAKA_Printf("\n");
+  }
+#endif
+
+  // コールバックでWORDSET
+  if( callback_func )
+  {
+    callback_func( wk->wordset, callback_arg );
+  }
+
+  WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
+
+#ifdef PM_DEBUG
+  GFL_STR_CheckBufferValid( wk->exp_strbuf ); ///< 破損チェック
+#endif
+
+  wk->print_stream = PRINTSYS_PrintStream( win, 0, 0, wk->exp_strbuf, wk->font, msgspeed,
+                                           wk->msg_tcblsys, 0xffff, wk->heap_id, clear_color );
+
   BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M );
 
   // 転送
   GFL_BMPWIN_TransVramCharacter( win );
   GFL_BMPWIN_MakeScreen( win );
 
-  GFL_BG_LoadScreenV_Req( BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
 }
 
 //-----------------------------------------------------------------------------
@@ -211,18 +255,20 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
  *	@retval TRUE:終了
  */
 //-----------------------------------------------------------------------------
-BOOL INTRO_MSG_IsPrintEnd( INTRO_MSG_WORK* wk )
+BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 {
+  PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->print_stream );
+
+//  HOSAKA_Printf("print state= %d \n", state );
+
   if( wk->print_stream )
   {
-    PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->print_stream );
-
     switch( state )
     {
     case PRINTSTREAM_STATE_DONE :
       PRINTSYS_PrintStreamDelete( wk->print_stream );
       wk->print_stream = NULL;
-      break;
+      return TRUE;
 
     case PRINTSTREAM_STATE_PAUSE :
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
@@ -231,11 +277,14 @@ BOOL INTRO_MSG_IsPrintEnd( INTRO_MSG_WORK* wk )
       }
       break;
 
-    default : GF_ASSERT(0);
+    default :
+      break;
     }
+
+    return FALSE;
   }
 
-  return TRUE; // 終了
+  return FALSE;
 }
 
 

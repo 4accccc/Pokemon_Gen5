@@ -82,6 +82,7 @@ struct _INTRO_CMD_WORK {
 // コマンド
 static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -96,6 +97,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   NULL, // null
   CMD_SET_SCENE,
   CMD_BG_LOAD,
+  CMD_BGM,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
@@ -166,6 +168,20 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  BGM再生コマンド
+ *
+ *	@param	param[0] BGM_Label
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  GFL_SOUND_PlayBGM( param[0] );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  SE再生コマンド
  *
  *	@param	param[0] SE_Label
@@ -178,7 +194,6 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   int player_no;
-
 
   GFL_SOUND_PlaySE( param[0] );
   
@@ -252,18 +267,16 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 //-----------------------------------------------------------------------------
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-//  const INTRO_SELECT_UI_RETURN ret = INTRO_SELECT_UpdateUI( wk->wk_msg );
 
   switch( sdat->seq )
   {
   case 0:
-//   INTRO_SELECT_Setup( wk->wk_msg, msg_kanamode_01, msg_kanamode_window_01, msg_kanamode_window_02 );
-    INTRO_MSG_SetPrint( wk->wk_msg, msg_kanamode_01 );
+    INTRO_MSG_SetPrint( wk->wk_msg, msg_kanamode_01, NULL, NULL );
     sdat->seq++;
     break;
 
   case 1:
-    if( INTRO_MSG_IsPrintEnd( wk->wk_msg ) )
+    if( INTRO_MSG_PrintProc( wk->wk_msg ) )
     {
       return TRUE;
       sdat->seq++;
@@ -333,7 +346,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( HEAPID heap_id )
   wk->heap_id = heap_id;
 
   // 選択肢モジュール初期化
-  wk->wk_msg = INTRO_MSG_Create( heap_id );
+  wk->wk_msg = INTRO_MSG_Create( NARC_message_intro_dat ,heap_id );
 
   return wk;
 }

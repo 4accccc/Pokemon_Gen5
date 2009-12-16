@@ -15,6 +15,7 @@
 static const INTRO_CMD_DATA c_intro_scene_init[] = 
 { 
   { INTRO_CMD_TYPE_BG_LOAD, },
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING } },
   // ↑ROMアクセスはここまで↑
   // 初回セーブデータ初期化コマンド開始
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
