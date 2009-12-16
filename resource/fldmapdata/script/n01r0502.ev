@@ -27,6 +27,10 @@ _EVENT_DATA_END
 /*						最終イベント						*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_01
+	
+	//このイベントで登場する人物のバニッシュフラグを事前に落としておきます。追加されるタイミングはそれぞれ異なります。
+	_FLAG_RESET( FV_N01R0502_EVENT_01 )
+	
 	//主人公：Ｎ前まで歩く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
 	_OBJ_ANIME_WAIT()
@@ -93,8 +97,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_MSGWIN_CLOSE()
 	
 	//ゲーチス：登場
-//	_FLAG_RESET( FV_N01R0502_EVENT_01 )
-//	_OBJ_ADD( N01R0502_SAGE1_01 )
+	_OBJ_ADD( N01R0502_SAGE1_01 )
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_come_01 )
 	_OBJ_ANIME_WAIT()
 	
@@ -124,8 +127,8 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_MSGWIN_CLOSE()
 	
 	//ライバル＆チャンピオン：登場
-//	_OBJ_ADD( N01R0502_RIVAL_01 )
-//	_OBJ_ADD( N01R0502_CHAMPION_01 )
+	_OBJ_ADD( N01R0502_RIVAL_01 )
+	_OBJ_ADD( N01R0502_CHAMPION_01 )
 	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_come_01 )
 	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_come_01 )
 	_OBJ_ANIME_WAIT()
@@ -171,7 +174,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_MSGWIN_CLOSE()
 	
 	//【仮】戦闘呼び出し　全滅処理が未定
-/*	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
+	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -179,7 +182,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
-*/	
+	
 	
 	
 	//なぜだー
@@ -202,6 +205,14 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_move_02 )
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_04 )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2293760,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	
 	//ゲーチスに教えられ…
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_07, N01R0502_BOSS_01, WIN_NONE )
@@ -256,9 +267,15 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_13, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,1675264,80 )	//一番最後の引数は移動にかかるフレーム数
+	
 	//Ｎ：上へ走る
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_boss_goaway_01 )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	
 	//ラストメッセージ【仮】シナリオの選択肢によって最後のメッセージが変わる予定
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_last_01, N01R0502_BOSS_01, WIN_NONE )
