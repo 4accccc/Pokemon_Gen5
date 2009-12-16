@@ -69,9 +69,6 @@ EVENT_START     ev_r10r0401_veteranm_01
     _BALLOONWIN_CLOSE()
   ELSE
     //とりあえず
-      _FLAG_SET( FE_BADGEGATE04_OPEN )
-      _SET_BADGE_FLAG( BADGE_ID_04 )
-
     _CALL ev_sub_gate_event
   ENDIF
 
@@ -110,13 +107,14 @@ ev_sub_gate_event:
   _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_04 )
   IF $SCWK_ANSWER == TRUE THEN
 
+    _FLAG_SET( FE_BADGEGATE04_OPEN )
     //バッジもってる→「うむ！よろしい！」
     _BALLOONWIN_OBJMSG( msg_r10r0401_badge_02, R10R0401_VETERANM )
     _BALLOONWIN_CLOSE()
 
     _CALL ev_sub_gate_open_demo
 
-	  _MAP_CHANGE_NO_FADE( ZONE_ID_R10R0501, 15, 0, 22, DIR_UP )
+	  _MAP_CHANGE_NO_FADE( ZONE_ID_R10R0501, 15, 0, 20, DIR_UP )
 
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
@@ -156,7 +154,7 @@ ev_sub_gate_open_demo:
       _SE_WAIT()
 
       //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
-      _BALLOONWIN_OBJMSG( msg_r10r0401_badge_03, R10R0401_VETERANM )
+      _BALLOONWIN_OBJMSG_POS( msg_r10r0401_badge_03, R10R0401_VETERANM, WIN_UP )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 
@@ -196,7 +194,7 @@ ev_sub_gate_open_demo:
 //主人公：一歩下がる
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_limitter_hero_go_down
-	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL  anm_walkout_hero_talk_up
@@ -211,7 +209,7 @@ _ANIME_LABEL  anm_walkout_hero_talk_left
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL  anm_walkout_hero_talk_right
-	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,3
   _ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 

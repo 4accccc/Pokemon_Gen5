@@ -36,6 +36,7 @@ _EVENT_DATA   ev_debug_tomoya
 _EVENT_DATA   ev_debug_obata
 _EVENT_DATA   ev_debug_hosaka
 _EVENT_DATA   ev_debug_ariizumi
+_EVENT_DATA   ev_debug_ohkubo
 _EVENT_DATA_END
 
 
@@ -89,6 +90,8 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
+  //_GET_ROM_VERSION( SCWK_ANSWER )
+  //_DEBUG_PRINT_WK ( SCWK_ANSWER )
   _GOTO_GAMECLEAR_DEMO( 0 )
 
   //_BGM_FADEOUT( 0, 30 )
@@ -306,7 +309,7 @@ EVENT_START   ev_debug_hosaka
   _CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
 
   //チャンピオン部屋のマップ置き換えリクエスト
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_CHAMPROOM, TRUE, TRUE )
 
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
@@ -319,4 +322,21 @@ EVENT_START   ev_debug_ariizumi
   _CALL_TVT_DEMO( 0 )
 EVENT_END
 
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ohkubo
+
+  _SET_BADGE_FLAG( BADGE_ID_01 )
+  _SET_BADGE_FLAG( BADGE_ID_02 )
+  _SET_BADGE_FLAG( BADGE_ID_03 )
+  _SET_BADGE_FLAG( BADGE_ID_04 )
+  _SET_BADGE_FLAG( BADGE_ID_05 )
+  _SET_BADGE_FLAG( BADGE_ID_06 )
+  _SET_BADGE_FLAG( BADGE_ID_07 )
+  _SET_BADGE_FLAG( BADGE_ID_08 )
+
+  _MAP_CHANGE( ZONE_ID_R10R0101, 15, 19, DIR_UP )
+EVENT_END
 
