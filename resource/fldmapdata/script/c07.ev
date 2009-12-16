@@ -20,7 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_c07_hakase1_01
-_EVENT_DATA    ev_pos_c07_leader7_01
+_EVENT_DATA    ev_scene_c07_leader7_01
 _EVENT_DATA    ev_c07_rival_01
 _EVENT_DATA    ev_c07_support_01
 _EVENT_DATA    ev_c07_hakaim_01
@@ -99,14 +99,9 @@ EVENT_START   ev_pos_c07_hakase1_01
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
-	//【仮】分岐メッセージ
-	_BALLOONWIN_OBJMSG( msg_c07_hakase1_07w , C07_HAKASE1_01 )
-	_BALLOONWIN_CLOSE()
-	
-	/*WB分岐メッセージ
 	//WとBで台詞を変える
 	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , WIN_NONE)
-	*/
+	_BALLOONWIN_CLOSE()
 	
 	//上を向いて喋る
 	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_02 )
@@ -140,7 +135,7 @@ EVENT_END
 /**************************************************************/
 /*   C07：リュウラセンイベント開始                             */
 /**************************************************************/
-EVENT_START   ev_pos_c07_leader7_01
+EVENT_START   ev_scene_c07_leader7_01
 
 	//======================================//
 	
@@ -150,9 +145,9 @@ EVENT_START   ev_pos_c07_leader7_01
 	//======================================//
 
 	//ライバルとサポート会話
-	_BALLOONWIN_OBJMSG( msg_c07_black_01 , C07_RIVAL_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_01 , C07_RIVAL_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG( msg_c07_white_01 , C07_SUPPORT_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_01 , C07_SUPPORT_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//ハチクOBJ表示
@@ -166,17 +161,17 @@ EVENT_START   ev_pos_c07_leader7_01
 	_OBJ_ANIME_WAIT()
 	
 	//リュウラセンの塔が鳴いている、ハチク退場
-	_BALLOONWIN_OBJMSG( msg_c07_leader7_01 , C07_LEADER7_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_01 , C07_LEADER7_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_goodbye )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルとサポート会話
-	_BALLOONWIN_OBJMSG( msg_c07_black_02 , C07_RIVAL_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG( msg_c07_white_03 , C07_SUPPORT_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG( msg_c07_black_03 , C07_RIVAL_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_03 , C07_RIVAL_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
 
 	//ハチクOBJ削除

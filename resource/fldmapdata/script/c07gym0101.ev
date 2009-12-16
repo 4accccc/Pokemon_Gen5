@@ -73,7 +73,7 @@ EVENT_START		ev_c07gym0101_leader7_01
 		
 		//【仮】トレーナーID仮
 		//戦闘処理
-		_TRAINER_BTL_SET( TRID_LEADER6_01, 0 )
+		_TRAINER_BTL_SET( TRID_LEADER7_01, 0 )
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -86,14 +86,18 @@ EVENT_START		ev_c07gym0101_leader7_01
 		//勝利後会話
 		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_02 , C07GYM0101_LEADER7_01 )
 		_BALLOONWIN_CLOSE()
-	
+
 		//アイシクルバッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_07 )
-		_PLAYER_NAME( 0 )
-		//ハチクからアイシクルバッジをもらった
-		_SYSWIN_MSG_DOWN( msg_c07gym0101_leader_03 )
+		
+		//入手音再生
 		_ME_PLAY( SEQ_ME_BADGE )
+		_CALL_FLD3D_CUTIN( FLDCIID_GYM07 )
 		_ME_WAIT()
+		
+		//ハチクからアイシクルバッジをもらった
+		_PLAYER_NAME( 0 )
+		_SYSWIN_MSG_ALLPUT_DOWN( msg_c07gym0101_leader_03 )
 		_SYSWIN_CLOSE()
 
 		//ハチクメッセージ
@@ -119,6 +123,9 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_FLAG_RESET( FV_C07_RIVAL_01 )
 		//C07のプラズマ団を表示
 		_FLAG_RESET( FV_C07_HAKAIM_01 )
+		
+		//d08r0101のマップを入り口が破壊されたマップに差し替える
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
 
 		//========================================//
 		

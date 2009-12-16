@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08r0101.h"
-  //.include  "c08r0101.h"
+  .include  "c08r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,138 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0101
+_EVENT_DATA    ev_scene_c08r0101_leader8_01
+_EVENT_DATA    ev_c08r0101_leader8a_01
+_EVENT_DATA    ev_c08r0101_leader8b_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*   C08：チャンピオン石解説イベント                           */
+/**************************************************************/
+EVENT_START   ev_scene_c08r0101_leader8_01
+	
+	//主人公チャンピオンの前に移動
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c08_9player_work )
+	_OBJ_ANIME_WAIT()
+	
+	//シャガWB分岐メッセージ（１）「君が持つストーンは」
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_01w , msg_c08r0101_leader8a_01b , C08R0101_LEADER8A_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	
+	//アイリス相槌
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_01 , C08R0101_LEADER8B_01)
+	_BALLOONWIN_CLOSE()
+	
+	//シャガWB分岐メッセージ（２）「だがある日の事」
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_02w , msg_c08r0101_leader8a_02b , C08R0101_LEADER8A_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	
+	//アイリスWB分岐メッセージ（３）「その名も」
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_02w , msg_c08r0101_leader8b_02b , C08R0101_LEADER8B_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	
+	//シャガ相槌
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_03 , C08R0101_LEADER8A_01)
+	_BALLOONWIN_CLOSE()
+	
+	//アイリスWB分岐メッセージ（４）「だからね！いま２匹が出会っても」
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_03w , msg_c08r0101_leader8b_03b , C08R0101_LEADER8B_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	
+	//シャガ相槌
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04 , C08R0101_LEADER8A_01)
+	_BALLOONWIN_CLOSE()
+	
+	//アイリス相槌
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_04 , C08R0101_LEADER8B_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//whiteVER（アイリスがジムリーダー）
+	IF $LCW_VERSION == VERSION_WHITE THEN
+	
+		//シャガアイリスを促す
+		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04 , C08R0101_LEADER8A_01)
+		_BALLOONWIN_CLOSE()
+		//アイリス相槌
+		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_04 , C08R0101_LEADER8B_01)
+		_BALLOONWIN_CLOSE()
+		//アイリス退場
+		_OBJ_ANIME( C08R0101_LEADER8B_01 , anm_c08_leader_exit )
+		_OBJ_ANIME_WAIT()
+		
+		//アイリスOBJ消去
+		_OBJ_DEL( C08R0101_LEADER8B_01 )
+	
+		//======================================//
+	
+		//C08イベント終了
+		$WK_SCENE_C08 = 2
+		
+		//C08サングラスを消してジム挑戦できるように
+		_FLAG_SET( FV_C08_SUNGLASSES_01 )
+		//C08R0101のアイリスを消す
+		_FLAG_SET( FV_C08R0101_LEADER8B_01 )
+	
+		//======================================//
+	
+	//blackVER（シャガがジムリーダー）
+	ELSE
+
+		//シャガ挑戦を受ける
+		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_05b , C08R0101_LEADER8A_01)
+		_BALLOONWIN_CLOSE()
+		//シャガ退場
+		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_leader_exit )
+		_OBJ_ANIME_WAIT()
+		
+		//シャガOBJ消去
+		_OBJ_DEL( C08R0101_LEADER8A_01 )
+	
+		//======================================//
+	
+		//C08イベント終了
+		$WK_SCENE_C08 = 2
+		
+		//C08サングラスを消してジム挑戦できるように
+		_FLAG_SET( FV_C08_SUNGLASSES_01 )
+		//C08R0101のシャガを消す
+		_FLAG_SET( FV_C08R0101_LEADER8A_01 )
+	
+		//======================================//
+	
+	ENDIF
+	
+EVENT_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*   C08：シャガ一言メッセージ                                */
 /**************************************************************/
-//ev_c08r0101_flag_change:
-//  _END
+EVENT_START   ev_c08r0101_leader8a_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_07 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*   C08：アイリス一言メッセージ                               */
 /**************************************************************/
-ev_c08r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c08r0101_leader8b_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_09 )
+EVENT_END
 
+//--------------------------------------------------------------
+//	C08	歴史解説イベント：主人公二人の前へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_9player_work
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C08	歴史解説イベント：ジムリーダー去る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leader_exit
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0

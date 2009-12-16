@@ -15,6 +15,10 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_c07_tbl
 _SP_EVENT_DATA_END
 
-
+//テーブル定義
+sp_c07_tbl:
+	_SCENE_CHANGE_DATA		WK_SCENE_D08_LEGEND,1,SCRID_SCENE_C07_LEADER7_01
+	_SCENE_CHANGE_END

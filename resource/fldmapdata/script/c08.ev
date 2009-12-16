@@ -184,15 +184,24 @@ EVENT_START   ev_pos_c08_champions_01
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
-	//チャンピオン・リーダーOBJ削除
+	//シャガ・アイリス退場
+	
+	//イベント関連OBJ削除
+	_OBJ_DEL( C08_LEADER8A_01 )
+	_OBJ_DEL( C08_LEADER8B_01 )
+	_OBJ_DEL( C08_SAGE1_01 )
+	_OBJ_DEL( C08_CHAMPION_01 )
+	_OBJ_DEL( C08_OLDMAN_01 )
+	_OBJ_DEL( C08_MAN3_01 )
+	_OBJ_DEL( C08_WOMAN2_01 )
 	
 	//======================================//
 	
 	//演説イベントOBJ非表示
-	//_FLAG_SET( FV_C07_HAKASE1 )
+	_FLAG_SET( FV_C08_SAGE1_01 )
 	
 	//C08演説イベントPOSを無効に
-	//$WK_SCENE_C07 = 1
+	$WK_SCENE_C08 = 1
 	
 	//======================================//
 

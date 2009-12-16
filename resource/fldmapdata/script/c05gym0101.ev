@@ -121,11 +121,15 @@ EVENT_START		ev_c05gym0101_leader
 	
 		//クエイクバッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_05 )
-		_PLAYER_NAME( 0 )
-		//ヤーコンからクエイクバッジをもらった
-		_SYSWIN_MSG_ALLPUT_DOWN( msg_c05gym0101_leader_03 )
+		
+		//入手音再生
 		_ME_PLAY( SEQ_ME_BADGE )
+		_CALL_FLD3D_CUTIN( FLDCIID_GYM05 )
 		_ME_WAIT()
+		
+		//ヤーコンからクエイクバッジをもらった
+		_PLAYER_NAME( 0 )
+		_SYSWIN_MSG_ALLPUT_DOWN( msg_c05gym0101_leader_03 )
 		_SYSWIN_CLOSE()
 
 		//ヤーコンメッセージ

@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 20:07:51
+#save date:2009/12/16 17:44:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SUNGLASSES_01
 #Event Script Name
 SCRID_C08_SUNGLASSES_01
 #Direction Type Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -344
+232 0 24
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 -344
+344 0 -472
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -344
+360 0 -472
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 -344
+376 0 -472
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 0 -344
+392 0 -472
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 0 -344
+408 0 -472
 #event number: 6
 #type
 1
@@ -208,7 +208,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -376
+184 0 -488
 #event number: 7
 #type
 1
@@ -239,7 +239,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 -376
+200 0 -488
 #event number: 8
 #type
 1
@@ -270,7 +270,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -376
+216 0 -488
 #event number: 9
 #type
 1
@@ -301,7 +301,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 -376
+232 0 -488
 #event number: 10
 #type
 1
@@ -332,7 +332,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -350,7 +350,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -392
+184 0 -504
 #event number: 11
 #type
 1
@@ -363,7 +363,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 -392
+200 0 -504
 #event number: 12
 #type
 1
@@ -394,7 +394,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C08_SAGE1_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -412,7 +412,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -392
+216 0 -504
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -441,15 +441,15 @@ SCRID_POS_C08_CHAMPIONS_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK1
+WK_SCENE_C08
 #Event Trigger Work Value
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -392
+152 0 -472
 #size
-1 1
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -593,7 +593,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 -32 -536
+104 0 -456
 #size
 1 1
 #event number: 8
@@ -610,7 +610,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 48 -392
+232 0 40
 #size
 1 1
 #event number: 9
@@ -619,7 +619,7 @@ DOOR_ID_C08_C08R0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C08R0101
 #Next Door ID Name
-DOOR_ID_C08R0101_C08_EXIT02
+DOOR_ID_C08R0101_C08_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -627,7 +627,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 -32 -360
+312 0 -456
 #size
 1 1
 #event number: 10
