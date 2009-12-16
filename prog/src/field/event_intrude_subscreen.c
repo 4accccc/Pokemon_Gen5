@@ -45,15 +45,13 @@ static GMEVENT_RESULT MissionPutEvent( GMEVENT *event, int *seq, void *wk );
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, int town_tblno)
 {
   GMEVENT * event;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  int town_tblno;
   ZONEID warp_zone_id;
   VecFx32 pos;
   
-  town_tblno = Intrude_GetWarpTown(game_comm);
   if(town_tblno == PALACE_TOWN_DATA_NULL){
     return NULL;
   }

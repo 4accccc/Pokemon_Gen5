@@ -1903,8 +1903,9 @@ static GMEVENT * checkSubScreenEvent(
 {
   GMEVENT* event=NULL;
   FIELD_SUBSCREEN_WORK * subscreen;
-  subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
 
+  subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  
   switch(FIELD_SUBSCREEN_GetAction(subscreen)){
   case FIELD_SUBSCREEN_ACTION_IRC:
 		{
@@ -1925,8 +1926,14 @@ static GMEVENT * checkSubScreenEvent(
   case FIELD_SUBSCREEN_ACTION_WIRELESS:
     event = EVENT_CG_Wireless(gsys, fieldWork, NULL, TRUE);
     break;
+  case FIELD_SUBSCREEN_ACTION_PALACE_WARP:
+    event = EVENT_IntrudeTownWarp(gsys, fieldWork, PALACE_TOWN_DATA_PALACE);
+    break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
-    event = EVENT_IntrudeTownWarp(gsys, fieldWork);
+    {
+      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      event = EVENT_IntrudeTownWarp(gsys, fieldWork, Intrude_GetWarpTown(game_comm));
+    }
     break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT:
     event = EVENT_IntrudeMissionPut(gsys, fieldWork, FIELDMAP_GetHeapID(fieldWork));
@@ -1937,6 +1944,9 @@ static GMEVENT * checkSubScreenEvent(
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);
+    break;
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE:
+    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_INTRUDE);
     break;
     
 #if 0
