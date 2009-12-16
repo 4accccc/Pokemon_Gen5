@@ -339,8 +339,8 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   FIELD_PLAYER_GetPos( pcActor, &pos );
   //T01へワープ
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(pos.x >= FX32_CONST(1624) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(1672) + PALACE_MAP_LEN*i
-        && pos.z >= FX32_CONST(504) && pos.z <= FX32_CONST(504)){
+    if(pos.x >= FX32_CONST(1016) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(1032) + PALACE_MAP_LEN*i
+        && pos.z >= FX32_CONST(920) && pos.z <= FX32_CONST(936)){
       pos.x = 12536 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 12120 << FX32_SHIFT;
@@ -358,9 +358,9 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   //ビンゴマップへワープ
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(pos.x >= FX32_CONST(1480) + PALACE_MAP_LEN*i
-        && pos.x <= FX32_CONST(1528) + PALACE_MAP_LEN*i 
-        && pos.z >= FX32_CONST(248) && pos.z <= FX32_CONST(280)){
+    if(pos.x >= FX32_CONST(984) + PALACE_MAP_LEN*i
+        && pos.x <= FX32_CONST(1064) + PALACE_MAP_LEN*i 
+        && pos.z >= FX32_CONST(184) && pos.z <= FX32_CONST(200)){
       pos.x = 472 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 504 << FX32_SHIFT;
@@ -376,7 +376,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
     pos.z >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 936 && pos.x >= 936-32) || (pos.x >= 2136 && pos.x <= 2136+32)) && (pos.z >= 440 && pos.z <= 504)){
+    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 424 && pos.x >= 424-32) || (pos.x >= 1624 && pos.x <= 1624+32)) && (pos.z >= 440 && pos.z <= 584)){
       left_right = pos.x <= (PALACE_MAP_LEN/2 >> FX32_SHIFT) ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }
