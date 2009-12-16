@@ -299,10 +299,14 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_FADEIN_WAIT;
     break;
   case SEQ_FADEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
   case SEQ_MAIN:
     {
@@ -358,10 +362,14 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
     break;
 
   case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
   case SEQ_FADEOUT_WAIT:
-    *p_seq  = SEQ_EXIT;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_EXIT;
+    }
     break;
   case SEQ_EXIT:
     NAGI_Printf( "BTLSUBWAY: Exit!\n" );

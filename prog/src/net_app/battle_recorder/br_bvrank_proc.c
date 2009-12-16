@@ -78,6 +78,7 @@ typedef struct
 
   BR_OUTLINE_DATA   outline;
   BR_RANK_WORK      rank;
+  
 } BR_BVRANK_WORK;
 
 
@@ -263,31 +264,78 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_MAIN,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_END,
+  };
 	BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
 	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
 
-  {
-    u32 x, y;
-    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
+   
+  case SEQ_MAIN:
+    BR_RANK_Main( &p_wk->rank, p_wk->heapID );
+
     {
-      if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
-      { 
-        BR_PROC_SYS_Pop( p_param->p_procsys );
-        return GFL_PROC_RES_FINISH;
-      }
-      if( Br_Rank_IsPushBattleBV( x, y ) )
-      { 
-        BR_RANK_GetSelect( &p_wk->rank );
-        BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
-        return GFL_PROC_RES_FINISH;
+      u32 x, y;
+      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+      {
+        if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
+        { 
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          *p_seq  = SEQ_FADEOUT_START;
+          break;
+        }
+        if( Br_Rank_IsPushBattleBV( x, y ) )
+        { 
+          BR_RANK_GetSelect( &p_wk->rank );
+          BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
+          *p_seq  = SEQ_FADEOUT_START;
+          break;
+        }
       }
     }
+    break;
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return GFL_PROC_RES_FINISH;
   }
+
+
+    
 
   BR_MSGWIN_PrintMain( p_wk->p_msgwin );
   BR_MSGWIN_PrintMain( p_wk->p_title );
   PRINTSYS_QUE_Main( p_wk->p_que );
-  BR_RANK_Main( &p_wk->rank, p_wk->heapID );
 
 	return GFL_PROC_RES_CONTINUE;
 }

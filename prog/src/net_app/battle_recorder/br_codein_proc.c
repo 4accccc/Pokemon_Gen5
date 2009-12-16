@@ -193,11 +193,74 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_MAIN,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_END,
+  }; 
 	BR_CODEIN_WORK	*p_wk	= p_wk_adrs;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
-  //コードイン
-  CODEIN_Main( p_wk->p_codein_wk );
+  //プロセス処理
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
+   
+  case SEQ_MAIN:
+    { 
+      //コードイン
+      CODEIN_Main( p_wk->p_codein_wk );
+
+      //
+      { 
+        CODEIN_SELECT select;
+        select  = CODEIN_GetSelect( p_wk->p_codein_wk );
+        switch( select )
+        { 
+        case CODEIN_SELECT_CANCEL:
+          NAGI_Printf( "CODEIN: Exit!\n" );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          *p_seq  = SEQ_FADEOUT_START;
+          break;
+
+        case CODEIN_SELECT_DECIDE:
+          NAGI_Printf( "CODEIN: Exit!\n" );
+          BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
+          *p_seq  = SEQ_FADEOUT_START;
+          break;
+        }
+      }
+    }
+    break;
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return GFL_PROC_RES_FINISH;
+  }
 
   //文字
   if( p_wk->p_text )
@@ -205,24 +268,6 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
     BR_TEXT_PrintMain( p_wk->p_text );
   }
   PRINTSYS_QUE_Main( p_wk->p_que );
-
-	//
-  { 
-    CODEIN_SELECT select;
-    select  = CODEIN_GetSelect( p_wk->p_codein_wk );
-    switch( select )
-    { 
-    case CODEIN_SELECT_CANCEL:
-      NAGI_Printf( "CODEIN: Exit!\n" );
-      BR_PROC_SYS_Pop( p_param->p_procsys );
-      return GFL_PROC_RES_FINISH;
-
-    case CODEIN_SELECT_DECIDE:
-      NAGI_Printf( "CODEIN: Exit!\n" );
-      BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
-      return GFL_PROC_RES_FINISH;
-    }
-  }
 
 	return GFL_PROC_RES_CONTINUE;
 }

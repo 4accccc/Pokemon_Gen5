@@ -13,6 +13,7 @@
 #include "br_res.h"
 #include "savedata/zukan_savedata.h"
 #include "system/bmp_oam.h"
+#include "br_fade.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -43,7 +44,7 @@ typedef struct _BR_POKESEARCH_WORK BR_POKESEARCH_WORK;
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, HEAPID heapID );
+extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, HEAPID heapID );
 extern void BR_POKESEARCH_Exit( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_StartUp( BR_POKESEARCH_WORK *p_wk );

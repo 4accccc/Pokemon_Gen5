@@ -325,10 +325,14 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     (*p_seq)++;
     break;
   case SEQ_FADEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
   case SEQ_MAIN:
     {
@@ -347,10 +351,14 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
     break;
 
   case SEQ_CHANGEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     (*p_seq)++;
     break;
   case SEQ_CHANGEOUT_WAIT:
-    (*p_seq)++;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      (*p_seq)++;
+    }
     break;
   case SEQ_CHANGEIN_START:
     { 
@@ -358,17 +366,25 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
       p_wk->sub_seq = p_wk->next_sub_seq;
       sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_INIT]( p_wk, p_param );
     }
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     (*p_seq)++;
     break;
   case SEQ_CHANGEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
 
   case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     (*p_seq)++;
     break;
   case SEQ_FADEOUT_WAIT:
-    *p_seq  = SEQ_EXIT;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_EXIT;
+    }
     break;
   case SEQ_EXIT:
     NAGI_Printf( "BVSEARCH: Exit!\n" );
@@ -805,7 +821,7 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
 //-----------------------------------------------------------------------------
 static BOOL Br_BvSearch_Seq_Poke_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
 { 
-  p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_wk->heapID ); 
+  p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->heapID ); 
   BR_POKESEARCH_StartUp( p_wk->p_search );
   return TRUE;
 }

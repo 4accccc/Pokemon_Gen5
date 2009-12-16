@@ -144,10 +144,55 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_BVSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_MAIN,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_END,
+  };
 	BR_BVSEND_WORK	*p_wk	= p_wk_adrs;
 	BR_BVSEND_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//ƒvƒƒZƒXˆ—
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
+   
+  case SEQ_MAIN:
+    if( GFL_UI_KEY_GetTrg() )
+    { 
+      *p_seq  = SEQ_FADEOUT_START;
+    }
+    break;
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return GFL_PROC_RES_FINISH;
+  }
 
 
 	return GFL_PROC_RES_CONTINUE;

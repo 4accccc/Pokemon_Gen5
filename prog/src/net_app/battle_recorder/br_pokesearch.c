@@ -94,6 +94,7 @@ struct _BR_POKESEARCH_WORK
   HEAPID                heapID;
   BR_RES_WORK           *p_res;
   BR_BTN_WORK	          *p_btn;
+  BR_FADE_WORK          *p_fade;
   GFL_CLUNIT            *p_unit;
   BMPOAM_SYS_PTR        p_bmpoam;
   PRINT_QUE             *p_que;
@@ -173,7 +174,7 @@ static const u16 sc_zukansort_data_idx[]=
  *	@return ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, HEAPID heapID )
+BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, HEAPID heapID )
 { 
   BR_POKESEARCH_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_POKESEARCH_WORK) );
@@ -181,6 +182,7 @@ BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WOR
   p_wk->heapID  = heapID;
   p_wk->cp_zkn  = cp_zkn;
   p_wk->p_res   = p_res;
+  p_wk->p_fade  = p_fade;
   p_wk->p_unit    = p_unit;
   p_wk->p_bmpoam  = p_bmpoam;
   p_wk->p_que     = PRINTSYS_QUE_Create( p_wk->heapID );
@@ -311,11 +313,15 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
       break;
 
     case SEQ_CHANGEOUT_START:
+      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
       p_wk->seq++;
       break;
 
     case SEQ_CHANGEOUT_WAIT:
-      p_wk->seq++;
+      if( BR_FADE_IsEnd( p_wk->p_fade ) )
+      { 
+        p_wk->seq++;
+      }
       break;
 
     case SEQ_CHANGEIN_START:
@@ -336,11 +342,15 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
         }
         BR_POKESEARCH_DISPLAY_CreateHead( p_wk );
       }
+      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
       p_wk->seq++;
       break;
 
     case SEQ_CHANGEIN_WAIT:
-      p_wk->seq = p_wk->next_seq;
+      if( BR_FADE_IsEnd( p_wk->p_fade ) )
+      { 
+        p_wk->seq = p_wk->next_seq;
+      }
       break;
 
     case SEQ_FADEOUT_START:

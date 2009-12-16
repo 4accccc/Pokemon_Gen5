@@ -241,10 +241,14 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_FADEIN_WAIT;
     break;
   case SEQ_FADEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
   case SEQ_MAIN:
     {
@@ -268,10 +272,14 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
     break;
 
   case SEQ_CHANGEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     (*p_seq)++;
     break;
   case SEQ_CHANGEOUT_WAIT:
-    (*p_seq)++;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      (*p_seq)++;
+    }
     break;
   case SEQ_CHANGEIN_START:
     { 
@@ -292,18 +300,26 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
         Br_Record_CreateMainDisplaySingle( p_wk, p_param );
       }
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     }
     (*p_seq)++;
     break;
   case SEQ_CHANGEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
 
   case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
   case SEQ_FADEOUT_WAIT:
-    *p_seq  = SEQ_EXIT;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_EXIT;
+    }
     break;
   case SEQ_EXIT:
     NAGI_Printf( "RECORD: Exit!\n" );
