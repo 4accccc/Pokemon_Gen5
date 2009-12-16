@@ -2398,7 +2398,7 @@
 ポケモンも　よろこぶのによッ！</language>
 	</row>
 
-	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_START">
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">ヘイヘイ！　ヒューヒュー！▼
 いい　ポケモン　もってんじゃねーか
 ちょっと　オレに　みせてみろよー！▼</language>
@@ -2407,14 +2407,41 @@
 ちょっと　オレに　みせてみろよー！▼</language>
 	</row>
 
-	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_LOSE">
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">い……　いい　ポケモン　じゃん
 しょうじき　まぶしいぜ！</language>
 		<language name="JPN_KANJI" width="216">い……　いい　ポケモン　じゃん
 しょうじき　まぶしいぜ！</language>
 	</row>
 
-	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_AFTER_1">
+		<language name="JPN" width="216">いい　ポケモンは　いるが！
+わるい　ポケモンは　いねえ！▼
+ぜーんぶ　トレーナー　しだい　だろ
+オレは　そう　おもうぜえ！</language>
+		<language name="JPN_KANJI" width="216">いい　ポケモンは　いるが！
+わるい　ポケモンは　いねえ！▼
+ぜーんぶ　トレーナー　しだい　だろ
+オレは　そう　おもうぜえ！</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">ヘイヘイ！　ヒューヒュー！▼
+いい　ポケモン　もってんじゃねーか
+ちょっと　オレに　みせてみろよー！▼</language>
+		<language name="JPN_KANJI" width="216">ヘイヘイ！　ヒューヒュー！▼
+いい　ポケモン　もってんじゃねーか
+ちょっと　オレに　みせてみろよー！▼</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">い……　いい　ポケモン　じゃん
+しょうじき　まぶしいぜ！</language>
+		<language name="JPN_KANJI" width="216">い……　いい　ポケモン　じゃん
+しょうじき　まぶしいぜ！</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_AFTER_2">
 		<language name="JPN" width="216">いい　ポケモンは　いるが！
 わるい　ポケモンは　いねえ！▼
 ぜーんぶ　トレーナー　しだい　だろ
@@ -3156,7 +3183,7 @@
 不思議と　闘いたく　なるの</language>
 	</row>
 
-	<row id="TRID_FANM_01_TRMSG_FIGHT_START">
+	<row id="TRID_FANM_01_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">れんしゅうを　みていたら
 なんだか　じぶんも　すごくなった▽
 そんな　きぶんに　なるだろ？▽
@@ -3167,14 +3194,14 @@
 だから　勝負しようよ！▼</language>
 	</row>
 
-	<row id="TRID_FANM_01_TRMSG_FIGHT_LOSE">
+	<row id="TRID_FANM_01_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">……ぜんぜん
 うまく　できなかったよ</language>
 		<language name="JPN_KANJI" width="216">……ぜんぜん
 うまく　できなかったよ</language>
 	</row>
 
-	<row id="TRID_FANM_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FANM_01_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">むずかしいことを　さも
 かんたんに　やってみせる……▼
 プロフェッショナルの
@@ -3185,19 +3212,48 @@
 すごさ　って　やつだね</language>
 	</row>
 
-	<row id="TRID_FANM_02_TRMSG_FIGHT_START">
+	<row id="TRID_FANM_01_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">れんしゅうを　みていたら
+なんだか　じぶんも　すごくなった▽
+そんな　きぶんに　なるだろ？▽
+だから　しょうぶ　しようよ！▼</language>
+		<language name="JPN_KANJI" width="216">練習を　見ていたら
+なんだか　自分も　すごくなった▽
+そんな　気分に　なるだろ？▽
+だから　勝負しようよ！▼</language>
+	</row>
+
+	<row id="TRID_FANM_01_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">……ぜんぜん
+うまく　できなかったよ</language>
+		<language name="JPN_KANJI" width="216">……ぜんぜん
+うまく　できなかったよ</language>
+	</row>
+
+	<row id="TRID_FANM_01_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">むずかしいことを　さも
+かんたんに　やってみせる……▼
+プロフェッショナルの
+すごさ　って　やつだね</language>
+		<language name="JPN_KANJI" width="216">難しいことを　さも
+簡単に　やってみせる……▼
+プロフェッショナルの
+すごさ　って　やつだね</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">この　スタジアムに　くるだけで
 こうふん　しちゃって！！▼</language>
 		<language name="JPN_KANJI" width="216">この　スタジアムに　来るだけで
 興奮　しちゃって！！▼</language>
 	</row>
 
-	<row id="TRID_FANM_02_TRMSG_FIGHT_LOSE">
+	<row id="TRID_FANM_02_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">こうふん　しすぎた！</language>
 		<language name="JPN_KANJI" width="216">興奮　しすぎた！</language>
 	</row>
 
-	<row id="TRID_FANM_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FANM_02_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">いるだけで！　みるだけで！
 こんなに　こうふん　するんだ！▼
 ここで　しあい　するなんて
@@ -3208,7 +3264,30 @@
 とんでもない　興奮　だろうな！</language>
 	</row>
 
-	<row id="TRID_FANM_03_TRMSG_FIGHT_START">
+	<row id="TRID_FANM_02_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">この　スタジアムに　くるだけで
+こうふん　しちゃって！！▼</language>
+		<language name="JPN_KANJI" width="216">この　スタジアムに　来るだけで
+興奮　しちゃって！！▼</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">こうふん　しすぎた！</language>
+		<language name="JPN_KANJI" width="216">興奮　しすぎた！</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">いるだけで！　みるだけで！
+こんなに　こうふん　するんだ！▼
+ここで　しあい　するなんて
+とんでもない　こうふん　だろうな！</language>
+		<language name="JPN_KANJI" width="216">いるだけで！　みるだけで！
+こんなに　興奮　するんだ！▼
+ここで　試合するなんて
+とんでもない　興奮　だろうな！</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">ひとが　れんしゅう　していると
 じぶんも　からだを　うごかしたくなる▼
 だーかーら　ぼくたちも
@@ -3219,14 +3298,14 @@
 ポケモンを　練習しよう！▼</language>
 	</row>
 
-	<row id="TRID_FANM_03_TRMSG_FIGHT_LOSE">
+	<row id="TRID_FANM_03_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">まけても　わらうのは
 たのしいからだよ！</language>
 		<language name="JPN_KANJI" width="216">負けても　笑うのは
 楽しいからだよ！</language>
 	</row>
 
-	<row id="TRID_FANM_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FANM_03_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">ひとの　れんしゅうを　みるより
 じぶんで　しょうぶする　ほうが▽
 なんばいも　たのしいよな！！</language>
@@ -3235,7 +3314,34 @@
 何倍も　楽しいよな！！</language>
 	</row>
 
-	<row id="TRID_FANW_01_TRMSG_FIGHT_START">
+	<row id="TRID_FANM_03_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">ひとが　れんしゅう　していると
+じぶんも　からだを　うごかしたくなる▼
+だーかーら　ぼくたちも
+ポケモンを　れんしゅう　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">人が　練習していると
+自分も　体を　動かしたくなる▼
+だーかーら　ぼくたちも
+ポケモンを　練習しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">まけても　わらうのは
+たのしいからだよ！</language>
+		<language name="JPN_KANJI" width="216">負けても　笑うのは
+楽しいからだよ！</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">ひとの　れんしゅうを　みるより
+じぶんで　しょうぶする　ほうが▽
+なんばいも　たのしいよな！！</language>
+		<language name="JPN_KANJI" width="216">人の　練習を　見るより
+自分で　勝負する　ほうが▽
+何倍も　楽しいよな！！</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">ポケモンと　れんしゅう　する
 せんしゅたちを　みていたら▽
 アタシも　ポケモンしたくなったわ▼</language>
@@ -3244,14 +3350,14 @@
 アタシも　ポケモンしたくなったわ▼</language>
 	</row>
 
-	<row id="TRID_FANW_01_TRMSG_FIGHT_LOSE">
+	<row id="TRID_FANW_01_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">すごーい！
 あなた　プロみたーい！！</language>
 		<language name="JPN_KANJI" width="216">すごーい！
 あなた　プロみたーい！！</language>
 	</row>
 
-	<row id="TRID_FANW_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FANW_01_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">はあ……　プロの　せんしゅのように
 じょうずに　ポケモンと　たたかうのは▽
 むずかしいことなのね　やっぱり</language>
@@ -3260,21 +3366,69 @@
 難しいことなのね　やっぱり</language>
 	</row>
 
-	<row id="TRID_FANW_02_TRMSG_FIGHT_START">
+	<row id="TRID_FANW_01_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">ポケモンと　れんしゅう　する
+せんしゅたちを　みていたら▽
+アタシも　ポケモンしたくなったわ▼</language>
+		<language name="JPN_KANJI" width="216">ポケモンと　練習する
+選手たちを　見学していたら▽
+アタシも　ポケモンしたくなったわ▼</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">すごーい！
+あなた　プロみたーい！！</language>
+		<language name="JPN_KANJI" width="216">すごーい！
+あなた　プロみたーい！！</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">はあ……　プロの　せんしゅのように
+じょうずに　ポケモンと　たたかうのは▽
+むずかしいことなのね　やっぱり</language>
+		<language name="JPN_KANJI" width="216">はあ……　プロの　選手のように
+上手に　ポケモンと　闘うのは▽
+難しいことなのね　やっぱり</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">あなたは　テニスと　バスケ！
 どっちが　すき　なの？▼</language>
 		<language name="JPN_KANJI" width="216">あなたは　テニスと　バスケ！
 どっちが　好き　なの？▼</language>
 	</row>
 
-	<row id="TRID_FANW_02_TRMSG_FIGHT_LOSE">
+	<row id="TRID_FANW_02_TRMSG_FIGHT_LOSE_1">
 		<language name="JPN" width="216">よく　わからないままに
 しあい　しゅうりょう……！</language>
 		<language name="JPN_KANJI" width="216">よく　わからないままに
 試合　終了……！</language>
 	</row>
 
-	<row id="TRID_FANW_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FANW_02_TRMSG_FIGHT_AFTER_1">
+		<language name="JPN" width="216">テニスも　バスケも　だいすき！▼
+だって　どの　ポケモンが　すき？
+そんな　しつもん　こたえられないわ</language>
+		<language name="JPN_KANJI" width="216">テニスも　バスケも　大好き！▼
+だって　どの　ポケモンが　好き？
+そんな　質問　答えられないわ</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">あなたは　テニスと　バスケ！
+どっちが　すき　なの？▼</language>
+		<language name="JPN_KANJI" width="216">あなたは　テニスと　バスケ！
+どっちが　好き　なの？▼</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">よく　わからないままに
+しあい　しゅうりょう……！</language>
+		<language name="JPN_KANJI" width="216">よく　わからないままに
+試合　終了……！</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_AFTER_2">
 		<language name="JPN" width="216">テニスも　バスケも　だいすき！▼
 だって　どの　ポケモンが　すき？
 そんな　しつもん　こたえられないわ</language>
