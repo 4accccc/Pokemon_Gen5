@@ -32,6 +32,8 @@
 #include "field/fieldskill_mapeff.h"
 
 
+#include "sound/wb_sound_data.sadl" //SEQ_BGM_C_08_Å`
+
 //-------------------------------------
 // ì‡ïîÉèÅ[ÉN
 //-------------------------------------
@@ -349,20 +351,30 @@ u16 ZONEDATA_GetCameraAreaID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 {
+  u16 bgm_id = 0;
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
 	switch (season_id) {
 	case PMSEASON_SPRING:
-		return zdbuf.bgm_spring_id;
+		bgm_id = zdbuf.bgm_spring_id;
+    break;
 	case PMSEASON_SUMMER:
-		return zdbuf.bgm_summer_id;
+		bgm_id = zdbuf.bgm_summer_id;
+    break;
 	case PMSEASON_AUTUMN:
-		return zdbuf.bgm_autumn_id;
+		bgm_id = zdbuf.bgm_autumn_id;
+    break;
 	case PMSEASON_WINTER:
-		return zdbuf.bgm_winter_id;
+		bgm_id = zdbuf.bgm_winter_id;
+    break;
+  default:
+	  GF_ASSERT(season_id < PMSEASON_TOTAL);
 	}
-	GF_ASSERT(season_id < PMSEASON_TOTAL);
-	return 0;
+  if (bgm_id == SEQ_BGM_C_08_B && GetVersion() == VERSION_WHITE )
+  {
+    bgm_id = SEQ_BGM_C_08_W;
+  }
+	return bgm_id;
 }
 
 //------------------------------------------------------------------

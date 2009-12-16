@@ -300,7 +300,7 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * 
   EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
   int season = GAMEDATA_GetSeasonID( gamedata );
   offsets->season_pos = season;
-  offsets->version_pos = PM_VERSION == VERSION_BLACK? 0 : 1;
+  offsets->version_pos = GetVersion() == VERSION_BLACK? 0 : 1;
   if (offsets->version_pos == 0 )
   {
     offsets->season_ver_pos = 0;
