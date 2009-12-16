@@ -17,7 +17,8 @@
 
 #include "arc/fieldmap/gym_dragon.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
-
+#include "script.h"     //for SCRIPT_CallScript
+#include "../../../resource/fldmapdata/script/c08gym0101_def.h"  //for SCRID_～
 //#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_local_def.h"
 
 //#include "sound/pm_sndsys.h"
@@ -963,7 +964,13 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 2:
+  case 2:    
+    //カメラ移動スクリプト
+    SCRIPT_CallScript( event, SCRID_PRG_C08GYM0101_CAMERA_MOVE,
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );          
+    (*seq)++;
+    break;  
+  case 3:
     {
       GMEVENT * call_event;
       HEAD_DIR next_dir;
@@ -1023,14 +1030,17 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 3:
+  case 4:
     {
       //首の向きと操作した首のインデックッスからレールの進行状態を変更する
-      SetRailSt(fieldWork, tmp->TrgtHead, tmp->DraWk->HeadDir);
+      SetRailSt(fieldWork, tmp->TrgtHead, tmp->DraWk->HeadDir);      
+      //カメラ戻しスクリプトコール
+      SCRIPT_CallScript( event, SCRID_PRG_C08GYM0101_CAMERA_RECOVER,
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     }
     (*seq)++;
     break;
-  case 4:
+  case 5:
     //終了
     return GMEVENT_RES_FINISH;
   }

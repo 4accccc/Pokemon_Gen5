@@ -27,6 +27,9 @@ _EVENT_DATA		ev_pos_c08gym0101_gimmick_02	//１階右の竜（左側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_03	//１階右の竜（右側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_04	//２階の竜（左側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_05	//２階の竜（右側）
+_EVENT_DATA		prg_c08gym0101_camera_move    //カメラ移動
+_EVENT_DATA		prg_c08gym0101_camera_recover //カメラ戻し
+
 _EVENT_DATA_END
 
 /************************************************************/
@@ -93,4 +96,14 @@ EVENT_START	ev_pos_c08gym0101_gimmick_05
   _GYM_DRAGON_CALL_GMK(2, 1)
 EVENT_END
 
+/************************************************************/
+/*				カメラ移動			*/
+/************************************************************/
+EVENT_START	prg_c08gym0101_camera_move
+EVENT_END
 
+/************************************************************/
+/*				カメラ戻し			*/
+/************************************************************/
+EVENT_START	prg_c08gym0101_camera_recover
+EVENT_END
