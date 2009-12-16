@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-14T22:47:22"/>
+	<create user="kagaya" host="W00143" date="2009-12-16T19:32:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,18 +302,12 @@
 	</row>
 
 	<row id="msg_c04r0102_receipt_02">
-		<language name="JPN" width="256">シングルトレインでは　ポケモン
-３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
-ポケモンは　３ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべてちがう
-どうで　なくては　なりません</language>
-		<language name="JPN_KANJI" width="256">シングルトレインでは　ポケモン
-３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
-ポケモンは　３ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべてちがう
-どうで　なくては　なりません</language>
+		<language name="JPN" width="256">バトルサブウェイ
+シングル　ルール説明
+</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイ
+シングル　ルール説明
+</language>
 	</row>
 
 	<row id="msg_c04r0102_receipt_03">
@@ -391,82 +385,6 @@
 	</row>
 
 	<row id="msg_c04r0102_receipt_15">
-		<language name="JPN" width="256">シングル</language>
-		<language name="JPN_KANJI" width="256">シングル</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_16">
-		<language name="JPN" width="256">ダブル</language>
-		<language name="JPN_KANJI" width="256">ダブル</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_17">
-		<language name="JPN" width="256">シングル　だぶる　せんたく</language>
-		<language name="JPN_KANJI" width="256">シングル　だぶる　せんたく</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_18">
-		<language name="JPN" width="256">せいせきを　レポートに　かきこんでいます
-しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこんでいます
-しばらく　おまちください</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_19">
-		<language name="JPN" width="256">おつかれ</language>
-		<language name="JPN_KANJI" width="256">おつかれ</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_20">
-		<language name="JPN" width="256">せいせきをセーブちゅう</language>
-		<language name="JPN_KANJI" width="256">せいせきをセーブちゅう</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_21">
-		<language name="JPN" width="256">おめでとうございます[BE:01:ページ切り替え（クリア）]
-７れんしょうを　たっせいし
-みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
-たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
-しんてい　いたします[BE:01:ページ切り替え（クリア）]
-プレイヤーは　バトルポイントを
-20BP てにいれた！
-</language>
-		<language name="JPN_KANJI" width="256">おめでとうございます[BE:01:ページ切り替え（クリア）]
-７れんしょうを　たっせいし
-みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
-たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
-しんてい　いたします[BE:01:ページ切り替え（クリア）]
-プレイヤーは　バトルポイントを
-20BP てにいれた！
-</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_22">
-		<language name="JPN" width="256">バトルポイントをもらった</language>
-		<language name="JPN_KANJI" width="256">バトルポイントをもらった</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_23">
-		<language name="JPN" width="256">リトライモードのしゅうりょうしょり</language>
-		<language name="JPN_KANJI" width="256">リトライモードのしゅうりょうしょり</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_24">
-		<language name="JPN" width="256">りーだーにかった</language>
-		<language name="JPN_KANJI" width="256">りーだーにかった</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_25">
-		<language name="JPN" width="256">れんしょうおめでとう</language>
-		<language name="JPN_KANJI" width="256">れんしょうおめでとう</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_26">
-		<language name="JPN" width="256">バトルポイントを</language>
-		<language name="JPN_KANJI" width="256">バトルポイントを</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_27">
 		<language name="JPN" width="256">おまちしておりました[BE:01:ページ切り替え（クリア）]
 バトルサブウェイへのチャレンジを
 さいかい　しますか？</language>
@@ -475,24 +393,21 @@
 さいかい　しますか？</language>
 	</row>
 
-	<row id="msg_c04r0102_receipt_28">
-		<language name="JPN" width="256">おなじポケモン　えらんでる</language>
-		<language name="JPN_KANJI" width="256">おなじポケモン　えらんでる</language>
+	<row id="msg_c04r0102_receipt_16">
+		<language name="JPN" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ごあんないする　まえに
+レポートを　かきます</language>
 	</row>
 
-	<row id="msg_c04r0102_receipt_29">
-		<language name="JPN" width="256">おなじアイテム　えらんでる</language>
-		<language name="JPN_KANJI" width="256">おなじアイテム　えらんでる</language>
+	<row id="msg_c04r0102_receipt_17">
+		<language name="JPN" width="256">それでは　ちゅうだんした　ところまで
+ごあんない　いたします</language>
+		<language name="JPN_KANJI" width="256">それでは　ちゅうだんした　ところまで
+ごあんない　いたします</language>
 	</row>
 
-	<row id="msg_c04r0102_receipt_30">
-		<language name="JPN" width="256">おめでとう　ございます！
-みごと　7にんぬき　たっせいです！</language>
-		<language name="JPN_KANJI" width="256">おめでとう　ございます！
-みごと　7にんぬき　たっせいです！</language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_31">
+	<row id="msg_c04r0102_receipt_18">
 		<language name="JPN" width="256">おつかれさまでした！[BE:01:ページ切り替え（クリア）]
 つづきを　チャレンジする　ばあいは
 また　おこし　ください</language>
@@ -501,14 +416,11 @@
 また　おこし　ください</language>
 	</row>
 
-	<row id="msg_c04r0102_receipt_32">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_c04r0102_receipt_33">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_c04r0102_receipt_19">
+		<language name="JPN" width="256">せいせきを　レポートに　かきこんでいます
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこんでいます
+しばらく　おまちください</language>
 	</row>
 
 	<flowchart-group-list>
