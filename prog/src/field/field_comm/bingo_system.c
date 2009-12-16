@@ -181,7 +181,7 @@ static void Bingo_Parent_UpdateIntrusionData(BINGO_SYSTEM *bingo)
       }
       //※check　デバッグ用 ビンゴバトルが出来るまでの仮想乱入許可NGやり取り
       else{
-        bingo->parent.intrusion_player_answer[i] = GFUser_GetPublicRand(BINGO_INTRUSION_ANSWER_NG + 1);
+        bingo->parent.intrusion_player_answer[i] = GFUser_GetPublicRand(BINGO_INTRUSION_ANSWER_NG + 2);
       }
     }
   }

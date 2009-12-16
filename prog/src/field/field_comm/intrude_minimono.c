@@ -61,7 +61,7 @@ void MINIMONO_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_
   zone_id = FIELDMAP_GetZoneID( fieldWork );
   
   head = data_MMdlHeader;
-  if(GFUser_GetPublicRand(1) == 0){
+  if(GFUser_GetPublicRand(2) == 0){
     head.obj_code = WHITEMONOLITH;
   }
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
@@ -118,7 +118,7 @@ static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, 
   zone_id = FIELDMAP_GetZoneID( fieldWork );
   
   head = data_MMdlHeader;
-  if(GFUser_GetPublicRand(1) == 0){
+  if(GFUser_GetPublicRand(2) == 0){
     head.obj_code = TPOKE_0001 + GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1;
   }
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;

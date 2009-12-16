@@ -750,7 +750,7 @@ static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA
   
   for(i = 0; i < md_max; i++){
     if(cdata[i].type == choice_type && cdata[i].level <= level){
-      if(cdata[i].odds == 100 || cdata[i].odds <= GFUser_GetPublicRand(100)){
+      if(cdata[i].odds == 100 || cdata[i].odds <= GFUser_GetPublicRand(100+1)){
         GFL_STD_MemCopy(&cdata[i], dest_md, sizeof(MISSION_CONV_DATA));
         return TRUE;
       }
@@ -853,7 +853,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   }
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  palace_level = occupy->intrude_level + 1;//ミッションデータが1originの為、合わせて1origin化
+  palace_level = occupy->intrude_level;
   
   cdata = MISSIONDATA_Load();
   md_array_max = MISSIONDATA_GetArrayMax();

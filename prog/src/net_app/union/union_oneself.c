@@ -37,6 +37,8 @@
 #include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
 
+#include "gamesystem/game_beacon.h"
+
 
 //==============================================================================
 //  ’è”’è‹`
@@ -698,6 +700,7 @@ static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, 
 {
   switch(*seq){
   case 0:
+    GAMEBEACON_Set_UnionOut();
     unisys->finish = TRUE;
     (*seq)++;
     break;

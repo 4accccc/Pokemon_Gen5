@@ -20,6 +20,7 @@
 #include "field/fieldmap_ctrl_grid.h"
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 #include "colosseum.h"
+#include "gamesystem/game_beacon.h"
 
 
 //==================================================================
@@ -49,6 +50,8 @@ void UNION_CommBoot(GAMESYS_WORK *gsys)
     upw->gsys = gsys;
     GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
 	}
+
+  GAMEBEACON_Set_UnionIn();
 }
 
 //==================================================================
