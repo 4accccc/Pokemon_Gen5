@@ -2934,7 +2934,7 @@ void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID)
 static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
 {
   FIELD_FOG_Reflect( fieldWork->fog );
-	FIELD_LIGHT_Reflect( fieldWork->light );
+	FIELD_LIGHT_Reflect( fieldWork->light, FALSE );
 
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );

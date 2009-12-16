@@ -497,10 +497,10 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
  *  @param  p_sys
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys )
+void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys, BOOL force )
 {
   // ƒf[ƒ^Ý’èˆ—‚Ö
-  if( p_sys->change ){
+  if( p_sys->change || force ){
     FIELD_LIGHT_ReflectSub( p_sys, p_sys->p_fog, p_sys->p_liblight );
     p_sys->change = FALSE;
   }

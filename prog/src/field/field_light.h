@@ -55,7 +55,7 @@ extern void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys );
 ///	システムメイン
 //=====================================
 extern void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second );
-extern void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys );
+extern void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys, BOOL force );
 
 
 //-------------------------------------
