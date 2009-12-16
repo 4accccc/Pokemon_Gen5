@@ -46,8 +46,6 @@ struct _FIELDMAP_CTRL_HYBRID
   FIELD_PLAYER*         p_player;
 	FIELD_PLAYER_GRID*    p_player_grid;
 	FIELD_PLAYER_NOGRID*  p_player_nogrid;
-
-  BOOL last_move;
 };
 
 
@@ -159,16 +157,16 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
   
   if( p_wk->base_type == FLDMAP_BASESYS_GRID )
   {
+    // 動作チェンジ
+    FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
     mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir );
   }
   else
   {
+    // 動作チェンジ
+    FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
     mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir );
   }
-
-  // 乗り換えたので、
-  // 次の動作までレールを乗り換えない
-  p_wk->last_move = FALSE;
 }
 
 
@@ -318,7 +316,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 
 
   // 移動完了しているか？
-  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (p_wk->last_move) && (dir != DIR_NOT) )
+  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (dir != DIR_NOT) )
   {
 
     // 足元がHYBRID、1つ前が移動不可能？
@@ -336,15 +334,9 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 	      FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
         
         mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir );
-
-        p_wk->last_move = FALSE;
         return ;
       }
     }
-  }
-  else if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
-  {
-    p_wk->last_move = TRUE;
   }
 
 	FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, key_trg, key_cont );
@@ -371,7 +363,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 
 
   // 移動完了しているか？
-  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (p_wk->last_move) && (dir != DIR_NOT) )
+  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (dir != DIR_NOT) )
   {
     
     // 足元がHYBRID、1つ前が移動不可能？
@@ -388,15 +380,9 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         // 動作チェンジ
         FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
         mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir );
-
-        p_wk->last_move = FALSE;
         return ;
       }
     }
-  }
-  else if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
-  {
-    p_wk->last_move = TRUE;
   }
 
   FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
