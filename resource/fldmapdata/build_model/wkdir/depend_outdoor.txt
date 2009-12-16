@@ -180,15 +180,15 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d19_house01.nsbmd \
 	$(RESDIR)/panhouse01.nsbmd \
 	$(RESDIR)/c6_bhouse_01.nsbmd \
-	$(RESDIR)/bc_block_00.nsbmd \
-	$(RESDIR)/bc_block_01.nsbmd \
-	$(RESDIR)/bc_block_02.nsbmd \
-	$(RESDIR)/bc_block_03.nsbmd \
-	$(RESDIR)/bc_block_04.nsbmd \
-	$(RESDIR)/bc_block_05.nsbmd \
-	$(RESDIR)/bc_block_06.nsbmd \
-	$(RESDIR)/bc_block_07.nsbmd \
-	$(RESDIR)/bc_block_08.nsbmd \
+	$(RESDIR)/bc_house_01_01.nsbmd \
+	$(RESDIR)/bc_house_01_02.nsbmd \
+	$(RESDIR)/bc_house_01_03.nsbmd \
+	$(RESDIR)/bc_house_02_01.nsbmd \
+	$(RESDIR)/bc_house_02_02.nsbmd \
+	$(RESDIR)/bc_house_02_03.nsbmd \
+	$(RESDIR)/bc_house_03_01.nsbmd \
+	$(RESDIR)/bc_road_01_01.nsbmd \
+	$(RESDIR)/bc_road_01_02.nsbmd \
 	$(RESDIR)/outwarp01.nsbmd \
 	$(RESDIR)/outwarp02.nsbmd \
 	$(RESDIR)/outwarp03.nsbmd \
@@ -212,4 +212,25 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/h05_elevator.nsbmd \
 	$(RESDIR)/door_h05.nsbmd \
 	$(RESDIR)/h05_panel.nsbmd \
+	$(RESDIR)/bc_road_01_03.nsbmd \
+	$(RESDIR)/bc_road_02_01.nsbmd \
+	$(RESDIR)/bc_road_02_02.nsbmd \
+	$(RESDIR)/bc_road_02_03.nsbmd \
+	$(RESDIR)/bc_road_02_04.nsbmd \
+	$(RESDIR)/bc_road_03_01.nsbmd \
+	$(RESDIR)/bc_road_03_02.nsbmd \
+	$(RESDIR)/wf_grass_01_01.nsbmd \
+	$(RESDIR)/wf_grass_01_02.nsbmd \
+	$(RESDIR)/wf_grass_01_03.nsbmd \
+	$(RESDIR)/wf_grass_01_04.nsbmd \
+	$(RESDIR)/wf_grass_01_05.nsbmd \
+	$(RESDIR)/wf_grass_02_01.nsbmd \
+	$(RESDIR)/wf_grass_02_02.nsbmd \
+	$(RESDIR)/wf_grass_02_03.nsbmd \
+	$(RESDIR)/wf_grass_02_04.nsbmd \
+	$(RESDIR)/wf_grass_02_05.nsbmd \
+	$(RESDIR)/wf_ground_01.nsbmd \
+	$(RESDIR)/wf_ground_02.nsbmd \
+	$(RESDIR)/wf_lake_01.nsbmd \
+	$(RESDIR)/wf_lake_02.nsbmd \
 
