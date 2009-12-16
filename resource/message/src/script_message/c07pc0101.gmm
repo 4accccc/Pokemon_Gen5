@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:15:56"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:46:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,11 +299,11 @@
 おばあさん</attribute>
 		<language name="JPN" width="256">たびの　りゆうは　ひとそれぞれ
 プレゼントする　りゆうも　おなじ[BE:01:ページ切り替え（クリア）]
-あたしゃあ　あんたと　であえたことを
+あたしゃあ　あんたとの　であいを
 きねんして　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">旅の理由は　人それぞれ
 プレゼントする理由も　同じ[BE:01:ページ切り替え（クリア）]
-あたしゃあ　あんたと　出会えたことを
+あたしゃあ　あんたとの　出会いを
 記念して　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -312,10 +312,10 @@
 ・仮メッセージ</comment>
 		<language name="JPN" width="256">プレゼントが　うれしいのは
 プレゼントそのもの　よりも[BE:00:ページ切り替え（行送り）]
-くれたひとの　おもいでが　あるからさ</language>
+くれたひとの　おもいが　あるからさ</language>
 		<language name="JPN_KANJI" width="256">プレゼントが　うれしいのは
 プレゼントそのもの　よりも[BE:00:ページ切り替え（行送り）]
-くれた人の　思い出が　あるからさ</language>
+くれた人の　思いが　あるからさ</language>
 	</row>
 
 	<flowchart-group-list>
