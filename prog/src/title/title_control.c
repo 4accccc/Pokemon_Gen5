@@ -71,6 +71,9 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #ifdef PM_DEBUG
 	switch( *seq  ){
 	case 0:
+		cdemo_data.mode = COMMANDDEMO_MODE_TEST;
+		cdemo_data.skip = COMMANDDEMO_SKIP_DEBUG;
+		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpRet );
 		*seq = 1;
 		break;
@@ -83,12 +86,18 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 		break;
 
 	case 2:
+		if( cdemo_data.ret == COMMANDDEMO_RET_SKIP_DEBUG ){
+			CorpRet = CORPORATE_RET_DEBUG;
+		}
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
 		return GFL_PROC_RES_FINISH;
 	}
 #else
 	switch( *seq  ){
 	case 0:
+		cdemo_data.mode = COMMANDDEMO_MODE_TEST;
+		cdemo_data.skip = COMMANDDEMO_SKIP_ON;
+		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, NULL );
 		*seq = 1;
 		break;

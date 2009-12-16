@@ -207,6 +207,15 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		if(GFL_FADE_CheckFade() == FALSE){
 			cw->seq = SEQ_MAIN;
 		}
+#ifdef PM_DEBUG
+		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+			int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+			GFL_FADE_SetMasterBrightReq(mode, 0, 0, 0 );
+			SetEndMode( pwk, CORPORATE_RET_DEBUG );
+			cw->seq = SEQ_END;
+			break;
+		}
+#endif
 		break;
 
 	case SEQ_MAIN:
@@ -247,6 +256,15 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		if(GFL_FADE_CheckFade() == FALSE){
 			cw->seq = SEQ_WAIT;
 		}
+#ifdef PM_DEBUG
+		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+			int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+			GFL_FADE_SetMasterBrightReq(mode, 16, 16, 0);
+			SetEndMode( pwk, CORPORATE_RET_DEBUG );
+			cw->seq = SEQ_END;
+			break;
+		}
+#endif
 		break;
 
 	case SEQ_WAIT:

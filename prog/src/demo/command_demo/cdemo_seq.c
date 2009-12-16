@@ -66,9 +66,20 @@ static const pCommDemoFunc MainSeq[] = {
 //-------------------------------------------------------------------------------------------
 BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 {
-	if( GFL_UI_KEY_GetTrg() & CDEMO_SKIP_KEY ){
-		wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
+	if( wk->dat->skip != COMMANDDEMO_SKIP_OFF ){
+		if( GFL_UI_KEY_GetTrg() & CDEMO_SKIP_KEY ){
+			wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
+			wk->dat->ret = COMMANDDEMO_RET_SKIP;
+		}
 	}
+#ifdef PM_DEBUG
+	if( wk->dat->skip == COMMANDDEMO_SKIP_DEBUG ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
+			wk->dat->ret = COMMANDDEMO_RET_SKIP_DEBUG;
+		}
+	}
+#endif
 
 	wk->main_seq = MainSeq[wk->main_seq]( wk );
 
@@ -378,6 +389,7 @@ static int MainSeq_Main( CDEMO_WORK * wk )
 		int	ret;
 		
 		if( wk->commPos[0] == CDEMOCOMM_END ){
+			wk->dat->ret = COMMANDDEMO_RET_NORMAL;
 			return CDEMOSEQ_MAIN_RELEASE;
 		}
 

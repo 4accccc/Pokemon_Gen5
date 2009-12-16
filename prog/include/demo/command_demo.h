@@ -24,6 +24,20 @@ enum {
 	COMMANDDEMO_MODE_TEST = 0,		// テストムービー
 };
 
+// スキップ設定
+enum {
+	COMMANDDEMO_SKIP_OFF = 0,			// スキップなし
+	COMMANDDEMO_SKIP_ON,					// スキップあり
+	COMMANDDEMO_SKIP_DEBUG,				// スキップあり（デバッグ用）
+};
+
+// 終了モード
+enum {
+	COMMANDDEMO_RET_NORMAL = 0,		// 通常
+	COMMANDDEMO_RET_SKIP,					// スキップした
+	COMMANDDEMO_RET_SKIP_DEBUG,		// スキップした（デバッグ用）
+};
+
 // 伝説デモ外部設定データ
 typedef struct {
 /*
@@ -36,7 +50,11 @@ typedef struct {
 #endif	// PM_DEBUG;
 */
 
-	u32	mode;		// 処理モード
+	// [ in ]
+	u16	mode;		// 処理モード
+	u8	skip;		// スキップ設定
+	// [ out ]
+	u8	ret;		// 終了モード
 
 }COMMANDDEMO_DATA;
 
