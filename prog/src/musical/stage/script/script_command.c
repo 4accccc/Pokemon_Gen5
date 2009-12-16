@@ -1932,4 +1932,25 @@ SCRIPT_FUNC_DEF( BgmStop )
   return SFT_CONTINUE;
 }
 
+SCRIPT_FUNC_DEF( SeqBgmStart )  //SEQ_BGM開始
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 bgmNo = ScriptFunc_GetValueS32();
+
+  PMSND_PlayBGM( bgmNo );
+  
+
+  return SFT_CONTINUE;
+}
+
+SCRIPT_FUNC_DEF( SeqBgmStop )   //SEQ_BGM開始
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  
+  PMSND_StopBGM( );
+  return SFT_CONTINUE;
+}
+
 #undef SCRIPT_FUNC_DEF

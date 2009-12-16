@@ -64,7 +64,9 @@
 #define SCRIPT_ENUM_StageFinishMainPart   (45)
 #define SCRIPT_ENUM_PokeActionComeNearToTop   (46)
 #define SCRIPT_ENUM_Label   (47)
-#define SEQ_END             (48)
+#define SCRIPT_ENUM_SeqBgmStart  (48)
+#define SCRIPT_ENUM_SeqBgmStop   (49)
+#define SEQ_END             (50)
 
 #ifndef __C_NO_DEF_
 
@@ -963,6 +965,32 @@
   .short  SCRIPT_ENUM_BgmStop
   .endm
 
+//======================================================================
+/**
+ * @brief SEQ_BGMFÄ¶
+ *
+ * #param_num 1
+ * @param bgmNo BGM”Ô†
+ *
+ * #param VALUE_INT bgmNo
+ */
+//======================================================================
+  .macro  ComSeqBgmStart bgmNo
+  .short  SCRIPT_ENUM_SeqBgmStart
+  .long \bgmNo
+  .endm
+
+//======================================================================
+/**
+ * @brief SEQ_BGMF’âŽ~
+ *
+ * #param_num 0
+ *
+ */
+//======================================================================
+  .macro  ComSeqBgmStop
+  .short  SCRIPT_ENUM_SeqBgmStop
+  .endm
 
 #pragma mark [>Other Command
 //======================================================================
