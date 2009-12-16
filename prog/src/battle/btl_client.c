@@ -2227,6 +2227,7 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     BTLV_StartRankDownEffect( wk->viewCore, vpos );
+    (*seq)++;
     break;
   case 1:
     if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
@@ -2246,6 +2247,7 @@ static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     BTLV_StartRankUpEffect( wk->viewCore, vpos );
+    (*seq)++;
     break;
   case 1:
     if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
