@@ -539,7 +539,7 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType wazaType );
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, PokeType wazaType );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type );
 static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeTypePair );
@@ -860,7 +860,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
   BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
 
   SCQUE_Init( wk->que );
-  scproc_CheckFlyingAllPoke( wk );
+//  scproc_CheckFlyingAllPoke( wk );
   BTL_SERVER_InitChangePokemonReq( wk->server );
 
   numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
@@ -906,7 +906,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
   BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
 
   SCQUE_Init( wk->que );
-  scproc_CheckFlyingAllPoke( wk );
+//  scproc_CheckFlyingAllPoke( wk );
 
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
   BTL_SERVER_InitChangePokemonReq( wk->server );
@@ -8553,11 +8553,13 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
  */
 //----------------------------------------------------------------------------------
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType wazaType )
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, PokeType wazaType )
 {
   // ふゆう状態のポケモンに地面ワザは効果がない
   if( wazaType == POKETYPE_JIMEN )
   {
+    scproc_CheckFlying( wk, defender );
+
     if( BPP_TURNFLAG_Get(defender, BPP_TURNFLG_FLYING) ){
       return BTL_TYPEAFF_0;
     }

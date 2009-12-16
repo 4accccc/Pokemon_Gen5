@@ -57,8 +57,8 @@ struct _BTL_EVENT_FACTOR {
   BTL_EVENT_FACTOR* prev;
   BTL_EVENT_FACTOR* next;
   const BtlEventHandlerTable* handlerTable;
-  BtlEventFactorType  factorType;
   BtlEventSkipCheckHandler  skipCheckHandler;
+  BtlEventFactorType  factorType;
   u32       priority;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
@@ -198,7 +198,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 
     GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
 
-    BTL_Printf("イベント登録 依存ポケID=%d\n", newFactor->pokeID);
+//    BTL_Printf("イベント登録 依存ポケID=%d\n", newFactor->pokeID);
 
     // 最初の登録
     if( FirstFactorPtr == NULL )
@@ -410,6 +410,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
           if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
           {
             factor->callingFlag = TRUE;
+//            BTL_Printf("ハンドラ[ %p ] を呼び出す\n", tbl[i].handler);
             tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
             factor->callingFlag = FALSE;
           }
@@ -458,9 +459,12 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     BTL_EVENT_FACTOR* fp;
     for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
     {
-      if( fp->skipCheckHandler != NULL ){
+      if( fp->skipCheckHandler != NULL )
+      {
+        BOOL result;
         BTL_Printf("factor[%p]にスキップチェックハンドラ( 0x%p )が見つかったので判断してもらう...\n", fp, fp->skipCheckHandler);
-        if( (factor->skipCheckHandler)( factor, factor->factorType, eventID, factor->subID, factor->dependID) ){
+        result = (fp->skipCheckHandler)( factor, factor->factorType, eventID, factor->subID, factor->dependID );
+        if( result ){
           BTL_Printf("スキップするそうです\n");
           return TRUE;
         }
@@ -481,7 +485,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
 {
   factor->skipCheckHandler = handler;
-  BTL_Printf("factor[%p] にスキップチェックハンドラ[%p]をアタッチ\n", factor, factor->skipCheckHandler);
+  BTL_Printf("factor[%p] にスキップチェックハンドラ[%p]をアタッチ[%p]\n", factor, factor->skipCheckHandler, &(factor->skipCheckHandler));
 }
 //=============================================================================================
 /**
