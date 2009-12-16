@@ -711,6 +711,9 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 
   scproc_AfterMemberIn( wk );
 
+  // シューターのエネルギーチャージ
+  scproc_countup_shooter_energy( wk );
+
   // @@@ しぬこともあるかも?
   return SVFLOW_RESULT_DEFAULT;
 }
@@ -733,7 +736,6 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   relivePokeRec_Init( wk );
   BTL_DEADREC_StartTurn( &wk->deadRec );
   wk->numActOrder = 0;
-
 
   FlowFlg_ClearAll( wk );
   BTL_EVENT_StartTurn();
@@ -3461,6 +3463,7 @@ static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* targe
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
   BTL_POKEPARAM* bpp;
+  u32 hem_state;
 
   // Lv1 無効化チェック（攻撃ポケが必中状態なら無効化できない）
   BTL_POKESET_SeekStart( targets );
@@ -3484,16 +3487,23 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
   {
+    hem_state = Hem_PushState( &wk->HEManager );
     if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 1, attacker, bpp, &wk->strParam) )
     {
       BTL_POKESET_Remove( targets, bpp );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+      // とりあえず文字を出すだけのリアクション
       if( HANDEX_STR_IsEnable(&wk->strParam) ){
         handexSub_putString( wk, &wk->strParam );
       }else{
-        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+        // HandExを利用したリアクション
+        if( !scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
+          // 何もリアクションなければ「効果がないようだ…」
+          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+        }
       }
     }
+    Hem_PopState( &wk->HEManager, hem_state );
   }
 
   // まもるチェック
@@ -5076,8 +5086,9 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
     {
       scEvent_AddSick_Failed( wk, target, sick );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
     }
+
+    Hem_PopState( &wk->HEManager, hem_state );
     return !fFail;
   }
 }
@@ -5197,7 +5208,10 @@ static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* tar
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
+    {
+      u8 atkPokeID = (attacker!=NULL)? BPP_GetID(attacker) : BTL_POKEID_NULL;
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, atkPokeID );
+    }
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_POKESICK_FIXED );
   BTL_EVENTVAR_Pop();
@@ -6908,8 +6922,12 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
     if( sick < POKESICK_MAX ){
       BPP_CurePokeSick( bpp );
       SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
-      SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
-    }else{
+      if ( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp) != BTL_POS_NULL) ){
+        SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
+      }
+    }
+    else
+    {
       BPP_CureWazaSick( bpp, sick );
       SCQUE_PUT_OP_CureWazaSick( wk->que, pokeID, sick );
     }
@@ -9172,7 +9190,7 @@ static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
 static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WEATHER, weather );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE_AFTER );
   BTL_EVENTVAR_Pop();
 }
@@ -9896,16 +9914,18 @@ static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk )
 {
   u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
-//  BTL_Printf(" *HEM-Push* sp=%d, rp=%d, next_rp=%d\n", wk->stack_ptr, wk->read_ptr, wk->stack_ptr);
+  BTL_Printf(" *HEM-Push* sp=%d, rp=%d, next_rp=%d\n", wk->stack_ptr, wk->read_ptr, wk->stack_ptr);
   wk->read_ptr = wk->stack_ptr;
   return state;
 }
+
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state )
 {
-  wk->stack_ptr = (state >> 16) & 0xffff;;
-  wk->read_ptr  = state & 0xffff;;
-//  BTL_Printf(" *HEM-Pop* sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
+  wk->stack_ptr = (state >> 16) & 0xffff;
+  wk->read_ptr  = state & 0xffff;
+  BTL_Printf(" *HEM-Pop* sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
 }
+
 static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk )
 {
   return wk->stack_ptr;
@@ -9917,6 +9937,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
   {
     BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*)(&wk->workBuffer[wk->read_ptr]);
     wk->read_ptr += header->size;
+    BTL_Printf(" *HEM-Read sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
 
     GF_ASSERT( header->equip < BTL_HANDEX_MAX );
     GF_ASSERT( wk->read_ptr <= wk->stack_ptr );
@@ -10355,7 +10376,8 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     BTL_POKEPARAM* pp_target;
     WazaSick cured_sick;
     u32 i;
-    for(i=0; i<param->poke_cnt; ++i){
+    for(i=0; i<param->poke_cnt; ++i)
+    {
       pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
       if( !BPP_IsDead(pp_target) )
       {

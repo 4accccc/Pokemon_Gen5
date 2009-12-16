@@ -459,7 +459,9 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
     {
       if( fp->skipCheckHandler != NULL ){
-        if( factor->skipCheckHandler( factor, factor->factorType, eventID, factor->subID, factor->dependID) ){
+        BTL_Printf("factor[%p]にスキップチェックハンドラ( 0x%p )が見つかったので判断してもらう...\n", fp, fp->skipCheckHandler);
+        if( (factor->skipCheckHandler)( factor, factor->factorType, eventID, factor->subID, factor->dependID) ){
+          BTL_Printf("スキップするそうです\n");
           return TRUE;
         }
       }
@@ -479,6 +481,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
 {
   factor->skipCheckHandler = handler;
+  BTL_Printf("factor[%p] にスキップチェックハンドラ[%p]をアタッチ\n", factor, factor->skipCheckHandler);
 }
 //=============================================================================================
 /**
@@ -528,7 +531,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
     factor = factor->next;
     while( factor ){
       if( (factor->factorType == type) && (factor->dependID == dependID) ){
-        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかったよ\n", type, dependID );
+        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかった\n", type, dependID );
         return factor;
       }
       factor = factor->next;

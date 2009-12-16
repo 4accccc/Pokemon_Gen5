@@ -2801,11 +2801,21 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     PokeSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
     if( (sick==POKESICK_DOKU)||(sick==POKESICK_MAHI) ||(sick==POKESICK_YAKEDO) )
     {
-      u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-      if( targetPokeID != BTL_POKEID_NULL )
+      u8 attackPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      if( attackPokeID != BTL_POKEID_NULL )
       {
-        BTL_EVWK_ADDSICK* evwk = (BTL_EVWK_ADDSICK*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-        evwk->reaction = BTL_EV_SICK_REACTION_REFRECT;
+        BTL_HANDEX_PARAM_ADD_SICK* param;
+
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        param->poke_cnt = 1;
+        param->pokeID[0] = attackPokeID;
+        param->sickID = sick;
+        param->sickCont = BPP_SICKCONT_MakePermanent();
+        param->fAlmost = TRUE;
+
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
       }
     }
   }
@@ -2870,7 +2880,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NormalSkin( u16 pri, u16 tokID, u8 pokeID
 // ワザタイプ決定ハンドラ
 static void handler_MultiType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_ARUSEUSU )
@@ -3879,6 +3889,7 @@ static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 // スキップチェックハンドラ
 static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
+  BTL_Printf("かたやぶりのスキップチェックハンドラが呼ばれた\n");
   if( factorType == BTL_EVENT_FACTOR_TOKUSEI )
   {
     // ターン無効化するとくせい群
@@ -3902,6 +3913,7 @@ static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
     for(i=0; i<NELEMS(disableTokTable); ++i)
     {
       if( disableTokTable[i] == subID ){
+        BTL_Printf("これはスキップさせるとくせいだ\n");
         return TRUE;
       }
     }
@@ -3956,11 +3968,8 @@ static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 // 天候変化ハンドラ
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
-    common_TenkiFormChange( flowWk, pokeID, weather );
-  }
+  BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
+  common_TenkiFormChange( flowWk, pokeID, weather );
 }
 static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather )
 {
@@ -4151,7 +4160,16 @@ static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     ||  (waza == WAZANO_SURIKAE)
     ||  (waza == WAZANO_DOROBOU)
     ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+      {
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        {
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+          HANDEX_STR_AddArg( &param->str, pokeID );
+        }
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      }
     }
   }
 }
