@@ -320,6 +320,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/wf_01_00.nsbmd \
 	$(DIR_TEMP)/wf_00_01.nsbmd \
 	$(DIR_TEMP)/wf_01_01.nsbmd \
+	$(DIR_TEMP)/bc_00_00.nsbmd \
+	$(DIR_TEMP)/bc_01_00.nsbmd \
+	$(DIR_TEMP)/bc_00_01.nsbmd \
+	$(DIR_TEMP)/bc_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
