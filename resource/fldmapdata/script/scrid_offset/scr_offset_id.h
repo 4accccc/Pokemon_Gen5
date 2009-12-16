@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/15 (Tue) 19:43
+ * @date  2009 12/16 (Wed) 19:30
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -87,6 +87,9 @@
 
 #define ID_DEOX_CHANGE_SCR_OFFSET        (10270) //デオキシスフォルムチェンジ
 #define ID_DEOX_CHANGE_SCR_OFFSET_END    (10279)
+
+#define ID_FOSSIL_SCR_OFFSET             (10280) //化石復元
+#define ID_FOSSIL_SCR_OFFSET_END         (10289)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)
