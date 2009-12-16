@@ -6,9 +6,9 @@
  * @date  08.11.12
  */
 //============================================================================================
-#ifndef __POKE_TOOL_H_
-#define __POKE_TOOL_H_
+#pragma once
 
+#ifndef __ASM_NO_DEF_
 #include <heapsys.h>
 
 #include "savedata\mystatus.h"
@@ -16,6 +16,7 @@
 #include "poke_tool\poke_personal.h"
 #include "waza_tool\wazadata.h"
 
+#endif __ASM_NO_DEF_
 
 // 性別
 #define PTL_SEX_MALE    (0)   ///<オス
@@ -211,7 +212,7 @@
 #define FORMNO_GIRATINA_MAX   (1)
 #endif
 
-
+#ifndef __ASM_NO_DEF_
 //なつき計算
 enum{
   FRIEND_LEVELUP = 0,   //レベルアップ
@@ -708,5 +709,5 @@ extern u16 POKETOOL_make_checksum( const void *data, u32 size );
 extern void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec);
 extern void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp);
 
+#endif __ASM_NO_DEF_
 
-#endif
