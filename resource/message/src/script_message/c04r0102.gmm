@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-08T17:13:42"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:27:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,9 +349,9 @@
 	</row>
 
 	<row id="msg_c04r0102_receipt_10">
-		<language name="JPN" width="256">それでは　シングルトレインへ
+		<language name="JPN" width="256">それでは　シングルトレインに
 ごじょうしゃ　ください！</language>
-		<language name="JPN_KANJI" width="256">それでは　シングルトレインへ
+		<language name="JPN_KANJI" width="256">それでは　シングルトレインに
 ごじょうしゃ　ください！</language>
 	</row>
 
