@@ -118,6 +118,7 @@ struct  _GFL_FONT {
   u8                       readBuffer[SRC_CHAR_MAXSIZE];
 
   ARCHANDLE*               fileHandle;
+  u32                      arcDatID;
 
   NNSFontInfo              fontHeader;
   BOOL                     fixedFontFlag;
@@ -131,8 +132,8 @@ struct  _GFL_FONT {
 
   GFL_FONT_WIDTH_HEADER*   widthTblTop;
   NNSCodeMap*       codeMapTop;
-  u32           ofsGlyphTop;
-  u8*           glyphBuf;
+  u32               ofsGlyphTop;
+  u8*               glyphBuf;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -149,8 +150,9 @@ static void cleanup_type_read_file( GFL_FONT* wk );
 static u32 get_glyph_index( const GFL_FONT* wk, u32 code );
 static void GetBitmapOnMemory( const GFL_FONT* wk, u32 index, void* dst, GFL_FONT_SIZE* size );
 static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FONT_SIZE* size );
+static void getBitmapCommon( const GFL_FONT* wk, const u8* glyphBuf, u32 glyphRemBits, void* dst, GFL_FONT_SIZE* dstSize );
 static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 cellWidth, BOOL maskFlag, u8* dst );
-static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 index );
+static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex );
 static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index );
 static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
@@ -180,6 +182,7 @@ GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOO
   if( wk )
   {
     wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
+    wk->arcDatID = datID;
     load_font_header( wk, datID, fixedFontFlag, heapID );
     setup_font_datas( wk, loadType, heapID );
   }
@@ -313,7 +316,7 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID h
     setup_type_on_memory,
   };
 
-  GF_ASSERT(loadType == GFL_FONT_LOADTYPE_FILE);
+//  GF_ASSERT(loadType == GFL_FONT_LOADTYPE_FILE);
 
   wk->loadType = loadType;
 
@@ -332,15 +335,31 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID h
 //--------------------------------------------------------------------------
 static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
-  #if 0
+  #if 1
 //  void* fontData = ArcUtil_Load( arcID, datID, FALSE, heapID, ALLOC_TOP );
-  u32  bit_data_size = wk->letterCharSize * wk->fontHeader.letterMax;
+  u32  fileSize, bitDataSize;
 
-  wk->fontBitData = GFL_HEAP_AllocMemory( heapID, bit_data_size );
+  fileSize = GFL_ARC_GetDataSizeByHandle( wk->fileHandle, wk->arcDatID );
+  bitDataSize = fileSize - wk->ofsGlyphTop;
+  OS_TPrintf("[メモリ常駐型フォント] FileSize=0x%08x, Bitデータサイズ=0x%08xbyte\n", fileSize, bitDataSize);
+
+  wk->fontBitData = GFL_HEAP_AllocMemory( heapID, bitDataSize );
+
+  GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->arcDatID, wk->ofsGlyphTop,
+            bitDataSize, wk->fontBitData );
+
+  OS_TPrintf("[メモリ常駐型フォント] Bitデータ読み込み完了\n");
+
   wk->GetBitmapFunc = GetBitmapOnMemory;
+  if( cellW==1 && cellH==1 )
+  {
+    wk->DotExpandFunc = dotExpand_1x1;
+  }
+  else if( cellW==2 && cellH==2 )
+  {
+    wk->DotExpandFunc = dotExpand_2x2;
+  }
 
-  GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->fileDatID, wk->fontHeader.bitDataOffs,
-            bit_data_size, wk->fontBitData );
   #else
   // WBではオンメモリ処理をしないと思われるため未実装。
   // とりあえずファイル読み込みタイプと同じ処理をしておく
@@ -360,6 +379,7 @@ static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapI
 //--------------------------------------------------------------------------
 static void setup_type_read_file( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
+  wk->fontBitData = NULL;
   wk->GetBitmapFunc = GetBitmapFileRead;
 
   if( cellW==1 && cellH==1 )
@@ -537,10 +557,14 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
 //--------------------------------------------------------------------------
 static void GetBitmapOnMemory( const GFL_FONT* wk, u32 index, void* dst, GFL_FONT_SIZE* size )
 {
-  GF_ASSERT(0);
-  GetBitmapFileRead( wk, index, dst, size );
-}
+  u32 ofs = index * wk->glyphInfo.cellSize;
 
+  GFL_STD_MemCopy( &(wk->fontBitData[ ofs ]), (void*)(wk->glyphBuf), wk->glyphInfo.cellSize );
+//  GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
+//  GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
+
+  getBitmapCommon( wk, wk->glyphBuf, wk->glyphRemBits, dst, size );
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -560,12 +584,26 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FON
   GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
   GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
 
+  getBitmapCommon( wk, wk->glyphBuf, wk->glyphRemBits, dst, size );
+
+#if 0
   wk->DotExpandFunc( &wk->glyphBuf[3], wk->glyphRemBits, dst );
 
   size->left_width  = wk->glyphBuf[0];
   size->glyph_width = wk->glyphBuf[1];
   size->width       = wk->glyphBuf[2];
   size->height      = wk->fontHeader.linefeed;
+#endif
+}
+
+static void getBitmapCommon( const GFL_FONT* wk, const u8* glyphBuf, u32 glyphRemBits, void* dst, GFL_FONT_SIZE* dstSize )
+{
+  wk->DotExpandFunc( &glyphBuf[3], glyphRemBits, dst );
+
+  dstSize->left_width  = glyphBuf[0];
+  dstSize->glyph_width = glyphBuf[1];
+  dstSize->width       = glyphBuf[2];
+  dstSize->height      = wk->fontHeader.linefeed;
 }
 
 //--------------------------------------------------------------------------
