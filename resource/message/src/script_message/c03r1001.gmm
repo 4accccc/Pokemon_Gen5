@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T12:06:48"/>
+	<create user="matsumiya" host="W00207" date="2009-12-16T12:08:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="223"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -302,6 +302,14 @@
 ポケモンの　なまえは　かえられないぞ</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
 ポケモンの　名前は　変えられないぞ</language>
+	</row>
+
+	<row id="msg_c03r1001_poke_01">
+		<comment>（汎用ビル）
+・ポケモン</comment>
+		<attribute name="キャラ指定">ポケモン</attribute>
+		<language name="JPN" width="256">おだいじに『……ぎゅぎゅーーん？</language>
+		<language name="JPN_KANJI" width="256">おだいじに『……ぎゅぎゅーーん？</language>
 	</row>
 
 	<flowchart-group-list>
