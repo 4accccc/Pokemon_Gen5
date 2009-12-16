@@ -14,11 +14,12 @@
 #define TR_C08GYM0101_F1_03                2
 #define TR_C08GYM0101_F1_04                3
 #define TR_C08GYM0101_F1_06                4
-#define C08GYM0101_LEADER8_01              5
+#define C08GYM0101_WKOBJCODE00_01          5
 #define TR_C08GYM0101_F2_01                6
 #define TR_C08GYM0101_F2_02                7
 #define TR_C08GYM0101_F2_03                8
 #define TR_C08GYM0101_F2_04                9
 #define TR_C08GYM0101_F1_05               10
+#define C08GYM0101_SUNGLASSES_01          11
 
 #endif //ZONE_C08GYM0101_EVC_H

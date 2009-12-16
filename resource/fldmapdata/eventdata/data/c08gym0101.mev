@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 20:06:50
+#save date:2009/12/16 18:43:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #hold event type:
 1
 #hold event number:
-11
+12
 #event number: 0
 #type
 1
@@ -169,17 +169,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C08GYM0101_LEADER8_01
+C08GYM0101_WKOBJCODE00_01
 #OBJ CODE Number
-TRAINERM
+WKOBJCODE00
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C08GYM0101_LEADER8_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -351,6 +351,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -216 0 -200
+#event number: 11
+#type
+1
+#ID name
+C08GYM0101_SUNGLASSES_01
+#OBJ CODE Number
+SUNGLASSES
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C08GYM0101_SUNGLASSES_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 0 -536
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -55,7 +55,7 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*    【仮】ジムリーダー会話                                  */
+/*          ジムリーダー会話                                  */
 /**************************************************************/
 EVENT_START		ev_c07gym0101_leader7_01
 
@@ -71,7 +71,6 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_01,C07GYM0101_LEADER7_01 )
 		_BALLOONWIN_CLOSE()
 		
-		//【仮】トレーナーID仮
 		//戦闘処理
 		_TRAINER_BTL_SET( TRID_LEADER7_01, 0 )
 		//結果チェック
