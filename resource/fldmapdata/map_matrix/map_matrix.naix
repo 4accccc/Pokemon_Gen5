@@ -261,7 +261,8 @@ enum {
 	NARC_map_matrix_seat01_mat_bin = 247,
 	NARC_map_matrix_baseball01_mat_bin = 248,
 	NARC_map_matrix_seat02_mat_bin = 249,
-	NARC_map_matrix_dun0202_mat_bin = 250
+	NARC_map_matrix_dun0202_mat_bin = 250,
+	NARC_map_matrix_wf_mat_bin = 251
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
