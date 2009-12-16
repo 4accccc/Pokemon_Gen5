@@ -27,6 +27,7 @@
 #include "field/field_comm/intrude_battle.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "item/itemsym.h"
+#include "event_intrude.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -68,6 +69,8 @@ typedef struct
 	
 	u8 first_talk_seq;
 	u8 padding[3];
+	
+	INTRUDE_EVENT_DISGUISE_WORK iedw;
 }COMMTALK_EVENT_WORK;
 
 
@@ -873,13 +876,15 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_POINT_GET,
     SEQ_POINT_GET_MSG_WAIT,
     SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
+    SEQ_DISGUISE_START,
+    SEQ_DISGUISE_MAIN,
     SEQ_END,
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
     if((*seq) < SEQ_POINT_GET_MSG_WAIT){
-      *seq = SEQ_END;
+      *seq = SEQ_DISGUISE_START;
       talk->error = TRUE;
     }
   }
@@ -920,7 +925,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       *seq = SEQ_POINT_GET;
     }
     else{
-      *seq = SEQ_END;
+      *seq = SEQ_DISGUISE_START;
     }
     break;
   case SEQ_POINT_GET:         //•ñVƒQƒbƒg
@@ -940,7 +945,17 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
         intcomm->send_occupy = TRUE;
       }
-      (*seq) = SEQ_END;
+      (*seq) = SEQ_DISGUISE_START;
+    }
+    break;
+
+  case SEQ_DISGUISE_START:  //•Ï‘•–ß‚·
+    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, 0);
+    (*seq)++;
+    break;
+  case SEQ_DISGUISE_MAIN:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&talk->iedw, intcomm) == TRUE){
+      (*seq)++;
     }
     break;
 

@@ -846,11 +846,17 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
 #else
 
   if(subscreen_mode == FIELD_SUBSCREEN_NORMAL){
-//    return FIELD_SUBSCREEN_BEACON_VIEW;
+  #if 0
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
         && GameCommSys_CheckSystemWaiting(game_comm) == FALSE && GFL_NET_GetConnectNum() > 1){
       return FIELD_SUBSCREEN_INTRUDE;
     }
+  #else
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    if(intcomm != NULL && intcomm->palace_in == TRUE){
+      return FIELD_SUBSCREEN_INTRUDE;
+    }
+  #endif
   }
   else if(subscreen_mode == FIELD_SUBSCREEN_INTRUDE){
     if(NetErr_App_CheckError() == TRUE){

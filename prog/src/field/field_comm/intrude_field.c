@@ -92,6 +92,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
   INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSys);
   int i, my_net_id;
   BOOL update_ret;
 
@@ -112,8 +113,15 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     return;
   }
 
-  my_net_id = GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(gameSys));
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   
+  if(intcomm->palace_in == FALSE){
+    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(gamedata);
+    if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( my_player ) ) == TRUE){
+      intcomm->palace_in = TRUE;
+    }
+  }
+
   if(Intrude_SetSendStatus(intcomm) == TRUE){
     intcomm->send_status = TRUE;
   }
@@ -125,10 +133,9 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     }
     if(intcomm->recv_profile & (1 << i)){
       if(CommPlayer_CheckOcc(intcomm->cps, i) == FALSE){
-        GAMEDATA *gdata = GAMESYSTEM_GetGameData(gameSys);
-        MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, i);
+        MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gamedata, i);
         u16 obj_code = Intrude_GetObjCode(&intcomm->intrude_status[i], 
-          GAMEDATA_GetMyStatusPlayer(gdata, i));
+          GAMEDATA_GetMyStatusPlayer(gamedata, i));
         CommPlayer_Add(intcomm->cps, i, obj_code, &intcomm->intrude_status[i].player_pack);
       }
       else{

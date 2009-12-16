@@ -168,6 +168,7 @@ typedef struct _INTRUDE_COMM_SYS{
   
   u8 wfbc_recv;               ///<TRUE:WFBCパラメータを受信した
   u8 new_mission_recv;        ///<TRUE:新規にミッションを受信した
-  u8 padding[2];
+  u8 palace_in;               ///<TRUE:パレス島に訪れた
+  u8 padding;
 }INTRUDE_COMM_SYS;
 

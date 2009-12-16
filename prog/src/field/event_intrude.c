@@ -58,13 +58,10 @@ typedef struct
 	INTRUDE_EVENT_MSGWORK iem;
 	
 	MISSION_DATA mdata;
-	s16 wait;
-	s16 wait_max;
+	INTRUDE_EVENT_DISGUISE_WORK iedw;
 	
-	u8 anm_no;
-	u8 loop;
 	u8 mission_view;
-	u8 padding;
+	u8 padding[3];
 }DISGUISE_EVENT_WORK;
 
 
@@ -178,45 +175,17 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
     break;
   
   case SEQ_DISGUISE_START:
-    dis_wk->wait_max = DISGUISE_ANM_WAIT_MAX;
-    dis_wk->wait = dis_wk->wait_max;
-    (*seq)++;
+    {
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+      
+      IntrudeEvent_Sub_DisguiseEffectSetup(&dis_wk->iedw, gsys, dis_wk->fieldWork, 
+        dis_wk->mdata.cdata.obj_id[GAMEDATA_GetIntrudeMyID(gamedata)]);
+      (*seq)++;
+    }
     break;
   case SEQ_DISGUISE_MAIN:
-    {
-      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(dis_wk->fieldWork);
-      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
-      static const u8 player_anm_tbl[] = {
-        AC_DIR_U, AC_DIR_L, AC_DIR_D, AC_DIR_R,
-      };
-      
-      if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
-        if(dis_wk->wait_max >= DISGUISE_ANM_WAIT_MAX 
-            && dis_wk->loop > 0
-            && player_anm_tbl[dis_wk->anm_no] == AC_DIR_R){
-          (*seq)++;
-          break;
-        }
-        MMDL_SetAcmd(player_mmdl, player_anm_tbl[dis_wk->anm_no]);
-        dis_wk->anm_no = (dis_wk->anm_no + 1) % NELEMS(player_anm_tbl);
-        dis_wk->wait = dis_wk->wait_max;
-        if(dis_wk->loop == 0){
-          dis_wk->wait_max--;
-          if(dis_wk->wait_max <= DISGUISE_ANM_WAIT_MIN){
-            GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-            if(intcomm != NULL){
-              IntrudeField_PlayerDisguise(intcomm, gsys, 
-                dis_wk->mdata.cdata.obj_id[GAMEDATA_GetIntrudeMyID(gamedata)]);
-            }
-            dis_wk->loop++;
-          }
-        }
-        else{
-          if(dis_wk->wait_max < DISGUISE_ANM_WAIT_MAX){
-            dis_wk->wait_max++;
-          }
-        }
-      }
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&dis_wk->iedw, intcomm) == TRUE){
+      (*seq)++;
     }
     break;
 	  
@@ -231,4 +200,83 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
+}
+
+//==================================================================
+/**
+ * 変装演出：セットアップ
+ *
+ * @param   iedw		
+ * @param   fieldWork		
+ * @param   disguise_code		変装するOBJCODE (0の場合は元の姿に戻る)
+ */
+//==================================================================
+void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code)
+{
+  GFL_STD_MemClear(iedw, sizeof(INTRUDE_EVENT_DISGUISE_WORK));
+  iedw->fieldWork = fieldWork;
+  iedw->disguise_code =disguise_code;
+  iedw->wait_max = DISGUISE_ANM_WAIT_MAX;
+  iedw->wait = iedw->wait_max;
+}
+
+//==================================================================
+/**
+ * 変装演出：メインシーケンス
+ *
+ * @param   iedw		
+ * @param   intcomm 内部でNULLチェックはする為、NULLであってもこの関数を呼び続けてください
+ *
+ * @retval  BOOL		TRUE:シーケンス終了　FALSE:シーケンス継続中
+ */
+//==================================================================
+BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  switch(iedw->seq){
+  case 0:
+    iedw->wait_max = DISGUISE_ANM_WAIT_MAX;
+    iedw->wait = iedw->wait_max;
+    iedw->seq++;
+    break;
+  case 1:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(iedw->fieldWork);
+      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+      static const u8 player_anm_tbl[] = {
+        AC_DIR_U, AC_DIR_L, AC_DIR_D, AC_DIR_R,
+      };
+      
+      if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+        if(iedw->wait_max >= DISGUISE_ANM_WAIT_MAX 
+            && iedw->loop > 0
+            && player_anm_tbl[iedw->anm_no] == AC_DIR_R){
+          iedw->seq++;
+          break;
+        }
+        MMDL_SetAcmd(player_mmdl, player_anm_tbl[iedw->anm_no]);
+        iedw->anm_no = (iedw->anm_no + 1) % NELEMS(player_anm_tbl);
+        iedw->wait = iedw->wait_max;
+        if(iedw->loop == 0){
+          iedw->wait_max--;
+          if(iedw->wait_max <= DISGUISE_ANM_WAIT_MIN){
+            GAMEDATA *gamedata = GAMESYSTEM_GetGameData(iedw->gsys);
+            if(intcomm != NULL){
+              IntrudeField_PlayerDisguise(intcomm, iedw->gsys, iedw->disguise_code);
+            }
+            iedw->loop++;
+          }
+        }
+        else{
+          if(iedw->wait_max < DISGUISE_ANM_WAIT_MAX){
+            iedw->wait_max++;
+          }
+        }
+      }
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  
+  return FALSE;
 }
