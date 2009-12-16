@@ -463,6 +463,8 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
     return GFL_PROC_RES_CONTINUE;
   }
 
+  GFL_TCB_DeleteTask( wk->v_tcb );
+
   SHINKADEMO_ExitBG( wk );
 
   GFL_MSG_Delete( wk->shinka_msg );

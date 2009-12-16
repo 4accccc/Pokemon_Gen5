@@ -36,6 +36,8 @@
 #include "app/townmap.h" //TOWNMAP_PARAM
 #include "app/wifi_note.h" //
 #include "app/mailtool.h" //MAIL_PARAM
+#include "poke_tool/shinka_check.h" //進化デモ
+#include "demo/shinka_demo.h" //進化デモ
 
 //アーカイブ
 #include "message.naix"
@@ -77,6 +79,11 @@ typedef enum
   PROCLINK_MODE_LIST_TO_MAIL_CREATE,  //手紙を持たせる→作成画面
   PROCLINK_MODE_LIST_TO_MAIL_VIEW,    //手紙を見る→View画面
   PROCLINK_MODE_BAG_TO_MAIL_CREATE,   //手紙を持たせる→作成画面
+  PROCLINK_MODE_EVOLUTION_ITEM,       //アイテム進化(○○の石
+  PROCLINK_MODE_EVOLUTION_LEVEL,      //レベルアップ進化(ふしぎなアメ
+  PROCLINK_MODE_WAZAWASURE_MACHINE,   //リスト→技忘れ(技マシン
+  PROCLINK_MODE_WAZAWASURE_LVUP,      //リスト→技忘れ(ふしぎなアメ
+
 }PROCLINK_TAKEOVER_MODE;  //PROC変更の際持ち越せない値保存用
 //=============================================================================
 /**
@@ -179,6 +186,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
 //メール画面
 static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs);
+//進化画面
+static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
+static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param_adrs);
 
 //-------------------------------------
 /// レポートと図鑑のイベント
@@ -288,6 +298,14 @@ static const struct
     &MailSysProcData,
     FMenuCallProc_Mail,
     FMenuReturnProc_Mail,
+    NULL,
+  },
+  //EVENT_PROCLINK_CALL_EVOLUTION
+  { 
+    NO_OVERLAY_ID,
+    &ShinkaDemoProcData,
+    FMenuCallProc_Evolution,
+    FMenuReturnProc_Evolution,
     NULL,
   },
 
@@ -718,6 +736,10 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
       }
       break;
       
+    case BAG_NEXTPROC_EVOLUTION:
+      plistData->mode = PL_MODE_SHINKA;    //進化アイテム
+      break;
+      
     case BAG_NEXTPROC_HAVE:  // ポケモンにアイテムをもたせる
       plistData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
       break;
@@ -755,7 +777,16 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     case PST_RET_CANCEL:
       if( psData->mode == PST_MODE_WAZAADD )
       {
-        plistData->mode = PL_MODE_WAZASET_RET;
+        if( wk->mode == PROCLINK_MODE_WAZAWASURE_LVUP )
+        {
+          //不思議なアメ
+          plistData->mode = PL_MODE_LVUPWAZASET_RET;
+        }
+        else
+        {
+          //技マシン
+          plistData->mode = PL_MODE_WAZASET_RET;
+        }
         plistData->item = wk->param->select_param;
         plistData->waza = psData->waza;
         if( psData->ret_mode == PST_RET_DECIDE )
@@ -859,12 +890,19 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
     return RETURNFUNC_RESULT_NEXT;
     
   case PL_RET_WAZASET:  //忘れる技選択
+  case PL_RET_LVUP_WAZASET:
     wk->next_type = EVENT_PROCLINK_CALL_STATUS;
     return RETURNFUNC_RESULT_NEXT;
     
   case PL_RET_MAILSET:
   case PL_RET_MAILREAD:
     wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+    return RETURNFUNC_RESULT_NEXT;
+    break;
+
+  case PL_RET_ITEMSHINKA:
+  case PL_RET_LVUPSHINKA:
+    wk->next_type = EVENT_PROCLINK_CALL_EVOLUTION;
     return RETURNFUNC_RESULT_NEXT;
     break;
 
@@ -989,11 +1027,20 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
     //リストのモードによって、ステータスのモードが違う
     switch( plData->ret_mode )
     { 
-    case PL_RET_WAZASET:  //忘れる技選択  
+    case PL_RET_WAZASET:  //忘れる技選択 
       psData->waza = plData->waza;
       psData->mode  = PST_MODE_WAZAADD;
       psData->page  = PPT_SKILL;
       psData->canExitButton = FALSE;
+      wk->mode = PROCLINK_MODE_WAZAWASURE_MACHINE;
+      break;
+
+    case PL_RET_LVUP_WAZASET://忘れる技選択 
+      psData->waza = plData->waza;
+      psData->mode  = PST_MODE_WAZAADD;
+      psData->page  = PPT_SKILL;
+      psData->canExitButton = FALSE;
+      wk->mode = PROCLINK_MODE_WAZAWASURE_LVUP;
       break;
 
     default:
@@ -1163,8 +1210,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
     }
 
   case BAG_NEXTPROC_EVOLUTION:
-    OS_TPrintf( "進化は今はないので戻ります\n" );
-    return RETURNFUNC_RESULT_RETURN;
+    wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+    return RETURNFUNC_RESULT_NEXT;
 
   case BAG_NEXTPROC_RIDECYCLE:
     /* fallthrough */
@@ -1568,11 +1615,100 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
     {
       wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
     }
+    //オーバーレイ開放！
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
     return RETURNFUNC_RESULT_NEXT;
   }
+  //オーバーレイ開放！！！
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
   return RETURNFUNC_RESULT_RETURN;
+}
+
+//-------------------------------------
+/// 進化画面
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CALL関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param   起動時引数
+ *  @param  pre     一つ前のプロック
+ *  @param  void* pre_param_adrs  一つ前のプロックパラメータ
+ *
+ *  @return プロセスパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
+{ 
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+  SHINKA_DEMO_PARAM *demoParam = NULL;
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo));
+  if( pre == EVENT_PROCLINK_CALL_POKELIST )
+  {
+    const PLIST_DATA *plistData = pre_param_adrs;
+
+    POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
+    SHINKA_TYPE type;
+    SHINKA_COND cond;
+    u16 newMonsNo;
+    if( plistData->ret_mode == PL_RET_ITEMSHINKA )
+    {
+      type = SHINKA_TYPE_ITEM_CHECK;
+      wk->mode = PROCLINK_MODE_EVOLUTION_ITEM;
+    }
+    else
+    {
+      type = SHINKA_TYPE_LEVELUP;
+      wk->mode = PROCLINK_MODE_EVOLUTION_LEVEL;
+    }
+    newMonsNo = SHINKA_Check( party , 
+                              PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
+                              type , 
+                              plistData->item , 
+                              &cond , 
+                              HEAPID_PROC );
+
+    demoParam = SHINKADEMO_AllocParam(HEAPID_PROC ,
+                                      party ,
+                                      newMonsNo ,
+                                      plistData->ret_sel ,
+                                      cond );
+
+  }
+  return demoParam;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  RETURN関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param_adrs  自分のプロックパラメータ
+ *
+ *  @return   RETURNFUNC_RESULT_RETURN,     //メニューに戻る
+ *            RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
+ *            RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
+ *            RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
+ *            RETURNFUNC_RESULT_NEXT,       //次のプロセスへ行く
+ */ 
+//-----------------------------------------------------------------------------
+static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param_adrs)
+{ 
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+  
+  if( wk->mode == PROCLINK_MODE_EVOLUTION_ITEM )
+  {
+    wk->next_type = EVENT_PROCLINK_CALL_BAG;
+  }
+  else
+  {
+    wk->next_type = EVENT_PROCLINK_CALL_BAG;
+  }
+
+  return RETURNFUNC_RESULT_NEXT;
+
 }
 //=============================================================================
 /**

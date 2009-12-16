@@ -176,6 +176,7 @@ typedef enum
   PSMS_INIT_HPANIME,
   PSMS_HPANIME,     //HPバー処理中
   PSMS_BATTLE_ANM_WAIT, //バトルメニュー時終了アニメ待ち
+  PSMS_DISP_PARAM,      //レベルアップ時・パラメータ表示
   PSMS_FADEOUT,
   PSMS_FADEOUT_FORCE, //強制終了
   PSMS_FADEOUT_WAIT,
@@ -240,6 +241,11 @@ struct _PLIST_WORK
   //HPアニメ処理
   u16 befHp;  //回復前のHP
   PLIST_CallbackFunc hpAnimeCallBack;
+  
+  //LvUp用bmpWin
+  u16          befParam[6]; //レベルアップ前の数値
+  GFL_BMPWIN   *paramWin;
+
   
   //MSG系
   GFL_MSGDATA *msgHandle;

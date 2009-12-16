@@ -21,6 +21,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "pokeicon/pokeicon.h"
+#include "poke_tool/shinka_check.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/mail.h"
 #include "savedata/mail_util.h"
@@ -188,7 +189,6 @@ static void PLIST_YesNoWaitInit( PLIST_WORK *work , PLIST_CallbackFuncYesNo yesN
 
 //メッセージコールバック
 static void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
-static void PLIST_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work );
 static void PLIST_MSGCB_ForgetSkill_ForgetCheckCB( PLIST_WORK *work , const int retVal );
 static void PLIST_MSGCB_ForgetSkill_SkillCancel( PLIST_WORK *work );
 static void PLIST_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int retVal );
@@ -237,6 +237,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->btlMenuAnmCnt = 0;
   work->btlTermAnmCnt = 0;
   work->hpAnimeCallBack = NULL;
+  work->paramWin = NULL;
   work->clwkExitButton = NULL;
   work->btlMenuWin[0] = NULL;
   work->btlMenuWin[1] = NULL; 
@@ -332,6 +333,11 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   
   PLIST_MENU_DeleteSystem( work , work->menuWork );
   PLIST_MSG_DeleteSystem( work , work->msgWork );
+  
+  if( work->paramWin != NULL )
+  {
+    GFL_BMPWIN_Delete( work->paramWin );
+  }
 
   for( i=0;i<PLIST_LIST_MAX;i++ )
   {
@@ -429,6 +435,10 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
         work->mainSeq = PSMS_FADEOUT;
       }
     }
+    break;
+    
+  case PSMS_DISP_PARAM:
+    PLIST_UpdateDispParam( work );
     break;
 
   case PSMS_FADEOUT_FORCE:
@@ -1073,6 +1083,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
     break;
 
   case PL_MODE_WAZASET_RET:
+  case PL_MODE_LVUPWAZASET_RET:
     work->pokeCursor = work->plData->ret_sel;
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
     if( work->plData->waza_pos < 4 )
@@ -1266,13 +1277,21 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , 0 , work->heapId );
         if( canUse == TRUE )
         {
-          PLIST_ITEM_MSG_UseItemFunc( work );
+          const PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_MSG_UseItemFunc( work );
           
           //実際に適用
           STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
-          PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
-          
-          PMSND_PlaySystemSE( PLIST_SND_RECOVER );
+          if( useType == ITEM_TYPE_LV_UP )
+          {
+            //レベルだけ表示HP変わるのでResetParamを使う
+            PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
+            PMSND_PlaySystemSE( PLIST_SND_LVUP );
+          }
+          else
+          {
+            PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+            PMSND_PlaySystemSE( PLIST_SND_RECOVER );
+          }
         }
         else
         {
@@ -1284,12 +1303,18 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     
   case PL_MODE_SHINKA:
     {
-      work->plData->ret_mode = PL_RET_BAG;
-      
-      PLIST_MSG_CreateWordSet( work , work->msgWork );
-      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
-      PLIST_MessageWaitInit( work , mes_pokelist_deb_01 , TRUE , PLIST_MSGCB_ExitCommon );
-      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      const u16 newMonsNo = PLIST_UTIL_CheckItemEvolution( work , work->selectPokePara , work->plData->item );
+      if( newMonsNo != 0 )
+      {
+        PLIST_SubBagItem( work , work->plData->item );
+        work->mainSeq = PSMS_FADEOUT;
+        work->plData->ret_sel = work->pokeCursor;
+        work->plData->ret_mode = PL_RET_ITEMSHINKA;
+      }
+      else
+      {
+        PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ExitCommon );
+      }
     }
     break;
 
@@ -1324,7 +1349,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       {
         //メールをはずさないと道具がもてない
         work->plData->ret_mode = PL_RET_BAG;
-        PLIST_MessageWaitInit( work , mes_pokelist_04_27 , FALSE , PLIST_MSGCB_ExitCommon );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_27 , TRUE , PLIST_MSGCB_ExitCommon );
       }
       else
       {
@@ -1359,12 +1384,12 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         //メール削除処理
         MAIL_DelMailData( work->plData->mailblock , MAILBLOCK_PASOCOM , work->plData->ret_sel );
         
-        PLIST_MessageWaitInit( work , mes_pokelist_04_64 , FALSE , PLIST_MSGCB_ExitCommon );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_64 , TRUE , PLIST_MSGCB_ExitCommon );
       }
       else
       {
         //道具を持ってるのでメールをもてない！
-        PLIST_MessageWaitInit( work , mes_pokelist_04_65 , FALSE , PLIST_MSGCB_ExitCommon );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_65 , TRUE , PLIST_MSGCB_ExitCommon );
       }
     }
     break;
@@ -2965,6 +2990,14 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
 }
 
 //--------------------------------------------------------------
+//	指定アイテムで進化できるか(モンスターナンバー返し
+//--------------------------------------------------------------
+const u16 PLIST_UTIL_CheckItemEvolution( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo )
+{
+  return SHINKA_Check( work->plData->pp , pp , SHINKA_TYPE_ITEM_CHECK , itemNo , NULL , work->heapId );
+}
+
+//--------------------------------------------------------------
 //	文字の描画
 //--------------------------------------------------------------
 void PLIST_UTIL_DrawStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
@@ -3032,7 +3065,7 @@ void PLIST_MSGCB_ExitCommon( PLIST_WORK *work )
 }
 
 //技がいっぱいで、忘れるかどうか？の選択肢
-static void PLIST_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work )
+void PLIST_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work )
 {
   PLIST_YesNoWaitInit( work , PLIST_MSGCB_ForgetSkill_ForgetCheckCB );
 }
@@ -3044,7 +3077,17 @@ static void PLIST_MSGCB_ForgetSkill_ForgetCheckCB( PLIST_WORK *work , const int 
   if( retVal == PMIT_YES )
   {
     //はい→どのわざをわすれますか？
-    work->plData->ret_mode = PL_RET_WAZASET;
+    if( work->plData->mode == PL_MODE_ITEMUSE ||
+        work->plData->mode == PL_MODE_LVUPWAZASET_RET )
+    {
+      //不思議なアメだった
+      work->plData->ret_mode = PL_RET_LVUP_WAZASET;
+    }
+    else
+    {
+      //技マシン
+      work->plData->ret_mode = PL_RET_WAZASET;
+    }
     PLIST_MessageWaitInit( work , mes_pokelist_04_09 , TRUE , PLIST_MSGCB_ExitCommon );
   }
   else
@@ -3074,7 +3117,17 @@ static void PLIST_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int 
     PLIST_MSG_CreateWordSet( work , work->msgWork );
     PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
     PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
-    PLIST_MessageWaitInit( work , mes_pokelist_04_08 , TRUE , PLIST_MSGCB_ExitCommon );
+    if( work->plData->mode == PL_MODE_ITEMUSE ||
+        work->plData->mode == PL_MODE_LVUPWAZASET_RET )
+    {
+      //不思議なアメだった
+      PLIST_MessageWaitInit( work , mes_pokelist_04_08 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
+    }
+    else
+    {
+      //技マシン
+      PLIST_MessageWaitInit( work , mes_pokelist_04_08 , TRUE , PLIST_MSGCB_ExitCommon );
+    }
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
   }
   else
@@ -3093,18 +3146,30 @@ static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
 {
   PLIST_MSG_CloseWindow( work , work->msgWork );
 
-  work->plData->ret_mode = PL_RET_BAG;
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
   PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
-  PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_ExitCommon );
-  PLIST_MSG_DeleteWordSet( work , work->msgWork );
-  
-  PLIST_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
-  if( work->plData->item != 0 )
+
+  if( work->plData->mode == PL_MODE_ITEMUSE ||
+      work->plData->mode == PL_MODE_LVUPWAZASET_RET )
   {
-    PLIST_SubBagItem( work , work->plData->item );
+    //不思議なアメだった
+    PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
   }
+  else
+  {
+    //技マシン
+    PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_ExitCommon );
+    work->plData->ret_mode = PL_RET_BAG;
+    if( work->plData->item != 0 )
+    {
+      PLIST_SubBagItem( work , work->plData->item );
+    }
+  }
+  
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+  PLIST_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
 }
 
 //アイテムセット すでに持ってる
@@ -3252,7 +3317,7 @@ static void PLIST_MSGCB_TakeMailCB( PLIST_WORK *work , const int retVal )
   else
   {
     //いいえ→消えるけどOK？
-    PLIST_MessageWaitInit( work , mes_pokelist_04_03 , TRUE , PLIST_MSGCB_TakeMail_Confirm );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_03 , FALSE , PLIST_MSGCB_TakeMail_Confirm );
   }
 }
 
@@ -3281,6 +3346,7 @@ static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal 
     PLIST_InitMode_Select( work );
   }
 }
+
 
 #pragma mark [>force exit
 void PLIST_ForceExit_Timeup( PLIST_WORK *work )

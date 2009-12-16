@@ -558,6 +558,28 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   else
+  if( work->plData->mode == PL_MODE_SHINKA )
+  {
+    const u16 evoMonsNo = PLIST_UTIL_CheckItemEvolution( work , plateWork->pp , work->plData->item );
+    u32 strId;
+    
+    if( evoMonsNo == 0 )
+    {
+      //進化不可
+      strId = mes_pokelist_06_11;
+    }
+    else
+    {
+      strId = mes_pokelist_06_10;
+      //進化可
+    }
+    
+    PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
+                    PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
+    //HPバー非表示
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
+  }
+  else
   {
     //HP描画
     {

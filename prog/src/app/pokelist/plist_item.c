@@ -14,6 +14,10 @@
 
 #include "item/item.h"
 #include "msg/msg_pokelist.h"
+#include "print/wordset.h"
+#include "print/str_tool.h"
+#include "system/bmp_winframe.h"
+#include "poke_tool/shinka_check.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
@@ -39,45 +43,6 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-//GSから定義移植
-typedef enum
-{
-  ITEM_TYPE_BTL_ST_UP = 0,  // 戦闘用ステータスアップ系
-  ITEM_TYPE_ALLDETH_RCV,    // 全員瀕死回復
-  ITEM_TYPE_LV_UP,      // LvUp系
-  ITEM_TYPE_NEMURI_RCV,   // 眠り回復
-  ITEM_TYPE_DOKU_RCV,     // 毒回復
-  ITEM_TYPE_YAKEDO_RCV,   // 火傷回復
-  ITEM_TYPE_KOORI_RCV,    // 氷回復
-  ITEM_TYPE_MAHI_RCV,     // 麻痺回復
-  ITEM_TYPE_KONRAN_RCV,   // 混乱回復
-  ITEM_TYPE_ALL_ST_RCV,   // 全快
-  ITEM_TYPE_MEROMERO_RCV,   // メロメロ回復
-  ITEM_TYPE_HP_RCV,     // HP回復
-  ITEM_TYPE_DEATH_RCV,  // 瀕死回復 (WB追加
-  
-  //メッセージのステータスと順番依存！！
-  ITEM_TYPE_HP_UP,      // HP努力値UP
-  ITEM_TYPE_ATC_UP,     // 攻撃努力値UP
-  ITEM_TYPE_DEF_UP,     // 防御努力値UP
-  ITEM_TYPE_AGL_UP,     // 素早さ努力値UP
-  ITEM_TYPE_SPA_UP,     // 特攻努力値UP
-  ITEM_TYPE_SPD_UP,     // 特防努力値UP
-
-  //メッセージのステータスと順番依存！！
-  ITEM_TYPE_HP_DOWN,      // HP努力値DOWN
-  ITEM_TYPE_ATC_DOWN,     // 攻撃努力値DOWN
-  ITEM_TYPE_DEF_DOWN,     // 防御努力値DOWN
-  ITEM_TYPE_AGL_DOWN,     // 素早さ努力値DOWN
-  ITEM_TYPE_SPA_DOWN,     // 特攻努力値DOWN
-  ITEM_TYPE_SPD_DOWN,     // 特防努力値DOWN
-
-  ITEM_TYPE_EVO,        // 進化系
-  ITEM_TYPE_PP_UP,      // ppUp系
-  ITEM_TYPE_PP_3UP,     // pp3Up系
-  ITEM_TYPE_PP_RCV,     // pp回復系
-  ITEM_TYPE_ETC,        // その他
-}PLIST_ITEM_USE_TYPE;
 
 
 //======================================================================
@@ -96,6 +61,8 @@ static const BOOL PLIST_ITEM_UTIL_CanSubParamExp( POKEMON_PARAM *pp , const int 
 static const s32 PLIST_ITEM_UTIL_GetFriendValue( POKEMON_PARAM *pp , u16 itemNo , HEAPID heapId );
 static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId );
 static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId , u16 statusID );
+static void PLIST_ITEM_UTIL_ItemUseMessageLvUp( PLIST_WORK *work );
+static void PLIST_MSGCB_LvUp( PLIST_WORK *work );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -416,7 +383,7 @@ void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 //  アイテム使った時の処理
 //--------------------------------------------------------------------------
-void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
+const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
 {
   PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( work->plData->item );
   
@@ -434,6 +401,22 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
     break;
 
   case ITEM_TYPE_LV_UP:      // LvUp系
+    {
+      u8 i;
+      const u32 lv = PP_CalcLevel( work->selectPokePara ); 
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+      PLIST_MSG_AddWordSet_Value( work , work->msgWork , 1 , lv+1 , 3 );
+      PLIST_MessageWaitInit( work , mes_pokelist_08_09 , TRUE , PLIST_MSGCB_LvUp );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      
+      //表示用にレベルアップ前ののパラメータを保存
+      for( i=0;i<6;i++ )
+      {
+        work->befParam[i] = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+      }
+      
+    }
     break;
 
   case ITEM_TYPE_NEMURI_RCV:   // 眠り回復
@@ -528,7 +511,7 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_ETC:        // その他
     break;
   }
-  
+  return useType;
 }
 
 #pragma mark [> HPAnime CallBack
@@ -574,7 +557,7 @@ void PLIST_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work )
 void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
 {
   const int target = PLIST_ITEM_CanUseDeathRecoverAllItem( work );
-
+  
   PLIST_MSG_CloseWindow( work , work->msgWork );
   PLIST_PLATE_ChangeColor( work , work->plateWork[work->pokeCursor] , PPC_NORMAL );
 
@@ -584,6 +567,233 @@ void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
   PLIST_ITEM_MSG_UseItemFunc( work );
   STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
   PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+}
+
+
+#pragma mark [> lv up Func
+
+#define PLIST_ITEM_PARAMWIN_LEFT (1)
+#define PLIST_ITEM_PARAMWIN_TOP  (1)
+#define PLIST_ITEM_PARAMWIN_WIDTH (14)
+#define PLIST_ITEM_PARAMWIN_HEIGHT (12)
+typedef enum
+{
+  PIPS_CREATE_WIN_1 = 0,
+  PIPS_DISP_WIN_1,
+  PIPS_WAIT_KEY_1,
+  PIPS_CREATE_WIN_2,
+  PIPS_DISP_WIN_2,
+  PIPS_WAIT_KEY_2,
+
+  PIPS_CHECK_SHINKA,
+
+}PLIST_ITEM_PARAM_SEQ;
+
+//ふしぎなアメレベルアップ用
+static void PLIST_MSGCB_LvUp( PLIST_WORK *work )
+{
+  work->mainSeq = PSMS_DISP_PARAM;
+  work->subSeq = 0;
+  //ウィンドウ閉じない！
+  //PLIST_MSG_CloseWindow( work , work->msgWork );
+
+}
+void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work )
+{
+  work->mainSeq = PSMS_DISP_PARAM;
+  work->subSeq = PIPS_CHECK_SHINKA;
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+
+}
+
+void PLIST_UpdateDispParam( PLIST_WORK *work )
+{
+  switch( work->subSeq )
+  {
+  //WinOpen + 上昇量の表示
+  case PIPS_CREATE_WIN_1:
+    {
+      u8 i;
+      BOOL isDouble = FALSE;  //2桁があったか？
+      work->paramWin = GFL_BMPWIN_Create( PLIST_BG_MENU , 
+                PLIST_ITEM_PARAMWIN_LEFT , PLIST_ITEM_PARAMWIN_TOP , 
+                PLIST_ITEM_PARAMWIN_WIDTH , PLIST_ITEM_PARAMWIN_HEIGHT ,
+                PLIST_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+      TalkWinFrame_Write( work->paramWin , WINDOW_TRANS_ON_V , 
+                          PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->paramWin ) , 0xf );
+      for( i=0;i<6;i++ )
+      {
+        const u32 param = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+        const u32 sub = param - work->befParam[i];
+        if( sub >= 10 )
+        {
+          isDouble = TRUE;
+        }
+        
+        //パラメータ書く
+        {
+          STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_08_01+i ); 
+          PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin ) , 
+                  0 , i*16 , str , work->fontHandle , PLIST_FONT_COLOR_BLACK );
+          GFL_STR_DeleteBuffer( str );
+        }
+        //数値書く
+        {
+          STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_08_08 ); 
+          STRBUF *workStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+          WORDSET *wordSet = WORDSET_Create( work->heapId );
+          u16 len;
+          
+          WORDSET_RegisterNumber( wordSet , 0 , sub , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( wordSet , workStr , str );
+          
+          len = PRINTSYS_GetStrWidth( workStr , work->fontHandle , 0 );
+          OS_TPrintf("[%d]\n",len);
+          PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin ) , 
+                  (PLIST_ITEM_PARAMWIN_WIDTH-1)*8-len , i*16 , workStr , work->fontHandle , PLIST_FONT_COLOR_BLACK );
+
+          GFL_STR_DeleteBuffer( str );
+          GFL_STR_DeleteBuffer( workStr );
+          WORDSET_Delete( wordSet );
+        }
+      }
+      for( i=0;i<6;i++ )
+      {
+        //+書く
+        const u8 posX = (isDouble==TRUE ? (PLIST_ITEM_PARAMWIN_WIDTH-5)*8 : (PLIST_ITEM_PARAMWIN_WIDTH-4)*8 );
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_08_07 ); 
+        PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin ) , 
+                posX , i*16 , str , work->fontHandle , PLIST_FONT_COLOR_BLACK );
+        GFL_STR_DeleteBuffer( str );
+      }
+      
+      work->subSeq = PIPS_DISP_WIN_1;
+    }
+    break;
+    
+  case PIPS_DISP_WIN_1:
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin )) == FALSE )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->paramWin );
+      work->subSeq = PIPS_WAIT_KEY_1;
+    }
+    break;
+
+  case PIPS_WAIT_KEY_1:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+        GFL_UI_TP_GetTrg() == TRUE )
+    {
+      work->subSeq = PIPS_CREATE_WIN_2;
+    }
+    break;
+    
+  case PIPS_CREATE_WIN_2:
+    {
+      u8 i;
+      //実数値書く
+      GFL_BMP_Fill( GFL_BMPWIN_GetBmp( work->paramWin ) ,
+                    (PLIST_ITEM_PARAMWIN_WIDTH-4)*8 , 0 ,
+                    4*8 , PLIST_ITEM_PARAMWIN_HEIGHT*8 , 0xf );
+      for( i=0;i<6;i++ )
+      {
+        const u32 param = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+        //数値書く
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_08_08 ); 
+        STRBUF *workStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+        WORDSET *wordSet = WORDSET_Create( work->heapId );
+        u16 len;
+        
+        WORDSET_RegisterNumber( wordSet , 0 , param , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( wordSet , workStr , str );
+        
+        len = PRINTSYS_GetStrWidth( workStr , work->fontHandle , 0 );
+        
+        PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin ) , 
+                (PLIST_ITEM_PARAMWIN_WIDTH-1)*8-len , i*16 , workStr , work->fontHandle , PLIST_FONT_COLOR_BLACK );
+
+        GFL_STR_DeleteBuffer( str );
+        GFL_STR_DeleteBuffer( workStr );
+        WORDSET_Delete( wordSet );
+        
+      }
+    }
+    work->subSeq = PIPS_DISP_WIN_2;
+    break;
+  case PIPS_DISP_WIN_2:
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin )) == FALSE )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->paramWin );
+      work->subSeq = PIPS_WAIT_KEY_2;
+    }
+    break;
+
+  case PIPS_WAIT_KEY_2:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+        GFL_UI_TP_GetTrg() == TRUE )
+    {
+      int idx = 0;
+      //技覚えチェック
+      WazaID wazaNo = PP_CheckWazaOboe( work->selectPokePara , &idx, work->heapId );
+      PLIST_MSG_CloseWindow( work , work->msgWork );
+      if( wazaNo == PTL_WAZAOBOE_NONE )
+      {
+        //無し
+        work->subSeq = PIPS_CHECK_SHINKA;
+      }
+      else if( wazaNo == PTL_WAZASET_SAME )
+      { 
+        //すでに覚えている
+        work->subSeq = PIPS_CHECK_SHINKA;
+      }
+      else if( wazaNo & PTL_WAZAOBOE_FULL )
+      {
+        work->plData->waza = wazaNo - PTL_WAZAOBOE_FULL;
+        //技がいっぱい
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_06 , FALSE , PLIST_MSGCB_ForgetSkill_ForgetCheck );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      }
+      else
+      {
+        //技を覚えた
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , wazaNo );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      }
+      
+    	GFL_BMPWIN_ClearScreen( work->paramWin );
+      TalkWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );
+      GFL_BMPWIN_Delete( work->paramWin );
+      work->paramWin = NULL;
+      
+    }
+    break;
+
+  case PIPS_CHECK_SHINKA:
+    {
+      const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
+      const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , 0 , NULL , work->heapId );
+      if( monsNo != evoMonsNo )
+      {
+        work->mainSeq = PSMS_FADEOUT;
+        work->plData->ret_sel = work->pokeCursor;
+        work->plData->ret_mode = PL_RET_LVUPSHINKA;
+      }
+      else
+      {
+        work->mainSeq = PSMS_FADEOUT;
+        work->plData->ret_sel = work->pokeCursor;
+        work->plData->ret_mode = PL_RET_BAG;
+      }
+      
+    }
+    break;
+  }
 }
 
 #pragma mark [> util
