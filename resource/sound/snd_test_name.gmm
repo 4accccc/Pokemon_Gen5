@@ -7449,6 +7449,10 @@
 		<language name="JPN" width="256">FLD-94</language>
 		<language name="JPN_KANJI" width="256">FLD-94</language>
 	</row>
+	<row id="msg_seq_se_fld_95">
+		<language name="JPN" width="256">FLD-95</language>
+		<language name="JPN_KANJI" width="256">FLD-95</language>
+	</row>
 	<row id="msg_seq_se_w213_01">
 		<language name="JPN" width="256">W213-01</language>
 		<language name="JPN_KANJI" width="256">W213-01</language>
@@ -7456,10 +7460,6 @@
 	<row id="msg_seq_se_w227_03">
 		<language name="JPN" width="256">W227-03</language>
 		<language name="JPN_KANJI" width="256">W227-03</language>
-	</row>
-	<row id="msg_seq_se_dmy_112">
-		<language name="JPN" width="256">DMY-112</language>
-		<language name="JPN_KANJI" width="256">DMY-112</language>
 	</row>
 	<row id="msg_seq_se_dmy_113">
 		<language name="JPN" width="256">DMY-113</language>
