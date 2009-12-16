@@ -561,9 +561,20 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
+    //3D面をオフ(キャプチャ面が見えている)
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+    G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
     (*seq)++;
     break;
   case 7:
+    //バックカラー設定
+    {
+      FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
+      FIELD_LIGHT_Reflect( light, TRUE );
+    }
+    //3D面をオン
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       NOZOMU_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
