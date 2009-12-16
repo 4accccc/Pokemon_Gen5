@@ -19,7 +19,6 @@
 #include "gamesystem/game_init.h"
 #include "field/fieldmap.h"
 #include "field/eventdata_sxy.h"
-
 //======================================================================
 //======================================================================
 //------------------------------------------------------------------
@@ -55,6 +54,20 @@ extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    u16 zone_id, const VecFx32 * pos, u16 dir );
+
+//------------------------------------------------------------------
+/**
+ * @brief 空を飛ぶマップ遷移イベント生成（座標指定）
+ * @param gsys    ゲームシステムへのポインタ
+ * @param fieldmap  フィールドシステムへのポインタ
+ * @param zone_id   遷移するマップのZONE指定
+ * @param pos     遷移するマップでの座標指定
+ * @param dir     遷移するマップでの方向指定
+ * @return  GMEVENT   生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_ChangeMapSorawotobu(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
     u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------

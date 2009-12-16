@@ -160,7 +160,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     //ノーフェードマップチェンジ
     {
       GMEVENT *child; 
-      child = EVENT_ChangeMapPosNoFade(wk->gsys, fieldWork,
+      child = EVENT_ChangeMapSorawotobu(wk->gsys, fieldWork,
           wk->ZoneID, &wk->Pos, DIR_DOWN );
       GMEVENT_CallEvent(event, child);
       (*seq)++;

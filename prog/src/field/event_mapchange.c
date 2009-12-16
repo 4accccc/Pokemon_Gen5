@@ -349,10 +349,11 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gamedata;
   FIELDMAP_WORK * fieldmap;
-  u16 before_zone_id;         ///<遷移前マップID
   LOCATION loc_req;           ///<遷移先指定
   EXIT_TYPE exit_type;
-  u8 next_season;  ///<遷移後の季節
+  u16 before_zone_id;         ///<遷移前マップID
+  u8  next_season;  ///<遷移後の季節
+  u8  mapchange_type; ///<チェンジタイプ EV_MAPCHG_TYPE
   VecFx32 stream_pos;  ///<流砂遷移時にのみ使用
 }MAPCHANGE_WORK;
 
@@ -360,6 +361,12 @@ typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
 
 #define INVALID_SEASON_ID (0xff)  ///<季節ID無効値
 
+typedef enum{
+  EV_MAPCHG_NORMAL,
+  EV_MAPCHG_FLYSKY,
+  EV_MAPCHG_ESCAPE,
+  EV_MAPCHG_TELEPORT,
+}EV_MAPCHG_TYPE;
 
 //------------------------------------------------------------------
 /**
@@ -461,6 +468,18 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     //新しいマップID、初期位置をセット
     MAPCHG_updateGameData( gsys, &mcw->loc_req );
 
+    //タイプに応じたフラグ初期化
+    switch(mcw->mapchange_type){
+    case EV_MAPCHG_FLYSKY:
+      FIELD_FLAGCONT_INIT_FlySky( gamedata, mcw->loc_req.zone_id );
+      break;
+    case EV_MAPCHG_ESCAPE:
+      FIELD_FLAGCONT_INIT_Escape( gamedata, mcw->loc_req.zone_id );
+      break;
+    case EV_MAPCHG_TELEPORT:
+      FIELD_FLAGCONT_INIT_Teleport( gamedata, mcw->loc_req.zone_id );
+      break;
+    }
     (*seq)++;
     break;
   case 2:
@@ -494,7 +513,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw )
+static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw, EV_MAPCHG_TYPE type )
 {
   GMEVENT* event;
   MAPCHANGE_WORK_PTR* work;
@@ -502,7 +521,7 @@ static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw )
   event = GMEVENT_Create( mcw->gsys, NULL, EVENT_FUNC_MapChangeCore, sizeof( MAPCHANGE_WORK_PTR ) );
   work  = GMEVENT_GetEventWork( event );
   *work = mcw;
-
+  work->mapchange_type = type;
   return event;
 }
 
@@ -530,7 +549,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     break;
   case 1:
     // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 2:
@@ -559,7 +578,7 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void
     break;
   case 1:
     // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 2:
@@ -598,7 +617,7 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
     break;
   case 2:
     // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, mcw->mapchange_type ) );
     (*seq)++;
     break;
   case 3:
@@ -638,7 +657,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 3: // 流砂登場イベント
@@ -674,7 +693,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo(GMEVENT * event, int *seq, 
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
   case 3: // 登場イベント
@@ -710,7 +729,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru(GMEVENT * event, int *seq, void
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
   case 3: // 登場イベント
@@ -746,7 +765,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_TELEPORT ) );
     (*seq)++;
     break;
   case 3: // 登場イベント
@@ -783,7 +802,7 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 3: // ユニオン通信起動
@@ -1040,10 +1059,8 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   return event;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir )
+static GMEVENT * EVENT_ChangeMapPosNoFadeCore(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    EV_MAPCHG_TYPE type, u16 zone_id, const VecFx32 * pos, u16 dir )
 {
   MAPCHANGE_WORK * mcw;
   GMEVENT * event;
@@ -1054,8 +1071,23 @@ GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   
   LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
   mcw->exit_type = EXIT_TYPE_NONE;
-  
+  mcw->mapchange_type = type; 
   return event;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    u16 zone_id, const VecFx32 * pos, u16 dir )
+{
+  return EVENT_ChangeMapPosNoFadeCore( gsys, fieldmap,
+            EV_MAPCHG_NORMAL, zone_id, pos, dir );
+}
+
+GMEVENT * EVENT_ChangeMapSorawotobu(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    u16 zone_id, const VecFx32 * pos, u16 dir )
+{
+  return EVENT_ChangeMapPosNoFadeCore( gsys, fieldmap,
+            EV_MAPCHG_FLYSKY, zone_id, pos, dir );
 }
 
 
