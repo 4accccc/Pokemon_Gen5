@@ -14,6 +14,8 @@
 
   .include  "pokecen_scr_def.h"
 
+  .include  "debug_scr_local_iwasawa.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -196,8 +198,84 @@ EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
+
+{ //DEBUG_IWASAWA_START
+DEFINE_LOCAL  reg_iwasawa_return
+
 EVENT_START   ev_debug_iwasawa
+  _CALL sub_iwasawa_main
 EVENT_END
+
+sub_iwasawa_main:
+{
+
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+    SWITCH $i_seq
+    CASE SEQ_IWASAWA_MAIN_MENU THEN
+      _CALL siwasawa_main_menu
+      $i_seq = $reg_iwasawa_return
+
+    CASE SEQ_IWASAWA_MV_POKE THEN
+      _CALL siwasawa_mv_poke_menu
+      $i_seq = $reg_iwasawa_return
+
+    CASE SEQ_IWASAWA_EXIT THEN
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+
+}
+_RET
+
+//メインメニュー
+siwasawa_main_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main01, SEQ_IWASAWA_MV_POKE )	//いどうポケモン
+	_BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+
+  $reg_iwasawa_return = $i_ret
+}
+_RET
+
+//移動ポケモン追加メニュー
+siwasawa_mv_poke_menu:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+	  //メニュー作成
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  //リスト追加
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp01, MOVE_POKE_RAIKAMI )	//ライカミ
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp02, MOVE_POKE_KAZAKAMI )	//カザカミ
+	  _BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	  //メニュー表示
+	  _BMPMENU_START()
+
+    IF $i_ret == SEQ_IWASAWA_EXIT THEN
+      $i_loop = FALSE
+    ELSE
+      _ADD_MOVE_POKEMON( i_ret )
+    ENDIF
+  ENDWHILE
+  $reg_iwasawa_return = SEQ_IWASAWA_MAIN_MENU
+}
+_RET
+
+} //DEBUG_IWASAWA_END
 
 /**************************************************************/
 /*                                                            */

@@ -468,9 +468,9 @@ static inline u16 GetZoneID( u8 zone_idx )
 static u8 MonsNoToMovePokeID(u16 monsno)
 {
 	switch (monsno) {
-	case MONSNO_RAIKOU:
+	case MONSNO_RAIKAMI:
 		return MOVE_POKE_RAIKAMI;
-	case MONSNO_ENTEI:
+	case MONSNO_KAZAKAMI:
 		return MOVE_POKE_KAZAKAMI;
 	}
 	GF_ASSERT(0);

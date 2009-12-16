@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-12-15T12:16:21"/>
+	<create user="iwasawa" host="W00157" date="2009-12-16T12:46:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,39 +314,54 @@
 		<language name="JPN_KANJI" width="256">テスト03</language>
 	</row>
 
-	<row id="msg_debug_masafumi_01">
+	<row id="msg_debug_masafumi_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">ゴースト</language>
 		<language name="JPN_KANJI" width="256">ゴースト</language>
 	</row>
 
-	<row id="msg_debug_masafumi_02">
+	<row id="msg_debug_masafumi_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">あく</language>
 		<language name="JPN_KANJI" width="256">あく</language>
 	</row>
 
-	<row id="msg_debug_masafumi_03">
+	<row id="msg_debug_masafumi_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">かくとう</language>
 		<language name="JPN_KANJI" width="256">かくとう</language>
 	</row>
 
-	<row id="msg_debug_masafumi_04">
+	<row id="msg_debug_masafumi_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">エスパー</language>
 		<language name="JPN_KANJI" width="256">エスパー</language>
 	</row>
 
-	<row id="msg_debug_suginaka_01">
+	<row id="msg_debug_suginaka_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">くさタイプ</language>
 		<language name="JPN_KANJI" width="256">くさタイプ</language>
 	</row>
 
-	<row id="msg_debug_suginaka_02">
+	<row id="msg_debug_suginaka_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">みずタイプ</language>
 		<language name="JPN_KANJI" width="256">みずタイプ</language>
 	</row>
 
-	<row id="msg_debug_suginaka_03">
+	<row id="msg_debug_suginaka_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">ほのおタイプ</language>
 		<language name="JPN_KANJI" width="256">ほのおタイプ</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_main01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">いどうポケモンついか</language>
+		<language name="JPN_KANJI" width="256">いどうポケモンついか</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_mvp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">ライカミ</language>
+		<language name="JPN_KANJI" width="256">ライカミ</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_mvp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">カザカミ</language>
+		<language name="JPN_KANJI" width="256">カザカミ</language>
 	</row>
 
 	<flowchart-group-list>
