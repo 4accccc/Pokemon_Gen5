@@ -52,6 +52,9 @@ VMCMD_RESULT EvCmdWifiGeoNetCall( VMHANDLE* core, void* wk )
  * @param wk   SCRCMD_WORK‚Ö‚Ìƒ|ƒCƒ“ƒ^
  *
  * @retval VMCMD_RESULT
+ *
+ * @regulation  poke_tool/regulation_def.h
+ * @party field/script_def.h SCRCMD_BTL_PARTY_TEMOTI,SCRCMD_BTL_PARTY_BTLBOX
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
@@ -59,6 +62,9 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  
+  u16 regulation = SCRCMD_GetVMWorkValue( core, work );
+  u16 party = SCRCMD_GetVMWorkValue( core, work );
 
   /*
   SCRIPT_CallEvent( sc, EVENT_WiFiClub( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));

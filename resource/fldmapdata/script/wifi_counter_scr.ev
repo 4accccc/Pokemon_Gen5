@@ -406,9 +406,7 @@ sub_rndmatch_try:
   //ì¸ÇËå˚à⁄ìÆÉAÉjÉÅ
   _CALL sub_anm_wifi_counter_in
 
-  _FIELD_CLOSE()
-  _WIFI_RANDOM_MATCH_EVENT_CALL()
-  _FIELD_OPEN()
+  _WIFI_RANDOM_MATCH_EVENT_CALL( lwk_rm_regulation, lwk_rm_party )
 
   _CALL sub_anm_wifi_counter_out
 
@@ -873,9 +871,7 @@ sub_gterminal_btl_recorder_call:
 
   _CALL sub_anm_wifi_counter_in
 
-  _FIELD_CLOSE()
-  _WIFI_BATTLE_RECORDER_EVENT_CALL( 0 )
-  _FIELD_OPEN()
+  _WIFI_BATTLE_RECORDER_EVENT_CALL( reg_param )
   
   _CALL sub_anm_wifi_counter_out
   $reg_return = SEQ_SUB_GTERMINAL_MENU

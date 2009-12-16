@@ -5432,10 +5432,13 @@
  * @brief   Wi-Fi ランダムマッチイベントを呼び出す
  */
 //--------------------------------------------------------------------
-#define _WIFI_RANDOM_MATCH_EVENT_CALL( ) _ASM_WIFI_RANDOM_MATCH_EVENT_CALL
+#define _WIFI_RANDOM_MATCH_EVENT_CALL( regulation, party ) \
+  _ASM_WIFI_RANDOM_MATCH_EVENT_CALL regulation, party
 
-  .macro  _ASM_WIFI_RANDOM_MATCH_EVENT_CALL
+  .macro  _ASM_WIFI_RANDOM_MATCH_EVENT_CALL regulation, party
   .short  EV_SEQ_WIFI_RANDOM_MATCH_EVENT_CALL
+  .short  \regulation
+  .short  \party
   .endm
 
 //--------------------------------------------------------------------
