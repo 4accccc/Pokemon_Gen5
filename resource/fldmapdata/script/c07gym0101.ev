@@ -96,7 +96,7 @@ EVENT_START		ev_c07gym0101_leader7_01
 		
 		//ハチクからアイシクルバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_ALLPUT_DOWN( msg_c07gym0101_leader_03 )
+		_SYSWIN_MSG_DOWN( msg_c07gym0101_leader_03 )
 		_SYSWIN_CLOSE()
 
 		//ハチクメッセージ

@@ -106,7 +106,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//シャガからレジェンドバッジをもらった
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG_ALLPUT_DOWN( msg_c08gym0101_leader_03b )
+			_SYSWIN_MSG_DOWN( msg_c08gym0101_leader_03b )
 			_SYSWIN_CLOSE()
 
 			//シャガメッセージ
@@ -178,7 +178,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//アイリスからレジェンドバッジをもらった
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG_ALLPUT_DOWN( msg_c08gym0101_leader_03w )
+			_SYSWIN_MSG_DOWN( msg_c08gym0101_leader_03w )
 			_SYSWIN_CLOSE()
 
 			//アイリスメッセージ

@@ -129,7 +129,7 @@ EVENT_START		ev_c05gym0101_leader
 		
 		//ヤーコンからクエイクバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_ALLPUT_DOWN( msg_c05gym0101_leader_03 )
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_leader_03 )
 		_SYSWIN_CLOSE()
 
 		//ヤーコンメッセージ
