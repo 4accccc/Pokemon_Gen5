@@ -8,6 +8,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
 SUBDIRS	=	wmi \
+			tokusei\
 			waza_tbl\
 			personal\
 			trdata \
