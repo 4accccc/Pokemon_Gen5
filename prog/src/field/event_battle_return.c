@@ -218,16 +218,16 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     break;
   case 4:
     //進化チェック
-    { 
+    {
       u16 after_mons_no = 0;
       int pos;
       SHINKA_COND cond;
       POKEPARTY* party  = GAMEDATA_GetMyPokemon( param->gameData );
       (*seq) = 6;
       while( wk->shinka_poke_bit )
-      { 
+      {
         if( wk->shinka_poke_bit & 1 )
-        { 
+        {
           POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, wk->shinka_poke_pos );
           after_mons_no = SHINKA_Check( party, pp, SHINKA_TYPE_LEVELUP, 0, &cond, wk->heapID );
           pos = wk->shinka_poke_pos;
@@ -235,7 +235,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         wk->shinka_poke_bit = wk->shinka_poke_bit >> 1;
         wk->shinka_poke_pos++;
         if( after_mons_no )
-        { 
+        {
           GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
           wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, party, after_mons_no, pos, cond );
           GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_param );
@@ -250,11 +250,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     wk->shinka_param = NULL;
     if( wk->shinka_poke_bit )
-    { 
+    {
       (*seq) = 4;
     }
     else
-    { 
+    {
       (*seq)++;
     }
     break;
@@ -272,19 +272,26 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
  */
 //--------------------------------------------------------------------------
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
-{ 
+{
   //勝利、逃げる、ゲット以外は進化チェックしない（逃げる、ゲットは2vs2野生でありうるので）
   if( ( param->btlResult->result != BTL_RESULT_WIN ) &&
       ( param->btlResult->result != BTL_RESULT_RUN ) &&
       ( param->btlResult->result != BTL_RESULT_CAPTURE ) )
-  { 
+  {
+    return;
+  }
+
+  // 野生＆ゲーム内トレーナー（サブウェイ除く）との対戦以外はチェックしない（レベルアップしないはず）
+  if( (param->btlResult->competitor != BTL_COMPETITOR_WILD)
+  &&  (param->btlResult->competitor != BTL_COMPETITOR_TRAINER)
+  ){
     return;
   }
 
   wk->shinka_poke_pos = 0;
   wk->shinka_poke_bit = 0;
 
-  { 
+  {
     POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
     POKEMON_PARAM*  old_pp;
     POKEMON_PARAM*  new_pp;
@@ -292,11 +299,11 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
     int max = PokeParty_GetPokeCount( party );
 
     for( i = 0 ; i < max ; i++ )
-    { 
+    {
       old_pp = PokeParty_GetMemberPointer( party, i );
       new_pp = PokeParty_GetMemberPointer( param->btlResult->party[ BTL_CLIENT_PLAYER ], i );
       if( PP_Get( old_pp, ID_PARA_level, NULL ) < PP_Get( new_pp, ID_PARA_level, NULL ) )
-      { 
+      {
         wk->shinka_poke_bit |= ( 1 << i );
       }
     }
