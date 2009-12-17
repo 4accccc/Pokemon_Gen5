@@ -18,6 +18,16 @@ EFF_D06DENKI = eff_denkidoukutu/
 #---------------------------------------------------------------
 G3D_FE_ANMITP = hero_kemu.itp \
   kusaeff.itp \
+  kusaeff_sp.itp \
+  kusaeff_sm.itp \
+  kusaeff_at.itp \
+  kusaeff_wt.itp \
+  kusaeff_sn.itp \
+  lgrass_sp.itp \
+  lgrass_sm.itp \
+  lgrass_at.itp \
+  lgrass_wt.itp \
+  lgrass_sn.itp \
   ripple.itp \
   shibuki.itp \
   taki_loop_s.itp \
@@ -88,6 +98,15 @@ G3D_FE_ANMIVA =
 G3D_FE_MDL = kage.imd \
   hero_kemu.imd \
   kusaeff.imd \
+  kusaeff_sp.imd \
+  kusaeff_sm.imd \
+  kusaeff_at.imd \
+  kusaeff_wt.imd \
+  kusaeff_sn.imd \
+  lgrass_sp.imd \
+  lgrass_sm.imd \
+  lgrass_at.imd \
+  lgrass_wt.imd \
   sea_ride.imd \
   sisen_ef.imd \
   f_mark_u.imd \
