@@ -342,7 +342,7 @@ BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp
     ret = FALSE;
     *FailedBit |= POKEFAILEDBIT_VETO_ITEM;
   }
-  return TRUE;
+  return ret;
 }
 
 
