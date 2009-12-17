@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-20T19:32:04"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T22:00:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -535,7 +535,7 @@
 	<row id="msg_d04r0601_champion_04">
 		<comment>♂
 ・メッセージ表示後、画面暗転
-・d03r0301に続く</comment>
+・d03r0101に続く</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">アデク『……ああ　そうだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アデク『……ああ　そうだな[BE:01:ページ切り替え（クリア）]</language>

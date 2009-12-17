@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T21:49:13"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T21:59:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,7 +313,7 @@
 		<language name="JPN" width="256">……じいさん　さきに　いったからさ
 いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……じいさん　先に行ったからさ
-いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
+急ぐぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_rival_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
