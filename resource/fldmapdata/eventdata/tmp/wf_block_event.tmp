@@ -1,5 +1,0 @@
-#../data/wf_block_event.mev
-../tmp/wf_block_event.bin:../data/wf_block_event.mev $(UNIQ_SCRIPTHEADER) ../tmp/wf_block_event.h 
-	@echo ../data/wf_block_event.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wf_block_event.h 
-
