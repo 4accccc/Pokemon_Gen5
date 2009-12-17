@@ -10,11 +10,10 @@
 #ifndef ZONE_R07R0102_EVC_H
 #define ZONE_R07R0102_EVC_H
 
-#define TR_R07R0102_DUMMY_01               0
-#define TR_R07R0102_DUMMY_02               1
-#define TR_R07R0102_DUMMY_03               2
-#define TR_R07R0102_DUMMY_04               3
-#define TR_R07R0102_DUMMY_05               4
-#define TR_R07R0102_DUMMY_06               5
+#define TR_MIDLLEWOMAN_01                  0
+#define TR_MIDLLEMAN_01                    1
+#define TR_ESPW_02                         2
+#define TR_R07R0102_DUMMY_06               3
+#define TR_BADMAN_01                       4
 
 #endif //ZONE_R07R0102_EVC_H
