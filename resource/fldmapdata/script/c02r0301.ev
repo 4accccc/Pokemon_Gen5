@@ -35,27 +35,112 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c02r0301_woman2_01
 
+//---------------------ローカルワーク定義----------------------//	
 
-_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_01  )
-
-//【仮】アクセサリー入れ、入手場所、アクセサリーの仕様が分からない為、保留
-//アクセサリー入れを持っているかどうかで、分岐
-/*
-	_ITEM_CHK  ( ITEM_AKUSESARIIIRE,  1,  ret_wk    )  
+	DEFINE_LOCAL	LWK_POKE_NAME1
+	DEFINE_LOCAL	LWK_TEMOCHI_POS
+	DEFINE_LOCAL	LWK_TEMOCHI_RET
+	DEFINE_LOCAL	LWK_TRADE_CHK
 	
-	IF $ret_wk == 1 THEN     //アクセサリー入れがある＝1、ない＝0
-  	//「ある」場合の処理
-  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_02  ) 
-  	
-  
+	//バージョンを取得
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVER
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		//渡すポケモンをモンメン、貰うポケモンをチュリネに！
+		$LWK_POKE_NAME1 = FLD_TRADE_POKE_TYURINE
+		_MONS_NAME( 0, MONSNO_MONMEN  )
+		_MONS_NAME( 1, MONSNO_TYURINE )
+				
+	//White
 	ELSE
-  	//「ない」場合の処理
-  
-  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_01  ) 
-  	
+		//渡すポケモンをチュリネ、貰うポケモンをモンメンに！
+		$LWK_POKE_NAME1 = FLD_TRADE_POKE_MONMEN
+		_MONS_NAME( 0, MONSNO_TYURINE )
+		_MONS_NAME( 1, MONSNO_MONMEN )
+		
 	ENDIF
-*/
+	
+//----------------------交換処理---------------------------//
 
+	_TALK_OBJ_START()
+	
+	//ポケモンの交換をもうすでに、した？
+	//していない
+	IF FLAG_OFF( FE_C02R0301_POKETRADE) THEN	
+	
+		//ねえねえ　あなた　　って　ポケモン　もってる？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_01 )
+		_BALLOONWIN_CLOSE() 
+					
+		//はい/いいえの選択
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はいを選んだ！交換するぞ！
+		IF $SCWK_ANSWER ==  SCR_YES THEN
+			
+			//手持ちポケモンのチェック
+			_SELECT_TEMOTI_POKE( LWK_TEMOCHI_RET , LWK_TEMOCHI_POS , 0 )
+			
+			//選んだポケモンが交換出来るかチェック
+			_FIELD_POKE_TRADE_CHECK( LWK_TRADE_CHK, LWK_POKE_NAME1, LWK_TEMOCHI_POS )
+			
+			//交換するポケモンを選んだ！
+			IF	$LWK_TEMOCHI_RET == 1	THEN
+				//選んだポケモンは交換できるぞ！
+				IF	$LWK_TRADE_CHK == FLD_TRADE_ENABLE  THEN
+					
+					//ポケモンの交換開始！
+					_FIELD_POKE_TRADE( LWK_POKE_NAME1, LWK_TEMOCHI_POS )
+
+					//うふふ！　あたしの 1:01:ポケモン種族名:1]　だいじにしてね！▼
+					_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_02 )
+					_BALLOONWIN_CLOSE() 
+					
+					//==============フラグ操作==============//
+					
+					//交換したフラグをONに
+					_FLAG_SET(FE_C02R0301_POKETRADE)
+					
+					//======================================//
+					
+				//選んだポケモンは交換できないぞ！(違うポケモンや、タマゴなど)	
+				ELSE
+					
+					//あたしが　ほしいのは
+					_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_03 )
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE() 
+					
+				ENDIF
+				
+			//交換するポケモンを選ばなかった！	
+			ELSE
+				//だめなら　しかたないな……▼
+				_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_04 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE() 
+			
+			ENDIF
+			
+		//いいえを選んだ！交換しないもんね
+		ELSE
+			//だめなら　しかたないな……▼
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_04 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE() 
+	    	
+		ENDIF
+		
+	//すでにポケモンの交換をした	
+	ELSE
+		//ポケモンの　おかげで　あたしと　あなた▽
+		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_05 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE() 
+		
+	ENDIF
+	
 EVENT_END
 
 /**************************************************************/
