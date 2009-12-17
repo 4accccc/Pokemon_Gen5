@@ -273,4 +273,7 @@
 #define SPWIN_LETTER (SCRCMD_SPWIN_TYPE_LETTER)
 #define SPWIN_BOOK (SCRCMD_SPWIN_TYPE_BOOK)
 
+//いあいぎりエフェクト表示開始から, OBJを消すまでの待ち時間
+#define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
+
 #endif //__USESCRIPT_H__

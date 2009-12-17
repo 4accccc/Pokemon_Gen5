@@ -1403,6 +1403,50 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_OBJID
+ * @brief 指定した座標にあるオブジェIDを取得する
+ * @param ret_id    オブジェIDを受け取るワーク
+ * @param ret_valid オブジェが存在するかどうかを受け取るワーク
+ * @param gx        x座標[grid]
+ * @param gy        y座標[grid]
+ * @param gz        z座標[grid]
+ * @return オブジェが存在する場合,   ret_valid = TRUE, ret_id = オブジェID
+ *         オブジェが存在しない場合, ret_valid = FALSE
+ */
+//--------------------------------------------------------------
+#define _GET_OBJID( ret_id, ret_valid, gx, gy, gz ) \
+    _ASM_GET_OBJID ret_id, ret_valid, gx, gy, gz
+
+    .macro  _ASM_GET_OBJID ret_id, ret_valid, gx, gy, gz 
+    .short  EV_SEQ_GET_OBJID
+    .short  \ret_id
+    .short  \ret_valid
+    .short  \gx
+    .short  \gy
+    .short  \gz
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_FRONT_OBJID
+ * @brief プレイヤーの前方1グリッドにあるオブジェIDを取得する
+ * @param ret_id    オブジェIDを受け取るワーク
+ * @param ret_valid オブジェが存在するかどうかを受け取るワーク
+ * @return オブジェが存在する場合,   ret_valid = TRUE, ret_id = オブジェID
+ *         オブジェが存在しない場合, ret_valid = FALSE
+ */
+//--------------------------------------------------------------
+#define _GET_FRONT_OBJID( ret_id, ret_valid ) \
+    _ASM_GET_FRONT_OBJID ret_id, ret_valid
+
+    .macro  _ASM_GET_FRONT_OBJID ret_id, ret_valid
+    .short  EV_SEQ_GET_FRONT_OBJID
+    .short  \ret_id
+    .short  \ret_valid
+    .endm
+
+//--------------------------------------------------------------
+/**
  * _OBJ_ADD_EX OBJを追加
  * @param x 表示するグリッドX座標
  * @param z 表示するグリッドZ座標
@@ -5524,6 +5568,19 @@
   
   .macro _ASM_FLASH
   .short EV_SEQ_FLASH
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _IAIGIRI_EFFECT
+ * @brief 居合い切りエフェクト表示
+ */
+//--------------------------------------------------------------
+#define _IAIGIRI_EFFECT() \
+    _ASM_IAIGIRI_EFFECT
+  
+  .macro _ASM_IAIGIRI_EFFECT
+  .short EV_SEQ_IAIGIRI_EFFECT
   .endm
 
 //======================================================================

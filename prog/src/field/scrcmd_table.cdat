@@ -213,9 +213,9 @@
   DEF_CMD( EvCmdObjDelEvent, EV_SEQ_OBJ_DEL_EV )
 	DEF_CMD( EvCmdObjPosChange, EV_SEQ_OBJ_POS_CHANGE )
   DEF_CMD( EvCmdPlayerDirGet, EV_SEQ_PLAYER_DIR_GET )
-  NO_CMD()
+  DEF_CMD( EvCmdGetFrontObjID, EV_SEQ_GET_FRONT_OBJID )
   
-  NO_CMD()
+  DEF_CMD( EvCmdGetObjID, EV_SEQ_GET_OBJID )
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -367,7 +367,7 @@
   //ひでんわざ関連
   DEF_CMD( EvCmdNaminori, EV_SEQ_NAMINORI )
   DEF_CMD( EvCmdTakinobori, EV_SEQ_TAKINOBORI )
-  NO_CMD()
+  DEF_CMD( EvCmdIaigiriEffect, EV_SEQ_IAIGIRI_EFFECT )
   NO_CMD()
 
   //ジムギミック関連

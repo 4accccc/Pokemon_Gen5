@@ -245,6 +245,8 @@ ev_hiden_iaigiri_02:
   _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
   
   //居合い切りエフェクト
+  _IAIGIRI_EFFECT()
+  _TIME_WAIT( EV_HIDEN_IAIGIRI_OBJDEL_WAIT )
 //  _HIDENEFF_START 0,SCWK_TEMP1  // SCWK_TEMP1に1が入ったらエフェクト終了
 //  _TIME_WAIT    EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
   
@@ -274,10 +276,21 @@ EVENT_START ev_hiden_iaigiri_menu
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   
   //居合い切りエフェクト
+  _IAIGIRI_EFFECT()
+  _TIME_WAIT( EV_HIDEN_IAIGIRI_OBJDEL_WAIT )
 //	_HIDENEFF_START 0,SCWK_TEMP1	// SCWK_TEMP1に1が入ったらエフェクト終了
 //	_TIME_WAIT		EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
   
-	_OBJ_DEL_EX( SCWK_TARGET_OBJID )
+  // 目の前のオブジェを消去
+  {
+    DEFINE_LOCAL obj_id
+    DEFINE_LOCAL obj_valid
+    _GET_FRONT_OBJID( obj_id, obj_valid )
+    IF $obj_valid == TRUE THEN
+      _OBJ_DEL_EX( obj_id ) 
+    ENDIF
+  }
+  _SE_PLAY( SEQ_SE_FLD_02 )
   
   //冒険ノート
 //	_GET_NOW_ZONE_ID	SCWK_TEMP0

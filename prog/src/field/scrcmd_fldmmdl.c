@@ -696,7 +696,8 @@ VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
   FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
   u16 gx, gy, gz;
-  u16 *ret_wk  = SCRCMD_GetVMWork( core, work );
+  u16 *ret_id     = SCRCMD_GetVMWork( core, work );
+  u16 *ret_valid  = SCRCMD_GetVMWork( core, work );
   MMDL *mmdl;
   u16 dir;
   VecFx32 pos;
@@ -710,9 +711,53 @@ VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk )
       FIELDMAP_GetMMdlSys(fieldmap), gx, gz, fy, GRID_HALF_FX32, FALSE );
   if ( mmdl )
   {
-    *ret_wk = MMDL_GetOBJID( mmdl );
+    *ret_valid = TRUE;
+    *ret_id    = MMDL_GetOBJID( mmdl );
+  }
+  else
+  {
+    *ret_valid = FALSE;
   }
 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief プレイヤーの前方1グリッドにあるOBJを検索する
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetFrontObjID( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  MMDLSYS*       mmdl_sys = FIELDMAP_GetMMdlSys( fieldmap );
+  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
+  u16*             ret_id = SCRCMD_GetVMWork( core, work );  // コマンド第一引数(オブジェIDの格納先)
+  u16*          ret_valid = SCRCMD_GetVMWork( core, work );  // コマンド第二引数(オブジェの有無)
+  MMDL* mmdl;
+  s16 gx, gy, gz;
+  fx32 fy;
+
+  // 自機の前方のグリッド座標を取得
+  FIELD_PLAYER_GetFrontGridPos( player, &gx, &gy, &gz );
+  fy = GRID_TO_FX32( gy );
+  // 前方にある動作モデルを取得
+  mmdl = MMDLSYS_SearchGridPosEx( mmdl_sys, gx, gz, fy, GRID_HALF_FX32, FALSE );
+  // 結果を格納
+  if( mmdl )
+  {
+    *ret_valid = TRUE;
+    *ret_id    = MMDL_GetOBJID( mmdl );
+  }
+  else
+  {
+    *ret_valid = FALSE;
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -779,6 +824,7 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
 
 //======================================================================
 //

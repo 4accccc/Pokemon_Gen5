@@ -21,6 +21,7 @@
 
 #include "fieldmap.h"
 #include "field_player_grid.h"
+#include "fldeff_iaigiri.h"
 
 //======================================================================
 //  秘伝技波乗り
@@ -120,5 +121,25 @@ VMCMD_RESULT EvCmdTakinobori( VMHANDLE *core, void *wk )
   SCRCMD_WORK_SetCallProcTCB( work, tcb );
   VMCMD_SetWait( core, EvWaitTakinobori );
   return( VMCMD_RESULT_SUSPEND );
+}
+
+//--------------------------------------------------------------
+/**
+ * 秘伝技 居合い切りエフェクト表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdIaigiriEffect( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
+  MMDL*              mmdl = FIELD_PLAYER_GetMMdl( player );
+  FLDEFF_CTRL*     fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+
+  FLDEFF_IAIGIRI_SetMMdl( mmdl, fectrl );
+  return VMCMD_RESULT_CONTINUE;
 }
 
