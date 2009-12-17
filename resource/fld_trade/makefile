@@ -27,7 +27,7 @@ SUBDIRS	=
 #コピーしてくるディレクトリ
 MONSNO_H_DIR		= ..\\personal\\
 ITEMSYM_H_DIR		= ..\\..\\prog\\include\\item\\
-TOKUSYU_H_DIR		= ..\\..\\prog\\include\\poke_tool\\
+TOKUSYU_H_DIR		= ..\\tokusei\\
 SEIKAKU_H_DIR		= ..\\..\\prog\\include\\poke_tool\\
 PM_VER_H_DIR		= ..\\..\\prog\\include\\
 
