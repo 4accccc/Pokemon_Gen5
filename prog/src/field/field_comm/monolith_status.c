@@ -249,12 +249,21 @@ static void _Setup_BGFrameSetting(void)
 			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x8000,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		},
+		{//GFL_BG_FRAME2_S
+			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x2000, MONO_BG_COMMON_CHARBASE, MONO_BG_COMMON_CHAR_SIZE,
+			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+		},
 	};
 
 	GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME2_S,   &bgcnt_frame[1],   GFL_BG_MODE_TEXT );
 
 	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
+	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------
@@ -265,7 +274,9 @@ static void _Setup_BGFrameSetting(void)
 static void _Setup_BGFrameExit(void)
 {
 	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
+	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_OFF);
   GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
 }
 
 //--------------------------------------------------------------
@@ -277,6 +288,10 @@ static void _Setup_BGFrameExit(void)
 //--------------------------------------------------------------
 static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
 {
+	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_joutai_lz_NSCR, 
+		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_MONOLITH);
+
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 }
 

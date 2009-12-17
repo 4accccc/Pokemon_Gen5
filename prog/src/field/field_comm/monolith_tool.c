@@ -77,7 +77,7 @@ enum{
   PANEL_COLOR_FADE_ADD_EVY = 0x0080,    ///<EVY加算値(下位8ビット小数)
   
   PANEL_COLOR_FLASH_WAIT = 3,     ///<フラッシュのウェイト
-  PANEL_COLOR_FLASH_COUNT = 2,    ///<フラッシュ回数
+  PANEL_COLOR_FLASH_COUNT = 1,    ///<フラッシュ回数
 };
 
 ///パネルカラーアニメでフォーカスされた時に向かうEVY最大到達カラー
@@ -294,7 +294,7 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
       pcc->evy = evy;
       evy >>= 8;
       for(i = 0; i < PANEL_COLOR_NUM; i++){
-        SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START,
+        SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
           1, evy, PanelFocusColor[i]);
       }
     }
@@ -316,7 +316,7 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
           }
         }
         for(i = 0; i < PANEL_COLOR_NUM; i++){
-          SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START,
+          SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
             1, pcc->evy >> 8, PanelFocusColor[i]);
         }
       }
