@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-10T21:32:36"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-17T12:10:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="149" top="165" right="837" bottom="945" maximized="no" rayout="Vertical2">
+	<dialog left="8" top="172" right="696" bottom="952" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -848,7 +848,8 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ランダムマッチの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
+どの　せつめいを　ききますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -857,7 +858,8 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
+どの　せつめいを　ききますか？</language>
 		<language name="JPN_KANJI" width="256">レーティングモードの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -866,7 +868,8 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">フリーモードの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
+どの　せつめいを　ききますか？</language>
 		<language name="JPN_KANJI" width="256">フリーモードの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
