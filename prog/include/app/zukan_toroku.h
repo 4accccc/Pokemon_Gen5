@@ -67,9 +67,15 @@ ZUKAN_TOROKU_PARAM;
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
+//-------------------------------------
+/// PROCに渡す引数を生成する
+//=====================================
 extern ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
                                                     ZUKAN_TOROKU_LAUNCH launch,
                                                     POKEMON_PARAM*      pp );
+//-------------------------------------
+/// ZUKAN_TOROKU_AllocParamで生成したPROCに渡す引数を破棄する
+//=====================================
 extern void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param );
 
 //-------------------------------------

@@ -17,6 +17,14 @@
 // system
 #include "gamesystem/gamesystem.h"
 
+//=============================================================================
+/**
+ *  定数定義
+ */
+//=============================================================================
+//-------------------------------------
+/// 表示面
+//=====================================
 typedef enum
 {
   ZUKAN_INFO_DISP_M,
@@ -24,6 +32,9 @@ typedef enum
 }
 ZUKAN_INFO_DISP;
 
+//-------------------------------------
+/// 起動方法
+//=====================================
 typedef enum
 {
   ZUKAN_INFO_LAUNCH_TOROKU,
@@ -48,7 +59,7 @@ typedef struct _ZUKAN_INFO_WORK ZUKAN_INFO_WORK;
  */
 //=============================================================================
 //-------------------------------------
-/// 初期化
+/// 初期化処理
 //=====================================
 extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
                                          ZUKAN_INFO_LAUNCH a_launch,
@@ -58,18 +69,41 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
                                          PRINT_QUE* a_print_que );
 
 //-------------------------------------
-/// 破棄
+/// 終了処理
 //=====================================
 extern void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work );
 
 //-------------------------------------
-/// メイン
+/// 主処理
 //=====================================
 extern void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work );
 
-
+//-------------------------------------
+/// ポケモン2D以外のものを破棄する
+//=====================================
 extern void ZUKAN_INFO_DeleteOthers( ZUKAN_INFO_WORK* work );
-extern void ZUKAN_INFO_Move( ZUKAN_INFO_WORK* work );  // 中央へ移動できる段階になったら移動しなさいよ、というフラグを立てるだけなので、直ちに移動するとは限らない
-extern BOOL ZUKAN_INFO_IsMove( ZUKAN_INFO_WORK* work );  // 移動を開始していたらTRUEを返す。移動を開始していないときはFALSEを返す。移動を終了していたらFALSEを返す。
-extern BOOL ZUKAN_INFO_IsCenterStill( ZUKAN_INFO_WORK* work );  // 中央で静止していたらTRUEを返す。
+
+//-------------------------------------
+/// ポケモン2Dの移動開始許可フラグを立てる
+//=====================================
+extern void ZUKAN_INFO_Move( ZUKAN_INFO_WORK* work );
+
+//-------------------------------------
+/// ポケモンの鳴き声フラグを立てる
+//=====================================
+extern void ZUKAN_INFO_Cry( ZUKAN_INFO_WORK* work );
+
+//-------------------------------------
+/// ポケモン2Dが移動中か否か
+//=====================================
+extern BOOL ZUKAN_INFO_IsMove( ZUKAN_INFO_WORK* work );
+
+//-------------------------------------
+/// ポケモン2Dが中央でじっとしているか否か
+//=====================================
+extern BOOL ZUKAN_INFO_IsCenterStill( ZUKAN_INFO_WORK* work );
+
+//-------------------------------------
+/// 処理を開始させる
+//=====================================
 extern void ZUKAN_INFO_Start( ZUKAN_INFO_WORK* work );

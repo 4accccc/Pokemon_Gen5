@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+// インクルード
 #include "print/gf_font.h"
 #include "font/font.naix"
 
@@ -39,10 +40,16 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 #define ZUKAN_TOROKU_HEAP_SIZE (0x30000)  ///< ヒープサイズ
 
-#define ZUKAN_TOROKU_FADE_IN_WAIT  (2)
-#define ZUKAN_TOROKU_FADE_OUT_WAIT (2)
+#define ZUKAN_TOROKU_FADE_IN_WAIT  (2)  ///< フェードインのスピード
+#define ZUKAN_TOROKU_FADE_OUT_WAIT (2)  ///< フェードアウトのスピード
+
 #define ZUKAN_TOROKU_INFO_BG_PRIORITY (0)  ///< 図鑑情報画面の最前面のプライオリティ(0か1) 
 
+#define ZUKAN_TOROKU_VBLANK_TCB_PRI (1)
+
+//-------------------------------------
+/// ステート 
+//=====================================
 typedef enum
 {
   ZUKAN_TOROKU_STATE_TOROKU,
@@ -50,6 +57,9 @@ typedef enum
 }
 ZUKAN_TOROKU_STATE;
 
+//-------------------------------------
+/// TOROKUステップ
+//=====================================
 typedef enum
 {
   ZUKAN_TOROKU_TOROKU_STEP_FADE_IN,
@@ -61,6 +71,9 @@ typedef enum
 }
 ZUKAN_TOROKU_TOROKU_STEP;
 
+//-------------------------------------
+/// NICKNAMEステップ
+//=====================================
 typedef enum
 {
   ZUKAN_TOROKU_NICKNAME_STEP_FADE_IN,
@@ -71,7 +84,6 @@ typedef enum
 }
 ZUKAN_TOROKU_NICKNAME_STEP;
 
-#define ZUKAN_TOROKU_VBLANK_TCB_PRI (1)
 
 //=============================================================================
 /**
@@ -79,7 +91,7 @@ ZUKAN_TOROKU_NICKNAME_STEP;
 */
 //=============================================================================
 //-------------------------------------
-/// PROCワーク
+/// PROC ワーク
 //=====================================
 typedef struct
 {
@@ -133,6 +145,17 @@ const GFL_PROC_DATA ZUKAN_TOROKU_ProcData =
 *  外部公開関数定義
 */
 //=============================================================================
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     PROCに渡す引数を生成する
+ *
+ *  @param[in] heap_id ヒープID
+ *  @param[in] launch  起動方法
+ *  @param[in] pp      ポケモンパラメータ
+ *
+ *  @retval    メモリ確保し初期化したZUKAN_TOROKU_PARAM
+ */
+//-----------------------------------------------------------------------------
 ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
                                              ZUKAN_TOROKU_LAUNCH launch,
                                              POKEMON_PARAM*      pp )
@@ -147,14 +170,31 @@ ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
   return param;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         ZUKAN_TOROKU_AllocParamで生成したPROCに渡す引数を破棄する
+ *
+ *  @param[in,out] param ZUKAN_TOROKU_AllocParamの戻り値
+ *
+ *  @retval        なし
+ */
+//-----------------------------------------------------------------------------
 void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param )
 {
   GFL_HEAP_FreeMemory( param );
 }
 
-//-------------------------------------
-/// PROCに渡す引数の設定
-//=====================================
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         PROCに渡す引数の設定
+ *
+ *  @param[in,out] param  初期化したいZUKAN_TOROKU_PARAM
+ *  @param[in]     launch 起動方法
+ *  @param[in]     pp     ポケモンパラメータ
+ *
+ *  @retval        なし 
+ */
+//-----------------------------------------------------------------------------
 void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
                             ZUKAN_TOROKU_LAUNCH launch,
                             POKEMON_PARAM*      pp )
@@ -163,9 +203,15 @@ void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
   param->pp     = pp;
 }
 
-//-------------------------------------
-/// 結果を得る
-//=====================================
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         結果を得る
+ *
+ *  @param[in,out] param ZUKAN_TOROKU_PARAM
+ *
+ *  @retval        結果 
+ */
+//-----------------------------------------------------------------------------
 ZUKAN_TOROKU_RESULT ZUKAN_TOROKU_GetResult( ZUKAN_TOROKU_PARAM* param )
 {
   return param->result; 
@@ -176,6 +222,9 @@ ZUKAN_TOROKU_RESULT ZUKAN_TOROKU_GetResult( ZUKAN_TOROKU_PARAM* param )
 *  ローカル関数定義
 */
 //=============================================================================
+//-------------------------------------
+/// PROC 初期化処理
+//=====================================
 static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   ZUKAN_TOROKU_PARAM* param = (ZUKAN_TOROKU_PARAM*)pwk;
@@ -184,20 +233,22 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
   // オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
+  // ヒープ
   {
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_TOROKU, ZUKAN_TOROKU_HEAP_SIZE );
     work = GFL_PROC_AllocWork( proc, sizeof(ZUKAN_TOROKU_WORK), HEAPID_ZUKAN_TOROKU );
     GFL_STD_MemClear( work, sizeof(ZUKAN_TOROKU_WORK) );
   }
 
-  work->heap_id = HEAPID_ZUKAN_TOROKU;
+  // 準備 
+  {
+    work->heap_id = HEAPID_ZUKAN_TOROKU;
+    work->graphic = ZUKAN_TOROKU_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
+    work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
+    work->print_que = PRINTSYS_QUE_Create( work->heap_id );
+  }
 
-  work->graphic = ZUKAN_TOROKU_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
-
-  work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
-
-  work->print_que = PRINTSYS_QUE_Create( work->heap_id );
-
+  // 起動方法からステート、ステップを決める
   {
     if(param->launch==ZUKAN_TOROKU_LAUNCH_TOROKU)
     {
@@ -211,6 +262,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
     }
   }
 
+  // 上画面
   work->zukan_info_work = ZUKAN_INFO_Init( work->heap_id, param->pp,
                                            (param->launch==ZUKAN_TOROKU_LAUNCH_TOROKU)?(ZUKAN_INFO_LAUNCH_TOROKU):(ZUKAN_INFO_LAUNCH_NICKNAME),
                                            ZUKAN_INFO_DISP_M, 0,
@@ -218,43 +270,55 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                            work->font,
                                            work->print_que );
 
+  // 上画面＆下画面
   work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp,
                                                    ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic), work->font, work->print_que );
- 
+
+  // 上画面
   if( work->state == ZUKAN_TOROKU_STATE_NICKNAME )
   {
     Zukan_Toroku_CreateBG( work );
   }
 
+  // VBlank中TBC
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Toroku_VBlankFunc, work, ZUKAN_TOROKU_VBLANK_TCB_PRI );
- 
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, ZUKAN_TOROKU_FADE_IN_WAIT );  // 真っ白の値or真っ黒の値, 0<画面が見えている値>, 輝度が1変化するのに掛かるフレーム );
+
+  // フェードイン(黒→見える)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, ZUKAN_TOROKU_FADE_IN_WAIT );
 
   return GFL_PROC_RES_FINISH;
 }
 
+//-------------------------------------
+/// PROC 終了処理
+//=====================================
 static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   ZUKAN_TOROKU_PARAM* param = (ZUKAN_TOROKU_PARAM*)pwk;
   ZUKAN_TOROKU_WORK* work = (ZUKAN_TOROKU_WORK*)mywk;
 
+  // VBlank中TBC
   GFL_TCB_DeleteTask( work->vblank_tcb );
-  
+ 
+  // 上画面
   Zukan_Toroku_DeleteBG( work );
-  
+ 
+  // 上画面＆下画面
   ZUKAN_NICKNAME_Exit( work->zukan_nickname_work );
+  // 上画面
   ZUKAN_INFO_Exit( work->zukan_info_work );
-  
-  PRINTSYS_QUE_Delete( work->print_que );
-
-  GFL_FONT_Delete( work->font );
-
-  ZUKAN_TOROKU_GRAPHIC_Exit( work->graphic );
-
+ 
+  // 後片付け
   {
-    HEAPID heap_id = work->heap_id;
+    PRINTSYS_QUE_Delete( work->print_que );
+    GFL_FONT_Delete( work->font );
+    ZUKAN_TOROKU_GRAPHIC_Exit( work->graphic );
+  }
+
+  // ヒープ
+  {
     GFL_PROC_FreeWork( proc );
-    GFL_HEAP_DeleteHeap( heap_id );
+    GFL_HEAP_DeleteHeap( HEAPID_ZUKAN_TOROKU );
   }
   
   // オーバーレイ破棄
@@ -263,6 +327,9 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pw
   return GFL_PROC_RES_FINISH;
 } 
 
+//-------------------------------------
+/// PROC 主処理
+//=====================================
 static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   ZUKAN_TOROKU_PARAM* param = (ZUKAN_TOROKU_PARAM*)pwk;
@@ -273,15 +340,19 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
 
   ZUKAN_INFO_Main( work->zukan_info_work );
   zukan_nickname_result = ZUKAN_NICKNAME_Main( work->zukan_nickname_work );
- 
+
+  // ステート分岐
   switch(work->state)
   {
+  // TOROKUステート
   case ZUKAN_TOROKU_STATE_TOROKU:
     {
+      // ステップ分岐
       switch(work->step)
       {
       case ZUKAN_TOROKU_TOROKU_STEP_FADE_IN:
         {
+          // フェードイン中
           if( !GFL_FADE_CheckFade() )
           {
             ZUKAN_INFO_Start( work->zukan_info_work );
@@ -291,6 +362,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_TOROKU_STEP_WAIT_KEY:
         {
+          // キー入力待ち
           BOOL next = FALSE;
           BOOL tp_trg = GFL_UI_TP_GetTrg();
           int trg = GFL_UI_KEY_GetTrg();
@@ -312,6 +384,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_TOROKU_STEP_MOVE:
         {
+          // ポケモンが中央へ移動し始めるのを待つ
           if( ZUKAN_INFO_IsMove(work->zukan_info_work) || ZUKAN_INFO_IsCenterStill(work->zukan_info_work) )  // IsCenterStillは念のため
           {
             work->brightness_wait = 0;
@@ -322,6 +395,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_TOROKU_STEP_FADE_OUT_BG:
         {
+          // ポケモンの背景を暗くする
           work->brightness_wait++;
           if( work->brightness_wait == 4 )
           {
@@ -343,6 +417,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_TOROKU_STEP_FADE_IN_BG:
         {
+          // ポケモンの背景を明るくする
           work->brightness_wait++;
           if( work->brightness_wait == 4 )
           {
@@ -362,8 +437,10 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_TOROKU_STEP_CENTER_STILL:
         {
+          // ポケモンが中央に移動中
           if( ZUKAN_INFO_IsCenterStill(work->zukan_info_work) )
           {
+            // NICKNAMEステートへ
             work->state = ZUKAN_TOROKU_STATE_NICKNAME;
             work->step = ZUKAN_TOROKU_NICKNAME_STEP_START;
           }
@@ -372,28 +449,35 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
       }
     }
     break;
+  // NICKNAMEステート
   case ZUKAN_TOROKU_STATE_NICKNAME:
     {
+      // ステップ分岐
       switch(work->step)
       {
       case ZUKAN_TOROKU_NICKNAME_STEP_FADE_IN:
         {
+          // フェードイン中
           if( !GFL_FADE_CheckFade() )
           {
+            ZUKAN_INFO_Cry( work->zukan_info_work );
             work->step = ZUKAN_TOROKU_NICKNAME_STEP_START;
           }
         }
         break;
       case ZUKAN_TOROKU_NICKNAME_STEP_START:
         {
+          // ニックネームを命名するか聞く処理の開始
           ZUKAN_NICKNAME_Start( work->zukan_nickname_work );
           work->step = ZUKAN_TOROKU_NICKNAME_STEP_SELECT;
         }
         break;
       case ZUKAN_TOROKU_NICKNAME_STEP_SELECT:
         {
+          // 選択中
           if( zukan_nickname_result == ZUKAN_NICKNAME_RES_FINISH )
           {
+            // フェードアウト(見える→黒)
             GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, ZUKAN_TOROKU_FADE_OUT_WAIT );
             work->step = ZUKAN_TOROKU_NICKNAME_STEP_FADE_OUT;
           }
@@ -401,6 +485,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
         break;
       case ZUKAN_TOROKU_NICKNAME_STEP_FADE_OUT:
         {
+          // フェードアウト中
           if( !GFL_FADE_CheckFade() )
           {
             ZUKAN_NICKNAME_SELECT zukan_nickname_select = ZUKAN_NICKNAME_GetSelect( work->zukan_nickname_work );
@@ -434,16 +519,15 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
   return proc_res;
 }
 
-
-
+//-------------------------------------
+/// 上画面背景の生成
+//=====================================
 static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
 {
   {
-    //GFL_BG_SetVisible( GFL_BG_FRAME1_M, FALSE );  // ここでOFFにすると一瞬　黒が晴れて、見えなくしておいたBGやOBJが見えてしまうので、
-    //GFL_BG_SetVisible( GFL_BG_FRAME2_M, FALSE );  // VBlank中にOFFにすることにした。
     work->bg_visible_off = TRUE;
 
-    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );  // GFL_BG_ClearFrameだと、これから描画しようと思っていたデータまで消されてしまうので。
+    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
 
     GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );  // 最背面
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );  // 最前面
@@ -466,6 +550,9 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 }
 
+//-------------------------------------
+/// 上画面背景の破棄
+//=====================================
 static void Zukan_Toroku_DeleteBG( ZUKAN_TOROKU_WORK* work )
 {
   // 読み込んだリソースの破棄
@@ -475,6 +562,9 @@ static void Zukan_Toroku_DeleteBG( ZUKAN_TOROKU_WORK* work )
   }
 }
 
+//-------------------------------------
+/// VBlank中に呼び出される関数
+//=====================================
 static void Zukan_Toroku_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_TOROKU_WORK* work = (ZUKAN_TOROKU_WORK*)wk;
