@@ -6451,35 +6451,11 @@
 なにも　できないもん！</language>
 	</row>
 
-	<row id="TRID_VETERANM_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">よく　きたな！
-だいかんげい　だぜ！▼
-ただし……
-しょうしょう　てあらい　けどな！▼</language>
-		<language name="JPN_KANJI" width="216">よく　来たな！
-大歓迎　だぜ！▼
-ただし……
-少々　手荒い　けどな！▼</language>
-	</row>
-
 	<row id="TRID_VETERANM_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">くぅ
 むねの　おくが　いたむぜ！</language>
 		<language name="JPN_KANJI" width="216">くぅ
 胸の　奥が　痛むぜ！</language>
-	</row>
-
-	<row id="TRID_VETERANM_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">オマエ……
-ずっとずっと　ポケモンを▽
-すきで　いろよ▼
-それこそが　つよくなる
-シンプルな　こたえ　さ</language>
-		<language name="JPN_KANJI" width="216">オマエ……
-ずっとずっと　ポケモンを▽
-好きで　いろよ▼
-それこそが　強くなる
-シンプルな　答え　さ</language>
 	</row>
 
 	<row id="TRID_VETERANW_04_TRMSG_FIGHT_START">
