@@ -24,9 +24,16 @@
 //=============================================================================
 typedef enum
 {
-  ZUKAN_NICKNAME_RESULT_NO,
-  ZUKAN_NICKNAME_RESULT_YES,
-  ZUKAN_NICKNAME_RESULT_SELECT,
+  ZUKAN_NICKNAME_SELECT_NO,
+  ZUKAN_NICKNAME_SELECT_YES,
+  ZUKAN_NICKNAME_SELECT_SELECT,
+}
+ZUKAN_NICKNAME_SELECT;
+
+typedef enum
+{
+  ZUKAN_NICKNAME_RES_CONTINUE,
+  ZUKAN_NICKNAME_RES_FINISH,
 }
 ZUKAN_NICKNAME_RESULT;
 
@@ -45,7 +52,10 @@ typedef struct _ZUKAN_NICKNAME_WORK ZUKAN_NICKNAME_WORK;
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
-extern ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que );
+extern ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
+                                                 GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que );
 extern void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work );
 extern ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work );
 
+extern void ZUKAN_NICKNAME_Start( ZUKAN_NICKNAME_WORK* work );
+extern ZUKAN_NICKNAME_SELECT ZUKAN_NICKNAME_GetSelect( ZUKAN_NICKNAME_WORK* work );

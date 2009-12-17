@@ -32,7 +32,7 @@ extern const GFL_PROC_DATA ZUKAN_TOROKU_ProcData;
 typedef enum
 {
   ZUKAN_TOROKU_LAUNCH_TOROKU,    ///< 図鑑登録
-  ZUKAN_TOROKU_LAUNCH_NICKNAME,  ///< ニックネーム確認
+  ZUKAN_TOROKU_LAUNCH_NICKNAME,  ///< ニックネーム命名確認
 }
 ZUKAN_TOROKU_LAUNCH;
 
@@ -57,6 +57,7 @@ ZUKAN_TOROKU_RESULT;
 typedef struct _ZUKAN_TOROKU_PARAM
 {
   ZUKAN_TOROKU_LAUNCH launch;  ///< [in]  起動方法
+  POKEMON_PARAM*      pp;      ///< [in]  表示するポケモン  // 他のところのを覚えているだけで生成や破棄はしない。 
   ZUKAN_TOROKU_RESULT result;  ///< [out] 結果
 }
 ZUKAN_TOROKU_PARAM;
@@ -66,15 +67,20 @@ ZUKAN_TOROKU_PARAM;
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
-extern ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID heap_id,
-                                                    ZUKAN_TOROKU_LAUNCH launch );
+extern ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
+                                                    ZUKAN_TOROKU_LAUNCH launch,
+                                                    POKEMON_PARAM*      pp );
 extern void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param );
 
 //-------------------------------------
 /// PROCに渡す引数の設定
 //=====================================
 extern void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
-                                   ZUKAN_TOROKU_LAUNCH launch );
+                                   ZUKAN_TOROKU_LAUNCH launch,
+                                   POKEMON_PARAM*      pp );
 
+//-------------------------------------
+/// 結果を得る
+//=====================================
 extern ZUKAN_TOROKU_RESULT ZUKAN_TOROKU_GetResult( ZUKAN_TOROKU_PARAM* param );
 

@@ -122,6 +122,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     {
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
       MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
+      ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
 
       check_lvup_poke( wk, param );
 
@@ -147,20 +148,18 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
-        // 図鑑登録画面 or 命名確認画面 へ
+        // 図鑑登録画面 or ニックネーム命名確認画面 へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
-#if 0  // つくりかけ
-        if( 1 )
+        if( !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(wk->pp, ID_PARA_monsno, NULL) ) ) )
         {
-          // @todo 図鑑フラグをセットする
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU );
+          ZUKANSAVE_SetPokeGet( zukan_savedata, wk->pp );  // 図鑑フラグをセットする
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp );
         }
         else
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp );
         }
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
-#endif  // #if 0  // つくりかけ
         (*seq)++;
       }else{
         (*seq) = 4;
@@ -170,14 +169,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
   case 1:
     {
-      BOOL nickname = TRUE;
-#if 0  // つくりかけ
       BOOL nickname = FALSE;
       if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
       {
         nickname = TRUE;
       }
-#endif  // #if 0  // つくりかけ
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
 
       if( nickname )
