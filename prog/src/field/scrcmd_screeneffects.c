@@ -124,6 +124,31 @@ static BOOL EvWaitMapFade( VMHANDLE *core, void *wk )
 /**
  * マップチェンジ用　ブラックイン
  * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT 
+ *
+ * @note
+ * コンティニュー時に使用すると、フェードアウトしていないために
+ * Assertになってしまう。この使い分けのためのコマンド
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_BlackIn_Force( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+#ifdef PM_DEBUG
+  //GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
+  MapFadeReqFlg = FALSE;
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　ブラックイン
+ * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------

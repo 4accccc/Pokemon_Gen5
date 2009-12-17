@@ -16,6 +16,7 @@ extern VMCMD_RESULT EvCmdDispFadeStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFadeCheck( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdMapFade_BlackIn_Force( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_BlackIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_BlackOut( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk );
