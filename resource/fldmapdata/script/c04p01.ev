@@ -64,12 +64,12 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c04p01_boss_01
 	
-	//Ｎ：主人公前へ
+/*	//Ｎ：主人公前へ
 	_OBJ_ANIME( C04P01_BOSS_01, anm_n_come_01 )
 	_TIME_WAIT( 8 )
 	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
 	_OBJ_ANIME_WAIT()
-	
+*/	
 	//キミ プラズマだんを
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -80,7 +80,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME_WAIT()
 	
 	//さあ乗りたまえ
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_02, C04P01_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//画面暗転
@@ -97,7 +97,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 	
 	//さて…
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_03, C04P01_BOSS_01, WIN_NONE )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_MSGWIN_CLOSE()
 	
@@ -172,7 +172,7 @@ _ANIME_LABEL	anm_n_move_01
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,10
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -182,7 +182,7 @@ _ANIME_LABEL	anm_player_move_01
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

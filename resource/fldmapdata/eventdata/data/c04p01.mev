@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 17:18:44
+#save date:2009/12/17 19:06:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04p01.wms
 #SECTION START:OBJ_EVENT
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C04P01_BOSS_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_POS_C04P01_BOSS_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 16 24
+376 16 72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -228,7 +228,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 -72 16 56
 #size
-1 5
+1 4
 #event number: 1
 #Door Event Label
 DOOR_ID_C04P01_C04GYM0101_EXIT01

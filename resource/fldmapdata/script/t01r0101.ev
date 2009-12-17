@@ -71,6 +71,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME_WAIT()
 
 	//ママ：何があったの？
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_01, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -100,14 +101,14 @@ EVENT_START ev_scene_t01r0101_first_01
 	//ＴＶトランシーバーよ
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
-
+	
+	//イベント曲終了
+	_END_EVENT_BGM()
+	
 	//いってらっしゃい
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04_01, T01R0101_MAMA_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
-	//イベント曲終了
-	_END_EVENT_BGM()
 
 //===============フラグワーク操作====================//
 
@@ -231,5 +232,5 @@ ev_everyday:
 
 	ENDIF
 
-
+_RET
 

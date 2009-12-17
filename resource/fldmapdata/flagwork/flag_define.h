@@ -644,7 +644,7 @@
 #define FV_C08_SUNGLASSES_01               620 /* 0x026c ソウリュウシティ：サングラス */
 #define FV_C08R0101_LEADER8A_01            621 /* 0x026d ソウリュウシティR0101：シャガ */
 #define FV_C08R0101_LEADER8B_01            622 /* 0x026e ソウリュウシティR0101：アイリス */
-		/* not used   623(0x026f) */
+#define FV_MUSEUM_STONE                    623 /* 0x026f C02GYM0101博物館：パッケージポケモン関連の&#xff5e;&#xff5e;ストーン */
 		/* not used   624(0x0270) */
 		/* not used   625(0x0271) */
 		/* not used   626(0x0272) */
