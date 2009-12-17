@@ -1369,7 +1369,7 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( GYM_GROUND_SE_WALL_OPEN ) );
         //隔壁アニメ監視フラグオフ
         tmp->WallAnmWatch = 0;
       }

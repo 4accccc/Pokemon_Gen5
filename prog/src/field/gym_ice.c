@@ -623,7 +623,7 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       //アニメ停止解除
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
       //SE再生
-      PMSND_PlaySE_byPlayerID( GYM_ICE_SE_GMK_MOVE, SEPLAYER_SE1 );
+      PMSND_PlaySE( GYM_ICE_SE_GMK_MOVE );
 
     }
     (*seq)++;
@@ -642,7 +642,7 @@ static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
         //SEストップ
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
+        PMSND_StopSE();
         //SE再生
         PMSND_PlaySE( GYM_ICE_SE_GMK_STOP);
         //次回に備え、アニメ切り替え

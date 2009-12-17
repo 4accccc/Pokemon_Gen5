@@ -770,10 +770,15 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   tmp->RadeRaleIdx = RIDE_NONE;
 
   //ＳＥ鳴らしっぱなし
-  PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
-  //始めはボリューム0
-  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
-  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+  {
+    SEPLAYER_ID player_id1, player_id2;
+    player_id1 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
+    player_id2 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+    PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id1 );
+    //始めはボリューム0
+    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id1 ), 0 );
+    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), 0 );
+  }
 /**
   {
     u8 i;
@@ -857,11 +862,14 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         //自分が乗っているカプセルのときはループＳＥ再生
         if ( (tmp->RadeRaleIdx != RIDE_NONE)&&(i == tmp->RadeRaleIdx / 2) ){
+          SEPLAYER_ID player_id;
+          player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
           //ループＳＥスタート
-          PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+          PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id );
           PMSND_PlaySE(GYM_ELEC_SE_SPEED);
+          player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
           //鳴らし始めはボリューム0にしとく
-          NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+          NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
 
         }
         tmp->StopPlatformIdx[i] = PLATFORM_NO_STOP;
@@ -956,7 +964,11 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
       volume = 0;
     }
 
-    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
+    {
+      SEPLAYER_ID player_id;
+      player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), volume );
+    }
 #endif    
   }
 }
@@ -975,8 +987,7 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
 
   //ＳＥストップ
-  PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-  PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+  PMSND_StopSE();
 /**
   for(i=0;i<RALE_NUM_MAX;i++){
     ICA_ANIME_Delete( tmp->IcaAnmPtr2[i] );
@@ -1485,6 +1496,9 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
   EXP_OBJ_ANM_CNT_PTR anm;
 
   int volume;
+  SEPLAYER_ID player_id1, player_id2;
+  player_id1 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
+  player_id2 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
 
   GF_ASSERT(tmp->RadeRaleIdx != RIDE_NONE);
 
@@ -1573,13 +1587,13 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->RideEvt = -1;
 
       //ループＳＥスタート
-      PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+      PMSND_PlaySE( GYM_ELEC_SE_DRIVE);
       PMSND_PlaySE(GYM_ELEC_SE_SPEED);
       //鳴らし始めはボリューム0にしとく
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), 0 );
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), 0 );
 
       //ボリュームセット
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), SE_VOL );
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id1 ), SE_VOL );
       //自機自動移動開始
       tmp->AltoMove = TRUE;
 
@@ -1692,12 +1706,15 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->RadeRaleIdx = RIDE_NONE;
       
       {
+        SEPLAYER_ID player_id;
         //カプセル近接ＳＥのためGYM_ELEC_SE_DRIVEは鳴らし続ける
-        PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+        player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
+        PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id );
         //始めはボリューム0
-        NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
+        NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
         //加速音はストップする
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+        PMSND_StopSE_byPlayerID( player_id );
       }
       
       return GMEVENT_RES_FINISH;
@@ -1713,14 +1730,12 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     switch( tmp->RadeRaleIdx ){
     case 2:
       if (frm == UP_SE_FRM1){
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        PMSND_StopSE();
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
       }else if(frm == TOP_SE_STOP_FRM1){
-        //昇りSEストップ
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //SEストップ
+        PMSND_StopSE();
       }else if(frm == DOWN_SE_FRM1){
         //下りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_DROP);
@@ -1728,14 +1743,12 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       break;
     case 3:
       if (frm == UP_SE_FRM2){
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        PMSND_StopSE();
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
       }else if(frm == TOP_SE_STOP_FRM2){
-        //昇りSEストップ
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        //SEストップ
+        PMSND_StopSE();
       }else if(frm == DOWN_SE_FRM2){
         //下りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_DROP);
@@ -1743,16 +1756,14 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       break;
     case 4:
       if (frm == LOOP_SE_FRM1){
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        PMSND_StopSE();
         //宙返りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_LOOP);
       }
       break;
     case 5:
       if (frm == LOOP_SE_FRM2){
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
-        PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+        PMSND_StopSE();
         //宙返りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_LOOP);
       }
@@ -1810,7 +1821,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     }
   }
 
-  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE2 ), volume );
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), volume );
 
   return GMEVENT_RES_CONTINUE;
 }
@@ -2545,6 +2556,9 @@ static void StateSeFunc(FIELDMAP_WORK *fieldWork, GYM_ELEC_TMP *tmp)
       volume = 0;
     }
   }
-  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
-
+  {
+    SEPLAYER_ID player_id;
+    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
+    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), volume );
+  }
 }
