@@ -504,9 +504,9 @@ static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 poke
 {
   SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, level, hp, atk, def, sp_atk, sp_def, agi );
 }
-static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess )
+static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess, u8 fZukanRegister, u16 ballItemID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess );
+  SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, ballItemID );
 }
 static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlRotateDir dir )
 {

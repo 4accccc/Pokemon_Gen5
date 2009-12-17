@@ -61,6 +61,7 @@ typedef enum {
   // à¯êîÇTå¬ÇÃå^
   SC_ARGFMT_555bit_22byte    = SC_ARGFMT(5,0),
   SC_ARGFMT_5_3_7_1bit_2byte = SC_ARGFMT(5,1),
+  SC_ARGFMT_3311bit_2byte    = SC_ARGFMT(5,2),
 
   // à¯êîÇUå¬ÇÃå^
   SC_ARGFMT_555555bit = SC_ARGFMT(6,0),
@@ -147,7 +148,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
   SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
-  SC_ARGFMT_5_5_6_2byte,      // SC_ACT_BALL_THROW
+  SC_ARGFMT_3311bit_2byte,    // SC_ACT_BALL_THROW
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
@@ -226,7 +227,7 @@ static inline u32 pack_3args( int bytes, int arg1, int arg2, int arg3, int bits1
     GF_ASSERT(arg2 <= mask2);
     GF_ASSERT(arg3 <= mask3);
 
-    return ( ((arg1&mask2)<<(bits2+bits3)) | ((arg2&mask2)<<bits3) | (arg3&mask3) );
+    return ( ((arg1&mask1)<<(bits2+bits3)) | ((arg2&mask2)<<bits3) | (arg3&mask3) );
   }
 }
 static inline void unpack_3args( int bytes, u32 pack, int bits1, int bits2, int bits3, int* args, int idx_start )
@@ -243,6 +244,47 @@ static inline void unpack_3args( int bytes, u32 pack, int bits1, int bits2, int 
     args[ idx_start++ ] = (pack >> (bits2+bits3)) & mask1;
     args[ idx_start++ ] = (pack >> bits3) & mask2;
     args[ idx_start ] = pack & mask3;
+  }
+}
+
+static inline u32 pack_4args( int bytes, int arg1, int arg2, int arg3, int arg4, int bits1, int bits2, int bits3, int bits4 )
+{
+  GF_ASSERT(bits1+bits2+bits3+bits4<=(bytes*8));
+  GF_ASSERT(bits1!=0);
+  GF_ASSERT(bits2!=0);
+  GF_ASSERT(bits3!=0);
+  GF_ASSERT(bits4!=0);
+  {
+    u16 mask1 = (1 << bits1) - 1;
+    u16 mask2 = (1 << bits2) - 1;
+    u16 mask3 = (1 << bits3) - 1;
+    u16 mask4 = (1 << bits4) - 1;
+
+    GF_ASSERT(arg1 <= mask1);
+    GF_ASSERT(arg2 <= mask2);
+    GF_ASSERT(arg3 <= mask3);
+    GF_ASSERT(arg4 <= mask4);
+
+    return ( ((arg1&mask1)<<(bits2+bits3+bits4)) | ((arg2&mask2)<<(bits3+bits4)) | ((arg3&mask3)<<bits4) | (arg4&mask4) );
+  }
+}
+static inline void unpack_4args( int bytes, u32 pack, int bits1, int bits2, int bits3, int bits4, int* args, int idx_start )
+{
+  GF_ASSERT(bits1+bits2+bits3+bits4<=(bytes*8));
+  GF_ASSERT(bits1!=0);
+  GF_ASSERT(bits2!=0);
+  GF_ASSERT(bits3!=0);
+  GF_ASSERT(bits4!=0);
+  {
+    u16 mask1 = (1 << bits1) - 1;
+    u16 mask2 = (1 << bits2) - 1;
+    u16 mask3 = (1 << bits3) - 1;
+    u16 mask4 = (1 << bits4) - 1;
+
+    args[ idx_start++ ] = (pack >> (bits2+bits3+bits4)) & mask1;
+    args[ idx_start++ ] = (pack >> (bits2+bits3)) & mask2;
+    args[ idx_start++ ] = (pack >> (bits3)) & mask3;
+    args[ idx_start ] = pack & mask4;
   }
 }
 
@@ -358,6 +400,13 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       u16 pack2 = pack1_2args( args[2], args[3], 7, 1 );
       scque_put2byte( que, pack1 );
       scque_put2byte( que, pack2 );
+      scque_put2byte( que, args[4] );
+    }
+    break;
+  case SC_ARGFMT_3311bit_2byte:
+    {
+      u8 pack = pack_4args( 1, args[0], args[1], args[2], args[3], 3, 3, 1, 1 );
+      scque_put1byte( que, pack );
       scque_put2byte( que, args[4] );
     }
     break;
@@ -509,6 +558,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       u16 pack2 = scque_read2byte( que );
       unpack1_2args( pack1, 5, 3, args, 0 );
       unpack1_2args( pack2, 7, 1, args, 2 );
+      args[4] = scque_read2byte( que );
+    }
+    break;
+  case SC_ARGFMT_3311bit_2byte:
+    {
+      u8 pack = scque_read1byte( que );
+      unpack_4args( 1, pack, 3, 3, 1, 1, args, 0 );
       args[4] = scque_read2byte( que );
     }
     break;

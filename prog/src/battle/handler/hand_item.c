@@ -588,6 +588,28 @@ void BTL_HANDLER_ITEM_TMP_Remove( BTL_EVENT_FACTOR* factor )
 
 //----------------------------------------------------------------------------------
 /**
+ * ランダム発動する装備効果の共通チェックルーチン
+ *
+ * @param   flowWk
+ * @param   per
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL Item_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per )
+{
+  if( BTL_CALC_IsOccurPer(per) ){
+    return TRUE;
+  }
+  if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_ITEM) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
  * アイテムパラメータ取得
  *
  * @param   myHandle
@@ -1890,7 +1912,7 @@ static void handler_SenseiNoTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     u8 per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-    if( BTL_CALC_IsOccurPer(per) )
+    if( Item_IsExePer(flowWk, per) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_HIGH );
     }
@@ -2606,7 +2628,7 @@ static void handler_KiaiNoHachimaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     u8 per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-    if( BTL_CALC_IsOccurPer(per) ){
+    if( Item_IsExePer(flowWk, per) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_ITEM );
     }
   }

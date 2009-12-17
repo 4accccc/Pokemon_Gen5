@@ -2753,7 +2753,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 /**
  *  モンスターボール投げつけ
- *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]:ボールのアイテムナンバー
+ *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]: 図鑑登録フラグ [4]:ボールのアイテムナンバー
  */
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
@@ -2762,7 +2762,8 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTLV_EFFECT_BallThrow( vpos, args[3], args[1], args[2] );
+      BTL_Printf("ボールなげアクション:itemID=%d, Pos=%d, ゆれ回数=%d\n", args[4], args[0], args[1]);
+      BTLV_EFFECT_BallThrow( vpos, args[4], args[1], args[2] );
       (*seq)++;
     }
     break;
@@ -2805,12 +2806,26 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         PMSND_PlayBGM( SEQ_ME_POKEGET );
         (*seq)++;
       }else{
-        (*seq) += 2;
+        return TRUE;
       }
     }
     break;
   case 3:
-    if( !PMSND_CheckPlayBGM() ){
+    if( !PMSND_CheckPlayBGM() )
+    {
+      // 図鑑登録メッセージ
+      if( args[3] )
+      {
+        const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_ZukanRegister );
+        BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID( bpp ) );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq)++;
+      }
+    }
+    break;
+  case 4:
+    if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq)++;
     }
     break;

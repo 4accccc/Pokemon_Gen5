@@ -1514,6 +1514,21 @@ const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE * wk )
 {
   return wk->playerStatus;
 }
+//=============================================================================================
+/**
+ * }ŠÓ‚É“o˜^‚³‚ê‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‚©‚Ç‚¤‚©”»’è
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsZukanRegistered( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp )
+{
+  u16 monsno = BPP_GetMonsNo( bpp );
+  return ZUKANSAVE_GetPokeGetFlag( wk->setupParam->zukanData, monsno );
+}
 
 //=============================================================================================
 /**

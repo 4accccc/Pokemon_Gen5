@@ -65,11 +65,7 @@ void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
 u32 BTL_CALC_GetRand( u32 range )
 {
   u32 result;
-  if( range ){
-    result = GFL_STD_Rand0( &gRandContext, range );
-  }else{
-    result = GFL_STD_Rand( &gRandContext, GFL_STD_RAND_MAX );
-  }
+  result = GFL_STD_Rand( &gRandContext, range );
   BTL_Printf("GetRand counter=%d, range=%d, result=%d\n", gDebugCounter++, range, result);
   return result;
 }

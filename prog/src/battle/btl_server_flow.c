@@ -2178,7 +2178,7 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
     if( targetPos != BTL_POS_NULL )
     {
-      u8 yure_cnt, fSuccess;
+      u8 yure_cnt, fSuccess, fZukanRegister;
 
       // @todo ここで捕獲成否チェック＆失敗なら揺れ数を計算する。今は適当。
       if( itemID == ITEM_MASUTAABOORU ){
@@ -2193,11 +2193,15 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         }
       }
 
-      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess );
       if( fSuccess ){
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
         wk->getPokePos = targetPos;
+        fZukanRegister = BTL_MAIN_IsZukanRegistered( wk->mainModule, targetPoke );
+      }else{
+        fZukanRegister = FALSE;
       }
+
+      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess, fZukanRegister, itemID );
     }
   }
 }
@@ -2751,7 +2755,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
-  if( !waza_lock_flag ){
+  if( !waza_lock_flag && waza_exe_flag ){
     u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
     if( wazaIdx != PTL_WAZA_MAX ){
       scproc_decrementPPUsedWaza( wk, attacker, wazaIdx, &wk->pokesetDamaged );
@@ -5747,6 +5751,8 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
     BTL_Printf("ワザ[%d]による天候変化->%d\n", wazaParam->wazaID, weather);
     if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
+    }else{
+      scPut_WazaFail( wk, attacker, wazaParam->wazaID );
     }
   }
   else
@@ -5764,20 +5770,26 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 }
 static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
 {
-  BOOL result = scEvent_CheckChangeWeather( wk, weather, &turn );
-
-  if( result ){
-    BTL_FIELD_SetWeather( weather, turn );
-    SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+  if( BTL_FIELD_GetWeather() == weather ){
+    return FALSE;
   }
-
+  else
   {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    scEvent_AfterChangeWeather( wk, weather );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
+    BOOL result = scEvent_CheckChangeWeather( wk, weather, &turn );
+
+    if( result ){
+      BTL_FIELD_SetWeather( weather, turn );
+      SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+    }
+
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_AfterChangeWeather( wk, weather );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+    return result;
   }
-  return result;
 }
 //--------------------------------------------------------------------------
 /**
@@ -6322,11 +6334,13 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
 static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
   BtlWeather weather = BTL_FIELD_TurnCheckWeather();
+  // ターンチェックにより天候が終わった
   if( weather != BTL_WEATHER_NONE )
   {
     SCQUE_PUT_ACT_WeatherEnd( wk->que, weather );
     return;
   }
+  // 天候が継続
   else
   {
     u8   pokeID[ BTL_POS_MAX ];
@@ -7282,8 +7296,15 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
 
   BPP_SetWazaSick( target, sick, sickCont );
   SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, sickCont.raw );
-  if( sick < POKESICK_MAX ){
-    SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
+
+  // 状態異常アイコン付加
+  {
+    if( sick == WAZASICK_DOKUDOKU ){
+      sick = WAZASICK_DOKU;
+    }
+    if( sick < POKESICK_MAX ){
+      SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
+    }
   }
 }
 static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, BtlAddSickFailCode failCode, WazaSick sick )
@@ -7809,7 +7830,7 @@ static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEP
   }while(0);
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_CAUSE, cause );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, cause );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK );
@@ -8606,8 +8627,10 @@ static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, waza_type );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLATMASTER_FLAG, FALSE );
+
     BTL_SICKEVENT_CheckNotEffectByType( wk, defender );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_AFFINITY );
+
     flatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
     flatMasterFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLATMASTER_FLAG );
   BTL_EVENTVAR_Pop();
@@ -8664,17 +8687,17 @@ static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   u32 volume = 1;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
     {
       u8 i = 0;
       BTL_POKEPARAM* bpp;
-      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, BTL_POKESET_GetCount(rec) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, BTL_POKESET_GetCount(rec) );
       while( (bpp=BTL_POKESET_Get(rec, i)) != NULL )
       {
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
         ++i;
       }
     }
+    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECREMENT_PP_VOLUME );
     volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
   BTL_EVENTVAR_Pop();
