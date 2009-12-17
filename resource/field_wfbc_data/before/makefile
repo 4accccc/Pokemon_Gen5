@@ -12,8 +12,8 @@ USERS	= tomoya_takahashi ohmori
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname0 = bc_block_event.mev
-targetname1 = wf_block_event.mev
+targetname0 = bcblock.mev
+targetname1 = wfblock.mev
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）

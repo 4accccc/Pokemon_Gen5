@@ -17,6 +17,8 @@
 #include "arc/field_wfbc_data.naix"
 #include "arc/fieldmap/eventdata.naix"
 
+#include "savedata/mystatus.h"
+
 #include "field/field_const.h"
 
 #include "field_wfbc.h"
@@ -47,8 +49,8 @@ static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] =
 //-------------------------------------
 ///	イベント情報
 //=====================================
-#define FIELD_WFBC_EVENT_WF  (NARC_eventdata_wf_block_event_bin)
-#define FIELD_WFBC_EVENT_BC  (NARC_eventdata_bc_block_event_bin)
+#define FIELD_WFBC_EVENT_WF  (NARC_eventdata_wfblock_bin)
+#define FIELD_WFBC_EVENT_BC  (NARC_eventdata_bcblock_bin)
 
 
 //-------------------------------------
@@ -430,8 +432,8 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
   };
   static const u32 sc_EVDATA[ FIELD_WFBC_CORE_TYPE_MAX ] = 
   {
-    NARC_eventdata_bc_block_event_bin,
-    NARC_eventdata_wf_block_event_bin,
+    FIELD_WFBC_EVENT_BC,
+    FIELD_WFBC_EVENT_WF,
   };
 
   // 今のイベント数
@@ -614,6 +616,87 @@ void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id )
   // セーブデータに反映
   WFBC_UpdateCore( p_wk );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  その人と会話した、機嫌値加算処理
+ *
+ *	@param	p_wk
+ *	@param	npc_id 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id )
+{
+  FIELD_WFBC_PEOPLE* p_people;
+  GF_ASSERT( p_wk );
+
+  p_people = WFBC_GetPeople( p_wk, npc_id );
+
+  // 会話加算
+  if( p_wk->mapmode == MAPMODE_NORMAL )
+  {
+    FIELD_WFBC_CORE_PEOPLE_CalcTalk( &p_people->people_local );
+
+    // セーブデータに反映
+    WFBC_UpdateCore( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワードセットに履歴のプレイヤー情報を設定
+ *
+ *	@param	cp_wk       ワーク
+ *	@param	p_wordset   ワードセット
+ *	@param	npc_id      NPCID
+ *	@param  heapID      ヒープID
+ */ 
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, HEAPID heapID )
+{
+  MYSTATUS* p_mystatus;
+  const FIELD_WFBC_PEOPLE* cp_people;
+  GF_ASSERT( cp_wk );
+
+  cp_people = WFBC_GetConstPeople( cp_wk, npc_id );
+
+  p_mystatus = MyStatus_AllocWork( GFL_HEAP_LOWID(heapID) );
+  MyStatus_Init( p_mystatus );
+  
+  MyStatus_SetMyName( p_mystatus, cp_people->people_local.parent );
+  MyStatus_SetID( p_mystatus, cp_people->people_local.parent_id );
+  
+
+  // ワードセットに設定
+  // @TODO 今wordsetのtmpBufがない
+  //WORDSET_RegisterPlayerName( p_wordset, 0, p_mystatus );
+
+
+  GFL_HEAP_FreeMemory( p_mystatus );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルしたことを設定
+ *
+ *	@param	p_wk      ワーク
+ *	@param	npc_id    NPCID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id )
+{
+  FIELD_WFBC_PEOPLE* p_people;
+  GF_ASSERT( p_wk );
+
+  p_people = WFBC_GetPeople( p_wk, npc_id );
+
+  FIELD_WFBC_CORE_PEOPLE_SetBattle( &p_people->people_local );
+
+  // セーブデータに反映
+  WFBC_UpdateCore( p_wk );
+}
+
+
 
 
 //----------------------------------------------------------------------------
@@ -1329,10 +1412,10 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
     {
       if( p_wk->people[i].data_in == FALSE )
       {
-        p_wk->people[i].data_in = TRUE;
-        p_wk->people[i].npc_id  = 0;
+        p_wk->people[i].npc_id  = FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( p_wk );
         p_wk->people[i].mood  = 50;
         p_wk->people[i].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
+        p_wk->people[i].data_in = TRUE;
         break;
       }
     }

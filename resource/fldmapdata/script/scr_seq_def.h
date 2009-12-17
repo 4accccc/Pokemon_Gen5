@@ -6413,3 +6413,82 @@
   .byte \type
   .short \retVal
   .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_TALKSTART 
+ *  @brief WFBC:会話開始
+ */
+//--------------------------------------------------------------
+#define _WFBC_TALKSTART() \
+    _ASM_WFBC_TALKSTART
+
+  .macro  _ASM_WFBC_TALKSTART
+  .short EV_SEQ_WFBC_TALKSTART
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_TALKEND
+ *  @brief WFBC:会話終了
+ */
+//--------------------------------------------------------------
+#define _WFBC_TALKEND() \
+    _ASM_WFBC_TALKEND
+
+  .macro  _ASM_WFBC_TALKEND
+  .short EV_SEQ_WFBC_TALKEND
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_GET_TRAINER_ID
+ *  @brief WFBC:会話しているトレーナーIDを取得
+ *
+ *  @param ret_val  戻り値  トレーナーID
+ */
+//--------------------------------------------------------------
+#define _WFBC_GET_TRAINER_ID( retVal ) \
+    _ASM_WFBC_GET_TRAINER_ID retVal
+
+  .macro  _ASM_WFBC_GET_TRAINER_ID retVal
+  .short EV_SEQ_WFBC_GET_TRAINER_ID
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_CHECK_TAKES_IT
+ *  @brief WFBC:会話内容が、～にいってみたいになるのかチェック
+ *
+ *  @param ret_val  戻り値  ～にいってみたい
+ */
+//--------------------------------------------------------------
+#define _WFBC_CHECK_TAKES_IT( retVal ) \
+    _ASM_WFBC_CHECK_TAKES_IT retVal
+
+  .macro  _ASM_WFBC_CHECK_TAKES_IT retVal
+  .short EV_SEQ_WFBC_CHECK_TAKES_IT
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_CHECK_RIREKI
+ *  @brief WFBC:履歴があるのかチェック
+ *
+ *  @param ret_val  戻り値  トレーナーID
+ */
+//--------------------------------------------------------------
+#define _WFBC_CHECK_RIREKI( retVal ) \
+    _ASM_WFBC_CHECK_RIREKI retVal
+
+  .macro  _ASM_WFBC_CHECK_RIREKI retVal
+  .short EV_SEQ_WFBC_CHECK_RIREKI
+  .short \retVal
+  .endm
+
+

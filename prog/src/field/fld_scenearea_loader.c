@@ -431,7 +431,6 @@ static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCEN
 
   local_pos = *cp_pos;
   local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
-  local_pos.y -= MMDL_VEC_Y_GRID_OFFS_FX32;
   local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
 
   grid_x = FX32_TO_GRID( local_pos.x );
@@ -486,7 +485,6 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
 
   local_pos = *cp_pos;
   local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
-  local_pos.y -= MMDL_VEC_Y_GRID_OFFS_FX32;
   local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
 
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );

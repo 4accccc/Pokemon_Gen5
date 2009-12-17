@@ -1,0 +1,41 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *	GAME FREAK inc.
+ *
+ *	@file		scrcmd_wfbc.h
+ *	@brief  WFBC用スクリプトコマンド郡
+ *	@author	tomoya takahashi
+ *	@date		2009.12.17
+ *
+ *	モジュール名：
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+#ifdef _cplusplus
+extern "C"{
+#endif
+
+
+// WFBCの会話開始・終了
+extern VMCMD_RESULT EvCmdWfbc_TalkStart( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdWfbc_TalkEnd( VMHANDLE *core, void *wk );
+
+// 話している人のバトルトレーナーID取得
+extern VMCMD_RESULT EvCmdWfbc_GetBattleTrainerID( VMHANDLE *core, void *wk );
+
+// 話し相手の街に行きたがるか？
+extern VMCMD_RESULT EvCmdWfbc_IsTakesIt( VMHANDLE *core, void *wk );
+
+// 話し相手の前の履歴があるか？
+extern VMCMD_RESULT EvCmdWfbc_IsRireki( VMHANDLE *core, void *wk );
+
+
+
+
+#ifdef _cplusplus
+}	// extern "C"{
+#endif
+
+
+

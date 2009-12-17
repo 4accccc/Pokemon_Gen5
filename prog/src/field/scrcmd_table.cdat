@@ -744,6 +744,18 @@
   NO_CMD()
   NO_CMD()
 
+  //WFBC関連
+  DEF_CMD( EvCmdWfbc_TalkStart, EV_SEQ_WFBC_TALKSTART )
+  DEF_CMD( EvCmdWfbc_TalkEnd, EV_SEQ_WFBC_TALKEND )
+  DEF_CMD( EvCmdWfbc_GetBattleTrainerID, EV_SEQ_WFBC_GET_TRAINER_ID )
+  DEF_CMD( EvCmdWfbc_IsTakesIt, EV_SEQ_WFBC_CHECK_TAKES_IT )
+
+  DEF_CMD( EvCmdWfbc_IsRireki, EV_SEQ_WFBC_CHECK_RIREKI )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

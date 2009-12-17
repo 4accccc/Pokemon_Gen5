@@ -102,6 +102,10 @@ for( $i=0; $i<2; $i++ )
 {
   open( FILEOUT, ">".$ARGV[ 1+$i ] );
 
+  $TAG_NAME = $ARGV[ 1+$i ];
+  $TAG_NAME =~ s/\.mev//g;
+  $TAG_NAME = uc( $TAG_NAME );
+
   print( FILEOUT "#event data\r\n" );
   print( FILEOUT "#save date:2009/10/29 17:41:31\r\n" );
   print( FILEOUT "# linked worldmap file name\r\n" );
@@ -157,7 +161,7 @@ for( $i=0; $i<2; $i++ )
       
       print( FILEOUT "#event number: $j\r\n" );
       print( FILEOUT "#Door Event Label\r\n" );
-      print( FILEOUT "DOOR_ID_".$EVENT_DATA_BC[ $data_index + $PARA_TAG ]."\r\n" );
+      print( FILEOUT "DOOR_ID_".$TAG_NAME."_".$EVENT_DATA_BC[ $data_index + $PARA_TAG ]."\r\n" );
       print( FILEOUT "#Next Zone ID Name\r\n" );
       print( FILEOUT $EVENT_DATA_BC[ $data_index + $PARA_NextZoneID ]."\r\n" );
       print( FILEOUT "#Next Door ID Name\r\n" );
@@ -188,7 +192,7 @@ for( $i=0; $i<2; $i++ )
       
       print( FILEOUT "#event number: $j\r\n" );
       print( FILEOUT "#Door Event Label\r\n" );
-      print( FILEOUT "DOOR_ID_".$EVENT_DATA_WF[ $data_index + $PARA_TAG ]."\r\n" );
+      print( FILEOUT "DOOR_ID_".$TAG_NAME."_".$EVENT_DATA_WF[ $data_index + $PARA_TAG ]."\r\n" );
       print( FILEOUT "#Next Zone ID Name\r\n" );
       print( FILEOUT $EVENT_DATA_WF[ $data_index + $PARA_NextZoneID ]."\r\n" );
       print( FILEOUT "#Next Door ID Name\r\n" );

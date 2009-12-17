@@ -42,11 +42,11 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\bc_block_event.wms
 4
 #event number: 0
 #Door Event Label
-DOOR_ID_BCIN_BUILD00
+DOOR_ID_BC10_BUILD00
 #Next Zone ID Name
-ZONE_ID_T01
+ZONE_ID_BC10R0101
 #Next Door ID Name
-DOOR_ID_T01_EXIT01
+DOOR_ID_BC10R0101_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -59,11 +59,11 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Door Event Label
-DOOR_ID_BCIN_BUILD01
+DOOR_ID_BC10_BUILD01
 #Next Zone ID Name
-ZONE_ID_T01
+ZONE_ID_BC10R0401
 #Next Door ID Name
-DOOR_ID_T01_EXIT01
+DOOR_ID_BC10R0401_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -76,11 +76,11 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 2
 #Door Event Label
-DOOR_ID_BCIN_BUILD02
+DOOR_ID_BC10_BUILD02
 #Next Zone ID Name
-ZONE_ID_T01
+ZONE_ID_BC10R0201
 #Next Door ID Name
-DOOR_ID_T01_EXIT01
+DOOR_ID_BC10R0201_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -93,11 +93,11 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 3
 #Door Event Label
-DOOR_ID_BCIN_BUILD03
+DOOR_ID_BC10_BUILD03
 #Next Zone ID Name
-ZONE_ID_T01
+ZONE_ID_BC10R0301
 #Next Door ID Name
-DOOR_ID_T01_EXIT01
+DOOR_ID_BC10R0301_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type

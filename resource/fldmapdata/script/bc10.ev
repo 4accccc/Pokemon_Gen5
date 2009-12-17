@@ -41,7 +41,16 @@ ev_bc10:
 /*   BlackCyty                                                */
 /**************************************************************/
 ev_bc_npc:
-	//ブラックシティ　さいこう！
+  // WFBC　会話前処理
+  _WFBC_TALKSTART()
+	
+  //ブラックシティ　さいこう！
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10_npc00 )
-  _END
 
+  // バトルへ飛ばす
+  _WFBC_GET_TRAINER_ID( SCWK_ANSWER )
+  _TRAINER_BTL_SET( SCWK_ANSWER, 0 )
+  
+  // WFBC　会話後処理
+  _WFBC_TALKEND()
+  _END

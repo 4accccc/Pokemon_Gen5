@@ -1492,6 +1492,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   //イベント起動データの読み込み
   EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );
 
+  // イベント追加登録
+
   //マトリックスデータの更新
   {
     MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );

@@ -697,6 +697,37 @@ void FIELD_WFBC_CORE_PEOPLE_CalcTalk( FIELD_WFBC_CORE_PEOPLE* p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  バトルしたことを設定
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_PEOPLE_SetBattle( FIELD_WFBC_CORE_PEOPLE* p_wk )
+{
+  // OFF
+  p_wk->one_day_msk = FIELD_WFBC_ONEDAY_MSK_OFF( p_wk->one_day_msk, FIELD_WFBC_ONEDAY_MSK_BATTLE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルが可能なのかチェック
+ *
+ *	@param	cp_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_PEOPLE_IsBattle( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
+{
+  // OFF
+  if( FIELD_WFBC_ONEDAY_MSK_CHECK( cp_wk->one_day_msk, FIELD_WFBC_ONEDAY_MSK_BATTLE ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  親データの設定
  *
  *	@param	p_wk        ワーク
@@ -755,6 +786,28 @@ u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
   GF_ASSERT( cp_wk );
   return cp_wk->npc_id;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  機嫌値が、連れて行かれてしまいそうになる値か？
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE    はい
+ *	@retval FALSE   いいえ
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_PEOPLE_IsMoodTakes( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  if( cp_wk->mood > FIELD_WFBC_MOOD_TAKES )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
 
 
 
@@ -1222,6 +1275,7 @@ static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, 
   p_people->one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
 
   // 親の設定
+  // 自分で初期化する
   FIELD_WFBC_CORE_PEOPLE_SetParentData( p_people, cp_mystatus );
 }
 
@@ -1276,3 +1330,21 @@ static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add 
   }
   return ret;
 }
+
+
+#ifdef PM_DEBUG
+u32 FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( const FIELD_WFBC_CORE* cp_wk )
+{
+  u32 npc_idx;
+  u32 npc_num;
+
+  npc_num = FIELD_WFBC_CORE_GetPeopleNum( cp_wk, MAPMODE_NORMAL );
+
+  npc_idx = GFUser_GetPublicRand( FIELD_WFBC_NPCID_MAX - npc_num );
+
+
+  npc_idx = WFBC_CORE_GetNotUseNpcID( cp_wk, npc_idx );
+
+  return npc_idx;
+}
+#endif

@@ -70,6 +70,7 @@
 #include "scrcmd_bsubway.h"
 #include "scrcmd_league_front.h"
 #include "scrcmd_palpark.h"
+#include "scrcmd_wfbc.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

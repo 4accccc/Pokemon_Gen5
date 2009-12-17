@@ -123,6 +123,15 @@ extern void FIELD_WFBC_DeletePeople( FIELD_WFBC* p_wk, u32 npc_id );
 // 連れて行かれた設定
 extern void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id );
 
+// 会話処理
+extern void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id );
+
+// 履歴の人の情報をWordSetに設定
+extern void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, HEAPID heapID );
+
+// バトルしたことを設定
+extern void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id );
+
 
 
 //-------------------------------------

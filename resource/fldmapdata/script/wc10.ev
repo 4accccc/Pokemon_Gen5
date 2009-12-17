@@ -41,6 +41,12 @@ ev_wc10:
 /*   WhiteForest                                              */
 /**************************************************************/
 ev_wf_npc:
+  // WFBC　会話前処理
+  _WFBC_TALKSTART()
+
 	//ホワイトフォレストさいこう！
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_npc00 )
+
+  // WFBC　会話後処理
+  _WFBC_TALKEND()
   _END
