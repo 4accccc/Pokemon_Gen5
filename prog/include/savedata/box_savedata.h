@@ -35,7 +35,8 @@ typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 #define BOX_MAX_TRAY			(24)
 #define BOX_TRAYNAME_MAXLEN		(8)
 #define BOX_TRAYNAME_BUFSIZE	(20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
-#define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)
+#define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)	// １つのトレイに格納できるポケモン数
+#define BOX_MAX_TRAY_POS	(BOX_MAX_POS*BOX_MAX_TRAY)		// ボックス全体に格納できるポケモン数
 
 
 #define BOX_NORMAL_WALLPAPER_MAX	(16)
