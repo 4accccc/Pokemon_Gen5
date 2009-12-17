@@ -126,7 +126,7 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_FLAG_RESET( FV_C07_HAKAIM_01 )
 		
 		//d08r0101のマップを入り口が破壊されたマップに差し替える
-		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
 
 		//========================================//
 		

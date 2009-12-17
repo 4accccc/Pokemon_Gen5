@@ -195,7 +195,7 @@ EVENT_END
 /* ライバル                                             */
 /**************************************************************/
 EVENT_START   ev_c07_rival_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_black_03 )
 EVENT_END
 
 
@@ -203,7 +203,7 @@ EVENT_END
 /* サポート                                             */
 /**************************************************************/
 EVENT_START   ev_c07_support_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_white_03 )
 EVENT_END
 
 
