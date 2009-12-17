@@ -288,11 +288,40 @@ EVENT_END
 EVENT_START   ev_c01_leader_01
 _TALK_OBJ_START()
 
+	//くさタイプ選択の場合
+	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		_POKETYPE_NAME( 0, POKETYPE_KUSA )
+
+	//ほのおタイプ選択の場合
+	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+		_POKETYPE_NAME( 0, POKETYPE_HONOO )
+
+	//みずタイプ選択の場合
+	ELSE
+		_POKETYPE_NAME( 0, POKETYPE_MIZU )
+		
+	ENDIF
+
 	_BALLOONWIN_TALKOBJ_MSG( msg_c01_leader1_01 )
 	_BALLOONWIN_CLOSE()
-		
+
+	//ローカル定義
+	DEFINE_LOCAL	DOOR_ANIME_ID
+
+	//ジム内に消えていくアニメ
 	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
 	_OBJ_ANIME_WAIT()
+
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 788, 585 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
+	_OBJ_ANIME_WAIT()
+
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 	
 	//========================================//
 	
@@ -315,7 +344,6 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader_saru
 	_ANIME_DATA	AC_WALK_U_16F,1
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

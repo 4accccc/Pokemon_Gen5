@@ -715,6 +715,9 @@ t02_speech:
 	_OBJ_ANIME( T02_N_01, anm_n_come )
 	_OBJ_ANIME_WAIT()
 
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
+
 	//キミの　ポケモンかな？　今　トレーナーへの
 	_BALLOONWIN_OBJMSG( msg_t02_boss_01 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
@@ -778,6 +781,9 @@ t02_speech:
 	//Ｎ・ライバルのＯＢＪを消す
 	_OBJ_DEL( T02_RIVAL_02 )
 	_OBJ_DEL( T02_N_01 )
+
+	//BGM終了
+	_END_EVENT_BGM()
 
 	//============================================//
 	

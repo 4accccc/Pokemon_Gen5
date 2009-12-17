@@ -1,5 +1,5 @@
 #../data/bcwftest.mev
-../tmp/bcwftest.bin:../data/bcwftest.mev $(UNIQ_SCRIPTHEADER) ../tmp/bcwftest.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h 
+../tmp/bcwftest.bin:../data/bcwftest.mev $(UNIQ_SCRIPTHEADER) ../tmp/bcwftest.h 
 	@echo ../data/bcwftest.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/bcwftest.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/bcwftest.h 
 
