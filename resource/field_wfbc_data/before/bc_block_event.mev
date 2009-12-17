@@ -54,7 +54,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 -360
+-72 0 -328
 #size
 1 1
 #event number: 1
@@ -71,7 +71,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-456 0 -360
+232 0 -344
 #size
 1 1
 #event number: 2
@@ -88,7 +88,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -488
+56 0 -456
 #size
 1 1
 #event number: 3
@@ -105,7 +105,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -488
+312 0 -456
 #size
 1 1
 #Map Event List Data End

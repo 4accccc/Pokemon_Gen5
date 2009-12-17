@@ -135,7 +135,7 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 
 	perl wfbc_camera_conv.pl $(CAMERA_FILE) $(CAMERA_BIN)
 
-	perl wfbc_event_conv.pl $(EVENT_FILE) $(LAND_DATA_PATCH) $(BLOCK_BC_HEADER) $(BLOCK_WF_HEADER) $(EVENT_WF_PARA) $(EVENT_BC_PARA)
+	perl wfbc_event_conv.pl $(EVENT_FILE) $(LAND_DATA_PATCH) $(BLOCK_BC_HEADER) $(BLOCK_WF_HEADER) $(EVENT_BC_PARA) $(EVENT_WF_PARA)
 
 	
 
