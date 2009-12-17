@@ -268,11 +268,15 @@ EVENT_START   ev_pos_d01r0101_support_01
 	//サポート登場
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_01)
 	_OBJ_ANIME_WAIT()
+	//主人公振り向く
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_retrun01)
+	_OBJ_ANIME_WAIT()
 	//ひとこと声をかける
 	_BALLOONWIN_OBJMSG(msg_d01r0101_white_01,D01R0101_SUPPORT)
 	_BALLOONWIN_CLOSE()
 	//サポート廃墟内へ
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_02)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_retrun02)
 	_OBJ_ANIME_WAIT()
 	
 	//======================================//
@@ -324,16 +328,45 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_d01r0101_support_03
 
+	//自機座標取得
+	DEFINE_LOCAL  POSX
+    DEFINE_LOCAL  POSZ
+    _PLAYER_POS_GET( POSX,POSZ ) 
+
 	//サポート追って来る
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_03)
 	_OBJ_ANIME_WAIT()
+	
+	//プレイヤーが通る3グリッド分をアニメを用意
+    SWITCH $POSZ
+	CASE 22 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z22 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 23 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z23 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 24 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z24 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z22 )
+	_OBJ_ANIME_WAIT()
+	
+    ENDSWITCH
+    
+	_OBJ_ANIME_WAIT()
+	
+	//サポート何かに気づく
 	_BALLOONWIN_OBJMSG(msg_d01r0101_white_03,D01R0101_SUPPORT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//======================================//
 	
-	//ポケモンの鳴き声を聞くPOS起動
+	//ポケモンの姿を見るPOS起動
 	$WK_SCENE_D01R0101_POKE = 2
 	
 	//======================================//
@@ -349,7 +382,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_PLAYER_NAME(0)
 
 	//夢ポケモン鳴いて退場
-	_BALLOONWIN_OBJMSG(msg_d01r0101_poke_01,D01R0101_POKE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_01,D01R0101_POKE_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
 	_OBJ_ANIME_WAIT()
@@ -418,50 +451,85 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_01
 	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤー振り向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_retrun01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤー一歩後ずさる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_retrun02
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤー、サポートに隣接z22
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_z22
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤー、サポートに隣接z23
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_z23
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤー、サポートに隣接z24
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_z24
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：廃墟の中に入っていくサポート 
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_02
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_DIR_R,8
-	_ANIME_DATA	AC_DIR_L,8
-	_ANIME_DATA	AC_DIR_R,8
-	_ANIME_DATA	AC_DIR_L,8
+	_ANIME_DATA	AC_DIR_R,16
+	_ANIME_DATA	AC_DIR_L,16
+	_ANIME_DATA	AC_DIR_R,16
+	_ANIME_DATA	AC_DIR_L,16
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：POS踏むとサポートが気づいて駆け寄って来る  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_03
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：夢ポケモン去っていく  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_pokemon_01
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：アイテムを取得後サポートが隣接 
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_04
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：アイテムを取得後サポートが隣接 
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_05
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0

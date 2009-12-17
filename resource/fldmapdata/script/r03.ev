@@ -67,6 +67,39 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG(msg_r03_black_01,R03_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
+	//自機座標取得
+	DEFINE_LOCAL  POSX
+    DEFINE_LOCAL  POSZ
+    _PLAYER_POS_GET( POSX,POSZ ) 
+    
+    //プレイヤーが通る4グリッド分を用意
+    SWITCH $POSZ
+	CASE 561 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z561 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 562 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z562 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 563 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z563 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 564 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z564 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 565 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z565 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z563 )
+	_OBJ_ANIME_WAIT()
+	
+    ENDSWITCH
+	
 	//ライバル隣接
 	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01_02)
 	_OBJ_ANIME_WAIT()
@@ -117,6 +150,8 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG( msg_r03_hakaim_01 , R03_HAKAIM_01 )
 	_OBJ_ANIME( R03_HAKAIM_01 , anm_hakai_dash_01 )
 	_OBJ_ANIME( R03_HAKAIM_02, anm_hakai_dash_01 )
+	_OBJ_ANIME( R03_RIVAL_01 , anm_hakai_bikkuri_rival )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_bikkuri_player )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -126,6 +161,7 @@ EVENT_START   ev_pos_r03_rival_01
 	
 	//ライバル画面右を見てサポートに気づく
 	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_03 )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_return )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03_black_03 , R03_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
@@ -170,6 +206,8 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03_white_04 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_06_up )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03_black_08 , R03_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
@@ -340,6 +378,50 @@ _ANIME_LABEL	anm_player_00
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公ライバルの方に歩くz561
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00_z561
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公ライバルの方に歩くz562
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00_z562
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公ライバルの方に歩くz563
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00_z563
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公ライバルの方に歩くz564
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00_z564
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公ライバルの方に歩くz565
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00_z565
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：R03ライバル主人公に隣接
@@ -348,6 +430,29 @@ _ANIME_LABEL	anm_player_00
 _ANIME_LABEL	anm_rival_01_02
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03ライバル、プラズマ団に驚いて横にのく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_hakai_bikkuri_rival
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公、プラズマ団に驚いて横にのく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_hakai_bikkuri_player
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：R03プラズマ団駆け抜ける
@@ -362,7 +467,17 @@ _ANIME_LABEL	 anm_hakai_dash_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_rival_01_03
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03プレイヤー画面右を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_return
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -423,15 +538,21 @@ _ANIME_LABEL	anm_support_03
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+// ポケモン誘拐イベント：ライバル主人公のほうを向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_06_up
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：ライバル洞窟方面へ
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_rival_01_07
-	_ANIME_DATA	AC_WALK_L_8F,35
-	_ANIME_DATA	AC_WALK_U_8F,9
-	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_L_6F,35
+	_ANIME_DATA	AC_WALK_U_6F,9
+	_ANIME_DATA	AC_WALK_L_6F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -439,8 +560,8 @@ _ANIME_LABEL	 anm_rival_01_07
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_player_01
-	_ANIME_DATA	AC_WALK_L_8F,35
-	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_WALK_L_6F,35
+	_ANIME_DATA	AC_WALK_U_6F,9
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
