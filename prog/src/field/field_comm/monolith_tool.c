@@ -74,17 +74,21 @@ enum{
   PANEL_COLOR_END = 4,        ///<パネルカラーアニメ終端位置
   PANEL_COLOR_NUM = PANEL_COLOR_END - PANEL_COLOR_START + 1,  ///<パネルカラーアニメのカラー数
   
+  PANEL_FADEDATA_PALNO = 3,   ///<パネルフェードデータ(変更後の色)が入っているパレット位置
+  
   PANEL_COLOR_FADE_ADD_EVY = 0x0080,    ///<EVY加算値(下位8ビット小数)
   
   PANEL_COLOR_FLASH_WAIT = 3,     ///<フラッシュのウェイト
   PANEL_COLOR_FLASH_COUNT = 1,    ///<フラッシュ回数
 };
 
+#if 0 //PANEL_FADEDATA_PALNOの位置に色を入れておくように変更
 ///パネルカラーアニメでフォーカスされた時に向かうEVY最大到達カラー
 ALIGN4 static const u16 PanelFocusColor[] = {
   0x7ff9, 0x7fd3, 0x7f10,
 };
 SDK_COMPILER_ASSERT(NELEMS(PanelFocusColor) == PANEL_COLOR_NUM);
+#endif
 
 //--------------------------------------------------------------
 //  BMPFONT
@@ -295,7 +299,9 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
       evy >>= 8;
       for(i = 0; i < PANEL_COLOR_NUM; i++){
         SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
-          1, evy, PanelFocusColor[i]);
+          1, evy, 
+          PaletteWork_ColorGet(appwk->setup->pfd, FADE_SUB_BG, FADEBUF_SRC, 
+          PANEL_FADEDATA_PALNO*16+PANEL_COLOR_START+i));
       }
     }
     break;
@@ -317,7 +323,9 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
         }
         for(i = 0; i < PANEL_COLOR_NUM; i++){
           SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
-            1, pcc->evy >> 8, PanelFocusColor[i]);
+            1, pcc->evy >> 8, 
+            PaletteWork_ColorGet(appwk->setup->pfd, FADE_SUB_BG, FADEBUF_SRC, 
+            PANEL_FADEDATA_PALNO*16+PANEL_COLOR_START+i));
         }
       }
       else{

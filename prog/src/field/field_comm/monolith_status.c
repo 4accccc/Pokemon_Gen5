@@ -25,6 +25,7 @@
 //==============================================================================
 ///BMPWIN
 enum{
+  BMPWIN_TITLE,           ///<タイトル
   BMPWIN_LEVEL,           ///<モノリスレベル
   BMPWIN_NICKNAME,        ///<モノリスの通称
   BMPWIN_POWER_BALANCE,   ///<パワーバランス
@@ -36,6 +37,11 @@ enum{
 
 ///BMPWINのサイズ定義など
 enum{
+  BMPWIN_POS_TITLE_X = 2,
+  BMPWIN_POS_TITLE_Y = 1,
+  BMPWIN_POS_TITLE_SIZE_X = 32 - BMPWIN_POS_TITLE_X,
+  BMPWIN_POS_TITLE_SIZE_Y = 2,
+
   BMPWIN_POS_LEVEL_X = 2,
   BMPWIN_POS_LEVEL_Y = 4,
   BMPWIN_POS_LEVEL_SIZE_X = 32 - BMPWIN_POS_LEVEL_X,
@@ -69,7 +75,6 @@ enum{
 typedef struct{
   GFL_BMPWIN *bmpwin[BMPWIN_MAX];
   PRINT_UTIL print_util[BMPWIN_MAX];
-  PANEL_ACTOR panel_title;
   GFL_CLWK *act_cancel;
 }MONOLITH_STATUS_WORK;
 
@@ -88,8 +93,6 @@ static void _Setup_BGFrameExit(void);
 static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw);
 static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw);
-static void _Setup_TitlePanel_Create(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw);
-static void _Setup_TitlePanel_Delete(MONOLITH_STATUS_WORK *msw);
 static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw);
 static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw);
 static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw);
@@ -148,7 +151,6 @@ static GFL_PROC_RESULT MonolithStatusProc_Init(GFL_PROC * proc, int * seq, void 
   _Setup_BGGraphicLoad(appwk->setup);
   _Setup_BmpWin_Create(appwk->setup, msw);
   //OBJ
-  _Setup_TitlePanel_Create(appwk, msw);
   _Status_CancelIconCreate(appwk, msw);
   
   //メッセージ描画
@@ -181,7 +183,6 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
   for(i = 0; i < BMPWIN_MAX; i++){
     PRINT_UTIL_Trans(&msw->print_util[i], appwk->setup->printQue);
   }
-  MonolithTool_Panel_TransUpdate(appwk->setup, &msw->panel_title);
   _Status_CancelIconUpdate(msw);
   
   switch(*seq){
@@ -221,7 +222,6 @@ static GFL_PROC_RESULT MonolithStatusProc_End( GFL_PROC * proc, int * seq, void 
   
   //OBJ
   _Status_CancelIconDelete(msw);
-  _Setup_TitlePanel_Delete(msw);
   
   //BG
   _Setup_BmpWin_Exit(msw);
@@ -307,6 +307,14 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *ms
 {
   int i;
   
+  //モノリスタイトル
+  msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_POS_TITLE_X, BMPWIN_POS_TITLE_Y, 
+    BMPWIN_POS_TITLE_SIZE_X, BMPWIN_POS_TITLE_SIZE_Y, 
+    MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_TITLE] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TITLE] );
+
   //モノリスレベル
   msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
     BMPWIN_POS_LEVEL_X, BMPWIN_POS_LEVEL_Y, 
@@ -372,42 +380,6 @@ static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw)
 
 //--------------------------------------------------------------
 /**
- * タイトルパネル作成
- *
- * @param   appwk		
- * @param   msw		
- */
-//--------------------------------------------------------------
-static void _Setup_TitlePanel_Create(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw)
-{
-  MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
-
-  STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
-
-	GFL_STR_SetStringCodeOrderLength(
-	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
-  WORDSET_RegisterWord(appwk->setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
-
-  GFL_STR_DeleteBuffer(strbuf);
-
-  MonolithTool_Panel_Create(appwk->setup, &msw->panel_title, 
-    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 12, msg_mono_title_000, appwk->setup->wordset);
-}
-
-//--------------------------------------------------------------
-/**
- * タイトルパネル削除
- *
- * @param   msw		
- */
-//--------------------------------------------------------------
-static void _Setup_TitlePanel_Delete(MONOLITH_STATUS_WORK *msw)
-{
-  MonolithTool_Panel_Delete(&msw->panel_title);
-}
-
-//--------------------------------------------------------------
-/**
  * ミッション説明描画
  *
  * @param   appwk		
@@ -420,12 +392,21 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
 {
   STRBUF *strbuf, *expand_strbuf;
   const OCCUPY_INFO *occupy;
+  MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
   
   occupy = Intrude_GetOccupyInfo(appwk->parent->intcomm, appwk->parent->palace_area);
   
   strbuf = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
   expand_strbuf = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
 
+  //タイトル
+	GFL_STR_SetStringCodeOrderLength(
+	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
+  WORDSET_RegisterWord(setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TITLE], setup->printQue, 
+    0, 0, expand_strbuf, setup->font_handle);
+  
   //モノリスレベル
   GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_000, strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, occupy->intrude_level, 3, 
