@@ -142,6 +142,7 @@ static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	GFL_HEAP_DeleteHeap( HEAPID_WORLD );
   GFL_HEAP_DeleteHeap( HEAPID_PROC );
   GFL_HEAP_DeleteHeap( HEAPID_APP_CONTROL );
+  OS_ResetSystem( 0 );
 	return GFL_PROC_RES_FINISH;
 }
 //------------------------------------------------------------------
