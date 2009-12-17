@@ -983,7 +983,18 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	if( p_wk->p_param->is_only_play )
 	{	
-		p_param->score	= 80;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    { 
+      p_param->score	= 100;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    { 
+      p_param->score	= 90;
+    }
+    else
+    { 
+      p_param->score	= 80;
+    }
 		p_param->is_only_play	= p_wk->p_param->is_only_play;
 		return p_param;
 	}
