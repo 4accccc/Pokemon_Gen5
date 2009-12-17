@@ -70,10 +70,11 @@ typedef struct {
 struct _INTRO_CMD_WORK {
   // [IN]
   HEAPID heap_id;
+  const INTRO_PARAM* init_param;
   // [PRIVATE]
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
-  // @TODO  時間があったらリファクタ
+  // @TODO 時間があったらリファクタ
   // INTRO_STORE_DATAを特定タイミングで初期化し、
   // その時に INTRO_CMD_WORK へのポインタも持たせる形式の方がスッキリする
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
@@ -89,6 +90,7 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
@@ -105,6 +107,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SE_STOP,
   CMD_KEY_WAIT,
   CMD_PRINT_MSG,
+  CMD_YESNO,
   CMD_SELECT_MOJI,
   NULL, // end
 };
@@ -179,7 +182,8 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  GFL_SOUND_PlayBGM( param[0] );
+  HOSAKA_Printf( "play bgm =%d \n", param[0] );
+  PMSND_PlayBGM( param[0] );
 
   return TRUE;
 }
@@ -291,60 +295,74 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  漢字／ひらがなモードを決定
+ *	@brief  YESNO選択
  *
  *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat
  *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  switch( sdat->seq )
+  {
+  case 0:
+    // SETUP
+    {
+#if 0
+      const BMPMENULIST_HEADER menuH =
+      {
+        2, 2,
+        0, 0, 0, 0,
+        1, 2, 15, ///< 文字色
+        0, 0, 0,
+        0, 0,
+      };
+#endif
+    }
+    break;
+
+  case 1:
+    {
+    }
+    break;
+
+  default : GF_ASSERT(0);
+  }
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ひらがな／漢字モードを決定
+ *
+ *	@param	param[0] 0=ひらがな ／ 1=漢字
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  // @TODO
-  return TRUE;
+  CONFIG* config;
   
-  switch( sdat->seq )
+  GF_ASSERT( param[0] == 0 || param[0] == 1 );
+
+  config = SaveData_GetConfig( wk->init_param->save_ctrl );
+  
+  if( param[0] == 0 )
   {
-  case 0:
-    INTRO_MSG_SetPrint( wk->wk_msg, param[0], NULL, NULL );
-    sdat->seq++;
-    break;
-
-  case 1:
-    if( INTRO_MSG_PrintProc( wk->wk_msg ) )
-    {
-      return TRUE;
-      sdat->seq++;
-    }
-    break;
-
-#if 0
-  case 2:
-    if( ret != INTRO_SELECT_UI_RET_CONTINUE )
-    {
-      if( ret == INTRO_SELECT_UI_RET_TRUE )
-      {
-        GFL_MSGSYS_SetLangID( 0 );
-//      CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_HIRAGANA );
-      }
-      else
-      {
-        GFL_MSGSYS_SetLangID( 1 );
-//      CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_KANJI );
-      }
-//    SEL_MODE_ExitItem( wk );
-    
-      return TRUE;
-    }
-    break;
-#endif 
-
-  default : GF_ASSERT(0);
+      GFL_MSGSYS_SetLangID( 0 );
+      CONFIG_SetMojiMode( config, MOJIMODE_HIRAGANA );
+  }
+  else
+  {
+      GFL_MSGSYS_SetLangID( 1 );
+      CONFIG_SetMojiMode( config, MOJIMODE_KANJI );
   }
 
-  return FALSE;
+  return TRUE;
 
 }
 
@@ -366,13 +384,13 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
 /**
  *	@brief  3Dデモコマンドコントローラー 初期化
  *
- *	@param  start_frame
+ *	@param  init_param
  *	@param	heap_id 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( const INTRO_PARAM* init_param, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
 
@@ -380,7 +398,8 @@ INTRO_CMD_WORK* Intro_CMD_Init( HEAPID heap_id )
   wk = GFL_HEAP_AllocClearMemory(  heap_id, sizeof( INTRO_CMD_WORK ) );
 
   // メンバ初期化
-  wk->heap_id = heap_id;
+  wk->heap_id     = heap_id;
+  wk->init_param  = init_param;
 
   // 選択肢モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( NARC_message_intro_dat ,heap_id );

@@ -16,11 +16,10 @@
 // シーン init
 static const INTRO_CMD_DATA c_intro_scene_init[] = 
 { 
-  { INTRO_CMD_TYPE_BG_LOAD, },
+  { INTRO_CMD_TYPE_BG_LOAD, { 0 }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING } },
+
   // ↑ROMアクセスはここまで↑
-  
-  // @TODO 初回セーブデータ初期化コマンド開始
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
 };
@@ -29,7 +28,10 @@ static const INTRO_CMD_DATA c_intro_scene_init[] =
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
-  { INTRO_CMD_TYPE_SELECT_MOJI }, // 漢字／ひらがな選択
+  
+  { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, } },
+    { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // YES=かな
+    { INTRO_CMD_TYPE_SELECT_MOJI, 1 }, //  NO=漢字
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_01 }, // シーン01へ
 };
@@ -37,8 +39,14 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 // シーン 01 
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 } },
+
   // @TODO ブラックイン
+
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
+  
+  // @TODO 初回セーブデータ初期化コマンド開始
+  
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_02 } }, // わたし　アララギと　いいます
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
@@ -48,6 +56,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 static const INTRO_CMD_DATA c_intro_scene_02[] =
 {
   // @TODO ポケモン出現演出
+  
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_03 } }, // そう！　この　せかいには
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_04 } }, // ふしぎな　ちからを　ひめている
   
@@ -59,6 +68,7 @@ static const INTRO_CMD_DATA c_intro_scene_03[] =
 {
   // ポケモン出現演出
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_05 } }, // さて　わたしの　はなしは
+
   // @TODO 博士 非表示（フェードあり）
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_04 }, // シーン04へ
@@ -68,8 +78,11 @@ static const INTRO_CMD_DATA c_intro_scene_03[] =
 static const INTRO_CMD_DATA c_intro_scene_04[] =
 {
   // @TODO 主人公 立ち絵 スライドイン
+  
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_gender_01 } }, // あなたは　おとこのこ？
+
   // @TODO 性別選択
+  
   // @TODO 性別 決定演出
   
   // @TODO 選択肢 確認メッセージ
@@ -110,7 +123,9 @@ static const INTRO_CMD_DATA c_intro_scene_06[] =
 static const INTRO_CMD_DATA c_intro_scene_07[] = 
 { 
   // @TODO 主人公立ち絵：（フェードイン）
+
   // @TODO 主人公立ち絵→フィールドOBJへ
+
   { INTRO_CMD_TYPE_END }, ///< 終了
 };
 

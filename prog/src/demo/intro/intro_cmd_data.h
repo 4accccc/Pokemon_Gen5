@@ -51,7 +51,7 @@ typedef enum
 typedef struct {
   INTRO_CMD_TYPE type;
   int param[ INTRO_CMD_PARAM_MAX ];
-  CMD_READ read_next; ///< CMD_READ_NEXT なら次のコマンドを並列実行
+  u32 read_next : 1; ///< CMD_READ : CMD_READ_NEXT なら次のコマンドを並列実行
 } INTRO_CMD_DATA;
 
 //=============================================================================

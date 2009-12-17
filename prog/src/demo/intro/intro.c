@@ -235,7 +235,7 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
   //3D ‰Šú‰»
-  wk->cmd = Intro_CMD_Init( wk->heapID );
+  wk->cmd = Intro_CMD_Init( wk->param, wk->heapID );
 
 #ifdef INTRO_INFOWIN
 	//INFOWIN‚Ì‰Šú‰»
