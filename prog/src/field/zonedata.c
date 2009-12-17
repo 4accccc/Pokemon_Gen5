@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	zonedata.c
- * @brief	ゾーン別データ
- * @author	tamada GAME FREAK inc.
- * @date	08.11.12
+ * @file  zonedata.c
+ * @brief ゾーン別データ
+ * @author  tamada GAME FREAK inc.
+ * @date  08.11.12
  */
 //============================================================================================
 
@@ -37,7 +37,7 @@
 //-------------------------------------
 // 内部ワーク
 //-------------------------------------
-typedef struct 
+typedef struct
 {
   // アーカイブハンドル
   ARCHANDLE* handle;
@@ -62,13 +62,13 @@ static ZONE_DATA_HANDLE* data_handle = NULL;
 
 //------------------------------------------------------------------
 /**
- * @brief	ゾーンID変更テーブル
+ * @brief ゾーンID変更テーブル
  */
 //------------------------------------------------------------------
 #define ZONEDATA_CHANGE_ID_BEFORE (0)
 #define ZONEDATA_CHANGE_ID_AFTER (1)
 #define ZONEDATA_CHANGE_ID_TBL_NUM (2)
-static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL_NUM ] = 
+static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL_NUM ] =
 {
   { ZONE_ID_BC10, ZONE_ID_WC10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
 };
@@ -90,11 +90,11 @@ void ZONEDATA_Open( HEAPID heap_id )
 
     // アーカイブハンドル
     data_handle->handle = GFL_ARC_OpenDataHandle( ARCID_ZONEDATA, heap_id );
-    
+
     // フォグ　ライト
     {
-      u32 size; 
-      
+      u32 size;
+
       data_handle->zonefoglist = GFL_ARC_UTIL_LoadEx( ARCID_ZONEFOG_TABLE, NARC_field_fog_table_zonefog_table_bin, FALSE, heap_id, &size );
       data_handle->zonefoglist_max = size / sizeof(ZONE_FOG_DATA);
 
@@ -106,7 +106,7 @@ void ZONEDATA_Open( HEAPID heap_id )
     // フィールド技　効果
     {
       u32 size;
-      
+
       data_handle->fieldskill_mapeff_list = GFL_ARC_UTIL_LoadEx( ARCID_FLDSKILL_MAPEFF, NARC_fieldskill_mapeff_fieldskill_mapeffect_bin, FALSE, heap_id, &size );
       data_handle->fieldskill_mapeff_list_max = size / sizeof(FIELDSKILL_MAPEFF_DATA);
     }
@@ -126,7 +126,7 @@ void ZONEDATA_Close()
     {
       GFL_HEAP_FreeMemory( data_handle->fieldskill_mapeff_list );
     }
-    
+
     // フォグ　ライト
     {
       GFL_HEAP_FreeMemory( data_handle->zonelightlist );
@@ -144,27 +144,31 @@ void ZONEDATA_Close()
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ZONEIDの変更設定
+ *  @brief  ZONEIDの変更設定
  *
- *	@param	id      ゾーンID変更ID
- *	@param	flag    TRUE:変更ON　　FALSE：変更OFF
+ *  @param  id      ゾーンID変更ID
+ *  @param  flag    TRUE:変更ON　　FALSE：変更OFF
  */
 //-----------------------------------------------------------------------------
 void ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_ID id, BOOL flag )
 {
-  GF_ASSERT( data_handle );
-  GF_ASSERT( id < ZONEDATA_CHANGE_MAX );
-  data_handle->zone_change_flag[ id ] = flag;
+// ここをNULLで止めてしまうとデバッグできないのでこうしてます  taya
+//    GF_ASSERT( data_handle );
+  if( data_handle != NULL )
+  {
+    GF_ASSERT( id < ZONEDATA_CHANGE_MAX );
+    data_handle->zone_change_flag[ id ] = flag;
+  }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ZONEIDの変更設定を確認
+ *  @brief  ZONEIDの変更設定を確認
  *
- *	@param	id    ゾーンID変更ID
+ *  @param  id    ゾーンID変更ID
  *
- *	@retval TRUE      変更ON
- *	@retval FALSE     変更OFF
+ *  @retval TRUE      変更ON
+ *  @retval FALSE     変更OFF
  */
 //-----------------------------------------------------------------------------
 BOOL ZONEDATA_GetChangeZoneID( ZONEDATA_CHANGE_ID id )
@@ -179,30 +183,30 @@ BOOL ZONEDATA_GetChangeZoneID( ZONEDATA_CHANGE_ID id )
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	範囲チェック
+ * @brief 範囲チェック
  */
 //------------------------------------------------------------------
 static inline u16 check_range(u16 zone_id)
 {
-	GF_ASSERT(zone_id < ZONE_ID_MAX);
-	if ( zone_id >= ZONE_ID_MAX ) {
-		return 0;
-	} else {
-		return zone_id;
-	}
+  GF_ASSERT(zone_id < ZONE_ID_MAX);
+  if ( zone_id >= ZONE_ID_MAX ) {
+    return 0;
+  } else {
+    return zone_id;
+  }
 }
-#define	CHECK_RANGE(value)	{value = check_range(value);}
+#define CHECK_RANGE(value)  {value = check_range(value);}
 
 
 //------------------------------------------------------------------
 /**
- * @brief	ZONEIDの変更処理
+ * @brief ZONEIDの変更処理
  */
 //------------------------------------------------------------------
 static u16 ControlZoneID( u16 zone_id )
 {
   int i;
-  
+
   for( i=0; i<ZONEDATA_CHANGE_MAX; i++ )
   {
     if( data_handle->zone_change_flag[i] )
@@ -218,19 +222,19 @@ static u16 ControlZoneID( u16 zone_id )
 
 //------------------------------------------------------------------
 /**
- * @brief	ゾーンの最大数の取得
- * @return	u16	最大数
+ * @brief ゾーンの最大数の取得
+ * @return  u16 最大数
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetZoneIDMax(void)
 {
-	return ZONE_ID_MAX;
+  return ZONE_ID_MAX;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static ZONEDATA * loadZoneData(HEAPID heapID)
 {
-	ZONEDATA * buffer;
+  ZONEDATA * buffer;
   if( data_handle != NULL )
   {
     buffer = GFL_ARC_LoadDataAllocByHandle(data_handle->handle, NARC_zonedata_zonetable_bin, heapID);
@@ -239,7 +243,7 @@ static ZONEDATA * loadZoneData(HEAPID heapID)
   {
     buffer = GFL_ARC_LoadDataAlloc(ARCID_ZONEDATA, NARC_zonedata_zonetable_bin, heapID);
   }
-	return buffer;
+  return buffer;
 }
 
 //------------------------------------------------------------------
@@ -255,7 +259,7 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
   // ZONEIDのすり替え
   zone_id = ControlZoneID(zone_id);
 
-	CHECK_RANGE(zone_id);	//範囲外チェック
+  CHECK_RANGE(zone_id); //範囲外チェック
 
   if( data_handle != NULL )
   {
@@ -269,60 +273,60 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
         ARCID_ZONEDATA, NARC_zonedata_zonetable_bin,
         sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA));
   }
-	return zdbuf;
+  return zdbuf;
 }
 
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	エリア指定の取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	エリア指定値
+ * @brief エリア指定の取得
+ * @param zone_id ゾーン指定ID
+ * @return  u16 エリア指定値
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetAreaID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.area_id;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.area_id;
 }
 //------------------------------------------------------------------
 /**
- * @brief	マトリックス指定の取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	マトリックス指定値
+ * @brief マトリックス指定の取得
+ * @param zone_id ゾーン指定ID
+ * @return  u16 マトリックス指定値
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMatrixID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.matrix_id;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.matrix_id;
 }
 //------------------------------------------------------------------
 /**
- * @brief	マップ構造指定の取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	マップ構造指定値
+ * @brief マップ構造指定の取得
+ * @param zone_id ゾーン指定ID
+ * @return  u16 マップ構造指定値
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMapRscID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.maprsc_id;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.maprsc_id;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief スクリプト指定IDの取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	スクリプトアーカイブでの指定ID
+ * @param zone_id ゾーン指定ID
+ * @return  u16 スクリプトアーカイブでの指定ID
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetScriptArcID(u16 zone_id)
-{ 
+{
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
   return zdbuf.script_id;
@@ -331,12 +335,12 @@ u16 ZONEDATA_GetScriptArcID(u16 zone_id)
 //------------------------------------------------------------------
 /**
  * @brief 特殊スクリプト指定IDの取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	スクリプトアーカイブでの指定ID
+ * @param zone_id ゾーン指定ID
+ * @return  u16 スクリプトアーカイブでの指定ID
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetSpScriptArcID(u16 zone_id)
-{ 
+{
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
   return zdbuf.sp_script_id;
@@ -345,12 +349,12 @@ u16 ZONEDATA_GetSpScriptArcID(u16 zone_id)
 //------------------------------------------------------------------
 /**
  * @brief フィールドメッセージ指定IDの取得
- * @param	zone_id	ゾーン指定ID
- * @return	u16	メッセージアーカイブでの指定ID
+ * @param zone_id ゾーン指定ID
+ * @return  u16 メッセージアーカイブでの指定ID
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMessageArcID(u16 zone_id)
-{ 
+{
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
   return zdbuf.msg_id;
@@ -358,128 +362,128 @@ u16 ZONEDATA_GetMessageArcID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief	マップ開始位置の取得
- * @param	zone_id	ゾーン指定ID
- * @param	pos		開始位置を受け取るためのfx32型ポインタ
+ * @brief マップ開始位置の取得
+ * @param zone_id ゾーン指定ID
+ * @param pos   開始位置を受け取るためのfx32型ポインタ
  */
 //------------------------------------------------------------------
 void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	pos->x = zdbuf.sx * FX32_ONE * FIELD_CONST_GRID_SIZE;
-	pos->y = zdbuf.sy * FX32_ONE * FIELD_CONST_GRID_SIZE;
-	pos->z = zdbuf.sz * FX32_ONE * FIELD_CONST_GRID_SIZE;
-	TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  pos->x = zdbuf.sx * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  pos->y = zdbuf.sy * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  pos->z = zdbuf.sz * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
 }
 
 //----------------------------------------------------------------------------
 /**
- * @brief	マップ開始レール位置の取得
+ * @brief マップ開始レール位置の取得
  *
- *	@param	zone_id
- *	@param	pos
+ *  @param  zone_id
+ *  @param  pos
  */
 //-----------------------------------------------------------------------------
 void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	pos->x = zdbuf.sx;
-	pos->y = zdbuf.sy;
-	pos->z = zdbuf.sz;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  pos->x = zdbuf.sx;
+  pos->y = zdbuf.sy;
+  pos->z = zdbuf.sz;
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	カメラ指定IDの取得
- * @param	zone_id	ゾーン指定ID
- * @return	u8		カメラ指定IDの値
+ * @brief カメラ指定IDの取得
+ * @param zone_id ゾーン指定ID
+ * @return  u8    カメラ指定IDの値
  */
 //------------------------------------------------------------------
 u8 ZONEDATA_GetCameraID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.camera_id;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.camera_id;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  カメラエリア指定IDの取得
- *	@param	zone_id ゾーン指定ID
- *	@return カメラエリア指定ID
+ *  @brief  カメラエリア指定IDの取得
+ *  @param  zone_id ゾーン指定ID
+ *  @return カメラエリア指定ID
  */
 //-----------------------------------------------------------------------------
 u16 ZONEDATA_GetCameraAreaID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.camera_area;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.camera_area;
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	BGM指定IDの取得
- * @param	zone_id		ゾーン指定ID
- * @param	season_id	季節指定ID
- * @return	u8		BGM指定IDの値
+ * @brief BGM指定IDの取得
+ * @param zone_id   ゾーン指定ID
+ * @param season_id 季節指定ID
+ * @return  u8    BGM指定IDの値
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 {
   u16 bgm_id = 0;
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	switch (season_id) {
-	case PMSEASON_SPRING:
-		bgm_id = zdbuf.bgm_spring_id;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  switch (season_id) {
+  case PMSEASON_SPRING:
+    bgm_id = zdbuf.bgm_spring_id;
     break;
-	case PMSEASON_SUMMER:
-		bgm_id = zdbuf.bgm_summer_id;
+  case PMSEASON_SUMMER:
+    bgm_id = zdbuf.bgm_summer_id;
     break;
-	case PMSEASON_AUTUMN:
-		bgm_id = zdbuf.bgm_autumn_id;
+  case PMSEASON_AUTUMN:
+    bgm_id = zdbuf.bgm_autumn_id;
     break;
-	case PMSEASON_WINTER:
-		bgm_id = zdbuf.bgm_winter_id;
+  case PMSEASON_WINTER:
+    bgm_id = zdbuf.bgm_winter_id;
     break;
   default:
-	  GF_ASSERT(season_id < PMSEASON_TOTAL);
-	}
+    GF_ASSERT(season_id < PMSEASON_TOTAL);
+  }
   if (bgm_id == SEQ_BGM_C_08_B && GetVersion() == VERSION_WHITE )
   {
     bgm_id = SEQ_BGM_C_08_W;
   }
-	return bgm_id;
+  return bgm_id;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief 天候指定IDの取得
- * @param	zone_id	ゾーン指定ID
+ * @param zone_id ゾーン指定ID
  * @return  u16 天候指定ID（include/field/weather_no.hを参照）
  */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetWeatherID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
   return zdbuf.weather_id;
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	特殊なサンプルOBJを使用するかどうかの設定取得
- * @param	zone_id	ゾーン指定ID
- * @param	BOOL	TRUEのとき、サンプルOBJを使用する
+ * @brief 特殊なサンプルOBJを使用するかどうかの設定取得
+ * @param zone_id ゾーン指定ID
+ * @param BOOL  TRUEのとき、サンプルOBJを使用する
  */
 //------------------------------------------------------------------
 BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.movemodel_id != 0;
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.movemodel_id != 0;
 }
 
 //------------------------------------------------------------------
@@ -570,8 +574,8 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
 //==================================================================
 /**
  * パレスマップかどうかのチェック
- * @param   zone_id		ゾーン指定ID
- * @retval  BOOL		ビンゴマップだったらTRUE
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    ビンゴマップだったらTRUE
  */
 //==================================================================
 BOOL ZONEDATA_IsPalace(u16 zone_id)
@@ -583,8 +587,8 @@ BOOL ZONEDATA_IsPalace(u16 zone_id)
 //==================================================================
 /**
  * 裏フィールドかどうかのチェック
- * @param   zone_id		ゾーン指定ID
- * @retval  BOOL		ビンゴマップだったらTRUE
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    ビンゴマップだったらTRUE
  */
 //==================================================================
 BOOL ZONEDATA_IsPalaceField(u16 zone_id)
@@ -600,8 +604,8 @@ BOOL ZONEDATA_IsPalaceField(u16 zone_id)
 //==================================================================
 /**
  * ビンゴマップかどうかのチェック
- * @param   zone_id		ゾーン指定ID
- * @retval  BOOL		ビンゴマップだったらTRUE
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    ビンゴマップだったらTRUE
  */
 //==================================================================
 BOOL ZONEDATA_IsBingo(u16 zone_id)
@@ -613,8 +617,8 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 //==================================================================
 /**
  * WFBCかどうか
- * @param   zone_id		ゾーン指定ID
- * @retval  BOOL		ビンゴマップだったらTRUE
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    ビンゴマップだったらTRUE
  */
 //==================================================================
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
@@ -644,9 +648,9 @@ BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData( &zdbuf, zone_id );
-	return zdbuf.placename_id;
+  ZONEDATA zdbuf;
+  getZoneData( &zdbuf, zone_id );
+  return zdbuf.placename_id;
 }
 
 //------------------------------------------------------------------
@@ -658,9 +662,9 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData( &zdbuf, zone_id );
-	return zdbuf.placename_flag;
+  ZONEDATA zdbuf;
+  getZoneData( &zdbuf, zone_id );
+  return zdbuf.placename_flag;
 }
 
 //------------------------------------------------------------------
@@ -688,12 +692,12 @@ BOOL ZONEDATA_IsDungeon(u16 zone_id)
   if( maptype == MAPTYPE_DUNGEON )
   {
     return TRUE;
-  } 
+  }
   return FALSE;
 }
 
 //------------------------------------------------------------------
-/** 
+/**
  * @brief 指定ゾーンがフィールドマップのマトリックス指定かどうかを判定
  * @param  zone_id 判定するゾーンのID
  * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定
@@ -701,13 +705,13 @@ BOOL ZONEDATA_IsDungeon(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return (zdbuf.matrix_id == NARC_map_matrix_wb_mat_bin);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return (zdbuf.matrix_id == NARC_map_matrix_wb_mat_bin);
 }
 
 //------------------------------------------------------------------
-/** 
+/**
  * @brief 指定ゾーンのエンカウントデータIDを取得
  * @param  zone_id 判定するゾーンのID
  * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定
@@ -715,13 +719,13 @@ BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return (zdbuf.enc_data_id);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return (zdbuf.enc_data_id);
 }
 
 //------------------------------------------------------------------
-/** 
+/**
  * @brief 指定ゾーンのイベントデータIDの取得
  * @param  zone_id 判定するゾーンのID
  * @return  イベントデータのアーカイブID
@@ -729,13 +733,13 @@ u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetEventDataArcID(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return (zdbuf.event_data_id);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return (zdbuf.event_data_id);
 }
 
 //------------------------------------------------------------------
-/** 
+/**
  * @brief 指定ゾーンの戦闘背景IDの取得
  * @param  zone_id 判定するゾーンのID
  * @return  イベントデータのアーカイブID
@@ -743,31 +747,31 @@ u16 ZONEDATA_GetEventDataArcID(u16 zone_id)
 //------------------------------------------------------------------
 u8 ZONEDATA_GetBattleBGType(u16 zone_id)
 {
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return (zdbuf.battle_bg_type);
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return (zdbuf.battle_bg_type);
 }
 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ぞーんごとのFOGデータインデックス取得 field_zonefog.h参照
+ *  @brief  ぞーんごとのFOGデータインデックス取得 field_zonefog.h参照
  *
- *	@param	zone_id ゾーンID
+ *  @param  zone_id ゾーンID
  *
- *	@retval データインデックス
- *	@retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
+ *  @retval データインデックス
+ *  @retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
  */
 //-----------------------------------------------------------------------------
 u32 ZONEDATA_GetFog(u16 zone_id)
 {
   int i;
   u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
-  
+
   GF_ASSERT( data_handle );
 
   zone_id = ControlZoneID(zone_id);
-  
+
   for( i=0; i<data_handle->zonefoglist_max; i++ )
   {
     if( data_handle->zonefoglist[i].zone_id == zone_id )
@@ -782,23 +786,23 @@ u32 ZONEDATA_GetFog(u16 zone_id)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ぞーんごとのLIGHTデータインデックス取得 field_zonefog.h参照
+ *  @brief  ぞーんごとのLIGHTデータインデックス取得 field_zonefog.h参照
  *
- *	@param	zone_id ゾーンID
+ *  @param  zone_id ゾーンID
  *
- *	@retval データインデックス
- *	@retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
+ *  @retval データインデックス
+ *  @retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
  */
 //-----------------------------------------------------------------------------
 u32 ZONEDATA_GetLight(u16 zone_id)
 {
   int i;
   u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
-  
+
   GF_ASSERT( data_handle );
 
   zone_id = ControlZoneID(zone_id);
-  
+
   for( i=0; i<data_handle->zonelightlist_max; i++ )
   {
     if( data_handle->zonelightlist[i].zone_id == zone_id )
@@ -814,22 +818,22 @@ u32 ZONEDATA_GetLight(u16 zone_id)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  フィールド技　マップエフェクトマスク取得
+ *  @brief  フィールド技　マップエフェクトマスク取得
  *
- *	@param	zone_id ゾーンID
+ *  @param  zone_id ゾーンID
  *
- *	@return FIELDSKILL_MAPEFF_MSK
+ *  @return FIELDSKILL_MAPEFF_MSK
  */
 //-----------------------------------------------------------------------------
 u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
 {
   int i;
   u32 ret = 0;
-  
+
   GF_ASSERT( data_handle );
 
   zone_id = ControlZoneID(zone_id);
-  
+
   for( i=0; i<data_handle->fieldskill_mapeff_list_max; i++ )
   {
     if( data_handle->fieldskill_mapeff_list[i].zone_id == zone_id )
@@ -844,11 +848,11 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  シーンエリアIDの取得
+ *  @brief  シーンエリアIDの取得
  *
- *	@param	zone_id ゾーンID
+ *  @param  zone_id ゾーンID
  *
- *	@return シーンエリアデータID
+ *  @return シーンエリアデータID
  */
 //-----------------------------------------------------------------------------
 u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
@@ -867,9 +871,9 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	ゾーン名データの取得
- * @param	buffer		名前を取得するためのバッファ(ZONEDATA_NAME_LENGTHの長さが必要）
- * @param	zoneid		取得するゾーンの名前
+ * @brief ゾーン名データの取得
+ * @param buffer    名前を取得するためのバッファ(ZONEDATA_NAME_LENGTHの長さが必要）
+ * @param zoneid    取得するゾーンの名前
  */
 //------------------------------------------------------------------
 void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
@@ -894,7 +898,7 @@ void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 //------------------------------------------------------------------
 const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
 {
-	char * namedata;
+  char * namedata;
   if( data_handle != NULL )
   {
     namedata = GFL_ARC_LoadDataAllocByHandle(
@@ -905,7 +909,7 @@ const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
     namedata = GFL_ARC_LoadDataAlloc(
         ARCID_ZONEDATA, NARC_zonedata_zonename_bin, heapID);
   }
-	return namedata;
+  return namedata;
 }
 
 
