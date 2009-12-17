@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T21:29:37"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T17:08:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,10 +304,10 @@
 ここにめざめ
 われに　ちからを　あたえよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『古の　英雄と　ともに
-国を　創りだし[BE:00:ページ切り替え（行送り）]
-大いなる　ポケモンよ……[BE:01:ページ切り替え（クリア）]
+国を　創りだし▽
+大いなる　ポケモンよ……▼
 ここに目覚め
-我に　力を与えよ！[BE:01:ページ切り替え（クリア）]</language>
+我に　力を与えよ！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -318,15 +318,15 @@
 ・続けて_boss_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『この　しろい　ポケモン
-シンと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　たいへんだな
-プラズマだんの　おうさま　として
-やることが　いっぱい　なんだ！</language>
+その　なを　シンと　いう！▼
+さて　これからだ
+プラズマだんの　おう　として▽
+なずべきこと　ばかり　だ！▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『この　白い　ポケモン
-シンと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　大変だな
-プラズマ団の　王様　として[BE:00:ページ切り替え（行送り）]
-やることが　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]</language>
+その名を　シンと　いう！▼
+さて　これからだ
+プラズマ団の　王として▽
+なずべきこと　ばかり　だ！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -337,15 +337,15 @@
 ・続けてboss_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『この　くろい　ポケモン
-ムと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　たいへんだな
-プラズマだんの　おうさま　として
-やることが　いっぱい　なんだ！</language>
+その　なを　ムと　いう！▼
+さて　これからだ
+プラズマだんの　おう　として▽
+なずべきこと　ばかり　だ！▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『この　黒い　ポケモン
-ムと　いうんだ！[BE:01:ページ切り替え（クリア）]
-さて　これから　大変だな
-プラズマ団の　王様　として[BE:00:ページ切り替え（行送り）]
-やることが　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]</language>
+その名を　ムと　いう！▼
+さて　これからだ
+プラズマ団の　王として▽
+なずべきこと　ばかり　だ！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -354,8 +354,10 @@
 ・画面外に消えると階段から
 　ライバルとジムリーダー登場</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">さ　いこう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さ　いこう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">いまより
+この　イッシュは　うまれかわる！▼</language>
+		<language name="JPN_KANJI" width="256">今より
+この　イッシュは　生まれ変わる！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
