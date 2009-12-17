@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-15T22:17:07" source="bcgata01_00_00_020.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-17T11:59:13" source="bcgata01_00_00_020.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-15T22:17:07" source="bcgata01_00_00_020.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-17T11:59:13" source="bcgata01_00_00_020.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -5739,14 +5739,14 @@
 					<tex st="91.562500 -31.750000"/>
 					<pos_xy xy="-1.637207 0.000000"/>
 					<tex st="189.437500 -30.875000"/>
-					<nrm xyz="0.003906 0.429688 0.902344"/>
-					<pos_xyz xyz="-1.783203 0.112061 2.218262"/>
+					<nrm xyz="-0.091797 0.419922 0.902344"/>
+					<pos_xyz xyz="-1.770508 0.073975 2.218262"/>
 					<tex st="156.437500 -30.875000"/>
-					<pos_xyz xyz="-1.426758 0.108154 2.218750"/>
+					<pos_xyz xyz="-1.421875 0.148438 2.218750"/>
 					<tex st="156.437500 -62.875000"/>
-					<pos_xyz xyz="-1.403320 0.405762 2.076904"/>
+					<pos_xyz xyz="-1.464111 0.443848 2.076904"/>
 					<tex st="189.437500 -62.875000"/>
-					<pos_xyz xyz="-1.760010 0.409424 2.076416"/>
+					<pos_xyz xyz="-1.812744 0.369385 2.076416"/>
 					<tex st="91.562500 -8.375000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="-1.905762 0.000000 2.653564"/>
@@ -8980,7 +8980,7 @@
 					<nrm xyz="0.666016 0.212891 0.714844"/>
 					<pos_xyz xyz="-0.067871 1.564941 3.834473"/>
 					<tex st="233.312500 0.312500"/>
-					<nrm xyz="0.003906 0.429688 0.902344"/>
+					<nrm xyz="0.000000 0.396484 0.917969"/>
 					<pos_diff xyz="-0.057129 0.023682 0.017578"/>
 					<tex st="233.312500 12.437500"/>
 					<nrm xyz="0.000000 0.119141 0.992188"/>
