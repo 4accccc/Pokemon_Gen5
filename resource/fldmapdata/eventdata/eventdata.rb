@@ -13,8 +13,8 @@
 #============================================================================
 #============================================================================
 class DataFormatError < Exception; end
-
 class ReadWMSError < Exception; end
+class DoorIDError < Exception; end
 
 def debug_puts str
   #puts str
@@ -216,11 +216,13 @@ class EventData
   end
 
 
-  def dumpBinary output
+  def dumpBinary( headerArray )
+    output = ""
     debug_puts "number of events:#{@num}"
     @items.each{|item|
-      output.puts"#{item}"
+      output += [Integer(item)].pack("S")
     }
+    return output
   end
 
   def getStructName
@@ -354,35 +356,37 @@ class DoorEvent < AllEvent
     end
   end
 
-  def dumpBinary output,headerArray
+  def dumpBinary( headerArray )
+    output = ""
     #output.puts "\t{//#{@door_id} = #{@number}"
     #output.puts "\t\t//#{@x}, #{@z} -- GRID(#{@header.blockSizeX},#{@header.blockSizeY})"
     #output.puts "\t\t//{#{gx/GRID_SIZE}, #{@y/GRID_SIZE}, #{gz/GRID_SIZE}},"
     #output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
-    output.write [headerArray.search( @next_zone_id, @door_id )].pack( "S" )
-    output.write [headerArray.search( @next_door_id, @door_id )].pack( "S" )
-    output.write [headerArray.search( @door_dir, @door_id )].pack( "C" )
-    output.write [headerArray.search( @door_type, @door_id )].pack( "C" )
-    output.write [headerArray.search( @pos_type, @door_id )].pack( "S" ) #ポジションタイプ
+    output += [headerArray.search( @next_zone_id, @door_id )].pack( "S" )
+    output += [headerArray.search( @next_door_id, @door_id )].pack( "S" )
+    output += [headerArray.search( @door_dir, @door_id )].pack( "C" )
+    output += [headerArray.search( @door_type, @door_id )].pack( "C" )
+    output += [headerArray.search( @pos_type, @door_id )].pack( "S" ) #ポジションタイプ
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_ofs @x, @z
       #ポジションタイプグリッド
-      output.write [headerArray.search( gx, @door_id )].pack("s")
-      output.write [headerArray.search( @y, @door_id )].pack("s")
-      output.write [headerArray.search( gz, @door_id )].pack("s")
-      output.write [headerArray.search( @sizex, @door_id )].pack("S")   #サイズX
-      output.write [headerArray.search( @sizez, @door_id )].pack("S")   #サイズZ
-      output.write [0].pack("S")   #パディング
+      output += [headerArray.search( gx, @door_id )].pack("s")
+      output += [headerArray.search( @y, @door_id )].pack("s")
+      output += [headerArray.search( gz, @door_id )].pack("s")
+      output += [headerArray.search( @sizex, @door_id )].pack("S")   #サイズX
+      output += [headerArray.search( @sizez, @door_id )].pack("S")   #サイズZ
+      output += [0].pack("S")   #パディング
     else
       #ポジションタイプレール
-      output.write [headerArray.search( @rail_index, @door_id )].pack("S")     #index
-      output.write [headerArray.search( @rail_front, @door_id )].pack("S")     #front grid
-      output.write [headerArray.search( @rail_side, @door_id )].pack("s")     #side grid
-      output.write [headerArray.search( @rail_front_size, @door_id )].pack("S")     #front_siz
-      output.write [headerArray.search( @rail_side_size, @door_id )].pack("S")     #side_siz
-      output.write [0].pack("S")
+      output += [headerArray.search( @rail_index, @door_id )].pack("S")     #index
+      output += [headerArray.search( @rail_front, @door_id )].pack("S")     #front grid
+      output += [headerArray.search( @rail_side, @door_id )].pack("s")     #side grid
+      output += [headerArray.search( @rail_front_size, @door_id )].pack("S")     #front_siz
+      output += [headerArray.search( @rail_side_size, @door_id )].pack("S")     #side_siz
+      output += [0].pack("S")
     end
+    return output
   end
 
   def dumpHeader output
@@ -395,12 +399,14 @@ class DoorEvent < AllEvent
     header.push( "../../zonetable/zone_id.h " )
   
     #door_id先のヘッダ
-    if @next_door_id =~ /DOOR_ID_([^_]+)_/
+    if @next_door_id =~ /DOOR_ID_([^_]+)_/ then
       zone = $1
       zone = zone.downcase
       header.push( "../tmp/#{zone}.h " )
+    elsif @next_door_id == "EXIT_ID_NONE" then
+      #do nothing
     else
-      raise
+      raise DoorIDError, "#{@next_door_id} is incorrect"
     end
   
     #eventdata_type.h
@@ -467,34 +473,36 @@ class ObjEvent < AllEvent
     end
   end
  
-  def dumpBinary output,headerArray
+  def dumpBinary( headerArray )
+    output = ""
 
-    output.write [headerArray.search( @id, @id )].pack("S")
-    output.write [headerArray.search( @obj_code, @id )].pack("S")
-    output.write [headerArray.search( @move_code, @id )].pack("S")
-    output.write [headerArray.search( @event_type, @id )].pack("S")
-    output.write [headerArray.search( @event_flag, @id )].pack("S")
-    output.write [headerArray.search( @event_id, @id )].pack("S")
-    output.write [headerArray.search( @dir, @id )].pack("s")
-    output.write [headerArray.search( @param0, @id )].pack("S")
-    output.write [headerArray.search( @param1, @id )].pack("S")
-    output.write [headerArray.search( @param2, @id )].pack("S")
-    output.write [headerArray.search( @move_limit_x, @id )].pack("s")
-    output.write [headerArray.search( @move_limit_z, @id )].pack("s")
-    output.write [headerArray.search( @pos_type, @id )].pack("I")
+    output += [headerArray.search( @id, @id )].pack("S")
+    output += [headerArray.search( @obj_code, @id )].pack("S")
+    output += [headerArray.search( @move_code, @id )].pack("S")
+    output += [headerArray.search( @event_type, @id )].pack("S")
+    output += [headerArray.search( @event_flag, @id )].pack("S")
+    output += [headerArray.search( @event_id, @id )].pack("S")
+    output += [headerArray.search( @dir, @id )].pack("s")
+    output += [headerArray.search( @param0, @id )].pack("S")
+    output += [headerArray.search( @param1, @id )].pack("S")
+    output += [headerArray.search( @param2, @id )].pack("S")
+    output += [headerArray.search( @move_limit_x, @id )].pack("s")
+    output += [headerArray.search( @move_limit_z, @id )].pack("s")
+    output += [headerArray.search( @pos_type, @id )].pack("I")
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @gx, @gz
-      output.write [headerArray.search( gx, @id )].pack("S")
-      output.write [headerArray.search( gz, @id )].pack("S")
+      output += [headerArray.search( gx, @id )].pack("S")
+      output += [headerArray.search( gz, @id )].pack("S")
       fx32_y = @y << 12;
-      output.write [headerArray.search( fx32_y, @id )].pack("i")
+      output += [headerArray.search( fx32_y, @id )].pack("i")
     else
-      output.write [headerArray.search( @rail_index, @id )].pack("S")  #index
-      output.write [headerArray.search( @rail_front, @id )].pack("S")  #front
-      output.write [headerArray.search( @rail_side, @id )].pack("s")   #side
-      output.write [0].pack("S")
+      output += [headerArray.search( @rail_index, @id )].pack("S")  #index
+      output += [headerArray.search( @rail_front, @id )].pack("S")  #front
+      output += [headerArray.search( @rail_side, @id )].pack("s")   #side
+      output += [0].pack("S")
     end
+    return output
   end
 
   def dumpHeader output
@@ -584,32 +592,33 @@ class PosEvent < AllEvent
     end
   end
 
-  def dumpBinary output,headerArray
+  def dumpBinary( headerArray )
+    output = ""
 
-    output.write [headerArray.search( @event_id, @pos_id )].pack("S")
-    output.write [headerArray.search( @workvalue, @pos_id )].pack("S")
-    output.write [headerArray.search( @workname, @pos_id )].pack("S")
-    output.write [headerArray.search( @check_type, @pos_id )].pack("S")
-    output.write [headerArray.search( @pos_type, @pos_id )].pack("S")
+    output += [headerArray.search( @event_id, @pos_id )].pack("S")
+    output += [headerArray.search( @workvalue, @pos_id )].pack("S")
+    output += [headerArray.search( @workname, @pos_id )].pack("S")
+    output += [headerArray.search( @check_type, @pos_id )].pack("S")
+    output += [headerArray.search( @pos_type, @pos_id )].pack("S")
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @x, @z
-      output.write [headerArray.search( gx, @pos_id )].pack("S")
-      output.write [headerArray.search( gz, @pos_id )].pack("S")
-      output.write [headerArray.search( @sizex, @pos_id )].pack("S")
-      output.write [headerArray.search( @sizez, @pos_id )].pack("S")
-      output.write [headerArray.search( @y, @pos_id )].pack("s")
-      output.write [0].pack("S")
+      output += [headerArray.search( gx, @pos_id )].pack("S")
+      output += [headerArray.search( gz, @pos_id )].pack("S")
+      output += [headerArray.search( @sizex, @pos_id )].pack("S")
+      output += [headerArray.search( @sizez, @pos_id )].pack("S")
+      output += [headerArray.search( @y, @pos_id )].pack("s")
+      output += [0].pack("S")
     else
 
-      output.write [headerArray.search( @rail_index, @pos_id )].pack("S")     #index
-      output.write [headerArray.search( @rail_front, @pos_id )].pack("S")     #front grid
-      output.write [headerArray.search( @rail_side, @pos_id )].pack("s")     #side grid
-      output.write [headerArray.search( @rail_front_size, @pos_id )].pack("S")     #front_siz
-      output.write [headerArray.search( @rail_side_size, @pos_id )].pack("S")     #side_siz
-      output.write [0].pack("S")
+      output += [headerArray.search( @rail_index, @pos_id )].pack("S")     #index
+      output += [headerArray.search( @rail_front, @pos_id )].pack("S")     #front grid
+      output += [headerArray.search( @rail_side, @pos_id )].pack("s")     #side grid
+      output += [headerArray.search( @rail_front_size, @pos_id )].pack("S")     #front_siz
+      output += [headerArray.search( @rail_side_size, @pos_id )].pack("S")     #side_siz
+      output += [0].pack("S")
     end
-
+    return output
   end
 
   def dumpHeader output
@@ -674,27 +683,28 @@ class BgEvent < AllEvent
     end
   end
 
-  def dumpBinary output,headerArray
+  def dumpBinary( headerArray )
+    output = ""
 
-
-    output.write [headerArray.search( @event_id, @bg_id )].pack("S")
-    output.write [headerArray.search( @bg_type, @bg_id )].pack("S")
-    output.write [headerArray.search( @bg_dir, @bg_id )].pack("S")
-    output.write [headerArray.search( @pos_type, @bg_id )].pack( "S" ) #ポジションタイプ
+    output += [headerArray.search( @event_id, @bg_id )].pack("S")
+    output += [headerArray.search( @bg_type, @bg_id )].pack("S")
+    output += [headerArray.search( @bg_dir, @bg_id )].pack("S")
+    output += [headerArray.search( @pos_type, @bg_id )].pack( "S" ) #ポジションタイプ
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @x, @z
-      output.write [headerArray.search( gx, @bg_id )].pack("i")
-      output.write [headerArray.search( gz, @bg_id )].pack("i")
-      output.write [headerArray.search( @y, @bg_id )].pack("i")
+      output += [headerArray.search( gx, @bg_id )].pack("i")
+      output += [headerArray.search( gz, @bg_id )].pack("i")
+      output += [headerArray.search( @y, @bg_id )].pack("i")
     else
-      output.write [headerArray.search( @rail_index, @bg_id )].pack("S")     #index
-      output.write [headerArray.search( @rail_front, @bg_id )].pack("S")     #front grid
-      output.write [headerArray.search( @rail_side, @bg_id )].pack("s")     #side grid
-      output.write [0].pack("S")
-      output.write [0].pack("S")
-      output.write [0].pack("S")
+      output += [headerArray.search( @rail_index, @bg_id )].pack("S")     #index
+      output += [headerArray.search( @rail_front, @bg_id )].pack("S")     #front grid
+      output += [headerArray.search( @rail_side, @bg_id )].pack("s")     #side grid
+      output += [0].pack("S")
+      output += [0].pack("S")
+      output += [0].pack("S")
     end
+    return output
   end
 
   def dumpHeader output
@@ -730,11 +740,11 @@ class DoorEventData < EventData
     }
   end
 
-  def dumpBinary output,headerArray
-    if @doors.length == 0 then
-      return
-    end
-    @doors.each{|door| door.dumpBinary(output,headerArray) }
+  def dumpBinary headerArray
+    output = ""
+    #if @doors.length == 0 then return end
+    @doors.each{|door| output += door.dumpBinary(headerArray) }
+    return output
   end
 
   def dumpHeader output
@@ -771,9 +781,11 @@ class ObjEventData < EventData
     }
   end
 
-  def dumpBinary output,headerArray
-    if @objs.length == 0 then return end
-    @objs.each{|obj| obj.dumpBinary(output, headerArray) }
+  def dumpBinary headerArray
+    output = ""
+    #if @objs.length == 0 then return end
+    @objs.each{|obj| output += obj.dumpBinary(headerArray) }
+    return output
   end
 
   def dumpHeader output
@@ -808,9 +820,11 @@ class BgEventData < EventData
     }
   end
 
-  def dumpBinary output,headerArray
-    if @bgs.length == 0 then return end
-    @bgs.each{|bg| bg.dumpBinary(output, headerArray) }
+  def dumpBinary headerArray
+    output = ""
+    #if @bgs.length == 0 then return end
+    @bgs.each{|bg| output += bg.dumpBinary(headerArray) }
+    return output
   end
 
   def dumpHeader output
@@ -837,9 +851,11 @@ class PosEventData < EventData
     }
   end
 
-  def dumpBinary output,headerArray
-    if @poss.length == 0 then return end
-    @poss.each{|pos| pos.dumpBinary(output, headerArray) }
+  def dumpBinary headerArray
+    output = ""
+    #if @poss.length == 0 then return end
+    @poss.each{|pos| output += pos.dumpBinary(headerArray) }
+    return output
   end
 
   def dumpHeader output
@@ -928,48 +944,49 @@ end
 def make_binary( filename, allHeader )
   begin
     
+    zonename = File.basename(filename,".*").downcase
+    ofilename = "../tmp/" + zonename + ".bin"
+    
     headerArray = HeaderDataArray.new();
 
-    ofilename = "";
-    
     #必要ヘッダーの読み込み
     allHeader.each{|headername|
       headerArray.load( headername )
     }
     
     File.open( filename ){|file|
+      #ヘッダ部分読み込み
       header = EventHeader.new(file)
+
+      #データ本体読み込み
       obj_events = ObjEventData.new(file, "OBJ_EVENT", header)
       bg_events = BgEventData.new(file, "BG_EVENT", header)
       pos_events = PosEventData.new(file, "POS_EVENT", header)
       door_events = DoorEventData.new(file, "DOOR_EVENT", header)
 
-      zonename = File.basename(filename,".*").downcase
-      ofilename = "../tmp/" + zonename
+      output = ""
+      output += [bg_events.items.length].pack("C")
+      output += [obj_events.items.length].pack("C")
+      output += [door_events.items.length].pack("C")
+      output += [pos_events.items.length].pack("C")
 
-      #headerArray.load( "../../script/#{zonename}_def.h" ) Doorイベントのみのmevの場合、スクリプトは関係ないので・
+      output += bg_events.dumpBinary(headerArray)
+      output += obj_events.dumpBinary(headerArray)
+      output += door_events.dumpBinary(headerArray)
+      output += pos_events.dumpBinary(headerArray)
 
-      File.open("#{ofilename}.bin", "wb"){|file|
-
-        file.write [bg_events.items.length].pack("C")
-        file.write [obj_events.items.length].pack("C")
-        file.write [door_events.items.length].pack("C")
-        file.write [pos_events.items.length].pack("C")
-
-        bg_events.dumpBinary(file, headerArray)
-        obj_events.dumpBinary(file, headerArray)
-        door_events.dumpBinary(file, headerArray)
-        pos_events.dumpBinary(file, headerArray)
+      File.open(ofilename, "wb"){|file|
+        file.write output
       }
     }
 
   rescue => errors
     p errors
     #例外時
-    if File.exist?( "#{ofilename}.bin" )
-      File.delete( "#{ofilename}.bin" );
+    if ofilename != "" && File.exist?( ofilename )
+      File.delete( ofilename );
     end
-    exit(1)
+    raise errors
   else
   end
 end
