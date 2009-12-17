@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-16T12:41:30"/>
+	<create user="taya" host="W00146" date="2009-12-17T11:36:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1503,19 +1503,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-猛毒　を　あびた！</language>
+猛毒を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_MoudokuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-猛毒　を　あびた！</language>
+猛毒を　あびた！</language>
 	</row>
 	<row id="BTL_STRID_SET_MoudokuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 もうどくを　あびた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-猛毒　を　あびた！</language>
+猛毒を　あびた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MoudokuGetSP">
@@ -5271,152 +5271,152 @@
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+[1:09:どうぐ名:1]で▽
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　上がった！</language>
+[1:09:どうぐ名:1]で▽
+かいひ率　が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+[1:09:どうぐ名:1]で▽
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　上がった！</language>
+[1:09:どうぐ名:1]で▽
+かいひ率　が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+[1:09:どうぐ名:1]で▽
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　上がった！</language>
+[1:09:どうぐ名:1]で▽
+かいひ率　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-こうげき　が　ぐーんと　あがった！</language>
+こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-攻撃　が　ぐーんと　上がった！</language>
+攻撃が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-こうげき　が　ぐーんと　あがった！</language>
+こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-攻撃　が　ぐーんと　上がった！</language>
+攻撃が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-こうげき　が　ぐーんと　あがった！</language>
+こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-攻撃　が　ぐーんと　上がった！</language>
+攻撃が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-ぼうぎょ　が　ぐーんと　あがった！</language>
+ぼうぎょが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-防御　が　ぐーんと　上がった！</language>
+防御が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-ぼうぎょ　が　ぐーんと　あがった！</language>
+ぼうぎょが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-防御　が　ぐーんと　上がった！</language>
+防御が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-ぼうぎょ　が　ぐーんと　あがった！</language>
+ぼうぎょが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-防御　が　ぐーんと　上がった！</language>
+防御が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　あがった！</language>
+とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　上がった！</language>
+特攻が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　あがった！</language>
+とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　上がった！</language>
+特攻が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　あがった！</language>
+とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　ぐーんと　上がった！</language>
+特攻が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　あがった！</language>
+とくぼうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　上がった！</language>
+とくぼうが　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　あがった！</language>
+とくぼうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　上がった！</language>
+とくぼうが　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　あがった！</language>
+とくぼうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　ぐーんと　上がった！</language>
+とくぼうが　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-すばやさ　が　ぐーんと　あがった！</language>
+すばやさが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-素早さ　が　ぐーんと　上がった！</language>
+素早さが　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-すばやさ　が　ぐーんと　あがった！</language>
+すばやさが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-素早さ　が　ぐーんと　上がった！</language>
+素早さが　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-すばやさ　が　ぐーんと　あがった！</language>
+すばやさが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-素早さ　が　ぐーんと　上がった！</language>
+素早さが　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT">
@@ -5425,7 +5425,7 @@
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-命中率　が　ぐーんと　上がった！</language>
+命中率が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
@@ -5433,7 +5433,7 @@
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-命中率　が　ぐーんと　上がった！</language>
+命中率が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
@@ -5441,7 +5441,7 @@
 めいちゅうりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-命中率　が　ぐーんと　上がった！</language>
+命中率が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID">
@@ -5450,7 +5450,7 @@
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　ぐーんと　上がった！</language>
+かいひ率が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
@@ -5458,7 +5458,7 @@
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　ぐーんと　上がった！</language>
+かいひ率が　ぐーんと　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
@@ -5466,7 +5466,7 @@
 かいひりつ　が　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-回避率　が　ぐーんと　上がった！</language>
+かいひ率が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical">
