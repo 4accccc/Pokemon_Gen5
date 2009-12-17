@@ -131,8 +131,8 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     },
   },
   {
-    ZONE_ID_BCWFTEST,    //※check WFBCに表裏別のゾーンIDが無いのでとりあえず同じのを指定
-    ZONE_ID_BCWFTEST, 
+    ZONE_ID_BC10,    //※check WFBCに表裏別のゾーンIDが無いのでとりあえず同じのを指定
+    ZONE_ID_BC10, 
     0x19*8, 0x11*8,
     {
       5,4, 0, 

@@ -348,10 +348,12 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
 
   switch(*seq){
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError() == TRUE){
+      GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
       CommPlayer_Exit(intcomm->cps);
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);

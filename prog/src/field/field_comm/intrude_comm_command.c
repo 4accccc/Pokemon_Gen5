@@ -1450,6 +1450,7 @@ static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData
   
   dest_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
   GFL_STD_MemCopy(wfbc_core, dest_wfbc, sizeof(FIELD_WFBC_CORE));
+  GAMEDATA_SetUpPalaceWFBCCoreData( gamedata, wfbc_core );
   
   GF_ASSERT(intcomm->wfbc_recv == FALSE);
   intcomm->wfbc_recv = TRUE;
