@@ -51,6 +51,12 @@ static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] =
 #define FIELD_WFBC_EVENT_BC  (NARC_eventdata_bc_block_event_bin)
 
 
+//-------------------------------------
+///	現在のマップ情報
+//  不定値
+//=====================================
+#define FIELD_WFBC_NOW_MAP_ERR  ( 0xffff )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -90,12 +96,33 @@ typedef struct
 
 
 //-------------------------------------
+///	配置１情報
+//=====================================
+typedef struct 
+{
+  WFBC_BLOCK_DATA block_tag;
+  u16 block_id;
+} WFBC_BLOCK_NOW;
+
+//-------------------------------------
+///	実際の配置情報
+//=====================================
+typedef struct 
+{
+   WFBC_BLOCK_NOW map_now[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X];
+} FIELD_WFBC_NOW_MAPDATA;
+
+
+
+
+//-------------------------------------
 ///	イベント起動情報
 //=====================================
 typedef struct 
 {
   // 条件
-  u32 if_para;
+  u16 block_tag;
+  u16 block_id;
 } FIELD_WFBC_EVENT_IF;
 
 
@@ -142,6 +169,10 @@ struct _FIELD_WFBC
   // ブロック配置情報
   FIELD_WFBC_BLOCK_DATA* p_block;
 
+  // 今のマップ情報
+  // 生成されたブロックの情報
+  FIELD_WFBC_NOW_MAPDATA map_data;
+
   // 人物位置情報
   FIELD_WFBC_CORE_PEOPLE_POS* p_pos;
 
@@ -184,6 +215,17 @@ static const FIELD_WFBC_PEOPLE* WFBC_GetConstPeople( const FIELD_WFBC* cp_wk, u3
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people );
 static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data );
 static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_CORE_PEOPLE* p_core );
+
+
+//-------------------------------------
+///	FIELD_WFBC_NOW_MAPDATA
+//=====================================
+static void WFBC_NOW_MAPDATA_Init( FIELD_WFBC_NOW_MAPDATA* p_wk );
+static void WFBC_NOW_MAPDATA_SetUp( FIELD_WFBC_NOW_MAPDATA* p_wk, FIELD_WFBC* p_data );
+static void WFBC_NOW_MAPDATA_SetData( FIELD_WFBC_NOW_MAPDATA* p_wk, u32 block_x, u32 block_z, WFBC_BLOCK_DATA block_tag, u16 block_id );
+static WFBC_BLOCK_NOW WFBC_NOW_MAPDATA_GetData( const FIELD_WFBC_NOW_MAPDATA* cp_wk, u32 block_x, u32 block_z );
+static BOOL WFBC_NOW_MAPDATA_IsDataIn( const FIELD_WFBC_NOW_MAPDATA* cp_wk, u16 block_tag, u16 block_id );
+
 
 
 //----------------------------------------------------------------------------
@@ -319,49 +361,20 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
 //-----------------------------------------------------------------------------
 int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID )
 {
-  WFBC_BLOCK_DATA block_tag;
-  const FIELD_WFBC_BLOCK_PATCH* cp_patch_data;
-  FIELD_DATA_PATCH* p_patch;
+  WFBC_BLOCK_NOW map_data;
   u32 local_grid_x, local_grid_z;
-  u8 tbl_index;
-  s32 score;
-
-  block_tag = p_wk->p_block->block_data[ block_z ][ block_x ];
+  FIELD_DATA_PATCH* p_patch;
   
-  if( block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
+
+  map_data = WFBC_NOW_MAPDATA_GetData( &p_wk->map_data, block_x, block_z );
+
+  
+  if( map_data.block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
   {
-    TOMOYA_Printf( "block_tag %d\n", block_tag.block_no );
-    TOMOYA_Printf( "block pos x %d  z %d\n", block_tag.pos_x, block_tag.pos_z );
+    TOMOYA_Printf( "block_tag %d\n", map_data.block_tag.block_no );
+    TOMOYA_Printf( "block pos x %d  z %d\n", map_data.block_tag.pos_x, map_data.block_tag.pos_z );
     TOMOYA_Printf( "block_x=%d  block_z=%d\n", block_x, block_z );
 
-    // ブロックのスコアを計算
-    // ブロックの左上で計算
-    {
-      u32 block_lefttop_x, block_lefttop_z;
-      block_lefttop_x = block_x - block_tag.pos_x;
-      block_lefttop_z = block_z - block_tag.pos_z;
-      
-      // （（WFにいる全てのOBJのNOの合計　＋　ブロック左上のＸ座標＋　ブロック左上のY座標） / (ブロック左上のＸ座標+1) /(ブロック左上のY座標+1) +２ ）／２
-      tbl_index = p_wk->block_pattern_num;
-      tbl_index += block_lefttop_x + block_lefttop_z;
-      tbl_index /= (block_lefttop_x+1) + (block_lefttop_z+1) + 2;
-      tbl_index %= 2;
-
-      // （OBJの人数×0.8）＋ランダム（０～１）
-      score = FIELD_WFBC_GetPeopleNum( p_wk );
-      score = (score * 8) / 10;
-      score += GFL_STD_Rand( &p_wk->randData, p_wk->block_rand_max );
-
-      if( score >= (FIELD_WFBC_BLOCK_PATCH_MAX/2) )
-      {
-        score = (FIELD_WFBC_BLOCK_PATCH_MAX/2)-1;
-      }
-      
-      score += tbl_index*(FIELD_WFBC_BLOCK_PATCH_MAX/2);
-    }
-    
-    
-    GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
 
     // g3Dmapローカルのグリッド座標を求める
     local_grid_x = FIELD_WFBC_BLOCK_TO_GRID_X( block_x ) % 32;
@@ -371,17 +384,14 @@ int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMOD
 
     TOMOYA_Printf( "build_count %d\n", build_count );
     
-    // 設定
-    cp_patch_data = &p_wk->p_block->patch[ block_tag.block_no ];
-
     // パッチ情報読み込み
-    p_patch = FIELD_DATA_PATCH_Create( cp_patch_data->patch[ score ], GFL_HEAP_LOWID(heapID) );
+    p_patch = FIELD_DATA_PATCH_Create( map_data.block_id, GFL_HEAP_LOWID(heapID) );
 
     // アトリビュートのオーバーライト
-    FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, block_tag.pos_x*8, block_tag.pos_z*8, local_grid_x, local_grid_z, 8, 8 );
+    FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, map_data.block_tag.pos_x*8, map_data.block_tag.pos_z*8, local_grid_x, local_grid_z, 8, 8 );
 
     // 配置上書き
-    if( (block_tag.pos_x == 0) && (block_tag.pos_z == 0) )
+    if( (map_data.block_tag.pos_x == 0) && (map_data.block_tag.pos_z == 0) )
     {
       // 左上のブロック情報のときにのみ設定
       build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
@@ -423,11 +433,6 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
     NARC_eventdata_bc_block_event_bin,
     NARC_eventdata_wf_block_event_bin,
   };
-  u32 score;
-
-  // 今の人の数
-  score = FIELD_WFBC_GetPeopleNum( cp_wk );
-  
 
   // 今のイベント数
   bg_num      = EVENTDATA_GetBgEventNum(p_evdata);
@@ -452,7 +457,7 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
   // 足しこむ
   for( i=0; i<add_connect_num; i++ )
   {
-    if(score > p_event_if[i].if_para)
+    if( WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if->block_tag, p_event_if->block_id ) )
     {
 #ifdef PM_DEBUG
       {
@@ -774,6 +779,8 @@ static void WFBC_Clear( FIELD_WFBC* p_wk )
     GFL_STD_MemClear( p_wk->p_block, FIELD_WFBC_BLOCK_BUFF_SIZE );
   }
 
+  // 配置情報クリア
+  WFBC_NOW_MAPDATA_Init( &p_wk->map_data );
 }
 
 //----------------------------------------------------------------------------
@@ -930,6 +937,10 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
     GF_ASSERT( size < FIELD_WFBC_BLOCK_BUFF_SIZE );
     GFL_ARC_LoadDataByHandle( p_wk->p_handle, sc_FIELD_WFBC_BLOCK_FILE[p_wk->type], p_wk->p_block );
   }
+
+
+  // ブロック配置情報生成
+  WFBC_NOW_MAPDATA_SetUp( &p_wk->map_data, p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -1119,6 +1130,167 @@ static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_
     GFL_STD_MemCopy( &cp_people->people_local, p_core, sizeof(FIELD_WFBC_CORE_PEOPLE) );
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生成マップ情報　初期化
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_NOW_MAPDATA_Init( FIELD_WFBC_NOW_MAPDATA* p_wk )
+{
+  int i, j;
+
+  for( i=0; i<FIELD_WFBC_BLOCK_SIZE_Z; i++ )
+  {
+    for( j=0; j<FIELD_WFBC_BLOCK_SIZE_X; j++ )
+    {
+      p_wk->map_now[i][j].block_tag.block_no = FIELD_WFBC_BLOCK_NONE;
+      p_wk->map_now[i][j].block_id = FIELD_WFBC_NOW_MAP_ERR;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロックの配置情報を生成
+ *
+ *	@param	p_wk      ワーク
+ *	@param	p_data   データ
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_NOW_MAPDATA_SetUp( FIELD_WFBC_NOW_MAPDATA* p_wk, FIELD_WFBC* p_data )
+{
+  int i, j;
+  WFBC_BLOCK_DATA block_tag;
+  const FIELD_WFBC_BLOCK_PATCH* cp_patch_data;
+  u8 tbl_index;
+  s32 score;
+
+  for( i=0; i<FIELD_WFBC_BLOCK_SIZE_Z; i++ )
+  {
+    for( j=0; j<FIELD_WFBC_BLOCK_SIZE_X; j++ )
+    {
+      block_tag = p_data->p_block->block_data[ i ][ j ];
+
+      if( block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
+      {
+        // ブロックのスコアを計算
+        // ブロックの左上で計算
+        {
+          u32 block_lefttop_x, block_lefttop_z;
+          block_lefttop_x = j - block_tag.pos_x;
+          block_lefttop_z = i - block_tag.pos_z;
+          
+          // （（WFにいる全てのOBJのNOの合計　＋　ブロック左上のＸ座標＋　ブロック左上のY座標） / (ブロック左上のＸ座標+1) /(ブロック左上のY座標+1) +２ ）／２
+          tbl_index = p_data->block_pattern_num;
+          tbl_index += block_lefttop_x + block_lefttop_z;
+          tbl_index /= (block_lefttop_x+1) + (block_lefttop_z+1) + 2;
+          tbl_index %= 2;
+
+          // （OBJの人数×0.8）＋ランダム（０～１）
+          score = FIELD_WFBC_GetPeopleNum( p_data );
+          score = (score * 8) / 10;
+          score += GFL_STD_Rand( &p_data->randData, p_data->block_rand_max );
+
+          if( score >= (FIELD_WFBC_BLOCK_PATCH_MAX/2) )
+          {
+            score = (FIELD_WFBC_BLOCK_PATCH_MAX/2)-1;
+          }
+          
+          score += tbl_index*(FIELD_WFBC_BLOCK_PATCH_MAX/2);
+        }
+        
+        
+        GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
+
+        // 設定
+        cp_patch_data = &p_data->p_block->patch[ block_tag.block_no ];
+
+
+        // 情報の保存
+        WFBC_NOW_MAPDATA_SetData( p_wk, j, i, block_tag, cp_patch_data->patch[ score ] );
+      }
+
+    }
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップ情報の設定
+ *
+ *	@param	p_wk        ワーク
+ *	@param	block_x     ブロックX
+ *	@param	block_z     ブロックZ
+ *	@param	block_tag   ブロック　タグID
+ *	@param	block_id    ブロック　LAND_DATA_PATCH　ID
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_NOW_MAPDATA_SetData( FIELD_WFBC_NOW_MAPDATA* p_wk, u32 block_x, u32 block_z, WFBC_BLOCK_DATA block_tag, u16 block_id )
+{
+  GF_ASSERT( block_x < FIELD_WFBC_BLOCK_SIZE_X );
+  GF_ASSERT( block_z < FIELD_WFBC_BLOCK_SIZE_Z );
+  
+  p_wk->map_now[block_z][block_x].block_tag = block_tag;
+  p_wk->map_now[block_z][block_x].block_id = block_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロックの　マップ情報取得
+ *
+ *	@param	p_wk      ワーク
+ *	@param	block_x   ブロックｘ
+ *	@param	block_z   ブロックｚ
+ *
+ *	@return マップ情報
+ */
+//-----------------------------------------------------------------------------
+static WFBC_BLOCK_NOW WFBC_NOW_MAPDATA_GetData( const FIELD_WFBC_NOW_MAPDATA* cp_wk, u32 block_x, u32 block_z )
+{
+  GF_ASSERT( block_x < FIELD_WFBC_BLOCK_SIZE_X );
+  GF_ASSERT( block_z < FIELD_WFBC_BLOCK_SIZE_Z );
+  return cp_wk->map_now[block_z][block_x];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  block_tagのblock_idがあるかチェック
+ *
+ *	@param	cp_wk       ワーク
+ *	@param	block_tag
+ *	@param	block_id 
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE なし
+ */
+//-----------------------------------------------------------------------------
+static BOOL WFBC_NOW_MAPDATA_IsDataIn( const FIELD_WFBC_NOW_MAPDATA* cp_wk, u16 block_tag, u16 block_id )
+{
+  int i, j;
+
+  for( i=0; i<FIELD_WFBC_BLOCK_SIZE_Z; i++ )
+  {
+    for( j=0; j<FIELD_WFBC_BLOCK_SIZE_X; j++ )
+    {
+      if( cp_wk->map_now[i][j].block_tag.block_no == block_tag )
+      {
+        if( cp_wk->map_now[i][j].block_id == block_id )
+        {
+          return TRUE;
+        }
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+
 
 
 

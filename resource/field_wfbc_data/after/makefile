@@ -37,12 +37,21 @@ BLOCK_BC_FILE = wb_wfbc_block_bc.txt
 POS_WF_FILE = wb_wfbc_pos_wf.txt
 POS_BC_FILE = wb_wfbc_pos_bc.txt
 CAMERA_FILE = wb_wfbc_camera.txt
+EVENT_FILE = wb_wfbc_event.txt
 
 BLOCK_WF_BIN = wb_wfbc_block_wf.block
 BLOCK_BC_BIN = wb_wfbc_block_bc.block
 POS_WF_BIN = wb_wfbc_block_wf.pos
 POS_BC_BIN = wb_wfbc_block_bc.pos
 CAMERA_BIN = wb_wfbc_camera.cam
+
+EVENT_BC_PARA = bc_block_event.evp
+EVENT_WF_PARA = wf_block_event.evp
+
+
+#ブロックヘッダー情報
+BLOCK_WF_HEADER = wb_wfbc_block_wf.h
+BLOCK_BC_HEADER = wb_wfbc_block_bc.h
 
 
 
@@ -111,6 +120,9 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(POS_WF_FILE) -p 6 -s tab $(XLSFILE)
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(POS_BC_FILE) -p 5 -s tab $(XLSFILE)
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(CAMERA_FILE) -p 7 -s tab $(XLSFILE)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(EVENT_FILE) -p 2 -s tab $(XLSFILE)
+
+
 	#コンバート
 	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER) $(OUTPUT_HEADER)
 
@@ -121,6 +133,10 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 	perl wfbc_peoplepos_conv.pl $(POS_BC_FILE) $(POS_BC_BIN)
 
 	perl wfbc_camera_conv.pl $(CAMERA_FILE) $(CAMERA_BIN)
+
+	perl wfbc_event_conv.pl $(EVENT_FILE) $(LAND_DATA_PATCH) $(BLOCK_BC_HEADER) $(BLOCK_WF_HEADER) $(EVENT_WF_PARA) $(EVENT_BC_PARA)
+
+	
 
 	-ls *.bin > $(LIST_FILE)
 	-ls *.block >> $(LIST_FILE)

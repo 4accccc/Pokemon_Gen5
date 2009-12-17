@@ -2,31 +2,32 @@
 #
 # WFBC イベントデータを出力
 #
-#  wfbc_event_conv.pl　tab_file out_bc out_wf out_bc_bin out_wf_bin
+#  wfbc_event_conv.pl　tab_file out_bc out_wf
 #
 #
 #################################################
 
 
 #引数チェック
-if( @ARGV < 5 )
+if( @ARGV < 3 )
 {
-  print( "wfbc_event_conv.pl tab_file out_wf out_bc out_wf_bin out_bc_bin\n" );
+  print( "wfbc_event_conv.pl tab_file out_wf out_bc\n" );
   exit(1);
 }
 
 #パラメータ
 $PARA_TAG     = 0;
-$PARA_IF      = 1;
-$PARA_GRID_X  = 2;
-$PARA_GRID_Z  = 3;
-$PARA_SIZE_X  = 4;
-$PARA_SIZE_Z  = 5;
-$PARA_NextZoneID  = 6;
-$PARA_NextDoorID  = 7;
-$PARA_ExitDir     = 8;
-$PARA_DoorType    = 9;
-$PARA_MAX     = 10;
+$PARA_IF00      = 1;
+$PARA_IF01      = 2;
+$PARA_GRID_X  = 3;
+$PARA_GRID_Z  = 4;
+$PARA_SIZE_X  = 5;
+$PARA_SIZE_Z  = 6;
+$PARA_NextZoneID  = 7;
+$PARA_NextDoorID  = 8;
+$PARA_ExitDir     = 9;
+$PARA_DoorType    = 10;
+$PARA_MAX     = 11;
 
 
 
@@ -214,35 +215,6 @@ for( $i=0; $i<2; $i++ )
   print( FILEOUT "#SECTION End:DOOR_EVENT\r\n" );
 
 
-  close( FILEOUT );
-}
-
-
-#イベントの出現条件を出力
-for( $i=0; $i<2; $i++ )
-{
-
-  open( FILEOUT, ">".$ARGV[ 3+$i ] );
-  binmode( FILEOUT );
-
-
-  if( $i == 0 )
-  {
-    for( $j=0; $j<$EVENT_DATA_BC_MAX; $j++ )
-    {
-      $data_index = $j * $PARA_MAX;
-      print( FILEOUT pack( "I", $EVENT_DATA_BC[$data_index + $PARA_IF] ) );
-    }
-  }
-  else
-  {
-    for( $j=0; $j<$EVENT_DATA_WF_MAX; $j++ )
-    {
-      $data_index = $j * $PARA_MAX;
-      print( FILEOUT pack( "I", $EVENT_DATA_WF[$data_index + $PARA_IF] ) );
-    }
-  }
-  
   close( FILEOUT );
 }
 

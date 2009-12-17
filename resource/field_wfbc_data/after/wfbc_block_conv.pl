@@ -209,6 +209,7 @@ for( $i=0; $i<64; $i++ )  # 8 * 8 で 64
   print( FILEOUT pack( "C", $BLOCK_ALL_DATA[($i*$BLOCK_ALL_DATA_PARA_MAX) + $BLOCK_ALL_DATA_PARA_TAG] ) ); 
 }
 
+
 #タグデータを出力
 for( $i=0; $i<$BLOCK_TAG_INDEX; $i++ )
 {
@@ -219,6 +220,23 @@ for( $i=0; $i<$BLOCK_TAG_INDEX; $i++ )
   }
 }
 
+
+close( FILEOUT );
+
+
+
+
+
+
+#BLOCK_TAGヘッダー生成
+$filename = $ARGV[2];
+$filename =~ s/\..*/.h/g;
+open( FILEOUT, ">".$filename );
+
+for( $i=0; $i<$BLOCK_TAG_INDEX; $i++ )
+{
+  print( FILEOUT "#define ".$BLOCK_TAG[ ($i*$BLOCK_TAG_PARA_MAX) + $BLOCK_TAG_PARA_TAG ]." ( $i )\n" );
+}
 
 close( FILEOUT );
 
