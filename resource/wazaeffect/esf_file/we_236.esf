@@ -1,13 +1,20 @@
 EFFSEQ
-$0003
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_236.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_236_moon.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
-BGのパレットフェード	すべて	0	12	1	0:0:0
+BGのパレットフェード	すべて	0	15	1	0:0:0
 エフェクト終了待ち	すべて
+BGのロード	bg_236_moon
+BGのスクロール	常に	0	1	120	1	0
+BGのパレットフェード	すべて	15	0	1	0:0:0
+BGの表示/非表示	エフェクト	表示
+BGの表示/非表示	フィールド	非表示
+BGの表示/非表示	お盆	非表示
 制御モード変更	継続
 SE再生	SEQ_SE_W112_02	SE1	20	0	115	0	0
 SE再生	SEQ_SE_W112_02	SE2	50	0	40	0	0
@@ -18,7 +25,12 @@ SEパン	SE2	追従	攻撃側	攻撃側	0	80:0:0
 パーティクルデータロード	w_236
 パーティクル再生	w_236	W_236_236_MOON_KIRA	攻撃側	方向無し	2	0
 エフェクト終了待ち	すべて
-BGのパレットフェード	すべて	12	0	1	0:0:0
+BGのパレットフェード	すべて	0	15	1	0:0:0
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	15	0	1	0:0:0
+BGの表示/非表示	フィールド	表示
+BGの表示/非表示	お盆	表示
+BGの表示/非表示	エフェクト	非表示
 ポケモンアニメ	攻撃側	アニメスタート
 カメラ移動	追従	初期位置	16	0	12
 エフェクト終了待ち	すべて
