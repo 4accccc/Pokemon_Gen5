@@ -363,11 +363,13 @@ void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
   // 起動
 	sys->isActive = TRUE;
 
+#if 0
   // パラメータ設定
   {
     u8 season = GAMEDATA_GetSeasonID( sys->gdata );
     SetBGMStatus( sys->pActiveParam, season ); 
   }
+#endif
 
   // DEBUG:
   OBATA_Printf( "ISS-D: On\n" );
