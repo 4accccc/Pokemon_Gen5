@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00151" date="2009-12-17T11:29:33" source="intro_bg.mb"/>
+	<create user="yoshida" host="W00151" date="2009-12-17T13:15:46" source="intro_bg.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -20,22 +20,32 @@
 	tolerance_color="2"
 />
 
-<mat_color_data size="105">
+<mat_color_data size="207">
 	25 31 0 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 30 30 29 28 26
-	25 23 21 19 17 15 13 11 9 7
-	5 3 2 0 0 0 0 0 0 0
-	0 0 0 0 0 2 3 5 6 8
-	9 11 12 14 16 17 19 20 22 23
-	25 26 28 29 31 31 31 31 31 31
+	31 31 31 8 8 8 8 8 7 7
+	7 6 6 5 5 4 4 3 2 2
+	1 1 0 0 0 0 0 0 0 0
+	0 0 0 0 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 30 30 29
+	27 26 24 22 20 18 16 14 12 10
+	8 6 4 2 0 0 0 0 0 0
+	0 0 0 0 0 0 0 1 1 2
+	2 3 3 3 4 4 5 5 5 6
+	6 6 6 7 7 7 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31
+	31 31 31 31 31 31 0 2 4 6
+	8 10 12 14 16 18 20 22 24 26
+	27 29 30 30 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31
 </mat_color_data>
 
-<mat_color_anm_array size="2">
-	<mat_color_anm index="0" material_name="file5Material">
+<mat_color_anm_array size="4">
+	<mat_color_anm index="0" material_name="file1Material">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -50,7 +60,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
 		<polygon_alpha frame_step="1" data_size="51" data_head="3"/>
 	</mat_color_anm>
-	<mat_color_anm index="1" material_name="file6Material">
+	<mat_color_anm index="1" material_name="file2Material">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -64,6 +74,36 @@
 		<emission_g frame_step="1" data_size="1" data_head="2"/>
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
 		<polygon_alpha frame_step="1" data_size="51" data_head="54"/>
+	</mat_color_anm>
+	<mat_color_anm index="2" material_name="file3Material">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="51" data_head="105"/>
+	</mat_color_anm>
+	<mat_color_anm index="3" material_name="file4Material">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="51" data_head="156"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
