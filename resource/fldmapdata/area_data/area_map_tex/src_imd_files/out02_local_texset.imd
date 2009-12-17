@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-12-15T23:36:27"/>
+	<create user="fuchino" host="W00152" date="2009-12-17T23:23:11"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="3">
+<tex_image_array size="5">
 	<tex_image index="0" name="c01michi_a"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
@@ -122,7 +122,155 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="c01yuka_a"
+	<tex_image index="2" name="c01park01"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="c01park01_pl"
+		path="C:/home/wb_data3d/field/out02/chip/c01park01.tga"
+	>
+		<bitmap size="512">
+			1111 1111 1111 1111 4441 4444 4444 4441
+			4444 4444 5534 5344 2345 1122 4444 1444
+			1111 1111 1111 1111 4431 4444 4444 4431
+			4444 4444 2254 4555 3444 1222 4443 1444
+			4444 3134 4444 1444 4431 4444 5344 4452
+			4444 3444 2225 4435 4444 5555 3155 1344
+			4444 3134 4444 0444 4311 4444 2555 4522
+			4444 5344 2222 4445 5444 6666 1666 1133
+			1111 1111 1111 0111 5511 5553 2222 5222
+			5555 5555 2222 4452 6544 6666 6666 0111
+			1333 3333 1333 0333 5110 4435 2223 2222
+			6665 6666 2225 4452 6544 6666 6666 0111
+			1333 3333 1333 0333 3100 4444 2334 5222
+			6666 6666 2256 4412 6544 6666 6666 0011
+			1333 3333 1333 0333 4100 4444 3444 6522
+			6666 6666 1566 4411 6544 6666 6666 0011
+			1111 1111 1111 0111 4100 4444 4444 6652
+			6666 6666 3166 4413 5344 6666 6666 0011
+			3333 1333 3333 0333 3110 4444 4444 6653
+			6666 6666 4316 1134 5443 6666 6666 0016
+			4444 1344 4443 0444 1110 5555 4435 6545
+			6666 6666 4431 3444 1111 6665 6666 0116
+			4444 1344 4443 0444 6611 6666 5555 5443
+			6666 1666 4431 3444 3344 6661 6666 1116
+			3333 1333 3333 1333 6611 6666 1666 4443
+			6665 3166 4313 4344 4444 6614 6666 1331
+			1111 1111 1111 1111 6661 6666 1666 4443
+			1554 4311 4134 4344 4444 6134 1166 1443
+			1111 1111 1111 1111 6661 6666 6666 4441
+			4433 4444 3144 4434 4444 6144 4311 1444
+			1111 1111 1111 1111 6661 6666 6666 3431
+			4444 4444 1344 4434 4444 1344 4443 1444
+			1111 1111 1111 1111 6661 6666 6666 4316
+			4444 4444 5344 4443 4444 1344 4443 1444
+			1111 1111 1111 1111 6661 6666 6666 4431
+			4444 4444 2234 4445 4444 1334 4433 1344
+			1111 1111 1111 1111 6611 6666 5666 4452
+			4444 4444 2234 4445 3444 1555 1111 1133
+			1111 1111 1111 0111 6611 6666 2555 4522
+			4444 4444 2223 4435 5344 4443 3344 0111
+			1111 1111 1111 0111 5511 5555 2533 5222
+			3335 5555 2223 4452 3534 4444 3444 0111
+			1111 1111 1111 0111 5110 4443 2544 2222
+			1115 6666 2225 3452 4511 4444 4444 0011
+			1111 1111 1111 0111 1100 4444 2544 5222
+			1344 6666 2256 1112 4133 4444 4444 0011
+			1111 1111 1111 0111 1100 4444 5444 4522
+			3444 6661 1566 4431 3144 4444 4444 0111
+			1111 1111 1111 0111 1100 4444 5444 4452
+			4444 6613 3166 4444 1344 4444 3444 1111
+			1111 1111 1111 0111 1110 4443 4444 4455
+			4444 6614 4316 4444 1344 4443 1344 1131
+			1111 1111 1111 0111 5110 4355 4444 4435
+			4444 6134 4431 4444 2344 4431 3134 1344
+			1111 1111 1111 0111 4311 5534 3443 4445
+			4444 1344 4435 4444 2234 1312 4311 1444
+			1111 1111 1111 1111 4431 3444 5555 4445
+			4444 4444 4353 4444 2234 3112 4444 1444
+			1111 1111 1111 1111 4441 4444 1344 4443
+			4444 4444 4534 4444 2234 3122 4444 1444
+			1111 1111 1111 1111 4441 4444 1444 4443
+			4444 4444 4544 4444 2234 1122 4444 1444
+			1111 1111 1111 1111 4441 4444 3444 4441
+			4444 4444 4544 4444 2254 1222 4444 1444
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="c01park_hasi"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="c01park_hasi_pl"
+		path="C:/home/wb_data3d/field/out02/chip/c01park_hasi.tga"
+	>
+		<bitmap size="512">
+			eecc eeee eeee 0000 2200 2222 2222 2222
+			2222 2222 2222 2222 0222 3330 3333 3333
+			eecc eeee eeee 1000 5511 5555 5555 5555
+			5555 5555 5555 2555 0222 6330 6666 3666
+			cc66 ccee eecc 1100 8811 8888 8888 8888
+			8888 8888 8888 5588 0222 6330 6666 3666
+			cc66 ccee eecc 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb 88bb 5888 0225 6330 9996 3669
+			cc66 ccee eecc 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8888 0255 6330 9999 3699
+			cc66 ccee eecc 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 888b 0255 6330 9999 3699
+			3300 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			3300 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			4411 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8bbb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 88bb 0258 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 888b 0255 6330 9999 3699
+			aa77 eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb bbbb 8888 0255 6330 9999 3699
+			ffdd eeee eeee 1100 bb11 bbbb bbbb bbbb
+			bbbb bbbb 88bb 5888 0225 6330 9996 3669
+			ffdd eeee eeee 1100 8811 8888 8888 8888
+			8888 8888 8888 5588 0222 6330 6666 3666
+			ffdd eeee eeee 1000 5511 5555 5555 5555
+			5555 5555 5555 2555 0222 6330 6666 3666
+			ffdd eeee eeee 0000 2200 2222 2222 2222
+			2222 2222 2222 2222 0222 3330 3333 3333
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="c01yuka_a"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -150,14 +298,21 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="3">
+<tex_palette_array size="5">
 	<tex_palette index="0" name="c01michi_a_pl" color_size="4">
 		62f6 6717 6b38 7fff
 	</tex_palette>
 	<tex_palette index="1" name="c01michi_b_pl" color_size="8">
 		6737 6b58 6f79 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="c01yuka_a_pl" color_size="4">
+	<tex_palette index="2" name="c01park01_pl" color_size="8">
+		7c1f 4f1a 5f3a 573c 5b5d 4f1c 533d 7fff
+	</tex_palette>
+	<tex_palette index="3" name="c01park_hasi_pl" color_size="16">
+		41cb 460d 464e 4e2d 4e4f 4e71 5250 5691
+		56b3 5a92 5ab2 5ad5 5ed4 6af3 6b37 7355
+	</tex_palette>
+	<tex_palette index="4" name="c01yuka_a_pl" color_size="4">
 		6717 6b38 6f59 777a
 	</tex_palette>
 </tex_palette_array>
@@ -267,15 +422,19 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="3">
+	<ex_tex_image_array size="5">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="3">
+	<ex_tex_palette_array size="5">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
