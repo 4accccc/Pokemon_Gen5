@@ -469,6 +469,8 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   int *start_ofs;
   int table_ofs;
 
+  GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です" ); 
+
   bevw->sequence = NULL;
 
   if( param != NULL )
@@ -3094,7 +3096,11 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     //正射影ではZで拡縮しないので、向こう側の再生時小さくする補正を入れる
     if( ( beeiw->ortho_mode ) && ( beeiw->src & 1 ) )
     { 
-      GFL_PTC_SetEmitterBaseScale( emit, FX16_HALF );
+      fx32  radius = GFL_PTC_GetEmitterRadius( emit );
+      fx32  length = GFL_PTC_GetEmitterLength( emit );
+      GFL_PTC_SetEmitterRadius( emit, radius / 2 );
+      GFL_PTC_SetEmitterLength( emit, length / 2 );
+      GFL_PTC_SetEmitterBaseScale( emit, FX16_ONE / 3 );
     }
   }
 
