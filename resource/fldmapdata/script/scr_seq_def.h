@@ -2518,7 +2518,7 @@
     _ASM_START_EVENT_BGM bgmno
 
   .macro _ASM_START_EVENT_BGM bgmno
-  _ASM_BGM_STOP
+//  _ASM_BGM_STOP
   _ASM_BGM_PLAY \bgmno
   .endm
 
