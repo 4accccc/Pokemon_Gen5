@@ -174,8 +174,8 @@ void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
   wk->ArmDir[1] = ARM_DIR_DOWN;   //‰E
   wk = &gmk_sv_work->DraWk[2];
   wk->HeadDir = HEAD_DIR_LEFT;
-  wk->ArmDir[0] = ARM_DIR_UP;     //¶
-  wk->ArmDir[1] = ARM_DIR_DOWN;     //‰E
+  wk->ArmDir[0] = ARM_DIR_DOWN;     //¶
+  wk->ArmDir[1] = ARM_DIR_UP;     //‰E
 }
 
 
