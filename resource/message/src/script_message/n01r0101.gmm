@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T21:36:50"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T18:34:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,8 +430,8 @@
 		<comment>♂
 ・続けてleader4_01</comment>
 		<attribute name="キャラ指定">七人衆３</attribute>
-		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ジムリーダーどもめ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーどもめ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0101_leader4_01">
@@ -655,10 +655,12 @@
 シャガ</attribute>
 		<language name="JPN" width="256">シャガ『そなたたちの　かんがえも
 わからんでも　ないが……[BE:01:ページ切り替え（クリア）]
+それいがいを　すべて　ひていする
 その　やりかたは　ゆるせん</language>
-		<language name="JPN_KANJI" width="256">シャガ『そなたたちの　かんがえも
+		<language name="JPN_KANJI" width="256">シャガ『そなたたちの　考えも
 わからんでも　ないが……[BE:01:ページ切り替え（クリア）]
-その　やりかたは　ゆるせん</language>
+それ以外を　全て　否定する
+その　やりかたは　許せん</language>
 	</row>
 
 	<flowchart-group-list>
