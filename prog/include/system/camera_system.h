@@ -11,8 +11,6 @@
 
 #pragma once
 
-#ifdef SDK_TWL
-
 //======================================================================
 //	define
 //======================================================================
@@ -22,6 +20,8 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
+
+#ifdef TWL_SDK
 //CAMERASize‚ğÄ’è‹`
 enum
 {
@@ -35,6 +35,27 @@ enum
 };
 
 
+#else
+//CAMERASize‚ğÄ’è‹`
+typedef enum
+{
+  CAMERA_SIZE_640x480,
+  CAMERA_SIZE_320x240,
+  CAMERA_SIZE_160x120,
+  CAMERA_SIZE_352x288,
+  CAMERA_SIZE_176x144,
+  CAMERA_SIZE_256x192,
+  CAMERA_SIZE_512x384,
+}CAMERASize;
+typedef enum
+{
+    CAMERA_SELECT_NONE = 0,
+    CAMERA_SELECT_IN   = (1<<0),
+    CAMERA_SELECT_OUT  = (1<<1),
+    CAMERA_SELECT_BOTH = (CAMERA_SELECT_IN|CAMERA_SELECT_OUT)
+} CAMERASelect;
+
+#endif
 
 //======================================================================
 //	typedef struct
@@ -97,9 +118,6 @@ void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-
-#endif  //def SDK_TWL
-
 
 
 

@@ -329,7 +329,12 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_ariizumi
-  _CALL_TVT_DEMO( 0 )
+
+  DEFINE_LOCAL  i_ret
+	_FIELD_COMM_EXIT_EVENT_CALL( i_ret )
+	_PALPARK_CALL() //ミュージカル呼び出し
+
+//  _CALL_TVT_DEMO( 0 )
 EVENT_END
 
 

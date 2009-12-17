@@ -69,6 +69,7 @@
 #include "scrcmd_pl_boat.h"
 #include "scrcmd_bsubway.h"
 #include "scrcmd_league_front.h"
+#include "scrcmd_palpark.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

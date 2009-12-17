@@ -607,7 +607,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     work->subState = MPSS_SEND_IMAGE_INIT_COMM_WAIT;
     break;
   case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
-    if( MB_COMM_IsInitComm( work->commWork ) == TRUE )
+    if( WH_GetSystemState() == WH_SYSSTATE_IDLE && 
+        MB_COMM_IsInitComm( work->commWork ) == TRUE )
     {
       if( WH_StartMeasureChannel() == TRUE )
       {
@@ -961,8 +962,14 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   MB_PARENT_INIT_WORK *initWork;
   MB_PARENT_WORK *work;
   
+  if( GFL_NET_IsExit() == FALSE )
+  {
+    OS_TPrintf("!\n");
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
   MB_TPrintf("LeastAppHeap[%x]\n",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x140000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x130000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_PARENT_WORK), HEAPID_MULTIBOOT );
   if( pwk == NULL )
   {

@@ -6322,3 +6322,35 @@
   .short \ret_wk
   .endm
 
+ 
+//--------------------------------------------------------------
+/**
+ * @def _PALPARK_CALL
+ * @brief パルパーク呼び出し
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _PALPARK_CALL() \
+    _ASM_PALPARK_CALL
+
+  .macro  _ASM_PALPARK_CALL
+  .short  EV_SEQ_CALL_PALPARK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_PALPARK_VALUE 
+ *  @brief パルパーク：数値取得(汎用
+ *      基本的に下にあるラッパーを呼んでください
+ *  @param type 種類(前回ゲームステート・ハイスコア
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_PALPARK_VALUE( type, retVal ) \
+    _ASM_GET_PALPARK_VALUE type, retVal
+
+  .macro  _ASM_GET_PALPARK_VALUE type, retVal
+  .short EV_SEQ_GET_PALPARK_VALUE
+  .byte \type
+  .short \retVal
+  .endm

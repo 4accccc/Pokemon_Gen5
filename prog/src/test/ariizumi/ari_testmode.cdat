@@ -69,8 +69,6 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 
 //個人テストパート関係
 
-#define USE_CAMERA_TEST (defined(SDK_TWL))
-
 #include "app/pms_Input.h"
 #include "app/codein.h"
 #include "app/wifi_note.h"
@@ -81,10 +79,12 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_capture_sys.h"
+#include "net_app/comm_tvt_sys.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(wifinote);
+FS_EXTERN_OVERLAY(comm_tvt);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebCodeIn( TESTMODE_WORK *work , const int idx );
@@ -94,11 +94,8 @@ static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int i
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
-#if USE_CAMERA_TEST
-#include "test/ariizumi/camera_test.h"
-FS_EXTERN_OVERLAY(camera_test);
+
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
-#endif
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx );
@@ -115,9 +112,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"数値入力"			  ,TESTMODE_ITEM_SelectDebCodeIn },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
-#if USE_CAMERA_TEST
-	{L"カメラテスト"			,TESTMODE_ITEM_SelectDebCameraTest },
-#endif
+	{L"CommTVT"	  		,TESTMODE_ITEM_SelectDebCameraTest },
 	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
 	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },
@@ -169,13 +164,11 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 }
 #endif //USE_MUSICAL_EDIT
 
-#if USE_CAMERA_TEST
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(camera_test), &CameraTastMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, NULL);
 	return TRUE;
 }
-#endif //USE_CAMERA_TEST
 
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx )
 {

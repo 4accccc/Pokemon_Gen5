@@ -12,7 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
-#include "test/ariizumi/camera_system.h"
+#include "system/camera_system.h"
 
 #ifdef SDK_TWL
 
@@ -600,5 +600,36 @@ void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work )
 
 }
 
+#else
+struct _CAMERA_SYSTEM_WORK
+{
+  HEAPID heapId;
+};
+CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId ){return NULL;}
+void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work ){}
+
+void CAMERA_SYS_CreateReadBuffer( CAMERA_SYSTEM_WORK* work , const int bufferNum , const HEAPID heapId ){}
+const u32 CAMERA_SYS_GetBufferSize( CAMERA_SYSTEM_WORK* work , const int bufferNum ){return 0;}
+void CAMERA_SYS_SetReadBuffer( CAMERA_SYSTEM_WORK* work , void *topAdr , const int bufferNum ){}
+
+void CAMERA_SYS_DeleteReadBuffer( CAMERA_SYSTEM_WORK* work ){}
+void CAMERA_SYS_StartCapture( CAMERA_SYSTEM_WORK* work ){}
+void CAMERA_SYS_StopCapture( CAMERA_SYSTEM_WORK* work ){}
+const BOOL CAMERA_SYS_IsCapture( CAMERA_SYSTEM_WORK* work ){return FALSE;}
+void CAMERA_SYS_SetCaptureCallBack( CAMERA_SYSTEM_WORK* work , 
+                                    CAMERA_SYS_CaptureCallBack callBack , 
+                                    void* userWork ){}
+void CAMERA_SYS_SetTrimming( CAMERA_SYSTEM_WORK* work , const u16 left , const u16 top , const u16 right , const u16 bottom ){}
+const BOOL CAMERA_SYS_GetIsTrimming( CAMERA_SYSTEM_WORK* work ){return FALSE;}
+void CAMERA_SYS_ResetTrimming( CAMERA_SYSTEM_WORK* work ){}
+const u16 CAMERA_SYS_CaptureSizeToWidth( CAMERA_SYSTEM_WORK* work ){return 0;}
+const u16 CAMERA_SYS_CaptureSizeToHeight( CAMERA_SYSTEM_WORK* work ){return 0;}
+void CAMERA_SYS_SetResolution( CAMERA_SYSTEM_WORK* work , const CAMERASize size ){}
+const CAMERASize CAMERA_SYS_GetResolution( CAMERA_SYSTEM_WORK* work ){return 0;}
+const u16 CAMERA_SYS_ResolutionSizeToWidth( CAMERA_SYSTEM_WORK* work ){return 0;}
+const u16 CAMERA_SYS_ResolutionSizeToHeight( CAMERA_SYSTEM_WORK* work ){return 0;}
+const CAMERASelect CAMERA_SYS_GetCameraPos( CAMERA_SYSTEM_WORK* work ){return 0;}
+void CAMERA_SYS_SetCameraPos( CAMERA_SYSTEM_WORK* work , const CAMERASelect pos ){}
+void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work ){}
 
 #endif //def SDK_TWL

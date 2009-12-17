@@ -553,7 +553,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
-        field/elboard_spnews_data.c
+        field/elboard_spnews_data.c \
+        field/scrcmd_palpark.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -1162,10 +1163,9 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 #LIB=>          libssp.$HYB.a
-SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
-        test/ariizumi/camera_test.c \
-		test/ariizumi/jpeg_encoder.c \
-		test/ariizumi/enc_adpcm.c
+SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
+			net_app/comm_tvt/ctvt_camera.c \
+			net_app/comm_tvt/comm_tvt_sys.c
 
 
 # 技教え

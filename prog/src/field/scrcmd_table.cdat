@@ -738,6 +738,12 @@
   NO_CMD()
   NO_CMD()
 
+  //パルパーク関連
+  DEF_CMD( EvCmdPalparkCall    , EV_SEQ_CALL_PALPARK ) 
+  DEF_CMD( EvCmdGetPalparkValue, EV_SEQ_GET_PALPARK_VALUE )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
