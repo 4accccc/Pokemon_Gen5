@@ -92,6 +92,24 @@ enum
 //static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(10) };
 static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(16) };
 
+
+
+// 配置アニメーションの有無
+static const BOOL EV_DEMO_HAICHI_ANIME[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  FALSE,
+  FALSE,
+  TRUE,
+  TRUE,
+};
+static const VecFx32 EV_DEMO_HAICHI_ANIME_POS[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  {0,0,0},
+  {0,0,0},
+  {GRID_TO_FX32(15), 0, GRID_TO_FX32(15)},
+  {0,0,0},
+};
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -137,6 +155,19 @@ typedef struct {
   int frame;
 } EV_CIRCLEWALK_HERO;
 
+
+//-------------------------------------
+///	配置アニメーションワーク
+//=====================================
+typedef struct {
+  
+  // 
+  FIELD_BMODEL* p_model;
+
+  
+} EV_BMODEL_ANIME;
+
+
 //-------------------------------------
 ///	DRAW_TASKワーク
 //=====================================
@@ -162,6 +193,9 @@ typedef struct
 
   // 自機のダミー動作
   EV_CIRCLEWALK_HERO hero;
+
+  // モデルアニメーション
+  EV_BMODEL_ANIME bmodel;
 
   // 描画タスク
   FLDMAPFUNC_WORK* p_drawtask;
@@ -223,6 +257,15 @@ static GMEVENT* EVENT_SetUp_CircleWalk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_f
 static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk );
 
 
+//-------------------------------------
+/// 配置オブジェのアニメーション
+//=====================================
+static void EV_BMODEL_Init( EV_BMODEL_ANIME* p_wk, FIELD_BMODEL_MAN * bmodel_man, u32 fourkings_no );
+static void EV_BMODEL_Exit( EV_BMODEL_ANIME* p_wk );
+static void EV_BMODEL_Start( EV_BMODEL_ANIME* p_wk );
+static BOOL EV_BMODEL_IsEnd( const EV_BMODEL_ANIME* cp_wk );
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  歩いてあがる演出
@@ -235,6 +278,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 //-----------------------------------------------------------------------------
 GMEVENT* EVENT_FourKings_CircleWalk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap, u32 fourkins_no )
 {
+  GF_ASSERT( FIELD_EVENT_FOURKINGS_MAX > fourkins_no );
   return EVENT_SetUp_CircleWalk(p_gsys, p_fieldmap, fourkins_no);
 }
 
@@ -360,6 +404,14 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       }
 
       EV_CAMERA_Init( &p_work->camera, p_camera, heapID, p_work->fourkings_no );
+      
+    }
+    // 配置モデル
+    {
+      FLDMAPPER* p_mapper = FIELDMAP_GetFieldG3Dmapper( p_work->p_fieldmap );
+      FIELD_BMODEL_MAN* p_bmodelman = FLDMAPPER_GetBuildModelManager( p_mapper );
+
+      EV_BMODEL_Init( &p_work->bmodel, p_bmodelman, p_work->fourkings_no );
     }
     EV_HERO_Init1( &p_work->hero );
 
@@ -373,6 +425,9 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 
     // 描画スイッチ
     EV_HERO_Switch( &p_work->hero, TRUE );
+
+    // 配置アニメーション開始
+    EV_BMODEL_Start( &p_work->bmodel ); 
     
     (*p_seq)++;
     break;
@@ -381,6 +436,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     {
       BOOL result1;
       BOOL result2;
+      BOOL result3;
 
 #ifdef DEBUG_FRAME_CONTROL
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -393,7 +449,9 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       result2 = EV_HERO_Update( &p_work->hero );
       GF_ASSERT( result1 == result2 );
 
-      if( result1 )
+      result3 = EV_BMODEL_IsEnd( &p_work->bmodel );
+
+      if( result1 && result3 )
       {
         (*p_seq) ++;
       }
@@ -413,6 +471,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     // 各デモ破棄
     EV_HERO_Exit( &p_work->hero );
     EV_CAMERA_Exit( &p_work->camera );
+    EV_BMODEL_Exit( &p_work->bmodel );
     return GMEVENT_RES_FINISH;
 
   default:
@@ -422,6 +481,80 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 
   return GMEVENT_RES_CONTINUE;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデルのアニメーション初期化
+ *
+ *	@param	p_wk              ワーク
+ *	@param	bmodel_man        配置管理システム
+ *	@param	fourkings_no      四天王ナンバー
+ */
+//-----------------------------------------------------------------------------
+static void EV_BMODEL_Init( EV_BMODEL_ANIME* p_wk, FIELD_BMODEL_MAN * bmodel_man, u32 fourkings_no )
+{
+  if( EV_DEMO_HAICHI_ANIME[ fourkings_no ] )
+  {
+    p_wk->p_model = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_NULL, &EV_DEMO_HAICHI_ANIME_POS[fourkings_no] );
+  }
+  else
+  {
+    p_wk->p_model = NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  破棄
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void EV_BMODEL_Exit( EV_BMODEL_ANIME* p_wk )
+{
+  if( p_wk->p_model )
+  {
+    FIELD_BMODEL_Delete( p_wk->p_model );
+    p_wk->p_model = NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションの開始
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void EV_BMODEL_Start( EV_BMODEL_ANIME* p_wk )
+{
+  if( p_wk->p_model )
+  {
+    FIELD_BMODEL_SetAnime( p_wk->p_model, 0, BMANM_REQ_START );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションの完了街
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL EV_BMODEL_IsEnd( const EV_BMODEL_ANIME* cp_wk )
+{
+  if( cp_wk->p_model )
+  {
+    return FIELD_BMODEL_WaitAnime( cp_wk->p_model, 0 );
+  }
+  return TRUE;
+}
+
 
 
 //----------------------------------------------------------------------------
