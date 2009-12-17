@@ -82,6 +82,8 @@ typedef struct _BR_BTN_WORK BR_BTN_WORK;
 extern BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
 extern void BR_BTN_Exit( BR_BTN_WORK *p_wk );
 extern BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y );
-extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, u32 x, u32 y );
- 
+extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, s16 x, s16 y );
+extern void BR_BTN_GetPos( const BR_BTN_WORK *cp_wk, s16 *p_x, s16 *p_y );
+extern void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri );
+extern u8 BR_BTN_GetSoftPriority( const BR_BTN_WORK *cp_wk );
 

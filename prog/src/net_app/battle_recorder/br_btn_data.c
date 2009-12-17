@@ -22,7 +22,6 @@
 //-------------------------------------
 ///	ボタンの座標
 //=====================================
-#define BR_BTN_POS_X					(42)
 #define BR_BTN_POS_START_Y		(25)	//開始オフセット
 #define BR_BTN_POS_OFFSET_Y		(36)	//間隔オフセット
 #define BR_BTN_POS_NUMDIF_Y		(16)	//個数での位置調整オフセット
