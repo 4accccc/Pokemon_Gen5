@@ -9,3 +9,6 @@ get2.spa
 gym1.spa
 	gym_housha.spr
 	gym_kira.spr
+
+fly_out.spa
+	feather_out.spr
