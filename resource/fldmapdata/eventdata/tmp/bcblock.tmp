@@ -1,0 +1,5 @@
+#../data/bcblock.mev
+../tmp/bcblock.bin:../data/bcblock.mev $(UNIQ_SCRIPTHEADER) ../tmp/bcblock.h ../../zonetable/zone_id.h ../tmp/bc10r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
+	@echo ../data/bcblock.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/bcblock.h ../../zonetable/zone_id.h ../tmp/bc10r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
+
