@@ -394,12 +394,12 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
 
   static const u8 result_table[ BTL_RESULT_MAX ][ BTL_COMPETITOR_MAX ] = {
     //野生        トレーナー  サブウェイ  通信
-    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_LOSE
-    { RES_WIN,    RES_WIN,    RES_WIN,    RES_WIN  },   //BTL_RESULT_WIN
-    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_DRAW
-    { RES_WIN,    RES_ERR,    RES_LOSE,   RES_LOSE },   //BTL_RESULT_RUN
-    { RES_WIN,    RES_ERR,    RES_WIN,    RES_WIN  },   //BTL_RESULT_RUN_ENEMY
-    { RES_WIN,    RES_ERR,    RES_ERR,    RES_ERR  },   //BTL_RESULT_CAPTURE
+    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE }, //BTL_RESULT_LOSE
+    { RES_WIN,    RES_WIN,    RES_WIN,    RES_WIN  }, //BTL_RESULT_WIN
+    { RES_LOSE,   RES_LOSE,   RES_LOSE,   RES_LOSE }, //BTL_RESULT_DRAW
+    { RES_WIN,    RES_ERR,    RES_ERR,    RES_LOSE }, //BTL_RESULT_RUN
+    { RES_WIN,    RES_ERR,    RES_WIN,    RES_WIN  }, //BTL_RESULT_RUN_ENEMY
+    { RES_WIN,    RES_ERR,    RES_ERR,    RES_ERR  }, //BTL_RESULT_CAPTURE
   };
 
   SDK_COMPILER_ASSERT( BTL_COMPETITOR_WILD == 0 );
@@ -412,6 +412,7 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
   GF_ASSERT_MSG( result <= BTL_RESULT_CAPTURE, "想定外のBtlResult(%d)\n", result );
   GF_ASSERT_MSG( competitor <= BTL_COMPETITOR_COMM, "想定外のBtlCompetitor(%d)\n", competitor);
   lose_flag = result_table[result][competitor];
+   
   if( lose_flag == RES_ERR )
   {
     OS_Printf("バトルからありえない結果(Result=%d, Competitor=%d)\n", result, competitor );

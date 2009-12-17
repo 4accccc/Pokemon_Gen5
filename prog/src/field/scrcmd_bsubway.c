@@ -169,9 +169,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
       FIELD_PLAYER_GetPos( fld_player, &pos );
-      LOCATION_Set( &loc, FIELDMAP_GetZoneID(fieldmap),
-          0, FIELD_PLAYER_GetDir(fld_player),
-          LOCATION_DEFAULT_EXIT_OFS, pos.x, pos.y, pos.z );
+      LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
+          FIELD_PLAYER_GetDir(fld_player),
+          pos.x, pos.y, pos.z );
+
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag(
           GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
