@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T17:17:20"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T16:44:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,13 +265,13 @@
 
 	<dialog left="33" top="196" right="737" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="842" top="169" right="1316" bottom="567" visible="yes"/>
+		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,10 +334,10 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">まよえる　トレーナーよ
 ポケモンたちを　じゆうにする……[BE:00:ページ切り替え（行送り）]
-その　けっしんは　ついたかい？</language>
+その　けっしんは　ついたかい？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">迷える　トレーナーよ
 ポケモンたちを　自由にする……[BE:00:ページ切り替え（行送り）]
-その　決心は　ついたかい？</language>
+その　決心は　ついたかい？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_boss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -351,14 +351,14 @@
 しかたない……
 ボクの　ともだちと　たたかいたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　とらえられた　ポケモンを
-じゆうに　してあげるから……</language>
+じゆうに　してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『ボクを　からかっているね
 その　ボールの中……[BE:00:ページ切り替え（行送り）]
 キミに従う　ポケモンだらけだ[BE:01:ページ切り替え（クリア）]
 仕方ない……
 ボクの　友達と　闘いたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　捕らえられた　ポケモンを
-解放してあげるから……</language>
+解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_boss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -372,14 +372,14 @@
 しかたない……
 ボクの　ともだちと　たたかいたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　とらえられた　ポケモンを
-じゆうに　してあげるから……</language>
+じゆうに　してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『ボクに　逆らうんだね
 その　ボールの中……[BE:00:ページ切り替え（行送り）]
 キミに従う　ポケモンだらけ[BE:01:ページ切り替え（クリア）]
 仕方ない……
 ボクの　友達と　闘いたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　捕らえられた　ポケモンを
-解放してあげるから……</language>
+解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_boss_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -393,12 +393,12 @@
 ポケモンを　すくいだせないか……[BE:01:ページ切り替え（クリア）]
 ボクには　ちからが　ひつようだ[BE:01:ページ切り替え（クリア）]
 せかいの　みんなが　ボクの　りそうに
-さんせい　するような　そんな　ちから……</language>
+さんせい　するような　そんな　ちから……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『今の　友達とでは
 ポケモンを　救い出せないか……[BE:01:ページ切り替え（クリア）]
 ボクには　力が　必要だ[BE:01:ページ切り替え（クリア）]
 世界の　みんなが　ボクの理想に
-賛同するための　力……</language>
+賛同するための　力……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_boss_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -413,12 +413,12 @@
 すうしきを　にんしき　しても[BE:00:ページ切り替え（行送り）]
 その　いみは　りかいできない[BE:01:ページ切り替え（クリア）]
 それとおなじように　ボクのりそう
-だれが　りかい　できようか……</language>
+だれが　りかい　できようか……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『世の中に　数多くの　数式がある[BE:01:ページ切り替え（クリア）]
 ほとんどの人は　数式自体を　認識しても
 その意味は　理解できない[BE:01:ページ切り替え（クリア）]
 それと同じように　ボクの理想
-だれが　理解できようか……</language>
+だれが　理解できようか……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -431,10 +431,10 @@
 ・続けてmsg_c02_leader2_01</comment>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
-		<language name="JPN" width="256">やあ　アロエさん
-なにか　いいカセキは　みつかったかい？</language>
-		<language name="JPN_KANJI" width="256">やあ　アロエさん
-なにか　いいカセキは　みつかったかい？</language>
+		<language name="JPN" width="256">？？？『やあ　アロエさん
+なにか　いいカセキは　みつかったかい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『やあ　アロエさん
+なにか　いいカセキは　みつかったかい？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -445,9 +445,9 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『あんた
-また　につまったのかい？</language>
+また　につまったのかい？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アロエ『あんた
-また　創作に　煮詰まったのかい？</language>
+また　創作に　煮詰まったのかい？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -459,11 +459,11 @@ C02ジムリーダー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 こいつさ　こうみえても
 ヒウンジムの　ジムリーダーで[BE:00:ページ切り替え（行送り）]
-アーティって　いうんだよ！</language>
+アーティって　いうんだよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 こいつさ　こうみえても
 ヒウンジムの　ジムリーダーで[BE:00:ページ切り替え（行送り）]
-アーティって　いうんだよ！</language>
+アーティって　いうんだよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -475,11 +475,11 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『……んうん？
 なんとなく　きぶんてんかん　かな？[BE:01:ページ切り替え（クリア）]
 でさ　なんとなく　たいへんそうだけど
-ひょっとして　なんか　あった？</language>
+ひょっとして　なんか　あった？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アーティ『……んうん？
 なんとなく　気分転換　かな？[BE:01:ページ切り替え（クリア）]
 でさ　なんとなく　大変そうだけど
-ひょっとして　なんか　あった？</language>
+ひょっとして　なんか　あった？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -489,9 +489,9 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『そうなんだよ！！
-てんじひんを　もっていかれてさ！</language>
+てんじひんを　もっていかれてさ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アロエ『そうなんだよ！！
-展示品を　ごっそり　持って行かれてさ！</language>
+展示品を　ごっそり　持って行かれてさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -501,9 +501,9 @@ C02ジムリーダー</attribute>
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
-どうして　はくぶつかん　からっぽなの？</language>
+どうして　はくぶつかん　からっぽなの？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
-どうして　博物館　空っぽなの？</language>
+どうして　博物館　空っぽなの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -517,10 +517,10 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
 		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]
 ジムバッジ　てにいれたかよ？[BE:01:ページ切り替え（クリア）]
-って　なんだか　そうぞうしいな</language>
+って　なんだか　そうぞうしいな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]
 ジムバッジ　手に入れたかよ？[BE:01:ページ切り替え（クリア）]
-って　なんだか　騒々しいな</language>
+って　なんだか　騒々しいな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -556,9 +556,9 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">そして　あんたたちは
-はくぶつかんに　のこってちょうだい！</language>
+はくぶつかんに　のこってちょうだい！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">そして　あんたたちは
-博物館に　残ってちょうだい！</language>
+博物館に　残ってちょうだい！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -575,12 +575,12 @@ C02ジムリーダー</attribute>
 ヤグルマのもりを　さがしておくれよ！[BE:01:ページ切り替え（クリア）]
 いい？　アーティ
 あんたが　あんない　してやんな[BE:01:ページ切り替え（クリア）]
-じゃ　たのんだよ！</language>
+じゃ　たのんだよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">で　アーティと　[1:00:トレーナー名:0]は
 ヤグルマの森を　探しておくれよ！[BE:01:ページ切り替え（クリア）]
 いい？　アーティ
 あんたが　案内してやんな[BE:01:ページ切り替え（クリア）]
-じゃ　頼んだよ！</language>
+じゃ　頼んだよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -594,11 +594,11 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
 キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
 じゃあ　いこうか
-ドロボウたいじ　とやらにさ</language>
+ドロボウたいじ　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
 キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
 じゃあ　行こうか
-ドロボウ退治　とやらにさ</language>
+ドロボウ退治　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_leader3_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -613,11 +613,11 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
 キミ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
 じゃあ　いこうか
-ドロボウたいじ　とやらにさ</language>
+ドロボウたいじ　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
 アナタ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
 じゃあ　行こうか
-ドロボウ退治　とやらにさ</language>
+ドロボウ退治　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_white_02" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -629,11 +629,11 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
 これを　もっていってよ！[BE:01:ページ切り替え（クリア）]
 マコモさんから　あずかってたの
-ダウジングマシン！</language>
+ダウジングマシン！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
 これを　持って行ってよ！[BE:01:ページ切り替え（クリア）]
 マコモさんから　預かってたの
-ダウジングマシン！</language>
+ダウジングマシン！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_white_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -644,10 +644,10 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">ダウジングマシンを　つかうと
 めには　みえないけれど[BE:01:ページ切り替え（クリア）]
 かくれている　どうぐの
-ばしょが　わかるんだって！</language>
+ばしょが　わかるんだって！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ダウジングマシンを　つかうと
 目には見えないけれど　隠れている[BE:00:ページ切り替え（行送り）]
-道具の　場所が　わかるんだって！</language>
+道具の　場所が　わかるんだって！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_black_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
