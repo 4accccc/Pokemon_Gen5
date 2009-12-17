@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-11T11:47:20"/>
+	<create user="ohmori" host="W00185" date="2009-12-17T13:16:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -646,56 +646,88 @@
 
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">こんにちは！
-え！[1:09:どうぐ名:0]を　くれるの？▽
-ありがとう！たいせつにつかうよ！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-え！[1:09:どうぐ名:0]を　くれるの？▽
-ありがとう！たいせつにつかうよ！</language>
+		<language name="JPN" width="256">おや！？
+こんなところに　ポケモンが▽
+めずらしいなぁ▼
+……え！
+[1:09:どうぐ名:0]を　くれるの？▼
+ありがとう
+たいせつに　つかうよ！▼
+もっていた　[1:09:どうぐ名:0]を
+あいてに　わたした！</language>
+		<language name="JPN_KANJI" width="256">おや！？
+こんなところに　ポケモンが▽
+めずらしいなぁ▼
+……え！
+[1:09:どうぐ名:0]を　くれるの？▼
+ありがとう
+たいせつに　つかうよ！▼
+もっていた　[1:09:どうぐ名:0]を
+あいてに　わたした！</language>
 	</row>
 
-	<row id="msg_talk_item_m_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_m_001" back-color="#ffff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるよ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-たいせつに　つかってね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるよ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-たいせつに　つかってね！</language>
+		<language name="JPN" width="256">ギャオッ　ギャオッ！▼
+……　おや？
+やってきた　ポケモンが▽
+[1:09:どうぐ名:0]を　もっている▼
+なんと　ポケモンが
+[1:09:どうぐ名:0]を　くれた！▼
+ギャオー！</language>
+		<language name="JPN_KANJI" width="256">ギャオッ　ギャオッ！▼
+……　おや？
+やってきた　ポケモンが▽
+[1:09:どうぐ名:0]を　もっている▼
+なんと　ポケモンが
+[1:09:どうぐ名:0]を　くれた！▼
+ギャオー！</language>
 	</row>
 
 	<row id="msg_talk_item_w_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">こんにちは！
-え！[1:09:どうぐ名:0]を　くれるの？▽
-ありがとう！たいせつにつかうよ！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-え！[1:09:どうぐ名:0]を　くれるの？▽
-ありがとう！たいせつにつかうよ！</language>
+		<language name="JPN" width="256">おや！？
+こんなところに　ポケモンが▽
+かわいいー！▼
+……え！
+[1:09:どうぐ名:0]を　くれるの？▼
+ありがとう
+たいせつに　つかうよ！▼
+もっていた　[1:09:どうぐ名:0]を
+あいてに　わたした！</language>
+		<language name="JPN_KANJI" width="256">おや！？
+こんなところに　ポケモンが▽
+かわいいー！▼
+……え！
+[1:09:どうぐ名:0]を　くれるの？▼
+ありがとう
+たいせつに　つかうよ！▼
+もっていた　[1:09:どうぐ名:0]を
+あいてに　わたした！</language>
 	</row>
 
-	<row id="msg_talk_item_w_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_w_001" back-color="#ffff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるよ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-たいせつに　つかってね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるよ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-たいせつに　つかってね！</language>
+		<language name="JPN" width="256">ギャオッ　ギャオッ！▼
+……　おや？
+やってきた　ポケモンが▽
+[1:09:どうぐ名:0]を　もっている▼
+なんと　ポケモンが
+[1:09:どうぐ名:0]を　くれた！▼
+ギャオー！</language>
+		<language name="JPN_KANJI" width="256">ギャオッ　ギャオッ！▼
+……　おや？
+やってきた　ポケモンが▽
+[1:09:どうぐ名:0]を　もっている▼
+なんと　ポケモンが
+[1:09:どうぐ名:0]を　くれた！▼
+ギャオー！</language>
 	</row>
 
 	<row id="msg_talk_item_pika_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -731,30 +763,54 @@
 
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
 	</row>
 
 	<row id="msg_talk_life_w_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>戦闘回復：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
 	</row>
 
 	<row id="msg_talk_life_pika_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>戦闘回復：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　かいふくさせた！
-がんばれ　[1:00:トレーナー名:0]！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
+そこだ！　がんばれ！！▼
+たたかっている　　[1:00:トレーナー名:0]の
+ポケモンを　かいふくさせた！▼
+[1:00:トレーナー名:0]　『おお！
+たすかったよ！　ありがとう！！</language>
 	</row>
 
 	<flowchart-group-list>
