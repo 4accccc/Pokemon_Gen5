@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/08 16:22:59
+#save date:2009/12/17 22:32:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r08.wms
 #SECTION START:OBJ_EVENT
@@ -171,7 +171,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_R08_R08R0201_EXIT01
@@ -189,5 +189,22 @@ EVENTDATA_POSTYPE_GRID
 680 0 8
 #size
 1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_R08_R08R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R08R0101
+#Next Door ID Name
+DOOR_ID_R08R0101_R08_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 120
+#size
+4 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
