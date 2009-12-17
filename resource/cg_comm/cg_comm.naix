@@ -12,13 +12,14 @@
 
 enum {
 	NARC_cg_comm_comm_bg_NCLR = 0,
-	NARC_cg_comm_comm_bg_NCGR = 1,
-	NARC_cg_comm_comm_base_NSCR = 2,
-	NARC_cg_comm_comm_ir_btn_NSCR = 3,
-	NARC_cg_comm_comm_vs1_btn_NSCR = 4,
-	NARC_cg_comm_comm_vs2_btn_NSCR = 5,
-	NARC_cg_comm_comm_wifi_btn_NSCR = 6,
-	NARC_cg_comm_comm_wireless_btn_NSCR = 7
+	NARC_cg_comm_comm_bg_ir_NCLR = 1,
+	NARC_cg_comm_comm_bg_NCGR = 2,
+	NARC_cg_comm_comm_base_NSCR = 3,
+	NARC_cg_comm_comm_ir_btn_NSCR = 4,
+	NARC_cg_comm_comm_vs1_btn_NSCR = 5,
+	NARC_cg_comm_comm_vs2_btn_NSCR = 6,
+	NARC_cg_comm_comm_wifi_btn_NSCR = 7,
+	NARC_cg_comm_comm_wireless_btn_NSCR = 8
 };
 
 /* NARC_CG_COMM_NAIX_ */
