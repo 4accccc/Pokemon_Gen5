@@ -11,7 +11,7 @@
 
 
 #引数　チェック
-if( @ARGV < 8 )
+if( @ARGV < 9 )
 {
   print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def trdata_def output_header\n" );
   exit(1);
@@ -134,7 +134,7 @@ foreach $one ( @EXCEL )
 #情報の出力
 
 #まずヘッダー
-open( FILEOUT, ">".$ARGV[7] );
+open( FILEOUT, ">".$ARGV[8] );
 
 print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
 print( FILEOUT "#pragma once\n" );
