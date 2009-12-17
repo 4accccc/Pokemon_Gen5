@@ -470,7 +470,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 //  ƒ|ƒPƒ‚ƒ“‘I‘ð
 //======================================================================
 
-
 //======================================================================
 //  parts
 //======================================================================
@@ -511,14 +510,14 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
   
   switch( mode ){
   case BSWAY_MODE_SINGLE:
-    reg_type = REG_LV50_SINGLE;
+    reg_type = REG_SUBWAY_SINGLE;
     break;
   case BSWAY_MODE_DOUBLE:
-    reg_type = REG_LV50_DOUBLE;
+    reg_type = REG_SUBWAY_DOUBLE;
     break;
   default:
     GF_ASSERT( 0 );
-    reg_type = REG_LV50_SINGLE;
+    reg_type = REG_SUBWAY_DOUBLE;
   }
 
   reg_data = (REGULATION*)PokeRegulation_LoadDataAlloc(
@@ -529,7 +528,7 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
   ret = PokeRegulationMatchPartialPokeParty( reg_data, party );
   GFL_HEAP_FreeMemory( reg_data );
   
-  if( ret == POKE_REG_OK ){
+  if( ret == POKE_REG_OK || POKE_REG_TOTAL_LV_FAILED ){
     return( TRUE );
   }
   
