@@ -403,6 +403,7 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
 	GFL_STR_SetStringCodeOrderLength(
 	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
   WORDSET_RegisterWord(setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
+  GFL_MSG_GetString(setup->mm_monolith, msg_mono_title_000, strbuf);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_TITLE], setup->printQue, 
     0, 0, expand_strbuf, setup->font_handle);
