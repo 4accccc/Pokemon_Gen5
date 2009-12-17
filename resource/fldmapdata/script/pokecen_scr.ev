@@ -343,7 +343,8 @@ EVENT_START ev_union
   // レポート処理
   IF $room_in == TRUE THEN
     // レポートを書く
-    _REPORT_EVENT_CALL( ret )
+    //_REPORT_EVENT_CALL( ret )
+    _REPORT_EVENT_CALL_WIRELESS( ret )
     // 書き込みに失敗
     IF $ret != SCR_REPORT_OK THEN
       $room_in = FALSE

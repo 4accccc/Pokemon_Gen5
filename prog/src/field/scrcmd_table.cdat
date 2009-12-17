@@ -424,7 +424,7 @@
 
   DEF_CMD( EvCmdGetRomVersion, EV_SEQ_GET_ROM_VERSION )
   DEF_CMD( EvCmdGetMySex, EV_SEQ_GET_MY_SEX )
-  NO_CMD()
+  DEF_CMD( EvCmdGetWirelessSaveMode, EV_SEQ_GET_WIRELESS_SAVEMODE ) 
   NO_CMD()
 
   // ˆç‚Ä‰®

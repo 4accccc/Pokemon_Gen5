@@ -588,3 +588,37 @@ VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk )
   } 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief ワイヤレスセーブモードを取得する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetWirelessSaveMode( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  CONFIG*          config = SaveData_GetConfig( save );
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );  // コマンド第一引数
+  WIRELESSSAVE_MODE mode;
+
+  // ワイヤレスセーブモード取得
+  mode = CONFIG_GetWirelessSaveMode( config );
+  OBATA_Printf( "=====================\n" );
+  OBATA_Printf( "wirelesssavemode = %d\n", mode );
+  OBATA_Printf( "=====================\n" );
+
+  // 対応する定数を返す
+  switch( mode )
+  {
+  case WIRELESSSAVE_OFF:  *ret_wk = WIRELESS_SAVEMODE_OFF;  break;
+  case WIRELESSSAVE_ON:   *ret_wk = WIRELESS_SAVEMODE_ON;   break;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}

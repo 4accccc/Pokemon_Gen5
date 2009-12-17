@@ -3833,6 +3833,22 @@
     .short  \flag
     .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_WIRELESS_SAVEMODE
+ * @brief ワイヤレスセーブモードの取得
+ */
+//--------------------------------------------------------------
+#define _GET_WIRELESS_SAVEMODE( ret_wk ) \
+      _ASM_GET_WIRELESS_SAVEMODE ret_wk
+
+    .macro  _ASM_GET_WIRELESS_SAVEMODE ret_wk
+    .short  EV_SEQ_GET_WIRELESS_SAVEMODE
+    .short  \ret_wk
+    .endm
+
+
 //--------------------------------------------------------------
 /**
  * @def _CGEAR_ON_DEMO
@@ -5695,11 +5711,26 @@
 /**
  * @def _REPORT_EVENT_CALL
  * @brief 簡易イベントコマンド：セーブ呼び出し
- * @param ret_wk
+ * @param ret_wk セーブ結果を受け取るワーク
+ * @return セーブした場合     SCR_REPORT_OK
+ *         キャンセルした場合 SCR_REPORT_CANCEL
  */
 //--------------------------------------------------------------
 #define _REPORT_EVENT_CALL( ret_wk )  \
     _ASM_REPORT_EVENT_CALL  ret_wk
+
+//--------------------------------------------------------------
+/**
+ * @def _REPORT_EVENT_CALL_WIRELESS
+ * @brief 簡易イベントコマンド：セーブ呼び出し( ワイヤレスセーブモードのチェック有 )
+ * @param ret_wk
+ * @return セーブした場合             SCR_REPORT_OK
+ *         キャンセルした場合         SCR_REPORT_CANCEL
+ *         セーブしない設定だった場合 SCR_REPORT_OK
+ */
+//--------------------------------------------------------------
+#define _REPORT_EVENT_CALL_WIRELESS( ret_wk )  \
+    _ASM_REPORT_EVENT_CALL_WIRELESS  ret_wk
 
 //--------------------------------------------------------------
 /**

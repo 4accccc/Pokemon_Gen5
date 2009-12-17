@@ -15,6 +15,7 @@ _EVENT_DATA   ev_dummy
 _EVENT_DATA   ev_heal_p01_dummy
 _EVENT_DATA   ev_gameover_recover_home
 _EVENT_DATA   ev_gameover_recover_pokecen
+_EVENT_DATA   ev_report_event_call_wireless
 _EVENT_DATA   ev_report_event_call
 _EVENT_DATA   ev_field_comm_exit_event_call
 _EVENT_DATA_END //終了
@@ -76,6 +77,20 @@ EVENT_END
 //--------------------------------------------------------------
 //  SCWK_PARAM0   セーブ結果を返すscript_def.h参照
 //--------------------------------------------------------------
+ev_report_event_call_wireless:
+{
+  DEFINE_LOCAL savemode
+
+  // ワイヤレスセーブモード取得
+  _GET_WIRELESS_SAVEMODE( savemode )
+
+  SWITCH $savemode
+  CASE WIRELESS_SAVEMODE_ON  THEN _CALL ev_report_event_call    // レポート処理へ
+  CASE WIRELESS_SAVEMODE_OFF THEN $SCWK_PARAM0 = SCR_REPORT_OK  // レポート書いたとみなす
+                                  _CHG_LOCAL_SCR                // ローカルスクリプトに切り替え
+  ENDSWITCH
+}
+_END 
 ev_report_event_call:
 { 
   // 変数を初期化

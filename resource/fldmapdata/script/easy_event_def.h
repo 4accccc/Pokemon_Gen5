@@ -42,6 +42,35 @@
 
 //--------------------------------------------------------------
 /**
+ * レポート呼び出し( ワイヤレスセーブモードのチェック有 )
+ *
+ * @param ret_wk      結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_REPORT_EVENT_CALL_WIRELESS ret_wk  
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _PUSH_WORK  SCWK_PARAM2
+  _PUSH_WORK  SCWK_PARAM3
+  _PUSH_WORK  SCWK_PARAM4
+  _PUSH_WORK  SCWK_PARAM5
+
+
+  _CHG_COMMON_SCR SCRID_REPORT_EVENT_CALL_WIRELESS
+  _ASM_LDWKVAL  \ret_wk, SCWK_PARAM0
+
+
+  _POP_WORK   SCWK_PARAM5
+  _POP_WORK   SCWK_PARAM4
+  _POP_WORK   SCWK_PARAM3
+  _POP_WORK   SCWK_PARAM2
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+
+  .endm
+
+//--------------------------------------------------------------
+/**
  * フィールド通信切断イベント呼び出し
  *
  * @param ret_wk      結果を受け取るためのワーク
