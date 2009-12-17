@@ -445,6 +445,7 @@ static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
   anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
 
   // リフト・ライトの座標を更新
+  if( !anime_end )
   {
     int obj_idx;
     VecFx32 trans;
