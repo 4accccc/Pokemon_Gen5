@@ -109,6 +109,9 @@ G3D_FE_MDL = kage.imd \
   lgrass_wt.imd \
   sea_ride.imd \
   sisen_ef.imd \
+  mark_hate.imd \
+  mark_onpu.imd \
+  mark_ten.imd \
   f_mark_u.imd \
   f_mark_d.imd \
   f_mark_l.imd \
