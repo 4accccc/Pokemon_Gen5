@@ -59,11 +59,11 @@
 
 #define WK_SYS_FIRST_POKETYPE            16432 /* 0x4030 最初の３体選択で選んだポケモンのタイプ。識別用定義名はuser_define.hで確認 */
 #define WK_SYS_MAPREPLACE01              16433 /* 0x4031 マップ置き換え処理用ワーク定義：博物館 */
-#define WK_SYS_MAPREPLACE02              16434 /* 0x4032 マップ置き換え処理用ワーク定義：りゅうらせん３F */
-#define WK_SYS_MAPREPLACE03              16435 /* 0x4033 マップ置き換え処理用ワーク定義：チャンピオン部屋 */
-#define WK_SYS_MAPREPLACE04              16436 /* 0x4034 マップ置き換え処理用ワーク定義 */
-#define WK_SYS_MAPREPLACE05              16437 /* 0x4035 マップ置き換え処理用ワーク定義 */
-#define WK_SYS_MAPREPLACE06              16438 /* 0x4036 マップ置き換え処理用ワーク定義 */
+#define WK_SYS_MAPREPLACE02              16434 /* 0x4032 マップ置き換え処理用ワーク定義：チャンピオン部屋 */
+#define WK_SYS_MAPREPLACE03              16435 /* 0x4033 マップ置き換え処理用ワーク定義：WF/BC制御用 */
+#define WK_SYS_MAPREPLACE04              16436 /* 0x4034 マップ置き換え処理用ワーク定義：Nの城の謁見の間 */
+#define WK_SYS_MAPREPLACE05              16437 /* 0x4035 マップ置き換え処理用ワーク定義：りゅうらせんの塔 屋外 */
+#define WK_SYS_MAPREPLACE06              16438 /* 0x4036 マップ置き換え処理用ワーク定義：古代の城 */
 #define WK_SYS_MAPREPLACE07              16439 /* 0x4037 マップ置き換え処理用ワーク定義 */
 #define WK_SYS_MAPREPLACE08              16440 /* 0x4038 マップ置き換え処理用ワーク定義 */
 #define WK_SYS_MAPREPLACE09              16441 /* 0x4039 マップ置き換え処理用ワーク定義 */
@@ -74,7 +74,7 @@
 		/* not used 16446(0x403e) */
 		/* not used 16447(0x403f) */
 		/* not used 16448(0x4040) */
-		/* not used 16449(0x4041) */
+#define WK_SYS_SCENE_COMM                16449 /* 0x4041 通信部屋から出てくる時の処理用シーン制御ワーク */
 		/* not used 16450(0x4042) */
 		/* not used 16451(0x4043) */
 		/* not used 16452(0x4044) */
