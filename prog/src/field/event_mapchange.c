@@ -57,6 +57,7 @@
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
 #include "ev_time.h"  //EVTIME_Update
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_SPEXIT_REQUEST
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  //WK_SYS_SCENE_COMM
 
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  //SCRID_POKECEN_ELEVATOR_OUT
 #ifdef PM_DEBUG
@@ -110,6 +111,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
   FIRST_MAPIN_WORK * fmw = work;
   GAMESYS_WORK * gsys = fmw->gsys;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
   FIELDMAP_WORK * fieldmap;
   switch (*seq) {
   case 0:
@@ -138,11 +140,11 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       break;
 
     case GAMEINIT_MODE_CONTINUE:
-      if (EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST ) )
+      if (EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST ) )
       { //特殊接続リクエスト：
         const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
         fmw->loc_req = *spLoc;
-    //    EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
+    //    EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
         FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
         MAPCHG_releaseMapTools( gsys );
         //新しいマップモードなど機能指定を行う
@@ -199,14 +201,17 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       }
     }
     if ( fmw->game_init_mode == GAMEINIT_MODE_CONTINUE 
-        &&EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST ) )
+        &&EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST ) )
     {
-      EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
-      SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
-      *seq = 4;
-    } else {
-      (*seq) ++;
+      EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
+      if ( *(EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_SCENE_COMM )) != 0 )
+      {
+        SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
+        *seq = 4;
+        break;
+      }
     }
+    (*seq) ++;
     break;
   case 3:
     {
@@ -235,6 +240,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
   }
   return GMEVENT_RES_CONTINUE;
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -849,7 +855,8 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
   case 4:
     // 入口退出イベント
     //GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
+    //GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );
     (*seq) ++;
     break;
   case 5:
