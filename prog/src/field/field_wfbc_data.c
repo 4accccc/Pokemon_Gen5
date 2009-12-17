@@ -19,6 +19,7 @@
 #include "system/gfl_use.h"
 
 #include "field/field_wfbc_data.h"
+#include "field/zonedata.h"
 
 #include "field_status_local.h"
 
@@ -85,6 +86,27 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
 static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood );
 static BOOL WFBC_CORE_People_IsGoBack( const FIELD_WFBC_CORE_PEOPLE* cp_people );
 static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add );
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ZONEDATA‚ÉWFBC‚ÌÝ’è‚ðs‚¤
+ *
+ *	@param	cp_wk   ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk )
+{
+  if( cp_wk->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
+  {
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, TRUE );
+  }
+  if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, FALSE );
+  }
+}
 
 
 //-------------------------------------

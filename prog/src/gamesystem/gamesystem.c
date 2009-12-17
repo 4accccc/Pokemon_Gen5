@@ -220,22 +220,23 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->evcheck_context = NULL;
 	gsys->event = NULL;
 
+  ZONEDATA_Open( heapID ); // ゾーンデータのアーカイブハンドルを開く
+
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 	gsys->fieldmap = NULL;
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
 	gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
 
-  ZONEDATA_Open( heapID ); // ゾーンデータのアーカイブハンドルを開く
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
-  ZONEDATA_Close();        // ゾーンデータのアーカイブハンドルを閉じる
 	ISS_SYS_Delete(gsys->iss_sys);
 	GAMEDATA_Delete(gsys->gamedata);
 	GameCommSys_Free(gsys->game_comm);
+  ZONEDATA_Close();        // ゾーンデータのアーカイブハンドルを閉じる
 }
 
 

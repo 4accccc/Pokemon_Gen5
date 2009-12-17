@@ -204,6 +204,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   }
   // 街自分の場所初期化
   FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE], GAMEDATA_GetMyStatus(gd), heapID );
+  FIELD_WFBC_CORE_SetUpZoneData( &gd->wfbc[GAMEDATA_WFBC_ID_MINE] );
   
   //歩数カウント
   gd->fieldmap_walk_count = 0;
@@ -324,6 +325,41 @@ FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID
   GF_ASSERT_MSG(id < GAMEDATA_WFBC_ID_MAX, "wfbc data data_id = %d\n", id);
   return &gamedata->wfbc[id];
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Palaceのコア情報設定
+ *
+ *	@param	gamedata  ゲームデータ
+ *	@param	cp_core   Palaceのコア情報
+ */ 
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_CORE* cp_core )
+{
+  GF_ASSERT( gamedata );
+  GF_ASSERT( cp_core );
+  GFL_STD_MemCopy( cp_core, &gamedata->wfbc[ GAMEDATA_WFBC_ID_COMM ], sizeof(FIELD_WFBC_CORE) );
+
+  // PalaceマップのZONE変更処理
+  FIELD_WFBC_CORE_SetUpZoneData( &gamedata->wfbc[ GAMEDATA_WFBC_ID_COMM ] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Palaceのコア情報を破棄
+ *
+ *	@param	gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata )
+{
+  GF_ASSERT( gamedata );
+  GFL_STD_MemClear( &gamedata->wfbc[ GAMEDATA_WFBC_ID_COMM ], sizeof(FIELD_WFBC_CORE) );
+
+  // 自分のマップのZONE変更処理
+  FIELD_WFBC_CORE_SetUpZoneData( &gamedata->wfbc[ GAMEDATA_WFBC_ID_MINE ] );
+}
+
 
 //----------------------------------------------------------------------------
 /**

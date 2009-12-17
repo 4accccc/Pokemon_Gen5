@@ -141,6 +141,14 @@ typedef struct
 extern FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata );
 extern FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID id );
 
+// WFBC パレス　開始
+extern void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_CORE* cp_core );
+extern void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata );
+
+//----------------------------------------------------------
+//  ZONEDATAの操作
+//----------------------------------------------------------
+extern void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk );
 
 
 //-------------------------------------

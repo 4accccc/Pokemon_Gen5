@@ -52,10 +52,28 @@ typedef struct
   u8 fieldskill_mapeff_list_max;
   FIELDSKILL_MAPEFF_DATA* fieldskill_mapeff_list;
 
+  // ゾーンID変更ID
+  u8 zone_change_flag[ ZONEDATA_CHANGE_MAX ];
 
 } ZONE_DATA_HANDLE;
 
 static ZONE_DATA_HANDLE* data_handle = NULL;
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	ゾーンID変更テーブル
+ */
+//------------------------------------------------------------------
+#define ZONEDATA_CHANGE_ID_BEFORE (0)
+#define ZONEDATA_CHANGE_ID_AFTER (1)
+#define ZONEDATA_CHANGE_ID_TBL_NUM (2)
+static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL_NUM ] = 
+{
+  { ZONE_ID_BC10, ZONE_ID_WC10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
+};
+
+
 
 //============================================================================================
 //============================================================================================
@@ -124,6 +142,39 @@ void ZONEDATA_Close()
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ZONEIDの変更設定
+ *
+ *	@param	id      ゾーンID変更ID
+ *	@param	flag    TRUE:変更ON　　FALSE：変更OFF
+ */
+//-----------------------------------------------------------------------------
+void ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_ID id, BOOL flag )
+{
+  GF_ASSERT( data_handle );
+  GF_ASSERT( id < ZONEDATA_CHANGE_MAX );
+  data_handle->zone_change_flag[ id ] = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ZONEIDの変更設定を確認
+ *
+ *	@param	id    ゾーンID変更ID
+ *
+ *	@retval TRUE      変更ON
+ *	@retval FALSE     変更OFF
+ */
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_GetChangeZoneID( ZONEDATA_CHANGE_ID id )
+{
+  GF_ASSERT( data_handle );
+  GF_ASSERT( id < ZONEDATA_CHANGE_MAX );
+  return data_handle->zone_change_flag[ id ];
+}
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -141,6 +192,29 @@ static inline u16 check_range(u16 zone_id)
 	}
 }
 #define	CHECK_RANGE(value)	{value = check_range(value);}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	ZONEIDの変更処理
+ */
+//------------------------------------------------------------------
+static u16 ControlZoneID( u16 zone_id )
+{
+  int i;
+  
+  for( i=0; i<ZONEDATA_CHANGE_MAX; i++ )
+  {
+    if( data_handle->zone_change_flag[i] )
+    {
+      if( ZONEDATA_CHANGE_ID_TBL[ i ][ ZONEDATA_CHANGE_ID_BEFORE ] == zone_id )
+      {
+        return ZONEDATA_CHANGE_ID_TBL[ i ][ ZONEDATA_CHANGE_ID_AFTER ];
+      }
+    }
+  }
+  return zone_id;
+}
 
 //------------------------------------------------------------------
 /**
@@ -177,6 +251,9 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
     OS_Printf( "アーカイブハンドルがオープンさせていません。\n" );
     return zdbuf;
   }
+
+  // ZONEIDのすり替え
+  zone_id = ControlZoneID(zone_id);
 
 	CHECK_RANGE(zone_id);	//範囲外チェック
 
@@ -414,6 +491,8 @@ BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsRailMap(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   return (ZONEDATA_GetRailDataID(zone_id) != ZONEDATA_NO_RAILDATA_ID);
 }
 
@@ -427,6 +506,8 @@ BOOL ZONEDATA_IsRailMap(u16 zone_id)
 //------------------------------------------------------------------
 int ZONEDATA_GetRailDataID(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   switch (zone_id)
   {
   case ZONE_ID_C03:
@@ -467,12 +548,16 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsUnionRoom(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   return (zone_id == ZONE_ID_UNION);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsColosseum(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   if ( (zone_id == ZONE_ID_CLOSSEUM) || (zone_id == ZONE_ID_CLOSSEUM02) )
   {
     return TRUE;
@@ -491,6 +576,8 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsPalace(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   return (zone_id == ZONE_ID_PALACE01);
 }
 //==================================================================
@@ -502,6 +589,8 @@ BOOL ZONEDATA_IsPalace(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsPalaceField(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   if((zone_id >= ZONE_ID_PLC04 && zone_id <= ZONE_ID_PLT04) //裏フィールド
       || (zone_id == ZONE_ID_PALACE02)){      //ビンゴマップ
     return TRUE;
@@ -517,6 +606,7 @@ BOOL ZONEDATA_IsPalaceField(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsBingo(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
   return (zone_id == ZONE_ID_PALACE02);
 }
 
@@ -529,6 +619,7 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
   return ((zone_id == ZONE_ID_BCWFTEST) || (zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10));
 }
 
@@ -541,6 +632,7 @@ BOOL ZONEDATA_IsWfbc(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
   return (zone_id == ZONE_ID_C04R0202);
 }
 //------------------------------------------------------------------
@@ -673,6 +765,8 @@ u32 ZONEDATA_GetFog(u16 zone_id)
   u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
   
   GF_ASSERT( data_handle );
+
+  zone_id = ControlZoneID(zone_id);
   
   for( i=0; i<data_handle->zonefoglist_max; i++ )
   {
@@ -702,6 +796,8 @@ u32 ZONEDATA_GetLight(u16 zone_id)
   u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
   
   GF_ASSERT( data_handle );
+
+  zone_id = ControlZoneID(zone_id);
   
   for( i=0; i<data_handle->zonelightlist_max; i++ )
   {
@@ -731,6 +827,8 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
   u32 ret = 0;
   
   GF_ASSERT( data_handle );
+
+  zone_id = ControlZoneID(zone_id);
   
   for( i=0; i<data_handle->fieldskill_mapeff_list_max; i++ )
   {
@@ -755,6 +853,8 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
 //-----------------------------------------------------------------------------
 u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 {
+  zone_id = ControlZoneID(zone_id);
+
   if( zone_id == ZONE_ID_C04 )
   {
     return NARC_grid_camera_scene_camera_scene_C04_dat;
@@ -774,7 +874,8 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 //------------------------------------------------------------------
 void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 {
-	CHECK_RANGE(zone_id);	//範囲外チェック
+  zone_id = ControlZoneID(zone_id);
+
   if( data_handle != NULL )
   {
     GFL_ARC_LoadDataOfsByHandle(data_handle->handle,

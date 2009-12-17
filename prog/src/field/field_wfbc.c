@@ -1207,6 +1207,8 @@ static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
     }
     p_wk->type = type;
     DEBUGWIN_RefreshScreen();
+
+    FIELD_WFBC_CORE_SetUpZoneData( p_wk );
   }
 }
 
