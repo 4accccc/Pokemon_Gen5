@@ -3121,7 +3121,7 @@ void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
 
   data = &camera->MoveData;
   if (!data->PushFlg){
-    GF_ASSERT_MSG(0,"No PushData");
+    OS_Printf("No PushData\n");
     return;
   }
   
