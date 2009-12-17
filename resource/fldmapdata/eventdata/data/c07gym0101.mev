@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/11 11:59:23
+#save date:2009/12/17 16:09:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -18,13 +18,13 @@ TR_KARATE_04
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_KARATE_04
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -728
+40 0 -728
 #event number: 2
 #type
 1
@@ -390,13 +390,13 @@ TR_BATTLEG_04
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_DMY
+MV_UP
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_BATTLEG_04
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -419,17 +419,17 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_KARATE_05
 #OBJ CODE Number
-FIGHTERW
+FIGHTERM
 #MOVE CODE Number
-MV_DMY
+MV_UP
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_KARATE_05
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 1
 #Parameter 1 Number
@@ -443,7 +443,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-712 48 -536
+488 48 -536
 #event number: 14
 #type
 1
@@ -452,13 +452,13 @@ TR_BATTLEG_05
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_DMY
+MV_DOWN
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_BATTLEG_05
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -483,13 +483,13 @@ TR_BATTLEG_06
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_DMY
+MV_DOWN
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_BATTLEG_06
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -514,13 +514,13 @@ TR_KARATE_06
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_KARATE_06
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -559,7 +559,7 @@ SCRID_BG_C07GYM0101_STATUE_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -712
+-8 0 -712
 #event number: 1
 #Bg Event Label
 BG_C07GYM0101_STATUE_02
@@ -572,7 +572,7 @@ SCRID_BG_C07GYM0101_STATUE_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -712
+56 0 -712
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
