@@ -455,7 +455,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     }
     
     MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
-
+    
     dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
     dst->musicPinch = SEQ_BGM_BATTLEPINCH;
     dst->result = BTL_RESULT_WIN;
@@ -494,6 +494,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     tr_data->tr_id = bsw_trainer->player_id;
     tr_data->tr_type = bsw_trainer->tr_type;
     tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    
     
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
@@ -871,7 +872,7 @@ static BSUBWAY_TRAINER_ROM_DATA * RomTrainerDataAlloc(
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   #if 1
-  if( BtlTower_CheckTrType( trd->tr_type ) == FALSE ){
+  if( BtlTower_CheckTrType(trd->tr_type) == FALSE ){
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif

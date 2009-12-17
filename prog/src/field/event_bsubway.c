@@ -17,6 +17,11 @@
 
 #include "event_battle.h"
 
+#include "fieldmap.h"
+
+#include "field/field_msgbg.h"
+#include "message.naix"
+
 #include "bsubway_scr.h"
 #include "bsubway_scr_common.h"
 #include "scrcmd_bsubway.h"
@@ -137,7 +142,7 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   work->result_num = bsw_scr->pokelist_select_num;
   work->result_select = &bsw_scr->pokelist_result_select;
   work->return_mode = &bsw_scr->pokelist_return_mode;
-
+  
   {
     int reg = REG_LV50_SINGLE;
     int type = PL_TYPE_SINGLE;
@@ -192,3 +197,115 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   
   return( event );
 }
+
+//======================================================================
+//  バトルサブウェイ　イベント　対戦前メッセージ
+//======================================================================
+//--------------------------------------------------------------
+/// 対戦前メッセージ
+//--------------------------------------------------------------
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  BSUBWAY_SCRWORK *bsw_scr;
+  
+  FLDSYSWIN_STREAM *sysWin;
+  STRBUF *strBuf;
+}EVENT_WORK_TRAINER_BEFORE_MSG;
+
+//--------------------------------------------------------------
+/**
+ * 対戦前メッセージ
+ * @param event GMEVENT
+ * @param seq event sequence
+ * @param wk event work
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ev_TrainerMsgBefore(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_WORK_TRAINER_BEFORE_MSG *work = wk;
+  GAMESYS_WORK *gsys = work->gsys;
+  
+  switch( *seq )
+  {
+  case 0:
+    FLDSYSWIN_STREAM_PrintStrBufStart( work->sysWin, 0, 0, work->strBuf );
+    (*seq)++;
+    break;
+  case 1:
+    if( FLDSYSWIN_STREAM_Print(work->sysWin) == TRUE ){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      FLDSYSWIN_STREAM_Delete( work->sysWin );
+      GFL_STR_DeleteBuffer( work->strBuf );
+      return( GMEVENT_RES_FINISH );
+    }
+    break;
+  }
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 対戦前メッセージ 呼び出し
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx )
+{
+  GMEVENT *event;
+  GAMEDATA *gdata;
+  FLDMSGBG *msgbg;
+  FIELDMAP_WORK *fieldmap;
+  EVENT_WORK_TRAINER_BEFORE_MSG *work;
+  
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  msgbg = FIELDMAP_GetFldMsgBG( fieldmap );
+  
+  event = GMEVENT_Create( gsys, NULL,
+    ev_TrainerMsgBefore, sizeof(EVENT_WORK_POKE_LIST) );
+  
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->strBuf = GFL_STR_CreateBuffer( 64, HEAPID_PROC );
+  
+  if( bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0] == 0xffff ){ //ROM MSG
+    GFL_MSGDATA *msgdata;
+    
+    msgdata =  GFL_MSG_Create(
+      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+      NARC_message_tower_trainer_dat, HEAPID_PROC );
+    
+    GFL_MSG_GetString(
+        msgdata, 
+        bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1],
+        work->strBuf );
+    
+    GFL_MSG_Delete( msgdata );
+  }else{ //簡易会話 kari
+    GFL_MSGDATA *msgdata;
+    
+    msgdata =  GFL_MSG_Create(
+      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+      NARC_message_tower_trainer_dat, HEAPID_PROC );
+    
+    GFL_MSG_GetString(
+        msgdata,
+        0,
+        work->strBuf );
+    
+    GFL_MSG_Delete( msgdata );
+  }
+  
+  work->sysWin = FLDSYSWIN_STREAM_Add( msgbg, NULL, 19 );
+  return( event );
+}
+

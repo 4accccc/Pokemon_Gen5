@@ -277,10 +277,11 @@ ev_train_rooms_common_sbtl_call:
   _CALL ev_train_rooms_comanm_enein
   
   //ëŒêÌëOë‰éå
-//_TALKMSG_BTOWER_APPEAR  0
-  _SYSWIN_MSG_DOWN( msg_c04r0110_test00 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
+//  _TALKMSG_BTOWER_APPEAR  0
+  _BSUBWAY_TOOL( BSWAY_SUB_TRAINER_BEFORE_MSG, 0, BSWAY_NULL )
+//  _SYSWIN_MSG_DOWN( msg_c04r0110_test00 )
+//  _AB_KEYWAIT()
+//  _SYSWIN_CLOSE()
 
   //å›Ç¢Ç…ãﬂÇ√Ç≠
   _CALL ev_train_anime_battle_start

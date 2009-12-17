@@ -240,7 +240,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     GF_ASSERT( 0 && "BSWAY_TOOL_WIFI_CONNECT WB未作成コマンドです" );
     #endif
   //---------------------ワーク依存--------------------------------
-   case BSWAY_SUB_GET_NOW_ROUND:
+  case BSWAY_SUB_GET_NOW_ROUND:
     *ret_wk = bsw_scr->now_round;
     break;
   case BSWAY_SUB_INC_ROUND:
@@ -429,6 +429,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       MMDL_SetStatusBitVanish( mmdl, TRUE );
     }
     break;
+  //トレーナー対戦前メッセージ
+  case BSWAY_SUB_TRAINER_BEFORE_MSG:
+    SCRIPT_CallEvent(
+        sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param) );
+    return( VMCMD_RESULT_SUSPEND );
   //エラー
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
