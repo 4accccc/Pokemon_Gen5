@@ -298,7 +298,7 @@ static inline void GFL_STD_RandInit(GFL_STD_RandContext *context, u64 seed)
 /**
  *  @brief  線形合同法による32bit乱数取得関数
  *  @param  context 乱数構造体のポインタ
- *  @param  range   取得数値の範囲を指定 0 ～ range の範囲の値が取得できます。
+ *  @param  range   取得数値の範囲を指定 0 ～ range-1 の範囲の値が取得できます。
  *                  GFL_STD_RAND_MAX = 0 を指定した場合にはすべての範囲の32bit値となります。
  *                  % や / を使用せずにここのrange値を変更してください
  *                  GFL_STD_RAND_MAXを使わない場合は下の関数
