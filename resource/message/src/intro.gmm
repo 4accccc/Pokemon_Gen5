@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-05T13:23:27"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T18:52:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,7 +370,7 @@
 ・かなモード選択時
 ・メッセージ表示後、画面切り替え</comment>
 		<language name="JPN" width="256">それでは　ゲームで　つかう　もじは
-ひらがな・カタカナだけを　つかいます▼</language>
+ひらがな・カタカナに　します▼</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
