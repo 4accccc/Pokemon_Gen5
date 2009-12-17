@@ -1,15 +1,30 @@
 EFFSEQ
-$0002
+$0005
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_433_wireroom.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_038_bashishi.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_433_wireroom.NSCR
 #001
 %00
 ポケモンアニメ	攻撃側	アニメストップ
 ポケモンアニメ	防御側	アニメストップ
-BGのパレットフェード	すべて	0	6	1	31:31:31
+BGのパレットフェード	すべて	0	15	1	0:0:0
+エフェクト終了待ち	すべて
+BGのロード	bg_433_wireroom
+BGの表示/非表示	エフェクト	表示
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	15	0	1	0:0:0
+BGの表示/非表示	フィールド	非表示
+BGの表示/非表示	お盆	非表示
 SE再生	SEQ_SE_W295_02	SE1	0	0	115	0	0
 タイマーによるウエイト	50
-BGのパレットフェード	すべて	6	0	1	31:31:31
+BGのパレットフェード	すべて	0	15	1	0:0:0
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	15	0	1	0:0:0
+BGの表示/非表示	フィールド	表示
+BGの表示/非表示	お盆	表示
+BGの表示/非表示	エフェクト	非表示
 ポケモンアニメ	攻撃側	アニメスタート
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
