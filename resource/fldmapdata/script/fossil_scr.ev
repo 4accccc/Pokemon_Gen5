@@ -91,7 +91,7 @@ select_fossil:
 
   $FOSSIL_ITEM_NO = 0
 
-  _BMPMENU_INIT( 0,0,0,1,LIST_SEL_RET )
+  _BMPMENU_INIT_EX( 1,1,0,1,LIST_SEL_RET )
   
   //ねっこのかせき
   $LIST_ITEM_NO = ITEM_NEKKONOKASEKI
@@ -160,6 +160,7 @@ select_fossil:
   IF $LIST_SEL_RET != EV_WIN_B_CANCEL THEN
     IF $LIST_SEL_RET != 0 THEN
       $FOSSIL_ITEM_NO = $LIST_SEL_RET
+      $SCWK_ANSWER = TRUE
     ELSE
       $FOSSIL_ITEM_NO = 0
       $SCWK_ANSWER = FALSE
@@ -179,7 +180,8 @@ recover_fossil_core:
   _BALLOONWIN_CLOSE()
   //アイテム減算
   _SUB_ITEM( FOSSIL_ITEM_NO, 1, SCWK_ANSWER )
-  //アニメが入るらしい
+  //@todo アニメが入る
+
   
   //道具名からポケモンを判別
   _CALL set_monsno_to_item    //input:FOSSIL_ITEM_NO  output:RECOVER_POKE
@@ -222,8 +224,8 @@ get_poke:
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN   //ニックネームつける
-      //追加位置は追加前の手持ち数
-      $SEL_POS = POKE_NUM
+      //追加位置は追加前の手持ち数と一致
+      $SEL_POS = $POKE_NUM
       //名前入力
       _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS )
     ENDIF
