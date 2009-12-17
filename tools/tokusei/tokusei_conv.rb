@@ -8,6 +8,8 @@ class PARA
   enum_const_set %w[
     NO
     NAME
+    INFO1
+    INFO2
   ]
 end
 
@@ -60,11 +62,11 @@ end
 
   #GMM
   tokuname_gmm = GMM::new
-  tokuname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokuseiname.gmm" )
-  tokuname_gmm.make_row_index( "TOKUNAME_", 0, "ーーーーー" )
-# tokuinfo_gmm = GMM::new
-# tokuinfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokuinfo.gmm" )
-# tokuinfo_gmm.make_row_index( "TOKUINFO_", 0, "ー\rー\rー\rー" )
+  tokuname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokusei.gmm" )
+  tokuname_gmm.make_row_index( "TOKUSEI_", 0, "ー" )
+  tokuinfo_gmm = GMM::new
+  tokuinfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokuseiinfo.gmm" )
+  tokuinfo_gmm.make_row_index( "TOKUSEIINFO_", 0, "ー\rー\r" )
 
   cnt = 1
 
@@ -73,16 +75,26 @@ end
     fp_tokuno.print( "#define\t\t" )
     label_str = label.make_label( "TOKUSYU_", split_data[ PARA::NAME ] )
     fp_tokuno.print( label_str )
-    tab_cnt = ( 19 - label_str.length ) / 2 + 2
+    tab_cnt = ( 25 - label_str.length ) / 2 + 2
     for j in 1..tab_cnt
       fp_tokuno.print( "\t" )
     end
     fp_tokuno.printf( "( %d )\t\t//%s\n", cnt, split_data[ PARA::NAME ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::NAME ], cnt )
-    tokuname_gmm.make_row_index( "TOKUNAME_", cnt, split_data[ PARA::NAME ] )
-#    info = split_data[ PARA::INFO1 ] + "\r\n" + split_data[ PARA::INFO2 ] + "\r\n" + split_data[ PARA::INFO3 ] + "\r\n" + split_data[ PARA::INFO4 ] + "\r\n" + split_data[ PARA::INFO5 ]
+    tokuname_gmm.make_row_index( "TOKUSEI_", cnt, split_data[ PARA::NAME ] )
+    if split_data[ PARA::INFO1 ] == nil
+      info1 = ""
+    else
+      info1 = split_data[ PARA::INFO1 ]
+    end
+    if split_data[ PARA::INFO2 ] == nil
+      info2 = ""
+    else
+      info2 = split_data[ PARA::INFO2 ]
+    end
+    info = info1 + "\r\n" + info2
     #@todo 漢字説明文ありなんですが、現状データがないので、同じ文字列で生成
-#    tokuinfo_gmm.make_row_index_kanji( "TOKUINFO_", cnt, info, info )
+    tokuinfo_gmm.make_row_index_kanji( "TOKUSEIINFO_", cnt, info, info )
     cnt += 1
   }
 
@@ -94,7 +106,7 @@ end
   fp_hash.close
 
   tokuname_gmm.close_gmm
-#  tokuinfo_gmm.close_gmm
+  tokuinfo_gmm.close_gmm
 
   print "特性ラベル＆gmmファイル　生成終了\n"
 
