@@ -81,7 +81,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
 	_OBJ_ANIME_WAIT()
 	
-	
 	//ライバルが喋る
 	//
 	_BALLOONWIN_OBJMSG( msg_d08r0901_black_01, D08R0901_RIVEL_01)
@@ -123,7 +122,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_FLAG_SET(FV_D08R0801_EVENT_01)
 	_FLAG_SET(FV_D08R0901_EVENT_01)
 	_FLAG_SET( FV_C07_HAKAIM_01 )
-
+	_FLAG_SET(FV_D08R0601_EVENT_01)
+	
 	_FLAG_RESET(FV_D08_RIVAL_01)
 	_FLAG_RESET(FV_D08_CHAMPION_01)
 	_FLAG_RESET(FV_D08_LEADER7_01)
@@ -132,7 +132,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
-	_MAP_CHANGE( ZONE_ID_D08, 179, 149, DIR_DOWN )
+	_MAP_CHANGE( ZONE_ID_D08, 179, 152, DIR_DOWN )
 	
 	_BLACK_IN()
 	
@@ -174,7 +174,8 @@ _ANIME_LABEL	anm_leader7_idou_01
 //   ライバル：Nが飛び去った場所を追いかける                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_raival_idou_02
-
+	
+	_ANIME_DATA AC_WALK_L_8F,2
 	_ANIME_DATA AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
@@ -182,6 +183,7 @@ _ANIME_LABEL	anm_raival_idou_02
 //  ハチク： Nが飛び去った場所を追いかける                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_idou_02
-
-	_ANIME_DATA AC_WALK_U_8F,5
+	
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0

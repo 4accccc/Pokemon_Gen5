@@ -181,7 +181,6 @@ recover_fossil_core:
   _BALLOONWIN_CLOSE()
   //アイテム減算
   _SUB_ITEM( FOSSIL_ITEM_NO, 1, SCWK_ANSWER )
-  //@todo アニメが入る
 	
 	//受付が機械を触りに行く
 	_OBJ_ANIME( C02GYM0101_FOSSIL,anm_fossil_go)

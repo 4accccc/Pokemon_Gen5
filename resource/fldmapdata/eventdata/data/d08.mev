@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 16:45:02
+#save date:2009/12/17 20:01:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 48 -8
+72 48 -8
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 48 -184
+56 48 -168
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 48 -184
+72 48 -184
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 48 -216
+56 48 -248
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 48 -216
+40 48 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

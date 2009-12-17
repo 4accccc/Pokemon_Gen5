@@ -33,7 +33,7 @@ EVENT_START    ev_pos_d08r0401_rivel_01
 	_BALLOONWIN_CLOSE()
 
 	//ライバルが主人公を向く
-	_OBJ_ANIME( D08R0401_RIVEL_01,anm_common_turn_dir_d)
+	_OBJ_ANIME( D08R0401_RIVEL_01,anm_common_turn_d ) 
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルが喋る
@@ -71,12 +71,12 @@ _ANIME_LABEL	anm_raival_saru_01
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-// ライバル：振り向く                    
+// 共通アニメ：下振り向き                       
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_dir_d
+_ANIME_LABEL	anm_common_turn_d
 
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_WALK_L_8F,9
+	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
+
 
 

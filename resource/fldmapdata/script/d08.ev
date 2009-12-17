@@ -29,6 +29,11 @@ _EVENT_DATA_END
 /*  リュウラセンの塔クリア後のPOSイベント                     */
 /**************************************************************/
 EVENT_START	ev_reserve_d08_hakase1_01
+
+		//博士とライバル、サポートの位置をイベント用に配置
+		_OBJ_POS_CHANGE( D08_HAKASE1_01, 180, 3, 149, DIR_DOWN )
+		_OBJ_POS_CHANGE( D08_RIVEL_01, 178, 3, 153, DIR_UP )
+		_OBJ_POS_CHANGE( D08_SUPPORT_01, 180, 3, 153, DIR_UP )
 		
 		_PLAYER_NAME(0)
 		
@@ -53,10 +58,19 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_BALLOONWIN_CLOSE()
 
 		//主人公、博士、サポート、ライバル、びっくりする。
+		_OBJ_ANIME( D08_LEADER7_01,anm_common_gyoe)
 		_OBJ_ANIME( D08_SUPPORT_01,anm_common_gyoe)
 		_OBJ_ANIME( D08_RIVEL_01,anm_common_gyoe)
 		_OBJ_ANIME( D08_HAKASE1_01,anm_common_gyoe)
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_gyoe)
+		_OBJ_ANIME_WAIT()
+		
+		//主人公、博士、サポート、ライバル、チャンピオンを振り向く
+		_OBJ_ANIME( D08_LEADER7_01,anm_common_turn_d)
+		_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_d)
+		_OBJ_ANIME( D08_RIVEL_01,anm_common_turn_d)
+		_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_d)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
 		//チャンピオンがやってくる
@@ -70,7 +84,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		
 		//チャンピオンが喋る
 		//チャンピオン：あいさつは　ぬきにしよう
-		_BALLOONWIN_OBJMSG(msg_d08_champion_01, D08_CHAMPION_01)
+		_BALLOONWIN_OBJMSG(msg_d08_champion_02, D08_CHAMPION_01)
 		_BALLOONWIN_CLOSE()
 
 		//博士が喋る
@@ -102,20 +116,23 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//ハチク：……では
 		_BALLOONWIN_OBJMSG(msg_d08_leader7_01, D08_LEADER7_01)
 		_BALLOONWIN_CLOSE()
-		
+	
 		//ハチクと博士が塔内に移動
 		_OBJ_ANIME( D08_HAKASE1_01,anm_hakase1_saru_01)
+		_OBJ_ANIME_WAIT()
+		
 		_OBJ_ANIME( D08_LEADER7_01,anm_leader7_saru_01)
 		_OBJ_ANIME_WAIT()
 		
 		//ライバルが喋る
 		//ライバル：そうだよな
-		_BALLOONWIN_OBJMSG(msg_d08_black_03, D08_RIVEL_01)
+		_BALLOONWIN_OBJMSG(msg_d08_black_04, D08_RIVEL_01)
 		_BALLOONWIN_CLOSE()
 		
-		//ハチクと博士が塔内に移動
-		_OBJ_ANIME( D08_CHAMPION_01,anm_champion_saru_01)
+		//ライバルとチャンピオンがに画面下に移動
 		_OBJ_ANIME( D08_RIVEL_01,anm_rivel_saru_02)
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( D08_CHAMPION_01,anm_champion_saru_01)
 		_OBJ_ANIME_WAIT()
 		
 		//サポートが喋る
@@ -158,7 +175,39 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_gyoe
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -166,7 +215,7 @@ _ANIME_LABEL	anm_common_gyoe
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_saru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -174,7 +223,9 @@ _ANIME_LABEL	anm_hakase1_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_saru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -182,7 +233,7 @@ _ANIME_LABEL	anm_leader7_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_kuru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -190,7 +241,7 @@ _ANIME_LABEL	anm_champion_kuru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_saru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -198,7 +249,9 @@ _ANIME_LABEL	anm_champion_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rivel_saru_02
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -219,10 +272,26 @@ EVENT_START    ev_pos_d08_hakase1_01
 		//プレイヤーの名前を格納
 		_PLAYER_NAME(0)
 		
+		//博士が主人公に気づく
+		_OBJ_ANIME( D08_HAKASE1_01,anm_common_gyoe)
+		_OBJ_ANIME_WAIT()
+		
+		//博士が振り向く
+		_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		
 		//博士が喋る
 		//博士（父）：おお　[1:00:トレーナー名:0]か！
 		_BALLOONWIN_OBJMSG(msg_d08_hakase1_02, D08_HAKASE1_01)
 		_BALLOONWIN_CLOSE()
+
+		//主人公がライバル、サポートに気づく
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_gyoe)
+		_OBJ_ANIME_WAIT()
+		
+		//主人公がライバルを振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
 		
 		//ライバルがやってくる
 		//サポートがやってくる
@@ -251,7 +320,18 @@ EVENT_START    ev_pos_d08_hakase1_01
 		
 		//ライバルを非表示にする
 		_OBJ_DEL( D08_RIVEL_01 )
-
+		
+		//主人公がライバルを振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_u)
+		_OBJ_ANIME_WAIT()
+		
+		//博士がライバルの方を向く
+		_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_u)
+		_OBJ_ANIME_WAIT()
+		
+		//少しライバルの方を向かせておく（ちょっと考える）
+		_TIME_WAIT( 20 )
+		
 		//博士がサポートに近づく
 		_OBJ_ANIME( D08_HAKASE1_01,anm_hakase1_idou_01)
 		_OBJ_ANIME_WAIT()
@@ -260,6 +340,10 @@ EVENT_START    ev_pos_d08_hakase1_01
 		//博士（父）：きみたちは……？
 		_BALLOONWIN_OBJMSG(msg_d08_hakase1_03, D08_HAKASE1_01)
 		_BALLOONWIN_CLOSE()
+		
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
 		
 		//サポートが喋る
 		//サポート：あたしは　ホワイティで
@@ -291,6 +375,9 @@ EVENT_START    ev_pos_d08_hakase1_01
 		//C07のライバルを消す
 		_FLAG_SET(FV_D08_RIVAL_01)
 		_FLAG_SET( FV_C07_RIVAL_01 )
+
+		//D08R0101の博士とハチクを出現させる
+		_FLAG_RESET( FV_D08R0101_EVENT_01 )
 		
 		//リュウラセンの外マップイベントを無効に
 		$WK_SCENE_D08_LEGEND = 2
@@ -304,7 +391,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rivel_kuru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -312,14 +399,14 @@ _ANIME_LABEL	anm_rivel_kuru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_kuru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------------
 //  ライバル：去っていく                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rivel_saru_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -327,14 +414,14 @@ _ANIME_LABEL	anm_rivel_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_idou_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------------
 // サポート：移動する                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_idou_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

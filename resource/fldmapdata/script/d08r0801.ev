@@ -63,7 +63,7 @@ EVENT_START    ev_d08r0801_boss_01
 	//Ｎまいったな……
 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_04)
     _BALLOONWIN_CLOSE()
-    
+
 	//七人衆が喋る
 	//ええい！　Ｎさまを　おたすけ　するのだ！
 	_BALLOONWIN_OBJMSG( msg_d08r0801_sage2_01, D08R0801_SAGE2_01 )
@@ -73,6 +73,13 @@ EVENT_START    ev_d08r0801_boss_01
 	//そのトレーナーを　とおしてあげて
  	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_05)
     _BALLOONWIN_CLOSE()
+
+	//プラズマ団が移動する
+	_OBJ_ANIME( D08R0801_HAKAIW_01,anm_hakaiw_01_idou_01)
+	_OBJ_ANIME( D08R0801_HAKAIM_01,anm_common_turn_l)
+	_OBJ_ANIME( D08R0801_HAKAIM_02,anm_hakaim_02_idou_01)
+	_OBJ_ANIME( D08R0801_SAGE2_01,anm_sage02_idou_01)
+	_OBJ_ANIME_WAIT()
 	
 	//Nが次のフロアに移動する。
 	_OBJ_ANIME( D08R0801_BOSS_01,anm_boss_01_idou_01)
@@ -107,8 +114,69 @@ _RET
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_01_idou_01
 
-	_ANIME_DATA AC_WALK_L_8F,10
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団：道を開ける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaiw_01_idou_01
+
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団：道を開ける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_02_idou_01
+
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団：七人衆、道を開ける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage02_idou_01
+
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*プラズマ団男1の話しかけイベント                           */
