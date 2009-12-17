@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-12-15T22:29:41"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-16T22:02:11"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="7" xyz="-3.392822 -0.112549 -3.625244" whd="6.742676 3.135742 6.687500"/>
 
-<tex_image_array size="27">
+<tex_image_array size="28">
 	<tex_image index="0" name="black"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
@@ -1389,9 +1389,26 @@
 			9698 a554 9698 a554 2600 9955 2600 9955
 		</bitmap>
 	</tex_image>
+	<tex_image index="27" name="white_gra"
+		width="8" height="16" original_width="8" original_height="16"
+		format="a5i3"
+		palette_name="white_gra"
+		path="C:/home/wb_data3d/field/out24/map/tex/white_gra.tga"
+	>
+		<bitmap size="64">
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f0f0 f0f0 f0f0 f0f0 e8e8 e8e8 e8e8 e8e8
+			e0e0 e0e0 e0e0 e0e0 d0d0 d0d0 d0d0 d0d0
+			c0c0 c0c0 c0c0 c0c0 a8a8 a8a8 a8a8 a8a8
+			9090 9090 9090 9090 7070 7070 7070 7070
+			5858 5858 5858 5858 4040 4040 4040 4040
+			2828 2828 2828 2828 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="27">
+<tex_palette_array size="28">
 	<tex_palette index="0" name="black_pl" color_size="4">
 		1084 7fff 7fff 7fff
 	</tex_palette>
@@ -1483,6 +1500,9 @@
 	</tex_palette>
 	<tex_palette index="26" name="t2_buil2" color_size="8">
 		4a2b 41d0 290a 2d4c 5274 2d4b 18c8 7fff
+	</tex_palette>
+	<tex_palette index="27" name="white_gra" color_size="8">
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -12073,7 +12093,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="27">
+	<ex_tex_image_array size="28">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -12101,8 +12121,9 @@
 		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="25" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="27" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="27">
+	<ex_tex_palette_array size="28">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -12130,6 +12151,7 @@
 		<ex_tex_palette index="24" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="25" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="27" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="12">
 		<ex_material index="0" disp_pos="-1020.000000 360.000000"/>
