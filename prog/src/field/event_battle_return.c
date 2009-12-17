@@ -218,12 +218,14 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     break;
   case 4:
     //進化チェック
+    if( wk->shinka_poke_bit )
     {
       u16 after_mons_no = 0;
       int pos;
       SHINKA_COND cond;
       POKEPARTY* party  = GAMEDATA_GetMyPokemon( param->gameData );
       (*seq) = 6;
+      OS_TPrintf("進化ポケモンがいる\n");
       while( wk->shinka_poke_bit )
       {
         if( wk->shinka_poke_bit & 1 )
@@ -243,6 +245,10 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           break;
         }
       }
+    }
+    else
+    {
+      (*seq) = 6;
     }
     break;
   case 5:
@@ -288,6 +294,7 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
   if( (param->btlResult->competitor != BTL_COMPETITOR_WILD)
   &&  (param->btlResult->competitor != BTL_COMPETITOR_TRAINER)
   ){
+    OS_TPrintf("サブウェイモードなどで進化チェックを行わない\n");
     return;
   }
 
