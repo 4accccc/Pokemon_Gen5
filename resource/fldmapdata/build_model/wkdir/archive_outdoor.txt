@@ -233,3 +233,6 @@
 "nsbmdfiles/wf_lake_01.nsbmd"
 "nsbmdfiles/wf_lake_02.nsbmd"
 "nsbmdfiles/door_c03.nsbmd"
+"nsbmdfiles/door_t2_b.nsbmd"
+"nsbmdfiles/door_t2_h.nsbmd"
+"nsbmdfiles/door_c1_school.nsbmd"
