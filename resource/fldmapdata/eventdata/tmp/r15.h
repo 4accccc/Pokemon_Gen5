@@ -9,6 +9,7 @@
 #define DOOR_ID_R15_BCWFTEST_EXIT02       4
 #define DOOR_ID_R15_BCWFTEST_EXIT03       5
 #define DOOR_ID_R15_R15R0201_EXIT04       6
+#define DOOR_ID_R15_R15R0301_EXIT01       7
 
 #endif //ZONE_R15_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

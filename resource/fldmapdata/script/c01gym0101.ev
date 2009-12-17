@@ -257,7 +257,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_BALLOONWIN_CLOSE()	
 	
 	//デント：くるっとその場で回る
-	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_turn )
+	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_turndento )
 	_OBJ_ANIME_WAIT()		
 	
 	//そして　ぼくはですね
@@ -267,7 +267,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//三人一斉にその場回転
 	_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_leader_turn2 )
 	_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_leader_turn2 )
-	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_turndento )
+	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_turndento2 )
 	_OBJ_ANIME_WAIT()
 	
 	//デント：その場足ふみ
@@ -416,13 +416,33 @@ _ANIME_LABEL	anm_leader_turn2
 _ANIME_LABEL	anm_leader_turndento
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_turndento2
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -529,11 +549,14 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
+	
+			//バッジ入手演出再生
+			_ME_PLAY( SEQ_ME_BADGE )
+			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			_ME_WAIT()
 			
 			//～～は　コーンから　トライバッジを　もらった
-			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07b )
-			_ME_PLAY( SEQ_ME_BADGE )
-			_ME_WAIT()
+			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07b )
 			_SYSWIN_CLOSE()
 
 			//コーン：デントの場所へ移動
@@ -646,11 +669,14 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
-			
-			//～～は　ポッドから　トライバッジを　もらった
-			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07a )
+
+			//バッジ入手演出再生
 			_ME_PLAY( SEQ_ME_BADGE )
+			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
 			_ME_WAIT()
+
+			//～～は　ポッドから　トライバッジを　もらった
+			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07a )
 			_SYSWIN_CLOSE()
 		
 			//ポッド：デントの場所へ移動
@@ -769,11 +795,15 @@ EVENT_START		ev_c01gym0101_leader1c_01
 				
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
-					_PLAYER_NAME( 0 )
-			//～～は　デントから　トライバッジを　もらった
-			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07c )
+			_PLAYER_NAME( 0 )
+					
+			//バッジ入手演出再生
 			_ME_PLAY( SEQ_ME_BADGE )
+			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
 			_ME_WAIT()
+
+			//～～は　デントから　トライバッジを　もらった
+			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07c )
 			_SYSWIN_CLOSE()
 		
 			//ジムバッジは　トレーナーの　つよさの　あかし！
