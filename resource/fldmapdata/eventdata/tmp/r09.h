@@ -5,6 +5,7 @@
 #define DOOR_ID_R09_R09R0101_EXIT01       0
 #define DOOR_ID_R09_C08R0501_EXIT01       1
 #define DOOR_ID_R09_R09R0201_EXIT01       2
+#define DOOR_ID_R09_R09R0301_EXIT01       3
 
 #endif //ZONE_R09_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
