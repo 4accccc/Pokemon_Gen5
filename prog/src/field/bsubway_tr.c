@@ -521,7 +521,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
       GFL_HEAP_FreeMemory( pp );
     }
   }
-
+  
 #if 0  
   BTL_MAIN_GetClientPlayerData 
   registerWords
@@ -552,6 +552,11 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
         pp = PokeParty_GetMemberPointer( myparty,
             wk->member[i] );
         PokeParty_Add( *party, pp );
+      }
+
+      {
+        int count = PokeParty_GetPokeCount( *party );
+        KAGAYA_Printf( "ポケモンセット　カウント=%d, max=%d\n", count, i );
       }
     }
   }

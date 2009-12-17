@@ -596,17 +596,25 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke(
   }
   
   party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(gsys) );
-  
+
+#ifdef DEBUG_ONLY_FOR_kagaya  
+  for( i = 0;i < wk->member_num;i++){
+    KAGAYA_Printf( "選択したポケモン No.%d = Pos %d\n", i,
+        wk->pokelist_select_num[i] );
+  }
+#endif
+
   for( i = 0;i < wk->member_num;i++){
     //ポケモン選択で取得した手持ちNo
-    if( wk->pokelist_select_num[i] >= 6 ){
+    if( (wk->pokelist_select_num[i]-1) >= 6 ){
       GF_ASSERT( 0 );
-    }else{
-      wk->member[i] = wk->pokelist_select_num[i];
-      pp = PokeParty_GetMemberPointer( party, wk->member[i] );
-      wk->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
-      wk->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+      wk->pokelist_select_num[i] = 1;
     }
+    
+    wk->member[i] = wk->pokelist_select_num[i] - 1;
+    pp = PokeParty_GetMemberPointer( party, wk->member[i] );
+    wk->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
+    wk->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
   }
   
   return TRUE;
