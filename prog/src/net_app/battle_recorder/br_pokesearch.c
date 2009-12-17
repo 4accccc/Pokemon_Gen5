@@ -313,7 +313,7 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
       break;
 
     case SEQ_CHANGEOUT_START:
-      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_OUT );
       p_wk->seq++;
       break;
 
@@ -342,7 +342,7 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
         }
         BR_POKESEARCH_DISPLAY_CreateHead( p_wk );
       }
-      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_IN );
       p_wk->seq++;
       break;
 

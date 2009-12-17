@@ -330,10 +330,14 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
     break;
 
   case SEQ_CHANGEOUT_START:
+    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
     (*p_seq)++;
     break;
   case SEQ_CHANGEOUT_WAIT:
-    (*p_seq)++;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      (*p_seq)++;
+    }
     break;
   case SEQ_CHANGEIN_START:
     { 
@@ -354,11 +358,15 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
         Br_BtlSubway_CreateMainDisplayWifi( p_wk, p_param );
         break;
       }
+      BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
     }
     (*p_seq)++;
     break;
   case SEQ_CHANGEIN_WAIT:
-    *p_seq  = SEQ_MAIN;
+    if( BR_FADE_IsEnd( p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
     break;
 
   case SEQ_FADEOUT_START:

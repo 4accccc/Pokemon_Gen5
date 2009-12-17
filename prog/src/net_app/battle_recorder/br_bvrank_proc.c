@@ -584,6 +584,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,
             &cldata, CLSYS_DRAW_MAIN, heapID );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum(mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_poke[i][j], GX_OAM_MODE_XLU );
     }
   }
 

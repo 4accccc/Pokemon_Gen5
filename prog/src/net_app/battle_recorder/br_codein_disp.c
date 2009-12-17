@@ -143,6 +143,7 @@ void CI_pv_disp_CodeOAM_Create( CODEIN_WORK* wk )
 													wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CODE] , 
 													wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_CODE] ,
 													&clwkInit , CLSYS_DEFREND_SUB , wk->heapID );
+      GFL_CLACT_WK_SetObjMode( wk->bar[ i_b ].clwk, GX_OAM_MODE_XLU );
 			i_b++;
 		}
 		else {			
@@ -154,6 +155,7 @@ void CI_pv_disp_CodeOAM_Create( CODEIN_WORK* wk )
 													wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_CODE] ,
 													&clwkInit , CLSYS_DEFREND_SUB , wk->heapID );
 			
+      GFL_CLACT_WK_SetObjMode( wk->code[ i_c ].clwk, GX_OAM_MODE_XLU );
 			i_c++;
 		}
 	}
@@ -186,14 +188,17 @@ void CI_pv_disp_CurOAM_Create( CODEIN_WORK* wk )
 											wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CURSOL] , 
 											wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_CURSOL] ,
 											&clwkInit , CLSYS_DEFREND_SUB, wk->heapID );
+  GFL_CLACT_WK_SetObjMode( wk->cur[ 0 ].clwk, GX_OAM_MODE_XLU );
 	wk->cur[ 1 ].clwk = GFL_CLACT_WK_Create( cellUnit , wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_CURSOL] ,
 											wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CURSOL] , 
 											wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_CURSOL] ,
 											&clwkInit , CLSYS_DEFREND_SUB, wk->heapID );
+  GFL_CLACT_WK_SetObjMode( wk->cur[ 1 ].clwk, GX_OAM_MODE_XLU );
 	wk->cur[ 2 ].clwk = GFL_CLACT_WK_Create( cellUnit , wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_CURSOL] ,
 											wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CURSOL] , 
 											wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_CURSOL] ,
 											&clwkInit , CLSYS_DEFREND_SUB, wk->heapID );
+  GFL_CLACT_WK_SetObjMode( wk->cur[ 2 ].clwk, GX_OAM_MODE_XLU );
 	
 	CI_pv_disp_CurBar_PosSet( wk, 0 );
 	GFL_CLACT_WK_SetAnmSeq( wk->cur[ 0 ].clwk, 0 );
@@ -248,12 +253,14 @@ void CI_pv_disp_BtnOAM_Create( CODEIN_WORK* wk )
 											wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_BUTTON] , 
 											wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_BUTTON] ,
 											&clwkInit , CLSYS_DEFREND_SUB , wk->heapID );
+  GFL_CLACT_WK_SetObjMode( wk->btn[ 0 ].clwk, GX_OAM_MODE_XLU );
 	
   clwkInit.anmseq = 1;
 	wk->btn[ 1 ].clwk = GFL_CLACT_WK_Create( cellUnit , wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_BUTTON] ,
 											wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_BUTTON] , 
 											wk->sys.resIdx[CIO_RES1_ANM][CIO_RES2_BUTTON] ,
 											&clwkInit , CLSYS_DEFREND_SUB , wk->heapID );
+  GFL_CLACT_WK_SetObjMode( wk->btn[ 1 ].clwk, GX_OAM_MODE_XLU );
 	{
 		GFL_CLACTPOS pos;
 		

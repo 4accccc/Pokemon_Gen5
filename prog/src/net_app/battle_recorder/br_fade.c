@@ -22,6 +22,11 @@
 #define BR_FADE_DEFAULT_EV1   (16)
 #define BR_FADE_DEFAULT_EV2   (16)
 
+#define BR_FADE_ALPHA_PLANEMASK_M_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ)
+#define BR_FADE_ALPHA_PLANEMASK_M_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3)
+#define BR_FADE_ALPHA_PLANEMASK_S_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ)
+#define BR_FADE_ALPHA_PLANEMASK_S_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -268,9 +273,8 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       if( p_wk->display & BR_FADE_DISPLAY_MAIN )
       { 
         G2_SetBlendAlpha(
-          GX_BLEND_PLANEMASK_BG2,
-          GX_BLEND_PLANEMASK_BG0 |
-          GX_BLEND_PLANEMASK_BG3,
+          BR_FADE_ALPHA_PLANEMASK_M_01,
+          BR_FADE_ALPHA_PLANEMASK_M_02,
           ev1,
           ev2
           );
@@ -278,10 +282,8 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       if( p_wk->display & BR_FADE_DISPLAY_SUB )
       { 
         G2S_SetBlendAlpha(
-          GX_BLEND_PLANEMASK_BG1,
-          GX_BLEND_PLANEMASK_BG0 |
-          GX_BLEND_PLANEMASK_BG1 |
-          GX_BLEND_PLANEMASK_BG2,
+          BR_FADE_ALPHA_PLANEMASK_S_01,
+          BR_FADE_ALPHA_PLANEMASK_S_02,
           ev1,
           ev2
           );
@@ -297,6 +299,7 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
     { 
       int ev1, ev2;
 
+      //フェード方向
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
         ev1 = 0 + 16 * p_wk->cnt / p_wk->max;
@@ -308,16 +311,34 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
         ev2 = 0 + 16 * p_wk->cnt / p_wk->max;
       }
 
+      //上画面
       if( p_wk->display & BR_FADE_DISPLAY_MAIN )
       { 
         G2_ChangeBlendAlpha( ev1, ev2 );
+        if( ev1 == 0 )
+        { 
+          GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , FALSE );
+        }
+        else
+        { 
+          GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , TRUE );
+        }
       }
+      //下画面
       if( p_wk->display & BR_FADE_DISPLAY_SUB )
       { 
         G2S_ChangeBlendAlpha( ev1, ev2 );
+        if( ev1 == 0 )
+        { 
+          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , FALSE );
+        }
+        else
+        { 
+          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , TRUE );
+        }
       }
     }
-    if( p_wk->cnt++ >= p_wk->max-1 )
+    if( p_wk->cnt++ >= p_wk->max )
     { 
       *p_seq  = SEQ_AL_EXIT;
     }

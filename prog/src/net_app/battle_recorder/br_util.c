@@ -336,6 +336,7 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
 				res.ncg, res.ncl, res.nce, 
 				&cldata, type, heapID );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_clwk[i], GX_OAM_MODE_XLU );
     }
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_U], FALSE );
   }
@@ -362,6 +363,7 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
       p_wk->p_clwk[i]  = GFL_CLACT_WK_Create( p_wk->param.p_unit, 
 				res.ncg, res.ncl, res.nce, 
 				&cldata, CLSYS_DRAW_SUB, heapID );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_clwk[i], GX_OAM_MODE_XLU );
     }
   }
 
