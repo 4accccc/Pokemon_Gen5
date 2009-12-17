@@ -369,6 +369,11 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
     return POKE_REG_OK;
   }
   GF_ASSERT(FailedBit);  //if文でいっぱいになるので呼び出し側で必ずセットする事
+  for(i = 0; i < 6 ;i++){
+    monsTbl[i] = _POKENO_NONE;
+    formTbl[i] = _POKENO_NONE;
+    itemTbl[i] = ITEM_DUMMY_DATA;
+  }
 
   //全体数
   cnt = PokeParty_GetPokeCountBattleEnable(party);
