@@ -584,8 +584,10 @@
 #define ITEM_HAATONOHANE		( 595 )		// ハートのハネ
 #define ITEM_KAMENOKASEKI		( 596 )		// かめのカセキ
 #define ITEM_TORINOKASEKI		( 597 )		// とりのカセキ
+#define ITEM_RAITOSUTOON		( 598 )		// ライトストーン
+#define ITEM_DAAKUSUTOON		( 599 )		// ダークストーン
 
-#define ITEM_DATA_MAX		( 597 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 599 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

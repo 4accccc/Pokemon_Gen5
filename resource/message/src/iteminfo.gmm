@@ -5508,6 +5508,24 @@
 </language>
 	</row>
 
+	<row id="ITEMINFO_598">
+		<language name="JPN" width="256">イベントが　はっせいします。
+
+</language>
+		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_599">
+		<language name="JPN" width="256">イベントが　はっせいします。
+
+</language>
+		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
+
+</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
