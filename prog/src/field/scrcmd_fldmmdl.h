@@ -28,6 +28,7 @@ extern VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work );
 extern void SCRCMD_SUB_PauseClearAll( SCRCMD_WORK *work );

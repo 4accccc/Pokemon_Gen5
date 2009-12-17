@@ -21,6 +21,7 @@
 #include "script_local.h"
 #include "field_player.h" //FIELD_PLAYER
 #include "fieldmap.h"     //FIELDMAP_
+#include "field/field_const.h"  //GRID_TO_FX32
 #include "eventdata_local.h"
 #include "field/eventdata_sxy.h"
 
@@ -681,6 +682,37 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   
   MMDL_SetDirDisp( *fmmdl, dir );
   MMDL_SetDrawStatus( *fmmdl, DRAW_STA_STOP );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief Žw’èˆÊ’u‚ÌOBJ‚ðŒŸõ‚·‚é
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  u16 gx, gy, gz;
+  u16 *ret_wk  = SCRCMD_GetVMWork( core, work );
+  MMDL *mmdl;
+  u16 dir;
+  VecFx32 pos;
+  fx32 fy;
+  
+  gx = SCRCMD_GetVMWorkValue( core, work );
+  gy = SCRCMD_GetVMWorkValue( core, work );
+  gz = SCRCMD_GetVMWorkValue( core, work );
+  fy = GRID_TO_FX32( gy );
+  mmdl = MMDLSYS_SearchGridPosEx(
+      FIELDMAP_GetMMdlSys(fieldmap), gx, gz, fy, GRID_HALF_FX32, FALSE );
+  if ( mmdl )
+  {
+    *ret_wk = MMDL_GetOBJID( mmdl );
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
