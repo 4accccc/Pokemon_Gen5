@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/05 2:47:02
+#save date:2009/12/17 21:45:30
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0101.wms
 #SECTION START:OBJ_EVENT
@@ -52,6 +52,40 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+2
+#event number: 0
+#Door Event Label
+DOOR_ID_R14R0101_BC10_EXIT01
+#Next Zone ID Name
+ZONE_ID_BC10
+#Next Door ID Name
+DOOR_ID_BC10_R14R0101_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 24
+#size
+3 1
+#event number: 1
+#Door Event Label
+DOOR_ID_R14R0101_R14_EXIT01
+#Next Zone ID Name
+ZONE_ID_R14
+#Next Door ID Name
+DOOR_ID_R14_R14R0101_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 232
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

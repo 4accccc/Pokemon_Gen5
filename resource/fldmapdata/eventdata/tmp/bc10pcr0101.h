@@ -2,6 +2,7 @@
 #ifndef ZONE_BC10PCR0101_EVD_H
 #define ZONE_BC10PCR0101_EVD_H
 
+#define DOOR_ID_BC10PCR0101_BC10_EXIT01   0
 
 #endif //ZONE_BC10PCR0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/bc10pcr0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
