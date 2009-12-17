@@ -179,8 +179,8 @@ extern GFL_BMP_ColorFormat  GFL_BMP_GetColorFormat( const GFL_BMP_DATA* bmp );
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
-      u16 size_x, u16 size_y, u16 nuki_col );
+extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u32 pos_sx, u32 pos_sy, int pos_dx, int pos_dy,
+      u32 size_x, u32 size_y, u16 nuki_col );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -198,8 +198,8 @@ extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 po
  * @param  col_offset 読み込みデータの色番号(0～15）に付加するオフセット値
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BMP_Print16to256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
-      u16 size_x, u16 size_y, u16 nuki_col, u16 col_offset );
+extern void GFL_BMP_Print16to256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u32 pos_sx, u32 pos_sy, int pos_dx, int pos_dy,
+      u32 size_x, u32 size_y, u16 nuki_col, u16 col_offset );
 
 //--------------------------------------------------------------------------------------------
 /**
