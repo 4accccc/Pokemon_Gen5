@@ -19,15 +19,13 @@ _EVENT_DATA_END
 
 
 DEFINE_LOCAL EndMsg        //ラストメッセージ
-DEFINE_LOCAL TEST        //テスト
-
 
 EVENT_START ev_palpark_reception
   _TALK_OBJ_START()
   //初はなしかけか？todo
-  IF $TEST == 0 THEN
+  IF FLAG_OFF( FE_PALPARK_FIRSTTALK ) THEN
     //初回話しかけフラグＯＮ
-    $TEST = 1
+    _FLAG_SET(FE_PALPARK_FIRSTTALK)
     //初回メッセージ
     _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
     _BALLOONWIN_CLOSE()
@@ -107,13 +105,13 @@ play_palpark:
   ENDIF
 
   //「そこにたって」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_08 )
   _BALLOONWIN_CLOSE()
 
   //主人公アニメ
 
   //「はじめるよ」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
   _BALLOONWIN_CLOSE()
 
   //パルパークコール
