@@ -109,7 +109,7 @@ int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, 
   if(cnt > ans){
     return POKE_REG_NUM_FAILED;  // ”‚ª‚ ‚Á‚Ä‚È‚¢
   }
-  for(i = 0; i < 6 ;i++){
+  for(i = 0; i < PokeParty_GetPokeCount(party) ;i++){
     if(sel[i]){
       int pid = sel[i] - 1;
       pp = PokeParty_GetMemberPointer(party, pid);
@@ -378,7 +378,7 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
     *FailedBit |= POKEFAILEDBIT_NUM;
     ret = POKE_REG_NUM_FAILED;  // ”‚ª‚ ‚Á‚Ä‚È‚¢
   }
-  for(i = 0; i < 6 ;i++){
+  for(i = 0; i < PokeParty_GetPokeCount(party) ;i++){
     pp = PokeParty_GetMemberPointer(party, i);
     if(PokeRegulationCheckPokeParaLookAt(pReg, pp, FailedBit ) == FALSE){
       ret = POKE_REG_ILLEGAL_POKE; // ŒÂ‘Ì‚ªˆø‚Á‚©‚©‚Á‚½
