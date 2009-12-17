@@ -555,10 +555,12 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
         PokeParty_Add( *party, pp );
       }
 
+#ifdef DEBUG_ONLY_FOR_kagaya
       {
         int count = PokeParty_GetPokeCount( *party );
         KAGAYA_Printf( "ポケモンセット　カウント=%d, max=%d\n", count, i );
       }
+#endif
     }
   }
   

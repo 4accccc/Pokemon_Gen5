@@ -228,7 +228,15 @@ ev_c04r0104_receipt_talk:
   //ようこそ
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_01 ) 
   _AB_KEYWAIT()
+
+  //連勝中チェック
+  _BSUBWAY_TOOL( BSWAY_TOOL_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0104_receipt_talk_02
   
+  //連勝中です
+  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_03 )
+  _AB_KEYWAIT()
+ 
 ev_c04r0104_receipt_talk_02:
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_13 )
   
@@ -248,12 +256,16 @@ ev_c04r0104_receipt_talk03:
   
   //手持ちポケモンチェック
   _BSUBWAY_TOOL( BSWAY_TOOL_CHK_ENTRY_POKE_NUM,BSWAY_NULL,SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_bsubway_receipt_select_poke
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,_receipt_talk03_error
   
+  _BSUBWAY_TOOL( BSWAY_TOOL_CHK_REGULATION, BSWAY_MODE_DOUBLE, SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_receipt_select_poke
+
+_receipt_talk03_error:
   //手持ちポケモンが足りない
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08 )
   _AB_KEYWAIT()
-  _JUMP ev_bsubway_seq_exit_mclose
+  _JUMP ev_bsubway_seq_exit
   _END
   
 //--------------------------------------------------------------

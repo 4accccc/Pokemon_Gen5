@@ -11,12 +11,14 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#include "poke_tool/poke_regulation.h"
 #include "savedata/save_tbl.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_SPEXIT_REQUEST
 #include "fieldmap.h"
@@ -44,6 +46,7 @@
 //======================================================================
 static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
+static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 
 //======================================================================
 //  proto
@@ -144,6 +147,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //参加可能なポケモン数のチェック
   case BSWAY_TOOL_CHK_ENTRY_POKE_NUM:
     if( param == 0 ){
+      GF_ASSERT( bsw_scr != NULL );
       *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
     }else{
       *ret_wk = bsway_CheckEntryPokeNum( param, gsys, 1 );
@@ -289,6 +293,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     #endif
     break;
+  case BSWAY_TOOL_GET_RENSHOU_CNT:
+#if 0
+    *ret_wk = BSUBWAY_SCOREDATA_SetRenshou( scoreData, BSWAY_SETMODE_get );
+#else
+    *ret_wk = BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_round, NULL );
+    (*ret_wk)--;
+    (*ret_wk) = 0;
+#endif
+    break;
   case BSWAY_SUB_GET_RENSHOU_CNT:
     if( (u32)bsw_scr->renshou+bsw_scr->now_win > 0xFFFF ){
       *ret_wk = 0xFFFF;
@@ -300,11 +314,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_SetLoseScore( gsys, bsw_scr );
     break;
   case BSWAY_SUB_SET_CLEAR_SCORE:
-    #if 0
-    TowerScr_SetClearScore(bsw_scr,core->fsys->savedata,core->fsys->fnote);
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_SET_CLEAR_SCORE WB未作成" );
-    #endif
+    BSUBWAY_SCRWORK_SetClearScore( bsw_scr, gsys );
     break;
   case BSWAY_SUB_SAVE_REST_PLAY_DATA:
     #if 0
@@ -435,6 +445,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param) );
     return( VMCMD_RESULT_SUSPEND );
+  case BSWAY_TOOL_CHK_REGULATION:
+    *ret_wk = 0; //ok
+
+    if( bsway_CheckRegulation(param,gsys) == FALSE ){
+      *ret_wk = 1;
+    }
+    #ifdef DEBUG_ONLY_FOR_Kagaya
+//    *ret_wk = 1;
+    #endif
+    break;
   //エラー
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
@@ -465,5 +485,53 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag )
 {
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  const POKEPARTY *party =  GAMEDATA_GetMyPokemon( gdata );
+  
+  if( PokeParty_GetPokeCount(party) < num ){
+    return FALSE;
+  }
+  
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
+{
+  int reg_type,ret;
+  GAMEDATA *gdata;
+  POKEPARTY *party;
+  REGULATION *reg_data;
+  
+  switch( mode ){
+  case BSWAY_MODE_SINGLE:
+    reg_type = REG_LV50_SINGLE;
+    break;
+  case BSWAY_MODE_DOUBLE:
+    reg_type = REG_LV50_DOUBLE;
+    break;
+  default:
+    GF_ASSERT( 0 );
+    reg_type = REG_LV50_SINGLE;
+  }
+
+  reg_data = (REGULATION*)PokeRegulation_LoadDataAlloc(
+      reg_type, HEAPID_PROC );
+  
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  party =  GAMEDATA_GetMyPokemon( gdata );
+  ret = PokeRegulationMatchPartialPokeParty( reg_data, party );
+  GFL_HEAP_FreeMemory( reg_data );
+  
+  if( ret == POKE_REG_OK ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
 }

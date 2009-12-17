@@ -177,6 +177,10 @@ extern BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     BSWAY_SCOREDATA_FLAG id, BSWAY_SETMODE mode );
 extern u8 BSUBWAY_SCOREDATA_SetWifiRank(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
+#if 0
+extern u16 BSUBWAY_SCOREDATA_SetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
+#endif
 
 //----
 #if 0 //wb null

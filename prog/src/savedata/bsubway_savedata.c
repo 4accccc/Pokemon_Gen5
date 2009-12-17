@@ -68,7 +68,7 @@ struct _BSUBWAY_SCOREDATA
   u16  btl_point;  ///<バトルポイント
   u8  wifi_lose;  ///<連続敗戦カウント
   u8  wifi_rank;  ///<WiFiランク
-
+  
   u32  day_rnd_seed;  ///<タワー用日付変化ランダムシード保存場所
   
   union{
@@ -95,9 +95,14 @@ struct _BSUBWAY_SCOREDATA
   
   ///<バトルサブウェイ周回数(paddingをWIFI_MULTI用に加えた)
   u16  tower_stage[6];
-
+  
+  //連勝記録
+#if 0
+  u16 renshou;
+#endif
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
+
   //WiFiポケモンデータストック
   struct _BSUBWAY_POKEMON  wifi_poke[3];
   //トレーナーロード用シングルデータストック
@@ -385,6 +390,36 @@ u16 BSUBWAY_SCOREDATA_SetBattlePoint(
   
   return bsw_score->btl_point;
 }
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　連勝数操作
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+#if 0
+u16 BSUBWAY_SCOREDATA_SetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
+{
+  switch(mode){
+  case BSWAY_SETMODE_reset:
+    bsw_score->renshou = 0;
+    break;
+  case BSWAY_SETMODE_inc:
+    if( bsw_score->renshou < 65534 ){
+      bsw_score->renshou++;
+    }
+    break;
+  case BSWAY_SETMODE_get:
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  return( bsw_score->renshou );
+}
+#endif
 
 //--------------------------------------------------------------
 /**

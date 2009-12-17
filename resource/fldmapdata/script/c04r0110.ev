@@ -189,7 +189,7 @@ EVENT_END
 ev_train_rooms_sbtl_01:
   //ƒoƒgƒ‹ˆ—
   _CALL ev_train_rooms_common_sbtl_call
-
+  
 #ifdef BSUBWAY_AUTO_DEBUG
 #else
   _IFVAL_JUMP SCWK_TEMP0,EQ,0,ev_train_rooms_common_lose

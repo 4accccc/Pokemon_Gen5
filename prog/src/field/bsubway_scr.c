@@ -169,7 +169,12 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     }
     #endif
   }
-  
+
+#if 0  
+  bsw_scr->renshou = BSUBWAY_SCOREDATA_SetRenshou(
+      bsw_scr->scoreData, BSWAY_SETMODE_get );
+#endif
+
   bsw_scr->my_sex = MyStatus_GetMySex( mystatus );
   
   //現在のレコードを取得
@@ -385,10 +390,17 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   }
   
   OS_Printf( "TowerLoseScoreSet -> mode = %d\n", bsw_scr->play_mode );
-
+  
   id = bsw_scr->play_mode * 2 + RECID_RENSHOU_SINGLE;
   
-  #if 0 //wb null
+  bsw_scr->renshou = 0;
+
+#if 0
+  BSUBWAY_SCOREDATA_SetRenshou(
+     bsw_scr->scoreData, BSWAY_SETMODE_reset );
+#endif
+
+#if 0 //wb null
   //現在の最大連勝数取得
   before = RECORD_Get( record, id );
   
@@ -418,7 +430,7 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   
   //延べ勝利数更新
   RECORD_Add(record,RECID_BTOWER_WIN,wk->now_win);
-  #endif
+#endif
 
   //現在の周回数リセット
   BSUBWAY_SCOREDATA_SetStage( bsw_scr->scoreData,
@@ -430,15 +442,61 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   
   //連勝リボンをもらえるかどうかのフラグをセット
   towerscr_IfRenshouPrizeGet(wk);
+  #endif
 
   //勝ち負け共通データ処理
   ret+=1;
+  
   if(ret > 9999){
     ret = 9999;  
   }
+
+#if 0 //wb null
   towerscr_SetCommonScore(wk,savedata,FALSE,ret);
-  #endif
+#endif
 }
+
+#if 0
+static void towerscr_SetCommonScore(BTOWER_SCRWORK* wk,SAVEDATA* sv,u8 win_f,u16 now_renshou)
+{
+	u8	buf8;
+
+	switch(wk->play_mode){
+	case BSWAY_MODE_SINGLE:
+#if 0
+		//ポケモンデータセット
+		towerscr_SaveMemberPokeData(wk,sv,BTWR_SCORE_POKE_SINGLE);
+#endif
+	case BTWR_MODE_DOUBLE:
+#if 0
+		if(now_renshou >= 7){
+			//TVインタビューデータセット(シングルとダブルで実行)
+			TVTOPIC_BTowerTemp_Set(SaveData_GetTvWork(sv),win_f,now_renshou);
+		}
+#endif
+		break;
+#if 0
+	case BTWR_MODE_WIFI:
+		//ポケモンデータセット
+		towerscr_SaveMemberPokeData(wk,sv,BTWR_SCORE_POKE_WIFI);
+		//スコア押し出し
+		TowerPlayData_WifiRecordAdd(wk->playSave,wk->rec_down,wk->rec_turn,wk->rec_damage);
+
+		//プレイモード書き出し
+		buf8 = wk->play_mode;
+		TowerPlayData_Put(wk->playSave,BTWR_PSD_playmode,&buf8);
+		//ラウンド数書き出し
+		buf8 = wk->now_round;
+		TowerPlayData_Put(wk->playSave,BTWR_PSD_round,&buf8);
+		
+		TowerScoreData_SetWifiScore(wk->scoreSave,wk->playSave);
+		break;
+#endif
+	default:
+		break;
+	}
+}
+#endif
 
 u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
 {
@@ -851,49 +909,53 @@ static void bswayscr_SetCommonScore(
  *  @brief  クリア処理
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
+void BSUBWAY_SCRWORK_SetClearScore(
+    BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
-#if 0 //wb
+/*
   u32  ret = 0;
   int  id;
-  void *note;
+//  void *note;
   u16  before,after,chg_flg;
-  RECORD * record;
-  FRONTIER_SAVEWORK *frontier;
+//  RECORD * record;
+//  FRONTIER_SAVEWORK *frontier;
     
   if( wk->play_mode == BSWAY_MODE_RETRY ){
     return;
   }
-  OS_Printf("TowerClearScoreSet -> mode = %d\n",wk->play_mode );
   
+//  OS_Printf("TowerClearScoreSet -> mode = %d\n",wk->play_mode );
+//
+#if 0  
   record = SaveData_GetRecord( savedata );
   frontier = SaveData_GetFrontier( savedata );
+#endif
 
+#if 0
   if( wk->play_mode == BSWAY_MODE_WIFI_MULTI ){
     id = FRID_TOWER_MULTI_WIFI_RENSHOU;
   }else{
     id = wk->play_mode*2+FRID_TOWER_SINGLE_RENSHOU;
   }
-  
+#endif
+
   //現在の連勝数を書き出し
   if( wk->play_mode == BSWAY_MODE_WIFI_MULTI ){
-#if 0
-    chg_flg = TowerScoreData_SetFlags( wk->scoreSave,
-        BSWAY_SFLAG_WIFI_MULTI_RECORD,BSWAY_DATA_get );
-#else
+    #if 0 //wb null
     chg_flg = FrontierRecord_Get( SaveData_GetFrontier( savedata ), 
-                  FRID_TOWER_MULTI_WIFI_CLEAR_BIT,
-                  Frontier_GetFriendIndex( FRID_TOWER_MULTI_WIFI_CLEAR_BIT ) );
-#endif
+          FRID_TOWER_MULTI_WIFI_CLEAR_BIT,
+          Frontier_GetFriendIndex( FRID_TOWER_MULTI_WIFI_CLEAR_BIT ) );
+    #else
+    ch_flg = 0;
+    #endif
   }else{
-    chg_flg = TowerScoreData_SetFlags( wk->scoreSave,
-        BSWAY_SFLAG_SINGLE_RECORD+wk->play_mode,BSWAY_DATA_get );
+    chg_flg = BSUBWAY_SCOREDATA_SetFlag( wk->scoreData,
+        BSWAY_SCOREDATA_FLAG_SINGLE_RECORD + wk->play_mode,
+        BSWAY_DATA_get );
   }
 
-#if 0
   if( chg_flg ){  //現在も連勝記録挑戦中なら加算
-    //ret = FrontierRecord_Add( frontier,id+1,Frontier_GetFriendIndex( id+1),BSWAY_CLEAR_WINCNT );
-
+    #if 0 //wb null
     ret = FrontierRecord_Get(  SaveData_GetFrontier( savedata ), 
                   ( id+1),
                   Frontier_GetFriendIndex( id+1) );
@@ -905,11 +967,15 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
     ret = FrontierRecord_Get(  SaveData_GetFrontier( savedata ), 
                   ( id+1),
                   Frontier_GetFriendIndex( id+1) );
-
+    #endif
   }else{  //前回負けてた場合は一旦リセット
-    ret = FrontierRecord_Set( frontier,id+1,Frontier_GetFriendIndex( id+1),BSWAY_CLEAR_WINCNT );
+    #if 0 //wb null
+    ret = FrontierRecord_Set(
+        frontier,id+1,Frontier_GetFriendIndex( id+1),BSWAY_CLEAR_WINCNT );
+    #endif
   }
-#else
+
+#if 0
   //連勝してから、負けた時に、wk->renshouが必ず0になっていれば、
   //( renshou + now_win )をセットでいいはず(08.05.25)
   //7+7=14勝利(勝ち終わり)
@@ -921,6 +987,7 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 #endif
 
   //レコード挑戦中フラグを立てる
+#if 0
   if( wk->play_mode == BSWAY_MODE_WIFI_MULTI ){
 #if 0
     TowerScoreData_SetFlags( wk->scoreSave,BSWAY_SFLAG_WIFI_MULTI_RECORD,BSWAY_DATA_set );
@@ -932,6 +999,7 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
   }else{
     TowerScoreData_SetFlags( wk->scoreSave,BSWAY_SFLAG_SINGLE_RECORD+wk->play_mode,BSWAY_DATA_set );
   }
+#endif
 
   //現在の最大連勝数取得
   before = FrontierRecord_Get( frontier,id,Frontier_GetFriendIndex( id ));
@@ -944,11 +1012,15 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
     bswayscr_MakeTVRenshouMaxUpdate( wk,fsys->savedata,after );
   }
 #endif
+
+#if 0
   //延べ勝利数更新
   RECORD_Add( record,RECID_BSUBWAY_WIN,BSWAY_CLEAR_WINCNT );
   //周回数プラス
   TowerScoreData_SetStage( wk->scoreSave,wk->play_mode,BSWAY_DATA_inc );
+#endif
 
+#if 0
   //バトルタワーへのチャレンジ数追加
   if( wk->play_mode != BSWAY_MODE_WIFI_MULTI ){
     RECORD_Add( record,RECID_BSUBWAY_CHALLENGE,1);
@@ -962,6 +1034,7 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 
   //勝ち負け共通データ処理
   bswayscr_SetCommonScore( wk,savedata,TRUE,ret );
+#endif
 
 #if 0
   //冒険ノート(通信マルチ&wifiのみ)
@@ -975,7 +1048,18 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
     note = FNOTE_SioBattleTowerDataMake( wk->heapID );
     FNOTE_DataSave( fnote, note, FNOTE_TYPE_SIO );
   }
-#endif
+*/
+  u8 buf8;
+  
+  //プレイモード書き出し
+  buf8 = wk->play_mode;
+  BSUBWAY_PLAYDATA_SetData( wk->playData,
+      BSWAY_PLAYDATA_ID_playmode, &buf8 );
+
+  //ラウンド数書き出し
+  buf8 = wk->now_round;
+	BSUBWAY_PLAYDATA_SetData( wk->playData,
+      BSWAY_PLAYDATA_ID_round, &buf8 );
 }
 
 /**
