@@ -58,6 +58,7 @@
 #include "ev_time.h"  //EVTIME_Update
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_SPEXIT_REQUEST
 
+#include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  //SCRID_POKECEN_ELEVATOR_OUT
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
 FS_EXTERN_OVERLAY(debug_data);
@@ -141,7 +142,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       { //特殊接続リクエスト：
         const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
         fmw->loc_req = *spLoc;
-        EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
+    //    EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
         FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
         MAPCHG_releaseMapTools( gsys );
         //新しいマップモードなど機能指定を行う
@@ -197,7 +198,15 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
     }
-    (*seq) ++;
+    if ( fmw->game_init_mode == GAMEINIT_MODE_CONTINUE 
+        &&EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST ) )
+    {
+      EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_SPEXIT_REQUEST );
+      SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
+      *seq = 4;
+    } else {
+      (*seq) ++;
+    }
     break;
   case 3:
     {
@@ -777,6 +786,35 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void * work )
+{
+  MAPCHANGE_WORK*     mcw = work;
+  GAMESYS_WORK*      gsys = mcw->gsys;
+  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+  GAMEDATA*      gamedata = mcw->gamedata;
+
+  switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gsys, fieldmap ) );
+    (*seq)++;
+    break;
+  case 1:
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+    (*seq)++;
+    break;
+  case 2:
+    SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
+    (*seq)++;
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*work)
 {
   MAPCHANGE_WORK*     mcw = work;
@@ -793,9 +831,11 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
     (*seq) ++;
     break;
   case 1:
+#if 0
     // 入口進入イベント
     GMEVENT_CallEvent( event, 
         EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
+#endif
     (*seq)++;
     break;
   case 2: // マップチェンジ・コア・イベント
@@ -808,7 +848,8 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
     break;
   case 4:
     // 入口退出イベント
-    GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
+    //GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
     (*seq) ++;
     break;
   case 5:
@@ -1018,6 +1059,23 @@ GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap 
   mcw->exit_type = EXIT_TYPE_NONE;
   return event;
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapFromUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+{
+  MAPCHANGE_WORK * mcw;
+  GMEVENT * event;
+  const LOCATION * spLoc;
+
+  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeFromUnion, sizeof(MAPCHANGE_WORK));
+  mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys ); 
+  spLoc = GAMEDATA_GetSpecialLocation( GAMESYSTEM_GetGameData( gsys ) );
+  mcw->loc_req = *spLoc;
+  return event;
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

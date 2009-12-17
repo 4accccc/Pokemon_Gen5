@@ -623,11 +623,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
   if(unisys == NULL){
     //ユニオン終了
-    VecFx32 pos;
-    pos.x = 104 << FX32_SHIFT;
-    pos.y = 48;
-    pos.z = 88 << FX32_SHIFT;
-    return EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_C01PC0101, &pos, 0);
+    return EVENT_ChangeMapFromUnion( gsys, fieldWork );
   }
   
   if(UnionMain_GetFinishReq(unisys) == TRUE){
@@ -1160,6 +1156,11 @@ static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir )
  * @brief POSイベントチェック：向き指定あり
  * @param req EV_REQUEST
  * @return 起動したPOSイベント
+ *
+ * @todo
+ * 氷状態で強制移動・方向固定のままPOSに踏み込む状況で、キーを
+ * 押しっぱなしにしていると発動しないタイミングが発見されている
+ * （現状はそのような地形をなくすことで対処した）
  */
 //--------------------------------------------------------------
 static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )

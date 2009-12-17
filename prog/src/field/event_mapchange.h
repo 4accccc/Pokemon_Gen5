@@ -160,6 +160,8 @@ extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys );
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 
+extern GMEVENT * EVENT_ChangeMapFromUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+
 //------------------------------------------------------------------
 /**
  */
