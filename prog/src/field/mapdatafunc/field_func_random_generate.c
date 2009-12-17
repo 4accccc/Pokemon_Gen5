@@ -104,19 +104,32 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 		{
 			void*				mem;
 			WBGridMapPackHeaderSt*	fileHeader;
+      int buildmodel_count;
 
 			//ヘッダー設定
 			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (WBGridMapPackHeaderSt*)mem;
 			//モデルリソース設定
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
-			//テクスチャリソース設定
-			//>>GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
+
+			//配置オブジェクト設定
+			if( fileHeader->positionOffset != fileHeader->endPos ){
+				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
+				PositionSt* objStatus = (PositionSt*)&layout->posData;
+				GFL_G3D_MAP_GLOBALOBJ_ST status;
+				int i;
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
+
+        buildmodel_count = layout->count;
+
+				for( i=0; i<buildmodel_count; i++ ){
+          FIELD_BMODEL_MAN_ResistMapObject(bm, g3Dmap, &objStatus[i], i);
+				}
+			}
 
       {
         int i, j;
         int block_x, block_z;
-        int count;
         FIELD_BMODEL_MAN* p_bm = FLD_G3D_MAP_EXWORK_GetBModelMan( p_exwork );
         NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
         int map_index = FLD_G3D_MAP_EXWORK_GetMapIndex( p_exwork );
@@ -128,12 +141,11 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
         block_x = (map_index % 2) * (FIELD_WFBC_BLOCK_SIZE_X/2);
         block_z = (map_index / 2) * (FIELD_WFBC_BLOCK_SIZE_Z/2);
 
-        count = 0;
         for( i=0; i<(FIELD_WFBC_BLOCK_SIZE_Z/2); i++ )
         {
           for( j=0; j<(FIELD_WFBC_BLOCK_SIZE_X/2); j++ )
           {
-            count = FIELD_WFBC_SetUpBlock( p_wfbc, p_attr, p_bm, g3Dmap, count, block_x + j, block_z + i, heapID );
+            buildmodel_count = FIELD_WFBC_SetUpBlock( p_wfbc, p_attr, p_bm, g3Dmap, buildmodel_count, block_x + j, block_z + i, heapID );
           }
         }
       }
