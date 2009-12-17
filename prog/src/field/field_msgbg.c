@@ -2261,7 +2261,7 @@ static void fldTalkMsgWin_Add(
     FLDMSGBG *fmb, FLDTALKMSGWIN *tmsg,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
 {
-  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE_NORMAL;
+  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
   
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
@@ -2467,7 +2467,7 @@ static void fldPlainMsgWin_Add(
     FLDMSGBG *fmb, FLDPLAINMSGWIN *plnwin,
     BOOL up_down, STRBUF *strBuf )
 {
-  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
+  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
   
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
@@ -2651,7 +2651,7 @@ static void fldSubMsgWin_Add(
     FLDMSGBG *fmb, FLDSUBMSGWIN *subwin,
     STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id )
 {
-  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
+  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
 
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
