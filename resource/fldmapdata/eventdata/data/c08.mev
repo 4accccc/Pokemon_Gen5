@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/16 17:44:01
+#save date:2009/12/17 16:25:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -459,7 +459,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-19
+17
 #event number: 0
 #Door Event Label
 DOOR_ID_C08_C08R0501_EXIT01
@@ -470,48 +470,14 @@ DOOR_ID_C08R0501_C08_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 -520
+-248 0 -472
 #size
-1 1
+1 5
 #event number: 1
-#Door Event Label
-DOOR_ID_C08_C08R0501_EXIT03
-#Next Zone ID Name
-ZONE_ID_C08R0501
-#Next Door ID Name
-DOOR_ID_C08R0501_C08_EXIT03
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 0 -552
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_C08_C08R0501_EXIT02
-#Next Zone ID Name
-ZONE_ID_C08R0501
-#Next Door ID Name
-DOOR_ID_C08R0501_C08_EXIT02
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 0 -536
-#size
-1 1
-#event number: 3
 #Door Event Label
 DOOR_ID_C08_R11_EXIT01
 #Next Zone ID Name
@@ -528,7 +494,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -296
 #size
 1 1
-#event number: 4
+#event number: 2
 #Door Event Label
 DOOR_ID_C08_R11_EXIT02
 #Next Zone ID Name
@@ -545,7 +511,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -312
 #size
 1 1
-#event number: 5
+#event number: 3
 #Door Event Label
 DOOR_ID_C08_R11_EXIT03
 #Next Zone ID Name
@@ -562,7 +528,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -328
 #size
 1 1
-#event number: 6
+#event number: 4
 #Door Event Label
 DOOR_ID_C08_R11_EXIT04
 #Next Zone ID Name
@@ -579,7 +545,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -344
 #size
 1 1
-#event number: 7
+#event number: 5
 #Door Event Label
 DOOR_ID_C08_C08PC0101_EXIT01
 #Next Zone ID Name
@@ -596,7 +562,7 @@ EVENTDATA_POSTYPE_GRID
 104 0 -456
 #size
 1 1
-#event number: 8
+#event number: 6
 #Door Event Label
 DOOR_ID_C08_C08GYM0101_EXIT01
 #Next Zone ID Name
@@ -613,7 +579,7 @@ EVENTDATA_POSTYPE_GRID
 232 0 40
 #size
 1 1
-#event number: 9
+#event number: 7
 #Door Event Label
 DOOR_ID_C08_C08R0101_EXIT01
 #Next Zone ID Name
@@ -630,7 +596,7 @@ EVENTDATA_POSTYPE_GRID
 312 0 -456
 #size
 1 1
-#event number: 10
+#event number: 8
 #Door Event Label
 DOOR_ID_C08_C08R0201_EXIT01
 #Next Zone ID Name
@@ -647,7 +613,7 @@ EVENTDATA_POSTYPE_GRID
 88 -32 -88
 #size
 1 1
-#event number: 11
+#event number: 9
 #Door Event Label
 DOOR_ID_C08_C08R0301_EXIT01
 #Next Zone ID Name
@@ -664,7 +630,7 @@ EVENTDATA_POSTYPE_GRID
 344 -32 -8
 #size
 1 1
-#event number: 12
+#event number: 10
 #Door Event Label
 DOOR_ID_C08_C08R0401_EXIT01
 #Next Zone ID Name
@@ -681,7 +647,7 @@ EVENTDATA_POSTYPE_GRID
 488 -32 -424
 #size
 1 1
-#event number: 13
+#event number: 11
 #Door Event Label
 DOOR_ID_C08_C08R0701_EXIT01
 #Next Zone ID Name
@@ -698,7 +664,7 @@ EVENTDATA_POSTYPE_GRID
 760 0 -520
 #size
 1 1
-#event number: 14
+#event number: 12
 #Door Event Label
 DOOR_ID_C08_C08R0701_EXIT03
 #Next Zone ID Name
@@ -715,7 +681,7 @@ EVENTDATA_POSTYPE_GRID
 760 0 -552
 #size
 1 1
-#event number: 15
+#event number: 13
 #Door Event Label
 DOOR_ID_C08_C08R0701_EXIT02
 #Next Zone ID Name
@@ -732,7 +698,7 @@ EVENTDATA_POSTYPE_GRID
 760 0 -536
 #size
 1 1
-#event number: 16
+#event number: 14
 #Door Event Label
 DOOR_ID_C08_C08R0601_EXIT01
 #Next Zone ID Name
@@ -749,7 +715,7 @@ EVENTDATA_POSTYPE_GRID
 536 0 168
 #size
 1 1
-#event number: 17
+#event number: 15
 #Door Event Label
 DOOR_ID_C08_C08R0601_EXIT02
 #Next Zone ID Name
@@ -766,7 +732,7 @@ EVENTDATA_POSTYPE_GRID
 552 0 168
 #size
 1 1
-#event number: 18
+#event number: 16
 #Door Event Label
 DOOR_ID_C08_C08R0601_EXIT03
 #Next Zone ID Name
