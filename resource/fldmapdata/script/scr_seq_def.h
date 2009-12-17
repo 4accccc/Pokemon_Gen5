@@ -4832,6 +4832,17 @@
   .short  \dir
   .endm
   
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジム首移動
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_MOVE_HEAD(head) _ASM_GYM_DRAGON_MOVE_HEAD head
+
+  .macro  _ASM_GYM_DRAGON_MOVE_HEAD head
+  .short  EV_SEQ_GYM_DRAGON_MOVE_HEAD
+  .short  \head
+  .endm
 
 //======================================================================
 //

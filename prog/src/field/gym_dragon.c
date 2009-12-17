@@ -422,6 +422,7 @@ static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
 static void SetupAnm(GYM_DRAGON_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inIdx);
 
 static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work );
 static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk);
 static int GetHeadAnmIdx(DRAGON_WORK *wk, const HEAD_DIR inNextDir);
@@ -753,6 +754,38 @@ GMEVENT *GYM_DRAGON_CreateGmkEvt(GAMESYS_WORK *gsys, const int inDragonIdx, cons
 
 //--------------------------------------------------------------
 /**
+ * 首ギミック発動イベント作成
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inDragonIdx   対象ドラゴンインデックス0～2
+ * 
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_DRAGON_CreateHeadMoveEvt(GAMESYS_WORK *gsys, const int inDragonIdx)
+{
+  GMEVENT * event;
+
+  GYM_DRAGON_TMP *tmp;
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+    tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+  }
+
+  tmp->TrgtHead = inDragonIdx;
+  tmp->DraWk = &gmk_sv_work->DraWk[inDragonIdx];
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, HeadMoveEvt, 0 );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
  * 自機アニメイベント作成
  * @param	      gsys        ゲームシステムポインタ
  * @param       inDir       自機の向き
@@ -964,10 +997,9 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 2:    
-    //カメラ移動スクリプト
-    SCRIPT_CallScript( event, SCRID_PRG_C08GYM0101_CAMERA_MOVE,
-          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );          
+  case 2:
+    //終了
+    return GMEVENT_RES_FINISH;
     (*seq)++;
     break;  
   case 3:
@@ -1047,6 +1079,104 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
   
   return GMEVENT_RES_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 首ギミックアニメイベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_DRAGON_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+  }
+
+  switch(*seq){
+  case 0:
+    {
+      GMEVENT * call_event;
+      HEAD_DIR next_dir;
+      int anm_idx;
+      int obj_idx;
+      
+      //腕の状態から、首アニメを決定
+      next_dir = GetHeadDirByArm(tmp->DraWk);
+      anm_idx = GetHeadAnmIdx(tmp->DraWk, next_dir);
+
+      OS_Printf("次の首の動きは　%d anm=%d\n",next_dir, anm_idx);
+
+      obj_idx = OBJ_HEAD_1+(tmp->TrgtHead*DRAGON_PARTS_SET);
+
+      //首のＯＢＪとアニメをセット
+      tmp->AnmPlayWk.ObjIdx = obj_idx;
+      tmp->AnmPlayWk.AnmNum = 1;
+      tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
+      tmp->AnmPlayWk.AllAnmNum = DRAGON_ANM_NUM;
+
+#ifdef PM_DEBUG
+      {
+        switch(anm_idx){
+        case 0:
+          OS_Printf("上＞右\n");
+          break;
+        case 1:
+          OS_Printf("右＞上\n");
+          break;
+        case 2:
+          OS_Printf("上＞左\n");
+          break;
+        case 3:
+          OS_Printf("左＞上\n");
+          break;
+        case 4:
+          OS_Printf("下＞右\n");
+          break;
+        case 5:
+          OS_Printf("右＞下\n");
+          break;
+        case 6:
+          OS_Printf("下＞左\n");
+          break;
+        case 7:
+          OS_Printf("左＞下\n");
+          break;
+        }
+      }
+#endif
+      
+      call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
+      //首アニメイベントコール
+      GMEVENT_CallEvent(event, call_event);
+      //首の情報更新
+      tmp->DraWk->HeadDir = next_dir;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      //首の向きと操作した首のインデックッスからレールの進行状態を変更する
+      SetRailSt(fieldWork, tmp->TrgtHead, tmp->DraWk->HeadDir);
+
+      //終了
+      return GMEVENT_RES_FINISH;
+    }
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**
