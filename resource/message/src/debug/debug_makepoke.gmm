@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-21T18:00:16"/>
+	<create user="taya" host="W00146" date="2009-12-17T15:01:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -447,35 +447,35 @@
 	</row>
 
 	<row id="DMPSTR_PPCNT1">
-		<language name="JPN" width="256">PPCnt1</language>
+		<language name="JPN" width="256">UpCnt</language>
 	</row>
 
 	<row id="DMPSTR_PPCNT2">
-		<language name="JPN" width="256">PPCnt2</language>
+		<language name="JPN" width="256">UpCnt</language>
 	</row>
 
 	<row id="DMPSTR_PPCNT3">
-		<language name="JPN" width="256">PPCnt3</language>
+		<language name="JPN" width="256">UpCnt</language>
 	</row>
 
 	<row id="DMPSTR_PPCNT4">
-		<language name="JPN" width="256">PPCnt4</language>
+		<language name="JPN" width="256">UpCnt</language>
 	</row>
 
 	<row id="DMPSTR_PPMAX1">
-		<language name="JPN" width="256">PPMax1</language>
+		<language name="JPN" width="256">Max</language>
 	</row>
 
 	<row id="DMPSTR_PPMAX2">
-		<language name="JPN" width="256">PPMax2</language>
+		<language name="JPN" width="256">Max</language>
 	</row>
 
 	<row id="DMPSTR_PPMAX3">
-		<language name="JPN" width="256">PPMax3</language>
+		<language name="JPN" width="256">Max</language>
 	</row>
 
 	<row id="DMPSTR_PPMAX4">
-		<language name="JPN" width="256">PPMax4</language>
+		<language name="JPN" width="256">Max</language>
 	</row>
 
 	<row id="DMPSTR_TYPE">

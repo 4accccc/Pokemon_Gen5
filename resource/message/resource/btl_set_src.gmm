@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-17T11:36:02"/>
+	<create user="taya" host="W00146" date="2009-12-17T18:58:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -505,14 +505,14 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-命中率が上がった！</language>
+命中率が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率が上がった！</language>
+回避率が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -562,7 +562,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率が　ぐーんと上がった！</language>
+回避率が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,,">
@@ -589,9 +589,9 @@
 
 	<row id="BTL_STRID_SET_Rankdown_SPDEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
-とくぼう　が　さがった！</language>
+とくぼうが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-特防　が　下がった！</language>
+特防が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AGI">
@@ -603,16 +603,16 @@
 
 	<row id="BTL_STRID_SET_Rankdown_HIT">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
-めいちゅうりつ　が　さがった！</language>
+めいちゅうりつが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-命中率が下がった！</language>
+命中率が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率が下がった！</language>
+回避率が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -712,7 +712,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率は　もう　上がらない！</language>
+回避率は　もう　上がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownMin_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -762,7 +762,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率は　もう　下がらない！</language>
+回避率は　もう　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankReset">
@@ -770,7 +770,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 のうりょくへんかが　もとにもどった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-のうりょくへんかが　元にもどった！</language>
+能力変化が　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -1139,6 +1139,21 @@
 全てのワザの　ＰＰを回復した！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_WeatherDmg_Sand">
+		<comment>天候によるダメージ</comment>
+		<language name="JPN" width="216">すなあらしが
+[1:02:ポケモンニックネーム:0]を　おそう！</language>
+		<language name="JPN_KANJI" width="216">すなあらしが
+[1:02:ポケモンニックネーム:0]を　襲う！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_WeatherDmg_Snow">
+		<language name="JPN" width="216">あられが
+[1:02:ポケモンニックネーム:0]を　おそう！</language>
+		<language name="JPN_KANJI" width="216">あられが
+[1:02:ポケモンニックネーム:0]を　襲う！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_TokuseiChange">
 		<comment>とくせい変化</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -1181,59 +1196,11 @@
 
 	<row id="BTL_STRID_SET_RedCard">
 		<comment>レッドカード</comment>
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
 [1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
 [1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_2Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
-やせいの　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
-野生の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_2E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
-あいての　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
-相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　レッドカードで
-[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　レッドカードで
-[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_Y2Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　レッドカードで
-やせいの　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　レッドカードで
-野生の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　レッドカードで
-[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">あいての　[1:02:ポケモンニックネーム:0]は　レッドカードで
-[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_RedCard_E2E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">相手の　[1:02:ポケモンニックネーム:0]は　レッドカードで
-相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　レッドカードで
-相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MoraibiExe" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -1242,7 +1209,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 ほのおの　いりょくが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-ほのおの　いりょくが　上がった！</language>
+ほのおの　威力が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YotimuExe">
@@ -1751,7 +1718,7 @@
 	<row id="BTL_STRID_SET_HeartSwap">
 		<comment>ハートスワップ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-のうりょく　へんかを　いれかえた！</language>
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
 	</row>
@@ -1759,7 +1726,7 @@
 	<row id="BTL_STRID_SET_PowerSwap">
 		<comment>パワースワップ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-せめる　のうりょく　へんかを▽
+せめる　のうりょくへんかを▽
 いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 攻める　能力変化を　入れ替えた！</language>
@@ -1768,7 +1735,8 @@
 	<row id="BTL_STRID_SET_GuardSwap">
 		<comment>ガードスワップ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-守る　のうりょく　へんかを　いれかえた！</language>
+まもる　のうりょくへんかを▽
+いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 守る　能力変化を　入れ替えた！</language>
 	</row>
@@ -2424,7 +2392,7 @@
 とくぼうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼうが　ぐーんと　上がった！</language>
+特防が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI">
@@ -2439,7 +2407,7 @@
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-めいちゅうりつ　が　ぐーんと　あがった！</language>
+めいちゅうりつが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率が　ぐーんと　上がった！</language>
@@ -2448,10 +2416,10 @@
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-かいひりつ　が　ぐーんと　あがった！</language>
+かいひりつが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-かいひ率が　ぐーんと　上がった！</language>
+回避率が　ぐーんと　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical">
