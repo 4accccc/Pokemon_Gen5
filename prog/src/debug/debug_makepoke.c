@@ -57,6 +57,7 @@ enum {
   COLIDX_PINK_L,
   COLIDX_WHITE,
 
+  INPUTBOX_NUM_ARG_EX = 0xffffffff,
 };
 
 #define CALC_NUMBOX_WIDTH(keta)      ((keta)*NUMBOX_CHAR_WIDTH +NUMBOX_MARGIN*2)
@@ -69,7 +70,7 @@ enum {
   LINE_MARGIN = 2,
   LINE_DIFFER = LINE_HEIGHT + LINE_MARGIN,
 
-  LY_LV1 = 6,
+  LY_LV1 = 2,
   LY_LV2 = LY_LV1+LINE_DIFFER,
   LY_LV3 = LY_LV2+LINE_DIFFER,
   LY_LV4 = LY_LV3+LINE_DIFFER + 2,
@@ -83,32 +84,37 @@ enum {
   LY_LV12 = LY_LV11+LINE_DIFFER,
   LY_LV13 = LY_LV12+LINE_DIFFER,
 
-  LX_POKETYPE_CAP = 4,
+  LX_POKETYPE_CAP = 2,
   LY_POKETYPE_CAP = LY_LV1,
   LX_POKETYPE_BOX = LX_POKETYPE_CAP+CALC_CAP_BOX_MARGIN(4),
   LY_POKETYPE_BOX = LY_LV1,
 
-  LX_LEVEL_CAP = 108,
+  LX_LEVEL_CAP = 96,
   LY_LEVEL_CAP = LY_LV1,
   LX_LEVEL_BOX = LX_LEVEL_CAP+CALC_CAP_BOX_MARGIN(3),
   LY_LEVEL_BOX = LY_LEVEL_CAP,
 
-  LX_SEX_CAP = 180,
-  LY_SEX_CAP = LY_LV1,
-  LX_SEX_BOX = LX_SEX_CAP+CALC_CAP_BOX_MARGIN(4),
-  LY_SEX_BOX = LY_SEX_CAP,
+  LX_EXP_CAP = 160,
+  LY_EXP_CAP = LY_LV1,
+  LX_EXP_BOX = LX_EXP_CAP+CALC_CAP_BOX_MARGIN_HALF(3),
+  LY_EXP_BOX = LY_EXP_CAP,
 
-  LX_SEIKAKU_CAP = 4,
+  LX_SEIKAKU_CAP = 2,
   LY_SEIKAKU_CAP = LY_LV2,
   LX_SEIKAKU_BOX = LX_SEIKAKU_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_SEIKAKU_BOX = LY_SEIKAKU_CAP,
 
-  LX_TOKUSEI_CAP = 120,
+  LX_TOKUSEI_CAP = 88,
   LY_TOKUSEI_CAP = LY_LV2,
   LX_TOKUSEI_BOX = LX_TOKUSEI_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_TOKUSEI_BOX = LY_TOKUSEI_CAP,
 
-  LX_ITEM_CAP = 4,
+  LX_SEX_CAP = 202,
+  LY_SEX_CAP = LY_LV2,
+  LX_SEX_BOX = LX_SEX_CAP+CALC_CAP_BOX_MARGIN(4),
+  LY_SEX_BOX = LY_SEX_CAP,
+
+  LX_ITEM_CAP = 2,
   LY_ITEM_CAP = LY_LV3,
   LX_ITEM_BOX = LX_ITEM_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_ITEM_BOX = LY_ITEM_CAP,
@@ -135,42 +141,42 @@ enum {
 
   LX_PPCNT1_CAP = 104,
   LY_PPCNT1_CAP = LY_LV4,
-  LX_PPCNT1_BOX = LX_PPCNT1_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPCNT1_BOX = LX_PPCNT1_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
   LY_PPCNT1_BOX = LY_PPCNT1_CAP,
 
   LX_PPCNT2_CAP = 104,
   LY_PPCNT2_CAP = LY_LV5,
-  LX_PPCNT2_BOX = LX_PPCNT2_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPCNT2_BOX = LX_PPCNT2_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
   LY_PPCNT2_BOX = LY_PPCNT2_CAP,
 
   LX_PPCNT3_CAP = 104,
   LY_PPCNT3_CAP = LY_LV6,
-  LX_PPCNT3_BOX = LX_PPCNT3_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPCNT3_BOX = LX_PPCNT3_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
   LY_PPCNT3_BOX = LY_PPCNT3_CAP,
 
   LX_PPCNT4_CAP = 104,
   LY_PPCNT4_CAP = LY_LV7,
-  LX_PPCNT4_BOX = LX_PPCNT4_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPCNT4_BOX = LX_PPCNT4_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
   LY_PPCNT4_BOX = LY_PPCNT4_CAP,
 
   LX_PPMAX1_CAP = 156,
   LY_PPMAX1_CAP = LY_LV4,
-  LX_PPMAX1_BOX = LX_PPMAX1_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPMAX1_BOX = LX_PPMAX1_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_PPMAX1_BOX = LY_PPMAX1_CAP,
 
   LX_PPMAX2_CAP = LX_PPMAX1_CAP,
   LY_PPMAX2_CAP = LY_LV5,
-  LX_PPMAX2_BOX = LX_PPMAX2_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPMAX2_BOX = LX_PPMAX2_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_PPMAX2_BOX = LY_PPMAX2_CAP,
 
   LX_PPMAX3_CAP = LX_PPMAX1_CAP,
   LY_PPMAX3_CAP = LY_LV6,
-  LX_PPMAX3_BOX = LX_PPMAX3_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPMAX3_BOX = LX_PPMAX3_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_PPMAX3_BOX = LY_PPMAX3_CAP,
 
   LX_PPMAX4_CAP = LX_PPMAX1_CAP,
   LY_PPMAX4_CAP = LY_LV7,
-  LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN(4),
+  LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_PPMAX4_BOX = LY_PPMAX4_CAP,
 
   LX_HPVAL_CAP = 4,
@@ -283,6 +289,7 @@ typedef enum {
 typedef enum {
   INPUTBOX_ID_POKETYPE=0,
   INPUTBOX_ID_LEVEL,
+  INPUTBOX_ID_EXP,
   INPUTBOX_ID_SEX,
   INPUTBOX_ID_SEIKAKU,
   INPUTBOX_ID_TOKUSEI,
@@ -332,6 +339,10 @@ typedef enum {
   INPUTBOX_ID_DEF_BUTTON,
 
   INPUTBOX_ID_MAX,
+
+  //
+  INPUTBOX_EXID_EXP_MIN,
+  INPUTBOX_EXID_EXP_MAX,
 
 }InputBoxID;
 
@@ -388,6 +399,10 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_NUM, DMPSTR_LEVEL,   LX_LEVEL_CAP,  LY_LEVEL_CAP,
     LX_LEVEL_BOX,   LY_LEVEL_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
     ID_PARA_level, 100, 1 },
+
+  { INPUTBOX_TYPE_NUM, DMPSTR_HP_EXP,  LX_EXP_CAP,  LY_EXP_CAP,
+    LX_EXP_BOX,   LY_EXP_BOX,  CALC_NUMBOX_WIDTH(8), LINE_HEIGHT,
+    ID_PARA_exp, INPUTBOX_NUM_ARG_EX, 0 },
 
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
     LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
@@ -562,7 +577,7 @@ typedef struct {
   u8   color_cur_bg;
   u8   color_letter;
 
-  u8   num_ary[ NUMINPUT_KETA_MAX ];
+  s8   num_ary[ NUMINPUT_KETA_MAX ];
   u8   cur_keta;
 
 }NUMINPUT_WORK;
@@ -583,6 +598,8 @@ typedef struct {
   PRINT_UTIL      printUtil;
   GFL_SKB*        skb;
   u32             pokeID;
+  u32             pokeExpMin;
+  u32             pokeExpMax;
   int             boxIdx;
   u32             boxValue[ INPUTBOX_ID_MAX ];
   u8              boxEnable[ INPUTBOX_ID_MAX ];
@@ -603,6 +620,7 @@ typedef struct {
 static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKEPOKE_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static void UpdatePokeExpMinMax( DMP_MAINWORK* wk, const POKEMON_PARAM* pp );
 static void setup_view( DMP_MAINWORK* wk );
 static void cleanup_view( DMP_MAINWORK* wk );
 static BOOL root_ctrl( DMP_MAINWORK* wk );
@@ -619,7 +637,7 @@ static void box_write_fixval( DMP_MAINWORK* wk, u32 boxID, u32 value );
 static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf );
 static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID );
 static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL_FONT* font,
-            PRINT_UTIL* util, PRINT_QUE* que, const INPUT_BOX_PARAM* boxParam, u32 value );
+            PRINT_UTIL* util, PRINT_QUE* que, const INPUT_BOX_PARAM* boxParam, u32 value, const DMP_MAINWORK* mainWork );
 static BOOL NumInput_Main( NUMINPUT_WORK* wk );
 static u32 NumInput_GetNum( NUMINPUT_WORK* wk );
 static void numinput_draw( NUMINPUT_WORK* wk );
@@ -663,9 +681,10 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
       wk->heapID = HEAPID_DEBUG_MAKEPOKE;
       wk->dst = proc_param->dst;
       if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
-        PP_Setup( wk->dst, MONSNO_GORIDARUMA, 5, 0x1000 );
+        PP_Setup( wk->dst, MONSNO_GORIDARUMA, 5, PTL_SETUP_RND_NOT_RARE );
       }
       wk->pokeID = PP_Get( wk->dst, ID_PARA_id_no, NULL );
+      UpdatePokeExpMinMax( wk, wk->dst );
       wk->seq = 0;
     }
   }
@@ -702,6 +721,27 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, 
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * ポケモン経験値の最小・最大値をワークに保持する
+ *
+ * @param   wk
+ * @param   pp
+ */
+//----------------------------------------------------------------------------------
+static void UpdatePokeExpMinMax( DMP_MAINWORK* wk, const POKEMON_PARAM* pp )
+{
+  u16 monsno, level;
+
+  monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+  level = PP_Get( pp, ID_PARA_level, NULL );
+  wk->pokeExpMin = POKETOOL_GetMinExp( monsno, PTL_FORM_NONE, level );
+  if( level < 100 ){
+    wk->pokeExpMax = POKETOOL_GetMinExp( monsno, PTL_FORM_NONE, level+1 ) - 1;
+  }else{
+    wk->pokeExpMax = wk->pokeExpMin;
+  }
+}
 
 
 //----------------------------------------------------------------------------------
@@ -864,7 +904,7 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
           break;
         case INPUTBOX_TYPE_NUM:
           NumInput_Setup( &wk->numInput, wk->strbuf, wk->win, wk->font,
-              &wk->printUtil, wk->printQue, p, box_getvalue(wk, wk->boxIdx) );
+              &wk->printUtil, wk->printQue, p, box_getvalue(wk, wk->boxIdx), wk );
           wk->seq = SEQ_INPUT_NUM;
           break;
         case INPUTBOX_TYPE_SWITCH:
@@ -980,10 +1020,11 @@ static void update_dst( DMP_MAINWORK* wk )
   sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
   personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
+  TAYA_Printf("個性乱数=%08x\n", personal_rnd);
 
   PP_Clear( wk->dst );
   {
-    u32 pow_val;
+    u32 pow_val, exp;
     u8 hp, pow, def, agi, spw, sdf;
     hp  = box_getvalue( wk, INPUTBOX_ID_HPRND );
     pow = box_getvalue( wk, INPUTBOX_ID_POWRND );
@@ -993,6 +1034,9 @@ static void update_dst( DMP_MAINWORK* wk )
     sdf = box_getvalue( wk, INPUTBOX_ID_SDFRND );
     pow_val = PTL_SETUP_POW_PACK( hp, pow, def, spw, sdf, agi );
     PP_SetupEx( wk->dst, mons_no, level, wk->pokeID, pow_val, personal_rnd );
+
+    exp = box_getvalue( wk, INPUTBOX_ID_EXP );
+    PP_Put( wk->dst, ID_PARA_exp, exp );
   }
 
   PP_Put( wk->dst, ID_PARA_speabino, tokusei );
@@ -1224,7 +1268,14 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
     break;
   }
 }
-// １つのボックス内容が更新された時、ポケモンパラメータの更新＆関連ボックスの更新を行う
+//----------------------------------------------------------------------------------
+/**
+ * １つのボックス内容が更新された時、関連するボックス＆ポケモンパラメータの更新を行う
+ *
+ * @param   wk
+ * @param   updateBoxID
+ */
+//----------------------------------------------------------------------------------
 static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
 {
   switch( updateBoxID ){
@@ -1242,6 +1293,17 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
+
+      UpdatePokeExpMinMax( wk, wk->dst );
+      {
+        u32 exp = box_getvalue( wk, INPUTBOX_ID_EXP );
+        if( (exp < wk->pokeExpMin) || (exp > wk->pokeExpMax) )
+        {
+          exp = wk->pokeExpMin;
+          PP_Put( wk->dst, ID_PARA_exp, exp );
+          box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
+        }
+      }
     }
     break;
   case INPUTBOX_ID_SEIKAKU:
@@ -1297,7 +1359,6 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_Renew( wk->dst );
       {
         u32 upbox = ( (updateBoxID-INPUTBOX_ID_HPRND) % 3 == 0 )? updateBoxID+2 : updateBoxID+1;
-        TAYA_Printf("ID[%d]を書き換えたので連動して[%d]も書き換わる\n", updateBoxID, upbox);
         box_setup( wk, upbox, wk->dst );
       }
     }
@@ -1306,9 +1367,12 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_LEVEL:
     {
       u32 monsno, exp, level;
+
+
       monsno = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
       level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
       exp = POKETOOL_GetMinExp( monsno, PTL_FORM_NONE, level );
+
       PP_Put( wk->dst, ID_PARA_exp, exp );
       PP_Renew( wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
@@ -1317,10 +1381,12 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
+
+      UpdatePokeExpMinMax( wk, wk->dst );
+      box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
     }
   }
 }
-
 
 
 
@@ -1328,7 +1394,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
 //  数値入力処理
 //==============================================================================================
 static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL_FONT* font,
-            PRINT_UTIL* util, PRINT_QUE* que, const INPUT_BOX_PARAM* boxParam, u32 value )
+            PRINT_UTIL* util, PRINT_QUE* que, const INPUT_BOX_PARAM* boxParam, u32 value, const DMP_MAINWORK* mainWork )
 {
   PRINTSYS_LSB color = box_sub_get_bgcol( boxParam->type );
 
@@ -1346,9 +1412,14 @@ static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL
   wk->color_letter = PRINTSYS_LSB_GetL( color );
 
   wk->num = value;
-  wk->keta = calc_keta( boxParam->arg );
-  wk->numMax = boxParam->arg;
-  wk->numMin = boxParam->arg2;
+  if( boxParam->arg != INPUTBOX_NUM_ARG_EX ){
+    wk->numMax = boxParam->arg;
+    wk->numMin = boxParam->arg2;
+  }else{
+    wk->numMax = mainWork->pokeExpMax;
+    wk->numMin = mainWork->pokeExpMin;
+  }
+  wk->keta = calc_keta( wk->numMax );
   wk->cur_keta = 0;
 
   numinput_sub_setary( wk, value );
@@ -1381,27 +1452,53 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
           break;
         }
       }
-      if( key & PAD_KEY_UP ){
-        if( wk->num_ary[wk->cur_keta] < 9 ){
-          wk->num_ary[wk->cur_keta]++;
-        }else{
-          wk->num_ary[wk->cur_keta] = 0;
+      if( key & PAD_KEY_UP )
+      {
+        int k = wk->cur_keta;
+        while( k < (wk->keta) ){
+          wk->num_ary[k]++;
+          if( wk->num_ary[k] <= 9 ){ break; }
+          wk->num_ary[k] = 0;
+          ++k;
+        }
+        // 桁あふれしたら最大値に
+        if( k == (wk->keta) ){
+          TAYA_Printf("↑　ケタあふれ\n");
+          numinput_sub_setary( wk, wk->numMax );
         }
         break;
       }
-      if( key & PAD_KEY_DOWN ){
-        if( wk->num_ary[wk->cur_keta] != 0 ){
-          wk->num_ary[wk->cur_keta]--;
-        }else{
-          wk->num_ary[wk->cur_keta] = 9;
+      if( key & PAD_KEY_DOWN )
+      {
+        int k = wk->cur_keta;
+        while( k < (wk->keta) )
+        {
+          wk->num_ary[k]--;
+          if( wk->num_ary[k] >= 0 ){ break; }
+          wk->num_ary[k] = 0;
+          ++k;
+        }
+        // 桁あふれしたら最小値に
+        if( k == (wk->keta) ){
+          TAYA_Printf("↓　ケタあふれ\n");
+          numinput_sub_setary( wk, wk->numMin );
         }
         break;
       }
+      if( key & PAD_BUTTON_L ){
+        numinput_sub_setary( wk, wk->numMax );
+        break;
+      }
+      if( key & PAD_BUTTON_R ){
+        numinput_sub_setary( wk, wk->numMin );
+        break;
+      }
+
       update = FALSE;
     }while(0);
 
     if( update ){
-      u32 num = numinput_sub_calcnum( wk );
+      int num = numinput_sub_calcnum( wk );
       if( num > wk->numMax ){
         num = wk->numMax;
         numinput_sub_setary( wk, num );
@@ -1447,6 +1544,8 @@ static void numinput_sub_setary( NUMINPUT_WORK* wk, u32 value )
 {
   u32 k = 1000000000;
   u32 i = NUMINPUT_KETA_MAX-1;
+
+  GFL_STD_MemClear( wk->num_ary, sizeof(wk->num_ary) );
   while(i){
     wk->num_ary[i] = value / k;
     value -= (wk->num_ary[i] * k);
@@ -1459,7 +1558,7 @@ static u32 numinput_sub_calcnum( NUMINPUT_WORK* wk )
 {
   u32 i, k, num;
   num = 0;
-  for(i=0, k=1; i<wk->keta; ++i, k*=10)
+  for(i=0, k=1; i<(wk->keta+1); ++i, k*=10)
   {
     num += ( wk->num_ary[i] * k );
   }
