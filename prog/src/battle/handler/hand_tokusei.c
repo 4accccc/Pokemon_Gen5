@@ -2194,7 +2194,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_AirLock( u16 pri, u16 tokID, u8 pokeID )
  *  とくせい「アイスボディ」
  */
 //------------------------------------------------------------------------------
-// ターンチェック開始ハンドラ
+// 天候ダメージ計算ハンドラ
 static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   common_weather_recover( flowWk, pokeID, BTL_WEATHER_SNOW );
@@ -2202,7 +2202,7 @@ static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_IcoBody( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN, handler_IceBody },   // ターンチェック開始ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_IceBody },   // ターンチェック開始ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2212,7 +2212,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_IcoBody( u16 pri, u16 tokID, u8 pokeID )
  *  とくせい「あめうけざら」
  */
 //------------------------------------------------------------------------------
-// ターンチェック開始ハンドラ
+// 天候ダメージ計算ハンドラ
 static void handler_AmeukeZara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   common_weather_recover( flowWk, pokeID, BTL_WEATHER_RAIN );
@@ -2220,7 +2220,7 @@ static void handler_AmeukeZara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_AmeukeZara( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN, handler_AmeukeZara },  // 天候ダメージ計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_AmeukeZara },  // 天候ダメージ計算ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2234,10 +2234,12 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-    param->header.tokwin_flag = TRUE;
-    param->pokeID = pokeID;
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
+    {
+      BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = pokeID;
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
+    }
   }
 }
 
@@ -2249,14 +2251,20 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 // 天候ダメージ計算ハンドラ
 static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // 晴れの時、MAXHPの 1/8 減る
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // 晴れの時、MAXHPの 1/8 減る
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == BTL_WEATHER_SHINE )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       int damage = BTL_CALC_QuotMaxHP( bpp, 8 );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, damage );
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      {
+        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+        param->pokeID = pokeID;
+        param->damage = damage;
+      }
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
   }
 }
@@ -2282,8 +2290,8 @@ static void handler_SunPower_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_SunPower( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_WEATHER_DAMAGE, handler_SunPower_Weather },// 天候ダメージ計算ハンドラ
-    { BTL_EVENT_ATTACKER_POWER,  handler_SunPower_AtkPower },   // 攻撃力決定ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_SunPower_Weather },  // 天候ダメージ計算ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,  handler_SunPower_AtkPower },  // 攻撃力決定ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -3361,15 +3369,30 @@ static void handler_Kansouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    int damage = BTL_CALC_QuotMaxHP( bpp, 8 );
     BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
 
     // 晴れの時、MAXHPの 1/8 減る
-    if( weather == BTL_WEATHER_SHINE ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, damage );
+    if( weather == BTL_WEATHER_SHINE )
+    {
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      {
+        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+        param->pokeID = pokeID;
+        param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+      }
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+
     // 雨の時、MAXHPの 1/8 回復
-    }else if( weather == BTL_WEATHER_RAIN ) {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, -damage );
+    }
+    else if( weather == BTL_WEATHER_RAIN )
+    {
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      {
+        BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+        param->pokeID = pokeID;
+        param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
+      }
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
   }
 }
@@ -3387,7 +3410,7 @@ static void handler_Kansouhada_DmgRecoverFix( BTL_EVENT_FACTOR* myHandle, BTL_SV
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kansouhada( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_WEATHER_DAMAGE,    handler_Kansouhada_Weather },      // 天候ダメージ計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION,    handler_Kansouhada_Weather },      // 天候ダメージ計算ハンドラ
     { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Kansouhada_DmgRecover },   // ダメージワザ回復チェックハンドラ
     { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Kansouhada_DmgRecoverFix },
     { BTL_EVENT_NULL, NULL },
@@ -4782,28 +4805,19 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Murakke( u16 pri, u16 tokID, u8 pokeID )
 // 天候ダメージ計算ハンドラ
 static void handler_Boujin_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, 0 );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE) > 0)
+  ){
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_FLAG, TRUE) )
+    {
+//      BTL_EVENT
+    }
   }
-}
-// 天候ダメージリアクションハンドラ
-static void handler_Boujin_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-  {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Boujin );
-    HANDEX_STR_AddArg( &param->str, pokeID );
-  }
-  BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Boujin( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_WEATHER_DAMAGE,    handler_Boujin_CalcDamage   }, // 天候ダメージ計算ハンドラ
-    { BTL_EVENT_WEATHER_TOK_REACTION,   handler_Boujin_Reaction     }, // 天候ダメージ処理後のリアクション
+    { BTL_EVENT_WEATHER_REACTION,    handler_Boujin_CalcDamage   }, // 天候ダメージ計算ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

@@ -2822,6 +2822,9 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
         (*seq)++;
       }
+      else{
+        return TRUE;
+      }
     }
     break;
   case 4:
