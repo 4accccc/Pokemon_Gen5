@@ -371,8 +371,8 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
   GF_ASSERT(FailedBit);  //if文でいっぱいになるので呼び出し側で必ずセットする事
 
   //全体数
-  cnt = PokeParty_GetMemberTopIdxBattleEnable(party);
-  
+  cnt = PokeParty_GetPokeCountBattleEnable(party);
+
   ans = Regulation_GetParam(pReg, REGULATION_NUM_LO);
   if(cnt < ans){
     *FailedBit |= POKEFAILEDBIT_NUM;
