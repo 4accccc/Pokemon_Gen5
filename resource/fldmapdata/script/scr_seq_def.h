@@ -3997,6 +3997,7 @@
  		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
  		POKECOUNT_MODE_ONLY_EGG      (3)  // タマゴの数(駄目タマゴを除く) 
  		POKECOUNT_MODE_ONLY_DAME_EGG (4)  // 駄目タマゴの数
+    POKECOUNT_MODE_EMPTY         (5)  // 空いている数
  	* @retval u16 手持ちポケモンの数
  */
 //--------------------------------------------------------------

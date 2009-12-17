@@ -472,6 +472,17 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
   case POKECOUNT_MODE_ONLY_DAME_EGG:
     num = PokeParty_GetPokeCountOnlyDameEgg( party );
     break;
+  case POKECOUNT_MODE_EMPTY:
+    {
+      int max = PokeParty_GetPokeCountMax( party );
+      int now = PokeParty_GetPokeCount( party );
+      if ( max<now )
+      {
+        GF_ASSERT_MSG(0,"max over max=%d now=%d",max, now);
+        num = 0;
+      }
+      else num = max - now;
+    }
   default:
     num = 0;
     break;
@@ -563,6 +574,17 @@ extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
     num  = BOXDAT_GetPokeExistCountTotal( box );
     num -= BOXDAT_GetPokeExistCount2Total( box );
     break;
+  case POKECOUNT_MODE_EMPTY:   //‹ó‚«”
+    {
+      int max = BOX_POKESET_MAX;
+      int now = BOXDAT_GetPokeExistCountTotal( box );
+      if ( max<now )
+      {
+        GF_ASSERT_MSG(0,"max over max=%d now=%d",max, now);
+        num = 0;
+      }
+      else num = max - now;
+    }
   default:
     num = 0;
     break;
