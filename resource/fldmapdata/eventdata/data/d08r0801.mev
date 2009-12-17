@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/15 16:54:03
+#save date:2009/12/17 17:13:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0801.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ FV_D08R0801_BOSS_01
 #Event Script Name
 SCRID_D08R0801_BOSS_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -40
+-120 0 -8
 #event number: 1
 #type
 1
@@ -57,7 +57,7 @@ FV_D08R0801_EVENT_01
 #Event Script Name
 SCRID_D08R0801_SAGE2_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -8
+-152 0 -24
 #event number: 2
 #type
 1
@@ -88,7 +88,7 @@ FV_D08R0801_EVENT_01
 #Event Script Name
 SCRID_D08R0801_HAKAIM_01
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -102,7 +102,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -40
+-120 0 -56
 #event number: 3
 #type
 1
@@ -119,7 +119,7 @@ FV_D08R0801_EVENT_01
 #Event Script Name
 SCRID_D08R0801_HAKAIW_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 -24
+-136 0 -40
 #event number: 4
 #type
 1
@@ -150,7 +150,7 @@ FV_D08R0801_EVENT_01
 #Event Script Name
 SCRID_D08R0801_HAKAIM_02
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -8
+-168 0 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

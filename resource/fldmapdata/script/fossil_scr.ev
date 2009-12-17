@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_kaseki_scr.h"
+  .include  "c02gym0101.h
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -181,8 +182,17 @@ recover_fossil_core:
   //アイテム減算
   _SUB_ITEM( FOSSIL_ITEM_NO, 1, SCWK_ANSWER )
   //@todo アニメが入る
-
-  
+	
+	//受付が機械を触りに行く
+	_OBJ_ANIME( C02GYM0101_FOSSIL,anm_fossil_go)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 90 )
+	
+	//受付が戻ってくる
+	_OBJ_ANIME( C02GYM0101_FOSSIL,anm_fossil_back)
+	_OBJ_ANIME_WAIT()	
+ 
   //道具名からポケモンを判別
   _CALL set_monsno_to_item    //input:FOSSIL_ITEM_NO  output:RECOVER_POKE
 
@@ -341,3 +351,19 @@ set_monsno_to_item:
     //ここにはこない
   ENDIF
 _RET
+
+//--------------------------------------------------------------------
+//化石復元受付:機械を触りに行く                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_fossil_go
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+//----------------------------
+
+//--------------------------------------------------------------------
+//化石復元受付:元の位置に戻ってくる                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_fossil_back
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+//----------------------------

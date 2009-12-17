@@ -119,6 +119,7 @@ init_flags:
 	_FLAG_SET( FV_D08_CHAMPION_01 )
 	_FLAG_SET( FV_D08_LEADER7_01 )
 	_FLAG_SET( FV_D08R0901_EVENT_01 )
+	_FLAG_SET( FV_D08R0101_EVENT_01 )
 	
 	//C02のサポート、ライバル、チャンピオン、アロエ、博士（父）、博士（娘）
 	//D04R601のイベント終了まで非表示
