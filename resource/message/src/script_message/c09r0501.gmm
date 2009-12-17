@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T16:32:15"/>
+	<create user="matsumiya" host="W00207" date="2009-12-17T17:21:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,14 +298,10 @@
 ・WHITEver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『あ～あ！[BE:01:ページ切り替え（クリア）]
-ボクの　シンが　どれだけ　つよいのか
-ためすつもり　だったのに[BE:00:ページ切り替え（行送り）]
-その　まえに　おわっちゃった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『あ～あ！[BE:01:ページ切り替え（クリア）]
-ボクの　シンが　どれだけ　強いのか
-試すつもり　だったのに[BE:00:ページ切り替え（行送り）]
-その前に　終わっちゃった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">Ｎ『シンが　どれほど　つよいか
+ためす……　そのまえに　おわるとは！▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『シンが　どれほど　強いか
+試す……　その前に　終わるとは！▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -313,14 +309,10 @@
 ・BLACKver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『あ～あ！[BE:01:ページ切り替え（クリア）]
-ボクの　ムが　どれだけ　つよいのか
-ためすつもり　だったのに[BE:00:ページ切り替え（行送り）]
-その　まえに　おわっちゃった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『あ～あ！[BE:01:ページ切り替え（クリア）]
-ボクの　ムが　どれだけ　強いのか
-試すつもり　だったのに[BE:00:ページ切り替え（行送り）]
-その前に　終わっちゃった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">Ｎ『ムが　どれほど　つよいか
+ためす……　そのまえに　おわるとは！▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ムが　どれほど　強いか
+試す……　その前に　終わるとは！▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -329,36 +321,38 @@
 　boss_03
 （イメージとしては、横並び）</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">だいたい　チャンピオン　だからって
-ボクに　かてるわけ　ないけど[BE:01:ページ切り替え（クリア）]
-キミの　ポケモンが　いっていたよ[BE:01:ページ切り替え（クリア）]
-むかしから　いっしょだった
-ポケモンが　しんでから[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">そもそも　チャンピオンと　いえど
+ボクに　かてるわけ　ない▼
+あなたの　ポケモンが　いっていた▼
+むかしから　いっしょ　だった
+ポケモンが　しんでから▼
 いちども　ほんきで
-たたかって　いないんでしょ？[BE:01:ページ切り替え（クリア）]
+たたかったことが　なかったと▼
 リハビリきぶんで
-ボクに　いどまれてもね……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">だいたい　チャンピオン　だからって
-ボクに　勝てるわけ　ないけど[BE:01:ページ切り替え（クリア）]
-キミの　ポケモンが　いっていたよ[BE:01:ページ切り替え（クリア）]
+ボクに　いどまれてもね……▼</language>
+		<language name="JPN_KANJI" width="256">そもそも　チャンピオンと　いえど
+ボクに　勝てるわけ　ない▼
+あなたの　ポケモンが　いっていた▼
 昔から　一緒だった
-ポケモンが　死んでから[BE:01:ページ切り替え（クリア）]
+ポケモンが　死んでから▼
 一度も　本気で
-戦って　いないんでしょ？[BE:01:ページ切り替え（クリア）]
+戦ったことが　なかったと▼
 リハビリ気分で
-ボクに　挑まれてもね……[BE:01:ページ切り替え（クリア）]</language>
+ボクに　挑まれてもね……▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてchampion_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">それにさ　ポケモンが　しんだのも
-チャンピオンに　ムリ　させられたのが[BE:00:ページ切り替え（行送り）]
-りゆう　なんじゃ　ないの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それにさ　ポケモンが　死んだのも
-チャンピオンに　ムリ　させられたのが[BE:00:ページ切り替え（行送り）]
-理由なんじゃ　ないの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">それに……▼
+ポケモンが　しんだのも
+あなたに　ムリさせられたのが▽
+りゆうでは　ないのか？▼</language>
+		<language name="JPN_KANJI" width="256">それに……▼
+ポケモンが　死んだのも
+あなたに　ムリさせられたのが▽
+理由では　ないのか？▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_01">
@@ -376,18 +370,16 @@
 ・メッセージ表示後、主人公をみて！マーク表示
 ・続けてboss_05</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『いまの　チャンピオンは　ボク！[BE:01:ページ切り替え（クリア）]
-まけた　にんげんが
-なにを　いっても　ムダなんだよ[BE:01:ページ切り替え（クリア）]
-それに　あらためて　ちかうよ[BE:01:ページ切り替え（クリア）]
-おろかな　にんげん　から
-すぐれた　ポケモンを　すくわないと！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『いまの　チャンピオンは　ボク！[BE:01:ページ切り替え（クリア）]
-負けた　人間が
-なにを　いっても　ムダなんだよ[BE:01:ページ切り替え（クリア）]
-それに　あらためて　誓うよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『まけた　にんげんが
+なにを　いっても　ムダだよ▼
+それに　あらためて　ちかう▼
+おろかな　にんげんから
+すぐれた　ポケモンを　すくうと！▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『負けた　人間が
+なにを　いっても　ムダだよ▼
+それに　あらためて　誓う▼
 愚かな　人間から
-優れた　ポケモンを　救わないと！[BE:01:ページ切り替え（クリア）]</language>
+優れた　ポケモンを　救うと！▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -397,41 +389,41 @@
 　BLACKならboss_06b</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">……そうか
-まだ　キミが　いたんだよね[BE:01:ページ切り替え（クリア）]</language>
+まだ　キミが　いたか▼</language>
 		<language name="JPN_KANJI" width="256">……そうか
-まだ　キミが　いたんだよね[BE:01:ページ切り替え（クリア）]</language>
+まだ　キミが　いたか▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">……ふうん
-キミも　ストーンを　てにいれたんだ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">……キミも
+ストーンを　てにいれたんだ▼
 ボクの　シンに
-はんのう　しているね[BE:00:ページ切り替え（行送り）]
-あばれたいのかな？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……ふうん
-キミも　ストーンを　手に入れたんだ[BE:01:ページ切り替え（クリア）]
+はんのう　しているね▽
+どちらが　うえか　きめるつもりか▼</language>
+		<language name="JPN_KANJI" width="256">……キミも
+ストーンを　手に入れたんだ▼
 ボクの　シンに
-反応しているね[BE:00:ページ切り替え（行送り）]
-暴れたいのかな？[BE:01:ページ切り替え（クリア）]</language>
+反応しているね▽
+雌雄を　決するつもりか▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">……ふうん
-キミも　ストーンを　てにいれたんだ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">……キミも
+ストーンを　てにいれたんだ▼
 ボクの　ムに
-はんのう　しているね[BE:00:ページ切り替え（行送り）]
-あばれたいのかな？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……ふうん
-キミも　ストーンを　手に入れたんだ[BE:01:ページ切り替え（クリア）]
+はんのう　しているね▽
+どちらが　うえか　きめるつもりか▼</language>
+		<language name="JPN_KANJI" width="256">……キミも
+ストーンを　手に入れたんだ▼
 ボクの　ムに
-反応しているね[BE:00:ページ切り替え（行送り）]
-暴れたいのかな？[BE:01:ページ切り替え（クリア）]</language>
+反応しているね▽
+雌雄を　決するつもりか▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -441,12 +433,12 @@
 ・その後、Nの出現デモ開始
 ・終了するとboss_08</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">……だけど
+		<language name="JPN" width="256">……だが
 ドラゴンたちに　ふさわしいのは[BE:00:ページ切り替え（行送り）]
-こんな　ばしょ　じゃないッ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……だけど
+こんな　ばしょ　ではない[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……だが
 ドラゴンたちに　ふさわしいのは[BE:00:ページ切り替え（行送り）]
-こんな　場所　じゃないッ！！[BE:01:ページ切り替え（クリア）]</language>
+こんな　場所　ではない[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_08" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -459,12 +451,12 @@
 ボクの　しろ[BE:01:ページ切り替え（クリア）]
 おうの　ことば……[BE:01:ページ切り替え（クリア）]
 あの　たかみから
-しもじもに　とどろかせないとね[BE:01:ページ切り替え（クリア）]</language>
+しもじもに　とどろかせる[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『あれが
 ボクの　城[BE:01:ページ切り替え（クリア）]
 王の　言葉……[BE:01:ページ切り替え（クリア）]
 あの　高みから
-下々に　とどろかせないとね[BE:01:ページ切り替え（クリア）]</language>
+下々に　とどろかせる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_09" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -474,14 +466,14 @@
 　入れ替わりでライバルが飛び込んでくる！
 ・続けてblack_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">キミ　おしろに　おいでよ！[BE:01:ページ切り替え（クリア）]
-ボクの　ドラゴンで
-あいてを　してあげる[BE:00:ページ切り替え（行送り）]
-しかも　ほんき　でね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">キミ　お城に　おいでよ！[BE:01:ページ切り替え（クリア）]
-ボクの　ドラゴンで
-相手を　してあげる[BE:00:ページ切り替え（行送り）]
-しかも　本気　でね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">キミも　しろに　きたまえ▼
+そこで　すべてを　きめよう▼
+われわれと　ポケモンは
+かわるべきか　このままでいるか……▼</language>
+		<language name="JPN_KANJI" width="256">キミも　城に　来たまえ▼
+そこで　全てを　決めよう▼
+我々と　ポケモンは
+変わるべきか　このままでいるか……▼</language>
 	</row>
 
 	<row id="msg_c09r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
