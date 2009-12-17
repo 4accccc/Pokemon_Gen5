@@ -90,8 +90,8 @@ do-build:	subdir bindata
 
 -include $(DEP_LIST_OUTDOOR)
 -include $(DEP_LIST_INDOOR)
--include $(TEXSET_DEP_OUTDOOR)
--include $(TEXSET_DEP_INDOOR)
+#-include $(TEXSET_DEP_OUTDOOR)
+#-include $(TEXSET_DEP_INDOOR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.nsbmd .nsbtx .imd
@@ -257,13 +257,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@-rm -f $(DEP_OUTDOOR) $(DEP_INDOOR)
 	@-rm -f $(WKDIR)/*.txt *.txt
 	@-rm -f $(INDEXDIR)/*
-	@-rm -f $(TEXSETDIR)/*
+	@-rm -f $(TEXSETDIR)/*.nsbtx $(TEXSETDIR)/*.imd
+	@-rm -f $(TEXSET_TMPDIR)/*
 	@-rm -f $(WKDIR)/*.bin
 	@-rm -f $(NARC_BIN_DATA)
 endif
 
 texture_clean:
-	@-rm -f $(TEXSETDIR)/*.*
+	@-rm -f $(TEXSETDIR)/*.nsbtx $(TEXSETDIR)/*.imd
 	@-rm -f $(TEXSET_TMPDIR)/*
 	@-rm -f $(TEXSET_DEP_OUTDOOR) $(TEXSET_ARC_OUTDOOR)
 	@-rm -f $(TEXSET_DEP_INDOOR) $(TEXSET_ARC_INDOOR)
