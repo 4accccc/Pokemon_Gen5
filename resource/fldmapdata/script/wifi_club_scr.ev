@@ -230,6 +230,10 @@ sub_club_counter_connect:
   //エレベータアニメ再生
 
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
+  //復帰時の出現先をここにする
+  _SET_SP_LOCATION_HERE()
+  //↑で設定した特殊接続先からゲームを開始するリクエスト
+  _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
 
   //クラブイベント呼び出し
   //_MAP_FADE_BLACK_OUT( )

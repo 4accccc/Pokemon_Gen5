@@ -39,6 +39,7 @@ INIT_EVENT_END
 /*            特殊スクリプト：マップ構築タイミング（初回）  　*/
 /**************************************************************/
 INIT_EVENT_START  ev_init_pokecen
+  _CALL sub_init_pokecen
 INIT_EVENT_END
 
 
@@ -358,7 +359,7 @@ EVENT_START ev_union
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL sub_pokecen_elevator_in
-    //復帰時の出現先＝＝ここにする
+    //復帰時の出現先をここにする
     _SET_SP_LOCATION_HERE()
     //↑で設定した特殊接続先からゲームを開始するリクエスト
     _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
@@ -390,6 +391,7 @@ sub_pokecen_elevator_in:
   DEFINE_LOCAL  LWK_BM_DOOR_ID
   DEFINE_LOCAL  LWK_BM_FLOOR_ID
 
+  $WK_SYS_SCENE_COMM = 1
   _PLAYER_POS_GET( BASEX, BASEZ )
   $BASEZ -= 3
   _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_PCEV_DOOR, BASEX, BASEZ )
@@ -460,8 +462,24 @@ sub_pokecen_elevator_out:
 {
   DEFINE_LOCAL  BASEX
   DEFINE_LOCAL  BASEZ
+  DEFINE_LOCAL  LWK_WOMANID
   DEFINE_LOCAL  LWK_BM_FLOOR_ID
   DEFINE_LOCAL  LWK_BM_DOOR_ID
+
+  $WK_SYS_SCENE_COMM = 0
+
+  //自機を下向きにする
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_down )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_POS_GET( BASEX, BASEZ )
+  $BASEZ += 3  //受付のみなさんは基本位置がエレベーターの３歩下
+  _GET_OBJID( LWK_WOMANID, SCWK_ANSWER, BASEX, 3, BASEZ )
+  IF $SCWK_ANSWER == TRUE THEN
+    $BASEX -= 1
+    $BASEZ -= 1
+    _OBJ_POS_CHANGE( LWK_WOMANID, BASEX, 3, BASEZ, DIR_RIGHT )
+  ENDIF
 
   _PLAYER_POS_GET( BASEX, BASEZ )
   _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
@@ -470,7 +488,7 @@ sub_pokecen_elevator_out:
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
   _PLAYER_UPDOWN_EFFECT( 1, 60, 64 )
 
-	_MAP_FADE_BLACK_IN( )
+	_MAP_FADE_BLACK_IN_FORCE( )
 
   _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
 	_MAP_FADE_END_CHECK()
@@ -490,7 +508,7 @@ sub_pokecen_elevator_out:
   _OBJ_ANIME_WAIT()
 
 //受付お姉さんもとの位置に戻る
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_pc_woman_move_default_pos )
+  _OBJ_ANIME( LWK_WOMANID, anm_pc_woman_move_default_pos )
   _OBJ_ANIME_WAIT()
 
 //エレベータードア閉まる
@@ -503,6 +521,10 @@ sub_pokecen_elevator_out:
   _RET
 }
 
+_ANIME_LABEL    anm_player_turn_down
+  _ANIME_DATA   AC_DIR_D, 1
+  _ANIME_DATA   ACMD_END,0
+
 _ANIME_LABEL    anm_pc_woman_move_default_pos
   _ANIME_DATA   AC_WALK_R_16F, 1
   _ANIME_DATA   AC_WALK_D_16F, 1
@@ -511,4 +533,25 @@ _ANIME_LABEL    anm_pc_woman_move_default_pos
 _ANIME_LABEL    anm_player_return_strait
   _ANIME_DATA   AC_WALK_D_16F, 4
   _ANIME_DATA   ACMD_END,0
+
+/**************************************************************/
+/**************************************************************/
+sub_init_pokecen:
+{
+  DEFINE_LOCAL GX
+  DEFINE_LOCAL GY
+  DEFINE_LOCAL GZ
+
+  IF $WK_SYS_SCENE_COMM == 1 THEN
+// 自機を見えなくする
+//  エレベーターアニメ生成、下げて止めておく
+//  お姉さんOBJのOBJIDをゲットする
+//  お姉さんOBJを脇に移動しておく
+  _PLAYER_POS_GET( GX, GZ )
+  $GY = 3   //とれないので代入
+  $GZ += 3  //みなさん基本位置はエレベーターの３歩下
+  _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, GX, GY, GZ, DIR_RIGHT )
+  ENDIF
+}
+_RET
 
