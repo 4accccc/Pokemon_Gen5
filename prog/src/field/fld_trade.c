@@ -579,8 +579,16 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
     sp2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
     sp3 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi3 );
     POKE_PERSONAL_CloseHandle( ppd );
-    OBATA_Printf( "original speabi = %d, %d, %d\n", sp1, sp2, sp3 );
-    GF_ASSERT( ((speabi==sp1)||(speabi==sp2)||(speabi==sp3)) && "ありえない特性です。" );
+    // 不正な特性を検出
+    if( (speabi!=sp1)||(speabi!=sp2)||(speabi!=sp3) )
+    {
+      OBATA_Printf( "======================================\n" );
+      OBATA_Printf( "不正な特性を検出しました。\n" );
+      OBATA_Printf( "正しい特性は %d or %d or %d です。\n", sp1, sp2, sp3 );
+      OBATA_Printf( "交換ポケモンの特性を %d に設定します。\n", sp1 );
+      OBATA_Printf( "======================================\n" );
+      PP_Put( pp, ID_PARA_speabino, sp1 );
+    }
   }
 } 
 
