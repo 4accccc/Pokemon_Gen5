@@ -2884,6 +2884,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     else
     {
       p_wk->select++;
+      PMSND_PlaySE( CONFIG_SE_MOVE );
       p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
     }
     break;
@@ -2900,6 +2901,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     else if( p_wk->select == CONFIG_LIST_CANCEL )
     {
       p_wk->select--;
+      PMSND_PlaySE( CONFIG_SE_MOVE );
       p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
     }
     break;
@@ -3523,6 +3525,14 @@ static void CONFIGPARAM_Init( CONFIG_PARAM *p_wk, CONFIG *p_savedata )
   p_wk->param[CONFIG_LIST_STR]      = CONFIG_GetMojiMode(p_savedata);
   p_wk->param[CONFIG_LIST_WIRELESS] = CONFIG_GetNetworkSearchMode(p_savedata);
   p_wk->param[CONFIG_LIST_REPORT]   = CONFIG_GetWirelessSaveMode(p_savedata);
+
+  { 
+    int i;
+    for( i  = 0; i < CONFIG_LIST_MAX; i++ )
+    { 
+      OS_TFPrintf( 3, "config[%d] %d\n", i, p_wk->param[i] );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3550,8 +3560,17 @@ static void CONFIGPARAM_Save( const CONFIG_PARAM *cp_wk )
   CONFIG_SetBattleRule( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_BTLRULE] );
   CONFIG_SetSoundMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_SND] );
   CONFIG_SetMojiMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_STR] );
-  CONFIG_SetWirelessSaveMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_WIRELESS] );
-  CONFIG_SetNetworkSearchMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_REPORT] );
+  CONFIG_SetNetworkSearchMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_WIRELESS] );
+  CONFIG_SetWirelessSaveMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_REPORT] );
+
+ { 
+    int i;
+    OS_TFPrintf( 3, "セーブ\n" );
+    for( i  = 0; i < CONFIG_LIST_MAX; i++ )
+    { 
+      OS_TFPrintf( 3, "config[%d] %d\n", i, cp_wk->param[i] );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3570,6 +3589,14 @@ static void CONFIGPARAM_SetItem( CONFIG_PARAM *p_wk, CONFIG_ITEM item )
     //漢字、メッセージスピードのコンフィグ内変更により設定
     p_wk->change  = item;
     CONFIGPARAM_Save( p_wk );
+  }
+ { 
+    int i;
+    OS_TFPrintf( 3, "SetItem\n" );
+    for( i  = 0; i < CONFIG_LIST_MAX; i++ )
+    { 
+      OS_TFPrintf( 3, "config[%d] %d\n", i, p_wk->param[i] );
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -3617,6 +3644,14 @@ static void CONFIGPARAM_AddItem( CONFIG_PARAM *p_wk, CONFIG_LIST list, s8 dir )
     //漢字、メッセージスピードのコンフィグ内変更により設定
     p_wk->change  = next;
     CONFIGPARAM_Save( p_wk );
+  }
+ { 
+    int i;
+    OS_TFPrintf( 3, "AddItem\n" );
+    for( i  = 0; i < CONFIG_LIST_MAX; i++ )
+    { 
+      OS_TFPrintf( 3, "config[%d] %d\n", i, p_wk->param[i] );
+    }
   }
 }
 //----------------------------------------------------------------------------
