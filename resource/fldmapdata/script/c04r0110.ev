@@ -286,13 +286,13 @@ ev_train_rooms_common_sbtl_call:
   _CALL ev_train_anime_battle_start
   
   //ÉoÉgÉãåƒÇ—èoÇµ
-  /*
   _BSUBWAY_TOOL( BSWAY_SUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  */
+  /*
   _BLACK_OUT()
   _BLACK_IN()
   _LDVAL( SCWK_ANSWER, 1 )
+  */
   
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _RET

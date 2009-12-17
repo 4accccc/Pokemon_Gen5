@@ -32,6 +32,12 @@
 //======================================================================
 //	define
 //======================================================================
+#ifdef DEBUG_ONLY_FOR_yoshida
+#define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_GIZA)
+#else
+#define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_NORMAL)
+#endif
+
 #define FLDMSGBG_BGFRAME ( FLDBG_MFRM_MSG )	///<使用BGフレーム
 
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
@@ -2255,6 +2261,8 @@ static void fldTalkMsgWin_Add(
     FLDMSGBG *fmb, FLDTALKMSGWIN *tmsg,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
 {
+  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE_NORMAL;
+  
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
@@ -2268,15 +2276,15 @@ static void fldTalkMsgWin_Add(
   switch( idx ){
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15 );
+        FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15, type );
     break;
   case FLDTALKMSGWIN_IDX_LOWER:
     TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15 );
+        FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15, type );
     break;
   default:
     TALKMSGWIN_CreateFixWindowAuto( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15 );
+        FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15, type );
   }
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
@@ -2459,6 +2467,8 @@ static void fldPlainMsgWin_Add(
     FLDMSGBG *fmb, FLDPLAINMSGWIN *plnwin,
     BOOL up_down, STRBUF *strBuf )
 {
+  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
+  
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
@@ -2472,11 +2482,11 @@ static void fldPlainMsgWin_Add(
   if( up_down == 0 ){
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
-        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31) );
+        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31), type );
   }else{
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
-        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31) );
+        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31), type );
   }
   
   TALKMSGWIN_OpenWindow( plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
@@ -2641,6 +2651,8 @@ static void fldSubMsgWin_Add(
     FLDMSGBG *fmb, FLDSUBMSGWIN *subwin,
     STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id )
 {
+  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
+
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
@@ -2654,7 +2666,7 @@ static void fldSubMsgWin_Add(
   
   TALKMSGWIN_CreateWindowAlone(
     subwin->talkMsgWinSys, subwin->talkMsgWinIdx,
-    strBuf, x, y, sx, sy, GX_RGB(31,31,31) );
+    strBuf, x, y, sx, sy, GX_RGB(31,31,31), type );
   
   TALKMSGWIN_OpenWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
 }
@@ -3232,6 +3244,8 @@ static BOOL bgwin_ScrollBmp(
 //======================================================================
 //  特殊ウィンドウ 
 //======================================================================
+#define SPWIN_CHROFFS_SPACE (9)
+
 //--------------------------------------------------------------
 /**
  * 特殊ウィンドウ　グラフィック初期化
@@ -3256,10 +3270,11 @@ static void spwin_InitPalette(
  * @retval
  */
 //--------------------------------------------------------------
-static GFL_BMP_DATA * spwin_CreateBmpBG( FLDSPWIN_TYPE type, HEAPID heapID )
+static void spwin_CreateBmpBG(
+    GFL_BMP_DATA *bmp_bg,
+    FLDSPWIN_TYPE type, HEAPID heapID, u32 charOffs )
 {
   u8 *buf;
-  GFL_BMP_DATA *bmp_bg;
   void *pData;
 	NNSG2dCharacterData *pCharData;
   
@@ -3268,17 +3283,19 @@ static GFL_BMP_DATA * spwin_CreateBmpBG( FLDSPWIN_TYPE type, HEAPID heapID )
     type = FLDSPWIN_TYPE_LETTER;
   }
   
-  bmp_bg = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, heapID );
+  type = FLDSPWIN_TYPE_LETTER; //現状、絵が一種類しかないので
+  
   buf = GFL_BMP_GetCharacterAdrs( bmp_bg );
   
   pData = GFL_ARC_UTIL_Load(
       ARCID_FLDMAP_WINFRAME, 
       NARC_winframe_spwin_NCGR, 0, heapID );
   
+  charOffs *= 0x20;
+
 	NNS_G2dGetUnpackedBGCharacterData( pData, &pCharData );
-  MI_CpuCopy( (u8*)(pCharData->pRawData)+(0x20*type), buf, 0x20 );
+  MI_CpuCopy( (u8*)(pCharData->pRawData)+(0x20*type)+charOffs, buf, 0x20 );
   GFL_HEAP_FreeMemory( pData );
-  return( bmp_bg );
 }
 
 //--------------------------------------------------------------
@@ -3289,21 +3306,82 @@ static GFL_BMP_DATA * spwin_CreateBmpBG( FLDSPWIN_TYPE type, HEAPID heapID )
  */
 //--------------------------------------------------------------
 static void spwin_WriteBmpBG(
-    GFL_BMP_DATA *bmp, const GFL_BMP_DATA *bmp_bg )
+    GFL_BMP_DATA *bmp, FLDSPWIN_TYPE type, HEAPID heapID )
 {
   u16 x,y;
+  GFL_BMP_DATA *bmp_bg;
   u16 size_x = GFL_BMP_GetSizeX( bmp ) >> 3;
   u16 size_y = GFL_BMP_GetSizeY( bmp ) >> 3;
-  
+
   KAGAYA_Printf( "size x = %d, y = %d\n", size_x, size_y );
+  bmp_bg = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, heapID );
+  
+  spwin_CreateBmpBG( bmp_bg, type, heapID, SPWIN_CHROFFS_SPACE );
   
   for( y = 0; y < size_y; y++ ){
     for( x = 0; x < size_x; x++ ){
-      KAGAYA_Printf( "write x = %d, y = %d\n", x, y );
       GFL_BMP_Print( bmp_bg, bmp,
           0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
     }
   }
+  
+  //top
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 1 );
+  
+  for( x = 0, y = 0; x < size_x; x++ ){
+    GFL_BMP_Print( bmp_bg, bmp,
+      0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  }
+
+  //bottom
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 17 );
+  
+  for( x = 0, y = size_y - 1; x < size_x; x++ ){
+    GFL_BMP_Print( bmp_bg, bmp,
+      0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  }
+
+  //left
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 8 );
+  
+  for( x = 0, y = 0; y < size_y; y++ ){
+    GFL_BMP_Print( bmp_bg, bmp,
+      0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  }
+
+  //right
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 10 );
+  
+  for( x = size_x - 1, y = 0; y < size_y; y++ ){
+    GFL_BMP_Print( bmp_bg, bmp,
+      0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  }
+  
+  //left top
+  x = 0;
+  y = 0;
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 0 );
+  GFL_BMP_Print( bmp_bg, bmp, 0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  
+  //right top
+  x = size_x - 1;
+  y = 0;
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 2 );
+  GFL_BMP_Print( bmp_bg, bmp, 0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+
+  //left bottom
+  x = 0;
+  y = size_y - 1;
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 16 );
+  GFL_BMP_Print( bmp_bg, bmp, 0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+
+  //right bottom
+  x = size_x - 1;
+  y = size_y - 1;
+  spwin_CreateBmpBG( bmp_bg, type, heapID, 18 );
+  GFL_BMP_Print( bmp_bg, bmp, 0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+  
+  GFL_BMP_Delete( bmp_bg );
 }
 
 //--------------------------------------------------------------
@@ -3361,8 +3439,9 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y,
       PANO_SPWIN, GFL_BMP_CHRAREA_GET_B );
   
-  spWin->bmp_bg = spwin_CreateBmpBG( type, fmb->heapID );
-  spwin_WriteBmpBG( GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
+  spWin->bmp_bg = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, fmb->heapID );
+  spwin_CreateBmpBG( spWin->bmp_bg, type, fmb->heapID, SPWIN_CHROFFS_SPACE );
+  spwin_WriteBmpBG( GFL_BMPWIN_GetBmp(spWin->bmpwin), type, fmb->heapID );
   spwin_InitPalette( fmb->bgFrame, PANO_SPWIN, fmb->heapID );
   
   GFL_BMPWIN_MakeScreen( spWin->bmpwin );
@@ -3599,19 +3678,20 @@ static void keyCursor_Write(
  */
 //--------------------------------------------------------------
 static void keyCursor_WriteBmpBG(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg )
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp,
+    GFL_BMP_DATA *bmp_bg )
 {
   s16 x,y,offs;
   u16 tbl[3] = { 0, 1, 2 };
   
-  x = GFL_BMP_GetSizeX( bmp ) - 16;
-  y = GFL_BMP_GetSizeY( bmp ) - 16;
+  x = GFL_BMP_GetSizeX( bmp ) - (8 - 16);
+  y = GFL_BMP_GetSizeY( bmp ) - (8 - 16);
   
   if( x >= 0 && y >= 0 ){ //BGを張る領域がある
     s16 ix,iy;
-    for( iy = y; iy < (y+16); iy += 8 ){
-      for( ix = x; ix < (x+16); ix += 8 ){
-        GFL_BMP_Print( bmp_bg, bmp, 0, 0, ix, iy, 8, 8, GF_BMPPRT_NOTNUKI );
+    for( iy = y; iy < (y+16); iy += 4 ){
+      for( ix = x; ix < (x+16); ix += 4 ){
+        GFL_BMP_Print( bmp_bg, bmp, 0, 0, ix, iy, 4, 4, GF_BMPPRT_NOTNUKI );
       }
     }
   }
@@ -3624,8 +3704,8 @@ static void keyCursor_WriteBmpBG(
     work->cursor_anm_no %= 3;
   }
   
-  x = GFL_BMP_GetSizeX( bmp ) - 11;
-  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  x = GFL_BMP_GetSizeX( bmp ) - (8 - 10);
+  y = GFL_BMP_GetSizeY( bmp ) - (8 - 7 - 3);
   offs = tbl[work->cursor_anm_no];
   
   GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );

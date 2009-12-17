@@ -135,10 +135,12 @@ typedef struct {
 	TAIL_SETPAT		tailPat;
 }TAIL_DATA;
 
+
 typedef struct {
 	u16 seq;
-  u16 windowAlone;
-  
+  u8 windowAlone;
+  u8 winType;
+
 	TALKWIN_SETPAT  winPat;
 
 	PRINT_STREAM*		printStream;
@@ -177,6 +179,7 @@ typedef struct {
 	u8							winsx;			
 	u8							winsy;			
 	GXRgb						color;
+  u16             winType;
 }TALKMSGWIN_SETUP;
 
 static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode );
@@ -344,7 +347,8 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winpy,			
 																			u8								winsx,			
 																			u8								winsy,			
-																			u8								colIdx )
+																			u8								colIdx,
+                                      TALKMSGWIN_TYPE   winType )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -356,7 +360,8 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsx = winsx;
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
-  
+  setup.winType = winType;
+
 	setupWindow( tmsgwinSys,
       &tmsgwinSys->tmsgwin[tmsgwinIdx], NULL, msg, &setup );
   tmsgwinSys->tmsgwin[tmsgwinIdx].windowAlone = TRUE;
@@ -370,7 +375,8 @@ void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winpy,			
 																			u8								winsx,			
 																			u8								winsy,			
-																			u8								colIdx )
+																			u8								colIdx,
+                                      TALKMSGWIN_TYPE   winType )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -382,6 +388,7 @@ void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsx = winsx;
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
+  setup.winType = winType;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -395,7 +402,8 @@ void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 																							u8								winpy,			
 																							u8								winsx,			
 																							u8								winsy,			
-																							u8								colIdx )
+																							u8								colIdx,
+                                              TALKMSGWIN_TYPE   winType )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -408,6 +416,7 @@ void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsx = winsx;
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
+  setup.winType = winType;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], 
 							tmsgwinSys->tmsgwin[prev_tmsgwinIdx].pTarget, msg, &setup);
@@ -421,7 +430,8 @@ void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 																			int							tmsgwinIdx,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
-																			u8							colIdx )
+																			u8							colIdx,
+                                      TALKMSGWIN_TYPE winType )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -433,6 +443,7 @@ void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 	setup.winsx = TWIN_FIX_SIZX;
 	setup.winsy = TWIN_FIX_SIZY;
 	setup.color = BACKGROUND_COLOR;
+  setup.winType = winType;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -441,7 +452,8 @@ void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 																			int							tmsgwinIdx,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
-																			u8							colIdx )
+																			u8							colIdx,
+                                      TALKMSGWIN_TYPE winType )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -453,6 +465,7 @@ void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 	setup.winsx = TWIN_FIX_SIZX;
 	setup.winsy = TWIN_FIX_SIZY;
 	setup.color = BACKGROUND_COLOR;
+  setup.winType = winType;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -461,16 +474,17 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 																			int							tmsgwinIdx,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
-																			u8							colIdx )
+																			u8							colIdx,
+                                      TALKMSGWIN_TYPE winType )
 {
 	int targetx, targety;
 
 	NNS_G3dWorldPosToScrPos(pTarget, &targetx, &targety);
 
 	if( targety < (96) ){ 
-		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
+		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx,winType);
 	} else {
-		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
+		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx,winType);
 	}
 }
 
@@ -571,6 +585,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	tmsgwin->color = setup->color;
 	tmsgwin->refTarget = 0;
 	tmsgwin->winPat = setup->winPat;
+  tmsgwin->winType = setup->winType;
 
 	//•`‰æ—pƒrƒbƒgƒ}ƒbƒvì¬
 	{
@@ -1540,6 +1555,7 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 
 
 //------------------------------------------------------------------
+//’Êí
 #define FLIP_H (0x0400)
 #define FLIP_V (0x0800)
 #define UL_CHR (1)
@@ -1552,8 +1568,29 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 #define R_CHR (4 + FLIP_H)
 #define SPC_CHR (5)
 #define CONNECT_CHR (2)
+#define CHR_COUNT (6)
 
-static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+//ƒMƒU
+#define UL_CHR_GIZA0 (CHR_COUNT+3)
+#define UL_CHR_GIZA1 (CHR_COUNT+4)
+#define UL_CHR_GIZA2 (CHR_COUNT+5)
+#define UR_CHR_GIZA0 (UL_CHR_GIZA0 + FLIP_H)
+#define UR_CHR_GIZA1 (UL_CHR_GIZA1 + FLIP_H)
+#define UR_CHR_GIZA2 (UL_CHR_GIZA2 + FLIP_H)
+#define DL_CHR_GIZA0 (UL_CHR_GIZA0 + FLIP_V)
+#define DL_CHR_GIZA1 (UL_CHR_GIZA1 + FLIP_V)
+#define DL_CHR_GIZA2 (UL_CHR_GIZA2 + FLIP_V)
+#define DR_CHR_GIZA0 (UL_CHR_GIZA0 + FLIP_H + FLIP_V)
+#define DR_CHR_GIZA1 (UL_CHR_GIZA1 + FLIP_H + FLIP_V)
+#define DR_CHR_GIZA2 (UL_CHR_GIZA2 + FLIP_H + FLIP_V)
+#define U_CHR_GIZA (CHR_COUNT + 0)
+#define D_CHR_GIZA (U_CHR_GIZA + FLIP_V)
+#define L_CHR_GIZA (CHR_COUNT + 1)
+#define R_CHR_GIZA (L_CHR_GIZA + FLIP_H)
+#define CONNECT_CHR_GIZA (CHR_COUNT+2)
+
+static void writeWindow_Normal(
+    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
 {
 	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
 	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
@@ -1578,154 +1615,337 @@ static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	//˜g—Ìˆæ
 	if(overU == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UL_CHR+chrOffs)),
+          px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
-		GFL_BG_FillScreen
-			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
+
+		GFL_BG_FillScreen(frameID,
+        (wplt | (U_CHR+chrOffs)),
+        px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
+
 		if(overR == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UR_CHR+chrOffs)),
+          px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
+  
 	if(overL == FALSE){
-		GFL_BG_FillScreen
-			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+		GFL_BG_FillScreen(frameID,
+        (wplt | (L_CHR+chrOffs)),
+        px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
+
 	if(overR == FALSE){
-		GFL_BG_FillScreen
-			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+		GFL_BG_FillScreen(frameID,
+        (wplt | (R_CHR+chrOffs)),
+        px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
+
 	if(overD == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DL_CHR+chrOffs)),
+          px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
-		GFL_BG_FillScreen
-			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
+
+		GFL_BG_FillScreen(frameID,
+        (wplt | (D_CHR+chrOffs)),
+        px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
+
 		if(overR == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DR_CHR+chrOffs)),
+          px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
-	GFL_BG_LoadScreenReq(frameID);
-}
-
-static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
-{
-	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
-	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
-	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
-	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
-	BOOL overU = FALSE;
-	BOOL overD = FALSE;
-	BOOL overL = FALSE;
-	BOOL overR = FALSE;
-	u8	frameID = tmsgwinSys->setup.ini.frameID;
-	u16	wplt = (tmsgwinSys->setup.ini.winPltID) << 12;
-	u16	chrOffs = tmsgwinSys->setup.chrNumOffs;
-
-	if(px == 0){ overL = TRUE; }
-	if((px + sx) == 32){ overR = TRUE; }
-	if(py == 0){ overU = TRUE; }
-	if((py + sy) == 24){ overD = TRUE; }
-
-	//•¶Žš•`‰æ—Ìˆæ
-	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
-
-	//˜g—Ìˆæ
-	if(overU == FALSE){
-		if(overL == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
-		}
-		GFL_BG_FillScreen
-			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
-		if(overR == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
-		}
-	}
-	if(overL == FALSE){
-		GFL_BG_FillScreen
-			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
-	}
-	if(overR == FALSE){
-		GFL_BG_FillScreen
-			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
-	}
-	if(overD == FALSE){
-		if(overL == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
-		}
-		GFL_BG_FillScreen
-			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
-		if(overR == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
-		}
-	}
+  
 #if TALKWIN_MODE
 #else
 	{
 		//u16	nullChr = (wplt | SPC_CHR+chrOffs);
 		u16	nullChr = (wplt | CONNECT_CHR+chrOffs);
-
-		switch(tmsgwin->tailData.tailPat){
+    
+		switch( tailPat ){
 		case TAIL_SETPAT_U:
 			if(overU == FALSE){
-				GFL_BG_FillScreen(frameID, nullChr, px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
 			}
 		break;
 		case TAIL_SETPAT_D:
 			if(overD == FALSE){
 				nullChr |= FLIP_V;
-				GFL_BG_FillScreen(frameID, nullChr, px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx/2 - 1, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
 			}
 		break;
 		case TAIL_SETPAT_L:
 			if(overL == FALSE){
 				nullChr = (wplt | SPC_CHR+chrOffs);
-				GFL_BG_FillScreen(frameID, nullChr, px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px - 1, py + sy/2 - 1, 1, 2,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_R:
 			if(overR == FALSE){
 				nullChr = (wplt | SPC_CHR+chrOffs);
-				GFL_BG_FillScreen(frameID, nullChr, px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx, py + sy/2 - 1, 1, 2,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_FIX_UL:
 			if(overU == FALSE){
-				GFL_BG_FillScreen
-					(frameID, nullChr, px + TWIN_FIX_TAIL_X, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + TWIN_FIX_TAIL_X, py - 1, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_FIX_DL:
 			if(overU == FALSE){
 				nullChr |= FLIP_V;
-				GFL_BG_FillScreen
-					(frameID, nullChr, px + TWIN_FIX_TAIL_X, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + TWIN_FIX_TAIL_X, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_FIX_UR:
 			if(overD == FALSE){
-				GFL_BG_FillScreen
-					(frameID, nullChr, px + sx - TWIN_FIX_TAIL_X -2, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx - TWIN_FIX_TAIL_X -2, py - 1, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		case TAIL_SETPAT_FIX_DR:
 			if(overD == FALSE){
 				nullChr |= FLIP_V;
-				GFL_BG_FillScreen
-					(frameID, nullChr, px + sx - TWIN_FIX_TAIL_X -2, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx - TWIN_FIX_TAIL_X -2, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
 			}
 			break;
 		}
 	}
 #endif
+  
 	GFL_BG_LoadScreenReq(frameID);
+}
+
+static void writeWindow_Giza(
+    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
+{
+	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
+	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
+	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
+	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
+	BOOL overU = FALSE;
+	BOOL overD = FALSE;
+	BOOL overL = FALSE;
+	BOOL overR = FALSE;
+	u8	frameID = tmsgwinSys->setup.ini.frameID;
+	u16	wplt = (tmsgwinSys->setup.ini.winPltID) << 12;
+	u16	chrOffs = tmsgwinSys->setup.chrNumOffs;
+
+	if(px == 0){ overL = TRUE; }
+	if((px + sx) == 32){ overR = TRUE; }
+	if(py == 0){ overU = TRUE; }
+	if((py + sy) == 24){ overD = TRUE; }
+
+	//•¶Žš•`‰æ—Ìˆæ
+	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
+
+	//˜g—Ìˆæ
+	if(overU == FALSE){
+		if(overL == FALSE){
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UL_CHR_GIZA0+chrOffs)),
+          px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+			
+      GFL_BG_FillScreen(frameID,
+          (wplt | (UL_CHR_GIZA1+chrOffs)),
+          px, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (UL_CHR_GIZA2+chrOffs)),
+          px - 1, py, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+    
+		GFL_BG_FillScreen(frameID,
+        (wplt | (U_CHR_GIZA+chrOffs)),
+        px + 1, py - 1, sx - 1, 1, GFL_BG_SCRWRT_PALIN);
+    
+		if(overR == FALSE){
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UR_CHR_GIZA0+chrOffs)),
+          px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UR_CHR_GIZA1+chrOffs)),
+          px + sx - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+			GFL_BG_FillScreen(frameID,
+          (wplt | (UR_CHR_GIZA2+chrOffs)),
+          px + sx, py, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+	}
+  
+	if(overL == FALSE){
+    if( overU == FALSE ){
+		  GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_GIZA+chrOffs)),
+          px - 1, py + 1, 1, sy - 1, GFL_BG_SCRWRT_PALIN);
+    }else{
+		  GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_GIZA+chrOffs)),
+          px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    }
+	}
+
+	if(overR == FALSE){
+    if( overU == FALSE ){
+		  GFL_BG_FillScreen(frameID,
+         (wplt | (R_CHR_GIZA+chrOffs)),
+          px + sx, py + 1, 1, sy - 1, GFL_BG_SCRWRT_PALIN);
+    }else{
+		  GFL_BG_FillScreen(frameID,
+         (wplt | (R_CHR_GIZA+chrOffs)),
+          px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    }
+	}
+  
+	if(overD == FALSE){
+		if(overL == FALSE){
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DL_CHR_GIZA0+chrOffs)),
+          px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DL_CHR_GIZA1+chrOffs)),
+          px, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DL_CHR_GIZA2+chrOffs)),
+          px - 1, py + sy - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+    
+		GFL_BG_FillScreen(frameID,
+        (wplt | (D_CHR_GIZA+chrOffs)),
+        px + 1, py + sy, sx - 1, 1, GFL_BG_SCRWRT_PALIN);
+
+		if(overR == FALSE){
+			GFL_BG_FillScreen(frameID,
+          (wplt | (DR_CHR_GIZA0+chrOffs)),
+          px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+			
+      GFL_BG_FillScreen(frameID,
+          (wplt | (DR_CHR_GIZA1+chrOffs)),
+          px + sx - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (DR_CHR_GIZA2+chrOffs)),
+          px + sx, py + sy - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+	}
+  
+#if TALKWIN_MODE
+#else
+	{
+//		u16	nullChr = (wplt | SPC_CHR+chrOffs);
+		u16	nullChr = (wplt | CONNECT_CHR_GIZA+chrOffs);
+    
+		switch( tailPat ){
+		case TAIL_SETPAT_U:
+			if(overU == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+		break;
+		case TAIL_SETPAT_D:
+			if(overD == FALSE){
+				nullChr |= FLIP_V;
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx/2 - 1, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
+			}
+		break;
+		case TAIL_SETPAT_L:
+			if(overL == FALSE){
+				nullChr = (wplt | SPC_CHR+chrOffs);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px - 1, py + sy/2 - 1, 1, 2,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_R:
+			if(overR == FALSE){
+				nullChr = (wplt | SPC_CHR+chrOffs);
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx, py + sy/2 - 1, 1, 2,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_UL:
+			if(overU == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + TWIN_FIX_TAIL_X, py - 1, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_DL:
+			if(overU == FALSE){
+				nullChr |= FLIP_V;
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + TWIN_FIX_TAIL_X, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_UR:
+			if(overD == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx - TWIN_FIX_TAIL_X -2, py - 1, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_DR:
+			if(overD == FALSE){
+				nullChr |= FLIP_V;
+				GFL_BG_FillScreen(frameID, nullChr,
+            px + sx - TWIN_FIX_TAIL_X -2, py + sy, 2, 1,
+            GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		}
+	}
+#endif
+  
+	GFL_BG_LoadScreenReq(frameID);
+}
+
+static void writeWindowSelect(
+    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
+{
+  switch( tmsgwin->winType ){
+  case TALKMSGWIN_TYPE_NORMAL:
+    writeWindow_Normal( tmsgwinSys, tmsgwin, tailPat );
+    break;
+  case TALKMSGWIN_TYPE_GIZA:
+    writeWindow_Giza( tmsgwinSys, tmsgwin, tailPat );
+    break;
+  }
+}
+
+static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+{
+  writeWindowSelect( tmsgwinSys, tmsgwin, TAIL_SETPAT_NONE );
+}
+
+static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+{
+  writeWindowSelect( tmsgwinSys, tmsgwin, tmsgwin->tailData.tailPat );
 }
 
 //------------------------------------------------------------------

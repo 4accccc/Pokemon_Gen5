@@ -276,7 +276,7 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 								sw->cameraTarget.z + 16*FX32_ONE);
 
 				TALKMSGWIN_CreateFixWindowAuto
-					(sw->tmsgwinSys, FIX_WIN_IDX, &sw->twinTarget[FIX_WIN_IDX], sw->strBuf[FIX_WIN_IDX], 15);
+					(sw->tmsgwinSys, FIX_WIN_IDX, &sw->twinTarget[FIX_WIN_IDX], sw->strBuf[FIX_WIN_IDX], 15, TALKMSGWIN_TYPE_NORMAL );
 				TALKMSGWIN_OpenWindow(sw->tmsgwinSys, FIX_WIN_IDX);
 				sw->seq = 3;
 			}
@@ -470,7 +470,7 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 																		sw->msgComm.commParam[1] - msgWidth/2,
 																		sw->msgComm.commParam[2],
 																		msgWidth, msgHeight,
-																		15);
+																		15, TALKMSGWIN_TYPE_NORMAL );
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
 
@@ -496,7 +496,7 @@ static BOOL commConnectMsg(SAMPLE3_WORK* sw)
 																					sw->msgComm.commParam[1] - msgWidth/2,
 																					sw->msgComm.commParam[2],
 																					msgWidth, msgHeight,
-																					15);
+																					15, TALKMSGWIN_TYPE_NORMAL );
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
 

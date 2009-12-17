@@ -23,6 +23,7 @@
 #include "battle/battle.h"
 #include "pm_define.h"
 #include "buflen.h"
+#include "sound/pm_sndsys.h"
 
 #include "fldmmdl.h"
 
@@ -409,7 +410,6 @@ static BSP_TRAINER_DATA * BSP_TRAINER_DATA_Create( HEAPID heapID )
 BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
-#if 0
 	BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
@@ -426,22 +426,28 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
-    dst->netID = 0;
+//  dst->netID = 0;
     dst->multiMode = 0;
     dst->recBuffer = NULL;
     dst->fRecordPlay = FALSE;
     
-    dst->partyPlayer = NULL;
-    dst->partyEnemy1 = NULL;
-    dst->partyPartner = NULL;
-    dst->partyEnemy2 = NULL;
+    dst->party[BTL_CLIENT_PLAYER] = NULL;
+    dst->party[BTL_CLIENT_ENEMY1] = NULL;
+    dst->party[BTL_CLIENT_PARTNER] = NULL;
+    dst->party[BTL_CLIENT_ENEMY2] = NULL;
     
     dst->competitor = BTL_COMPETITOR_TRAINER;
     
-    dst->statusPlayer = GAMEDATA_GetMyStatus( gameData );
+    dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
+    dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;
+    dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
+    dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
+   
     dst->itemData     = GAMEDATA_GetMyItem( gameData );
     dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
     dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
+//  dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
+    dst->commSupport  = NULL;
     
     {
       SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
@@ -449,6 +455,10 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     }
     
     MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
+
+    dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
+    dst->musicPinch = SEQ_BGM_BATTLEPINCH;
+    dst->result = BTL_RESULT_WIN;
   }
   
   BTL_SETUP_SetSubwayMode( dst );
@@ -473,40 +483,28 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
   }
   
   { //敵トレーナーセット
+    PMS_DATA *pd;
     BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
-    POKEPARTY **party = &dst->partyEnemy1;
-    BSP_TRAINER_DATA *data = dst->tr_data[client];
-    BSUBWAY_PARTNER_DATA *b_tr_data = &wk->tr_data[0];
-    BSUBWAY_TRAINER *bt_trd = &b_tr_data->bt_trd;
+    POKEPARTY **party = &dst->party[client];
+    BSP_TRAINER_DATA *tr_data = dst->tr_data[client];
     
-    data->tr_id = 0;
-    data->tr_type = bt_trd->tr_type;
-    data->ai_bit = 0xFFFFFFFF;  //最強
+    BSUBWAY_PARTNER_DATA *bsw_partner = &wk->tr_data[0];
+    BSUBWAY_TRAINER *bsw_trainer = &bsw_partner->bt_trd;
     
-    #if 1
-    {
-#if 0
-      GFL_MSGDATA *msgdata;
-      STRBUF *name;
-      
-      msgdata =  GFL_MSG_Create(
-        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-        NARC_message_btdtrname_dat, HEAPID_PROC );
-      name = GFL_MSG_CreateString( msgdata, bt_trd->player_id );
-     
-	    GFL_STR_CopyBuffer( name, data->name );
-      
-      GFL_STR_DeleteBuffer(name);
-      GFL_MSG_Delete( msgdata );
-#endif
-    }
-    #else
-    GFL_STR_SetStringCode( data->name, bt_trd->name );
-    #endif
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0xFFFFFFFF;  //最強
     
-    MI_CpuCopy8( bt_trd->win_word, &data->win_word,sizeof(PMS_DATA));
-    MI_CpuCopy8( bt_trd->lose_word, &data->lose_word,sizeof(PMS_DATA));
-
+    //name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //win word
+	  pd = (PMS_DATA*)bsw_trainer->win_word;
+	  tr_data->win_word = *pd;
+    
+	  pd = (PMS_DATA*)bsw_trainer->lose_word;
+	  tr_data->lose_word = *pd;
+    
     //敵ポケモンセット
     {
       int i;
@@ -517,7 +515,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
       PokeParty_Init( *party, TEMOTI_POKEMAX );
       
       for( i = 0; i < wk->member_num; i++ ){
-        BtlTower_PokeParaMake( &(b_tr_data->btpwd[i]), pp );
+        BtlTower_PokeParaMake( &(bsw_partner->btpwd[i]), pp );
         PokeParty_Add( *party, pp );
       }
       GFL_HEAP_FreeMemory( pp );
@@ -531,7 +529,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
 
   { //プレイヤーセット
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
-    POKEPARTY **party = &dst->partyPlayer;
+    POKEPARTY **party = &dst->party[client];
     BSP_TRAINER_DATA *data = dst->tr_data[client];
     PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork( gameData );
     
@@ -557,6 +555,9 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
       }
     }
   }
+  
+	return dst;
+}
 
 #if 0
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
@@ -610,11 +611,6 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
 		break;
 	}
 #endif
-	return dst;
-#else
-  return NULL;
-#endif
-}
 
 //============================================================================
 /**
