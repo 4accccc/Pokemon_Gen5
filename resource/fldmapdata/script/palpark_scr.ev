@@ -1,0 +1,122 @@
+//======================================================================
+//                palpark_scr.ev
+//
+//    スクリプトファイル：palpark_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_palpark_scr.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+
+_EVENT_DATA   ev_palpark_reception
+_EVENT_DATA_END
+
+
+DEFINE_LOCAL EndMsg        //ラストメッセージ
+DEFINE_LOCAL TEST        //テスト
+
+
+EVENT_START ev_palpark_reception
+  _TALK_OBJ_START()
+  //初はなしかけか？todo
+  IF $TEST == 0 THEN
+    //初回話しかけフラグＯＮ
+    $TEST = 1
+    //初回メッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+  //「やってみる？」
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
+  IF $SCWK_ANSWER == 0 THEN     //やる
+    DEFINE_LOCAL box_empty_num        //ローカルワーク　ボックスの空き数
+    //ボックスの空き状態をチェック
+    _GET_BOX_POKE_COUNT( box_empty_num, POKECOUNT_MODE_EMPTY )
+    IF $box_empty_num >= 6 THEN          //6以上空きがある
+      //「ＤＳある？」
+      _BALLOONWIN_TALKOBJ_MSG( msg_palpark_05 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _BALLOONWIN_CLOSE()
+      IF $SCWK_ANSWER == 0 THEN          //ＤＳある
+        _CALL save        //output:SCWK_ANSWER
+        IF $SCWK_ANSWER == TRUE THEN
+          _CALL play_palpark
+        ENDIF
+      ELSE                              //ＤＳない
+        _CALL see_you
+      ENDIF
+    ELSE
+      //「ボックス空けて」
+      $EndMsg = msg_palpark_04
+      _CALL end_msg
+    ENDIF
+  ELSE                          //やらない
+    _CALL see_you
+  ENDIF
+EVENT_END
+
+//最終メッセージ共通
+end_msg:
+  _BALLOONWIN_TALKOBJ_MSG( EndMsg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+_RET
+
+
+see_you:
+  //「またね」
+  $EndMsg = msg_palpark_03
+  _CALL end_msg
+_RET
+
+//セーブ                   output:SCWK_ANSWER
+save:
+  DEFINE_LOCAL report //セーブチェック用
+  // レポートを書く
+  _REPORT_EVENT_CALL_WIRELESS( report )
+  // 書き込みに失敗
+  IF $report != SCR_REPORT_OK THEN
+    //セーブ失敗
+    $SCWK_ANSWER = FALSE
+  ELSE
+    //セーブ成功
+    $SCWK_ANSWER = TRUE
+  ENDIF
+_RET
+
+play_palpark:
+  DEFINE_LOCAL i_ret
+  //フィールド通信切断
+  _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
+
+  IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+    //キャンセル todo
+    _RET
+  ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+    //エラー todo
+    _RET
+  ENDIF
+
+  //「そこにたって」
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
+  _BALLOONWIN_CLOSE()
+
+  //主人公アニメ
+
+  //「はじめるよ」
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_01 )
+  _BALLOONWIN_CLOSE()
+
+  //パルパークコール
+  _PALPARK_CALL()
+
+_RET
