@@ -62,9 +62,11 @@ typedef BOOL (*pPrintCallBack)(u32);
 typedef u16   PRINTSYS_LSB;
 
 
+#define PRINTSYS_MACRO_LSB(L, S, B)  (PRINTSYS_LSB)((((L)&0x1f)<<10) | (((S)&0x1f)<<5) | ((b)&0x1f))
+
 static inline PRINTSYS_LSB PRINTSYS_LSB_Make( u8 l, u8 s, u8 b )
 {
-  return (l<<10) | (s<<5) | b;
+  return PRINTSYS_MACRO_LSB( l, s, b );
 }
 static inline u8 PRINTSYS_LSB_GetL( PRINTSYS_LSB color )
 {
