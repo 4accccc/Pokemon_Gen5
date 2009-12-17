@@ -78,6 +78,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_02,T02PC0101_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
 
+	//BGM終了
+	_END_EVENT_BGM()
+
 	//=========フラグワーク操作==========//
 	
 	//博士案内イベント次へ
@@ -186,7 +189,10 @@ _ANIME_LABEL	anm_hakase2_dir_u
 /**************************************************************/
 //【メモ】T02PC0101にて初めて回復をした際にWK_SCENE_T02PC0101 = 2になります。
 EVENT_START   ev_scene_t02pc0101_hakaseguide_02
-	
+
+	//博士BGM開始
+	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
+
 	//博士：パソコンの前（１マス隣）に移動、自機：パソコンの前に移動、サポート：自機真横に移動
 	_OBJ_ANIME( T02PC0101_HAKASE2_01,anm_hakase_pc )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_pc )
@@ -233,9 +239,6 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	//階段ＳＥ再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
-	
-	//BGM終了
-	_END_EVENT_BGM()
 
 	//サポート：自機のほうに向く、自機：サポートに向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_muku )
@@ -270,6 +273,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_FLAG_RESET( FV_T02_MAN )
 
 	//===================================//
+
+	//BGM終了
+	_END_EVENT_BGM()
 
 EVENT_END
 	

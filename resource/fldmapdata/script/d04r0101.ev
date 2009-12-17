@@ -23,7 +23,6 @@
 _EVENT_DATA		ev_mapchange1
 _EVENT_DATA		ev_mapchange2
 _EVENT_DATA		ev_d04r0101_sunglasses_01
-_EVENT_DATA		ev_pos_d04r0101_sunglasses_01
 _EVENT_DATA		ev_d04r0101_corn_01
 _EVENT_DATA_END
 
@@ -67,82 +66,6 @@ _TALK_OBJ_START()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
-
-EVENT_END
-
-/**************************************************************/
-/*			サングラスPOS	D04R0101イベントスクリプト		  */
-/**************************************************************/
-EVENT_START		ev_pos_d04r0101_sunglasses_01
-
-//D08イベント終了後のみのPOSイベントです。
-
-	//ローカル変数を定義
-	DEFINE_LOCAL	LWK_HERO_X
-	DEFINE_LOCAL	LWK_HERO_Z
-	
-	//Z軸が14の場合
-	IF $LWK_HERO_Z == 14 THEN
-	
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_14tikaduku )
-		_OBJ_ANIME_WAIT()
-			
-		//自機がサングラスの方へ向く
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-		_OBJ_ANIME_WAIT()
-			
-		//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
-		_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
-			
-		//持ち場に戻る
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_14return )
-		_OBJ_ANIME_WAIT()
-		
-	//Z軸が15の場合
-	ELSIF $LWK_HERO_Z == 15 THEN
-
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_15tikaduku )
-		_OBJ_ANIME_WAIT()
-			
-		//自機がサングラスの方へ向く
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-		_OBJ_ANIME_WAIT()
-			
-		//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
-		_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
-			
-		//持ち場に戻る
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_15return )
-		_OBJ_ANIME_WAIT()
-	
-	//Z軸が16の場合
-	ELSE
-	
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_16tikaduku )
-		_OBJ_ANIME_WAIT()
-			
-		//自機がサングラスの方へ向く
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-		_OBJ_ANIME_WAIT()
-			
-		//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
-		_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
-			
-		//持ち場に戻る
-		_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_16return )
-		_OBJ_ANIME_WAIT()
-	
-	ENDIF
-
-//========================================//
-		
-//D08サングラスPOS終了
-$WK_SCENE_D04R0101 = 0
-		
-//========================================//
 
 EVENT_END
 

@@ -745,6 +745,9 @@ t02_speech:
 	_BALLOONWIN_OBJMSG( msg_t02_boss_03 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
 
+	//BGM終了
+	_END_EVENT_BGM()
+
 	//Ｎとポケモンしょうぶ。
 	_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
 	
@@ -755,6 +758,9 @@ t02_speech:
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
+
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG( msg_t02_boss_04 , T02_N_01 )

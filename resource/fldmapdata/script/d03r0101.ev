@@ -181,14 +181,6 @@ EVENT_START		ev_pos_d03r0101_event_01
 	$WK_SCENE_D03R0101 = 2
 	
 	//========================================/
-	
-	//サングラスにおいしいみずをあげている場合
-	IF FLAG_ON( FV_D04R0101_SUNGLASSES_01 ) THEN
-		
-		//サングラスＰＯＳイベント開始
-		$WK_SCENE_D04R0101 = 1
-
-	ENDIF
 
 EVENT_END
 

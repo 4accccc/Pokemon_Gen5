@@ -294,7 +294,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -216
+-72 0 -200
 #size
 10 1
 #Map Event List Data End
