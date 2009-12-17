@@ -273,6 +273,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
 {
+  wk->shinka_poke_pos = 0;
+  wk->shinka_poke_bit = 0;
+
   //勝利、逃げる、ゲット以外は進化チェックしない（逃げる、ゲットは2vs2野生でありうるので）
   if( ( param->btlResult->result != BTL_RESULT_WIN ) &&
       ( param->btlResult->result != BTL_RESULT_RUN ) &&
@@ -287,9 +290,6 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
   ){
     return;
   }
-
-  wk->shinka_poke_pos = 0;
-  wk->shinka_poke_bit = 0;
 
   {
     POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
