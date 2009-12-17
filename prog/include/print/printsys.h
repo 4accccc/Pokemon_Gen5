@@ -206,7 +206,7 @@ extern BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA
  *
  */
 //==============================================================================================
-extern void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
+extern void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font );
 
 //==============================================================================================
 /**
@@ -222,7 +222,7 @@ extern void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 
  *
  */
 //==============================================================================================
-extern void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
+extern void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
 
 //=============================================================================================
 /**
@@ -268,7 +268,7 @@ extern void PRINTSYS_QUE_ForceCommMode( PRINT_QUE* que, BOOL flag );
  *
  */
 //==============================================================================================
-extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
+extern void PRINTSYS_Print( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font );
 
 //=============================================================================================
 /**
@@ -283,7 +283,7 @@ extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF*
  *
  */
 //=============================================================================================
-extern void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
+extern void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
 
 //==============================================================================================
 /**
@@ -305,7 +305,7 @@ extern void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const ST
  */
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStream(
-    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+    GFL_BMPWIN* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font,
     int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
 
 //==============================================================================================
@@ -328,7 +328,7 @@ extern PRINT_STREAM* PRINTSYS_PrintStream(
  */
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
-    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+    GFL_BMPWIN* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font,
     int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback );
 
 //==============================================================================================
@@ -561,7 +561,7 @@ inline void PRINT_UTIL_Setup( PRINT_UTIL* wk, GFL_BMPWIN* win )
  *
  */
 //--------------------------------------------------------------------------------------
-inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos, const STRBUF* buf, GFL_FONT* font )
+inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, s16 xpos, s16 ypos, const STRBUF* buf, GFL_FONT* font )
 {
   PRINTSYS_PrintQue( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font );
   wk->transReq = TRUE;
@@ -580,7 +580,7 @@ inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos
  *
  */
 //--------------------------------------------------------------------------------------
-inline void PRINT_UTIL_PrintColor( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos, const STRBUF* buf, GFL_FONT* font, PRINTSYS_LSB color )
+inline void PRINT_UTIL_PrintColor( PRINT_UTIL* wk, PRINT_QUE* que, s16 xpos, s16 ypos, const STRBUF* buf, GFL_FONT* font, PRINTSYS_LSB color )
 {
   PRINTSYS_PrintQueColor( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font, color );
   wk->transReq = TRUE;

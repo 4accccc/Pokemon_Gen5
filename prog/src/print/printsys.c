@@ -57,7 +57,7 @@ enum {
 //==============================================================
 
 // １文字書き込み関数フォーマット
-typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
+typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 
 //--------------------------------------------------------------------------
 /**
@@ -68,14 +68,13 @@ typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* 
 //--------------------------------------------------------------------------
 typedef struct {
 
-  u32   org_x : 10;
-  u32   org_y : 10;
-  u32   write_x : 10;
-  u32   pad0    : 2;
+  s16   write_x;
+  s16   write_y;
 
-  u32   write_y    : 10;
-  u32   colorState : 4;
-  u32   pad1       : 18;
+  s32   org_x      : 10;
+  s32   org_y      : 10;
+  s32   colorState : 4;
+  s32   pad1       : 18;
 
   PRINTSYS_LSB    defColor;
   PRINTSYS_LSB    jobColor;
@@ -166,12 +165,12 @@ static struct {
 /*--------------------------------------------------------------------------*/
 static inline BOOL IsNetConnecting( void );
 static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str );
-static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
+static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, s16 org_x, s16 org_y );
 static void printJob_setColor( PRINT_JOB* wk, PRINTSYS_LSB color );
 static void printJob_finish( PRINT_JOB* job, const STRBUF* str );
 static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
-static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
-static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
+static void put1char_normal( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
+static void put1char_16to256( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp );
 static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
@@ -499,7 +498,7 @@ static inline BOOL IsNetConnecting( void )
  *
  */
 //==============================================================================================
-void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
+void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font )
 {
   GF_ASSERT(que);
   GF_ASSERT(dst);
@@ -527,7 +526,7 @@ void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, c
  *
  */
 //=============================================================================================
-void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
+void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
 {
   GF_ASSERT(que);
   GF_ASSERT(dst);
@@ -583,7 +582,7 @@ static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str )
  *
  */
 //==============================================================================================
-void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
+void PRINTSYS_Print( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font )
 {
   PRINT_JOB* job = &SystemWork.printJob;
   const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
@@ -603,7 +602,7 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
  * @param   color
  */
 //=============================================================================================
-void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
+void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
 {
   PRINT_JOB* job = &SystemWork.printJob;
   const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
@@ -626,7 +625,7 @@ void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* s
  *
  */
 //------------------------------------------------------------------
-static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
+static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, s16 org_x, s16 org_y )
 {
   wk->dst = dst;
   wk->put1charFunc = (GFL_BMP_GetColorFormat(dst) == GFL_BMP_16_COLOR)?
@@ -768,47 +767,10 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
  *
  */
 //------------------------------------------------------------------
-static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
+static void put1char_normal( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
 {
   GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
   GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x00 );
-
-  #if 0
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG )
-  {
-    u32 x, y, dx, dy, pix;
-    ISDPrintSetBlockingMode(1);
-    TAYA_Printf("*** charCode=%04x, height=%d ***\n", charCode, size->height );
-    for(y=0; y<16; ++y)
-    {
-      for(x=0; x<16; ++x)
-      {
-        pix = GFL_BMP_GetPixel( SystemWork.charBuffer, x, y );
-        TAYA_Printf("%x", pix);
-      }
-        TAYA_Printf("\n");
-    }
-    TAYA_Printf("=========>\n");
-    dx = xpos+size->left_width;
-    dy = ypos;
-    for(y=0; y<size->height; ++y)
-    {
-      for(x=0; x<size->glyph_width; ++x)
-      {
-        pix = GFL_BMP_GetPixel( dst, dx+x, dy+y );
-        if( pix != 0x0f ){
-          TAYA_Printf("%x", pix);
-        }else{
-          TAYA_Printf(" ");
-        }
-      }
-      TAYA_Printf("\n");
-    }
-    TAYA_Printf("\n");
-    ISDPrintSetBlockingMode(0);
-  }
-  #endif
-
 }
 //------------------------------------------------------------------
 /**
@@ -823,7 +785,7 @@ static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fo
  *
  */
 //------------------------------------------------------------------
-static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
+static void put1char_16to256( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
 {
   GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
   GFL_BMP_Print16to256( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x0f, 0 );
@@ -961,7 +923,7 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
  */
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStream(
-    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+    GFL_BMPWIN* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font,
     int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColorIdx )
 {
   return PRINTSYS_PrintStreamCallBack(
@@ -990,7 +952,7 @@ PRINT_STREAM* PRINTSYS_PrintStream(
  */
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
-    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
+    GFL_BMPWIN* dst, s16 xpos, s16 ypos, const STRBUF* str, GFL_FONT* font,
     int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColorIdx, pPrintCallBack callback )
 {
   PRINT_STREAM* stwk;
