@@ -17,7 +17,5 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
-_FIELD_INIT_LABEL    SCRID_INIT_GATE_CONTENTS
-_FIELD_RECOVER_LABEL SCRID_INIT_GATE_CONTENTS
 _SP_EVENT_DATA_END
 

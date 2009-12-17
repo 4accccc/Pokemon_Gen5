@@ -13,5 +13,6 @@
 
 #define C06R0301_WOMAN3_01                 0
 #define C06R0301_BOY1_01                   1
+#define C06R301_WAZA_WASURE_OYAJI          2
 
 #endif //ZONE_C06R0301_EVC_H

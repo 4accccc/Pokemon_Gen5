@@ -22,5 +22,6 @@
 #define C02GYM0101_SUPPOT_01               7
 #define C02GYM0101_BONE_01                 8
 #define C02GYM0101_BLACKSTONE_01           9
+#define C02GYM0101_FOSSIL                 10
 
 #endif //ZONE_C02GYM0101_EVC_H

@@ -96,6 +96,9 @@ EVENT_START   ev_pos_c02_rival_01
     ENDSWITCH
     }
     
+    //BGMの再生
+    _START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
+    
 	//主人公がライバルに気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_kiduku )
 	_OBJ_ANIME_WAIT()
@@ -134,6 +137,9 @@ EVENT_START   ev_pos_c02_rival_01
 	_OBJ_DEL( C02_RIVAL_02 )
 	_OBJ_DEL( C02_SUPPORT_01 )
 	_OBJ_DEL( C02_LEADER3_01 )
+	
+	//BGMの終了
+	_END_EVENT_BGM()
 	
 	//==============フラグワーク操作==============//
 			

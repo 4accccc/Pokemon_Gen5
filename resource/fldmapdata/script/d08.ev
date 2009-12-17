@@ -143,6 +143,12 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//C07にてジムリーダー7を出現させる
 	_FLAG_RESET( FV_C07GYM0101_READER7_01 )
 	
+	//リゾートデザートのライバルイベント開始
+	$WK_SCENE_D03R0101 = 1
+
+	//リゾートデザートのライバル出現
+	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
+	
 	//========================================//
 	
 EVENT_END
