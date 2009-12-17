@@ -1,0 +1,112 @@
+#event data
+#save date:2009/10/29 17:41:31
+# linked worldmap file name
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\bcblock.wms
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:2009/10/13 21:30:10
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:2009/10/13 21:30:10
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:2009/10/13 21:30:10
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:2009/10/13 21:30:10
+2
+#hold event type:
+1
+#hold event number:
+4
+#event number: 0
+#Door Event Label
+DOOR_ID_BCBLOCK_BUILD00
+#Next Zone ID Name
+ZONE_ID_BC10R0101
+#Next Door ID Name
+DOOR_ID_BC10R0101_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -328
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_BCBLOCK_BUILD01
+#Next Zone ID Name
+ZONE_ID_BC10R0401
+#Next Door ID Name
+DOOR_ID_BC10R0401_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -344
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_BCBLOCK_BUILD02
+#Next Zone ID Name
+ZONE_ID_BC10R0201
+#Next Door ID Name
+DOOR_ID_BC10R0201_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -456
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_BCBLOCK_BUILD03
+#Next Zone ID Name
+ZONE_ID_BC10R0301
+#Next Door ID Name
+DOOR_ID_BC10R0301_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 0 -456
+#size
+1 1
+#Map Event List Data End
+#SECTION End:DOOR_EVENT
