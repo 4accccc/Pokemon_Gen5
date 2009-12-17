@@ -228,14 +228,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
 
   switch (*seq)
   {
-  case 0:
-    { 
-      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
-    }
-    ++ *seq;
-    break;
-  case 1: // 画面・BGMフェードイン
+  case 0: // 画面・BGMフェードイン
     { // フェードイン
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus; 
@@ -261,6 +254,13 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
       {
         FIELD_SOUND_FadeInBGM( fsnd, bgm_now, 20 );
       }
+    }
+    ++ *seq;
+    break;
+  case 1:
+    { 
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
