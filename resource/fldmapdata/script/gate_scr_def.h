@@ -5,6 +5,6 @@
 #define _GATE_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_INIT_GATE_CONTENTS (10250)
+#define SCRID_DUMMY (10250)
 
 #endif //_GATE_SCR_DEF_H_

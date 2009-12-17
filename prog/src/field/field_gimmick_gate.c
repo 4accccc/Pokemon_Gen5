@@ -388,6 +388,9 @@ static const ELBOARD_SPNEWS_DATA* SearchTopNews( GATEWORK* work );
 static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work );
 static const ELBOARD_SPNEWS_DATA* SearchFlagNews( GATEWORK* work, u32 flag );
 static BOOL CheckSpecialNews( GATEWORK* work );
+static void EntryNews( GATEWORK* work, 
+                       const NEWS_PARAM* news, NEWS_TYPE type, 
+                       const ELBOARD_SPNEWS_DATA* sp_data );
 static void AddNews_DATE( GATEWORK* work );
 static void AddNews_PROPAGATION( GATEWORK* work );
 static void AddNews_WEATHER( GATEWORK* work );
@@ -1304,6 +1307,50 @@ static BOOL CheckSpecialNews( GATEWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief ニュースを登録する
+ *
+ * @param work    ギミック管理ワーク
+ * @param news    登録するニュースパラメータ
+ * @param type    登録するニュースのタイプ
+ * @param sp_data 登録する臨時ニュースのデータ( 平常ニュースの場合はNULL )
+ *
+ * ※ニュースの追加は, 必ずこの関数を介して行う。
+ *  ①掲示板へニュースを追加
+ *  ②ニュース登録状況の更新
+ *  ③フラグ操作(臨時ニュースの場合)
+ */
+//------------------------------------------------------------------------------------------
+static void EntryNews( GATEWORK* work, 
+                       const NEWS_PARAM* news, NEWS_TYPE type, 
+                       const ELBOARD_SPNEWS_DATA* sp_data )
+{
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, news );
+
+  // 登録状況を更新
+  {
+    u32 flag = 0;
+    if( type == NEWS_TYPE_SPECIAL ){ flag = sp_data->flag; }
+    AddNewsEntryData( &work->newsEntryData, type, flag );
+  }
+
+  // フラグ操作
+  // 臨時ニュースを追加した場合, そのニュースに設定されたフラグ操作を行う.
+  if( type == NEWS_TYPE_SPECIAL )
+  {
+    // フラグを落とす
+    if( sp_data->flagControl == FLAG_CONTROL_RESET )
+    { 
+      GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
+      GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+      EVENTWORK*  evwork = GAMEDATA_GetEventWork( gdata ); 
+      EVENTWORK_ResetEventFlag( evwork, sp_data->flag );
+    }
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief 掲示板のニュースを追加する(日付)
  *
  * @param work ギミック管理ワーク
@@ -1330,14 +1377,11 @@ static void AddNews_DATE( GATEWORK* work )
   news.msgStrID   = work->gateData->msgID_date;
   news.wordset    = wordset;
 
-  // ニュースを追加
-  GOBJ_ELBOARD_AddNews( work->elboard, &news );
+  // ニュース登録
+  EntryNews( work, &news, NEWS_TYPE_DATE, NULL ); 
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
-
-  // 登録状況を更新
-  AddNewsEntryData( &work->newsEntryData, NEWS_TYPE_DATE, 0 );
 }
 
 //------------------------------------------------------------------------------------------

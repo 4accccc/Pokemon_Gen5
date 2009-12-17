@@ -20,39 +20,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_init_c04r0601
 _EVENT_DATA    ev_c04r0601_oldman1_01
 _EVENT_DATA 	ev_bg_c04r0601_board_01
 _EVENT_DATA_END
 
-/**************************************************************/
-/*  R02R0101 特殊スクリプト 初期化処理                        */
-/**************************************************************/
-INIT_EVENT_START ev_init_c04r0601
-{
-  DEFINE_LOCAL month
-  DEFINE_LOCAL day
-
-  // 平常ニュース
-  //_ELBOARD_SET_NORMAL_NEWS()
-
-  // 臨時ニュース
-  _GET_DATE( month, day )
-  _NUMBER( 0, month, 2 )
-  _NUMBER( 1, day,   2 )
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_01_01 )  // 日付
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_02_01 )  // ニュース1
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_03_01 )  // ニュース2
- 
-// _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_04_01 )  // ニュース3
-// _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_05_01 )  // ニュース4
-  // ※注1 ニュースは最大6つまでしか登録されない！
-  // ※注2 平常ニュースと臨時ニュースの同時登録は出来ない！
-
-  // 掲示板状態の復帰
-  _ELBOARD_RECOVERY()
-}
-INIT_EVENT_END
 /************************************************************/
 /*															*/
 /************************************************************/

@@ -19,6 +19,7 @@
 #include "event_look_elboard.h"
 
 
+#if 0  // ニュースの管理方法を変更し, 不要になったために削除 2009.12.17
 //---------------------------------------------------------------------------------------
 /**
  * @brief 平常時のニュースをセットする
@@ -75,6 +76,8 @@ VMCMD_RESULT EvCmdElboard_Recovery( VMHANDLE *core, void *wk )
   GATE_GIMMICK_Elboard_Recovery( fieldmap );
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
+
 
 //---------------------------------------------------------------------------------------
 /**

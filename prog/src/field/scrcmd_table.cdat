@@ -629,10 +629,10 @@
   NO_CMD()
 
   // ゲート関連
-  DEF_CMD( EvCmdElboard_SetNormalNews, EV_SEQ_ELBOARD_SET_NORMAL_NEWS )
-  DEF_CMD( EvCmdElboard_AddSpecialNews, EV_SEQ_ELBOARD_ADD_SPECIAL_NEWS )
-  DEF_CMD( EvCmdElboard_Recovery, EV_SEQ_ELBOARD_RECOVERY )
   DEF_CMD( EvCmdLookElboard, EV_SEQ_LOOK_ELBOARD )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   //虫ジム
   DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )

@@ -2263,47 +2263,6 @@
 
 //--------------------------------------------------------------
 /**
- *  @def _ELBOARD_SET_NORMAL_NEWS
- *  @brief 電光掲示板に平常時のニュースを設定
- */
-//--------------------------------------------------------------
-#define _ELBOARD_SET_NORMAL_NEWS() \
-    _ASM_ELBOARD_SET_NORMAL_NEWS
-
-  .macro  _ASM_ELBOARD_SET_NORMAL_NEWS
-  .short  EV_SEQ_ELBOARD_SET_NORMAL_NEWS
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  @def _ELBOARD_ADD_SPECIAL_NEWS
- *  @brief 電光掲示板に臨時ニュースを追加
- *  @param strID ニュースに使用するメッセージを指定
- */
-//--------------------------------------------------------------
-#define _ELBOARD_ADD_SPECIAL_NEWS( strID ) \
-    _ASM_ELBOARD_ADD_SPECIAL_NEWS strID
-
-  .macro  _ASM_ELBOARD_ADD_SPECIAL_NEWS strID
-  .short  EV_SEQ_ELBOARD_ADD_SPECIAL_NEWS
-  .short  \strID
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  @def _ELBOARD_RECOVERY
- *  @brief 電光掲示板の状態を復帰(画面復帰時に使用)
- */
-//--------------------------------------------------------------
-#define _ELBOARD_RECOVERY() \
-    _ASM_ELBOARD_RECOVERY
-
-  .macro  _ASM_ELBOARD_RECOVERY
-  .short  EV_SEQ_ELBOARD_RECOVERY
-  .endm
-
-//--------------------------------------------------------------
-/**
  *  @def _LOOK_ELBOARD
  *  @brief 電光掲示板を見る
  *  @param frame カメラ移動に要するフレーム数

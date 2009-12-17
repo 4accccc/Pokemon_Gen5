@@ -18,36 +18,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_init_gate_contents
+_EVENT_DATA    ev_dummy
 _EVENT_DATA_END
 
 
 
 /**************************************************************/
-/*  電光掲示板ゲート共通 特殊スクリプト 初期化処理            */
+/*                      ダミースクリプト                      */
 /**************************************************************/
-INIT_EVENT_START ev_init_gate_contents
-{
-  DEFINE_LOCAL month
-  DEFINE_LOCAL day
-
-  // 平常ニュース
-  _ELBOARD_SET_NORMAL_NEWS()
-
-/*
-  // 臨時ニュース
-  _GET_DATE( month, day )
-  _NUMBER( 0, month, 2 )
-  _NUMBER( 1, day,   2 )
-  
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_01_01 )  // 日付
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_c1_01 )  // ニュース1
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_c1_02 )  // ニュース2
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_c1_03 )  // ニュース2
-  _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_cm_01 )  // 日付
-*/
-  // 掲示板状態の復帰
-  _ELBOARD_RECOVERY()
-}
-INIT_EVENT_END
-
+EVENT_START ev_dummy
+EVENT_END 

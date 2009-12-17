@@ -11,7 +11,6 @@
 
   .include  "scr_seq_def.h"
   .include  "c04r0601_def.h"
-  .include  "gate_scr_def.h"  //SCRID_INIT_GATE_CONTENTS参照のため
 
 //--------------------------------------------------------------
 //              特殊スクリプト
