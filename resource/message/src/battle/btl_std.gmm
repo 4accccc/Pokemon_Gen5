@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-16T12:27:32"/>
+	<create user="taya" host="W00146" date="2009-12-17T11:51:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -601,7 +601,7 @@
 		<comment>ポケモン捕獲失敗（ゆれ回数２）</comment>
 		<language name="JPN" width="216">ざんねん！
 もうすこしで　つかまえられたのに！</language>
-		<language name="JPN_KANJI" width="216">残念！
+		<language name="JPN_KANJI" width="216">ざんねん！
 もう少しで　捕まえられたのに！</language>
 	</row>
 
@@ -619,6 +619,14 @@
 [1:01:ポケモン種族名:0]を　つかまえたぞ！</language>
 		<language name="JPN_KANJI" width="216">やったー！
 [1:01:ポケモン種族名:0]を　捕まえたぞ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_ZukanRegister" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモンが図鑑に登録される</comment>
+		<language name="JPN" width="216">[1:01:ポケモン種族名:0]のデータが　あたらしく
+ポケモンずかんに　とうろく　されます！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]のデータが　新しく
+ポケモンずかんに　登録されます！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
