@@ -77,10 +77,6 @@ init_flags:
 	//D02R0101：盗難イベント
 	//_FLAG_SET( FV_D02R0101_LEADER2 )
 
-	//野球場観客席：Ｎ戦闘イベントのＮとサポート
-	_FLAG_SET( FV_C04R0302_SUPPORT )
-	_FLAG_SET( FV_C04R0302_BOSS )
-
 	//D05R0101：夢アイテム、夢ポケモンと遭遇イベント後に表示
 	_FLAG_SET( FV_D01R0101_ITEM_01 )
 	

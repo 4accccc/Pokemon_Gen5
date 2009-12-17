@@ -29,6 +29,9 @@ _EVENT_DATA_END
 /*				自宅１階：初めて下りたとき					*/
 /************************************************************/
 EVENT_START ev_scene_t01r0101_first_01
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE1 )
+	
 	//ライバル：その場歩き
 	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_walk_01 )
 	_OBJ_ANIME_WAIT()
@@ -94,8 +97,17 @@ EVENT_START ev_scene_t01r0101_first_01
 	//【仮】ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
 	$LOCALWORK15 = 999
 
+	//ＴＶトランシーバーよ
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
+
+	//いってらっしゃい
+	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04_01, T01R0101_MAMA_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+	//イベント曲終了
+	_END_EVENT_BGM()
 
 //===============フラグワーク操作====================//
 
@@ -165,7 +177,26 @@ _ANIME_LABEL	anm_home_mama_walk_01
 /************************************************************/
 EVENT_START ev_t01r0101_mother_01
 	_TALK_OBJ_START()
+	
+	//図鑑入手後かで分岐
+	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
+		//通常処理をコール（回復）
+		_CALL		ev_everyday
+	
+	ELSE
+		//アララギ博士によろしくね
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
 
+
+EVENT_END
+
+
+//ママ：通常処理
+ev_everyday:
 	//回復済みチェック　ローカルワーク15を使用
 	IF $LOCALWORK15 == 999 THEN
 		//回復終了後なのでメッセージ表示のみ
@@ -199,9 +230,6 @@ EVENT_START ev_t01r0101_mother_01
 		_BALLOONWIN_CLOSE()
 
 	ENDIF
-
-
-EVENT_END
 
 
 

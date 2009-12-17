@@ -564,7 +564,7 @@
 #define FV_C01_INVENTOR_01                 540 /* 0x021c C01フィールド：バッジ入手後に話しかけてくる発明家（マコモ） */
 #define FV_C01R0101_INVENTOR_01            541 /* 0x021d 発明家自宅の１階：発明家（マコモ） （最終的には２階に常駐） */
 #define FV_C01R0501_RIVAL_01               542 /* 0x021e C01トレーナーズスクール：ライバル */
-#define FV_C04_SUPPORT_01                  543 /* 0x021f ライモンシティ：サポート */
+#define FV_C04_HAKAI_01                    543 /* 0x021f ライモンシティ：プラズマ団POSイベントのしたっぱ２人と育て屋じいさん */
 #define FV_D05R0101_RIVAL_01               544 /* 0x0220 D05R0101：初回入室時イベントライバル01 */
 #define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
 #define FV_D05R0101_WORKMAN_01             546 /* 0x0222 D05R0101：戦闘後表示WORKMAN */
@@ -574,7 +574,7 @@
 #define FV_D02R0101_HAKAI                  550 /* 0x0226 ヤグルマの森：盗難イベントのプラズマ団 */
 #define FV_D02R0101_LEADER2                551 /* 0x0227 ヤグルマの森：盗難イベントのジムリーダー（アロエ） */
 #define FV_D02R0101_LEADER3                552 /* 0x0228 ヤグルマの森：盗難イベントのジムリーダー（アーティ） */
-#define FV_C04R0302_BOSS                   553 /* 0x0229 Ｃ04野球場の観客席：Ｎ（エヌ） */
+#define FV_C04P01_BOSS_01                  553 /* 0x0229 ライモンシティ遊園地：N */
 #define FV_C05_GYMLEADER_01                554 /* 0x022a C05：ジムリーダー達 */
 #define FV_C05_GYMLEADER_02                555 /* 0x022b C05：ジムリーダー達 */
 #define FV_C05_WORKMAN_02                  556 /* 0x022c C05：H02方面ストッパー */
@@ -582,7 +582,7 @@
 #define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
 #define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
 #define FV_C05_BUSINESSMAN_01              560 /* 0x0230 C05：ジム前ストッパー */
-#define FV_C04R0302_SUPPORT                561 /* 0x0231 C04野球場の観客席：サポート */
+		/* not used   561(0x0231) */
 #define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
 #define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
 #define FV_C02GYM0202_LEADER2              564 /* 0x0234 C02ジム：ジムリーダー（アロエ） */

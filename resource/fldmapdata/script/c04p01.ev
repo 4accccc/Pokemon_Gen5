@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04p01.h"
-  //.include  "c04p01.h"
+  .include  "c04p01.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +23,7 @@ _EVENT_DATA    ev_c04p01_clown_01
 _EVENT_DATA    ev_c04p01_clown_02
 _EVENT_DATA    ev_c04p01_middlewoman2_01
 _EVENT_DATA    ev_c04p01_girl1_01
+_EVENT_DATA    ev_pos_c04p01_boss_01
 _EVENT_DATA_END
 
 
@@ -56,5 +57,153 @@ EVENT_END
 EVENT_START	ev_c04p01_girl1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_girl1_01 )
 EVENT_END
+
+
+/************************************************************/
+/*							Ｎ								*/
+/************************************************************/
+EVENT_START	ev_pos_c04p01_boss_01
+	
+	//Ｎ：主人公前へ
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_come_01 )
+	_TIME_WAIT( 8 )
+	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
+	_OBJ_ANIME_WAIT()
+	
+	//キミ プラズマだんを
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ＆主人公：観覧車前へ
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//さあ乗りたまえ
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//Ｎ＆主人公：位置変更
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//さて…
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	
+	//はい/いいえで分岐
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_04, C04P01_BOSS_01, WIN_NONE )
+		_MSGWIN_CLOSE()
+		
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_05, C04P01_BOSS_01, WIN_NONE )
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+	
+	//Ｎ：戦闘
+	_TRAINER_BTL_SET( TRID_BOSS_03, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+	
+	
+	//いま勝負の最中に
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_06, C04P01_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//Ｎ：去る
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_goaway_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//Ｎ：削除
+	_OBJ_DEL( C04P01_BOSS_01 )
+	
+	//========================================//
+	
+	//Ｎ非表示
+	_FLAG_SET( FV_C04P01_BOSS_01 )
+	
+	//POS無効
+	$WK_SCENE_C04P01 = 1
+	
+	//========================================//
+	
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_come_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ＆主人公：観覧車前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_move_01
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ＆主人公：位置変更
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_move_02
+	_ANIME_DATA	AC_WALK_L_2F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_02
+	_ANIME_DATA	AC_WALK_L_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	ACMD_END,0
+
 
 

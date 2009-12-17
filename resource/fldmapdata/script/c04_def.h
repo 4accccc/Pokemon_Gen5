@@ -5,7 +5,7 @@
 #define _C04_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_POS_C04_SUPPORT_01 (1)
+#define SCRID_POS_C04_HAKAI_01 (1)
 #define SCRID_POS_C04_LEADER4_01 (2)
 #define SCRID_C04_FOOTBALLM_01 (3)
 #define SCRID_C04_CLOWN_01 (4)
@@ -20,5 +20,6 @@
 #define SCRID_BG_C04_BOARD_03 (13)
 #define SCRID_BG_C04_BOARD_04 (14)
 #define SCRID_BG_C04_BOARD_05 (15)
+#define SCRID_BG_C04_BOARD_06 (16)
 
 #endif //_C04_DEF_H_

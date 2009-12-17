@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/09 18:23:35
+#save date:2009/12/16 21:19:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09r0201.wms
 #SECTION START:OBJ_EVENT
@@ -60,7 +60,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_C09R0201_ENTER_01
@@ -76,6 +76,23 @@ LOCALWORK0
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -152
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_C09R0201_WARP_01
+#Pos Script Name
+SCRID_POS_C09R0201_WARP_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+555
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 160 120
 #size
 1 1
 #Map Event List Data End

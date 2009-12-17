@@ -96,6 +96,9 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_06, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
+	
 	//ゲーチス：登場
 	_OBJ_ADD( N01R0502_SAGE1_01 )
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_come_01 )
@@ -402,7 +405,8 @@ _ANIME_LABEL	anm_sage1_move_04
 //Ｎ：走り去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_goaway_01
-	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	AC_WALK_U_6F,11
+	_ANIME_DATA	AC_WAIT_8F,4
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 

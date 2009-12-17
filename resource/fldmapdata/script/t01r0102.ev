@@ -386,8 +386,8 @@ t01r0102_poke_get_yes:
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
-	//【仮】サポート曲再生。演出をつめる。サポートは問題ないが、ライバルＢＧＭの鳴らすタイミングが難しい。
-	//_BGM_PLAY( SEQ_BGM_E_SUPPORT_M )
+	//サポート曲再生。演出をつめる。サポートは問題ないが、ライバルＢＧＭの鳴らすタイミングが難しい。
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
 
 	//サポート会話：勝負しましょ！
 	_BALLOONWIN_OBJMSG( msg_t01r0102_white_05, T01R0102_SUPPORT_01 )
@@ -425,7 +425,11 @@ t01r0102_poke_get_yes:
 	//サポート会話：つよいねー
 	_BALLOONWIN_OBJMSG( msg_t01r0102_white_11, T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
-
+	
+	
+	//ライバル曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	
 	//手持ちの残りHPで分岐
 	_CHECK_TEMOTI_HP( SCWK_ANSWER, 0 )		//ＨＰをチェック（必ず手持ちの先頭にいるはずなので 0 を指定）
 	IF $SCWK_ANSWER == TRUE THEN

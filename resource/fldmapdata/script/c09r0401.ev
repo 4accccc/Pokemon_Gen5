@@ -21,7 +21,31 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c09r0401_bigfour4_01
 _EVENT_DATA    ev_pos_c09r0401_enter_01
+_EVENT_DATA    ev_pos_c09r0401_warp_01
+_EVENT_DATA    ev_zone_c09r0401
 _EVENT_DATA_END
+
+
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK10 をギミックの制御に使用しています。マップ内使用禁止	//
+//		555 = POSイベント有効										//
+//																	//
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*					ゾーンチェンジスクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c09r0401
+	
+	//四天王（エスパー）倒しているならワープPOSイベントを有効にする
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+		$LOCALWORK10 = 555
+	ENDIF
+	
+	
+INIT_EVENT_END
 
 
 /************************************************************/
@@ -109,7 +133,7 @@ EVENT_START	ev_c09r0401_bigfour4_01
 			_MSGWIN_CLOSE()
 			
 			//トレーナー戦呼び出し
-			_TRAINER_BTL_SET( TRID_TANPAN_01, 0 )
+			_TRAINER_BTL_SET( TRID_BIGFOUR4_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -207,7 +231,18 @@ _ANIME_LABEL	anm_stay_walk_u
 //主人公：上へ進む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						ワープ（出口用）					*/
+/************************************************************/
+EVENT_START	ev_pos_c09r0401_warp_01
+	
+	//【仮】マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C09P01, 31, 14, DIR_UP )
+	
+EVENT_END
 
 
