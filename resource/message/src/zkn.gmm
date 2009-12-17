@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2009-12-15T22:46:36"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-17T19:39:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="111" top="362" right="816" bottom="990" maximized="no" rayout="Vertical2">
+	<dialog left="190" top="268" right="895" bottom="896" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1341,12 +1341,20 @@
 ニックネームを　つけますか？</language>
 	</row>
 
-	<row id="ZKN_POKEGET_BOX" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ポケモン捕獲後の図鑑画面</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]を
-[1:0B:ボックス名:1]へ　てんそうしました！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]を
-[1:0B:ボックス名:1]へ　てんそうしました！</language>
+	<row id="ZKN_POKEGET_BOX_01" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>ボックス転送：作成者に会っていない</comment>
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンに
+てんそうされた！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンに
+てんそうされた！</language>
+	</row>
+
+	<row id="ZKN_POKEGET_BOX_02" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>ボックス転送：作成者に会っている</comment>
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンに
+てんそうされた！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンに
+てんそうされた！</language>
 	</row>
 
 	<flowchart-group-list>
