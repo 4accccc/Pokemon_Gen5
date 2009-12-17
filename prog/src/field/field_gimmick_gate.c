@@ -428,20 +428,26 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // ニュースセットアップ
   {
+    int i;
     GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
     GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
     int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
     SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
+    NEWS_ENTRY_DATA* data = &save_buf->newsEntryData;
 
-    if( save_buf->newsEntryData.newsNum == 0 )
-    { // 新規
-      SetupElboardNews( work );
+    // フラグ復元
+    for( i=0; i<data->newsNum; i++)
+    {
+      EVENTWORK* evwork = GAMEDATA_GetEventWork( gdata );
+      if( data->newsType[i] == NEWS_TYPE_SPECIAL )
+      {
+        EVENTWORK_SetEventFlag( evwork, data->spNewsFlag[i] );
+      }
     }
-    else
-    { // 復帰
-      GATE_GIMMICK_Elboard_Recovery( fieldmap );
-    }
+    // ニュースをセット
+    SetupElboardNews( work ); 
+    GOBJ_ELBOARD_SetFrame( work->elboard, work->recoveryFrame << FX32_SHIFT );
   }
 
   // DEBUG:
