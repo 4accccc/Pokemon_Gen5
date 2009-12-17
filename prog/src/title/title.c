@@ -19,6 +19,7 @@
 #include "test/testmode.h"
 #include "font/font.naix"
 #include "title.naix"
+#include "title1.naix"
 #include "title/title.h"
 #include "title/startmenu.h"
 #include "system\gfl_use.h"
@@ -445,11 +446,13 @@ enum{
 	BGPRI_MSG = 0,
 	BGPRI_TITLE_LOGO = 2,
 	BGPRI_3D = 1,
+	BGPRI_BKGR = 2,
 };
 
 enum{
-	FRAME_MSG = GFL_BG_FRAME1_S,		///<メッセージフレーム
-	FRAME_LOGO = GFL_BG_FRAME3_S,		///<タイトルロゴのBGフレーム
+	FRAME_BKGR = GFL_BG_FRAME3_M,			// メイン画面背景
+	FRAME_MSG = GFL_BG_FRAME1_S,		// メッセージフレーム
+	FRAME_LOGO = GFL_BG_FRAME3_S,		// タイトルロゴのBGフレーム
 };
 
 //--------------------------------------------------------------
@@ -457,6 +460,12 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 {
 	//BGフレーム設定
 	{
+		static const GFL_BG_BGCNT_HEADER main_bkgr_frame = {	//メイン画面BGフレーム
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, 0x04000,
+			GX_BG_EXTPLTT_01, BGPRI_BKGR, 0, 0, FALSE
+		};
 		static const GFL_BG_BGCNT_HEADER sub_msg_frame = {	//サブ画面BGフレーム
 			0, 0, 0x800, 0,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -469,12 +478,23 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x8000,
 			GX_BG_EXTPLTT_01, BGPRI_TITLE_LOGO, 0, 0, FALSE
 		};
+		GFL_BG_SetBGControl( FRAME_BKGR, &main_bkgr_frame, GFL_BG_MODE_TEXT );
 		GFL_BG_SetBGControl( FRAME_MSG, &sub_msg_frame, GFL_BG_MODE_TEXT );
 		GFL_BG_SetBGControl( FRAME_LOGO, &sub_logo_frame, GFL_BG_MODE_TEXT );
 	}
-	//メイン画面背景色設定
-	GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M, GX_RGB(25, 31, 31));
+	//メイン画面背景設定
+	{
+		//GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M, GX_RGB(25, 31, 31));
+		GFL_ARC_UTIL_TransVramBgCharacter(
+			ARCID_TITLETEST, NARC_title1_sky_NCGR, FRAME_BKGR, 0, 0x4000, 0, heapID);
+		GFL_ARC_UTIL_TransVramScreen(
+			ARCID_TITLETEST, NARC_title1_sky_NSCR, FRAME_BKGR, 0, 0, 0, heapID);
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_TITLETEST, NARC_title1_sky_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
 
+		GFL_BG_LoadScreenReq( FRAME_BKGR );
+		GFL_BG_SetVisible(FRAME_BKGR, VISIBLE_ON);
+	}
 	//グラフィックデータロード(LOGO)
 	{
 		GFL_ARC_UTIL_TransVramBgCharacter(
@@ -557,8 +577,6 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
 //==============================================================================
 //	G3DControl
 //==============================================================================
-#include "title1.naix"
-
 static const GFL_G3D_LOOKAT cameraLookAt = {
 	{ -252.446045*FX32_ONE, 268.627930*FX32_ONE, 721.645996*FX32_ONE },	//カメラの位置(＝視点)
 	{ 0, FX32_ONE, 0 },												//カメラの上方向
