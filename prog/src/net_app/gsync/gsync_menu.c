@@ -32,12 +32,17 @@
 #include "sound/pm_sndsys.h"
 
 #include "msg/msg_gsync.h"
+#include "msg/msg_wifi_system.h"
 #include "../../field/event_gsync.h"
 #include "gsync.naix"
 #include "cg_comm.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
+#include "net/wih_dwc.h"
 #include "gsync_poke.cdat"
+#define _PALETTE_R(pal)  (pal & 0x001f)
+#define _PALETTE_G(pal)  ((pal & 0x03e0) >> 5)
+#define _PALETTE_B(pal)  ((pal & 0x7c00) >> 10)
 
 
 #define _NET_DEBUG (1)  //デバッグ時は１
@@ -93,6 +98,7 @@ static void Snd_SePlay(int a){}
 #define	FBMP_COL_PNK_SDW	(10)
 #define	FBMP_COL_WHITE		(15)
 
+#define _PALETTE_CHANGE_NUM (6)  //CGEARボタンに使っているパレット
 
 
 //--------------------------------------------
@@ -122,15 +128,17 @@ struct _GAMESYNC_MENU {
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
   GFL_MSGDATA *pMsgData;  //
+  GFL_MSGDATA *pMsgWiFiData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
 	STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	u32 subchar;
-  //    BMPWINFRAME_AREAMANAGER_POS aPos;
 
-
+  u8 BackupPalette[16 * _PALETTE_CHANGE_NUM *2];
+  u8 LightPalette[16 * _PALETTE_CHANGE_NUM *2];
+  u16 TransPalette[16 ];
 
   GFL_BMPWIN* infoDispWin;
   PRINT_STREAM* pStream;
@@ -139,13 +147,17 @@ struct _GAMESYNC_MENU {
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
+  APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_GSYNC_WORK * dbw;
   int windowNum;
   GAMEDATA* gamedata;
-  GAMESYS_WORK *gameSys_;
-  FIELDMAP_WORK *fieldWork_;
-  GMEVENT* event_;
+  GAMESYS_WORK *gsys;
   int yoffset;
+  int anmCnt;  //決定時アニメカウント
+  int bttnid;
+  u16 anmCos;
+  GAME_COMM_STATUS_BIT bit;
+  GAME_COMM_STATUS_BIT bitold;
 };
 
 
@@ -155,7 +167,6 @@ struct _GAMESYNC_MENU {
 //-----------------------------------------------
 static void _changeState(GAMESYNC_MENU* pWork,StateFunc* state);
 static void _changeStateDebug(GAMESYNC_MENU* pWork,StateFunc* state, int line);
-//static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork);
 static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WINDOWPOS* pos);
 static void _modeSelectMenuInit(GAMESYNC_MENU* pWork);
 static void _modeSelectMenuWait(GAMESYNC_MENU* pWork);
@@ -167,6 +178,14 @@ static void _modeSelectBattleTypeInit(GAMESYNC_MENU* pWork);
 
 static void _buttonWindowDelete(GAMESYNC_MENU* pWork);
 static void _ReturnButtonStart(GAMESYNC_MENU* pWork);
+static void _modeFadeout(GAMESYNC_MENU* pWork);
+static void _modeFadeoutStart(GAMESYNC_MENU* pWork);
+
+
+static void _infoMessageDispClear(GAMESYNC_MENU* pWork);
+static void _infoMessageEnd(GAMESYNC_MENU* pWork);
+static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork);
+static void _infoMessageDisp(GAMESYNC_MENU* pWork);
 
 
 
@@ -202,7 +221,7 @@ static void _changeState(GAMESYNC_MENU* pWork,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GAMESYNC_MENU* pWork,StateFunc state, int line)
 {
-  NET_PRINT("ircbtl: %d\n",line);
+  NET_PRINT("gsy: %d\n",line);
   _changeState(pWork, state);
 }
 #endif
@@ -276,6 +295,101 @@ static void _createSubBg(GAMESYNC_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   渡されたテーブルを元に明るいパレットを作る
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _lightPaletteMake(u16* pal, u16* PaletteTable, int num)
+{
+  int i,j;
+  u16 palr,palg,palb;
+  
+  for(i =0 ;i< num;i++){
+    for(j=0;j<16;j++){
+      palr = pal[i*16+j] & 0x001f;
+      palg = (pal[i*16+j] & 0x03e0) >> 5;
+      palb = (pal[i*16+j] & 0x7c00) >> 10;
+      palr += PaletteTable[j];
+      palg += PaletteTable[j];
+      palb += PaletteTable[j];
+      if(palr>0x1f){
+        palr=0x1f;
+      }
+      if(palg>0x1f){
+        palg=0x1f;
+      }
+      if(palb>0x1f){
+        palb=0x1f;
+      }
+      pal[i*16+j] = palr + (palg<<5) + (palb<<10);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeoutStart(GAMESYNC_MENU* pWork)
+{
+  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+
+
+  if(GFL_NET_IsInit()){
+    GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
+  }
+
+
+  _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タッチした際に画面が点滅
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeButtonFlash(GAMESYNC_MENU* pWork)
+{
+    //決定時アニメ
+  int pltNo = Btn_PalettePos[pWork->bttnid];
+  const u8 isBlink = (pWork->anmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
+  if( isBlink == 0 )
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->BackupPalette[32*pltNo] , 32 );
+  }
+  else
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->LightPalette[32*pltNo] , 32 );
+  }
+  pWork->anmCnt++;
+
+  if( pWork->anmCnt >= APP_TASKMENU_ANM_CNT )
+  {
+    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+    pWork->pAppWin = NULL;
+
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(pWork->dbw->ctrl))){
+      _CHANGE_STATE(pWork, _modeReportInit);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   受け取った数のウインドウを等間隔に作る 幅は3char
  * @retval  none
  */
@@ -286,8 +400,6 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WIN
   int i;
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
-
-	//_buttonWindowDelete(pWork);
 
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
@@ -303,34 +415,24 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WIN
   }
 
   for(i=0;i < num;i++){
-//    GFL_FONTSYS_SetColor(0xe,0xf,3);
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
       _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
-//      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
-
     PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
                         pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
-//void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
-
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   }
-
-
 	if(pWork->pButton){
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
-	 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-	 
 }
 
 
@@ -358,8 +460,6 @@ static void _buttonWindowDelete(GAMESYNC_MENU* pWork)
 			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
 			
-//			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-//			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
 		}
     pWork->buttonWin[i] = NULL;
@@ -408,12 +508,26 @@ static void _modeInit(GAMESYNC_MENU* pWork)
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_gsync_dat, pWork->heapID );
+  pWork->pMsgWiFiData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_system_dat, pWork->heapID );
+
   //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_comm_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+
+    {
+      NNSG2dPaletteData* pPal;
+      void* pData;
+
+      pData = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_cg_comm_comm_bg_NCLR, &pPal,  pWork->heapID);
+      GFL_STD_MemCopy(pPal->pRawData,pWork->BackupPalette,_PALETTE_CHANGE_NUM*32);
+      GFL_STD_MemCopy(pPal->pRawData,pWork->LightPalette,_PALETTE_CHANGE_NUM*32);
+      _lightPaletteMake((u16*)pWork->LightPalette, Btn_PaletteTable, _PALETTE_CHANGE_NUM);
+
+      GFL_HEAP_FreeMemory(pData);
+    }
     // サブ画面BG0キャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_cg_comm_comm_bg_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
@@ -475,6 +589,7 @@ static void _workEnd(GAMESYNC_MENU* pWork)
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
   GFL_MSG_Delete( pWork->pMsgData );
+  GFL_MSG_Delete( pWork->pMsgWiFiData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
@@ -483,7 +598,7 @@ static void _workEnd(GAMESYNC_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   フェードアウト処理
+ * @brief   フェードアウト処理 + 通信終了確認
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -491,9 +606,40 @@ static void _workEnd(GAMESYNC_MENU* pWork)
 static void _modeFadeout(GAMESYNC_MENU* pWork)
 {
 	if(WIPE_SYS_EndCheck()){
-		_CHANGE_STATE(pWork, NULL);        // 終わり
+    switch(pWork->selectType){
+    case GAMESYNC_RETURNMODE_SYNC:
+    case GAMESYNC_RETURNMODE_UTIL:
+      if(GAME_COMM_NO_NULL==GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys))){
+        _CHANGE_STATE(pWork, NULL);        // 終わり
+      }
+      break;
+    default:
+      _CHANGE_STATE(pWork, NULL);        // 終わり
+      break;
+    }
 	}
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キーを押したら最初に戻る
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _hitAnyKey(GAMESYNC_MENU* pWork)
+{
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+	if(GFL_UI_TP_GetTrg()){
+    _infoMessageEnd(pWork);
+    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+    pWork->pAppWin = NULL;
+		_CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
+	}
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -503,40 +649,100 @@ static void _modeFadeout(GAMESYNC_MENU* pWork)
 //------------------------------------------------------------------------------
 static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 {
-  BOOL ret=FALSE;
-  
+  pWork->bttnid=bttnid;
+
   switch( bttnid ){
   case _SELECTMODE_GSYNC:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeReportInit);
+    _CHANGE_STATE(pWork,_modeButtonFlash);
     pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
-    ret = TRUE;
     break;
   case _SELECTMODE_UTIL:
     if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
-      _CHANGE_STATE(pWork,_modeReportInit);
-      ret = TRUE;
-      break;
+      _CHANGE_STATE(pWork,_modeButtonFlash);
     }
-    //break throw
+    else{
+      GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
+      _infoMessageDisp(pWork);
+
+      _CHANGE_STATE(pWork,_hitAnyKey);
+    }
+    break;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
-    ret = TRUE;
+    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
     break;
   default:
     break;
   }
 
-  APP_TASKMENU_CloseMenu(pWork->pAppTask);
-  pWork->pAppTask = NULL;
 
-  return ret;
+  return TRUE;
+}
+
+static void _UpdatePalletAnimeSingle(GAMESYNC_MENU* pWork , u16 anmCnt , u8 pltNo )
+{
+  int i;
+  const u16* pal = (u16*)&pWork->BackupPalette[32*pltNo];
+  const u16* lpal = (u16*)&pWork->LightPalette[32*pltNo];
+
+  for(i = 0;i<16;i++){
+    //1～0に変換
+    const u32 br = _PALETTE_R(pal[i]);
+    const u32 bg = _PALETTE_G(pal[i]);
+    const u32 bb = _PALETTE_B(pal[i]);
+    
+    const fx16 cos = (FX_CosIdx(anmCnt)+FX16_ONE)/2;
+    const u8 r = br + (((_PALETTE_R(lpal[i])-br)*cos)>>FX16_SHIFT);
+    const u8 g = bg + (((_PALETTE_G(lpal[i])-bg)*cos)>>FX16_SHIFT);
+    const u8 b = bb + (((_PALETTE_B(lpal[i])-bb)*cos)>>FX16_SHIFT);
+    u16 palx[16];
+    
+    pWork->TransPalette[i] = GX_RGB(r, g, b);
+//    OS_TPrintf("%d pal %x  %x\n",i,pal[i],pWork->TransPalette[i]);
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          pltNo * 32,  pWork->TransPalette , 32 );
+    }
+  }
+}
+
+
+
+//--------------------------------------------------------------
+//	パレットアニメーションの更新
+//--------------------------------------------------------------
+static void _UpdatePalletAnime(GAMESYNC_MENU* pWork )
+{
+
+
+  //プレートアニメ
+  if( pWork->anmCos + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
+  {
+    pWork->anmCos = pWork->anmCos+APP_TASKMENU_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    pWork->anmCos += APP_TASKMENU_ANIME_VALUE;
+  }
+  {
+    if(GAME_COMM_STATUS_BIT_WIFI & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    }
+    if(GAME_COMM_STATUS_BIT_WIFI_ZONE & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    }
+    if(GAME_COMM_STATUS_BIT_WIFI_FREE & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    }
+    if(GAME_COMM_STATUS_BIT_WIFI_LOCK & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -547,19 +753,10 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(GAMESYNC_MENU* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    if(selectno==0){
-      pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-      _CHANGE_STATE(pWork,NULL);
-    }
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    return;
-  }
 	if(WIPE_SYS_EndCheck()){
 		GFL_BMN_Main( pWork->pButton );
 	}
+  _UpdatePalletAnime(pWork);
 }
 
 
@@ -601,26 +798,45 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
 static void _ReturnButtonStart(GAMESYNC_MENU* pWork)
 {
   int i;
-  APP_TASKMENU_INITWORK appinit;
-
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  1;
-  appinit.itemWork =  &pWork->appitem[0];
-
-  appinit.posType = ATPT_RIGHT_DOWN;
-  appinit.charPosX = 32;
-  appinit.charPosY = 23;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_003, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
 
-  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの画面消去
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageDispClear(GAMESYNC_MENU* pWork)
+{
+  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの終了
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageEnd(GAMESYNC_MENU* pWork)
+{
+  _infoMessageDispClear(pWork);
+  GFL_BMPWIN_Delete(pWork->infoDispWin);
+  pWork->infoDispWin=NULL;
 }
 
 //------------------------------------------------------------------------------
@@ -735,9 +951,7 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
     
     if(svr == SAVE_RESULT_OK){
-			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-      GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+      _infoMessageEnd(pWork);
 
       GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
 
@@ -807,7 +1021,6 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
@@ -840,6 +1053,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_STD_MemClear(pWork, sizeof(GAMESYNC_MENU));
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->gamedata = pParentWork->gameData;
+    pWork->gsys = pParentWork->gsys;
 
     GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
     GXS_DispOn();
@@ -895,8 +1109,14 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+  }
+  if(GFL_NET_IsInit()){
+    pWork->bitold =  pWork->bit;
+    pWork->bit = WIH_DWC_GetAllBeaconTypeBit();
+  }
 
-  //	ConnectBGPalAnm_Main(&pWork->cbp);
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
@@ -928,6 +1148,10 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  }
+
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
 

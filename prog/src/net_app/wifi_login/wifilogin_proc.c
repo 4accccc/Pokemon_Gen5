@@ -645,10 +645,12 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
       _CHANGE_STATE(pWork,_connectionStart);
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       _CHANGE_STATE(pWork,NULL);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
@@ -951,14 +953,13 @@ static void _modeReportWait2(WIFILOGIN_WORK* pWork)
     if(selectno==0){
 
 
-//      WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_007);
-
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
       GAMEDATA_SaveAsyncStart(pWork->gamedata);
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-   //   pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       _CHANGE_STATE(pWork,NULL);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);

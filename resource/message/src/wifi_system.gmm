@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-16T17:11:02"/>
+	<create user="ohno" host="W00141" date="2009-12-17T11:32:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -762,6 +762,15 @@
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">もうしこみを　ちゅうだん　しています
 しばらく　おまちください</language>
+	</row>
+
+	<row id="dwc_message_0017" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>DSiはWiFi設定を
+本体でしか行えない</comment>
+		<language name="JPN" font=" 1:small" width="216">ほんたいせっていのインターネットの　こうもくから
+せっていをおこなってください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">本体設定のインターネットの項目から
+設定を行ってください。</language>
 	</row>
 
 	<row id="dwc_lobby_0001">

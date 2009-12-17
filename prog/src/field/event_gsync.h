@@ -31,11 +31,11 @@ typedef struct {
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   BATTLE_SETUP_PARAM para;
-  BOOL isEndProc;
   int selectType;
   BOOL push;
   u16 boxNo;
   u16 boxIndex;
+  int PlayBGM;
   WIFILOGIN_PARAM aLoginWork;
   BOX2_GFL_PROC_PARAM boxParam;
 } EVENT_GSYNC_WORK;

@@ -108,15 +108,6 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
 //     (*seq) = _GAMESYNC_MAINPROC;
     break;
   case _CALL_GAMESYNC_MENU:
-
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
-      dbw->push=TRUE;
-    }
-
-    dbw->isEndProc = FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
     (*seq)++;
     break;
@@ -138,11 +129,12 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
 
   case _FIELD_FADEOUT:
-    dbw->isEndProc = FALSE;
     (*seq)++;
     break;
   case _CALL_IRCBATTLE_MATCH:
-   	PMSND_Exit();
+    
+    dbw->PlayBGM = PMSND_GetBGMsoundNo();
+    PMSND_Exit();
     
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_util), &WifiUtilGSyncProcData, dbw);
     (*seq)++;
@@ -153,9 +145,10 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     }
     break;
   case _FADEIN_WIFIUTIL:
+		OS_EnableIrq();
    	PMSND_Init();
+    FIELD_SOUND_PlayBGM(dbw->PlayBGM);
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1);
-    
     (*seq) = _CALL_GAMESYNC_MENU;
     break;
   case _FIELD_OPEN:
@@ -176,8 +169,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PopBGM( fsnd );
       dbw->push=FALSE;
-    }
-    PMSND_FadeInBGM(60);
+    } 
     return GMEVENT_RES_FINISH;
   case _FIELD_FADEOUT_IRCBATTLE:
     {
@@ -191,12 +183,21 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _CALL_GAMESYNC:
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
+      dbw->push=TRUE;
+    }
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
     (*seq)++;
     break;
   case _WAIT_GAMESYNCLOGIN:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      if(FALSE==DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SV_GetDreamWorldSaveData(dbw->ctrl))){
+      if(dbw->aLoginWork.result == WIFILOGIN_RESULT_CANCEL){
+        *seq = _FIELD_OPEN;
+      }
+      else if(FALSE==DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SV_GetDreamWorldSaveData(dbw->ctrl))){
         (*seq)=_GAMESYNC_CALLBOX;
       }
       else{
@@ -214,6 +215,12 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       (*seq)=_CALL_GAMESYNC_MENU;
     }
+    if(dbw->push){
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+      FIELD_SOUND_PopBGM( fsnd );
+      dbw->push=FALSE;
+    }
     break;
   case _GAMESYNC_CALLBOX:
     dbw->boxParam.gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -229,10 +236,15 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _GAMESYNC_CALLBOX_WAIT:
     dbw->boxNo = dbw->boxParam.retTray;      		// 終了時に開いていたトレイ（寝かせる用）
-    dbw->boxIndex = dbw->boxParam.retPoke;   		// 終了時に選択された位置（寝かせる用）
-    dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
-    (*seq) = _GAMESYNC_MAINPROC;
-    
+    dbw->boxIndex = dbw->boxParam.retPoke;   		// 終了時に選択された位置（寝かせる用
+    if((BOX_RET_SEL_NONE==dbw->boxParam.retTray) && (BOX_RET_SEL_NONE==dbw->boxParam.retPoke)){
+      GFL_NET_Exit(NULL);
+      *seq = _FIELD_OPEN;
+    }
+    else{
+      dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
+      (*seq) = _GAMESYNC_MAINPROC;
+    }
     break;
   default:
     GF_ASSERT(0);

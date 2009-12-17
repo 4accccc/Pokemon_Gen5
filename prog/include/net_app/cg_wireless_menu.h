@@ -23,6 +23,7 @@
 typedef struct _CG_WIRELESS_MENU  CG_WIRELESS_MENU;
 
 extern const GFL_PROC_DATA CG_WirelessMenuProcData;
+extern const GFL_PROC_DATA CGEAR_SubMenuProcData;
 
 
 enum CG_WIRELESS_RETURNMODE {

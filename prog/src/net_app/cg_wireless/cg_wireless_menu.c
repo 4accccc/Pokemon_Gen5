@@ -186,7 +186,6 @@ struct _CG_WIRELESS_MENU {
 //-----------------------------------------------
 static void _changeState(CG_WIRELESS_MENU* pWork,StateFunc* state);
 static void _changeStateDebug(CG_WIRELESS_MENU* pWork,StateFunc* state, int line);
-//static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork);
 static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _WINDOWPOS* pos);
 static void _modeSelectMenuInit(CG_WIRELESS_MENU* pWork);
 static void _modeSelectMenuWait(CG_WIRELESS_MENU* pWork);
@@ -321,7 +320,6 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
 
-	//_buttonWindowDelete(pWork);
 
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
@@ -337,22 +335,16 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
   }
 
   for(i=0;i < num;i++){
-//    GFL_FONTSYS_SetColor(0xe,0xf,3);
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
       _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
-//      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
-
     PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
                         pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
-//void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
-
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   }
@@ -362,9 +354,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
-	 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-	 
 }
 
 
@@ -663,18 +653,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 {
   
   pWork->bttnid=bttnid;
+
   switch( bttnid ){
   case _SELECTMODE_PALACE:
     {
       GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-     // if(Intrude_Check_CommConnect(pComm)){ //侵入通信が正常に繋がっているか調べる
-        pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
-        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-        _CHANGE_STATE(pWork,_modeButtonFlash);
-    //  }
-     // else{
-       // PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-//      }
+      pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      _CHANGE_STATE(pWork,_modeButtonFlash);
     }
     break;
   case _SELECTMODE_TV:
@@ -706,7 +692,7 @@ static void _MessageDisp(int i,int message,int change,BOOL expand ,CG_WIRELESS_M
     GFL_BMPWIN_Delete(pWork->buttonWin[i]);
   }
 
-  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
+//  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     GFL_BG_FRAME1_S,
@@ -815,28 +801,11 @@ static void _YesNoStart(CG_WIRELESS_MENU* pWork)
 static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork)
 {
   int i;
-  APP_TASKMENU_INITWORK appinit;
-
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  1;
-  appinit.itemWork =  &pWork->appitem[0];
-
-  appinit.posType = ATPT_RIGHT_DOWN;
-  appinit.charPosX = 32;
-  appinit.charPosY = 23;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_010, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-
-//  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-
-//  pWork->pAppTask->initWork	= appinit;
-//	pWork->pAppTask->res			= pWork->pAppTaskRes;
- // APP_TASKMENU_CreateMenuWin( pWork->pAppTask, pWork->pAppTaskRes );
 
 
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
@@ -1021,7 +990,7 @@ static void _UpdatePalletAnimeSingle(CG_WIRELESS_MENU* pWork , u16 anmCnt , u8 p
     u16 palx[16];
     
     pWork->TransPalette[i] = GX_RGB(r, g, b);
-    OS_TPrintf("%d pal %x  %x\n",i,pal[i],pWork->TransPalette[i]);
+    //OS_TPrintf("%d pal %x  %x\n",i,pal[i],pWork->TransPalette[i]);
     {
       NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
                                           pltNo * 32,  pWork->TransPalette , 32 );
@@ -1077,7 +1046,6 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
@@ -1179,7 +1147,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
     pWork->unionnumOld = pWork->unionnum;
     pWork->unionnum = GFL_NET_WLGetServiceNumber(WB_NET_MYSTERY);
   }
-  //	ConnectBGPalAnm_Main(&pWork->cbp);
+
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
