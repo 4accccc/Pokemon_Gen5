@@ -734,6 +734,24 @@ void FLDMSGPRINT_PrintStrBuf(
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGPRINT プリント　STRBUF指定、カラー指定あり
+ * @param	msgPrint	FLDMSGPRINT
+ * @param	x		表示X座標
+ * @param	y		表示Y座標
+ * @param	strBuf	表示するSTRBUF
+ * @param color PRINTSYS_LSB
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
+    u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color )
+{
+  PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
+		x, y, strBuf, msgPrint->fontHandle, color );		
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGPRINT　プリント転送チェック
  * @param	msgPrint	FLDMSGPRINT
  * @retval	BOOL	TRUE=転送終了
@@ -957,6 +975,23 @@ void FLDMSGWIN_PrintStrBuf( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf )
 
 //--------------------------------------------------------------
 /**
+ * メッセージウィンドウ　メッセージ表示 STRBUF指定、カラー指定あり
+ * @param	msgWin	FLDMSGWIN
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param	strBuf	STRBUF
+ * @param color PRINTSYS_LSB
+ * @retval	nothing
+ */
+//-------------------------------------------------------------
+void FLDMSGWIN_PrintStrBufColor( FLDMSGWIN *msgWin,
+    u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
+{
+	FLDMSGPRINT_PrintStrBufColor( msgWin->msgPrint, x, y, strBuf, color );
+}
+
+//--------------------------------------------------------------
+/**
  * メッセージウィンドウ　転送終了チェック
  * @param	msgWin	FLDMSGWIN
  * @retval	BOOL	TRUE=転送終了
@@ -1099,6 +1134,23 @@ void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 {
 	FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　メッセージ表示 STRBUF指定、カラー指定あり
+ * @param	sysWin	FLDSYSWIN
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param	strBuf	STRBUF
+ * @param color PRINTSYS_LSB
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_PrintStrBufColor( FLDSYSWIN *sysWin,
+    u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
+{
+	FLDMSGPRINT_PrintStrBufColor( sysWin->msgPrint, x, y, strBuf, color );
 }
 
 //--------------------------------------------------------------

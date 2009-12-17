@@ -181,6 +181,8 @@ extern void FLDMSGPRINT_PrintColor(
     FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID, PRINTSYS_LSB color );
 extern void FLDMSGPRINT_PrintStrBuf(
   FLDMSGPRINT *msgPrint, u32 x, u32 y, STRBUF *strBuf );
+extern void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
+    u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color );
 extern BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint );
 extern void FLDMSGPRINT_ChangeBmpWin(
     FLDMSGPRINT *msgPrint, GFL_BMPWIN *bmpwin );
@@ -199,6 +201,8 @@ extern FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 extern void FLDMSGWIN_Delete( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID );
 extern void FLDMSGWIN_PrintStrBuf( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
+extern void FLDMSGWIN_PrintStrBufColor( FLDMSGWIN *msgWin,
+    u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color );
 extern BOOL FLDMSGWIN_CheckPrintTrans( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_FillClearWindow(
@@ -211,6 +215,8 @@ extern FLDSYSWIN * FLDSYSWIN_Add(
 extern void FLDSYSWIN_Delete( FLDSYSWIN *msgWin );
 extern void FLDSYSWIN_Print( FLDSYSWIN *msgWin, u16 x, u16 y, u32 strID );
 extern void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
+extern void FLDSYSWIN_PrintStrBufColor( FLDSYSWIN *sysWin,
+    u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color );
 extern BOOL FLDSYSWIN_CheckPrintTrans( FLDSYSWIN *msgWin );
 extern void FLDSYSWIN_ClearWindow( FLDSYSWIN *msgWin );
 extern void FLDSYSWIN_FillClearWindow(
