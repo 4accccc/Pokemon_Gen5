@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BC10 (1)
+#define SCRID_BC_NPC (2)
 
 #endif //_BC10_DEF_H_

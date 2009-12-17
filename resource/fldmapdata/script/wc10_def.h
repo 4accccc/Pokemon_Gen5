@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_WC10 (1)
+#define SCRID_WF_NPC (2)
 
 #endif //_WC10_DEF_H_

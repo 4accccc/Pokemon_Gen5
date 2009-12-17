@@ -3,7 +3,7 @@
 #
 #   WFBC  人物情報のコンバート
 #
-#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def trdata_def output_header
+#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def trdata_def output_header
 #
 #
 #
@@ -13,7 +13,7 @@
 #引数　チェック
 if( @ARGV < 8 )
 {
-  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def trdata_def output_header\n" );
+  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def trdata_def output_header\n" );
   exit(1);
 }
 
@@ -21,7 +21,8 @@ if( @ARGV < 8 )
 @OBJCODE = undef;
 @TRTYPE_DEF = undef;
 @MONSNO_DEF = undef;
-@SCRIPT = undef;
+@SCRIPT_BC = undef;
+@SCRIPT_WF = undef;
 @ITEM_DEF = undef;
 @TRDATA_DEF = undef;
 
@@ -43,12 +44,15 @@ open( FILEIN, $ARGV[3] );
 @MONSNO_DEF = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[4] );
-@SCRIPT = <FILEIN>;
+@SCRIPT_BC = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[5] );
-@ITEM_DEF = <FILEIN>;
+@SCRIPT_WF = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[6] );
+@ITEM_DEF = <FILEIN>;
+close( FILEIN );
+open( FILEIN, $ARGV[7] );
 @TRDATA_DEF = <FILEIN>;
 close( FILEIN );
 
@@ -198,10 +202,10 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   $outnum = &TRDATA_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_BTL_TRDATA ] );
   print( FILEOUT pack( "I", $outnum ) );
   #スクリプト　WF
-  $outnum = &SCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_WF_00 ] );
+  $outnum = &SCRIPT_WF_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_WF_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
   #スクリプト　BC
-  $outnum = &SCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_BC_00 ] );
+  $outnum = &SCRIPT_BC_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_BC_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
   #道具 WF
   $outnum = &ITEMDEF_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_ITEM_WF ] );
@@ -327,7 +331,7 @@ sub MONSNO_GetIdx
   exit(1);
 }
 
-sub SCRIPT_GetIdx
+sub SCRIPT_BC_GetIdx
 {
   my( $name ) = @_;
   my( $code, @codeline );
@@ -335,7 +339,32 @@ sub SCRIPT_GetIdx
   #大文字化
   $name = uc( $name );
 
-  foreach $code (@SCRIPT)
+  foreach $code (@SCRIPT_BC)
+  {
+    $code =~ s/ +/ /g;
+    $code =~ s/\t+/ /g;
+    @codeline = split( /\s/, $code );
+    if( "".$codeline[1] eq "".$name )
+    {
+      $codeline[2] =~ s/\(//;
+      $codeline[2] =~ s/\)//;
+      return $codeline[2];
+    }
+  }
+
+  print( "script $name がみつかりません\n" );
+  exit(1);
+}
+
+sub SCRIPT_WF_GetIdx
+{
+  my( $name ) = @_;
+  my( $code, @codeline );
+
+  #大文字化
+  $name = uc( $name );
+
+  foreach $code (@SCRIPT_WF)
   {
     $code =~ s/ +/ /g;
     $code =~ s/\t+/ /g;
