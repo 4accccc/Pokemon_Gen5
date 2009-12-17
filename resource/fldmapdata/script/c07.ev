@@ -180,7 +180,7 @@ EVENT_START   ev_scene_c07_leader7_01
 	//======================================//
 	
 	//D08イベント開始・ジム前POS起動
-	$WK_SCENE_D08_LEGEND = 2
+	$WK_SCENE_C07 = 3
 	
 	//C07ハチク非表示
 	_FLAG_SET( FV_C07_READER7 )
