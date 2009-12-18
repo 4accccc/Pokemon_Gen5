@@ -44,12 +44,12 @@ _EVENT_DATA_END
 EVENT_START	ev_pos_c04_hakai_01
 	
 	//【保留】戦闘が間に入るとカメラ操作が正常に機能しなくなるため保留
-//	_CAMERA_START()		//カメラ操作開始
-//	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	//カメラ操作
-//	_CAMERA_MOVE( 9688,0,970752,28246016,0,31080448,30 )	//一番最後の引数は移動にかかるフレーム数
-//	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 9688,0,970752,28246016,0,31080448,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//じいさん！あんたが育て屋…
 	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim1_01, C04_HAKAIM_01, WIN_NONE )
@@ -89,7 +89,6 @@ EVENT_START	ev_pos_c04_hakai_01
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
-	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 	
 	//！

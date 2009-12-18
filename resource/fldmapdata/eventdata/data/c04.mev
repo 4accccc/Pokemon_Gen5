@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 11:28:54
+#save date:2009/12/17 23:17:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -270,7 +270,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C04_HAKAI_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -301,7 +301,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C04_HAKAI_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -332,7 +332,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C04_HAKAI_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
