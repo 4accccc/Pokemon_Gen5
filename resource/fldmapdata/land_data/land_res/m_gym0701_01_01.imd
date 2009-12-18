@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-17T13:03:47" source="m_gym0701_01_01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-18T10:41:47" source="m_gym0701_01_01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-17T13:03:47" source="m_gym0701_01_01c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-12-18T10:41:47" source="m_gym0701_01_01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2171,8 +2171,8 @@
 		41ef 2509 2929 35ad 316b 2d4b 292a 2d4a
 	</tex_palette>
 	<tex_palette index="3" name="ice_gake04_pl" color_size="16">
-		03ae 14a4 2527 3589 41ec 5270 4a4d 5ed4
-		6737 6316 6b58 56b2 6f9b 7bfe 7fff 7fff
+		1bf2 35ab 41ed 4a4f 5270 5ed3 5ab1 6316
+		6b58 6737 6b58 5ef5 6f7a 73bc 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="in30_back01_pl" color_size="16">
 		6318 56b5 4631 318c 2529 1ce7 18c6 18c6
@@ -6788,7 +6788,7 @@
 				</primitive>
 				<primitive index="16" type="quads" vertex_size="16">
 					<tex st="-64.000000 64.000000"/>
-					<clr rgb="23 23 23"/>
+					<clr rgb="23 31 31"/>
 					<pos_xyz xyz="-1.125000 0.250000 -0.132813"/>
 					<tex st="0.000000 64.000000"/>
 					<pos_xz xz="-1.125000 0.242188"/>
@@ -6806,7 +6806,7 @@
 					<tex st="0.000000 -64.000000"/>
 					<pos_xy xy="-0.750000 0.375000"/>
 					<tex st="-64.000000 64.000000"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_s xyz="-1.625000 0.625000 -1.375000"/>
 					<tex st="0.000000 64.000000"/>
 					<pos_xz xz="-1.625000 -1.000000"/>
@@ -7407,9 +7407,10 @@
 					<tex st="0.375000 11.125000"/>
 					<pos_xy xy="-1.000000 0.718750"/>
 					<tex st="0.375000 63.625000"/>
-					<clr rgb="18 25 24"/>
+					<clr rgb="21 27 27"/>
 					<pos_yz yz="-0.156250 0.304688"/>
 					<tex st="31.625000 63.312500"/>
+					<clr rgb="18 25 24"/>
 					<pos_xy xy="-0.875000 -0.031250"/>
 					<tex st="31.625000 11.125000"/>
 					<clr rgb="31 31 31"/>
@@ -7436,7 +7437,7 @@
 					<pos_xy xy="-0.750000 0.343750"/>
 					<tex st="0.375000 11.125000"/>
 					<pos_xy xy="-0.875000 0.218750"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_xyz xyz="-1.125000 0.250000 0.242188"/>
 					<tex st="0.375000 63.625000"/>
 					<clr rgb="18 25 24"/>
@@ -7463,7 +7464,7 @@
 					<tex st="0.000000 11.125000"/>
 					<pos_xy xy="-1.125000 0.375000"/>
 					<tex st="-64.000000 1.000000"/>
-					<clr rgb="25 25 25"/>
+					<clr rgb="23 31 31"/>
 					<pos_xy xy="-1.125000 0.250000"/>
 					<tex st="31.625000 1.000000"/>
 					<pos_xz xz="-1.125000 -0.132813"/>
@@ -7481,7 +7482,7 @@
 					<pos_xy xy="-1.250000 0.718750"/>
 					<tex st="0.375000 11.125000"/>
 					<pos_xy xy="-1.375000 0.593750"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_s xyz="-1.625000 0.625000 -1.000000"/>
 					<tex st="0.375000 63.312500"/>
 					<clr rgb="18 25 24"/>
@@ -7508,7 +7509,7 @@
 					<tex st="0.000000 11.125000"/>
 					<pos_xy xy="-1.625000 0.750000"/>
 					<tex st="31.625000 1.000000"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_xy xy="-1.625000 0.625000"/>
 					<tex st="-64.000000 1.000000"/>
 					<pos_xz xz="-1.625000 -1.375000"/>
@@ -7523,7 +7524,7 @@
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.125000 0.375000 0.242188"/>
 					<tex st="32.000000 3.937500"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_xy xy="-1.125000 0.250000"/>
 					<tex st="0.000000 7.562500"/>
 					<clr rgb="31 31 31"/>
@@ -7531,7 +7532,7 @@
 					<tex st="32.000000 11.125000"/>
 					<pos_s xyz="-1.625000 0.750000 -1.000000"/>
 					<tex st="32.000000 3.937500"/>
-					<clr rgb="16 16 16"/>
+					<clr rgb="23 31 31"/>
 					<pos_xy xy="-1.625000 0.625000"/>
 					<tex st="0.000000 7.562500"/>
 					<clr rgb="31 31 31"/>
