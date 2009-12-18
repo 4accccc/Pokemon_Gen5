@@ -65,7 +65,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 		ENDIF
 	
 	//二回目以降に話しかけた場合
-	ELSE
+	ELSIF $WK_SCENE_R03R0301 == 1 THEN
 	
 		//先に進むか質問
 		_BALLOONWIN_OBJMSG( msg_r03r0301_black_03 , R03R0301_RIVAL_01 )
@@ -84,6 +84,9 @@ EVENT_START   ev_pos_r03r0301_rival_01
 			_OBJ_ANIME_WAIT()
 		ENDIF
 	
+	//イベント終了
+	ELSE
+	
 	ENDIF
 
 EVENT_END
@@ -93,9 +96,29 @@ EVENT_END
 /**************************************************************/
 ev_r03r0301_rival02:
 
+	//主人公位置格納
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	_PLAYER_POS_GET( POSX,POSZ )
+	
+	SWITCH $POSZ
+	CASE 4 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz4 )
+		_OBJ_ANIME_WAIT()
+	CASE 5 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz5 )
+		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME_WAIT()
+	CASE 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz6 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //一番上と同じ処理
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz4 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
 	//プラズマ団のもとへ
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_go )
-	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_player_go )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_go_end )
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_go )
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ団と会話
@@ -103,6 +126,8 @@ ev_r03r0301_rival02:
 	_BALLOONWIN_CLOSE()
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim_01 , R03R0301_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_step )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_05 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -129,6 +154,7 @@ ev_r03r0301_rival02:
 	_DISP_FADE_END_CHECK()
 	_OBJ_DEL( R03R0301_HAKAIM_01 )
 	_OBJ_DEL( R03R0301_HAKAIM_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_rival_01 )
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_01 )
 	_OBJ_ANIME_WAIT()
 	_BLACK_IN()
@@ -139,12 +165,14 @@ ev_r03r0301_rival02:
 	_BALLOONWIN_CLOSE()
 	
 	//主人公のほうを向いて
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_to_rival )
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_02 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_08 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル退場
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_rival_01 )
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_03 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( R03R0301_RIVAL_01 )
@@ -173,11 +201,53 @@ _ANIME_LABEL	anm_r03r0301_player_return
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	主人公「はい」で進む
+//	主人公「はい」で進むz5
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03r0301_player_go
+_ANIME_LABEL	anm_r03r0301_player_goz4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公「はい」で進むz5
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_goz5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公「はい」で進むz6
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_goz6
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公「はい」で進むgo_end
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_go_end
 	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	主人公「はい」で進むz6
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_rival_go
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// ライバルその場歩きでせっかちさ表現
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r03r0301_rival_step
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -193,7 +263,15 @@ _ANIME_LABEL	anm_r03r0301_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_rival_02
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公のほうを向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_to_rival
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
