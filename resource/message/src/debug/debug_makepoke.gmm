@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-17T15:01:58"/>
+	<create user="taya" host="W00146" date="2009-12-18T11:54:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -484,6 +484,10 @@
 
 	<row id="DMPSTR_DEFWAZA">
 		<language name="JPN" width="256">デフォ</language>
+	</row>
+
+	<row id="DMPSTR_SLASH">
+		<language name="JPN" width="256">/</language>
 	</row>
 
 	<flowchart-group-list>
