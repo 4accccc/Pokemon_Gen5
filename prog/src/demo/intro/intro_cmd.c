@@ -95,12 +95,12 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
 static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
-static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
-static BOOL CMD_RELOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
@@ -113,12 +113,12 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   NULL, // null
   CMD_SET_SCENE,
   CMD_YESNO,
-  CMD_BG_LOAD,
+  CMD_LOAD_BG,
   CMD_BGM,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
-  CMD_RELOAD_GMM,
+  CMD_LOAD_GMM,
   CMD_PRINT_MSG,
   CMD_SELECT_MOJI,
   NULL, // end
@@ -228,7 +228,7 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   HEAPID heap_id;
 	ARCHANDLE	*handle;
@@ -361,9 +361,9 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_RELOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  INTRO_MSG_ReloadGmm( wk->wk_msg, param[0], param[1] );
+  INTRO_MSG_LoadGmm( wk->wk_msg, param[0], param[1] );
 
   return TRUE;
 }
@@ -429,7 +429,6 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
   }
 
   return TRUE;
-
 }
 
 //=============================================================================
@@ -460,7 +459,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( const INTRO_PARAM* init_param, HEAPID heap_id )
   wk->init_param  = init_param;
 
   // 選択肢モジュール初期化
-  wk->wk_msg = INTRO_MSG_Create( NARC_message_intro_dat, GFL_MSG_LOAD_NORMAL, heap_id );
+  wk->wk_msg = INTRO_MSG_Create( heap_id );
 
   return wk;
 }
@@ -525,11 +524,15 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
         // 次のシーンの先頭コマンド
         data = Intro_DATA_GetCmdData( wk->scene_id );
       }
+#if 0
       else if( data->type == INTRO_CMD_TYPE_YESNO )
       {
+        //@TODO 次のコマンドを差される前じゃないと困るので一旦ここにおく
         c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
-      
       }
+#endif
+
+      //---------------------------------------------
 
       // コマンド終了判定
       if( data->type == INTRO_CMD_TYPE_END )

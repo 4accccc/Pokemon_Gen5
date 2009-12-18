@@ -108,7 +108,7 @@ struct _INTRO_MSG_WORK {
  *	@retval INTRO_MSG_WORK* wk メインワーク
  */
 //-----------------------------------------------------------------------------
-INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, GflMsgLoadType type, HEAPID heap_id )
+INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 {
   INTRO_MSG_WORK* wk;
 
@@ -119,9 +119,6 @@ INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, GflMsgLoadType type, HEAPID he
   wk->heap_id = heap_id;
   wk->wordset = WORDSET_Create( heap_id );
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
-  
-  // メッセージハンドルをROMに展開しておく
-  wk->msghandle = GFL_MSG_Create( type, ARCID_MESSAGE, msg_dat_id, heap_id );
 
   wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 1, 0 );
 
@@ -182,7 +179,10 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 
   PRINTSYS_QUE_Delete( wk->print_que );
   
-  GFL_MSG_Delete( wk->msghandle );
+  if( wk->msghandle )
+  {
+    GFL_MSG_Delete( wk->msghandle );
+  }
 
   WORDSET_Delete( wk->wordset );
 
@@ -201,9 +201,12 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INTRO_MSG_ReloadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id )
+void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id )
 {
-  GFL_MSG_Delete( wk->msghandle );
+  if( wk->msghandle )
+  {
+    GFL_MSG_Delete( wk->msghandle );
+  }
   wk->msghandle = GFL_MSG_Create( type, ARCID_MESSAGE, msg_dat_id, wk->heap_id );
 }
 

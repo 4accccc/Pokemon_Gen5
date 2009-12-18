@@ -55,10 +55,10 @@ typedef struct {
 //=============================================================================
 
 // main
-extern INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, GflMsgLoadType type, HEAPID heap_id );
+extern INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id );
 extern void INTRO_MSG_Exit( INTRO_MSG_WORK* wk );
 extern void INTRO_MSG_Main( INTRO_MSG_WORK* wk );
-extern void INTRO_MSG_ReloadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id );
+extern void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id );
 
 // stream
 extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg );
