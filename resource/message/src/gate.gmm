@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00210" date="2009-12-18T21:56:25"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T23:01:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -420,50 +420,50 @@
 	<row id="msg_gate_common_cm_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/月曜</comment>
-		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　　　ていきょう　ポケモンセンター</language>
-		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　提供　ポケモンセンター</language>
+		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　　　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　ポケモンセンター</language>
 	</row>
 
 	<row id="msg_gate_common_cm_02" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/火曜</comment>
-		<language name="JPN" width="256">◇「かってよかった　キズぐすり　なくてこまった　キズぐすり」　こうにゅうは　フレンドリィショップまで！　　　ていきょう　フレンドリィショップ</language>
-		<language name="JPN_KANJI" width="256">◇「買ってよかった　キズぐすり　無くて困った　キズぐすり」　購入は　フレンドリィショップまで！　　　提供　フレンドリィショップ</language>
+		<language name="JPN" width="256">◇「かってよかった　キズぐすり　なくてこまった　キズぐすり」　こうにゅうは　フレンドリィショップまで！　　　フレンドリィショップ</language>
+		<language name="JPN_KANJI" width="256">◇「買ってよかった　キズぐすり　無くて困った　キズぐすり」　購入は　フレンドリィショップまで！　　　フレンドリィショップ</language>
 	</row>
 
 	<row id="msg_gate_common_cm_03" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/水曜</comment>
-		<language name="JPN" width="256">◇あなたの　かわりに　そだてます　あずけるだけで　ポケモンは　つよくなる　　　ていきょう　３ばんどうろ　そだてや　</language>
-		<language name="JPN_KANJI" width="256">◇あなたの　代わりに　育てます　預けるだけで　ポケモンは　強くなる　　　提供　３番道路　育て屋　</language>
+		<language name="JPN" width="256">◇あなたの　かわりに　そだてます　あずけるだけで　ポケモンは　つよくなる　　　３ばんどうろ　そだてや　</language>
+		<language name="JPN_KANJI" width="256">◇あなたの　代わりに　育てます　預けるだけで　ポケモンは　強くなる　　　３番道路　育て屋　</language>
 	</row>
 
 	<row id="msg_gate_common_cm_04" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/木曜</comment>
-		<language name="JPN" width="256">◇スターへの　かいだんが　ここから　はじまる……　あなたの　さんかを　まっています　　　ていきょう　ライモンシティ　ミュージカル</language>
-		<language name="JPN_KANJI" width="256">◇スターへの　階段が　ここから　始まる……　あなたの　参加を　待っています　　　提供　ライモンシティ　ミュージカル</language>
+		<language name="JPN" width="256">◇スターへの　かいだんが　ここから　はじまる……　あなたの　さんかを　まっています　　　ライモンシティ　ミュージカル</language>
+		<language name="JPN_KANJI" width="256">◇スターへの　階段が　ここから　始まる……　あなたの　参加を　待っています　　　ライモンシティ　ミュージカル</language>
 	</row>
 
 	<row id="msg_gate_common_cm_05" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/金曜</comment>
-		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて」　　あなたを　まんぞくが　ここに　あります　　　ていきょう　９ばんどうろ　ショッピングモール</language>
-		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて」　　あなたを　満足が　ここに　あります　　　提供　９ばんどうろ　ショッピングモール</language>
+		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて」　　あなたを　まんぞくが　ここに　あります　　　９ばんどうろ　ショッピングモール</language>
+		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて」　　あなたを　満足が　ここに　あります　　　９ばんどうろ　ショッピングモール</language>
 	</row>
 
 	<row id="msg_gate_common_cm_06" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/土曜</comment>
-		<language name="JPN" width="256">◇なまえを　かえれば　すばらしい　みらい　　なまえが　みちびく　すばらしい　かんけい　　　ていきょう　ヒウンシティ　せいめいはんだんの　みせ</language>
-		<language name="JPN_KANJI" width="256">◇名前を　変えれば　素晴らしい　未来　名前が　導く　素晴らしい　関係　　　提供　ヒウンシティ　姓名判断の店</language>
+		<language name="JPN" width="256">◇なまえを　かえれば　すばらしい　みらい　　なまえが　みちびく　すばらしい　かんけい　　　ヒウンシティ　せいめいはんだんの　みせ</language>
+		<language name="JPN_KANJI" width="256">◇名前を　変えれば　素晴らしい　未来　名前が　導く　素晴らしい　関係　　　ヒウンシティ　姓名判断の店</language>
 	</row>
 
 	<row id="msg_gate_common_cm_07" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
-		<language name="JPN" width="256">◇にがさは　りょうやくの　あかし　　にがさは　あいの　あかし　　　ていきょう　ホドモエシティ　マーケット　かんぽうや</language>
-		<language name="JPN_KANJI" width="256">◇苦さは　良薬の　証　　苦さは　愛の　証　　　提供　ホドモエシティ　マーケット　漢方屋</language>
+		<language name="JPN" width="256">◇にがさは　りょうやくの　あかし　　にがさは　あいの　あかし　　　ホドモエシティ　マーケット　かんぽうや</language>
+		<language name="JPN_KANJI" width="256">◇苦さは　良薬の　証　　苦さは　愛の　証　　　ホドモエシティ　マーケット　漢方屋</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -1170,56 +1170,56 @@
 
 	<row id="msg_gate_d3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報1</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報１</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう１</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報１</language>
 	</row>
 
 	<row id="msg_gate_d3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報2</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報２</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう２</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報２</language>
 	</row>
 
 	<row id="msg_gate_d3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報3</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報３</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう３</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報３</language>
 	</row>
 
 	<row id="msg_gate_d3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報4</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報４</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう４</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報４</language>
 	</row>
 
 	<row id="msg_gate_d3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報5</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報５</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう５</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報５</language>
 	</row>
 
 	<row id="msg_gate_d3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報6</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報６</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう６</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報６</language>
 	</row>
 
 	<row id="msg_gate_d3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報7</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報７</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう７</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報７</language>
 	</row>
 
 	<row id="msg_gate_d3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報8</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報８</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう８</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報８</language>
 	</row>
 
 	<row id="msg_gate_d3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報9</comment>
-		<language name="JPN" width="256">◇デザートリザートは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇デザートリザートは･･････　情報９</language>
+		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう９</language>
+		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報９</language>
 	</row>
 
 	<row id="msg_gate_d8_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1545,37 +1545,37 @@
 
 	<row id="msg_gate_champ_1">
 		<comment>チャンピオン情報（ポケモン数1)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]</language>
 	</row>
 
 	<row id="msg_gate_champ_2">
 		<comment>チャンピオン情報（ポケモン数2)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]</language>
 	</row>
 
 	<row id="msg_gate_champ_3">
 		<comment>チャンピオン情報（ポケモン数3)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]</language>
 	</row>
 
 	<row id="msg_gate_champ_4">
 		<comment>チャンピオン情報（ポケモン数4)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]</language>
 	</row>
 
 	<row id="msg_gate_champ_5">
 		<comment>チャンピオン情報（ポケモン数5)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]</language>
 	</row>
 
 	<row id="msg_gate_champ_6">
 		<comment>チャンピオン情報（ポケモン数6)</comment>
-		<language name="JPN" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]</language>
+		<language name="JPN" width="256">しんチャンピオン　たんじょう！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]</language>
 		<language name="JPN_KANJI" width="256">新チャンピオン誕生！　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]</language>
 	</row>
 
