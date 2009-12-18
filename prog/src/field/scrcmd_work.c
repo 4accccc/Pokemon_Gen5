@@ -469,8 +469,20 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
 
   sx = FLDMENUFUNC_GetListMenuWidth(
       menuWork->listData, menuH.font_size_x, menuH.msg_spc );
+
+  //項目数が表示最大数を超えているかをチェックして、ウィンドウの縦幅を決定する
+  {
+    u32 len;
+    u32 max = FLDMENUFUNC_GetListMax( menuWork->listData );
+    if (max > data_MenuHeader.line) len = data_MenuHeader.line;
+    else len = max;
+
+    sy = FLDMENUFUNC_GetListMenuLen( len, menuH.font_size_y, menuH.line_spc );
+  }
+/**
   sy = FLDMENUFUNC_GetListMenuHeight(
       menuWork->listData, menuH.font_size_y, menuH.line_spc );
+*/
   count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
