@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-12-03T20:35:55"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T22:58:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="146" right="762" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="145" right="759" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,8 +301,8 @@
 いいえ→終了</comment>
 		<language name="JPN" width="256">この　きは　なんだか　きれそうだ！
 いあいぎりで　きりますか？</language>
-		<language name="JPN_KANJI" width="256">この　きは　なんだか　きれそうだ！
-いあいぎりで　きりますか？</language>
+		<language name="JPN_KANJI" width="256">この　木は　なんだか　切れそうだ！
+いあいぎりで　切りますか？</language>
 	</row>
 
 	<row id="msg_iai_02">
@@ -313,16 +313,16 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 いあいぎりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-いあいぎりを　つかった！▼</language>
+いあいぎりを　使った！▼</language>
 	</row>
 
 	<row id="msg_iai_03">
 		<comment>秘伝いあいぎり
 ・秘伝使用不可能時</comment>
-		<language name="JPN" width="256">この　きは　なんだか
-きれそうだ！</language>
-		<language name="JPN_KANJI" width="256">この　きは　なんだか
-きれそうだ！</language>
+		<language name="JPN" width="256">この　きは
+なんだか　きれそうだ！</language>
+		<language name="JPN_KANJI" width="256">この　木は
+なんだか　切れそうだ！</language>
 	</row>
 
 	<row id="msg_iwa_01">
@@ -330,8 +330,8 @@
 ・秘伝使用可能時</comment>
 		<language name="JPN" width="256">ポケモンの　わざで　こわせそうだ！
 いわくだきを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　わざで　こわせそうだ！
-いわくだきを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　技で　壊せそうだ！
+いわくだきを　使いますか？</language>
 	</row>
 
 	<row id="msg_iwa_02">
@@ -339,8 +339,8 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">かたそうな　いわ　だけど……
 ポケモンの　わざで　こわせるかも？</language>
-		<language name="JPN_KANJI" width="256">かたそうな　いわ　だけど……
-ポケモンの　わざで　こわせるかも？</language>
+		<language name="JPN_KANJI" width="256">固そうな　岩　だけど……
+ポケモンの　技で　壊せるかも？</language>
 	</row>
 
 	<row id="msg_iwa_03">
@@ -351,7 +351,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 いわくだきを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-いわくだきを　つかった！▼</language>
+いわくだきを　使った！▼</language>
 	</row>
 
 	<row id="msg_kairiki_01">
@@ -366,9 +366,9 @@
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 ポケモンの　わざで　おせるかも？▼
 かいりきを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">おおきな　いわ　だけど……
-ポケモンの　わざで　おせるかも？▼
-かいりきを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">大きな　岩　だけど……
+ポケモンの　技で　押せるかも？▼
+かいりきを　使いますか？</language>
 	</row>
 
 	<row id="msg_kairiki_02">
@@ -381,9 +381,9 @@
 [1:00:トレーナー名:0]の　かいりきの　おかげで
 いわを　おせるように　なった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-かいりきを　はっき　した！▼
+かいりきを　発揮した！▼
 [1:00:トレーナー名:0]の　かいりきの　おかげで
-いわを　おせるように　なった！</language>
+岩を　押せるように　なった！</language>
 	</row>
 
 	<row id="msg_kairiki_03">
@@ -391,8 +391,8 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 ポケモンの　わざで　おせるかも？</language>
-		<language name="JPN_KANJI" width="256">おおきな　いわ　だけど……
-ポケモンの　わざで　おせるかも？</language>
+		<language name="JPN_KANJI" width="256">大きな　岩　だけど……
+ポケモンの　技で　押せるかも？</language>
 	</row>
 
 	<row id="msg_kairiki_04">
@@ -401,7 +401,7 @@
 		<language name="JPN" width="256">かいりきの　おかげで
 いわを　おして　うごかせる！</language>
 		<language name="JPN_KANJI" width="256">かいりきの　おかげで
-いわを　おして　うごかせる！</language>
+岩を　押して　動かせる！</language>
 	</row>
 
 	<row id="msg_kairiki_05">
@@ -412,7 +412,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 かいりきを　はっき　した！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-かいりきを　はっき　した！▼</language>
+かいりきを　発揮した！▼</language>
 	</row>
 
 	<row id="msg_kairiki_06">
@@ -423,7 +423,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
 いわを　おせるように　なった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
-いわを　おせるように　なった！</language>
+岩を　押せるように　なった！</language>
 	</row>
 
 	<row id="msg_kairiki_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -431,16 +431,16 @@
 ・岩を穴やがけに落としたとき</comment>
 		<language name="JPN" width="256">おとした　いわの　うえを
 とおれるように　なった！</language>
-		<language name="JPN_KANJI" width="256">おとした　いわの　うえを
-とおれるように　なった！</language>
+		<language name="JPN_KANJI" width="256">落とした　岩の　上を
+通れるように　なった！</language>
 	</row>
 
 	<row id="msg_naminori_01">
 		<comment>秘伝なみのり</comment>
 		<language name="JPN" width="256">みずは　ふかい　あおに　そまっている
 なみのりを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">みずは　ふかい　あおに　そまっている
-なみのりを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">水は　深い　青に　染まっている
+なみのりを　使いますか？</language>
 	</row>
 
 	<row id="msg_naminori_02">
@@ -450,15 +450,15 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 なみのりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-なみのりを　つかった！▼</language>
+なみのりを　使った！▼</language>
 	</row>
 
 	<row id="msg_naminori_03">
 		<comment>連れ歩きエラーメッセージ</comment>
-		<language name="JPN" width="256">つれあるいて　いるときは
+		<language name="JPN" width="256">つれあるいている　ときは
 なみのりを　つかえません！</language>
-		<language name="JPN_KANJI" width="256">つれあるいて　いるときは
-なみのりを　つかえません！</language>
+		<language name="JPN_KANJI" width="256">連れ歩いている　ときは
+なみのりを　使えません！</language>
 	</row>
 
 	<row id="msg_kiri_01">
@@ -470,8 +470,8 @@
 いいえ→終了</comment>
 		<language name="JPN" width="256">ふかい　きりに　おおわれている……
 きりばらいを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">ふかい　きりに　おおわれている……
-きりばらいを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">深い　霧に　おおわれている……
+きりばらいを　使いますか？</language>
 	</row>
 
 	<row id="msg_kiri_02">
@@ -481,7 +481,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 きりばらいを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-きりばらいを　つかった！▼</language>
+きりばらいを　使った！▼</language>
 	</row>
 
 	<row id="msg_kiri_03">
@@ -489,8 +489,8 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">ふかい　きりに　おおわれている……
 ポケモンの　わざで　はらえるかも？</language>
-		<language name="JPN_KANJI" width="256">ふかい　きりに　おおわれている……
-ポケモンの　わざで　はらえるかも？</language>
+		<language name="JPN_KANJI" width="256">深い　霧に　おおわれている……
+ポケモンの　技で　はらえるかも？</language>
 	</row>
 
 	<row id="msg_rock_01">
@@ -502,8 +502,8 @@
 いいえ→終了</comment>
 		<language name="JPN" width="256">いわはだが　ゴツゴツしている……
 ロッククライムを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">いわはだが　ゴツゴツしている……
-ロッククライムを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">岩肌が　ゴツゴツしている……
+ロッククライムを　使いますか？</language>
 	</row>
 
 	<row id="msg_rock_02">
@@ -521,16 +521,16 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">いわはだが　ゴツゴツしている……
 ポケモンのわざで　いどうできるかも？</language>
-		<language name="JPN_KANJI" width="256">いわはだが　ゴツゴツしている……
-ポケモンのわざで　いどうできるかも？</language>
+		<language name="JPN_KANJI" width="256">岩肌が　ゴツゴツしている……
+ポケモンの技で　移動できるかも？</language>
 	</row>
 
 	<row id="msg_rock_04">
 		<comment>連れ歩きエラーメッセージ</comment>
-		<language name="JPN" width="256">つれあるいて　いるときは
+		<language name="JPN" width="256">つれあるいている　ときは
 ロッククライムを　つかえません！</language>
-		<language name="JPN_KANJI" width="256">つれあるいて　いるときは
-ロッククライムを　つかえません！</language>
+		<language name="JPN_KANJI" width="256">連れ歩いている　ときは
+ロッククライムを　使えません！</language>
 	</row>
 
 	<row id="msg_taki_01">
@@ -542,8 +542,8 @@
 いいえ→終了</comment>
 		<language name="JPN" width="256">おおきな　たきだ！
 たきのぼりを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">おおきな　たきだ！
-たきのぼりを　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">大きな　滝だ！
+たきのぼりを　使いますか？</language>
 	</row>
 
 	<row id="msg_taki_02">
@@ -553,7 +553,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 たきのぼりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-たきのぼりを　つかった！▼</language>
+たきのぼりを　使った！▼</language>
 	</row>
 
 	<row id="msg_taki_03">
@@ -561,8 +561,8 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">おおきな　おとを　たてて
 みずが　ながれおちている！</language>
-		<language name="JPN_KANJI" width="256">おおきな　おとを　たてて
-みずが　ながれおちている！</language>
+		<language name="JPN_KANJI" width="256">大きな　音を　たてて
+水が　流れ落ちている！</language>
 	</row>
 
 	<row id="msg_teleport_ask_01">
@@ -571,7 +571,7 @@
 0＝マップ名</comment>
 		<language name="JPN" width="256">さいごに　やすんだ
 [1:04:ポケモン分類:0]に　テレポートする？</language>
-		<language name="JPN_KANJI" width="256">さいごに　やすんだ
+		<language name="JPN_KANJI" width="256">最後に　休んだ
 [1:04:ポケモン分類:0]に　テレポートする？</language>
 	</row>
 
@@ -582,7 +582,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 フラッシュを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-フラッシュを　つかった！▼</language>
+フラッシュを　使った！▼</language>
 	</row>
 
 	<row id="msg_teleport_01">
@@ -592,7 +592,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 テレポートを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-テレポートを　つかった！▼</language>
+テレポートを　使った！▼</language>
 	</row>
 
 	<row id="msg_anawohoru_01">
@@ -602,7 +602,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 あなをほるを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-あなをほるを　つかった！▼</language>
+あなをほるを　使った！▼</language>
 	</row>
 
 	<flowchart-group-list>
