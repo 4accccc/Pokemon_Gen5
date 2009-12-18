@@ -313,9 +313,9 @@ void FLDEFF_FOOTMARK_SetMMdl(
       pos.z += FOOTMARK_OFFSPOS_Z;
     }
     break;
-  case FOOTMARK_TYPE_HUMAN_SNOW:
   case FOOTMARK_TYPE_DEEPSNOW:
-    pos.y += NUM_FX32( -7 );
+    pos.y += NUM_FX32( -8 );
+    pos.z += NUM_FX32( -4 );
     break;
   }
   

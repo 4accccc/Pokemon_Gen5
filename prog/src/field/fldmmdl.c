@@ -877,7 +877,10 @@ static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 {
 	MMdl_InitCallMoveProcWork( mmdl );
 	MMdl_AddTCB( mmdl, fos );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnStatusBit( mmdl,
+      MMDL_STABIT_MOVE_START|
+      MMDL_STABIT_ATTR_GET_ERROR|
+      MMDL_STABIT_HEIGHT_GET_ERROR );
 }
 
 //----------------------------------------------------------------------------

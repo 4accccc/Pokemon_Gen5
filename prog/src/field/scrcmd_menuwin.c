@@ -558,16 +558,24 @@ static const VecFx32 data_balloonWinOffset_Up[DIR_MAX4] =
 {
   {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
   {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
-  {NUM_FX32(-4),U_DEF_Y,U_DEF_Z},
-  {NUM_FX32(4),U_DEF_Y,U_DEF_Z},
+  {NUM_FX32(-2),U_DEF_Y,U_DEF_Z},
+  {NUM_FX32(2),U_DEF_Y,U_DEF_Z},
+//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+//  {NUM_FX32(-4),U_DEF_Y,U_DEF_Z},
+//  {NUM_FX32(4),U_DEF_Y,U_DEF_Z},
 };
 
 static const VecFx32 data_balloonWinOffset_Down[DIR_MAX4] =
 {
+  {NUM_FX32(5),NUM_FX32(16),D_DEF_Z},
   {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
-  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
-  {NUM_FX32(-4),D_DEF_Y,D_DEF_Z},
-  {NUM_FX32(4),D_DEF_Y,D_DEF_Z},
+  {NUM_FX32(-2),D_DEF_Y,D_DEF_Z},
+  {NUM_FX32(2),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(-4),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(4),D_DEF_Y,D_DEF_Z},
 };
 
 //--------------------------------------------------------------
@@ -849,7 +857,7 @@ VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   CloseBalloonWin(work);       //<<内部で既閉チェックをしています
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //======================================================================
@@ -1413,7 +1421,7 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
     CloseSpWin( work );
   }
   
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //======================================================================

@@ -23,6 +23,8 @@
 
 #include "field_sound.h"
 
+#include "fldeff_kemuri.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -32,7 +34,7 @@
 #define EX_MOVEHITBIT(bit_no) (1<<(MMDL_MOVEHITBIT_BITMAX+bit_no))
 
 ///”ö£‚ä‚ç‚ä‚çŒÀŠEƒtƒŒ[ƒ€
-#define OZE_YURE_MAXFRAME (30*2) //ŽO•b
+#define OZE_YURE_MAXFRAME (30*2)
 
 //--------------------------------------------------------------
 /// JIKI_MOVEBIT
@@ -2161,14 +2163,27 @@ static void gjikiCycle_SetMove_Walk(
   if( debug_flag == TRUE ){
     code = AC_WALK_U_2F;
   }else{
+    MAPATTR attr;
     code = AC_WALK_U_2F;
+    
+    if( gjiki_GetAttr(gjiki,DIR_NOT,&attr) == TRUE ){ //[‚¢»”™‚È‚ç‘¬“x’á‰º
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      
+      if( MAPATTR_VALUE_CheckDesertDeep(val) == TRUE ){
+        FLDEFF_CTRL *fectrl;
+        code = AC_WALK_U_16F; //ê—p
+        
+        fectrl = FIELDMAP_GetFldEffCtrl( gjiki->fieldWork );
+        FLDEFF_KEMURI_SetMMdl( mmdl, fectrl ); //‰Œo‚·
+      }
+    }
   }
   
   code = MMDL_ChangeDirAcmdCode( dir, code );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
-
+  
   FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackAction();

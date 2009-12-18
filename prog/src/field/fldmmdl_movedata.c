@@ -1592,6 +1592,9 @@ static const int DATA_CodeTbl_AC_JUMPGR_U_1G_8F[] =
 static const int DATA_CodeTbl_AC_JUMPGU_U_1G_8F[] =
 {AC_JUMPGU_U_1G_8F,AC_JUMPGU_D_1G_8F,AC_JUMPGU_L_1G_8F,AC_JUMPGU_R_1G_8F};
 
+static const int DATA_CodeTbl_AC_SANDWALK_U_16F[] =
+{AC_SANDWALK_U_16F,AC_SANDWALK_D_16F,AC_SANDWALK_L_16F,AC_SANDWALK_R_16F};
+
 //--------------------------------------------------------------
 ///	MMDL_ChangeDirAcmdCode()で対応するコード。
 /// 並びは不順。
@@ -1632,6 +1635,8 @@ const int * const DATA_AcmdCodeDirChangeTbl[] =
 	DATA_CodeTbl_AC_JUMPGU_U_1G_8F,
 	DATA_CodeTbl_AC_WALKGU_U_4F,
 	DATA_CodeTbl_AC_WALKGU_U_2F,
+  DATA_CodeTbl_AC_SANDWALK_U_16F,
+  
 	NULL,	//終端識別
 };
 

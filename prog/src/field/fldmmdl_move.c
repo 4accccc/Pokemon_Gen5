@@ -47,7 +47,7 @@
 #define ATTROFFS_Y_YUKI (NUM_FX32(-12))///<雪Yオフセット
 #define ATTROFFS_Y_YUKI_DEEP (NUM_FX32(-14))///<深い雪Yオフセット
 #define ATTROFFS_Y_YUKI_DEEP_MOST (NUM_FX32(-16))///<更に深い雪Yオフセット
-#define ATTROFFS_Y_DESERT_DEEP (NUM_FX32(-8)) ///<深い砂漠Yオフセット
+#define ATTROFFS_Y_DESERT_DEEP (NUM_FX32(-6)) ///<深い砂漠Yオフセット
 
 ///高さ差分による移動制限
 #define HEIGHT_DIFF_COLLISION (FX32_ONE*(20))
