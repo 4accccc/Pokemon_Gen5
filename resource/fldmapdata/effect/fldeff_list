@@ -162,8 +162,13 @@ G3D_FE_MDL = kage.imd \
   $(EFF_D06DENKI)d6_ishi_mini01.imd \
   $(EFF_D06DENKI)d6_yuka_biri01.imd \
   $(EFF_D06DENKI)d6_ishikage01.imd \
-  iaigiri.imd
-
+  iaigiri.imd \
+  sc_mark_u.imd \
+  sc_mark_l.imd \
+  sc_mark_ul.imd \
+  sc_mark_ur.imd \
+  sc_mark_dl.imd \
+  sc_mark_dr.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
