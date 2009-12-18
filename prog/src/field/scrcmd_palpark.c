@@ -27,6 +27,7 @@
 
 #include "../../../resource/fldmapdata/script/palpark_scr_local.h"
 #include "savedata/save_control.h"
+#include "savedata/misc.h"
 #include "event_fieldmap_control.h"
 
 #include "multiboot/mb_parent_sys.h"
@@ -90,13 +91,14 @@ VMCMD_RESULT EvCmdGetPalparkValue( VMHANDLE *core, void *wk )
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  //SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  MISC *miscSave = SaveData_GetMisc( svWork );
   
   switch(type)
   {
   case 0:
     OS_TPrintf("パルパーク数値取得 終了ステート\n");
-    *ret_wk = 0;
+    *ret_wk = MISC_GetPalparkFinishState( miscSave );
     //PALPARK_FINISH_NORMAL    (0)  //捕獲した
     //PALPARK_FINISH_HIGHSOCRE (1)  //捕獲した＋ハイスコア
     //PALPARK_FINISH_NO_GET    (2)  //捕獲できなかった
@@ -105,7 +107,7 @@ VMCMD_RESULT EvCmdGetPalparkValue( VMHANDLE *core, void *wk )
     break;
   case 1:
     OS_TPrintf("パルパーク数値取得 ハイスコア\n");
-    *ret_wk = 100;
+    *ret_wk = MISC_GetPalparkHighscore( miscSave );;
     break;
   }
   //仮処理

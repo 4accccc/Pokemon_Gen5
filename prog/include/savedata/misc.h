@@ -59,6 +59,10 @@ extern void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg
 extern void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag);
 extern void MISC_GetGdsSelfIntroduction(const MISC *misc, PMS_DATA *pms);
 extern void MISC_SetGdsSelfIntroduction(MISC *misc, const PMS_DATA *pms);
-
+//palpark
+extern const u32  MISC_GetPalparkHighscore(const MISC *misc);
+extern void  MISC_SetPalparkHighscore(MISC *misc , u32 score);
+extern const u8  MISC_GetPalparkFinishState(const MISC *misc);
+extern void  MISC_SetPalparkFinishState(MISC *misc , u8 state);
 
 

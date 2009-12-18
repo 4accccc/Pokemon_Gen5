@@ -303,6 +303,8 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
 //  ARI_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
+
+  STA_ACT_LoadBg( work , 0 );
   return work;
 }
 

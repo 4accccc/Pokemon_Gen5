@@ -25,7 +25,7 @@
 //======================================================================
 #pragma mark [> define
 
-#if defined(DEBUG_ONLY_FOR_iwao_kazumasa)
+#if defined(DEBUG_ONLY_FOR_iwao_kazumasa)|1
 #define SCRIPT_TPrintf ARI_TPrintf
 #define SCRIPT_Printf OS_Printf
 #else
@@ -587,7 +587,8 @@ SCRIPT_FUNC_DEF( StageChangeBg )
   const s32 bgNo = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(StageChangeBg);
   
-  STA_ACT_LoadBg( work->actWork , bgNo );
+  //ƒ_ƒ~[
+  //STA_ACT_LoadBg( work->actWork , bgNo );
 
   return SFT_CONTINUE;
 }

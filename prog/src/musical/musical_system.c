@@ -257,6 +257,7 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
 void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
 {
   //FIXME:セーブデータからの取得
+  distData->programNo = programNo;
   if( programNo >= MUS_PROGRAM_LOCAL_NUM )
   {
     distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );

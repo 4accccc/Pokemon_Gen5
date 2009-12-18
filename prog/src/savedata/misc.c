@@ -36,6 +36,10 @@ struct _MISC
 	u8	namein_mode[NAMEIN_MAX];	//5つ
 
 	PMS_DATA gds_self_introduction;		// GDSプロフィールの自己紹介メッセージ
+	
+	//パルパーク
+	u32 palpark_highscore:28;
+	u32 palpark_finish_state:4;
 };
 
 //=============================================================================
@@ -76,6 +80,8 @@ void MISC_Init( MISC *p_msc )
 	GFL_STD_MemClear( p_msc, sizeof(MISC) );
 
 	MISC_InitNameIn( p_msc );
+	
+	p_msc->palpark_highscore = 100; //仮
 }
 
 //=============================================================================
@@ -221,3 +227,35 @@ void MISC_SetGdsSelfIntroduction(MISC *misc, const PMS_DATA *pms)
 	misc->gds_self_introduction = *pms;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief   パルパーク：ハイスコア取得/設定
+ *
+ * @param   misc		
+ */
+//--------------------------------------------------------------
+const u32  MISC_GetPalparkHighscore(const MISC *misc)
+{
+	return misc->palpark_highscore;
+}
+void  MISC_SetPalparkHighscore(MISC *misc , u32 score)
+{
+	misc->palpark_highscore = score;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   パルパーク：終了ステート取得/設定
+ *          script/palpark_scr_local.h に定義
+ * @param   misc		
+ */
+//--------------------------------------------------------------
+const u8  MISC_GetPalparkFinishState(const MISC *misc)
+{
+	return misc->palpark_finish_state;
+}
+void  MISC_SetPalparkFinishState(MISC *misc , u8 state)
+{
+	misc->palpark_finish_state = state;
+}

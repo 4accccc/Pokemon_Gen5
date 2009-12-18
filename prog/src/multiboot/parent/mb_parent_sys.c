@@ -16,9 +16,12 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "system/wipe.h"
+#include "savedata/misc.h"
 
 #include "arc_def.h"
 #include "mb_parent.naix"
+
+#include "../../../../resource/fldmapdata/script/palpark_scr_local.h"
 
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_comm_sys.h"
@@ -121,6 +124,8 @@ typedef struct
   BOOL            isSendGameData;
   BOOL            isSendRom;
   
+  MISC  *miscSave;
+  
   //SendImage
   u16    *romTitleStr;  //DLROMタイトル
   u16    *romInfoStr;   //DLROM説明
@@ -191,6 +196,12 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   work->isSendGameData = FALSE;
   work->gameData = NULL;
+  
+  {
+    SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
+    work->miscSave = SaveData_GetMisc( svWork );
+    MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_NORMAL );
+  }
 }
 
 //--------------------------------------------------------------
@@ -272,7 +283,6 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       //起動失敗
       work->state = MPS_FADEOUT;
-
     }
     break;
     
@@ -739,6 +749,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
       {
         // Bボタンでマルチブートキャンセル
+        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
         MBP_Cancel();
         break;
       }
