@@ -56,7 +56,9 @@ class RegulationBin
   
   def bitingmm(names, outFH , max, gmmhash)
     bitarray = Array.new
-    for i in 0..max
+    maxmai = max - 1
+    
+    for i in 0..maxmai
       bitarray.push(0)
     end
     
@@ -74,7 +76,7 @@ class RegulationBin
       end
       bitarray[keyno / 8]  = bitarray[keyno / 8] + byteorder[keyno % 8]
     }
-    for i in 0..max
+    for i in 0..maxmai
       num = bitarray[i]
       outFH.write([num].pack("c"))
     end
