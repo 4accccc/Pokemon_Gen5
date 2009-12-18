@@ -42,10 +42,14 @@ typedef struct _UNION_SYSTEM{
   UNION_PARENT_WORK *uniparent;
   u8 huge_receive_buf[UNION_CONNECT_PLAYER_NUM][UNION_HUGE_RECEIVE_BUF_SIZE];
   
+  WORDSET *wordset;
   GFL_MSGDATA *msgdata;
   FLDMSGWIN_STREAM *fld_msgwin_stream;
   FLDMENUFUNC *fldmenu_func;
   FLDMENUFUNC *fldmenu_yesno_func;
+
+  FLDMSGWIN *fldmsgwin;
+  FLDMSGPRINT *fldmsgprint;
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン

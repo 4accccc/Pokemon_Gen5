@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-09-18T21:37:14"/>
+	<create user="matsuda" host="W00142" date="2009-12-18T11:35:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3118,6 +3118,11 @@ msg_connect_union_08からの分岐メッセージ
 		<language name="JPN_KANJI" width="216" line="2">けってい</language>
 	</row>
 
+	<row id="msg_union_battle_01_07_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">ルールを　みる</language>
+		<language name="JPN_KANJI" width="216" line="2">ルールを　みる</language>
+	</row>
+
 	<row id="msg_union_battle_01_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>・「２人で対戦」「４人で対戦」のウィンドウへ戻る。</comment>
 		<language name="JPN" width="216" line="2">もどる</language>
@@ -3651,6 +3656,18 @@ msg_connect_union_08からの分岐メッセージ
 Ｂボタンで　キャンセル</language>
 		<language name="JPN_KANJI" width="216" line="2">しょうしょう　おまち　ください
 Ｂボタンで　キャンセル</language>
+	</row>
+
+	<row id="msg_union_ng_temoti" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>レギュレーションで手持ちがNGだった場合の表題</comment>
+		<language name="JPN" width="216" line="2">てもちのポケモン</language>
+		<language name="JPN_KANJI" width="216" line="2">てもちのポケモン</language>
+	</row>
+
+	<row id="msg_union_ng_bbox" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>レギュレーションでバトルボックスがNGだった場合の表題</comment>
+		<language name="JPN" width="216" line="2">バトルボックス</language>
+		<language name="JPN_KANJI" width="216" line="2">バトルボックス</language>
 	</row>
 
 	<flowchart-group-list>

@@ -33,6 +33,7 @@
 #include "app\pms_select.h"
 #include "poke_tool/regulation_def.h"
 #include "poke_tool/poke_regulation.h"
+#include "savedata/battle_box_save.h"
 
 #include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -527,27 +528,100 @@ static int Union_GetMenuIndex_to_RegulationNo(u32 menu_index)
 
 //--------------------------------------------------------------
 /**
+ * play_categoryからシューターの有無を取得する
+ * @param   play_category		
+ * @retval  int		TRUE:シューターあり
+ * @retval  int		FALSE:シューター無し
+ */
+//--------------------------------------------------------------
+static BOOL Union_GetPlayCategory_to_Shooter(u32 play_category)
+{
+  switch(play_category){
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:        //対戦:1VS1:シングル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //対戦:1VS1:シングル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER://対戦:1VS1:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:        //対戦:1VS1:ダブル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //対戦:1VS1:ダブル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:  //対戦:1VS1:ダブル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイカテゴリーが戦闘のものかチェックする
+ *
+ * @param   play_category		
+ *
+ * @retval  BOOL		TRUE:戦闘　FALSE:戦闘以外
+ */
+//--------------------------------------------------------------
+static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
+{
+  if(play_category < UNION_PLAY_CATEGORY_COLOSSEUM_START 
+      || play_category > UNION_PLAY_CATEGORY_COLOSSEUM_END){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
  * 選択メニューが戦闘だった場合、参加出来るかレギュレーションチェック
  *
  * @param   unisys		
  * @param   menu_index		
+ * @param   temoti_fail_bit      手持ちNGbit代入先
+ * @param   bbox_fail_bit        バトルボックスNGbit代入先
  *
- * @retval  BOOL		TRUE:参加OK　FALSE:参加NG
+ * @retval  BOOL		TRUE:どちらか片方だけでも参加OK　FALSE:両方とも参加NG
  */
 //--------------------------------------------------------------
-static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_index)
+static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_index,u32 *temoti_fail_bit, u32 *bbox_fail_bit)
 {
   int reg_no;
+  POKE_REG_RETURN_ENUM temoti_ret, bbox_ret;
   
-  if(menu_index < UNION_PLAY_CATEGORY_COLOSSEUM_START 
-      || menu_index > UNION_PLAY_CATEGORY_COLOSSEUM_END){
+  *temoti_fail_bit = 0;
+  *bbox_fail_bit = 0;
+  
+  if(Union_CheckPlayCategoryBattle(menu_index) == FALSE){
     return TRUE;  //戦闘ではないのでTRUE
   }
   
   reg_no = Union_GetMenuIndex_to_RegulationNo(menu_index);
   PokeRegulation_LoadData(reg_no, unisys->alloc.regulation);
-  //※check　現状手持ちだけチェック。　バトルボックスが出来ればそちらも行う
-  if(PokeRegulationMatchPartialPokeParty(unisys->alloc.regulation, GAMEDATA_GetMyPokemon(unisys->uniparent->game_data)) == POKE_REG_OK){
+
+  //手持ち
+  temoti_ret = PokeRegulationMatchLookAtPokeParty(unisys->alloc.regulation, 
+    GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), temoti_fail_bit);
+  
+  //バトルボックス
+  {
+    SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+    BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+    
+    if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+      POKEPARTY *bb_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
+      bbox_ret = PokeRegulationMatchLookAtPokeParty(
+        unisys->alloc.regulation, bb_party, bbox_fail_bit);
+      GFL_HEAP_FreeMemory(bb_party);
+    }
+    else{
+      *bbox_fail_bit = 0xffffffff;
+    }
+  }
+
+  OS_TPrintf("手持ちNG bit=%d\n", *temoti_fail_bit);
+  OS_TPrintf("ボックスNG bit=%d\n", *bbox_fail_bit);
+  if(temoti_ret == POKE_REG_OK || bbox_ret == POKE_REG_OK){
     return TRUE;
   }
   return FALSE;
@@ -1144,16 +1218,30 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _INIT,
+    _SELECT_WAIT,
+    _BATTLE_REG_PRINT_WAIT,
+    _YESNO_SELECT,
+    _YESNO_WAIT,
+    _YESNO_RESULT_SEND_WAIT,
+    _REG_PRINT_TEMOTI,
+    _REG_PRINT_TEMOTI_WAIT,
+    _REG_PRINT_BBOX,
+    _REG_PRINT_BBOX_WAIT,
+    _FINISH,
+  };
+
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
   }
 
   switch(*seq){
-  case 0:
+  case _INIT:
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
     (*seq)++;
     break;
-  case 1:
+  case _SELECT_WAIT:
     if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_NULL){
       break;
     }
@@ -1168,7 +1256,18 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       UnionMsg_TalkStream_PrintPack(
         unisys, fieldWork, 
         msg_union_test_003 + situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_TRAINERCARD);
-      (*seq)++;
+
+      //戦闘の時はレギュレーション表示
+      if(Union_CheckPlayCategoryBattle(situ->mycomm.mainmenu_select) == TRUE){
+        Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
+          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+        UnionMsg_Menu_RegulationSetup(unisys, fieldWork, 0, 
+          Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_RULE);
+        (*seq) = _BATTLE_REG_PRINT_WAIT;
+      }
+      else{
+        (*seq) = _YESNO_SELECT;
+      }
     }
     else{
       if(UnionSend_MainMenuListResultAnswer(FALSE) == TRUE){
@@ -1179,17 +1278,26 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       }
     }
     break;
-  case 2:   //「はい・いいえ」選択
+  
+  case _BATTLE_REG_PRINT_WAIT:   //戦闘であればレギュレーション表示
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE){
+      *seq = _YESNO_SELECT;
+    }
+    break;
+    
+  case _YESNO_SELECT:   //「はい・いいえ」選択
     UnionMsg_YesNo_Setup(unisys, fieldWork);
     (*seq)++;
     break;
-  case 3:
+  case _YESNO_WAIT:
     {
       BOOL result;
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
+        UnionMsg_Menu_RegulationDel(unisys);
         //戦闘の時はレギュレーションを見て参加可能かチェック
-        if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select) == FALSE){
+        if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
+            &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
           result = FALSE; //強制で「いいえ」を返す
         }
@@ -1198,18 +1306,58 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       }
     }
     break;
-  case 4: //「はい・いいえ」選択結果送信
+  case _YESNO_RESULT_SEND_WAIT: //「はい・いいえ」選択結果送信
     if(UnionSend_MainMenuListResultAnswer(situ->mycomm.mainmenu_yesno_result) == TRUE){
-      if(situ->mycomm.mainmenu_yesno_result == FALSE){
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006_01);
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+      if(situ->reg_temoti_fail_bit > 0 && situ->reg_bbox_fail_bit > 0){
+        *seq = _REG_PRINT_TEMOTI;
       }
       else{
-        UnionOneself_ReqStatus(unisys, 
-          UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select-UNION_PLAY_CATEGORY_TRAINERCARD);
+        *seq = _FINISH;
       }
-      return TRUE;
+      break;
     }
+    break;
+    
+  case _REG_PRINT_TEMOTI:     //手持ちNGレギュレーション表示
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_TEMOTI);
+    (*seq)++;
+    break;
+  case _REG_PRINT_TEMOTI_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      if(situ->reg_bbox_fail_bit == 0xffffffff){  //バトルボックスを作っていないので表示スキップ
+        *seq = _FINISH;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+    break;
+  case _REG_PRINT_BBOX:       //バトルボックスNGレギュレーション表示
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_BBOX);
+    (*seq)++;
+    break;
+  case _REG_PRINT_BBOX_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      (*seq) = _FINISH;
+    }
+    break;
+    
+  case _FINISH: //「はい・いいえ」選択結果送信
+    if(situ->mycomm.mainmenu_yesno_result == FALSE){
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006_01);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+    }
+    else{
+      UnionOneself_ReqStatus(unisys, 
+        UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select-UNION_PLAY_CATEGORY_TRAINERCARD);
+    }
+    return TRUE;
   }
   
   return FALSE;
@@ -1246,12 +1394,18 @@ static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  BOOL next_menu;
+  BOOL next_menu, look;
   u32 select_ret;
   enum{
     LOCALSEQ_INIT,
     LOCALSEQ_MENU_SETUP,
     LOCALSEQ_MENU_LOOP,
+    _RULE_LOOK,
+    _RULE_LOOK_WAIT,
+    _REG_PRINT_TEMOTI,
+    _REG_PRINT_TEMOTI_WAIT,
+    _REG_PRINT_BBOX,
+    _REG_PRINT_BBOX_WAIT,
   };
   
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
@@ -1269,7 +1423,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     (*seq)++;
     break;
   case LOCALSEQ_MENU_LOOP:
-    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu, &situ->menu_reg);
+    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu, &situ->menu_reg, &look);
     if(next_menu == TRUE){
       situ->work = select_ret;
       UnionMsg_Menu_BattleMenuDel(unisys);
@@ -1288,16 +1442,68 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
         return TRUE;
       }
     }
+    else if(look == TRUE){  //ルールを見る
+      UnionMsg_Menu_BattleMenuDel(unisys);
+      //レギュレーションデータのロード
+      Union_CheckEntryBattleRegulation(unisys, select_ret, 
+          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+      situ->mycomm.mainmenu_select = select_ret;
+      *seq = _RULE_LOOK;
+    }
     else if(select_ret != FLDMENUFUNC_NULL){
       UnionMsg_Menu_BattleMenuDel(unisys);
-      if(Union_CheckEntryBattleRegulation(unisys, select_ret) == FALSE){
+      if(Union_CheckEntryBattleRegulation(unisys, select_ret, 
+          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
-        (*seq) = LOCALSEQ_INIT;
+        (*seq) = _REG_PRINT_TEMOTI;
         break;
       }
       situ->mycomm.mainmenu_select = select_ret;
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
       return TRUE;
+    }
+    break;
+
+  case _RULE_LOOK:    //ルールを見る
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, 0, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_RULE);
+    (*seq)++;
+    break;
+  case _RULE_LOOK_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      *seq = LOCALSEQ_MENU_SETUP;
+    }
+    break;
+
+  case _REG_PRINT_TEMOTI:     //手持ちNGレギュレーション表示
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_TEMOTI);
+    (*seq)++;
+    break;
+  case _REG_PRINT_TEMOTI_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      if(situ->reg_bbox_fail_bit == 0xffffffff){  //バトルボックスを作っていないので表示スキップ
+        *seq = LOCALSEQ_INIT;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+    break;
+  case _REG_PRINT_BBOX:       //バトルボックスNGレギュレーション表示
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_BBOX);
+    (*seq)++;
+    break;
+  case _REG_PRINT_BBOX_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      (*seq) = LOCALSEQ_INIT;
     }
     break;
   }
@@ -1324,8 +1530,15 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     LOCALSEQ_INIT,
     LOCALSEQ_END,
     
+    LOCALSEQ_REGWIN_PRINT_WAIT,
+    
     LOCALSEQ_YESNO_SETUP,
     LOCALSEQ_YESNO,
+
+    _REG_PRINT_TEMOTI,
+    _REG_PRINT_TEMOTI_WAIT,
+    _REG_PRINT_BBOX,
+    _REG_PRINT_BBOX_WAIT,
   };
   
   buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
@@ -1372,10 +1585,17 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //マルチ
       if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016);
-        (*seq) = LOCALSEQ_YESNO_SETUP;
+
+        //乱入可の時はレギュレーション表示
+        Union_CheckEntryBattleRegulation(unisys, play_category, 
+          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+        UnionMsg_Menu_RegulationSetup(unisys, fieldWork, 0, 
+          Union_GetPlayCategory_to_Shooter(play_category), REGWIN_TYPE_RULE);
+
+        (*seq) = LOCALSEQ_REGWIN_PRINT_WAIT;
       }
       else{ //人数がいっぱい
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
@@ -1395,7 +1615,13 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       return TRUE;
     }
     break;
-
+  
+  case LOCALSEQ_REGWIN_PRINT_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE){
+      *seq = LOCALSEQ_YESNO_SETUP;
+    }
+    break;
+    
   case LOCALSEQ_YESNO_SETUP:   //「はい・いいえ」選択
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       UnionMsg_YesNo_Setup(unisys, fieldWork);
@@ -1407,6 +1633,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       BOOL result;
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
+        UnionMsg_Menu_RegulationDel(unisys);
         if(result == FALSE){
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_018);
           UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
@@ -1414,10 +1641,11 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         }
         else{
           //レギュレーションを見て参加可能かチェック
-          if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select) == FALSE){
+          if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select,
+              &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
             UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
             UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-            (*seq) = LOCALSEQ_END;
+            (*seq) = _REG_PRINT_TEMOTI;
           }
           else{
             situ->mycomm.mainmenu_yesno_result = result;
@@ -1426,6 +1654,39 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
           }
         }
       }
+    }
+    break;
+
+  case _REG_PRINT_TEMOTI:     //手持ちNGレギュレーション表示
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
+    }
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_TEMOTI);
+    (*seq)++;
+    break;
+  case _REG_PRINT_TEMOTI_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      if(situ->reg_bbox_fail_bit == 0xffffffff){  //バトルボックスを作っていないので表示スキップ
+        *seq = LOCALSEQ_END;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+    break;
+  case _REG_PRINT_BBOX:       //バトルボックスNGレギュレーション表示
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+      Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_BBOX);
+    (*seq)++;
+    break;
+  case _REG_PRINT_BBOX_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
+        && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      UnionMsg_Menu_RegulationDel(unisys);
+      (*seq) = LOCALSEQ_END;
     }
     break;
   }

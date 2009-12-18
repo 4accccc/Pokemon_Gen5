@@ -12,6 +12,7 @@
 #include "app/trainer_card.h"
 #include "system\pms_data.h"
 #include "savedata/regulation.h"
+#include "poke_tool/poke_regulation.h"
 
 
 //==============================================================================
@@ -387,6 +388,8 @@ typedef struct{
   
   //↓ここから下は通信では送らないデータ
   UNION_MENU_REGULATION menu_reg;   ///<メニューレギュレーション
+  u32 reg_temoti_fail_bit;      ///<レギュレーション：手持ちFAILビット
+  u32 reg_bbox_fail_bit;        ///<レギュレーション：バトルボックスFAILビット
   s16 wait;
   s16 work;
   u8 before_union_status;     ///<前に実行していたプレイヤーの状況(UNION_STATUS_???)
@@ -410,6 +413,7 @@ typedef struct{
 ///ユニオンルーム内で別途Allocされるワーク管理
 typedef struct{
   REGULATION *regulation;    ///<バトルレギュレーション
+  REGULATION_PRINT_MSG *rpm; ///<レギュレーション内容を一覧表示
 }UNION_ALLOC;
 
 //--------------------------------------------------------------

@@ -23,6 +23,12 @@ enum{
   UNION_MENU_SELECT_NULL = 0xff,  ///<何も選択されていない(初期値として使用)
 };
 
+typedef enum{
+  REGWIN_TYPE_RULE,        ///<ルールを見る
+  REGWIN_TYPE_NG_TEMOTI,   ///<手持ちNGチェック
+  REGWIN_TYPE_NG_BBOX,     ///<バトルボックスNGチェック
+}REGWIN_TYPE;
+
 
 //==============================================================================
 //  外部関数宣言
@@ -46,8 +52,14 @@ extern u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, int menu_index, UNION_MENU_REGULATION *menu_reg);
 extern void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys);
-extern u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, UNION_MENU_REGULATION *menu_reg);
+extern u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, 
+  UNION_MENU_REGULATION *menu_reg, BOOL *reg_look);
 
 extern void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 extern void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys);
 extern u32 UnionMsg_Menu_PokePartySelectMenuSelectLoop(UNION_SYSTEM_PTR unisys);
+
+extern void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, 
+  FIELDMAP_WORK *fieldWork, u32 fail_bit, BOOL shooter_type, REGWIN_TYPE regwin_type);
+extern BOOL UnionMsg_Menu_RegulationWait(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
+extern void UnionMsg_Menu_RegulationDel(UNION_SYSTEM_PTR unisys);

@@ -23,6 +23,8 @@
 //==============================================================================
 ///レギュレーション：決定
 #define UNION_BATTLE_REGULATION_DECIDE    (100)
+///レギュレーション：ルールをみる
+#define UNION_BATTLE_REGULATION_RULE      (150)
 
 ///レギュレーション：対戦形式
 enum{
@@ -51,12 +53,17 @@ enum{
   UNION_BATTLE_REGULATION_SHOOTER_MAX,
 };
 
+///レギュレーション：ノーマル色
+#define REG_NORMAL_COLOR      PRINTSYS_MACRO_LSB(1, 2, 0)
+///レギュレーション：NG色
+#define REG_FAIL_COLOR        PRINTSYS_MACRO_LSB(4, 2, 0)
+
 
 //==============================================================================
 //  プロトタイプ宣言：データ
 //==============================================================================
 static const FLDMENUFUNC_LIST BattleMenuList_Number[3];
-static const FLDMENUFUNC_LIST BattleMenuList_Custom[5];
+static const FLDMENUFUNC_LIST BattleMenuList_Custom[6];
 static const FLDMENUFUNC_LIST BattleMenuList_Mode[5];
 static const FLDMENUFUNC_LIST BattleMenuList_Rule[4];
 static const FLDMENUFUNC_LIST BattleMenuList_Shooter[3];
@@ -163,6 +170,7 @@ static const FLDMENUFUNC_LIST BattleMenuList_Custom[] =
   {msg_union_battle_01_05, (void*)BattleMenuList_Rule},       //ルール(レベル50、制限無し…)
   {msg_union_battle_01_06, (void*)BattleMenuList_Shooter},   //シューター有無
   {msg_union_battle_01_07_01, (void*)UNION_BATTLE_REGULATION_DECIDE},    //決定
+  {msg_union_battle_01_07_02, (void*)UNION_BATTLE_REGULATION_RULE},    //ルールをみる
   {msg_union_battle_01_08, (void*)BattleMenuList_Number},    //もどる
 };
 
@@ -204,7 +212,7 @@ static const struct{
   },
   {
     BattleMenuList_Custom,
-    5,
+    6,
   },
   {
     BattleMenuList_Mode,
@@ -437,8 +445,6 @@ void UnionMsg_TalkStream_WindowDel(UNION_SYSTEM_PTR unisys)
 //==================================================================
 void UnionMsg_TalkStream_Print(UNION_SYSTEM_PTR unisys, u32 str_id)
 {
-  FLDMSGPRINT *msg_print;
-  
   GF_ASSERT(unisys->fld_msgwin_stream != NULL);
   FLDMSGWIN_STREAM_PrintStart(unisys->fld_msgwin_stream, 0, 0, str_id);
 }
@@ -693,12 +699,13 @@ void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys)
  * @retval  u32		next_sub_menuがFALSEの場合、最終結果番号(これを通信で送る)
  */
 //==================================================================
-u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, UNION_MENU_REGULATION *menu_reg)
+u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, UNION_MENU_REGULATION *menu_reg, BOOL *reg_look)
 {
   u32 menu_ret;
   int i;
   
   *next_sub_menu = FALSE;
+  *reg_look = FALSE;
   
   menu_ret = UnionMsg_Menu_SelectLoop(unisys);
   switch(menu_ret){
@@ -707,6 +714,9 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
     return menu_ret;
   
   case UNION_BATTLE_REGULATION_DECIDE:
+    return MenuReg_to_PlayCategory[menu_reg->mode][menu_reg->rule][menu_reg->shooter];
+  case UNION_BATTLE_REGULATION_RULE:
+    *reg_look = TRUE; //レギュレーションを見る
     return MenuReg_to_PlayCategory[menu_reg->mode][menu_reg->rule][menu_reg->shooter];
   }
   if(menu_reg->menu_index == BATTLE_MENU_INDEX_NUMBER && menu_ret < UNION_PLAY_CATEGORY_MAX){
@@ -787,5 +797,114 @@ void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys)
 u32 UnionMsg_Menu_PokePartySelectMenuSelectLoop(UNION_SYSTEM_PTR unisys)
 {
   return UnionMsg_Menu_SelectLoop(unisys);
+}
+
+//==================================================================
+/**
+ * NGレギュレーション：セットアップ
+ *
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   fail_bit    レギュレーションNGbit
+ * @param   shooter_type  TRUE:シューター有　FALSE:シューター無し
+ * @param   regwin_type    NGREG_TYPE_???
+ */
+//==================================================================
+void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, u32 fail_bit, BOOL shooter_type, REGWIN_TYPE regwin_type)
+{
+  FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
+  int category;
+  PRINTSYS_LSB color;
+  u16 title_msgid;
+  
+  GF_ASSERT(unisys->wordset == NULL);
+  GF_ASSERT(unisys->fldmsgwin == NULL);
+  GF_ASSERT(unisys->alloc.rpm == NULL);
+  
+  if(shooter_type == TRUE){
+    shooter_type = REGULATION_SHOOTER_VALID;
+  }
+  else{
+    shooter_type = REGULATION_SHOOTER_INVALID;
+  }
+  
+  unisys->wordset = WORDSET_Create(HEAPID_UNION);
+  unisys->fldmsgwin = FLDMSGWIN_Add(fldmsg_bg, unisys->msgdata, 
+    1, 1, 26, (REGULATION_CATEGORY_MAX+2)*2);
+  unisys->alloc.rpm = PokeRegulation_CreatePrintMsg(unisys->alloc.regulation,
+    unisys->wordset, HEAPID_UNION, shooter_type);
+
+  if(regwin_type == REGWIN_TYPE_RULE){
+    STRBUF* cupname = Regulation_CreateCupName(unisys->alloc.regulation, HEAPID_UNION);
+    FLDMSGWIN_PrintStrBuf( unisys->fldmsgwin, 0, 0, cupname );
+    GFL_STR_DeleteBuffer(cupname);
+  }
+  else{
+    if(regwin_type == REGWIN_TYPE_NG_TEMOTI){
+      title_msgid = msg_union_ng_temoti;
+    }
+    else{
+      title_msgid = msg_union_ng_bbox;
+    }
+    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, title_msgid );
+  }
+  
+  for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
+    if(fail_bit & (1 << category)){
+      color = REG_FAIL_COLOR;
+    }
+    else{
+      color = REG_NORMAL_COLOR;
+    }
+    FLDMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 0, (4 + 2*category)*8, 
+      unisys->alloc.rpm->category[category], color );
+    FLDMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 14*8, (4 + 2*category)*8, 
+      unisys->alloc.rpm->prerequisite[category], color );
+  }
+}
+
+//==================================================================
+/**
+ * NGレギュレーション：描画完了待ち
+ *
+ * @param   unisys		
+ * @param   fieldWork		
+ *
+ * @retval  BOOL		TRUE:描画完了　FALSE:描画中
+ */
+//==================================================================
+BOOL UnionMsg_Menu_RegulationWait(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
+{
+  FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
+  PRINT_QUE *print_que = FLDMSGBG_GetPrintQue( fldmsg_bg );
+
+  if(unisys->alloc.rpm == NULL){
+    return TRUE;
+  }
+
+  return PRINTSYS_QUE_IsFinished( print_que );
+}
+
+//==================================================================
+/**
+ * NGレギュレーション：削除
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_Menu_RegulationDel(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->alloc.rpm == NULL){
+    return;
+  }
+  
+  WORDSET_Delete(unisys->wordset);
+  unisys->wordset = NULL;
+  
+  FLDMSGWIN_Delete(unisys->fldmsgwin);
+  unisys->fldmsgwin = NULL;
+
+  PokeRegulation_DeletePrintMsg(unisys->alloc.rpm);
+  unisys->alloc.rpm = NULL;
 }
 
