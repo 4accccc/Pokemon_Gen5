@@ -56,11 +56,11 @@ ZUKAN_TOROKU_RESULT;
 //=====================================
 typedef struct _ZUKAN_TOROKU_PARAM
 {
-  ZUKAN_TOROKU_LAUNCH launch;   ///< [in]  起動方法
-  POKEMON_PARAM*      pp;       ///< [in]  表示するポケモン  // 他のところのを覚えているだけで生成や破棄はしない。
-  const STRBUF*       box_strbuf;  ///< [in]  ボックスに転送しました。
-  const BOX_MANAGER*  box_manager;
-  u32                 box_tray;
+  ZUKAN_TOROKU_LAUNCH launch;       ///< [in]  起動方法
+  POKEMON_PARAM*      pp;           ///< [in]  表示するポケモン  // 他のところのを覚えているだけで生成や破棄はしない。
+  const STRBUF*       box_strbuf;   ///< [in]  !=NULLのとき、ボックスに転送しましたというメッセージを表示する
+  const BOX_MANAGER*  box_manager;  ///< [in]  box_strbuf!=NULLのときのみ有効
+  u32                 box_tray;     ///< [in]  box_strbuf!=NULLのときのみ有効
   ZUKAN_TOROKU_RESULT result;   ///< [out] 結果
 }
 ZUKAN_TOROKU_PARAM;

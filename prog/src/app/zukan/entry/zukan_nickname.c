@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+// インクルード
 #include "print/gf_font.h"
 #include "font/font.naix"
 
@@ -137,6 +138,15 @@ static u8 Zukan_Nickname_GetCursorPos( ZUKAN_NICKNAME_CURSOR_ORIGIN origin, u8 i
 *  外部公開関数定義
 */
 //=============================================================================
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     初期化処理
+ *
+ *  @param[in]
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
                                           const STRBUF* a_box_strbuf, const BOX_MANAGER* a_box_manager, u32 a_box_tray,
                                           GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que )
@@ -307,6 +317,15 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
   return work;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     終了処理
+ *
+ *  @param[in]
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
 void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work )
 {
   {
@@ -343,6 +362,15 @@ void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work )
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     主処理
+ *
+ *  @param[in]
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
 {
   ZUKAN_NICKNAME_RESULT res = ZUKAN_NICKNAME_RES_CONTINUE;
@@ -545,6 +573,15 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
   return res;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     処理を開始する
+ *
+ *  @param[in]
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
 void ZUKAN_NICKNAME_Start( ZUKAN_NICKNAME_WORK* work )
 {
   if( work->step == ZUKAN_NICKNAME_STEP_WAIT )
@@ -555,6 +592,15 @@ void ZUKAN_NICKNAME_Start( ZUKAN_NICKNAME_WORK* work )
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief     選択結果を得る
+ *
+ *  @param[in]
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_SELECT ZUKAN_NICKNAME_GetSelect( ZUKAN_NICKNAME_WORK* work )
 {
   return work->select;
@@ -565,6 +611,9 @@ ZUKAN_NICKNAME_SELECT ZUKAN_NICKNAME_GetSelect( ZUKAN_NICKNAME_WORK* work )
 *  ローカル関数定義
 */
 //=============================================================================
+//-------------------------------------
+/// カーソルOBJの表示位置を得る
+//=====================================
 static u8 Zukan_Nickname_GetCursorPos( ZUKAN_NICKNAME_CURSOR_ORIGIN origin, u8 idx, ZUKAN_NICKNAME_CURSOR_POS pos )
 {
   const u8 Zukan_Nickname_CursorOrigin[ZUKAN_NICKNAME_CURSOR_ORIGIN_MAX][ZUKAN_NICKNAME_CURSOR_POS_MAX] =  // 左上

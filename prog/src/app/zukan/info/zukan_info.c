@@ -5,6 +5,8 @@
  *  @author Koji Kawada
  *  @data   2009.12.03
  *  @note   infowin.c, touchbar.c, ui_template.cを参考にして作成しました。
+ *          コピペした箇所とか実験箇所とか定数直書きとか直します
+ *          
  *
  *  モジュール名：ZUKAN_INFO
  */
@@ -134,6 +136,39 @@ ZUKAN_INFO_STEP;
 #define ZUKAN_INFO_PALETTE_ANIME_NUM (4)
 #define ZUKAN_INFO_PALETTE_ANIME_NO (1)
 
+
+
+
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define APP_TASKMENU_ANIME_VALUE (0x400)
+
+//プレートのアニメ
+#define APP_TASKMENU_ANIME_S_R (5)
+#define APP_TASKMENU_ANIME_S_G (10)
+#define APP_TASKMENU_ANIME_S_B (13)
+#define APP_TASKMENU_ANIME_E_R (12)
+#define APP_TASKMENU_ANIME_E_G (25)
+#define APP_TASKMENU_ANIME_E_B (30)
+//プレートのアニメする色
+#define APP_TASKMENU_ANIME_COL (0x8)
+
+
+
+
+#ifdef TEST_MSG  // PSTATUS_InitMessage
+
+typedef enum
+{
+  ZUKAN_INFO_ALIGN_LEFT,
+  ZUKAN_INFO_ALIGN_RIGHT,
+  ZUKAN_INFO_ALIGN_CENTER,
+}
+ZUKAN_INFO_ALIGN;
+
+#define ZUKAN_INFO_STRBUF_LEN (128)  // この文字数で足りるかbuflen.hで要確認
+
+#endif //#ifdef TEST_MSG  // PSTATUS_InitMessage
+
 //=============================================================================
 /**
  *  構造体宣言
@@ -217,6 +252,11 @@ static void Zukan_Info_VBlankFunc( GFL_TCB* tcb, void* wk );
 static void Zukan_Info_ChangeBarPal( ZUKAN_INFO_WORK* work );
 
 #ifdef TEST_MSG  // PSTATUS_InitMessage
+static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA* msgdata, PRINT_QUE* print_que, GFL_FONT* font,
+                                u32 str_id, u16 x, u16 y, u16 color, ZUKAN_INFO_ALIGN align, WORDSET* wordset );
+#endif
+
+#ifdef TEST_MSG  // PSTATUS_InitMessage
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work );
 #endif
@@ -242,20 +282,6 @@ static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work );
 #endif //TEST_POKEFOOT
 
 static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work );
-
-
-//プレートのアニメ。sin使うので0～0xFFFFのループ
-#define APP_TASKMENU_ANIME_VALUE (0x400)
-
-//プレートのアニメ
-#define APP_TASKMENU_ANIME_S_R (5)
-#define APP_TASKMENU_ANIME_S_G (10)
-#define APP_TASKMENU_ANIME_S_B (13)
-#define APP_TASKMENU_ANIME_E_R (12)
-#define APP_TASKMENU_ANIME_E_G (25)
-#define APP_TASKMENU_ANIME_E_B (30)
-//プレートのアニメする色
-#define APP_TASKMENU_ANIME_COL (0x8)
 
 static void APP_TASKMENU_UpdatePalletAnime( ZUKAN_INFO_WORK* work, u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo );
 
@@ -800,23 +826,9 @@ static void Zukan_Info_ChangeBarPal( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-///	
+///	文字を書く
 //=====================================
 #ifdef TEST_MSG  // PSTATUS_InitMessage
-
-typedef enum
-{
-  ZUKAN_INFO_ALIGN_LEFT,
-  ZUKAN_INFO_ALIGN_RIGHT,
-  ZUKAN_INFO_ALIGN_CENTER,
-}
-ZUKAN_INFO_ALIGN;
-
-#define ZUKAN_INFO_STRBUF_LEN (128)  // この文字数で足りるかbuflen.hで要確認
-
-static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA* msgdata, PRINT_QUE* print_que, GFL_FONT* font,
-                                u32 str_id, u16 x, u16 y, u16 color, ZUKAN_INFO_ALIGN align, WORDSET* wordset );
-
 static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA* msgdata, PRINT_QUE* print_que, GFL_FONT* font,
                                 u32 str_id, u16 x, u16 y, u16 color, ZUKAN_INFO_ALIGN align, WORDSET* wordset )
 {
@@ -871,7 +883,7 @@ static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA*
 }
 
 //-------------------------------------
-///	
+///	BGに文字を書く
 //=====================================
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 {
@@ -953,7 +965,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-///	
+///	BGに書いた文字を破棄する
 //=====================================
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work )
 {
@@ -966,7 +978,7 @@ static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work )
 #endif //TEST_MSG
 
 //-------------------------------------
-///	
+///	タイプアイコンOBJを生成する
 //=====================================
 
 #ifdef TEST_TYPEICON_TWICE
@@ -1036,7 +1048,7 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
 }
 
 //-------------------------------------
-///	
+///	タイプアイコンOBJを破棄する
 //=====================================
 static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work )
 {
@@ -1067,9 +1079,8 @@ static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work )
 #endif //TEST_TYPEICON_TWICE
 
 //-------------------------------------
-///	
+///	ポケモン2Dのリソース読み込み
 //=====================================
-
 #ifdef UI_TEST_POKE2D
 //=============================================================================
 /**
@@ -1105,9 +1116,8 @@ static void UITemplate_POKE2D_LoadResourceOBJ( ZUKAN_INFO_WORK *wk, HEAPID heapI
 }
 
 //-------------------------------------
-///	
+///	ポケモン2Dのリソース破棄
 //=====================================
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	リソース破棄
@@ -1126,9 +1136,8 @@ static void UITemplate_POKE2D_UnLoadResourceOBJ( ZUKAN_INFO_WORK *wk )
 }
 
 //-------------------------------------
-///	
+///	ポケモン2DのOBJを生成する
 //=====================================
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	CLWK作成
@@ -1155,9 +1164,8 @@ static void UITemplate_POKE2D_CreateCLWK( ZUKAN_INFO_WORK *wk, GFL_CLUNIT *cluni
 }
 
 //-------------------------------------
-///	
+///	ポケモン2DのOBJを破棄する
 //=====================================
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	CLWK破棄
@@ -1172,7 +1180,7 @@ static void UITemplate_POKE2D_DeleteCLWK( ZUKAN_INFO_WORK *wk )
 #endif //UI_TEST_POKE2D
 
 //-------------------------------------
-///	
+///	ポケモンの足跡OBJを生成する
 //=====================================
 /*
 マッピングモードを1Dモード(128K)としているのだが、
@@ -1207,7 +1215,7 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, GFL_CL
 }
 
 //-------------------------------------
-///	
+///	ポケモンの足跡OBJを破棄する
 //=====================================
 static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work )
 {	
@@ -1219,7 +1227,7 @@ static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work )
 #endif //TEST_POKEFOOT
 
 //-------------------------------------
-///	
+///	ポケモン2D以外のものを生成する
 //=====================================
 static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 {
@@ -1266,9 +1274,8 @@ if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
 }
 
 //-------------------------------------
-///	
+///	パレットアニメーションの更新
 //=====================================
-
 //--------------------------------------------------------------
 //	パレットアニメーションの更新
 //--------------------------------------------------------------

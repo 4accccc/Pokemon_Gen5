@@ -149,12 +149,12 @@ const GFL_PROC_DATA ZUKAN_TOROKU_ProcData =
 /**
  *  @brief     PROCに渡す引数を生成する
  *
- *  @param[in] heap_id  ヒープID
- *  @param[in] launch   起動方法
- *  @param[in] pp       ポケモンパラメータ
- *  @param[in] bos_strbuf  ボックスに転送されました。
- *  @param[in] box_manager
- *  @param[in] box_tray
+ *  @param[in] heap_id      ヒープID
+ *  @param[in] launch       起動方法
+ *  @param[in] pp           ポケモンパラメータ
+ *  @param[in] bos_strbuf   !=NULLのとき、ボックスに転送しましたというメッセージを表示する
+ *  @param[in] box_manager  box_strbuf!=NULLのときのみ有効
+ *  @param[in] box_tray     box_strbuf!=NULLのときのみ有効
  *
  *  @retval    メモリ確保し初期化したZUKAN_TOROKU_PARAM
  */
@@ -197,12 +197,12 @@ void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param )
 /**
  *  @brief         PROCに渡す引数の設定
  *
- *  @param[in,out] param   初期化したいZUKAN_TOROKU_PARAM
- *  @param[in]     launch  起動方法
- *  @param[in]     pp      ポケモンパラメータ
- *  @param[in]     box_strbuf  ボックスに転送しました
- *  @param[in] box_manager
- *  @param[in] box_tray
+ *  @param[in,out] param        初期化したいZUKAN_TOROKU_PARAM
+ *  @param[in]     launch       起動方法
+ *  @param[in]     pp           ポケモンパラメータ
+ *  @param[in]     bos_strbuf   !=NULLのとき、ボックスに転送しましたというメッセージを表示する
+ *  @param[in]     box_manager  box_strbuf!=NULLのときのみ有効
+ *  @param[in]     box_tray     box_strbuf!=NULLのときのみ有効
  *
  *  @retval        なし 
  */
@@ -210,8 +210,8 @@ void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param )
 void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
                             ZUKAN_TOROKU_LAUNCH launch,
                             POKEMON_PARAM*      pp,
-                            const STRBUF*             box_strbuf,
-                            const BOX_MANAGER* box_manager,
+                            const STRBUF*       box_strbuf,
+                            const BOX_MANAGER*  box_manager,
                             u32 box_tray )
 {
   param->launch   = launch;
