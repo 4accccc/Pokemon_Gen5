@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T17:58:59"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T11:41:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="48" top="308" right="548" bottom="928" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="699" top="-4" right="1172" bottom="394" visible="yes"/>
+		<tag-palette left="699" top="0" right="1172" bottom="398" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
@@ -314,7 +314,7 @@
 参加してもらえて　とても　うれしいわ▼
 今回の　演目は
 [1:22:コンテスト名称:0]▼
-[1:23:コンテストランク:1]の　お客さんに　
+[1:23:コンテストランク:1]の　お客さんに
 とても　人気のある　演目よ▼
 それじゃあ　さっそくだけど
 ポケモンを　ドレスアップ　してあげて！</language>
@@ -327,11 +327,11 @@
 ショー前</attribute>
 		<language name="JPN" width="256">じゅんびが　できたみたいね！
 もうすぐ　ミュージカルが　はじまるわ▼
-あとは　ポケモンを　しんじて　
+あとは　ポケモンを　しんじて
 みまもっていて　あげて！</language>
 		<language name="JPN_KANJI" width="256">準備が　出来たみたいね！
 もうすぐ　ミュージカルが　始まるわ▼
-あとは　ポケモンを　信じて　
+あとは　ポケモンを　信じて
 見守っていて　あげて！</language>
 	</row>
 
@@ -341,17 +341,17 @@
 ショー後
 全体評価：全員同じ点(50点)</attribute>
 		<language name="JPN" width="256">おつかれさま！▼
-ポケモンたちの　いきが　
+ポケモンたちの　いきが
 ピッタリと　あっていた▼
-かんせいどの　たかい　
+かんせいどの　たかい
 ミュージカル　だったわ！▼
 もちろん　おきゃくさんから
 ファンレターも　たくさん！▼
 じゅんばんに　わたして　いくわね！</language>
 		<language name="JPN_KANJI" width="256">おつかれさま！▼
-ポケモンたちの　息が　
+ポケモンたちの　息が
 ピッタリと　合っていた▼
-完成度の　高い　
+完成度の　高い
 ミュージカル　だったわ！▼
 もちろん　お客さんから
 ファンレターも　たくさん！▼
@@ -363,13 +363,13 @@
 ショー後
 全体評価：全員40点以上</attribute>
 		<language name="JPN" width="256">おつかれさま！▼
-とっても　すばらしい　
+とっても　すばらしい
 ミュージカル　だったと　おもうわ！▼
 その　しょうこに　おきゃくさんから
 ファンレターを　あずかったの！▼
 じゅんばんに　わたして　いくわね！</language>
 		<language name="JPN_KANJI" width="256">おつかれさま！▼
-とっても　すばらしい　
+とっても　すばらしい
 ミュージカル　だったと　思うわ！
 その　証拠に　お客さんから
 ファンレターを　預かったの！▼
@@ -381,14 +381,12 @@
 ショー後
 全体評価：それ以外</attribute>
 		<language name="JPN" width="256">おつかれさま！▼
-なかなか　よい　ミュージカル　
-だったと　おもうわ！▼
+なかなか　よい　ミュージカルだったわ▼
 ぶたいをみていた　おきゃくさんから
 ファンレターも　あずかったの！▼
-じゅんばんに　わたして　行くわね！</language>
+じゅんばんに　わたして　いくわね！</language>
 		<language name="JPN_KANJI" width="256">おつかれさま！▼
-なかなか　良い　ミュージカル　
-だったと　おもうわ！▼
+なかなか　良い　ミュージカルだったわ▼
 舞台を見ていた　お客さんから
 ファンレターも　預かったの！▼
 順番に　渡して　行くわね！</language>
@@ -399,7 +397,7 @@
 ショー後
 全体評価：一人100以上</attribute>
 		<language name="JPN" width="256">おつかれさま！▼
-いちぶで　すごく　もりあがりの　ある　
+いちぶで　すごく　もりあがりの　ある
 ミュージカル　だったわね！▼
 ぶたいを　みていた　おきゃくさんから
 ファンレターを　あずかっているわ▼
@@ -475,19 +473,19 @@
 	<row id="msg_mus_03_003_05">
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20以上</attribute>
-		<language name="JPN">ポケモンも　それに　こたえようと　
+		<language name="JPN">ポケモンも　それに　こたえようと
 がんばっている　ように　みえました！</language>
-		<language name="JPN_KANJI">ポケモンも　それに　答えようと　
-頑張っている　ように　見えました！</language>
+		<language name="JPN_KANJI">ポケモンも　それに　応えようと
+頑張っているように　見えました！</language>
 	</row>
 
 	<row id="msg_mus_03_003_06">
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20未満</attribute>
-		<language name="JPN">あまり　めだって　なかったけど　……▼
+		<language name="JPN">あまり　めだって　なかったけど……▼
 ぼくは　すきでした！
 また　みにきます！</language>
-		<language name="JPN_KANJI">あまり　目立って　なかったけど　……▼
+		<language name="JPN_KANJI">あまり　目立って　なかったけど……▼
 僕は　好きでした！
 また　見に来ます！</language>
 	</row>
