@@ -116,7 +116,7 @@ struct _FIELD_RAIL_WORK{
     const RAIL_LINE * line;
   };
   u16 active;
-	u16 pad;	
+	u16 rail_index;	
   /// LINEにいる間の、LINE上でのオフセット位置
   s32 line_ofs;
   s32 line_ofs_max;
@@ -205,7 +205,10 @@ static void initLineSwitch( RAIL_LINE_SWITCH* work );
 static void onLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index );
 static void offLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index );
 static BOOL getLineSwitch( const RAIL_LINE_SWITCH* work, u16 line_index );
+static BOOL getLineSwitchPointer( const RAIL_LINE_SWITCH* work, const RAIL_LINE* line, const RAIL_SETTING* rail_dat );
 static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, const RAIL_SETTING * raildat, u32 index );
+static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs );
+static BOOL IsLineSwitchMoveOk( const RAIL_LINE_SWITCH* work, const RAIL_LINE * line, int l_ofs, int w_ofs, const RAIL_SETTING * raildat, fx32 ofs_unit );
 
 
 //------------------------------------------------------------------
@@ -224,6 +227,7 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
 static void setLineData(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max, int w_ofs_max);
 static BOOL isLinePoint_S( const RAIL_SETTING * rail_dat, const RAIL_LINE * line, const RAIL_POINT * point );
 static BOOL isLinePoint_E( const RAIL_SETTING * rail_dat, const RAIL_LINE * line, const RAIL_POINT * point );
+static void getLineCrossAreaSize( const RAIL_SETTING * rail_dat, const RAIL_LINE * line, s32* p_size_line, s32* p_size_width, const RAIL_LINE_SWITCH* line_switch, fx32 unit );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1964,14 +1968,21 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailOffset( const FIELD_RAIL_WORK * work )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const RAIL_LINE * RAILPOINT_getLineByKey(const RAIL_POINT * point, RAIL_KEY key, const RAIL_SETTING* rail_dat, const  RAIL_LINE_SWITCH* cp_lineswitch )
+static const RAIL_LINE * RAILPOINT_getLineByKey(const RAIL_POINT * point, RAIL_KEY key, const RAIL_SETTING* rail_dat, const  RAIL_LINE_SWITCH* cp_lineswitch, BOOL switch_flag )
 {
   int i;
   for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
   {
     if (point->keys[i] == key)
     {
-      return getLineSwitchRailDatLine( cp_lineswitch, rail_dat, point->lines[i] );
+      if( switch_flag )
+      {
+        return getLineSwitchRailDatLine( cp_lineswitch, rail_dat, point->lines[i] );
+      }
+      else
+      {
+        return getRailDatLine( rail_dat, point->lines[i] );
+      }
     }
   }
   return NULL;
@@ -1995,6 +2006,12 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
         work->point->name, debugGetRailKeyName(key), line->name);
   }
 
+  //  接続ラインスイッチチェック front_ofsが0である必要がある。
+  if( IsLineSwitchMoveOk( work->line_switch, line, l_ofs, w_ofs, work->rail_dat, work->ofs_unit )==FALSE )
+  {
+    return RAIL_KEY_NULL;
+  }
+
   // 横幅チェック
   if( MATH_ABS(w_ofs) > w_ofs_max )
   {
@@ -2011,13 +2028,13 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
     {
       // もしも、lofs以上でl_ofs_maxで、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_e );
-      next_line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat, work->line_switch);
+      next_line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat, work->line_switch, TRUE);
     }
     else
     {
       // もしも、lofsが０未満で、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_s );
-      next_line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat, work->line_switch);
+      next_line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat, work->line_switch, TRUE);
     }
 
     // ないときは、移動不可能or通常設定
@@ -2115,6 +2132,86 @@ static BOOL isLinePoint_E( const RAIL_SETTING * rail_dat, const RAIL_LINE * line
 	return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  始点、分岐地点の範囲を求める
+ *
+ *	@param	rail_dat
+ *	@param	line
+ *	@param	start
+ *	@param	p_size_line
+ *	@param	p_size_width 
+ */
+//-----------------------------------------------------------------------------
+static void getLineCrossAreaSize( const RAIL_SETTING * rail_dat, const RAIL_LINE * line, s32* p_size_line, s32* p_size_width, const RAIL_LINE_SWITCH* line_switch, fx32 unit )
+{
+  // 始点の情報を取得
+  const RAIL_POINT* point;
+  const RAIL_LINE* revers;
+  const RAIL_LINE* left;
+  const RAIL_LINE* right;
+  s32 line_ofs_max;
+  s32 width_ofs_max;
+
+  s32 width_ofs_max_hi = 16;
+  s32 line_ofs_max_hi = 16;
+
+  point = getRailDatPoint( rail_dat, line->point_s );
+
+  // 各分岐のライン幅の最大値の範囲の移動を許容する。
+  // 逆方向、左、右を取得
+  revers = RAILPOINT_getLineByKey(point, getReverseKey(line->key), rail_dat, line_switch, TRUE);
+  left = RAILPOINT_getLineByKey(point, getAntiClockwiseKey(line->key), rail_dat, line_switch, TRUE);
+  right = RAILPOINT_getLineByKey(point, getClockwiseKey(line->key), rail_dat, line_switch, TRUE);
+
+  // サイズを求める
+  // width
+  // 自分
+  line_ofs_max  = getLineOfsMax( line, unit, rail_dat );
+  width_ofs_max_hi = getLineWidthOfsMax( line, 0, line_ofs_max, rail_dat );
+  // revers
+  if( revers )
+  {
+    line_ofs_max  = getLineOfsMax( revers, unit, rail_dat );
+    width_ofs_max = getLineWidthOfsMax( revers, line_ofs_max, line_ofs_max, rail_dat );
+    if( width_ofs_max > width_ofs_max_hi )
+    {
+      width_ofs_max_hi = width_ofs_max;
+    }
+  }
+
+  // line
+  // left
+  if(left)
+  {
+    line_ofs_max  = getLineOfsMax( left, unit, rail_dat );
+    if( isLinePoint_S(rail_dat, left, point) ){
+      width_ofs_max = getLineWidthOfsMax( left, 0, line_ofs_max, rail_dat );
+    }else{
+      width_ofs_max = getLineWidthOfsMax( left, line_ofs_max, line_ofs_max, rail_dat );
+    }
+    line_ofs_max_hi = width_ofs_max;
+  }
+  //right
+  if(right)
+  {
+    line_ofs_max  = getLineOfsMax( right, unit, rail_dat );
+    if( isLinePoint_S(rail_dat, right, point) ){
+      width_ofs_max = getLineWidthOfsMax( right, 0, line_ofs_max, rail_dat );
+    }else{
+      width_ofs_max = getLineWidthOfsMax( right, line_ofs_max, line_ofs_max, rail_dat );
+    }
+    if( width_ofs_max > line_ofs_max_hi  )
+    {
+      line_ofs_max_hi = width_ofs_max;
+    }
+  }
+
+  
+  *p_size_line = line_ofs_max_hi;
+  *p_size_width = width_ofs_max_hi;
+  
+}
 
 
 //------------------------------------------------------------------
@@ -2217,13 +2314,13 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   if (key == nLine->key)
   {//正方向キーの場合
     const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
-    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch);
-    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch);
+    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
     BOOL width_over = FALSE;
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat, work->line_switch);
     TAMADA_Printf("↑");
-    work->line_ofs += count_up;
+    calcLineSwitchLineOfs( work->line_switch, work, count_up, 0 );
     if (work->line_ofs < nLine_ofs_max) {   // nLine_ofs_max == 次のラインのline_ofs 0
       // 今の道幅チェック オーバーしてなければ、通常の更新
       now_line_width_max = getLineWidthOfsMax( nLine, work->line_ofs, nLine_ofs_max, work->rail_dat );
@@ -2342,12 +2439,12 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   {//逆方向キーの場合
     const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
     //const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
-    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch);
-    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch);
-    const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
+    const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
     BOOL width_over = FALSE;
     TAMADA_Printf("↓");
-    work->line_ofs -= count_up;
+    calcLineSwitchLineOfs( work->line_switch, work, -count_up, 0 );
     if (work->line_ofs >= 0) {
 
       // 今の道幅チェック オーバーしてなければ、通常の更新
@@ -2463,12 +2560,12 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
     TAMADA_Printf("→");
-    work->width_ofs += count_up;
+    calcLineSwitchLineOfs( work->line_switch, work, 0, count_up );
     if( (work->width_ofs > 0) && ((work->width_ofs % RAIL_WALK_OFS) == 0) ) // 右サイドに移っていたら
     { 
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
-        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
         if(right)
         {
           if ( isLinePoint_S( work->rail_dat, right, nPoint ) )
@@ -2509,7 +2606,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       }
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+        const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
         if(right)
         {
           if ( isLinePoint_S( work->rail_dat, right, nPoint ) )
@@ -2569,12 +2666,12 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
     TAMADA_Printf("←");
-    work->width_ofs -= count_up;
+    calcLineSwitchLineOfs( work->line_switch, work, 0, -count_up );
     if( (work->width_ofs < 0) && ((MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) == 0) )
     {
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_s );
-        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
         if(left)
         {
           if ( isLinePoint_S( work->rail_dat, left, nPoint ) )
@@ -2613,7 +2710,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       }
       {
         const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, nLine->point_e );
-        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch);
+        const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
         if(left)
         {
           if ( isLinePoint_S( work->rail_dat, left, nPoint ) )
@@ -3215,6 +3312,36 @@ static BOOL getLineSwitch( const RAIL_LINE_SWITCH* work, u16 line_index )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ラインスイッチ　設定されているかチェック
+ *
+ *	@param	const RAIL_LINE_SWITCH* work
+ *	@param	RAIL_LINE* line
+ *	@param	RAIL_SETTING* rail_dat 
+ *
+ *	@retval TRUE  設定されている
+ *	@retval FALSE 設定されていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL getLineSwitchPointer( const RAIL_LINE_SWITCH* work, const RAIL_LINE* line, const RAIL_SETTING* rail_dat )
+{
+  int i;
+  int index = 0;
+  
+  // ラインインデックスを求める
+  for( i=0; i<rail_dat->line_count; i++ )
+  {
+    if( (u32)(&rail_dat->line_table[i]) == (u32)line )
+    {
+      index = i;
+    }
+  }
+
+  return getLineSwitch( work, index );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ラインスイッチ  を使用した、ラインの取得関数
  *
  *	@param	work      ワーク
@@ -3232,6 +3359,88 @@ static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, 
     return getRailDatLine( raildat, index );
   }
   return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  LineSwitchで管理された、ラインオフセットの制御
+ *
+ *	@param	work
+ *	@param	railwk
+ *	@param	front_ofs
+ *	@param	side_ofs 
+ *
+ *	@retval TRUE  他のラインに乗るべき
+ *	@retval FALSE 通常動作
+ */
+//-----------------------------------------------------------------------------
+static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs )
+{
+  if( getLineSwitchPointer( work, railwk->line, railwk->rail_dat ) )
+  {
+    s32  size_line, size_width;
+    
+    // 移動可能範囲を求める
+    // 移動可能範囲内でのみ移動できる。 
+    // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
+    getLineCrossAreaSize( railwk->rail_dat, railwk->line, &size_line, &size_width, work, railwk->ofs_unit );
+
+    TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
+    
+    railwk->line_ofs += front_ofs;
+    railwk->width_ofs += side_ofs;
+
+    if( railwk->line_ofs > size_line )
+    {
+      railwk->line_ofs = size_line;
+    }
+    if( MATH_ABS( railwk->width_ofs ) > size_width )
+    {
+      if( railwk->width_ofs > 0 ){
+        railwk->width_ofs = size_width;
+      }else{
+        railwk->width_ofs = -size_width;
+      }
+    }
+  }
+  else
+  {
+    railwk->line_ofs += front_ofs;
+    railwk->width_ofs += side_ofs;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動可能なのかチェック
+ *
+ *	@param	work
+ *	@param	line
+ *	@param	l_ofs line ofs
+ *	@param	w_ofs width ofs
+ *
+ *	@retval TRUE  移動可能
+ *	@retval FALSE 移動不可能
+ */
+//-----------------------------------------------------------------------------
+static BOOL IsLineSwitchMoveOk( const RAIL_LINE_SWITCH* work, const RAIL_LINE * line, int l_ofs, int w_ofs, const RAIL_SETTING * raildat, fx32 ofs_unit )
+{
+  if( getLineSwitchPointer( work, line, raildat ) )
+  {
+    s32  size_line, size_width;
+    
+    // 移動可能範囲を求める
+    // 移動可能範囲内でのみ移動できる。 
+    // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
+    getLineCrossAreaSize( raildat, line, &size_line, &size_width, work, ofs_unit );
+
+    if( (l_ofs < size_line) && (MATH_ABS(w_ofs) < size_width) )
+    {
+      return TRUE;
+    }
+    return FALSE;
+  }
+  return TRUE;
 }
 
 
