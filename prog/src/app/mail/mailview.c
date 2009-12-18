@@ -209,8 +209,6 @@ static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk );
 //プロセス定義
 //====================================================================
 
-static MAIL_VIEW_DAT *debug_mail_wk;
-
 //=============================================================================================
 /**
  * @brief   メール描画呼び出し　初期化
@@ -227,8 +225,6 @@ GFL_PROC_RESULT MailViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *m
 {
   MAIL_TMP_DATA* tp;
   MAIL_VIEW_DAT* wk;
-
-  debug_mail_wk = wk;
 
   //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MAILVIEW, 0x20000 );
