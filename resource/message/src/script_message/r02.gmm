@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-09T21:53:12"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:30:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,48 +293,18 @@
 
 
 	<row id="msg_r02_black_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・POSで発動
-　主人公に隣接してこのメッセージ表示
-0＝プレイヤー名</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『[1:00:トレーナー名:0]……！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0]……！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r02_black_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・草むらを向いてこのメッセージ表示</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">このさきの　ながい　くさむら……[BE:01:ページ切り替え（クリア）]
-はんぱじゃなく
-つよい　ポケモンが　でてくるぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この先の　長い　草むら……[BE:01:ページ切り替え（クリア）]
-はんぱじゃなく
-強い　ポケモンが　でてくるぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r02_black_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・再度主人公と向き合い
-　メッセージ表示
-・表示後、T02に戻っていくアニメ
-・画面外に消えると、操作可能に
-　
-・このあとt02pc0101に出現（c01到達まで）</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">おれ……
-ポケモンセンターに　もどる……[BE:01:ページ切り替え（クリア）]
-つよい　ポケモンと　たたかうことで
-じぶんの　ポケモンを　そだてる[BE:00:ページ切り替え（行送り）]
-チャンスかも　しれないけどさ[BE:01:ページ切り替え（クリア）]
-おまえも　きを　つけろよな！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おれ……
-ポケモンセンターに　戻る……[BE:01:ページ切り替え（クリア）]
-強い　ポケモンと　たたかうことで
-自分の　ポケモンを　育てる[BE:00:ページ切り替え（行送り）]
-チャンスかも　しれないけどさ[BE:01:ページ切り替え（クリア）]
-おまえも　気を　つけろよな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r02_mama_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
