@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T17:56:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T11:34:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -514,7 +514,7 @@
 足を　運んでみてくれ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_clown_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
@@ -522,13 +522,15 @@
 		<language name="JPN" width="256">……おきゃくさん
 ここだけの　はなし　ですけど[BE:01:ページ切り替え（クリア）]
 じつは　ライモンシティって
-ポケモンしょうぶの　メッカですよ[BE:00:ページ切り替え（行送り）]
-そこかしらに　トレーナーがいますから</language>
+ポケモンしょうぶの　メッカですよ[BE:01:ページ切り替え（クリア）]
+そこかしらの　しせつに
+ポケモントレーナーが　いますから</language>
 		<language name="JPN_KANJI" width="256">……お客さん
 ここだけの　話ですけど[BE:01:ページ切り替え（クリア）]
 実は　ライモンシティって
-ポケモン勝負の　メッカですよ[BE:00:ページ切り替え（行送り）]
-そこかしらに　トレーナーがいますから</language>
+ポケモン勝負の　メッカですよ[BE:01:ページ切り替え（クリア）]
+そこかしらの　施設に
+ポケモントレーナーが　いますから</language>
 	</row>
 
 	<row id="msg_c04_badman_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -546,15 +548,15 @@
 もっと鍛えて　挑戦してやるよ！！</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_middleman2_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
 		<language name="JPN" width="256">ここは　てんごく　なのか……？
-あっとうされて　こえもでないぞ</language>
+あっとうされて　こえもでない</language>
 		<language name="JPN_KANJI" width="256">ここは　天国なのか……？
-圧倒されて　声もでないぞ</language>
+圧倒されて　声もでない</language>
 	</row>
 
 	<row id="msg_c04_backpackerw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
