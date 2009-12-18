@@ -28,11 +28,9 @@ typedef struct{
 //--------------------------------------------------------------
 //  出口座標
 //--------------------------------------------------------------
-///1vs1の時の立ち位置座標
+///1vs1の時の立ち位置座標(グリッド座標)
 static const POINT_S16 UnionWayOutPos[] = {
-  {152, 248},
-  {168, 248},
-  {184, 248},
+  {11, 16},
 };
 
 
@@ -59,11 +57,11 @@ BOOL UnionTool_CheckWayOut(FIELDMAP_WORK *fieldWork)
   int i;
   
   FIELD_PLAYER_GetPos(player, &pos);
-  pos.x >>= FX32_SHIFT;
-  pos.z >>= FX32_SHIFT;
+  pos.x = SIZE_GRID_FX32(pos.x);
+  pos.z = SIZE_GRID_FX32(pos.z);
 
   if(PLAYERWORK_getDirection( plWork ) == DIR_UP){
-    return FALSE;
+//    return FALSE;
   }
   
   for(i = 0; i < NELEMS(UnionWayOutPos); i++){
