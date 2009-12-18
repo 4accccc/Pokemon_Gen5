@@ -1,13 +1,2 @@
 ELBOARD_SPNEWS_DATA = \
-./setting/bin/elboard_spnews_data_0.bin\
-./setting/bin/elboard_spnews_data_1.bin\
-./setting/bin/elboard_spnews_data_2.bin\
-./setting/bin/elboard_spnews_data_3.bin\
-./setting/bin/elboard_spnews_data_4.bin\
-./setting/bin/elboard_spnews_data_5.bin\
-./setting/bin/elboard_spnews_data_6.bin\
-./setting/bin/elboard_spnews_data_7.bin\
-./setting/bin/elboard_spnews_data_8.bin\
-./setting/bin/elboard_spnews_data_9.bin\
-./setting/bin/elboard_spnews_data_10.bin\
-./setting/bin/elboard_spnews_data_11.bin
+./setting/bin/elboard_spnews_data_0.bin

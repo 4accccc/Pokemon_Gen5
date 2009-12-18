@@ -339,12 +339,22 @@ VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
 typedef struct
 {
   WAZAOSHIE_DATA *waza_remind_dat;
+  u16* retWk;  // 結果の格納先
 
 } WAZA_REMIND_CALLBACK_WORK;
 
 static void EvCmdCallWazaRemindProc_CallBack( void* work )
 {
   WAZA_REMIND_CALLBACK_WORK* wrwk = work;
+
+  // 結果を返す
+  switch( wrwk->waza_remind_dat->ret )
+  {
+  default:
+  case WAZAOSHIE_RET_SET:    *(wrwk->retWk) = SCR_WAZAOSHIE_RET_SET;    break;
+  case WAZAOSHIE_RET_CANCEL: *(wrwk->retWk) = SCR_WAZAOSHIE_RET_CANCEL; break;
+  }
+
   GFL_HEAP_FreeMemory( wrwk->waza_remind_dat->waza_tbl );
   WAZAOSHIE_DataFree( wrwk->waza_remind_dat );
   // wrwkはPROC呼び出しイベントルーチン内で解放される
@@ -364,7 +374,8 @@ VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数(パーティー内位置)
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数(結果の格納先)
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数(パーティー内位置)
   POKEPARTY*        party = GAMEDATA_GetMyPokemon(gdata);
   POKEMON_PARAM*       pp = PokeParty_GetMemberPointer( party, poke_pos);
   MYSTATUS*      mystatus = GAMEDATA_GetMyStatus( gdata );
@@ -386,6 +397,7 @@ VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
 
   wrwk  = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_CALLBACK_WORK) );
   wrwk->waza_remind_dat = param;
+  wrwk->retWk = ret_wk;
   
   event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
                                        FS_OVERLAY_ID(waza_oshie), &WazaOshieProcData, param,

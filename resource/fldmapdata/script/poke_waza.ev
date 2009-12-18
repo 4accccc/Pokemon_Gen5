@@ -19,6 +19,7 @@
 //               スクリプトテーブル
 //----------------------------------------------------------------------
 _EVENT_DATA   ev_waza_wasure_oyaji
+_EVENT_DATA   ev_waza_omoidashi
 _EVENT_DATA_END
 
 //----------------------------------------------------------------------
@@ -151,3 +152,115 @@ EVENT_START ev_waza_wasure_oyaji
 } 
 EVENT_END
 
+
+
+/**************************************************************/
+/*                       技 思い出し                          */
+/**************************************************************/
+EVENT_START ev_waza_omoidashi
+{
+  DEFINE_LOCAL poke_pos  // 対象ポケモンの手持ち位置
+
+  // 初会話
+  {
+    DEFINE_LOCAL first_contact
+    _FLAG_CHECK( FE_REMIND_FIRSTTALK, first_contact )
+    IF $first_contact == TRUE THEN
+      _FLAG_SET( FE_REMIND_FIRSTTALK )  // フラグセット
+      _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_12 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+  }
+  // ハートのうろこ所持チェック
+  {
+    DEFINE_LOCAL have_uroko
+    _ADD_ITEM( ITEM_HAATONOUROKO, 1, have_uroko )  // TEST:
+    _ITEM_CHK( ITEM_HAATONOUROKO, 1, have_uroko )
+    IF $have_uroko == FALSE THEN 
+      _JUMP omoidashi_exit_byebye 
+    ENDIF
+  }
+  // 思い出させるか確認
+  {
+    DEFINE_LOCAL ans
+    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_13 )  //「思い出させます？」
+    _YES_NO_WIN( ans )
+    _BALLOONWIN_CLOSE()
+    IF $ans == SCR_NO THEN
+      _JUMP omoidashi_exit_byebye
+    ENDIF
+  }
+  // ポケモン選択
+  {
+    DEFINE_LOCAL decide
+    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_14 )  //「どの ポケモンに します？」
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _SELECT_TEMOTI_POKE( decide, poke_pos, 0 )
+    // キャンセル
+    IF $decide == FALSE THEN 
+      _JUMP omoidashi_exit_byebye 
+    ENDIF
+    // タマゴチェック
+    {
+      DEFINE_LOCAL egg
+      _CHECK_TEMOTI_EGG( egg, poke_pos )
+      IF $egg == TRUE THEN 
+        _JUMP omoidashi_exit_egg 
+      ENDIF
+    }
+    // 思い出し技の有無チェック
+    {
+      DEFINE_LOCAL enable
+      _CHECK_WAZA_REMAIND( enable, poke_pos )
+      IF $enable == FALSE THEN 
+        _JUMP omoidashi_exit_disable 
+      ENDIF
+    }
+  }
+  // 思い出し処理
+  {
+    DEFINE_LOCAL result
+    DEFINE_LOCAL tmp
+    _TEMOTI_NICK_NAME( 0, poke_pos )
+    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_01 )  //「どの わざ？」
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _CALL_WAZA_REMAIND_PROC( result, poke_pos )
+    SWITCH $result
+    CASE SCR_WAZAOSHIE_RET_SET    THEN _JUMP omoidashi_exit_finish
+    CASE SCR_WAZAOSHIE_RET_CANCEL THEN _JUMP omoidashi_exit_byebye
+    DEFAULT                            _JUMP omoidashi_exit_byebye
+    ENDSWITCH
+  }
+
+
+omoidashi_exit_byebye:
+  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_15 )  //「また きてね！」
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _JUMP omoidashi_exit
+omoidashi_exit_egg:
+  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_16 )  //「それ, タマゴだよ」
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _JUMP omoidashi_exit 
+omoidashi_exit_disable:
+  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_17 )  //「忘れてる技 ないよ」
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _JUMP omoidashi_exit
+omoidashi_exit_finish:
+  _PLAYER_NAME(0)
+  _SYSWIN_MSG_DOWN( msg_waza_omoi_10 )  //「ウロコを あげた！」
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  { // ウロコ減
+    DEFINE_LOCAL ret
+    _SUB_ITEM( ITEM_HAATONOUROKO, 1, ret )  
+  }
+  _JUMP omoidashi_exit
+omoidashi_exit:
+}
+EVENT_END

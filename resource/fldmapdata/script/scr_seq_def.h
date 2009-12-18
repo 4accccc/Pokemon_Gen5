@@ -6339,14 +6339,18 @@
 /**
  * @def _CALL_WAZA_REMAIND_PROC
  * @brief 技思い出しプロセスを呼び出す
- * @param pos 対象となるポケモンを手持ち位置で指定
+ * @param ret_wk 結果の格納先
+ * @param pos    対象となるポケモンを手持ち位置で指定
+ * @return 技を思い出した場合 SCR_WAZAOSHIE_RET_SET
+ *         キャンセルした場合 SCR_WAZAOSHIE_RET_CANCEL
  */
 //--------------------------------------------------------------
-#define _CALL_WAZA_REMAIND_PROC( pos ) \
-    _ASM_CALL_WAZA_REMAIND_PROC pos
+#define _CALL_WAZA_REMAIND_PROC( ret_wk, pos ) \
+    _ASM_CALL_WAZA_REMAIND_PROC ret_wk, pos
 
-  .macro _ASM_CALL_WAZA_REMAIND_PROC
+  .macro _ASM_CALL_WAZA_REMAIND_PROC ret_wk, pos
   .short EV_SEQ_CALL_WAZA_REMAIND_PROC
+  .short \ret_wk
   .short \pos
   .endm
 
