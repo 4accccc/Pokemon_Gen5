@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T19:00:01"/>
+	<create user="hozumi_yukiko" host="W00211" date="2009-12-18T20:56:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1522" top="169" right="2227" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="165" top="194" right="870" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,14 +341,14 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">もうひとつのDSに　きゅうソフトを　さしこみ、
-でんげんをいれて　ダウンロードプレイから
+		<language name="JPN" width="208">もうひとつの　ＤＳに　きゅうソフトを
+いれて『ＤＳダウンロードプレイ』から
 『パルパーク　[1:00:トレーナー名:0]』を
-せんたくしてください。</language>
-		<language name="JPN_KANJI" width="208">もう一つのDSに　旧ソフトを　差込み
-電源をいれて　ダウンロードプレイから
+えらんでください</language>
+		<language name="JPN_KANJI" width="208">もう一つの　ＤＳに　旧ソフトを
+入れて『ＤＳダウンロードプレイ』から
 『パルパーク　[1:00:トレーナー名:0]』を
-選択してください。</language>
+選んでください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_02">

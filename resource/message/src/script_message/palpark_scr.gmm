@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T17:16:43"/>
+	<create user="hozumi_yukiko" host="W00211" date="2009-12-18T21:16:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="313" top="298" right="1018" bottom="918" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -373,12 +373,12 @@ BOXに6匹以上の空きがない</comment>
 	<row id="msg_palpark_05">
 		<comment>はい選択で
 BOXに6匹以上の空きがある</comment>
-		<language name="JPN" width="256">もう１つ　ＤＳを
-つかって　あそぶけど▽
-ＤＳは　２つ　あるかい？▼</language>
-		<language name="JPN_KANJI" width="256">もう１つ　ＤＳを
-使って　遊ぶけど▽
-ＤＳは　２つ　あるかい？▼</language>
+		<language name="JPN" width="256">ＤＳは　２つ　ひつようだよ▼
+もうひとつの　ＤＳを　つかって
+あそぶけど　それで　いいかな？</language>
+		<language name="JPN_KANJI" width="256">ＤＳは　２つ　必要だよ▼
+もう一つの　ＤＳを　使って
+遊ぶけど　それで　いいかな？▼</language>
 	</row>
 
 	<row id="msg_palpark_06">
@@ -404,9 +404,9 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_08">
 		<comment>メッセージ表示後、移動アニメーション</comment>
-		<language name="JPN" width="256">はい！
+		<language name="JPN" width="256">よしっ
 じゃあ　そこに　たって！▼</language>
-		<language name="JPN_KANJI" width="256">はい！
+		<language name="JPN_KANJI" width="256">よしっ
 じゃあ　そこに　たって！▼</language>
 	</row>
 
@@ -475,8 +475,9 @@ BOXに6匹以上の空きがある</comment>
 	</row>
 
 	<row id="msg_palpark_13">
-		<language name="JPN" width="256">また　やりたくなったら　きてよね！</language>
-		<language name="JPN_KANJI" width="256">また　やりたくなったら　来てよね！</language>
+		<comment>通信エラーのときのメッセージ</comment>
+		<language name="JPN" width="256">やりたくなったら　またきてよね！</language>
+		<language name="JPN_KANJI" width="256">やりたくなったら　また来てよね！</language>
 	</row>
 
 	<flowchart-group-list>
