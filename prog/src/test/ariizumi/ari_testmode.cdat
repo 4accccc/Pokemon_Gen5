@@ -103,6 +103,7 @@ static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
+	{L"CommTVT"	  		,TESTMODE_ITEM_SelectDebCameraTest },
 	{L"ポケステータス"  ,TESTMODE_ITEM_SelectDebPokeStatus },
 	{L"ポケリスト"		  ,TESTMODE_ITEM_SelectDebPokeList },
 	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
@@ -112,7 +113,6 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"数値入力"			  ,TESTMODE_ITEM_SelectDebCodeIn },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
-	{L"CommTVT"	  		,TESTMODE_ITEM_SelectDebCameraTest },
 	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
 	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },

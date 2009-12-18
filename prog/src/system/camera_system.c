@@ -199,7 +199,10 @@ static void CAMERA_SYS_ErrorCallBack(CAMERAResult result)
 #pragma unused(result)
   CAMERA_SYSTEM_WORK *work = cameraWork;
 
-  OS_TPrintf("Error was occurred[%d].\n",result);
+  if( result != 0 )
+  {
+    OS_TPrintf("Error was occurred[%d].\n",result);
+  }
   // カメラ停止処理
   CAMERA_StopCapture();
   MI_StopNDma(NDMA_NO);
@@ -601,6 +604,8 @@ void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work )
 }
 
 #else
+#pragma mark [>Dummy
+//ダミー
 struct _CAMERA_SYSTEM_WORK
 {
   HEAPID heapId;

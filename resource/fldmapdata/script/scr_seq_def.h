@@ -6428,6 +6428,39 @@
   .short \retVal
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _GET_PALPARK_VALUE_FINISH_STATE 
+ *  @brief パルパーク：前回終了状態(0:捕獲あり 1:捕獲あり+ハイスコア 2:捕獲無し 3:エラー
+ *         palpark_scr_local.h参照
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_PALPARK_VALUE_FINISH_STATE( retVal ) \
+    _ASM_GET_PALPARK_VALUE_FINISH_STATE retVal
+
+  .macro  _ASM_GET_PALPARK_VALUE_FINISH_STATE retVal
+  .short EV_SEQ_GET_PALPARK_VALUE
+  .byte 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_PALPARK_VALUE 
+ *  @brief パルパーク：ハイスコア
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_PALPARK_VALUE_HIGHSCORE( retVal ) \
+    _ASM_GET_PALPARK_VALUE_HIGHSCORE retVal
+
+  .macro  _ASM_GET_PALPARK_VALUE_HIGHSCORE retVal
+  .short EV_SEQ_GET_PALPARK_VALUE
+  .byte 1
+  .short \retVal
+  .endm
+
 
 //--------------------------------------------------------------
 /**

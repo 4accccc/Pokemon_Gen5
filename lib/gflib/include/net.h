@@ -1027,7 +1027,8 @@ extern BOOL GFL_NET_IsError(void);
 //----------------------------------------------------------------
 extern int GFL_NET_GetErrorCode(void);
 
-
+//--------低優先度送信
+//セットすると、毎フレーム通信バッファの空きを見て、その分を送信します。
 //--------------------------------------------------------------
 /**
  * @brief   低優先度送信：システム作成(送信側
@@ -1063,7 +1064,25 @@ extern void GFL_NET_LDATA_SetSendData( void* data , const u32 size , const u8 se
  */
 //--------------------------------------------------------------
 extern void GFL_NET_LDATA_CreatePostBuffer( u32 size , const u8 netId , const HEAPID heapId );
-
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信バッファ作成(外からバッファを渡す
+ *
+ * @param   size   受信サイズ
+ * @param   netID  送信側のnetID
+ * @param   heapId システム作成用HEAP
+ * @param   bufferAdr バッファ
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_CreatePostBuffer_SetAddres( u32 size , const u8 netId , const HEAPID heapId , void* bufferAdr );
+//--------------------------------------------------------------
+/**
+ * @brief   低優先度送信：受信バッファ削除
+ *
+ * @param   netID  送信側のnetID
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_LDATA_DeletePostBuffer( const u8 netId );
 //--------------------------------------------------------------
 /**
  * @brief   低優先度送信：受信バッファ取得

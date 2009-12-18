@@ -21,7 +21,7 @@
 //======================================================================
 #pragma mark [> enum
 
-#ifdef TWL_SDK
+#ifdef SDK_TWL
 //CAMERASize‚ğÄ’è‹`
 enum
 {

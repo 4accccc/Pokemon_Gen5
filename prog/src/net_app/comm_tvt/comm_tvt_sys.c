@@ -15,6 +15,7 @@
 
 #include "net_app/comm_tvt_sys.h"
 #include "ctvt_camera.h"
+#include "ctvt_comm.h"
 #include "comm_tvt_local_def.h"
 
 //======================================================================
@@ -35,12 +36,18 @@
 struct _COMM_TVT_WORK
 {
   HEAPID heapId;
+  GFL_TCB *vBlankTcb;
+
+  u8 connectNum;
+  u8 selfIdx;
+  BOOL isDouble;
   
   //セル系
   GFL_CLUNIT  *cellUnit;
 
   //各ワーク
   CTVT_CAMERA_WORK *camWork;
+  CTVT_COMM_WORK   *commWork;
 
   COMM_TVT_INIT_WORK *initWork;
 };
@@ -52,6 +59,7 @@ struct _COMM_TVT_WORK
 static void COMM_TVT_Init( COMM_TVT_WORK *work );
 static void COMM_TVT_Term( COMM_TVT_WORK *work );
 static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work );
+static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work );
 static void COMM_TVT_TermGraphic( COMM_TVT_WORK *work );
@@ -78,10 +86,17 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void COMM_TVT_Init( COMM_TVT_WORK *work )
 {
+  work->connectNum = 1;
+  work->selfIdx = 0;
+  work->isDouble = FALSE;
+
+
   COMM_TVT_InitGraphic( work );
   work->camWork = CTVT_CAMERA_Init( work , work->heapId );
-
+  work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
   
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
+
 
   GX_SetMasterBrightness(0);
   GXS_SetMasterBrightness(0);
@@ -92,7 +107,9 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 //--------------------------------------------------------------
 static void COMM_TVT_Term( COMM_TVT_WORK *work )
 {
-
+  GFL_TCB_DeleteTask( work->vBlankTcb );
+  
+  CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
   COMM_TVT_TermGraphic( work );
 }
@@ -103,13 +120,26 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
 static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
 {
   CTVT_CAMERA_Main( work , work->camWork );
-  
+  CTVT_COMM_Main( work , work->commWork );
+
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
   {
     return TRUE;
   }
   return FALSE;
+}
+//--------------------------------------------------------------
+//	VBlankTcb
+//--------------------------------------------------------------
+static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
+{
+  COMM_TVT_WORK *work = wk;
+
+  //上画面の更新
+  CTVT_CAMERA_VBlank( work , work->camWork );
+  //OBJの更新
+  GFL_CLACT_SYS_VBlankFunc();
 }
 
 //--------------------------------------------------------------
@@ -199,6 +229,61 @@ static void COMM_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
   GFL_BG_LoadScreenReq( bgPlane );
 }
 
+#pragma mark [>outer func (system
+CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work )
+{
+  return work->camWork;
+}
+
+#pragma mark [>outer func (value
+//--------------------------------------------------------------------------
+//  モードとか人数
+//--------------------------------------------------------------------------
+const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work )
+{
+  return work->heapId;
+}
+const u8   COMM_TVT_GetConnectNum( const COMM_TVT_WORK *work )
+{
+  return work->connectNum;
+}
+void   COMM_TVT_SetConnectNum( COMM_TVT_WORK *work , const u8 num)
+{
+  work->connectNum = num;
+}
+
+const COMM_TVT_DISP_MODE COMM_TVT_GetDispMode( const COMM_TVT_WORK *work )
+{
+  const u8 num = COMM_TVT_GetConnectNum( work );
+  if( num == 1 )
+  {
+    return CTDM_SINGLE;
+  }
+  else
+  if( num == 2 )
+  {
+    return CTDM_DOUBLE;
+  }
+  return CTDM_FOUR;
+}
+
+const BOOL COMM_TVT_IsDoubleMode( const COMM_TVT_WORK *work )
+{
+  return work->isDouble;
+}
+void   COMM_TVT_SetDoubleMode( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isDouble = flg;
+}
+const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work )
+{
+  return work->selfIdx;
+}
+void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx )
+{
+  work->selfIdx = idx;
+}
+
 #pragma mark [>util func
 //--------------------------------------------------------------------------
 //  TWL起動かチェック
@@ -227,8 +312,8 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work;
   
-  OS_TPrintf("Least heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x80000 );
+  CTVT_TPrintf("Least heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x100000 );
   
   work = GFL_PROC_AllocWork( proc, sizeof(COMM_TVT_WORK), HEAPID_COMM_TVT );
   work->heapId = HEAPID_COMM_TVT;
@@ -262,6 +347,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_COMM_TVT );
 
+  CTVT_TPrintf("FinishCamera\n");
   return GFL_PROC_RES_FINISH;
 }
 

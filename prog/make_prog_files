@@ -1166,6 +1166,7 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
 #LIB=>          libssp.$HYB.a
 SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 			net_app/comm_tvt/ctvt_camera.c \
+			net_app/comm_tvt/ctvt_comm.c \
 			net_app/comm_tvt/comm_tvt_sys.c
 
 
