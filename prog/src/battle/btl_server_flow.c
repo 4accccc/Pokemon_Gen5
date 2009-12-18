@@ -504,7 +504,8 @@ static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
   WazaID orgWazaID, WazaID actWazaID, BTL_HANDEX_STR_PARAMS* str );
-static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static SV_WazaFailCause scEvent_CheckWazaExecute1ST( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* param );
 static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
   WazaID waza, SV_WazaFailCause cause );
@@ -1320,7 +1321,7 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
     {
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-      agi = (agi * ratio) >> FX32_SHIFT;
+      agi = BTL_CALC_MulRatio( agi, ratio );
       BTL_Printf("  ハンドラ処理後の素早さ=%d, 倍率=%08x, 結果=%d\n",
           BTL_EVENTVAR_GetValue(BTL_EVAR_AGILITY), ratio, agi);
     }
@@ -3758,6 +3759,9 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
       break;
     }
 
+    // その他の失敗チェック
+    cause = scEvent_CheckWazaExecute1ST( wk, attacker, waza );
+
   }while( 0 );
 
   if( cause != SV_WAZAFAIL_NULL ){
@@ -3790,7 +3794,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
     }
 
     // その他の失敗チェック
-    cause = scEvent_CheckWazaExecute( wk, attacker, waza );
+    cause = scEvent_CheckWazaExecute2ND( wk, attacker, waza );
   }while( 0 );
 
   if( cause != SV_WAZAFAIL_NULL ){
@@ -4614,71 +4618,71 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   }
   else
   {
-    fx32 fxDamage;
+    u32 fxDamage;
     u16 atkPower, defGuard, wazaPower;
-
+    u8 atkLevel;
     // 各種パラメータから素のダメージ値計算
     wazaPower = scEvent_getWazaPower( wk, attacker, defender, wazaParam );
     atkPower  = scEvent_getAttackPower( wk, attacker, defender, wazaParam, criticalFlag );
     defGuard  = scEvent_getDefenderGuard( wk, attacker, defender, wazaParam, criticalFlag );
     {
-      u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
-//      rawDamage = wazaPower * atkPower * (atkLevel*2/5+2) / defGuard / 50 + 2;
-      fxDamage = (wazaPower * atkPower * (atkLevel*2/5+2)) << FX32_SHIFT;
+      atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
+
+      BTL_Printf("Damage Params : wazaPow=%d, atLv=%d, atk=%d, def=%d\n",
+            wazaPower, atkLevel, atkPower, defGuard);
+      fxDamage = (wazaPower * atkPower * (atkLevel*2/5+2));
+      BTL_Printf("Damage Step1 (%d)\n", fxDamage );
       fxDamage = fxDamage / defGuard / 50;
-      fxDamage += FX32_CONST(2);
+      BTL_Printf("Damage Step2 (%d)\n", fxDamage);
+      fxDamage += 2;
+      BTL_Printf("基礎ダメージ値 (%d)\n", fxDamage);
     }
-//    rawDamage = (rawDamage * targetDmgRatio) >> FX32_SHIFT;
-    fxDamage  = (fxDamage * targetDmgRatio) >> FX32_SHIFT;
+    fxDamage  = BTL_CALC_MulRatio( fxDamage, targetDmgRatio );
+    BTL_Printf("対象数によるダメージ補正:%d\n", fxDamage);
     // 天候補正
     {
       fx32 weatherDmgRatio = BTL_FIELD_GetWeatherDmgRatio( wazaParam->wazaID );
       if( weatherDmgRatio != BTL_CALC_DMG_WEATHER_RATIO_NONE )
       {
-        u32 prevDmg = fxDamage >> FX32_SHIFT;
-//        rawDamage = (rawDamage * weatherDmgRatio) >> FX32_SHIFT;
-        fxDamage = (fxDamage * weatherDmgRatio) >> FX32_SHIFT;
-        BTL_Printf("天候による補正が発生, 補正率=%08x, dmg=%d->%d\n", weatherDmgRatio, prevDmg, (fxDamage>>FX32_SHIFT));
+        u32 prevDmg = fxDamage;
+        fxDamage = BTL_CALC_MulRatio( fxDamage, weatherDmgRatio );
+        BTL_Printf("天候による補正が発生, 補正率=%08x, dmg=%d->%d\n", weatherDmgRatio, prevDmg, fxDamage);
       }
     }
     // 素ダメージ値を確定
-    BTL_Printf("威力:%d, こうげき:%d, ぼうぎょ:%d,  ... 素ダメ:%d\n",
-        wazaPower, atkPower, defGuard, fxDamage>>FX32_SHIFT );
+    BTL_Printf("威力:%d, Lv:%d, こうげき:%d, ぼうぎょ:%d,  ... 素ダメ:%d\n",
+        wazaPower, atkLevel, atkPower, defGuard, fxDamage );
 
     // クリティカルで２倍
     if( criticalFlag ){
-//      rawDamage *= 2;
       fxDamage *= 2;
-      BTL_Printf("クリティカルだから素ダメ->%d\n", (fxDamage>>FX32_SHIFT));
+      BTL_Printf("クリティカルだから素ダメ->%d\n", fxDamage);
     }
     //ランダム補正(100～85％)
     {
       u16 ratio = 100 - BTL_CALC_GetRand( 16 );
 //      rawDamage = (rawDamage * ratio) / 100;
       fxDamage = (fxDamage * ratio) / 100;
-      BTL_Printf("ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, (fxDamage>>FX32_SHIFT));
+      BTL_Printf("ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fxDamage);
     }
     // タイプ一致補正
     {
       fx32 ratio = scEvent_CalcTypeMatchRatio( wk, attacker, wazaParam->wazaType );
-//      rawDamage = (rawDamage * ratio) >> FX32_SHIFT;
-      fxDamage = (fxDamage * ratio) >> FX32_SHIFT;
+      fxDamage = BTL_CALC_MulRatio( fxDamage, ratio );
       if( ratio != FX32_ONE ){
-        BTL_Printf("タイプ一致補正:%d%%  -> 素ダメ=%d\n", (ratio*100>>FX32_SHIFT), (fxDamage>>FX32_SHIFT));
+        BTL_Printf("タイプ一致補正:%d%%  -> 素ダメ=%d\n", (ratio*100>>FX32_SHIFT), fxDamage);
       }
     }
     // タイプ相性計算
-//    rawDamage = BTL_CALC_AffDamage( rawDamage, typeAff );
     fxDamage = BTL_CALC_AffDamage( fxDamage, typeAff );
-    BTL_Printf("タイプ相性:%02d -> ダメージ値：%d\n", typeAff, (fxDamage>>FX32_SHIFT));
+    BTL_Printf("タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fxDamage);
     // やけど補正
     if( (dmgType == WAZADATA_DMG_PHYSIC)
     &&  (BPP_GetPokeSick(attacker) == POKESICK_YAKEDO)
     ){
-//      rawDamage = (rawDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
       fxDamage = (fxDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
     }
-    rawDamage = fxDamage >> FX32_SHIFT;
+    rawDamage = fxDamage;
     if( rawDamage == 0 ){ rawDamage = 1; }
 
     // 各種ハンドラによる倍率計算
@@ -4688,7 +4692,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     {
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-      rawDamage = (rawDamage * ratio) >> FX32_SHIFT;
+      rawDamage = BTL_CALC_MulRatio( rawDamage, ratio );
       BTL_Printf("ダメ受けポケモン=%d, ratio=%08x, Damage=%d -> %d\n",
             BPP_GetID(defender), ratio, BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE ), rawDamage);
     }
@@ -6152,7 +6156,7 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
           recoverHP /= 2;
         }
         if( recoverHP ){
-          scPut_SimpleHp( wk, bpp, recoverHP, TRUE );
+          scproc_RecoverHP( wk, bpp, recoverHP );
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CommSupport, BTL_CLIENTID_COMM_SUPPORT, pokeID );
           COMM_PLAYER_SUPPORT_Init( supportHandle );
         }
@@ -6425,15 +6429,22 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
 
   switch( weather ){
   case BTL_WEATHER_SAND:
-    scPut_Message_Set( wk, bpp, BTL_STRID_SET_WeatherDmg_Sand );
+    HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_WeatherDmg_Sand );
+    HANDEX_STR_AddArg( &wk->strParam, pokeID );
     break;
   case BTL_WEATHER_SNOW:
-    scPut_Message_Set( wk, bpp, BTL_STRID_SET_WeatherDmg_Snow );
+    HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_WeatherDmg_Snow );
+    HANDEX_STR_AddArg( &wk->strParam, pokeID );
+    break;
+  default:
+    HANDEX_STR_Clear( &wk->strParam );
     break;
   }
 
   BTL_Printf("ダメージ値=%d\n", damage);
-  scPut_SimpleHp( wk, bpp, -damage, TRUE );
+  if( damage > 0 ){
+    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam );
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -6682,7 +6693,7 @@ static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_
   denom  = ( (denom_int * denom_int) * FX_Sqrt(FX32_CONST(denom_int)) );
   ratio = FX_Div( numer, denom );
 
-  result = ((base_exp * ratio) >> FX32_SHIFT) + 1;
+  result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
 
   BTL_Printf( "自分Lv=%d, 敵Lv=%d, 基本経験値=%d -> 補正後経験値=%d\n",
       getpoke_lv, deadpoke_lv, base_exp, result );
@@ -6863,9 +6874,11 @@ static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damag
 {
   u8 pokeID = BPP_GetID( bpp );
 
+  // こんらんはマジックガードの影響を受けないのでSimpleHPを直接呼んでいる  taya
+  SCQUE_PUT_ACT_ConfDamage( wk->que, pokeID );
   scPut_SimpleHp( wk, bpp, (int)(-damage), TRUE );
   SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_KonranExe, pokeID );
-  SCQUE_PUT_ACT_ConfDamage( wk->que, pokeID );
+
 }
 //--------------------------------------------------------------------------
 /**
@@ -7770,7 +7783,7 @@ static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 }
 //--------------------------------------------------------------------------
 /**
- * 【Event】ワザ出し失敗判定
+ * 【Event】ワザ出し失敗判定１回目（ワザメッセージ前）
  *
  * @param   wk
  * @param   attacker    攻撃ポケモンパラメータ
@@ -7779,7 +7792,31 @@ static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
  * @retval  SV_WazaFailCause
  */
 //--------------------------------------------------------------------------
-static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+static SV_WazaFailCause scEvent_CheckWazaExecute1ST( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+{
+  SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, cause );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK_1ST );
+    cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
+  BTL_EVENTVAR_Pop();
+  return cause;
+}
+//--------------------------------------------------------------------------
+/**
+ * 【Event】ワザ出し失敗判定２回目（ワザメッセージ後）
+ *
+ * @param   wk
+ * @param   attacker    攻撃ポケモンパラメータ
+ * @param   waza        出そうとしているワザ
+ *
+ * @retval  SV_WazaFailCause
+ */
+//--------------------------------------------------------------------------
+static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
 {
   WazaSick sick = BPP_GetPokeSick( attacker );
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
@@ -7829,7 +7866,7 @@ static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEP
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, cause );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK_2ND );
     cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
   BTL_EVENTVAR_Pop();
   return cause;
@@ -8201,7 +8238,7 @@ static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
     ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
   BTL_EVENTVAR_Pop();
 
-  per = (per * ratio) >> FX32_SHIFT;
+  per = BTL_CALC_MulRatio( per, ratio );
   if( per > 100 ){
     per = 100;
   }
@@ -8783,11 +8820,11 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   fx32 ratio;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0), FX32_CONST(0.1f), FX32_CONST(512) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
@@ -8795,7 +8832,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
     ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER_RATIO );
   BTL_EVENTVAR_Pop();
 
-  power = ( power * ratio ) >> FX32_SHIFT;
+  power = BTL_CALC_MulRatio( power, ratio );
   BTL_Printf("威力は%dだーよ\n", power);
   return power;
 }
@@ -8815,8 +8852,8 @@ static BOOL scEvent_CheckEnableSimpleDamage( BTL_SVFLOW_WORK* wk, const BTL_POKE
   BOOL flag;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, TRUE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_SIMPLE_DAMAGE_ENABLE );
     flag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();

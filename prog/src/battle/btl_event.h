@@ -49,7 +49,8 @@ typedef enum {
   BTL_EVENT_REQWAZA_PARAM,          ///< 他ワザ呼び出し時パラメータ
   BTL_EVENT_REQWAZA_MSG,            ///< 他ワザ呼び出し時メッセージ
   BTL_EVENT_CHECK_WAZA_ROB,         ///< ワザ乗っ取りチェック
-  BTL_EVENT_WAZA_EXECUTE_CHECK,     ///< ワザ実行チェック
+  BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, ///< ワザ実行チェック（ワザメッセージ前）
+  BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, ///< ワザ実行チェック（ワザメッセージ後）
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
   BTL_EVENT_WAZA_EXECUTE_FIX,       ///< ワザ出し成功確定
   BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, ///< ワザ出し成功したが効果なし

@@ -145,12 +145,21 @@ extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
 
 static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
 {
-  return (value * ratio) >> FX32_SHIFT;
+  u32 decimal;
+
+  value *= ratio;
+  decimal = value & ( (1 << (FX32_SHIFT-1)) -1 );
+  value >>= FX32_SHIFT;
+  if( decimal > (1 << (FX32_SHIFT-1)) ){
+    ++value;
+  }
+
+  return value;
 }
 
 static inline u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
 {
-  value = (value * ratio) >> FX32_SHIFT;
+  value = BTL_CALC_MulRatio( value, ratio );
   if( value == 0 ){
     value = 1;
   }
