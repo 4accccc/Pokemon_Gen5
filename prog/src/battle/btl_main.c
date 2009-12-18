@@ -1569,7 +1569,7 @@ static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 {
   switch( exType ){
   default:
-    GF_ASSERT(0);
+    return 0;
     /* fallthru */
   case BTL_EXPOS_AREA_ENEMY:
   case BTL_EXPOS_AREA_OTHERS:
@@ -1593,6 +1593,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
   switch( exType ){
   default:
     GF_ASSERT(0);
+    return 0;
     /* fallthru */
   case BTL_EXPOS_AREA_ENEMY:
   case BTL_EXPOS_FULL_ENEMY:

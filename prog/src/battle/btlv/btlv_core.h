@@ -255,6 +255,8 @@ extern void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos );
 extern BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk );
 extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
+extern void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlPokePos pos, u16 effectNo );
+extern BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlPokePos pos );
 
 
 extern void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos, BOOL fFlash );

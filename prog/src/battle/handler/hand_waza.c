@@ -2653,11 +2653,14 @@ static BTL_EVENT_FACTOR*  ADD_Daibakuhatsu( u16 pri, WazaID waza, u8 pokeID )
 }
 static void handler_Daibakuhatsu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // WB‚æ‚è‚±‚ÌŽd—l‚Í‚È‚µ
+  #if 0
   // Ž©•ª‚ªUŒ‚‚ÌŽžA‘ŠŽè‘¤–hŒä‚ð”¼•ª‚É‚µ‚ÄŒvŽZ
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
+  #endif
 }
 static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -5325,11 +5328,10 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       if( prevWaza != WAZANO_NULL )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        u8 turns = BTL_CALC_RandRange( 2, 5 );
 
         BTL_Printf("‚Ó‚¤‚¶‚±‚ß‚éƒƒU‚Í %d\n", prevWaza);
         param->sickID = WAZASICK_KANASIBARI;
-        param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
+        param->sickCont = BPP_SICKCONT_MakeTurnParam( 4, prevWaza );
         param->poke_cnt = 1;
         param->pokeID[0] = targetPokeID;
       }

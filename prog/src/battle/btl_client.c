@@ -197,6 +197,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1765,6 +1766,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
+    { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
   };
 
 restart:
@@ -2958,6 +2960,32 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   default:
     return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  指定位置にエフェクト発動
+ *  args .. [0]:位置指定  [1]:エフェクト指定
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_AddEffectByPos( wk->viewCore, args[0], args[1] );
+    (*seq)++;
+    break;
+  default:
+    if( BTLV_WaitEffectByPos( wk->viewCore, args[0] ) ){
+      return TRUE;
+    }
+/*
+    if( ++(*seq) > 120 ){
+      return TRUE;
+    }
+*/
+    break;
   }
   return FALSE;
 }

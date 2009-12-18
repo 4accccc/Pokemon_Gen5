@@ -730,8 +730,8 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.sel_poke = 0;
     wk->plistData.chg_waza = 0;
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
-	  wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
-	  wk->plistData.pfd = BTLV_EFFECT_GetPfd();
+    wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
+    wk->plistData.pfd = BTLV_EFFECT_GetPfd();
 
     wk->selectItemSeq = 1;
   }
@@ -1072,8 +1072,38 @@ void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos )
 }
 BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 {
-  return BTLV_SCU_WaitHPGauge( wk->scrnU );
+  if( BTLV_SCU_WaitHPGauge(wk->scrnU) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
+
+
+//=============================================================================================
+/**
+ * 位置指定汎用エフェクト開始
+ *
+ * @param   wk
+ * @param   pos
+ */
+//=============================================================================================
+void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlPokePos pos, u16 effectNo )
+{
+  BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  BTL_Printf("vpos=%d にエフェクト発動\n", vpos);
+  BTLV_EFFECT_AddByPos( vpos, effectNo );
+}
+BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlPokePos pos )
+{
+  BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  BTL_Printf("vpos=%d エフェクト終了待ち\n", vpos);
+  if( !BTLV_EFFECT_CheckExist( vpos ) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //=============================================================================================

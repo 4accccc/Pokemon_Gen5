@@ -437,7 +437,7 @@ static void turncheck_field_callback( BtlFieldEffect effect, void* arg );
 static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect );
 static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet );
 static int scEvent_CheckWeatherReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlWeather weather, u32 damage );
-static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWeather weather, u32 damage );
+static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWeather weather, int damage );
 static void scEvent_WeatherTokReaction( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
@@ -1188,11 +1188,11 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
 
     // 行動による優先順（優先度高いほど数値大）
     switch( actParam->gen.cmd ){
-    case BTL_ACTION_ESCAPE: actionPri = 5; break;
-    case BTL_ACTION_ITEM:   actionPri = 4; break;
-    case BTL_ACTION_CHANGE: actionPri = 3; break;
-    case BTL_ACTION_SKIP:   actionPri = 2; break;
-    case BTL_ACTION_MOVE:   actionPri = 1; break;
+    case BTL_ACTION_ESCAPE: actionPri = 4; break;
+    case BTL_ACTION_ITEM:   actionPri = 3; break;
+    case BTL_ACTION_CHANGE: actionPri = 2; break;
+    case BTL_ACTION_SKIP:   actionPri = 1; break;
+    case BTL_ACTION_MOVE:   actionPri = 0; break;
     case BTL_ACTION_FIGHT:  actionPri = 0; break;
     case BTL_ACTION_NULL: continue;
     default:
@@ -1200,15 +1200,21 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
       actionPri = 0;
       break;
     }
-    // ワザによる優先順
+    // 「たたかう」場合はワザによる優先順、アイテム装備による優先フラグを全て見る
     if( actParam->gen.cmd == BTL_ACTION_FIGHT ){
       WazaID  waza;
       waza = ActOrder_GetWazaID( &order[i] );
       BTL_Printf("ポケ[%d]のワザ優先チェック .. waza=%d\n", BPP_GetID(bpp), waza);
       wazaPri = scEvent_GetWazaPriority( wk, waza, bpp );
-
       // アイテム装備など、特殊な優先フラグ
       scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
+
+    // 「ムーブ」の場合、アイテム装備等による優先フラグを見る
+    }else if( actParam->gen.cmd == BTL_ACTION_MOVE ){
+      wazaPri = 0;
+      scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
+
+    // それ以外は行動優先順のみで判定
     }else{
       wazaPri = 0;
       spPri_A = BTL_SPPRI_A_DEFAULT;
@@ -3476,15 +3482,23 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   {
     if( !IsMustHit(attacker, bpp) )
     {
+      hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 0, attacker, bpp, &wk->strParam) )
       {
         BTL_POKESET_Remove( targets, bpp );
+
+        // とりあえず文字を出すだけのリアクション
         if( HANDEX_STR_IsEnable(&wk->strParam) ){
           handexSub_putString( wk, &wk->strParam );
         }else{
-          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+          // HandExを利用したリアクション
+          if( !scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
+            // 何もリアクションなければ「効果がないようだ…」
+            SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+          }
         }
       }
+      Hem_PopState( &wk->HEManager, hem_state );
     }
   }
 
@@ -6107,6 +6121,9 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
   {
     SUPPORT_TYPE support_type;
 
+// テスト用に強制ＯＮしたい時に使おう
+    COMM_PLAYER_SUPPORT_SetParam( supportHandle, SUPPORT_TYPE_RECOVER_HALF, BTL_MAIN_GetPlayerStatus(wk->mainModule) );
+
     support_type = COMM_PLAYER_SUPPORT_GetSupportType( supportHandle );
     if( support_type != SUPPORT_TYPE_NULL )
     {
@@ -6344,12 +6361,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
   // 天候が継続
   else
   {
-    u8   pokeID[ BTL_POS_MAX ];
-    u8   tok_pokeID[ BTL_POS_MAX ];
-    s16  damage[ BTL_POS_MAX ];
     BTL_POKEPARAM* bpp;
-    u8 poke_cnt = 0;
-    u8 tok_poke_cnt = 0;
 
     weather = BTL_FIELD_GetWeather();
     BTL_POKESET_SeekStart( pokeSet );
@@ -6407,7 +6419,7 @@ static int scEvent_CheckWeatherReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
  * @param   damage
  */
 //----------------------------------------------------------------------------------
-static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWeather weather, u32 damage )
+static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWeather weather, int damage )
 {
   u8 pokeID = BPP_GetID( bpp );
 
@@ -6420,7 +6432,8 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
     break;
   }
 
-  scPut_DecreaseHP( wk, bpp, damage );
+  BTL_Printf("ダメージ値=%d\n", damage);
+  scPut_SimpleHp( wk, bpp, -damage, TRUE );
 }
 
 //--------------------------------------------------------------------------
@@ -6850,7 +6863,7 @@ static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damag
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  scPut_DecreaseHP( wk, bpp, damage );
+  scPut_SimpleHp( wk, bpp, (int)(-damage), TRUE );
   SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_KonranExe, pokeID );
   SCQUE_PUT_ACT_ConfDamage( wk->que, pokeID );
 }
@@ -7227,6 +7240,14 @@ static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value, 
 
   if( value > 0 )
   {
+    if( fEffectEnable )
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon,pokeID );
+      if( pos != BTL_POS_NULL ){
+        BTL_Printf("Poke[%d] (pos-%d)に回復エフェクト発動\n", pokeID, pos);
+        SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_HP_RECOVER );
+      }
+    }
     BPP_HpPlus( bpp, value );
     SCQUE_PUT_OP_HpPlus( wk->que, pokeID, value );
   }
@@ -8842,6 +8863,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
         }
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_ONE, FX32_CONST(0.1), FX32_CONST(32) );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER );

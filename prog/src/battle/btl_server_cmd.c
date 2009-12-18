@@ -152,6 +152,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
+  SC_ARGFMT_12byte,           // SC_ACT_EFFECT_BYPOS
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
 

@@ -95,6 +95,7 @@ typedef enum {
   SC_ACT_ROTATION,          ///< ローテーション
   SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
   SC_ACT_FAKE_DISABLE,      ///< イリュージョン解除
+  SC_ACT_EFFECT_BYPOS,      ///< 指定位置にエフェクト発動
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -519,6 +520,10 @@ static inline void SCQUE_PUT_ACT_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 poke
 static inline void SCQUE_PUT_ACT_FakeDisable( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_FAKE_DISABLE, pokeID );
+}
+static inline void SCQUE_PUT_ACT_EffectByPos( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u16 effectNo )
+{
+  SCQUE_PUT_Common( que, SC_ACT_EFFECT_BYPOS, pos, effectNo );
 }
 
 

@@ -1138,8 +1138,8 @@ static void handler_Sniper( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     // クリティカルの時
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) )
     {
-      // ダメージ２倍
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      // ダメージ1.5倍（クリティカルなので実質３倍）
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
     }
   }
 }
@@ -1294,10 +1294,13 @@ static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeTyp
   {
     // HP 1/3 以下で
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetHPBorder(bpp) <= BPP_HPBORDER_YELLOW )
+    u32  borderHP = BTL_CALC_QuotMaxHP( bpp, 3 );
+    u32  hp = BPP_GetValue( bpp, BPP_HP );
+    BTL_Printf("hp=%d, borderHP=%d\n", hp, borderHP);
+    if( hp <= borderHP )
     {
       // 使うのが指定タイプワザなら
-      if( WAZADATA_GetType( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) ) == wazaType )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == wazaType )
       {
         // 威力２倍
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
@@ -1596,6 +1599,7 @@ static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       // ダメージタイプが特殊の時、特防上昇
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
+        BTL_Printf("ふしぎなうろこ発動したよ\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
       }
     }
@@ -3564,10 +3568,19 @@ static void handler_Bouon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     // サウンドワザ無効
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetFlag( waza, WAZAFLAG_Sound ) )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+      {
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        {
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+          HANDEX_STR_AddArg( &param->str, pokeID );
+        }
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      }
     }
   }
 }
@@ -4299,10 +4312,9 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
         if( prevWaza != WAZANO_NULL )
         {
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-          u8 turns = BTL_CALC_RandRange( 2, 5 );
 
           param->sickID = WAZASICK_KANASIBARI;
-          param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
+          param->sickCont = BPP_SICKCONT_MakeTurnParam( 4, prevWaza );
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
           param->header.tokwin_flag = TRUE;
@@ -5099,7 +5111,7 @@ static void handler_JisinKajou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     for(i=0; i<targetCnt; ++i)
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) );
-      if( !BPP_IsDead(bpp) )
+      if( BPP_IsDead(bpp) )
       {
         BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
         param->header.tokwin_flag = TRUE;
