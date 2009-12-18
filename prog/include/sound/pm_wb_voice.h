@@ -209,6 +209,27 @@ inline u32 PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan,
 	return PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声ステータス変更関数
+ */
+//------------------------------------------------------------------
+inline void	PMV_SetPan( u32 voicePlayerIdx, u8 pan)
+{
+	PMVOICE_SetPan(voicePlayerIdx, pan);
+}
+inline void	PMV_SetVolume( u32 voicePlayerIdx, int volOfs)
+{
+	PMVOICE_SetVolume(voicePlayerIdx, volOfs);
+}
+inline void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs)
+{
+	PMVOICE_SetSpeed(voicePlayerIdx, spdOfs);
+}
+inline void	PMV_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
+{
+	PMVOICE_SetStatus(voicePlayerIdx, pan, volOfs, spdOfs);
+}
 
 #endif
 

@@ -92,6 +92,9 @@ extern u32	PMVOICE_Play
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
+extern void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan);
+extern void	PMVOICE_SetVolume( u32 voicePlayerIdx, int volOfs);
+extern void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs);
 extern void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs );
 //------------------------------------------------------------------
 /**
