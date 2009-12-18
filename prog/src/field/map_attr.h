@@ -110,3 +110,5 @@ extern BOOL MAPATTR_VALUE_CheckElecRock( const MAPATTR_VALUE val );
 
 extern BOOL MAPATTR_VALUE_CheckOze01( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckOzeStairs( const MAPATTR_VALUE val );
+
+extern BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val );

@@ -645,7 +645,7 @@ BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season )
     return( TRUE );
   }
   if( (val == MATTR_WATER_S01) && season != PMSEASON_WINTER ){
-    return;
+    return( TRUE );
   }
   return( FALSE );
 }
@@ -755,3 +755,16 @@ BOOL MAPATTR_VALUE_CheckOzeStairs( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_OZE_STAIRS );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　深い砂漠
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_DESERT_01 );
+}
+
