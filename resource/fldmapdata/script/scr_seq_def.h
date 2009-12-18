@@ -2060,6 +2060,7 @@
   .short  \partner_id
   .short  \tr_id_0
   .short  \tr_id_1
+  .short  SCR_BATTLE_MODE_NONE
   .endm
 
 //--------------------------------------------------------------

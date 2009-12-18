@@ -408,7 +408,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0, tr_id_1, flags );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, TRID_NULL, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
@@ -417,24 +417,28 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * トレーナー対戦呼び出し（マルチバトル）
+ * トレーナー対戦呼び出し（AIマルチバトル）
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
 {
-#if 0
-	FIELDSYS_WORK * fsys = core->fsys;
-	VMCMD_RESULT* win_flag			= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16 partner_id			= SCRCMD_GetVMWorkValue(core);
-	u16 tr_id_0				= SCRCMD_GetVMWorkValue(core);
-	u16 tr_id_1				= SCRCMD_GetVMWorkValue(core);
-
-	//OS_Printf( "partner_id = %d\n", partner_id );
-	EventCmd_TrainerBattle(core->event_work, tr_id_0, tr_id_1, partner_id, HEAPID_WORLD, win_flag);
-	return 1;
-#else
-  return VMCMD_RESULT_SUSPEND;
-#endif
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+	VMCMD_RESULT *win_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
+	u16 partner_id = SCRCMD_GetVMWorkValue( core, work );
+	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
+	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
+  u16 flags = SCRCMD_GetVMWorkValue( core, work );
+  
+  {
+    GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+    SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
+    GMEVENT *ev_battle =
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, partner_id, tr_id_0, tr_id_1, flags );
+    SCRIPT_CallEvent( sc, ev_battle );
+  }
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------

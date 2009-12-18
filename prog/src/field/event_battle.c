@@ -139,19 +139,12 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_TrainerBattle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id0, int tr_id1, u32 flags )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int partner_id, int tr_id0, int tr_id1, u32 flags )
 {
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
   BATTLE_SETUP_PARAM* bp;
-
-#if 0
-  {
-    POKEPARTY * myparty = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
-    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( myparty, 0 );
-    PP_Put( pp, ID_PARA_hp, 1 );
-  }
-#endif
+  
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
@@ -161,7 +154,7 @@ GMEVENT * EVENT_TrainerBattle(
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
-    FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, tr_id0, tr_id1, HEAPID_PROC );
+    FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, partner_id, tr_id0, tr_id1, HEAPID_PROC );
   }
 
   BEW_Initialize( bew, gsys, bp );
