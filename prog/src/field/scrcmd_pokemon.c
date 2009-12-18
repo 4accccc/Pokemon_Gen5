@@ -483,6 +483,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
       }
       else num = max - now;
     }
+    break;
   default:
     num = 0;
     break;
@@ -585,6 +586,7 @@ extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
       }
       else num = max - now;
     }
+    break;
   default:
     num = 0;
     break;
