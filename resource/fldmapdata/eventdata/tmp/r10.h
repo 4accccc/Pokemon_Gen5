@@ -13,5 +13,12 @@
 #define ZONE_R10_EVC_H
 
 #define R10_RIVAL_01                       0
+#define TR_BATTLEG_01                      1
+#define TR_KARATE_01                       2
+#define TR_MOUNT_01                        3
+#define TR_ELITEM_01                       4
+#define TR_ELITEM_02                       5
+#define TR_VETERANM_01                     6
+#define TR_VETERANW_01                     7
 
 #endif //ZONE_R10_EVC_H
