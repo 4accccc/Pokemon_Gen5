@@ -1058,7 +1058,8 @@ static void update_dst( DMP_MAINWORK* wk )
   PP_Put( wk->dst, ID_PARA_speabino, tokusei );
   {
     u32 i;
-    for(i=0; i<PTL_WAZA_MAX; ++i){
+    for(i=0; i<PTL_WAZA_MAX; ++i)
+    {
       {
         u16 waza = box_getvalue(wk, INPUTBOX_ID_WAZA1+i);
         PP_SetWazaPos( wk->dst, box_getvalue(wk, INPUTBOX_ID_WAZA1+i), i );
@@ -1074,6 +1075,8 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_spedef_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
   }
   PP_Renew( wk->dst );
+  PP_Put( wk->dst, ID_PARA_hp, box_getvalue(wk, INPUTBOX_ID_HPEDIT) );
+
 
   {
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
@@ -1269,6 +1272,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
       GFL_MSG_Delete( msgdat );
     }
     break;
+
   case INPUTBOX_TYPE_NUM:
     {
       u8 keta = 1;
