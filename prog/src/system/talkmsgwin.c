@@ -70,8 +70,8 @@ typedef enum {
 #define TWIN_FIX_SIZY		(4)
 #endif
 #define TWIN_FIX_POSX		(1)
-#define TWIN_FIX_POSY_U (2)
-#define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
+#define TWIN_FIX_POSY_U (1)
+#define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+1))
 #define TWIN_FIX_TAIL_X	(7)
 
 enum {
