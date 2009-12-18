@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T17:48:41"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:03:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -341,8 +341,8 @@
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ　せつぞくを
-かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">ＷｉーＦｉ　接続を
+開始しますか？</language>
 	</row>
 
 	<row id="msg_wifi_counter_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -374,18 +374,18 @@ Wi-Fi P2P接続画面へ</comment>
 ＷｉーＦｉコネクションを
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">ＷｉーＦｉコネクション　では
-ともだちてちょうに　とうろくした▽
-ひと　どうしで　ポケモンこうかんや▽
-つうしんたいせんを　たのしめます▼
-ここでの　つうしんたいせんは
+ともだちてちょうに　登録した▽
+人　同士で　ポケモン交換や▽
+通信対戦を　楽しめます▼
+ここでの　通信対戦は
 シングルと　ダブルの　２しゅるいで▼
 それぞれに　「フリー」「レベル５０」
-「レベル１００」を　えらべます▼
+「レベル１００」を　選べます▼
 「レベル５０」や「レベル１００」では
-さんかした　ポケモン　すべてが▽
+参加した　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
 ＷｉーＦｉコネクションを
-ごりよう　ですか？</language>
+ご利用ですか？</language>
 	</row>
 
 	<row id="msg_wifi_counter_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -394,7 +394,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ただいま　じゅうびちゅう　です！
 また　あとで　おこしください</language>
-		<language name="JPN_KANJI" width="256">ただいま　じゅうびちゅう　です！
+		<language name="JPN_KANJI" width="256">ただいま　準備中です！
 また　あとで　おこしください</language>
 	</row>
 
@@ -404,7 +404,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">てもちに　つれていけない
 ポケモンが　います</language>
-		<language name="JPN_KANJI" width="256">てもちに　つれていけない
+		<language name="JPN_KANJI" width="256">てもちに　連れて行けない
 ポケモンが　います</language>
 	</row>
 
@@ -457,7 +457,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">グローバルターミナルを
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナルを
-ごりよう　ですか？</language>
+ご利用ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_exp01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -470,7 +470,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">グローバルターミナルは
 ……　……　……▼
 グローバルターミナルを
-ごりよう　ですか？</language>
+ご利用ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_win01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -505,7 +505,7 @@ C-Gear入手前</comment>
 		<comment>グローバルターミナルメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_gterminal_win06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -520,7 +520,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモン　グローバル　こうかんを
 しますか？</language>
-		<language name="JPN_KANJI" width="256">ポケモン　グローバル　こうかんを
+		<language name="JPN_KANJI" width="256">ポケモン　グローバル　交換を
 しますか？</language>
 	</row>
 
@@ -528,14 +528,14 @@ C-Gear入手前</comment>
 		<comment>GTSメニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">こうかん　する</language>
-		<language name="JPN_KANJI" width="256">こうかん　する</language>
+		<language name="JPN_KANJI" width="256">交換する</language>
 	</row>
 
 	<row id="msg_gterminal_gts_win02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<comment>GTSメニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_gterminal_gts_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
@@ -550,16 +550,16 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ＧＴＳでは　ポケモンを　あずけること
 ポケモンを　さがすことの[BE:01:ページ切り替え（クリア）]
-ふたつのほうほうで
+２つの　ほうほうで
 ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">ＧＴＳでは　ポケモンを　あずけること
-ポケモンを　さがすことの[BE:01:ページ切り替え（クリア）]
-ふたつのほうほうで
-ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">ＧＴＳでは　ポケモンを　預けること
+ポケモンを　探すことの[BE:01:ページ切り替え（クリア）]
+２つの　方法で
+ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_leave" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -569,10 +569,10 @@ C-Gear入手前</comment>
 ……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　あずけるには
+		<language name="JPN_KANJI" width="256">ポケモンを　預けるには
 ……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_search" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -582,24 +582,24 @@ C-Gear入手前</comment>
 ……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　さがすには
+		<language name="JPN_KANJI" width="256">ポケモンを　探すには
 ……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_win01" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<comment>GTS 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　あずけるって？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　あずけるって？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　預けるって？</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_win02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<comment>GTS 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　さがすって？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　さがすって？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　探すって？</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
@@ -629,7 +629,7 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGOメニュー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -643,15 +643,15 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ＧＴＳネゴシエーションでは
-……　……　……・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーションでは
-……　……　……・・・・[BE:01:ページ切り替え（クリア）]
-ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]
+ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -663,8 +663,8 @@ C-Gear入手前</comment>
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ネゴシエーションとは
 ……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -674,10 +674,10 @@ C-Gear入手前</comment>
 ……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">こうかん　じょうけん　には
+		<language name="JPN_KANJI" width="256">交換条件には
 ……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+くわしい　説明を
+ご希望ですか？</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -691,7 +691,7 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">こうかん　じょうけんって？</language>
-		<language name="JPN_KANJI" width="256">こうかん　じょうけんって？</language>
+		<language name="JPN_KANJI" width="256">交換条件って？</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -705,7 +705,7 @@ C-Gear入手前</comment>
 		<comment>BtlVideo</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">バトルビデオを　みますか？</language>
-		<language name="JPN_KANJI" width="256">バトルビデオを　みますか？</language>
+		<language name="JPN_KANJI" width="256">バトルビデオを　見ますか？</language>
 	</row>
 
 	<row id="msg_gterminal_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -716,21 +716,21 @@ C-Gear入手前</comment>
 バトルビデオを　みますか？</language>
 		<language name="JPN_KANJI" width="256">バトルビデオは
 ……　……　……[BE:01:ページ切り替え（クリア）]
-バトルビデオを　みますか？</language>
+バトルビデオを　見ますか？</language>
 	</row>
 
 	<row id="msg_gterminal_btlvideo_win01" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
 		<comment>BtlVideoメニュー</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">みる</language>
-		<language name="JPN_KANJI" width="256">みる</language>
+		<language name="JPN_KANJI" width="256">見る</language>
 	</row>
 
 	<row id="msg_gterminal_btlvideo_win02" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
 		<comment>BtlVideoメニュー</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_gterminal_btlvideo_win03" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
@@ -744,32 +744,32 @@ C-Gear入手前</comment>
 		<comment>Musical</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">ミュージカルショットを　みますか？</language>
-		<language name="JPN_KANJI" width="256">ミュージカルショットを　みますか？</language>
+		<language name="JPN_KANJI" width="256">ミュージカルショットを　見ますか？</language>
 	</row>
 
 	<row id="msg_gterminal_musical_exp" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>Musical</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">ミュージカルショットは
-……　……　……・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 ミュージカルショットを　みますか？</language>
 		<language name="JPN_KANJI" width="256">ミュージカルショットは
-……　……　……・・[BE:01:ページ切り替え（クリア）]
-ミュージカルショットを　みますか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]
+ミュージカルショットを　見ますか？</language>
 	</row>
 
 	<row id="msg_gterminal_musical_win01" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
 		<comment>Musicalメニュー</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">みる</language>
-		<language name="JPN_KANJI" width="256">みる</language>
+		<language name="JPN_KANJI" width="256">見る</language>
 	</row>
 
 	<row id="msg_gterminal_musical_win02" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
 		<comment>Musicalメニュー</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_gterminal_musical_win03" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
@@ -785,21 +785,21 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">ランダムマッチに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_01_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ちょうせんする</language>
-		<language name="JPN_KANJI" width="256">ちょうせんする</language>
+		<language name="JPN_KANJI" width="256">挑戦する</language>
 	</row>
 
 	<row id="msg_rndmatch_01_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">せつめいをきく</language>
-		<language name="JPN_KANJI" width="256">せつめいをきく</language>
+		<language name="JPN_KANJI" width="256">説明を　聞く</language>
 	</row>
 
 	<row id="msg_rndmatch_01_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -813,7 +813,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">どの　せつめいを　ききますか？</language>
-		<language name="JPN_KANJI" width="256">どの　せつめいを　ききますか？</language>
+		<language name="JPN_KANJI" width="256">どの　説明を　聞きますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -878,7 +878,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">どの　たいせんを　しますか？</language>
-		<language name="JPN_KANJI" width="256">どの　たいせんを　しますか？</language>
+		<language name="JPN_KANJI" width="256">どの　対戦を　しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_03_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -929,7 +929,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">シングルバトルに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">シングルバトルに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -938,7 +938,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">ダブルバトルに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">ダブルバトルに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -947,7 +947,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">トリプルバトルに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -956,7 +956,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">ローテーションバトルに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -965,21 +965,21 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">シューターバトルに
 ちょうせん　しますか？</language>
 		<language name="JPN_KANJI" width="256">シューターバトルに
-ちょうせん　しますか？</language>
+挑戦しますか？</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">決定</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ルールを　きく</language>
-		<language name="JPN_KANJI" width="256">ルールを　きく</language>
+		<language name="JPN_KANJI" width="256">ルールを　聞く</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -1003,15 +1003,15 @@ C-Gear入手前</comment>
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルバトルは
-たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
-３ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
-つれていく　ポケモンは　すべて　ちがう
+戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+３匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+連れて行く　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
+持たせる　道具も　すべて　違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+また　特別な　ポケモンや　タマゴは
+連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1028,15 +1028,15 @@ C-Gear入手前</comment>
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ダブルバトルは
-たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
-４ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
-つれていく　ポケモンは　すべて　ちがう
+戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+４匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+連れて行く　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
+持たせる　道具も　すべて　違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+また　特別な　ポケモンや　タマゴは
+連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1053,15 +1053,15 @@ C-Gear入手前</comment>
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルは
-たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
-６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
-つれていく　ポケモンは　すべて　ちがう
+戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+連れて行く　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
+持たせる　道具も　すべて　違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+また　特別な　ポケモンや　タマゴは
+連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1078,15 +1078,15 @@ C-Gear入手前</comment>
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルは
-たたかうまえに　あいてと　じぶんの[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
-５ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
-つれていく　ポケモンは　すべて　ちがう
+戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+５匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+連れて行く　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
+持たせる　道具も　すべて　違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+また　特別な　ポケモンや　タマゴは
+連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1105,17 +1105,17 @@ C-Gear入手前</comment>
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シューターバトルは
-サポートシューターを　つかって[BE:00:ページ切り替え（行送り）]
-トリプルバトルを　おこないます[BE:01:ページ切り替え（クリア）]
-たたかうまえに　あいてと　じぶんの
-てもち　ポケモンを　みくらべて[BE:00:ページ切り替え（行送り）]
-６ひき　えらんで　たいせん　します[BE:01:ページ切り替え（クリア）]
-つれていく　ポケモンは　すべて　ちがう
+サポートシューターを　使って[BE:00:ページ切り替え（行送り）]
+トリプルバトルを　行います[BE:01:ページ切り替え（クリア）]
+戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+連れて行く　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべて　ちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-また　とくべつな　ポケモンや　タマゴは
-つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
+持たせる　道具も　すべて　違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+また　特別な　ポケモンや　タマゴは
+連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1124,7 +1124,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">てもちか　バトルボックスの
 どちらを　つかうか　えらんでください</language>
 		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
-どちらを　つかうか　えらんでください</language>
+どちらを　使うか　選んでください</language>
 	</row>
 
 	<row id="msg_rndmatch_05_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -1154,14 +1154,14 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">てもちか　バトルボックスの
 どちらを　つかうか　えらんでください</language>
 		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
-どちらを　つかうか　えらんでください</language>
+どちらを　使うか　選んでください</language>
 	</row>
 
 	<row id="msg_rndmatch_win17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>バトルボックス選択メニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">決定</language>
 	</row>
 
 	<row id="msg_rndmatch_win18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
