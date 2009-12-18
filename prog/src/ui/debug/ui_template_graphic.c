@@ -260,9 +260,13 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	ÉJÉÅÉâà íu
 //=====================================
-static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//à íu
-static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//è„ï˚å¸
-static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//É^Å[ÉQÉbÉg
+//static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//à íu
+//static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//è„ï˚å¸
+//static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//É^Å[ÉQÉbÉg
+
+static const VecFx32 sc_CAMERA_PER_POS	= { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
+static const VecFx32 sc_CAMERA_PER_UP = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
+static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
 
 //-------------------------------------
 ///	ÉvÉçÉWÉFÉNÉVÉáÉì
@@ -272,7 +276,7 @@ static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//É^Å[ÉQÉbÉ
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 0	//éÀâe
+#if 1	//éÀâe
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),

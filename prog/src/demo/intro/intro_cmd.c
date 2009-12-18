@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/brightness.h"
 
 #include "msg/msg_intro.h"  // for GMM Index
 
@@ -34,6 +35,7 @@
 #include "intro_cmd_data.h"
 
 #include "intro_msg.h" // for INTRO_MSG_WORK
+#include "intro_mcss.h" // for INTRO_MCSS_WORK
 
 #include "intro_cmd.h" // for extern宣言
 
@@ -71,6 +73,7 @@ struct _INTRO_CMD_WORK {
   // [IN]
   HEAPID heap_id;
   const INTRO_PARAM* init_param;
+  INTRO_MCSS_WORK* mcss;
   // [PRIVATE]
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
@@ -96,6 +99,9 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
@@ -103,6 +109,10 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
+// イントロ用コマンド
+static BOOL CMD_DOCTOR_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -113,7 +123,11 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   NULL, // null
   CMD_SET_SCENE,
   CMD_YESNO,
+
   CMD_LOAD_BG,
+  CMD_BRIGHTNESS_SET,
+  CMD_BRIGHTNESS_REQ,
+  CMD_BRIGHTNESS_WAIT,
   CMD_BGM,
   CMD_SE,
   CMD_SE_STOP,
@@ -121,6 +135,9 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_LOAD_GMM,
   CMD_PRINT_MSG,
   CMD_SELECT_MOJI,
+
+  CMD_DOCTOR_LOAD,
+  CMD_DOCTOR_SET_VISIBLE,
   NULL, // end
 };
 
@@ -234,6 +251,7 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 	ARCHANDLE	*handle;
 
   heap_id = wk->heap_id;
+  // @TODO 汎用性
 	handle	= GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
 	// 上下画面ＢＧパレット転送
@@ -251,8 +269,58 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_intro_intro_bg_sub_NSCR,
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
+	
+  GFL_ARC_CloseDataHandle( handle );
 
-	GFL_ARC_CloseDataHandle( handle );
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	param[0]
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  SetBrightness( param[0], (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	param[0]
+ *	@param	param[1]
+ *	@param	param[2]
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  ChangeBrightnessRequest( param[0], param[1], param[2], (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	param[0]
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  IsFinishedBrightnessChg( MASK_MAIN_DISPLAY );
 
   return TRUE;
 }
@@ -431,6 +499,69 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
   return TRUE;
 }
 
+
+//=============================================================================
+/**
+ * イントロ用コマンド
+ */
+//=============================================================================
+
+//#include "system/mcss_tool.h"
+//#include "poke_tool/poke_tool.h"
+//#include "poke_tool/monsno_def.h"
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  博士をロード
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_DOCTOR_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+#if 1
+  static const MCSS_ADD_WORK add = 
+  {
+    ARCID_INTRO_GRA,
+    NARC_intro_intro_doctor_NCBR,
+    NARC_intro_intro_doctor_NCLR,
+    NARC_intro_intro_doctor_NCER,
+    NARC_intro_intro_doctor_NANR,
+    NARC_intro_intro_doctor_NMCR,
+    NARC_intro_intro_doctor_NMAR,
+    NARC_intro_intro_doctor_NCEC,
+  };
+  // とりあえず表示
+  INTRO_MCSS_Add( wk->mcss, 0, FX32_CONST(2.5), 0, &add, 0 );
+#else
+  // DEBUG:ヒトカゲを表示
+  {
+    MCSS_ADD_WORK   add;
+    POKEMON_PARAM*  pp;
+
+    pp = PP_Create( MONSNO_HITOKAGE, 0, 0, wk->heap_id );
+
+    MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
+    INTRO_MCSS_Add( wk->mcss, 0, 0, 0, &add, 0 );
+  }
+#endif
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  博士表示切替
+ *
+ *	@param	param[0] 0:非表示, 1:表示
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_MCSS_SetVisible( wk->mcss, param[0], 0 );
+
+  return TRUE;
+}
+
 //=============================================================================
 /**
  *								外部公開関数
@@ -447,9 +578,11 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( const INTRO_PARAM* init_param, HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, const INTRO_PARAM* init_param, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
+
+  GF_ASSERT( mcss );
 
   // メインワーク アロケーション
   wk = GFL_HEAP_AllocClearMemory(  heap_id, sizeof( INTRO_CMD_WORK ) );
@@ -457,6 +590,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( const INTRO_PARAM* init_param, HEAPID heap_id )
   // メンバ初期化
   wk->heap_id     = heap_id;
   wk->init_param  = init_param;
+  wk->mcss = mcss;
 
   // 選択肢モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( heap_id );

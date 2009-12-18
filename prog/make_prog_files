@@ -1313,7 +1313,8 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_graphic.c \
 					 demo/intro/intro_cmd.c \
 					 demo/intro/intro_cmd_data.c \
-           demo/intro/intro_msg.c
+           demo/intro/intro_msg.c \
+           demo/intro/intro_mcss.c
 
 # }ŠÓ“o˜^
 #===> SRCS_OVERLAY_BATTLE_RETURN

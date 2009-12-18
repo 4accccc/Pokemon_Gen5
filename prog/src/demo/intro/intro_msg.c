@@ -118,6 +118,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   // ƒƒ“ƒo‰Šú‰»
   wk->heap_id = heap_id;
   wk->wordset = WORDSET_Create( heap_id );
+  // @TODO intro.c‚ÉŠù‚É‚ ‚éB“‡‚·‚éB
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
 
   wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 1, 0 );

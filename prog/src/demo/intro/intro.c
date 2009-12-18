@@ -12,6 +12,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/brightness.h"
 
 //タスクメニュー
 #include "app/app_taskmenu.h"
@@ -48,6 +49,7 @@
 
 #include "message.naix"
 
+#include "intro_mcss.h"
 #include "intro_cmd.h"
 
 //=============================================================================
@@ -115,6 +117,7 @@ typedef struct
 #endif	//INTRO_PRINT_TOOL
 
   INTRO_CMD_WORK*   cmd;
+  INTRO_MCSS_WORK*  mcss;
 
 } INTRO_MAIN_WORK;
 
@@ -234,8 +237,11 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
-  //3D 初期化
-  wk->cmd = Intro_CMD_Init( wk->param, wk->heapID );
+  // MCSS初期化
+  wk->mcss = INTRO_MCSS_Create( wk->heapID );
+
+  // コマンド初期化
+  wk->cmd = Intro_CMD_Init( wk->mcss, wk->param, wk->heapID );
 
 #ifdef INTRO_INFOWIN
 	//INFOWINの初期化
@@ -255,6 +261,10 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
 	wk->menu			= Intro_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 #endif //INTRO_TASKMENU
+
+  // @TODO 汎用性のために、初期化コマンドを用意するべき
+  // ブライドネス設定 真っ黒
+  SetBrightness( -16, (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
 
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
@@ -289,6 +299,8 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
     // フェード中は処理に入らない
     return GFL_PROC_RES_CONTINUE;
   }
+  
+  INTRO_MCSS_Exit( wk->mcss );
 
 #ifdef INTRO_TASKMENU
 	//TASKMENUシステム＆リソース破棄
@@ -315,7 +327,7 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
 	//FONT
 	GFL_FONT_Delete( wk->font );
   
-  //3D 破棄
+  //コマンド 破棄
   Intro_CMD_Exit( wk->cmd );
 
 	//描画設定破棄
@@ -381,6 +393,111 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
 
 	//2D描画
 	INTRO_GRAPHIC_2D_Draw( wk->graphic );
+
+#if PM_DEBUG
+  // カメラテスト
+  { 
+    VecFx32 pos;
+
+    static BOOL mode = 0;
+
+    GFL_G3D_CAMERA* camera = INTRO_GRAPHIC_GetCamera( wk->graphic );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+    {
+      mode = (mode+1)%3;
+
+      if( mode == 0 )
+      {
+        HOSAKA_Printf("mode=%d Pos\n",mode);
+      }
+      else if( mode == 1 )
+      {
+        HOSAKA_Printf("mode=%d CamUp\n",mode);
+      }
+      else
+      {
+        HOSAKA_Printf("mode=%d Target\n",mode);
+      }
+    }
+    
+    if( mode == 0 )
+    {
+      GFL_G3D_CAMERA_GetPos( camera, &pos );
+    }
+    else if( mode == 1 )
+    {
+      GFL_G3D_CAMERA_GetCamUp( camera, &pos );
+    }
+    else
+    {
+      GFL_G3D_CAMERA_GetTarget( camera, &pos );
+    }
+
+    if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+    {
+      pos.y += 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+    {
+      pos.y -= 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }    
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+    {
+      pos.x += 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+    {
+      pos.x -= 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    {
+      pos.z += 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      pos.z -= 1;
+      HOSAKA_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+    
+    // データセット
+    if( mode == 0 )
+    {
+      GFL_G3D_CAMERA_SetPos( camera, &pos );
+    }
+    else if( mode == 1 )
+    {
+      GFL_G3D_CAMERA_SetCamUp( camera, &pos );
+    }
+    else
+    {
+      GFL_G3D_CAMERA_SetTarget( camera, &pos );
+    }
+
+    // データ吐き出し
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      GFL_G3D_CAMERA_GetPos( camera, &pos );
+      HOSAKA_Printf("pos { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+      GFL_G3D_CAMERA_GetCamUp( camera, &pos );
+      HOSAKA_Printf("CamUp { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+      GFL_G3D_CAMERA_GetTarget( camera, &pos );
+      HOSAKA_Printf("Taraget { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    }
+  }
+#endif
+
+  //3D描画
+  INTRO_GRAPHIC_3D_StartDraw( wk->graphic );
+
+  INTRO_MCSS_Main( wk->mcss );
+
+  INTRO_GRAPHIC_3D_EndDraw( wk->graphic );
 
 	//コマンド実行
   is_coutinue = Intro_CMD_Main( wk->cmd );

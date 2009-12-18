@@ -39,9 +39,11 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 // シーン 01 
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 6, 6 } },
-
-  // @TODO ブラックイン
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 6, 6 }, CMD_READ_NEXT }, // BGM切替
+  { INTRO_CMD_TYPE_DOCTOR_LOAD, CMD_READ_NEXT },    // 博士ロード
+  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 8, 0, -16 } }, // ブラックからフェードイン
+  
+//{ INTRO_CMD_TYPE_DOCTOR_SET_VISIBLE, 1 },
 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
   
@@ -49,7 +51,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   // @TODO 初回セーブデータ初期化コマンド開始
   
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_02 } }, // わたし　アララギと　いいます
-  
+
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
 };
 
