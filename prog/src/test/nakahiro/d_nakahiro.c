@@ -120,7 +120,7 @@ static const BMPMENULIST_HEADER TopMenuListH = {
 	2,		// 表示文字影色
 	0,		// 文字間隔Ｘ
 	16,		// 文字間隔Ｙ
-	BMPMENULIST_NO_SKIP,		// ページスキップタイプ
+	BMPMENULIST_LRKEY_SKIP,		// ページスキップタイプ
 	0,		// 文字指定(本来はu8だけどそんなに作らないと思うので)
 	0,		// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
 

@@ -12,16 +12,38 @@
 
 #include "arc_def.h"
 #include "system/gfl_use.h"
+#include "print/global_msg.h"
 #include "font/font.naix"
 #include "app/app_menu_common.h"
-#include "zukan_gra.naix"
+#include "msg/msg_zukan_list.h"
+#include "message.naix"
 
 #include "zknlist_main.h"
+#include "zknlist_bmp.h"
+#include "zknlist_obj.h"
+#include "zknlist_bgwfrm.h"
+#include "zukan_gra.naix"
 
 
+//============================================================================================
+//	定数定義
+//============================================================================================
+#define	EXP_BUF_SIZE	( 128 )		// テンポラリメッセージバッファサイズ
 
+#define	BLEND_EV1		( 6 )				// ブレンド係数
+#define	BLEND_EV2		( 10 )			// ブレンド係数
+
+
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
 static void VBlankTask( GFL_TCB * tcb, void * work );
+static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s16 oldScroll, u32 mv );
 
+
+//============================================================================================
+//	グローバル
+//============================================================================================
 
 // VRAM割り振り
 static const GFL_DISP_VRAM VramTbl = {
@@ -92,7 +114,7 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 //	ZKNLISTMAIN_WORK * wk = work;
 
 	GFL_BG_VBlankFunc();
-//	GFL_CLACT_SYS_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 
 //	PaletteFadeTrans( syswk->app->pfd );
 
@@ -359,4 +381,493 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		ZKNLISTMAIN_SBG_PAL_FONT*0x20, 0x20, HEAPID_ZUKAN_LIST );
 
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アルファブレンド設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_SetBlendAlpha(void)
+{
+	G2S_SetBlendAlpha(
+		GX_BLEND_PLANEMASK_BG2,
+		GX_BLEND_PLANEMASK_BG3,
+		BLEND_EV1, BLEND_EV2 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  メッセージ関連初期化
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_InitMsg( ZKNLISTMAIN_WORK * wk )
+{
+	wk->mman = GFL_MSG_Create(
+							GFL_MSG_LOAD_NORMAL,
+							ARCID_MESSAGE, NARC_message_zukan_list_dat, HEAPID_ZUKAN_LIST );
+	wk->font = GFL_FONT_Create(
+												ARCID_FONT, NARC_font_large_gftr,
+												GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ZUKAN_LIST );
+	wk->wset = WORDSET_Create( HEAPID_ZUKAN_LIST );
+	wk->que  = PRINTSYS_QUE_Create( HEAPID_ZUKAN_LIST );
+	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_ZUKAN_LIST );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  メッセージ関連解放
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_ExitMsg( ZKNLISTMAIN_WORK * wk )
+{
+	GFL_STR_DeleteBuffer( wk->exp );
+	PRINTSYS_QUE_Delete( wk->que );
+	WORDSET_Delete( wk->wset );
+	GFL_FONT_Delete( wk->font );
+	GFL_MSG_Delete( wk->mman );
+}
+
+
+#define	LIST_MONS_MASK		( 0x0fffffff )
+#define	LIST_INFO_MASK		( 0xf0000000 )
+#define	LIST_INFO_SHIFT		( 28 )
+
+#define	SET_LIST_PARAM(p,m)	( ( p << LIST_INFO_SHIFT ) | m )
+#define	GET_LIST_MONS(a)		( a & LIST_MONS_MASK )
+#define	GET_LIST_INFO(a)		( ( a & LIST_INFO_MASK ) >> LIST_INFO_SHIFT )
+
+enum {
+	LIST_INFO_MONS_NONE = 0,
+	LIST_INFO_MONS_SEE,
+	LIST_INFO_MONS_GET,
+};
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リスト作成
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
+{
+	STRBUF * srcStr;
+	STRBUF * cpyStr;
+	u32	i;
+
+	wk->list = ZKNLISTMAIN_CreateList( MONSNO_END, HEAPID_ZUKAN_LIST );
+
+	// 仮です。
+	for( i=1; i<MONSNO_END; i++ ){
+		if( ( i % 3 ) == 0 ){
+			srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
+			ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
+		}else{
+			srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
+			cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+			GFL_STR_DeleteBuffer( srcStr );
+			ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(i%3,i) );
+		}
+	}
+
+/*
+	srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, 1 );
+	cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+	GFL_STR_DeleteBuffer( srcStr );
+	ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(LIST_INFO_MONS_GET,1) );
+	for( i=1; i<256; i++ ){
+		srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
+		ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
+	}
+	srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
+	cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+	GFL_STR_DeleteBuffer( srcStr );
+	ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(LIST_INFO_MONS_SEE,i) );
+*/
+
+	ZKNLISTMAIN_InitList( wk->list, 0, 7, 0, wk, ListCallBack );
+
+	ZKNLISTMAIN_InitListPut( wk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リスト削除
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk )
+{
+	ZKNLISTMAIN_ExitList( wk->list );
+}
+
+u32 ZKNLISTMAIN_GetListMons( ZUKAN_LIST_WORK * wk, u32 pos )
+{
+	return GET_LIST_MONS( ZKNLISTMAIN_GetListParam(wk,pos) );
+}
+
+u32 ZKNLISTMAIN_GetListInfo( ZUKAN_LIST_WORK * wk, u32 pos )
+{
+	return GET_LIST_INFO( ZKNLISTMAIN_GetListParam(wk,pos) );
+}
+
+void ZKNLISTMAIN_PutListOne( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
+{
+	ZKNLISTBMP_PutPokeList( wk, ZKNLISTBMP_WINIDX_NAME_M1+idx, listPos );
+	ZKNLISTBGWFRM_PutPokeList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+idx, listPos );
+	ZKNLISTOBJ_PutPokeList( wk, ZKNLISTOBJ_IDX_POKEICON+idx, listPos, TRUE );
+}
+
+void ZKNLISTMAIN_PutListOneSub( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
+{
+	ZKNLISTBMP_PutPokeList( wk, ZKNLISTBMP_WINIDX_NAME_S1+idx, listPos );
+	ZKNLISTBGWFRM_PutPokeList( wk, ZKNLISTBGWFRM_IDX_NAME_S1+idx, listPos );
+	ZKNLISTOBJ_PutPokeList( wk, ZKNLISTOBJ_IDX_POKEICON_S+idx, listPos, FALSE );
+}
+
+void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk )
+{
+	s16	scroll;
+	s16	i;
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 0 );
+	ZKNLISTOBJ_InitScrollList( wk );
+
+	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
+
+	for( i=0; i<8; i++ ){
+		ZKNLISTMAIN_PutListOne( wk, i, scroll+i );
+		ZKNLISTMAIN_PutListOneSub( wk, i, scroll+i-8 );
+		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_M1+i, 16, i*3 );
+		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_S1+i, 16, i*3 );
+	}
+
+	ZKNLISTMAIN_PutListCursor( wk, 2, ZKNLISTMAIN_GetListPos(wk->list) );
+	ZKNLISTOBJ_ChgListPosAnm( wk, ZKNLISTMAIN_GetListPos(wk->list), TRUE );
+	ZKNLISTOBJ_PutListPosPokeGra( wk, ZKNLISTMAIN_GetListCursorPos(wk->list) );
+
+	wk->listPutIndex = 0;
+}
+
+void ZKNLISTMAIN_PutListCursor( ZKNLISTMAIN_WORK * wk, u8 pal, s16 pos )
+{
+	int	scroll;
+	u16	i;
+	s8	py;
+
+	scroll = GFL_BG_GetScrollY( GFL_BG_FRAME2_M ) % 256;
+	py = scroll / 8 + pos * ZKNLISTMAIN_LIST_SY;
+
+	for( i=0; i<ZKNLISTMAIN_LIST_SY; i++ ){
+		if( py < 0 ){
+			py += 32;
+		}else if( py >= 32 ){
+			py -= 32;
+		}
+		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, ZKNLISTMAIN_LIST_PX, py, ZKNLISTMAIN_LIST_SX, 1, pal );
+		py++;
+	}
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+}
+
+static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s16 oldScroll, u32 mv )
+{
+	ZKNLISTMAIN_WORK * wk;
+	
+	wk = work;
+
+	switch( mv ){
+	// カーソル移動
+	case ZKNLISTMAIN_LIST_MOVE_UP:
+	case ZKNLISTMAIN_LIST_MOVE_DOWN:
+//	if( nowPos != oldPos ){
+		ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
+		ZKNLISTMAIN_PutListCursor( wk, 2, nowPos );
+		ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
+		ZKNLISTOBJ_ChgListPosAnm( wk, nowPos, TRUE );
+		ZKNLISTOBJ_PutListPosPokeGra( wk, nowPos+nowScroll );
+		return;
+//	}
+
+	// ページスクロール
+	case ZKNLISTMAIN_LIST_MOVE_LEFT:
+	case ZKNLISTMAIN_LIST_MOVE_RIGHT:
+//	if( GFL_STD_Abs(nowScroll-oldScroll) >= 2 ){
+		ZKNLISTMAIN_InitListPut( wk );
+		return;
+//	}
+
+	// 上方向にスクロール
+	case ZKNLISTMAIN_LIST_MOVE_SCROLL_UP:
+//	if( nowScroll < oldScroll ){
+		wk->listPutIndex -= 1;
+		if( wk->listPutIndex < 0 ){
+			wk->listPutIndex = 7;
+		}
+		ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
+		ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
+		ZKNLISTMAIN_PutListOne( wk, wk->listPutIndex, nowScroll );
+		ZKNLISTMAIN_PutListOneSub( wk, wk->listPutIndex, nowScroll-7 );
+		ZKNLISTOBJ_PutScrollList( wk, wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
+		ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
+		ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
+		return;
+
+	// 下方向にスクロール
+	case ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN:
+//	}else if( nowScroll > oldScroll ){
+		{
+			u8	idx = wk->listPutIndex + 7;
+			if( idx >= 8 ){
+				idx -= 8;
+			}
+			ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
+			ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
+			ZKNLISTMAIN_PutListOne( wk, idx, nowScroll+6 );
+			ZKNLISTMAIN_PutListOneSub( wk, idx, nowScroll-1 );
+			ZKNLISTOBJ_PutScrollList( wk, idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
+			ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
+			ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
+			wk->listPutIndex += 1;
+			if( wk->listPutIndex >= 8 ){
+				wk->listPutIndex = 0;
+			}
+		}
+//		}
+		return;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct {
+	STRBUF * str;
+	u32	prm;
+}LIST_DATA;
+
+struct _ZUKAN_LIST_WORK {
+	LIST_DATA * dat;
+	s16	pos;
+	s16	scroll;
+	s16	posMax;
+	s16	listMax;
+	void * work;
+	pZUKAN_LIST_CALLBACK	func;
+};
+
+ZUKAN_LIST_WORK * ZKNLISTMAIN_CreateList( u32 siz, HEAPID heapID )
+{
+	ZUKAN_LIST_WORK * wk;
+	wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(ZUKAN_LIST_WORK) );
+	wk->dat = GFL_HEAP_AllocClearMemory( heapID, sizeof(LIST_DATA)*siz );
+	return wk;
+}
+
+void ZKNLISTMAIN_ExitList( ZUKAN_LIST_WORK * wk )
+{
+	s32	i;
+
+	for( i=0; i<wk->listMax; i++ ){
+		GFL_STR_DeleteBuffer( wk->dat[i].str );
+	}
+	GFL_HEAP_FreeMemory( wk->dat );
+	GFL_HEAP_FreeMemory( wk );
+}
+
+void ZKNLISTMAIN_AddListData( ZUKAN_LIST_WORK * wk, STRBUF * str, u32 prm )
+{
+	wk->dat[wk->listMax].str = str;
+	wk->dat[wk->listMax].prm = prm;
+	wk->listMax++;
+}
+
+void ZKNLISTMAIN_InitList( ZUKAN_LIST_WORK * wk, s16 pos, s16 posMax, s16 scroll, void * work, pZUKAN_LIST_CALLBACK func )
+{
+	wk->pos    = pos;
+	wk->posMax = posMax;
+	if( wk->posMax > wk->listMax ){
+		wk->posMax = wk->listMax;
+	}
+	wk->scroll = scroll;
+	wk->work   = work;
+	wk->func   = func;
+}
+
+s16 ZKNLISTMAIN_GetListPos( ZUKAN_LIST_WORK * wk )
+{
+	return wk->pos;
+}
+
+s16 ZKNLISTMAIN_GetListScroll( ZUKAN_LIST_WORK * wk )
+{
+	return wk->scroll;
+}
+
+s16 ZKNLISTMAIN_GetListCursorPos( ZUKAN_LIST_WORK * wk )
+{
+	return ( wk->pos + wk->scroll );
+}
+
+STRBUF * ZKNLISTMAIN_GetListStr( ZUKAN_LIST_WORK * wk, u32 pos )
+{
+	return wk->dat[pos].str;
+}
+
+u32 ZKNLISTMAIN_GetListParam( ZUKAN_LIST_WORK * wk, u32 pos )
+{
+	return wk->dat[pos].prm;
+}
+
+
+
+u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk )
+{
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP  ){
+		if( wk->pos != 0 ){
+			s16	tmp = wk->pos;
+			wk->pos--;
+			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_UP );
+			return ZKNLISTMAIN_LIST_MOVE_UP;
+		}else if( wk->scroll != 0 ){
+			s16	tmp = wk->scroll;
+			wk->scroll--;
+			wk->func( wk->work, wk->pos, wk->scroll, wk->pos, tmp, ZKNLISTMAIN_LIST_MOVE_SCROLL_UP );
+			return ZKNLISTMAIN_LIST_MOVE_SCROLL_UP;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+	}
+
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+		if( wk->pos < (wk->posMax-1) ){
+			s16	tmp = wk->pos;
+			wk->pos++;
+			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_DOWN );
+			return ZKNLISTMAIN_LIST_MOVE_DOWN;
+		}else if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+			s16	tmp = wk->scroll;
+			wk->scroll++;
+			wk->func( wk->work, wk->pos, wk->scroll, wk->pos, tmp, ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN );
+			return ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+	}
+
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+		return ZKNLISTMAIN_MoveLeft( wk );
+/*
+		if( wk->scroll != 0 ){
+			s16	tmpPos    = wk->pos;
+			s16	tmpScroll = wk->scroll;
+			wk->scroll -= wk->posMax;
+			if( wk->scroll < 0 ){
+				wk->scroll = 0;
+				wk->pos    = 0;
+			}
+			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
+			return ZKNLISTMAIN_LIST_MOVE_LEFT;
+		}else if( wk->pos != 0 ){
+			s16	tmp = wk->pos;
+			wk->pos = 0;
+			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
+			return ZKNLISTMAIN_LIST_MOVE_LEFT;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+*/
+	}
+
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+		return ZKNLISTMAIN_MoveRight( wk );
+/*
+		if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+			s16	tmpPos    = wk->pos;
+			s16	tmpScroll = wk->scroll;
+			wk->scroll += wk->posMax;
+			if( wk->scroll > (wk->listMax-wk->posMax-1) ){
+				wk->scroll = wk->listMax - wk->posMax - 1;
+				wk->pos    = wk->posMax - 1;
+			}
+			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
+			return ZKNLISTMAIN_LIST_MOVE_RIGHT;
+		}else if( wk->pos < (wk->posMax-1) ){
+			s16	tmp = wk->pos;
+			wk->pos = wk->posMax - 1;
+			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
+			return ZKNLISTMAIN_LIST_MOVE_RIGHT;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+*/
+	}
+
+	return ZKNLISTMAIN_LIST_MOVE_NONE;
+}
+
+u32 ZKNLISTMAIN_MoveLeft( ZUKAN_LIST_WORK * wk )
+{
+	if( wk->scroll != 0 ){
+		s16	tmpPos    = wk->pos;
+		s16	tmpScroll = wk->scroll;
+		wk->scroll -= wk->posMax;
+		if( wk->scroll < 0 ){
+			wk->scroll = 0;
+			wk->pos    = 0;
+		}
+		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
+		return ZKNLISTMAIN_LIST_MOVE_LEFT;
+	}else if( wk->pos != 0 ){
+		s16	tmp = wk->pos;
+		wk->pos = 0;
+		wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
+		return ZKNLISTMAIN_LIST_MOVE_LEFT;
+	}
+	return ZKNLISTMAIN_LIST_MOVE_NONE;
+}
+
+u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk )
+{
+	if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+		s16	tmpPos    = wk->pos;
+		s16	tmpScroll = wk->scroll;
+		wk->scroll += wk->posMax;
+		if( wk->scroll > (wk->listMax-wk->posMax-1) ){
+			wk->scroll = wk->listMax - wk->posMax - 1;
+			wk->pos    = wk->posMax - 1;
+		}
+		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
+		return ZKNLISTMAIN_LIST_MOVE_RIGHT;
+	}else if( wk->pos < (wk->posMax-1) ){
+		s16	tmp = wk->pos;
+		wk->pos = wk->posMax - 1;
+		wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
+		return ZKNLISTMAIN_LIST_MOVE_RIGHT;
+	}
+	return ZKNLISTMAIN_LIST_MOVE_NONE;
 }

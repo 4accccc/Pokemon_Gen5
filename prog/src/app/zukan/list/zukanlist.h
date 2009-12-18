@@ -16,11 +16,14 @@
 //============================================================================================
 
 typedef struct {
-	u32	retMode;
+	u16	retMode;		// 終了モード
+	u16	retMons;		// 選択ポケモン
 }ZUKANLIST_DATA;
 
+// 終了モード
 enum {
 	ZKNLIST_RET_EXIT = 0,			// 図鑑終了
+	ZKNLIST_RET_EXIT_X,				// 図鑑を終了してメニューへ
 	ZKNLIST_RET_INFO,					// 詳細画面へ
 	ZKNLIST_RET_SEARCH,				// 検索画面へ
 };

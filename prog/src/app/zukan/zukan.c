@@ -22,17 +22,17 @@
 
 // メインシーケンス
 enum {
-	SEQ_LIST_CALL = 0,		// リスト
+	SEQ_LIST_CALL = 0,		// リスト呼び出し
 	SEQ_LIST_END,					// リスト終了後
-	SEQ_INFO_CALL,				// 情報
+	SEQ_INFO_CALL,				// 情報呼び出し
 	SEQ_INFO_END,					// 情報終了後
-	SEQ_MAP_CALL,					// 分布
+	SEQ_MAP_CALL,					// 分布呼び出し
 	SEQ_MAP_END,					// 分布終了後
-	SEQ_VOICE_CALL,				// 鳴き声
+	SEQ_VOICE_CALL,				// 鳴き声呼び出し
 	SEQ_VOICE_END,				// 鳴き声終了後
-	SEQ_FORM_CALL,				// 姿
+	SEQ_FORM_CALL,				// 姿呼び出し
 	SEQ_FORM_END,					// 姿終了後
-	SEQ_SEARCH_CALL,			// 検索
+	SEQ_SEARCH_CALL,			// 検索呼び出し
 	SEQ_SEARCH_END,				// 検索終了後
 	SEQ_PROC_FINISH,			// 図鑑終了
 };
@@ -69,8 +69,19 @@ const GFL_PROC_DATA ZUKAN_ProcData = {
 
 // メインシーケンス関数テーブル
 static const pZUKAN_FUNC MainSeq[] = {
-	MainSeq_CallList,
-	MainSeq_EndList,
+	MainSeq_CallList,			// リスト呼び出し
+	MainSeq_EndList,			// リスト終了後
+
+	NULL,	// 情報呼び出し
+	NULL,	// 情報終了後
+	NULL,	// 分布呼び出し
+	NULL,	// 分布終了後
+	NULL,	// 鳴き声呼び出し
+	NULL,	// 鳴き声終了後
+	NULL,	// 姿呼び出し
+	NULL,	// 姿終了後
+	NULL,	// 検索呼び出し
+	NULL,	// 検索終了後
 };
 
 
@@ -169,7 +180,7 @@ static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 {
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANLIST_DATA) );
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, &wk->work );
+	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
 	return SEQ_LIST_END;
 }
 
@@ -182,6 +193,10 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 	switch( list->retMode ){
 	case ZKNLIST_RET_EXIT:		// 図鑑終了
+		ret = SEQ_PROC_FINISH;
+		break;
+
+	case ZKNLIST_RET_EXIT_X:	// 図鑑を終了してメニューへ
 		ret = SEQ_PROC_FINISH;
 		break;
 

@@ -1330,7 +1330,8 @@ SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
                           app/zukan/list/zknlist_seq.c \
                           app/zukan/list/zknlist_bmp.c \
                           app/zukan/list/zknlist_obj.c \
-                          app/zukan/list/zknlist_ui.c
+                          app/zukan/list/zknlist_ui.c \
+                          app/zukan/list/zknlist_bgwfrm.c
 
 # }ŠÓ
 #===> SRCS_OVERLAY_ZUKAN_TOROKU

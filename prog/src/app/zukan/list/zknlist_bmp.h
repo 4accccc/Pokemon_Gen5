@@ -36,3 +36,18 @@ extern void ZKNLISTBMP_Init( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTBMP_Exit( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		プリントメイン
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTBMP_PrintUtilTrans( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 winIdx, s32 listPos );
