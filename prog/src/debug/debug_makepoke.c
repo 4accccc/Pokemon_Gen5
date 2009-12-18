@@ -57,7 +57,8 @@ enum {
   COLIDX_PINK_L,
   COLIDX_WHITE,
 
-  INPUTBOX_NUM_ARG_EX = 0xffffffff,
+  INPUTBOX_NUM_ARG_EXP = 0xffffffff,
+  INPUTBOX_NUM_ARG_DEPEND = 0xfffffffe,
 };
 
 #define CALC_NUMBOX_WIDTH(keta)      ((keta)*NUMBOX_CHAR_WIDTH +NUMBOX_MARGIN*2)
@@ -73,11 +74,11 @@ enum {
   LY_LV1 = 2,
   LY_LV2 = LY_LV1+LINE_DIFFER,
   LY_LV3 = LY_LV2+LINE_DIFFER,
-  LY_LV4 = LY_LV3+LINE_DIFFER + 2,
+  LY_LV4 = LY_LV3+LINE_DIFFER + 4,
   LY_LV5 = LY_LV4+LINE_DIFFER,
   LY_LV6 = LY_LV5+LINE_DIFFER,
   LY_LV7 = LY_LV6+LINE_DIFFER,
-  LY_LV8 = LY_LV7+LINE_DIFFER + 2,
+  LY_LV8 = LY_LV7+LINE_DIFFER + 4,
   LY_LV9 = LY_LV8+LINE_DIFFER,
   LY_LV10 = LY_LV9+LINE_DIFFER,
   LY_LV11 = LY_LV10+LINE_DIFFER,
@@ -179,95 +180,105 @@ enum {
   LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_PPMAX4_BOX = LY_PPMAX4_CAP,
 
-  LX_HPVAL_CAP = 4,
+
+  //-------------------------------------------------------------
+  // ステータス欄レイアウト
+  //-------------------------------------------------------------
+  STATUS_CAP_LX = 4,
+  STATUS_CAP_RND_SPACE = CALC_CAP_BOX_MARGIN_HALF(4),     // キャプションと[rnd]列の間隔
+  STATUS_RND_VAL_SPACE = CALC_CAP_BOX_MARGIN_HALF(3),     // [rnd]列と値部分の間隔
+  STATUS_RND_EXP_SPACE = CALC_CAP_BOX_MARGIN_HALF(6),     // [rnd]値部分と[EXP]列の間隔
+  STATUS_EXP_VAL_SPACE = CALC_CAP_BOX_MARGIN_HALF(3),     // [EXP]列と値部分の間隔
+  STATUS_EXP_RESULT_SPACE = CALC_NUMBOX_WIDTH(3)+4,       // [EXP]値部分と計算結果の間隔
+
+  // HP  -------------------------------------------------------------
+  LX_HPVAL_CAP = STATUS_CAP_LX,
   LY_HPVAL_CAP = LY_LV8,
-  LX_HPVAL_BOX = LX_HPVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_HPVAL_BOX = LY_HPVAL_CAP,
-
-  LX_HPRND_CAP = LX_HPVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_HPRND_CAP = LX_HPVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_HPRND_CAP = LY_LV8,
-  LX_HPRND_BOX = LX_HPRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_HPRND_BOX = LY_HPRND_CAP,
-
-  LX_HPEXP_CAP = LX_HPRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_HPRND_BOX = LX_HPRND_CAP + STATUS_RND_VAL_SPACE,
+  LY_HPRND_BOX = LY_LV8,
+  LX_HPEXP_CAP = LX_HPRND_BOX + STATUS_RND_EXP_SPACE,
   LY_HPEXP_CAP = LY_LV8,
-  LX_HPEXP_BOX = LX_HPEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_HPEXP_BOX = LY_HPEXP_CAP,
+  LX_HPEXP_BOX = LX_HPEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_HPEXP_BOX = LY_LV8,
+  LX_HPEDIT_BOX  = LX_HPEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_HPEDIT_BOX  = LY_LV8,
+  LX_HPSLASH_CAP = LX_HPEDIT_BOX + CALC_NUMBOX_WIDTH(3)+2,
+  LY_HPSLASH_CAP = LY_LV8,
+  LX_HPVAL_BOX   = LX_HPSLASH_CAP + 6,
+  LY_HPVAL_BOX   = LY_LV8,
 
-  LX_POWVAL_CAP = 4,
+  // POW -------------------------------------------------------------
+  LX_POWVAL_CAP = STATUS_CAP_LX,
   LY_POWVAL_CAP = LY_LV9,
-  LX_POWVAL_BOX = LX_POWVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_POWVAL_BOX = LY_POWVAL_CAP,
-
-  LX_POWRND_CAP = LX_POWVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_POWRND_CAP = LX_POWVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_POWRND_CAP = LY_LV9,
-  LX_POWRND_BOX = LX_POWRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
+  LX_POWRND_BOX = LX_POWRND_CAP + STATUS_RND_VAL_SPACE,
   LY_POWRND_BOX = LY_POWRND_CAP,
-
-  LX_POWEXP_CAP = LX_POWRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_POWEXP_CAP = LX_POWRND_BOX + STATUS_RND_EXP_SPACE,
   LY_POWEXP_CAP = LY_LV9,
-  LX_POWEXP_BOX = LX_POWEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_POWEXP_BOX = LY_POWEXP_CAP,
+  LX_POWEXP_BOX = LX_POWEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_POWEXP_BOX = LY_LV9,
+  LX_POWVAL_BOX = LX_POWEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_POWVAL_BOX = LY_LV9,
 
-  LX_DEFVAL_CAP = 4,
+  // DEF -------------------------------------------------------------
+  LX_DEFVAL_CAP = STATUS_CAP_LX,
   LY_DEFVAL_CAP = LY_LV10,
-  LX_DEFVAL_BOX = LX_DEFVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_DEFVAL_BOX = LY_DEFVAL_CAP,
-
-  LX_DEFRND_CAP = LX_DEFVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_DEFRND_CAP = LX_DEFVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_DEFRND_CAP = LY_LV10,
-  LX_DEFRND_BOX = LX_DEFRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_DEFRND_BOX = LY_DEFRND_CAP,
-
-  LX_DEFEXP_CAP = LX_DEFRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_DEFRND_BOX = LX_DEFRND_CAP + STATUS_RND_VAL_SPACE,
+  LY_DEFRND_BOX = LY_LV10,
+  LX_DEFEXP_CAP = LX_DEFRND_BOX + STATUS_RND_EXP_SPACE,
   LY_DEFEXP_CAP = LY_LV10,
-  LX_DEFEXP_BOX = LX_DEFEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_DEFEXP_BOX = LY_DEFEXP_CAP,
+  LX_DEFEXP_BOX = LX_DEFEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_DEFEXP_BOX = LY_LV10,
+  LX_DEFVAL_BOX = LX_DEFEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_DEFVAL_BOX = LY_LV10,
 
-  LX_AGIVAL_CAP = 4,
+  // AGI -------------------------------------------------------------
+  LX_AGIVAL_CAP = STATUS_CAP_LX,
   LY_AGIVAL_CAP = LY_LV11,
-  LX_AGIVAL_BOX = LX_AGIVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_AGIVAL_BOX = LY_AGIVAL_CAP,
-
-  LX_AGIRND_CAP = LX_AGIVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_AGIRND_CAP = LX_AGIVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_AGIRND_CAP = LY_LV11,
-  LX_AGIRND_BOX = LX_AGIRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_AGIRND_BOX = LY_AGIRND_CAP,
-
-  LX_AGIEXP_CAP = LX_AGIRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_AGIRND_BOX = LX_AGIRND_CAP + STATUS_RND_VAL_SPACE,
+  LY_AGIRND_BOX = LY_LV11,
+  LX_AGIEXP_CAP = LX_AGIRND_BOX + STATUS_RND_EXP_SPACE,
   LY_AGIEXP_CAP = LY_LV11,
-  LX_AGIEXP_BOX = LX_AGIEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_AGIEXP_BOX = LY_AGIEXP_CAP,
+  LX_AGIEXP_BOX = LX_AGIEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_AGIEXP_BOX = LY_LV11,
+  LX_AGIVAL_BOX = LX_AGIEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_AGIVAL_BOX = LY_LV11,
 
-  LX_SPWVAL_CAP = 4,
+  // SP-POW ----------------------------------------------------------
+  LX_SPWVAL_CAP = STATUS_CAP_LX,
   LY_SPWVAL_CAP = LY_LV12,
-  LX_SPWVAL_BOX = LX_SPWVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SPWVAL_BOX = LY_SPWVAL_CAP,
-
-  LX_SPWRND_CAP = LX_SPWVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_SPWRND_CAP = LX_SPWVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_SPWRND_CAP = LY_LV12,
-  LX_SPWRND_BOX = LX_SPWRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SPWRND_BOX = LY_SPWRND_CAP,
-
-  LX_SPWEXP_CAP = LX_SPWRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_SPWRND_BOX = LX_SPWRND_CAP + STATUS_RND_VAL_SPACE,
+  LY_SPWRND_BOX = LY_LV12,
+  LX_SPWEXP_CAP = LX_SPWRND_BOX + STATUS_RND_EXP_SPACE,
   LY_SPWEXP_CAP = LY_LV12,
-  LX_SPWEXP_BOX = LX_SPWEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SPWEXP_BOX = LY_SPWEXP_CAP,
+  LX_SPWEXP_BOX = LX_SPWEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_SPWEXP_BOX = LY_LV12,
+  LX_SPWVAL_BOX = LX_SPWEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_SPWVAL_BOX = LY_LV12,
 
-  LX_SDFVAL_CAP = 4,
+  // SP-DEF ----------------------------------------------------------
+  LX_SDFVAL_CAP = STATUS_CAP_LX,
   LY_SDFVAL_CAP = LY_LV13,
-  LX_SDFVAL_BOX = LX_SDFVAL_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SDFVAL_BOX = LY_SDFVAL_CAP,
-
-  LX_SDFRND_CAP = LX_SDFVAL_BOX + CALC_NUMBOX_WIDTH(3) + 4,
+  LX_SDFRND_CAP = LX_SDFVAL_CAP + STATUS_CAP_RND_SPACE,
   LY_SDFRND_CAP = LY_LV13,
-  LX_SDFRND_BOX = LX_SDFRND_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SDFRND_BOX = LY_SDFRND_CAP,
-
-  LX_SDFEXP_CAP = LX_SDFRND_BOX+ CALC_NUMBOX_WIDTH(2) + 4,
+  LX_SDFRND_BOX = LX_SDFRND_CAP + STATUS_RND_VAL_SPACE,
+  LY_SDFRND_BOX = LY_LV13,
+  LX_SDFEXP_CAP = LX_SDFRND_BOX + STATUS_RND_EXP_SPACE,
   LY_SDFEXP_CAP = LY_LV13,
-  LX_SDFEXP_BOX = LX_SDFEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
-  LY_SDFEXP_BOX = LY_SDFEXP_CAP,
+  LX_SDFEXP_BOX = LX_SDFEXP_CAP + STATUS_EXP_VAL_SPACE,
+  LY_SDFEXP_BOX = LY_LV13,
+  LX_SDFVAL_BOX = LX_SDFEXP_BOX + STATUS_EXP_RESULT_SPACE,
+  LY_SDFVAL_BOX = LY_LV13,
+
 
   LX_TYPE_CAP = 120,
   LY_TYPE_CAP = LY_LV3,
@@ -313,6 +324,7 @@ typedef enum {
   INPUTBOX_ID_HPRND,
   INPUTBOX_ID_HPEXP,
   INPUTBOX_ID_HPVAL,
+  INPUTBOX_ID_HPEDIT,
 
   INPUTBOX_ID_POWRND,
   INPUTBOX_ID_POWEXP,
@@ -402,7 +414,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_NUM, DMPSTR_HP_EXP,  LX_EXP_CAP,  LY_EXP_CAP,
     LX_EXP_BOX,   LY_EXP_BOX,  CALC_NUMBOX_WIDTH(8), LINE_HEIGHT,
-    ID_PARA_exp, INPUTBOX_NUM_ARG_EX, 0 },
+    ID_PARA_exp, INPUTBOX_NUM_ARG_EXP, 0 },
 
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
     LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
@@ -478,7 +490,11 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_HP,   LX_HPVAL_CAP,   LY_HPVAL_CAP,
     LX_HPVAL_BOX,    LY_HPVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hpmax,   255,  0 },
+    ID_PARA_hpmax,   512,  0 },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_SLASH,    LX_HPSLASH_CAP,       LY_HPSLASH_CAP,
+    LX_HPEDIT_BOX,   LY_HPEDIT_BOX,   CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_hp,      INPUTBOX_NUM_ARG_DEPEND,  INPUTBOX_ID_HPVAL },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_POW_RND,   LX_POWRND_CAP,   LY_POWRND_CAP,
     LX_POWRND_BOX,    LY_POWRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
@@ -630,7 +646,7 @@ static void update_dst( DMP_MAINWORK* wk );
 static void print_caption( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
 static PRINTSYS_LSB box_sub_get_bgcol( u8 input_type );
 static void box_initwork( DMP_MAINWORK* wk );
-static int box_getvalue( DMP_MAINWORK* wk, u32 boxIdx );
+static int box_getvalue( const DMP_MAINWORK* wk, u32 boxIdx );
 static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp );
 static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value );
 static void box_write_fixval( DMP_MAINWORK* wk, u32 boxID, u32 value );
@@ -1108,7 +1124,7 @@ static void box_initwork( DMP_MAINWORK* wk )
   }
 }
 
-static int box_getvalue( DMP_MAINWORK* wk, u32 boxIdx )
+static int box_getvalue( const DMP_MAINWORK* wk, u32 boxIdx )
 {
   return wk->boxValue[ boxIdx ];
 }
@@ -1192,6 +1208,9 @@ static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
   if( str_width < p->width ){
     xpos += (p->width - str_width) / 2;
   }
+  if( boxID == INPUTBOX_ID_HPEDIT ){
+    TAYA_Printf("Box-xpos=%d, width=%d, strWidth=%d, strX=%d\n", p->xpos, p->width, str_width, xpos);
+  }
   str_height = GFL_FONT_GetLineHeight( wk->font );
   ypos = p->ypos;
   if( str_height < p->height ){
@@ -1251,8 +1270,23 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
     }
     break;
   case INPUTBOX_TYPE_NUM:
-    STRTOOL_SetNumber( wk->strbuf, value, calc_keta(p->arg), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+    {
+      u8 keta = 1;
+      switch( p->arg ){
+      default:
+        keta = calc_keta(p->arg);
+        break;
+      case INPUTBOX_NUM_ARG_EXP:
+        keta = 8;
+        break;
+      case INPUTBOX_NUM_ARG_DEPEND:
+        keta = 3;
+        break;
+      }
+      STRTOOL_SetNumber( wk->strbuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+    }
     break;
+
   case INPUTBOX_TYPE_FIXVAL:
     STRTOOL_SetNumber( wk->strbuf, value, calc_keta(p->arg), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     break;
@@ -1288,6 +1322,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
       box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
       box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
@@ -1309,6 +1344,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_SEIKAKU:
     {
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
       box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
@@ -1357,8 +1393,17 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       u32 value = box_getvalue( wk, updateBoxID );
       PP_Put( wk->dst, p->paraID, value );
       PP_Renew( wk->dst );
+      if( (updateBoxID==INPUTBOX_ID_HPRND) || (updateBoxID==INPUTBOX_ID_HPEXP) )
       {
-        u32 upbox = ( (updateBoxID-INPUTBOX_ID_HPRND) % 3 == 0 )? updateBoxID+2 : updateBoxID+1;
+        u32 hpMax = PP_Get( wk->dst, ID_PARA_hpmax, NULL );
+        PP_Put( wk->dst, ID_PARA_hp, hpMax );
+
+        box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+        box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
+      }
+      else
+      {
+        u32 upbox = ( (updateBoxID-INPUTBOX_ID_POWRND) % 3 == 0 )? updateBoxID+2 : updateBoxID+1;
         box_setup( wk, upbox, wk->dst );
       }
     }
@@ -1368,7 +1413,6 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u32 monsno, exp, level;
 
-
       monsno = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
       level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
       exp = POKETOOL_GetMinExp( monsno, PTL_FORM_NONE, level );
@@ -1376,6 +1420,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_Put( wk->dst, ID_PARA_exp, exp );
       PP_Renew( wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
       box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
@@ -1412,12 +1457,19 @@ static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL
   wk->color_letter = PRINTSYS_LSB_GetL( color );
 
   wk->num = value;
-  if( boxParam->arg != INPUTBOX_NUM_ARG_EX ){
+  switch( boxParam->arg ){
+  default:
     wk->numMax = boxParam->arg;
     wk->numMin = boxParam->arg2;
-  }else{
+    break;
+  case INPUTBOX_NUM_ARG_DEPEND:
+    wk->numMax = box_getvalue( mainWork, boxParam->arg2 );
+    wk->numMin = 0;
+    break;
+  case INPUTBOX_NUM_ARG_EXP:
     wk->numMax = mainWork->pokeExpMax;
     wk->numMin = mainWork->pokeExpMin;
+    break;
   }
   wk->keta = calc_keta( wk->numMax );
   wk->cur_keta = 0;
@@ -1475,7 +1527,7 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
         {
           wk->num_ary[k]--;
           if( wk->num_ary[k] >= 0 ){ break; }
-          wk->num_ary[k] = 0;
+          wk->num_ary[k] = 9;
           ++k;
         }
         // 桁あふれしたら最小値に
