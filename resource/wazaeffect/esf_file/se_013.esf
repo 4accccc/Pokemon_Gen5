@@ -7,6 +7,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_013_ball_down.spa
 %00
 パーティクルデータロード	be_se_013_ball_down
 パーティクル再生（正射影）	be_se_013_ball_down	BE_SE_013_BALL_DOWN_SE_013_BALL_DOWN	攻撃側	方向無し	0:3:0
+制御モード変更	継続
+SE再生	SEQ_SE_BE_SE_13	SE1	0	0	127	0	0
+SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
+制御モード変更	逐次
 エフェクト終了待ち	すべて
 エフェクト終了
 &
