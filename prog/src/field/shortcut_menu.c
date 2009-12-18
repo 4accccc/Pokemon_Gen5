@@ -17,6 +17,7 @@
 #include "system/bmp_menulist.h"
 
 #include "field_bg_def.h"
+#include "field_oam_pal.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -53,7 +54,7 @@ enum
 	PLT_BG_SELECT_M	= 12,
 
 	//上画面OBJ
-	PLT_OBJ_M	= 2,
+	PLT_OBJ_M	= FLDOAM_PALNO_Y_MENU,
 };
 //BMPWINサイズ
 #define SCROLL_BMPWIN_X	(1)
