@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T17:19:26"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T22:24:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -347,9 +347,9 @@
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">うーむ！　この　こっかくひょうほんは
-いつみても……　ホレボレしますな</language>
+いつみても……　ホレボレしますな▼</language>
 		<language name="JPN_KANJI" width="256">うーむ！　この　骨格標本は
-いつみても……　ホレボレしますな（仮）</language>
+いつみても……　ホレボレしますな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -363,13 +363,13 @@
 せっかく　いらしたのです　
 かんないを　あんない　しましょう！[BE:01:ページ切り替え（クリア）]
 いいんです
-えんりょ　しないで　くださいませ</language>
+えんりょ　しないで　くださいませ▼</language>
 		<language name="JPN_KANJI" width="256">どうも　わたくし
 副館長の　キダチ　です[BE:01:ページ切り替え（クリア）]
 せっかく　いらしたのです　
 館内を　案内いたしましょう！[BE:01:ページ切り替え（クリア）]　
 いいんです
-遠慮しないで　くださいませ（仮）</language>
+遠慮しないで　くださいませ▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -379,9 +379,9 @@
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">こっかく……
-おおむかしの　ポケモン……</language>
+おおむかしの　ポケモン……▼</language>
 		<language name="JPN_KANJI" width="256">骨格……
-大昔の　ポケモン……（仮）</language>
+大昔の　ポケモン……▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -393,11 +393,11 @@
 		<language name="JPN" width="256">この　いしは　すごいですよ
 いんせき　なんですよ！[BE:01:ページ切り替え（クリア）]
 なにかしらの
-うちゅうエネルギーを　ひめています</language>
+うちゅうエネルギーを　ひめています▼</language>
 		<language name="JPN_KANJI" width="256">この　石は　すごいですよ
 いん石なんですよ！[BE:01:ページ切り替え（クリア）]
 なにかしらの
-宇宙エネルギーを　秘めています（仮）</language>
+宇宙エネルギーを　秘めています▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -414,14 +414,14 @@
 ふるい　いがいには　まったく[BE:00:ページ切り替え（行送り）]
 かちの　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
-てんじ　しております</language>
+てんじ　しております▼</language>
 		<language name="JPN_KANJI" width="256">ああ　こちらは
 ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
 砂漠付近で　見つかったのですが
 古い以外には　まったく[BE:00:ページ切り替え（行送り）]
 価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
-展示しております（仮）</language>
+展示しております▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
