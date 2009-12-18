@@ -80,13 +80,6 @@ see_you:
   _CALL end_msg
 _RET
 
-see_you2:
-  //「またね」
-  $EndMsg = msg_palpark_13
-  _CALL end_msg
-_RET
-
-
 //セーブ                   output:SCWK_ANSWER
 save:
   DEFINE_LOCAL report //セーブチェック用
@@ -163,11 +156,13 @@ play_palpark:
     _BALLOONWIN_CLOSE()
   ENDIF
 
-  _CALL see_you2
+  _CALL see_you
 _RET
 
 connect_error:
-  //通信エラーのときのメッセージ  todo
+  //通信エラーのときのメッセージ
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_13 )
+  _BALLOONWIN_CLOSE()
 _RET
 
 score_msg:
