@@ -26,8 +26,9 @@ extern VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdBModelChangeViewFlag( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelDirectAnimeSetFinished( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelDirectAnimeSetLoop( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelDirectChangeViewFlag( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk );

@@ -5033,7 +5033,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def _BMODEL_ANIME_SET_FINISHED
+ * @def _BMODEL_DIRECT_ANIME_SET_FINISHED
  * @brief 配置モデルアニメ状態を終了状態で固定する
  * @param bm_id   配置モデルの種類指定ID（script_def.hを参照）
  * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
@@ -5046,11 +5046,35 @@
  * バッジチェックゲートを開けっ放しにするためのコマンドで、他では使い道がないかも。
  */
 //--------------------------------------------------------------
-#define _BMODEL_ANIME_SET_FINISHED( bm_id, gx, gz )  \
-    _ASM_BMODEL_ANIME_SET_FINISHED bm_id, gx, gz
+#define _BMODEL_DIRECT_ANIME_SET_FINISHED( bm_id, gx, gz )  \
+    _ASM_BMODEL_DIRECT_ANIME_SET_FINISHED bm_id, gx, gz
 
-    .macro  _ASM_BMODEL_ANIME_SET_FINISHED bm_id, gx, gz
-    .short  EV_SEQ_BMODEL_ANIME_SET_FINISHED
+    .macro  _ASM_BMODEL_DIRECT_ANIME_SET_FINISHED bm_id, gx, gz
+    .short  EV_SEQ_BMODEL_DIRECT_ANIME_SET_FINISHED
+    .short  \bm_id
+    .short  \gx
+    .short  \gz
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _BMODEL_DIRECT_ANIME_SET_LOOP
+ * @brief 配置モデルアニメ状態をループ状態で固定する
+ * @param bm_id   配置モデルの種類指定ID（script_def.hを参照）
+ * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
+ * @param gz      アニメ生成する配置モデルのZ位置（グリッド単位）
+ *
+ * @note
+ * ・グローバルなアニメ状態を操作するので、マップ中の同じ種類のすべての配置モデルに適用される
+ * ・状態は保持されないため、マップ再構成時に毎回呼び出す必要がある
+ *
+ */
+//--------------------------------------------------------------
+#define _BMODEL_DIRECT_ANIME_SET_LOOP( bm_id, gx, gz )  \
+    _ASM_BMODEL_DIRECT_ANIME_SET_LOOP bm_id, gx, gz
+
+    .macro  _ASM_BMODEL_DIRECT_ANIME_SET_LOOP bm_id, gx, gz
+    .short  EV_SEQ_BMODEL_DIRECT_ANIME_SET_LOOP
     .short  \bm_id
     .short  \gx
     .short  \gz
@@ -5071,7 +5095,7 @@
     _ASM_BMODEL_CHANGE_VIEW_FLAG bm_id, gx, gz, flag
 
     .macro  _ASM_BMODEL_CHANGE_VIEW_FLAG bm_id, gx, gz, flag
-    .short  EV_SEQ_BMODEL_CHANGE_VIEW_FLAG
+    .short  EV_SEQ_BMODEL_DIRECT_CHANGE_VIEW_FLAG
     .short  \bm_id
     .short  \gx
     .short  \gz

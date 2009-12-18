@@ -43,7 +43,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_init_r10r0701
   IF FLAG_ON( FE_BADGEGATE07_OPEN ) THEN
-    _BMODEL_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
+    _BMODEL_DIRECT_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
   ENDIF
 INIT_EVENT_END
 
@@ -53,7 +53,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_recover_r10r0701
   IF FLAG_ON( FE_BADGEGATE07_OPEN ) THEN
-    _BMODEL_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
+    _BMODEL_DIRECT_ANIME_SET_FINISHED( SCR_BMID_DOOR, 15, 7 )
   ENDIF
 INIT_EVENT_END
 

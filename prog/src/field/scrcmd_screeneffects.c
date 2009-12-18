@@ -356,27 +356,63 @@ static FIELD_BMODEL_MAN * getBModelMan( SCRCMD_WORK * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief 配置モデル実データのアニメ制御：再生終了状態にする
+ * @brief 配置モデル実データの取得
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
+static G3DMAPOBJST * getBModel( FIELD_BMODEL_MAN * man, u16 bm_id, u16 gx, u16 gz )
 {
-  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   VecFx32 pos;
-  SCRCMD_WORK *work = wk;
-  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
-
-  G3DMAPOBJST * entry = NULL;
 
   pos.x = GRID_TO_FX32( gx );
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  entry = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, bm_id, &pos );
-  G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
-  G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
+  return FIELD_BMODEL_MAN_SearchObjStatusPos( man, bm_id, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 配置モデル実データのアニメ制御：再生終了状態にする
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBModelDirectAnimeSetFinished( VMHANDLE * core, void *wk )
+{
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+
+  SCRCMD_WORK *work = wk;
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
+
+  if ( entry )
+  {
+    G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
+    G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 配置モデル実データのアニメ制御：ループ再生状態にする
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBModelDirectAnimeSetLoop( VMHANDLE * core, void *wk )
+{
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+
+  SCRCMD_WORK *work = wk;
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
+
+  if ( entry )
+  {
+    G3DMAPOBJST_setAnime( bmodel_man, entry, BMANM_INDEX_DOOR_OPEN, BMANM_REQ_LOOP );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -386,23 +422,17 @@ VMCMD_RESULT EvCmdBModelAnimeSetFinished( VMHANDLE * core, void *wk )
  * @brief 配置モデル実データの表示制御ON/OFF
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdBModelChangeViewFlag( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdBModelDirectChangeViewFlag( VMHANDLE * core, void *wk )
 {
   u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   u16 flag = SCRCMD_GetVMWorkValue( core, wk );
-  VecFx32 pos;
 
   SCRCMD_WORK *work = wk;
   FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
-  G3DMAPOBJST * entry = NULL;
+  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
 
-  pos.x = GRID_TO_FX32( gx );
-  pos.y = 0;
-  pos.z = GRID_TO_FX32( gz );
-
-  entry = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, bm_id, &pos );
   if (entry)
   {
     G3DMAPOBJST_changeViewFlag( entry, flag );
