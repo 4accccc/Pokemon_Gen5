@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-18T20:22:11"/>
+	<create user="taya" host="W00146" date="2009-12-19T00:10:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -432,7 +432,7 @@
 		<band id="2" index="3" style="0000" width="496"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1344,6 +1344,14 @@
 こうげきが　さいだいまで　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 攻撃が　最大まで　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NightMare">
+		<comment>ナイトメア</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+うなされている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+うなされている！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
