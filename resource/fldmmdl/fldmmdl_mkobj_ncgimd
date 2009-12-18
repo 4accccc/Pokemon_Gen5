@@ -531,12 +531,12 @@
 #hurahero.imd
 ./mmdl_res/hurahero.imd: ./mmdl_nchara/hurahero.ncg ./mmdl_nchara/hurahero.ncl
 	@echo convert ncg_imd hurahero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hurahero.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 12
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hurahero.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 16
 
 #huraheroine.imd
 ./mmdl_res/huraheroine.imd: ./mmdl_nchara/huraheroine.ncg ./mmdl_nchara/huraheroine.ncl
 	@echo convert ncg_imd huraheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/huraheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 12
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/huraheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4hurahero.imd 4 4 16
 
 #fishhero.imd
 ./mmdl_res/fishhero.imd: ./mmdl_nchara/fishhero.ncg ./mmdl_nchara/fishhero.ncl

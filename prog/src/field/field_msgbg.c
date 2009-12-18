@@ -2311,10 +2311,9 @@ struct _TAG_FLDTALKMSGWIN
 //--------------------------------------------------------------
 static void fldTalkMsgWin_Add(
     FLDMSGBG *fmb, FLDTALKMSGWIN *tmsg,
-    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf,
+    TALKMSGWIN_TYPE type )
 {
-  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
-  
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
@@ -2361,14 +2360,14 @@ static void fldTalkMsgWin_Add(
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    const GFL_MSGDATA *msgData, u32 msgID )
+    const GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
   tmsg->strBuf = GFL_STR_CreateBuffer(
 					FLDMSGBG_STRLEN, fmb->heapID );
   GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
-  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type );
   return( tmsg );
 }
 
@@ -2385,11 +2384,12 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
  */
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
-    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    STRBUF *strBuf, TALKMSGWIN_TYPE type )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
-  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf, type );
   return( tmsg );
 }
 

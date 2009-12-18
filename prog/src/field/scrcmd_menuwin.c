@@ -28,6 +28,8 @@
 //======================================================================
 //  define
 //======================================================================
+#define DEBUG_BWINTYPE TALKMSGWIN_TYPE_NORMAL
+
 // 所持金表示ウィンドウ
 #define GOLD_WIN_WIDTH (14) // 幅(キャラクタ単位)
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
@@ -39,12 +41,9 @@
 static void CloseWin(SCRCMD_WORK *work);
 static void CloseBalloonWin(SCRCMD_WORK *work);
 
-static void SetFldMsgWinStream(
-              SCRCMD_WORK *work,
-              FLDMSGBG *fmb,
-              FLDTALKMSGWIN_IDX idx,
-              const VecFx32 *pos,
-              STRBUF *strBuf );
+static void setBalloonWindow( SCRCMD_WORK *work,
+  FLDMSGBG *fmb, FLDTALKMSGWIN_IDX idx,
+  const VecFx32 *pos, STRBUF *strBuf, TALKMSGWIN_TYPE type );
 
 static STRBUF * SetExpandWord(
     SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id );
@@ -383,7 +382,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
     tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
   }
   
-  SCRCMD_WORK_SetFldMsgWinStream( work, (FLDSYSWIN_STREAM*)tmsg );
+  SCRCMD_WORK_setBalloonWindow( work, (FLDSYSWIN_STREAM*)tmsg );
   PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
 
   VMCMD_SetWait( core, TalkMsgWait );
@@ -623,7 +622,8 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
  */
 //--------------------------------------------------------------
 static BOOL balloonWin_Write( SCRCMD_WORK *work,
-    u16 objID, u16 arcID, u16 msgID, FLDTALKMSGWIN_IDX idx )
+    u16 objID, u16 arcID, u16 msgID, FLDTALKMSGWIN_IDX idx,
+    TALKMSGWIN_TYPE type )
 {
   STRBUF **msgbuf;
   SCRCMD_BALLOONWIN_WORK *bwin_work;
@@ -687,8 +687,8 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   bwin_work->up_down = idx;
   balloonWin_UpdatePos( work );
   
-  SetFldMsgWinStream( work,
-      fparam->msgBG, idx, &bwin_work->tail_pos, *msgbuf );
+  setBalloonWindow( work,
+      fparam->msgBG, idx, &bwin_work->tail_pos, *msgbuf, type );
   return( TRUE );
 }
 
@@ -728,10 +728,15 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-  
+#ifndef DEBUG_BWINTYPE
+  TALKMSGWIN_TYPE type = VMGetU16( core );
+#else
+  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
+#endif
+
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -754,7 +759,12 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 win_idx = VMGetU8( core );
-  
+#ifndef DEBUG_BWINTYPE
+  TALKMSGWIN_TYPE type = VMGetU16( core );
+#else
+  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
+#endif
+
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
     return VMCMD_RESULT_SUSPEND;
@@ -763,7 +773,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( *mmdl );
     
-    if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+    if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
@@ -787,7 +797,12 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
   u16 msg_id_f = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-  
+#ifndef DEBUG_BWINTYPE
+  TALKMSGWIN_TYPE type = VMGetU16( core );
+#else
+  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
+#endif
+
   {
     GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
@@ -798,7 +813,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
     }
   }
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -821,12 +836,17 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 msg_id_b = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-  
+#ifndef DEBUG_BWINTYPE
+  TALKMSGWIN_TYPE type = VMGetU16( core );
+#else
+  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
+#endif
+
   if( PM_VERSION == VERSION_BLACK ){
     msg_id = msg_id_b;
   }
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -925,8 +945,8 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       bwin_work->up_down = idx;
       balloonWin_UpdatePos( work );
       
-      SetFldMsgWinStream(
-          work, fparam->msgBG, idx, &bwin_work->tail_pos, *msgbuf);
+      setBalloonWindow( work, fparam->msgBG,
+          idx, &bwin_work->tail_pos, *msgbuf, TALKMSGWIN_TYPE_NORMAL );
       
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
@@ -1478,16 +1498,13 @@ static void CloseBalloonWin(SCRCMD_WORK *work)
  * @return  none
  */
 //--------------------------------------------------------------
-static void SetFldMsgWinStream(
-              SCRCMD_WORK *work,
-              FLDMSGBG *fmb,
-              FLDTALKMSGWIN_IDX idx,
-              const VecFx32 *pos,
-              STRBUF *strBuf )
+static void setBalloonWindow( SCRCMD_WORK *work,
+  FLDMSGBG *fmb, FLDTALKMSGWIN_IDX idx,
+  const VecFx32 *pos, STRBUF *strBuf, TALKMSGWIN_TYPE type )
 {
   FLDTALKMSGWIN *tmsg;
   
-  tmsg = FLDTALKMSGWIN_AddStrBuf( fmb, idx, pos, strBuf );
+  tmsg = FLDTALKMSGWIN_AddStrBuf( fmb, idx, pos, strBuf, type );
   SCRCMD_WORK_SetMsgWinPtr( work, tmsg );
   //ウィンドウ作成フラグオン
   SCREND_CHK_SetBitOn(SCREND_CHK_BALLON_WIN_OPEN);

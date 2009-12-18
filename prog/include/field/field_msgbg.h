@@ -314,9 +314,10 @@ extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    const GFL_MSGDATA *msgData, u32 msgID );
+    const GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type );
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
-    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf );
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    STRBUF *strBuf, TALKMSGWIN_TYPE type );
 extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
