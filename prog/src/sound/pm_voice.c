@@ -533,8 +533,48 @@ u32		PMVOICE_Play
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
+void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan)
+{
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return; }
+
+	NNS_SndWaveOutSetPan(voicePlayer->waveHandle, pan);
+	if( voicePlayer->subWaveUse == TRUE ){
+		NNS_SndWaveOutSetPan(voicePlayer->waveHandleSub, pan);
+	}
+}
+
+void	PMVOICE_SetVolume( u32 voicePlayerIdx, int volOfs)
+{
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return; }
+
+	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume + volOfs);
+	if( voicePlayer->subWaveUse == TRUE ){
+		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, voicePlayer->volumeSub + volOfs);
+	}
+}
+
+void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs)
+{
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return; }
+
+	NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed + spdOfs);
+	if( voicePlayer->subWaveUse == TRUE ){
+		NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, voicePlayer->speedSub + spdOfs);
+	}
+}
+
 void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
 {
+#if 0
 	PMVOICE_PLAYER* voicePlayer;
 
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
@@ -556,6 +596,11 @@ void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
 			NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, voicePlayer->speedSub + spdOfs);
 		}
 	}
+#else
+	PMVOICE_SetPan(voicePlayerIdx, pan);
+	if(volOfs){ PMVOICE_SetVolume(voicePlayerIdx, volOfs); }
+	if(spdOfs){ PMVOICE_SetSpeed(voicePlayerIdx, spdOfs); }
+#endif
 }
 
 //------------------------------------------------------------------
