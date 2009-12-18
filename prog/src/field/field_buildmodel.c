@@ -517,14 +517,18 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
     man->mdl_arc_id = ARCID_BMODEL_OUTDOOR;
     model_info_dataid = FILEID_BMINFO_OUTDOOR;
     bmlist_arc_id = ARCID_BMODEL_IDX_OUTDOOR;
+#ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_OUTDOOR;
+#endif
   }
   else
   {	
     man->mdl_arc_id = ARCID_BMODEL_INDOOR;
     model_info_dataid = FILEID_BMINFO_INDOOR;
     bmlist_arc_id = ARCID_BMODEL_IDX_INDOOR;
+#ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_INDOOR;
+#endif
   }
 
   //エリア別配置モデルIDリストの読み込み
