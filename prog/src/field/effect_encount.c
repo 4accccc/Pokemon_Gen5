@@ -283,11 +283,7 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
       ev_no = 1;
     }
   }else{
-    if( rnd < 800 ){
-      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
-    }else{
-      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
-    }
+    event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
   }
   GF_ASSERT( event );
 
