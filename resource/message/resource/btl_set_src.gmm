@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-17T18:58:56"/>
+	<create user="taya" host="W00146" date="2009-12-18T20:22:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1247,9 +1247,9 @@
 	<row id="BTL_STRID_SET_Namake">
 		<comment>なまけ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-なまけていて　わざが　だせない！</language>
+なまけている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-なまけていて　技が　出せない！</language>
+なまけている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Fumin">
@@ -1336,6 +1336,14 @@
 イリュージョンが　とけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 イリュージョンが　解けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_IkarinoTubo">
+		<comment>いかりのつぼ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+こうげきが　さいだいまで　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+攻撃が　最大まで　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
