@@ -2918,11 +2918,11 @@
 
 	<row id="TRID_ELITEM_02_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">まけて　おちこむのは　いっしゅん！▼
-トレーナーの　あたしが　あきらめたら
-ポケモンは　なにも　できないもの！</language>
+トレーナーの　オレが　あきらめたら
+ポケモンは　なにも　できないもんな！</language>
 		<language name="JPN_KANJI" width="216">負けて　落ち込むのは　一瞬！▼
-トレーナーの　あたしが　あきらめたら
-ポケモンは　なにも　できないもの！</language>
+トレーナーの　オレが　あきらめたら
+ポケモンは　なにも　できないもんな！</language>
 	</row>
 
 	<row id="TRID_ELITEM_03_TRMSG_FIGHT_START">
