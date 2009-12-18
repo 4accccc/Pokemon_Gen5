@@ -2239,7 +2239,7 @@ static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
   
   nogrid_OnMoveBitForce( nogrid );
   nogrid_OnMoveBitSpinL( nogrid );
-  
+
   // ƒXƒsƒ“’âŽ~
   nogrid_OffMoveBitSpinR(nogrid);
   {
