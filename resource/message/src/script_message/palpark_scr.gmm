@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T20:03:32"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T17:16:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,7 +343,7 @@
 	<row id="msg_palpark_01">
 		<comment>初回メッセージ</comment>
 		<language name="JPN" width="256">しょかいメッセージ</language>
-		<language name="JPN_KANJI" width="256">しょかいメッセージ</language>
+		<language name="JPN_KANJI" width="256">初回メッセージ</language>
 	</row>
 
 	<row id="msg_palpark_02">
@@ -356,7 +356,7 @@
 	<row id="msg_palpark_03">
 		<comment>msg_palpark_02でいいえ</comment>
 		<language name="JPN" width="256">また　やりたくなったら　きてよね！</language>
-		<language name="JPN_KANJI" width="256">また　やりたくなったら　きてよね！</language>
+		<language name="JPN_KANJI" width="256">また　やりたくなったら　来てよね！</language>
 	</row>
 
 	<row id="msg_palpark_04">
@@ -365,19 +365,19 @@ BOXに6匹以上の空きがない</comment>
 		<language name="JPN" width="256">ボックスに　あきが　たりないね▼
 ボックスに　６ひきぶんの
 スペースを　よういして　きてくれ</language>
-		<language name="JPN_KANJI" width="256">ボックスに　あきが　たりないね▼
-ボックスに　６ひきぶんの
-スペースを　よういして　きてくれ</language>
+		<language name="JPN_KANJI" width="256">ボックスに　空きが　足りないね▼
+ボックスに　６匹分の
+スペースを　用意して　来てくれ</language>
 	</row>
 
 	<row id="msg_palpark_05">
 		<comment>はい選択で
 BOXに6匹以上の空きがある</comment>
-		<language name="JPN" width="256">もうひとつ　ＤＳを
+		<language name="JPN" width="256">もう１つ　ＤＳを
 つかって　あそぶけど▽
 ＤＳは　２つ　あるかい？▼</language>
-		<language name="JPN_KANJI" width="256">もうひとつ　ＤＳを
-つかって　あそぶけど▽
+		<language name="JPN_KANJI" width="256">もう１つ　ＤＳを
+使って　遊ぶけど▽
 ＤＳは　２つ　あるかい？▼</language>
 	</row>
 
@@ -387,10 +387,10 @@ BOXに6匹以上の空きがある</comment>
 かきこむ　ひつようが　ある▼
 あそぶため　レポートに
 かきこんでも　いいかい？▼</language>
-		<language name="JPN_KANJI" width="256">あそぶには　レポートへ
-かきこむ　ひつようが　ある▼
-あそぶため　レポートに
-かきこんでも　いいかい？▼</language>
+		<language name="JPN_KANJI" width="256">遊ぶには　レポートへ
+書きこむ　必要が　ある▼
+遊ぶため　レポートに
+書きこんでも　いいかい？▼</language>
 	</row>
 
 	<row id="msg_palpark_07">
@@ -398,8 +398,8 @@ BOXに6匹以上の空きがある</comment>
 続けてmsg_palpark_08</comment>
 		<language name="JPN" width="256">レポートへ　かきこんでいます
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI" width="256">レポートへ　かきこんでいます
-でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI" width="256">レポートへ　書きこんでいます
+電源を　切らないで　ください</language>
 	</row>
 
 	<row id="msg_palpark_08">
@@ -413,7 +413,7 @@ BOXに6匹以上の空きがある</comment>
 	<row id="msg_palpark_09">
 		<comment>メッセージ表示後、通信画面に切り替え</comment>
 		<language name="JPN" width="256">それじゃ　はじめるよ！▼</language>
-		<language name="JPN_KANJI" width="256">それじゃ　はじめるよ！▼</language>
+		<language name="JPN_KANJI" width="256">それじゃ　始めるよ！▼</language>
 	</row>
 
 	<row id="msg_palpark_10">
@@ -462,7 +462,7 @@ BOXに6匹以上の空きがある</comment>
 		<comment>パルパークでポケモンを１匹以上捕まえた場合</comment>
 		<language name="JPN" width="256">つかまえた　ポケモンは
 パソコンの　ボックスに　いれておいたよ▼</language>
-		<language name="JPN_KANJI" width="256">つかまえた　ポケモンは
+		<language name="JPN_KANJI" width="256">捕まえた　ポケモンは
 パソコンの　ボックスに　いれておいたよ▼</language>
 	</row>
 
@@ -470,13 +470,13 @@ BOXに6匹以上の空きがある</comment>
 		<comment>パルパークでポケモンを1匹も捕まえられなかった場合</comment>
 		<language name="JPN" width="256">ざんねん！　ポケモンは
 つかまえられなかった　みたいだね</language>
-		<language name="JPN_KANJI" width="256">ざんねん！　ポケモンは
-つかまえられなかった　みたいだね</language>
+		<language name="JPN_KANJI" width="256">残念！　ポケモンは
+捕まえられなかった　みたいだね</language>
 	</row>
 
 	<row id="msg_palpark_13">
 		<language name="JPN" width="256">また　やりたくなったら　きてよね！</language>
-		<language name="JPN_KANJI" width="256">また　やりたくなったら　きてよね！</language>
+		<language name="JPN_KANJI" width="256">また　やりたくなったら　来てよね！</language>
 	</row>
 
 	<flowchart-group-list>
