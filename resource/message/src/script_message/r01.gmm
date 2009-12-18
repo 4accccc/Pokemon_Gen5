@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T11:18:20"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:29:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -674,7 +674,7 @@ TVTトランシーバー</attribute>
 ポケモンさんの　体力が　減ると[BE:00:ページ切り替え（行送り）]
 大変だから　これを　あげる[BE:01:ページ切り替え（クリア）]
 あなたの　バッグの
-かいふくポケットに　いれておいてね！</language>
+回復ポケットに　いれておいてね！</language>
 	</row>
 
 	<row id="msg_r01_girl1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -685,7 +685,7 @@ TVTトランシーバー</attribute>
 ムリせず　こまめに
 ポケモンさんを　やすませてね</language>
 		<language name="JPN_KANJI" width="256">ポケモンさんの　体力が　減ると
-たたかう　元気が　なくなっちゃうから[BE:01:ページ切り替え（クリア）]
+戦う　元気が　なくなっちゃうから[BE:01:ページ切り替え（クリア）]
 ムリせず　こまめに
 ポケモンさんを　休ませてね</language>
 	</row>
