@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/16 22:13:23
+#save date:2009/12/18 17:34:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -20,11 +20,11 @@ TRAINERM
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEM_13
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -51,11 +51,11 @@ TRAINERM
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEM_12
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -82,11 +82,11 @@ TRAINERM
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEM_11
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -111,13 +111,13 @@ TR_C08GYM0101_F1_04
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEW_10
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -144,13 +144,13 @@ TRAINERM
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEM_10
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -202,15 +202,15 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_C08GYM0101_F2_01
 #OBJ CODE Number
-TRAINERM
+TRAINERW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEW_11
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -233,7 +233,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_C08GYM0101_F2_02
 #OBJ CODE Number
-TRAINERM
+TRAINERW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -241,7 +241,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEW_13
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -262,48 +262,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_C08GYM0101_F2_03
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 120 -312
-#event number: 9
-#type
-1
-#ID name
 TR_C08GYM0101_F2_04
 #OBJ CODE Number
-TRAINERM
+VETERANW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_VETERANW_04
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -320,21 +289,21 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 424 96 -424
-#event number: 10
+#event number: 9
 #type
 1
 #ID name
 TR_C08GYM0101_F1_05
 #OBJ CODE Number
-TRAINERM
+TRAINERW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_ELITEW_12
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -351,7 +320,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -216 0 -200
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -381,7 +350,38 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -536
+200 0 -520
+#event number: 11
+#type
+1
+#ID name
+TR_C08GYM0101_F2_03
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_VETERANM_04
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+47 4 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -401,7 +401,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-6
+7
 #event number: 0
 #Pos Event Label
 POS_C08GYM0101_GIMMICK_01
@@ -502,6 +502,23 @@ LOCALWORK0
 EVENTDATA_POSTYPE_GRID
 #position
 88 112 -184
+#size
+1 1
+#event number: 6
+#Pos Event Label
+POS_C08GYM0101_F2_03
+#Pos Script Name
+SCRID_POS_C08GYM0101_F2_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C08GYM0101
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+48 0 0
 #size
 1 1
 #Map Event List Data End

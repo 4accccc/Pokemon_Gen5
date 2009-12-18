@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/07 18:42:33
+#save date:2009/12/18 17:46:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -331,9 +331,9 @@ WK_SCENE_R01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 0 -664
+552 0 -696
 #size
-10 1
+6 1
 #event number: 1
 #Pos Event Label
 POSID_R01_POKECOUNT_01

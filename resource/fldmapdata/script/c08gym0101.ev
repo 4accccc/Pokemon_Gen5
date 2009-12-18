@@ -29,6 +29,7 @@ _EVENT_DATA		ev_pos_c08gym0101_gimmick_04	//２階の竜（左側）
 _EVENT_DATA		ev_pos_c08gym0101_gimmick_05	//２階の竜（右側）
 _EVENT_DATA		ev_c08gym0101_sunglasses_01
 _EVENT_DATA		ev_bg_c08gym0101_statue_01
+_EVENT_DATA		ev_pos_c08gym0101_f2_03
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -220,6 +221,51 @@ EVENT_START	ev_c08gym0101_leader8_01
 	ENDIF
 	
 EVENT_END
+
+/************************************************************/
+/*	POS起動トレーナー戦                                     */
+/************************************************************/
+EVENT_START	ev_pos_c08gym0101_f2_03
+
+	//トレーナー近寄って来る
+	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_com )
+	_OBJ_ANIME_WAIT()
+	
+	//トレーナーメッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_01,TR_C08GYM0101_F2_03 )
+	_BALLOONWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_VETERANM_04, 0 )
+	
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			
+			//トレーナーメッセージ
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_02,TR_C08GYM0101_F2_03 )
+			_BALLOONWIN_CLOSE()
+	
+			//========================================//
+			//POS起動をオフに
+			$WK_SCENE_C08GYM0101 = 1
+			//========================================//
+			
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+EVENT_END
+
+//--------------------------------------------------------------
+//	トレーナー接近
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_c08r0101_tr_com
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*						ジムガイド							*/
@@ -423,17 +469,17 @@ move_head:
   //分岐をかける
   SWITCH $CAMERA_IDX
   CASE 0 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 6488,7680,970752,1040384,249841,2576384,30 )
   CASE 1 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 6488,7680,970752,1040384,249841,2576384,30 )
   CASE 2 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 5080,57472,970752,2449408,331791,1114112,30 )
   CASE 3 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 5080,4736,970752,3039232,331791,1114112,30 )
   CASE 4 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 7128,6144,970752,1863680,774223,1241088,30 )
   CASE 5 THEN
-    _CAMERA_MOVE( 4312,4480,970752,2686976,0,909312,30 )
+    _CAMERA_MOVE( 7128,6144,970752,1863680,774223,1241088,30 )
   DEFAULT
 	ENDSWITCH
 

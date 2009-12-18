@@ -50,13 +50,13 @@ _EVENT_DATA_END
 EVENT_START   ev_pos_c07_hakase1_01
 
 	//プレイヤーネームを格納
-	_PLAYER_NAME(1)
+	_PLAYER_NAME(0)
 
 	//瀕死・タマゴを除くポケモンの先頭を選択
 	DEFINE_LOCAL LWK_FRONT
 	_GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
 	//先頭ポケモンの名前を取得
-	_TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
+	_TEMOTI_MONS_NAME  (  1 , LWK_FRONT  )
 	//なつき度格納変数
 	DEFINE_LOCAL LWK_CHECK_NT
 	//なつき度チェック

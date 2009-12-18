@@ -49,12 +49,6 @@ EVENT_START   ev_r01_poke_getdemo_01
 
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
     SWITCH $POSX
-    CASE 784 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x784 )
-        _OBJ_ANIME_WAIT()
-    CASE 785 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x785 )
-        _OBJ_ANIME_WAIT()
     CASE 786 THEN
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x786 )
         _OBJ_ANIME_WAIT()
@@ -62,20 +56,24 @@ EVENT_START   ev_r01_poke_getdemo_01
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x787 )
         _OBJ_ANIME_WAIT()
     CASE 788 THEN  //目の前に立ったケース
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x788 )
-        _OBJ_ANIME_WAIT()
+        //なし
     CASE 789 THEN
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x789 )
         _OBJ_ANIME_WAIT()
-    CASE 793 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x793 )
+    CASE 790 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x790 )
+        _OBJ_ANIME_WAIT()
+    CASE 791 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x791 )
         _OBJ_ANIME_WAIT()
     DEFAULT  //目の前に立ったケースと同じ処理を行う
-        _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x788 )
-        _OBJ_ANIME_WAIT()
+        //なし
     ENDSWITCH
   } //ローカル変数の参照制限範囲、ここまで。
 
+//上に移動
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_up )
+    _OBJ_ANIME_WAIT()
 
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget0 )
@@ -386,27 +384,10 @@ EVENT_START   ev_r01_support_02
 EVENT_END
 
 //--------------------------------------------------------------
-//	R01　GETDEMO：POSで主人公移動784
-//--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide_x784
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　GETDEMO：POSで主人公移動785
-//--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide_x785
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
 //	R01　GETDEMO：POSで主人公移動786
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_r01_guide_x786
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -414,7 +395,6 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_r01_guide_x787
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -429,16 +409,27 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_r01_guide_x789
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　GETDEMO：POSで主人公移動793
+//	R01　GETDEMO：POSで主人公移動790
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_r01_guide_x793
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_LABEL	anm_r01_guide_x790
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公移動791
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_x791
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　GETDEMO：POSで主人公、上に移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r01_guide_up
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
