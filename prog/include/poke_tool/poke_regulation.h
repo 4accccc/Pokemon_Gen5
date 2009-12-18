@@ -14,6 +14,8 @@
 
 #include "regulation_def.h"
 
+#include "print/wordset.h"
+
 
 // PokeRegulationMatchPartialPokePartyとPokeRegulationMatchFullPokeParty の戻り値
 typedef enum{
@@ -59,3 +61,30 @@ extern int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY 
 
 
 
+//==============================================================================
+//  メッセージ取得
+//==============================================================================
+///レギュレーション項目表示カテゴリー
+typedef enum{
+  REGULATION_CATEGORY_NUM,        ///<ポケモンの数
+  REGULATION_CATEGORY_LV,         ///<ポケモンのレベル
+  REGULATION_CATEGORY_SP_POKE,    ///<特別なポケモン
+  REGULATION_CATEGORY_SAMEPOKE,   ///<同じポケモン
+  REGULATION_CATEGORY_SAMEITEM,   ///<同じ道具
+  REGULATION_CATEGORY_SHOOTER,    ///<サポートシューター
+  
+  REGULATION_CATEGORY_MAX,
+}REGULATION_CATEGORY;
+
+///レギュレーション内容を一覧表示する場合のメッセージパッケージ
+typedef struct{
+  GFL_MSGDATA *msgdata;
+  STRBUF *category[REGULATION_CATEGORY_MAX];     ///<カテゴリー名のメッセージID
+  STRBUF *prerequisite[REGULATION_CATEGORY_MAX]; ///<カテゴリー毎の前提条件メッセージ
+  u8 shooter_type;
+  u8 padding[3];
+}REGULATION_PRINT_MSG;
+
+extern REGULATION_PRINT_MSG * PokeRegulation_CreatePrintMsg(
+  const REGULATION* pReg, WORDSET *wordset, HEAPID heap_id, int shooter_type);
+extern void PokeRegulation_DeletePrintMsg(REGULATION_PRINT_MSG *rpm);

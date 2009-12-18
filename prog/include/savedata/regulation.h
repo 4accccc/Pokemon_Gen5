@@ -80,6 +80,11 @@ typedef enum  {
   REGULATION_BATTLE_MAX   //
 } REGULATION_BATTLE_TYPE;
 
+typedef enum {
+  REGULATION_SHOOTER_INVALID,   ///<無効(なし)
+  REGULATION_SHOOTER_VALID,     ///<有効(あり)
+  REGULATION_SHOOTER_MANUAL,    ///<マニュアル
+}REGULATION_SHOOTER_TYPE;
 
 //----------------------------------------------------------
 /**

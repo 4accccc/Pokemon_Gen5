@@ -19,6 +19,10 @@
 #include "arc_def.h"
 #include "regulation.naix"
 
+#include "pm_define.h"
+#include "msg/msg_regulation.h"
+#include "message.naix"
+
 #define _POKENO_NONE  (0)          // ポケモン番号でない番号
 
 
@@ -465,3 +469,241 @@ void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg)
   GFL_ARC_LoadData(reg, ARCID_REGULATION, regulation_data_no);
 }
 
+
+//==============================================================================
+//
+//  メッセージ取得
+//
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：ポケモンの数
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateNum(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  
+  if(pReg->NUM_LO == 1 && pReg->NUM_HI == TEMOTI_POKEMAX){
+    msg_id = msg_reg_num_000; //制限無し
+  }
+  else if(pReg->NUM_LO == pReg->NUM_HI){
+    msg_id = msg_reg_num_001; //人数固定
+  }
+  else if(pReg->NUM_LO > 1 && pReg->NUM_HI == TEMOTI_POKEMAX){
+    msg_id = msg_reg_num_002; //xxx匹以上
+  }
+  else{
+    msg_id = msg_reg_num_003; // xxx ～ xxx 匹
+  }
+  
+  WORDSET_RegisterNumber( wordset, 0, pReg->NUM_LO, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wordset, 1, pReg->NUM_HI, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  strbuf = GFL_STR_CreateBuffer(64, heap_id);
+  GFL_MSG_GetString( rpm->msgdata, msg_id, tempbuf );
+
+  WORDSET_ExpandStr( wordset, strbuf, tempbuf );
+  return strbuf;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：ポケモンのレベル
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateLv(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  
+  if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_NORMAL){
+    msg_id = msg_reg_num_000; //制限なし
+  }
+  else if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_SAME){
+    msg_id = msg_reg_lv_001;  //全補正
+  }
+  else if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_OVER){
+    msg_id = msg_reg_lv_003;  //以上
+  }
+  else if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_LESS){
+    msg_id = msg_reg_lv_002;  //以下
+  }
+  else if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_DRAG_DOWN){
+    msg_id = msg_reg_lv_004;  //引き下げ
+  }
+  else if(pReg->LEVEL_RANGE == REGULATION_LEVEL_RANGE_PULL_UP){
+    msg_id = msg_reg_lv_005;  //引き上げ
+  }
+  else{
+    GF_ASSERT(0);
+    msg_id = msg_reg_num_000; //制限なし
+  }
+  WORDSET_RegisterNumber( wordset, 0, pReg->LEVEL, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  strbuf = GFL_STR_CreateBuffer(64, heap_id);
+  GFL_MSG_GetString( rpm->msgdata, msg_id, tempbuf );
+
+  WORDSET_ExpandStr( wordset, strbuf, tempbuf );
+  return strbuf;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：特別なポケモン
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateSpPoke(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  int i;
+  
+  for(i = 0; i < REG_POKENUM_MAX_BYTE; i++){
+    if(pReg->VETO_POKE_BIT[i] != 0){
+      break;
+    }
+  }
+  if(i == REG_POKENUM_MAX_BYTE){
+    msg_id = msg_reg_sp_000;
+  }
+  else{
+    msg_id = msg_reg_sp_001;
+  }
+  
+  strbuf = GFL_MSG_CreateString( rpm->msgdata, msg_id );
+  return strbuf;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：同じポケモン
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateSamePoke(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  
+  if(pReg->BOTH_POKE == TRUE){
+    msg_id = msg_reg_samepoke_000;
+  }
+  else{
+    msg_id = msg_reg_samepoke_001;
+  }
+
+  strbuf = GFL_MSG_CreateString( rpm->msgdata, msg_id );
+  return strbuf;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：同じ道具
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateSameItem(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  
+  if(pReg->BOTH_ITEM == TRUE){
+    msg_id = msg_reg_sameitem_000;
+  }
+  else{
+    msg_id = msg_reg_sameitem_001;
+  }
+
+  strbuf = GFL_MSG_CreateString( rpm->msgdata, msg_id );
+  return strbuf;
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ作成：シューターの有無
+ */
+//--------------------------------------------------------------
+static STRBUF * _RegMsg_CreateShooter(const REGULATION* pReg, WORDSET *wordset, REGULATION_PRINT_MSG *rpm, STRBUF *tempbuf, HEAPID heap_id)
+{
+  STRBUF *strbuf;
+  u16 msg_id;
+  
+  if(rpm->shooter_type == REGULATION_SHOOTER_VALID){
+    msg_id = msg_reg_shooter_000;
+  }
+  else if(rpm->shooter_type == REGULATION_SHOOTER_INVALID){
+    msg_id = msg_reg_shooter_001;
+  }
+  else{
+    GF_ASSERT(0);
+    msg_id = msg_reg_shooter_000;
+  }
+
+  strbuf = GFL_MSG_CreateString( rpm->msgdata, msg_id );
+  return strbuf;
+}
+
+//==================================================================
+/**
+ * レギュレーション一覧メニュー表示用メッセージのパッケージを作成する
+ *
+ * @param   pReg		
+ * @param   wordset		
+ * @param   heap_id		
+ * @param   shooter_manual		REGULATION_SHOOTER_TYPE(レギュレーションがMANUAL以外の時は無視します)
+ *
+ * @retval  REGULATION_PRINT_MSG *		
+ */
+//==================================================================
+REGULATION_PRINT_MSG * PokeRegulation_CreatePrintMsg(const REGULATION* pReg, WORDSET *wordset, HEAPID heap_id, int shooter_type)
+{
+  REGULATION_PRINT_MSG *rpm = GFL_HEAP_AllocClearMemory(heap_id, sizeof(REGULATION_PRINT_MSG));
+  STRBUF *tempbuf;
+  int category;
+  static STRBUF * (* const PrerequisiteFunc[])(const REGULATION *, WORDSET *, REGULATION_PRINT_MSG *, STRBUF *, HEAPID) = {
+    _RegMsg_CreateNum,
+    _RegMsg_CreateLv,
+    _RegMsg_CreateSpPoke,
+    _RegMsg_CreateSamePoke,
+    _RegMsg_CreateSameItem,
+    _RegMsg_CreateShooter,
+  };
+  SDK_COMPILER_ASSERT(NELEMS(PrerequisiteFunc) == REGULATION_CATEGORY_MAX);
+
+  rpm->msgdata = GFL_MSG_Create( 
+    GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_regulation_dat, heap_id );
+  
+  tempbuf = GFL_STR_CreateBuffer(64, heap_id);
+  
+  if(pReg->SHOOTER == REGULATION_SHOOTER_MANUAL){
+    rpm->shooter_type = shooter_type;
+  }
+  else{
+    rpm->shooter_type = pReg->SHOOTER;
+  }
+  
+  for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
+    rpm->category[category] = GFL_MSG_CreateString( rpm->msgdata, msg_reg_000 + category );
+    rpm->prerequisite[category] = PrerequisiteFunc[category](pReg, wordset, rpm, tempbuf, heap_id);
+  }
+  return rpm;
+}
+
+//==================================================================
+/**
+ * レギュレーション一覧メニュー表示用メッセージのパッケージを削除する
+ *
+ * @param   rpm		
+ */
+//==================================================================
+void PokeRegulation_DeletePrintMsg(REGULATION_PRINT_MSG *rpm)
+{
+  int category;
+  
+  for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
+    GFL_STR_DeleteBuffer(rpm->category[category]);
+    GFL_STR_DeleteBuffer(rpm->prerequisite[category]);
+  }
+  GFL_MSG_Delete(rpm->msgdata);
+  GFL_HEAP_FreeMemory(rpm);
+}
