@@ -1913,9 +1913,9 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
 
       p_wk->res_plt	= POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 2, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, PLT_OBJ_GIFT_M * 0x20, heapID );
  
-      p_wk->res_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 2, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
+      p_wk->res_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 1, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
         
-      p_wk->res_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 2, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, heapID );
+      p_wk->res_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 1, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, heapID );
  
       GFL_ARC_CloseDataHandle( p_handle );
     }

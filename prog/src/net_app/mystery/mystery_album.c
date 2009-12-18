@@ -1304,7 +1304,11 @@ static u32 MYSTERY_CARD_DATA_GetResPlt( const MYSTERY_CARD_DATA *cp_wk )
     return POKEICON_GetPalArcIndex();
 
   case MYSTERYGIFT_TYPE_ITEM:
-    return ITEM_GetIndex( cp_wk->p_data->icon_no, ITEM_GET_ICON_PAL );
+    { 
+      const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
+      const GIFT_PRESENT_ITEM *cp_item = &cp_data->data.item;
+      return ITEM_GetIndex( cp_item->itemNo, ITEM_GET_ICON_PAL );
+    }
 
   case MYSTERYGIFT_TYPE_RULE:
     /* fallthrow */
@@ -1329,7 +1333,11 @@ static u32 MYSTERY_CARD_DATA_GetPltOfs( const MYSTERY_CARD_DATA *cp_wk )
   switch( MYSTERY_CARD_DATA_GetType(cp_wk) )
   { 
   case MYSTERYGIFT_TYPE_POKEMON:
-    return POKEICON_GetPalNum( cp_wk->p_data->icon_no, cp_wk->p_data->form, FALSE );
+    { 
+      const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
+      const GIFT_PRESENT_POKEMON *cp_pokemon = &cp_data->data.pokemon;
+      return POKEICON_GetPalNum( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->egg );
+    }
 
   default:
     return 0;
@@ -1349,11 +1357,18 @@ static u32 MYSTERY_CARD_DATA_GetResCgx( const MYSTERY_CARD_DATA *cp_wk )
   switch( MYSTERY_CARD_DATA_GetType(cp_wk) )
   { 
   case MYSTERYGIFT_TYPE_POKEMON:
-    return POKEICON_GetCgxArcIndexByMonsNumber( cp_wk->p_data->icon_no, 
-                                                  cp_wk->p_data->form, FALSE );
+    { 
+      const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
+      const GIFT_PRESENT_POKEMON *cp_pokemon = &cp_data->data.pokemon;
+      return POKEICON_GetCgxArcIndexByMonsNumber( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->egg );
+    }
 
   case MYSTERYGIFT_TYPE_ITEM:
-    return ITEM_GetIndex( cp_wk->p_data->icon_no, ITEM_GET_ICON_CGX );
+    { 
+      const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
+      const GIFT_PRESENT_ITEM *cp_item = &cp_data->data.item;
+      return ITEM_GetIndex( cp_item->itemNo, ITEM_GET_ICON_CGX );
+    }
 
   case MYSTERYGIFT_TYPE_RULE:
     /*  fallthrow */
@@ -2421,9 +2436,9 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
       const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->p_data->data.pokemon;
       ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
 
-      p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_setup->p_data->icon_no, cp_setup->p_data->form, cp_pokemon->sex, cp_setup->p_data->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
-      p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_setup->p_data->icon_no, cp_setup->p_data->form, cp_pokemon->sex, cp_setup->p_data->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, draw_type, heapID );
-      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_setup->p_data->icon_no, cp_setup->p_data->form, cp_pokemon->sex, cp_setup->p_data->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, heapID );
+      p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
+      p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, draw_type, heapID );
+      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, heapID );
 
       GFL_ARC_CloseDataHandle( p_handle );
     }

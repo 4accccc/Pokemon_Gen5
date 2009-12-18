@@ -80,8 +80,6 @@ static inline void MYSTERY_DEBUG_SetGiftData( DOWNLOAD_GIFT_DATA *p_data )
 
   //データ
   p_data->data.gift_type      = MYSTERYGIFT_TYPE_POKEMON;
-  p_data->data.icon_no        = MONSNO_MYUU;
-  p_data->data.form           = 0;
   p_data->data.card_message   = 4;
   
   //一度だけ受信フラグ
