@@ -43,8 +43,8 @@
 
 #define MB_SEL_TRAY_X (216)
 #define MB_SEL_TRAY_Y ( 96)
-#define MB_SEL_CHANGE_TRAY_L_X ( 44)
-#define MB_SEL_CHANGE_TRAY_R_X (132)
+#define MB_SEL_CHANGE_TRAY_L_X ( 16)
+#define MB_SEL_CHANGE_TRAY_R_X (152)
 #define MB_SEL_CHANGE_TRAY_Y   ( 20)
 
 //速度を変えるときはちゃんと絵が変わるか確認すること！！！！
