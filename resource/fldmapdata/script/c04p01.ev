@@ -67,9 +67,11 @@ EVENT_START	ev_pos_c04p01_boss_01
 /*	//Ｎ：主人公前へ
 	_OBJ_ANIME( C04P01_BOSS_01, anm_n_come_01 )
 	_TIME_WAIT( 8 )
-	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
 	_OBJ_ANIME_WAIT()
 */	
+	
+	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
+	
 	//キミ プラズマだんを
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()

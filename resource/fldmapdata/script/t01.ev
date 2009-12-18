@@ -35,8 +35,13 @@ _EVENT_DATA_END //データ終端を指定しています。
 /*  T01 BIGMANの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START	ev_t01_man3_01
+	_TALK_OBJ_START()
+	
 	//科学のチカラってスゲー
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_bigman_01 )
+	_GIZAWIN_OBJMSG_POS( msg_t01_bigman_01 , T01_MAN3_01, WIN_NONE )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
 /************************************************************/
@@ -83,6 +88,19 @@ EVENT_START	ev_t01_rival_01
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01_black_03 )
 		_BALLOONWIN_CLOSE()
 
+		//ライバル：上を向く
+		_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_u )
+		_OBJ_ANIME_WAIT()
+
+		//ドア演出
+		//ローカル定義
+		DEFINE_LOCAL	DOOR_ANIME_ID
+
+		//ドアセット
+		_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 777, 740 )
+		_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+		_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
 		//友達ズ：研究所内へ入る
 		_OBJ_ANIME( T01_RIVAL_01, anm_labo_rival_move_01 )
 		_OBJ_ANIME( T01_SUPPORT_01, anm_labo_support_move_01 )
@@ -92,10 +110,25 @@ EVENT_START	ev_t01_rival_01
 		_SE_PLAY( SEQ_SE_KAIDAN )
 
 		//主人公：研究所内へ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_labo_player_move_01 )
-		_OBJ_ANIME_WAIT()
+		
+		//主人公向きで分岐
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		IF $SCWK_ANSWER == DIR_UP THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_labo_player_move_01a )
+			_OBJ_ANIME_WAIT()
+			
+		ELSE
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_labo_player_move_01b )
+			_OBJ_ANIME_WAIT()
+			
+		ENDIF
 
 		_SE_WAIT()
+
+		//ドア解放
+		_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+		_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+		_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 
 		//ライバル、サポートのOBJ削除
 		_OBJ_DEL( T01_RIVAL_01 )
@@ -120,6 +153,13 @@ EVENT_START	ev_t01_rival_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //ライバル＆サポート：研究所内へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_labo_rival_move_01
@@ -136,9 +176,15 @@ _ANIME_LABEL	anm_labo_support_move_01
 //--------------------------------------------------------------------
 //主人公：研究所内へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_labo_player_move_01
+_ANIME_LABEL	anm_labo_player_move_01a
 	_ANIME_DATA	AC_WAIT_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_labo_player_move_01b
+	_ANIME_DATA	AC_WAIT_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
