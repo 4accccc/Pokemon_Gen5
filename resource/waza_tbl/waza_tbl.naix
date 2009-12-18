@@ -540,7 +540,22 @@ enum {
 	NARC_waza_tbl_waza526_bin = 526,
 	NARC_waza_tbl_waza527_bin = 527,
 	NARC_waza_tbl_waza528_bin = 528,
-	NARC_waza_tbl_waza529_bin = 529
+	NARC_waza_tbl_waza529_bin = 529,
+	NARC_waza_tbl_waza530_bin = 530,
+	NARC_waza_tbl_waza531_bin = 531,
+	NARC_waza_tbl_waza532_bin = 532,
+	NARC_waza_tbl_waza533_bin = 533,
+	NARC_waza_tbl_waza534_bin = 534,
+	NARC_waza_tbl_waza535_bin = 535,
+	NARC_waza_tbl_waza536_bin = 536,
+	NARC_waza_tbl_waza537_bin = 537,
+	NARC_waza_tbl_waza538_bin = 538,
+	NARC_waza_tbl_waza539_bin = 539,
+	NARC_waza_tbl_waza540_bin = 540,
+	NARC_waza_tbl_waza541_bin = 541,
+	NARC_waza_tbl_waza542_bin = 542,
+	NARC_waza_tbl_waza543_bin = 543,
+	NARC_waza_tbl_waza544_bin = 544
 };
 
 /* NARC_WAZA_TBL_NAIX_ */
