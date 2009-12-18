@@ -47,6 +47,18 @@ enum{
   INTSUB_ACTOR_TOWN_6,
   INTSUB_ACTOR_TOWN_7,
   INTSUB_ACTOR_TOWN_MAX = INTSUB_ACTOR_TOWN_7,
+
+  INTSUB_ACTOR_TOUCH_TOWN_0,
+  INTSUB_ACTOR_TOUCH_TOWN_1,
+  INTSUB_ACTOR_TOUCH_TOWN_2,
+  INTSUB_ACTOR_TOUCH_TOWN_3,
+  INTSUB_ACTOR_TOUCH_TOWN_4,
+  INTSUB_ACTOR_TOUCH_TOWN_5,
+  INTSUB_ACTOR_TOUCH_TOWN_6,
+  INTSUB_ACTOR_TOUCH_TOWN_7,
+  INTSUB_ACTOR_TOUCH_TOWN_MAX = INTSUB_ACTOR_TOUCH_TOWN_7,
+
+  INTSUB_ACTOR_TOUCH_PALACE,
   
   INTSUB_ACTOR_AREA_0,
   INTSUB_ACTOR_AREA_1,
@@ -126,6 +138,7 @@ enum{
 ///アクターソフトプライオリティ
 enum{
   SOFTPRI_TOWN = 100,
+  SOFTPRI_TOUCH_TOWN = 90,
   SOFTPRI_AREA = 50,
   SOFTPRI_CUR_S = 20,
   SOFTPRI_CUR_L = 19,
@@ -200,6 +213,7 @@ static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorDelete(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
@@ -209,6 +223,8 @@ static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorUpdate_Town(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_TouchTown(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_SenkyoEff(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
@@ -393,6 +409,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   
   //アクター更新
   _IntSub_ActorUpdate_Town(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_TouchTown(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_SenkyoEff(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_Area(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
@@ -559,6 +576,7 @@ static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub)
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
   _IntSub_ActorCreate_Town(intsub, handle);
+  _IntSub_ActorCreate_TouchTown(intsub, handle);
   _IntSub_ActorCreate_SenkyoEff(intsub, handle);
   _IntSub_ActorCreate_Area(intsub, handle);
   _IntSub_ActorCreate_CursorS(intsub, handle);
@@ -606,8 +624,8 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   GF_ASSERT(PALACE_TOWN_DATA_MAX == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
   GF_ASSERT(PALACE_TOWN_DATA_MAX == INTRUDE_TOWN_MAX);
   for(i = INTSUB_ACTOR_TOWN_0; i <= INTSUB_ACTOR_TOWN_MAX; i++){
-    head.pos_x = PalaceTownData[i].subscreen_x;
-    head.pos_y = PalaceTownData[i].subscreen_y;
+    head.pos_x = PalaceTownData[i - INTSUB_ACTOR_TOWN_0].subscreen_x;
+    head.pos_y = PalaceTownData[i - INTSUB_ACTOR_TOWN_0].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
@@ -615,6 +633,44 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   }
   
   intsub->town_update_req = TOWN_UPDATE_REQ_NOT_EFFECT;
+}
+
+//--------------------------------------------------------------
+/**
+ * タッチ出来る街アクター生成
+ *
+ * @param   intsub		
+ * @param   handle		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+{
+  int i;
+  GFL_CLWK_DATA head = {
+  	0, 0,                       //X, Y座標
+  	PALACE_ACT_ANMSEQ_TOUCH_TOWN,   //アニメーションシーケンス
+  	SOFTPRI_TOUCH_TOWN,               //ソフトプライオリティ
+  	BGPRI_ACTOR_COMMON,         //BGプライオリティ
+  };
+  
+  GF_ASSERT(PALACE_TOWN_DATA_MAX == (INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0 + 1));
+  for(i = INTSUB_ACTOR_TOUCH_TOWN_0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX; i++){
+    head.pos_x = PalaceTownData[i - INTSUB_ACTOR_TOUCH_TOWN_0].subscreen_x;
+    head.pos_y = PalaceTownData[i - INTSUB_ACTOR_TOUCH_TOWN_0].subscreen_y;
+    intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
+      intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
+  }
+  
+  //タッチパレス島
+  head.anmseq = PALACE_ACT_ANMSEQ_TOUCH_PALACE;
+  head.pos_x = 128;
+  head.pos_y = 0xa*8;
+  intsub->act[INTSUB_ACTOR_TOUCH_PALACE] = GFL_CLACT_WK_Create(intsub->clunit, 
+    intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+  GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], FALSE);  //表示OFF
 }
 
 //--------------------------------------------------------------
@@ -889,6 +945,35 @@ static void _IntSub_ActorUpdate_Town(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SY
   if(intsub->town_update_req != TOWN_UPDATE_REQ_NONE && intsub->senkyo_eff_bit == 0){
     _IntSub_TownChangeCheck(intsub, area_occupy, intsub->town_update_req);
     intsub->town_update_req = FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：タッチ街アクター
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int i;
+  
+  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    //自分のエリアの為、パレス島しかタッチ出来ない
+    for(i = INTSUB_ACTOR_TOUCH_TOWN_0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX; i++){
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);
+    }
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
+  }
+  else{
+    for(i = INTSUB_ACTOR_TOUCH_TOWN_0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX; i++){
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
+    }
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
   }
 }
 
