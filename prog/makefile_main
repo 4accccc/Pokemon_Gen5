@@ -46,7 +46,7 @@ TWL_ADDIN_IRC_LIBS =
 
 # JPEGライブラリをオーバーレイする為の定義
 
-ifneq	($(filter NITRO,$(TARGET_PLATFORM_LIST)),)
+ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
 
 NITRO_LIBS		= 									\
 				   libcard$(NITRO_LIBSUFFIX).a		\
@@ -86,7 +86,7 @@ NITRO_LIBS += $(CRT0_O)
 
 endif
 
-ifneq	($(filter TWL,$(TARGET_PLATFORM_LIST)),)
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
 
 NITRO_LIBS		=
 
@@ -107,6 +107,7 @@ TWL_LIBS		= 									\
 				   librtc$(NITRO_LIBSUFFIX).a		\
 				   libsnd$(NITRO_LIBSUFFIX).a		\
 				   libspi$(NITRO_LIBSUFFIX).a		\
+				   libscfg$(NITRO_LIBSUFFIX).a		\
 				   libstd$(NITRO_LIBSUFFIX).a		\
 				   libwfs$(NITRO_LIBSUFFIX).a		\
 				   libwm$(NITRO_LIBSUFFIX).a		\
