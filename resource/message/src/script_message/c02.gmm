@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T16:44:21"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:28:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="196" right="737" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="196" right="737" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
@@ -356,7 +356,7 @@
 その　ボールの中……[BE:00:ページ切り替え（行送り）]
 キミに従う　ポケモンだらけだ[BE:01:ページ切り替え（クリア）]
 仕方ない……
-ボクの　友達と　闘いたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　友達と　戦いたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　捕らえられた　ポケモンを
 解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -377,7 +377,7 @@
 その　ボールの中……[BE:00:ページ切り替え（行送り）]
 キミに従う　ポケモンだらけ[BE:01:ページ切り替え（クリア）]
 仕方ない……
-ボクの　友達と　闘いたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　友達と　戦いたまえ！[BE:01:ページ切り替え（クリア）]
 キミに　捕らえられた　ポケモンを
 解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -395,7 +395,7 @@
 せかいの　みんなが　ボクの　りそうに
 さんせい　するような　そんな　ちから……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『今の　友達とでは
-ポケモンを　救い出せないか……[BE:01:ページ切り替え（クリア）]
+ポケモンを　救いだせないか……[BE:01:ページ切り替え（クリア）]
 ボクには　力が　必要だ[BE:01:ページ切り替え（クリア）]
 世界の　みんなが　ボクの理想に
 賛同するための　力……[BE:01:ページ切り替え（クリア）]</language>
@@ -708,7 +708,7 @@ C02ジムリーダー</attribute>
 たたかわせたく　なるよな！</language>
 		<language name="JPN_KANJI" width="256">倉庫って　でかいもんな！[BE:01:ページ切り替え（クリア）]
 ポケモンを　思う存分
-闘わせたくなるよな！</language>
+戦わせたくなるよな！</language>
 	</row>
 
 	<row id="msg_c02_middlewoman2_01">

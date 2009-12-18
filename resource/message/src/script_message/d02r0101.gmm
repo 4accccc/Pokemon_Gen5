@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T20:52:15"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:27:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,7 +347,7 @@
 		<language name="JPN" width="256">アーティ『ああ
 もりの　におい……[BE:01:ページ切り替え（クリア）]
 えーっとね
-ここを　まっすぐ　いくと　でぐり[BE:01:ページ切り替え（クリア）]
+ここを　まっすぐ　いくと　でぐち[BE:01:ページ切り替え（クリア）]
 それいがいに　この
 ヤグルマのもりからは　でられない[BE:01:ページ切り替え（クリア）]
 なので　ボクが　そこにたっていれば
@@ -552,14 +552,14 @@
 ・画面外に消えると、主人公、操作可能に</comment>
 		<attribute name="キャラ指定">C02ジムリーダー
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ
+		<language name="JPN" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ[BE:01:ページ切り替え（クリア）]
 あんたのように
 やさしい　トレーナーなら[BE:01:ページ切り替え（クリア）]
 いっしょにいる　ポケモンも
 しあわせ　だよ[BE:01:ページ切り替え（クリア）]
 さて　ふるいいしを
 はくぶつかんに　もどさないとね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ
+		<language name="JPN_KANJI" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ[BE:01:ページ切り替え（クリア）]
 あんたのように
 やさしい　トレーナーなら[BE:01:ページ切り替え（クリア）]
 一緒にいる　ポケモンも
