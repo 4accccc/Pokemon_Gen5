@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-14T16:34:18"/>
+	<create user="ohmori" host="W00185" date="2009-12-18T12:07:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1351" top="227" right="2050" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="2080" top="226" right="2553" bottom="850" visible="yes"/>
-		<band id="0" index="0" style="0000" width="524"/>
+		<tag-palette left="807" top="226" right="1280" bottom="850" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="691"/>
-		<band id="3" index="3" style="0000" width="691"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,10 +296,10 @@
 	</row>
 
 	<row id="msg_beacon_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]が
-「おめでとう！」と　いっています</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が
-「おめでとう！」と　いっています</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パワーで
+ピカチュウが　たいりょうはっせい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パワーで
+ピカチュウが　たいりょうはっせい！</language>
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">

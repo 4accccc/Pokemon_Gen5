@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2009-12-17T13:16:08"/>
+	<create user="ohmori" host="W00185" date="2009-12-18T12:08:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -670,20 +670,20 @@
 		<comment>アイテム渡し：話しかけられた側
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">ギャオッ　ギャオッ！▼
+		<language name="JPN" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
 [1:09:どうぐ名:0]を　もっている▼
 なんと　ポケモンが
 [1:09:どうぐ名:0]を　くれた！▼
-ギャオー！</language>
-		<language name="JPN_KANJI" width="256">ギャオッ　ギャオッ！▼
+キュイーン！</language>
+		<language name="JPN_KANJI" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
 [1:09:どうぐ名:0]を　もっている▼
 なんと　ポケモンが
 [1:09:どうぐ名:0]を　くれた！▼
-ギャオー！</language>
+キュイーン！</language>
 	</row>
 
 	<row id="msg_talk_item_w_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -714,20 +714,20 @@
 		<comment>アイテム渡し：話しかけられた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">ギャオッ　ギャオッ！▼
+		<language name="JPN" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
 [1:09:どうぐ名:0]を　もっている▼
 なんと　ポケモンが
 [1:09:どうぐ名:0]を　くれた！▼
-ギャオー！</language>
-		<language name="JPN_KANJI" width="256">ギャオッ　ギャオッ！▼
+キュイーン！</language>
+		<language name="JPN_KANJI" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
 [1:09:どうぐ名:0]を　もっている▼
 なんと　ポケモンが
 [1:09:どうぐ名:0]を　くれた！▼
-ギャオー！</language>
+キュイーン！</language>
 	</row>
 
 	<row id="msg_talk_item_pika_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
