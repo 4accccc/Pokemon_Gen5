@@ -63,8 +63,8 @@ EVENT_START	ev_c02gym0202_leader2_01
 	_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
 	_FLAG_RESET( FV_D02R0101_LEADER2 )	//盗難イベント用アーティ表示
 	_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除
-	_FLAG_RESET( FV_D02R0101_LEADER2 )	//D02のジムリーダー2を表示
-	
+	_FLAG_RESET( FV_D02R0101_LEADER2 )	//D02のジムリーダー2を表示	
+	_FLAG_SET( FE_ELBOARD_C02GYMWIN )	//電光掲示板のニュースをセット
 	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨と石がなくなる
 	
 	_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
