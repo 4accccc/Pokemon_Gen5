@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-12-16T20:45:48" source="h05_panel.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-12-17T19:31:25"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="tanoue_reiko" host="W00192" date="2009-12-16T20:45:48" source="h05_panel.mb"/>
+<original_create user="tanoue_reiko" host="W00192" date="2009-12-17T19:14:18" source="h05_panel.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,12 +22,12 @@
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="1 1"
 	compress_material="off" material_size="3 3"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-0.300049 -3.000000 -0.285400" whd="0.599854 5.187500 0.570557"/>
+<box_test pos_scale="4" xyz="-0.420166 -4.200195 -0.399658" whd="0.839844 7.262451 0.798828"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="h05pa_01"
@@ -230,7 +230,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="h05pa_02_1"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -242,10 +242,10 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
+		emission="31 31 31"
+		shininess_table_flag="on"
 		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
@@ -739,7 +739,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.500000 0.500000 0.500000"
+		scale="0.699951 0.699951 0.699951"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -758,6 +758,33 @@
 
 <output_info vertex_size="174" polygon_size="49"
 	triangle_size="12" quad_size="37"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="ƒhƒ‰ƒSƒ“" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="3">
+		<ex_tex_image index="0" disp_pos="-120.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 300.000000"/>
+		<ex_tex_image index="2" disp_pos="120.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="3">
+		<ex_tex_palette index="0" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 360.000000"/>
+		<ex_tex_palette index="2" disp_pos="120.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="3">
+		<ex_material index="0" disp_pos="-120.000000 240.000000"/>
+		<ex_material index="1" disp_pos="0.000000 240.000000"/>
+		<ex_material index="2" disp_pos="120.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="3">
+		<ex_polygon index="0" disp_pos="-120.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="120.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
