@@ -166,6 +166,9 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//リゾートデザートのライバル出現
 	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
 	
+	//古代の城１Fの道路用コーンを消去
+	_FLAG_SET( FV_D04R0101_CORN_01 )
+	
 	//========================================//
 	
 EVENT_END

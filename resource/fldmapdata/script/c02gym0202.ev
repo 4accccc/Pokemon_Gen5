@@ -154,6 +154,10 @@ ev_c02gym_tounan:
 	//ジムリーダー夫：たいへんだよ！
 	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
+
+	//ジムリーダーが夫を振り向く
+	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_common_turn_d  )
+	_OBJ_ANIME_WAIT()
 	
 	//主人公：びっくりして、振り向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_furimuku )
@@ -309,4 +313,44 @@ EVENT_END
 	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_WALK_D_4F,7
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+

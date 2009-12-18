@@ -98,8 +98,25 @@ EVENT_START   ev_pos_r02_mama_01
 	
 	//BGMの再生
 	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
-	
 	_FLAG_RESET  ( FV_R02_MOTHER  )
+	
+    DEFINE_LOCAL  LWK_PLAYER_POSX   
+    DEFINE_LOCAL  LWK_PLAYER_POSZ
+       
+//------------------------------------------------------------//
+    _PLAYER_POS_GET( LWK_PLAYER_POSX  ,LWK_PLAYER_POSZ ) //自機座標取得
+    
+    SWITCH $LWK_PLAYER_POSZ
+    CASE 647 THEN
+		_OBJ_POS_CHANGE( R02_MAMA_01, 763, 0, 647, DIR_LEFT )
+    CASE 648 THEN
+        _OBJ_POS_CHANGE( R02_MAMA_01, 763, 0, 648, DIR_LEFT )
+    CASE 649 THEN
+        _OBJ_POS_CHANGE( R02_MAMA_01, 763, 0, 649, DIR_LEFT )
+    CASE 650THEN
+        _OBJ_POS_CHANGE( R02_MAMA_01, 763, 0, 649, DIR_LEFT )
+    DEFAULT  
+    ENDSWITCH
 	
 	//プレイヤーの名前を取得
 	_PLAYER_NAME(0)
@@ -117,8 +134,14 @@ EVENT_START   ev_pos_r02_mama_01
 	_OBJ_ANIME_WAIT()
 	
 	//ママが主人公の方へ来る
-	_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru)
-	_OBJ_ANIME_WAIT()
+    SWITCH $LWK_PLAYER_POSZ
+    CASE 650THEN
+  		_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru_b)
+		_OBJ_ANIME_WAIT()
+    DEFAULT  
+ 		_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru_a)
+		_OBJ_ANIME_WAIT()
+    ENDSWITCH
 	
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
@@ -142,9 +165,16 @@ EVENT_START   ev_pos_r02_mama_01
 	_BALLOONWIN_CLOSE()
 	
 	//ママが帰っていく
-	_OBJ_ANIME( R02_MAMA_01,anm_mama_saru1)
-	_OBJ_ANIME_WAIT()
-	
+	//ママが主人公の方へ来る
+    SWITCH $LWK_PLAYER_POSZ
+    CASE 650THEN
+  		_OBJ_ANIME( R02_MAMA_01,anm_mama_saru_b)
+		_OBJ_ANIME_WAIT()
+    DEFAULT  
+		_OBJ_ANIME( R02_MAMA_01,anm_mama_saru_a)
+		_OBJ_ANIME_WAIT()
+    ENDSWITCH
+    
 	//ママ、気になって振り向く
 	_OBJ_ANIME( R02_MAMA_01,anm_mama_furimuku)
 	_OBJ_ANIME_WAIT()
@@ -174,14 +204,31 @@ EVENT_END
 //--------------------------------------------------------------------
 //ママ:主人公に接近                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_mama_kuru
+_ANIME_LABEL	anm_mama_kuru_a
 	_ANIME_DATA AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//ママ:2番道路から去る1                         
+//ママ:主人公に接近                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_mama_saru1
+_ANIME_LABEL	anm_mama_kuru_b
+	_ANIME_DATA AC_WALK_L_8F,6
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ:2番道路から去るA                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_saru_a
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ:2番道路から去るB                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_saru_b
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA AC_WALK_R_8F,3
 	_ANIME_DATA	ACMD_END,0
 

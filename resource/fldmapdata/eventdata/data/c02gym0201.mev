@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/16 23:23:27
+#save date:2009/12/17 22:31:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -326,7 +326,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C02GYM0201_BOOK_01F
 #OBJ CODE Number
-NONE
+NONDRAW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
