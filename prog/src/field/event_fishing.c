@@ -307,7 +307,10 @@ static void sub_SetGyoeAnime( FISHING_WORK* wk )
  */
 static void sub_DelGyoeAnime( FISHING_WORK* wk )
 {
-  FLDEFF_TASK_CallDelete( wk->task_gyoe );
+  if(wk->task_gyoe != NULL){
+    FLDEFF_TASK_CallDelete( wk->task_gyoe );
+    wk->task_gyoe = NULL;
+  }
 }
 
 /*
@@ -324,7 +327,9 @@ static void sub_SetLureAnime( FISHING_WORK* wk )
  */
 static void sub_DelLureAnime( FISHING_WORK* wk )
 {
-  FLDEFF_TASK_CallDelete( wk->task_lure );
+  if(wk->task_lure != NULL){
+    FLDEFF_TASK_CallDelete( wk->task_lure );
+    wk->task_lure = NULL;
+  }
 }
-
 

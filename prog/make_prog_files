@@ -436,6 +436,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_namipoke.c \
         field/fldeff_encount.c \
         field/fldeff_iwakudaki.c \
+        field/fldeff_fishing.c \
         field/event_trainer_eye.c \
         field/scrcmd_trainer.c \
         field/scrcmd_sound.c \
