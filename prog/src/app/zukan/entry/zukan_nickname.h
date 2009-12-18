@@ -56,6 +56,7 @@ typedef struct _ZUKAN_NICKNAME_WORK ZUKAN_NICKNAME_WORK;
 /// èâä˙âªèàóù
 //=====================================
 extern ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
+                                                 const STRBUF* a_box_strbuf, const BOX_MANAGER* a_box_manager, u32 box_tray,
                                                  GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que );
 
 //-------------------------------------

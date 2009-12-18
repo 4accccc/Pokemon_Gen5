@@ -18,6 +18,7 @@
 #include "system/bmp_winframe.h"
 #include "system/nsbtx_to_clwk.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem/msgspeed.h"
 
 //	module
 #include "app/app_menu_common.h"
@@ -448,6 +449,17 @@ typedef struct
 	u16								dummy;
 } MSGWND_WORK;
 //-------------------------------------
+///	プリントストリーム
+//=====================================
+typedef struct 
+{
+  PRINT_STREAM      *p_stream;
+  GFL_TCBLSYS       *p_tcblsys;
+  SEQ_FUNCTION      next_seq_function;
+  u16               wait_max;
+  u16               wait_count;
+} PS_WORK;
+//-------------------------------------
 ///	キーボード
 //=====================================
 typedef struct 
@@ -509,6 +521,9 @@ typedef struct
 
 	//上画面ウィンドウ
 	MSGWND_WORK		msgwnd;
+
+  //上画面ウィンドウのプリントストリーム
+  PS_WORK       ps;
 
 	//文字欄横のアイコン
 	ICON_WORK			icon;
@@ -645,6 +660,14 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID );
 static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u16 form, HEAPID heapID );
 static void MSGWND_ExpandPrintPP( MSGWND_WORK *p_wk, u32 strID, const POKEMON_PARAM *cp_pp );
 static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
+
+//-------------------------------------
+///	PS(PrintStream)
+//=====================================
+static void PS_Init( PS_WORK* p_wk, HEAPID heapID );
+static void PS_Exit( PS_WORK* p_wk );
+static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* p_param, HEAPID heapID );
+
 //-------------------------------------
 ///	ICON
 //=====================================
@@ -659,6 +682,7 @@ static BOOL Icon_MainMove( ICON_WORK *p_wk );
 //=====================================
 static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_pos );
 static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
+static void FinishInput( NAMEIN_WORK *p_wk );
 //-------------------------------------
 ///	SEQ
 //=====================================
@@ -674,6 +698,7 @@ static void SEQ_End( SEQ_WORK *p_wk );
 static void SEQFUNC_WaitPrint( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //=============================================================================
@@ -770,6 +795,33 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
 
 	return p_param;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NAMEINに渡すPARAM構造体作成	ポケモンモード固定＆PP指定版
+ *	        ポケモン捕獲時はこちらを使用してください
+ *
+ *	@param	HEAPID heapId					ヒープID
+ *	@param	POKEMON_PARAM *pp			ポケモンパラム
+ *	@param	wordmax								入力文字最大数
+ *	@param	STRBUF *default_str		デフォルトで入力されている文字列
+ *	@param  box_strbuf   [ポケモンニックネーム]は○○のパソコンの[ボックス名]に転送された！
+ *	@param  box_manager  ボックスマネージャ(box_strbuf!=NULLのときしか使われない) 
+ *	@param  box_tray     ボックストレイナンバー(box_strbuf!=NULLのときしか使われない) 
+ *
+ *	@return	NAMEIN_PARAM
+ */
+//-----------------------------------------------------------------------------
+NAMEIN_PARAM *NAMEIN_AllocParamPokemonCapture( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str,
+                                               const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray )
+{
+  NAMEIN_PARAM *p_param = NAMEIN_AllocParamPokemonByPP( heapId, pp, wordmax, default_str );
+  p_param->box_strbuf = box_strbuf;
+  p_param->box_manager = box_manager;
+  p_param->box_tray = box_tray;
+	return p_param;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	NAMEIN_PARAMを破棄
@@ -890,6 +942,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
 	KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, HEAPID_NAME_INPUT );
 	MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
+  PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
 	//文字描画
 	if( p_param->mode == NAMEIN_POKEMON )
 	{	
@@ -928,6 +981,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 	NAMEIN_WORK	*p_wk	= p_wk_adrs;
 
 	//モジュール破棄
+  PS_Exit( &p_wk->ps );
 	MSGWND_Exit( &p_wk->msgwnd );
 	KEYBOARD_Exit( &p_wk->keyboard );
 	STRINPUT_Exit( &p_wk->strinput );
@@ -4242,6 +4296,115 @@ static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk )
 {	
 	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
 }
+
+//=============================================================================
+/**
+ *					PS(PrintStream)
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プリントストリーム	初期化
+ *	@param	PS_WORK* p_wk    	ワーク
+ *	@param	heapID						ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void PS_Init( PS_WORK* p_wk, HEAPID heapID )
+{
+  //クリア
+	GFL_STD_MemClear( p_wk, sizeof(PS_WORK) );
+
+  // GFL_TCBLシステム
+  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 1, 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プリントストリーム	破棄
+ *
+ *	@param	PS_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PS_Exit( PS_WORK* p_wk )
+{
+  // プリントストリーム
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+
+  // GFL_TCBLシステム
+  GFL_TCBL_Exit( p_wk->p_tcblsys );
+
+  //クリア
+	GFL_STD_MemClear( p_wk, sizeof(PS_WORK) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン捕獲でボックス転送になった時のプリントストリームの準備
+ *
+ *	@param	PS_WORK* p_wk            PSワーク
+ *	@param	MSGWND_WORK* p_msgwnd_wk MSGWNDワーク
+ *	@param  NAMEIN_PARAM* p_param    NAMEIN_PARAMワーク
+ *	@param	heapID                   ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* p_param, HEAPID heapID )
+{
+  const u32 tcbpri = 2;
+  
+  const u32 buf_id_nickname = 0;
+  const u32 buf_id_box = 1;
+  WORDSET *wordset;  // ポケモンのニックネーム、ボックス名を入れておく
+
+  // WORDSET生成
+  wordset = WORDSET_Create( heapID );
+  
+  // ポケモンのニックネームを得る
+  if( NAMEIN_IsCancel(p_param) )
+  {
+    WORDSET_RegisterPokeNickName( wordset, buf_id_nickname, p_param->pp );
+  }
+  else
+  {
+    const u32  sex           = 0;  // WORDSET_RegisterPokeNickNameでは必要ないので、
+    const BOOL singular_flag = 0;  // static void InitParam(WORDSET_PARAM* param)を参考に数値設定。
+    const u32  lang          = 0;
+    
+    STRBUF *strbuf = GFL_STR_CreateCopyBuffer( p_param->strbuf, heapID );
+    NAMEIN_CopyStr( p_param, strbuf );
+    WORDSET_RegisterWord( wordset, buf_id_nickname, strbuf, sex, singular_flag, lang );
+		GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // ボックス名を得る
+  WORDSET_RegisterBoxName( wordset, buf_id_box, p_param->box_manager, p_param->box_tray );
+
+  // 文字描画関連の設定をクリアする
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_msgwnd_wk->p_bmpwin ), p_msgwnd_wk->clear_chr );
+  GFL_STR_ClearBuffer( p_msgwnd_wk->p_strbuf );
+  
+  // 文字描画関連の設定を行う
+  WORDSET_ExpandStr( wordset, p_msgwnd_wk->p_strbuf, p_param->box_strbuf );
+  p_wk->p_stream = PRINTSYS_PrintStream( p_msgwnd_wk->p_bmpwin, 0, 0, p_msgwnd_wk->p_strbuf,
+                                         p_msgwnd_wk->p_font, MSGSPEED_GetWait(),
+                                         p_wk->p_tcblsys, tcbpri, heapID, p_msgwnd_wk->clear_chr );
+
+  // その他の設定を行う
+  p_wk->next_seq_function = SEQFUNC_FadeIn;
+  p_wk->wait_max = 60;
+  p_wk->wait_count = 0;
+ 
+  // WORDSET破棄
+  WORDSET_Delete( wordset );
+}
+
 //=============================================================================
 /**
  *		アイコン
@@ -4579,6 +4742,56 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
 
 	return NULL;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
+ *
+ *	@param  p_wk							ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FinishInput( NAMEIN_WORK *p_wk )
+{
+	//一端キャンセルフラグをOFF
+	p_wk->p_param->cancel	= FALSE;
+
+
+	//元の文字列と入力文字列の一致確認処理
+	//一致していればキャンセルとみなす
+	{	
+		STRBUF *p_src_str;
+		p_src_str	= GFL_STR_CreateCopyBuffer( p_wk->p_param->strbuf, HEAPID_NAME_INPUT );
+
+		//今回の文字列を返す
+		STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
+
+		//以前の文字列と一致したもしくはならば、キャンセルとみなす
+		{	
+			if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
+			{	
+				p_wk->p_param->cancel	= TRUE;
+			}
+		}
+		GFL_STR_DeleteBuffer( p_src_str );
+	}
+
+	//入力数が0ならば
+	//主人公入力ならばデフォルト名をいれ、
+	//そのほかならキャンセルとみなす
+	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0 )
+	{	
+		if( p_wk->p_param->mode == NAMEIN_MYNAME ||
+				p_wk->p_param->mode == NAMEIN_RIVALNAME )
+		{
+			GF_ASSERT( 0 );
+		}
+		else
+		{	
+			p_wk->p_param->cancel	= TRUE;
+		}
+	}
+}
+
 //=============================================================================
 /**
  *						SEQ
@@ -4784,6 +4997,67 @@ static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	}
 
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プリントストリーム
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_param				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{
+  enum
+  {
+    SEQ_PS_STREAM,
+    SEQ_PS_WAIT,
+    SEQ_PS_EXIT,
+  };
+
+	NAMEIN_WORK	*p_wk	= p_param;
+  PS_WORK *p_ps_wk = &(p_wk->ps);
+
+  switch( *p_seq )
+  {
+  case SEQ_PS_STREAM:
+    {
+      PRINTSTREAM_STATE state;
+      GFL_TCBL_Main( p_ps_wk->p_tcblsys );
+      state = PRINTSYS_PrintStreamGetState( p_ps_wk->p_stream );
+      if( state == PRINTSTREAM_STATE_DONE )
+      {
+        *p_seq = SEQ_PS_WAIT;
+      }
+    }
+    break;
+  case SEQ_PS_WAIT:
+    {
+      if( p_ps_wk->wait_count >= p_ps_wk->wait_max )
+      {
+        *p_seq = SEQ_PS_EXIT;
+      }
+      else
+      {
+        p_ps_wk->wait_count++;
+      }
+    }
+    break;
+  case SEQ_PS_EXIT:
+    {
+      SEQ_SetNext( p_seqwk, p_ps_wk->next_seq_function );
+    }
+    break;
+  default:
+    {
+      GF_ASSERT(0);
+    }
+    break;
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	設定画面メイン処理
@@ -4848,7 +5122,18 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 				}
 			}
 
-			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+      // 入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
+      FinishInput( p_wk );
+
+      if( p_wk->p_param->mode==NAMEIN_POKEMON && p_wk->p_param->box_strbuf!=NULL )  // ポケモン捕獲時でボックス転送
+      {
+        PS_SetupBox( &p_wk->ps, &p_wk->msgwnd, p_wk->p_param, HEAPID_NAME_INPUT );
+        SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+      }
+      else
+      {
+			  SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+      }
 			break;
 		case KEYBOARD_INPUT_NONE:				//何もしていない
 	
@@ -4902,45 +5187,7 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {	
 	NAMEIN_WORK	*p_wk = p_param;
 
-	//一端キャンセルフラグをOFF
-	p_wk->p_param->cancel	= FALSE;
-
-
-	//元の文字列と入力文字列の一致確認処理
-	//一致していればキャンセルとみなす
-	{	
-		STRBUF *p_src_str;
-		p_src_str	= GFL_STR_CreateCopyBuffer( p_wk->p_param->strbuf, HEAPID_NAME_INPUT );
-
-		//今回の文字列を返す
-		STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
-
-		//以前の文字列と一致したもしくはならば、キャンセルとみなす
-		{	
-			if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
-			{	
-				p_wk->p_param->cancel	= TRUE;
-			}
-		}
-		GFL_STR_DeleteBuffer( p_src_str );
-	}
-
-	//入力数が0ならば
-	//主人公入力ならばデフォルト名をいれ、
-	//そのほかならキャンセルとみなす
-	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0 )
-	{	
-		if( p_wk->p_param->mode == NAMEIN_MYNAME ||
-				p_wk->p_param->mode == NAMEIN_RIVALNAME )
-		{
-			GF_ASSERT( 0 );
-		}
-		else
-		{	
-			p_wk->p_param->cancel	= TRUE;
-		}
-	}
-
+  //SEQFUNC_Mainへ移動FinishInput( p_wk );
 
 	//入力モードを保存する
 	{	

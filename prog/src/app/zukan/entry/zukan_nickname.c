@@ -72,6 +72,7 @@ typedef enum
   ZUKAN_NICKNAME_STEP_QUESTION,
   ZUKAN_NICKNAME_STEP_SELECT,
   ZUKAN_NICKNAME_STEP_BOX,
+  ZUKAN_NICKNAME_STEP_LAST_WAIT,
   ZUKAN_NICKNAME_STEP_END,
 }
 ZUKAN_NICKNAME_STEP;
@@ -100,6 +101,9 @@ struct _ZUKAN_NICKNAME_WORK
 {
   HEAPID heap_id;  ///< ヒープ  // 他のところのを覚えているだけで生成や破棄はしない。
   POKEMON_PARAM* pp;  // 他のところのを覚えているだけで生成や破棄はしない。
+  const STRBUF* box_strbuf;  // 他のところのを覚えているだけで生成や破棄はしない。
+  const BOX_MANAGER* box_manager;
+  u32 box_tray;
   GFL_CLUNIT* clunit;  ///< セルアクターユニット  // 他のところのを覚えているだけで生成や破棄はしない。
   GFL_FONT* font;  ///< フォント  // 他のところのを覚えているだけで生成や破棄はしない。
   PRINT_QUE* print_que;  ///< 文字キュー  // 他のところのを覚えているだけで生成や破棄はしない。
@@ -117,6 +121,8 @@ struct _ZUKAN_NICKNAME_WORK
   STRBUF* msg_strbuf;
   GFL_ARCUTIL_TRANSINFO msg_chara;
   GFL_TCBLSYS* msg_tcblsys;
+
+  u32 last_wait_count;
 };
 
 //=============================================================================
@@ -132,6 +138,7 @@ static u8 Zukan_Nickname_GetCursorPos( ZUKAN_NICKNAME_CURSOR_ORIGIN origin, u8 i
 */
 //=============================================================================
 ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
+                                          const STRBUF* a_box_strbuf, const BOX_MANAGER* a_box_manager, u32 a_box_tray,
                                           GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que )
 {
   ZUKAN_NICKNAME_WORK* work;
@@ -145,6 +152,9 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
   {
     work->heap_id = a_heap_id;
     work->pp = a_pp;
+    work->box_strbuf = a_box_strbuf;
+    work->box_manager = a_box_manager;
+    work->box_tray = a_box_tray;
     work->clunit = a_clunit;
     work->font = a_font;
     work->print_que = a_print_que;
@@ -154,6 +164,7 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     work->cursor.origin = ZUKAN_NICKNAME_CURSOR_ORIGIN_UP;
     work->step = ZUKAN_NICKNAME_STEP_WAIT;
     work->select = ZUKAN_NICKNAME_SELECT_SELECT;
+    work->last_wait_count = 0;
   }
 
   {
@@ -455,17 +466,73 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
           GFL_CLACT_WK_SetAutoAnmFlag( work->cursor.clwk[i], FALSE );
         }
 
-        // BOXの準備をここで行う
-        work->step = ZUKAN_NICKNAME_STEP_BOX;
+        if( work->select == ZUKAN_NICKNAME_SELECT_NO )
+        {
+          // 手持ちか、ボックスへ転送か
+          // ここでは判定を行っているだけで、手持ちへの追加やボックスへの転送は行っていない
+          if( work->box_strbuf == NULL )
+          {
+            // 手持ち
+            work->step = ZUKAN_NICKNAME_STEP_END;
+          }
+          else
+          {
+            // ボックスへ転送
+            const u8 clear_color = 15;  // 先に出てきたのと統一して
+            // 一旦消去
+            GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msg_bmpwin), clear_color );
+  	        // 前のを消す
+            PRINTSYS_PrintStreamDelete( work->msg_stream );  // この関数でタスクも削除してくれるので、同時に動くタスクは1つで済む
+            GFL_STR_DeleteBuffer( work->msg_strbuf );
+            // 文字列作成
+            {
+              const u32 buf_id_nickname = 0;
+              const u32 buf_id_box = 1;
+              WORDSET* wordset;
+
+              wordset = WORDSET_Create( work->heap_id );
+              
+              WORDSET_RegisterPokeNickName( wordset, buf_id_nickname, work->pp );  // デフォルトでニックネームは入っている？→入っているっぽい
+              WORDSET_RegisterBoxName( wordset, buf_id_box, work->box_manager, work->box_tray );
+              work->msg_strbuf = GFL_STR_CreateBuffer( 64, work->heap_id );  // buflen.h
+              WORDSET_ExpandStr( wordset, work->msg_strbuf, work->box_strbuf );
+
+              WORDSET_Delete( wordset );
+            }
+            // ストリーム開始
+            work->msg_stream = PRINTSYS_PrintStream( work->msg_bmpwin, 0, 0, work->msg_strbuf, work->font,
+                                                     MSGSPEED_GetWait(), work->msg_tcblsys, 2, work->heap_id, clear_color );
+            
+            work->step = ZUKAN_NICKNAME_STEP_BOX;
+          }
+        }
+        else
+        {
+          work->step = ZUKAN_NICKNAME_STEP_END;
+        }
       }
     }
     break;
   case ZUKAN_NICKNAME_STEP_BOX:
     {
-      if(1)
+      PRINTSTREAM_STATE state;
+     
+      GFL_TCBL_Main( work->msg_tcblsys );
+      
+      state = PRINTSYS_PrintStreamGetState( work->msg_stream );
+      if( state == PRINTSTREAM_STATE_DONE )
       {
-        work->step = ZUKAN_NICKNAME_STEP_END;
+        work->step = ZUKAN_NICKNAME_STEP_LAST_WAIT;
       }
+    }
+    break;
+  case ZUKAN_NICKNAME_STEP_LAST_WAIT:
+    {
+       work->last_wait_count++;
+       if( work->last_wait_count == 60 )
+       {
+         work->step = ZUKAN_NICKNAME_STEP_END;
+       }
     }
     break;
   case ZUKAN_NICKNAME_STEP_END:

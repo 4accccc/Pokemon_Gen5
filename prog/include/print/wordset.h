@@ -17,6 +17,7 @@
 #include "net_app/wifi_country.h"
 #include "tr_tool/tr_tool.h"
 #include "tr_tool/trno_def.h"
+#include "savedata/box_savedata.h"
 
 typedef struct _WORDSET  WORDSET;
 
@@ -56,6 +57,7 @@ extern void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID 
 extern void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID );
 extern void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID );
 extern void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID );
+extern void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* box, u32 trayNumber );
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 

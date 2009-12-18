@@ -716,6 +716,21 @@ void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID )
   }
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにボックス名を登録
+ *
+ * @param bufID         バッファID
+ * @param box           ボックスデータポインタ
+ * @param trayNumber    トレイナンバー
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* box, u32 trayNumber )
+{
+  BOXDAT_GetBoxName( box, trayNumber, wordset->tmpBuf );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
+
 
 
 

@@ -93,6 +93,11 @@ typedef struct
 	};
 	const POKEMON_PARAM *pp;	//[in]ニックネーム登録をPPから作成する場合
 
+  const STRBUF       *box_strbuf;   // [in] ポケモン捕獲でボックス転送になった時に必要
+                                    // ( mode==NAMEIN_POKEMON && box_strbuf!=NULL ) のとき、ポケモン捕獲時
+  const BOX_MANAGER  *box_manager;  // [in] box_strbuf!=NULLのときのみ有効
+  u32                box_tray;      // [in] box_strbuf!=NULLのときのみ有効
+
 	u32 wordmax;		// [in]入力文字最大数
 
 	BOOL cancel;		// [out]名前入力が終了した時に反映されるフラグ。
@@ -104,13 +109,6 @@ typedef struct
 									// もう１つは、名前入力に行くときにここに文字列を格納しておくと,
 									// 名前入力画面はその文字列を表示しながら開始する。引数としても機能する
 
-	//現在未使用
-#if 0
-	// --------ポケモン捕獲でボックス転送になった時に必要-------------
-	int get_msg_id; 	// ポケモン捕獲の時にBOX転送が発生した時のメッセージIDが入る
-	BOX_MANAGER  *boxdata;	// ポケモン捕獲の時にBOX転送が発生した時に、BOXの名前を取得するために必要
-	CONFIG    *config;  // コンフィグ構造体
-#endif 
 } NAMEIN_PARAM;
 
 //=============================================================================
@@ -171,7 +169,27 @@ extern void NAMEIN_FreeParam( NAMEIN_PARAM *param );
  */
 //-----------------------------------------------------------------------------
 extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str );
-//-------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンニックネーム登録をPPから行う場合のNAMEIN_PARAM作成
+ *	        ポケモン捕獲時はこちらを使用してください
+ *					解放はNAMEIN_FreeParamで行ってください
+ *
+ *	@param	HEAPID		ヒープID
+ *	@param	wordmax		文字入力数
+ *	@param	default_str	初期に入力されている文字。いらない場合はNULL
+ *	@param  box_strbuf   [ポケモンニックネーム]は○○のパソコンの[ボックス名]に転送された！
+ *	@param  box_manager  ボックスマネージャ(box_strbuf!=NULLのときしか使われない) 
+ *	@param  box_tray     ボックストレイナンバー(box_strbuf!=NULLのときしか使われない) 
+ *
+ *	@return	NAMEIN_PARAM
+ */
+//-----------------------------------------------------------------------------
+extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonCapture( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str,
+                                                      const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray );
+
+//------------------------------------
 ///	PARAMからの取得
 //=====================================
 //----------------------------------------------------------------------------

@@ -20,6 +20,12 @@
 #include "demo\shinka_demo.h"
 #include "app/zukan_toroku.h"
 
+#include "arc_def.h"
+#include "message.naix"
+#include "msg/msg_zkn.h"
+
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 // local includes --------------------
 #include "event_battle_return.h"
 
@@ -42,6 +48,8 @@ typedef struct {
   STRBUF*           strbuf;
   POKEMON_PARAM*    pp;
   ZUKAN_TOROKU_PARAM zukan_toroku_param;
+  STRBUF*            box_strbuf;  // NULLでないときポケモン捕獲でボックス転送になる
+  u32                box_tray;
 
   SHINKA_DEMO_PARAM*  shinka_param;
   u16                 shinka_poke_pos;
@@ -86,6 +94,8 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
   wk->strbuf = GFL_STR_CreateBuffer( STRBUF_SIZE, HEAPID_BTLRET_SYS );
   wk->nameinParam = NULL;
   wk->pp = NULL;
+  wk->box_strbuf = NULL;
+  wk->box_tray = 0;
   wk->shinka_param = NULL;
   wk->heapID = HEAPID_BTLRET_SYS;
 
@@ -99,6 +109,11 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   BTLRET_WORK* wk = mywk;
+
+  if( wk->box_strbuf )
+  {
+    GFL_STR_DeleteBuffer( wk->box_strbuf );
+  }
 
   GFL_STR_DeleteBuffer( wk->strbuf );
   GFL_PROC_FreeWork( proc );
@@ -123,6 +138,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
       MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
       ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
+      BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
       check_lvup_poke( wk, param );
 
@@ -148,16 +164,40 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
+        // 手持ちかボックスに置くか
+        if( !( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ) )
+        {
+          int tray_num;
+          int pos;
+          BOOL empty;
+
+          GFL_MSGDATA* msgdata;
+          BOOL flag_pcname;
+
+          // 転送されるボックスのトレイナンバーを確定する
+          tray_num = (int)BOXDAT_GetCureentTrayNumber( boxman );
+          pos = 0;
+          empty = BOXDAT_GetEmptyTrayNumberAndPos( boxman, &tray_num, &pos );  // これの結果はBOXDAT_PutPokemonと同じはず
+          GF_ASSERT_MSG( empty, "BtlRet_ProcMain : ボックスに空きがありませんでした。\n" );
+          wk->box_tray = (u32)tray_num;
+         
+          // STRBUFを作成する
+          msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, HEAPID_BTLRET_SYS );
+          flag_pcname = EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(param->gameData), SYS_FLAG_PCNAME ); 
+          wk->box_strbuf = GFL_MSG_CreateString( msgdata, (flag_pcname)?(ZKN_POKEGET_BOX_02):(ZKN_POKEGET_BOX_01) );
+          GFL_MSG_Delete( msgdata );
+        }
+
         // 図鑑登録画面 or ニックネーム命名確認画面 へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
         if( !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(wk->pp, ID_PARA_monsno, NULL) ) ) )
         {
           ZUKANSAVE_SetPokeGet( zukan_savedata, wk->pp );  // 図鑑フラグをセットする
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
         }
         else
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
         }
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
         (*seq)++;
@@ -169,6 +209,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
   case 1:
     {
+      BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
+
       BOOL nickname = FALSE;
       if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
       {
@@ -180,7 +222,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       {
         // 名前入力画面へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
+        wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL,
+                                                           wk->box_strbuf, boxman, wk->box_tray );
 
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
         (*seq)++;
@@ -207,7 +250,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     {
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
 
-      if( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ){
+      if( wk->box_strbuf == NULL ){
         PokeParty_Add( party, wk->pp );
       }else{
         BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );

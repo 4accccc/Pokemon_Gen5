@@ -56,9 +56,12 @@ ZUKAN_TOROKU_RESULT;
 //=====================================
 typedef struct _ZUKAN_TOROKU_PARAM
 {
-  ZUKAN_TOROKU_LAUNCH launch;  ///< [in]  起動方法
-  POKEMON_PARAM*      pp;      ///< [in]  表示するポケモン  // 他のところのを覚えているだけで生成や破棄はしない。 
-  ZUKAN_TOROKU_RESULT result;  ///< [out] 結果
+  ZUKAN_TOROKU_LAUNCH launch;   ///< [in]  起動方法
+  POKEMON_PARAM*      pp;       ///< [in]  表示するポケモン  // 他のところのを覚えているだけで生成や破棄はしない。
+  const STRBUF*       box_strbuf;  ///< [in]  ボックスに転送しました。
+  const BOX_MANAGER*  box_manager;
+  u32                 box_tray;
+  ZUKAN_TOROKU_RESULT result;   ///< [out] 結果
 }
 ZUKAN_TOROKU_PARAM;
 
@@ -72,7 +75,11 @@ ZUKAN_TOROKU_PARAM;
 //=====================================
 extern ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
                                                     ZUKAN_TOROKU_LAUNCH launch,
-                                                    POKEMON_PARAM*      pp );
+                                                    POKEMON_PARAM*      pp,
+                                                    const STRBUF*       box_strbuf,
+                                                    const BOX_MANAGER*  box_manager,
+                                                    u32 box_tray );
+
 //-------------------------------------
 /// ZUKAN_TOROKU_AllocParamで生成したPROCに渡す引数を破棄する
 //=====================================
@@ -83,7 +90,10 @@ extern void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param );
 //=====================================
 extern void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
                                    ZUKAN_TOROKU_LAUNCH launch,
-                                   POKEMON_PARAM*      pp );
+                                   POKEMON_PARAM*      pp,
+                                   const STRBUF*       box_strbuf,
+                                   const BOX_MANAGER*  box_manager,
+                                   u32 box_tray );
 
 //-------------------------------------
 /// 結果を得る

@@ -149,23 +149,32 @@ const GFL_PROC_DATA ZUKAN_TOROKU_ProcData =
 /**
  *  @brief     PROCに渡す引数を生成する
  *
- *  @param[in] heap_id ヒープID
- *  @param[in] launch  起動方法
- *  @param[in] pp      ポケモンパラメータ
+ *  @param[in] heap_id  ヒープID
+ *  @param[in] launch   起動方法
+ *  @param[in] pp       ポケモンパラメータ
+ *  @param[in] bos_strbuf  ボックスに転送されました。
+ *  @param[in] box_manager
+ *  @param[in] box_tray
  *
  *  @retval    メモリ確保し初期化したZUKAN_TOROKU_PARAM
  */
 //-----------------------------------------------------------------------------
 ZUKAN_TOROKU_PARAM* ZUKAN_TOROKU_AllocParam( HEAPID              heap_id,
                                              ZUKAN_TOROKU_LAUNCH launch,
-                                             POKEMON_PARAM*      pp )
+                                             POKEMON_PARAM*      pp,
+                                             const STRBUF*       box_strbuf,
+                                             const BOX_MANAGER*  box_manager,
+                                             u32 box_tray )
 {
   ZUKAN_TOROKU_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof(ZUKAN_TOROKU_PARAM) );
   GFL_STD_MemClear( param, sizeof(ZUKAN_TOROKU_PARAM) );
 
   ZUKAN_TOROKU_SetParam( param,
                          launch,
-                         pp );
+                         pp,
+                         box_strbuf,
+                         box_manager,
+                         box_tray );
   
   return param;
 }
@@ -188,19 +197,28 @@ void ZUKAN_TOROKU_FreeParam( ZUKAN_TOROKU_PARAM* param )
 /**
  *  @brief         PROCに渡す引数の設定
  *
- *  @param[in,out] param  初期化したいZUKAN_TOROKU_PARAM
- *  @param[in]     launch 起動方法
- *  @param[in]     pp     ポケモンパラメータ
+ *  @param[in,out] param   初期化したいZUKAN_TOROKU_PARAM
+ *  @param[in]     launch  起動方法
+ *  @param[in]     pp      ポケモンパラメータ
+ *  @param[in]     box_strbuf  ボックスに転送しました
+ *  @param[in] box_manager
+ *  @param[in] box_tray
  *
  *  @retval        なし 
  */
 //-----------------------------------------------------------------------------
 void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
                             ZUKAN_TOROKU_LAUNCH launch,
-                            POKEMON_PARAM*      pp )
+                            POKEMON_PARAM*      pp,
+                            const STRBUF*             box_strbuf,
+                            const BOX_MANAGER* box_manager,
+                            u32 box_tray )
 {
-  param->launch = launch;
-  param->pp     = pp;
+  param->launch   = launch;
+  param->pp       = pp;
+  param->box_strbuf = box_strbuf;
+  param->box_manager = box_manager;
+  param->box_tray = box_tray;
 }
 
 //-----------------------------------------------------------------------------
@@ -271,7 +289,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                            work->print_que );
 
   // 上画面＆下画面
-  work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp,
+  work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp, param->box_strbuf, param->box_manager, param->box_tray,
                                                    ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic), work->font, work->print_que );
 
   // 上画面
