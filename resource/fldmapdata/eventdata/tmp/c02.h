@@ -12,11 +12,8 @@
 #define DOOR_ID_C02_C02R0401_EXIT02       7
 #define DOOR_ID_C02_C02R0301_EXIT02       8
 #define DOOR_ID_C02_C02R0201_EXIT02       9
-#define DOOR_ID_C02_C02R0701_EXIT03      10
-#define DOOR_ID_C02_C02R0701_EXIT04      11
-#define DOOR_ID_C02_C02R0701_EXIT02      12
-#define DOOR_ID_C02_C02R0701_EXIT01      13
-#define DOOR_ID_C02_C02GYM0101_EXIT01    14
+#define DOOR_ID_C02_C02R0701_EXIT01      10
+#define DOOR_ID_C02_C02GYM0101_EXIT01    11
 
 #endif //ZONE_C02_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

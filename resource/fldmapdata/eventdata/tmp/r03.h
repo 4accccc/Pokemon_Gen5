@@ -3,12 +3,9 @@
 #define ZONE_R03_EVD_H
 
 #define DOOR_ID_R03_C02R0701_EXIT01       0
-#define DOOR_ID_R03_C02R0701_EXIT02       1
-#define DOOR_ID_R03_C02R0701_EXIT03       2
-#define DOOR_ID_R03_C02R0701_EXIT04       3
-#define DOOR_ID_R03_R03R0101_EXIT01       4
-#define DOOR_ID_R03_R03R0201_EXIT01       5
-#define DOOR_ID_R03_R03R0301_EXIT01       6
+#define DOOR_ID_R03_R03R0101_EXIT01       1
+#define DOOR_ID_R03_R03R0201_EXIT01       2
+#define DOOR_ID_R03_R03R0301_EXIT01       3
 
 #endif //ZONE_R03_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

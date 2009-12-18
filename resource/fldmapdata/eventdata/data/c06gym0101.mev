@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/27 14:21:12
+#save date:2009/12/18 13:24:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/27 14:21:12
+#save date:
 2
 #hold event type:
 1
@@ -37,8 +37,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-24 0 -168
+24 0 -344
 #event number: 1
 #type
 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 160 168
 #event number: 2
@@ -95,6 +99,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 200 64 -72
 #event number: 3
@@ -124,15 +130,17 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 56 64 72
 #event number: 4
 #type
 1
 #ID name
-TR_WORKER1_05
+TR_WORKER2_08
 #OBJ CODE Number
-WORKMAN
+WORKMAN2
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
@@ -140,7 +148,7 @@ EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER1_05
+SCRID_TRID_WORKER2_08
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -153,15 +161,17 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 72 32 -40
 #event number: 5
 #type
 1
 #ID name
-TR_WORKER1_06
+TR_WORKER2_10
 #OBJ CODE Number
-WORKMAN
+WORKMAN2
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -169,7 +179,7 @@ EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER1_06
+SCRID_TRID_WORKER2_10
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -182,15 +192,17 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 136 64 -184
 #event number: 6
 #type
 1
 #ID name
-TR_WORKER1_07
+TR_WORKER2_09
 #OBJ CODE Number
-WORKMAN
+WORKMAN2
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -198,7 +210,7 @@ EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER1_07
+SCRID_TRID_WORKER2_09
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -211,15 +223,17 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 64 -200
 #event number: 7
 #type
 1
 #ID name
-TR_WORKER1_08
+TR_WORKER2_11
 #OBJ CODE Number
-WORKMAN
+WORKMAN2
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -227,7 +241,7 @@ EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER1_08
+SCRID_TRID_WORKER2_11
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -240,13 +254,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -216 96 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/27 14:21:12
+#save date:
 2
 #hold event type:
 1
@@ -261,8 +277,10 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C06GYM0101_POKEZOU
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--56 0 -232
+-40 0 -312
 #event number: 1
 #Bg Event Label
 BGID_C06GYM0101_POKEZOU_02
@@ -272,13 +290,15 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C06GYM0101_POKEZOU
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-40 0 -232
+24 0 -312
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/27 14:21:12
+#save date:
 2
 #hold event type:
 1
@@ -288,7 +308,7 @@ SCRID_BG_C06GYM0101_POKEZOU
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/27 14:21:12
+#save date:
 2
 #hold event type:
 1
@@ -305,8 +325,12 @@ DOOR_ID_C06_C06GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -392
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C06GYM0101_C06_EXIT02
@@ -318,8 +342,12 @@ DOOR_ID_C06_C06GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -392
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C06GYM0101_C06_EXIT03
@@ -331,7 +359,11 @@ DOOR_ID_C06_C06GYM0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 8 0 -392
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

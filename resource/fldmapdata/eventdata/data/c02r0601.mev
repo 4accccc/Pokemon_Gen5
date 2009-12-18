@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/02 18:55:17
+#save date:2009/12/18 12:03:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0601.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/02 18:55:17
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -104 32 56
 #event number: 1
@@ -66,6 +68,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 32 184
 #event number: 2
@@ -95,6 +99,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 136
 #event number: 3
@@ -124,13 +130,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -88 32 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/02 18:55:17
+#save date:
 2
 #hold event type:
 1
@@ -140,7 +148,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/02 18:55:17
+#save date:
 2
 #hold event type:
 1
@@ -150,26 +158,13 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/02 18:55:17
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-3
+1
 #event number: 0
-#Door Event Label
-DOOR_ID_C02R0601_C02_EXIT03
-#Next Zone ID Name
-ZONE_ID_C02
-#Next Door ID Name
-DOOR_ID_C02_C02R0601_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--104 32 8
-#event number: 1
 #Door Event Label
 DOOR_ID_C02R0601_C02_EXIT01
 #Next Zone ID Name
@@ -180,20 +175,11 @@ DOOR_ID_C02_C02R0601_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 32 8
-#event number: 2
-#Door Event Label
-DOOR_ID_C02R0601_C02_EXIT02
-#Next Zone ID Name
-ZONE_ID_C02
-#Next Door ID Name
-DOOR_ID_C02_C02R0601_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--120 32 8
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
