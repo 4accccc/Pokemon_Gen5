@@ -64,9 +64,8 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   _localWork=pWork;
 
   pWork->cfg =GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
-  NCFG_ReadConfig(&_localWork->cfg->compat, NULL);
 
-// NCFG_ReadConfigEx(NCFGConfigEx* configEx, void* work); //@todo
+  //NCFG_ReadConfig(&_localWork->cfg->compat, NULL);  //@todo ãgå¥Ç≥ÇÒÇ…ÉoÉOïÒçêçœÇ›
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 
