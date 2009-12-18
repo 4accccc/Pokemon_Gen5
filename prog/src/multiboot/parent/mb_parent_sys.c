@@ -52,6 +52,7 @@ typedef enum
   MPS_SEND_IMAGE_MAIN,
   MPS_SEND_IMAGE_TERM,
 
+  MPS_SEND_INIT_NET,
   MPS_SEND_INIT_DATA,
 
   MPS_SEND_GAMEDATA_INIT,
@@ -83,7 +84,11 @@ typedef enum
   
   MPSS_SEND_IMAGE_WAIT_BOOT_INIT,
   MPSS_SEND_IMAGE_WAIT_BOOT,
-  MPSS_SEND_IMAGE_FINISH_BOOT,
+
+  MPSS_SEND_IMAGE_NET_EXIT,
+  MPSS_SEND_IMAGE_NET_EXIT_WAIT,
+
+  MPSS_SEND_CANCEL_BOOT,
 //-------------------------------
   MPSS_SAVE_WAIT_SAVE_INIT,
   MPSS_SAVE_SYNC_SAVE_INIT,
@@ -114,6 +119,7 @@ typedef struct
   u8              subState;
   u8              saveWaitCnt;
   BOOL            isSendGameData;
+  BOOL            isSendRom;
   
   //SendImage
   u16    *romTitleStr;  //DLROMタイトル
@@ -161,11 +167,14 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work );
 static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work );
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work );
 static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work );
+static BOOL MP_PARENT_WhCallBack( BOOL bResult );
 
 static void MB_PARENT_SaveInit( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveMain( MB_PARENT_WORK *work );
 
+BOOL WhCallBackFlg = FALSE;
+FS_EXTERN_OVERLAY(dev_wireless);
 
 //--------------------------------------------------------------
 //  初期化
@@ -253,24 +262,37 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     
   case MPS_SEND_IMAGE_TERM:
     MP_PARENT_SendImage_Term( work );
-    if( work->subState == MPSS_SEND_IMAGE_FINISH_BOOT )
+    if( work->isSendRom == TRUE )
     {
       //起動成功
-      work->state = MPS_SEND_INIT_DATA;
+      work->state = MPS_SEND_INIT_NET;
+      MB_COMM_InitComm( work->commWork );
     }
     else
     {
       //起動失敗
       work->state = MPS_FADEOUT;
+
     }
     break;
     
   //起動後
-  case MPS_SEND_INIT_DATA:
-    work->initData.msgSpeed = MSGSPEED_GetWait();
-    if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
+  case MPS_SEND_INIT_NET:
+    if( MB_COMM_IsInitComm( work->commWork ) == TRUE )
     {
-      work->state = MPS_SEND_GAMEDATA_INIT;
+      work->state = MPS_SEND_INIT_DATA;
+      MB_COMM_InitParent( work->commWork );
+    }
+    break;
+    
+  case MPS_SEND_INIT_DATA:
+    if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
+    {
+      work->initData.msgSpeed = MSGSPEED_GetWait();
+      if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
+      {
+        work->state = MPS_SEND_GAMEDATA_INIT;
+      }
     }
     break;
     
@@ -392,7 +414,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_WAIT_EXIT_COMM:
     if( MB_COMM_IsFinishComm( work->commWork ) == TRUE )
     {
-      return TRUE;
+      work->state = MPS_FADEOUT;
     }
     break;
   }
@@ -584,6 +606,9 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
       work->romInfoStr[i] = 0x000a;
     }
   }
+  
+  work->isSendRom = FALSE;
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dev_wireless));
 }
 
 //--------------------------------------------------------------
@@ -591,6 +616,8 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 {
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dev_wireless));
+
   GFL_HEAP_FreeMemory( work->romTitleStr );
   GFL_HEAP_FreeMemory( work->romInfoStr );
 }
@@ -603,31 +630,25 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   switch( work->subState )
   {
   case MPSS_SEND_IMAGE_INIT_COMM:
-    MB_COMM_InitComm( work->commWork );
+    WhCallBackFlg = FALSE;
+    WH_Initialize(work->heapId , &MP_PARENT_WhCallBack , FALSE );
     work->subState = MPSS_SEND_IMAGE_INIT_COMM_WAIT;
     break;
   case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
-    if( WH_GetSystemState() == WH_SYSSTATE_IDLE && 
-        MB_COMM_IsInitComm( work->commWork ) == TRUE )
+    //if( WhCallBackFlg == TRUE )
     {
-      if( WH_StartMeasureChannel() == TRUE )
+      if( WH_GetSystemState() == WH_SYSSTATE_IDLE )
       {
-        work->subState = MPSS_SEND_IMAGE_WAIT_SEARCH_CH;
+        if( WH_StartMeasureChannel() == TRUE )
+        {
+          work->subState = MPSS_SEND_IMAGE_WAIT_SEARCH_CH;
+        }
       }
     }
     break;
   case MPSS_SEND_IMAGE_WAIT_SEARCH_CH:
     if( WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL )
     {
-#if DEB_ARI
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-      {
-        const u16 channel = WH_GetMeasureChannel();
-        work->subState = MPSS_SEND_IMAGE_WAIT_BOOT_INIT;
-        MB_TPrintf("Quick boot!!\n");
-      }
-      else
-#endif
       {
         MP_PARENT_SendImage_MBPInit( work );
 
@@ -645,18 +666,31 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     break;
 
   case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
-    MB_COMM_InitParent( work->commWork );
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
     break;
     
   case MPSS_SEND_IMAGE_WAIT_BOOT:
-    if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
+    work->isSendRom = TRUE;
+    work->subState = MPSS_SEND_IMAGE_NET_EXIT;
+    break;
+  case MPSS_SEND_CANCEL_BOOT:
+    work->subState = MPSS_SEND_IMAGE_NET_EXIT;
+    break;
+
+  case MPSS_SEND_IMAGE_NET_EXIT:
+    WhCallBackFlg = FALSE;
+    WH_End( &MP_PARENT_WhCallBack );
+    work->subState = MPSS_SEND_IMAGE_NET_EXIT_WAIT;
+    break;
+  case MPSS_SEND_IMAGE_NET_EXIT_WAIT:
+    if( WhCallBackFlg == TRUE )
     {
-      work->subState = MPSS_SEND_IMAGE_FINISH_BOOT;
+      WH_FreeMemory();
       return TRUE;
     }
     break;
+    
   }
   
   return FALSE;
@@ -770,6 +804,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     //-----------------------------------------
     // 通信異常終了
   case MBP_STATE_STOP:
+    work->subState = MPSS_SEND_CANCEL_BOOT;
     /*
     switch (WH_GetSystemState())
     {
@@ -788,6 +823,13 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   }
   
 }
+
+static BOOL MP_PARENT_WhCallBack( BOOL bResult )
+{
+  WhCallBackFlg = TRUE;
+  return TRUE;
+}
+
 
 #pragma mark [>save func
 //--------------------------------------------------------------
