@@ -164,8 +164,8 @@
 #define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 #define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
 #define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
-		/* not used   151(0x0097) */
-		/* not used   152(0x0098) */
+#define FE_ELBOARD_TOUNAN                  151 /* 0x0097 電光掲示板用フラグ：Ｃ02博物館の盗難イベント発生ニュース */
+#define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 電光掲示板用フラグ：Ｃ02ジムリーダー勝利フラグ */
 		/* not used   153(0x0099) */
 		/* not used   154(0x009a) */
 		/* not used   155(0x009b) */
