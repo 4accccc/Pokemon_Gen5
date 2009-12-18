@@ -255,6 +255,7 @@ extern u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
 extern u32 FLDMENUFUNC_GetListMenuHeight(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
+extern u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space );
 extern void FLDMENUFUNC_InputHeaderListSize(
   FLDMENUFUNC_HEADER *head, u16 count,
   u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );

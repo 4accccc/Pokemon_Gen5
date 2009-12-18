@@ -1534,6 +1534,27 @@ u32 FLDMENUFUNC_GetListMenuHeight(
   return( c );
 }
 
+//--------------------------------------------------------------
+/**
+ * 指定項目数から
+ * 必要なメニュー幅を取得。
+ * @param num
+ * @param font_size フォント縦サイズ
+ * @param space 列の表示間隔
+ * @retval u32 メニュー幅 キャラ単位
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space )
+{
+  u32 c,len;
+  len = num * font_size;
+  c = len / 8;
+  if( (len & 0x07) ){ c++; }
+  if( space ){ c += ((num*space)/8)+1; }
+  return( c );
+}
+
+
 
 //--------------------------------------------------------------
 /**
