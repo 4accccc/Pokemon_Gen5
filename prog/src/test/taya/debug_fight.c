@@ -1307,7 +1307,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
-      { SELITEM_MUST_TUIKA,    SELITEM_MUST_CRITICAL, SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_TUIKA,    SELITEM_PP_CONST,      SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_ITEM,     SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_CRITICAL, SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
