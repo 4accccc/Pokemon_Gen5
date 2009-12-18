@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-05-27T17:10:53"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-12-18T20:19:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="96"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="110" top="202" right="815" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="338" top="263" right="1043" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,6 +347,29 @@
 	<row id="QUESTION_STR3">
 		<language name="JPN" width="256">つうしんきのう　を　ONにしますか？</language>
 		<language name="JPN_KANJI" width="256">通信機能をONにしますか？</language>
+	</row>
+
+	<row id="QUESTION_STR4">
+		<language name="JPN" width="256">ちゅうい！</language>
+		<language name="JPN_KANJI" width="256">注意！</language>
+	</row>
+
+	<row id="QUESTION_STR5">
+		<language name="JPN" width="256">このゲームを　さいだいげんに　たのしむ
+ためには　むせんつうしんきのうを
+ＯＮに　してください
+ひこうきや　びょういんなど
+むせんつうしんきのうを　きんしに　している
+ばしょでは　ＯＦＦに　してください
+ゲームちゅうの　せっていがめんでも
+へんこう　することが　できます　</language>
+		<language name="JPN_KANJI" width="256">このゲームを　最大限に　楽しむためには
+無線通信機能を　ＯＮにして下さい
+飛行機や　病院など
+無線通信を　禁止にしている場所では
+ＯＦＦにして下さい
+ゲーム中の　設定画面でも
+変更することが　できます</language>
 	</row>
 
 	<row id="ITEM1_STR1">
