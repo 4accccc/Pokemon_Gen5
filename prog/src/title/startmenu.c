@@ -445,7 +445,7 @@ static void START_MENU_InitGraphic( START_MENU_WORK *work )
   GXS_SetMasterBrightness(-16);
   GFL_DISP_GX_SetVisibleControlDirect(0);   //全BG&OBJの表示OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
-  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
   GFL_DISP_SetBank( &vramBank );
   GFL_BG_Init( work->heapId );
@@ -593,7 +593,7 @@ static void START_MENU_ChangeActiveItem( START_MENU_WORK *work , const u8 newIte
 
 
 //--------------------------------------------------------------
-//	パレットアニメーションの更新
+//  パレットアニメーションの更新
 //--------------------------------------------------------------
 //プレートのアニメ。sin使うので0～0xFFFFのループ
 #define START_MENU_ANIME_VALUE (0x400)
@@ -772,7 +772,7 @@ static void START_MENU_ITEM_WordMsgDrawFunc( START_MENU_WORK *work , GFL_BMPWIN 
 static void START_MENU_UpdateControl( START_MENU_WORK *work )
 {
   START_MENU_UpdatePad(work);
-  START_MENU_UpdateTp(work);
+//  START_MENU_UpdateTp(work);
 }
 
 //--------------------------------------------------------------------------
