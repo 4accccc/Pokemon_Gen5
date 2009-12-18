@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2009-12-16T16:14:50" source="badge_get14.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="376"
+	tool_start_frame="0"
+	tool_end_frame="375"
+	interpolation="frame"
+	compress_material="on" material_size="15 15"
+	frame_step_mode="2"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="380">
+	25 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 13 31 27 17 5 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 25 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 25 13 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+</mat_color_data>
+
+<mat_color_anm_array size="2">
+	<mat_color_anm index="0" material_name="lambert16">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="2" data_size="189" data_head="2"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="lambert17">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="2" data_size="189" data_head="191"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>
