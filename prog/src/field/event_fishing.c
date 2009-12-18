@@ -21,6 +21,7 @@
 #include "effect_encount.h"
 #include "fldmmdl.h"
 #include "fldeff_gyoe.h"
+#include "fldeff_fishing.h"
 
 #include "event_fishing.h"
 
@@ -44,7 +45,7 @@ enum{
   CODE_END,
 };
 
-#define TIME_START_WAIT (30)
+#define TIME_START_WAIT (15)
 #define TIME_ENCOUNT_FAILED_WAIT (30*4)
 #define TIME_HIT_WAIT_MIN (30)
 #define TIME_HIT_WAIT_MAX (120-TIME_HIT_WAIT_MIN)
@@ -63,6 +64,7 @@ typedef struct _FISHING_WORK{
   MMDL_GRIDPOS  pos;
 
   FLDEFF_TASK*  task_gyoe;
+  FLDEFF_TASK*  task_lure;
 
   VecFx32 player_pos;
   VecFx32 target_pos;
@@ -78,18 +80,20 @@ static BOOL sub_TimeWait( FISHING_WORK* wk, u32 time );
 static int sub_TimeKeyWait( FISHING_WORK* wk, u32 time );
 static void sub_SetGyoeAnime( FISHING_WORK* wk );
 static void sub_DelGyoeAnime( FISHING_WORK* wk );
+static void sub_SetLureAnime( FISHING_WORK* wk );
+static void sub_DelLureAnime( FISHING_WORK* wk );
 
 static const VecFx32 DATA_FishingFormOfs[] = {
  { FX32_CONST(0),0,FX32_CONST(0) }, //up
  { FX32_CONST(0),0,FX32_CONST(0) }, //down
- { FX32_CONST(-6),0,FX32_CONST(0) }, //left
- { FX32_CONST(6),0,FX32_CONST(0) }, //right
+ { FX32_CONST(-0),0,FX32_CONST(0) }, //left
+ { FX32_CONST(0),0,FX32_CONST(0) }, //right
 };
 
 /*
  *  @brief  釣りができるポジションかチェック
  */
-BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos )
+static BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos )
 {
   u8 dir;
   VecFx32 pos;
@@ -121,7 +125,7 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
   }
   outPos->x = pos.x;
   outPos->y = gridData.height;
-  outPos->z = pos.x;
+  outPos->z = pos.z;
 
   return TRUE;
 }
@@ -164,6 +168,9 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   }else{
     wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_NORMAL );
   }
+
+  IWASAWA_Printf("PlayerPos ( 0x%08x, 0x%08x, 0x%08x)\n", wk->player_pos.x, wk->player_pos.y, wk->player_pos.z );
+  IWASAWA_Printf("TargetPos ( 0x%08x, 0x%08x, 0x%08x)\n", wk->target_pos.x, wk->target_pos.y, wk->target_pos.z );
   return event;
 }
 
@@ -193,11 +200,13 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     if( !sub_TimeWait(wk,TIME_START_WAIT )){
       break;
     }
+    //ルアーセット
+    sub_SetLureAnime(wk);
+
     if( wk->enc_event == NULL ){  //エンカウト失敗
       *seq = SEQ_ENCOUNT_FAILED;
       break;
     }
-    MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_ON );
     wk->time = GFUser_GetPublicRand0(TIME_HIT_WAIT_MAX)+TIME_HIT_WAIT_MIN;
     (*seq)++;
     break;
@@ -221,6 +230,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     }
     sub_DelGyoeAnime( wk );
     if( ret == CODE_HIT){
+      sub_DelLureAnime( wk );
       MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_HIT );
       SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_SUCCESS, NULL, NULL, HEAPID_FIELDMAP );
       *seq = SEQ_HIT_SUCCESS;
@@ -239,21 +249,12 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     if( !sub_TimeWait(wk,TIME_ENCOUNT_FAILED_WAIT )){
       break;
     }
-    MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
-    SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_ENCOUNT, NULL, NULL, HEAPID_FIELDMAP );
-		(*seq) = SEQ_END;
-    break;
-
-  //釣り上げ失敗
+    //ブレイクスルー
   case SEQ_TOO_EARLY:
-    MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
-    SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_TOO_EARLY, NULL, NULL, HEAPID_FIELDMAP );
-		(*seq) = SEQ_END;
-    break;
-  //釣り上げ失敗
   case SEQ_TOO_SLOW:
+    sub_DelLureAnime( wk );
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
-    SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_TOO_SLOW, NULL, NULL, HEAPID_FIELDMAP );
+    SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_ENCOUNT+(*seq-SEQ_ENCOUNT_FAILED), NULL, NULL, HEAPID_FIELDMAP );
 		(*seq) = SEQ_END;
     break;
 
@@ -295,6 +296,8 @@ static int sub_TimeKeyWait( FISHING_WORK* wk, u32 time )
 static void sub_SetGyoeAnime( FISHING_WORK* wk )
 {
   FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( wk->fieldWork );
+  
+  MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_ON );
   wk->task_gyoe = FLDEFF_GYOE_SetMMdl(
       fectrl, wk->player_mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
 }
@@ -306,4 +309,22 @@ static void sub_DelGyoeAnime( FISHING_WORK* wk )
 {
   FLDEFF_TASK_CallDelete( wk->task_gyoe );
 }
+
+/*
+ *  @brief  ルアーアニメ
+ */
+static void sub_SetLureAnime( FISHING_WORK* wk )
+{
+  FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( wk->fieldWork );
+  wk->task_lure = FLDEFF_FISHING_LURE_Set( fectrl, &wk->target_pos );
+}
+
+/*
+ *  @brief  ビックリマークアニメ破棄
+ */
+static void sub_DelLureAnime( FISHING_WORK* wk )
+{
+  FLDEFF_TASK_CallDelete( wk->task_lure );
+}
+
 
