@@ -73,6 +73,7 @@ static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 static void* _getMyUserData(void* pWork);  //DWCUserData
 static void* _getFriendData(void* pWork);  //DWCFriendData
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
+static void _modeFadeStart(WIFILOGIN_WORK* pWork);
 
 
 ///通信コマンドテーブル
@@ -370,7 +371,7 @@ static void _exitEnd( WIFILOGIN_WORK* pWork)
   }
   pWork->timer--;
   if(pWork->timer==0){
-    _CHANGE_STATE(pWork, NULL);
+    _CHANGE_STATE(pWork, _modeFadeStart);
   }
 }
 
@@ -512,7 +513,7 @@ static void _saveEndWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()  || GFL_UI_TP_GetTrg()){
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    _CHANGE_STATE(pWork, NULL);  //接続完了
+    _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
   }
 }
 
@@ -532,7 +533,7 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork, _saveEndWait);
     }
     else{
-      _CHANGE_STATE(pWork, NULL);  //接続完了
+      _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
     }
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -837,6 +838,20 @@ static void _modeFadeout(WIFILOGIN_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeStart(WIFILOGIN_WORK* pWork)
+{
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   モードセレクト画面タッチ処理
  * @retval  none
  */
@@ -847,19 +862,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,WIFILOGIN_WORK* pWork)
   case _SELECTMODE_GSYNC:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeReportInit);
-//    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
     return TRUE;
   case _SELECTMODE_UTIL:
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-  //  pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-   // pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
+    _CHANGE_STATE(pWork,_modeFadeStart);        // 終わり
     return TRUE;
   default:
     break;
@@ -1016,7 +1026,8 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
       pWork->dbw = pwk;
     
     if(GFL_NET_IsInit()){       // 接続中
-      _CHANGE_STATE(pWork,_modeSelectMenuInit);
+      GF_ASSERT(0);
+      //_CHANGE_STATE(pWork,_modeSelectMenuInit);
     }
     else{
       //接続開始 プロファイル検査

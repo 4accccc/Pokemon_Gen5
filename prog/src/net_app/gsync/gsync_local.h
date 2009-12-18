@@ -90,4 +90,5 @@ extern void GSYNC_DISP_ObjChange(GSYNC_DISP_WORK* pWork,int no,int no2);
 extern void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no);
 extern void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_BlendSmokeStart(GSYNC_DISP_WORK* pWork,BOOL bFadein);
+extern void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent);
 

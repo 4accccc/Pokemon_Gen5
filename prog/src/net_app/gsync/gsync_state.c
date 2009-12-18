@@ -37,6 +37,8 @@
 #include "msg/msg_gsync.h"
 #include "gsync.naix"
 
+#include "webresp_defs.h"
+
 /*
 ■BGM■
 
@@ -98,11 +100,12 @@ struct _G_SYNC_WORK {
   GSYNC_DISP_WORK* pDispWork;  // 描画系
   GSYNC_MESSAGE_WORK* pMessageWork; //メッセージ系
   APP_TASKMENU_WORK* pAppTask;
+  EVENT_GSYNC_WORK* pParent;
   BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
   void* pTopAddr;
-  u16 trayno;
-  u16 indexno;
+  int trayno;
+  int indexno;
   StateFunc* state;      ///< ハンドルのプログラム状態
   vu32 count;
   int req;
@@ -147,18 +150,59 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc state, int line)
 }
 #endif
 
+#if PM_DEBUG
+static void _DEBUG_HEADER_PRINT(gs_response* prep)
+{
+
+  NET_PRINT("処理結果コード       %d\n",prep->ret_cd);
+  NET_PRINT("データ部バイトサイズ %d\n",prep->body_size);
+  NET_PRINT("詳細エラーコード     %d\n",prep->desc_cd);
+  NET_PRINT("%s\n",prep->desc_msg);
+}
+#endif
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeout(G_SYNC_WORK* pWork)
+{
+	if(WIPE_SYS_EndCheck()){
+		_CHANGE_STATE( NULL);        // 終わり
+	}
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeStart(G_SYNC_WORK* pWork)
+{
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(_modeFadeout);        // 終わり
+}
+
+
 
 static void _networkClose1(G_SYNC_WORK* pWork)
 {
   if(!GFL_NET_IsInit()){
-    _CHANGE_STATE(NULL);
+    _CHANGE_STATE(_modeFadeout);
   }
 }
 
 static void _networkClose(G_SYNC_WORK* pWork)
 {
+  pWork->pParent->selectType = GAMESYNC_RETURNMODE_EXIT;
   if(!GFL_NET_IsInit()){
-    _CHANGE_STATE(NULL);
+    _CHANGE_STATE(_modeFadeout);
   }
   else{
     GFL_NET_Exit(NULL);
@@ -187,7 +231,26 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
 
 static void _wakeupAction7(G_SYNC_WORK* pWork)
 {
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
+  if(pWork->pp){
+    GFL_HEAP_FreeMemory(pWork->pp);
+    pWork->pp=NULL;
+  }
+
+  if(BOXDAT_GetEmptyTrayNumberAndPos( pWork->pBox, &pWork->trayno, &pWork->indexno )){
+    POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize()) ;
+
+    GFL_STD_MemCopy(DREAMWORLD_SV_GetSleepPokemon(pDream), pp, POKETOOL_GetWorkSize());
+
+    BOXDAT_PutPokemon(pWork->pBox, PP_GetPPPPointerConst(pp));
+    
+    pWork->pp = pp;
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
+  }
+
+
+  
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_005);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani4);
 
@@ -366,6 +429,7 @@ static void _ghttpInfoWait1(G_SYNC_WORK* pWork)
     
 }
 
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン状態検査
@@ -388,8 +452,64 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
       _CHANGE_STATE(_ghttpInfoWait1);
     }
   }
+}
 
 
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン状態検査
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      NET_PRINT("終了\n");
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+
+        _DEBUG_HEADER_PRINT((gs_response*)pEvent);
+
+        GFL_STD_MemCopy(&pEvent[sizeof(gs_response)],pWork->pParent->selectPokeList.pokemonList,
+                        DREAM_WORLD_SERVER_POKMEONLIST_MAX/8);
+      }
+      pWork->pParent->selectType = GAMESYNC_RETURNMODE_BOXJUMP;
+      _CHANGE_STATE(_modeFadeStart);
+    }
+  }
+  else{
+      pWork->pParent->selectType = GAMESYNC_RETURNMODE_BOXJUMP;
+    _CHANGE_STATE(_modeFadeStart);
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン状態検査
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
+{
+
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_POKEMONLIST, pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+        _CHANGE_STATE(_ghttpPokemonListDownload1);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg()){
+      _CHANGE_STATE(_ghttpPokemonListDownload1);
+    }
+  }
 }
 
 
@@ -454,9 +574,14 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_upeffectLoop7);
 }
 
+
+static int dummy=0;
+
 static void _upeffectLoop5(G_SYNC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
+    GSYNC_DISP_SetPerfomance(pWork->pDispWork,dummy/3);
+    dummy++;
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
@@ -478,7 +603,11 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
     }
   }
   else{
-    _CHANGE_STATE(_upeffectLoop6);
+    GSYNC_DISP_SetPerfomance(pWork->pDispWork,dummy/3);
+    dummy++;
+    if(GFL_UI_KEY_GetTrg()){
+      _CHANGE_STATE(_upeffectLoop6);
+    }
   }
     
 }
@@ -500,27 +629,31 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
 
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
-      if(0){
+      if(1){
         u32 size;
         u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
         NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
+        dummy=0;
+        GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
+
+
       }
-      else{
-        ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
-        u32 size;
-        pWork->pTopAddr = GFL_ARCHDL_UTIL_LoadEx(p_handle,NARC_gsync_save3_bin,FALSE,pWork->heapID,&size );
-        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->pTopAddr, 0x80000 );
-        GFL_ARC_CloseDataHandle(p_handle);
-      }
+//      else{
+//        ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
+//        u32 size;
+//        pWork->pTopAddr = GFL_ARCHDL_UTIL_LoadEx(p_handle,NARC_gsync_save3_bin,FALSE,pWork->heapID,&size );
+//        NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->pTopAddr, 0x80000 );
+//        GFL_ARC_CloseDataHandle(p_handle);
+//      }
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_upeffectLoop5);
       }
     }
   }
   else{
-    if(GFL_UI_KEY_GetTrg()){
-      _CHANGE_STATE(_upeffectLoop5);
-    }
+    dummy=0;
+    GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
+    _CHANGE_STATE(_upeffectLoop5);
   }
 
 }
@@ -680,13 +813,14 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   G_SYNC_WORK* pWork;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x78000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x88000 );
   pWork = GFL_PROC_AllocWork( proc, sizeof( G_SYNC_WORK ), HEAPID_GAMESYNC );
   GFL_STD_MemClear(pWork, sizeof(G_SYNC_WORK));
 
   pWork->heapID = HEAPID_GAMESYNC;
 
   if(pParent){
+    pWork->pParent = pParent;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
@@ -698,6 +832,9 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
       break;
     case GSYNC_CALLTYPE_BOXSET:
       _CHANGE_STATE(_BoxPokeMove);
+      break;
+    case GSYNC_CALLTYPE_POKELIST:
+      _CHANGE_STATE(_ghttpPokemonListDownload);
       break;
     }
   }

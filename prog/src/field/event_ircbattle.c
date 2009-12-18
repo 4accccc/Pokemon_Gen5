@@ -91,7 +91,6 @@ struct _EVENT_IRCBATTLE_WORK{
   GAMESYS_WORK * gsys;
   GAMEDATA* gamedata;
   POKEPARTY* pParty;
-  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   int selectType;
   IRC_COMPATIBLE_PARAM  compatible_param; //赤外線メニューに渡す情報
@@ -113,6 +112,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 {
   EVENT_IRCBATTLE_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
+  FIELDMAP_WORK * pFieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
 #if PM_DEBUG
   if(dbw->debugseq != *seq){
@@ -125,13 +125,13 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _IRCBATTLE_START:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
     break;
   case _IRCBATTLE_START_FIELD_CLOSE:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, pFieldmap));
     //
     (*seq) = _CALL_IRCBATTLE_MENU;
     break;
@@ -284,7 +284,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
         GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
@@ -301,16 +301,14 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
   //相性チェックはプロセス移動
   case _FIELD_FADEOUT_IRCBATTLE:
-    {
+/*    {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
-    }
+    }*/
     (*seq)++;
     break;
   case _FIELD_END_IRCBATTLE:
-    //すでにCloseされている
-    //GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
     break;
   case _CALL_IRCCOMMPATIBLE:  //相性チェック画面へ
@@ -354,7 +352,6 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) );  //SaveControl_GetPointer();
   dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
-  dbw->fieldmap = fieldmap;
 
   dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
 

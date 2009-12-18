@@ -116,7 +116,7 @@ static void Snd_SePlay(int a){}
 
 
 
-#define _PALETTE_CHANGE_NUM (6)  //CGEARボタンに使っているパレット
+#define _PALETTE_CHANGE_NUM (7)  //CGEARボタンに使っているパレット
 
 //--------------------------------------------
 // 内部ワーク
@@ -469,7 +469,6 @@ static void _modeInit(CG_WIRELESS_MENU* pWork)
   
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_cg_wireless_dat, pWork->heapID );
-  //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
@@ -785,13 +784,17 @@ static void _YesNoStart(CG_WIRELESS_MENU* pWork)
 	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
+
+  
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_008, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_009, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
@@ -806,8 +809,6 @@ static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork)
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_010, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-
-
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
                                            pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
 
@@ -970,6 +971,64 @@ static void _modeReportWait2(CG_WIRELESS_MENU* pWork)
 
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ確認画面待機
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeNetworkOn3(CG_WIRELESS_MENU* pWork)
+{
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    if(selectno==0){
+      GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
+      _CHANGE_STATE(pWork, _modeSelectMenuInit);
+    }
+    else{
+    //  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
+      _CHANGE_STATE(pWork, _modeFadeoutStart);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信ONにする確認画面
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeNetworkOn2(CG_WIRELESS_MENU* pWork)
+{
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+  _YesNoStart(pWork);
+  _CHANGE_STATE(pWork,_modeNetworkOn3);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信ONにする確認画面
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
+{
+  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+
+  GFL_MSG_GetString( pWork->pMsgData, CGEAR_WIRLESS_011, pWork->pStrBuf );
+  
+  _infoMessageDisp(pWork);
+  _CHANGE_STATE(pWork, _modeNetworkOn2);
+}
+
 
 static void _UpdatePalletAnimeSingle(CG_WIRELESS_MENU* pWork , u16 anmCnt , u8 pltNo )
 {
@@ -1109,7 +1168,8 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
 
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-		_CHANGE_STATE(pWork,_modeSelectMenuInit);
+
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
 	}
   

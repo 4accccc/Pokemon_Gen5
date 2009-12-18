@@ -71,9 +71,6 @@ enum _EVENT_IRCBATTLE {
   _FIELD_FADEIN,
   _FIELD_END,
   _FADEIN_WIFIUTIL,
-
-  _FIELD_FADEOUT_IRCBATTLE,
-  _FIELD_END_IRCBATTLE,
   _CALL_GAMESYNC,
   _WAIT_GAMESYNCLOGIN,
   _GAMESYNC_MAINPROC,
@@ -92,20 +89,20 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
 {
   EVENT_GSYNC_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
+  FIELDMAP_WORK * pFieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   switch (*seq) {
   case _FIELD_FADE_START:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
     break;
   case _FIELD_FADE_CLOSE:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, pFieldmap));
     (*seq) = _CALL_GAMESYNC_MENU;
-//     (*seq) = _GAMESYNC_MAINPROC;
     break;
   case _CALL_GAMESYNC_MENU:
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
@@ -158,7 +155,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
@@ -171,16 +168,6 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       dbw->push=FALSE;
     } 
     return GMEVENT_RES_FINISH;
-  case _FIELD_FADEOUT_IRCBATTLE:
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
-      GMEVENT_CallEvent(event, fade_event);
-    }
-    (*seq)++;
-    break;
-  case _FIELD_END_IRCBATTLE:
-    (*seq)++;
     break;
   case _CALL_GAMESYNC:
     {
@@ -198,9 +185,11 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         *seq = _FIELD_OPEN;
       }
       else if(FALSE==DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SV_GetDreamWorldSaveData(dbw->ctrl))){
-        (*seq)=_GAMESYNC_CALLBOX;
+        dbw->selectType = GSYNC_CALLTYPE_POKELIST; 
+        (*seq)=_GAMESYNC_MAINPROC;
       }
       else{
+        dbw->selectType = GSYNC_CALLTYPE_INFO;  
         (*seq)=_GAMESYNC_MAINPROC;
       }
     }
@@ -210,16 +199,20 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _WAIT_GAMESYNC_MAINPROC:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
-    {
-      GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
-      (*seq)=_CALL_GAMESYNC_MENU;
-    }
-    if(dbw->push){
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-      dbw->push=FALSE;
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP){
+        (*seq)=_GAMESYNC_CALLBOX;
+      }
+      else if(dbw->selectType==GAMESYNC_RETURNMODE_EXIT){
+        GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+        (*seq)=_CALL_GAMESYNC_MENU;
+        if(dbw->push){
+          GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+          FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+          FIELD_SOUND_PopBGM( fsnd );
+          dbw->push=FALSE;
+        }
+      }
     }
     break;
   case _GAMESYNC_CALLBOX:
@@ -271,7 +264,6 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
-  dbw->fieldmap = fieldmap;
   dbw->aLoginWork.gsys=gsys;
   dbw->aLoginWork.gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->aLoginWork.bDreamWorld = TRUE;

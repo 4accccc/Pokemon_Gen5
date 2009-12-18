@@ -98,7 +98,7 @@ static void Snd_SePlay(int a){}
 #define	FBMP_COL_PNK_SDW	(10)
 #define	FBMP_COL_WHITE		(15)
 
-#define _PALETTE_CHANGE_NUM (6)  //CGEARボタンに使っているパレット
+#define _PALETTE_CHANGE_NUM (7)  //CGEARボタンに使っているパレット
 
 
 //--------------------------------------------
@@ -640,6 +640,19 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
 	}
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeAppWinFlash(GAMESYNC_MENU* pWork)
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -653,9 +666,17 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_GSYNC:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeButtonFlash);
-    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
+#if DEBUG_ONLY_FOR_ohno
+    pWork->bit=GAME_COMM_STATUS_BIT_WIFI_ALL;  //どんな状態でも起動
+#endif
+    if(GAME_COMM_STATUS_BIT_WIFI_ALL & pWork->bit){
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      _CHANGE_STATE(pWork,_modeButtonFlash);
+      pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
+    }
+    else{
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    }
     break;
   case _SELECTMODE_UTIL:
     if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
@@ -674,7 +695,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
+    _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
   default:
     break;
@@ -684,11 +705,11 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
   return TRUE;
 }
 
-static void _UpdatePalletAnimeSingle(GAMESYNC_MENU* pWork , u16 anmCnt , u8 pltNo )
+static void _UpdatePalletAnimeSingle(GAMESYNC_MENU* pWork , u16 anmCnt , u8 srcPltNo,  u8 distPltNo)
 {
   int i;
-  const u16* pal = (u16*)&pWork->BackupPalette[32*pltNo];
-  const u16* lpal = (u16*)&pWork->LightPalette[32*pltNo];
+  const u16* pal = (u16*)&pWork->BackupPalette[32*srcPltNo];
+  const u16* lpal = (u16*)&pWork->LightPalette[32*distPltNo];
 
   for(i = 0;i<16;i++){
     //1～0に変換
@@ -706,7 +727,7 @@ static void _UpdatePalletAnimeSingle(GAMESYNC_MENU* pWork , u16 anmCnt , u8 pltN
 //    OS_TPrintf("%d pal %x  %x\n",i,pal[i],pWork->TransPalette[i]);
     {
       NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
-                                          pltNo * 32,  pWork->TransPalette , 32 );
+                                          srcPltNo * 32,  pWork->TransPalette , 32 );
     }
   }
 }
@@ -718,8 +739,6 @@ static void _UpdatePalletAnimeSingle(GAMESYNC_MENU* pWork , u16 anmCnt , u8 pltN
 //--------------------------------------------------------------
 static void _UpdatePalletAnime(GAMESYNC_MENU* pWork )
 {
-
-
   //プレートアニメ
   if( pWork->anmCos + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
   {
@@ -731,16 +750,16 @@ static void _UpdatePalletAnime(GAMESYNC_MENU* pWork )
   }
   {
     if(GAME_COMM_STATUS_BIT_WIFI & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, 6, 4);
     }
-    if(GAME_COMM_STATUS_BIT_WIFI_ZONE & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    else if(GAME_COMM_STATUS_BIT_WIFI_ZONE & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, 6, 2);
     }
-    if(GAME_COMM_STATUS_BIT_WIFI_FREE & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    else if(GAME_COMM_STATUS_BIT_WIFI_FREE & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, 6, 3);
     }
-    if(GAME_COMM_STATUS_BIT_WIFI_LOCK & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_GSYNC ]);
+    else if(GAME_COMM_STATUS_BIT_WIFI_LOCK & pWork->bit){
+      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, 6, 1);
     }
   }
 }
@@ -953,9 +972,13 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     if(svr == SAVE_RESULT_OK){
       _infoMessageEnd(pWork);
 
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
-
-      _CHANGE_STATE(pWork,_FadeWait);
+      if(GAMESYNC_RETURNMODE_UTIL == pWork->selectType){
+        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
+        _CHANGE_STATE(pWork,_FadeWait);
+      }
+      else{
+        _CHANGE_STATE(pWork,_modeFadeoutStart);
+      }
     }
   }
 }
@@ -974,22 +997,17 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
 
     if(selectno==0){
 
-
-#if 1
       GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_007, pWork->pStrBuf );
       _infoMessageDisp(pWork);
       //セーブ開始
       GAMEDATA_SaveAsyncStart(pWork->gamedata);
       //SaveControl_SaveAsyncInit( pWork->dbw->ctrl );
       _CHANGE_STATE(pWork,_modeReporting);
-#else
-      _CHANGE_STATE(pWork,NULL);
-#endif
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-      _CHANGE_STATE(pWork,NULL);
+      _CHANGE_STATE(pWork,  _modeFadeoutStart );
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;

@@ -63,19 +63,19 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
   GAMESYS_WORK * gsys = dbw->gsys;
   GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK * pFieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   switch (*seq) {
   case _FIELD_FADE_START:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
     break;
   case _FIELD_FADE_CLOSE:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-    dbw->fieldmap=NULL;  //fieldmap‚¨‚í‚è
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, pFieldmap));
     (*seq) = _CALL_CG_WIRELESS_MENU;
     break;
   case _CALL_CG_WIRELESS_MENU:
@@ -120,8 +120,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       GMEVENT* fade_event;
       FIELD_SUBSCREEN_WORK * subscreen;
 
-      dbw->fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      subscreen = FIELDMAP_GetFieldSubscreenWork(dbw->fieldmap);
+      subscreen = FIELDMAP_GetFieldSubscreenWork(pFieldmap);
 
       if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
         if(NULL==Intrude_Check_CommConnect(pComm)){ //‚Â‚È‚ª‚Á‚Ä‚È‚¢
@@ -129,7 +128,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
         }
       }
 
-      fade_event = EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
@@ -167,7 +166,6 @@ GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
-  dbw->fieldmap = fieldmap;
   return event;
 }
 

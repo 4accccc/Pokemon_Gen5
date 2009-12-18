@@ -28,7 +28,6 @@ typedef enum{
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gameData;
-  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   BOOL isEndProc;
   int selectType;

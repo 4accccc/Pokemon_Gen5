@@ -61,9 +61,9 @@ struct DREAM_WORLD_SERVER_DOWNLOAD_DATA{
 };
 
 /// ポケモンリストデータ構造体
-struct DREAM_WORLD_SERVER_POKEMONLIST_DATA{
+typedef struct {
   u8 pokemonList[DREAM_WORLD_SERVER_POKMEONLIST_MAX/8];  ///< 寝かせてよいポケモンBITLIST
-};
+} DREAM_WORLD_SERVER_POKEMONLIST_DATA;
 
 
 

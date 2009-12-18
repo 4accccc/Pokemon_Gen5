@@ -1018,16 +1018,18 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 			pWork->touchx = xp;
 			pWork->touchy = yp;
 
-			switch(type){
-			case CGEAR_PANELTYPE_IR:
-				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
-				break;
-			case CGEAR_PANELTYPE_WIRELESS:
-        FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
-				break;
-			case CGEAR_PANELTYPE_WIFI:
-				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
-				break;
+      if(GFL_NET_IsInit()){  //’ÊMON‚È‚ç
+        switch(type){
+        case CGEAR_PANELTYPE_IR:
+          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
+          break;
+        case CGEAR_PANELTYPE_WIRELESS:
+          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
+          break;
+        case CGEAR_PANELTYPE_WIFI:
+          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
+          break;
+        }
       }
 		}
 		break;

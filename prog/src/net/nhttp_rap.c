@@ -43,10 +43,13 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 //#define GETURL1 "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php"
 
 
-const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
-const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
-const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php";  //GET
+const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/gs?p=test.get&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
+const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
+const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=test.get&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
 const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //POST
+
+
+
 
   //rom, langcode, dreamw 
 
@@ -141,13 +144,10 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
   GFL_STD_MemCopy(urltable[urlno].url, pWork->urlbuff, GFL_STD_StrLen(urltable[urlno].url));
 
-  if(urlno==NHTTPRAP_URL_UPLOAD){
-    GFL_STD_MemCopy(pWork->urlbuff, pidbuff, _URL_BUFFER);
-//  //rom, langcode, dreamw 
-    
-    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
-    GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
-  }
+  // ID‡¬
+  GFL_STD_MemCopy(pWork->urlbuff, pidbuff, _URL_BUFFER);
+  STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
+ // GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
 
   
   NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
@@ -262,7 +262,8 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
     break;
   case NHTTP_ERROR_NONE:  //‚·‚Å‚ÉŠ®—¹
   default:
-    OS_TPrintf("err = %d\n", err);
+    OS_TPrintf("err = %d  response %d \n", err,NHTTP_GetResultCode( pWork->handle ));
+
     NHTTPDeleteConnection(pWork->handle);
     pWork->handle=NULL;
     NHTTPCleanup();

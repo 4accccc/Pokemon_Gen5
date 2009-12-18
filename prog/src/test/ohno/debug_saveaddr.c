@@ -152,6 +152,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
 #include "savedata/system_data_local.h"
+#include "savedata/dreamworld_data_local.h"
 #include	"poke_tool/pokeparty.h"
 
 
@@ -164,11 +165,24 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
     OS_TPrintf("SAVESIZE ,%x\n", size);
-      
+
+
+    for(i=0;i<22;i++){
+      REGULATION* pData = GFL_ARC_UTIL_Load(ARCID_REGULATION, 1, FALSE, HEAPID_PROC );
+      OS_TPrintf("%d %d\n",Regulation_GetParam(pData, REGULATION_SHOOTER),sizeof(REGULATION));
+      GFL_HEAP_FreeMemory(pData);
+    }
+
+
+
+    
     {//DreamWorld関連
       DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
       pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
+      pAddr = (u8*)&pDW->pokemonIn;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ISIN_SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, sizeof(u8));
+      
     }
     {//Myステータス
       MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);

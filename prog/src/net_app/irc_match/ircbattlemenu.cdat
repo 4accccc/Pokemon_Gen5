@@ -31,6 +31,12 @@ typedef struct {
 #define _IRMAIN_FRIEND_WIDTH (22)
 #define _IRMAIN_FRIEND_HEIGHT (4)
 
+#define _IRMAIN_EXIT_ST_X (24-4)
+#define _IRMAIN_EXIT_ST_Y (32-10)
+#define _IRMAIN_EXIT_WIDTH (10)
+#define _IRMAIN_EXIT_HEIGHT (4)
+
+
 
 static _WINDOWPOS wind_irmain[]={
   {    _IRMAIN_BATTLE_ST_X  ,    _IRMAIN_BATTLE_ST_Y, _IRMAIN_BATTLE_WIDTH,  _IRMAIN_BATTLE_HEIGHT},
@@ -52,6 +58,9 @@ static const GFL_UI_TP_HITTBL btn_irmain[] = {
 
 	{ _X8(_IRMAIN_FRIEND_ST_Y-1),_X8(_IRMAIN_FRIEND_ST_Y+_IRMAIN_FRIEND_HEIGHT+1),
 	  _X8(_IRMAIN_FRIEND_ST_X-1),_X8(_IRMAIN_FRIEND_ST_X+_IRMAIN_FRIEND_WIDTH+1)},
+
+	{ _X8(_IRMAIN_EXIT_ST_Y-1),_X8(_IRMAIN_EXIT_ST_Y+_IRMAIN_EXIT_HEIGHT+1),
+	  _X8(_IRMAIN_EXIT_ST_X-1),_X8(_IRMAIN_EXIT_ST_X+_IRMAIN_EXIT_WIDTH+1)},
 
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -82,6 +91,11 @@ static const GFL_UI_TP_HITTBL btn_irvs1[] = {
 
 	{ _X8(_IRVS1_MULTI_ST_Y-1),_X8(_IRVS1_MULTI_ST_Y+_IRVS1_MULTI_HEIGHT+1),
 	  _X8(_IRVS1_MULTI_ST_X-1),_X8(_IRVS1_MULTI_ST_X+_IRVS1_MULTI_WIDTH+1)},
+
+	{ _X8(_IRMAIN_EXIT_ST_Y-1),_X8(_IRMAIN_EXIT_ST_Y+_IRMAIN_EXIT_HEIGHT+1),
+	  _X8(_IRMAIN_EXIT_ST_X-1),_X8(_IRMAIN_EXIT_ST_X+_IRMAIN_EXIT_WIDTH+1)},
+
+
 
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -136,9 +150,24 @@ static const GFL_UI_TP_HITTBL btn_irvs2[] = {
 	{ _X8(_IRVS2_ROTATE_ST_Y-1),_X8(_IRVS2_ROTATE_ST_Y+_IRVS2_ROTATE_HEIGHT+1),
 	  _X8(_IRVS2_ROTATE_ST_X-1),_X8(_IRVS2_ROTATE_ST_X+_IRVS2_ROTATE_WIDTH+1)},
 
+	{ _X8(_IRMAIN_EXIT_ST_Y-1),_X8(_IRMAIN_EXIT_ST_Y+_IRMAIN_EXIT_HEIGHT+1),
+	  _X8(_IRMAIN_EXIT_ST_X-1),_X8(_IRMAIN_EXIT_ST_X+_IRMAIN_EXIT_WIDTH+1)},
+
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
 
+
+
+//ボタンのパレット場所
+static u8 Btn_PalettePos[] = { 1, 2, 3,4 };  //
+
+static u8 Btn_PaletteSelectEntry[] ={ 1,6};
+static u8 Btn_PaletteSelectBattle[] ={ 1,6,7,8};
+
+//ボタンのパレット変化テーブル
+static u16 Btn_PaletteTable[] =
+{ 0, 5,15,15,15,15,15,5,
+  5, 0, 0, 0, 0,15,15,15};
 
 

@@ -14,13 +14,15 @@
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
 #include "net_app/wifi_login.h"
+#include "net/dreamworld_netdata.h"
 #include "app/box2.h"
 #include "app/box_mode.h"
 
 
 typedef enum{
-  GSYNC_CALLTYPE_INFO,
-  GSYNC_CALLTYPE_BOXSET,
+  GSYNC_CALLTYPE_INFO,    // 状態を確認>ダウンロード
+  GSYNC_CALLTYPE_BOXSET,  // BOXポケモンセット後
+  GSYNC_CALLTYPE_POKELIST,    // 選択可能なポケモンダウンロード
 } GSYNC_CALLTYPE_ENUM;
 
 
@@ -28,7 +30,6 @@ typedef enum{
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gameData;
-  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   BATTLE_SETUP_PARAM para;
   int selectType;
@@ -36,6 +37,7 @@ typedef struct {
   u16 boxNo;
   u16 boxIndex;
   int PlayBGM;
+  DREAM_WORLD_SERVER_POKEMONLIST_DATA selectPokeList;
   WIFILOGIN_PARAM aLoginWork;
   BOX2_GFL_PROC_PARAM boxParam;
 } EVENT_GSYNC_WORK;
