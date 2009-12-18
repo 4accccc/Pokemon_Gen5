@@ -1453,7 +1453,7 @@ static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq )
   case 1:
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
     {
-      if( ++(wk->saveTimer) > 150 ){
+      if( ++(wk->saveTimer) > 100 ){
         DEBUG_BACKUP_FlashSave(DEBUG_FIGHT_SAVE, &wk->saveData, sizeof(wk->saveData));
         (*seq)++;
       }
