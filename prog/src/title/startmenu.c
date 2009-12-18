@@ -60,6 +60,11 @@
 //メニュー項目の左右サイズ(キャラ単位)
 #define START_MENU_ITEM_LEFT (3)
 #define START_MENU_ITEM_WIDTH (22)
+
+// カーソルパレットアニメの初期カラー
+#define START_MENU_ANIME_E_R ( 5)
+#define START_MENU_ANIME_E_G (15)
+#define START_MENU_ANIME_E_B (21)
 //======================================================================
 //  enum
 //======================================================================
@@ -135,6 +140,10 @@ typedef struct
 
   u16 anmCnt;
   u16 transBuf;
+  
+  u16 anime_r;
+  u16 anime_g;
+  u16 anime_b;
   
 }START_MENU_WORK;
 
@@ -249,6 +258,11 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( START_MENU_VBlankFunc , (void*)work , 0 );
 
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 16 , 0 , ARI_FADE_SPD );
+
+  work->anime_r = START_MENU_ANIME_E_R;
+  work->anime_g = START_MENU_ANIME_E_G;
+  work->anime_b = START_MENU_ANIME_E_B;
+
   
   return GFL_PROC_RES_FINISH;
 }
@@ -591,6 +605,8 @@ static void START_MENU_ChangeActiveItem( START_MENU_WORK *work , const u8 newIte
   }
 }
 
+// カーソルが一番白くなる時
+#define CURSOR_MAX_WHITE_POINT  (0xc000)
 
 //--------------------------------------------------------------
 //  パレットアニメーションの更新
@@ -600,9 +616,6 @@ static void START_MENU_ChangeActiveItem( START_MENU_WORK *work , const u8 newIte
 #define START_MENU_ANIME_S_R (25)
 #define START_MENU_ANIME_S_G (30)
 #define START_MENU_ANIME_S_B (29)
-#define START_MENU_ANIME_E_R ( 5)
-#define START_MENU_ANIME_E_G (15)
-#define START_MENU_ANIME_E_B (21)
 //プレートのアニメする色
 #define START_MENU_ANIME_COL (0x6)
 
@@ -617,12 +630,20 @@ static void START_MENU_UpdatePalletAnime( START_MENU_WORK *work )
   {
     work->anmCnt += START_MENU_ANIME_VALUE;
   }
+
+  // カーソル一番白くなる時にカラーを変更する
+  if(work->anmCnt==CURSOR_MAX_WHITE_POINT){
+    work->anime_r = GFL_STD_MtRand(14)+10;
+    work->anime_g = GFL_STD_MtRand(24);
+    work->anime_b = 24-work->anime_g;
+  }
+
   {
     //1～0に変換
-    const fx16 cos = (FX_CosIdx(work->anmCnt)+FX16_ONE)/2;
-    const u8 r = START_MENU_ANIME_S_R + (((START_MENU_ANIME_E_R-START_MENU_ANIME_S_R)*cos)>>FX16_SHIFT);
-    const u8 g = START_MENU_ANIME_S_G + (((START_MENU_ANIME_E_G-START_MENU_ANIME_S_G)*cos)>>FX16_SHIFT);
-    const u8 b = START_MENU_ANIME_S_B + (((START_MENU_ANIME_E_B-START_MENU_ANIME_S_B)*cos)>>FX16_SHIFT);
+    const fx16 sin = (FX_SinIdx(work->anmCnt)+FX16_ONE)/2;
+    const u8 r = START_MENU_ANIME_S_R + (((work->anime_r-START_MENU_ANIME_S_R)*sin)>>FX16_SHIFT);
+    const u8 g = START_MENU_ANIME_S_G + (((work->anime_g-START_MENU_ANIME_S_G)*sin)>>FX16_SHIFT);
+    const u8 b = START_MENU_ANIME_S_B + (((work->anime_b-START_MENU_ANIME_S_B)*sin)>>FX16_SHIFT);
     
     work->transBuf = GX_RGB(r, g, b);
     
