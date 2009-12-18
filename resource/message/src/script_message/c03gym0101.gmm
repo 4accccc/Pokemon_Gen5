@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:54:31"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -461,7 +461,7 @@ jugglimg_06</attribute>
 ずっと　かくれたままだったのさ▼
 そう　むしジムの
 トレーナーを　むしするってこと……</language>
-		<language name="JPN_KANJI" width="256">きみが　スイッチを　ふんでくれないと
+		<language name="JPN_KANJI" width="256">きみが　スイッチを　踏んでくれないと
 ずっと　隠れたままだったのさ▼
 そう　むしジムの
 トレーナーを　むしするってこと……</language>
