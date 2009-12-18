@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T21:08:05"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:22:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,11 +293,12 @@
 
 
 	<row id="msg_t02pc0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♀
 ・マップ切り替え直後からイベント
 　カウンター前まで進むと
 　主人公と向き合ってこのメッセージ表示
-・同時に友達♀も移動</comment>
+・同時に友達♀も移動
+　このときwhite_03表示</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『ここが　ポケモンセンター！
@@ -308,8 +309,16 @@
 それでは　案内しまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
+	<row id="msg_t02pc0101_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてhakase2_02</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『は～い！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『は～い！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
 	<row id="msg_t02pc0101_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♀
 ・マップ切り替え直後からイベント
 　カウンター（）まで進むと
 　主人公と向き合ってこのメッセージ表示</comment>
@@ -330,8 +339,8 @@
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・msg_t02pc0101_docotr_jr_01表示後に
+		<comment>♀
+・hakase2_02表示後に
 　主人公が左か下に移動したとき
 　メッセージ表示後、主人公の位置をもどす</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
@@ -347,7 +356,7 @@
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♀
 ・回復処理後～
 　パソコン（）まで進むと
 　主人公と向き合ってこのメッセージ表示</comment>
@@ -382,7 +391,7 @@
 
 	<row id="msg_t02pc0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・続けてmsg_t02pc0101_hakase2_05表示</comment>
+・続けてhakase2_05表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『はかせ……[BE:01:ページ切り替え（クリア）]
 がめんの　「だれかのパソコン」って
@@ -393,7 +402,7 @@
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『すごい！　ホワイティ！
@@ -417,10 +426,10 @@
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-msg_t02pc0101_docotr_jr_03表示後
-ショップカウンタ（）まで進むと
-主人公と向き合ってこのメッセージ表示</comment>
+		<comment>♀
+・hakase2_05表示後
+　ショップカウンタ（）まで進むと
+　主人公と向き合ってこのメッセージ表示</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『こちらは
@@ -440,10 +449,10 @@ msg_t02pc0101_docotr_jr_03表示後
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♀
 ・メッセージ表示後退場
 　画面外に消えると
-　続けてmsg_t02pc0101_black_01
+　続けてmsg_t02_boodle_06
 ・t01r0401に博士OBJ復帰</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
@@ -482,7 +491,7 @@ msg_t02pc0101_docotr_jr_03表示後
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_02">
+	<row id="msg_t02pc0101_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・t02での演説イベント終了まで
 　ここでこのメッセージ繰り返し</comment>
