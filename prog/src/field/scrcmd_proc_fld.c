@@ -39,6 +39,7 @@
 
 #include "event_gameclear.h"  //EVENT_GameClear
 #include "app/box2.h"
+#include "savedata/battle_box_save.h"
 
 // ボックスプロセスデータとコールバック関数
 static void callback_BoxProc( void* work );
@@ -50,12 +51,24 @@ static void callback_BoxProc( void* work );
 //--------------------------------------------------------------
 typedef struct
 {
+  GAMEDATA* gdata;
   BOX2_GFL_PROC_PARAM* box_param;
-} BOX_CALLBACK_WORK;
 
+} BOX_CALLBACK_WORK;
+//--------------------------------------------------------------
 static void callback_BoxProc( void* work )
 {
   BOX_CALLBACK_WORK* cw = (BOX_CALLBACK_WORK*)work;
+
+  // バトルボックスのセーブデータに反映
+  if( cw->box_param->callMode == BOX_MODE_BATTLE )
+  {
+    SAVE_CONTROL_WORK*      sv = GAMEDATA_GetSaveControlWork( cw->gdata );
+    BATTLE_BOX_SAVE* bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+    BATTLE_BOX_SAVE_SetPokeParty( bbox_save, cw->box_param->pokeparty );
+  }
+
+  // 後始末
   GFL_HEAP_FreeMemory( cw->box_param );
 }
 
@@ -89,9 +102,18 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   box_param->cfg       = SaveData_GetConfig( sv );
   box_param->zknMode   = 0;
   box_param->callMode  = box_mode;
+  
+  // バトルボックスのパーティーをセット
+  if( box_mode == BOX_MODE_BATTLE )
+  {
+    BATTLE_BOX_SAVE* bbox_save;
+    bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+    box_param->pokeparty = BATTLE_BOX_SAVE_MakePokeParty( bbox_save, HEAPID_PROC );
+  }
 
   // コールバックのパラメータを作成
   cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX_CALLBACK_WORK) );
+  cw->gdata     = gdata;
   cw->box_param = box_param;
 
   // イベントを呼び出す
