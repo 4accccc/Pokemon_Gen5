@@ -47,8 +47,8 @@ lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCBR,$(gsources))
 eobjects = $(subst .nce,.NCEC,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
-maobjects = $(subst .nce,.NMCR,$(mcsources))
-mcobjects = $(subst .nce,.NMAR,$(mcsources))
+maobjects = $(subst .nmc,.NMCR,$(mcsources))
+mcobjects = $(subst .nmc,.NMAR,$(mcsources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
