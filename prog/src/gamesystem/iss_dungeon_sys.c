@@ -360,6 +360,9 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
 //-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
 {
+  // ‹N“®Ï‚Ý
+  if( sys->isActive ){ return; }
+
   // ‹N“®
 	sys->isActive = TRUE;
 
@@ -384,6 +387,9 @@ void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
 //-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys )
 {
+  // ’âŽ~Ï‚Ý
+  if( !sys->isActive ){ return; }
+
 	// ’âŽ~
 	sys->isActive = FALSE;
 
