@@ -64,8 +64,6 @@ EVENT_START   ev_r02_boy1_01
 
 			
 		ELSE
-			_OBJ_ANIME(R02_BOY1_01,test02anime)
-			_OBJ_ANIME_WAIT()
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2a_04)
 		ENDIF
 
@@ -83,14 +81,6 @@ EVENT_END
 	_ANIME_DATA AC_WALK_D_16F,1			//<下に移動　16フレーム
 	_ANIME_DATA ACMD_END,0
 
-//--------------------------------------------------------------------
-//段差説明少年:その場でジャンプ                       
-//--------------------------------------------------------------------
-	_ANIME_LABEL test02anime
-	_ANIME_DATA AC_STAY_JUMP_D_16F,3
-	_ANIME_DATA ACMD_END,0
-
-//【仮】2番道路の形状が変化する可能性があるので、POSについては仮
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
@@ -149,10 +139,13 @@ EVENT_START   ev_pos_r02_mama_01
 	//ママ「やっと　おいついた」
 	_BALLOONWIN_OBJMSG( msg_r02_mama_02, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
-
+	
+	//キーアイテムを入手ME
+	_ME_PLAY( SEQ_ME_KEYITEM )
 //【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
-	_BALLOONWIN_OBJMSG( msg_r02_mama_03, R02_MAMA_01)
-	_BALLOONWIN_CLOSE()
+	_SYSWIN_MSG_ALLPUT_DOWN( msg_r02_mama_03 )
+	_SYSWIN_CLOSE()
+	_ME_WAIT()
 	
 	//ママがランニングシューズの説明
 	_BALLOONWIN_OBJMSG( msg_r02_mama_04, R02_MAMA_01)
@@ -174,14 +167,6 @@ EVENT_START   ev_pos_r02_mama_01
 		_OBJ_ANIME( R02_MAMA_01,anm_mama_saru_a)
 		_OBJ_ANIME_WAIT()
     ENDSWITCH
-    
-	//ママ、気になって振り向く
-	_OBJ_ANIME( R02_MAMA_01,anm_mama_furimuku)
-	_OBJ_ANIME_WAIT()
-	
-	//ママが帰っていく
-	_OBJ_ANIME( R02_MAMA_01,anm_mama_saru2)
-	_OBJ_ANIME_WAIT()
 	
 	//ママ：画面から消す
 	_OBJ_DEL( R02_MAMA_01  )
@@ -221,7 +206,7 @@ _ANIME_LABEL	anm_mama_kuru_b
 //ママ:2番道路から去るA                        
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_mama_saru_a
-	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -229,21 +214,7 @@ _ANIME_LABEL	anm_mama_saru_a
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_mama_saru_b
 	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA AC_WALK_R_8F,3
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ママ:2番道路から去る2                         
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_mama_saru2
-	_ANIME_DATA AC_WALK_R_8F,4
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ママ:振り向く                        
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_mama_furimuku
-	_ANIME_DATA AC_DIR_L,40
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
