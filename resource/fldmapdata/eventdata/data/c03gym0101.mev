@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 15:07:28
+#save date:2009/12/18 21:13:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -489,7 +489,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-11
+10
 #event number: 0
 #Pos Event Label
 POS_C03GYM0101_SWITCH_06
@@ -660,23 +660,6 @@ EVENTDATA_POSTYPE_GRID
 360 0 -152
 #size
 1 1
-#event number: 10
-#Pos Event Label
-POS_C03GYM0101_SUNGLASSES_01
-#Pos Script Name
-SCRID_POS_C03GYM0101_SUNGLASSES_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-248 0 -504
-#size
-3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
