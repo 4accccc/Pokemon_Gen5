@@ -3275,6 +3275,107 @@ void FIELD_CAMERA_RecvLinerParam(
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  デフォルトゾーンカメラ設定で復帰するリカバリー関数
+ *
+ *	@param	camera      カメラポインタ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_RecvLinerParamDefault(
+    FIELD_CAMERA * camera, const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  data = &camera->MoveData;
+  if (!data->PushFlg){
+    GF_ASSERT_MSG(0,"NO RECOVER PARAM\n");
+    return;
+  }
+
+  //フレーム指定が0のときは不正とみなし、処理しない
+  if (inFrame == 0){
+    GF_ASSERT(0);
+    return;
+  }
+
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  SetNowCameraParam(camera, &data->SrcParam);
+  //ゾーンデフォルトカメラパラメータを取得する
+  {
+    FLD_CAMERA_PARAM param;
+    loadInitialParameter( camera, &param );
+    data->DstParam.AnglePitch = param.Angle.x;
+    data->DstParam.AngleYaw = param.Angle.y;
+    data->DstParam.Distance = param.Distance * FX32_ONE;
+    data->DstParam.Fovy = param.PerspWay;
+    // プレイヤーとのバインドチェック
+    if( param.PlayerLink )
+    {
+      // バインドする場合
+      data->DstParam.Shift = param.Shift;
+      data->DstParam.TrgtPos = *camera->default_target;
+    }
+    else
+    {
+      // バインドしない場合
+      VEC_Set( &data->DstParam.Shift, 0,0,0 );
+      data->DstParam.TrgtPos = param.Shift;
+    }
+  }
+  data->NowFrm = 0;
+  data->CostFrm = inFrame;
+
+  data->Chk.Shift = TRUE;
+  data->Chk.Pitch = TRUE;
+  data->Chk.Yaw = TRUE;
+  data->Chk.Dist = TRUE;
+  data->Chk.Fovy = TRUE;
+  data->Chk.Pos = TRUE;
+
+  {
+    OS_Printf("pitch = %x\n",data->PushParam.RecvParam.AnglePitch);
+    OS_Printf("yaw = %x\n",data->PushParam.RecvParam.AngleYaw);
+    OS_Printf("dis = %x\n",data->PushParam.RecvParam.Distance);
+    OS_Printf("pers = %x\n",data->PushParam.RecvParam.Fovy);
+    OS_Printf("pos = %x, %x, %x\n",
+        data->PushParam.RecvParam.TrgtPos.x,
+        data->PushParam.RecvParam.TrgtPos.y,
+        data->PushParam.RecvParam.TrgtPos.z);
+    OS_Printf("shift = %x, %x, %x\n",
+        data->PushParam.RecvParam.Shift.x,
+        data->PushParam.RecvParam.Shift.y,
+        data->PushParam.RecvParam.Shift.z);
+
+    OS_Printf("_pitch = %x\n",data->DstParam.AnglePitch);
+    OS_Printf("_yaw = %x\n",data->DstParam.AngleYaw);
+    OS_Printf("_dis = %x\n",data->DstParam.Distance);
+    OS_Printf("_pers = %x\n",data->DstParam.Fovy);
+    OS_Printf("_pos = %x, %x, %x\n",
+        data->DstParam.TrgtPos.x,
+        data->DstParam.TrgtPos.y,
+        data->DstParam.TrgtPos.z);
+    OS_Printf("_shift = %x, %x, %x\n",
+        data->DstParam.Shift.x,
+        data->DstParam.Shift.y,
+        data->DstParam.Shift.z);
+  }
+
+  //コールバックをセット
+  camera->CallBack = LinerMoveFunc;
+  //線形補間移動を開始
+  data->Valid = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  線形訪韓移動関数
  *
  *	@param	camera      カメラポインタ
@@ -3453,10 +3554,14 @@ static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm,
   long val;
   fx32 ans;
 
-  dif = dst - src;
-  tmp = (dif*inNowFrm);
-  val = tmp / inCostFrm;
-  ans = src+val;
+  if ( inCostFrm == inNowFrm ) ans = dst;
+  else
+  {
+    dif = dst - src;
+    tmp = (dif*inNowFrm);
+    val = tmp / inCostFrm;
+    ans = src+val;
+  }
 #if 0
   fx32 dif, val, ans;
   fx32 tmp;
