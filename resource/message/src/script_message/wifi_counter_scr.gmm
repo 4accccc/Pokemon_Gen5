@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-17T12:10:00"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T17:48:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,11 +464,11 @@ C-Gear入手前</comment>
 		<comment>グローバルターミナル説明</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">グローバルターミナルは
-・・・・・・・・・・▼
+……　……　……▼
 グローバルターミナルを
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナルは
-・・・・・・・・・・▼
+……　……　……▼
 グローバルターミナルを
 ごりよう　ですか？</language>
 	</row>
@@ -566,11 +566,11 @@ C-Gear入手前</comment>
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　あずけるには
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　あずけるには
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 	</row>
@@ -579,11 +579,11 @@ C-Gear入手前</comment>
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　さがすには
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　さがすには
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 	</row>
@@ -643,12 +643,12 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ＧＴＳネゴシエーションでは
-・・・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……・・・・[BE:01:ページ切り替え（クリア）]
 ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーションでは
-・・・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……・・・・[BE:01:ページ切り替え（クリア）]
 ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
@@ -658,11 +658,11 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ネゴシエーションとは
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">ネゴシエーションとは
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 	</row>
@@ -671,11 +671,11 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">こうかん　じょうけん　には
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 		<language name="JPN_KANJI" width="256">こうかん　じょうけん　には
-・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+……　……　……[BE:01:ページ切り替え（クリア）]
 くわしい　せつめいを
 ごきぼうですか？</language>
 	</row>
@@ -711,11 +711,11 @@ C-Gear入手前</comment>
 	<row id="msg_gterminal_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>BtlVideo</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
-		<language name="JPN" width="256">バトルビデオは・・・
-・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">バトルビデオは
+……　……　……[BE:01:ページ切り替え（クリア）]
 バトルビデオを　みますか？</language>
-		<language name="JPN_KANJI" width="256">バトルビデオは・・・
-・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">バトルビデオは
+……　……　……[BE:01:ページ切り替え（クリア）]
 バトルビデオを　みますか？</language>
 	</row>
 
@@ -750,11 +750,11 @@ C-Gear入手前</comment>
 	<row id="msg_gterminal_musical_exp" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>Musical</comment>
 		<attribute name="キャラ指定">Musical</attribute>
-		<language name="JPN" width="256">ミュージカルショットは・・・・・
-・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ミュージカルショットは
+……　……　……・・[BE:01:ページ切り替え（クリア）]
 ミュージカルショットを　みますか？</language>
-		<language name="JPN_KANJI" width="256">ミュージカルショットは・・・・・
-・・・・・・・・・・・・・・・・[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ミュージカルショットは
+……　……　……・・[BE:01:ページ切り替え（クリア）]
 ミュージカルショットを　みますか？</language>
 	</row>
 
