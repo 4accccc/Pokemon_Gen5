@@ -28,7 +28,8 @@
 
 #include "scrcmd_camera.h"
 
-static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
+//static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitTraceStopForCamMvEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
 static void EndCamera(FIELD_CAMERA *camera);
 
@@ -101,9 +102,10 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
-  //復帰パラメータをセットする
-  FIELD_CAMERA_SetRecvCamParam(camera);
-
+ 
+  //終了チェックフラグをオン
+  SCREND_CHK_SetBitOn(SCREND_CHK_CAMERA);
+  
   if ( FIELD_CAMERA_CheckTraceSys(camera) )
   {
     //カメラトレースを停止するリクエストを出す
@@ -112,12 +114,16 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
     {
       GMEVENT *call_event;
       SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-      call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopEvt, 0 );
+      call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopForCamMvEvt, 0 );
       SCRIPT_CallEvent( sc, call_event );
     }
   }
-  //終了チェックフラグをオン
-  SCREND_CHK_SetBitOn(SCREND_CHK_CAMERA);
+  else
+  {
+    //復帰パラメータをセットする
+    FIELD_CAMERA_SetRecvCamParam(camera);
+  }
+  
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
@@ -271,8 +277,7 @@ VMCMD_RESULT EvCmdCamera_RecoverMove( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
-  frame = VMGetU16( core );
-  
+  frame = VMGetU16( core );  
   {
     FLD_CAM_MV_PARAM_CHK chk;
     chk.Shift = TRUE;
@@ -283,6 +288,27 @@ VMCMD_RESULT EvCmdCamera_RecoverMove( VMHANDLE *core, void *wk )
     chk.Pos = TRUE;
     FIELD_CAMERA_RecvLinerParam(camera, &chk, frame);
   }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * デフォルトカメラへの復帰移動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCamera_DefaultCamMove( VMHANDLE *core, void *wk )
+{
+  u16 frame;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+
+  frame = VMGetU16( core );  
+  FIELD_CAMERA_RecvLinerParamDefault( camera, frame);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -310,6 +336,7 @@ VMCMD_RESULT EvCmdCamera_WaitMove( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * カメラトレース処理停止待ちイベント
@@ -333,6 +360,34 @@ static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work )
     return GMEVENT_RES_FINISH;
   }
   
+  return GMEVENT_RES_CONTINUE;
+}
+#endif
+//--------------------------------------------------------------
+/**
+ * カメラトレース処理停止待ちイベント
+ * @note    トレース終了時に、復帰用パラメータをセットする
+ * @param   event　　　       イベントポインタ
+ * @param   seq　　　　       シーケンス
+ * @param   work　　　　      ワークポインタ
+ * @return  GMEVENT_RESULT    GMEVENT_RES_FINISHでイベント終了
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT WaitTraceStopForCamMvEvt( GMEVENT* event, int* seq, void* work )
+{
+  BOOL rc;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+  
+  rc = FIELD_CAMERA_CheckTrace(camera);
+
+  if (!rc){
+    //復帰パラメータをセットする
+    FIELD_CAMERA_SetRecvCamParam(camera);
+    //停止
+    return GMEVENT_RES_FINISH;
+  }
   return GMEVENT_RES_CONTINUE;
 }
 
