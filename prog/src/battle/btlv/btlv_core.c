@@ -1096,9 +1096,8 @@ void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlPokePos pos, u16 effectNo )
 }
 BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlPokePos pos )
 {
-  BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-  BTL_Printf("vpos=%d エフェクト終了待ち\n", vpos);
-  if( !BTLV_EFFECT_CheckExist( vpos ) ){
+//  BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  if( !BTLV_EFFECT_CheckExecute() ){
     return TRUE;
   }
   return FALSE;

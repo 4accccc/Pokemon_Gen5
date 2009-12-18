@@ -2980,11 +2980,6 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitEffectByPos( wk->viewCore, args[0] ) ){
       return TRUE;
     }
-/*
-    if( ++(*seq) > 120 ){
-      return TRUE;
-    }
-*/
     break;
   }
   return FALSE;

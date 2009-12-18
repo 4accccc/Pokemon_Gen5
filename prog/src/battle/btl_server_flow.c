@@ -6122,7 +6122,7 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
     SUPPORT_TYPE support_type;
 
 // テスト用に強制ＯＮしたい時に使おう
-    COMM_PLAYER_SUPPORT_SetParam( supportHandle, SUPPORT_TYPE_RECOVER_HALF, BTL_MAIN_GetPlayerStatus(wk->mainModule) );
+//    COMM_PLAYER_SUPPORT_SetParam( supportHandle, SUPPORT_TYPE_RECOVER_HALF, BTL_MAIN_GetPlayerStatus(wk->mainModule) );
 
     support_type = COMM_PLAYER_SUPPORT_GetSupportType( supportHandle );
     if( support_type != SUPPORT_TYPE_NULL )

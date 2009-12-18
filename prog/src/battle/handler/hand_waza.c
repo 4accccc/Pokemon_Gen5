@@ -97,6 +97,23 @@ enum {
   WAZANO_KARI_HURUITATERU,
   WAZANO_KARI_EREKINETTO,
   WAZANO_KARI_WAIRUDOBORUTO,
+
+  WAZANO_KARI_DORIRURAINAA,
+  WAZANO_KARI_DABURUTYOPPU,
+  WAZANO_KARI_HAATOSUTANPU,
+  WAZANO_KARI_UDDOHOON,
+  WAZANO_KARI_SEINARUTURUGI,
+  WAZANO_KARI_SHERUBUREEDO,
+  WAZANO_KARI_HIITOSUTANPU,
+  WAZANO_KARI_GURASUMIKISAA,
+  WAZANO_KARI_HAADOROORAA,
+  WAZANO_KARI_KOTTONGAADO,
+  WAZANO_KARI_NAITOBAASUTO,
+  WAZANO_KARI_SAIKOBUREIKU,
+  WAZANO_KARI_SUIIBUBINTA,
+  WAZANO_KARI_BOUHUU,
+  WAZANO_KARI_AHUROBUREIKU,
+  WAZANO_KARI_GIASOOSAA,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -854,13 +871,16 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_GAADOSHEA,        ADD_GuardShare      },
     { WAZANO_KARI_BODYPAAZI,        ADD_BodyPurge       },
     { WAZANO_KARI_HEBIIBONBAA,      ADD_HeavyBomber     },
+    { WAZANO_KARI_HIITOSUTANPU,     ADD_HeavyBomber     },  // ヒートスタンプ=ヘビーボンバー
     { WAZANO_KARI_WANDAARUUMU,      ADD_WonderRoom      },
     { WAZANO_KARI_MAZIKKURUUMU,     ADD_MagicRoom       },
     { WAZANO_KARI_SAIKOSYOKKU,      ADD_PsycoShock      },
+    { WAZANO_KARI_SAIKOBUREIKU,     ADD_PsycoShock      },  // サイコブレイク=サイコショック
     { WAZANO_KARI_HAZIKERUHONOO,    ADD_HajikeruHonoo   },
     { WAZANO_KARI_EREKUTOBOORU,     ADD_ElectBall       },
     { WAZANO_KARI_SINKURONOIZU,     ADD_SyncroNoise     },
     { WAZANO_KARI_NASIKUZUSI,       ADD_NasiKuzusi      },
+    { WAZANO_KARI_SEINARUTURUGI,    ADD_NasiKuzusi      },  // せいなるつるぎ=なしくずし
     { WAZANO_KARI_EKOOBOISU,        ADD_EchoVoice       },
     { WAZANO_KARI_YAKITUKUSU,       ADD_Yakitukusu      },
     { WAZANO_KARI_GIHUTOPASU,       ADD_GiftPass        },
@@ -876,6 +896,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_SAIDOCHENZI,      ADD_SideChange      },
     { WAZANO_KARI_TELEKINESISU,     ADD_Telekinesis     },
     { WAZANO_KARI_FURIIFOORU,       ADD_FreeFall        },
+    { WAZANO_KARI_HAADOROORAA,      ADD_Fumituke        },  // ハードローラー=ふみつけ
+    { WAZANO_KARI_BOUHUU,           ADD_Kaminari        },  // ぼうふう=かみなり
   };
 
   int i;
@@ -3893,7 +3915,7 @@ static void handler_SkyUpper( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 }
 //----------------------------------------------------------------------------------
 /**
- * かみなり
+ * かみなり・ぼうふう
  */
 //----------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR*  ADD_Kaminari( u16 pri, WazaID waza, u8 pokeID )
@@ -8458,7 +8480,7 @@ static void handler_PsycoShock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 }
 //----------------------------------------------------------------------------------
 /**
- * なしくずし
+ * なしくずし・せいなるつるぎ
  */
 //----------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR*  ADD_NasiKuzusi( u16 pri, WazaID waza, u8 pokeID )
