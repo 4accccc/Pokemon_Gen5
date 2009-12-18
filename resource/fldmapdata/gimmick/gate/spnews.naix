@@ -12,17 +12,7 @@
 
 enum {
 	NARC_spnews_elboard_spnews_data_0_bin = 0,
-	NARC_spnews_elboard_spnews_data_1_bin = 1,
-	NARC_spnews_elboard_spnews_data_2_bin = 2,
-	NARC_spnews_elboard_spnews_data_3_bin = 3,
-	NARC_spnews_elboard_spnews_data_4_bin = 4,
-	NARC_spnews_elboard_spnews_data_5_bin = 5,
-	NARC_spnews_elboard_spnews_data_6_bin = 6,
-	NARC_spnews_elboard_spnews_data_7_bin = 7,
-	NARC_spnews_elboard_spnews_data_8_bin = 8,
-	NARC_spnews_elboard_spnews_data_9_bin = 9,
-	NARC_spnews_elboard_spnews_data_10_bin = 10,
-	NARC_spnews_elboard_spnews_data_11_bin = 11
+	NARC_spnews_elboard_spnews_data_1_bin = 1
 };
 
 /* NARC_SPNEWS_NAIX_ */
