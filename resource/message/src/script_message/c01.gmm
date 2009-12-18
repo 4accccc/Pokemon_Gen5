@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:18:53"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T22:21:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -604,13 +604,12 @@
 		<language name="JPN_KANJI" width="256">この先　夢の跡地</language>
 	</row>
 
-	<row id="msg_c01_sign3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>庭園の植木用
-・仮</comment>
-		<language name="JPN" width="256">ポケモンの　かたちに　みえるよう
-うえきが　かりこまれている</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　形に　見えるよう
-植木が　刈り込まれている</language>
+	<row id="msg_c01_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>トレーナーズスクール用</comment>
+		<language name="JPN" width="256">ポケモンの　ために　まなぶ
+トレーナーズ　スクール</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　ために　学ぶ
+トレーナーズ　スクール</language>
 	</row>
 
 	<flowchart-group-list>
