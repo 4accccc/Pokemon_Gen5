@@ -3840,7 +3840,7 @@ static void handler_WeatherBall_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlWeather weather = BTL_FIELD_GetWeather();
+    BtlWeather weather = BTL_SVFTOOL_GetWeather(flowWk);
     PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
     switch( weather ){
     case BTL_WEATHER_SHINE:  type = POKETYPE_HONOO; break;
@@ -3945,7 +3945,7 @@ static void handler_Kaminari_excuseHitCalc( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN ){
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_RAIN ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
@@ -3954,8 +3954,8 @@ static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE ){
+      BTL_EVENTVAR_MulValue( BTL_EVAR_HIT_PER, 50 );
     }
   }
 }
@@ -3977,7 +3977,7 @@ static void handler_Fubuki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SNOW ){
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SNOW ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
@@ -5259,9 +5259,9 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     &&  (BPP_GetPrevWazaID(target) != WAZANO_NULL)
     ){
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      u8 turns = BTL_CALC_RandRange( 3, 7 );
+//      u8 turns = BTL_CALC_RandRange( 3, 7 );
       param->sickID = WAZASICK_ENCORE;
-      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( turns );
+      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
       param->fAlmost = FALSE;
@@ -5296,9 +5296,9 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( !BPP_CheckSick(target, WAZASICK_TYOUHATSU) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      u8 turns = BTL_CALC_RandRange( 3, 5 );
+   //   u8 turns = BTL_CALC_RandRange( 3, 5 );
       param->sickID = WAZASICK_TYOUHATSU;
-      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( turns );
+      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
 
@@ -6746,7 +6746,7 @@ static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlWeather w = BTL_FIELD_GetWeather();
+    BtlWeather w = BTL_SVFTOOL_GetWeather(flowWk);
     u8 ratio = 50;
     switch( w ){
     case BTL_WEATHER_SHINE:  ratio = 66; break;
@@ -6988,7 +6988,7 @@ static void handler_SolarBeam_TameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
@@ -7006,7 +7006,7 @@ static void handler_SolarBeam_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static void handler_SolarBeam_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  ( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
+  &&  ( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_RAIN )
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
   }

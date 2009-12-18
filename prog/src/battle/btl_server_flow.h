@@ -132,6 +132,7 @@ extern WazaID BTL_SVFTOOL_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_CheckSinkaMae( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+extern BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag );
 
 extern void BTL_SVFRET_RemoveItem( BTL_SVFLOW_WORK* wk, u8 pokeID );

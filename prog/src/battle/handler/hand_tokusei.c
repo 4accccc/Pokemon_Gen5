@@ -804,7 +804,7 @@ static void handler_Suisui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // 雨のとき、すばやさ２倍
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_RAIN )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
@@ -829,7 +829,7 @@ static void handler_Youryokuso( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // はれの時、すばやさ２倍
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
@@ -1036,7 +1036,7 @@ static void handler_Sunagakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SAND )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SAND )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
     }
@@ -1060,7 +1060,7 @@ static void handler_Yukigakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SNOW )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SNOW )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SUNAGAKURE_HITRATIO );
     }
@@ -1422,7 +1422,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Minus( u16 pri, u16 tokID, u8 pokeID )
 static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 天気「はれ」で
-  if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+  if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
   {
     // 攻撃側が自分か味方のとき
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
@@ -1441,7 +1441,7 @@ static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 天気「はれ」で
-  if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+  if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
   {
     // 防御側が自分か味方のとき
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
@@ -1813,7 +1813,7 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     // 天候が晴れ
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
       // ポケモン系状態異常にはならない
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX )
@@ -2167,11 +2167,12 @@ static void common_weather_change( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeathe
  */
 //------------------------------------------------------------------------------
 // 自分が出場ハンドラ
-static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+#if 0
+ static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( BTL_FIELD_GetWeather() != BTL_WEATHER_NONE )
+    if( BTL_SVFTOOL_GetWeather(flowWk) != BTL_WEATHER_NONE )
     {
       BTL_HANDEX_PARAM_CHANGE_WEATHER* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_WEATHER, pokeID );
 
@@ -2181,22 +2182,17 @@ static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }
   }
 }
+#endif
 // 天候変化ハンドラ
 static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_FLAG, TRUE) )
-  {
-    BTL_HANDEX_PARAM_MESSAGE* param;
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_WeatherLocked );
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
-  }
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_AirLock( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,      handler_AirLock_Appear },         // 自分が出場ハンドラ
+//    { BTL_EVENT_MEMBER_IN,      handler_AirLock_Appear },         // 自分が出場ハンドラ
+    { BTL_EVENT_WEATHER_CHECK,  handler_AirLock_ChangeWeather },  // 天候チェックハンドラ
     { BTL_EVENT_WEATHER_CHANGE, handler_AirLock_ChangeWeather },  // 天候変化ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
@@ -2288,7 +2284,7 @@ static void handler_SunPower_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // 天候が晴れで
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       // ダメージタイプが特殊の時
@@ -2376,7 +2372,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_TennoMegumi( u16 pri, u16 tokID, u8 pokeI
 // 状態異常ダメージハンドラ
 static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
+  if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_RAIN )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
@@ -4027,7 +4023,7 @@ static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlWeather weather = BTL_FIELD_GetWeather();
+    BtlWeather weather = BTL_SVFTOOL_GetWeather(flowWk);
     common_TenkiFormChange( flowWk, pokeID, weather );
   }
 }
@@ -4999,7 +4995,7 @@ static void handler_Sunakaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // 天候がすなあらしなら素早さ２倍
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SAND ){
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SAND ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
@@ -5082,7 +5078,7 @@ static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // 天候すなあらしなら威力増加
-    if( BTL_FIELD_GetWeather() == BTL_WEATHER_SAND )
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SAND )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
     }
