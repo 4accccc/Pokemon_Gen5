@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:23:42"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:43:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -541,11 +541,11 @@
 		<language name="JPN" width="256">ホワイティ『いまの　ピンクいろのが
 ゆめをみせる　ポケモン……[BE:01:ページ切り替え（クリア）]
 あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！▼</language>
+ねっ　[1:00:トレーナー名:0]　とってみて！</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『今の　ピンク色のが
 夢を見せる　ポケモン……[BE:01:ページ切り替え（クリア）]
 あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！▼</language>
+ねっ　[1:00:トレーナー名:0]　とってみて！</language>
 	</row>
 
 	<row id="msg_d01r0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
