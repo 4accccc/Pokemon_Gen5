@@ -196,6 +196,9 @@ enum {
   LAYOUT_LABEL_MSGSPEED_X = 144,
   LAYOUT_LABEL_WAZAEFF_X  = 144,
 
+  LAYOUT_LOAD_X = 4,
+  LAYOUT_SAVE_X = 38,
+
   LAYOUT_LABEL_SUBWAY_X = 144,
   LAYOUT_LABEL_SUBWAY_Y = LAYOUT_PARAM_LINE_Y3,
 
@@ -206,6 +209,11 @@ enum {
   LAYOUT_CRIPMARK_OY = 4,
   LAYOUT_CRIPMARK_WIDTH = 12,
   LAYOUT_CRIPMARK_HEIGHT = 12,
+
+  LAYOUT_SAVEMARK_OX = LAYOUT_SAVE_X + 30,
+  LAYOUT_SAVEMARK_OY = LAYOUT_PARAM_LINE_Y4,
+  LAYOUT_SAVEMARK_WIDTH = 12,
+  LAYOUT_SAVEMARK_HEIGHT = 12,
 
 
   LAYOUT_LABEL_MUST_TUIKA_X     = 4,
@@ -320,8 +328,8 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
   { SELITEM_REC_MODE,       LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y,    0, DBF_RECMODE_MAX-1 },
   { SELITEM_REC_BUF,        LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y,    0, 3                 },
 
-  { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
-  { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
+  { SELITEM_LOAD,       LAYOUT_LOAD_X, LAYOUT_PARAM_LINE_Y4 },
+  { SELITEM_SAVE,       LAYOUT_SAVE_X, LAYOUT_PARAM_LINE_Y4 },
 };
 
 /**
@@ -444,7 +452,7 @@ struct _DEBUG_BTL_WORK {
   SAVE_CONTROL_WORK*  saveCtrl;
   u16                 saveSeq0;
   u16                 saveSeq1;
-
+  u32                 saveTimer;
 
   DEBUG_BTL_SAVEDATA  saveData;
 
@@ -489,6 +497,8 @@ static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
+static void printSaveMark( DEBUG_BTL_WORK* wk );
+static void clearSaveMark( DEBUG_BTL_WORK* wk );
 static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf );
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_ChangePage( DEBUG_BTL_WORK* wk, int* seq );
@@ -1177,6 +1187,19 @@ static void clearClipMark( DEBUG_BTL_WORK* wk )
               LAYOUT_CRIPMARK_WIDTH, LAYOUT_CRIPMARK_HEIGHT, 0xff );
   GFL_BMPWIN_TransVramCharacter( wk->win );
 }
+static void printSaveMark( DEBUG_BTL_WORK* wk )
+{
+  GFL_STR_ClearBuffer( wk->strbuf );
+  GFL_STR_AddCode( wk->strbuf, 0x25ce ); // ''
+  PRINTSYS_Print( wk->bmp, LAYOUT_SAVEMARK_OX, LAYOUT_SAVEMARK_OY, wk->strbuf, wk->fontHandle );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
+static void clearSaveMark( DEBUG_BTL_WORK* wk )
+{
+  GFL_BMP_Fill( wk->bmp, LAYOUT_SAVEMARK_OX, LAYOUT_SAVEMARK_OY,
+              LAYOUT_SAVEMARK_WIDTH, LAYOUT_SAVEMARK_HEIGHT, 0xff );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
 static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+flag, buf );
@@ -1421,8 +1444,33 @@ FS_EXTERN_OVERLAY(debug_makepoke);
 //----------------------------------------------------------------------------------
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq )
 {
-  DEBUG_BACKUP_FlashSave(DEBUG_FIGHT_SAVE, &wk->saveData, sizeof(wk->saveData));
-  setMainProc( wk, mainProc_Root );
+  switch( *seq ){
+  case 0:
+    printSaveMark( wk );
+    wk->saveTimer = 0;
+    ++(*seq);
+    break;
+  case 1:
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+    {
+      if( ++(wk->saveTimer) > 150 ){
+        DEBUG_BACKUP_FlashSave(DEBUG_FIGHT_SAVE, &wk->saveData, sizeof(wk->saveData));
+        (*seq)++;
+      }
+    }
+    else
+    {
+      (*seq)++;
+    }
+    break;
+  case 2:
+    clearSaveMark( wk );
+    (*seq)++;
+    break;
+  default:
+    setMainProc( wk, mainProc_Root );
+    break;
+    }
   return FALSE;
 }
 //----------------------------------------------------------------------------------
