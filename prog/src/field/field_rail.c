@@ -1915,6 +1915,47 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
 
 }
 
+void FIELD_RAIL_WORK_DEBUG_PrintRailOffset( const FIELD_RAIL_WORK * work )
+{
+  GF_ASSERT( work );
+
+  if( work->type == FIELD_RAIL_TYPE_LINE )
+  {
+    s32 width_ofs_max_s, width_ofs_max_e;
+    s32 width_ofs_max;
+    int index;
+    int i;
+
+    width_ofs_max_s = getLineWidthOfsMax( work->line, 0, work->line_ofs_max, work->rail_dat );
+    width_ofs_max_e = getLineWidthOfsMax( work->line, work->line_ofs_max, work->line_ofs_max, work->rail_dat );
+    
+    if( width_ofs_max_s >= width_ofs_max_e )
+    {
+      width_ofs_max = width_ofs_max_s;
+    }
+    else
+    {
+      width_ofs_max = width_ofs_max_e;
+    }
+
+    // ラインインデックスを求める
+    index = 0;
+    for( i=0; i<work->rail_dat->line_count; i++ )
+    {
+      if( (u32)&work->rail_dat->line_table[i] == (u32)work->line )
+      {
+        index = i;
+      }
+    }
+    
+    OS_TPrintf("RAIL:%s :front_offs=%d side_grid=%d \n",
+        work->line->name, 
+        work->line_ofs, 
+        work->width_ofs );
+
+  }
+}
+
 #endif
 
 

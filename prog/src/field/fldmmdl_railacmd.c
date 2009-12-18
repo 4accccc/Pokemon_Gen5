@@ -853,6 +853,7 @@ static void AcJumpWorkInitMain(
 	MMDL * mmdl, int dir, fx32 val,
 	s16 wait, u16 draw, s16 h_type, u16 h_speed, u32 se )
 {
+  BOOL result;
 	AC_RAIL_JUMP_WORK *work;
 	
 	work = MMDL_InitMoveCmdWork( mmdl, AC_RAIL_JUMP_WORK_SIZE );
@@ -866,8 +867,10 @@ static void AcJumpWorkInitMain(
 	if( val == 0 ){												//その場
 		MMDL_UpdateGridPosCurrent( mmdl );
 	}else{
-    MMDL_ReqRailMove( mmdl, dir, GRID_FRAME_8 );
+    result = MMDL_ReqRailMove( mmdl, dir, GRID_FRAME_8 );
 		MMDL_Rail_UpdateGridPosDir( mmdl, dir );					//移動
+
+    GF_ASSERT( result );
 	}
 	
 	MMDL_OnStatusBit( mmdl,
@@ -877,6 +880,8 @@ static void AcJumpWorkInitMain(
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
 	MMDL_IncAcmdSeq( mmdl );
+
+  TOMOYA_Printf( "Jump Start dir %d\n", dir );
 	
 	if( se ){
     PMSND_PlaySE( se );
@@ -922,6 +927,9 @@ static int AC_Jump_1( MMDL * mmdl )
   FIELD_RAIL_WORK* p_rail;
 	
 	work = MMDL_GetMoveCmdWork( mmdl );
+
+  // ウエイト計算
+	work->wait--;
 	
   // 移動管理
 	if( work->val ){
@@ -929,15 +937,21 @@ static int AC_Jump_1( MMDL * mmdl )
     p_rail = MMDL_GetRailWork( mmdl );
     FIELD_RAIL_WORK_Update( p_rail );
 
+    FIELD_RAIL_WORK_DEBUG_PrintRailOffset( p_rail );
+
     // 新ポジションの設定
     FIELD_RAIL_WORK_GetPos( p_rail, &pos );
     MMDL_SetVectorPos( mmdl, &pos );
 			
-		if( work->dest_val >= GRID_FX32 ){						//１グリッド移動
+		if( (work->dest_val >= GRID_FX32) && (work->wait > 0) ){						//１グリッド移動
+      BOOL result;
+      
 			work->dest_val = 0;
-      MMDL_ReqRailMove( mmdl, work->dir, GRID_FRAME_8 );
+      result = MMDL_ReqRailMove( mmdl, work->dir, GRID_FRAME_8 );
+      GF_ASSERT( result );
 			MMDL_Rail_UpdateGridPosDir( mmdl, work->dir );
 			MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+      TOMOYA_Printf( "Jump 2 Start dir %d\n", work->dir );
 		}
 			
 		{
@@ -969,10 +983,9 @@ static int AC_Jump_1( MMDL * mmdl )
 		}
 	}
 	
-	work->wait--;
 	
-	if( work->wait > 0 ){
-		return( FALSE );
+	if( (work->wait > 0) || FIELD_RAIL_WORK_IsAction( p_rail ) ){
+    return( FALSE );
 	}
 	
 	{

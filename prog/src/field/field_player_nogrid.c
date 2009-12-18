@@ -1167,8 +1167,8 @@ static PLAYER_SET player_CheckMoveStart_Walk(
       RAIL_LOCATION location;
       u32 attr;
       
-      // 1歩先のロケーション取得
-      MMDL_GetRailFrontLocation( mmdl, &location );
+      // Dir方向先のロケーション取得
+      MMDL_GetRailDirLocation( mmdl, dir, &location );
       attr = MMDL_GetRailLocationAttr( mmdl, &location );
     
       {
@@ -1599,8 +1599,8 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
       RAIL_LOCATION location;
       u32 attr;
       
-      // 1歩先のロケーション取得
-      MMDL_GetRailFrontLocation( mmdl, &location );
+      // Dir方向先のロケーション取得
+      MMDL_GetRailDirLocation( mmdl, dir, &location );
       attr = MMDL_GetRailLocationAttr( mmdl, &location );
     
       {
