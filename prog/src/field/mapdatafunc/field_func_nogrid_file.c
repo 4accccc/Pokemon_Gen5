@@ -105,27 +105,11 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
-				GFL_G3D_MAP_GLOBALOBJ_ST status;
-				int i, count = layout->count;
-
-				for( i=0; i<count; i++ ){
-					FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus[i], i );
-
-				}
+        FIELD_BMODEL_MAN_ResistAllMapObjects(bm, g3Dmap, objStatus, layout->count);
 			}
     }
 
       
-#if 0
-    OS_Printf("DataID=%08x\n",fileHeader->DataID);         ////< DP3PACK_HEADER
-    OS_Printf("dummy1=%08x\n",fileHeader->dummy1);
-    OS_Printf("nsbmdOffset=%08x\n",fileHeader->nsbmdOffset);    ///< ファイルの先頭からnsbmdの場所までのOFFSET
-    OS_Printf("nsbtxOffset=%08x\n",fileHeader->nsbtxOffset);    ///< ファイルの先頭からnsbtxの場所までのOFFSET
-    OS_Printf("bhcOffset=%08x\n",fileHeader->bhcOffset);	    ///< ファイルの先頭からbhcの場所までのOFFSET
-    OS_Printf("vertexOffset=%08x\n",fileHeader->vertexOffset);   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
-    OS_Printf("positionOffset=%08x\n",fileHeader->positionOffset); ///< ファイルの先頭からポジションの場所までのOFFSET
-    OS_Printf("endPos=%08x\n",fileHeader->endPos);         ///< ファイルの先頭からポジションの最後までのOFFSET
-#endif
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
 
 
