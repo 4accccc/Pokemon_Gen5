@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-28T21:01:06"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-17T12:11:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1600" top="106" right="2206" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="1728" top="530" right="2433" bottom="1158" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
-		<band id="0" index="0" style="0000" width="598"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="431"/>
-		<band id="3" index="3" style="0000" width="598"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,8 +335,8 @@
 
 	<row id="TITLE">
 		<comment>最初のメッセージはタイトル固定でお願いします</comment>
-		<language name="JPN" width="256">ポケッターリモンスターリ</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ</language>
+		<language name="JPN" width="256">クールきょく</language>
+		<language name="JPN_KANJI" width="256">クール曲</language>
 	</row>
 
 	<row id="MSG_01">
