@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T22:43:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T19:03:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,16 +293,8 @@
 
 
 	<row id="msg_r03_oldwoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・10月末ROMでは削除</comment>
-		<attribute name="キャラ指定">OLDWOMAN1
-おばあさん</attribute>
-		<language name="JPN" width="256">ここは　そだてや　じゃ！[BE:01:ページ切り替え（クリア）]
-なにを　そだてるか？[BE:01:ページ切り替え（クリア）]
-そりゃ　ポケモン　じゃ！！</language>
-		<language name="JPN_KANJI" width="256">ここは　育て屋　じゃ！[BE:01:ページ切り替え（クリア）]
-なにを　育てるか？[BE:01:ページ切り替え（クリア）]
-そりゃ　ポケモン　じゃ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r03_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
