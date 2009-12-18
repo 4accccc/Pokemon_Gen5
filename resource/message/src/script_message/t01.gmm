@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T14:34:29"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T19:19:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,12 +357,14 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
-		<language name="JPN" width="256">かがくの　ちからって　すげー！[BE:01:ページ切り替え（クリア）]
-いまじゃ　せきがいせんを　つかって
-あんなことや　こんなことが　できるぞ</language>
-		<language name="JPN_KANJI" width="256">科学の　力って　すげー！[BE:01:ページ切り替え（クリア）]
-今じゃ　赤外線を　使って
-あんなことや　こんなことが　できるぞ</language>
+		<language name="JPN" width="256">かがくの　ちからって　すげー！▼
+テレビトランシーバー　って
+ＤＳで　あいての　かおを　みながら▽
+おはなし　できるんだと！</language>
+		<language name="JPN_KANJI" width="256">科学の　力って　すげー！▼
+テレビトランシーバー　って
+ＤＳで　相手の　顔を　みながら▽
+お話　できるんだと！</language>
 	</row>
 
 	<row id="msg_t01_woman2_01">
