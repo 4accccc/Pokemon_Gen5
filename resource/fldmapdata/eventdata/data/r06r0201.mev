@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 21:05:34
+#save date:2009/12/19 2:32:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06r0201.wms
 #type
 1
 #ID name
-D06R201_ROCk_01
+R06R0201_ROCK_01
 #OBJ CODE Number
 ROCK
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_HIDEN_KAIRIKI
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -45,7 +45,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D06R201_ROCk_02
+R06R0201_ROCK_02
 #OBJ CODE Number
 ROCK
 #MOVE CODE Number
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_HIDEN_KAIRIKI
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -76,7 +76,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D06R201_ROCk_03
+R06R0201_ROCK_03
 #OBJ CODE Number
 ROCK
 #MOVE CODE Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_HIDEN_KAIRIKI
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -107,7 +107,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D06R201_ROCk_04
+R06R0201_ROCK_04
 #OBJ CODE Number
 ROCK
 #MOVE CODE Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_HIDEN_KAIRIKI
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -138,7 +138,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D06R201_ROCk_05
+R06R0201_ROCK_05
 #OBJ CODE Number
 ROCK
 #MOVE CODE Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_HIDEN_KAIRIKI
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -194,7 +194,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_R06R0201_R06_EXIT01
@@ -218,7 +218,7 @@ DOOR_ID_R06R0201_R06R0202_EXIT01
 #Next Zone ID Name
 ZONE_ID_R06R0202
 #Next Door ID Name
-DOOR_ID_R06R0202_R06R0201_EXIT02
+DOOR_ID_R06R0202_R06R0201_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
@@ -226,25 +226,8 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 -32 -40
+-40 16 -8
 #size
 1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_R06R0201_R06R0202_EXIT02
-#Next Zone ID Name
-ZONE_ID_R06R0202
-#Next Door ID Name
-DOOR_ID_R06R0202_R06R0201_EXIT02
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_STAIRS
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 52 8
-#size
-3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

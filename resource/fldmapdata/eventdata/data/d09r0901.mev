@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 11:20:24
+#save date:2009/12/19 1:36:05
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09r0901.wms
 #SECTION START:OBJ_EVENT
@@ -59,23 +59,6 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Door Event Label
-DOOR_ID_D09R0901_D09R0801_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R0801
-#Next Door ID Name
-DOOR_ID_D09R0801_D09R0901_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_STAIRS
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 -8 184
-#size
-1 1
-#event number: 2
-#Door Event Label
 DOOR_ID_D09R0901_D09R1001_EXIT01
 #Next Zone ID Name
 ZONE_ID_D09R1001
@@ -89,6 +72,23 @@ EXIT_TYPE_STAIRS
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 40
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_D09R0901_D09R0801_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R0801
+#Next Door ID Name
+DOOR_ID_D09R0801_D09R0901_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_STAIRS
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 184
 #size
 1 1
 #Map Event List Data End

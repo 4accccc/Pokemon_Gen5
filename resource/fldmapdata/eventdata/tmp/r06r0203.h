@@ -9,9 +9,9 @@
 #ifndef ZONE_R06R0203_EVC_H
 #define ZONE_R06R0203_EVC_H
 
-#define D06R0203_ROCK_01                   0
-#define D06R0203_ROCK_02                   1
-#define D06R0203_ROCK_04                   2
-#define D06R0203_ROCK_03                   3
+#define R06R0203_ROCK_01                   0
+#define R06R0203_ROCK_02                   1
+#define R06R0203_ROCK_04                   2
+#define R06R0203_ROCK_03                   3
 
 #endif //ZONE_R06R0203_EVC_H

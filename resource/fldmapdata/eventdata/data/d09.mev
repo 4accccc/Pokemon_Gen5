@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 0:53:07
+#save date:2009/12/19 2:11:22
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -42,11 +42,11 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 17
 #event number: 0
 #Door Event Label
-DOOR_ID_D09_D09R0501_EXIT01
+DOOR_ID_D09_D09R0201_EXIT01
 #Next Zone ID Name
-ZONE_ID_D09R0501
+ZONE_ID_D09R0201
 #Next Door ID Name
-DOOR_ID_D09R0501_D09_EXIT01
+DOOR_ID_D09R0201_D09_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -54,27 +54,10 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-15 4 -3
+13 4 -3
 #size
-1 1
+2 1
 #event number: 1
-#Door Event Label
-DOOR_ID_D09_D09R0701_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R0701
-#Next Door ID Name
-DOOR_ID_D09R0701_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-23 3 -3
-#size
-1 1
-#event number: 2
 #Door Event Label
 DOOR_ID_D09_D09R1001_EXIT01
 #Next Zone ID Name
@@ -88,44 +71,27 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-31 4 -2
+31 3 -2
 #size
-1 1
+2 1
+#event number: 2
+#Door Event Label
+DOOR_ID_D09_D09R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R0401
+#Next Door ID Name
+DOOR_ID_D09R0401_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+33 2 -2
+#size
+2 1
 #event number: 3
-#Door Event Label
-DOOR_ID_D09_D09R0201_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R0201
-#Next Door ID Name
-DOOR_ID_D09R0201_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-13 5 -3
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_D09_D09R0801_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R0801
-#Next Door ID Name
-DOOR_ID_D09R0801_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-30 3 6
-#size
-1 1
-#event number: 5
 #Door Event Label
 DOOR_ID_D09_D09R0301_EXIT01
 #Next Zone ID Name
@@ -139,10 +105,27 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-21 4 -3
+21 3 -3
 #size
-1 1
-#event number: 6
+2 1
+#event number: 4
+#Door Event Label
+DOOR_ID_D09_D09R0701_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R0701
+#Next Door ID Name
+DOOR_ID_D09R0701_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+23 2 -3
+#size
+2 1
+#event number: 5
 #Door Event Label
 DOOR_ID_D09_D09R1301_EXIT01
 #Next Zone ID Name
@@ -158,76 +141,8 @@ EVENTDATA_POSTYPE_RAIL
 #position
 40 2 -3
 #size
-1 1
-#event number: 7
-#Door Event Label
-DOOR_ID_D09_D09R1201_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1201
-#Next Door ID Name
-DOOR_ID_D09R1201_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-58 1 2
-#size
-1 1
-#event number: 8
-#Door Event Label
-DOOR_ID_D09_D09R1201_EXIT02
-#Next Zone ID Name
-ZONE_ID_D09R1201
-#Next Door ID Name
-DOOR_ID_D09R1201_D09_EXIT02
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-61 0 -2
-#size
-1 1
-#event number: 9
-#Door Event Label
-DOOR_ID_D09_D09R1401_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1401
-#Next Door ID Name
-DOOR_ID_D09R1401_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-57 1 -3
-#size
-1 1
-#event number: 10
-#Door Event Label
-DOOR_ID_D09_D09R1101_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1101
-#Next Door ID Name
-DOOR_ID_D09R1101_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-41 3 -3
-#size
-1 1
-#event number: 11
+2 1
+#event number: 6
 #Door Event Label
 DOOR_ID_D09_C09_EXIT01
 #Next Zone ID Name
@@ -241,10 +156,61 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-55 2 -6
+55 0 -6
 #size
-1 1
-#event number: 12
+3 1
+#event number: 7
+#Door Event Label
+DOOR_ID_D09_D09R1401_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R1401
+#Next Door ID Name
+DOOR_ID_D09R1401_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+57 1 -3
+#size
+2 1
+#event number: 8
+#Door Event Label
+DOOR_ID_D09_D09R1201_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R1201
+#Next Door ID Name
+DOOR_ID_D09R1201_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+58 1 -2
+#size
+2 1
+#event number: 9
+#Door Event Label
+DOOR_ID_D09_D09R0801_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R0801
+#Next Door ID Name
+DOOR_ID_D09R0801_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+30 2 6
+#size
+2 1
+#event number: 10
 #Door Event Label
 DOOR_ID_D09_D09R0101_EXIT01
 #Next Zone ID Name
@@ -260,14 +226,14 @@ EVENTDATA_POSTYPE_RAIL
 #position
 0 5 -4
 #size
-1 1
-#event number: 13
+2 1
+#event number: 11
 #Door Event Label
-DOOR_ID_D09_D09R0601_EXIT01
+DOOR_ID_D09_D09R0501_EXIT01
 #Next Zone ID Name
-ZONE_ID_D09R0601
+ZONE_ID_D09R0501
 #Next Door ID Name
-DOOR_ID_D09R0601_D09_EXIT01
+DOOR_ID_D09R0501_D09_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -275,10 +241,10 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 5 -4
+15 3 -3
 #size
-1 1
-#event number: 14
+2 1
+#event number: 12
 #Door Event Label
 DOOR_ID_D09_D09R0901_EXIT01
 #Next Zone ID Name
@@ -294,8 +260,8 @@ EVENTDATA_POSTYPE_RAIL
 #position
 29 3 -3
 #size
-1 1
-#event number: 15
+2 1
+#event number: 13
 #Door Event Label
 DOOR_ID_D09_R10R0901_EXIT01
 #Next Zone ID Name
@@ -312,13 +278,13 @@ EVENTDATA_POSTYPE_RAIL
 0 5 1
 #size
 3 1
-#event number: 16
+#event number: 14
 #Door Event Label
-DOOR_ID_D09_D09R0401_EXIT01
+DOOR_ID_D09_D09R1101_EXIT01
 #Next Zone ID Name
-ZONE_ID_D09R0401
+ZONE_ID_D09R1101
 #Next Door ID Name
-DOOR_ID_D09R0401_D09_EXIT01
+DOOR_ID_D09R1101_D09_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -326,8 +292,42 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-33 3 -2
+41 2 -3
 #size
-1 1
+2 1
+#event number: 15
+#Door Event Label
+DOOR_ID_D09_D09R1201_EXIT02
+#Next Zone ID Name
+ZONE_ID_D09R1201
+#Next Door ID Name
+DOOR_ID_D09R1201_D09_EXIT02
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+60 0 -3
+#size
+2 1
+#event number: 16
+#Door Event Label
+DOOR_ID_D09_D09R0601_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R0601
+#Next Door ID Name
+DOOR_ID_D09R0601_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 4 -4
+#size
+2 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
