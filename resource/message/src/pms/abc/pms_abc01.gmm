@@ -401,171 +401,176 @@
 	</row>
 
 	<row id="search_abc_11">
+		<language name="JPN" width="216">いかりのこな</language>
+		<language name="JPN_KANJI" width="216">いかりのこな</language>
+	</row>
+
+	<row id="search_abc_12">
 		<language name="JPN" width="216">いかりのつほ</language>
 		<language name="JPN_KANJI" width="216">いかりのつほ</language>
 	</row>
 
-	<row id="search_abc_12">
+	<row id="search_abc_13">
 		<language name="JPN" width="216">いかりのまえは</language>
 		<language name="JPN_KANJI" width="216">いかりのまえは</language>
 	</row>
 
-	<row id="search_abc_13">
+	<row id="search_abc_14">
 		<language name="JPN" width="216">いくせ</language>
 		<language name="JPN_KANJI" width="216">いくせ</language>
 	</row>
 
-	<row id="search_abc_14">
+	<row id="search_abc_15">
 		<language name="JPN" width="216">いくよ</language>
 		<language name="JPN_KANJI" width="216">いくよ</language>
 	</row>
 
-	<row id="search_abc_15">
+	<row id="search_abc_16">
 		<language name="JPN" width="216">いくわよ</language>
 		<language name="JPN_KANJI" width="216">いくわよ</language>
 	</row>
 
-	<row id="search_abc_16">
+	<row id="search_abc_17">
 		<language name="JPN" width="216">いしあたま</language>
 		<language name="JPN_KANJI" width="216">いしあたま</language>
 	</row>
 
-	<row id="search_abc_17">
+	<row id="search_abc_18">
 		<language name="JPN" width="216">いしつふて</language>
 		<language name="JPN_KANJI" width="216">いしつふて</language>
 	</row>
 
-	<row id="search_abc_18">
+	<row id="search_abc_19">
 		<language name="JPN" width="216">いたすらこころ</language>
 		<language name="JPN_KANJI" width="216">いたすらこころ</language>
 	</row>
 
-	<row id="search_abc_19">
+	<row id="search_abc_20">
 		<language name="JPN" width="216">いたみわけ</language>
 		<language name="JPN_KANJI" width="216">いたみわけ</language>
 	</row>
 
-	<row id="search_abc_20">
+	<row id="search_abc_21">
 		<language name="JPN" width="216">いちはん</language>
 		<language name="JPN_KANJI" width="216">いちはん</language>
 	</row>
 
-	<row id="search_abc_21">
+	<row id="search_abc_22">
 		<language name="JPN" width="216">いちやもん</language>
 		<language name="JPN_KANJI" width="216">いちやもん</language>
 	</row>
 
-	<row id="search_abc_22">
+	<row id="search_abc_23">
 		<language name="JPN" width="216">いとまる</language>
 		<language name="JPN_KANJI" width="216">いとまる</language>
 	</row>
 
-	<row id="search_abc_23">
+	<row id="search_abc_24">
 		<language name="JPN" width="216">いとをはく</language>
 		<language name="JPN_KANJI" width="216">いとをはく</language>
 	</row>
 
-	<row id="search_abc_24">
+	<row id="search_abc_25">
 		<language name="JPN" width="216">いのちかけ</language>
 		<language name="JPN_KANJI" width="216">いのちかけ</language>
 	</row>
 
-	<row id="search_abc_25">
+	<row id="search_abc_26">
 		<language name="JPN" width="216">いのむー</language>
 		<language name="JPN_KANJI" width="216">いのむー</language>
 	</row>
 
-	<row id="search_abc_26">
+	<row id="search_abc_27">
 		<language name="JPN" width="216">いはる</language>
 		<language name="JPN_KANJI" width="216">いはる</language>
 	</row>
 
-	<row id="search_abc_27">
+	<row id="search_abc_28">
 		<language name="JPN" width="216">いひき</language>
 		<language name="JPN_KANJI" width="216">いひき</language>
 	</row>
 
-	<row id="search_abc_28">
+	<row id="search_abc_29">
 		<language name="JPN" width="216">いやー</language>
 		<language name="JPN_KANJI" width="216">いやー</language>
 	</row>
 
-	<row id="search_abc_29">
+	<row id="search_abc_30">
 		<language name="JPN" width="216">いやしのすす</language>
 		<language name="JPN_KANJI" width="216">いやしのすす</language>
 	</row>
 
-	<row id="search_abc_30">
+	<row id="search_abc_31">
 		<language name="JPN" width="216">いやしのねかい</language>
 		<language name="JPN_KANJI" width="216">いやしのねかい</language>
 	</row>
 
-	<row id="search_abc_31">
+	<row id="search_abc_32">
 		<language name="JPN" width="216">いやしのはとう</language>
 		<language name="JPN_KANJI" width="216">いやしのはとう</language>
 	</row>
 
-	<row id="search_abc_32">
+	<row id="search_abc_33">
 		<language name="JPN" width="216">いやなおと</language>
 		<language name="JPN_KANJI" width="216">いやなおと</language>
 	</row>
 
-	<row id="search_abc_33">
+	<row id="search_abc_34">
 		<language name="JPN" width="216">いらつしやい</language>
 		<language name="JPN_KANJI" width="216">いらつしやい</language>
 	</row>
 
-	<row id="search_abc_34">
+	<row id="search_abc_35">
 		<language name="JPN" width="216">いりゆーしよん</language>
 		<language name="JPN_KANJI" width="216">いりゆーしよん</language>
 	</row>
 
-	<row id="search_abc_35">
+	<row id="search_abc_36">
 		<language name="JPN" width="216">いるみーせ</language>
 		<language name="JPN_KANJI" width="216">いるみーせ</language>
 	</row>
 
-	<row id="search_abc_36">
+	<row id="search_abc_37">
 		<language name="JPN" width="216">いろめかね</language>
 		<language name="JPN_KANJI" width="216">いろめかね</language>
 	</row>
 
-	<row id="search_abc_37">
+	<row id="search_abc_38">
 		<language name="JPN" width="216">いわ</language>
 		<language name="JPN_KANJI" width="216">いわ</language>
 	</row>
 
-	<row id="search_abc_38">
+	<row id="search_abc_39">
 		<language name="JPN" width="216">いわーく</language>
 		<language name="JPN_KANJI" width="216">いわーく</language>
 	</row>
 
-	<row id="search_abc_39">
+	<row id="search_abc_40">
 		<language name="JPN" width="216">いわおとし</language>
 		<language name="JPN_KANJI" width="216">いわおとし</language>
 	</row>
 
-	<row id="search_abc_40">
+	<row id="search_abc_41">
 		<language name="JPN" width="216">いわくたき</language>
 		<language name="JPN_KANJI" width="216">いわくたき</language>
 	</row>
 
-	<row id="search_abc_41">
+	<row id="search_abc_42">
 		<language name="JPN" width="216">いわなたれ</language>
 		<language name="JPN_KANJI" width="216">いわなたれ</language>
 	</row>
 
-	<row id="search_abc_42">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">いんせくた</language>
 		<language name="JPN_KANJI" width="216">いんせくた</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">いんふあいと</language>
 		<language name="JPN_KANJI" width="216">いんふあいと</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">いんふらんと</language>
 		<language name="JPN_KANJI" width="216">いんふらんと</language>
 	</row>
