@@ -189,12 +189,18 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
       else if( (fmw->game_init_mode == GAMEINIT_MODE_CONTINUE) && (outdoor != TRUE) )
-      { // 「つづきから」で屋内にいる場合 ==> 表示なし
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+      { // 「つづきから」で屋内にいる場合 ==> 現在時刻の季節
+        GMTIME* gmtime;
+        SAVE_CONTROL_WORK* scw;
+        scw    = GAMEDATA_GetSaveControlWork( gamedata );
+        gmtime = SaveData_GetGameTime( scw );
+        season = PMSEASON_CalcSeasonID_bySec( gmtime->start_sec );
+        season = (season + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE  );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
       else
-      { // それ以外 ==> 開始時の季節を表示
+      { // それ以外 ==> セーブした時点の季節を表示
         season = (season + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
         FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
