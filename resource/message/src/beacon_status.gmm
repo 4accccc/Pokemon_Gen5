@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2009-12-18T12:07:46"/>
+	<create user="ohmori" host="W00185" date="2009-12-18T15:06:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -289,51 +289,51 @@
 
 
 	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]が
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』が
 ちかくに　います</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』が
 ちかくに　います</language>
 	</row>
 
 	<row id="msg_beacon_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パワーで
-ピカチュウが　たいりょうはっせい！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パワーで
-ピカチュウが　たいりょうはっせい！</language>
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
+ポケモンと　そうぐう　しづらくなった！</language>
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
+ポケモンと　そうぐう　しづらくなった！</language>
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　もっている
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　もっている
 [1:02:ポケモンニックネーム:1]が　しんかした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　もっている
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　もっている
 [1:02:ポケモンニックネーム:1]が　しんかした！</language>
 	</row>
 
 	<row id="msg_beacon_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　もっている
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　もっている
 [1:02:ポケモンニックネーム:1]は　レベルがあがった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　もっている
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　もっている
 [1:02:ポケモンニックネーム:1]は　レベルがあがった！</language>
 	</row>
 
 	<row id="msg_beacon_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』は
 [1:02:ポケモンニックネーム:1]を　つかまえた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』は
 [1:02:ポケモンニックネーム:1]を　つかまえた！</language>
 	</row>
 
 	<row id="msg_beacon_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』は
 ユニオンルームに　はいった</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』は
 ユニオンルームに　はいった</language>
 	</row>
 
 	<row id="msg_beacon_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』は
 ユニオンルームから　でた</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』は
 ユニオンルームから　でた</language>
 	</row>
 
