@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T17:49:19"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:28:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,13 +304,13 @@
 いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
 アララギはかせ　とは
 だいがくじだい　からの　ともだちでさ[BE:00:ページ切り替え（行送り）]
-アナタたちの　てだすけを　たのまれたの</language>
+アナタたちの　てだすけを　たのまれたの[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">改めて　自己紹介するね[BE:01:ページ切り替え（クリア）]
 アタシは　マコモ
 いわゆる　発明家です[BE:01:ページ切り替え（クリア）]
 アララギ博士とは
 大学時代からの　友達でさ[BE:00:ページ切り替え（行送り）]
-アナタたちの　手助けを頼まれたの</language>
+アナタたちの　手助けを頼まれたの[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -320,9 +320,9 @@
 　msg_c01r0102_inventor_03表示</comment>
 		<attribute name="キャラ指定">発明家</attribute>
 		<language name="JPN" width="256">あっ！　そのＣギア
-つかえるように　とうろくしてあげる</language>
+つかえるように　とうろくしてあげる[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">あっ！　そのＣギア
-使えるように　登録してあげる</language>
+使えるように　登録してあげる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -331,9 +331,9 @@
 ・No000「わざマシン？？：いあいぎり」</comment>
 		<attribute name="キャラ指定">発明家</attribute>
 		<language name="JPN" width="256">で　アタシからの　バックアップです
-この　わざマシンを　どうぞ！</language>
+この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">で　アタシからの　バックアップです
-この　わざマシンを　どうぞ！</language>
+この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
