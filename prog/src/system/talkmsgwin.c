@@ -81,6 +81,7 @@ enum {
 	WINSEQ_OPEN,
 	WINSEQ_HOLD,
 	WINSEQ_CLOSE,
+	WINSEQ_END,
 };
 
 typedef enum {
@@ -551,6 +552,9 @@ static void initWindow( TMSGWIN* tmsgwin )
 {
 	tmsgwin->seq = WINSEQ_EMPTY;
 	tmsgwin->printStream = NULL;
+	VEC_Fx16Set(&tmsgwin->tailData.vtxTail0, 0, 0, 0);
+	VEC_Fx16Set(&tmsgwin->tailData.vtxTail1, 0, 0, 0);
+	VEC_Fx16Set(&tmsgwin->tailData.vtxTail2, 0, 0, 0);
 }
 
 //------------------------------------------------------------------
@@ -659,6 +663,7 @@ static void openWindow( TMSGWIN* tmsgwin )
 static void closeWindow( TMSGWIN* tmsgwin )
 {
 	tmsgwin->seq = WINSEQ_CLOSE;
+	tmsgwin->timer = 4;
 }
 
 //------------------------------------------------------------------
@@ -711,6 +716,14 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
     }
 		break;
 	case WINSEQ_CLOSE:
+		if(tmsgwin->timer){
+			tmsgwin->timer--;
+			break;
+		}
+		//deleteWindow(tmsgwinSys, tmsgwin);
+		tmsgwin->seq = WINSEQ_END;
+		break;
+	case WINSEQ_END:
 		deleteWindow(tmsgwinSys, tmsgwin);
 		break;
 	}
@@ -754,6 +767,10 @@ static void mainfuncWindowAlone(
 	case WINSEQ_HOLD:
 		break;
 	case WINSEQ_CLOSE:
+		//deleteWindow(tmsgwinSys, tmsgwin);
+		tmsgwin->seq = WINSEQ_END;
+		break;
+	case WINSEQ_END:
 		deleteWindow(tmsgwinSys, tmsgwin);
 		break;
 	}
@@ -766,6 +783,7 @@ static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	case WINSEQ_EMPTY:
 	case WINSEQ_IDLING:
 	case WINSEQ_CLOSE:
+	case WINSEQ_END:
 	case WINSEQ_OPEN_START:
 		break;
 	case WINSEQ_OPEN:

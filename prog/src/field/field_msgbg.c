@@ -2427,7 +2427,8 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
 		GFL_STR_DeleteBuffer( tmsg->strBuf );
   }
   
-  TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  //TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  TALKMSGWIN_CloseWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   keyCursor_Delete( &tmsg->cursor_work );
   GFL_HEAP_FreeMemory( tmsg );
 }
