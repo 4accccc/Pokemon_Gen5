@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/17 (Thu) 20:59
+ * @date  2009 12/18 (Fri) 10:48
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -22,7 +22,7 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_PALPARK_SCR_OFFSET,          //(10290),
       ID_PALPARK_SCR_OFFSET_END,      //(10309),
       NARC_script_seq_palpark_scr_bin,
-      NARC_script_message_namechange_scr_dat
+      NARC_script_message_palpark_scr_dat
     },
     {//化石復元
       ID_FOSSIL_SCR_OFFSET,           //(10280),

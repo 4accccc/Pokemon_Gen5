@@ -19,6 +19,7 @@ _EVENT_DATA_END
 
 
 DEFINE_LOCAL EndMsg        //ラストメッセージ
+DEFINE_LOCAL TEST
 
 EVENT_START ev_palpark_reception
   _TALK_OBJ_START()
@@ -48,6 +49,8 @@ EVENT_START ev_palpark_reception
         _CALL save        //output:SCWK_ANSWER
         IF $SCWK_ANSWER == TRUE THEN
           _CALL play_palpark
+        ELSE
+          _CALL see_you
         ENDIF
       ELSE                              //ＤＳない
         _CALL see_you
@@ -75,6 +78,13 @@ see_you:
   $EndMsg = msg_palpark_03
   _CALL end_msg
 _RET
+
+see_you2:
+  //「またね」
+  $EndMsg = msg_palpark_13
+  _CALL end_msg
+_RET
+
 
 //セーブ                   output:SCWK_ANSWER
 save:
@@ -108,7 +118,7 @@ play_palpark:
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_08 )
   _BALLOONWIN_CLOSE()
 
-  //主人公アニメ
+  //主人公アニメ    todo
 
   //「はじめるよ」
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
@@ -116,5 +126,64 @@ play_palpark:
 
   //パルパークコール
   _PALPARK_CALL()
+
+  //主人公アニメ    todo
+
+  //無事終了した？ todo
+  IF $TEST == 0 THEN
+    _CALL connect_error
+  ELSE
+    //「おつかれ」
+    _BALLOONWIN_TALKOBJ_MSG( msg_palpark_10 )
+    _BALLOONWIN_CLOSE()
+
+    //ハイスコア？ todo
+    IF $TEST == 0 THEN
+      _CALL score_msg
+      //「捕まえたポケはボックスへ」
+      _BALLOONWIN_TALKOBJ_MSG( msg_palpark_11 )
+      _BALLOONWIN_CLOSE()
+    ELSE
+      //つかまえたポケいるか？ todo
+      IF $TEST == 0 THEN
+        //「捕まえたポケはボックスへ」
+        _BALLOONWIN_TALKOBJ_MSG( msg_palpark_11 )
+        _BALLOONWIN_CLOSE()
+      ELSE
+        //「ざんねん」
+        _BALLOONWIN_TALKOBJ_MSG( msg_palpark_12 )
+        _BALLOONWIN_CLOSE()
+      ENDIF
+    ENDIF
+
+    _CALL see_you2
+  ENDIF
+_RET
+
+connect_error:
+  _CALL see_you2
+_RET
+
+score_msg:
+  DEFINE_LOCAL score
+  DEFINE_LOCAL score_msg
+
+  IF $score >= 500 THEN
+    $score_msg = msg_palpark_score_06
+  ELSIF $score >= 400 THEN
+    $score_msg = msg_palpark_score_05
+  ELSIF $score >= 300 THEN
+    $score_msg = msg_palpark_score_04
+  ELSIF $score >= 200 THEN
+    $score_msg = msg_palpark_score_03
+  ELSIF $score >= 100 THEN
+    $score_msg = msg_palpark_score_02
+  ELSE
+    $score_msg = msg_palpark_score_01
+  ENDIF
+
+  //「レベル○○」
+  _BALLOONWIN_TALKOBJ_MSG( score_msg )
+  _BALLOONWIN_CLOSE()
 
 _RET
