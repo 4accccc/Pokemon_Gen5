@@ -3,19 +3,17 @@
 #define ZONE_C05_EVD_H
 
 #define DOOR_ID_C05_H02_EXIT01            0
-#define DOOR_ID_C05_H02_EXIT03            1
-#define DOOR_ID_C05_H02_EXIT02            2
-#define DOOR_ID_C05_EXIT10                3
-#define DOOR_ID_C05_EXIT11                4
-#define DOOR_ID_C05_EXIT12                5
-#define DOOR_ID_C05_EXIT13                6
-#define DOOR_ID_C05_EXIT15                7
-#define DOOR_ID_C05_EXIT16                8
-#define DOOR_ID_C05_EXIT17                9
-#define DOOR_ID_C05_EXIT18               10
-#define DOOR_ID_C05_EXIT19               11
-#define DOOR_ID_C05_EXIT14               12
-#define DOOR_ID_C05_EXIT20               13
+#define DOOR_ID_C05_EXIT10                1
+#define DOOR_ID_C05_EXIT11                2
+#define DOOR_ID_C05_EXIT12                3
+#define DOOR_ID_C05_EXIT13                4
+#define DOOR_ID_C05_EXIT15                5
+#define DOOR_ID_C05_EXIT16                6
+#define DOOR_ID_C05_EXIT17                7
+#define DOOR_ID_C05_EXIT18                8
+#define DOOR_ID_C05_EXIT19                9
+#define DOOR_ID_C05_EXIT14               10
+#define DOOR_ID_C05_EXIT20               11
 
 #endif //ZONE_C05_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
