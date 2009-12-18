@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-12-12T16:51:15" source="pcmachine01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-18T12:25:22" source="pcmachine01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-12-12T16:51:15" source="pcmachine01.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-12-18T12:25:22" source="pcmachine01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="3" xyz="-2.629639 0.321045 -2.261963" whd="5.330811 5.088135 4.683594"/>
 
-<tex_image_array size="6">
+<tex_image_array size="7">
 	<tex_image index="0" name="pc_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
@@ -68,21 +68,21 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="pc_meka02"
-		width="8" height="32" original_width="8" original_height="32"
-		format="palette16"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette256"
 		color0_mode="color"
 		palette_name="pc_meka02_pl"
 		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka02.tga"
 	>
 		<bitmap size="64">
-			2222 2222 2222 2222 2222 2222 1111 1111
-			1111 1111 1111 1111 0000 0000 0000 0000
-			0000 0000 3333 3333 3333 3333 4444 4444
-			4444 4444 4444 4444 4444 4444 5555 5555
-			6666 6666 6666 6666 6666 6666 9999 9999
-			9999 9999 9999 9999 aaaa aaaa aaaa aaaa
-			aaaa aaaa bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb cccc cccc cccc cccc cccc cccc
+			0808 0808 0808 0808 1a1a 1a1a 1717 1717
+			1919 1919 1616 1616 1818 1818 1515 1515
+			1414 1414 1212 1212 1010 1010 0b0b 0b0b
+			0c0c 0c0c 0909 0909 0505 0505 1313 1313
+			0101 0101 0707 0707 0000 0000 0606 0606
+			0404 0404 0f0f 0f0f 0303 0303 0e0e 0e0e
+			0202 0202 0d0d 0d0d 1111 1111 1111 1111
+			0a0a 0a0a 0a0a 0a0a 0808 0808 0808 0808
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="pc_meka03.1"
@@ -93,8 +93,8 @@
 		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.1.tga"
 	>
 		<bitmap size="16">
-			8888 8888 8888 8888 7777 7777 7777 7777
-			6666 6666 6666 6666 6666 6666 6666 6666
+			bbbb bbbb bbbb bbbb aaaa aaaa aaaa aaaa
+			9999 9999 9999 9999 9999 9999 9999 9999
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="pc_meka03.2"
@@ -105,8 +105,8 @@
 		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.2.tga"
 	>
 		<bitmap size="16">
-			5555 5555 5555 5555 3333 3333 3333 3333
-			4444 4444 4444 4444 4444 4444 4444 4444
+			8888 8888 8888 8888 6666 6666 6666 6666
+			7777 7777 7777 7777 7777 7777 7777 7777
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="pc_meka03.3"
@@ -117,7 +117,19 @@
 		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.3.tga"
 	>
 		<bitmap size="16">
-			0000 0000 0000 0000 1111 1111 1111 1111
+			3333 3333 3333 3333 4444 4444 4444 4444
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="pc_meka03.4"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="pc_meka03"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.4.tga"
+	>
+		<bitmap size="16">
+			1111 1111 1111 1111 0000 0000 0000 0000
 			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
@@ -131,13 +143,15 @@
 		7fff 5dbf 6685 7f45 6ae8 7328 7b68 4e72
 		6bff 6f7b 5ef7 56b5 5294 4631 318c 18c6
 	</tex_palette>
-	<tex_palette index="2" name="pc_meka02_pl" color_size="16">
-		6685 6ae8 7769 4bb3 2bbb 1bbe 179f 1f1b
-		1eb7 1b1f 2e3f 2dff 2d7f 5ef7 56b5 4631
+	<tex_palette index="2" name="pc_meka02_pl" color_size="32">
+		1a7f 1b1e 2d7f 2dff 2e3f 375f 3a57 3a97
+		3def 426b 4631 46ad 4725 4a59 4a79 4a99
+		4b48 4e73 4eef 4efa 4fa9 5ecd 6710 6b52
+		7fa5 7fe9 7fec 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="pc_meka03" color_size="16">
-		027a 0aff 171f 3275 3697 25f1 5ef7 56b5
-		4631 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		0f9f 035e 3fbf 027a 0aff 171f 3275 3697
+		25f1 5ef7 56b5 4631 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -631,7 +645,7 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="2" name="polygon2"
-		vertex_size="12" polygon_size="6"
+		vertex_size="18" polygon_size="6"
 		triangle_size="6" quad_size="0"
 		volume_min="-1.479736 1.999512 -1.266113"
 		volume_max="1.479736 1.999512 1.297119"
@@ -641,35 +655,55 @@
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="3">
-				<primitive index="0" type="triangle_strip" vertex_size="5">
+			<primitive_array size="1">
+				<primitive index="0" type="triangles" vertex_size="18">
 					<mtx idx="0"/>
-					<tex st="-5.500000 31.250000"/>
+					<tex st="0.000000 11.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="1.479736 1.999512 0.015381"/>
+					<tex st="3.937500 11.000000"/>
 					<pos_xz xz="0.739990 -1.266113"/>
-					<tex st="-5.500000 23.625000"/>
+					<tex st="3.937500 8.187500"/>
 					<clr rgb="31 31 17"/>
 					<pos_xz xz="0.000000 0.015381"/>
-					<tex st="-5.500000 31.250000"/>
-					<clr rgb="31 31 31"/>
-					<pos_xz xz="-0.739990 -1.266113"/>
-					<pos_xz xz="-1.479736 0.015381"/>
-				</primitive>
-				<primitive index="1" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="1.479736 1.999512"/>
-					<tex st="-5.500000 23.625000"/>
-					<clr rgb="31 31 17"/>
-					<pos_xy xy="0.000000 1.999512"/>
-					<tex st="-5.500000 31.250000"/>
+					<tex st="0.000000 11.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.739990 1.297119"/>
-					<pos_xy xy="-0.739990 1.999512"/>
-				</primitive>
-				<primitive index="2" type="triangles" vertex_size="3">
-					<pos_xz xz="-1.479736 0.015381"/>
+					<tex st="3.937500 11.000000"/>
+					<pos_xz xz="1.479736 0.015381"/>
+					<tex st="3.937500 8.187500"/>
+					<clr rgb="31 31 17"/>
+					<pos_xy xy="0.000000 1.999512"/>
+					<tex st="0.000000 11.000000"/>
+					<clr rgb="31 31 31"/>
 					<pos_xz xz="-0.739990 1.297119"/>
-					<tex st="-5.500000 23.625000"/>
+					<tex st="3.937500 11.000000"/>
+					<pos_xy xy="0.739990 1.999512"/>
+					<tex st="3.937500 8.187500"/>
+					<clr rgb="31 31 17"/>
+					<pos_xz xz="0.000000 0.015381"/>
+					<tex st="0.000000 11.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="-1.479736 1.999512"/>
+					<tex st="3.937500 11.000000"/>
+					<pos_xz xz="-0.739990 1.297119"/>
+					<tex st="3.937500 8.187500"/>
+					<clr rgb="31 31 17"/>
+					<pos_xz xz="0.000000 0.015381"/>
+					<tex st="0.000000 11.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xz xz="-0.739990 -1.266113"/>
+					<tex st="3.937500 11.000000"/>
+					<pos_xz xz="-1.479736 0.015381"/>
+					<tex st="3.937500 8.187500"/>
+					<clr rgb="31 31 17"/>
+					<pos_xy xy="0.000000 1.999512"/>
+					<tex st="0.000000 11.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xz xz="0.739990 -1.266113"/>
+					<tex st="3.937500 11.000000"/>
+					<pos_xy xy="-0.739990 1.999512"/>
+					<tex st="3.937500 8.187500"/>
 					<clr rgb="31 31 17"/>
 					<pos_xz xz="0.000000 0.015381"/>
 				</primitive>
@@ -759,7 +793,7 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="4"
-		vertex_size="198" polygon_size="66"
+		vertex_size="204" polygon_size="66"
 		triangle_size="20" quad_size="46"
 		volume_min="-2.629639 0.321045 -2.261963"
 		volume_max="2.701172 5.409424 2.421875"
@@ -772,7 +806,7 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="198" polygon_size="66"
+<output_info vertex_size="204" polygon_size="66"
 	triangle_size="20" quad_size="46"/>
 
 </body>

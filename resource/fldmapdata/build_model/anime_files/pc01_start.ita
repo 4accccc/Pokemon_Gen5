@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-11-16T13:16:19" source="pc01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-12-18T12:32:38" source="pc01_start.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_srt_info
-	frame_size="81"
+	frame_size="16"
 	tool_start_frame="0"
-	tool_end_frame="80"
+	tool_end_frame="15"
 	interpolation="frame"
 	tex_matrix_mode="maya"
 	compress_material="on" material_size="3 3"
@@ -31,16 +31,9 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="81">
-	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
-	0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500
-	0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000
-	0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500
-	0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500
-	0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500 0.687500
-	0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000
-	0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000 0.375000
-	0.375000
+<tex_translate_data size="16">
+	0.000000 0.000000 0.000000 0.687988 0.687988 0.687988 0.375000 0.375000 0.375000 0.687500
+	0.687500 0.687500 0.375000 0.375000 0.375000 0.375000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
@@ -48,7 +41,7 @@
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="81" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="16" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
