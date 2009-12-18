@@ -268,7 +268,7 @@ EVENT_START ev_union
   // C-gear持ってない場合
   IF $have_cgear != TRUE THEN 
     //「ただいま じゅんびちゅう です！」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_06 ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_06, SCWK_TARGET_OBJID, WIN_DOWN ) 
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF 
@@ -276,7 +276,7 @@ EVENT_START ev_union
   // 駄目タマゴを持っている場合
   IF $dame_egg_count > 0 THEN
     //「つれていけない ポケモンがいます」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_07 ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_07, SCWK_TARGET_OBJID, WIN_DOWN ) 
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -285,7 +285,7 @@ EVENT_START ev_union
   IF ($have_cgear == TRUE) && ($dame_egg_count == 0) THEN 
     //「ユニオンルームにようこそ」
     _TALK_OBJ_START()
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_01 ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_01, SCWK_TARGET_OBJID, WIN_DOWN ) 
     // メニュー表示
     _BMPMENU_INIT_EX( 1, 8, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
@@ -308,7 +308,7 @@ EVENT_START ev_union
   // 説明を聞く場合
   IF $explain == TRUE THEN
     //「へやにはいりますか？」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_02 )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_02, SCWK_TARGET_OBJID, WIN_DOWN )
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『はい』
@@ -320,7 +320,7 @@ EVENT_START ev_union
   // ユニオンルームに入る場合
   IF $room_in == TRUE THEN
     //「ワイヤレスつうしんをかいしします」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_03 )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_03, SCWK_TARGET_OBJID, WIN_DOWN )
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『いいえ』
@@ -354,7 +354,7 @@ EVENT_START ev_union
   // 入場
   IF $room_in == TRUE THEN
     //「おたのしみ ください」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_04 )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, WIN_DOWN )
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL sub_pokecen_elevator_in
@@ -369,7 +369,7 @@ EVENT_START ev_union
   // キャンセルした場合
   IF $room_in != TRUE THEN
     //「また おこしください」
-    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_05 )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_05, SCWK_TARGET_OBJID, WIN_DOWN )
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -467,10 +467,6 @@ sub_pokecen_elevator_out:
 
   $WK_SYS_SCENE_COMM = 0
 
-  //自機を下向きにする
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_down )
-  _OBJ_ANIME_WAIT()
-
   _PLAYER_POS_GET( BASEX, BASEZ )
   $BASEZ += 3  //受付のみなさんは基本位置がエレベーターの３歩下
   _GET_OBJID( LWK_WOMANID, SCWK_ANSWER, BASEX, 3, BASEZ )
@@ -481,17 +477,31 @@ sub_pokecen_elevator_out:
     $SCWK_TARGET_OBJID = $LWK_WOMANID
   ENDIF
 
+//エレベーター上昇アニメ準備：自機を見えなくしておく
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish )
+  _OBJ_ANIME_WAIT()
+
+//エレベーター上昇アニメ準備：適用した最初のフレームで停止しておく
   _PLAYER_POS_GET( BASEX, BASEZ )
   _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
+  _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
+  _BMODEL_ANIME_STOP( LWK_BM_FLOOR_ID )
+
+//マップフェードイン
+	_MAP_FADE_BLACK_IN_FORCE( )
+	_MAP_FADE_END_CHECK()
+
 //エレベーター上昇アニメ
   _SE_PLAY( SEQ_SE_FLD_23 )
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
+  //自機上昇演出開始
   _PLAYER_UPDOWN_EFFECT( 1, 40, 64 )
 
-	_MAP_FADE_BLACK_IN_FORCE( )
+  //自機を下向きにし、表示する
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_down )
+  _OBJ_ANIME_WAIT()
 
   _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
-	_MAP_FADE_END_CHECK()
   _SE_STOP()
 
   _BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
@@ -521,7 +531,12 @@ sub_pokecen_elevator_out:
   _RET
 }
 
+_ANIME_LABEL    anm_player_vanish
+  _ANIME_DATA   AC_VANISH_ON, 1
+  _ANIME_DATA   ACMD_END, 0
+
 _ANIME_LABEL    anm_player_turn_down
+  _ANIME_DATA   AC_VANISH_OFF, 1
   _ANIME_DATA   AC_DIR_D, 1
   _ANIME_DATA   ACMD_END,0
 
