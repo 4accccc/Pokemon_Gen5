@@ -25,7 +25,7 @@ CameraNo,Length,Pitch,Yow,Roll,ViewType,depth,fovy,Near,Far,Player Link ÅõorÅ~,Å
 23,1b0,25d8,0,0,PER,ZBUF,e38,1,400,Åõ,0,4000,0,WFBCçÇÇ≥2,
 24,25d,25d8,0,0,PER,ZBUF,e38,1,400,Åõ,0,4000,0,WFBCçÇÇ≥3,
 25,17b,24fb,0,0,PER,ZBUF,df8,1,400,Åõ,0,51000,4b000,C03ÉxÉCÉTÉCÉh,
-26,160,24fb,0,0,PER,ZBUF,e38,1,400,Åõ,0,61000,44000,H05,
+26,160,24fb,0,0,PER,ZBUF,e38,1,490,Åõ,0,61000,44000,H05,
 27,ed,25d8,0,0,PER,ZBUF,e38,1,510,Åõ,0,4000,0,C07ïXÉWÉÄ,
 28,ed,25d8,0,0,PER,ZBUF,e38,1,400,Åõ,0,4000,0,ñ¢íË,
 29,ed,25d8,0,0,PER,ZBUF,e38,1,400,Åõ,0,4000,0,ñ¢íË,
