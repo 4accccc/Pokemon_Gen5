@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-09-11T17:39:24"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:02:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -368,14 +368,14 @@
 
 	<row id="AURA_STR_005">
 		<language name="JPN" width="256">[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]が　つながりました</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:1]赤外線　通信[FF:00:色:0]が　つながりました</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:1]赤外線通信[FF:00:色:0]が　つながりました</language>
 	</row>
 
 	<row id="AURA_STR_006">
 		<language name="JPN" width="256">つながりが　きれました
 [FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　してください</language>
 		<language name="JPN_KANJI" width="256">つながりが　きれました
-[FF:00:色:1]赤外線　通信[FF:00:色:0]を　してください</language>
+[FF:00:色:1]赤外線通信[FF:00:色:0]を　してください</language>
 	</row>
 
 	<row id="AURA_BTN_000">
