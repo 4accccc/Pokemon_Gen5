@@ -10,6 +10,7 @@
 //=============================================================================
 #include <gflib.h>
 #include "system/bmp_winframe.h" // for BmpWinFrame_
+#include "system/bmp_menulist.h" // for BMPMENU_LIST_WORK
 
 // 文字列関連
 #include "print/gf_font.h"
@@ -47,6 +48,18 @@ enum
  */
 //=============================================================================
 
+#define LISTDATA_STR_LENGTH	(32)
+
+//-------------------------------------
+///	リスト
+//=====================================
+typedef struct 
+{
+	BMPMENULIST_WORK	*p_list;
+	BMP_MENULIST_DATA *p_list_data;
+	u32		select;
+} INTRO_LIST_WORK;
+
 //--------------------------------------------------------------
 ///	メッセージ処理 メインワーク
 //==============================================================
@@ -55,16 +68,23 @@ struct _INTRO_MSG_WORK {
   HEAPID        heap_id;
   PRINT_QUE*    print_que;
   WORDSET*      wordset;
-  PRINT_STREAM* print_stream;
-  GFL_TCBLSYS*  msg_tcblsys;
   GFL_MSGDATA*  msghandle;
   GFL_FONT*     font;
+
+  // ストリーム再生
+  PRINT_STREAM* print_stream;
+  GFL_TCBLSYS*  msg_tcblsys;
   GFL_BMPWIN*   win_dispwin;
-  GFL_ARCUTIL_TRANSINFO  bgchar_frame;
+  
+  // リスト
+  INTRO_LIST_WORK   list;
+  PRINT_UTIL        print_util;
+  GFL_BMPWIN*       win_list;
+
+  // 文字列
   STRBUF*   strbuf;
   STRBUF*   exp_strbuf;
 };
-
 
 //=============================================================================
 /**
@@ -88,7 +108,7 @@ struct _INTRO_MSG_WORK {
  *	@retval INTRO_MSG_WORK* wk メインワーク
  */
 //-----------------------------------------------------------------------------
-INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, HEAPID heap_id )
+INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, GflMsgLoadType type, HEAPID heap_id )
 {
   INTRO_MSG_WORK* wk;
 
@@ -101,13 +121,12 @@ INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, HEAPID heap_id )
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
   
   // メッセージハンドルをROMに展開しておく
-  wk->msghandle = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, msg_dat_id, heap_id );
+  wk->msghandle = GFL_MSG_Create( type, ARCID_MESSAGE, msg_dat_id, heap_id );
 
   wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 1, 0 );
 
   // メッセージ用フォント転送
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*PLTID_BG_TEXT_M, 0x20, heap_id );
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_TEXT_M, 0x20, heap_id );
 
   // フレームウィンドウ用のキャラを用意
   BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_FIELD, heap_id );
@@ -117,6 +136,12 @@ INTRO_MSG_WORK* INTRO_MSG_Create( u16 msg_dat_id, HEAPID heap_id )
 
   wk->strbuf      = GFL_STR_CreateBuffer( STRBUF_SIZE, wk->heap_id );
   wk->exp_strbuf  = GFL_STR_CreateBuffer( STRBUF_SIZE, wk->heap_id );
+
+  // ウィンドウ生成
+  // @TODO リストを出す場所指定
+  wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 24, 14, 7, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリアしておく
+  GFL_BMPWIN_MakeTransWindow_VBlank( wk->win_list );
 
   return wk;
 }
@@ -147,6 +172,11 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
   {
     GFL_BMPWIN_Delete( wk->win_dispwin );
   }
+  
+  if( wk->win_list )
+  {
+    GFL_BMPWIN_Delete( wk->win_list );
+  }
 
   GFL_TCBL_Exit( wk->msg_tcblsys );
 
@@ -158,6 +188,23 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 
   // メインワーク 破棄
   GFL_HEAP_FreeMemory( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージリソースをリロード
+ *
+ *	@param	INTRO_MSG_WORK* wk
+ *	@param	type
+ *	@param	msg_dat_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_ReloadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id )
+{
+  GFL_MSG_Delete( wk->msghandle );
+  wk->msghandle = GFL_MSG_Create( type, ARCID_MESSAGE, msg_dat_id, wk->heap_id );
 }
 
 //-----------------------------------------------------------------------------
@@ -200,7 +247,7 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callba
   msgspeed  = MSGSPEED_GetWait();
   win       = wk->win_dispwin;
 
-  HOSAKA_Printf("msgspeed = %d str_id=%d \n", msgspeed, str_id);
+//  HOSAKA_Printf("msgspeed = %d str_id=%d \n", msgspeed, str_id);
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), clear_color);
   GFL_FONTSYS_SetColor(1, 2, clear_color);
@@ -262,6 +309,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
     case PRINTSTREAM_STATE_PAUSE : // キー入力待ち
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
       {
+//      GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
       }
       break;
@@ -321,4 +369,162 @@ static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDA
   return dst;
 }
 #endif
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PRINT_UTILを設定し取得
+ *
+ *	@param	MSG_WORK *wk	ワーク
+ *	@param	BMPWIN
+ *
+ *	@return	PRINT_UTIL
+ */
+//-----------------------------------------------------------------------------
+static PRINT_UTIL * MSG_GetPrintUtil( INTRO_MSG_WORK *wk, GFL_BMPWIN*	p_bmpwin )
+{	
+	PRINT_UTIL_Setup( &wk->print_util, p_bmpwin );
+	return &wk->print_util;
+}
+
+//=============================================================================
+/**
+ *					LIST
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リストシステム　初期化
+ *
+ *	@param	INTRO_LIST_WORK *wk	ワーク
+ *	@param	*cp_tbl					設定テーブル
+ *	@param	tbl_max					設定テーブル数
+ *
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u32 tbl_max )
+{	
+  INTRO_LIST_WORK* list = &wk->list;
+  HEAPID heapID         = wk->heap_id;
+  GFL_BMPWIN* p_bmpwin  = wk->win_list;
+
+	//クリア
+	GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK));
+
+	//LISTDATA create
+	{	
+		int i;
+
+		list->p_list_data	= BmpMenuWork_ListCreate( tbl_max, heapID );
+
+		for( i = 0; i < tbl_max; i++ )
+		{	
+      GFL_MSG_GetString( wk->msghandle, cp_tbl[i].str_id, wk->strbuf );
+
+      BmpMenuWork_ListAddString( &list->p_list_data[i], wk->strbuf, cp_tbl[i].param, heapID );
+		}
+	}
+
+	//LIST create
+	{	
+		BMPMENULIST_HEADER	header;
+
+		GFL_STD_MemClear( &header, sizeof(BMPMENULIST_HEADER));
+		header.list				= list->p_list_data;
+		header.win				= p_bmpwin;
+		header.count			= tbl_max;
+		header.line				= 5;
+		header.rabel_x		= 0;
+		header.data_x			= 16;
+		header.cursor_x		= 0;
+		header.line_y			= 2;
+		header.f_col			= 1;
+		header.b_col			= 15;
+		header.s_col			= 2;
+		header.msg_spc		= 0;
+		header.line_spc		= 0;
+		header.page_skip	= BMPMENULIST_LRKEY_SKIP;
+		header.font				= 0;
+		header.c_disp_f		= 0;
+		header.work				= NULL;
+		header.font_size_x= 16;
+		header.font_size_y= 16;
+		header.msgdata		= NULL;
+		header.print_util	= MSG_GetPrintUtil( wk, p_bmpwin );
+		header.print_que	= wk->print_que;
+		header.font_handle= wk->font;
+
+		list->p_list	= BmpMenuList_Set( &header, 0, 0, heapID );
+		BmpMenuList_SetCursorBmp( list->p_list, heapID );
+	}
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リストシステム	破棄
+ *
+ *	@param	INTRO_LIST_WORK *wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_LIST_Finish( INTRO_MSG_WORK *wk )
+{
+  INTRO_LIST_WORK* list = &wk->list;
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリア
+  GFL_BMPWIN_TransVramCharacter( wk->win_list ); // 転送
+
+	BmpMenuList_Exit( list->p_list, NULL, NULL );
+	BmpMenuWork_ListDelete( list->p_list_data );
+	GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リストシステム	メイン処理
+ *
+ *	@param	INTRO_LIST_WORK *wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_LIST_Main( INTRO_MSG_WORK *wk )
+{	
+  INTRO_LIST_WORK* list = &wk->list;
+
+	list->select	= BmpMenuList_Main(	list->p_list );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リスト決定待ち
+ *
+ *	@param	const INTRO_LIST_WORK *cwk	ワーク
+ *	@param	*p_select								リストのインデックス
+ *
+ *	@retval	TRUEならば決定
+ *	@retval	FALSEならば選択中
+ */
+//-----------------------------------------------------------------------------
+INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_select )
+{	
+  INTRO_LIST_WORK* list = &wk->list;
+
+	switch( list->select)
+  { 
+  case BMPMENULIST_NULL:
+    return INTRO_LIST_SELECT_NONE;
+
+	case BMPMENULIST_CANCEL:
+    return INTRO_LIST_SELECT_CANCEL;
+
+  default:
+		if( p_select )
+		{	
+			*p_select	= list->select;
+		}
+		return INTRO_LIST_SELECT_DECIDE;
+  }
+
+	return INTRO_LIST_SELECT_NONE;
+}
 

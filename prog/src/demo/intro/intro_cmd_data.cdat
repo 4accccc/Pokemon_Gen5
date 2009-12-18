@@ -11,6 +11,7 @@
 
 // コマンド定義 >> demo3d_cmd_def.h
 
+#include "message.naix" // for NARC_message_
 #include "msg/msg_intro.h"  // for GMM Index
 
 // シーン init
@@ -18,8 +19,6 @@ static const INTRO_CMD_DATA c_intro_scene_init[] =
 { 
   { INTRO_CMD_TYPE_BG_LOAD, { 0 }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING } },
-
-  // ↑ROMアクセスはここまで↑
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
 };
@@ -29,9 +28,11 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 { 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
   
-  { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, } },
-    { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // YES=かな
-    { INTRO_CMD_TYPE_SELECT_MOJI, 1 }, //  NO=漢字
+  { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, }, },
+    { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // かな
+    { INTRO_CMD_TYPE_SELECT_MOJI, 1 }, // 漢字
+
+  { INTRO_CMD_TYPE_RELOAD_GMM, { GFL_MSG_LOAD_FAST, NARC_message_intro_dat } }, // GMMをリロード（メモリに全展開）
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_01 }, // シーン01へ
 };
@@ -39,12 +40,13 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 // シーン 01 
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 } },
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 12, 0 } },
 
   // @TODO ブラックイン
 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
   
+  // ↑ROMアクセスはここまで↑
   // @TODO 初回セーブデータ初期化コマンド開始
   
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_02 } }, // わたし　アララギと　いいます

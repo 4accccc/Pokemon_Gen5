@@ -75,22 +75,33 @@ struct _INTRO_CMD_WORK {
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
   // @TODO 時間があったらリファクタ
-  // INTRO_STORE_DATAを特定タイミングで初期化し、
-  // その時に INTRO_CMD_WORK へのポインタも持たせる形式の方がスッキリする
+  // INTRO_STORE_DATAをINTRO_STORE_DATAに内包する形式の方がスッキリする。
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
   INTRO_MSG_WORK* wk_msg;
 };
 
+//=============================================================================
+/**
+ *							プロトタイプ宣言
+ */
+//=============================================================================
+static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data );
+static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
+
+//=============================================================================
 // コマンド
+//=============================================================================
 static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
 static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_RELOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
-static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
@@ -101,13 +112,14 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
 { 
   NULL, // null
   CMD_SET_SCENE,
+  CMD_YESNO,
   CMD_BG_LOAD,
   CMD_BGM,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
+  CMD_RELOAD_GMM,
   CMD_PRINT_MSG,
-  CMD_YESNO,
   CMD_SELECT_MOJI,
   NULL, // end
 };
@@ -130,6 +142,80 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
   wk->cmd_idx = 0;
 
   return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  YESNO選択
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  switch( sdat->seq )
+  {
+  case 0:
+    // SETUP
+    {
+      INTRO_LIST_DATA data[2];
+
+      data[0].str_id  = param[0];
+      data[0].param   = 0;
+
+      data[1].str_id  = param[1];
+      data[1].param   = 1;
+
+      INTRO_MSG_LIST_Start( wk->wk_msg, data, NELEMS(data) );
+
+      sdat->seq++;
+    }
+    break;
+
+  case 1:
+    INTRO_MSG_LIST_Main( wk->wk_msg );
+
+    {
+      u32 select_id;
+
+      if( INTRO_MSG_LIST_IsDecide( wk->wk_msg, &select_id ) == INTRO_LIST_SELECT_DECIDE )
+      {
+        const INTRO_CMD_DATA* data;
+
+        data = Intro_DATA_GetCmdData( wk->scene_id );
+        data += wk->cmd_idx;
+
+        HOSAKA_Printf( "select_id=%d\n" ,select_id );
+
+        // リスト開放
+        INTRO_MSG_LIST_Finish( wk->wk_msg );
+
+        if( select_id == 0 )
+        {
+          // 上が選択された場合は直後のコマンドをストア
+          cmd_store( wk, data );
+        }
+        else
+        {
+          data++;
+          cmd_store( wk, data );
+        }
+         
+        // 結果コマンドの次をシーク
+        wk->cmd_idx += 2;
+
+        return TRUE;
+      }
+    }
+    break;
+
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -176,14 +262,17 @@ static BOOL CMD_BG_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
  *	@brief  BGM再生コマンド
  *
  *	@param	param[0] BGM_Label
+ *	@param  param[1] fadeInFrame
+ *	@param  param[2] fadeOutFrame
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  HOSAKA_Printf( "play bgm =%d \n", param[0] );
-  PMSND_PlayBGM( param[0] );
+  HOSAKA_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
+//  PMSND_PlayBGM( param[0] );
+  PMSND_PlayNextBGM( param[0], param[1], param[2] );
 
   return TRUE;
 }
@@ -264,6 +353,24 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  GMMをリロード
+ *
+ *	@param	param[0] GflMsgLoadType
+ *	@param	param[1] msg_dat_id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_RELOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_MSG_ReloadGmm( wk->wk_msg, param[0], param[1] );
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  メッセージ表示
  *
  *	@param	param[0] str_id
@@ -281,57 +388,16 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
       break;
 
     case 1:
-    if( INTRO_MSG_PrintProc( wk->wk_msg ) )
-    {
-      return TRUE;
-    }
-    break;
+      if( INTRO_MSG_PrintProc( wk->wk_msg ) )
+      {
+        return TRUE;
+      }
+      break;
 
   default : GF_ASSERT(0);
   }
 
   return FALSE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  YESNO選択
- *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	param 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
-{
-  switch( sdat->seq )
-  {
-  case 0:
-    // SETUP
-    {
-#if 0
-      const BMPMENULIST_HEADER menuH =
-      {
-        2, 2,
-        0, 0, 0, 0,
-        1, 2, 15, ///< 文字色
-        0, 0, 0,
-        0, 0,
-      };
-#endif
-    }
-    break;
-
-  case 1:
-    {
-    }
-    break;
-
-  default : GF_ASSERT(0);
-  }
-
-  return TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -368,14 +434,6 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
- */
-//=============================================================================
-static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data );
-static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
-
-//=============================================================================
-/**
  *								外部公開関数
  */
 //=============================================================================
@@ -402,7 +460,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( const INTRO_PARAM* init_param, HEAPID heap_id )
   wk->init_param  = init_param;
 
   // 選択肢モジュール初期化
-  wk->wk_msg = INTRO_MSG_Create( NARC_message_intro_dat ,heap_id );
+  wk->wk_msg = INTRO_MSG_Create( NARC_message_intro_dat, GFL_MSG_LOAD_NORMAL, heap_id );
 
   return wk;
 }
@@ -443,26 +501,34 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
   {
     int i;
 
-    // もしコマンドがすべて終了していたら次のコマンドを呼び出す
+    // コマンドがすべて終了したら、次のコマンドを呼び出す
     for( i=0; i<STORE_NUM+1; i++ )
     {
       const INTRO_CMD_DATA* data;
 
       GF_ASSERT( i < STORE_NUM ); ///< ストア限界チェック
       
-      data = Intro_DATA_GetCmdData( wk->scene_id );
+      data  = Intro_DATA_GetCmdData( wk->scene_id );
       data += wk->cmd_idx;
       
+      //=======================================================
+      // 例外コマンド
+      //=======================================================
       // シーン変更
       if( data->type == INTRO_CMD_TYPE_SET_SCENE )
       {
         // CMD_SET_SCENE
         c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
                 
-        HOSAKA_Printf("next scene_id=%d\n",wk->scene_id);
+        OS_TPrintf("\n*** next scene_id=%d ***\n",wk->scene_id);
 
         // 次のシーンの先頭コマンド
         data = Intro_DATA_GetCmdData( wk->scene_id );
+      }
+      else if( data->type == INTRO_CMD_TYPE_YESNO )
+      {
+        c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
+      
       }
 
       // コマンド終了判定
@@ -526,8 +592,7 @@ static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data )
             data->param[0],
             data->param[1],
             data->param[2],
-            data->param[3]
-            );
+            data->param[3] );
         
         break;
       }
