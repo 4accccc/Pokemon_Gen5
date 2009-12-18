@@ -35,7 +35,8 @@ G3D_FE_ANMITP = hero_kemu.itp \
   taki_start_f.itp \
   taki_start_s.itp \
   iwakudaki.itp \
-  $(EFF_D06DENKI)d6_yuka_biri01.itp
+  $(EFF_D06DENKI)d6_yuka_biri01.itp \
+  fishing_lure.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -168,7 +169,8 @@ G3D_FE_MDL = kage.imd \
   sc_mark_ul.imd \
   sc_mark_ur.imd \
   sc_mark_dl.imd \
-  sc_mark_dr.imd
+  sc_mark_dr.imd \
+  fishing_lure.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
