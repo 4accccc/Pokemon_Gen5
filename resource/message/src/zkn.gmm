@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-17T19:39:36"/>
+	<create user="shimoyamada" host="W00184" date="2009-12-18T11:46:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1342,19 +1342,23 @@
 	</row>
 
 	<row id="ZKN_POKEGET_BOX_01" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ボックス転送：作成者に会っていない</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンに
-てんそうされた！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンに
-てんそうされた！</language>
+		<comment>ボックス転送：作成者に会っていない
+0：ニックネーム
+1：ボックス名</comment>
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンの
+[1:0B:ボックス名:1]に　てんそうされた！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　だれかの　パソコンの
+[1:0B:ボックス名:1]に　てんそうされた！</language>
 	</row>
 
 	<row id="ZKN_POKEGET_BOX_02" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ボックス転送：作成者に会っている</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンに
-てんそうされた！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンに
-てんそうされた！</language>
+		<comment>ボックス転送：作成者に会っている
+0：ニックネーム
+1：ボックス名</comment>
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンの
+[1:0B:ボックス名:1]に　てんそうされた！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンの
+[1:0B:ボックス名:1]に　てんそうされた！</language>
 	</row>
 
 	<flowchart-group-list>
