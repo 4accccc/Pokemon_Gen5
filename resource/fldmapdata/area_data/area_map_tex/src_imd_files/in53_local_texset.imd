@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-12-18T14:40:31"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,12 +22,158 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+
+<tex_image_array size="3">
+	<tex_image index="0" name="chip_mat"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_mat_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_mat.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 5550 0555 aa94 16aa
+			55a4 1a55 0064 1900 0064 1900 0064 1900
+			0064 1900 0064 1900 0064 1900 55a4 1a55
+			aa94 16aa 5550 0555 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="in20book_08"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in20book_08_pl"
+		path="C:/home/wb_data3d/field/in20/map/tex/in20book_08.tga"
+	>
+		<bitmap size="512">
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 b021 2bdc 0259 bcdb 2662 cdb0 662b
+			dba2 62bc ba26 2bcd a266 bcdb 1562 4444
+			4444 2221 2222 2256 2222 2562 2222 6622
+			2222 6222 2226 2222 2266 2222 1562 4444
+			4444 2081 a222 0757 b222 857a 2220 57a0
+			2208 7a02 2085 a022 0857 0222 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 ba81 abdd a857 bddb 857a cdba 57ab
+			dba8 7abc ba85 abcd a857 bcdb 157a 4444
+			4444 b021 2bdc 0259 bcdb 2672 cdb0 672b
+			dba2 72bc ba26 2bcd a267 bcdb 1562 4444
+			4444 2221 2222 2256 2222 2572 2222 6722
+			2222 7222 2226 2222 2267 2222 1562 4444
+			4444 2081 a222 0757 b222 857a 2220 57a0
+			2208 7a02 2085 a022 0857 0222 137a 4444
+			4444 ba81 abdd a836 bddb 836a ddba 36ab
+			dba8 7abc ba83 abdd a836 bddb 133a 4444
+			4444 b851 7bdc 8333 bddb 3338 ddb8 338b
+			db83 3abd b833 8bdd 8533 bddb 1338 4444
+			4444 5531 3888 3333 8885 3333 8883 3338
+			8633 3388 6533 3888 3333 6886 1333 4444
+			4444 3331 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 1333 4444
+			4444 3331 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 1333 4444
+			4444 3331 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 1333 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="in20tana_01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in20tana_01_pl"
+		path="C:/home/wb_data3d/field/in20/map/tex/in20tana_01.tga"
+	>
+		<bitmap size="256">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0011 0000 0000 0000 0000 0000 0000 1100
+			1011 1111 1111 1111 1111 1111 1111 1101
+			1011 2222 2222 2222 2222 2222 2222 1101
+			1011 2222 2222 2222 2222 2222 2222 1101
+			1011 2222 2222 2222 2222 2222 2222 1101
+			1011 2222 2222 2222 2222 2222 2222 1101
+			1011 1111 1111 1111 1111 1111 1111 1101
+			0011 0000 0000 0000 0000 0000 0000 1100
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			4444 4444 4444 4444 4444 4444 4444 7653
+			3333 3333 3333 3333 3333 3333 3333 7653
+			6666 6666 6666 6666 6666 6666 6666 7666
+			7777 7777 7777 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="3">
+	<tex_palette index="0" name="chip_mat_pl" color_size="4">
+		28f8 2d18 3539 7fff
+	</tex_palette>
+	<tex_palette index="1" name="in20book_08_pl" color_size="16">
+		00ed 0130 01cf 0445 08ca 1044 1445 1845
+		1866 1887 2087 2889 30aa 34aa 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="in20tana_01_pl" color_size="8">
+		0465 0467 0488 110d 150c 150e 152f 1550
+	</tex_palette>
+</tex_palette_array>
 
 <material_array size="1">
 	<material index="0" name="lambert1"
@@ -131,6 +277,29 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="3">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="3">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
