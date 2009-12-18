@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T21:33:52"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T18:19:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,10 +365,23 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ポケモンセンターの　まえで
-はかせが　まっていなかったか？[BE:01:ページ切り替え（クリア）]</language>
+はかせが　まっていただろ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 博士　いただろ？
-ポケモンセンターの　前に[BE:01:ページ切り替え（クリア）]</language>
+ポケモンセンターの　前にさ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02_black_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・上記メッセージ、直接会話した時用
+0＝プレイヤー名</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+ポケモンセンターの　まえで
+はかせが　まっていただろ？</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+博士　いただろ？
+ポケモンセンターの　前にさ</language>
 	</row>
 
 	<row id="msg_t02_boodle_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
