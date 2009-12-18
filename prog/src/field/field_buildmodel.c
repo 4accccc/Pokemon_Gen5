@@ -1705,6 +1705,45 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
   G3DMAPOBJST_init( man, obj );
 }
 
+//------------------------------------------------------------------
+///  表示されているかどうかのチェック
+//------------------------------------------------------------------
+static BOOL G3DMAPOBJST_isVanished( const G3DMAPOBJST * obj )
+{
+  return (obj->objSt->id == GFL_G3D_MAP_OBJID_NULL );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u8 G3DMAPOBJST_getEntryNo( const G3DMAPOBJST * obj )
+{
+  if ( obj->objSt->id == GFL_G3D_MAP_OBJID_NULL )
+  {
+    return obj->entryNoBackup;
+  }
+  return obj->objSt->id;
+}
+
+//------------------------------------------------------------------
+/// 配置モデル実データ：表示制御
+//------------------------------------------------------------------
+void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
+{
+  GF_ASSERT(obj->viewFlag == !flag);
+  if (flag)
+  {
+    obj->objSt->id = obj->entryNoBackup;
+    obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
+    obj->viewFlag = TRUE;
+  }
+  else
+  {
+    obj->entryNoBackup = obj->objSt->id;
+    obj->objSt->id = GFL_G3D_MAP_OBJID_NULL;
+    obj->viewFlag = FALSE;
+  }
+}
+
+
 //============================================================================================
 //
 //
@@ -1816,29 +1855,10 @@ BM_SEARCH_ID G3DMAPOBJST_getSearchID( const FIELD_BMODEL_MAN * man, const G3DMAP
 {
   u8 entryNo;
   GF_ASSERT( G3DMAPOBJST_exists(obj) );
-  entryNo = obj->objSt->id;
+  entryNo = G3DMAPOBJST_getEntryNo( obj );
+  //entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
   return BMINFO_getSearchID(&man->bmInfo[entryNo]);
-}
-
-//------------------------------------------------------------------
-/// 配置モデル実データ：表示制御
-//------------------------------------------------------------------
-void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
-{
-  GF_ASSERT(obj->viewFlag == !flag);
-  if (flag)
-  {
-    obj->objSt->id = obj->entryNoBackup;
-    obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
-    obj->viewFlag = TRUE;
-  }
-  else
-  {
-    obj->entryNoBackup = obj->objSt->id;
-    obj->objSt->id = GFL_G3D_MAP_OBJID_NULL;
-    obj->viewFlag = FALSE;
-  }
 }
 
 //------------------------------------------------------------------
@@ -1847,7 +1867,8 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
 void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req )
 {
   u8 entryNo;
-  entryNo = obj->objSt->id;
+  entryNo = G3DMAPOBJST_getEntryNo( obj );
+  //entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
   OBJHND_setAnime( &man->objHdl[entryNo], anm_idx, req );
 }
