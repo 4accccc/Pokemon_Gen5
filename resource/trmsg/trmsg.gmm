@@ -1973,13 +1973,11 @@
 
 	<row id="TRID_RANGERM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">まいにち　ヤグルマのもりを
-パトロールしている　この　オレ！▼
-ここので　しょうぶは
-おてのもの　だぜ！</language>
+パトロールしている　この　オレ！▽
+ここので　しょうぶは　おてのもの！▼</language>
 		<language name="JPN_KANJI" width="216">毎日　ヤグルマの森を
-パトロールしている　この　オレ！▼
-ここので　勝負は
-おてのもの　だぜ！</language>
+パトロールしている　この　オレ！▽
+ここので　勝負は　おてのもの！▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_01_TRMSG_FIGHT_LOSE">
@@ -2887,10 +2885,10 @@
 	</row>
 
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">おまえの　ほうが
-げきせんを　かちぬいたか！？</language>
-		<language name="JPN_KANJI" width="216">おまえの　ほうが
-激戦を　勝ち抜いたか！？</language>
+		<language name="JPN" width="216">げきせんを　かちぬいたのは
+おまえの　ほうか！？</language>
+		<language name="JPN_KANJI" width="216">激戦を　勝ち抜いたのは
+おまえの　ほうか！？</language>
 	</row>
 
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_AFTER">
@@ -3803,11 +3801,11 @@
 	</row>
 
 	<row id="TRID_MOUNT_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">たたかったぶん　つよくなる
-ほったぶん　あなが　ひろがる……▽
+		<language name="JPN" width="216">たたかっただけ　つよくなる
+ほっただけ　あなが　ひろがる……▽
 もくてきがあれば　むだなことはない！</language>
-		<language name="JPN_KANJI" width="216">戦った分　強くなる
-掘った分　穴が　広がる……▽
+		<language name="JPN_KANJI" width="216">戦っただけ　強くなる
+掘っただけ　穴が　広がる……▽
 目的があれば　無駄なことはない！</language>
 	</row>
 
