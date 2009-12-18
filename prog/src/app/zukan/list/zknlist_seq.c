@@ -289,8 +289,10 @@ static int MainSeq_ListScroll( ZKNLISTMAIN_WORK * wk )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_S, wk->listScroll, wk->listSpeed );
 	if( wk->listScroll == GFL_BG_SCROLL_Y_DEC ){
 		ZKNLISTOBJ_ScrollPokeIcon( wk, wk->listSpeed );
+		wk->listBgScroll -= wk->listSpeed;
 	}else{
 		ZKNLISTOBJ_ScrollPokeIcon( wk, -wk->listSpeed );
+		wk->listBgScroll += wk->listSpeed;
 	}
 
 	wk->listConut += wk->listSpeed;
@@ -369,11 +371,11 @@ static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos )
 
 static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk )
 {
-	wk->bgScroll++;
-	if( wk->bgScroll == ZKNCOMM_BG_SCROLL_WAIT ){
+	wk->BaseScroll++;
+	if( wk->BaseScroll == ZKNCOMM_BG_SCROLL_WAIT ){
 		GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
-		wk->bgScroll = 0;
+		wk->BaseScroll = 0;
 	}
 }
 

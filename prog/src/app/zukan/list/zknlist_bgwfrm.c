@@ -111,7 +111,7 @@ void ZKNLISTBGWFRM_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
 void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 {
 	u16 * buf;
-	int	scroll;
+//	int	scroll;
 	u16	sx, sy;
 	u8	frm;
 	s8	px, py;
@@ -122,8 +122,8 @@ void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 //	BGWINFRM_PosGet( wk->wfrm, idx, &px, &py );
 	BGWINFRM_SizeGet( wk->wfrm, idx, &sx, &sy );
 
-	scroll = GFL_BG_GetScrollY( frm ) % 256;
-	py = scroll / 8;
+//	scroll = GFL_BG_GetScrollY( frm ) % 256;
+	py = wk->listBgScroll / 8;
 	px = ZKNLISTMAIN_LIST_PX;
 
 	if( mv == ZKNLISTBGWFRM_LISTPUT_UP ){
@@ -131,6 +131,9 @@ void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 	}else{
 		py += 21;
 	}
+
+	OS_Printf( "py = %d\n", py );
+
 	for( i=0; i<sy; i++ ){
 		if( py < 0 ){
 			py += 32;
@@ -146,7 +149,7 @@ void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 void ZKNLISTBGWFRM_PutScrollListSub( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 {
 	u16 * buf;
-	int	scroll;
+//	int	scroll;
 	u16	sx, sy;
 	u8	frm;
 	s8	px, py;
@@ -157,8 +160,8 @@ void ZKNLISTBGWFRM_PutScrollListSub( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 //	BGWINFRM_PosGet( wk->wfrm, idx, &px, &py );
 	BGWINFRM_SizeGet( wk->wfrm, idx, &sx, &sy );
 
-	scroll = GFL_BG_GetScrollY( frm ) % 256;
-	py = scroll / 8;
+//	scroll = GFL_BG_GetScrollY( frm ) % 256;
+	py = wk->listBgScroll / 8;
 	px = ZKNLISTMAIN_LIST_PX;
 
 	if( mv == ZKNLISTBGWFRM_LISTPUT_DOWN ){

@@ -92,8 +92,9 @@ typedef struct {
 	u8	listSpeed;
 	u8	listRepeat;
 	u8	listConut;
+	u8	listBgScroll;
 
-	u32	bgScroll;
+	u32	BaseScroll;
 
 
 /*

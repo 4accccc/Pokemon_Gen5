@@ -530,14 +530,14 @@ u32 ZKNLISTMAIN_GetListInfo( ZUKAN_LIST_WORK * wk, u32 pos )
 	return GET_LIST_INFO( ZKNLISTMAIN_GetListParam(wk,pos) );
 }
 
-void ZKNLISTMAIN_PutListOne( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
+static void PutListOne( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
 {
 	ZKNLISTBMP_PutPokeList( wk, ZKNLISTBMP_WINIDX_NAME_M1+idx, listPos );
 	ZKNLISTBGWFRM_PutPokeList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+idx, listPos );
 	ZKNLISTOBJ_PutPokeList( wk, ZKNLISTOBJ_IDX_POKEICON+idx, listPos, TRUE );
 }
 
-void ZKNLISTMAIN_PutListOneSub( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
+static void PutListOneSub( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
 {
 	ZKNLISTBMP_PutPokeList( wk, ZKNLISTBMP_WINIDX_NAME_S1+idx, listPos );
 	ZKNLISTBGWFRM_PutPokeList( wk, ZKNLISTBGWFRM_IDX_NAME_S1+idx, listPos );
@@ -552,12 +552,13 @@ void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 0 );
 	ZKNLISTOBJ_InitScrollList( wk );
+	wk->listBgScroll = 0;
 
 	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
 
 	for( i=0; i<8; i++ ){
-		ZKNLISTMAIN_PutListOne( wk, i, scroll+i );
-		ZKNLISTMAIN_PutListOneSub( wk, i, scroll+i-8 );
+		PutListOne( wk, i, scroll+i );
+		PutListOneSub( wk, i, scroll+i-8 );
 		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_M1+i, 16, i*3 );
 		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_S1+i, 16, i*3 );
 	}
@@ -626,8 +627,8 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 		}
 		ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
 		ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
-		ZKNLISTMAIN_PutListOne( wk, wk->listPutIndex, nowScroll );
-		ZKNLISTMAIN_PutListOneSub( wk, wk->listPutIndex, nowScroll-7 );
+		PutListOne( wk, wk->listPutIndex, nowScroll );
+		PutListOneSub( wk, wk->listPutIndex, nowScroll-7 );
 		ZKNLISTOBJ_PutScrollList( wk, wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
 		ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
 		ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
@@ -643,8 +644,8 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 			}
 			ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
 			ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
-			ZKNLISTMAIN_PutListOne( wk, idx, nowScroll+6 );
-			ZKNLISTMAIN_PutListOneSub( wk, idx, nowScroll-1 );
+			PutListOne( wk, idx, nowScroll+6 );
+			PutListOneSub( wk, idx, nowScroll-1 );
 			ZKNLISTOBJ_PutScrollList( wk, idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
 			ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
 			ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
@@ -783,48 +784,34 @@ u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk )
 
 	if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
 		return ZKNLISTMAIN_MoveLeft( wk );
-/*
-		if( wk->scroll != 0 ){
-			s16	tmpPos    = wk->pos;
-			s16	tmpScroll = wk->scroll;
-			wk->scroll -= wk->posMax;
-			if( wk->scroll < 0 ){
-				wk->scroll = 0;
-				wk->pos    = 0;
-			}
-			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
-			return ZKNLISTMAIN_LIST_MOVE_LEFT;
-		}else if( wk->pos != 0 ){
-			s16	tmp = wk->pos;
-			wk->pos = 0;
-			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
-			return ZKNLISTMAIN_LIST_MOVE_LEFT;
-		}
-		return ZKNLISTMAIN_LIST_MOVE_NONE;
-*/
 	}
 
 	if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
 		return ZKNLISTMAIN_MoveRight( wk );
-/*
-		if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+	}
+
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+		if( wk->pos != 0 || wk->scroll != 0 ){
 			s16	tmpPos    = wk->pos;
 			s16	tmpScroll = wk->scroll;
-			wk->scroll += wk->posMax;
-			if( wk->scroll > (wk->listMax-wk->posMax-1) ){
-				wk->scroll = wk->listMax - wk->posMax - 1;
-				wk->pos    = wk->posMax - 1;
-			}
+			wk->scroll = 0;
+			wk->pos    = 0;
+			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_LEFT );
+			return ZKNLISTMAIN_LIST_MOVE_LEFT;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+	}
+
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+		if( wk->pos != (wk->posMax-1) || wk->scroll != (wk->listMax-wk->posMax-1) ){
+			s16	tmpPos    = wk->pos;
+			s16	tmpScroll = wk->scroll;
+			wk->scroll = wk->listMax - wk->posMax - 1;
+			wk->pos    = wk->posMax - 1;
 			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
-			return ZKNLISTMAIN_LIST_MOVE_RIGHT;
-		}else if( wk->pos < (wk->posMax-1) ){
-			s16	tmp = wk->pos;
-			wk->pos = wk->posMax - 1;
-			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
 			return ZKNLISTMAIN_LIST_MOVE_RIGHT;
 		}
 		return ZKNLISTMAIN_LIST_MOVE_NONE;
-*/
 	}
 
 	return ZKNLISTMAIN_LIST_MOVE_NONE;
