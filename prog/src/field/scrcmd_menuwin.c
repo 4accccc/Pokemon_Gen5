@@ -726,10 +726,10 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
-  u8 obj_id = VMGetU8( core );
-  u8 win_idx = VMGetU8( core );
-  TALKMSGWIN_TYPE type = VMGetU16( core );
-
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
+  
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
   if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
@@ -754,8 +754,8 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
-  u8 win_idx = VMGetU8( core );
-  TALKMSGWIN_TYPE type = VMGetU16( core );
+  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
@@ -787,9 +787,9 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id_f = SCRCMD_GetVMWorkValue( core, work );
-  u8 obj_id = VMGetU8( core );
-  u8 win_idx = VMGetU8( core );
-  TALKMSGWIN_TYPE type = VMGetU16( core );
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
   {
     GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
@@ -822,9 +822,9 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id_b = SCRCMD_GetVMWorkValue( core, work );
-  u8 obj_id = VMGetU8( core );
-  u8 win_idx = VMGetU8( core );
-  TALKMSGWIN_TYPE type = VMGetU16( core );
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
   if( PM_VERSION == VERSION_BLACK ){
     msg_id = msg_id_b;

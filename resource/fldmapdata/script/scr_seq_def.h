@@ -942,8 +942,8 @@
   .short  EV_SEQ_BALLOONWIN_OBJMSG
   .short 0x0400
   .short \msg_id
-  .byte \obj_id
-  .byte WIN_NONE
+  .short \obj_id
+  .short WIN_NONE
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -961,7 +961,7 @@
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short 0x0400
   .short \msg_id
-  .byte WIN_NONE
+  .short WIN_NONE
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -980,7 +980,7 @@
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short \arc_id
   .short \msg_id
-  .byte WIN_NONE
+  .short WIN_NONE
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -1000,8 +1000,8 @@
   .short  EV_SEQ_BALLOONWIN_OBJMSG
   .short 0x0400
   .short \msg_id
-  .byte \obj_id
-  .byte \pos
+  .short \obj_id
+  .short \pos
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -1023,8 +1023,8 @@
   .short 0x0400
   .short \msg_id_m
   .short \msg_id_f
-  .byte \obj_id
-  .byte \pos
+  .short \obj_id
+  .short \pos
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -1046,14 +1046,14 @@
   .short 0x0400
   .short \msg_id_w
   .short \msg_id_b
-  .byte \obj_id
-  .byte \pos
+  .short \obj_id
+  .short \pos
   .endm
 
 //--------------------------------------------------------------
 /**
  *  @def  _GIZAWIN_OBJMSG_POS
- *  @brief  吹き出しウィンドウ描画　位置指定あり
+ *  @brief  吹き出しウィンドウ描画　ギザギザ　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
  *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
@@ -1066,8 +1066,8 @@
   .short  EV_SEQ_BALLOONWIN_OBJMSG
   .short 0x0400
   .short \msg_id
-  .byte \obj_id
-  .byte \pos
+  .short \obj_id
+  .short \pos
   .short BALLOONWIN_TYPE_GIZA
   .endm
 
