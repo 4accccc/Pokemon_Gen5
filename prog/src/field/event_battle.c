@@ -155,6 +155,24 @@ GMEVENT * EVENT_TrainerBattle(
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, partner_id, tr_id0, tr_id1, HEAPID_PROC );
+#if 1
+    //2009年12月末ロム用処理：ジムリーダー戦のみ、BGMを変更する
+    switch (tr_id0)
+    {
+    case TRID_LEADER1A_01:
+    case TRID_LEADER1B_01:
+    case TRID_LEADER1C_01:
+    case TRID_LEADER2_01:
+    case TRID_LEADER3_01:
+    case TRID_LEADER4_01:
+    case TRID_LEADER5_01:
+    case TRID_LEADER6_01:
+    case TRID_LEADER7_01:
+    case TRID_LEADER8A_01:
+    case TRID_LEADER8B_01:
+      bp->musicDefault = SEQ_BGM_VS_GYMLEADER;
+    }
+#endif
   }
 
   BEW_Initialize( bew, gsys, bp );
