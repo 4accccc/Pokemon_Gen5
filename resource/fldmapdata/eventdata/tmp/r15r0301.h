@@ -9,5 +9,6 @@
 #ifndef ZONE_R15R0301_EVC_H
 #define ZONE_R15R0301_EVC_H
 
+#define R15R0301_PARK                      0
 
 #endif //ZONE_R15R0301_EVC_H
