@@ -581,7 +581,7 @@ static u16 loadScriptData( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 s
 
   for (i = 0; i < NELEMS(ScriptArcTable); i++) {
     if (scr_id >= tbl[i].scr_id_start) {
-      GF_ASSERT(scr_id <= tbl[i].scr_id_end);
+      GF_ASSERT_MSG(scr_id <= tbl[i].scr_id_end,"id=%d end=%d",scr_id,tbl[i].scr_id_end);
       loadScriptDataDirect(work, core, tbl[i].scr_arc_id, tbl[i].msg_arc_id, heapID);
       local_scr_id -= tbl[i].scr_id_start;
       OS_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
