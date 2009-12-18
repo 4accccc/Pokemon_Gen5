@@ -131,6 +131,8 @@ play_palpark:
   //無事終了した？
   IF $palpark_retval == PALPARK_FINISH_ERROR THEN
     _CALL connect_error                             //通信エラー
+  ELSIF $palpark_retval == PALPARK_FINISH_CANCEL  THEN
+    //何もしない
   ELSE
     DEFINE_LOCAL result_msg
     //「おつかれ」
