@@ -48,12 +48,16 @@ typedef struct {
 
 	BtlRule	rule;			// シングル／ダブル／トリプル
 
-	u8	multi_pos;			// マルチの立ち位置
+	BOOL	multiMode;		// マルチバトルかどうか TRUE = マルチ, FALSE = それ以外
+	u8	multiPos;				// マルチの立ち位置
 	u8	change_sel[2];	// ダブル/トリプルですでに選択されているポケモン（いない場合はBPL_CHANGE_SEL_NONE）
 	u8	mode;						// リストモード
 
 	u16	item;						// アイテム
 	u16	chg_waza;				// いれかえ禁止技・新しく覚える技
+
+  GFL_TCBSYS* tcb_sys;
+	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
 	// [in & out]
 	u8	sel_poke;									// 選択されたポケモン or 戻る
@@ -76,8 +80,6 @@ typedef struct {
 //	s32 client_no;						// クライアントNo
 //	u8	list_row[TEMOTI_POKEMAX];	// リストロウ
 //	u8	bag_page;		// バッグのページ
-  GFL_TCBSYS* tcb_sys;
-	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 }BPLIST_DATA;
 
 
