@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="nakatsui" host="W00169" date="2009-12-14T16:29:25" source="winter05_05.mb"/>
+	<create user="nakatsui" host="W00169" date="2009-12-18T19:39:41" source="winter05_05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="nakatsui" host="W00169" date="2009-12-14T16:29:25" source="winter05_05.mb"/>
+<original_create user="nakatsui" host="W00169" date="2009-12-18T19:39:41" source="winter05_05.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="17 17"
@@ -7413,7 +7413,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="a131" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
