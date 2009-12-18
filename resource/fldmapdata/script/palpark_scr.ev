@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_palpark_scr.h"
+  .include  "palpark_scr_local.h"
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -23,7 +24,7 @@ DEFINE_LOCAL TEST
 
 EVENT_START ev_palpark_reception
   _TALK_OBJ_START()
-  //初はなしかけか？todo
+  //初はなしかけか？
   IF FLAG_OFF( FE_PALPARK_FIRSTTALK ) THEN
     //初回話しかけフラグＯＮ
     _FLAG_SET(FE_PALPARK_FIRSTTALK)
@@ -103,6 +104,7 @@ _RET
 
 play_palpark:
   DEFINE_LOCAL i_ret
+  DEFINE_LOCAL palpark_retval
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
@@ -124,50 +126,57 @@ play_palpark:
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
   _BALLOONWIN_CLOSE()
 
-  //パルパークコール
+  //パルパークコール (内部でフェードアウト＞アプリフェードインまでやる)
   _PALPARK_CALL()
 
   //主人公アニメ    todo
 
-  //無事終了した？ todo
-  IF $TEST == 0 THEN
-    _CALL connect_error
+  //終了状態取得
+  _GET_PALPARK_VALUE_FINISH_STATE(palpark_retval)
+  
+
+  //無事終了した？
+  IF $palpark_retval == PALPARK_FINISH_ERROR THEN
+    _CALL connect_error                             //通信エラー
   ELSE
+    DEFINE_LOCAL result_msg
     //「おつかれ」
     _BALLOONWIN_TALKOBJ_MSG( msg_palpark_10 )
     _BALLOONWIN_CLOSE()
 
-    //ハイスコア？ todo
-    IF $TEST == 0 THEN
+    IF $palpark_retval == PALPARK_FINISH_HIGHSOCRE THEN   //ハイスコア？
       _CALL score_msg
       //「捕まえたポケはボックスへ」
-      _BALLOONWIN_TALKOBJ_MSG( msg_palpark_11 )
-      _BALLOONWIN_CLOSE()
+      $result_msg = msg_palpark_11
+    ELSIF $palpark_retval == PALPARK_FINISH_NORMAL THEN   //つかまえたポケいる?
+      //「捕まえたポケはボックスへ」
+      $result_msg = msg_palpark_11
+    ELSIF $palpark_retval == PALPARK_FINISH_NO_GET THEN    //捕まえていない
+      //「ざんねん」
+      $result_msg = msg_palpark_12
     ELSE
-      //つかまえたポケいるか？ todo
-      IF $TEST == 0 THEN
-        //「捕まえたポケはボックスへ」
-        _BALLOONWIN_TALKOBJ_MSG( msg_palpark_11 )
-        _BALLOONWIN_CLOSE()
-      ELSE
-        //「ざんねん」
-        _BALLOONWIN_TALKOBJ_MSG( msg_palpark_12 )
-        _BALLOONWIN_CLOSE()
-      ENDIF
+      //ここにはこない
+      $result_msg = msg_palpark_12    //「ざんねん」メッセージをいれとく todo
     ENDIF
 
-    _CALL see_you2
+    _BALLOONWIN_TALKOBJ_MSG( result_msg )
+    _BALLOONWIN_CLOSE()
   ENDIF
+
+  _CALL see_you2
 _RET
 
 connect_error:
-  _CALL see_you2
+  //通信エラーのときのメッセージ  todo
 _RET
 
 score_msg:
   DEFINE_LOCAL score
   DEFINE_LOCAL score_msg
 
+  //ハイスコア取得
+  _GET_PALPARK_VALUE_HIGHSCORE(score)
+  
   IF $score >= 500 THEN
     $score_msg = msg_palpark_score_06
   ELSIF $score >= 400 THEN
