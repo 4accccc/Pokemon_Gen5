@@ -485,11 +485,11 @@
 #define		WAZANO_SAIKOSYOKKU		( 473 )		//サイコショック
 #define		WAZANO_BENOMUSYOKKU		( 474 )		//ベノムショック
 #define		WAZANO_BODHIPAAZI			( 475 )		//ボディパージ
-#define		WAZANO_KIKAZARU				( 476 )		//きかざる
+#define		WAZANO_IKARINOKONA		( 476 )		//いかりのこな
 #define		WAZANO_TEREKINESISU		( 477 )		//テレキネシス
 #define		WAZANO_MAZIKKURUUMU		( 478 )		//マジックルーム
 #define		WAZANO_UTIOTOSU				( 479 )		//うちおとす
-#define		WAZANO_GORINKUDAKI		( 480 )		//ごりんくだき
+#define		WAZANO_YAMAARASI			( 480 )		//やまあらし
 #define		WAZANO_HAZIKERUHONOO	( 481 )		//はじけるほのお
 #define		WAZANO_HEDOROWHEEBU		( 482 )		//ヘドロウェーブ
 #define		WAZANO_TYOUNOMAI			( 483 )		//ちょうのまい
@@ -502,13 +502,13 @@
 #define		WAZANO_ROOKIKKU				( 490 )		//ローキック
 #define		WAZANO_ASSIDOBOMU			( 491 )		//アッシドボム
 #define		WAZANO_IKASAMA				( 492 )		//イカサマ
-#define		WAZANO_TANZYUNKA			( 493 )		//たんじゅんか
+#define		WAZANO_SINPURUBIIMU		( 493 )		//シンプルビーム
 #define		WAZANO_NAKAMADUKURI		( 494 )		//なかまづくり
 #define		WAZANO_OSAKINIDOUZO		( 495 )		//おさきにどうぞ
 #define		WAZANO_RINSYOU				( 496 )		//りんしょう
 #define		WAZANO_EKOOBOISU			( 497 )		//エコーボイス
 #define		WAZANO_NASIKUZUSI			( 498 )		//なしくずし
-#define		WAZANO_MADDOBOORU			( 499 )		//マッドボール
+#define		WAZANO_KURIASUMOGGU		( 499 )		//クリアスモッグ
 #define		WAZANO_ASISUTOPAWAA		( 500 )		//アシストパワー
 #define		WAZANO_FASUTOGAADO		( 501 )		//ファストガード
 #define		WAZANO_SAIDOTHENZI		( 502 )		//サイドチェンジ
@@ -538,4 +538,20 @@
 #define		WAZANO_HURUITATERU		( 526 )		//ふるいたてる
 #define		WAZANO_EREKINETTO			( 527 )		//エレキネット
 #define		WAZANO_WAIRUDOBORUTO	( 528 )		//ワイルドボルト
-#define		WAZANO_MAX						( 528 )
+#define		WAZANO_DORIRURAINAA		( 529 )		//ドリルライナー
+#define		WAZANO_DABURUTYOPPU		( 530 )		//ダブルチョップ
+#define		WAZANO_HAATOSUTANPU		( 531 )		//ハートスタンプ
+#define		WAZANO_UDDOHOON				( 532 )		//ウッドホーン
+#define		WAZANO_SEINARUTURUGI	( 533 )		//せいなるつるぎ
+#define		WAZANO_SHERUBUREEDO		( 534 )		//シェルブレード
+#define		WAZANO_HIITOSUTANPU		( 535 )		//ヒートスタンプ
+#define		WAZANO_GURASUMIKISAA	( 536 )		//グラスミキサー
+#define		WAZANO_HAADOROORAA		( 537 )		//ハードローラー
+#define		WAZANO_KOTTONGAADO		( 538 )		//コットンガード
+#define		WAZANO_NAITOBAASUTO		( 539 )		//ナイトバースト
+#define		WAZANO_SAIKOBUREIKU		( 540 )		//サイコブレイク
+#define		WAZANO_SUIIPUBINTA		( 541 )		//スイープビンタ
+#define		WAZANO_BOUHUU					( 542 )		//ぼうふう
+#define		WAZANO_AHUROBUREIKU		( 543 )		//アフロブレイク
+#define		WAZANO_GIASOOSAA			( 544 )		//ギアソーサー
+#define		WAZANO_MAX						( 544 )

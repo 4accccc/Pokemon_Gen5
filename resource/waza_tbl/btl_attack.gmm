@@ -7484,17 +7484,17 @@
 
 	<row id="ATKMSG_M_476">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]の
-きかざる！</language>
+いかりのこな！</language>
 	</row>
 
 	<row id="ATKMSG_Y_476">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
-きかざる！</language>
+いかりのこな！</language>
 	</row>
 
 	<row id="ATKMSG_E_476">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
-きかざる！</language>
+いかりのこな！</language>
 	</row>
 
 	<row id="ATKMSG_M_477">
@@ -7544,17 +7544,17 @@
 
 	<row id="ATKMSG_M_480">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]は
-ごりんくだきを　した！</language>
+やまあらしを　した！</language>
 	</row>
 
 	<row id="ATKMSG_Y_480">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]は
-ごりんくだきを　した！</language>
+やまあらしを　した！</language>
 	</row>
 
 	<row id="ATKMSG_E_480">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]は
-ごりんくだきを　した！</language>
+やまあらしを　した！</language>
 	</row>
 
 	<row id="ATKMSG_M_481">
@@ -7739,17 +7739,17 @@
 
 	<row id="ATKMSG_M_493">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]の
-たんじゅんか！</language>
+シンプルビーム！</language>
 	</row>
 
 	<row id="ATKMSG_Y_493">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
-たんじゅんか！</language>
+シンプルビーム！</language>
 	</row>
 
 	<row id="ATKMSG_E_493">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
-たんじゅんか！</language>
+シンプルビーム！</language>
 	</row>
 
 	<row id="ATKMSG_M_494">
@@ -7829,17 +7829,17 @@
 
 	<row id="ATKMSG_M_499">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]の
-マッドボール！</language>
+クリアスモッグ！</language>
 	</row>
 
 	<row id="ATKMSG_Y_499">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
-マッドボール！</language>
+クリアスモッグ！</language>
 	</row>
 
 	<row id="ATKMSG_E_499">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
-マッドボール！</language>
+クリアスモッグ！</language>
 	</row>
 
 	<row id="ATKMSG_M_500">
@@ -8275,6 +8275,246 @@
 	<row id="ATKMSG_E_528">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
 ワイルドボルト！</language>
+	</row>
+
+	<row id="ATKMSG_M_529">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ドリルライナー！</language>
+	</row>
+
+	<row id="ATKMSG_Y_529">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ドリルライナー！</language>
+	</row>
+
+	<row id="ATKMSG_E_529">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ドリルライナー！</language>
+	</row>
+
+	<row id="ATKMSG_M_530">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ダブルチョップ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_530">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ダブルチョップ！</language>
+	</row>
+
+	<row id="ATKMSG_E_530">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ダブルチョップ！</language>
+	</row>
+
+	<row id="ATKMSG_M_531">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ハートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_531">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ハートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_E_531">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ハートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_M_532">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ウッドホーン！</language>
+	</row>
+
+	<row id="ATKMSG_Y_532">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ウッドホーン！</language>
+	</row>
+
+	<row id="ATKMSG_E_532">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ウッドホーン！</language>
+	</row>
+
+	<row id="ATKMSG_M_533">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+せいなるつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_533">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+せいなるつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_E_533">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+せいなるつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_M_534">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+シェルブレード！</language>
+	</row>
+
+	<row id="ATKMSG_Y_534">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+シェルブレード！</language>
+	</row>
+
+	<row id="ATKMSG_E_534">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+シェルブレード！</language>
+	</row>
+
+	<row id="ATKMSG_M_535">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ヒートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_535">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ヒートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_E_535">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ヒートスタンプ！</language>
+	</row>
+
+	<row id="ATKMSG_M_536">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+グラスミキサー！</language>
+	</row>
+
+	<row id="ATKMSG_Y_536">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+グラスミキサー！</language>
+	</row>
+
+	<row id="ATKMSG_E_536">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+グラスミキサー！</language>
+	</row>
+
+	<row id="ATKMSG_M_537">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ハードローラー！</language>
+	</row>
+
+	<row id="ATKMSG_Y_537">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ハードローラー！</language>
+	</row>
+
+	<row id="ATKMSG_E_537">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ハードローラー！</language>
+	</row>
+
+	<row id="ATKMSG_M_538">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+コットンガード！</language>
+	</row>
+
+	<row id="ATKMSG_Y_538">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+コットンガード！</language>
+	</row>
+
+	<row id="ATKMSG_E_538">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+コットンガード！</language>
+	</row>
+
+	<row id="ATKMSG_M_539">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ナイトバースト！</language>
+	</row>
+
+	<row id="ATKMSG_Y_539">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ナイトバースト！</language>
+	</row>
+
+	<row id="ATKMSG_E_539">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ナイトバースト！</language>
+	</row>
+
+	<row id="ATKMSG_M_540">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+サイコブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_Y_540">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+サイコブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_E_540">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+サイコブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_M_541">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+スイープビンタ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_541">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+スイープビンタ！</language>
+	</row>
+
+	<row id="ATKMSG_E_541">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+スイープビンタ！</language>
+	</row>
+
+	<row id="ATKMSG_M_542">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ぼうふう！</language>
+	</row>
+
+	<row id="ATKMSG_Y_542">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ぼうふう！</language>
+	</row>
+
+	<row id="ATKMSG_E_542">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ぼうふう！</language>
+	</row>
+
+	<row id="ATKMSG_M_543">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+アフロブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_Y_543">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+アフロブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_E_543">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+アフロブレイク！</language>
+	</row>
+
+	<row id="ATKMSG_M_544">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ギアソーサー！</language>
+	</row>
+
+	<row id="ATKMSG_Y_544">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ギアソーサー！</language>
+	</row>
+
+	<row id="ATKMSG_E_544">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ギアソーサー！</language>
 	</row>
 
 	<flowchart-group-list>

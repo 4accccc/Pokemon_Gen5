@@ -2250,7 +2250,7 @@
 	</row>
 
 	<row id="WAZANAME_476">
-		<language name="JPN" width="216">きかざる</language>
+		<language name="JPN" width="216">いかりのこな</language>
 	</row>
 
 	<row id="WAZANAME_477">
@@ -2266,7 +2266,7 @@
 	</row>
 
 	<row id="WAZANAME_480">
-		<language name="JPN" width="216">ごりんくだき</language>
+		<language name="JPN" width="216">やまあらし</language>
 	</row>
 
 	<row id="WAZANAME_481">
@@ -2318,7 +2318,7 @@
 	</row>
 
 	<row id="WAZANAME_493">
-		<language name="JPN" width="216">たんじゅんか</language>
+		<language name="JPN" width="216">シンプルビーム</language>
 	</row>
 
 	<row id="WAZANAME_494">
@@ -2342,7 +2342,7 @@
 	</row>
 
 	<row id="WAZANAME_499">
-		<language name="JPN" width="216">マッドボール</language>
+		<language name="JPN" width="216">クリアスモッグ</language>
 	</row>
 
 	<row id="WAZANAME_500">
@@ -2459,6 +2459,70 @@
 
 	<row id="WAZANAME_528">
 		<language name="JPN" width="216">ワイルドボルト</language>
+	</row>
+
+	<row id="WAZANAME_529">
+		<language name="JPN" width="216">ドリルライナー</language>
+	</row>
+
+	<row id="WAZANAME_530">
+		<language name="JPN" width="216">ダブルチョップ</language>
+	</row>
+
+	<row id="WAZANAME_531">
+		<language name="JPN" width="216">ハートスタンプ</language>
+	</row>
+
+	<row id="WAZANAME_532">
+		<language name="JPN" width="216">ウッドホーン</language>
+	</row>
+
+	<row id="WAZANAME_533">
+		<language name="JPN" width="216">せいなるつるぎ</language>
+	</row>
+
+	<row id="WAZANAME_534">
+		<language name="JPN" width="216">シェルブレード</language>
+	</row>
+
+	<row id="WAZANAME_535">
+		<language name="JPN" width="216">ヒートスタンプ</language>
+	</row>
+
+	<row id="WAZANAME_536">
+		<language name="JPN" width="216">グラスミキサー</language>
+	</row>
+
+	<row id="WAZANAME_537">
+		<language name="JPN" width="216">ハードローラー</language>
+	</row>
+
+	<row id="WAZANAME_538">
+		<language name="JPN" width="216">コットンガード</language>
+	</row>
+
+	<row id="WAZANAME_539">
+		<language name="JPN" width="216">ナイトバースト</language>
+	</row>
+
+	<row id="WAZANAME_540">
+		<language name="JPN" width="216">サイコブレイク</language>
+	</row>
+
+	<row id="WAZANAME_541">
+		<language name="JPN" width="216">スイープビンタ</language>
+	</row>
+
+	<row id="WAZANAME_542">
+		<language name="JPN" width="216">ぼうふう</language>
+	</row>
+
+	<row id="WAZANAME_543">
+		<language name="JPN" width="216">アフロブレイク</language>
+	</row>
+
+	<row id="WAZANAME_544">
+		<language name="JPN" width="216">ギアソーサー</language>
 	</row>
 
 	<flowchart-group-list>
