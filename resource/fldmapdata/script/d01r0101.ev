@@ -197,9 +197,13 @@ ev_d01r0101_pokecount:
 			_PLAYER_NAME(0)
 		
 			//éËÇ…ì¸ÇÍÇΩ
-					_SYSWIN_MSG_DOWN(msg_d01r0101_girl_08)
+			_ME_PLAY( SEQ_ME_POKEGET )
+			_SYSWIN_MSG_ALLPUT_DOWN(msg_d01r0101_girl_08)
+			_ME_WAIT()
 			_SYSWIN_CLOSE()
-					_SYSWIN_MSG_DOWN(msg_d01r0101_girl_09)
+			
+			//ñºëOÇÇ¬ÇØÇ‹Ç∑Ç©ÅH
+			_SYSWIN_MSG_DOWN(msg_d01r0101_girl_09)
 			DEFINE_LOCAL NAME_YESNO01
 			_YES_NO_WIN( NAME_YESNO01 )
 			_SYSWIN_CLOSE()
