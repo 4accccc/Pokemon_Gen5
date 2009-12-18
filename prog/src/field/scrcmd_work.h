@@ -48,6 +48,16 @@ typedef struct
   FIELDMAP_WORK *fieldMap;
 }SCRCMD_WORK_HEADER;
 
+//--------------------------------------------------------------
+/// SCRCMD_WORK_BALLOONWIN　バルーンウィンドウ関連ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 obj_id;
+  u16 up_down;
+  VecFx32 tail_pos;
+}SCRCMD_BALLOONWIN_WORK;
+
 //======================================================================
 //	proto
 //======================================================================
@@ -71,9 +81,8 @@ extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin );
 extern void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work );
 
-extern void SCRCMD_WORK_SetTalkMsgWinTailPos(
-    SCRCMD_WORK *work, const VecFx32 *pos );
-extern const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work );
+extern SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork(
+    SCRCMD_WORK *work );
 
 extern void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work );

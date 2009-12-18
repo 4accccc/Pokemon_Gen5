@@ -55,12 +55,12 @@ struct _TAG_SCRCMD_WORK
 	SCRCMD_WORK_HEADER head;
 	
 	GFL_MSGDATA *msgData;
-	VecFx32 talkMsgWinTailPos;
   
   GFL_TCB *tcb_callproc;
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
   
   SCRCMD_MENU_WORK menuWork;
+  SCRCMD_BALLOONWIN_WORK balloonWinWork;
 };
 
 //======================================================================
@@ -245,6 +245,7 @@ void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 	work->msgWin = msgWin;
 #else
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  OS_Printf( "SC = 0x%x WORK = 0x%x\n", (u32)sc, (u32)work );
   SCRIPT_SetMsgWinPointer( sc, msgWin );
 #endif
 }
@@ -266,30 +267,16 @@ void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 #endif
 }
 
-//--------------------------------------------------------------
-/**
- * SCRCMD_WORK 吹き出しウィンドウ用座標セット
- * @param work SCRCMD_WORK
- * @param pos セットする座標
- * @retval nothing
- */
-//--------------------------------------------------------------
-void SCRCMD_WORK_SetTalkMsgWinTailPos(
-    SCRCMD_WORK *work, const VecFx32 *pos )
-{
-  work->talkMsgWinTailPos = *pos;
-}
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK 吹き出しウィンドウ用座標ポインタ取得
- * @param work SCRCMD_WORK
- * @retval VecFx32*
+ * @param
+ * @retval
  */
 //--------------------------------------------------------------
-const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work )
+SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork( SCRCMD_WORK *work )
 {
-  return( &work->talkMsgWinTailPos );
+  return( &work->balloonWinWork );
 }
 
 //--------------------------------------------------------------
