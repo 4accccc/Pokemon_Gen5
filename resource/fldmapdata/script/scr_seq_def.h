@@ -1052,7 +1052,7 @@
 
 //--------------------------------------------------------------
 /**
- *  @def  _BALLOONWIN_OBJMSG_POS
+ *  @def  _GIZAWIN_OBJMSG_POS
  *  @brief  吹き出しウィンドウ描画　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
@@ -1082,6 +1082,14 @@
   .macro  _ASM_BALLOONWIN_CLOSE
   .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GIZAWIN_CLOSE 吹き出しウィンドウ閉じる
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _GIZAWIN_CLOSE() _ASM_BALLOONWIN_CLOSE
 
 //======================================================================
 //  所持金ウィンドウ
