@@ -21,6 +21,8 @@
 #include "fldeff_splash.h"
 #include "fldeff_d06denki.h"
 
+#include "sound/pm_sndsys.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -45,6 +47,7 @@
 #define ATTROFFS_Y_YUKI (NUM_FX32(-12))///<雪Yオフセット
 #define ATTROFFS_Y_YUKI_DEEP (NUM_FX32(-14))///<深い雪Yオフセット
 #define ATTROFFS_Y_YUKI_DEEP_MOST (NUM_FX32(-16))///<更に深い雪Yオフセット
+#define ATTROFFS_Y_DESERT_DEEP (NUM_FX32(-8)) ///<深い砂漠Yオフセット
 
 ///高さ差分による移動制限
 #define HEIGHT_DIFF_COLLISION (FX32_ONE*(20))
@@ -479,7 +482,27 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl )
 static void MMdl_MapAttrHeight_02(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
+	if( MMDL_CheckStatusBitAttrOffsetOFF(fmmdl) == FALSE ){
+    MAPATTR_VALUE o_val = MAPATTR_GetAttrValue( old );
+    MAPATTR_VALUE n_val = MAPATTR_GetAttrValue( now );
+    
+    if( MAPATTR_VALUE_CheckDesertDeep(n_val) ){
+      VecFx32 offs = { 0, ATTROFFS_Y_DESERT_DEEP, 0 };
+			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &offs );
+      return;
+    }
+  }
+  
+  {
+		VecFx32 vec = { 0, 0, 0 };
+		MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
+  }
+}
+
+#ifndef MMDL_PL_NULL
+static void MMdl_MapAttrHeight_02(
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
+{
 	if( MMDL_CheckStatusBitAttrOffsetOFF(fmmdl) == FALSE ){
 		if( MAPATTR_IsSwampDeep(now) == TRUE ||
 			MAPATTR_IsSwampGrassDeep(now) == TRUE ){
@@ -517,8 +540,8 @@ static void MMdl_MapAttrHeight_02(
 		VecFx32 vec = { 0, 0, 0 };
 		MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 	}
-	#endif
 }
+#endif
 
 //======================================================================
 //	アトリビュート　草
@@ -593,16 +616,24 @@ static void MMdl_MapAttrFootMarkProc_1(
       FOOTMARK_TYPE type;
       FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
       MAPATTR_VALUE val = MAPATTR_GetAttrValue( old );
-
-      if( MAPATTR_VALUE_CheckSnowType(val) == FALSE ){
-        type = FOOTMARK_TYPE_HUMAN;
-        if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
-          type = FOOTMARK_TYPE_CYCLE;
-        }
-      }else{
+      
+      if( MAPATTR_VALUE_CheckSnowType(val) == TRUE )
+      {
         type = FOOTMARK_TYPE_HUMAN_SNOW;
         if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
           type = FOOTMARK_TYPE_CYCLE_SNOW;
+        }
+      }
+      else if( MAPATTR_VALUE_CheckDesertDeep(val) == TRUE )
+      {
+        type = FOOTMARK_TYPE_DEEPSNOW;       
+        PMSND_PlaySE( SEQ_SE_FLD_91 );
+      }
+      else
+      {
+        type = FOOTMARK_TYPE_HUMAN;
+        if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
+          type = FOOTMARK_TYPE_CYCLE;
         }
       }
       

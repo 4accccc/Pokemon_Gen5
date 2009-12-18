@@ -47,7 +47,15 @@ enum
   FOOTMARK_SNOW_CYCLE_DR,                ///<自転車足跡 下右
   FOOTMARK_SNOW_MAX,                  ///<雪足跡最大数
   
-  FOOTMARK_ALL_MAX = FOOTMARK_SNOW_MAX, ///<全足跡最大数
+  FOOTMARK_DEEPSNOW_UD = FOOTMARK_SNOW_MAX, //深い雪　上下
+  FOOTMARK_DEEPSNOW_LR, //深い雪　左右
+  FOOTMARK_DEEPSNOW_UL, //深い雪　上左
+  FOOTMARK_DEEPSNOW_UR, //深い雪　上右
+  FOOTMARK_DEEPSNOW_DL, //深い雪　下左
+  FOOTMARK_DEEPSNOW_DR, //深い雪　下右
+  FOOTMARK_DEEPSNOW_MAX,
+  
+  FOOTMARK_ALL_MAX = FOOTMARK_DEEPSNOW_MAX, ///<全足跡最大数
 };
 
 ///雪 足跡リソース位置
@@ -56,6 +64,8 @@ enum
 #define FOOTMARK_CYCLE_START (FOOTMARK_CYCLE_UD)
 ///雪　自転車足跡リソース位置
 #define FOOTMARK_SNOW_CYCLE_START (FOOTMARK_SNOW_CYCLE_UD)
+///深い雪 リソース位置
+#define FOOTMARK_DEEPSNOW_START (FOOTMARK_DEEPSNOW_UD)
 
 #define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
 #define FOOTMARK_OFFSPOS_Z (NUM_FX32(1))
@@ -245,6 +255,11 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
     no += FOOTMARK_SNOW_CYCLE_START;
     *outobj = fmark->g3d_obj[no];
     break;
+  case FOOTMARK_TYPE_DEEPSNOW:
+    no = data_FootMarkCycleDirTbl[old_dir][now_dir] - FOOTMARK_CYCLE_START;
+    no += FOOTMARK_DEEPSNOW_START;
+    *outobj = fmark->g3d_obj[no];
+    break;
   default:
     GF_ASSERT( 0 );
     *outobj = fmark->g3d_obj[no];
@@ -285,13 +300,23 @@ void FLDEFF_FOOTMARK_SetMMdl(
   MMDL_GetVectorPos( mmdl, &pos ); //y
   MMDL_TOOL_GetCenterGridPos(
       MMDL_GetOldGridPosX(mmdl), MMDL_GetOldGridPosZ(mmdl), &pos );
-  pos.y += FOOTMARK_OFFSPOS_Y;
   
-  if( type == FOOTMARK_TYPE_HUMAN &&
-      (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
-    pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
-  }else{
-    pos.z += FOOTMARK_OFFSPOS_Z;
+  switch( type ){
+  case FOOTMARK_TYPE_HUMAN:
+  case FOOTMARK_TYPE_CYCLE:
+    pos.y += FOOTMARK_OFFSPOS_Y;
+    
+    if( type == FOOTMARK_TYPE_HUMAN &&
+        (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
+      pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
+    }else{
+      pos.z += FOOTMARK_OFFSPOS_Z;
+    }
+    break;
+  case FOOTMARK_TYPE_HUMAN_SNOW:
+  case FOOTMARK_TYPE_DEEPSNOW:
+    pos.y += NUM_FX32( -7 );
+    break;
   }
   
   FLDEFF_CTRL_AddTask(
@@ -407,11 +432,20 @@ static const u32 data_FootMarkArcIdx[FOOTMARK_ALL_MAX] =
 	NARC_fldeff_c_mark_ur_nsbmd,
 	NARC_fldeff_c_mark_dl_nsbmd,
 	NARC_fldeff_c_mark_dr_nsbmd,
+  
   //雪
 	NARC_fldeff_nf_mark_u_nsbmd,
 	NARC_fldeff_nf_mark_d_nsbmd,
 	NARC_fldeff_nf_mark_l_nsbmd,
 	NARC_fldeff_nf_mark_r_nsbmd,
+	NARC_fldeff_sc_mark_u_nsbmd,
+	NARC_fldeff_sc_mark_l_nsbmd,
+	NARC_fldeff_sc_mark_ul_nsbmd,
+	NARC_fldeff_sc_mark_ur_nsbmd,
+	NARC_fldeff_sc_mark_dl_nsbmd,
+	NARC_fldeff_sc_mark_dr_nsbmd,
+
+  //深い雪
 	NARC_fldeff_nc_mark_u_nsbmd,
 	NARC_fldeff_nc_mark_l_nsbmd,
 	NARC_fldeff_nc_mark_ul_nsbmd,
