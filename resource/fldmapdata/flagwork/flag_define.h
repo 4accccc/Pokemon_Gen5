@@ -163,7 +163,7 @@
 #define FE_C05PC0101_WAZA                  147 /* 0x0093 C05PC0101：ホモエドシティPC、なみのり入手フラグ */
 #define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 #define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
-		/* not used   150(0x0096) */
+#define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
 		/* not used   151(0x0097) */
 		/* not used   152(0x0098) */
 		/* not used   153(0x0099) */
