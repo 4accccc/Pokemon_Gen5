@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-05T22:20:51" source="c03_wall1_2.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-12-18T19:24:34" source="c03_wall1_1ab.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,31 +11,30 @@
 <body>
 
 <node_anm_info
-	frame_size="23"
+	frame_size="13"
 	scaling_rule="maya"
 	magnify="1.000000"
 	tool_start_frame="0"
-	tool_end_frame="22"
+	tool_end_frame="12"
 	interpolation="frame"
-	compress_node="merge" node_size="5 4"
+	compress_node="merge" node_size="6 4"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="2">
-	1.000000 0.000000
+<node_scale_data size="1">
+	1.000000
 </node_scale_data>
 
 <node_rotate_data size="2">
 	0.000000 90.000000
 </node_rotate_data>
 
-<node_translate_data size="24">
-	0.000000 0.000000 -1.133057 -2.379883 -3.711914 -5.101074 -6.518555 -7.936035 -9.324951 -10.657227
-	-11.904053 -13.037109 -14.027832 -14.847900 -15.468994 -15.862549 -16.000000 -16.000000 -16.000000 -16.000000
-	-16.000000 -16.000000 -4.000000 16.000000
+<node_translate_data size="15">
+	0.000000 4.000000 0.230713 -2.031006 0.984619 4.000000 1.109619 -2.031006 -0.142334 2.000000
+	0.126953 -2.000000 -1.375000 0.000000 16.000000
 </node_translate_data>
 
 <node_anm_array size="4">
@@ -68,14 +67,14 @@
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
-		<translate_x frame_step="1" data_size="23" data_head="1"/>
-		<translate_y frame_step="1" data_size="1" data_head="23"/>
+		<translate_x frame_step="1" data_size="13" data_head="1"/>
+		<translate_y frame_step="1" data_size="1" data_head="14"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 	<node_anm index="3">
-		<scale_x frame_step="1" data_size="1" data_head="1"/>
-		<scale_y frame_step="1" data_size="1" data_head="1"/>
-		<scale_z frame_step="1" data_size="1" data_head="1"/>
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
