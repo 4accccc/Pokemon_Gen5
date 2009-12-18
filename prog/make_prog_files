@@ -244,7 +244,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         gamesystem/comm_player_support.c \
-        gamesystem/pm_season.c
+        gamesystem/pm_season.c \
+        field/scrcmd_sodateya.c
 
 
 #================================================
@@ -452,7 +453,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_intrude.c \
         field/scrcmd_encount.c \
         field/scrcmd_camera.c \
-        field/scrcmd_sodateya.c \
         field/scrcmd_fourkings.c \
         field/scrcmd_fld_battle.c \
 				field/rail_editor.c \
