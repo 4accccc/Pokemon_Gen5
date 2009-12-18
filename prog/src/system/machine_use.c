@@ -15,6 +15,13 @@
 // ファイルシステムで利用するDMA番号の定義
 #define FS_DMA_NUMBER	1
 
+
+//TWLのNITROモードとのHEAPの差分の為確保してあります
+//
+#if !defined(SDK_TWL)
+static u8 dummybufferTWL[0x8d00];
+#endif
+
 //VRAM転送マネージャ定義(NNS関数)
 #define VRAMTRANS_MAN_TASKNUM    (32)
 NNSGfdVramTransferTask    VRAMtransManTaskArray[ VRAMTRANS_MAN_TASKNUM ];
@@ -82,6 +89,12 @@ void MachineSystem_Init(void)
     OS_CheckStack(OS_GetCurrentThread());
     OS_SetIrqStackWarningOffset(0x100);
 #endif
+
+#if !defined(SDK_TWL)
+  dummybufferTWL[0]=0;
+#endif
+ 
+
 }
 
 //------------------------------------------------------------------
