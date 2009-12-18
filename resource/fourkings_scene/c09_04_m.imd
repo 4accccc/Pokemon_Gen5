@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-25T19:02:29" source="m_siten02_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-12-14T16:24:38" source="m_siten04_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-11-25T19:02:29" source="m_siten02_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-12-14T16:24:38" source="m_siten04_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,214 +20,76 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
+	compress_node="merge" node_size="2 1"
 	compress_material="on" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-4.389160 -0.082764 5.886230" whd="2.000000 1.731934 1.000000"/>
+<box_test pos_scale="4" xyz="-1.440186 0.602295 3.436279" whd="2.505127 2.238281 1.970703"/>
 
-<tex_image_array size="4">
-	<tex_image index="0" name="hero.1"
+<tex_image_array size="1">
+	<tex_image index="0" name="hero04.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.1_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.1.tga"
+		palette_name="hero04.1_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hero04.1.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0344 0000 0000 0000
-			0000 0000 f000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee eeee 0f69 0000 0000
-			0000 0000 9662 eeee eeee 2669 0000 0000
-			0000 0000 666f eee9 9eee f666 0000 0000
-			0000 0000 666f 9996 6999 f666 0000 0000
-			0000 0000 666f 6666 6666 f666 0000 0000
-			0000 a000 66fb 3366 6633 bf66 000a 0000
-			0000 a000 66ff 3366 6633 ff66 000a 0000
-			0000 f000 6443 6666 6666 3446 000f 0000
-			0000 0000 444f 6664 4666 f444 0000 0000
-			0000 0000 4ff0 4444 4444 0ff4 0000 0000
-			0000 0000 43f0 4444 4444 0f34 0000 0000
-			0000 0000 ff00 44f3 3f44 00ff 0000 0000
-			0000 0000 f000 ffaf faff 000f 0000 0000
-			0000 0000 af00 17a1 1a11 00fa 0000 0000
-			0000 0000 1bfa 71ff ff11 afb1 0000 0000
-			0000 a000 fb7c 11a0 5a17 c7bf 000a 0000
-			0000 a000 0fbc 1d2f 5271 cbf7 000a 0000
-			0000 0000 00ff dd9f 77dd ff88 0000 0000
-			0000 0000 0000 993f 7399 0587 0000 0000
-			0000 0000 0000 f444 444f 0557 0000 0000
-			0000 0000 f000 0f33 33f0 0055 0000 0000
-			0000 0000 f000 0f22 22f0 000f 0000 0000
-			0000 0000 0000 00ff ff00 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="1" name="hero.10"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero.10_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.10.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 3330 0333 0000 0000 0000
-			0000 0000 3000 dd53 35dd 000e 0000 0000
-			0000 0000 5e00 7ddd dd87 00e5 0000 0000
-			0000 0000 85e0 7ddd ddd7 0e58 0000 0000
-			0000 0000 85e0 dddd dd8d 0e58 0000 0000
-			0000 0000 855e dddd d8dd e758 0000 0000
-			0000 0000 551e ddd8 88dd ec75 0000 0000
-			0000 e000 5222 8885 5888 ec65 0044 0000
-			0000 0000 522e 5555 5555 47c5 0477 0000
-			0000 e000 5153 5555 5555 4c65 4777 0000
-			0000 0000 553e 5555 5555 7476 4777 0000
-			0000 e000 5333 5555 6555 7766 0477 0000
-			0000 2e00 3333 eab3 ed9e 4444 0044 0000
-			0000 e000 333e eab3 edaa 09bb 0000 0000
-			0000 0000 3ee0 3a93 bbaa 0abb 0000 0000
-			0000 0000 32e0 3e3e ba99 009a 0000 0000
-			0000 0000 ee00 3ee0 e9e3 000e 0000 0000
-			0000 0000 0000 5e00 00e5 0000 0000 0000
-			0000 0000 0000 6e00 0e56 0000 0000 0000
-			0000 0000 0000 c9e0 0ec2 0000 0000 0000
-			0000 0000 0000 a9e0 06c3 0000 0000 0000
-			0000 0000 0000 a33e e623 0000 0000 0000
-			0000 0000 0000 735e e52b 0000 0000 0000
-			0000 0000 0000 b34e e43b 0000 0000 0000
-			0000 0000 0000 3640 0463 0000 0000 0000
-			0000 0000 0000 4400 0044 0000 0000 0000
-			0000 0000 0000 3e00 0e11 0000 0000 0000
-			0000 0000 0000 e000 00ee 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="2" name="hero.4"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero.4_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.4.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0444 0000 0000 0000
-			0000 0000 f000 ee64 f6ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 e99e e99e 0f69 0000 0000
-			0000 0000 966f eee9 9eee f669 0000 0000
-			0000 ff00 6663 88e9 9e88 3666 00ff 0000
-			0000 f000 666f 1776 6771 f666 000f 0000
-			0000 3f00 666f 7176 6717 f666 00f3 0000
-			0000 a3f0 67fb 1766 6671 bf76 0f3a 0000
-			0000 af00 7f3b 8887 7888 b3f7 00fa 0000
-			0000 a000 543b 8887 7888 b345 000a 0000
-			0000 0000 bfbf 55fe ef55 fbfb 0000 0000
-			0000 0000 ca3f ccfe efcc f3ac 0000 0000
-			0000 0000 a4f0 cccc cccc 0f4a 0000 0000
-			0000 0000 ff00 bcba abcb 0000 0000 0000
-			0000 0000 f000 aff1 1ffa 000f 0000 0000
-			0000 0000 df00 61a1 1a76 00fd 0000 0000
-			0000 0000 1bfa 91af fa47 afb1 0000 0000
-			0000 a000 fb7c 77a5 0ad9 c7bf 000a 0000
-			0000 a000 7fbc 9775 fade cbf0 000a 0000
-			0000 0000 88ff e167 461e ff00 0000 0000
-			0000 0000 7850 6647 f466 0000 0000 0000
-			0000 0000 7550 f445 f44f 0000 0000 0000
-			0000 0000 5500 0f43 34f0 000f 0000 0000
-			0000 0000 f000 0f22 22f0 000f 0000 0000
-			0000 0000 0000 00ff ff00 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="hero.7"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero.7_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.7.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4440 0444 0000 0000 0000
-			0000 0000 f000 ee64 46ee 0004 0000 0000
-			0000 0000 6f00 89ee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 e9ee eeee 0f69 0000 0000
-			0000 0000 968f ee9e eeee f669 0000 0000
-			0000 0000 68df ee99 9eee f266 0000 0000
-			0000 5500 67df 9996 6999 3336 0004 0000
-			0000 8850 6d85 6666 6666 f236 0000 0000
-			0000 8885 67d5 6666 6666 4626 000f 0000
-			0000 8885 7858 6666 6666 f466 0000 0000
-			0000 8850 7788 6667 6666 4446 000f 0000
-			0000 5500 5555 faef 4cbf 4444 00f3 0000
-			0000 0000 cca0 bbef 4cbf f444 000f 0000
-			0000 0000 ccb0 bbcc 4ab4 0ff4 0000 0000
-			0000 0000 ba00 aabc f4f4 0f34 0000 0000
-			0000 0000 f000 4faf 0ff4 00ff 0000 0000
-			0000 0000 0000 6f00 00f6 0000 0000 0000
-			0000 0000 0000 76f0 00f7 0000 0000 0000
-			0000 0000 0000 3df0 0fad 0000 0000 0000
-			0000 0000 0000 4d20 0fab 0000 0000 0000
-			0000 0000 0000 431f f44b 0000 0000 0000
-			0000 0000 0000 c36f f648 0000 0000 0000
-			0000 0000 0000 c44f f44c 0000 0000 0000
-			0000 0000 0000 4340 0ff4 0000 0000 0000
-			0000 0000 0000 4f00 00f4 0000 0000 0000
-			0000 0000 0000 22f0 00f4 0000 0000 0000
-			0000 0000 0000 ff00 000f 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 3333 3333 0000 0000 0000
+			0000 0000 2200 0002 2000 0022 0000 0000
+			0000 0000 0220 0000 0000 0220 0000 0000
+			0000 0000 0022 0000 0000 2200 0000 0000
+			0000 0000 0002 0000 0000 2000 0000 0000
+			0000 3000 0003 0000 0000 3000 0003 0000
+			0000 4440 0000 0000 0000 0000 0444 0000
+			0000 0040 0000 0000 0000 0000 0400 0000
+			0000 0550 0000 0000 0000 0000 0550 0000
+			0000 0055 0000 0000 0000 0000 5500 0000
+			0000 0007 0000 0000 0000 0000 7000 0000
+			0000 0077 0000 0000 0000 0000 7700 0000
+			0000 0770 0000 0000 0000 0000 0770 0000
+			0000 9900 0000 0000 0000 0000 0099 0000
+			0000 a000 0000 0000 0000 0000 000a 0000
+			0000 a000 000a 0000 0000 a000 000a 0000
+			0000 0000 0088 0000 0000 8888 0000 0000
+			0000 0000 0880 0000 0000 0880 0000 0000
+			0000 6000 0066 0000 0000 6600 0006 0000
+			0000 6600 0000 0000 0000 0000 0066 0000
+			0000 0b00 0000 0000 b000 0000 00b0 0000
+			0000 0b00 0000 0000 0000 000b 00b0 0000
+			0000 bb00 0000 0000 0000 00bb 00bb 0000
+			0000 d000 000d 0000 0000 dddd 000d 0000
+			0000 0000 000c 0000 0000 00cc 0000 0000
+			0000 0000 0011 1000 0001 0010 0000 0000
+			0000 0000 0110 1000 0001 0010 0000 0000
+			0000 0000 1100 1100 0011 0011 0000 0000
+			0000 0000 1000 0111 1110 0001 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="4">
-	<tex_palette index="0" name="hero.10_pl" color_size="16">
-		2e47 416b 28e7 1ca5 4d47 6af5 61e8 728e
-		7779 192d 3a7a 5f5f 35bd 7fff 0000 7fff
-	</tex_palette>
-	<tex_palette index="1" name="hero.1_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="2" name="hero.4_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="3" name="hero.7_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
+<tex_palette_array size="1">
+	<tex_palette index="0" name="hero04.1_pl" color_size="16">
+		0463 357f 381f 441a 5419 5c15 4992 6c31
+		5d52 68b1 60f1 35d7 35df 35db 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="lambert2"
+	<material index="0" name="lambert5"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -237,7 +99,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
+		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -281,16 +143,16 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="test_pPlane3" kind="mesh"
+	<node index="0" name="syoumen" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="-30.000000 0.000000 0.000000"
-		translate="-54.226318 12.535645 102.181396"
+		billboard="on"
+		scale="1.199951 1.199951 1.199951"
+		rotate="21.145020 30.735840 0.000000"
+		translate="-2.998291 27.544922 70.748779"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
