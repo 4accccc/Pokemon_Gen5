@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-18T18:34:29"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T21:34:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="183" right="944" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="359" top="303" right="1052" bottom="916" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="521"/>
+		<band id="0" index="1" style="0000" width="518"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="534"/>
+		<band id="2" index="3" style="0000" width="531"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="688"/>
+		<band id="4" index="0" style="0000" width="685"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -311,15 +311,15 @@
 
 	<row id="msg_r03r0101_woman3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・はい／いいえの選択肢表示
+・はい/いいえの選択肢表示
 　はい　→woman3_02
 　いいえ→woman3_03</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン女性</attribute>
-		<language name="JPN" width="256">あたし　ダブルバトルって
-ごぞんじ　かしら？</language>
-		<language name="JPN_KANJI" width="256">あたし　ダブルバトルって
-ごぞんじ　かしら？</language>
+		<language name="JPN" width="256">あなた　ダブルバトルって
+ごぞんじ　かしら？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あなた　ダブルバトルって
+ご存知　かしら？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03r0101_woman3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -332,11 +332,11 @@
 ポケモンしょうぶの　ことよ[BE:01:ページ切り替え（クリア）]
 どの　２ひきで　たたかうか
 コンビネーションが　だいじになるわ</language>
-		<language name="JPN_KANJI" width="256">かんたんに　いえば
-ポケモンを　２ひきずつ　たたかわせる[BE:00:ページ切り替え（行送り）]
-ポケモンしょうぶの　ことよ[BE:01:ページ切り替え（クリア）]
-どの　２ひきで　たたかうか
-コンビネーションが　だいじになるわ</language>
+		<language name="JPN_KANJI" width="256">簡単に　いえば
+ポケモンを　２匹ずつ　戦わせる[BE:00:ページ切り替え（行送り）]
+ポケモン勝負の　ことよ[BE:01:ページ切り替え（クリア）]
+どの　２匹で　戦うか
+コンビネーションが　大事になるわ</language>
 	</row>
 
 	<row id="msg_r03r0101_woman3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -345,13 +345,9 @@
 		<attribute name="キャラ指定">WOMAN3
 エプロン女性</attribute>
 		<language name="JPN" width="256">そうよね
-ジムバッジを　もってるもんね[BE:01:ページ切り替え（クリア）]
-でも　じっさいに　たたかうほどに
-いろいろ　おぼえていくのが　ダブルバトルよ</language>
+ジムバッジを　もってるもんね</language>
 		<language name="JPN_KANJI" width="256">そうよね
-ジムバッジを　もってるもんね[BE:01:ページ切り替え（クリア）]
-でも　じっさいに　たたかうほどに
-いろいろ　おぼえていくのが　ダブルバトルよ</language>
+ジムバッジを　持ってるもんね</language>
 	</row>
 
 	<row id="msg_r03r0101_babygirl1_01">
