@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-14T16:44:11"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T11:42:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,119 +292,39 @@
 	</lock>
 
 
-	<row id="msg_c04r0302_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・このマップに入ると
-　カメラ移動してッサポートを中心に
-・その後メッセージ表示
-・続けて、カメラを戻し、主人公を
-　サポートの隣に移動</comment>
-		<attribute name="キャラ指定">友達♀
-サポート</attribute>
-		<language name="JPN" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！
-こっちだよ　こっち！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！
-こっちだよ　こっち！！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_c04r0302_white_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_white_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・Ｎとの戦闘後
-・ｃ05ジムバッジ入手の
-　タイミングでサポートをここから削除</comment>
-		<language name="JPN" width="256">ともだち♀『……さっきの　ひと
-うまくいえないけど……　こわいね[BE:01:ページ切り替え（クリア）]
-あっ　あたしは
-もうしばらく　ここにいるね！</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『……さっきの人
-うまくいえないけど……　こわいね[BE:01:ページ切り替え（クリア）]
-あっ　あたしは
-もうしばらく　ここにいるね！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_boss_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・上記white_01のスクリプトで
-　主人公がサポートに隣接すると
-　Ｎのメッセージ表示</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">（みらいよちの　えんしゅつ）[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">（みらいよちの演出）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_boss_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公と向き合いメッセージ表示
-・はい/いいえの選択
-　どちらを選んだか保存しておく</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
-たびをつづけて　キミは
-きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
-にんげんの　みにくさに　きづいたかい？</language>
-		<language name="JPN_KANJI" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
-旅を続けて　キミは
-きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
-人間の　醜さに　気づいたかい？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_boss_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい選択時
-・トレーナー戦闘に</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『その　へんじ……　ほんとうか
-どうか　たしかめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『その返事……
-本当かどうか　確かめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_boss_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・いいえ選択時
-・トレーナー戦闘に</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
-にんげんは　うらおもてが　ありすぎる
-じぶんを　よりよく　みせようと[BE:00:ページ切り替え（行送り）]
-むりをする……　ときには　ウソをつく[BE:01:ページ切り替え（クリア）]
-ポケモンのように
-しぜんで　いられない[BE:01:ページ切り替え（クリア）]
-キミが　しょうぶで　まけそうになったとき
-どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
-そのことを　おしえてあげるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
-人間は　裏表が　ありすぎる
-自分を　より良く見せようと[BE:00:ページ切り替え（行送り）]
-無理をする……　時にはウソをつく[BE:01:ページ切り替え（クリア）]
-ポケモンのように
-自然で　いられない[BE:01:ページ切り替え（クリア）]
-キミが　勝負で　負けそうになったとき
-どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
-そのことを　教えてあげるよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_boss_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後
-･メッセージ表示後、画面左方向へ
-　５歩移動
-・続けてmsg_c02_boss_05</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『いま　しょうぶの　さなかに
-みえた　みらいの　ビジョン……[BE:01:ページ切り替え（クリア）]
-そうか……　キミは
-そんな　しめいを　もつのか[BE:01:ページ切り替え（クリア）]
-なるほど……　それが
-ボクが　とくべき　すうしき……[BE:00:ページ切り替え（行送り）]
-では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『今　勝負の　さなかに
-見えた　未来のビジョン……[BE:01:ページ切り替え（クリア）]
-そうか……
-キミは　そんな使命を　持つのか[BE:01:ページ切り替え（クリア）]
-なるほど……
-それが　ボクが解くべき　数式……[BE:00:ページ切り替え（行送り）]
-では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0302_girl4_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
