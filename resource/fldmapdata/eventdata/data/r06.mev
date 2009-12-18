@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/01 20:21:57
+#save date:2009/12/19 0:48:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #hold event type:
 1
 #hold event number:
-2
+9
 #event number: 0
 #type
 1
@@ -72,6 +72,223 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 536 0 -408
+#event number: 2
+#type
+1
+#ID name
+TR_RANGERW_03
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 0 -248
+#event number: 3
+#type
+1
+#ID name
+TR_SCIENTISTM_06
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RND_UR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTM_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 -120
+#event number: 4
+#type
+1
+#ID name
+TR_RANGERM_03
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERM_03
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+5
+#Move Limit Z Number
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 -40
+#event number: 5
+#type
+1
+#ID name
+TR_PARASOL_02
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_SPIN_R
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_PARASOL_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -120
+#event number: 6
+#type
+1
+#ID name
+TR_PARASOL_01
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_PARASOL_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -184
+#event number: 7
+#type
+1
+#ID name
+TR_SCIENTISTM_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTM_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+344 0 -456
+#event number: 8
+#type
+1
+#ID name
+TR_SCIENTISTW_04
+#OBJ CODE Number
+ASSISTANTW
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTW_04
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

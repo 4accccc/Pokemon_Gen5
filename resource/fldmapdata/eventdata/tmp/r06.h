@@ -13,5 +13,12 @@
 
 #define R06_MOUNTAIN_01                    0
 #define R06_SPORTSW_01                     1
+#define TR_RANGERW_03                      2
+#define TR_SCIENTISTM_06                   3
+#define TR_RANGERM_03                      4
+#define TR_PARASOL_02                      5
+#define TR_PARASOL_01                      6
+#define TR_SCIENTISTM_01                   7
+#define TR_SCIENTISTW_04                   8
 
 #endif //ZONE_R06_EVC_H
