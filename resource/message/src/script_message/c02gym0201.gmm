@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-28T18:18:09"/>
+	<create user="matsumiya" host="W00207" date="2009-12-18T22:27:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="155" top="-14" right="851" bottom="995" maximized="no" rayout="Vertical2">
+	<dialog left="155" top="0" right="851" bottom="995" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="521"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="688"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -801,12 +801,12 @@
 	<row id="msg_c02gym0101_book_05" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンの　きょういく」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ピカチュウの　せいたいが　かいてある
-よわった　なかまの　ピカチュウに▽
+		<language name="JPN" width="256">ピカチュウの　せいたいが　かいてある▼
+よわった　なかまの　ピカチュウに
 でんきをながし　ショックをあたえて▽
 げんきを　わけあたえることも　ある</language>
-		<language name="JPN_KANJI" width="256">ピカチュウの　生態が　書いてある
-弱った　仲間の　ピカチュウに▽
+		<language name="JPN_KANJI" width="256">ピカチュウの　生態が　書いてある▼
+弱った　仲間の　ピカチュウに
 電気を流し　ショックを与えて▽
 元気を　分け与える事も　ある</language>
 	</row>
@@ -814,12 +814,12 @@
 	<row id="msg_c02gym0101_book_06" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ナエトルの　せいたい」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ナエトルの　せいたいが　かいてある
-つちで　できた　せなかの　こうらを▽
+		<language name="JPN" width="256">ナエトルの　せいたいが　かいてある▼
+つちで　できた　せなかの　こうらを
 さわって　しめっていたのなら▽
 その　ナエトルは　とても　げんきだ</language>
-		<language name="JPN_KANJI" width="256">ナエトルの　生態が　書いてある
-土で　できた　背中の　甲羅を▽
+		<language name="JPN_KANJI" width="256">ナエトルの　生態が　書いてある▼
+土で　できた　背中の　甲羅を
 触って　湿っていたのなら▽
 その　ナエトルは　とても　元気だ</language>
 	</row>
@@ -827,12 +827,12 @@
 	<row id="msg_c02gym0101_book_07" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポッチャマの　せいたい」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ポッチャマの　せいたいが　かいてある
-あるくのは　にがてで　こけたりするが▽
-ポッチャマの　プライドは　たかく▽　
+		<language name="JPN" width="256">ポッチャマの　せいたいが　かいてある▼
+あるくのは　にがてで　こけたりするが
+ポッチャマの　プライドは　たかく▽
 きにせず　どうどうと　むねをはる</language>
-		<language name="JPN_KANJI" width="256">ポッチャマの　生態が　書いてある
-歩くのは　苦手で　こけたりするが▽
+		<language name="JPN_KANJI" width="256">ポッチャマの　生態が　書いてある▼
+歩くのは　苦手で　こけたりするが
 ポッチャマの　プライドは　高く▽
 気にせず　堂々と　胸を張る</language>
 	</row>
@@ -840,12 +840,12 @@
 	<row id="msg_c02gym0101_book_08" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ヒコザルの　せいたい」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ヒコザルの　せいたいが　かいてある
-とても　みがるな　ポケモン▽
+		<language name="JPN" width="256">ヒコザルの　せいたいが　かいてある▼
+とても　みがるな　ポケモン
 まわりが　もえないように　おしりの▽
 ほのおを　けしてから　ねむる</language>
-		<language name="JPN_KANJI" width="256">ヒコザルの　生態が　書いてある
-とても　身軽な　ポケモン▽
+		<language name="JPN_KANJI" width="256">ヒコザルの　生態が　書いてある▼
+とても　身軽な　ポケモン
 周りが　燃えないように　おしりの▽
 炎を　消してから　眠る</language>
 	</row>
@@ -926,7 +926,7 @@
 
 	<row id="msg_c02gym0101_book_15" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">ほんに　てがみが　はさんである……！▼
-せいかいです
+せいかい　です
 ここが　さいごの　ほんです▼
 いまから　あなたに　
 あえることが　とても　たのしみです▽
