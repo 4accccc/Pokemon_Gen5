@@ -11,15 +11,19 @@
 #define NARC_INTRO_NAIX_
 
 enum {
-	NARC_intro_intro_doctor_NMCR = 0,
+	NARC_intro_intro_bg_NCGR = 0,
 	NARC_intro_intro_bg_NCLR = 1,
-	NARC_intro_intro_doctor_NCLR = 2,
-	NARC_intro_intro_bg_NCGR = 3,
-	NARC_intro_intro_doctor_NCGR = 4,
-	NARC_intro_intro_bg_main_NSCR = 5,
-	NARC_intro_intro_bg_sub_NSCR = 6,
-	NARC_intro_intro_doctor_NCER = 7,
-	NARC_intro_intro_doctor_NANR = 8
+	NARC_intro_intro_bg_main_NSCR = 2,
+	NARC_intro_intro_bg_sub_NSCR = 3,
+	NARC_intro_intro_bg_nsbca = 4,
+	NARC_intro_intro_bg_nsbma = 5,
+	NARC_intro_intro_bg_nsbmd = 6,
+	NARC_intro_intro_doctor_NANR = 7,
+	NARC_intro_intro_doctor_NCBR = 8,
+	NARC_intro_intro_doctor_NCEC = 9,
+	NARC_intro_intro_doctor_NCER = 10,
+	NARC_intro_intro_doctor_NCGR = 11,
+	NARC_intro_intro_doctor_NCLR = 12
 };
 
 /* NARC_INTRO_NAIX_ */
