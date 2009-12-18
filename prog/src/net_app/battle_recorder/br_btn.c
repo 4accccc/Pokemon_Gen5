@@ -2138,7 +2138,7 @@ void BR_BTN_GetPos( const BR_BTN_WORK *cp_wk, s16 *p_x, s16 *p_y )
 void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri )
 { 
   GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, soft_pri );
-  BmpOam_ActorSetSoftPriprity( p_wk->p_oamfont, soft_pri-1 );
+//  BmpOam_ActorSetSoftPriprity( p_wk->p_oamfont, soft_pri-1 );  //@@oo‹Ù‹}‰ñ”ð
 
 }
 
