@@ -35,8 +35,8 @@ typedef enum
 //=====================================
 typedef struct 
 {
-	BR_MODE				mode;			///<[in]	バトルレコーダー起動モード
-	GAMESYS_WORK	*p_gsys;	///<[in]	ゲームシステム
+	BR_MODE				mode;			    ///<[in]	バトルレコーダー起動モード
+	GAMEDATA      *p_gamedata;	///<[in]	ゲームデータ
 } BATTLERECORDER_PARAM;
 
 

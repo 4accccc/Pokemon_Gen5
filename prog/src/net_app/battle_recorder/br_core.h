@@ -37,6 +37,24 @@ typedef enum
 	BR_PROCID_MAX
 } BR_PROCID;
 
+//-------------------------------------
+///	バトルレコーダーコアの起動モード
+//=====================================
+typedef enum
+{
+  BR_CORE_MODE_INIT,    //初期
+  BR_CORE_MODE_RETURN,  //バトルから復帰
+} BR_CORE_MODE;
+
+//-------------------------------------
+///	バトルレコーダーコアの終了モード
+//=====================================
+typedef enum
+{
+  BR_CORE_RETURN_FINISH,  //終了
+  BR_CORE_RETURN_BTLREC,  //バトルへ
+} BR_CORE_RETURN;
+
 //=============================================================================
 /**
  *					構造体
@@ -47,7 +65,9 @@ typedef enum
 //=====================================
 typedef struct 
 {
-	BATTLERECORDER_PARAM	*p_param;
+  BR_CORE_RETURN        ret;      //[out]終了モード
+  BR_CORE_MODE          mode;     //[in ]起動モード
+	BATTLERECORDER_PARAM	*p_param; //[in ]本体の引数
 } BR_CORE_PARAM;
 
 

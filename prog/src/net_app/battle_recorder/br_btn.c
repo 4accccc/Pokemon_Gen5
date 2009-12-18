@@ -204,7 +204,7 @@ static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
 ///	BTNの処理
 //=====================================
-static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, const BR_RES_WORK *cp_res, HEAPID heapID );
+static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, const BR_RES_WORK *cp_res, const STRBUF *cp_strbuf, HEAPID heapID );
 static void BR_BTNEX_Exit( BR_BTNEX_WORK *p_wk );
 static BOOL BR_BTNEX_GetTrg( const BR_BTNEX_WORK *cp_wk, u32 x, u32 y );
 static void BR_BTNEX_StartMove( BR_BTNEX_WORK *p_wk, BR_BTN_MOVE move, const GFL_POINT *cp_target );
@@ -267,7 +267,7 @@ static const GFL_POINT  sc_tag_pos[]  =
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_BTLREC_SET *cp_rec, HEAPID heapID )
+BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_BTN_DATA_SETUP *cp_setup, HEAPID heapID )
 {	
 	BR_BTN_SYS_WORK *p_wk;
 
@@ -281,7 +281,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 		p_wk->p_unit			= p_unit;
 		p_wk->heapID			= heapID;
 		p_wk->p_bmpoam		= BmpOam_Init( heapID, p_unit);
-		p_wk->p_btn_data	= BR_BTN_DATA_SYS_Init( cp_rec, heapID );
+		p_wk->p_btn_data	= BR_BTN_DATA_SYS_Init( cp_setup, heapID );
 	}
 
 	//リソース読み込み
@@ -323,15 +323,21 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 				BR_MENUID	preID;
 				u32 btnID;
 				BR_BTNEX_WORK	btn;
+        STRBUF  *p_strbuf;
+        GFL_MSGDATA *p_msg;
 
+        p_msg		= BR_RES_GetMsgData( p_res );
 				for( i = 0; i < num; i++ )
 				{	
           GFL_STD_MemClear( &btn, sizeof(BR_BTNEX_WORK) );
 					BR_BTN_DATA_SYS_GetLink( p_wk->p_btn_data, menuID, i, &preID, &btnID );
 
 					cp_data	= BR_BTN_DATA_SYS_GetData( p_wk->p_btn_data, preID, btnID );
-					BR_BTNEX_Init( &btn, cp_data, p_unit, p_wk->p_bmpoam, p_res, heapID );
+          p_strbuf  = BR_BTN_DATA_CreateString( p_wk->p_btn_data, cp_data, p_msg, GFL_HEAP_LOWID(heapID) );
+					BR_BTNEX_Init( &btn, cp_data, p_unit, p_wk->p_bmpoam, p_res, p_strbuf, heapID );
 					Br_Btn_Sys_PushStack( p_wk, &btn, CLSYS_DRAW_MAIN );
+
+          GFL_STR_DeleteBuffer( p_strbuf );
 				}
         //座標を設定
         for( i = 0; i < p_wk->btn_stack_num; i++ )
@@ -344,13 +350,20 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 		//読み込むもの
 		{	
 			int i;
+      STRBUF  *p_strbuf;
 			const BR_BTN_DATA *	cp_data;
+      GFL_MSGDATA *p_msg;
+
+      p_msg		= BR_RES_GetMsgData( p_res );
 			p_wk->btn_now_num	= BR_BTN_DATA_SYS_GetDataNum( p_wk->p_btn_data, menuID );
 
 			for( i = 0; i < p_wk->btn_now_num; i++ )
 			{	
 				cp_data	= BR_BTN_DATA_SYS_GetData( p_wk->p_btn_data, menuID, i );
-				BR_BTNEX_Init( &p_wk->p_btn_now[i], cp_data, p_unit, p_wk->p_bmpoam, p_res, heapID );
+        p_strbuf  = BR_BTN_DATA_CreateString( p_wk->p_btn_data, cp_data, p_msg, GFL_HEAP_LOWID(heapID) );
+
+				BR_BTNEX_Init( &p_wk->p_btn_now[i], cp_data, p_unit, p_wk->p_bmpoam, p_res, p_strbuf, heapID );
+        GFL_STR_DeleteBuffer( p_strbuf );
 			}
 		}
 	}
@@ -518,13 +531,21 @@ static void Br_Btn_Sys_ReLoadBtn( BR_BTN_SYS_WORK *p_wk, BR_MENUID menuID, const
 	{	
 		int i;
 		const BR_BTN_DATA *	cp_data;
+    STRBUF  *p_strbuf;
+    GFL_MSGDATA *p_msg;
+
+    p_msg		= BR_RES_GetMsgData( p_wk->p_res );
 
 		p_wk->btn_now_num	= BR_BTN_DATA_SYS_GetDataNum( p_wk->p_btn_data, menuID );
 
 		for( i = 0; i < p_wk->btn_now_num; i++ )
 		{	
 			cp_data	= BR_BTN_DATA_SYS_GetData( p_wk->p_btn_data, menuID, i );
-			BR_BTNEX_Init( &p_wk->p_btn_now[i], cp_data, p_wk->p_unit, p_wk->p_bmpoam, p_wk->p_res, p_wk->heapID );
+      p_strbuf  = BR_BTN_DATA_CreateString( p_wk->p_btn_data, cp_data, p_msg, GFL_HEAP_LOWID(p_wk->heapID) );
+
+			BR_BTNEX_Init( &p_wk->p_btn_now[i], cp_data, p_wk->p_unit, p_wk->p_bmpoam, p_wk->p_res, p_strbuf, p_wk->heapID );
+
+      GFL_STR_DeleteBuffer( p_strbuf );
 
       //優先度設定
       BR_BTNEX_SetSoftPriority( &p_wk->p_btn_now[i], 3 );
@@ -1273,7 +1294,7 @@ static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, const BR_RES_WORK *cp_res, HEAPID heapID )
+static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, const BR_RES_WORK *cp_res, const STRBUF *cp_strbuf, HEAPID heapID )
 {	
 	u32 plt;
 
@@ -1293,9 +1314,8 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
 	{	
 		BR_RES_OBJ_DATA	res;
 		GFL_FONT *p_font;
-		GFL_MSGDATA *p_msg;
 		GFL_CLWK_DATA	cldata;
-    u32 msgID;
+    STRBUF  *p_strbuf;
 
     //データ設定
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -1307,12 +1327,11 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
 		//リソース読み込み
 		BR_RES_GetOBJRes( cp_res, BR_RES_OBJ_BROWSE_BTN_S, &res );
 		p_font	= BR_RES_GetFont( cp_res );
-		p_msg		= BR_RES_GetMsgData( cp_res );
-		msgID		= BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID );
 
 		//作成
-		p_wk->p_btn		= BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_WIDTH, p_wk->display, p_unit, 
-				p_bmpoam, p_font, p_msg, &res, GetHeapLowID( heapID ) );
+		p_wk->p_btn		= BR_BTN_InitEx( &cldata, cp_strbuf, BR_BTN_DATA_WIDTH, p_wk->display, p_unit, 
+				p_bmpoam, p_font, &res, GetHeapLowID( heapID ) );
+
 	}
 
 }
@@ -1995,6 +2014,40 @@ static BOOL Br_BtnEx_Move_NextTarget( BR_BTNEX_WORK *p_wk )
 BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID )
 {	
 	BR_BTN_WORK *p_wk;
+  STRBUF  *p_strbuf;
+
+  //文字列作成
+  p_strbuf	= GFL_MSG_CreateString( p_msg, msgID );
+
+  //作成コア
+  p_wk  = BR_BTN_InitEx( cp_cldata, p_strbuf, w, display, p_unit, p_bmpoam, p_font, cp_res, heapID );
+
+	//フォント
+  GFL_STR_DeleteBuffer( p_strbuf );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタン初期化EX msgIDではなくSTRBUFから文字を作成する版
+ *
+ *	@param	const GFL_CLWK_DATA *cp_cldata	設定情報
+ *	@param	msgID														ボタンに載せる文字列
+ *	@param  w                               幅
+ *	@param	display													表示面
+ *	@param	*p_unit													アクター登録ユニット
+ *	@param	p_bmpoam												BMPOAM登録システム
+ *	@param	*p_font													フォント
+ *	@param	*p_msg													メッセージ
+ *	@param	BR_RES_OBJ_DATA *cp_res					リソース
+ *	@param	heapID													ヒープID
+ *
+ *	@return	ワーク
+ */
+//-----------------------------------------------------------------------------
+BR_BTN_WORK * BR_BTN_InitEx( const GFL_CLWK_DATA *cp_cldata, const STRBUF *cp_strbuf, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID )
+{	
+	BR_BTN_WORK *p_wk;
 
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(BR_BTN_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_BTN_WORK) );
@@ -2014,10 +2067,7 @@ BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLS
 		STRBUF			*p_str;
 
 		p_wk->p_bmp	= GFL_BMP_Create( p_wk->w/8, 2, GFL_BMP_16_COLOR, heapID );
-		p_str	= GFL_MSG_CreateString( p_msg, msgID );
-		PRINTSYS_Print( p_wk->p_bmp, 0, 0, p_str, p_font );
-
-		GFL_STR_DeleteBuffer( p_str );
+		PRINTSYS_Print( p_wk->p_bmp, 0, 0, cp_strbuf, p_font );
 	}
 
 
@@ -2041,6 +2091,7 @@ BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLS
 
 	return p_wk;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタン破棄
@@ -2138,7 +2189,7 @@ void BR_BTN_GetPos( const BR_BTN_WORK *cp_wk, s16 *p_x, s16 *p_y )
 void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri )
 { 
   GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, soft_pri );
-//  BmpOam_ActorSetSoftPriprity( p_wk->p_oamfont, soft_pri-1 );  //@@oo緊急回避
+  BmpOam_ActorSetSoftPriprity( p_wk->p_oamfont, soft_pri-1 );
 
 }
 

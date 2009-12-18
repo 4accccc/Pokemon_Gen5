@@ -380,6 +380,23 @@ void BmpOam_ActorSetObjMode( BMPOAM_ACT_PTR bact, GXOamMode mode )
 		}
 	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPOAMアクターのOBJプライオリティをセット
+ *
+ *	@param	BMPOAM_ACT_PTR bact
+ *	@param	soft_pri 
+ */
+//-----------------------------------------------------------------------------
+void BmpOam_ActorSetSoftPriprity( BMPOAM_ACT_PTR bact, u8 soft_pri )
+{ 
+	int num_y, num_x;
+	for(num_y = 0; num_y < bact->act_num_y; num_y++){
+		for(num_x = 0; num_x < bact->act_num_x; num_x++){
+      GFL_CLACT_WK_SetSoftPri( bact->cap[num_x + num_y*bact->act_num_x], soft_pri );
+		}
+	}
+}
 
 //==============================================================================
 //	ローカル関数

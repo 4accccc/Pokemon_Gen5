@@ -270,7 +270,10 @@ HEAPID BR_PROC_SYS_GetHeapID( const BR_PROC_SYS *cp_wk )
 void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk )
 {	
 
-	p_wk->stack_num--;
+  if( p_wk->stack_num > 0 )
+  { 
+    p_wk->stack_num--;
+  }
 
 	if( p_wk->stack_num != 0 )
 	{	

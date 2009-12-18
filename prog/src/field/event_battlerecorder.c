@@ -124,7 +124,7 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
       dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(BATTLERECORDER_PARAM));
       p_param = dbw->p_sub_wk;
       p_param->mode   = dbw->mode;
-      p_param->p_gsys  = gsys;
+      p_param->p_gamedata  = GAMESYSTEM_GetGameData(gsys);
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, dbw->p_sub_wk );
     }
     (*seq)++;

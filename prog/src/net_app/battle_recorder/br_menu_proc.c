@@ -18,6 +18,9 @@
 //自分のモジュール
 #include "br_btn.h"
 
+//セーブデータ
+#include "savedata/battle_rec.h"
+
 //外部参照
 #include "br_menu_proc.h"
 
@@ -108,14 +111,42 @@ static GFL_PROC_RESULT BR_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//グラフィック初期化
 
+
 	//モジュール初期化
 	{	
-		//@todo
-		static BR_BTLREC_SET	rec	= {	0};
-		rec.my.is_valid	= TRUE;
-		rec.other[0].is_valid	= TRUE;
+    int i;
+    LOAD_RESULT result;
+    SAVE_CONTROL_WORK *p_sv;
+    GDS_PROFILE_PTR p_profile;
+		BR_BTN_DATA_SETUP	setup;
+    GFL_STD_MemClear( &setup, sizeof(BR_BTN_DATA_SETUP) );
+    
+    p_sv = GAMEDATA_GetSaveControlWork( p_param->p_gamedata );
 
-		p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, &rec, p_wk->heapID );
+    //設定構造体作成
+    for( i = 0; i < BR_RECORD_NUM; i++ )
+    {
+      BattleRec_Load( p_sv, GFL_HEAP_LOWID( p_wk->heapID ), &result, i ); 
+      if( result == LOAD_RESULT_OK )
+      { 
+        NAGI_Printf( "戦闘録画読み込み %d\n", i );
+        p_profile = BattleRec_GDSProfilePtrGet();
+        setup.is_valid[i] = TRUE;
+        setup.p_name[i]   = GDS_Profile_CreateNameString( p_profile, GFL_HEAP_LOWID( p_wk->heapID ) );
+        setup.sex[i]      = GDS_Profile_GetSex( p_profile );
+      }
+    }
+
+		p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, &setup, p_wk->heapID );
+
+    //設定構造体破棄
+    for( i = 0; i < BR_RECORD_NUM; i++ )
+    { 
+      if( setup.is_valid[i] )
+      { 
+        GFL_STR_DeleteBuffer( setup.p_name[i] );
+      }
+    }
 	}
 
 	NAGI_Printf( "MENU: Init!\n" );

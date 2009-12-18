@@ -34,6 +34,9 @@
 #include "br_musicallook_proc.h"
 #include "br_musicalsend_proc.h"
 
+//セーブデータ
+#include "savedata/battle_rec.h"
+
 //外部参照
 #include "br_core.h"
 
@@ -67,6 +70,8 @@ typedef struct
 
 	//引数
 	BR_CORE_PARAM		*p_param;
+
+
 } BR_CORE_WORK;
 
 //=============================================================================
@@ -318,27 +323,91 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  enum
+  { 
+		SEQ_INIT,
+		SEQ_FADEIN,
+		SEQ_FADEIN_WAIT,
+		SEQ_MAIN,
+		SEQ_FADEOUT,
+		SEQ_FADEOUT_WAIT,
+		SEQ_EXIT,
+  };
+
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
 
-  //フェードプロセス処理
-  BR_FADE_Main( p_wk->p_fade );
-
-	//プロセス処理
-	BR_PROC_SYS_Main( p_wk->p_procsys );
-
-	//描画
-	BR_GRAPHIC_2D_Draw( p_wk->p_graphic );
-
-
-	//プロセス終了条件
-	if( BR_PROC_SYS_IsEnd( p_wk->p_procsys ) )
+  switch( *p_seq )
 	{	
+	case SEQ_INIT:
+    //バトルから戻ってきた時だけ、フェード
+    if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
+    { 
+      *p_seq	= SEQ_FADEIN;
+    }
+    else
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+		break;
+
+	case SEQ_FADEIN:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		*p_seq	= SEQ_FADEIN_WAIT;
+		break;
+
+	case SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_MAIN;
+		}
+		break;
+
+	case SEQ_MAIN:
+		{
+			BOOL is_end;
+      //フェードプロセス処理
+      BR_FADE_Main( p_wk->p_fade );
+
+      //プロセス処理
+      BR_PROC_SYS_Main( p_wk->p_procsys );
+
+      //描画
+      BR_GRAPHIC_2D_Draw( p_wk->p_graphic );
+
+			is_end	= BR_PROC_SYS_IsEnd( p_wk->p_procsys );
+
+      //戦闘にいくときのみフェード
+			if( is_end )
+			{	
+        if( p_wk->p_param->ret == BR_CORE_RETURN_BTLREC )
+        { 
+          *p_seq	= SEQ_FADEOUT;
+        }
+        else
+        { 
+          *p_seq  = SEQ_EXIT;
+        }
+			}
+		}
+		break;
+
+	case SEQ_FADEOUT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		*p_seq	= SEQ_FADEOUT_WAIT;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_EXIT;
+		}
+		break;
+
+	case SEQ_EXIT:
 		return GFL_PROC_RES_FINISH;
 	}
-	else
-	{	
-		return GFL_PROC_RES_CONTINUE;
-	}
+
+  return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
 /**
@@ -441,6 +510,7 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**
@@ -452,6 +522,8 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 //-----------------------------------------------------------------------------
 static void BR_MENU_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 {	
+  BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
+	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
 }
 //----------------------------------------------------------------------------
@@ -475,6 +547,7 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_fade     = p_wk->p_fade;
   p_param->p_procsys	= p_wk->p_procsys;
   p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_sv       = SaveControl_GetPointer();
   switch( preID )
   { 
   case BR_PROCID_MENU:
@@ -514,7 +587,15 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 //-----------------------------------------------------------------------------
 static void BR_RECORD_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 {	
-
+  BR_RECORD_PROC_PARAM			*p_param	= p_param_adrs;
+	BR_CORE_WORK							*p_wk			= p_wk_adrs;
+  
+  switch( p_param->ret )
+  { 
+  case BR_RECORD_RETURN_BTLREC:
+    p_wk->p_param->ret = BR_CORE_RETURN_BTLREC;
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------

@@ -28,6 +28,15 @@ typedef enum
 	BR_RECODE_PROC_OTHER_02,
 } BR_RECODE_PROC_MODE;
 
+//-------------------------------------
+///	終了モード
+//=====================================
+typedef enum
+{
+  BR_RECORD_RETURN_FINISH,
+  BR_RECORD_RETURN_BTLREC,
+} BR_RECORD_RETURN;
+
 //=============================================================================
 /**
  *					構造体
@@ -38,11 +47,13 @@ typedef enum
 //=====================================
 typedef struct 
 {
-	BR_RECODE_PROC_MODE	mode;					//[out]起動モード
-  BR_FADE_WORK        *p_fade;      //[in]フェード
-	BR_RES_WORK					*p_res;				//[in]リソース管理
-	BR_PROC_SYS					*p_procsys;		//[in]プロセス管理
-	GFL_CLUNIT					*p_unit;			//[in]ユニット
+  BR_RECORD_RETURN    ret;          //[out]終了モード
+	BR_RECODE_PROC_MODE	mode;					//[in ]起動モード
+  BR_FADE_WORK        *p_fade;      //[in ]フェード
+	BR_RES_WORK					*p_res;				//[in ]リソース管理
+	BR_PROC_SYS					*p_procsys;		//[in ]プロセス管理
+	GFL_CLUNIT					*p_unit;			//[in ]ユニット
+  SAVE_CONTROL_WORK   *p_sv;        //[in ]外部セーブ取得用
 } BR_RECORD_PROC_PARAM;
 
 

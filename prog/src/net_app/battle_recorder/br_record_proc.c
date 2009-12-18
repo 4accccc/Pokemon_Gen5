@@ -22,6 +22,9 @@
 #include "br_btn.h"
 #include "br_util.h"
 
+//セーブデータ
+#include "savedata/battle_rec.h"
+
 //外部参照
 #include "br_record_proc.h"
 
@@ -128,6 +131,7 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 
 //その他
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
+static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -265,8 +269,29 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
         //終了チェック
         if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_RETURN], x, y ) )
         {	
+          p_param->ret  = BR_RECORD_RETURN_FINISH;
+          BR_PROC_SYS_Pop( p_param->p_procsys );
           *p_seq  = SEQ_FADEOUT_START;
         }	
+
+        //再生ボタン
+        if( Br_Record_GetTrgStart( x, y ) )
+        { 
+          LOAD_RESULT result;
+          BattleRec_Load( p_param->p_sv, GFL_HEAP_LOWID( p_wk->heapID ), &result, p_param->mode ); 
+          GF_ASSERT( result == LOAD_RESULT_OK );
+
+          p_param->ret  = BR_RECORD_RETURN_BTLREC;
+          //フェードをすっとばす
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          BR_PROC_SYS_Pop( p_param->p_procsys );
+          *p_seq  = SEQ_EXIT;
+        }
       }
     }
     break;
@@ -323,7 +348,6 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
     break;
   case SEQ_EXIT:
     NAGI_Printf( "RECORD: Exit!\n" );
-    BR_PROC_SYS_Pop( p_param->p_procsys );
     return GFL_PROC_RES_FINISH;
   }
 
@@ -607,6 +631,28 @@ static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
 	rect.right	= (8 + 15)*8;
 	rect.top		= (2)*8;
 	rect.bottom	= (2 + 4)*8;
+
+  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タッチスタート
+ *
+ *	@param  xタッチ座標
+ *	@param  yタッチ座標
+ *
+ *	@return TRUEで押した  FALSEで押していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_GetTrgStart( u32 x, u32 y )
+{ 
+	GFL_RECT rect;
+
+	rect.left		= (10)*8;
+	rect.right	= (10 + 12)*8;
+	rect.top		= (7)*8;
+	rect.bottom	= (7 + 8)*8;
 
   return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));

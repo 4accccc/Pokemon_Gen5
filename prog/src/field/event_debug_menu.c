@@ -79,6 +79,7 @@
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
 #include "event_debug_wifimatch.h"
+#include "event_battlerecorder.h"
 
 //======================================================================
 //  define
@@ -167,6 +168,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -223,6 +225,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake }, 
   { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas }, 
+  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },
   { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, 
   { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
@@ -3264,6 +3267,102 @@ static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
 { 
   GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_ATLAS ) );
   return TRUE;
+}
+
+//======================================================================
+//  バトルレコーダー
+//======================================================================
+#include "net_app/battle_recorder.h"
+FS_EXTERN_OVERLAY( battle_recorder );
+
+static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//-------------------------------------
+/// バトルレコーダーPROCイベントワーク  
+//=====================================
+typedef struct
+{ 
+  HEAPID heapID;
+  GAMESYS_WORK    *p_gamesys;
+  GMEVENT         *p_event;
+  FIELDMAP_WORK   *p_field;
+  BATTLERECORDER_PARAM  param;
+} DEBUG_BR_EVENT_WORK;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダーへ
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *
+ *	@return TRUEでイベンﾄ継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
+  HEAPID heapID = HEAPID_PROC;
+  DEBUG_BR_EVENT_WORK *p_param;
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugBattleRecorder, sizeof(DEBUG_BR_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_param, sizeof(DEBUG_BR_EVENT_WORK) );
+  
+  //ワーク設定
+  p_param->p_gamesys  = p_gamesys;
+  p_param->p_event    = p_event;
+  p_param->p_field    = p_field;
+  p_param->heapID     = heapID;
+  p_param->param.p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  p_param->param.mode       = BR_MODE_BROWSE;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  { 
+    p_param->param.mode  = BR_MODE_GLOBAL_BV;
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  { 
+    p_param->param.mode  = BR_MODE_GLOBAL_MUSICAL;
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダー呼び出しイベント
+ *
+ *	@param	GMEVENT *p_event  イベント
+ *	@param	*p_seq      シーケンス
+ *	@param	*p_wk_adrs  ワーク 
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CALL_PROC,
+    SEQ_PROC_END,
+  };
+
+  DEBUG_BR_EVENT_WORK *p_wk = p_wk_adrs;
+
+  switch(*p_seq )
+  { 
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+        FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->param ) );
+    *p_seq  = SEQ_PROC_END;
+    break;
+
+  case SEQ_PROC_END:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
 }
 
 //-----------------------------------------------------------------------------

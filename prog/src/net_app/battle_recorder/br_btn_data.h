@@ -90,12 +90,24 @@ typedef struct _BR_BTN_DATA_SYS  BR_BTN_DATA_SYS;
 //=====================================
 typedef struct _BR_BTN_DATA  BR_BTN_DATA;
 
+//-------------------------------------
+///	外部からボタンに与える情報
+//=====================================
+#define BR_RECORD_NUM 4
+typedef struct 
+{
+  BOOL    is_valid[BR_RECORD_NUM];
+  STRBUF  *p_name[BR_RECORD_NUM];
+  u32     sex[BR_RECORD_NUM];
+} BR_BTN_DATA_SETUP;
+
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTLREC_SET *cp_rec, HEAPID heapID );
+extern BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPID heapID );
 extern void BR_BTN_DATA_SYS_Exit( BR_BTN_DATA_SYS *p_wk );
 //-------------------------------------
 ///	データ取得
@@ -112,3 +124,4 @@ extern u32 BR_BTN_DATA_SYS_GetLinkMax( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID m
 ///	内部情報取得
 //=====================================
 extern u16 BR_BTN_DATA_GetParam( const BR_BTN_DATA *cp_data, BR_BTN_DATA_PARAM paramID );
+extern STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DATA *cp_data, GFL_MSGDATA *p_msg, HEAPID heapID );

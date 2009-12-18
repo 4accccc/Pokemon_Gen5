@@ -40,6 +40,7 @@
 #include "app/name_input.h"
 #include "net_app/wifibattlematch.h"
 #include "net_app/battle_recorder.h"
+#include "title/title.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -187,7 +188,6 @@ typedef struct
 	TEMPLATE_PARAM				template_param;
 	CONFIG_PANEL_PARAM		config_param;
 	WIFIBATTLEMATCH_PARAM	wifibattlematch_param;
-	BATTLERECORDER_PARAM	battle_recorder_param;
 	NAMEIN_PARAM					*p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
 
@@ -379,9 +379,6 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 #if 1
 	{	
-		L"WIFIバトルマッチ", LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
-	},
-	{	
 		L"バトルレコーダー", LISTDATA_SEQ_PROC_BTLRECORDER,
 	},
 #endif 
@@ -508,6 +505,13 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 		GFL_PROC_SysSetNextProc(
 				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
 	}
+  else if( p_wk->is_end )
+  { 
+
+		//次のPROC予約
+		GFL_PROC_SysSetNextProc(
+				FS_OVERLAY_ID(title), &TitleProcData, NULL );
+  }
 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	NAMEIN_FreeParam( p_wk->p_namein_param );
@@ -1181,22 +1185,25 @@ static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
  *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
+static	BATTLERECORDER_PARAM	s_battle_recorder_param;
 static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
+  GFL_STD_MemClear( &s_battle_recorder_param, sizeof(BATTLERECORDER_PARAM) );
+
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   { 
-    p_wk->battle_recorder_param.mode		= BR_MODE_GLOBAL_BV;
+    s_battle_recorder_param.mode		= BR_MODE_GLOBAL_BV;
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   { 
-    p_wk->battle_recorder_param.mode		= BR_MODE_GLOBAL_MUSICAL;
+    s_battle_recorder_param.mode		= BR_MODE_GLOBAL_MUSICAL;
   }
   else
   { 
-    p_wk->battle_recorder_param.mode		= BR_MODE_BROWSE;
+    s_battle_recorder_param.mode		= BR_MODE_BROWSE;
   }
-	p_wk->battle_recorder_param.p_gsys	= NULL;
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->battle_recorder_param );
+	s_battle_recorder_param.p_gamedata	= NULL;
+	DEBUG_NAGI_COMMAND_NextProc( p_wk, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &s_battle_recorder_param.mode );
 }
 
 //=============================================================================

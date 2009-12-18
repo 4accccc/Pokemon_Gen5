@@ -60,8 +60,7 @@ extern BOOL BR_PROC_SYS_IsEnd( const BR_PROC_SYS *cp_wk );
 
 //-------------------------------------
 ///	PROCの中で使う関数
-//		PROCの親ワークにはBR_PROCが入っているので、
-//		以下の関数が使えます。↑は使わないで下さい。
+//		各PROCの引数にBR_PROC_SYSを渡し、以下のを使い操作してください
 //=====================================
 extern void * BR_PROC_SYS_GetParam( const BR_PROC_SYS *cp_wk );
 extern HEAPID BR_PROC_SYS_GetHeapID( const BR_PROC_SYS *cp_wk );

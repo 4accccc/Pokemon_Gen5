@@ -1215,9 +1215,14 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_comm.c
 
 #バトルレコーダー
+#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_BAG
+#===> SRCS_OVERLAY_BATTLE_PLIST 
+SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
+
+#バトルレコーダーコア部分
 #===> SRCS_OVERLAY_MUSICAL
-SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
-																net_app/battle_recorder/br_core.c \
+SRCS_OVERLAY_BATTLE_RECORDER_CORE	= net_app/battle_recorder/br_core.c \
 																net_app/battle_recorder/br_btn.c \
 																net_app/battle_recorder/br_btn_data.c \
 																net_app/battle_recorder/br_res.c \

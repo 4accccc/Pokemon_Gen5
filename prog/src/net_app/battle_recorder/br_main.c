@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		battle_recoder.c
+ *	@file		battle_recorder.c
  *	@brief	バトルレコーダーメイン
  *	@author	Toru=Nagihashi
  *	@data		2009.11.09
@@ -17,17 +17,33 @@
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
 
+//プロセス
+#include "gamesystem/btl_setup.h"
+#include "battle/battle.h"
+
 //自分のモジュール
 #include "br_core.h"
 
 //外部公開
 #include "net_app/battle_recorder.h"
 
+//-------------------------------------
+///	
+//=====================================
+FS_EXTERN_OVERLAY( battle_recorder_core );
+
+
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+static int s_debug_flag = 0;
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -37,7 +53,7 @@
 //-------------------------------------
 ///	サブプロック移動
 //=====================================
-typedef void *(*SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
+typedef void *(*SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 typedef void (*SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
 typedef struct 
 {
@@ -56,6 +72,7 @@ typedef struct {
 	void						*p_wk_adrs;
 	const SUBPROC_DATA			*cp_procdata_tbl;
 
+  u32             pre_procID;
 	u32							next_procID;
 	u32							now_procID;
 } SUBPROC_WORK;
@@ -95,8 +112,10 @@ static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 //-------------------------------------
 ///	サブプロセス用引数の解放、破棄関数
 //=====================================
-static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs );
+static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
+static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //=============================================================================
 /**
  *					データ
@@ -116,17 +135,17 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 {	
 	//SUBPROCID_CORE
 	{	
-		NO_OVERLAY_ID,
+		FS_OVERLAY_ID(battle_recorder_core),
 		&BR_CORE_ProcData,
 		BR_CORE_AllocParam,
 		BR_CORE_FreeParam,
 	},
 	//SUBPROCID_BTLREC
 	{	
-		NO_OVERLAY_ID,
-		NULL,
-		NULL,
-		NULL,
+		FS_OVERLAY_ID(battle),
+		&BtlProcData,
+		BR_BATTLE_AllocParam,
+		BR_BATTLE_FreeParam,
 	},
 };
 
@@ -167,15 +186,26 @@ static GFL_PROC_RESULT BR_SYS_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	BR_SYS_WORK	*p_wk;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_SYS, 0x10000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_SYS, 0x12000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_SYS_WORK), HEAPID_BATTLE_RECORDER_SYS );
 	GFL_STD_MemClear( p_wk, sizeof(BR_SYS_WORK) );	
 	p_wk->p_param		= p_param_adrs;
 
+  //録画データ開始
+  BattleRec_Init( HEAPID_BATTLE_RECORDER_SYS );
+
 	//モジュール作成
 	SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_BATTLE_RECORDER_SYS );
+
+#ifdef PM_DEBUG
+  if( p_wk->p_param->p_gamedata== NULL )
+  { 
+    p_wk->p_param->p_gamedata = GAMEDATA_Create( HEAPID_BATTLE_RECORDER_SYS );
+    s_debug_flag  = TRUE;
+  }
+#endif
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -195,8 +225,19 @@ static GFL_PROC_RESULT BR_SYS_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 {	
 	BR_SYS_WORK	*p_wk	= p_wk_adrs;
 
+#ifdef PM_DEBUG
+  if( s_debug_flag )
+  { 
+    GAMEDATA_Delete( p_wk->p_param->p_gamedata );
+    s_debug_flag  = FALSE;
+  }
+#endif
+
 	//モジュール破棄
 	SUBPROC_Exit( &p_wk->subproc );
+
+  //録画データ終了
+  BattleRec_Exit();
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -329,6 +370,7 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 	switch( p_wk->seq )
 	{	
 	case SEQ_INIT:
+    p_wk->pre_procID  = p_wk->now_procID;
 		p_wk->now_procID	= p_wk->next_procID;
 		p_wk->seq	= SEQ_ALLOC_PARAM;
 		break;
@@ -338,7 +380,7 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
 		{	
 			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
-					p_wk->heapID, p_wk->p_wk_adrs );
+					p_wk->heapID, p_wk->p_wk_adrs, p_wk->pre_procID );
 		}
 		else
 		{	
@@ -430,11 +472,12 @@ static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID )
  *
  *	@param	HEAPID heapID			ヒープID
  *	@param	*p_wk_adrs				ワーク
+ *	@param  pre_procID
  *
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
+static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
 {	
 	BR_CORE_PARAM	*p_param;
 
@@ -443,6 +486,15 @@ static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BR_CORE_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(BR_CORE_PARAM) );
 	p_param->p_param	= p_wk->p_param;
+
+  if( pre_procID == SUBPROCID_BTLREC )
+  { 
+    p_param->mode = BR_CORE_MODE_RETURN;
+  }
+  else
+  { 
+    p_param->mode = BR_CORE_MODE_INIT;
+  }
 		
 	return p_param;;
 }
@@ -459,5 +511,50 @@ static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 	BR_CORE_PARAM	*p_param	= p_param_adrs;
 	BR_SYS_WORK		*p_wk			= p_wk_adrs;
 
+  if( p_param->ret == BR_CORE_RETURN_BTLREC )
+  { 
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BTLREC );
+  }
+
 	GFL_HEAP_FreeMemory( p_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
+{ 
+  BR_SYS_WORK		*p_wk			= p_wk_adrs;
+  BATTLE_SETUP_PARAM  *p_param;
+  GAMEDATA            *p_gamedata;
+
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
+  p_gamedata  = p_wk->p_param->p_gamedata;
+
+  BTL_SETUP_InitForRecordPlay( p_param, BattleRec_WorkPtrGet(), p_gamedata, heapID );
+
+  return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  BR_SYS_WORK		      *p_wk			= p_wk_adrs;
+  BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
+
+  GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //@todo プレイヤーのMySatusは開放されないので
+  BTL_SETUP_QuitForRecordPlay( p_param );
+  GFL_HEAP_FreeMemory( p_param );
+
+  SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
 }
