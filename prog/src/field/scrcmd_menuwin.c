@@ -728,11 +728,7 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-#ifndef DEBUG_BWINTYPE
   TALKMSGWIN_TYPE type = VMGetU16( core );
-#else
-  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
-#endif
 
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
@@ -759,11 +755,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 win_idx = VMGetU8( core );
-#ifndef DEBUG_BWINTYPE
   TALKMSGWIN_TYPE type = VMGetU16( core );
-#else
-  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
-#endif
 
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
@@ -797,11 +789,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
   u16 msg_id_f = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-#ifndef DEBUG_BWINTYPE
   TALKMSGWIN_TYPE type = VMGetU16( core );
-#else
-  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
-#endif
 
   {
     GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
@@ -836,11 +824,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 msg_id_b = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
   u8 win_idx = VMGetU8( core );
-#ifndef DEBUG_BWINTYPE
   TALKMSGWIN_TYPE type = VMGetU16( core );
-#else
-  TALKMSGWIN_TYPE type = DEBUG_BWINTYPE;
-#endif
 
   if( PM_VERSION == VERSION_BLACK ){
     msg_id = msg_id_b;
