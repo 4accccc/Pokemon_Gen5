@@ -156,8 +156,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     commWork->postPhotoBuf[i] = GFL_NET_Align32Alloc( heapId , CTVT_BUFFER_SCR_SIZE/2 );
   }
   {
-//    const u32 encWorkSize = SSP_GetJpegEncoderBufferSize( 128,192,CTVT_COMM_JPG_OUT_TYPE,CTVT_COMM_JPG_OUT_OPT );
-//    commWork->encWorkBuf = GFL_NET_Align32Alloc( heapId , encWorkSize );
+    const u32 encWorkSize = SSP_GetJpegEncoderBufferSize( 128,192,CTVT_COMM_JPG_OUT_TYPE,CTVT_COMM_JPG_OUT_OPT );
+    commWork->encWorkBuf = GFL_NET_Align32Alloc( heapId , encWorkSize );
   }
   commWork->encBuffer = GFL_NET_Align32Alloc( heapId , CTVT_BUFFER_SCR_SIZE/2 );
   commWork->sendBuffer = GFL_NET_Align32Alloc( heapId , CTVT_BUFFER_SCR_SIZE/2 );
@@ -349,7 +349,6 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
         
         GFL_STD_MemCopy32( (void*)selfBuf , (void*)commWork->encBuffer , bufSize );
         {
-          /*
           dataSize = SSP_StartJpegEncoder(  commWork->encBuffer , 
                                             commWork->sendBuffer , 
                                             bufSize ,
@@ -359,7 +358,6 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
                                             CTVT_COMM_JPG_QUALITY ,
                                             CTVT_COMM_JPG_OUT_TYPE ,
                                             CTVT_COMM_JPG_OUT_OPT );
-          */
         }
         if( dataSize != 0 )
         {
@@ -501,14 +499,12 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
       void* buffer = CTVT_CAMERA_GetBuffer( work , camWork , idx );
       s16 sizeX = CTVT_CAMERA_GetPhotoSizeX(work,camWork);
       s16 sizeY = CTVT_CAMERA_GetPhotoSizeY(work,camWork);
-/*
       SSP_StartJpegDecoder( GFL_NET_LDATA_GetPostData(idx) ,
                             GFL_NET_LDATA_GetPostDataSize(idx) ,
                             buffer ,
                             &sizeX ,
                             &sizeY ,
                             0 );
-*/
       CTVT_CAMERA_SetRefreshFlg( work , camWork , idx );
       state->state = CCSU_REQ_PHOTO;
       CTVT_TPrintf("Post[%d]!!\n",idx);
@@ -572,5 +568,3 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     break;
   }
 }
-
-
