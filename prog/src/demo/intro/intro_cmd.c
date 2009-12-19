@@ -529,7 +529,8 @@ static BOOL CMD_DOCTOR_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
     NARC_intro_intro_doctor_NCEC,
   };
   // とりあえず表示
-  INTRO_MCSS_Add( wk->mcss, 0, FX32_CONST(2.5), 0, &add, 0 );
+//  INTRO_MCSS_Add( wk->mcss, 0, FX32_CONST(2.5), 0, &add, 0 );
+  INTRO_MCSS_Add( wk->mcss, 0, 0x5a0c, 0, &add, 0 );
 #else
   // DEBUG:ヒトカゲを表示
   {

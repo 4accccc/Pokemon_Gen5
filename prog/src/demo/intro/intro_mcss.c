@@ -111,6 +111,62 @@ void INTRO_MCSS_Exit( INTRO_MCSS_WORK* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+
+#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
+
+static void debug_mcss_camera( MCSS_WORK* mcss_work )
+{
+  VecFx32 pos;
+  static int num = 1;
+
+  GF_ASSERT( mcss_work );
+    
+  MCSS_GetPosition( mcss_work, &pos );
+
+  if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
+  {
+    num++;
+    HOSAKA_Printf("num=%d \n",num);
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
+  {
+    num--;
+    HOSAKA_Printf("num=%d \n",num);
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
+  {
+    pos.y += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
+  {
+    pos.y -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }    
+  else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
+  {
+    pos.x += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
+  {
+    pos.x -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
+  {
+    pos.z += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
+  {
+    pos.z -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  
+  MCSS_SetPosition( mcss_work, &pos );
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  MCSSŽåˆ—
@@ -122,6 +178,24 @@ void INTRO_MCSS_Exit( INTRO_MCSS_WORK* wk )
 //-----------------------------------------------------------------------------
 void INTRO_MCSS_Main( INTRO_MCSS_WORK* wk )
 {
+  // @TODO debug
+#ifdef PM_DEBUG
+  {
+    static BOOL is_on = FALSE;
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      is_on ^= 1;
+    }
+
+    if( is_on && wk->mcss_work[0] )
+    {
+      debug_mcss_camera( wk->mcss_work[0] );
+    }
+  }
+#endif
+
+
   MCSS_Main( wk->mcss );
   MCSS_Draw( wk->mcss );
 }
