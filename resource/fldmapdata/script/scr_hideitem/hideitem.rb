@@ -102,20 +102,26 @@ def readItemData( filename )
 end
 
 #------------------------------------------------------------
+#
+# 隠しアイテム用データファイル作成
+#
 #------------------------------------------------------------
 def getCDAT( items )
   output = ""
-  output += sprintf("static const HIDE_ITEM hide_item_data = {\n")
+  output += sprintf("static const u16 hide_item_data[%d] = {\n", items.length)
   output += sprintf("\n")
   items.each{|item|
-    output += sprintf("\t { %-03d, %-2d }, // %s (%d,%d)\n",
-                      item.itemno, item.num, item.mapname, item.posx, item.posz )
+    output += sprintf("\t %3d, // %s (%d,%d)\n",
+                      item.id, item.mapname, item.posx, item.posz )
   }
   output += sprintf( "}; // end of hide_item_data\n" )
   return output
 end
 
 #------------------------------------------------------------
+#
+# 隠しアイテム用スクリプトファイル生成
+#
 #------------------------------------------------------------
 def getEV( items )
   output =<<HEADSTRING
@@ -153,7 +159,8 @@ MIDDLESTRING
   items.each_with_index{|item, index|
     output += sprintf("EVENT_START ev_hide_item_%03d\n", index)
     output += sprintf("//%s ( %d, %d )\n", item.mapname, item.posx, item.posz )
-    output += sprintf("\t_ITEM_EVENT_FIELD( %d, %d )// %s\n", item.itemno, item.num, item.itemname )
+    output += sprintf("\t_ITEM_EVENT_HIDEITEM( %d, %d, FLAG_HIDEITEM_%03d )// %s\n",
+                      item.itemno, item.num, item.id, item.itemname )
     output += sprintf("EVENT_END\n\n")
   }
 

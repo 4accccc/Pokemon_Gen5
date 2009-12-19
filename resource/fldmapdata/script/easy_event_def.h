@@ -168,6 +168,16 @@
   .endm
 
 //--------------------------------------------------------------
+// 隠しイベント入手イベント「▼」待ちあり
+//--------------------------------------------------------------
+  .macro  _ASM_ITEM_EVENT_HIDEITEM itemno, num, flag_no
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
+  _ASM_LDWKVAL  SCWK_PARAM1, \num
+  _ASM_LDWKVAL  SCWK_PARAM2, \flag_no
+  _CHG_COMMON_SCR SCRID_ITEM_EVENT_HIDEITEM
+  .endm
+
+//--------------------------------------------------------------
 /**
  * @brief イベント入手成功イベント「▼」待ちあり
  */

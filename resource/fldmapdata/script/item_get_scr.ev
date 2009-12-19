@@ -22,6 +22,7 @@ _EVENT_DATA   ev_item_event_field
 _EVENT_DATA   ev_pocket_me_set
 _EVENT_DATA   ev_item_get_player_form_set
 _EVENT_DATA   ev_item_get_player_form_return
+_EVENT_DATA   ev_item_event_hideitem
 _EVENT_DATA_END //終了
 
 
@@ -151,6 +152,23 @@ _END
 //				アイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
 //====================================================================
 ev_item_event_field:
+_CALL ev_item_event_field_core
+_CHG_LOCAL_SCR
+_END
+
+//====================================================================
+//				隠しアイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
+//====================================================================
+ev_item_event_hideitem:
+  _CALL ev_item_event_field_core
+  IF $SCWK_ANSWER == TRUE THEN
+    //フラグ操作
+    _FLAG_SET( SCWK_PARAM2 )
+  ENDIF
+_CHG_LOCAL_SCR
+_END
+
+ev_item_event_field_core:
 {
   DEFINE_LOCAL  i_get
 
@@ -185,9 +203,9 @@ ev_item_event_field:
     _LAST_KEYWAIT()
   ENDIF
   _SYSWIN_CLOSE()
+  $SCWK_ANSWER = $i_get
+  _RET
 }
-_CHG_LOCAL_SCR
-_END
 
 //====================================================================
 //				アイテム取得イベント(失敗)(送りキー待ち有り)

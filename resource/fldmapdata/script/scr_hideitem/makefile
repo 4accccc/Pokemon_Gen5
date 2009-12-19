@@ -18,6 +18,8 @@ TARGET_CDAT	= hide_item.cdat
 SRCFILE	= hide_item.xls
 SRCTXT	= hide_item.txt
 
+DEPENDS	= $(PROJECT_ROOT)tools/hash/item_hash.rb hideitem.rb
+
 XLS2TAB = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb -c
 
 .PHONY:	do-build clean
@@ -27,7 +29,7 @@ XLS2TAB = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb -c
 do-build:	$(DSTDIR)/$(TARGET_EV)
 
 
-$(DSTDIR)/$(TARGET_EV): $(SRCTXT) $(PROJECT_ROOT)tools/hash/item_hash.rb
+$(DSTDIR)/$(TARGET_EV): $(SRCTXT) $(DEPENDS)
 	ruby hideitem.rb $(SRCTXT) $(TARGET_CDAT) $(TARGET_EV)
 	unix2dos -D $(TARGET_EV)
 	$(COPY) $(TARGET_EV) $(DSTDIR)
