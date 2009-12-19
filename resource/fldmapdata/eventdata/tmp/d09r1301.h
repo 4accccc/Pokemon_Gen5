@@ -10,5 +10,6 @@
 #ifndef ZONE_D09R1301_EVC_H
 #define ZONE_D09R1301_EVC_H
 
+#define TR_VETERANM_02                     0
 
 #endif //ZONE_D09R1301_EVC_H

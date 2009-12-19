@@ -15,5 +15,7 @@
 #define R06R0201_ROCK_03                   2
 #define R06R0201_ROCK_04                   3
 #define R06R0201_ROCK_05                   4
+#define TR_MOUNT_06                        5
+#define TR_MOUNT_07                        6
 
 #endif //ZONE_R06R0201_EVC_H

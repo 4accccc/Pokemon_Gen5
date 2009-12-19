@@ -9,5 +9,7 @@
 #ifndef ZONE_R09R0303_EVC_H
 #define ZONE_R09R0303_EVC_H
 
+#define TR_VETERANM_03                     0
+#define TR_VETERANW_03                     1
 
 #endif //ZONE_R09R0303_EVC_H

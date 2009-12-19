@@ -10,5 +10,6 @@
 #ifndef ZONE_D09R0401_EVC_H
 #define ZONE_D09R0401_EVC_H
 
+#define TR_ELITEW_07                       0
 
 #endif //ZONE_D09R0401_EVC_H

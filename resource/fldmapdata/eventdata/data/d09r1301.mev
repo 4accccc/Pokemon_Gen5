@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 1:37:29
+#save date:2009/12/19 12:11:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09r1301.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09r1301.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+TR_VETERANM_02
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_VETERANM_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 64 -184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

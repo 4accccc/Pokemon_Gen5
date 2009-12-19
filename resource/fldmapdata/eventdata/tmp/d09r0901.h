@@ -11,5 +11,6 @@
 #ifndef ZONE_D09R0901_EVC_H
 #define ZONE_D09R0901_EVC_H
 
+#define TR_KARATE_07                       0
 
 #endif //ZONE_D09R0901_EVC_H
