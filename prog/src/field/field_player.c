@@ -1002,6 +1002,19 @@ void FIELD_PLAYER_ChangeDrawForm(
 
 //--------------------------------------------------------------
 /**
+ * 自機のDrawFormを取得
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_DRAW_FORM
+ */
+//--------------------------------------------------------------
+PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  return fld_player_CheckOBJCodeToDrawForm( MMDL_GetOBJCode( mmdl ));
+}
+
+//--------------------------------------------------------------
+/**
  * 自機波乗りアトリビュートチェック
  * @param fld_player
  * @param nattr
