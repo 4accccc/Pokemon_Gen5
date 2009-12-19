@@ -717,7 +717,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder( FIELD_PLAYER_GRID *gjiki,
  * キー入力による自機移動オーダーを取得
  * @param gjiki FIELD_PLAYER_GRID
  * @param dir キー入力方向
- * @retval JIKI_MOVEORDER
+ * @retval PLAYER_MOVE_VALUE
  */
 //--------------------------------------------------------------
 PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
@@ -731,7 +731,8 @@ PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
     return( PLAYER_MOVE_VALUE_STOP );
   }
   
-  if( dir != m_dir && gjiki->move_action != JIKI_ACTION_WALK ){
+  if( dir != m_dir && (gjiki->move_action != JIKI_ACTION_WALK) &&
+      (gjiki->move_action != JIKI_ACTION_HITCH) ){
     return( PLAYER_MOVE_VALUE_TURN );
   }
   
