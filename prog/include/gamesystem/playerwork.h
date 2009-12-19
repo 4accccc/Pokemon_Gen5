@@ -53,9 +53,14 @@ typedef struct {
 	ZONEID zoneID;
 	VecFx32 position;
   RAIL_LOCATION railposition;
-	u16 direction;        ///<回転角度のRadian値　（0～0xffff）
+	
+  u16 direction;        ///<回転角度のRadian値　（0～0xffff）
   u8 palace_area;       ///<※check　パレステストの為、一時的にここに配置
   u8 pos_type;       ///<LOCATION_POS_TYPE
+
+  u8 objcode_fix; ///<OBJコード変更不可
+  u8 padding[3]; ///<4byte補正余り
+  
 	MYSTATUS mystatus;
   PLAYER_MOVE_FORM move_form;
 }PLAYER_WORK;
@@ -246,6 +251,26 @@ extern PLAYER_MOVE_FORM PLAYERWORK_GetMoveForm( const PLAYER_WORK *player );
  */
 //--------------------------------------------------------------
 extern void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form );
+
+//--------------------------------------------------------------
+/**
+ * @brief 自機OBJコード固定フラグをセット
+ * @param player PLAYER_WORKへのポインタ
+ * @param flag TRUE=固定 FALSE=可変
+ * @retval none
+ */
+//--------------------------------------------------------------
+extern void PLAYERWORK_SetFlagOBJCodeFix( PLAYER_WORK *player, BOOL flag );
+
+  //--------------------------------------------------------------
+/**
+ * @brief 自機OBJコード固定フラグをチェック
+ * @param player PLAYER_WORKへのポインタ
+ * @retval BOOL TRUE=固定 FALSE=可変
+ */
+//--------------------------------------------------------------
+extern BOOL PLAYERWORK_GetFlagOBJCodeFix( const PLAYER_WORK *player );
+
 
 #ifdef	__cplusplus
 } /* extern "C" */

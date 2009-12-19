@@ -133,7 +133,9 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 		MMDL_SetVectorPos( fmmdl, pos );
     
     //レポート等のイベント用OBJの場合、動作フォームに合わせて復帰
-    FIELD_PLAYER_ResetMoveForm( fld_player );
+    if( PLAYERWORK_GetFlagOBJCodeFix(fld_player->playerWork) == FALSE ){
+      FIELD_PLAYER_ResetMoveForm( fld_player );
+    }
 	}
 	
   { //OBJコードから動作フォームを設定
@@ -753,6 +755,7 @@ void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code )
 {
   MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
   MMDL_ChangeOBJCode( mmdl, code );
+  PLAYERWORK_SetFlagOBJCodeFix( fld_player->playerWork, TRUE );
 }
 
 //--------------------------------------------------------------

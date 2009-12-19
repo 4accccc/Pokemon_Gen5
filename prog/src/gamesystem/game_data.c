@@ -962,6 +962,20 @@ void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
   player->move_form = form;
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void PLAYERWORK_SetFlagOBJCodeFix( PLAYER_WORK *player, BOOL flag )
+{
+  player->objcode_fix = flag;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+BOOL PLAYERWORK_GetFlagOBJCodeFix( const PLAYER_WORK *player )
+{
+  return player->objcode_fix;
+}
+
 //==================================================================
 /**
  * @brief   FIELD_STATUS�̎擾
