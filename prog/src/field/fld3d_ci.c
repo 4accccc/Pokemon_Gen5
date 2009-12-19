@@ -35,7 +35,7 @@
 #define POKE_VOICE_WAIT (5)
 #define VOICE_VOL_OFS (8)
 
-#define FLYSKY_WHITE_FADE_SPD (-16)
+#define FLYSKY_WHITE_FADE_SPD (0)
 
 #ifdef PM_DEBUG
 
