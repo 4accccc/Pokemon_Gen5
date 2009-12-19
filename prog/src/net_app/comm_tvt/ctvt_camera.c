@@ -187,7 +187,8 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
 
   if( camWork->isUpdateBit & (1<<idx) )
   {
-    CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
+    //CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
+    CTVT_TPrintf("!");
     return;
   }
   

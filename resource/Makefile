@@ -113,7 +113,8 @@ SUBDIRS	=	wmi \
 			zukan_gra \
 			demo3d \
 			fld_trade \
-			intro
+			intro \
+			comm_tvt
 
 include $(RESOURCE_MACRO)
 

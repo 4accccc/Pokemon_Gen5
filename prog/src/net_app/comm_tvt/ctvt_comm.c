@@ -61,13 +61,6 @@ typedef enum
   
   CCST_MAX,
 }CTVT_COMM_SEND_TYPE;
-//フラグのタイプ
-typedef enum
-{
-  CCFT_REQ_PHOTO,
-  
-  CCFT_MAX,
-}CTVT_COMM_FLAG_TYPE;
 
 //======================================================================
 //	typedef struct
@@ -79,6 +72,7 @@ typedef struct
 {
   BOOL isEnable;
   BOOL isSelf;
+  BOOL reqTalk;
   u8   bufferNo;
   
   CTVT_COMM_STATE_USER state;
@@ -110,6 +104,15 @@ struct _CTVT_COMM_WORK
   void *encWorkBuf;
   void *encBuffer;
   void *sendBuffer;
+  
+  //親機から子機へ共有する処理
+  u8  talkMember;
+  
+  //親機専用処理
+  BOOL updateReqTalk;
+  
+  BOOL updateTalkMember;
+  u8 tempTalkMember;
 };
 
 //======================================================================
@@ -127,7 +130,6 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state );
 static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx );
 
-static const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
 static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable CTVT_COMM_RecvTable[] = 
@@ -164,6 +166,12 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->PhotobufUseBit = 0;
   commWork->reqCheckBit = 0;
   commWork->isSendWait = FALSE;
+  
+  commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
+  
+  commWork->updateReqTalk = FALSE;
+  commWork->updateTalkMember = FALSE;
+  commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   return commWork;
 }
 
@@ -306,6 +314,7 @@ static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID 
 //--------------------------------------------------------------
 static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   //ステートの更新
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
@@ -362,7 +371,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
         if( dataSize != 0 )
         {
           GFL_NET_LDATA_SetSendData( commWork->sendBuffer , dataSize , commWork->reqCheckBit , FALSE );
-          CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
+          //CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
           commWork->photoReqBit = 0;
           commWork->isSendWait = TRUE;
         }
@@ -374,6 +383,39 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     }
   }
   
+  //親機の処理
+  if( selfId == 0 )
+  {
+    if( commWork->updateReqTalk == TRUE )
+    {
+      u8 i;
+      commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+      for( i=0;i<CTVT_MEMBER_NUM;i++ )
+      {
+        if( commWork->member[i].reqTalk == TRUE )
+        {
+          if( commWork->tempTalkMember == CTVT_COMM_INVALID_MEMBER )
+          {
+            commWork->tempTalkMember = i;
+          }
+          commWork->member[i].reqTalk = FALSE;
+        }
+      }
+      if( commWork->tempTalkMember != commWork->talkMember )
+      {
+        commWork->updateTalkMember = TRUE;
+      }
+    }
+    
+    if( commWork->updateTalkMember == TRUE )
+    {
+      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_TALK_MEMBER , commWork->tempTalkMember );
+      if( ret == TRUE )
+      {
+        commWork->updateTalkMember = FALSE;
+      }
+    }
+  }
 }
 
 #pragma mark [>comm util
@@ -462,6 +504,7 @@ static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *co
 {
   state->isSelf = FALSE;
   state->isEnable = FALSE;
+  state->reqTalk = FALSE;
   state->bufferNo = 0xFF;
   state->state = CCSU_NONE;
 }
@@ -507,7 +550,7 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
                             0 );
       CTVT_CAMERA_SetRefreshFlg( work , camWork , idx );
       state->state = CCSU_REQ_PHOTO;
-      CTVT_TPrintf("Post[%d]!!\n",idx);
+      //CTVT_TPrintf("Post[%d]!!\n",idx);
     }
     break;
   case CCSU_POST_PHOTO:
@@ -525,13 +568,17 @@ typedef struct
 //--------------------------------------------------------------
 // フラグ送信
 //--------------------------------------------------------------
-static const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value )
+const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   CTVT_COMM_FLG_PACKET pkt;
   pkt.flg = flg;
   pkt.value = value;
-  //CTVT_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+  
+  if( flg != CCFT_REQ_PHOTO )
+  {
+    CTVT_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+  }
   
   {
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
@@ -556,15 +603,56 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   CTVT_COMM_FLG_PACKET *pkt = (CTVT_COMM_FLG_PACKET*)pData;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-  //CTVT_TPrintf("Post Flg [%d][%d:%d].\n",netID,pkt->flg,pkt->value);
+  if( pkt->flg != CCFT_REQ_PHOTO )
+  {
+    CTVT_TPrintf("Post Flg [%d][%d:%d].\n",netID,pkt->flg,pkt->value);
+  }
   switch( pkt->flg )
   {
+  //COMMが使う
   case CCFT_REQ_PHOTO:
     if( netID != selfId )
     {
       commWork->photoReqBit |= 1<<netID;
-      CTVT_TPrintf("ReqBit [%d][%d].\n",commWork->photoReqBit,commWork->reqCheckBit);
+      //CTVT_TPrintf("ReqBit [%d][%d].\n",commWork->photoReqBit,commWork->reqCheckBit);
     }
     break;
+    
+  //COMMが使う＆親機が子に通知する用
+  case CCFT_TALK_MEMBER:
+    commWork->talkMember = pkt->value;
+    CTVT_TPrintf("TalkMember [%d].\n",pkt->value);
+    break;
+    
+  //外で使う
+  case CCFT_REQ_TALK:  //会話要求通知
+    if( selfId == 0 )
+    {
+      commWork->member[netID].reqTalk = TRUE;
+      commWork->updateReqTalk = TRUE;
+    }
+    break;
+
+  case CCFT_FINISH_TALK:  //会話終了通知
+    break;
+    
+  case CCFT_CANCEL_TALK:  //会話取り消し通知 //何かしらうまくいかなかったとき
+    if( netID == commWork->talkMember )
+    {
+      commWork->updateReqTalk = TRUE;
+    }
+    break;
+    
   }
+}
+
+
+#pragma mark [>outer func
+const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+}
+const u8 CTVT_COMM_GetTalkMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->talkMember;
 }
