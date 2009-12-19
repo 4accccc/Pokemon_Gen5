@@ -838,5 +838,8 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 
     GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys)));
   FIELD_PLAYER_ChangeOBJCode( fld_player, obj_code );
+  if(disguise_code == 0){
+    FIELD_PLAYER_ClearOBJCodeFix( fld_player );
+  }
 }
 
