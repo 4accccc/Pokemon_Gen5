@@ -28,7 +28,7 @@ typedef enum{
   
   //手持ち or バトルボックス選択リスト イベント中
   FLDOAM_PALNO_FREE_PSL_POKEICON = FLDOAM_PALNO_FREE_START,
-  FLDOAM_PALNO_FREE_PSL_ITEM,
+  FLDOAM_PALNO_FREE_PSL_ITEM = FLDOAM_PALNO_FREE_PSL_POKEICON + 3,
   FLDOAM_PALNO_FREE_PSL_FONTOAM,
 
   //地下鉄ステータス イベント中(仮)　※フリーエリアのイメージを掴んでもらうだけのダミー
