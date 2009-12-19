@@ -36,6 +36,8 @@
 
 //セーブデータ
 #include "savedata/battle_rec.h"
+#include "savedata/save_control.h"
+#include "savedata/save_tbl.h"
 
 //外部参照
 #include "br_core.h"
@@ -645,7 +647,7 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_subway   = NULL;
+  p_param->p_subway   = SaveControl_DataPtrGet( SaveControl_GetPointer(), GMDATA_ID_BSUBWAY_SCOREDATA );
 }
 //----------------------------------------------------------------------------
 /**
@@ -678,16 +680,12 @@ static void BR_RNDMATCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 
 	//メニュー以外から来ない
 	GF_ASSERT_MSG( preID == BR_PROCID_MENU, "メニュー以外からは来ない %d", preID );
-/*
-	switch( cp_menu_param->next_data )
-	{	
-		
-	}
-*/
+
 	p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_rndmatch = SaveData_GetRndMatch( SaveControl_GetPointer() );
 }
 //----------------------------------------------------------------------------
 /**

@@ -494,7 +494,7 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_805 );
 
   { 
-    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88, 88, p_wk->heapID );
   }
 }
@@ -599,7 +599,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
       { 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -610,7 +610,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -631,7 +631,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
 
   { 
-    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 
@@ -737,7 +737,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
       { 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -748,7 +748,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -768,7 +768,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   }
 
   { 
-    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
@@ -927,9 +927,9 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       switch( i )
       { 
-      case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_CAPTION:   //‚º‚ñ‚©‚¢
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_NUM:   //‚º‚ñ‚©‚¢
         { 
-         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_MULTI ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -939,7 +939,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
         break;
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_NUM:       //‚X‚X‚X‚X
         { 
-         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_MULTI ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -949,7 +949,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
         break;
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -960,7 +960,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -981,7 +981,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   }
 
   { 
-    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
@@ -1064,7 +1064,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
       { 
       case BR_BTLSUBWAY_MSGWINID_M_WIFI_NOW_NUM:  //ƒ‰ƒ“ƒN
         { 
-         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_SetWifiRank( p_param->p_subway, BSWAY_SETMODE_get ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1083,7 +1083,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     }
   }
   { 
-    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }

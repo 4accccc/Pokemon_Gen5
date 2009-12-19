@@ -48,7 +48,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/zukan_savedata.c \
 				savedata/encount_sv.c \
 				savedata/gds_profile.c \
-        savedata/bsubway_savedata.c
+        savedata/bsubway_savedata.c \
+        savedata/rndmatch_savedata.c
 
 
 #’ÊM‚Ìí’“

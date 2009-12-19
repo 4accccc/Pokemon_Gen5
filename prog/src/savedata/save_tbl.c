@@ -47,6 +47,7 @@
 #include "savedata/encount_sv.h"
 #include "savedata/c_gear_picture.h"
 #include "savedata/bsubway_savedata.h"
+#include "savedata/rndmatch_savedata.h"
 
 //==============================================================================
 //  定数定義
@@ -379,6 +380,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_BSUBWAY_SCOREDATA,
     (FUNC_GET_SIZE)BSUBWAY_SCOREDATA_GetWorkSize,
     (FUNC_INIT_WORK)BSUBWAY_SCOREDATA_Init,
+  },
+  { 
+    //ランダムマッチセーブデータ
+    GMDATA_ID_RNDMATCH,
+    (FUNC_GET_SIZE)RNDMATCH_GetWorkSize,
+    (FUNC_INIT_WORK)RNDMATCH_Init,
   },
 };
 

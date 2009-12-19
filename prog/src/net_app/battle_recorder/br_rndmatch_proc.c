@@ -54,45 +54,43 @@ typedef enum
   BR_RNDMATCH_MSGWINID_M_NONE_MSG = 0,    //メッセージ面
   BR_RNDMATCH_MSGWINID_M_NONE_MAX,
 
+
   BR_RNDMATCH_MSGWINID_M_RND_CAPTION = 0, //フリーモード共通
   BR_RNDMATCH_MSGWINID_M_RND_WIN,         //かち
   BR_RNDMATCH_MSGWINID_M_RND_LOSE,        //まけ
   BR_RNDMATCH_MSGWINID_M_RND_SINGLE,        //シングル
-  BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,      //シングル勝ち点
-  BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,       //シングル負け点
-
   BR_RNDMATCH_MSGWINID_M_RND_DOUBLE,        //ダブル
-  BR_RNDMATCH_MSGWINID_M_RND_DOUBLE_W,      //ダブル勝ち点
-  BR_RNDMATCH_MSGWINID_M_RND_DOUBLE_L,       //ダブル負け点
-
   BR_RNDMATCH_MSGWINID_M_RND_TRIPLE,        //トリプル
-  BR_RNDMATCH_MSGWINID_M_RND_TRIPLE_W,      //トリプル勝ち点
-  BR_RNDMATCH_MSGWINID_M_RND_TRIPLE_L,       //トリプル負け点
-
   BR_RNDMATCH_MSGWINID_M_RND_ROT,        //ローテ
-  BR_RNDMATCH_MSGWINID_M_RND_ROT_W,      //ローテ勝ち点
-  BR_RNDMATCH_MSGWINID_M_RND_ROT_L,       //ローテ負け点
-
   BR_RNDMATCH_MSGWINID_M_RND_SHOT,        //シューター
+
+  BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,      //シングル勝ち点
+  BR_RNDMATCH_MSGWINID_M_RND_DOUBLE_W,      //ダブル勝ち点
+  BR_RNDMATCH_MSGWINID_M_RND_TRIPLE_W,      //トリプル勝ち点
+  BR_RNDMATCH_MSGWINID_M_RND_ROT_W,      //ローテ勝ち点
   BR_RNDMATCH_MSGWINID_M_RND_SHOT_W,      //シューター勝ち点
+
+  BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,       //シングル負け点
+  BR_RNDMATCH_MSGWINID_M_RND_DOUBLE_L,       //ダブル負け点
+  BR_RNDMATCH_MSGWINID_M_RND_TRIPLE_L,       //トリプル負け点
+  BR_RNDMATCH_MSGWINID_M_RND_ROT_L,       //ローテ負け点
   BR_RNDMATCH_MSGWINID_M_RND_SHOT_L,       //シューター負け点
+
   BR_RNDMATCH_MSGWINID_M_RND_MAX,
+
 
   BR_RNDMATCH_MSGWINID_M_RATE_CAPTION = 0, //ランダムマッチ　レーティング
   BR_RNDMATCH_MSGWINID_M_RATE_RATE,        //レーティング
   BR_RNDMATCH_MSGWINID_M_RATE_SINGLE,      //シングル
-  BR_RNDMATCH_MSGWINID_M_RATE_SINGLE_RATE, //シングルレーティング
-
   BR_RNDMATCH_MSGWINID_M_RATE_DOUBLE,      //ダブル
-  BR_RNDMATCH_MSGWINID_M_RATE_DOUBLE_RATE, //ダブルレーティング
-
-  BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE,       //トリプル
-  BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE_RATE,  //トリプルレーティング
-
-  BR_RNDMATCH_MSGWINID_M_RATE_ROT,        //ローテ
-  BR_RNDMATCH_MSGWINID_M_RATE_ROT_RATE,    //ローテレーティング
-
+  BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE,      //トリプル
+  BR_RNDMATCH_MSGWINID_M_RATE_ROT,         //ローテ
   BR_RNDMATCH_MSGWINID_M_RATE_SHOT,        //シューター
+
+  BR_RNDMATCH_MSGWINID_M_RATE_SINGLE_RATE, //シングルレーティング
+  BR_RNDMATCH_MSGWINID_M_RATE_DOUBLE_RATE, //ダブルレーティング
+  BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE_RATE, //トリプルレーティング
+  BR_RNDMATCH_MSGWINID_M_RATE_ROT_RATE,    //ローテレーティング
   BR_RNDMATCH_MSGWINID_M_RATE_SHOT_RATE,   //シューターレーティング
   BR_RNDMATCH_MSGWINID_M_RATE_MAX,
 
@@ -560,9 +558,13 @@ static void Br_RndMatch_CreateMainDisplayRnd( BR_RNDMATCH_WORK *p_wk, BR_RNDMATC
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
@@ -571,10 +573,54 @@ static void Br_RndMatch_CreateMainDisplayRnd( BR_RNDMATCH_WORK *p_wk, BR_RNDMATC
   //メッセージWIN作成
   {
     int i;
+    int number;
+    BOOL is_expand;
     for( i = 0; i < BR_RNDMATCH_MSGWINID_M_RATE_MAX; i++ )
     { 
+      is_expand = TRUE;
+
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_RNDMATCH_MSGWINID_M_RATE_SINGLE_RATE:  //シングル
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE, RNDMATCH_PARAM_IDX_RATE ); 
+        break;
+
+      case BR_RNDMATCH_MSGWINID_M_RATE_DOUBLE_RATE:  //ダブル
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_DOUBLE, RNDMATCH_PARAM_IDX_RATE ); 
+        break;
+
+      case BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE_RATE:  //トリプル
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_TRIPLE, RNDMATCH_PARAM_IDX_RATE ); 
+        break;
+
+      case BR_RNDMATCH_MSGWINID_M_RATE_ROT_RATE:  //ローテ
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_ROTATE, RNDMATCH_PARAM_IDX_RATE ); 
+        break;
+
+      case BR_RNDMATCH_MSGWINID_M_RATE_SHOT_RATE:  //シュータ
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SHOOTER, RNDMATCH_PARAM_IDX_RATE ); 
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        is_expand = FALSE;
+      }
+
+      if( is_expand )
+      { 
+        p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+        GFL_STR_DeleteBuffer( p_src );
+      }
+
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
 
@@ -732,9 +778,13 @@ static void Br_RndMatch_CreateMainDisplayRate( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
@@ -743,10 +793,46 @@ static void Br_RndMatch_CreateMainDisplayRate( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
   //メッセージWIN作成
   {
     int i;
+    int number;
+    BOOL is_expand;
     for( i = 0; i < BR_RNDMATCH_MSGWINID_M_RND_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_W )
+      { 
+        //勝ち点
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,
+            RNDMATCH_PARAM_IDX_WIN ); 
+        is_expand = TRUE;
+      }
+      else if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_L )
+      { 
+        //負け点
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,
+            RNDMATCH_PARAM_IDX_LOSE ); 
+
+        is_expand = TRUE;
+      }
+      else
+      { 
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        is_expand = FALSE;
+      }
+
+      if( is_expand )
+      { 
+        p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+        GFL_STR_DeleteBuffer( p_src );
+      }
+
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
 }
@@ -903,23 +989,65 @@ static void Br_RndMatch_CreateMainDisplayFree( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RNDMATCH_M_RATE, p_wk->heapID );
 
+
   //メッセージWIN作成
   {
     int i;
+    int number;
+    BOOL is_expand;
     for( i = 0; i < BR_RNDMATCH_MSGWINID_M_RND_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_W )
+      { 
+        //勝ち点
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,
+            RNDMATCH_PARAM_IDX_WIN ); 
+        is_expand = TRUE;
+      }
+      else if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_L )
+      { 
+        //負け点
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,
+            RNDMATCH_PARAM_IDX_LOSE ); 
+
+        is_expand = TRUE;
+      }
+      else
+      { 
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        is_expand = FALSE;
+      }
+
+      if( is_expand )
+      { 
+        p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+        GFL_STR_DeleteBuffer( p_src );
+      }
+
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
+
 }
 //----------------------------------------------------------------------------
 /**
