@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-19T02:12:27"/>
+	<create user="taya" host="W00146" date="2009-12-19T23:30:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,15 +424,15 @@
 		</language>
 	</columns>
 
-	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
+	<dialog left="130" top="0" right="809" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
 		<tag-palette left="783" top="534" right="1214" bottom="932" visible="yes"/>
-		<band id="0" index="1" style="0001" width="506"/>
+		<band id="0" index="1" style="0001" width="504"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="496"/>
+		<band id="2" index="3" style="0000" width="494"/>
 		<band id="3" index="4" style="0000" width="175"/>
-		<band id="4" index="0" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="671"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1188,7 +1188,7 @@
 
 	<row id="BTL_STRID_SET_Juel">
 		<comment>○○○ジュエル</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+		<language name="JPN" width="216">[1:09:どうぐ名:0]は　[1:07:わざ名:1]の
 いりょくを　つよめた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 威力を　強めた！</language>
@@ -2243,11 +2243,11 @@
 
 	<row id="BTL_STRID_SET_UseItem_RecoverPP">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-[1:07:わざ名:0]のPPを　かいふくした！</language>
+[1:09:どうぐ名:1]で▽
+[1:07:わざ名:2]のPPを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-[1:07:わざ名:0]のPPを　回復した！</language>
+[1:09:どうぐ名:1]で▽
+[1:07:わざ名:2]のPPを　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverLittle">
@@ -2448,10 +2448,10 @@
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
+[1:09:どうぐ名:1]を　つかって▽
 はりきりだした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
+[1:09:どうぐ名:1]を　使って▽
 張り切りだした！</language>
 	</row>
 
