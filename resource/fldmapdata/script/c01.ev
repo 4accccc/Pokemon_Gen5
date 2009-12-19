@@ -316,16 +316,17 @@ _TALK_OBJ_START()
 
 	//ローカル定義
 	DEFINE_LOCAL	DOOR_ANIME_ID
-
-	//ジム内に消えていくアニメ
-	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
+	
+	//ジム内に消えていくアニメ１
+	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru1 )
 	_OBJ_ANIME_WAIT()
 
 	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 788, 585 )
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
-	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
+	//ジム内に消えていくアニメ２
+	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru2 )
 	_OBJ_ANIME_WAIT()
 
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
@@ -351,10 +352,17 @@ EVENT_END
 //--------------------------------------------------------------
 //	リーダー　ジム内へ
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_leader_saru
-	_ANIME_DATA	AC_WALK_U_16F,1
+_ANIME_LABEL	anm_leader_saru1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+_ANIME_LABEL	anm_leader_saru2
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  C01 発明家											      */
 /**************************************************************/

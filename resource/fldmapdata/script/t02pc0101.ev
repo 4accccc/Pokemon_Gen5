@@ -68,7 +68,10 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	//サポート：自機に気付いて横に行く
 	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_counter )
 	_OBJ_ANIME_WAIT()
-
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_03,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	
 	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_counter1 )
 	_OBJ_ANIME_WAIT()
 
