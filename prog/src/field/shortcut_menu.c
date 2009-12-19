@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 
 //システム
+#include "system/main.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 
@@ -227,9 +228,6 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 	p_wk->input				= SHORTCUTMENU_INPUT_NONE;
 	p_wk->shortcutID	= SHORTCUT_ID_NULL;
 	p_wk->p_cursor		= p_cursor;
-
-	NAGI_Printf( "ショートカットメニュー確保前　SYS=0x%x RES=0x%x \n",
-			GFL_HEAP_GetHeapFreeSize( sys_heapID ), GFL_HEAP_GetHeapFreeSize( res_heapID ));
 
 	//BG初期化
 	{	
