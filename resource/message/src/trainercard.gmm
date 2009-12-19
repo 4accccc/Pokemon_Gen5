@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-15T17:33:31"/>
+	<create user="mori" host="W00155" date="2009-12-18T14:52:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="148"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -260,15 +260,15 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="489" top="270" right="1194" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="123" top="147" right="596" bottom="545" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -290,66 +290,81 @@
 
 	<row id="MSG_TCARD_01">
 		<comment>カード表面項目。トレーナーＩＤ。単位なし。</comment>
-		<language name="JPN" width="256">ＩＤＮｏ．</language>
-		<language name="JPN_KANJI" width="256">ＩＤＮｏ．</language>
-	</row>
-
-	<row id="MSG_TCARD_02">
-		<comment>カード表面項目。トレーナー名。単位なし。</comment>
 		<language name="JPN" width="256">なまえ</language>
 		<language name="JPN_KANJI" width="256">なまえ</language>
 	</row>
 
+	<row id="MSG_TCARD_02">
+		<comment>カード表面項目。トレーナー名。単位なし。</comment>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
+	</row>
+
 	<row id="MSG_TCARD_03">
 		<comment>カード表面項目。おこづかい。単位「円」の表示は画像で行う。</comment>
-		<language name="JPN" width="256">おこづかい</language>
-		<language name="JPN_KANJI" width="256">おこづかい</language>
+		<language name="JPN" width="256">せいかく</language>
+		<language name="JPN_KANJI" width="256">せいかく</language>
 	</row>
 
 	<row id="MSG_TCARD_04">
 		<comment>カード表面項目。ポケモン図鑑。単位「匹」の表示は画像で行う。</comment>
-		<language name="JPN" width="256">ポケモンずかん</language>
-		<language name="JPN_KANJI" width="256">ポケモンずかん</language>
+		<language name="JPN" width="256">ずかん</language>
+		<language name="JPN_KANJI" width="256">ずかん</language>
 	</row>
 
 	<row id="MSG_TCARD_05">
 		<comment>カード表面項目。スコア。単位なし。</comment>
-		<language name="JPN" width="256">ＳＣＯＲＥ</language>
-		<language name="JPN_KANJI" width="256">ＳＣＯＲＥ</language>
-	</row>
-
-	<row id="MSG_TCARD_06">
-		<comment>カード表面項目。プレイ時間。時間と分の間を「：」で区切る。単位なし。</comment>
 		<language name="JPN" width="256">プレイじかん</language>
 		<language name="JPN_KANJI" width="256">プレイじかん</language>
 	</row>
 
+	<row id="MSG_TCARD_06">
+		<comment>カード表面項目。プレイ時間。時間と分の間を「：」で区切る。単位なし。</comment>
+		<language name="JPN" width="256">IDNo．</language>
+		<language name="JPN_KANJI" width="256">IDNo．</language>
+	</row>
+
 	<row id="MSG_TCARD_07">
 		<comment>カード表面項目。冒険を始めた時。単位「年」、「月」、「日」の表示は画像で行う。</comment>
-		<language name="JPN" width="256">ぼうけんを　はじめたとき</language>
-		<language name="JPN_KANJI" width="256">ぼうけんを　はじめたとき</language>
+		<language name="JPN" width="256">おこづかい</language>
+		<language name="JPN_KANJI" width="256">おこづかい</language>
 	</row>
 
 	<row id="MSG_TCARD_08">
 		<comment>カード裏面項目。初めての殿堂入り。単位「年」、「月」、「日」の表示は画像で行う。時間と分の間を「：」で区切る</comment>
+		<language name="JPN" width="256">ぼうけんを　はじめたとき</language>
+		<language name="JPN_KANJI" width="256">ぼうけんを　はじめたとき</language>
+	</row>
+
+	<row id="MSG_TCARD_09">
 		<language name="JPN" width="256">はじめての　でんどういり</language>
 		<language name="JPN_KANJI" width="256">はじめての　でんどういり</language>
 	</row>
 
-	<row id="MSG_TCARD_09">
+	<row id="MSG_TCARD_10">
 		<comment>カード裏面項目。通信した回数。単位「回」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">つうしんした　かいすう</language>
 		<language name="JPN_KANJI" width="256">つうしんした　かいすう</language>
 	</row>
 
-	<row id="MSG_TCARD_10">
+	<row id="MSG_TCARD_11_1">
 		<comment>カード裏面項目。通信対戦の戦績。小項目「かち」、「まけ」の表示は画像で行う。</comment>
-		<language name="JPN" width="256">つうしん　たいせん</language>
+		<language name="JPN" width="256">つうしんたいせん　かいすう</language>
 		<language name="JPN_KANJI" width="256">つうしん　たいせん</language>
 	</row>
 
-	<row id="MSG_TCARD_11">
+	<row id="MSG_TCARD_11_2">
+		<language name="JPN" width="256">つうしんたいせん　かち</language>
+		<language name="JPN_KANJI" width="256">つうしんたいせん　かち</language>
+	</row>
+
+	<row id="MSG_TCARD_11_3">
 		<comment>カード裏面項目。通信交換した回数。単位「回」の表示は画像で行う。</comment>
+		<language name="JPN" width="256">つうしんたいせん　まけ</language>
+		<language name="JPN_KANJI" width="256">つうしんたいせん　まけ</language>
+	</row>
+
+	<row id="MSG_TCARD_11_4">
 		<language name="JPN" width="256">つうしん　こうかん</language>
 		<language name="JPN_KANJI" width="256">つうしん　こうかん</language>
 	</row>
@@ -402,6 +417,146 @@
 きえますが　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">いま　書かれている　サインは
 消えますが　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_000">
+		<language name="JPN" width="256">がんばりや</language>
+		<language name="JPN_KANJI" width="256">がんばりや</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_001">
+		<language name="JPN" width="256">さみしがり</language>
+		<language name="JPN_KANJI" width="256">さみしがり</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_002">
+		<language name="JPN" width="256">ゆうかん</language>
+		<language name="JPN_KANJI" width="256">ゆうかん</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_003">
+		<language name="JPN" width="256">いじっぱり</language>
+		<language name="JPN_KANJI" width="256">いじっぱり</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_004">
+		<language name="JPN" width="256">やんちゃ</language>
+		<language name="JPN_KANJI" width="256">やんちゃ</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_005">
+		<language name="JPN" width="256">ずぶとい</language>
+		<language name="JPN_KANJI" width="256">ずぶとい</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_006">
+		<language name="JPN" width="256">すなお</language>
+		<language name="JPN_KANJI" width="256">すなお</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_007">
+		<language name="JPN" width="256">のんき</language>
+		<language name="JPN_KANJI" width="256">のんき</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_008">
+		<language name="JPN" width="256">わんぱく</language>
+		<language name="JPN_KANJI" width="256">わんぱく</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_009">
+		<language name="JPN" width="256">のうてんき</language>
+		<language name="JPN_KANJI" width="256">のうてんき</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_010">
+		<language name="JPN" width="256">おくびょう</language>
+		<language name="JPN_KANJI" width="256">おくびょう</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_011">
+		<language name="JPN" width="256">せっかち</language>
+		<language name="JPN_KANJI" width="256">せっかち</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_012">
+		<language name="JPN" width="256">まじめ</language>
+		<language name="JPN_KANJI" width="256">まじめ</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_013">
+		<language name="JPN" width="256">ようき</language>
+		<language name="JPN_KANJI" width="256">ようき</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_014">
+		<language name="JPN" width="256">むじゃき</language>
+		<language name="JPN_KANJI" width="256">むじゃき</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_015">
+		<language name="JPN" width="256">ひかえめ</language>
+		<language name="JPN_KANJI" width="256">ひかえめ</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_016">
+		<language name="JPN" width="256">れいせい</language>
+		<language name="JPN_KANJI" width="256">れいせい</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_017">
+		<language name="JPN" width="256">てれや</language>
+		<language name="JPN_KANJI" width="256">てれや</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_018">
+		<language name="JPN" width="256">うっかり</language>
+		<language name="JPN_KANJI" width="256">うっかり</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_019">
+		<language name="JPN" width="256">おだやか</language>
+		<language name="JPN_KANJI" width="256">おだやか</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_020">
+		<language name="JPN" width="256">おだやか</language>
+		<language name="JPN_KANJI" width="256">おだやか</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_021">
+		<language name="JPN" width="256">おとなしい</language>
+		<language name="JPN_KANJI" width="256">おとなしい</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_022">
+		<language name="JPN" width="256">なまいき</language>
+		<language name="JPN_KANJI" width="256">なまいき</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_023">
+		<language name="JPN" width="256">しんちょう</language>
+		<language name="JPN_KANJI" width="256">しんちょう</language>
+	</row>
+
+	<row id="MSG_TCARD_SEIKAKU_024">
+		<language name="JPN" width="256">きまぐれ</language>
+		<language name="JPN_KANJI" width="256">きまぐれ</language>
+	</row>
+
+	<row id="MSG_TCARD_NUM_KAI">
+		<language name="JPN" width="256">[2:04:５桁:0]回</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]回</language>
+	</row>
+
+	<row id="MSG_TCARD_NUM_YEN">
+		<language name="JPN" width="256">[2:05:６桁:0]円</language>
+		<language name="JPN_KANJI" width="256">[2:05:６桁:0]円</language>
+	</row>
+
+	<row id="MSG_TCARD_NUM_YYMMDD">
+		<language name="JPN" width="256">[2:01:２桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日</language>
 	</row>
 
 	<flowchart-group-list>
