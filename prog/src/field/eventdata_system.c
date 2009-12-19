@@ -1273,7 +1273,7 @@ static u16 EventData_CheckTalkBGEventBase(
       
       if( data->type == BG_TALK_TYPE_HIDE )
       {
-        u16 flag = SCRIPT_GetHideItemFlagNoByScriptID( data->id );
+        u16 flag = HIDEITEM_GetFlagNoByScriptID( data->id );
           
         if( EVENTWORK_CheckEventFlag(evwork,flag) == FALSE ){
           return data->id;

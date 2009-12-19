@@ -9,10 +9,6 @@
  * 05.04.25 Hiroyuki Nakamura
  *
  * 09.09.13 tamada  隠しアイテム関連を独立させた
-//
-//	・スクリプトIDから、隠しアイテムフラグを取得して、フラグチェック
-//	BOOL CheckEventFlag( fsys, GetHideItemFlagNoByScriptId(scr_id) );
-//
  */
 //======================================================================
 
@@ -21,25 +17,25 @@
 
 #include "script_hideitem.h"
 
-//ID_HIDE_ITEM_OFFSET
-#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
-//FH_FLAG_START
-//#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "eventwork_def.h"
 
 
-//隠しアイテム
 #ifndef SCRIPT_PL_NULL
-u16 GetHideItemFlagNoByScriptId( u16 scr_id );
-u16 GetHideItemFlagIndexByScriptId( u16 scr_id );
 u8 GetHideItemResponseByScriptId( u16 scr_id );
 static BOOL HideItemParamSet( SCRIPT_WORK* sc, u16 scr_id );
 void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys );
 #endif
 
-//======================================================================
+
+//FLAG_HIDEITEM_AREA_START参照のため
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
+//ID_HIDE_ITEM_OFFSET参照のため
+#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
+
+//============================================================================================
 //	隠しアイテムデータ
-//======================================================================
+//============================================================================================
 #ifndef SCRIPT_PL_NULL
 typedef struct{
 	u16 itemno;									//アイテムナンバー
@@ -52,46 +48,45 @@ typedef struct{
 //#include "../fielddata/script/hide_item.dat"	//隠しアイテムデータ
 #endif
 
-//======================================================================
-//	隠しアイテム関連
-//	・スクリプトIDから、隠しアイテムフラグを取得して、フラグチェック
-//	BOOL CheckEventFlag( fsys, GetHideItemFlagNoByScriptId(scr_id) );
-//======================================================================
+//static const u16 hide_item_data[];
+#include "../../../resource/fldmapdata/script/scr_hideitem/hide_item.cdat"
+
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
- * スクリプトIDから、隠しアイテムフラグナンバーを取得
- * @param   scr_id		スクリプトID
- * @retval  "フラグナンバー"
+ * @brief スクリプトIDから隠しアイテムIDを取得
+ * @param scr_id  スクリプトID
+ * @param 隠しアイテムデータのインデックス
  */
 //--------------------------------------------------------------
-u16 SCRIPT_GetHideItemFlagNoByScriptID( u16 scr_id )
+u16 HIDEITEM_GetIDByScriptID( u16 scr_id )
 {
-	return (scr_id - ID_HIDE_ITEM_OFFSET + FH_FLAG_START);
+  if ( scr_id < ID_HIDE_ITEM_OFFSET || scr_id > ID_HIDE_ITEM_OFFSET_END )
+  {
+    GF_ASSERT_MSG( 0, "not hide-item script id(%d)!!\n", scr_id );
+    return 0;
+  }
+  return scr_id - ID_HIDE_ITEM_OFFSET;
 }
 
 //--------------------------------------------------------------
 /**
- * スクリプトIDから、隠しアイテムフラグインデックスを取得
- * @param   scr_id		スクリプトID
- * @retval  "フラグインデックス"
+ * @brief スクリプトIDから隠しアイテムに対応したフラグIDを取得
+ * @param scr_id  スクリプトID
+ * @return  u16 イベントフラグNo
  */
 //--------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-u16 GetHideItemFlagIndexByScriptId( u16 scr_id )
+u16 HIDEITEM_GetFlagNoByScriptID( u16 scr_id )
 {
-	return (scr_id - ID_HIDE_ITEM_OFFSET);
+  return FLAG_HIDEITEM_AREA_START + hide_item_data[ HIDEITEM_GetIDByScriptID( scr_id ) ];
 }
-#endif
 
-//--------------------------------------------------------------
-/**
- * 0時で隠しフラグが復活する
- * @param   fsys	FLDCOMMON_WORK型のポインタ
- * @retval  none
- * 殿堂入り後のチェックが抜けていましたが、
- * 現状の形でOKだそうです。(08.06.25)
- */
-//--------------------------------------------------------------
+
+
+
+//============================================================================================
+//============================================================================================
 #ifndef SCRIPT_PL_NULL
 static u16 oneday_hide_item1[][2] = {		//鋼鉄島
 	{ ZONE_ID_D24R0103, 52 },
@@ -110,6 +105,15 @@ static u16 oneday_hide_item2[] = {			//ソノオの花園
 #endif
 
 #ifndef SCRIPT_PL_NULL
+//--------------------------------------------------------------
+/**
+ * 0時で隠しフラグが復活する
+ *
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+//extern void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys );
 void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys )
 {
 	u8 index;
@@ -157,7 +161,7 @@ u8 GetHideItemResponseByScriptId( u16 scr_id )
 	const HIDE_ITEM_DATA* data;
 
 	data	= &hide_item_data[0];
-	index	= GetHideItemFlagIndexByScriptId(scr_id);			//フラグインデックス取得
+	index	= HIDEITEM_GetIDByScriptID(scr_id);			//フラグインデックス取得
 
 	//サーチする
 	for( i=0; i < HIDE_ITEM_DATA_MAX ;i++ ){
@@ -202,7 +206,7 @@ static BOOL HideItemParamSet( SCRIPT_WORK* sc, u16 scr_id )
 	u16* param2 = getTempWork( sc, SCWK_PARAM2 );
 
 	data	= &hide_item_data[0];
-	index	= GetHideItemFlagIndexByScriptId(scr_id);		//フラグインデックス取得
+	index	= HIDEITEM_GetIDByScriptID(scr_id);		//フラグインデックス取得
 
 	//サーチする
 	for( i=0; i < HIDE_ITEM_DATA_MAX ;i++ ){
@@ -219,11 +223,21 @@ static BOOL HideItemParamSet( SCRIPT_WORK* sc, u16 scr_id )
 
 	*param0 = data[i].itemno;						//アイテムナンバー
 	*param1 = data[i].num;							//個数
-	*param2 = GetHideItemFlagNoByScriptId(scr_id);	//フラグナンバー
+	*param2 = HIDEITEM_GetFlagNoByScriptID(scr_id);	//フラグナンバー
 
 	return 1;
 }
 #endif
+
+
+//============================================================================================
+//============================================================================================
+#define HIDE_LIST_SX				(7)		//検索範囲
+#define HIDE_LIST_SZ				(7)		//検索範囲(未使用)
+#define HIDE_LIST_SZ_2				(6)		//検索範囲(未使用)
+#define HIDE_LIST_TOP				(7)		//検索範囲(主人公から画面上)
+#define HIDE_LIST_BOTTOM			(6)		//検索範囲(主人公から画面下)
+#define HIDE_LIST_RESPONSE_NONE		(0xff)	//終了コード
 
 #define DEBUG_HIDE_ITEM_LIST	//デバック有効
 //--------------------------------------------------------------
@@ -303,7 +317,7 @@ HIDE_ITEM_LIST * HideItem_CreateList( FLDCOMMON_WORK * fsys, int heapid )
 
 		//隠しアイテムタイプで、まだ入手していなかったら
 		if( (bg[i].type == BG_TALK_TYPE_HIDE) &&
-			(CheckEventFlag(fsys, GetHideItemFlagNoByScriptId(bg[i].id)) == 0) ){
+			(CheckEventFlag(fsys, HIDEITEM_GetFlagNoByScriptID(bg[i].id)) == 0) ){
 
 			//検索範囲内にあるかチェック
 			if( (bg[i].gx >= l) &&
