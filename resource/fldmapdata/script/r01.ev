@@ -430,7 +430,7 @@ EVENT_END
 //	R01　GETDEMO：POSで主人公、上に移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_r01_guide_up
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
