@@ -14,14 +14,16 @@
 
 #include "field_skill.h"
 #include "eventwork.h"
-
 #include "script.h"
-#include "encount_data.h"
-#include "field_encount.h"
-#include "effect_encount.h"
 #include "fldmmdl.h"
 #include "fldeff_gyoe.h"
 #include "fldeff_fishing.h"
+
+#include "gamesystem/btl_setup.h"
+#include "encount_data.h"
+#include "field_encount.h"
+#include "effect_encount.h"
+#include "event_battle.h"
 
 #include "event_fishing.h"
 
@@ -32,11 +34,11 @@ typedef enum{
  SEQ_START_WAIT,
  SEQ_HIT_WAIT,
  SEQ_HIT,
- SEQ_HIT_SUCCESS,
  SEQ_ENCOUNT_FAILED,
  SEQ_TOO_EARLY,
  SEQ_TOO_SLOW,
  SEQ_END,
+ SEQ_HIT_SUCCESS,
 }AMAIKAORI_SEQ;
 
 enum{
@@ -73,7 +75,7 @@ typedef struct _FISHING_WORK{
   u16     enc_error;
   u32     time;
   u32     count;
-  GMEVENT* enc_event;
+  BATTLE_SETUP_PARAM* bsp;
 }FISHING_WORK;
 
 static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work);
@@ -166,10 +168,10 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   //エフェクトエンカウントチェック
   if( EFFECT_ENC_CheckEffectPos( wk->fld_enc, &wk->pos )){
     wk->enc_type = ENC_TYPE_EFFECT;
-    wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_EFFECT );
+    wk->bsp = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_EFFECT );
   }else{
     wk->enc_type = ENC_TYPE_NORMAL;
-    wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_NORMAL );
+    wk->bsp = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_NORMAL );
   }
 
   IWASAWA_Printf("PlayerPos ( 0x%08x, 0x%08x, 0x%08x)\n", wk->player_pos.x, wk->player_pos.y, wk->player_pos.z );
@@ -190,8 +192,6 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     }
     MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 
-    //エンカウントチェック
-    wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, wk->enc_type );
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
@@ -206,7 +206,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     //ルアーセット
     sub_SetLureAnime(wk);
 
-    if( wk->enc_event == NULL ){  //エンカウト失敗
+    if( wk->bsp == NULL ){  //エンカウト失敗
       *seq = SEQ_ENCOUNT_FAILED;
       break;
     }
@@ -241,12 +241,6 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       *seq = SEQ_TOO_SLOW;
     }
     break;
-
-  case SEQ_HIT_SUCCESS:
-    GMEVENT_CallEvent( event, wk->enc_event );
-		(*seq) = SEQ_END;
-		break;
-
   //エンカウント失敗
   case SEQ_ENCOUNT_FAILED:
     if( !sub_TimeWait(wk,TIME_ENCOUNT_FAILED_WAIT )){
@@ -256,6 +250,9 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_TOO_EARLY:
   case SEQ_TOO_SLOW:
     sub_DelLureAnime( wk );
+    if(wk->bsp != NULL){
+      BATTLE_PARAM_Delete(wk->bsp);
+    }
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
     SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_ENCOUNT+(*seq-SEQ_ENCOUNT_FAILED), NULL, NULL, HEAPID_FIELDMAP );
 		(*seq) = SEQ_END;
@@ -266,6 +263,11 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &DATA_FishingFormOfs[0]);
     MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 		return GMEVENT_RES_FINISH;
+
+  //エンカウントイベントへ移行
+  case SEQ_HIT_SUCCESS:
+    GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE ) );
+	  return GMEVENT_RES_CONTINUE;
 	}
 	return GMEVENT_RES_CONTINUE;
 }

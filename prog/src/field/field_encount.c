@@ -255,7 +255,7 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
  * @param enc FIELD_ENCOUNT
  * @param enc_mode  ENCOUNT_MODE_???
  * @retval  NULL  エンカウントなし
- * @retval  GMEVENT*  エンカウント成功
+ * @retval  BATTLE_SETUP_PARAM*  エンカウント成功
  */
 //--------------------------------------------------------------
 void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
@@ -307,8 +307,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
 
-  //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE );
+  return bp;
 }
 
 

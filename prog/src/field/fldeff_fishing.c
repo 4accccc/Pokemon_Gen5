@@ -188,7 +188,8 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos )
   wk = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FISHING_LURE );
   head.eff_lure = wk;
   head.pos = *tpos; 
-  
+  head.pos.z += FX32_CONST(8); 
+
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_fishing_lure_TaskHeader, NULL, 0, &head, 0 );
 }
