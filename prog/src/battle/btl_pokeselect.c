@@ -130,7 +130,6 @@ void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT* result )
 //=============================================================================================
 BOOL BTL_POKESELECT_IsDone( const BTL_POKESELECT_RESULT* result )
 {
-  BTL_Printf("‘I‚Î‚Ë‚Î‚È‚ç‚ñ=%d‘ÌA‘I‚ñ‚¾=%d‘Ì\n", result->max, result->cnt);
   return result->cnt == result->max;
 }
 

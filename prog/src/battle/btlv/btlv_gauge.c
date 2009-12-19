@@ -26,6 +26,7 @@
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
 
+
 //============================================================================================
 /**
  *  定数宣言
@@ -1453,7 +1454,7 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
   };
   //ゲージが存在しないときはなにもせずにリターン
   if( bgw->bgcl[ pos ].status_clwk == NULL )
-  { 
+  {
     return;
   }
   if( sick == POKESICK_NULL )

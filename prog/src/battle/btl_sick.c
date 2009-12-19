@@ -7,6 +7,7 @@
 
 #include "btl_sick.h"
 
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
@@ -167,7 +168,6 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 
     param->pokeID = pokeID;
     if( BPP_SICKCONT_GetFlag(cont) ){ // フラグONなら２倍（しめつけバンド対応）
-      BTL_Printf("しめつけバンド効果でバインドダメージ２倍\n");
       param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
     }else{
       param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );

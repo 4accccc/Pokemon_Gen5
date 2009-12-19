@@ -31,6 +31,7 @@
 
 #include "btlv_core.h"
 
+
 //バトルバッグとバトルポケモンリストをオーバーレイ化
 FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);

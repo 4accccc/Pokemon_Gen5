@@ -148,7 +148,7 @@ static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
   u32 decimal;
 
   value *= ratio;
-  decimal = value & ( (1 << (FX32_SHIFT-1)) -1 );
+  decimal = value & ( (1 << FX32_SHIFT) -1 );
   value >>= FX32_SHIFT;
   if( decimal > (1 << (FX32_SHIFT-1)) ){
     ++value;

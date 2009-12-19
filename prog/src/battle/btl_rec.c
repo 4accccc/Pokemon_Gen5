@@ -16,7 +16,6 @@
 
 
 
-
 static inline u8 MakeRecFieldTag( BtlRecFieldType type, u8 numClient )
 {
   GF_ASSERT(numClient < 16);

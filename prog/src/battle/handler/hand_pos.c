@@ -291,7 +291,6 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
     HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
     HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
-    BTL_Printf("時間差攻撃:基ワザ＝%d\n", work[ WORKIDX_WAZAID ] );
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
     param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
@@ -323,8 +322,6 @@ static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   };
 
   u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  BTL_Printf("[バトンタッチ] targetPokeID=%d, NowPow=%d, NowPosPokeID=%d\n",
-    targetPokeID, pokePos, BTL_SVFTOOL_PokePosToPokeID(flowWk, pokePos));
   if( targetPokeID == BTL_SVFTOOL_PokePosToPokeID(flowWk, pokePos) )
   {
     BTL_HANDEX_PARAM_BATONTOUCH* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_BATONTOUCH, BTL_POKEID_NULL );

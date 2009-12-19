@@ -732,7 +732,7 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
-{ 
+{
   //ＢＧモード設定
   {
     static const GFL_BG_SYS_HEADER sysHeader = {
@@ -1165,10 +1165,8 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
-    BTL_Printf("Input: hitPos=%d\n", hit);
     if( biw->button_exist[ hit ] == FALSE )
     {
-      BTL_Printf("  not exist ...\n");
       hit = GFL_UI_TP_HIT_NONE;
     }
   }
@@ -2458,7 +2456,6 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
       GFL_STR_DeleteBuffer( monsname_src );
     }
     biw->button_exist[ i ] = bisp->bidp[ i ].exist;  //押せるボタンかどうかチェック
-    BTL_Printf("ボタン[%d]有効 : %d\n", i, biw->button_exist[i] );
   }
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
 

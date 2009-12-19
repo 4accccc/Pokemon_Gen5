@@ -7,8 +7,7 @@
  * @date  2008.09.25  çÏê¨
  */
 //=============================================================================================
-#ifndef __BTL_UTIL_H__
-#define __BTL_UTIL_H__
+#pragma once
 
 
 #include "poke_tool/poketype.h"
@@ -435,7 +434,7 @@ typedef enum {
 #if defined(DEBUG_ONLY_FOR_taya) | \
     defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
 #ifdef PM_DEBUG
-  #define BTL_PRINT_SYSTEM_ENABLE
+//  #define BTL_PRINT_SYSTEM_ENABLE
 #endif
 #endif
 
@@ -459,7 +458,8 @@ extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size
 #define BTL_PrintfSimple( ... )   /* */
 #define BTL_DUMP_Printf( cap, dat, siz )  /* */
 
-
 #endif  // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
-#endif
+
+
+

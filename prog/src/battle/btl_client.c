@@ -25,7 +25,6 @@
 #include "app\b_bag.h"
 #include "btlv\btlv_core.h"
 
-
 #include "btl_client.h"
 
 /*--------------------------------------------------------------------------*/

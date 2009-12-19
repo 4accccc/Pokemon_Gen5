@@ -267,7 +267,6 @@ static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
     {
-      BTL_Printf("リフレクターでダメージはんぶんに\n");
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
     }
   }
@@ -353,7 +352,6 @@ static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SV
   ){
     work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     if( work[0] ){
-      BTL_Printf("しろいきりで防いだ\n");
     }
   }
 }
