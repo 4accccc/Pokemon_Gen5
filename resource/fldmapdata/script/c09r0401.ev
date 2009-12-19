@@ -289,7 +289,7 @@ _ANIME_LABEL	anm_ply_move_01
 EVENT_START	ev_pos_c09r0401_warp_01
 	
 	//【仮】マップチェンジ
-	_MAP_CHANGE( ZONE_ID_C09P01, 31, 48, DIR_UP )
+	_MAP_CHANGE( ZONE_ID_C09P01, 34, 50, DIR_UP )
 	
 EVENT_END
 
