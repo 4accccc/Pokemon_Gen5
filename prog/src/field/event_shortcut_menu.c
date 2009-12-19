@@ -527,8 +527,8 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call = EVENT_PROCLINK_CALL_WIFINOTE;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TURIZAO:			//つりざお
-		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
-		return CALLTYPE_PROC;
+		p_param->select_param	= EVENT_ITEMUSE_CALL_TURIZAO;
+		return CALLTYPE_ITEM;
 	case SHORTCUT_ID_PSTATUS_STATUS:		//ポケモン情報＞ステータス
 		p_param->call = EVENT_PROCLINK_CALL_STATUS;
 		p_param->data	= PPT_INFO;
