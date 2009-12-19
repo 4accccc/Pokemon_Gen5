@@ -266,8 +266,8 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 static const FLDMENUFUNC_LIST PokePartySelectMenuList[] =
 {
   {msg_union_battle_01_23, (void*)COLOSSEUM_SELECT_PARTY_TEMOTI},  //手持ち
-  {msg_union_battle_01_24, (void*)COLOSSEUM_SELECT_PARTY_BOX_A},   //バトルボックス１
-  {msg_union_battle_01_25, (void*)COLOSSEUM_SELECT_PARTY_BOX_B},   //バトルボックス２
+  {msg_union_battle_01_24, (void*)COLOSSEUM_SELECT_PARTY_BOX},     //バトルボックス
+  {msg_union_battle_01_25, (void*)COLOSSEUM_SELECT_PARTY_CANCEL},  //やめる
 };
 
 ///メニューヘッダー(POKEPARTY選択メニュー用)

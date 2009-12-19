@@ -475,13 +475,13 @@ BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 //--------------------------------------------------------------
 /**
  * メニューIndexからバトルレギュレーション番号を取得する
- * @param   menu_index		
+ * @param   play_category		
  * @retval  int		レギュレーションNo
  */
 //--------------------------------------------------------------
-static int Union_GetMenuIndex_to_RegulationNo(u32 menu_index)
+static int Union_GetPlayCategory_to_RegulationNo(u32 play_category)
 {
-  switch(menu_index){
+  switch(play_category){
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:        //対戦:1VS1:シングル:LV50
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
     return REG_LV50_SINGLE;
@@ -574,6 +574,77 @@ static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
 
 //--------------------------------------------------------------
 /**
+ * unisys->alloc.regulationにplay_categoryに対応したレギュレーションデータをロードします
+ *
+ * @param   play_category		
+ */
+//--------------------------------------------------------------
+static void _Load_PlayCategory_to_Regulation(UNION_SYSTEM_PTR unisys, u32 play_category)
+{
+  int reg_no;
+
+  GF_ASSERT(Union_CheckPlayCategoryBattle(play_category) == TRUE);
+  
+  reg_no = Union_GetPlayCategory_to_RegulationNo(play_category);
+  PokeRegulation_LoadData(reg_no, unisys->alloc.regulation);
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンのレギュレーションチェック
+ *
+ * @param   unisys		
+ * @param   fail_bit		
+ *
+ * @retval  POKE_REG_RETURN_ENUM		
+ *
+ * unisys->alloc.regulationにレギュレーションデータがロードされている必要があります
+ */
+//--------------------------------------------------------------
+static POKE_REG_RETURN_ENUM _CheckRegulation_Temoti(UNION_SYSTEM_PTR unisys, u32 *fail_bit)
+{
+  POKE_REG_RETURN_ENUM reg_ret;
+  
+  *fail_bit = 0;
+  reg_ret = PokeRegulationMatchLookAtPokeParty(unisys->alloc.regulation, 
+    GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), fail_bit);
+  return reg_ret;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルボックスのレギュレーションチェック
+ *
+ * @param   unisys		
+ * @param   fail_bit		
+ *
+ * @retval  POKE_REG_RETURN_ENUM		
+ *
+ * unisys->alloc.regulationにレギュレーションデータがロードされている必要があります
+ */
+//--------------------------------------------------------------
+static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(UNION_SYSTEM_PTR unisys, u32 *fail_bit)
+{
+  POKE_REG_RETURN_ENUM reg_ret;
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+  BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+  
+  *fail_bit = 0;
+  
+  if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+    POKEPARTY *bb_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
+    reg_ret = PokeRegulationMatchLookAtPokeParty(
+      unisys->alloc.regulation, bb_party, fail_bit);
+    GFL_HEAP_FreeMemory(bb_party);
+  }
+  else{ //バトルボックスのセーブデータが存在しない
+    *fail_bit = 0xffffffff;
+  }
+  return reg_ret;
+}
+
+//--------------------------------------------------------------
+/**
  * 選択メニューが戦闘だった場合、参加出来るかレギュレーションチェック
  *
  * @param   unisys		
@@ -586,7 +657,6 @@ static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
 //--------------------------------------------------------------
 static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_index,u32 *temoti_fail_bit, u32 *bbox_fail_bit)
 {
-  int reg_no;
   POKE_REG_RETURN_ENUM temoti_ret, bbox_ret;
   
   *temoti_fail_bit = 0;
@@ -596,28 +666,11 @@ static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_i
     return TRUE;  //戦闘ではないのでTRUE
   }
   
-  reg_no = Union_GetMenuIndex_to_RegulationNo(menu_index);
-  PokeRegulation_LoadData(reg_no, unisys->alloc.regulation);
+  _Load_PlayCategory_to_Regulation(unisys, menu_index);
 
-  //手持ち
-  temoti_ret = PokeRegulationMatchLookAtPokeParty(unisys->alloc.regulation, 
-    GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), temoti_fail_bit);
-  
-  //バトルボックス
-  {
-    SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
-    BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
-    
-    if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
-      POKEPARTY *bb_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
-      bbox_ret = PokeRegulationMatchLookAtPokeParty(
-        unisys->alloc.regulation, bb_party, bbox_fail_bit);
-      GFL_HEAP_FreeMemory(bb_party);
-    }
-    else{
-      *bbox_fail_bit = 0xffffffff;
-    }
-  }
+  //レギュレーションチェック
+  temoti_ret = _CheckRegulation_Temoti(unisys, temoti_fail_bit);
+  bbox_ret = _CheckRegulation_BBox(unisys, bbox_fail_bit);
 
   OS_TPrintf("手持ちNG bit=%d\n", *temoti_fail_bit);
   OS_TPrintf("ボックスNG bit=%d\n", *bbox_fail_bit);
@@ -1259,8 +1312,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 
       //戦闘の時はレギュレーション表示
       if(Union_CheckPlayCategoryBattle(situ->mycomm.mainmenu_select) == TRUE){
-        Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
-          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+        _Load_PlayCategory_to_Regulation(unisys, situ->mycomm.mainmenu_select);
         UnionMsg_Menu_RegulationSetup(unisys, fieldWork, 0, 
           Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_RULE);
         (*seq) = _BATTLE_REG_PRINT_WAIT;
@@ -1445,8 +1497,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     else if(look == TRUE){  //ルールを見る
       UnionMsg_Menu_BattleMenuDel(unisys);
       //レギュレーションデータのロード
-      Union_CheckEntryBattleRegulation(unisys, select_ret, 
-          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+      _Load_PlayCategory_to_Regulation(unisys, select_ret);
       situ->mycomm.mainmenu_select = select_ret;
       *seq = _RULE_LOOK;
     }
@@ -1590,8 +1641,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016);
 
         //乱入可の時はレギュレーション表示
-        Union_CheckEntryBattleRegulation(unisys, play_category, 
-          &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit);
+        _Load_PlayCategory_to_Regulation(unisys, play_category);
         UnionMsg_Menu_RegulationSetup(unisys, fieldWork, 0, 
           Union_GetPlayCategory_to_Shooter(play_category), REGWIN_TYPE_RULE);
 
@@ -2680,21 +2730,45 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
 static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
-
+  enum{
+    _INIT,
+    _FIRST_CHECK,
+    _MENU,
+    _MENU_WAIT,
+    _REG_CHECK,
+    _REG_FAIL_PRINT_WAIT,
+    _REG_FAIL_PRINT_KEY_WAIT,
+  };
+  
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
   }
   
   switch(*seq){
-  case 0:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_battle_01_22);
+  case _INIT:
+    situ->work = 0;
     (*seq)++;
+    //break;
+  case _FIRST_CHECK:
+    {
+      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+      BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+      if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_battle_01_22);
+        (*seq)++;
+      }
+      else{ //バトルボックスのセーブデータが存在していないなら手持ち選択したことにする
+        clsys->select_pokeparty = COLOSSEUM_SELECT_PARTY_TEMOTI;
+        situ->work++; //手持ちしかない事の印
+        *seq = _REG_CHECK;
+      }
+    }
     break;
-  case 1:   //メインメニュー描画
+  case _MENU:   //メインメニュー描画
     UnionMsg_Menu_PokePartySelectMenuSetup(unisys, fieldWork);
     (*seq)++;
     break;
-  case 2:
+  case _MENU_WAIT:
     {
       u32 select_list;
       
@@ -2703,13 +2777,13 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       case FLDMENUFUNC_NULL:
         break;
       case FLDMENUFUNC_CANCEL:
+      case COLOSSEUM_SELECT_PARTY_CANCEL:
         OS_TPrintf("メニューをキャンセルしました\n");
         UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
         return TRUE;
       case COLOSSEUM_SELECT_PARTY_TEMOTI:
-      case COLOSSEUM_SELECT_PARTY_BOX_A:
-      case COLOSSEUM_SELECT_PARTY_BOX_B:
+      case COLOSSEUM_SELECT_PARTY_BOX:
         UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         clsys->select_pokeparty = select_list;
         (*seq)++;
@@ -2717,14 +2791,50 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       }
     }
     break;
-  case 3:
-    if(1){  //参加条件を満たしているかチェック  ※check　後で作成
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST_READY);
-      return TRUE;
+  case _REG_CHECK:
+    {
+      POKE_REG_RETURN_ENUM reg_ret = 0;
+      u32 fail_bit = 0;
+      REGWIN_TYPE regwin_type;
+      
+      if(clsys->select_pokeparty == COLOSSEUM_SELECT_PARTY_TEMOTI){
+        reg_ret = _CheckRegulation_Temoti(unisys, &fail_bit);
+        regwin_type = REGWIN_TYPE_NG_TEMOTI;
+      }
+      else{
+        reg_ret = _CheckRegulation_BBox(unisys, &fail_bit);
+        regwin_type = REGWIN_TYPE_NG_BBOX;
+      }
+      
+      if(fail_bit > 0){
+        //NGレギュレーションの表示
+        UnionMsg_Menu_RegulationSetup(unisys, fieldWork, fail_bit, 
+          Union_GetPlayCategory_to_Shooter(situ->play_category), regwin_type);
+        *seq = _REG_FAIL_PRINT_WAIT;
+      }
+      else{
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST_READY);
+        return TRUE;
+      }
     }
-    else{ //参加条件を満たしていない
+    break;
+  case _REG_FAIL_PRINT_WAIT:
+    if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE){
+      //参加条件を満たしていない
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_battle_01_26);
-      *seq = 0;
+      (*seq)++;
+    }
+    break;
+  case _REG_FAIL_PRINT_KEY_WAIT:
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
+      UnionMsg_Menu_RegulationDel(unisys);
+      if(situ->work == 0){
+        *seq = _INIT;
+      }
+      else{ //手持ちしかなくてレギュレーションに引っかかっているので後退するしかない
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+        return TRUE;
+      }
     }
     break;
   }
@@ -2817,12 +2927,7 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
       PokeParty_Copy(GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), 
         clsys->recvbuf.pokeparty[my_net_id]);
       break;
-    case COLOSSEUM_SELECT_PARTY_BOX_A:
-      //※check　とりあえず手持ち
-      PokeParty_Copy(GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), 
-        clsys->recvbuf.pokeparty[my_net_id]);
-      break;
-    case COLOSSEUM_SELECT_PARTY_BOX_B:
+    case COLOSSEUM_SELECT_PARTY_BOX:
       //※check　とりあえず手持ち
       PokeParty_Copy(GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), 
         clsys->recvbuf.pokeparty[my_net_id]);

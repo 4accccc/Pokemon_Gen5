@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-18T11:35:09"/>
+	<create user="matsuda" host="W00142" date="2009-12-18T19:58:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3251,14 +3251,14 @@ msg_connect_union_08からの分岐メッセージ
 
 	<row id="msg_union_battle_01_24" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケパーティ選択項目</comment>
-		<language name="JPN" width="216" line="2">バトルボックス１</language>
-		<language name="JPN_KANJI" width="216" line="2">バトルボックス１</language>
+		<language name="JPN" width="216" line="2">バトルボックス</language>
+		<language name="JPN_KANJI" width="216" line="2">バトルボックス</language>
 	</row>
 
-	<row id="msg_union_battle_01_25" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+	<row id="msg_union_battle_01_25" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,,#80ffff,,,#80ffff,,,,,,,">
 		<comment>ポケパーティ選択項目</comment>
-		<language name="JPN" width="216" line="2">バトルボックス２</language>
-		<language name="JPN_KANJI" width="216" line="2">バトルボックス２</language>
+		<language name="JPN" width="216" line="2">やめる</language>
+		<language name="JPN_KANJI" width="216" line="2">やめる</language>
 	</row>
 
 	<row id="msg_union_battle_01_26" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">

@@ -26,8 +26,8 @@
 ///どのPOKEPARTYを使用するか
 enum{
   COLOSSEUM_SELECT_PARTY_TEMOTI,    ///<手持ち
-  COLOSSEUM_SELECT_PARTY_BOX_A,     ///<バトルボックス１
-  COLOSSEUM_SELECT_PARTY_BOX_B,     ///<バトルボックス２
+  COLOSSEUM_SELECT_PARTY_BOX,       ///<バトルボックス
+  COLOSSEUM_SELECT_PARTY_CANCEL,    ///<やめる
 };
 
 //==============================================================================
