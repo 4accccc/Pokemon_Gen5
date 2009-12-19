@@ -333,7 +333,17 @@ BOOL	GFL_SNDVIEWER_Main( GFL_SNDVIEWER* gflSndViewer )
 	switch( gflSndViewer->seq ){
 
 	case SEQ_PUSHVRAM:
-		GFL_DISPUT_VisibleOff( gflSndViewer->setup.bgID );
+		if(gflSndViewer->setup.bgID < GFL_DISPUT_BGID_S0){
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M0 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M1 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M2 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M3 );
+		} else {
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S0 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S1 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S2 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S3 );
+		}
 
 		GFL_DISPUT_PushVram( gflSndViewer->vramSv );
 

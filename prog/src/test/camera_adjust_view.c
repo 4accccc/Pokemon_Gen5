@@ -213,7 +213,17 @@ BOOL  GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
   switch( gflCamAdjust->seq ){
 
   case SEQ_PUSHVRAM:
-    GFL_DISPUT_VisibleOff( gflCamAdjust->setup.bgID );
+		if(gflCamAdjust->setup.bgID < GFL_DISPUT_BGID_S0){
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M0 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M1 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M2 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_M3 );
+		} else {
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S0 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S1 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S2 );
+			GFL_DISPUT_VisibleOff( GFL_DISPUT_BGID_S3 );
+		}
 
     GFL_DISPUT_PushVram( gflCamAdjust->vramSv );
 
