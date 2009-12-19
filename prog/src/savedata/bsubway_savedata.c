@@ -97,9 +97,9 @@ struct _BSUBWAY_SCOREDATA
   u16  tower_stage[6];
   
   //連勝記録
-#if 0
   u16 renshou;
-#endif
+  u16 renshou_max;
+
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
 
@@ -398,7 +398,6 @@ u16 BSUBWAY_SCOREDATA_SetBattlePoint(
  * @retval
  */
 //--------------------------------------------------------------
-#if 0
 u16 BSUBWAY_SCOREDATA_SetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
 {
@@ -419,7 +418,6 @@ u16 BSUBWAY_SCOREDATA_SetRenshou(
   
   return( bsw_score->renshou );
 }
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -547,6 +545,30 @@ u8 BSUBWAY_SCOREDATA_SetWifiRank(
 #endif //CRC_LOADCHECK
 */
   return bsw_score->wifi_rank;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ、前回の連勝記録を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score )
+{
+  return bsw_score->renshou;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ、最大連勝記録を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score )
+{
+  return bsw_score->renshou_max;
 }
 
 //======================================================================
