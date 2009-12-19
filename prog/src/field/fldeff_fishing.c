@@ -57,6 +57,9 @@ typedef struct
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm[ANIME_NUM];
   GFL_G3D_RND *obj_rnd;
+
+  u16 anm_id;
+  u16 anm_change_req;
 }TASKWORK_FISHING_LURE;
 
 //--------------------------------------------------------------
@@ -192,6 +195,20 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos )
 
 //--------------------------------------------------------------
 /**
+ * ルアー アニメーションステート変更
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_FISHING_LURE_ChangeAnime( FLDEFF_TASK* task, FISHING_LURE_ANM_ID anm_id )
+{
+  TASKWORK_FISHING_LURE *work = (TASKWORK_FISHING_LURE*)FLDEFF_TASK_GetWork( task );
+
+  work->anm_change_req = TRUE;
+  work->anm_id = anm_id;
+}
+
+//--------------------------------------------------------------
+/**
  * ルアータスク　初期化
  * @param task FLDEFF_TASK
  * @param wk task work
@@ -264,18 +281,8 @@ static void fishingLureTask_Update( FLDEFF_TASK *task, void *wk )
   
   for( i=0; i<ANIME_NUM; i++ )
   {
-    GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
-#if 0  
-    if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,i,FX32_ONE) == TRUE ){
-      end = FALSE;
-    }
-#endif
+    GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_CONST( (work->anm_id*2)+1 ) );
   }
-#if 0
-  if( end ){
-    FLDEFF_TASK_CallDelete( task );
-  }
-#endif
 }
 
 //--------------------------------------------------------------

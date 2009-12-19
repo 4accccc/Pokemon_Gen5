@@ -69,7 +69,8 @@ typedef struct _FISHING_WORK{
   VecFx32 player_pos;
   VecFx32 target_pos;
 
-  u32     enc_type;
+  u16     enc_type;
+  u16     enc_error;
   u32     time;
   u32     count;
   GMEVENT* enc_event;
@@ -156,7 +157,7 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 
   //ポジションチェック
   if( FieldFishingCheckPos( wk->gdata, wk->fieldWork, &wk->target_pos ) == FALSE){
-    wk->enc_type = 1;
+    wk->enc_error = TRUE;
   }
   wk->pos.gx = SIZE_GRID_FX32(wk->target_pos.x);
   wk->pos.gy = SIZE_GRID_FX32(wk->target_pos.y);
@@ -164,8 +165,10 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 
   //エフェクトエンカウントチェック
   if( EFFECT_ENC_CheckEffectPos( wk->fld_enc, &wk->pos )){
+    wk->enc_type = ENC_TYPE_EFFECT;
     wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_EFFECT );
   }else{
+    wk->enc_type = ENC_TYPE_NORMAL;
     wk->enc_event = FIELD_ENCOUNT_CheckFishingEncount( wk->fld_enc, ENC_TYPE_NORMAL );
   }
 
@@ -181,7 +184,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 	
   switch (*seq) {
   case SEQ_FISHING_START:
-    if(wk->enc_type){ //仮処理
+    if(wk->enc_error){ //仮処理
       *seq = SEQ_END;
       break;
     }
@@ -300,6 +303,8 @@ static void sub_SetGyoeAnime( FISHING_WORK* wk )
   MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_ON );
   wk->task_gyoe = FLDEFF_GYOE_SetMMdl(
       fectrl, wk->player_mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
+
+  FLDEFF_FISHING_LURE_ChangeAnime( wk->task_lure, FISHING_LURE_ANM_HIT );
 }
 
 /*
