@@ -170,7 +170,8 @@ G3D_FE_MDL = kage.imd \
   sc_mark_ur.imd \
   sc_mark_dl.imd \
   sc_mark_dr.imd \
-  fishing_lure.imd
+  fishing_lure.imd \
+  lgrass_sn.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
