@@ -10,12 +10,21 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
 
+//システム
+#include "system/pms_draw.h"
+#include "app/app_menu_common.h"
+#include "pokeicon/pokeicon.h"
+#include "system/nsbtx_to_clwk.h"
+
 //自分のモジュール
-#include "br_util.h"
 #include "br_inner.h"
 
 //アーカイブ
+#include "arc_def.h"
 #include "msg/msg_battle_rec.h"
+
+//外部公開
+#include "br_util.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					BMPWINメッセージ描画構造体
@@ -154,6 +163,27 @@ void BR_MSGWIN_PrintColor( BR_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, 
 
 	//文字列作成
 	GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+
+	//文字列描画
+	PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_font, lsb );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPWINメッセージ  STRBUFプリント開始
+ *
+ *	@param	BR_MSGWIN_WORK* p_wk ワーク
+ *	@param	*p_strbuf         STRBUF  すぐ破棄してもかまいません
+ *	@param	*p_font           フォント
+ *	@param  lsb               色指定
+ */
+//-----------------------------------------------------------------------------
+void BR_MSGWIN_PrintBufColor( BR_MSGWIN_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font, PRINTSYS_LSB lsb )
+{ 
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+	//文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
 
 	//文字列描画
 	PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_font, lsb );
@@ -926,6 +956,7 @@ typedef enum
   BR_PROFILE_MSGWINID_M_COUNTRY,    //住んでいる場所国名
   BR_PROFILE_MSGWINID_M_AREA,       //住んでいる地域
   BR_PROFILE_MSGWINID_M_INTRO,      //じこしょうかい
+  BR_PROFILE_MSGWINID_M_WORD,       //自己紹介文
 
   BR_PROFILE_MSGWINID_M_MAX,
 
@@ -937,6 +968,17 @@ struct _BR_PROFILE_WORK
 { 
   BR_MSGWIN_WORK    *p_msgwin[ BR_PROFILE_MSGWINID_M_MAX ];
   BR_RES_WORK       *p_res;
+  PMS_DRAW_WORK     *p_pms;
+
+
+  GFL_CLWK          *p_pokeicon;
+  GFL_CLWK          *p_selficon;
+  u32               res_icon_plt;
+  u32               res_icon_chr;
+  u32               res_icon_cel;
+  u32               res_self_plt;
+  u32               res_self_chr;
+  u32               res_self_cel;
 };
 
 //-------------------------------------
@@ -1008,37 +1050,194 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       2,
       msg_17,
     },
+    { 
+      4,
+      19,
+      24,
+      4,
+      0,
+    }
   };
 
 
+  GFL_FONT *p_font;
   BR_PROFILE_WORK * p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_PROFILE_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(BR_PROFILE_WORK) );
   p_wk->p_res = p_res;
 
- 
+
+  p_font  = BR_RES_GetFont( p_res );
+
+  { 
+    p_wk->p_pms = PMS_DRAW_Init( p_unit, CLSYS_DRAW_MAIN, p_que, p_font, PLT_OBJ_M_PMS, 1, heapID );
+  }
+
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_RECORD_M_PROFILE, heapID );
 
  //メッセージWIN作成
   {
     int i;
-    GFL_FONT *p_font;
     GFL_MSGDATA *p_msg;
+    WORDSET *p_word;
+    STRBUF  *p_strbuf;
+    STRBUF  *p_src;
 
-    p_font  = BR_RES_GetFont( p_res );
+    BOOL is_msg   = TRUE;
+
     p_msg   = BR_RES_GetMsgData( p_res );
+    p_word  = BR_RES_GetWordSet( p_res );
 
     for( i = 0; i < BR_PROFILE_MSGWINID_M_MAX; i++ )
     { 
       p_wk->p_msgwin[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_que, heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+      switch(i)
+      { 
+      case BR_PROFILE_MSGWINID_M_NAME:   //●●●のプロフィール
+        { 
+          STRBUF  *p_name;
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_name    = GDS_Profile_CreateNameString( cp_profile, heapID );
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterWord( p_word, 0, p_name, GDS_Profile_GetSex(cp_profile), TRUE, PM_LANG );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_name );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_PROFILE_MSGWINID_M_BIRTH:      //●がつうまれ
+        { 
+          const u32 month = GDS_Profile_GetMonthBirthday( cp_profile );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_PROFILE_MSGWINID_M_COUNTRY:    //住んでいる場所国名
+        { 
+          const u32 nation = GDS_Profile_GetNation( cp_profile );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterCountryName( p_word, 0, nation );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_PROFILE_MSGWINID_M_AREA:       //住んでいる地域
+        { 
+          const u32 nation  = GDS_Profile_GetNation( cp_profile );
+          const u32 area    = GDS_Profile_GetArea( cp_profile );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterLocalPlaceName( p_word, 0, nation, area );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      case BR_PROFILE_MSGWINID_M_WORD:    //自己紹介文
+        { 
+          STRBUF  *p_self;
+          PMS_DATA pms;
+          p_self    = GDS_Profile_GetSelfIntroduction( cp_profile, &pms, heapID );
+          if( p_self )
+          { 
+            p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+            p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+            WORDSET_RegisterWord( p_word, 0, p_self, GDS_Profile_GetSex(cp_profile), TRUE, PM_LANG );
+            WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+            GFL_STR_DeleteBuffer( p_self );
+            GFL_STR_DeleteBuffer( p_src );
+          }
+          else
+          { 
+            PMS_DRAW_SetPrintColor( p_wk->p_pms, BR_PRINT_COL_NORMAL );
+            PMS_DRAW_Print( p_wk->p_pms, p_wk->p_msgwin[i]->p_bmpwin, &pms, 0 ); 
+            is_msg  = FALSE;
+          }
+        }
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+      }
+
+      if( is_msg )
+      { 
+        BR_MSGWIN_PrintBufColor( p_wk->p_msgwin[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+        GFL_STR_DeleteBuffer( p_strbuf );
+      }
     }
   }
 
 
-  //@todo 自分の見た目＋ポケモン
+  //ポケモン
   { 
+    const int egg   = GDS_Profile_GetEggFlag(cp_profile);
+    const int mons   = GDS_Profile_GetMonsNo(cp_profile);
+    const int form   = GDS_Profile_GetFormNo(cp_profile);
 
+    if( mons != 0 )
+    { 
+      { 
+        ARCHANDLE *p_handle;
+        p_handle  = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(heapID) );
+        p_wk->res_icon_plt  = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
+            POKEICON_GetPalArcIndex(),
+            CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, heapID );
+        p_wk->res_icon_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+            POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID );
+        p_wk->res_icon_chr  = GFL_CLGRP_CGR_Register( p_handle,
+            POKEICON_GetCgxArcIndexByMonsNumber( mons, form, egg ),
+            FALSE, CLSYS_DRAW_MAIN, heapID );
+        GFL_ARC_CloseDataHandle( p_handle );
+      }
+      { 
+        GFL_CLWK_DATA data;
+        GFL_STD_MemClear( &data, sizeof(GFL_CLWK_DATA) );
+        data.pos_x  = 75;
+        data.pos_y  = 64;
+        data.anmseq = POKEICON_ANM_HPMAX;
+        p_wk->p_pokeicon  = GFL_CLACT_WK_Create( p_unit,
+            p_wk->res_icon_chr,p_wk->res_icon_plt,p_wk->res_icon_cel,
+            &data, CLSYS_DEFREND_MAIN, heapID );
+        GFL_CLACT_WK_SetPlttOffs( p_wk->p_pokeicon, POKEICON_GetPalNum( mons, form, egg ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      }
+    }
+  }
+
+  //自分のみため
+  { 
+    //@todo
+    const int self  = 1 + GDS_Profile_GetTrainerView(cp_profile);
+    { 
+      ARCHANDLE *p_handle;
+      p_handle  = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), GFL_HEAP_LOWID(heapID) );
+      p_wk->res_self_plt  = GFL_CLGRP_PLTT_Register( p_handle, 
+                          APP_COMMON_GetNull4x4PltArcIdx(),
+                          CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, heapID );
+      p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+          APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K ), 
+          APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K ), heapID );
+      p_wk->res_self_chr  = GFL_CLGRP_CGR_Register( p_handle,
+          APP_COMMON_GetNull4x4CharArcIdx(),
+          FALSE, CLSYS_DRAW_MAIN, heapID );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    { 
+      GFL_CLWK_DATA data;
+      GFL_STD_MemClear( &data, sizeof(GFL_CLWK_DATA) );
+      data.pos_x  = 48;
+      data.pos_y  = 64;
+      p_wk->p_selficon  = GFL_CLACT_WK_Create( p_unit,
+          p_wk->res_self_chr,p_wk->res_self_plt,p_wk->res_self_cel,
+            &data, CLSYS_DEFREND_MAIN, heapID );
+      CLWK_TransNSBTX( p_wk->p_selficon, ARCID_MMDL_RES, self, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DRAW_MAIN, heapID );
+    }
   }
 
 
@@ -1053,6 +1252,26 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
 //-----------------------------------------------------------------------------
 void BR_PROFILE_DeleteMainDisplay( BR_PROFILE_WORK *p_wk )
 { 
+  //OBJ開放
+  { 
+    if( p_wk->p_selficon )
+    { 
+      GFL_CLACT_WK_Remove( p_wk->p_selficon );
+      GFL_CLGRP_PLTT_Release(p_wk->res_self_plt);
+      GFL_CLGRP_CGR_Release(p_wk->res_self_chr);
+      GFL_CLGRP_CELLANIM_Release(p_wk->res_self_cel);
+    }
+
+    if( p_wk->p_pokeicon )
+    { 
+      GFL_CLACT_WK_Remove( p_wk->p_pokeicon );
+      GFL_CLGRP_PLTT_Release(p_wk->res_icon_plt);
+      GFL_CLGRP_CGR_Release(p_wk->res_icon_chr);
+      GFL_CLGRP_CELLANIM_Release(p_wk->res_icon_cel);
+    }
+  }
+
+  //BG開放
   { 
     int i;
     for( i = 0; i < BR_PROFILE_MSGWINID_M_MAX; i++ )
@@ -1065,6 +1284,7 @@ void BR_PROFILE_DeleteMainDisplay( BR_PROFILE_WORK *p_wk )
     }
   }
 
+  PMS_DRAW_Exit( p_wk->p_pms );
 
   BR_RES_UnLoadBG( p_wk->p_res, BR_RES_BG_RECORD_M_PROFILE );
 
@@ -1091,6 +1311,8 @@ BOOL BR_PROFILE_PrintMain( BR_PROFILE_WORK *p_wk )
       ret &= BR_MSGWIN_PrintMain( p_wk->p_msgwin[i] );
     }
   }
+
+  PMS_DRAW_Main( p_wk->p_pms );
 
   return ret;
 }

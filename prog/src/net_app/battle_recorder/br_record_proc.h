@@ -12,6 +12,8 @@
 #include "br_proc_sys.h"
 #include "br_res.h"
 #include "br_fade.h"
+#include "savedata/gds_profile.h"
+#include "savedata/battle_rec.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -53,7 +55,8 @@ typedef struct
 	BR_RES_WORK					*p_res;				//[in ]リソース管理
 	BR_PROC_SYS					*p_procsys;		//[in ]プロセス管理
 	GFL_CLUNIT					*p_unit;			//[in ]ユニット
-  SAVE_CONTROL_WORK   *p_sv;        //[in ]外部セーブ取得用
+  GDS_PROFILE_PTR       p_profile;  //[in ]プロフィール
+  BATTLE_REC_HEADER_PTR p_header;   //[in ]バトルヘッダ
 } BR_RECORD_PROC_PARAM;
 
 

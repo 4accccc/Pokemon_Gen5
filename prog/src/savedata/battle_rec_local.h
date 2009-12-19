@@ -15,20 +15,12 @@
 //----------------------------------------------------------------------
 #include "gds_local_common.h"
 
-
-///データナンバーの型
-typedef u64 DATA_NUMBER;
-
 ///データナンバーのバイトサイズ
 #define DATANUMBER_SIZE   (sizeof(DATA_NUMBER))
 
-///録画ヘッダに格納するポケモン番号の最大要素数
-#define HEADER_MONSNO_MAX   (12)
 
 ///録画データの存在有無
 #define REC_OCC_MAGIC_KEY   (0xe281)
-
-
 
 
 //--------------------------------------------------------------

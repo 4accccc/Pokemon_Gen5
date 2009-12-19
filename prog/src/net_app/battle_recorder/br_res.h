@@ -14,6 +14,7 @@
 #pragma once
 
 #include "print/gf_font.h"
+#include "print/wordset.h"
 
 #include "br_core.h"	//BR_PROCID
 //=============================================================================
@@ -136,4 +137,4 @@ extern void BR_RES_UnLoadCommon( BR_RES_WORK *p_wk, CLSYS_DRAW_TYPE type );
 //=====================================
 extern GFL_FONT * BR_RES_GetFont( const BR_RES_WORK *cp_wk );
 extern GFL_MSGDATA * BR_RES_GetMsgData( const BR_RES_WORK *cp_wk );
-
+extern WORDSET * BR_RES_GetWordSet( const BR_RES_WORK *cp_wk );

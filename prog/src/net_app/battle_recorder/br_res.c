@@ -50,6 +50,7 @@ struct _BR_RES_WORK
 	BOOL						obj_flag[BR_RES_OBJ_MAX];
 	GFL_FONT				*p_font;
 	GFL_MSGDATA			*p_msg;
+  WORDSET         *p_word;
 };
 
 //=============================================================================
@@ -76,6 +77,7 @@ BR_RES_WORK *BR_RES_Init( HEAPID heapID )
 	//Å‰‚É“Ç‚Ýž‚ñ‚Å‚¨‚­ƒŠƒ\[ƒX
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_battle_rec_dat, heapID );
+  p_wk->p_word  = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
 
   BR_RES_LoadCommon( p_wk, CLSYS_DRAW_MAIN, heapID );
   BR_RES_LoadCommon( p_wk, CLSYS_DRAW_SUB, heapID );
@@ -104,6 +106,7 @@ void BR_RES_Exit( BR_RES_WORK *p_wk )
   BR_RES_UnLoadCommon( p_wk, CLSYS_DRAW_SUB );
 
 	//‹¤’Ê‚»‚Ì‘¼ƒŠƒ\[ƒX”jŠü
+  WORDSET_Delete( p_wk->p_word );
 	GFL_MSG_Delete( p_wk->p_msg );
 	GFL_FONT_Delete( p_wk->p_font );
 
@@ -730,4 +733,17 @@ GFL_FONT * BR_RES_GetFont( const BR_RES_WORK *cp_wk )
 GFL_MSGDATA * BR_RES_GetMsgData( const BR_RES_WORK *cp_wk )
 {	
 	return cp_wk->p_msg;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ’PŒê“o˜^‚¤‚¯‚Æ‚è
+ *
+ *	@param	const BR_RES_WORK *cp_wk  ƒ[ƒN
+ *
+ *	@return ’PŒê“o˜^
+ */
+//-----------------------------------------------------------------------------
+WORDSET * BR_RES_GetWordSet( const BR_RES_WORK *cp_wk )
+{ 
+  return cp_wk->p_word;
 }

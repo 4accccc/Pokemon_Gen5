@@ -547,7 +547,8 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_fade     = p_wk->p_fade;
   p_param->p_procsys	= p_wk->p_procsys;
   p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_sv       = SaveControl_GetPointer();
+  p_param->p_profile  = BattleRec_GDSProfilePtrGet();
+  p_param->p_header   = BattleRec_HeaderPtrGet();
   switch( preID )
   { 
   case BR_PROCID_MENU:
@@ -574,6 +575,24 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   default:
     GF_ASSERT_MSG( 0, "メニューとランキング、コード入力以外からは来ない %d", preID );
     break;
+  }
+
+  //読み込み
+  {
+    LOAD_RESULT result;
+    BattleRec_Load( SaveControl_GetPointer(), HEAPID_BATTLE_RECORDER_SYS, &result, p_param->mode ); 
+    if( result == LOAD_RESULT_OK )
+    { 
+      if( p_param->mode == LOADDATA_MYREC )
+      { 
+        GDS_Profile_MyDataSet(p_param->p_profile, SaveControl_GetPointer());
+      }
+      NAGI_Printf( "戦闘録画読み込み %d\n", p_param->mode );
+    }
+    else
+    { 
+      GF_ASSERT(0);
+    }
   }
   
 }

@@ -14,8 +14,10 @@
 //システム
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
+#include "pokeicon/pokeicon.h"
 
 //アーカイブ
+#include "arc_def.h"
 #include "msg/msg_battle_rec.h"
 
 //自分のモジュール
@@ -81,6 +83,11 @@ typedef struct
 
   BR_PROFILE_WORK   *p_profile_disp;
 
+  u32               res_icon_plt;
+  u32               res_icon_cel;
+  u32               res_icon_chr[HEADER_MONSNO_MAX];
+  GFL_CLWK          *p_icon[HEADER_MONSNO_MAX];
+
   BOOL              is_profile;
 	HEAPID            heapID;
 } BR_RECORD_WORK;
@@ -123,13 +130,15 @@ const GFL_PROC_DATA BR_RECORD_ProcData =
 //画面作成
 static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param, GDS_PROFILE_PTR p_profile );
+static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
+static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 
 static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 
 //その他
+static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
 
@@ -189,10 +198,17 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_RECORD_WORK				*p_wk	= p_wk_adrs;
 	BR_RECORD_PROC_PARAM	*p_param	= p_param_adrs;
 
+  if( p_wk->is_profile )
+  { 
+    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+  }
+  else
+  { 
+    Br_Record_DeleteMainDisplay( p_wk, p_param );
+  }
 
   //画面構築破棄
   Br_Record_DeleteSubDisplay( p_wk, p_param );
-  Br_Record_DeleteMainDisplay( p_wk, p_param );
   GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
@@ -277,10 +293,6 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
         //再生ボタン
         if( Br_Record_GetTrgStart( x, y ) )
         { 
-          LOAD_RESULT result;
-          BattleRec_Load( p_param->p_sv, GFL_HEAP_LOWID( p_wk->heapID ), &result, p_param->mode ); 
-          GF_ASSERT( result == LOAD_RESULT_OK );
-
           p_param->ret  = BR_RECORD_RETURN_BTLREC;
           //フェードをすっとばす
           BR_PROC_SYS_Pop( p_param->p_procsys );
@@ -314,14 +326,16 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
       p_font  = BR_RES_GetFont( p_param->p_res );
       p_msg   = BR_RES_GetMsgData( p_param->p_res );
       //読み込み変え
-      Br_Record_DeleteMainDisplay( p_wk, p_param );
       if( p_wk->is_profile )
       { 
+        Br_Record_DeleteMainDisplay( p_wk, p_param );
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_719, p_font, BR_PRINT_COL_NORMAL );
-        Br_Record_CreateMainDisplayProfile( p_wk, p_param, NULL );
+        Br_Record_CreateMainDisplayProfile( p_wk, p_param );
       }
       else
       { 
+        BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+        p_wk->p_profile_disp  = NULL;
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
         Br_Record_CreateMainDisplaySingle( p_wk, p_param );
       }
@@ -392,7 +406,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
  *	@param	BR_RECORD_WORK * p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
+static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 {	
   static const struct 
   { 
@@ -434,24 +448,85 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
     int i;
     GFL_FONT *p_font;
     GFL_MSGDATA *p_msg;
+    WORDSET *p_word;
+    STRBUF  *p_strbuf;
+    STRBUF  *p_src;
 
     p_font  = BR_RES_GetFont( p_param->p_res );
     p_msg   = BR_RES_GetMsgData( p_param->p_res );
+    p_word  = BR_RES_GetWordSet( p_param->p_res );
 
     for( i = 0; i < BR_RECORD_MSGWINID_M_BTL_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+
+      switch( i )
+      { 
+      case BR_RECORD_MSGWINID_M_BTL_NAME:  //●●●の記録
+        { 
+          STRBUF  *p_name;
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_name    = GDS_Profile_CreateNameString( p_param->p_profile, p_wk->heapID );
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterWord( p_word, 0, p_name, GDS_Profile_GetSex(p_param->p_profile), TRUE, PM_LANG );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_name );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_RECORD_MSGWINID_M_BTL_RULE:       //コロシアム　シングル　せいげんなし
+        {
+          const u32 btl_rule  = RecHeader_ParamGet( p_param->p_header, RECHEAD_IDX_MODE, 0);
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID + btl_rule );
+        }
+        break;
+      case BR_RECORD_MSGWINID_M_BTL_NUMBER:    //ビデオナンバー
+        { 
+          const u64 number  = RecHeader_ParamGet( p_param->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
+          u64 dtmp1 = number;
+          u32 dtmp2[3];
+
+          dtmp2[ 0 ] = dtmp1 % 100000;	///< 3block
+          dtmp1 /= 100000;
+          dtmp2[ 1 ] = dtmp1 % 100000;	///< 2block
+          dtmp1 /= 100000;
+          dtmp2[ 2 ] = dtmp1;				///< 1block
+          
+          { 
+            int check1 = ( dtmp2[ 2 ] / 10 ) % 10;
+
+            if ( ( check1 == 0 ) && ( number != 0 ) ){
+              p_strbuf = GFL_MSG_CreateString( p_msg,  msg_12_2 );		///< ｘｘｘせんめ
+              OS_Printf( "特殊なデータナンバー\n");
+            }
+            else
+            { 
+              p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+            }
+          }
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 2, dtmp2[0], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 1, dtmp2[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 0, dtmp2[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
 
-
-  //@todoポケアイコン
+  //ポケアイコン
   { 
-
+    Br_Record_AddPokeIcon( p_wk, p_param->p_unit, p_param->p_header, p_wk->heapID );
   }
-
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ダブル戦用録画ヘッダ画面構築
@@ -462,6 +537,133 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
 static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 {	
 	BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_DOUBLE, p_wk->heapID );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録画ヘッダ画面にポケアイコンをつける
+ *	        このソースはGSから移植
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param  p_param	              引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID )
+{	
+	int i;
+	int monsno;
+	int form;
+	int no = 0;
+	
+	int gra_id;
+	int monsno_tbl[ HEADER_MONSNO_MAX ];
+	int form_tbl[ HEADER_MONSNO_MAX ];
+	int type;
+  ARCHANDLE *p_handle;
+  GFL_CLWK_DATA cldata;
+	
+	
+	static const s16 pos_tbl[][ HEADER_MONSNO_MAX ][ 2 ] = 
+  {
+		{
+			{ 11*8, 13*8 },{ 14*8, 13*8 },{ 17*8, 13*8 },{ 20*8, 13*8 },{ 23*8, 13*8 },{ 26*8, 13*8 },
+			{  3*8, 19*8 },{  6*8, 19*8 },{  9*8, 19*8 },{ 12*8, 19*8 },{ 15*8, 19*8 },{ 18*8, 19*8 },
+		},
+		{
+			{  3*8, 17*8 },{  6*8, 17*8 },{  9*8, 17*8 },	///< 自分
+			{  5*8, 20*8 },{  8*8, 20*8 },{ 11*8, 20*8 },	///< 自分
+			{ 18*8, 17*8 },{ 21*8, 17*8 },{ 24*8, 17*8 },	///< 相手
+			{ 20*8, 20*8 },{ 23*8, 20*8 },{ 26*8, 20*8 },	///< 相手
+		},
+	};
+  p_handle  = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(heapID) );
+
+
+  //パレット、セル
+  p_wk->res_icon_plt  = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
+      POKEICON_GetPalArcIndex(),
+      CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, heapID );
+  p_wk->res_icon_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+      POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID );
+
+	
+	///< テーブルの作成
+	{	
+		int temp_no = 0;
+		int temp_monsno = 0;
+		int temp_form = 0;
+		int add = 6;
+		int si = 0;
+		int ei = add;
+		
+		type = 0;
+
+		///< 2vs2の場合
+		if ( Br_Record_Check2vs2( p_header ) == TRUE ){
+			add = 3;
+			ei = 3;
+			type = 1;
+		}
+		do {
+			for ( i = si; i < ei; i++ ){
+				monsno_tbl[ temp_no ] = 0xFF;
+				
+				temp_monsno = RecHeader_ParamGet( p_header, RECHEAD_IDX_MONSNO, i );
+				temp_form	= RecHeader_ParamGet( p_header, RECHEAD_IDX_FORM_NO, i );
+
+				if ( temp_monsno == 0 ){ continue; }
+				
+				monsno_tbl[ temp_no ] = temp_monsno;
+				form_tbl[ temp_no]	  = temp_form;
+				
+				temp_no++;
+			}
+			for ( i = temp_no; i < ei; i++ ){	
+				monsno_tbl[ temp_no ] = 0;
+				form_tbl[ temp_no ]	  = 0;
+				temp_no++;
+			}		
+			si += add;
+			ei += add;
+			
+		} while ( ei <= HEADER_MONSNO_MAX );
+	}
+	
+	for ( i = 0; i < HEADER_MONSNO_MAX; i++ ){
+				
+		p_wk->p_icon[ i ]     = NULL;
+    p_wk->res_icon_chr[i] = GFL_CLGRP_REGISTER_FAILED;
+		
+		monsno = monsno_tbl[ i ];
+		
+		if ( monsno == 0 ){ continue; }		///< たまご無し
+		
+		form = form_tbl[ i ];
+		
+
+    p_wk->res_icon_chr[i] = GFL_CLGRP_CGR_Register( p_handle,
+              POKEICON_GetCgxArcIndexByMonsNumber( monsno, form, 0 ),
+              FALSE, CLSYS_DRAW_MAIN, heapID );
+  
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		cldata.pos_x		= pos_tbl[ type ][ i ][ 0 ] + 12 - 4;
+		cldata.pos_y		= pos_tbl[ type ][ i ][ 1 ] - 12;
+		cldata.anmseq 	= POKEICON_ANM_HPMAX;
+				
+		p_wk->p_icon[ no ] = GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res_icon_chr[i],p_wk->res_icon_plt,p_wk->res_icon_cel,
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+		
+    GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ no ], POKEICON_GetPalNum( monsno, form, 0 ),
+        CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+		
+		OS_Printf( "no = %2d\n", no );
+		no++;	
+	}
+
+  GFL_ARC_CloseDataHandle( p_handle );
 }
 //----------------------------------------------------------------------------
 /**
@@ -469,12 +671,11 @@ static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_
  *
  *	@param	BR_RECORD_WORK * p_wk ワーク
  *	@param	p_param								レコードの引数
- *	@param	p_profile							profileのポインタ
  */
 //-----------------------------------------------------------------------------
-static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param,  GDS_PROFILE_PTR p_profile )
+static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 {
-  p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
+  p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_param->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
 
 }
 //----------------------------------------------------------------------------
@@ -487,6 +688,27 @@ static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD
 //-----------------------------------------------------------------------------
 static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 { 
+  //OBJ破棄
+  { 
+    int i;
+    for( i = 0; i < HEADER_MONSNO_MAX; i++ )
+    { 
+      if( p_wk->p_icon[i] )
+      { 
+        GFL_CLACT_WK_Remove( p_wk->p_icon[i] );
+        p_wk->p_icon[i] = NULL;
+      }
+      if( p_wk->res_icon_chr[i] != GFL_CLGRP_REGISTER_FAILED )
+      { 
+        GFL_CLGRP_CGR_Release(p_wk->res_icon_chr[i]);
+      }
+    }
+    GFL_CLGRP_PLTT_Release(p_wk->res_icon_plt);
+    GFL_CLGRP_CELLANIM_Release(p_wk->res_icon_cel);
+
+  }
+
+  //BG破棄
   { 
     int i;
     for( i = 0; i < BR_RECORD_MSGWINID_M_MAX; i++ )
@@ -497,12 +719,6 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
         p_wk->p_msgwin_m[i] = NULL;
       }
     }
-  }
-
-  if( p_wk->p_profile_disp )
-  { 
-    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-    p_wk->p_profile_disp  = NULL;
   }
 
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_SINGLE );
@@ -612,6 +828,40 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 	BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_S );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ２ｖ２かどうかをチェックする
+ *
+ *	@param	BATTLE_REC_HEADER_PTR p_head  ヘッダ 
+ *
+ *	@return TRUEならば２ｖ２用録画ヘッダ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head )
+{
+	int	type;
+	BOOL b2vs2 = FALSE; 
+	
+	type = RecHeader_ParamGet( p_head, RECHEAD_IDX_MODE, 0 );
+	
+	switch ( type ){
+	case GT_BATTLE_MODE_TOWER_MULTI:
+	case GT_BATTLE_MODE_FACTORY50_MULTI:
+	case GT_BATTLE_MODE_FACTORY100_MULTI:
+	case GT_BATTLE_MODE_STAGE_MULTI:
+	case GT_BATTLE_MODE_CASTLE_MULTI:
+	case GT_BATTLE_MODE_ROULETTE_MULTI:
+	case GT_BATTLE_MODE_COLOSSEUM_MULTI:
+		b2vs2 = TRUE;
+		break;
+	default:
+		b2vs2 = FALSE;
+		break;
+	};
+	
+	return b2vs2;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  プロフィール切り替えボタンをおしたかどうか

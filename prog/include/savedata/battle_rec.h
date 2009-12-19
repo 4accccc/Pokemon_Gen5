@@ -18,7 +18,11 @@ enum {
   BTLREC_OPERATION_BUFFER_SIZE = 0xc00,   ///< 全クライアントの操作内容保持バッファサイズ
 };
 
+///録画ヘッダに格納するポケモン番号の最大要素数
+#define HEADER_MONSNO_MAX   (12)
 
+///データナンバーの型
+typedef u64 DATA_NUMBER;
 
 //ロードデータ用インデックス
 #define LOADDATA_MYREC    (0)
