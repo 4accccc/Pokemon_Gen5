@@ -73,7 +73,7 @@ extern void PMV_MakeRefDataMine( PMV_REF* pmvRef );
 inline void PMV_StopVoice( void ){ PMVOICE_Reset(); }
 
 // 終了検出（再生中の全鳴き声が対象）
-inline void PMV_CheckPlay( void ){ PMVOICE_CheckBusy(); }
+inline BOOL PMV_CheckPlay( void ){ return PMVOICE_CheckBusy(); }
 
 
 //============================================================================================
