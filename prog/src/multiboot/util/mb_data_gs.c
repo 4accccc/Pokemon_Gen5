@@ -9,7 +9,7 @@
 //======================================================================
 #include <gflib.h>
 #include <string.h>
-#include <nitro/irc.h>
+#include <nitro/card/backup_ex.h>
 #include "system/gfl_use.h"
 #include "./pt_save.h"
 #include "arc_def.h"
