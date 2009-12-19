@@ -9,5 +9,10 @@
 #ifndef ZONE_C08PC0101_EVC_H
 #define ZONE_C08PC0101_EVC_H
 
+#define C08PC0101_CONNECT_00               0
+#define C08PC0101_CONNECT_01               1
+#define C08PC0101_CONNECT_02               2
+#define C08PC0101_PCWOMAN                  3
+#define C08PC0101_SHOPM1_01                4
 
 #endif //ZONE_C08PC0101_EVC_H

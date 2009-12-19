@@ -15,5 +15,8 @@
 #define C06PC0101_SHOPM_01                 1
 #define C06PC0101_MAN1_01                  2
 #define C06PC0101_PILOT_01                 3
+#define C06PC0101_CONNECT_00               4
+#define C06PC0101_CONNECT_01               5
+#define C06PC0101_CONNECT_02               6
 
 #endif //ZONE_C06PC0101_EVC_H

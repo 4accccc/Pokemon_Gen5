@@ -1,15 +1,15 @@
 #event data
-#save date:2009/11/13 15:35:11
+#save date:2009/12/19 22:25:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/13 15:35:11
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-3
+6
 #event number: 0
 #type
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 88
 #event number: 1
@@ -66,6 +68,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -24
 #event number: 2
@@ -95,13 +99,108 @@ DIR_DOWN
 2
 #Move Limit Z Number
 3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 24
+#event number: 3
+#type
+1
+#ID name
+C07PC0101_CONNECT_00
+#OBJ CODE Number
+PCWOMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_UNION
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 48 184
+#event number: 4
+#type
+1
+#ID name
+C07PC0101_CONNECT_01
+#OBJ CODE Number
+WIFISM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_WIFI_COUNTER
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 48 184
+#event number: 5
+#type
+1
+#ID name
+C07PC0101_CONNECT_02
+#OBJ CODE Number
+WIFISW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_WIFI_CLUB_COUNTER
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 48 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/13 15:35:11
+#save date:
 2
 #hold event type:
 1
@@ -111,7 +210,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/13 15:35:11
+#save date:
 2
 #hold event type:
 1
@@ -121,7 +220,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/13 15:35:11
+#save date:
 2
 #hold event type:
 1
@@ -138,8 +237,12 @@ DOOR_ID_C07_C07PC0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 -56
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C07PC0101_C07_EXIT02
@@ -151,8 +254,12 @@ DOOR_ID_C07_C07PC0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -56
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C07PC0101_C07_EXIT03
@@ -164,7 +271,11 @@ DOOR_ID_C07_C07PC0101_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 0 -56
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

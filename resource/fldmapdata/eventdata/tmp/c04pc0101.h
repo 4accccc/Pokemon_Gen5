@@ -15,5 +15,8 @@
 #define C04PC0101_SHOPM1_02                3
 #define C04PC0101_GIRL4_01                 4
 #define C04PC0101_POKEMON_01               5
+#define C04PC0101_CONNECT_00               6
+#define C04PC0101_CONNECT_01               7
+#define C04PC0101_CONNECT_02               8
 
 #endif //ZONE_C04PC0101_EVC_H

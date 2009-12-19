@@ -11,5 +11,10 @@
 
 #define C03PC0101_MAN1_01                  0
 #define C03PC0101_BUSINESSMAN_01           1
+#define C03PC0101_CONNECT_00               2
+#define C03PC0101_CONNECT_01               3
+#define C03PC0101_CONNECT_02               4
+#define C03PC0101_PCWOMAN                  5
+#define C03PC0101_SHOPM1_01                6
 
 #endif //ZONE_C03PC0101_EVC_H
