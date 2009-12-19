@@ -133,6 +133,7 @@ typedef enum
 typedef struct _COMM_TVT_WORK COMM_TVT_WORK;
 typedef struct _CTVT_CAMERA_WORK CTVT_CAMERA_WORK;
 typedef struct _CTVT_COMM_WORK CTVT_COMM_WORK;
+typedef struct _CTVT_MIC_WORK CTVT_MIC_WORK;
 
 typedef struct _CTVT_TALK_WORK CTVT_TALK_WORK;
 
@@ -144,6 +145,8 @@ typedef struct _CTVT_TALK_WORK CTVT_TALK_WORK;
 //システム取得系
 extern CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work );
 extern CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work );
+extern CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work );
+extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
 
 //数値取得系
 extern const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work );
@@ -160,6 +163,9 @@ extern const BOOL COMM_TVT_IsDoubleMode( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetDoubleMode( COMM_TVT_WORK *work , const BOOL flg );
 extern const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx );
+extern const BOOL COMM_TVT_GetSusspend( COMM_TVT_WORK *work );
+extern void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg );
+
 
 //UTIL
 extern const BOOL COMM_TVT_IsTwlMode( void );

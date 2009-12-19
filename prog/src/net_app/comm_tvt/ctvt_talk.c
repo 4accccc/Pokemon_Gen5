@@ -23,6 +23,8 @@
 #include "ctvt_talk.h"
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
+#include "ctvt_mic.h"
+#include "enc_adpcm.h"
 
 //======================================================================
 //	define
@@ -68,6 +70,14 @@ typedef enum
   CTS_TALKING,
 }CTVT_TALK_STATE;
 
+typedef enum
+{
+  CTSS_INIT_REC,
+  CTSS_RECORDING,
+  CTSS_REC_TRANS, //転送
+  CTSS_WAIT_PLAY, //転送
+}CTVT_TALK_SUB_STATE;
+
 //Recボタン種類
 typedef enum
 {
@@ -87,9 +97,19 @@ typedef enum
 struct _CTVT_TALK_WORK
 {
   CTVT_TALK_STATE state;
-  
+  CTVT_TALK_SUB_STATE subState;
   s16         sliderPos;
+
+  //録音関係  
+  CTVT_MIC_WORK *micWork;
+  BOOL  reqSendWave;
+  u8    sendCnt;
   
+  void  *sendWaveBuf;  //下の2つはここからアドレスを持つ
+  CTVT_COMM_WAVE_HEADER *sendWaveData;
+  void *sendWaveBufTop;
+  
+  //セル関係
   GFL_CLWK    *clwkSlider;
   GFL_CLWK    *clwkYobidasi;
   GFL_CLWK    *clwkPause;
@@ -104,6 +124,7 @@ struct _CTVT_TALK_WORK
 //======================================================================
 #pragma mark [> proto
 static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
+static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] = 
@@ -125,6 +146,10 @@ CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   u8 i;
   CTVT_TALK_WORK* talkWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_TALK_WORK) );
   
+  talkWork->micWork = CTVT_MIC_Init( heapId );
+  talkWork->sendWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE );
+  talkWork->sendWaveData = talkWork->sendWaveBuf;
+  talkWork->sendWaveBufTop = (void*)((u32)talkWork->sendWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
   talkWork->state = CTS_FADEIN;
   talkWork->sliderPos = 0;
   talkWork->recButtonState = CRBT_NONE;
@@ -137,9 +162,10 @@ CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 //--------------------------------------------------------------
 void CTVT_TALK_TermSystem( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
-
-  GFL_HEAP_FreeMemory( talkWork );
   
+  GFL_HEAP_FreeMemory( talkWork->sendWaveData );
+  CTVT_MIC_Term( talkWork->micWork );
+  GFL_HEAP_FreeMemory( talkWork );
 }
 //--------------------------------------------------------------
 //	モード切替時初期化
@@ -293,7 +319,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_REQ_TALK:
     {
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 )
+      if( isContTbl == 0 || GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK )
       {
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
         const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_REQ_TALK , 0 );
@@ -315,7 +341,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       const u8 talkMember = CTVT_COMM_GetTalkMember( work , commWork );
       const u8 selfId = CTVT_COMM_GetSelfNetId( work , commWork );
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 )
+      if( isContTbl == 0 || GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK  )
       {
         if( talkMember != CTVT_COMM_INVALID_MEMBER )
         {
@@ -323,22 +349,30 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
           {
             //会話開始
             talkWork->state = CTS_TALKING;
+            talkWork->subState = CTSS_INIT_REC;
           }
           else
           {
+            //抽選もれ
             talkWork->state = CTS_WAIT;
           }
         }
       }
       else
       {
+        //会話キャンセル
         talkWork->state = CTS_WAIT;
       }
     }
     break;
+  case CTS_TALKING:
+    CTVT_TALK_UpdateTalk( work , talkWork );
+    break;
   }
 
   CTVT_TALK_UpdateButton( work , talkWork );
+  CTVT_MIC_Main( talkWork->micWork );
+
   return CTM_TALK;
 }
 
@@ -392,6 +426,104 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   }
 }
 
+//--------------------------------------------------------------
+//	録音部分の更新
+//--------------------------------------------------------------
+static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+  const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
+  switch( talkWork->subState )
+  {
+  case CTSS_INIT_REC:
+    {
+      const BOOL ret = CTVT_MIC_StartRecord( talkWork->micWork );
+      if( ret == TRUE )
+      {
+        talkWork->recButtonState = CRBT_TALKING;
+        talkWork->subState = CTSS_RECORDING;
+        talkWork->sendCnt = 0;
+        talkWork->reqSendWave = FALSE;
+        ENC_ADPCM_ResetParam();
+      }
+    }
+    break;
+  case CTSS_RECORDING:
+    if( !(isContTbl == 0) && !(GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK) )
+    {
+      CTVT_MIC_StopRecord( talkWork->micWork );
+    }
+
+    if( CTVT_MIC_IsRecording( talkWork->micWork ) == FALSE )
+    {
+      talkWork->subState = CTSS_REC_TRANS;
+      talkWork->recButtonState = CRBT_DISALE;
+    }
+    //転送は録音中もやるのでスキップ
+    //break through;
+  case CTSS_REC_TRANS:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      const BOOL isSendWave = CTVT_COMM_GetCommWaveData( work , commWork );
+      const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
+      if( talkWork->reqSendWave == FALSE && isSendWave == FALSE )
+      {
+        if( recSize >= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) ||
+            talkWork->subState == CTSS_REC_TRANS)
+        {
+          //エンコード
+          void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
+          void* sendTopBuf = (void*)((u32)recBuffer+talkWork->sendCnt*CTVT_SEND_WAVE_SIZE_ONE );
+          const u32 endSize = CTVT_MIC_EncodeData( talkWork->micWork , sendTopBuf , talkWork->sendWaveBufTop , CTVT_SEND_WAVE_SIZE_ONE );
+          //送信
+          talkWork->sendWaveData->dataNo = talkWork->sendCnt;
+          talkWork->sendWaveData->encSize = endSize;
+          talkWork->sendWaveData->recSize = recSize;
+          if( talkWork->subState == CTSS_REC_TRANS && 
+            recSize <= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) )
+          {
+            talkWork->sendWaveData->isLast = TRUE;
+          }
+          else
+          {
+            talkWork->sendWaveData->isLast = FALSE;
+          }
+              
+          talkWork->reqSendWave = TRUE;
+        }
+      }
+      
+      if( talkWork->reqSendWave == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendWave( work , commWork , talkWork->sendWaveData );
+        if( ret == TRUE )
+        {
+          talkWork->sendCnt++;
+          talkWork->reqSendWave = FALSE;
+          if( talkWork->sendWaveData->isLast == TRUE )
+          {
+            talkWork->subState = CTSS_WAIT_PLAY;
+          }
+        }
+      }
+    }
+
+    break;
+  case CTSS_WAIT_PLAY:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      const BOOL isSendWave = CTVT_COMM_GetCommWaveData( work , commWork );
+      if( isSendWave == FALSE )
+      {
+        const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_TALK , 0 );
+        if( ret == TRUE )
+        {
+          talkWork->state = CTS_WAIT;
+        }
+      }
+    }
+    break;
+  }
+}
 
 
 //--------------------------------------------------------------
@@ -426,4 +558,11 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     talkWork->befRecButtonState = talkWork->recButtonState;
   }
   
+}
+
+
+#pragma mark[>outer func
+CTVT_MIC_WORK* CTVT_TALK_GetMicWork( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+  return talkWork->micWork;
 }

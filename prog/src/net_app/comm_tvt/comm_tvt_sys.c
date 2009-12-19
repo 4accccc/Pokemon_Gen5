@@ -50,6 +50,7 @@ struct _COMM_TVT_WORK
   u8 connectNum;
   u8 selfIdx;
   BOOL isDouble;
+  BOOL isSusspend;
   
   ARCHANDLE *arcHandle;
   //ƒZƒ‹Œn
@@ -121,6 +122,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->mode = CTM_NONE;
   work->nextMode = CTM_TALK;
   work->isUpperFade = TRUE;
+  work->isSusspend = FALSE;
 
 }
 
@@ -439,6 +441,14 @@ CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work )
 {
   return work->commWork;
 }
+CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work )
+{
+  return work->talkWork;
+}
+CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work )
+{
+  return CTVT_TALK_GetMicWork( work , work->talkWork );
+}
 
 #pragma mark [>outer func (value
 //--------------------------------------------------------------------------
@@ -511,6 +521,18 @@ const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work )
 void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx )
 {
   work->selfIdx = idx;
+}
+//--------------------------------------------------------------
+//	ˆêŽž’âŽ~(ƒVƒXƒeƒ€‘¤
+//--------------------------------------------------------------
+const BOOL COMM_TVT_GetSusspend( COMM_TVT_WORK *work )
+{
+  return work->isSusspend;
+}
+
+void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isSusspend = flg;
 }
 
 #pragma mark [>util func

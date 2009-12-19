@@ -21,6 +21,9 @@
 
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
+#include "ctvt_talk.h"
+#include "ctvt_mic.h"
+#include "enc_adpcm.h"
 
 //======================================================================
 //	define
@@ -58,7 +61,7 @@ typedef enum
 typedef enum
 {
   CCST_SEND_FLG = GFL_NET_CMD_COMM_TVT,
-  
+  CCST_SEND_WAVE,
   CCST_MAX,
 }CTVT_COMM_SEND_TYPE;
 
@@ -104,7 +107,11 @@ struct _CTVT_COMM_WORK
   void *encWorkBuf;
   void *encBuffer;
   void *sendBuffer;
-  
+  BOOL isCommWave;   //Wave送受信中
+  BOOL isFinishPostWave;   //Wave送受信中
+  u16  waveSize;
+  void *postWaveBuf;  //Wave受信バッファ
+  void *decodeWaveBuf;      //デコード後データ
   //親機から子機へ共有する処理
   u8  talkMember;
   
@@ -113,6 +120,8 @@ struct _CTVT_COMM_WORK
   
   BOOL updateTalkMember;
   u8 tempTalkMember;
+  
+  COMM_TVT_WORK *parentWork;  //受信コールバックで使うため
 };
 
 //======================================================================
@@ -131,10 +140,13 @@ static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *co
 static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx );
 
 static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    CTVT_COMM_Post_WaveData_Buff( int netID, void* pWork , int size );
+static void CTVT_COMM_Post_WaveData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable CTVT_COMM_RecvTable[] = 
 {
   { CTVT_COMM_PostFlg   ,NULL  },
+  { CTVT_COMM_Post_WaveData   ,CTVT_COMM_Post_WaveData_Buff  },
 };
 
 //--------------------------------------------------------------
@@ -145,6 +157,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   u8 i;
   CTVT_COMM_WORK* commWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WORK) );
   
+  commWork->parentWork = work;
   commWork->state = CCS_INIT_COMM;
   commWork->connectNum = 1;
   commWork->photoReqBit = 0;
@@ -167,11 +180,17 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->reqCheckBit = 0;
   commWork->isSendWait = FALSE;
   
+  commWork->isCommWave = FALSE;
+  commWork->isFinishPostWave = FALSE;
+  commWork->postWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE_REAL );
+  commWork->decodeWaveBuf = GFL_HEAP_AllocClearMemory( heapId , CTVT_SEND_WAVE_SIZE );
+  
   commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
   
   commWork->updateReqTalk = FALSE;
   commWork->updateTalkMember = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+  
   return commWork;
 }
 
@@ -181,6 +200,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   u8 i;
+  GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
+  GFL_HEAP_FreeMemory( commWork->postWaveBuf );
   GFL_HEAP_FreeMemory( commWork->encBuffer );
   GFL_HEAP_FreeMemory( commWork->sendBuffer );
   GFL_HEAP_FreeMemory( commWork->encWorkBuf );
@@ -351,33 +372,35 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       if( (commWork->reqCheckBit & commWork->photoReqBit) == commWork->reqCheckBit&&
           commWork->reqCheckBit != 0 )
       {
-        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-        void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );
-        const u32 bufSize = CTVT_CAMERA_GetBufferSize( work , camWork );
-        u32 dataSize;
-        
-        GFL_STD_MemCopy32( (void*)selfBuf , (void*)commWork->encBuffer , bufSize );
+        if( COMM_TVT_GetSusspend( work ) == FALSE )
         {
-          dataSize = SSP_StartJpegEncoder(  commWork->encBuffer , 
-                                            commWork->sendBuffer , 
-                                            bufSize ,
-                                            commWork->encWorkBuf , 
-                                            CTVT_CAMERA_GetPhotoSizeX(work,camWork) ,
-                                            CTVT_CAMERA_GetPhotoSizeY(work,camWork) ,
-                                            CTVT_COMM_JPG_QUALITY ,
-                                            CTVT_COMM_JPG_OUT_TYPE ,
-                                            CTVT_COMM_JPG_OUT_OPT );
-        }
-        if( dataSize != 0 )
-        {
-          GFL_NET_LDATA_SetSendData( commWork->sendBuffer , dataSize , commWork->reqCheckBit , FALSE );
-          //CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
-          commWork->photoReqBit = 0;
-          commWork->isSendWait = TRUE;
-        }
-        else
-        {
-          CTVT_TPrintf("JpegEncode Error!!\n");
+          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+          void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );
+          const u32 bufSize = CTVT_CAMERA_GetBufferSize( work , camWork );
+          u32 dataSize;
+          GFL_STD_MemCopy32( (void*)selfBuf , (void*)commWork->encBuffer , bufSize );
+          {
+            dataSize = SSP_StartJpegEncoder(  commWork->encBuffer , 
+                                              commWork->sendBuffer , 
+                                              bufSize ,
+                                              commWork->encWorkBuf , 
+                                              CTVT_CAMERA_GetPhotoSizeX(work,camWork) ,
+                                              CTVT_CAMERA_GetPhotoSizeY(work,camWork) ,
+                                              CTVT_COMM_JPG_QUALITY ,
+                                              CTVT_COMM_JPG_OUT_TYPE ,
+                                              CTVT_COMM_JPG_OUT_OPT );
+          }
+          if( dataSize != 0 )
+          {
+            GFL_NET_LDATA_SetSendData( commWork->sendBuffer , dataSize , commWork->reqCheckBit , FALSE );
+            //CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
+            commWork->photoReqBit = 0;
+            commWork->isSendWait = TRUE;
+          }
+          else
+          {
+            CTVT_TPrintf("JpegEncode Error!!\n");
+          }
         }
       }
     }
@@ -405,6 +428,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       {
         commWork->updateTalkMember = TRUE;
       }
+      commWork->updateReqTalk = FALSE;
     }
     
     if( commWork->updateTalkMember == TRUE )
@@ -634,6 +658,16 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     break;
 
   case CCFT_FINISH_TALK:  //会話終了通知
+    if( netID != selfId )
+    {
+      CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
+      CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , 0x8000 );
+    }
+    if( selfId == 0 )
+    {
+      commWork->member[netID].reqTalk = FALSE;
+      commWork->updateReqTalk = TRUE;
+    }
     break;
     
   case CCFT_CANCEL_TALK:  //会話取り消し通知 //何かしらうまくいかなかったとき
@@ -646,6 +680,79 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   }
 }
 
+//--------------------------------------------------------------
+// Wave送信
+//--------------------------------------------------------------
+const BOOL CTVT_COMM_SendWave( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , void* sendData )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  const CTVT_COMM_WAVE_HEADER *header = sendData;
+  
+  CTVT_TPrintf("Send Wave[%d][%x].\n",header->dataNo,header->recSize);
+  
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_WAVE , sizeof( CTVT_COMM_WAVE_HEADER )+header->encSize , 
+      sendData , TRUE , FALSE , TRUE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send Wave failue!\n");
+    }
+    else
+    {
+      commWork->isCommWave = TRUE;
+    }
+    return ret;
+  }
+}
+//--------------------------------------------------------------
+// Wave受信バッファ
+//--------------------------------------------------------------
+static u8*    CTVT_COMM_Post_WaveData_Buff( int netID, void* pWork , int size )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  commWork->isCommWave = TRUE;
+
+  GFL_STD_MemClear32( (void*)commWork->postWaveBuf , (CTVT_SEND_WAVE_SIZE_ONE_REAL) + sizeof(CTVT_COMM_WAVE_HEADER) );
+  return commWork->postWaveBuf;
+}
+
+//--------------------------------------------------------------
+// Wave受信
+//--------------------------------------------------------------
+static void CTVT_COMM_Post_WaveData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
+  const CTVT_COMM_WAVE_HEADER *header = commWork->postWaveBuf;
+  void *waveBuffet = (void*)((u32)commWork->postWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
+
+  CTVT_TPrintf("Post Wave[%d]\n",header->dataNo );
+  
+  if( netID != GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) )
+  {
+    if( header->dataNo == 0 )
+    {
+      ENC_ADPCM_ResetParam();
+      GFL_STD_MemClear32( (void*)commWork->decodeWaveBuf , CTVT_SEND_WAVE_SIZE );
+    }
+    
+    {
+      void *setBuffer = (void*)((u32)commWork->decodeWaveBuf + header->dataNo*CTVT_SEND_WAVE_SIZE_ONE );
+      const u32 decSize = CTVT_MIC_DecodeData( micWork , waveBuffet , setBuffer , header->encSize );
+    }
+
+    if( header->isLast == TRUE )
+    {
+      commWork->isFinishPostWave = TRUE;
+      commWork->waveSize = header->recSize;
+    }
+    
+  }
+  commWork->isCommWave = FALSE;
+  
+}
 
 #pragma mark [>outer func
 const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
@@ -655,4 +762,16 @@ const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork 
 const u8 CTVT_COMM_GetTalkMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   return commWork->talkMember;
+}
+const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->isCommWave;
+}
+const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->isFinishPostWave;
+}
+void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  commWork->isFinishPostWave = FALSE;
 }

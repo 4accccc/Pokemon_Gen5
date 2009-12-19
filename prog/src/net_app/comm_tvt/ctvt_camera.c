@@ -39,7 +39,6 @@ struct _CTVT_CAMERA_WORK
   
   u8   isUpdateBit;
   
-  
   //以下TWL時のみ作られるもの
   CAMERA_SYSTEM_WORK *camSys;       //  1サイズ*2 //0x30000
   void *cnvBuf;   //変換用バッファ  //  1/2サイズ //0x0c000
@@ -185,6 +184,11 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   const u8 idx = COMM_TVT_GetSelfIdx( work );
 
+  if( COMM_TVT_GetSusspend(work) == TRUE )
+  {
+    return;
+  }
+
   if( camWork->isUpdateBit & (1<<idx) )
   {
     //CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
@@ -301,3 +305,4 @@ const u32 CTVT_CAMERA_GetBufferSize( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *cam
     return bufSizeArr[mode]/2;
   }
 }
+
