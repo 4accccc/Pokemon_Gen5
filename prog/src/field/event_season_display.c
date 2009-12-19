@@ -340,23 +340,34 @@ static void UpdateAlpha( const EVENT_WORK* work, int seq )
   }
   else if( seq == SEQ_FADEOUT )
   { // フェードアウト
-    if( work->dispSeason == work->currentSeason )
-    { // 最後の季節表示はαブレンド
-      int alpha1, alpha2;
-      float rate;
-      rate = (float)work->count / (float)work->maxCount;
-      alpha2 = ALPHA_MAX * rate;
-      alpha1 = ALPHA_MAX - alpha2;
-      G2_SetBlendAlpha( ALPHA_MASK_SEASON, ALPHA_MASK_FIELD, alpha1, alpha2 );
+    if( work->dispSeason == work->currentSeason )  // if(最後のフェードアウト)
+    { 
+      // 最後の季節表示はαブレンド
+      {
+        int alpha1, alpha2;
+        float rate;
+        rate = (float)work->count / (float)work->maxCount;
+        alpha2 = ALPHA_MAX * rate;
+        alpha1 = ALPHA_MAX - alpha2;
+        G2_SetBlendAlpha( ALPHA_MASK_SEASON, ALPHA_MASK_FIELD, alpha1, alpha2 );
+      }
+      // 最後の季節表示フェードアウト時は下画面を輝度フェードインさせる
+      {
+        int bright;
+        float rate;
+        rate = (float)work->count / (float)work->maxCount;
+        bright = BRIGHT_MIN + (BRIGHT_MAX - BRIGHT_MIN) * rate;
+        GXS_SetMasterBrightness( bright );
+      }
     }
-    else
-    { // スキップ時は輝度
-      int bright;
-      float rate;
-      rate = (float)work->count / (float)work->maxCount;
-      bright = BRIGHT_MAX - (BRIGHT_MAX - BRIGHT_MIN) * rate;
-      G2_SetBlendBrightness( ALPHA_MASK_SEASON, bright );
-    }
+  }
+  else
+  { // スキップ時は輝度
+    int bright;
+    float rate;
+    rate = (float)work->count / (float)work->maxCount;
+    bright = BRIGHT_MAX - (BRIGHT_MAX - BRIGHT_MIN) * rate;
+    G2_SetBlendBrightness( ALPHA_MASK_SEASON, bright );
   }
 }
 
