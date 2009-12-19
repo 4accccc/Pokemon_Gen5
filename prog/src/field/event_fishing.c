@@ -58,18 +58,19 @@ typedef struct _FISHING_WORK{
   GAMEDATA* gdata;
   FIELDMAP_WORK *fieldWork;
   FIELD_ENCOUNT* fld_enc;
-  const FLDMAPPER* g3dMapper;
   MMDLSYS* mmdl_sys;
 
   FIELD_PLAYER *fplayer;
   MMDL* player_mmdl;
   MMDL_GRIDPOS  pos;
+  PLAYER_DRAW_FORM player_form;
 
   FLDEFF_TASK*  task_gyoe;
   FLDEFF_TASK*  task_lure;
 
   VecFx32 player_pos;
   VecFx32 target_pos;
+  VecFx32 player_view_ofs;
 
   u16     enc_type;
   u16     enc_error;
@@ -150,12 +151,13 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fld_enc = FIELDMAP_GetEncount( wk->fieldWork );
 
-  wk->g3dMapper = (const FLDMAPPER*)FIELDMAP_GetFieldG3Dmapper( wk->fieldWork ); 
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldWork );
   wk->fplayer = FIELDMAP_GetFieldPlayer( fieldmap );
   wk->player_mmdl = FIELD_PLAYER_GetMMdl( wk->fplayer );
 
   FIELD_PLAYER_GetPos( wk->fplayer, &wk->player_pos);
+  wk->player_form = FIELD_PLAYER_GetDrawForm( wk->fplayer );
+  MMDL_GetVectorDrawOffsetPos( wk->player_mmdl, &wk->player_view_ofs );
 
   //ポジションチェック
   if( FieldFishingCheckPos( wk->gdata, wk->fieldWork, &wk->target_pos ) == FALSE){
@@ -259,8 +261,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     break;
 
 	case SEQ_END:
-    FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_NORMAL );
-    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &DATA_FishingFormOfs[0]);
+    FIELD_PLAYER_ChangeDrawForm( wk->fplayer, wk->player_form );
+    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &wk->player_view_ofs );
     MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 		return GMEVENT_RES_FINISH;
 
