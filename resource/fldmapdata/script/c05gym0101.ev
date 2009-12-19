@@ -183,6 +183,16 @@ EVENT_START		ev_c05gym0101_lift_00u
 		_GYM_GROUND_MV_LIFT( 0 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_10 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_10 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -200,6 +210,16 @@ EVENT_START		ev_c05gym0101_lift_00d
 		_GYM_GROUND_MV_LIFT( 0 )
 		_SE_WAIT()
 		_FLAG_SET( FH_10 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_10 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -218,6 +238,16 @@ EVENT_START		ev_c05gym0101_lift_01u
 		_GYM_GROUND_MV_LIFT( 1 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_11 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_11 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -236,6 +266,16 @@ EVENT_START		ev_c05gym0101_lift_01d
 		_GYM_GROUND_MV_LIFT( 1 )
 		_SE_WAIT()
 		_FLAG_SET( FH_11 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_11 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -254,6 +294,16 @@ EVENT_START		ev_c05gym0101_lift_02u
 		_GYM_GROUND_MV_LIFT( 2 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_12 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_12 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -272,6 +322,16 @@ EVENT_START		ev_c05gym0101_lift_02d
 		_GYM_GROUND_MV_LIFT( 2 )
 		_SE_WAIT()
 		_FLAG_SET( FH_12 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_12 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -290,6 +350,16 @@ EVENT_START		ev_c05gym0101_lift_03u
 		_GYM_GROUND_MV_LIFT( 3 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_13 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_13 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -308,6 +378,16 @@ EVENT_START		ev_c05gym0101_lift_03d
 		_GYM_GROUND_MV_LIFT( 3 )
 		_SE_WAIT()
 		_FLAG_SET( FH_13 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_13 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -326,6 +406,16 @@ EVENT_START		ev_c05gym0101_lift_04u
 		_GYM_GROUND_MV_LIFT( 4 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_14 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_14 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -344,6 +434,16 @@ EVENT_START		ev_c05gym0101_lift_04d
 		_GYM_GROUND_MV_LIFT( 4 )
 		_SE_WAIT()
 		_FLAG_SET( FH_14 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_14 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -362,6 +462,16 @@ EVENT_START		ev_c05gym0101_lift_05u
 		_GYM_GROUND_MV_LIFT( 5 )
 		_SE_WAIT()
 		_FLAG_RESET( FH_15 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_15 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これ以上上昇しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -380,6 +490,16 @@ EVENT_START		ev_c05gym0101_lift_05d
 		_GYM_GROUND_MV_LIFT( 5 )
 		_SE_WAIT()
 		_FLAG_SET( FH_15 )
+		
+	//リフトを起動できないとき
+	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_15 ) THEN
+		_TALK_START_SE_PLAY()
+		
+		//これいじょう下降しません！
+		_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 
 EVENT_END
@@ -427,7 +547,13 @@ EVENT_END
 /*					接続リフト 下降スイッチ					*/
 /************************************************************/
 EVENT_START	ev_c05gym0101_exitlift_00d
-	//現状は押しても反応無し　【保留】反応が無いメッセージを表示するか
+	_TALK_START_SE_PLAY()
+	
+	//これいじょう下降しません！
+	_SYSWIN_MSG_DOWN( msg_c05gym0101_swicth_02 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 

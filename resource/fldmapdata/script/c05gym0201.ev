@@ -24,6 +24,7 @@ _EVENT_DATA    ev_c05gym0201_startlift_01
 _EVENT_DATA    ev_reserve_c05gym0201_gymback_01
 _EVENT_DATA    ev_c05gym0201_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
+_EVENT_DATA    ev_bg_c05gym0201_lift_01
 _EVENT_DATA_END
 
 
@@ -152,5 +153,17 @@ EVENT_START	ev_bg_c05gym0201_statue_01
 EVENT_END
 
 
+/************************************************************/
+/*						リフト 上昇スイッチ					*/
+/************************************************************/
+//押せないスイッチ
+EVENT_START	ev_bg_c05gym0201_lift_01
+	_TALK_START_SE_PLAY()
+	
+	_SYSWIN_MSG_DOWN( msg_c05gym0201_swicth_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
 
 

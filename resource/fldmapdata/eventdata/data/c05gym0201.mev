@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 18:19:45
+#save date:2009/12/19 21:57:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -81,7 +81,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Bg Event Label
 BG_C05GYM0201_STATUE_01
@@ -108,6 +108,19 @@ SCRID_BG_C05GYM0201_STATUE_01
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 120
+#event number: 2
+#Bg Event Label
+BG_C05GYM0201_LIFT_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0201_LIFT_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 200
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
