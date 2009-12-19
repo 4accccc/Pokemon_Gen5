@@ -105,7 +105,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->heapId = HEAPID_TRCARD_SYS;
 
   //データテンポラリ作成
-	wk->tcp	= GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
+  wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
   *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE);
@@ -203,10 +203,10 @@ static int sub_CardInit(TR_CARD_SYS* wk)
     TrCardProc_End,
   };
 //  wk->proc = PROC_Create(&TrCardProcData,wk->tcp,wk->heapId);
-	if( wk->procSys == NULL )
-	{	
-		wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
-	}
+  if( wk->procSys == NULL )
+  { 
+    wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+  }
   GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &TrCardProcData,(void*)wk->tcp);
   return CARD_WAIT;
 }
@@ -240,10 +240,10 @@ static int sub_SignInit(TR_CARD_SYS* wk)
   };
     
 //  wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
-	if( wk->procSys == NULL )
-	{	
-		wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
-	}
+  if( wk->procSys == NULL )
+  { 
+    wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+  }
   GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
   return SIGN_WAIT;
 }
@@ -358,6 +358,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
             RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE)+
             RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE)+
             RECORD_Get(rec, RECID_PORUTO_COMM);
+  // 通信対戦回数
+  cardData->CommBattleNum = RECORD_Get(rec, RECID_BATTLE_COUNT);
   //勝ち数  ワイヤレス+WiFi
   cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN)+RECORD_Get(rec, RECID_WIFI_BTL_WIN);
   //負け数  ワイヤレス+WiFi
@@ -369,7 +371,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   cardData->Score = RECORD_Score_Get( rec );
   
   //FIXME 図鑑処理
-  cardData->PokeBookFlg = FALSE;
+  cardData->PokeBookFlg = TRUE;
 
   //サインデータの取得
   //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
@@ -383,7 +385,7 @@ TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HE
 {
   TRCARD_CALL_PARAM* callParam;
   callParam = GFL_HEAP_AllocMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
-	GFL_STD_MemClear( callParam, sizeof(TRCARD_CALL_PARAM) );
+  GFL_STD_MemClear( callParam, sizeof(TRCARD_CALL_PARAM) );
   callParam->TrCardData = NULL;
   callParam->gameData = gameData;
   callParam->value = 0;

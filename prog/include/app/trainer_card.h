@@ -4,6 +4,7 @@
 #include "gamesystem/game_data.h"
 #include "buflen.h"
 #include "savedata/playtime.h"
+#include "system/pms_data.h"
 
 #define SIGN_SIZE_X (24)
 #define SIGN_SIZE_Y (8)
@@ -36,7 +37,8 @@ typedef struct TR_CARD_DATA_tag
   u8 TrSex:1;     //性別
   u8 PokeBookFlg:1; //図鑑所持フラグ
   u8 MySignValid:1; //サインデータ有効/無効フラグ
-  u8 Padding:4;
+  u8 SignAnimeOn:1; // サインデータはアニメしているか？（0:してない　1:してる）
+  u8 Padding:3;
   u8 UnionTrNo;   //ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
 
   u16 BadgeFlag;    //バッジ入手フラグ(16bit)
@@ -60,13 +62,16 @@ typedef struct TR_CARD_DATA_tag
   u8 Clear_y;     //クリア年
   u8 Clear_m;     //クリア月
   u8 Clear_d;     //クリア日
-  u8 ClearTime_m;   //クリア時間（分）
+  u8 ClearTime_m; //クリア時間（分）
   
-  u32 CommNum;    //通信回数
-  u32 CommBattleWin;  //対戦勝ち数
-  u32 CommBattleLose; //対戦負け数
-  u32 CommTrade;    //交換回数
-
+  u16 CommNum;        //通信回数
+  u16 CommBattleNum;  // 
+  u16 CommBattleWin;  //対戦勝ち数
+  u16 CommBattleLose; //対戦負け数
+  u32 Personality;    //性格
+  u32 CommTrade;      //交換回数
+  PMS_DATA Pms;       //トレーナーカード内簡易会話
+  
   u8  SignRawData[SIGN_SIZE_X*SIGN_SIZE_Y*8]; //サインデータ
   u16 _xor;     // 検証用
   u16 reached;    // 到着フラグ(通信時に使用）

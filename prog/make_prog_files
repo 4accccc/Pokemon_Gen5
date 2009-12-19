@@ -983,6 +983,7 @@ SRCS_OVERLAY_GTS_NEGOTIATE = net_app/gts_nego/gtsnego_proc.c \
 # メールアプリケーション
 #===> SRCS_OVERLAY_POKEMON_TRADE
 #===> SRCS_OVERLAY_PMSINPUT
+#===> SRCS_OVERLAY_POKELIST
 SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
 			app/mail/mailsys.c \
                     	app/mail/mailview.c \
