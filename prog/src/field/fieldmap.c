@@ -1837,7 +1837,6 @@ void FIELDMAP_InitBGMode( void )
 void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 {
 	//ＢＧコントロール設定
-	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 ); 
 	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
 
   // 会話ウインドウリソースセットアップ
