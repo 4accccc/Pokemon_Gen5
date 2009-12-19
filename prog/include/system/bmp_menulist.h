@@ -25,14 +25,17 @@
 
 typedef struct _BMPMENULIST_WORK	BMPMENULIST_WORK;
 
+typedef void	(*BMPMENULIST_CURSOR_CALLBACK)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
+typedef void	(*BMPMENULIST_PRINT_CALLBACK)(BMPMENULIST_WORK * wk,u32 param,u8 y);
+
 ///リストヘッダ構造体
 typedef struct {
 	//表示文字データポインタ
 	const BMP_MENULIST_DATA *list;
 	//カーソル移動ごとのコールバック関数
-	void	(*call_back)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
+	BMPMENULIST_CURSOR_CALLBACK call_back;
 	//一列表示ごとのコールバック関数
-	void	(*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
+	BMPMENULIST_PRINT_CALLBACK icon;
 
 	GFL_BMPWIN *win;
 	
