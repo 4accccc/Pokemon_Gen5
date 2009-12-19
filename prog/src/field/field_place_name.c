@@ -17,6 +17,7 @@
 #include "msg/msg_place_name.h"
 #include "system/bmp_oam.h"
 #include "pm_define.h"
+#include "field_oam_pal.h"  // for FIELDOAM_PALNO_PLACENAME
 
 
 //===================================================================================
@@ -40,8 +41,6 @@
 #define BG_PALETTE_NO       (0)					// BGパレット番号
 #define BG_FRAME            (GFL_BG_FRAME3_M)	// 使用するBGフレーム
 #define BG_FRAME_PRIORITY   (1)					// BGフレームのプライオリティ
-
-#define OBJ_PALETTE_NO (1)                      // OBJパレット番号
 
 #define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (2)		            // 影部分のカラー番号
@@ -909,7 +908,7 @@ static void LoadClactResource( FIELD_PLACE_NAME* sys )
 	sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				p_arc_handle, NARC_place_name_place_name_string_NCLR,
-				CLSYS_DRAW_MAIN, OBJ_PALETTE_NO * 32, 0, 1, sys->heapID );
+				CLSYS_DRAW_MAIN, FIELDOAM_PALNO_PLACENAME * 32, 0, 1, sys->heapID );
 
 	GFL_ARC_CloseDataHandle( p_arc_handle );
 }
