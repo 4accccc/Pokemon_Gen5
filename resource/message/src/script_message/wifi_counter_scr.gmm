@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T18:03:00"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-12-19T19:19:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="8" top="172" right="696" bottom="952" maximized="no" rayout="Vertical2">
+	<dialog left="1490" top="175" right="2178" bottom="955" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -644,13 +644,18 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ＧＴＳネゴシエーションでは
 ……　……　……[BE:01:ページ切り替え（クリア）]
-ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーションでは
 ……　……　……[BE:01:ページ切り替え（クリア）]
-ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
+ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gterminal_gtsnego_exp00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>GTS-NEGO</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">くわしい　説明を
 ご希望ですか？</language>
 	</row>
 
@@ -658,26 +663,18 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ネゴシエーションとは
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ネゴシエーションとは
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
-ご希望ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">こうかん　じょうけん　には
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">交換条件には
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
-ご希望ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">

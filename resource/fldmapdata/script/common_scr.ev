@@ -110,10 +110,10 @@ ev_report_event_call:
   //「かいても いいですか？」
   _SYSWIN_MSG_DOWN( msg_common_report_01 )
   _YES_NO_WIN( SCWK_PARAM5 )
-  _SYSWIN_CLOSE()
   IF $SCWK_PARAM5 == 0 THEN //『はい』
     $SCWK_PARAM1 = TRUE
   ENDIF
+  _SYSWIN_CLOSE()
 
   //「すでに べつの レポートが…」
   IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
@@ -136,7 +136,7 @@ ev_report_event_call:
   // セーブ
   IF $SCWK_PARAM1 == TRUE THEN
     //「かきこんでいます」
-      SWITCH $SCWK_PARAM4 
+    SWITCH $SCWK_PARAM4 
     CASE 0 THEN 
       _SYSWIN_MSG_DOWN( msg_common_report_10 )
     CASE 1 THEN

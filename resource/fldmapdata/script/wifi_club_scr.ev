@@ -55,7 +55,7 @@ sub_club_counter_main:
 
   //C-Gear取得チェック
   IF FLAG_OFF( FE_CGEAR_GET ) THEN
-    _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_err01 ) //また後でお越しください
+    _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_err01, SCWK_TARGET_OBJID, WIN_DOWN ) //また後でお越しください
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _RET
@@ -64,13 +64,13 @@ sub_club_counter_main:
   //ダメタマチェック
   _GET_PARTY_POKE_COUNT( i_ret, POKECOUNT_MODE_ONLY_DAME_EGG)
   IF $i_ret != 0 THEN
-    _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_err02 ) //手持ちに連れて行けないポケモンがいます
+    _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_err02, SCWK_TARGET_OBJID, WIN_DOWN ) //手持ちに連れて行けないポケモンがいます
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _RET
   ENDIF
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_01 ) //Wi-Fiクラブへようこそ
+  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_01, SCWK_TARGET_OBJID, WIN_DOWN ) //Wi-Fiクラブへようこそ
   $i_seq = SEQ_MENU
 
   $i_loop = TRUE
@@ -81,7 +81,7 @@ sub_club_counter_main:
       $i_seq = $reg_return
 
     CASE SEQ_CLUB_EXP THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_07 ) //Wi-Fiクラブでは…
+      _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_07, SCWK_TARGET_OBJID, WIN_DOWN ) //Wi-Fiクラブでは…
       $i_seq = SEQ_MENU
 
     CASE SEQ_CHECK_CONNECT THEN
@@ -93,11 +93,11 @@ sub_club_counter_main:
       $i_seq = $reg_return
 
     CASE SEQ_GOODBYE THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_02 ) //それではまたお越しください
+      _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_02, SCWK_TARGET_OBJID, WIN_DOWN ) //それではまたお越しください
       $i_seq = SEQ_EXIT
    
     CASE SEQ_RETRY THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_err03 ) //もう一度最初からやり直してください
+      _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_err03, SCWK_TARGET_OBJID, WIN_DOWN ) //もう一度最初からやり直してください
       $i_seq = SEQ_EXIT
 
     CASE SEQ_EXIT THEN
@@ -151,11 +151,11 @@ sub_club_counter_check_connect:
 
   //登録人数チェック
   _WIFI_GET_FRIEND_NUM( i_friend_num )
-//  $i_friend_num = 1
+  //$i_friend_num = 1
 
   IF $i_id_state == TRUE THEN
     IF $i_friend_num == 0 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_06 ) //友だちを登録していないと利用できません
+      _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_06, SCWK_TARGET_OBJID, WIN_DOWN ) //友だちを登録していないと利用できません
       _AB_KEYWAIT()
       _BALLOONWIN_CLOSE()
       $reg_return = SEQ_GOODBYE
@@ -166,7 +166,7 @@ sub_club_counter_check_connect:
   ENDIF
 
   //仮IDを取得しますか？
-  _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_05 ) //自分のコードだけでも受け取りますか？
+  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_05, SCWK_TARGET_OBJID, WIN_DOWN ) //自分のコードだけでも受け取りますか？
   _YES_NO_WIN( i_ret )
   _BALLOONWIN_CLOSE()
   
@@ -189,7 +189,7 @@ sub_club_counter_connect:
   DEFINE_LOCAL  i_id_state
 
   //Wi-Fi接続を開始しますか？
-  _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_03 )
+  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_03, SCWK_TARGET_OBJID, WIN_DOWN )
   _YES_NO_WIN( i_ret )
   _BALLOONWIN_CLOSE()
 
@@ -218,7 +218,7 @@ sub_club_counter_connect:
   ENDIF
 
   //接続　それではご案内します
-  _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_04 )
+  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, WIN_DOWN )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
@@ -256,7 +256,7 @@ _RET
 sub_club_counter_goodbye:
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 ) //お辞儀アニメ
   _OBJ_ANIME_WAIT()
-  _BALLOONWIN_TALKOBJ_MSG( msg_wifi_club_01_02 ) //それではまたお越しください
+  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_02, SCWK_TARGET_OBJID, WIN_DOWN ) //それではまたお越しください
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 _RET

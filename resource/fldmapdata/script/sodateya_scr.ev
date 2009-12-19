@@ -95,14 +95,14 @@ _RET
 //======================================================================
 say:
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_MSG( message_id )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 _RET
 
 say_no_wait: // キー待ちなし
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_MSG( message_id )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
   _BALLOONWIN_CLOSE() 
 _RET
 
@@ -115,10 +115,79 @@ _RET
 //======================================================================
 ask:
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_MSG( message_id )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
   _YES_NO_WIN( ask_retval )
   _BALLOONWIN_CLOSE()
 _RET
+
+
+/**********************************************************************/
+/*                                                                    */
+/* ■育て屋じいさん                                                   */
+/*                                                                    */
+/**********************************************************************/
+EVENT_START ev_sodateya_grandpa
+{ 
+  // ローカルワーク宣言
+  DEFINE_LOCAL egg_get      // タマゴを受け取るかどうか
+
+  // 現在状態を取得
+  _CALL get_sodateya_state    // 育て屋の状態
+  _CALL get_party_state       // 手持ちの状態
+  $egg_get = FALSE
+
+  //-------------------
+  // タマゴがある場合
+  //-------------------
+  IF $sodateya_have_egg == TRUE THEN  
+    //「タマゴほしいじゃろ？」
+    $message_id = msg_sodateya_oldman_07
+    _CALL ask
+    IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
+      $egg_get = TRUE 
+    ELSE                      //「いいえ」を選択 ==>「本当は欲しいんじゃろ？」
+      $message_id = msg_sodateya_oldman_10
+      _CALL ask
+      IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
+        $egg_get = TRUE 
+      ENDIF
+    ENDIF
+    // タマゴ受け取り処理
+    IF $egg_get == TRUE THEN 
+      IF $party_total_num < 6 THEN  // 手持ちに空き有 ==> たまごゲット
+        _GET_SODATEYA_EGG()
+        //「タマゴを貰った」
+        _PLAYER_NAME( 0 )
+        $message_id = msg_sodateya_oldman_08
+        _CALL say
+        //「大事に育てなさいよ」
+        $message_id = msg_sodateya_oldman_08_01
+        _CALL say
+      ELSE                      // 手持ちがいっぱい ==>「手持ちがいっぱいじゃ」
+        $message_id = msg_sodateya_oldman_09
+        _CALL say
+      ENDIF
+    // タマゴ削除
+    ELSE
+      _DELETE_SODATEYA_EGG()
+    ENDIF
+  //-------------------
+  // タマゴがない場合
+  //-------------------
+  ELSE                      
+    IF $sodateya_poke_num == 0 THEN       // 預けポケモン0体 ==>「わしは育て屋じいさん」
+      $message_id = msg_sodateya_oldman_01
+      _CALL say
+    ELSIF $sodateya_poke_num == 1 THEN    // 預けポケモン1体 ==>「よくきたな」
+      _SODATEYA_NICK_NAME( 0, 0 )
+      $message_id = msg_sodateya_oldman_02
+      _CALL say
+    ELSE                            // 預けポケモン2体 ==> 相性チェック
+      _CALL love_check
+    ENDIF
+  ENDIF
+} 
+EVENT_END
 
 
 //======================================================================
@@ -146,6 +215,80 @@ love_check:
   _CALL say
 }
 _RET
+
+
+/**********************************************************************/
+/*                                                                    */
+/* ■育て屋ばあさん                                                   */
+/*                                                                    */
+/**********************************************************************/
+EVENT_START ev_sodateya_grandma
+{
+  // ローカルワーク宣言
+  DEFINE_LOCAL menu_select    // メニュー選択結果
+
+  // 現在の状態を取得
+  _CALL get_sodateya_state
+  _CALL get_party_state
+
+  //------------------
+  // タマゴがある場合
+  //------------------
+  IF $sodateya_have_egg == TRUE THEN
+    //「そういえば」
+    $message_id = msg_sodateya_oldwoman_04
+    _CALL say
+  //------------------
+  // タマゴがない場合
+  //------------------
+  ELSE 
+    // 初回会話かどうかでメッセージ切り替え
+    IF $first_talk == TRUE THEN
+      //「あたし育て屋ばあさん」
+      $message_id = msg_sodateya_oldwoman_01
+      _CALL say
+    ELSE
+      //「何をしにきたの？」
+      $message_id = msg_sodateya_oldwoman_02
+      _CALL say
+    ENDIF
+
+    // 所持金表示
+    _GOLD_WIN_OPEN( 1, 1 )
+
+    // メニュー作成
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, menu_select )
+    IF $sodateya_poke_num < $sodateya_poke_max THEN   // 『あずける』
+      _BMPMENU_MAKE_LIST( msg_sodateya_menu_02, msg_sodateya_menu_02 )
+    ENDIF
+    IF $sodateya_poke_num > 0 THEN    // 『ひきとる』
+      _BMPMENU_MAKE_LIST( msg_sodateya_menu_03, msg_sodateya_menu_03 )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_sodateya_menu_04, msg_sodateya_menu_04 )  // 『やめる』
+
+    // メニュー表示
+    _BMPMENU_START()
+
+    // 所持金表示
+    _GOLD_WIN_OPEN( 1, 1 )
+
+    // 選択結果で分岐
+    SWITCH $menu_select
+    CASE msg_sodateya_menu_02 THEN       //『あずける』
+      _CALL sodateya_adopt_pokemon
+    CASE msg_sodateya_menu_03 THEN       //『ひきとる』
+      _CALL player_take_back_pokemon
+    CASE msg_sodateya_menu_04 THEN       //『やめる』
+      $message_id = msg_sodateya_oldwoman_03  //「そうかい またおいで」
+      _CALL say
+    ENDSWITCH
+
+    // 所持金非表示
+    _GOLD_WIN_CLOSE()
+
+  ENDIF
+}
+EVENT_END 
 
 //======================================================================
 // サブルーチン：『あずける』コア部
@@ -288,16 +431,16 @@ take_back_pokemon_core:
 {
   // ローカルワークの定義
   DEFINE_LOCAL select_sodateya_pos   // 引き取るポケモンの育て屋内インデックス
-  DEFINE_LOCAL now_level     // 現在のレベル
-  DEFINE_LOCAL grow_level     // 育ったレベル
-  DEFINE_LOCAL charge         // 引き取り料金
-  DEFINE_LOCAL have_gold    // 所持金が足りるかどうか
-  DEFINE_LOCAL monsno   // 種族番号
-  DEFINE_LOCAL formno   // 形状番号
-  DEFINE_LOCAL sex      // 性別
+  DEFINE_LOCAL now_level             // 現在のレベル
+  DEFINE_LOCAL grow_level            // 育ったレベル
+  DEFINE_LOCAL charge                // 引き取り料金
+  DEFINE_LOCAL have_gold             // 所持金が足りるかどうか
+  DEFINE_LOCAL monsno                // 種族番号
+  DEFINE_LOCAL formno                // 形状番号
+  DEFINE_LOCAL sex                   // 性別
 
   // メニュー表示
-  _BMPMENU_INIT_EX( 1, 5, 0, 1, select_sodateya_pos )
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, select_sodateya_pos )
   IF $sodateya_poke_num > 0 THEN
     _GET_SODATEYA_POKE_SEX( sex, 0 )
     _GET_SODATEYA_POKE_LV( now_level, 0 )
@@ -459,149 +602,4 @@ player_take_back_pokemon:
     ENDSWITCH
   ENDWHILE
 }
-_RET
-
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_sodateya_scr_flag_change:
-//  _END
-
-/**************************************************************/
-/* 育て屋じいさん                                             */
-/**************************************************************/
-EVENT_START ev_sodateya_grandpa
-{ 
-  // ローカルワーク宣言
-  DEFINE_LOCAL egg_get      // タマゴを受け取るかどうか
-
-  // 現在状態を取得
-  _CALL get_sodateya_state    // 育て屋の状態
-  _CALL get_party_state       // 手持ちの状態
-  $egg_get = FALSE
-
-  //-------------------
-  // タマゴがある場合
-  //-------------------
-  IF $sodateya_have_egg == TRUE THEN  
-    //「タマゴほしいじゃろ？」
-    $message_id = msg_sodateya_oldman_07
-    _CALL ask
-    IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
-      $egg_get = TRUE 
-    ELSE                      //「いいえ」を選択 ==>「本当は欲しいんじゃろ？」
-      $message_id = msg_sodateya_oldman_10
-      _CALL ask
-      IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
-        $egg_get = TRUE 
-      ENDIF
-    ENDIF
-    // タマゴ受け取り処理
-    IF $egg_get == TRUE THEN 
-      IF $party_total_num < 6 THEN  // 手持ちに空き有 ==> たまごゲット
-        _GET_SODATEYA_EGG()
-        //「タマゴを貰った」
-        _PLAYER_NAME( 0 )
-        $message_id = msg_sodateya_oldman_08
-        _CALL say
-        //「大事に育てなさいよ」
-        $message_id = msg_sodateya_oldman_08_01
-        _CALL say
-      ELSE                      // 手持ちがいっぱい ==>「手持ちがいっぱいじゃ」
-        $message_id = msg_sodateya_oldman_09
-        _CALL say
-      ENDIF
-    // タマゴ削除
-    ELSE
-      _DELETE_SODATEYA_EGG()
-    ENDIF
-  //-------------------
-  // タマゴがない場合
-  //-------------------
-  ELSE                      
-    IF $sodateya_poke_num == 0 THEN       // 預けポケモン0体 ==>「わしは育て屋じいさん」
-      $message_id = msg_sodateya_oldman_01
-      _CALL say
-    ELSIF $sodateya_poke_num == 1 THEN    // 預けポケモン1体 ==>「よくきたな」
-      _SODATEYA_NICK_NAME( 0, 0 )
-      $message_id = msg_sodateya_oldman_02
-      _CALL say
-    ELSE                            // 預けポケモン2体 ==> 相性チェック
-      _CALL love_check
-    ENDIF
-  ENDIF
-} 
-EVENT_END
-
-
-/**************************************************************/
-/* 育て屋ばあさん                                             */
-/**************************************************************/
-EVENT_START ev_sodateya_grandma
-{
-  // ローカルワーク宣言
-  DEFINE_LOCAL menu_select    // メニュー選択結果
-
-  // 現在の状態を取得
-  _CALL get_sodateya_state
-  _CALL get_party_state
-
-  //------------------
-  // タマゴがある場合
-  //------------------
-  IF $sodateya_have_egg == TRUE THEN
-    //「そういえば」
-    $message_id = msg_sodateya_oldwoman_04
-    _CALL say
-  //------------------
-  // タマゴがない場合
-  //------------------
-  ELSE 
-    // 初回会話かどうかでメッセージ切り替え
-    IF $first_talk == TRUE THEN
-      //「あたし育て屋ばあさん」
-      $message_id = msg_sodateya_oldwoman_01
-      _CALL say
-    ELSE
-      //「何をしにきたの？」
-      $message_id = msg_sodateya_oldwoman_02
-      _CALL say
-    ENDIF
-
-    // 所持金表示
-    _GOLD_WIN_OPEN( 1, 1 )
-
-    // メニュー作成
-    _BMPMENU_INIT_EX( 1, 5, 0, 1, menu_select )
-    IF $sodateya_poke_num < $sodateya_poke_max THEN   // 『あずける』
-      _BMPMENU_MAKE_LIST( msg_sodateya_menu_02, msg_sodateya_menu_02 )
-    ENDIF
-    IF $sodateya_poke_num > 0 THEN    // 『ひきとる』
-      _BMPMENU_MAKE_LIST( msg_sodateya_menu_03, msg_sodateya_menu_03 )
-    ENDIF
-    _BMPMENU_MAKE_LIST( msg_sodateya_menu_04, msg_sodateya_menu_04 )  // 『やめる』
-
-    // メニュー表示
-    _BMPMENU_START()
-
-    // 所持金表示
-    _GOLD_WIN_OPEN( 1, 1 )
-
-    // 選択結果で分岐
-    SWITCH $menu_select
-    CASE msg_sodateya_menu_02 THEN       //『あずける』
-      _CALL sodateya_adopt_pokemon
-    CASE msg_sodateya_menu_03 THEN       //『ひきとる』
-      _CALL player_take_back_pokemon
-    CASE msg_sodateya_menu_04 THEN       //『やめる』
-      $message_id = msg_sodateya_oldwoman_03  //「そうかい またおいで」
-      _CALL say
-    ENDSWITCH
-
-    // 所持金非表示
-    _GOLD_WIN_CLOSE()
-
-  ENDIF
-}
-EVENT_END 
+_RET 
