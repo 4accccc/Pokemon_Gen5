@@ -305,6 +305,26 @@ void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc )
 
   if( ep->valid_f ){
     ep->push_cancel_f = TRUE;
+    if( enc->eff_enc->eff_task != NULL){
+      FLDEFF_ENCOUNT_AnmPauseSet( enc->eff_enc->eff_task,TRUE );
+    }
+  }
+}
+
+/*
+ *  @brief  エフェクトエンカウント　アニメ再生ポーズ
+ */
+void EFFECT_ENC_EffectAnmPauseSet( FIELD_ENCOUNT* enc, BOOL pause_f )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFECT_ENCOUNT* eff_wk = enc->eff_enc; 
+  
+  //起動中チェック
+  if( ewk->effect_encount.param.valid_f ){
+    return;
+  }
+  if( eff_wk->eff_task != NULL){
+    FLDEFF_ENCOUNT_AnmPauseSet( eff_wk->eff_task, pause_f );
   }
 }
 
@@ -602,6 +622,10 @@ static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
  */
 static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep )
 {
+  if( eff_wk->eff_task != NULL){
+    GF_ASSERT(0);
+    return;
+  }
   eff_wk->eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, ep->gx, ep->gz, ep->height, ep->type );
 //  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, 788, 715, ep->height, ep->type );  
   IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d <0x%08x\n",ep->gx, ep->gz, ep->height, ep->type,eff_wk->eff_task );

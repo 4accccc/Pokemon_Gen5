@@ -41,6 +41,7 @@
 #include "warpdata.h"
 #include "move_pokemon.h"
 #include "field_sound.h"
+#include "effect_encount.h"
 
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
@@ -882,6 +883,9 @@ static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
   mcw->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   mcw->before_zone_id = FIELDMAP_GetZoneID( mcw->fieldmap );
   mcw->next_season = INVALID_SEASON_ID;
+
+  //ƒRƒ‚ƒ“ˆ—‚Æ‚µ‚Ä‚±‚±‚É‘‚­
+  EFFECT_ENC_EffectAnmPauseSet( FIELDMAP_GetEncount( mcw->fieldmap), TRUE );
 }
 
 //------------------------------------------------------------------

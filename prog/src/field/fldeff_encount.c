@@ -64,7 +64,9 @@ struct _TAG_FLDEFF_ENCOUNT
 typedef struct
 {
   FLDEFF_ENCOUNT *eff_enc;
+  MMDLSYS* mmdl_sys;
   MMDL *fmmdl;
+
   u16 gx,gz;
   EFFENC_TYPE_ID type;
   int init_gx;
@@ -79,9 +81,11 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int seq_no;
+  u16 seq_no;
+  u16 anm_pause_f;
   TASKHEADER_ENCOUNT head;
   MMDL_CHECKSAME_DATA samedata;
+
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm[ENCOUNT_ANMRES_MAX];
   GFL_G3D_RND *obj_rnd;
@@ -280,6 +284,7 @@ static void enc_DeleteResource( FLDEFF_ENCOUNT* enc )
   for(i = 0;i < enc->data.anm_num;i++){
  	  GFL_G3D_DeleteResource( enc->g3d_res_anm[i] );
   }
+  GFL_G3D_FreeVramTexture( enc->g3d_res_mdl );
  	GFL_G3D_DeleteResource( enc->g3d_res_mdl );
 }
 
@@ -289,7 +294,6 @@ static void enc_DeleteResource( FLDEFF_ENCOUNT* enc )
 //--------------------------------------------------------------
 /**
  * エフェクトエンカウント　エフェクト追加(レールマップ上で呼び出しても無視されます)
- * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
@@ -301,12 +305,14 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32
   VecFx32 pos;
   FIELDMAP_WORK* fieldMapWork = FLDEFF_CTRL_GetFieldMapWork( fectrl );
 
-  if( FIELDMAP_GetBaseSystemType( fieldMapWork ) == FLDMAP_BASESYS_RAIL ){
+  if( FIELDMAP_GetBaseSystemType( fieldMapWork ) != FLDMAP_BASESYS_GRID ){
      return NULL; //レールマップでは生成しない
   }
 
   enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+type );
   head.eff_enc = enc;
+  head.mmdl_sys = FIELDMAP_GetMMdlSys( fieldMapWork );
+
   head.gx = gx;
   head.gz = gz;
   head.type = type;
@@ -317,6 +323,23 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32
 
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_encountTaskHeader, NULL, TRUE, &head, 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * エフェクトエンカウント　アニメ再生フック
+ * @param fmmdl MMDL
+ * @param FLDEFF_CTRL*
+ * @retval nothing
+ *
+ * 純粋にDeleteのタイミングまで待つと、フェードアウト後に
+ * SEが鳴ってしまうことがあるのでフックする
+ */
+//--------------------------------------------------------------
+void FLDEFF_ENCOUNT_AnmPauseSet( FLDEFF_TASK* task, BOOL pause_f )
+{
+  TASKWORK_ENCOUNT *work = (TASKWORK_ENCOUNT*)FLDEFF_TASK_GetWork( task );
+  work->anm_pause_f = pause_f;
 }
 
 //--------------------------------------------------------------
@@ -399,6 +422,9 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   TASKWORK_ENCOUNT *work = wk;
   FLDEFF_ENCOUNT* enc = work->head.eff_enc;
  
+  if(work->anm_pause_f || MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
+    return;
+  }
   {
     int frame;
  	  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
