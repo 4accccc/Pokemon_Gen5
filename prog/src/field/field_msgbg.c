@@ -734,6 +734,24 @@ void FLDMSGPRINT_PrintStrBuf(
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGPRINT プリント　STRBUF指定、カラー指定あり、GFL_FONT外部渡し
+ * @param	msgPrint	FLDMSGPRINT
+ * @param	x		表示X座標
+ * @param	y		表示Y座標
+ * @param	strBuf	表示するSTRBUF
+ * @param color PRINTSYS_LSB
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGPRINT_PrintStrBufColorFontHandle( FLDMSGPRINT *msgPrint,
+    u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *fontHandle )
+{
+  PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
+		x, y, strBuf, fontHandle, color );		
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGPRINT プリント　STRBUF指定、カラー指定あり
  * @param	msgPrint	FLDMSGPRINT
  * @param	x		表示X座標
@@ -746,8 +764,7 @@ void FLDMSGPRINT_PrintStrBuf(
 void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
     u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color )
 {
-  PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
-		x, y, strBuf, msgPrint->fontHandle, color );		
+  FLDMSGPRINT_PrintStrBufColorFontHandle(msgPrint, x, y, strBuf, color, msgPrint->fontHandle);
 }
 
 //--------------------------------------------------------------
@@ -992,6 +1009,21 @@ void FLDMSGWIN_PrintStrBufColor( FLDMSGWIN *msgWin,
 
 //--------------------------------------------------------------
 /**
+ * メッセージウィンドウ　メッセージ表示 GFL_FONT指定
+ * @param	msgWin	FLDMSGWIN
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param	strBuf	STRBUF
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_PrintStrBufColorFontHandle( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *font_handle )
+{
+	FLDMSGPRINT_PrintStrBufColorFontHandle( msgWin->msgPrint, x, y, strBuf, color, font_handle );
+}
+
+//--------------------------------------------------------------
+/**
  * メッセージウィンドウ　転送終了チェック
  * @param	msgWin	FLDMSGWIN
  * @retval	BOOL	TRUE=転送終了
@@ -1219,13 +1251,19 @@ FLDSYSWIN * FLDSYSWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
  * @param pltt_no 使用するパレット番号
+ * @param call_back    BMPMENULIST_HEADERのカーソル移動ごとのコールバック関数指定(NULL可)
+ * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
+ * @param work    BMPMENULIST_HEADERにセットするワーク(BmpMenuList_GetWorkPtrで取り出す。NULL可)
  * @retval	FLDMENUFUNC*
  */
 //--------------------------------------------------------------
 static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData,
-  u16 list_pos, u16 cursor_pos, u16 pltt_no )
+  u16 list_pos, u16 cursor_pos, u16 pltt_no,
+  BMPMENULIST_CURSOR_CALLBACK callback,
+  BMPMENULIST_PRINT_CALLBACK icon,
+  void *work )
 {
 	FLDMENUFUNC *menuFunc;
 	BMPMENULIST_HEADER menuH;
@@ -1250,6 +1288,8 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	menuH.font_handle = fmb->fontHandle;
 	menuH.win = menuFunc->bmpwin;
 	menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
+	menuH.icon = icon;
+	menuH.work = work;
 	
 	menuFunc->pMenuListWork =
 		BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
@@ -1261,6 +1301,35 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
     setBlendAlpha( TRUE );
   }
 	return( menuFunc );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC メニュー追加　BMPリストの1列表示後とのコールバック指定有り版
+ * @param	fmb	FLDMSGBG
+ * @param	pMenuHead FLDMENUFUNC_HEADER
+ * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param list_pos リスト初期位置
+ * @param cursor_pos カーソル初期位置
+ * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
+ * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
+ * @param work    BMPMENULIST_HEADERにセットするワーク(BmpMenuList_GetWorkPtrで取り出す。NULL可)
+ * @retval	FLDMENUFUNC*
+ */
+//--------------------------------------------------------------
+FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos,
+  BMPMENULIST_CURSOR_CALLBACK callback,
+  BMPMENULIST_PRINT_CALLBACK icon,
+  void *work )
+{
+	FLDMENUFUNC *menuFunc;
+  fmb->deriveWin_plttNo = PANO_FONT;
+  menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
+    list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, icon, work );
+  return( menuFunc );
 }
 
 //--------------------------------------------------------------
@@ -1279,11 +1348,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 	FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos )
 {
-	FLDMENUFUNC *menuFunc;
-  fmb->deriveWin_plttNo = PANO_FONT;
-  menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
-    list_pos, cursor_pos, fmb->deriveWin_plttNo );
-  return( menuFunc );
+  return FLDMENUFUNC_AddMenuListEx(fmb, pMenuHead, pMenuListData, list_pos, cursor_pos, NULL, NULL, NULL);
 }
 
 //--------------------------------------------------------------
@@ -1322,7 +1387,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
 {
 	FLDMENUFUNC *menuFunc;
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
-    list_pos, cursor_pos, fmb->deriveWin_plttNo );
+    list_pos, cursor_pos, fmb->deriveWin_plttNo, NULL, NULL, NULL );
   
   if( cancel == FALSE ){
     BmpMenuList_SetCancelMode(
@@ -1639,7 +1704,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
   
 	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = fldmenufunc_AddMenuList( fmb, &menuH, listData,
-      0, cursor_pos, fmb->deriveWin_plttNo );
+      0, cursor_pos, fmb->deriveWin_plttNo, NULL, NULL, NULL );
   
 #if 0 //Bキャンセル無効
   BmpMenuList_SetCancelMode(

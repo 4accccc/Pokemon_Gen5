@@ -13,6 +13,7 @@
 #include "print/printsys.h"
 #include "print/gf_font.h"
 #include "system/talkmsgwin.h"
+#include "system/bmp_menulist.h"
 
 //======================================================================
 //  define
@@ -181,6 +182,8 @@ extern void FLDMSGPRINT_PrintColor(
     FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID, PRINTSYS_LSB color );
 extern void FLDMSGPRINT_PrintStrBuf(
   FLDMSGPRINT *msgPrint, u32 x, u32 y, STRBUF *strBuf );
+extern void FLDMSGPRINT_PrintStrBufColorFontHandle( FLDMSGPRINT *msgPrint,
+    u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *fontHandle );
 extern void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
     u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color );
 extern BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint );
@@ -203,6 +206,8 @@ extern void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID );
 extern void FLDMSGWIN_PrintStrBuf( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
 extern void FLDMSGWIN_PrintStrBufColor( FLDMSGWIN *msgWin,
     u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color );
+extern void FLDMSGWIN_PrintStrBufColorFontHandle( 
+  FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *font_handle );
 extern BOOL FLDMSGWIN_CheckPrintTrans( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_FillClearWindow(
@@ -226,6 +231,13 @@ extern void FLDMSGBG_TransMsgWindowFrame( HEAPID heapID, int bgFrame );
 
 
 //ÉÅÉjÉÖÅ[
+extern FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos,
+  BMPMENULIST_CURSOR_CALLBACK callback,
+  BMPMENULIST_PRINT_CALLBACK icon,
+  void *work );
 extern FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
   const FLDMENUFUNC_HEADER *pMenuHead,
   FLDMENUFUNC_LISTDATA *pMenuListData,
