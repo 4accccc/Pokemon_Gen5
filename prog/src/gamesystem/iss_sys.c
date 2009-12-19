@@ -23,6 +23,7 @@
 //=========================================================================================
 // ■定数
 //=========================================================================================
+#define ISS_ON                   // ISS動作スイッチ
 #define INVALID_BGM_NO (0xffff)  // 再生中BGM番号の無効値
 
 
@@ -116,8 +117,10 @@ void ISS_SYS_Delete( ISS_SYS* sys )
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( sys );
 
+#ifdef ISS_ON
 	// 9, 10トラックの音量を元に戻す
   PMSND_ChangeBGMVolume( (1<<8)|(1<<9), 127 );
+#endif
 }
 
 //-----------------------------------------------------------------------------------------
@@ -129,6 +132,7 @@ void ISS_SYS_Delete( ISS_SYS* sys )
 //-----------------------------------------------------------------------------------------
 void ISS_SYS_Update( ISS_SYS* sys )
 { 
+#ifdef ISS_ON
 	// BGM変更チェック
 	BGMChangeCheck( sys );
 
@@ -141,6 +145,7 @@ void ISS_SYS_Update( ISS_SYS* sys )
 	ISS_DUNGEON_SYS_Update( sys->issD ); // ダンジョンISS 
   ISS_ZONE_SYS_Update( sys->issZ );    // ゾーンISS 
   ISS_SWITCH_SYS_Update( sys->issS );  // スイッチISS
+#endif
 }
 	
 
@@ -154,6 +159,7 @@ void ISS_SYS_Update( ISS_SYS* sys )
 //-----------------------------------------------------------------------------------------
 void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id )
 {
+#ifdef ISS_ON
 	PLAYER_WORK* player;
 	PLAYER_MOVE_FORM form;
 
@@ -169,6 +175,7 @@ void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id )
 	ISS_CITY_SYS_ZoneChange( sys->issC, next_zone_id );    // 街ISS 
 	ISS_DUNGEON_SYS_ZoneChange( sys->issD, next_zone_id ); // ダンジョンISS 
   ISS_ZONE_SYS_ZoneChange( sys->issZ, next_zone_id );    // ゾーンISS
+#endif
 }
 
 //-----------------------------------------------------------------------------------------
@@ -199,6 +206,7 @@ ISS_SWITCH_SYS* ISS_SYS_GetIssSwitchSystem( const ISS_SYS* sys )
 //-----------------------------------------------------------------------------------------
 static void BGMChangeCheck( ISS_SYS* sys )
 {
+#ifdef ISS_ON
 	int bgm_no, iss_type;
 	BGM_INFO_SYS* bgm_info_sys = GAMEDATA_GetBGMInfoSys( sys->gdata );
 	PLAYER_WORK*        player = GAMEDATA_GetMyPlayerWork( sys->gdata );
@@ -260,4 +268,5 @@ static void BGMChangeCheck( ISS_SYS* sys )
 
   // BGM番号を記憶
   sys->bgmNo = bgm_no;
+#endif
 } 
