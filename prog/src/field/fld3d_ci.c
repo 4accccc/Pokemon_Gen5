@@ -83,7 +83,6 @@ typedef struct FLD3D_CI_tag
 
   BOOL VoicePlayFlg;
   int SePlayWait;
-  int VoiceVolOfs;
   u32 VoicePlayerIdx;
 
   SETUP_CALLBACK SetupCallBack;
@@ -562,7 +561,6 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         if ( ptr->VoicePlayFlg )
         {
           GMEVENT * call_event;
-          ptr->VoiceVolOfs = 0;
           call_event = GMEVENT_Create(gsys, event, VoiceFadeOutEvt, 0);
           GMEVENT_CallEvent(event, call_event);
         }
@@ -1469,6 +1467,8 @@ static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work )
   FLD3D_CI_PTR ptr;
   FLD3D_CI_EVENT_WORK *evt_work;
 
+  s8 volume;
+
   //親イベントからワークポインタを取得
   {
     GMEVENT * parent = GMEVENT_GetParentEvent(event);
@@ -1479,10 +1479,15 @@ static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work )
   //鳴き声なっていないなら、終了
   if ( !PMV_CheckPlay() ) return GMEVENT_RES_FINISH;
 
-  if ( ptr->VoiceVolOfs < 127){
-    	PMV_SetVolume( ptr->VoicePlayerIdx, -ptr->VoiceVolOfs);
-      ptr->VoiceVolOfs += VOICE_VOL_OFS;
-  }else
+  volume = PMVOICE_GetVolume( ptr->VoicePlayerIdx );
+
+  if ( volume > 0){
+    volume -= VOICE_VOL_OFS;
+    if ( volume < 0 ) volume = 0;
+
+    PMV_SetVolume( ptr->VoicePlayerIdx, volume );
+  }
+  else
   {
     PMV_StopVoice();
     return GMEVENT_RES_FINISH;
