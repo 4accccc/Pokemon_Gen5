@@ -142,6 +142,7 @@ typedef struct {
   BOOL menuRequest; ///<メニューオープン操作があったかどうか
   BOOL moveRequest; ///<一歩移動終了タイミングかどうか
   BOOL stepRequest; ///<振り向きor一歩移動終了タイミングかどうか
+  BOOL dirPosRequest; ///<方向つきPOSイベントのチェックをするタイミングか？
   BOOL pushRequest; ///<押し込み操作があったかどうか
   BOOL convRequest; ///<便利ボタン操作があったかどうか
 
@@ -207,6 +208,7 @@ static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 static GMEVENT* checkPosEvent( EV_REQUEST* req );
 static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir );
 static GMEVENT* checkPosEvent_OnlyDirection( EV_REQUEST * req );
+static GMEVENT* checkPosEvent_prefetchDirection( EV_REQUEST * req );
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 
 //--------------------------------------------------------------
@@ -336,7 +338,16 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
-	
+  //POSイベント：方向指定ありチェックその２
+  //if ( req->player_state != PLAYER_MOVE_STATE_END && req->player_value == PLAYER_MOVE_VALUE_TURN )
+  {
+    event = checkPosEvent_prefetchDirection( &req );
+    if (event)
+    {
+      return event;
+    }
+  }
+  
   //戦闘移行チェック
   { //ノーマルエンカウントイベント起動チェック
     GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
@@ -344,7 +355,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return enc_event;
     }
   }
-  
+
 
   //看板イベントチェック
   /*
@@ -1055,6 +1066,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }else if( req->stepRequest ) {
     IWASAWA_Printf( "Req->StepRequst\n");
   }
+  req->dirPosRequest = FALSE;
+  if ( req->player_state != PLAYER_MOVE_STATE_END && req->player_value == PLAYER_MOVE_VALUE_TURN )
+  {
+    req->dirPosRequest = TRUE;
+  } 
   if ( ( (req->player_dir == DIR_UP) && (req->key_cont & PAD_KEY_UP) )
       || ( (req->player_dir == DIR_DOWN) && (req->key_cont & PAD_KEY_DOWN) )
       || ( (req->player_dir == DIR_LEFT) && (req->key_cont & PAD_KEY_LEFT) )
@@ -1080,6 +1096,10 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->convRequest = FALSE;
   }
     
+  if (req->key_cont & PAD_BUTTON_L) {
+    TAMADA_Printf("KEY:%04x PSTATE:%d PVALUE:%d DIR:%d\n",
+        req->key_cont & 0xff, req->player_state, req->player_value, req->player_dir );
+  }
 }
 
 
@@ -1188,7 +1208,92 @@ static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
     return NULL;
   }
   //現在の向き意外に、キーの先読みで自機が向く方向もチェック
-  return checkPosEvent_core( req, next_dir );
+  event = checkPosEvent_core( req, next_dir );
+  if ( event )
+  {
+    OS_Printf( " dir pos event!!\n" );
+    return event;
+  }
+  return NULL;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
+{
+  GMEVENT * event;
+  FIELD_PLAYER_GRID * fpg;
+  u16 key_dir = DIR_NOT;
+  int st = req->player_state;
+  int val = req->player_value;
+  //if ( req->player_state == PLAYER_MOVE_STATE_END ) return NULL;
+  //if ( req->player_value == PLAYER_MOVE_VALUE_WALK ) return NULL;
+
+  if ( req->debugRequest ) return NULL;
+
+  if ( req->key_cont & PAD_KEY_UP    ) {
+    key_dir = DIR_UP;
+  } else if ( req->key_cont & PAD_KEY_DOWN  ) {
+    key_dir = DIR_DOWN;
+  } else if ( req->key_cont & PAD_KEY_LEFT  ) {
+    key_dir = DIR_LEFT;
+  } else if ( req->key_cont & PAD_KEY_RIGHT ) {
+    key_dir = DIR_RIGHT;
+  }
+
+#if 0
+  switch ( val )
+  {
+  case PLAYER_MOVE_VALUE_STOP:
+    GF_ASSERT( st == PLAYER_MOVE_STATE_OFF );
+    break;
+  case PLAYER_MOVE_VALUE_WALK:
+  case PLAYER_MOVE_VALUE_TURN:
+    GF_ASSERT( st != PLAYER_MOVE_STATE_OFF );
+    break;
+  }
+#endif
+  if ( key_dir == req->player_dir ) return NULL;
+  if ( key_dir == DIR_NOT ) return NULL;
+
+  switch ( st )
+  {
+  //case PLAYER_MOVE_STATE_OFF:
+  case PLAYER_MOVE_STATE_START:
+  case PLAYER_MOVE_STATE_ON:
+    return NULL;
+  //case PLAYER_MOVE_STATE_END:
+  }
+
+  fpg = FIELDMAP_GetPlayerGrid( req->fieldWork );
+  if ( fpg == NULL )
+  {
+    return NULL;
+  }
+#if 0
+  if ( FIELD_PLAYER_GRID_GetMoveValue( fpg, key_dir ) == PLAYER_MOVE_VALUE_STOP )
+  {
+    return NULL;
+  }
+  switch ( val )
+  {
+  case PLAYER_MOVE_VALUE_STOP:
+    if
+  case PLAYER_MOVE_VALUE_WALK:
+  case PLAYER_MOVE_VALUE_TURN:
+  }
+#endif
+  event = checkPosEvent_core( req, key_dir );
+#if 0
+  if ( event )
+  {
+    OS_Printf( " prefetch dir pos event!!\n" );
+  } else if ( req->key_cont & PAD_BUTTON_L ) {
+    OS_Printf( " prefetch dir pos not!!\n" );
+  }
+#endif
+
+  return event;
 }
 
 //--------------------------------------------------------------
