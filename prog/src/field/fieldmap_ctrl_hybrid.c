@@ -336,15 +336,19 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   MAPATTR_VALUE value;
   MMDL * mmdl;
   u16 dir;
+  u16 set_dir;
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
+
   if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK)
   {
     dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
+    set_dir = dir;
   }
   else
   {
     dir = MMDL_GetDirMove( mmdl );
+    set_dir = MMDL_GetDirDisp( mmdl );
   }
 
 
@@ -374,7 +378,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
           // 動作チェンジ
           FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
           
-          mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir, &location );
+          mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, set_dir, &location );
           p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
           return ;
         }
@@ -402,16 +406,19 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   MAPATTR_VALUE value;
   MMDL * mmdl;
   u16 dir;
+  u16 set_dir;
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
   if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK)
   {
     dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
+    set_dir = dir;
   }
   else
   {
     dir = MMDL_GetDirMove( mmdl );
+    set_dir = MMDL_GetDirDisp( mmdl );
   }
 
 
@@ -440,7 +447,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         {
           // 動作チェンジ
           FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
-          mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir, &pos );
+          mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, set_dir, &pos );
           p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
           return ;
         }
@@ -579,7 +586,6 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   MMDL* p_mmdl;
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-  u16 draw_dir;
 
   if( p_wk->base_type == type )
   {
@@ -589,9 +595,6 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   
   p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  // 方向は最終的な見た目で決める
-  draw_dir = MMDL_GetDirDisp( p_mmdl );
-  
   // アニメーションの停止
   MMDL_FreeAcmd( p_mmdl );
   
@@ -621,7 +624,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
 
     //  座標を設定
     {
-      MMDL_InitGridPosition( p_mmdl, SIZE_GRID_FX32( pos.x ), SIZE_GRID_FX32( pos.y ), SIZE_GRID_FX32( pos.z ), draw_dir );
+      MMDL_InitGridPosition( p_mmdl, SIZE_GRID_FX32( pos.x ), SIZE_GRID_FX32( pos.y ), SIZE_GRID_FX32( pos.z ), dir );
       
       MMDL_GetVectorPos( p_mmdl, &pos );
     }
@@ -645,7 +648,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   }
 
   // 方向を合わせる
-  MMDL_SetDirDisp( p_mmdl, draw_dir );
+  MMDL_SetDirDisp( p_mmdl, dir );
   MMDL_SetDirMove( p_mmdl, dir );
 
   p_wk->base_type = type;
