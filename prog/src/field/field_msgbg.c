@@ -1289,6 +1289,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	menuH.win = menuFunc->bmpwin;
 	menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
 	menuH.icon = icon;
+	menuH.call_back = callback;
 	menuH.work = work;
 	
 	menuFunc->pMenuListWork =
