@@ -26,6 +26,7 @@ extern "C"{
 #include "field_fog.h"
 #include "field_zonefog.h"
 #include "field_3dbg.h"
+#include "field_oam_pal.h"
 
 #include "weather_snd.h"
 
@@ -90,7 +91,7 @@ typedef enum {
 ///	リソース情報
 //=====================================
 #define WEATHER_TASK_GRAPHIC_OAM_PLTT_NUM_MAX	( 1 )		// パレットのサイズ
-#define WEATHER_TASK_GRAPHIC_OAM_PLTT_OFS		( 0*32 )	// パレットの転送位置
+#define WEATHER_TASK_GRAPHIC_OAM_PLTT_OFS		( FLDOAM_PALNO_WEATHER*32 )	// パレットの転送位置
 
 
 //-------------------------------------

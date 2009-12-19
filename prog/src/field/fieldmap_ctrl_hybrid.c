@@ -234,6 +234,9 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
     base_type = PLAYERWORK_getPosType( cp_playerwk );
     p_wk->base_type = FLDMAP_BASESYS_MAX;
 
+    // モデルの向きをDIRにする
+    FIELD_PLAYER_SetDir( p_wk->p_player, dir );
+
 
     // base_typeに移動システムを遷移
     if( base_type == FLDMAP_BASESYS_GRID )
