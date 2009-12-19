@@ -399,12 +399,6 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
   #endif
 #else //侵入用に名前固定ではなく、ランダムで決定するようにした
-    {
-      int i;
-      for(i = 0; i < 100; i++){
-        OS_TPrintf("rand = %d\n", GFUser_GetPublicRand(2));
-      }
-    }
     if(GFUser_GetPublicRand(2) & 1){
       namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_M_000 + GFUser_GetPublicRand(8) );
       sex = PM_MALE;
