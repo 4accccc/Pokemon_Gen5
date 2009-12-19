@@ -64,8 +64,9 @@ struct _MB_DATA_WORK
 
   s32 lockID_;  //カードロック用ID
   MATHCRC16Table  crcTable_;  //CRCチェック用テーブル
-
-  DLPLAY_CARD_TYPE  cardType; //本体に刺さっているカードの種類
+  
+  BOOL  isDummyCard;
+  DLPLAY_CARD_TYPE  cardType;     //本体に刺さっているカードの種類(デバッグ時に選択したROMがのる
   u8          boxSavePos;  //ボックスデータの新しい方
   u8          mainSavePos; //メインデータの新しい方
 

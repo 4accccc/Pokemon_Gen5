@@ -9,6 +9,7 @@
 //======================================================================
 #include <gflib.h>
 #include <string.h>
+#include <nitro/irc.h>
 #include "system/gfl_use.h"
 #include "./pt_save.h"
 #include "arc_def.h"
@@ -72,7 +73,14 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
     dataWork->lockID_ = OS_GetLockID();
     GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
     //プラチナは4MBフラッシュ
-    CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
+    if( dataWork->isDummyCard == TRUE )
+    {
+      CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
+    }
+    else
+    {
+      CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
+    }
     CARD_LockBackup( (u16)dataWork->lockID_ );
     CARD_ReadFlashAsync( 0x0000 , dataWork->pData , saveSize , NULL , NULL );
     dataWork->subSeq++;

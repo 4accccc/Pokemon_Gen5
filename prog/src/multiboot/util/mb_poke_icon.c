@@ -21,6 +21,7 @@
 
 #include "pokeicon/pokeicon.h"
 
+#define USE_DUMMY_ICON (1)
 
 //======================================================================
 //	define
@@ -55,33 +56,13 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
   arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON ,heapId );
   //arcHandle = GFL_ARC_OpenDataHandleByFilePath("a/0/1/0",heapId);
 #else                    //DL子機時処理
-
+#if USE_DUMMY_ICON
+    arcHandle = GFL_ARC_OpenDataHandle(ARCID_MB_SELECT,heapId);
+#else  
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
     arcHandle = GFL_ARC_OpenDataHandleByFilePath("poketool/icongra/poke_icon.narc",heapId);
-    {
-      u8 i;
-      FSDirectoryEntryInfo info[3];
-      FSFile file;
-      BOOL ret;
-      int result;
-      int resultArr[3];
-      FS_InitFile( &file );
-      ret = FS_OpenDirectory( &file , "/poketool/" , 0 );
-      result = FS_GetResultCode(&file);
-      for( i=0;i<3;i++ )
-      {
-        FS_ReadDirectory( &file , &info[i] );
-        resultArr[i] = FS_GetResultCode(&file);
-      }
-      GF_ASSERT_MSG( 0 , "[%d][%d]\n[%d][%s]\n[%d][%s]\n[%d][%s]\n"
-                          , ret , result
-                          ,resultArr[0],info[0].longname 
-                          ,resultArr[1],info[1].longname 
-                          ,resultArr[2],info[2].longname );
-      
-    }
     break;
   case CARD_TYPE_PT:   //プラチナ
 #if 0
@@ -131,6 +112,7 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
     arcHandle = GFL_ARC_OpenDataHandle(ARCID_MB_SELECT,heapId);
     break;
   }
+#endif  //USE_DUMMY_ICON
 #endif //MULTI_BOOT_MAKE
 
   return arcHandle;
@@ -145,6 +127,9 @@ u32 MB_ICON_GetPltResId( const DLPLAY_CARD_TYPE cardType )
 #ifndef MULTI_BOOT_MAKE  //通常時処理
   return POKEICON_GetPalArcIndex();
 #else                    //DL子機時処理
+#if USE_DUMMY_ICON
+    return NARC_mb_select_gra_icon_dummy_NCLR;
+#endif 
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
@@ -167,6 +152,9 @@ u32 MB_ICON_GetCharResId( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardT
 #ifndef MULTI_BOOT_MAKE  //通常時処理
   return POKEICON_GetCgxArcIndex(ppp);
 #else                    //DL子機時処理
+#if USE_DUMMY_ICON
+    return NARC_mb_select_gra_icon_dummy_NCGR;
+#endif 
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
@@ -189,6 +177,9 @@ u32 MB_ICON_GetCellResId( const DLPLAY_CARD_TYPE cardType )
 #ifndef MULTI_BOOT_MAKE  //通常時処理
   return POKEICON_GetCellArcIndex();
 #else                    //DL子機時処理
+#if USE_DUMMY_ICON
+    return NARC_mb_select_gra_icon_dummy_NCER;
+#endif 
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
@@ -212,6 +203,9 @@ u32 MB_ICON_GetAnmResId( const DLPLAY_CARD_TYPE cardType )
 #ifndef MULTI_BOOT_MAKE  //通常時処理
   return POKEICON_GetAnmArcIndex();
 #else                    //DL子機時処理
+#if USE_DUMMY_ICON
+    return NARC_mb_select_gra_icon_dummy_NANR;
+#endif 
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール

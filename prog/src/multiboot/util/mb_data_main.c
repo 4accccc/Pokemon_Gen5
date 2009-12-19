@@ -65,6 +65,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->isFinishSaveSecond = FALSE;
   dataWork->permitLastSaveFirst = FALSE;
   dataWork->permitLastSaveSecond = FALSE;
+  dataWork->isDummyCard = FALSE;
   MATH_CRC16CCITTInitTable( &dataWork->crcTable_ ); //CRC‰Šú‰»
 
   {
@@ -101,6 +102,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
              STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
     {
       //MB‚ÅƒoƒOROM‚©srl’¼‹N“®
+      dataWork->isDummyCard = TRUE;
       dataWork->cardType = CARD_TYPE_DUMMY;
     }
   }

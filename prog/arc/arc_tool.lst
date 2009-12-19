@@ -248,3 +248,4 @@
   ARCID_PL_BTD_TR "pl_btdtr.narc" #PLバトルタワートレーナーデータ
   ARCID_PL_BTD_PM "pl_btdpm.narc" #PLバトルタワーポケモンデータ
   ARCID_INTRO_GRA "intro.narc" #イントロデモ用グラフィックデータ
+  ARCID_COMM_TVT_GRA "comm_tvt.narc" #通信トランシーバー
