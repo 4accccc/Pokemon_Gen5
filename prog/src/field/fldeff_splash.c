@@ -204,7 +204,13 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
-  
+
+  {
+    VecFx32 pos;
+    MMDL_GetVectorPos( work->head.mmdl, &pos );
+    pos.z += SPLASH_DRAW_Z_OFFSET;
+    FLDEFF_TASK_SetPos( task, &pos );
+  }
 //即反映すると親がjointフラグがセットされていない状態。
 //  FLDEFF_TASK_CallUpdate( task );
 }
@@ -237,9 +243,11 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SPLASH *work = wk;
   
-  if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == FALSE ){
-    FLDEFF_TASK_CallDelete( task );
-    return;
+  if( work->head.joint == TRUE ){
+    if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
   }
   
   if( work->head.joint == TRUE ){
@@ -256,7 +264,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
     }
   }
   
-  {
+  if( work->head.joint == TRUE ){
     VecFx32 pos;
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     pos.z += SPLASH_DRAW_Z_OFFSET;

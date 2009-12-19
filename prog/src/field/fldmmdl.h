@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
+#include "include/field/fieldmap_proc.h"
 #include "include/field/field_dir.h"
 
 #include "field_g3dobj.h"
@@ -678,6 +679,7 @@ extern MMDLSYS * MMDLSYS_CreateSystem(
 extern void MMDLSYS_FreeSystem( MMDLSYS *fos );
 
 extern void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+    GAMEDATA *gdata, FIELDMAP_WORK *fieldmap,
     const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper );
 extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
@@ -744,9 +746,8 @@ extern MMDL_G3DOBJCONT * MMDLSYS_GetG3dObjCont( MMDLSYS *mmdlsys );
 
 extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
 extern FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos );
-extern void MMDLSYS_SetFieldMapWork(
-    MMDLSYS *fos, void *fieldMapWork );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
+extern GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *fos );
 extern u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys );
 
 extern void MMDL_OnStatusBit( MMDL *mmdl, MMDL_STABIT bit );

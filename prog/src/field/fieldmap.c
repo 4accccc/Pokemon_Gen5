@@ -2121,10 +2121,10 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
 		
 	fieldWork->fldMMdlSys = fmmdlsys;
-	MMDLSYS_SetFieldMapWork( fmmdlsys, fieldWork );
-
+  
 	MMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
-		fieldWork->heapID, fieldWork->g3Dmapper, fieldWork->nogridMapper );
+		fieldWork->heapID, gdata, fieldWork,
+    fieldWork->g3Dmapper, fieldWork->nogridMapper );
 	
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );

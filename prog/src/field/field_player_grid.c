@@ -714,7 +714,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder( FIELD_PLAYER_GRID *gjiki,
 
 //--------------------------------------------------------------
 /**
- * キー入力による自機移動オーダーを取得
+ * 指定方向を自機に渡すとPLAYER_MOVE_VALUEはどうなるかチェック
  * @param gjiki FIELD_PLAYER_GRID
  * @param dir キー入力方向
  * @retval PLAYER_MOVE_VALUE

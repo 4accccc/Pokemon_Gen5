@@ -90,7 +90,8 @@ struct _TAG_MMDLSYS
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
   
   void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
-  
+  GAMEDATA *gdata;
+
   MMDL_ROCKPOS *rockpos; ///<かいりき岩座標 セーブデータポインタ
   
   const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
@@ -363,17 +364,20 @@ void MMDLSYS_FreeSystem( MMDLSYS *fos )
  */
 //--------------------------------------------------------------
 void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+    GAMEDATA *gdata, FIELDMAP_WORK *fieldmap,
     const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
 {
 	fos->heapID = heapID;
 	fos->pG3DMapper = pG3DMapper;
-	
+  fos->gdata = gdata;
+  fos->fieldMapWork = fieldmap;
+  
 	MMdlSys_InitOBJCodeParam( fos );
 	
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(
 		heapID, GFL_TCB_CalcSystemWorkSize(fos->mmdl_max) );
 	fos->pTCBSys = GFL_TCB_Init( fos->mmdl_max, fos->pTCBSysWork );
-
+  
   fos->arcH_res = GFL_ARC_OpenDataHandle( ARCID_MMDL_RES, heapID );
   
   // ノーグリッド移動設定
@@ -1641,20 +1645,6 @@ const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos )
 
 //--------------------------------------------------------------
 /**
- * MMDLSYS FIELDMAP_WORKセット
- * @param mmdlsys MMDLSYS
- * @param fieldMapWork FIELDMAP_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-void MMDLSYS_SetFieldMapWork(
-    MMDLSYS *fos, void *fieldMapWork )
-{
-  fos->fieldMapWork = fieldMapWork;
-}
-
-//--------------------------------------------------------------
-/**
  * MMDLSYS FIELDMAP_WORK取得
  * @param mmdlsys MMDLSYS
  * @retval fieldMapWork FIELDMAP_WORK
@@ -1664,6 +1654,19 @@ void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos )
 {
   GF_ASSERT( fos->fieldMapWork != NULL );
   return( fos->fieldMapWork );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS GAMEDATA取得
+ * @param mmdlsys MMDLSYS
+ * @retval GAMEDATA*
+ */
+//--------------------------------------------------------------
+GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *fos )
+{
+  GF_ASSERT( fos->gdata != NULL );
+  return( fos->gdata );
 }
 
 //--------------------------------------------------------------
