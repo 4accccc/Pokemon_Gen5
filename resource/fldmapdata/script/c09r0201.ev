@@ -23,6 +23,8 @@ _EVENT_DATA    ev_c09r0201_bigfour2_01
 _EVENT_DATA    ev_pos_c09r0201_enter_01
 _EVENT_DATA    ev_pos_c09r0201_warp_01
 _EVENT_DATA    ev_zone_c09r0201
+_EVENT_DATA    ev_init_c09r0201
+_EVENT_DATA    ev_recover_c09r0201
 _EVENT_DATA_END
 
 
@@ -35,6 +37,43 @@ _EVENT_DATA_END
 
 
 /************************************************************/
+/*				フィールドイニットスクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c09r0201
+	//四天王（あく）倒しているならワープPOSイベントを有効にする
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) THEN
+		
+		//ローカル定義
+		DEFINE_LOCAL	BM_ANIME_ID_INIT
+		
+		//配置モデルのアニメをループ再生
+		_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID_INIT, 18, 8 )
+		
+	ENDIF
+
+INIT_EVENT_END
+
+
+/************************************************************/
+/*				フィールドリカバースクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c09r0201
+	
+	//四天王（あく）倒しているならワープPOSイベントを有効にする
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) THEN
+		
+		//ローカル定義
+		DEFINE_LOCAL	BM_ANIME_ID_RECV
+		
+		//配置モデルのアニメをループ再生
+		_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID_RECV, 18, 8 )
+		
+	ENDIF
+
+INIT_EVENT_END
+
+
+/************************************************************/
 /*					ゾーンチェンジスクリプト				*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c09r0201
@@ -43,7 +82,6 @@ INIT_EVENT_START	ev_zone_c09r0201
 	IF FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) THEN
 		$LOCALWORK10 = 555
 	ENDIF
-	
 	
 INIT_EVENT_END
 
@@ -71,6 +109,21 @@ EVENT_START	ev_c09r0201_bigfour2_01
 			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_01 )
 			_MSGWIN_CLOSE()
 			
+			
+			//========================================//
+			
+			//戦闘終了後にワープのアニメを再生させるため、マップ構築前に勝利フラグをたてておく
+			//負けた場合はC09でリセットされるので問題なし
+			
+			//四天王（ギーマ）勝利フラグをセット
+			_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
+			
+			//ワープPOSイベントを有効
+			$LOCALWORK10 = 555
+			
+			//========================================//
+			
+			
 			//トレーナー戦呼び出し
 			_TRAINER_BTL_SET( TRID_BIGFOUR2_01, 0 )
 			//敗戦チェック
@@ -81,15 +134,6 @@ EVENT_START	ev_c09r0201_bigfour2_01
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 			
-			//========================================//
-			
-			//四天王（ギーマ）勝利フラグをセット
-			_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
-			
-			//ワープPOSイベントを有効
-			$LOCALWORK10 = 555
-			
-			//========================================//
 			
 			//戦闘後メッセージ 四天王討伐状況で修正
 			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
@@ -192,11 +236,50 @@ EVENT_END
 /*					螺旋を登るposイベント					*/
 /************************************************************/
 EVENT_START	ev_pos_c09r0201_enter_01
+	//ローカル定義
+	DEFINE_LOCAL	BM_ANIME_ID
+	
+	//ドアアニメコントローラの作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID, SCR_BMID_NULL, 15, 15 )
+	
+	//ドアを地面下に下げておく ※アニメを再生させすぐに停止させることで降りた状態を表現しています）
+	_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_STOP( BM_ANIME_ID )
+	
 	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 2 )
 	
+	//主人公：上を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公：上へ進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ドアが地面下から出てくる
+	_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID )
+	
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID )
+	
+	
 EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：上を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：上へ進む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ply_move_01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/
