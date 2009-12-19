@@ -107,12 +107,13 @@ static void debug_camera_test( GFL_G3D_CAMERA* camera )
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     GFL_G3D_CAMERA_GetPos( camera, &pos );
-    OS_Printf("pos { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    OS_Printf("pos { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
     GFL_G3D_CAMERA_GetCamUp( camera, &pos );
-    OS_Printf("CamUp { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    OS_Printf("CamUp { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
     GFL_G3D_CAMERA_GetTarget( camera, &pos );
-    OS_Printf("Taraget { 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    OS_Printf("Taraget { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
 }
+
 #endif
 
