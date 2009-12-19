@@ -596,8 +596,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='cyclehero' color_size='16' index='0'>
-		2e47 416b 28e7 61e8 4d47 4d7d 4158 3110 
-		1ca5 7779 3a7a 192f 5f5f 7fff 6af5 0000 
+		2e47 416d 28e9 61e8 4d47 4d7d 4158 3110 
+		1ca7 7779 3a7a 192f 5f5f 7fff 6af5 0000 
 	</tex_palette>
 </tex_palette_array>
 
