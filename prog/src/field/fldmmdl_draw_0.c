@@ -771,7 +771,7 @@ static void drawFishingHero_SetOffset(
   offs->x = 0;
   offs->y = 0;
   offs->z = 0;
-
+#if 0
   code = MMDL_GetOBJCode( mmdl );
   mmdlsys = MMDL_GetMMdlSys( mmdl );
   anmTbl = MMDL_BLACTCONT_GetObjAnimeTable( mmdlsys, code );
@@ -790,6 +790,7 @@ static void drawFishingHero_SetOffset(
       offs->x = -offs->x;
     }
   }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -841,6 +842,15 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
     pos.z += offs.z;
   }
   
+  { //64x64•â³
+    fx16 sizX = FX16_ONE*8-1;
+    fx16 sizY = FX16_ONE*8-1;
+    GFL_BBD_SetObjectSiz( GFL_BBDACT_GetBBDSystem(actSys),
+        work->actID, &sizX, &sizY );
+    pos.y += NUM_FX32( -12 );
+    pos.z += NUM_FX32( 8 );
+  }
+
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
