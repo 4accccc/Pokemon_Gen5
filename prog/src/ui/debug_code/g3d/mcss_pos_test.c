@@ -17,6 +17,8 @@
  */
 //=============================================================================
 
+#ifdef PM_DEBUG
+
 #define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
 
 static void debug_mcss_camera( MCSS_WORK* mcss_work )
@@ -72,3 +74,5 @@ static void debug_mcss_camera( MCSS_WORK* mcss_work )
   MCSS_SetPosition( mcss_work, &pos );
 }
 
+
+#endif
