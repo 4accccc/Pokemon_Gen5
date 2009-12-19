@@ -995,7 +995,7 @@ void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * l
 
   // ƒƒP[ƒVƒ‡ƒ“‚Ìæ“¾
   *location = work->now_location;
-  RAIL_LOCATION_Dump(location);
+  //RAIL_LOCATION_Dump(location);
 }
 
 //----------------------------------------------------------------------------
@@ -1098,7 +1098,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   GF_ASSERT( work->rail_dat );
 
 
-  RAIL_LOCATION_Dump(location);
+  //RAIL_LOCATION_Dump(location);
   // ‰Šú‰»
   clearRail( work, work->rail_dat );
 

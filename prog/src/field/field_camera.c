@@ -2428,11 +2428,6 @@ static void traceUpdate(FIELD_CAMERA * camera)
 
   GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &outTgt );
   GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &outCam );
-
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) {
-    TAMADA_Printf("inTGT:%3d inCAM:%3d ", FX_Whole(tgt.y), FX_Whole(cam.y) );
-    TAMADA_Printf("outTGT:%3d outCAM:%3d \n", FX_Whole(outTgt.y), FX_Whole(outCam.y) );
-  }
 }
 
 //----------------------------------------------------------------------------
