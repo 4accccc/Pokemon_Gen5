@@ -33,7 +33,7 @@
 
 
 #define POKE_VOICE_WAIT (5)
-
+#define VOICE_VOL_OFS (8)
 #ifdef PM_DEBUG
 
 #include "fieldmap.h" //for FIELDMAP_～
@@ -81,7 +81,10 @@ typedef struct FLD3D_CI_tag
   int Rare;
   BOOL Egg;
 
+  BOOL VoicePlayFlg;
   int SePlayWait;
+  int VoiceVolOfs;
+  u32 VoicePlayerIdx;
 
   SETUP_CALLBACK SetupCallBack;
 }FLD3D_CI;
@@ -138,7 +141,7 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work );
-
+static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work );
 
 static void ParticleCallBack(GFL_EMIT_PTR emit);
 static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo);
@@ -320,6 +323,7 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
   ptr->Sex = 0;
   ptr->Rare = 0;
   ptr->SePlayWait = POKE_VOICE_WAIT;
+  ptr->VoicePlayFlg = TRUE;
 
   GAMESYSTEM_SetEvent(gsys, event);
 }
@@ -349,6 +353,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   ptr->SetupCallBack = NULL;
   //ＳＥ無しでセット
   ptr->SePlayWait = 0;
+  ptr->VoicePlayFlg = FALSE;
   //イベント作成
   {
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
@@ -392,6 +397,7 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   ptr->Rare = inRare;
   ptr->Egg  = inEgg;
   ptr->SePlayWait = POKE_VOICE_WAIT;
+  ptr->VoicePlayFlg = TRUE;
 
   return event;
 }
@@ -540,18 +546,26 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
       //鳴き声再生    @todo
       {
-        if (ptr->SePlayWait)
+        if (ptr->VoicePlayFlg && ptr->SePlayWait)
         {
           ptr->SePlayWait--;
           if ( ptr->SePlayWait == 0 )
           {
-            PMV_PlayVoice( ptr->MonsNo, ptr->FormNo );
+            ptr->VoicePlayerIdx = PMV_PlayVoice( ptr->MonsNo, ptr->FormNo );
           }
         }
       }
 
-      if (rc1&&rc2&&rc3){
-        PMV_StopVoice();    //鳴き声なっているならストップ  @todo
+      if (rc1&&rc2&&rc3)
+      {
+        //PMV_StopVoice();    //鳴き声なっているならストップ  @todo
+        if ( ptr->VoicePlayFlg )
+        {
+          GMEVENT * call_event;
+          ptr->VoiceVolOfs = 0;
+          call_event = GMEVENT_Create(gsys, event, VoiceFadeOutEvt, 0);
+          GMEVENT_CallEvent(event, call_event);
+        }
         (*seq)++;
       }
     }
@@ -1438,4 +1452,43 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
     NOZOMU_Printf("::FLD3DCUTIN_HEAP_REST %x\n",size);
   }
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ポケモン鳴き声フェードアウトイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work )
+{
+  FLD3D_CI_PTR ptr;
+  FLD3D_CI_EVENT_WORK *evt_work;
+
+  //親イベントからワークポインタを取得
+  {
+    GMEVENT * parent = GMEVENT_GetParentEvent(event);
+    evt_work = GMEVENT_GetEventWork(parent);
+    ptr = evt_work->CiPtr;
+  }
+
+  //鳴き声なっていないなら、終了
+  if ( !PMV_CheckPlay() ) return GMEVENT_RES_FINISH;
+
+  if ( ptr->VoiceVolOfs < 127){
+    	PMV_SetVolume( ptr->VoicePlayerIdx, -ptr->VoiceVolOfs);
+      ptr->VoiceVolOfs += VOICE_VOL_OFS;
+  }else
+  {
+    PMV_StopVoice();
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
 
