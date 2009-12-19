@@ -37,6 +37,8 @@ typedef struct SORAWOTOBU_WORK_tag{
   const VecFx32 *Watch;
   int ZoneID;
   VecFx32 Pos;
+  int OutCutinNo;
+  int InCutinNo;
 }SORAWOTOBU_WORK;
 
 static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *work);
@@ -57,6 +59,21 @@ GMEVENT * EVENT_FieldSkillSorawotobu(
 //  wk->gdata = GAMESYSTEM_GetGameData(gsys);
 
   wk->ZoneID = inZoneID;
+
+  //性別でカットインナンバー分岐
+  {
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    if ( MyStatus_GetMySex( GAMEDATA_GetMyStatus( gdata ) ) == PTL_SEX_MALE )
+    {
+      wk->OutCutinNo = FLDCIID_FLY_OUT;
+      wk->InCutinNo = FLDCIID_FLY_IN;
+    }
+    else
+    {
+      wk->OutCutinNo = FLDCIID_FLY_OUT;
+      wk->InCutinNo = FLDCIID_FLY_IN;
+    }
+  }
 
   if( ZONEDATA_IsRailMap(inZoneID) )
   {
@@ -136,7 +153,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
       GMEVENT *child;
       //カットイン演出開始
-      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, FLDCIID_FLY_OUT);
+      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->OutCutinNo);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }
@@ -236,7 +253,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
       GMEVENT *child;
       //カットイン演出開始
-      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, FLDCIID_FLY_IN);
+      child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->InCutinNo);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }
@@ -246,14 +263,6 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
        FIELD_PLACE_NAME * p_sys = FIELDMAP_GetPlaceNameSys( fieldWork );
        FIELD_PLACE_NAME_DisplayForce( p_sys, wk->ZoneID );
-    }
-    //自機表示
-    {
-      MMDL * mmdl;
-      FIELD_PLAYER *fld_player;
-      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish(mmdl, FALSE);
     }
 
     {
@@ -291,3 +300,4 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
 
   return GMEVENT_RES_CONTINUE;
 }
+

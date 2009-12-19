@@ -34,6 +34,9 @@
 
 #define POKE_VOICE_WAIT (5)
 #define VOICE_VOL_OFS (8)
+
+#define FLYSKY_WHITE_FADE_SPD (-16)
+
 #ifdef PM_DEBUG
 
 #include "fieldmap.h" //for FIELDMAP_～
@@ -161,6 +164,12 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
 #endif  //PM_DEBUG
 
 static void ReTransToPokeGra(FLD3D_CI_PTR ptr);
+
+static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work );
+
+static BOOL IsFlySkyOut(const int inCutinNo);
+static BOOL IsFlySkyIn(const int inCutinNo);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -353,6 +362,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   //ＳＥ無しでセット
   ptr->SePlayWait = 0;
   ptr->VoicePlayFlg = FALSE;
+
   //イベント作成
   {
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
@@ -466,11 +476,17 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //表示状態の保存
     PushDisp(ptr);
     //カットイン共通ホワイトアウト処理
+
+    if ( IsFlySkyOut(ptr->CutInNo) )
+    {
+      GMEVENT* fade_event;
+      fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
+      GMEVENT_CallEvent(event, fade_event);
+    }
     (*seq)++;
     break;
   case 1:
-    //ホワイトアウト待ち
-    if (1){
+    {
       //キャプチャリクエスト
       ReqCapture(ptr);
       (*seq)++;
@@ -528,10 +544,15 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       GFL_HEAP_FreeMemory( ptr->chr_buf );
       GFL_HEAP_FreeMemory( ptr->pal_buf );
     }
-    //画面復帰
-    if (1){
-      (*seq)++;
+
+    if ( IsFlySkyOut(ptr->CutInNo) )
+    {
+      GMEVENT* fade_event;
+      fade_event = GMEVENT_Create(gsys, event, WhiteInEvt, 0);
+      GMEVENT_CallEvent(event, fade_event);
     }
+
+    (*seq)++;
     break;
   case 5:
     {
@@ -573,10 +594,26 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
-    //3D面をオフ(キャプチャ面が見えている)
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
-    //クリアカラーのアルファを元に戻す
-    G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
+    
+    //空を飛ぶフェードインの場合の処理
+    if ( IsFlySkyIn(ptr->CutInNo) )
+    {
+      //自機表示
+      MMDL * mmdl;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      MMDL_SetStatusBitVanish(mmdl, FALSE);
+      //戻ってきた場所はおそらく3Ｄクリアカラーが見えない場所のはずなので
+      //3Ｄ面オフの処理とクリアカラーのアルファセットの処理を行わない
+    }
+    else
+    {
+      //3D面をオフ(キャプチャ面が見えている)
+      GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+      //クリアカラーのアルファを元に戻す
+      G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
+    }
     (*seq)++;
     break;
   case 7:
@@ -623,41 +660,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDLSYS_ClearPauseMoveProc(mmdlsys);
     }
-#if 0
-    //マップ遷移を入れて、ＢＧのセットアップをする
-    {
-      GMEVENT * child;
-      int zone_id;
-      FIELD_PLAYER *fld_player;
-      PLAYER_WORK *player_work;
-      FLDMAP_CTRLTYPE map_type;
-
-      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      {
-        GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-        player_work = GAMEDATA_GetMyPlayerWork(gamedata);
-      }
-      zone_id = player_work->zoneID;
-
-      map_type = FIELDMAP_GetMapControlType( fieldmap );
-      
-      if (map_type == FLDMAP_CTRLTYPE_GRID){
-        VecFx32 pos;
-        //自機の座標
-        FIELD_PLAYER_GetPos( fld_player, &pos );
-        child = EVENT_ChangeMapPos(gsys, fieldmap,
-            zone_id, &pos, DIR_DOWN );
-      }
-      else{
-        RAIL_LOCATION rail_loc;
-        MMDL_GetRailLocation( FIELD_PLAYER_GetMMdl( fld_player ), &rail_loc );
-        child = DEBUG_EVENT_ChangeMapRailLocation(gsys, fieldmap,
-            zone_id, &rail_loc, DIR_DOWN );
-      }
-      //イベントコール
-      GMEVENT_CallEvent(event, child);
-    }
-#endif    
+    
     (*seq)++;
     break;
   case 8:
@@ -1495,5 +1498,114 @@ static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work )
   
   return GMEVENT_RES_CONTINUE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ホワイトアウトイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK * fieldmap;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLYSKY_WHITE_FADE_SPD );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      //自機を非表示
+      MMDL * mmdl;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      MMDL_SetStatusBitVanish(mmdl, TRUE);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ホワイトインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK * fieldmap;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, FLYSKY_WHITE_FADE_SPD );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 空を飛ぶアウトカットインか？
+ *
+ * @param   einCutinNo
+ *
+ * @return	BOOL    TRUE:アウトカットイン
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL IsFlySkyOut(const int inCutinNo)
+{
+  if (inCutinNo == FLDCIID_FLY_OUT) return TRUE;
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 空を飛ぶインカットインか？
+ *
+ * @param   einCutinNo
+ *
+ * @return	BOOL    TRUE:インカットイン
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL IsFlySkyIn(const int inCutinNo)
+{
+  if (inCutinNo == FLDCIID_FLY_IN) return TRUE;
+
+  return FALSE;
+}
+
+
 
 
