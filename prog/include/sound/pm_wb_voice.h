@@ -218,17 +218,25 @@ inline void	PMV_SetPan( u32 voicePlayerIdx, u8 pan)
 {
 	PMVOICE_SetPan(voicePlayerIdx, pan);
 }
-inline void	PMV_SetVolume( u32 voicePlayerIdx, int volOfs)
+inline void	PMV_SetVolume( u32 voicePlayerIdx, s8 volume)
 {
-	PMVOICE_SetVolume(voicePlayerIdx, volOfs);
+	PMVOICE_SetVolume(voicePlayerIdx, volume);
 }
-inline void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs)
+inline void	PMV_SetSpeed( u32 voicePlayerIdx, int speed)
 {
-	PMVOICE_SetSpeed(voicePlayerIdx, spdOfs);
+	PMVOICE_SetSpeed(voicePlayerIdx, speed);
 }
-inline void	PMV_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
+inline u8	PMV_GetPan( u32 voicePlayerIdx)
 {
-	PMVOICE_SetStatus(voicePlayerIdx, pan, volOfs, spdOfs);
+	return PMVOICE_GetPan(voicePlayerIdx);
+}
+inline s8	PMV_GetVolume( u32 voicePlayerIdx)
+{
+	return PMVOICE_GetVolume(voicePlayerIdx);
+}
+inline int	PMV_GetSpeed( u32 voicePlayerIdx)
+{
+	return PMVOICE_GetSpeed(voicePlayerIdx);
 }
 
 #endif

@@ -93,9 +93,13 @@ extern u32	PMVOICE_Play
  */
 //------------------------------------------------------------------
 extern void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan);
-extern void	PMVOICE_SetVolume( u32 voicePlayerIdx, int volOfs);
+extern void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volOfs);
 extern void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs);
-extern void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs );
+
+extern u8		PMVOICE_GetPan( u32 voicePlayerIdx);
+extern s8		PMVOICE_GetVolume( u32 voicePlayerIdx);
+extern int	PMVOICE_GetSpeed( u32 voicePlayerIdx);
+
 //------------------------------------------------------------------
 /**
  * @brief	ñ¬Ç´ê∫ã≠êßí‚é~ä÷êî
