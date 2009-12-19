@@ -1048,6 +1048,7 @@
   .short \msg_id_b
   .short \obj_id
   .short \pos
+  .short BALLOONWIN_TYPE_NORMAL
   .endm
 
 //--------------------------------------------------------------
