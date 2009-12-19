@@ -150,7 +150,7 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0, 0, 0));
+    GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT ));
     (*seq) ++;
     break;
   case _FIELD_END:
