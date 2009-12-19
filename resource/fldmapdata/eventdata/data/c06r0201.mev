@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/22 19:25:21
+#save date:2009/12/19 19:35:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ C06R0201_WORKMAN_01
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_DOWN
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -24
+-72 0 -88
 #event number: 1
 #type
 1
@@ -65,13 +65,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -24
+-56 0 -72
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ C06R0201_WORKMAN_02
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_RIGHT
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -96,13 +96,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 24
+104 0 -56
 #event number: 3
 #type
 1
@@ -111,7 +111,7 @@ C06R0201_WORKMAN_03
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_RIGHT
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -127,13 +127,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 8
+136 0 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

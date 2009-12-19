@@ -378,10 +378,11 @@ EVENT_START    ev_pos_d08_hakase1_01
 		//C07のライバルを消す
 		_FLAG_SET(FV_D08_RIVAL_01)
 		_FLAG_SET( FV_C07_RIVAL_01 )
+		_FLAG_SET( FV_C07_RIVAL_01 )
 
 		//D08R0101の博士とハチクを出現させる
 		_FLAG_RESET( FV_D08R0101_EVENT_01 )
-		
+		_FLAG_SET(FV_D08R0101_NONDRAW_01)
 		//リュウラセンの外マップイベントを無効に
 		$WK_SCENE_D08_LEGEND = 2
 		

@@ -543,10 +543,10 @@ _ANIME_LABEL	anm_boss_saru_01
 /**************************************************************/
 EVENT_START    ev_d06r0101_hakase2_01
 	
-	IF $LOCALWORK15 == 1 THEN 
+	IF $WK_SCENE_D06R0101 == 1 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_hakase2_04 )
 	
-	ELSIF $LOCALWORK15 == 2 THEN 
+	ELSIF $WK_SCENE_D06R0101 == 2 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_hakase2_08 )
 	ENDIF
 
@@ -557,10 +557,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d06r0101_heroine_01
 	
-	IF $LOCALWORK15 == 1 THEN 
+	IF $WK_SCENE_D06R0101 == 1 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_white_03 )
 	
-	ELSIF $LOCALWORK15 == 2 THEN 
+	ELSIF $WK_SCENE_D06R0101 == 2 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_white_05 )
 	ENDIF
 	

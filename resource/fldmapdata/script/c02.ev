@@ -96,13 +96,13 @@ EVENT_START   ev_pos_c02_rival_01
     ENDSWITCH
     }
     
-    //BGMの再生
-    _START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
-    
 	//主人公がライバルに気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_kiduku )
 	_OBJ_ANIME_WAIT()
-	
+
+    //BGMの再生
+    _START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
+    
 	//クロックがやってくる
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come )
 	_OBJ_ANIME_WAIT()
@@ -552,7 +552,7 @@ EVENT_START   ev_scene_c02_leader02_01
 
 	//============================================//
 	
-EVENT_END
+EVENT_END	
 
 //--------------------------------------------------------------------
 //主人公:一歩、前に出る                               
@@ -753,10 +753,12 @@ EVENT_START   ev_pos_c02_stone_01
 
     DEFINE_LOCAL  LWK_PLAYER_POSX   
     DEFINE_LOCAL  LWK_PLAYER_POSZ
+ 	DEFINE_LOCAL  LWK_ROM_VERSION
        
 //------------------------------------------------------------//
     _PLAYER_POS_GET( LWK_PLAYER_POSX  ,LWK_PLAYER_POSZ ) //自機座標取得
- 
+ 	_GET_ROM_VERSION ( LWK_ROM_VERSION ) 
+ 	
   	//主人公、みんなの方を向く
  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
 	_OBJ_ANIME_WAIT()
@@ -865,7 +867,16 @@ EVENT_START   ev_pos_c02_stone_01
 	//Ｎが　かかげたのは
 	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_02, C02_HAKASE1_01,WIN_DOWN) 
     _BALLOONWIN_CLOSE()
-    
+	
+	//ROMVerによって、ダークストーンか、ライトストーンを入手
+	IF $LWK_ROM_VERSION == VERSION_BLACK THEN
+		_ITEM_EVENT_KEYWAIT(ITEM_DAAKUSUTOON, 1)
+		
+	ELSE
+		_ITEM_EVENT_KEYWAIT(ITEM_RAITOSUTOON, 1)
+		
+	ENDIF
+	
 	//全員が主人公の方を向く
 	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_d )
 	_OBJ_ANIME( C02_SUPPORT_02, anm_common_turn_d )
@@ -961,6 +972,7 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_DEL( C02_HAKASE2_01 )
 	
 	_FLAG_SET(FV_C02_STONEEVENT_01)
+	_FLAG_SET( FV_MUSEUM_STONE )
 	$WK_SCENE_C02 = 7
 	
 	//============================================//
