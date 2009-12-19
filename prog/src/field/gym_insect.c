@@ -196,6 +196,7 @@ typedef struct GYM_INSECT_TMP_tag
   GFL_TCB *PushAnmTcb;
   BOOL PushEnd;
   BOOL PushStepStart;
+  BOOL SeFlg;
 }GYM_INSECT_TMP;
 
 //リソースの並び順番
@@ -861,12 +862,14 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //アニメ有効
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, idx, j, TRUE);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
       if ( gmk_sv_work->Sw[i] ){
         fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
         //ラストフレーム
-        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );
-        //アニメ停止
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );  
       }
     }
   }
@@ -884,12 +887,14 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //アニメ有効
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, idx, j, TRUE);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
       if ( gmk_sv_work->Pl[i] ){
         fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
         //ラストフレーム
-        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );
-        //アニメ停止
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );  
       }      
     }
   }
@@ -964,7 +969,6 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
     FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, brk_idx, TRUE );
   }
   //スイッチのセットアップ
-  //ウォールバンドのセットアップ
   //ポールのセットアップ
   {
     int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
@@ -1219,8 +1223,8 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
         //アニメ停止
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
 
-        //壁押し込みSE
-        PMSND_PlaySE(GYM_INSECT_SE_WALL_PUSH);
+        //ＳＥ再生フラグ初期化
+        tmp->SeFlg = FALSE;
         (*seq)++;
       }
     }
@@ -1244,14 +1248,23 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
         tmp->Cont++;
         if (tmp->Cont>=CONT_TIME)
         {
+          int frm;
           tmp->Cont = 0;
           tmp->Val++;
           FIELD_PLAYER_GetPos( fld_player, &pos );
           pos.z += (accel*FX32_ONE);
           FIELD_PLAYER_SetPos( fld_player, &pos );
+          frm = tmp->Val/2;
+          if ( (!tmp->SeFlg) && (frm != 0 ))
+          {
+            //壁押し込みSE
+            PMSND_PlaySE(GYM_INSECT_SE_WALL_PUSH);
+            //ＳＥ再生フラグＯＮ
+            tmp->SeFlg = TRUE;
+          }
           //アニメフレーム進める
           FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX,
-                                    detail_obj_idx, anm_idx, (tmp->Val/2)*FX32_ONE );
+                                    detail_obj_idx, anm_idx, frm*FX32_ONE );
 
           if ( tmp->Val >= BAND_WIDTH ) (*seq)++;
           
@@ -1370,6 +1383,11 @@ static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    //ＳＥ停止
+    PMSND_StopSE();
+    (*seq)++;
+    //NONE BREAK
+  case 1:
     //アニメ終了待ち
     if ( tmp->PushAnmTcb != NULL)
     {
@@ -1389,16 +1407,17 @@ static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
 
     //シーケンスシフトが発生したら
     if (*seq == 1) {
-      //弾かれSE
-      PMSND_PlaySE(GYM_INSECT_SE_WALL_RETURN);
+      //SE再生フラグ初期化
+      tmp->SeFlg = FALSE;
     }
     break;
-  case 1:
+  case 2:
     {
       BOOL arrive;
       VecFx32 pos;
       fx32 diff;
       int accel;
+      fx32 frm;
       FIELD_PLAYER_GetPos( fld_player, &pos );
       //戻る値セット
       tmp->Val++;
@@ -1425,7 +1444,17 @@ static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
         diff = pos.z - tmp->BasePos.z;
       }
 
-      FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_obj_idx, anm_idx, (diff/2) );
+      frm = diff/2;
+
+      if ( (!tmp->SeFlg) && (frm != 0) )
+      {
+        //弾かれSE
+        PMSND_PlaySE(GYM_INSECT_SE_WALL_RETURN);
+        //ＳＥ再生フラグＯＮ
+        tmp->SeFlg = TRUE;
+      }
+
+      FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_obj_idx, anm_idx, frm );
       FIELD_PLAYER_SetPos( fld_player, &pos );
 
       if (arrive)
