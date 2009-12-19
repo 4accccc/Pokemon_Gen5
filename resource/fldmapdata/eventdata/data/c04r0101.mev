@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 15:36:11
+#save date:2009/12/19 19:30:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 1 0
+3 4 1
 #event number: 1
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 3 0
+0 14 1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -147,7 +147,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 3 -4
+0 2 -4
 #size
 3 1
 #event number: 1
@@ -164,7 +164,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 9 -4
+0 8 -4
 #size
 4 1
 #event number: 2
@@ -181,7 +181,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-1 6 -4
+1 5 -4
 #size
 3 1
 #event number: 3
@@ -232,9 +232,9 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 8 -4
+3 9 -4
 #size
-4 1
+3 1
 #event number: 6
 #Door Event Label
 DOOR_ID_C04R0101_C04R0108_EXIT01
@@ -266,7 +266,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 11 -4
+2 12 -4
 #size
 4 1
 #event number: 8
@@ -283,7 +283,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 2 -1
+5 2 -1
 #size
 1 4
 #Map Event List Data End

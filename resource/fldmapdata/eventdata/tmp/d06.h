@@ -3,7 +3,6 @@
 #define ZONE_D06_EVD_H
 
 #define DOOR_ID_D06_D06R0101_EXIT01       0
-#define DOOR_ID_D06_D06R0101_EXIT02       1
 
 #endif //ZONE_D06_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
