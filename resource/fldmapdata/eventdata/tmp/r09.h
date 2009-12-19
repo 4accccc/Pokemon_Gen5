@@ -13,5 +13,11 @@
 #define ZONE_R09_EVC_H
 
 #define R09_BAKER_01                       0
+#define TR_BADRIDER_01                     1
+#define TR_BADRIDER_02                     2
+#define TR_BADTEAM_01                      3
+#define TR_HEADS_01                        4
+#define TR_HEADS_02                        5
+#define TR_BADTEAM_01_2                    6
 
 #endif //ZONE_R09_EVC_H
