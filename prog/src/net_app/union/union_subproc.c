@@ -633,8 +633,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 	case SEQ_FADEIN:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn(gsys, fieldWork, 
-                                     FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Black(gsys, fieldWork, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(parent_event, fade_event);
     }
 		(*seq) ++;
