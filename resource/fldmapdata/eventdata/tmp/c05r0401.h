@@ -2,9 +2,7 @@
 #ifndef ZONE_C05R0401_EVD_H
 #define ZONE_C05R0401_EVD_H
 
-#define DOOR_ID_C05R0401_EXIT02           0
-#define DOOR_ID_C05R0401_EXIT01           1
-#define DOOR_ID_C05R0401_EXIT03           2
+#define DOOR_ID_C05R0401_C05_EXIT01       0
 
 #endif //ZONE_C05R0401_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

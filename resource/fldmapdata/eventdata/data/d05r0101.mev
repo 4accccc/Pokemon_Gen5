@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/01 21:17:09
+#save date:2009/12/19 17:02:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -366,7 +366,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_D05R0101_D05_EXIT01
@@ -383,42 +383,8 @@ EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -248
 #size
-1 1
+3 1
 #event number: 1
-#Door Event Label
-DOOR_ID_D05R0101_D05_EXIT02
-#Next Zone ID Name
-ZONE_ID_D05
-#Next Door ID Name
-DOOR_ID_D05_D05R0101_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 -248
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_D05R0101_D05_EXIT03
-#Next Zone ID Name
-ZONE_ID_D05
-#Next Door ID Name
-DOOR_ID_D05_D05R0101_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -248
-#size
-1 1
-#event number: 3
 #Door Event Label
 DOOR_ID_D05R0101_D05R0201_EXIT01
 #Next Zone ID Name
@@ -426,9 +392,9 @@ ZONE_ID_D05R0201
 #Next Door ID Name
 DOOR_ID_D05R0201_D05R0101_EXIT01
 #Door Direction
-EXIT_DIR_NON
+EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

@@ -16,8 +16,8 @@
 #define DOOR_ID_C03_C03PC0101_EXIT01     11
 #define DOOR_ID_C03_H01R0201_EXIT02      12
 #define DOOR_ID_C03_C03R0301_EXIT01      13
-#define DOOR_ID_C03_C03R0701_EXIT01      14
-#define DOOR_ID_C03_C03R0101_EXIT01      15
+#define DOOR_ID_C03_C03R0101_EXIT01      14
+#define DOOR_ID_C03_C03R0701_EXIT01      15
 
 #endif //ZONE_C03_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

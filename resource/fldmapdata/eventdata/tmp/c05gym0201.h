@@ -2,7 +2,7 @@
 #ifndef ZONE_C05GYM0201_EVD_H
 #define ZONE_C05GYM0201_EVD_H
 
-#define DOOR_ID_C05GYM0201_EXIT01         0
+#define DOOR_ID_C05GYM0201_C05_EXIT01     0
 
 #endif //ZONE_C05GYM0201_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05gym0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

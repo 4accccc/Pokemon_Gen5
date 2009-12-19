@@ -2,15 +2,9 @@
 #ifndef ZONE_C05R0601_EVD_H
 #define ZONE_C05R0601_EVD_H
 
-#define DOOR_ID_C05R0601_EXIT01           0
-#define DOOR_ID_C05R0601_EXIT02           1
-#define DOOR_ID_C05R0601_EXIT03           2
-#define DOOR_ID_C05R0601_EXIT04           3
-#define DOOR_ID_C05R0601_EXIT05           4
-#define DOOR_ID_C05R0601_EXIT06           5
-#define DOOR_ID_C05R0601_EXIT09           6
-#define DOOR_ID_C05R0601_EXIT08           7
-#define DOOR_ID_C05R0601_EXIT07           8
+#define DOOR_ID_C05R0601_C05_EXIT01       0
+#define DOOR_ID_C05R0601_C05_EXIT02       1
+#define DOOR_ID_C05R0601_C05_EXIT03       2
 
 #endif //ZONE_C05R0601_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

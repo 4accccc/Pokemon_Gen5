@@ -399,6 +399,8 @@ _TALK_OBJ_START()
 	_FLAG_RESET( FV_MUSEUM_TOUNAN )  //博物館内の骨と石が元に戻る
 	_FLAG_SET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02の町から消える
 
+	_FLAG_SET(FV_C02GYM0101_FRIENDS)	//C02博物館内のサポートとライバルを消す
+
 	//ジムリーダーのアロエがジムに戻る
 	$WK_SCENE_C02  =  5 
 

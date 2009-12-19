@@ -504,7 +504,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P09, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P10, 15, 17, DIR_DOWN )
 
 	ENDIF
 	
