@@ -1252,7 +1252,21 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SanNomi( u32* numElems )
 }
 static void handler_SanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_PinchRankup( flowWk, pokeID, WAZA_RANKEFF_CRITICAL_RATIO, 1 );
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) )
+  {
+    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+    param = (BTL_HANDEX_PARAM_SET_CONTFLAG*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+    param->pokeID = pokeID;
+    param->flag = BPP_CONTFLG_KIAIDAME;
+
+    msg_param = (BTL_HANDEX_PARAM_MESSAGE*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Rankup_Critical );
+    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+  }
 }
 static void handler_SanNomi_Tmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -1323,7 +1337,7 @@ static void common_PinchRankup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaRankEffe
 static const BtlEventHandlerTable* HAND_ADD_ITEM_NazoNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_NazoNomi     },
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_NazoNomi     },
     { BTL_EVENT_USE_ITEM,              handler_NazoNomi_Use },
   };
   *numElems = NELEMS( HandlerTable );
@@ -3663,7 +3677,7 @@ static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Juel );
-    HANDEX_STR_AddArg( &param->str, pokeID );
+    HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
   }
 }

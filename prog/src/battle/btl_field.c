@@ -87,7 +87,6 @@ void BTL_FIELD_ClearWeather( void )
 {
   Work.weather = BTL_WEATHER_NONE;
   Work.weatherTurn = 0;
-  BTL_Printf("天候フラットに\n");
 }
 
 //=============================================================================================

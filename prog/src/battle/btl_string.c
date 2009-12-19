@@ -578,39 +578,33 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
           switch( tagIdx ){
           case TAGIDX_TRAINER_TYPE:
             clientID = args[ argIdx ];
-            BTL_Printf("[TAG] SetTrainerID ... clientID=%d\n", clientID);
             register_TrainerType( wset, bufIdx, clientID );
             ++argIdxDec;
             break;
           case TAGIDX_TRAINER_NAME:
             if( clientID == BTL_CLIENT_MAX ){
               clientID = args[argIdx];
-              BTL_Printf("[TAG] TrainerName (clientID = NULL)\n");
             }
-            BTL_Printf("[TAG] SetTrainerName ... clientID=%d\n", clientID);
             register_TrainerName( wset, bufIdx, clientID );
             clientID = BTL_CLIENT_MAX;
             break;
           case TAGIDX_POKE_NICKNAME:
-            BTL_Printf("[TAG] Set PokeNickName ... pokeID=%d\n", args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NICKNAME_TRUTH:
-            BTL_Printf("[TAG] Set PokeNickName ... pokeID=%d\n", args[argIdx]);
             register_PokeNicknameTruth( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NAME:
-            BTL_Printf("[TAG] Set PokeName ... pokeIdx=%d\n", args[argIdx] );
             register_PokeName( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_TYPE:
             WORDSET_RegisterPokeTypeName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_TOKUSEI_NAME:
-            BTL_Printf("[TAG] Set TokuseiName ... tokusei=%d\n", args[argIdx] );
             WORDSET_RegisterTokuseiName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_WAZA_NAME:
+            BTL_Printf("[TAG] Set WazaName ... waza=%d\n", args[argIdx] );
             WORDSET_RegisterWazaName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_ITEM_NAME:

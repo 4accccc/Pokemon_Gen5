@@ -26,6 +26,7 @@
 #include "hand_waza.h"
 
 
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -2732,7 +2733,6 @@ static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       msg_param = (BTL_HANDEX_PARAM_MESSAGE*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KiaiDame );
       HANDEX_STR_AddArg( &msg_param->str, pokeID );
-
     }
   }
 }
@@ -4445,7 +4445,6 @@ static void handler_Magnitude_effect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_Magnitude1 + i );
-      BTL_Printf("マグニチュード idx=%d, 威力値=%d\n", i, powTbl[i].pow);
     }
   }
 }
@@ -8057,7 +8056,6 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     int turn_cnt = BTL_SVFTOOL_GetTurnCount( flowWk ) - 1;
     int cont_cnt = 0;
 
-    BTL_Printf("EchoVoice wazaID=%d\n", wazaID);
     while( turn_cnt >= 0 )
     {
       if( BTL_WAZAREC_IsUsedWaza(rec, wazaID, turn_cnt--) ){
@@ -8074,7 +8072,6 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       case 3:   pow = 160; break;
       default:  pow = 200; break;
       }
-      BTL_Printf("エコボ %d 回目につき pow=%d\n", cont_cnt, pow);
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
     }
   }
@@ -8825,7 +8822,6 @@ static void handler_Rinsyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     {
       BTL_HANDEX_PARAM_INTR_WAZA* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_INTR_WAZA, pokeID );
       param->waza = wazaID;
-      BTL_Printf("ポケ[%d]のりんしょうはターン最初なので順番くりあげる\n", pokeID);
     }
   }
 }
@@ -8840,7 +8836,6 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     // 既に自分のワザがレコードされているので１件を越えてたら２番目以降と判定
     if( BTL_WAZAREC_GetUsedWazaCount(rec, wazaID, thisTurn) > 1)
     {
-      BTL_Printf("ポケ[%d]のりんしょうは最初じゃないので威力が倍\n", pokeID);
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }

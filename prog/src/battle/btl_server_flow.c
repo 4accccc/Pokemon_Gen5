@@ -490,7 +490,7 @@ static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, con
 static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value );
 static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol );
 static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
-static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ActFlag_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppActFlag flagID );
 static void scPut_ActFlag_Clear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -4774,10 +4774,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     u32 hem_state_2nd = Hem_PushState( &wk->HEManager );
     scEvent_ItemEquip( wk, bpp );
 
-    if( ITEM_CheckNuts(itemID) ){
-      scPut_EatNutsAct( wk, bpp );
-    }
-
+    scPut_UseItemAct( wk, bpp );
     BTL_Printf("ポケ[%d]のアイテム(%d)使用する\n", BPP_GetID(bpp), itemID);
     scproc_HandEx_Root( wk, itemID );
     Hem_PopState( &wk->HEManager, hem_state_2nd );
@@ -5575,6 +5572,12 @@ static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recov
   &&  !BPP_IsDead(bpp)
   &&  !BPP_IsHPFull(bpp)
   ){
+    u8 pokeID = BPP_GetID( bpp );
+    BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
+    if( pos != BTL_POS_NULL ){
+      SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_HP_RECOVER );
+    }
+
     scPut_SimpleHp( wk, bpp, recoverHP, TRUE );
     return TRUE;
   }
@@ -7250,7 +7253,6 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
   {
     volume *= -1;
     volume = BPP_RankDown( target, effect, volume );
-    BTL_Printf(" RANK DOWN vol=%d\n", volume);
     SCQUE_PUT_OP_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_ACT_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, effect, volume );
@@ -7277,18 +7279,8 @@ static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value, 
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  BTL_Printf("ポケ[%d]のHPを %d だけシフトする\n", pokeID, value );
-
   if( value > 0 )
   {
-    if( fEffectEnable )
-    {
-      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon,pokeID );
-      if( pos != BTL_POS_NULL ){
-        BTL_Printf("Poke[%d] (pos-%d)に回復エフェクト発動\n", pokeID, pos);
-        SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_HP_RECOVER );
-      }
-    }
     BPP_HpPlus( bpp, value );
     SCQUE_PUT_OP_HpPlus( wk->que, pokeID, value );
   }
@@ -7486,8 +7478,10 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
 
   BPP_PPPlus( bpp, wazaIdx, volume );
   SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
-  if( itemID != ITEM_DUMMY_DATA ){
+  if( itemID != ITEM_DUMMY_DATA )
+  {
     WazaID waza = BPP_WAZA_GetID( bpp, wazaIdx );
+    TAYA_Printf("wazaIdx=%d, wazaID=%d, itemID=%d\n", wazaIdx, waza, itemID);
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverPP, pokeID, itemID, waza );
   }
 }
@@ -7496,7 +7490,7 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
  * [Put] きのみを食べるアクション
  */
 //----------------------------------------------------------------------------------
-static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   SCQUE_PUT_ACT_KINOMI( wk->que, BPP_GetID(bpp) );
 }
@@ -8412,7 +8406,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         return TRUE;
       }
       if( WAZADATA_IsMustCritical(waza) ){
-        BTL_Printf("必ずクリティカルなワザです\n");
+        BTL_Printf("必ずクリティカルなワザ\n");
         flag = TRUE;
       }else{
         rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
@@ -8774,9 +8768,9 @@ static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
   BOOL flag = FALSE;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, flag );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID,   BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_IDX, wazaIdx );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID,   BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_IDX, wazaIdx );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, flag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECREMENT_PP_DONE );
     flag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
@@ -8855,7 +8849,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   power = BTL_CALC_MulRatio( power, ratio );
-  BTL_Printf("威力は%dだーよ\n", power);
+  BTL_Printf("ワザ威力は%d\n", power);
   return power;
 }
 //--------------------------------------------------------------------------
@@ -8963,10 +8957,8 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   }else{
     if( criticalFlag ){
       guard = BPP_GetValue_Critical( defender, vid );
-      BTL_Printf("クリティカルなので対象のガード=%d\n", guard);
     }else{
       guard = BPP_GetValue( defender, vid );
-      BTL_Printf("通常ヒットなので対象のガード=%d\n", guard);
     }
   }
   // てんこう「すなあらし」の時、いわタイプのとくぼう1.5倍
@@ -10351,6 +10343,8 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
     if( scproc_RecoverHP(wk, pp_target, param->recoverHP) ){
       if( param->exStr.type != BTL_STRTYPE_NULL ){
         handexSub_putString( wk, &(param->exStr) );
+      }else if( itemID != ITEM_DUMMY_DATA ){
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverHP, param->pokeID, itemID );
       }
       result = 1;
     }

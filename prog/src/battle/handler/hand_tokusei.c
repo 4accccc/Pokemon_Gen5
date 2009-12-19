@@ -4836,18 +4836,10 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         }
       }
     }
-    /*
-    BTL_Printf("*** ëgÇ›çáÇÌÇπëçêî=%d ***\n", ptnCnt);
-    for(i=0; i<ptnCnt; ++i)
-    {
-      BTL_Printf("UP:%d : DOWN:%d\n", (work->patterns[i]>>8), (work->patterns[i]&0xff));
-    }
-    */
     // ëgÇ›çáÇÌÇπÇÃíÜÇ©ÇÁÇPÇ¬ÇÉâÉìÉ_ÉÄåàíË
     i = BTL_SVFTOOL_GetRand( flowWk, ptnCnt );
     upEffect = (work->patterns[i] >> 8) & 0xff;
     downEffect = work->patterns[i] & 0xff;
-//    BTL_Printf("-------\nåàíË UP=%d, down=%d\n", upEffect, downEffect);
   }
 
   BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );

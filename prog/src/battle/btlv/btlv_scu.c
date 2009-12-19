@@ -2217,14 +2217,7 @@ BOOL BTLV_SCU_UpdateGauge_Wait( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlvMcssPos pos )
 {
-  // @@@ 今は適当にワザエフェクトを出しておく
-  BTLV_WAZAEFFECT_PARAM param;
-
-  param.waza = WAZANO_HATAKU;
-  param.from = pos;
-  param.to = pos;
-  param.turn_count = 0;
-  param.continue_count = 0;
+  BTLV_EFFECT_AddByPos( pos, BTLEFF_SOUBI_ITEM );
 }
 //=============================================================================================
 /**

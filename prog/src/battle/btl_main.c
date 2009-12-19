@@ -131,6 +131,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
+static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
@@ -155,6 +156,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static inline clientID_to_side( u8 clientID );
 static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
+static inline u8 GetFriendCrientID( u8 clientID );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
@@ -464,7 +466,7 @@ static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
       else
       {
         // マルチで非通信時、相方のパーティデータがあるなら自分の管理領域は１
-        u8 friendClientID = (clientID + 2) & 0x03;
+        u8 friendClientID = GetFriendCrientID( clientID );
         if(  (wk->setupParam->party[friendClientID] != NULL)
         &&   (PokeParty_GetPokeCount( wk->setupParam->party[friendClientID] ) > 0)
         ){
@@ -2029,6 +2031,14 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
   return (clientID1&1) != (clientID2&1);
 }
 
+/**
+ *  マルチモード時の味方クライアントIDに変換
+ */
+static inline u8 GetFriendCrientID( u8 clientID )
+{
+  return (clientID + 2) & 3;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 戦闘位置->クライアントIDに 変換
@@ -2760,6 +2770,21 @@ POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
 {
   srcParty_RefrectBtlParty( wk, wk->myClientID );
   return srcParty_Get( wk, wk->myClientID );
+}
+POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
+{
+  if( BTL_MAIN_IsMultiMode(wk) )
+  {
+    u8 friendClientID = GetFriendCrientID( wk->myClientID );
+    srcParty_RefrectBtlParty( wk, wk->myClientID );
+    srcParty_RefrectBtlParty( wk, friendClientID );
+    // @todo 未実装
+    return BTL_MAIN_GetPlayerPokeParty( wk );
+  }
+  else
+  {
+    return BTL_MAIN_GetPlayerPokeParty( wk );
+  }
 }
 
 u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )

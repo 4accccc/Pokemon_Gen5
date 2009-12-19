@@ -511,7 +511,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 4:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントのコマンド再生おわりました...result=%d\n", server->flowResult);
+      BTL_Printf("全クライアントのコマンド再生終了...result=%d\n", server->flowResult);
       BTL_MAIN_SyncServerCalcData( server->mainModule );
       ResetAdapterCmd( server );
 
@@ -531,13 +531,12 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_POKE_GET:
         {
           BtlPokePos pos = BTL_SVFLOW_GetCapturedPokePos( server->flowWork );
-          BTL_Printf("ポケ捕まえました pos=%d\n", pos);
           BTL_MAIN_NotifyCapturedPokePos( server->mainModule, pos );
           setMainProc( server, ServerMain_ExitBattle );
           return FALSE;
         }
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        BTL_Printf("決着がついた！\n");
+        BTL_Printf("決着！\n");
         setMainProc( server, ServerMain_ExitBattle );
         return FALSE;
       default:

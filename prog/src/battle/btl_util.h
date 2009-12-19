@@ -434,7 +434,7 @@ typedef enum {
 #if defined(DEBUG_ONLY_FOR_taya) | \
     defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
 #ifdef PM_DEBUG
-//  #define BTL_PRINT_SYSTEM_ENABLE
+  #define BTL_PRINT_SYSTEM_ENABLE
 #endif
 #endif
 

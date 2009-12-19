@@ -21,9 +21,6 @@
 //--------------------------------------------------------------
 static GFL_STD_RandContext gRandContext = {0};
 
-#ifdef PM_DEBUG
-static u32 gDebugCounter=0;
-#endif
 //=============================================================================================
 /**
  * —”ƒVƒXƒeƒ€‰Šú‰»
@@ -34,23 +31,6 @@ static u32 gDebugCounter=0;
 void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
 {
   gRandContext = *randContext;
-
-  #ifdef PM_DEBUG
-  gDebugCounter = 0;
-  {
-    u8* p = (u8*)(&gRandContext);
-    u32 i;
-    OS_TPrintf("******** Random Context *******\n");
-    for(i=0; i<sizeof(gRandContext); ++i)
-    {
-      OS_TPrintf("0x%02x, ", p[i]);
-      if( ((i+1)%8)==0 ){
-        OS_TPrintf("\n");
-      }
-    }
-    OS_TPrintf("\n");
-  }
-  #endif
 }
 //=============================================================================================
 /**
@@ -66,7 +46,6 @@ u32 BTL_CALC_GetRand( u32 range )
 {
   u32 result;
   result = GFL_STD_Rand( &gRandContext, range );
-  BTL_Printf("GetRand counter=%d, range=%d, result=%d\n", gDebugCounter++, range, result);
   return result;
 }
 
@@ -160,8 +139,6 @@ BOOL BTL_CALC_CheckCritical( u8 rank )
   {
     u8 rp = CriticalRankTable[ rank ];
     u8 ret = BTL_CALC_GetRand( rp );
-
-    BTL_Printf("Critical Rank=%d, num=%d, result=%d\n", rank, rp, ret);
 
     return (ret == 0);
   }
