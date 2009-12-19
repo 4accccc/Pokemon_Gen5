@@ -37,7 +37,8 @@ struct _INTR_SAVE_CONTROL{
   u8 mystatus_save_req;       ///<TRUE:MYSTATUSが代入されたのでもう一度セーブを行う
   
   u8 first_save_end;          ///<TRUE:第1段階のセーブが完了した
-  u8 padding[3];
+  u8 no_save;                 ///<TRUE:既にセーブデータがあるのでセーブはしない
+  u8 padding[2];
 };
 
 
@@ -62,7 +63,9 @@ INTR_SAVE_CONTROL * IntrSave_Init(HEAPID heap_id, SAVE_CONTROL_WORK *ctrl)
   
   isc = GFL_HEAP_AllocClearMemory(heap_id, sizeof(INTR_SAVE_CONTROL));
   isc->ctrl = ctrl;
-  
+  if(SaveData_GetExistFlag(ctrl) == TRUE){
+    isc->no_save = TRUE;
+  }
   return isc;
 }
 
@@ -88,6 +91,9 @@ void IntrSave_Exit(INTR_SAVE_CONTROL *isc)
 //==================================================================
 void IntrSave_Start(INTR_SAVE_CONTROL *isc)
 {
+  if(isc->no_save == TRUE){
+    return;
+  }
   SaveControl_SaveAsyncInit(isc->ctrl);
   isc->status = INTR_SAVE_STATUS_MAIN;
 }
@@ -104,6 +110,10 @@ void IntrSave_Start(INTR_SAVE_CONTROL *isc)
 SAVE_RESULT IntrSave_Main(INTR_SAVE_CONTROL *isc)
 {
   SAVE_RESULT result;
+  
+  if(isc->no_save == TRUE){
+    return SAVE_RESULT_OK;
+  }
   
   switch(isc->status){
   case INTR_SAVE_STATUS_MAIN:
@@ -195,7 +205,9 @@ void IntrSave_Resume(INTR_SAVE_CONTROL *isc)
 //==================================================================
 BOOL IntrSave_CheckSuspend(INTR_SAVE_CONTROL *isc)
 {
-  if(isc->status == INTR_SAVE_STATUS_1ST_FINISH || isc->status == INTR_SAVE_STATUS_2ND_FINISH){
+  if(isc->no_save == TRUE 
+      || isc->status == INTR_SAVE_STATUS_1ST_FINISH 
+      || isc->status == INTR_SAVE_STATUS_2ND_FINISH){
     //外部シーケンスの進行停止の原因になるのでセーブが終了の時はTRUEを返す
     return TRUE;
   }
@@ -232,6 +244,9 @@ void IntrSave_ReqMyStatusSave(INTR_SAVE_CONTROL *isc)
 //==================================================================
 BOOL IntrSave_CheckAllSaveEnd(INTR_SAVE_CONTROL *isc)
 {
+  if(isc->no_save == TRUE){
+    return TRUE;
+  }
   if(isc->status == INTR_SAVE_STATUS_2ND_FINISH){
     return TRUE;
   }
