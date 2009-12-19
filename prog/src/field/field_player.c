@@ -88,6 +88,7 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
 		const VecFx32 *pos, int sex, HEAPID heapID )
 {
+  u16 fixcode;
 	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
 	
@@ -107,6 +108,8 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
   
   fld_player->sex = sex;
   
+  fixcode = PLAYERWORK_GetOBJCodeFix( fld_player->playerWork );
+
 	if( fld_player->fldmmdl == NULL )	//新規
 	{
 		MMDL_HEADER head;
@@ -116,8 +119,17 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 		gridpos->gx = SIZE_GRID_FX32( pos->x );
 		gridpos->gz = SIZE_GRID_FX32( pos->z );
 		gridpos->y = pos->y;
-    head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
-        sex, PLAYER_MOVE_FORM_NORMAL ); 
+    
+    if( fixcode == OBJCODEMAX )
+    {
+      head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
+          sex, PLAYER_MOVE_FORM_NORMAL ); 
+    }
+    else
+    {
+      head.obj_code = fixcode;
+    }
+
 		fld_player->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
 	}
 	else //復帰
@@ -133,12 +145,13 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 		MMDL_SetVectorPos( fmmdl, pos );
     
     //レポート等のイベント用OBJの場合、動作フォームに合わせて復帰
-    if( PLAYERWORK_GetFlagOBJCodeFix(fld_player->playerWork) == FALSE ){
+    if( fixcode == OBJCODEMAX ){
       FIELD_PLAYER_ResetMoveForm( fld_player );
     }
 	}
 	
-  { //OBJコードから動作フォームを設定
+  //OBJコードから動作フォームを設定
+  if( fixcode == OBJCODEMAX ){
     u16 code = MMDL_GetOBJCode( fld_player->fldmmdl );
     PLAYER_MOVE_FORM form = FIELD_PLAYER_GetOBJCodeToMoveForm( sex, code );
 #if 0
@@ -755,7 +768,20 @@ void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code )
 {
   MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
   MMDL_ChangeOBJCode( mmdl, code );
-  PLAYERWORK_SetFlagOBJCodeFix( fld_player->playerWork, TRUE );
+  PLAYERWORK_SetOBJCodeFix( fld_player->playerWork, code );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の表示コード固定を解除
+ * @param fld_player FIELD_PLAYER
+ * @param code 表示コード HERO等
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player )
+{
+  PLAYERWORK_SetOBJCodeFix( fld_player->playerWork, OBJCODEMAX );
 }
 
 //--------------------------------------------------------------

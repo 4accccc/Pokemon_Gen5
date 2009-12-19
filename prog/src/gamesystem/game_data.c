@@ -817,6 +817,7 @@ void PLAYERWORK_init(PLAYER_WORK * player)
   player->railposition.rail_index = 0;
   player->railposition.line_grid  = 0;
   player->railposition.width_grid = 0;
+  player->objcode_fix = OBJCODEMAX;
 }
 
 //------------------------------------------------------------------
@@ -964,14 +965,14 @@ void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-void PLAYERWORK_SetFlagOBJCodeFix( PLAYER_WORK *player, BOOL flag )
+void PLAYERWORK_SetOBJCodeFix( PLAYER_WORK *player, u16 code )
 {
-  player->objcode_fix = flag;
+  player->objcode_fix = code;
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-BOOL PLAYERWORK_GetFlagOBJCodeFix( const PLAYER_WORK *player )
+u16 PLAYERWORK_GetOBJCodeFix( const PLAYER_WORK *player )
 {
   return player->objcode_fix;
 }
