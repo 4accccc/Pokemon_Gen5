@@ -30,21 +30,22 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BTL_EVENT_FACTOR* ADD_Fld_Weather( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_Weather( u32* numElems );
 static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_TrickRoom( u32* numElems );
 static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_Juryoku( u32* numElems );
 static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam );
-static BTL_EVENT_FACTOR* ADD_Fld_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam );
-static BTL_EVENT_FACTOR* ADD_Fld_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_Sawagu( u32* numElems );
+static const BtlEventHandlerTable* ADD_Fld_MizuAsobi( u32* numElems );
 static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_DoroAsobi( u32* numElems );
 static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_WonderRoom( u32* numElems );
 static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
-static BTL_EVENT_FACTOR* ADD_Fld_MagicRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static const BtlEventHandlerTable* ADD_Fld_Fuin( u32* numElems );
+static const BtlEventHandlerTable* ADD_Fld_MagicRoom( u32* numElems );
+static void handler_fld_dummy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 
 
 
@@ -61,7 +62,7 @@ static BTL_EVENT_FACTOR* ADD_Fld_MagicRoom( u16 pri, BtlFieldEffect effect, u8 s
 //=============================================================================================
 BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
 {
-  typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, BtlFieldEffect effect, u8 subParam );
+  typedef const BtlEventHandlerTable* (*pEventAddFunc)( u32* numHandlers );
 
   static const struct {
     BtlFieldEffect eff;
@@ -83,7 +84,11 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
     {
       if( funcTbl[i].eff == effect )
       {
-        return funcTbl[i].func( 0, effect, sub_param );
+        const BtlEventHandlerTable* handlerTable;
+        u32 numHandlers;
+
+        handlerTable = funcTbl[i].func( &numHandlers );
+        return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, 0, sub_param, handlerTable, numHandlers );
       }
     }
   }
@@ -108,13 +113,13 @@ void BTL_HANDLER_FLD_Remove( BTL_EVENT_FACTOR* factor )
  *  天候
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_Weather( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_Weather( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -125,13 +130,13 @@ static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
  *  トリックルーム
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_TrickRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_TrickRoom( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,  handler_fld_TrickRoom   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -142,13 +147,13 @@ static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  じゅうりょく
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_Juryoku( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_Juryoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -156,42 +161,29 @@ static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 }
 //--------------------------------------------------------------------------------------
 /**
- *  ふういん
- */
-//--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_Fuin( u16 pri, BtlFieldEffect effect, u8 subParam )
-{
-  // 今のところ、何もハンドラを用意する必要が無くなってしまった…
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NULL, NULL },
-  };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
-}
-//--------------------------------------------------------------------------------------
-/**
  *  さわぐ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_Sawagu( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_Sawagu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_fld_Weather   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 //--------------------------------------------------------------------------------------
 /**
  *  みずあそび
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_MizuAsobi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,  handler_fld_MizuAsobi   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -204,13 +196,13 @@ static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  どろあそび
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_DoroAsobi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,  handler_fld_DoroAsobi   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -223,13 +215,13 @@ static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  ワンダールーム
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_WonderRoom( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DEFENDER_GUARD_PREV,  handler_fld_WonderRoom   },  // 防御側能力値計算の前
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
@@ -239,17 +231,35 @@ static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
 //--------------------------------------------------------------------------------------
 /**
+ *  ふういん
+ */
+//--------------------------------------------------------------------------------------
+static const BtlEventHandlerTable* ADD_Fld_Fuin( u32* numElems )
+{
+  // 今のところ、何もハンドラを用意する必要が無くなってしまった…
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NULL, handler_fld_dummy },
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//--------------------------------------------------------------------------------------
+/**
  *  マジックルーム
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_Fld_MagicRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+static const BtlEventHandlerTable* ADD_Fld_MagicRoom( u32* numElems )
 {
   // 現状、マジックルームは登録しておくことで効果は各所で判断するため、
   // こいつのハンドラ自体は何もしない。
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NULL, NULL },
+    { BTL_EVENT_NULL, handler_fld_dummy },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
+static void handler_fld_dummy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
 
+}
 

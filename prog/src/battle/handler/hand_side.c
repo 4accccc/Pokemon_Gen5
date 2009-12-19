@@ -47,29 +47,29 @@ static EXIST_EFFECT ExistEffect[ BTL_SIDE_MAX ][ BTL_SIDEEFF_MAX ];
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static u8 getMyAddCounter( BTL_EVENT_FACTOR* myHandle, BtlSide side );
-static BTL_EVENT_FACTOR* ADD_SIDE_Refrector( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Refrector( u32* numElems );
 static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Hikarinokabe( u32* numElems );
 static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems );
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_SiroiKiri( u32* numElems );
 static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Oikaze( u32* numElems );
 static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Omajinai( u32* numElems );
 static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_StealthRock( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_StealthRock( u32* numElems );
 static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_WideGuard( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_WideGuard( u32* numElems );
 static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_FastGuard( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_FastGuard( u32* numElems );
 static void handler_side_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Makibisi( u32* numElems );
 static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
-static BTL_EVENT_FACTOR* ADD_SIDE_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff );
+static const BtlEventHandlerTable* ADD_SIDE_Dokubisi( u32* numElems );
 static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 
 
@@ -100,7 +100,7 @@ void BTL_HANDLER_SIDE_InitSystem( void )
 //=============================================================================================
 BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect, BPP_SICK_CONT contParam )
 {
-  typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, BtlSide side, BtlSideEffect eff );
+  typedef const BtlEventHandlerTable* (*pEventAddFunc)( u32* numHandlers );
 
   static const struct {
     BtlSideEffect  eff;
@@ -131,9 +131,13 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
       {
         if( ExistEffect[ side ][ sideEffect ].add_counter == 0 )
         {
-          BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, side, sideEffect );
-          BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
+          const BtlEventHandlerTable* handlerTable;
+          u32 numHandlers;
+          BTL_EVENT_FACTOR* factor;
+          handlerTable = funcTbl[i].func( &numHandlers );
+          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, sideEffect, 0, side, handlerTable, numHandlers );
 
+          BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
           ExistEffect[ side ][ sideEffect ].add_counter = 1;
           ExistEffect[ side ][ sideEffect ].turn_counter = 0;
           ExistEffect[ side ][ sideEffect ].contParam = contParam;
@@ -246,19 +250,18 @@ static u8 getMyAddCounter( BTL_EVENT_FACTOR* myHandle, BtlSide side )
 }
 
 
-
 //--------------------------------------------------------------------------------------
 /**
  *  リフレクター
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Refrector( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Refrector( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_side_Refrector   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work )
 {
@@ -276,13 +279,13 @@ static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
  *  ひかりのかべ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Hikarinokabe( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Hikarinokabe( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_side_HikariNoKabe   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -300,14 +303,14 @@ static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
  *  しんぴのまもり
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Sinpinomamori( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_side_SinpiNoMamori_CheckFail   },  // 状態異常失敗チェック
     { BTL_EVENT_ADDSICK_FAILED,     handler_side_SinpiNoMamori_FixFail     },  // 失敗確定
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -334,14 +337,14 @@ static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_
  *  しろいきり
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_SiroiKiri( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_SiroiKiri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_side_SiroiKiri_CheckFail   },  // ランク増減失敗チェック
     { BTL_EVENT_RANKEFF_FAILED,      handler_side_SiroiKiri_FixFail     },  // 失敗確定
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -370,13 +373,13 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
  *  おいかぜ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Oikaze( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,  handler_side_Oikaze  },  // すばやさ計算ハンドラ
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 // すばやさ計算ハンドラ
 static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
@@ -392,13 +395,13 @@ static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
  *  おまじない
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Omajinai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CRITICAL_CHECK,  handler_side_Omajinai  },  // ランク増減失敗チェック
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -413,13 +416,13 @@ static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  ステルスロック
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_StealthRock( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_StealthRock( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_side_StealthRock  },  // メンバー入場ハンドラ
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -455,13 +458,13 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
  *  ワイドガード
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_WideGuard( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_WideGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_NOEFFECT_CHECK_L2,  handler_side_WideGuard  },  // ワザ無効化レベル２
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -489,13 +492,13 @@ static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
  *  ファストガード
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_FastGuard( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_FastGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_NOEFFECT_CHECK_L2,  handler_side_FastGuard  },  // ワザ無効化レベル２
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -524,13 +527,13 @@ static void handler_side_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
  *  まきびし
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Makibisi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_side_Makibisi  },  // 入場チェックハンドラ
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
@@ -568,13 +571,13 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  どくびし
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_SIDE_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff )
+static const BtlEventHandlerTable* ADD_SIDE_Dokubisi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_side_Dokubisi  },  // 入場チェックハンドラ
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {

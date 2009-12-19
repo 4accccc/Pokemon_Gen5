@@ -30,16 +30,16 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos);
-static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos );
+static const BtlEventHandlerTable* ADD_POS_Negaigoto( u32* numElems );
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
-static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static const BtlEventHandlerTable* ADD_POS_MikadukiNoMai( u32* numElems );
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
-static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static const BtlEventHandlerTable* ADD_POS_IyasiNoNegai( u32* numElems );
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
-static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static const BtlEventHandlerTable* ADD_POS_DelayAttack( u32* numElems );
 static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
-static BTL_EVENT_FACTOR* ADD_POS_BatonTouch( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+static const BtlEventHandlerTable* ADD_POS_BatonTouch( u32* numElems );
 static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work );
 
 
@@ -60,7 +60,7 @@ static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 //=============================================================================================
 BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 pokeID, const int* param, u8 param_cnt )
 {
-  typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, BtlPokePos pos, BtlPosEffect eff );
+  typedef const BtlEventHandlerTable* (*pEventAddFunc)( u32* numHandlers );
 
   static const struct {
     BtlPosEffect   eff;
@@ -83,7 +83,12 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 
       {
         if( is_registable(effect, pos) )
         {
-          BTL_EVENT_FACTOR* factor = funcTbl[i].func( 0, pos, effect );
+          BTL_EVENT_FACTOR* factor;
+          const BtlEventHandlerTable* handlerTable;
+          u32 numHandlers;
+
+          handlerTable = funcTbl[i].func( &numHandlers );
+          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, effect, 0, pos, handlerTable, numHandlers );
           if( factor )
           {
             u32 j;
@@ -110,7 +115,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 
  * @retval  BOOL    条件を満たしていたらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos)
+static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos )
 {
   BTL_EVENT_FACTOR* factor;
 
@@ -130,13 +135,13 @@ static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos)
  *  ねがいごと
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_Negaigoto( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static const BtlEventHandlerTable* ADD_POS_Negaigoto( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_Negaigoto   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -166,13 +171,13 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *  みかづきのまい
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static const BtlEventHandlerTable* ADD_POS_MikadukiNoMai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_pos_MikadukiNoMai   },  // ポケ入場ハンドラ
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -224,13 +229,13 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
  *  いやしのねがい
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static const BtlEventHandlerTable* ADD_POS_IyasiNoNegai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_pos_IyasiNoNegai   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -266,13 +271,13 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
  *  時間差ワザ攻撃（みらいよち、はめつのねがい等）
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_DelayAttack( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static const BtlEventHandlerTable* ADD_POS_DelayAttack( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_DelayAttack   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
@@ -307,13 +312,13 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
  *  バトンタッチ
  */
 //--------------------------------------------------------------------------------------
-static BTL_EVENT_FACTOR* ADD_POS_BatonTouch( u16 pri, BtlPokePos pos, BtlPosEffect eff )
+static const BtlEventHandlerTable* ADD_POS_BatonTouch( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,  handler_pos_BatonTouch   },  // ダメージ補正
-    { BTL_EVENT_NULL, NULL },
   };
-  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, eff, pri, pos, HandlerTable );
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
 }
 static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {

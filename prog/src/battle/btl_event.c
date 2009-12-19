@@ -176,7 +176,7 @@ static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
  */
 //=============================================================================================
 BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 dependID,
-  const BtlEventHandlerTable* handlerTable )
+  const BtlEventHandlerTable* handlerTable, u16 numHandlers )
 {
   BTL_EVENT_FACTOR* newFactor;
 
@@ -188,11 +188,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->prev = NULL;
     newFactor->next = NULL;
     newFactor->handlerTable = handlerTable;
-    newFactor->numHandlers = 0;
-    while( handlerTable[ newFactor->numHandlers ].eventType != BTL_EVENT_NULL ){
-      newFactor->numHandlers++;
-    }
-    OS_TPrintf("ƒnƒ“ƒhƒ‰”=%d\n", newFactor->numHandlers);
+    newFactor->numHandlers = numHandlers;
 
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
@@ -298,10 +294,11 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
   {
     const BtlEventHandlerTable* handlerTable = factor->handlerTable;
     BtlEventFactorType type = factor->factorType;
+    u16 numHandlers = factor->numHandlers;
     u16 subID = factor->subID;
 
     BTL_EVENT_FACTOR_Remove( factor );
-    BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable );
+    BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable, numHandlers );
   }
   else
   {
