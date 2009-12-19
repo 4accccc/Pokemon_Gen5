@@ -125,6 +125,7 @@ extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );
 extern  void              BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no );
+extern  void              BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no );
 extern  void              BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param );
 extern  void              BTLV_EFFECT_Stop( void );
 
