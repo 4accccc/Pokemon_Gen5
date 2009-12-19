@@ -322,7 +322,7 @@ VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
   param->gamedata    = gdata;
   cbw->mailbox_param = param;
 
-  event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap, 
                                        FS_OVERLAY_ID(app_mail), &MailBoxProcData, param,
                                        EvCmdCallMailBoxProc_CallBack, cbw );
   SCRIPT_CallEvent( sc, event );

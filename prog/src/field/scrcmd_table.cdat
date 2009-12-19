@@ -505,8 +505,8 @@
   //âÊñ ââèoä÷òA
   DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
   DEF_CMD( EvCmdPokecenPcOn, EV_SEQ_POKECEN_PC_ON )
+  DEF_CMD( EvCmdPokecenPcRun, EV_SEQ_POKECEN_PC_RUN )
   DEF_CMD( EvCmdPokecenPcOff, EV_SEQ_POKECEN_PC_OFF )
-  NO_CMD()
 
   DEF_CMD( EvCmdBModelAnimeCreate, EV_SEQ_BMODEL_ANIME_CREATE )
   DEF_CMD( EvCmdBModelAnimeDelete, EV_SEQ_BMODEL_ANIME_DELETE )

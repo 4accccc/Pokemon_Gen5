@@ -287,7 +287,7 @@ EVENT_START ev_union
     _TALK_OBJ_START()
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_01, SCWK_TARGET_OBJID, WIN_DOWN ) 
     // ÉÅÉjÉÖÅ[ï\é¶
-    _BMPMENU_INIT_EX( 1, 8, 0, 1, ret )
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_no, msg_pc_union_menu_no )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_explain, msg_pc_union_menu_explain )

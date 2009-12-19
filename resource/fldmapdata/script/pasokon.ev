@@ -95,9 +95,6 @@ pc_box:
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos
 
-  // ローカル変数の初期化
-  $exit = FALSE
-
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
@@ -105,7 +102,8 @@ pc_box:
   _SYSWIN_MSG_DOWN( msg_pc_box_01 )
   _SYSWIN_CLOSE()
 
-  WHILE $exit == FALSE 
+  $exit = FALSE
+  WHILE $exit == FALSE
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST( msg_pc_box_window_01, msg_pc_box_window_01 )  // あずける
@@ -115,16 +113,25 @@ pc_box:
     _BMPMENU_MAKE_LIST( msg_pc_box_window_04, msg_pc_box_window_04 )  // もちもの
     _BMPMENU_MAKE_LIST( msg_pc_box_window_05, msg_pc_box_window_05 )  // さようなら
     _BMPMENU_START() 
-    // 選択に応じた処理
+    //「さようなら」選択
+    SWITCH $select_pos
+    CASE msg_pc_box_window_05 THEN _RET
+    CASE EV_WIN_B_CANCEL      THEN _RET
+    ENDSWITCH
+    // ボックス呼び出し
+    _MAP_FADE_BLACK_OUT() // フェードアウト
+    _MAP_FADE_END_CHECK() //
     SWITCH $select_pos
     CASE msg_pc_box_window_01 THEN _CALL_BOX_PROC( BOX_MODE_AZUKERU )
     CASE msg_pc_box_window_02 THEN _CALL_BOX_PROC( BOX_MODE_TURETEIKU )
     CASE msg_pc_box_window_03 THEN _CALL_BOX_PROC( BOX_MODE_SEIRI )
     CASE msg_pc_box_window_06 THEN _CALL_BOX_PROC( BOX_MODE_BATTLE )
     CASE msg_pc_box_window_04 THEN _CALL_BOX_PROC( BOX_MODE_ITEM )
-    CASE msg_pc_box_window_05 THEN $exit = TRUE 
-    CASE EV_WIN_B_CANCEL      THEN $exit = TRUE
     ENDSWITCH 
+    _POKECEN_PC_RUN()           // パソコンアニメ再生
+    _MAP_FADE_BLACK_IN()        // フェードイン
+    _MAP_FADE_END_CHECK()       //
+    _SE_PLAY( SEQ_SE_PC_LOGIN ) // SE
   ENDWHILE
 }
 _RET
@@ -135,10 +142,7 @@ _RET
 pc_mail_box:
 {
   DEFINE_LOCAL exit
-  DEFINE_LOCAL select_pos
-
-  // ローカル変数の初期化
-  $exit = FALSE
+  DEFINE_LOCAL select_pos 
 
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
@@ -149,18 +153,26 @@ pc_mail_box:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
+  $exit = FALSE
   WHILE $exit == FALSE
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST( msg_pc_mail_window_01, msg_pc_mail_window_01 )  // メールボックス
     _BMPMENU_MAKE_LIST( msg_pc_mail_window_02, msg_pc_mail_window_02 )  // せつぞくを きる
     _BMPMENU_START()
-    // 選択に応じた処理
+    //「せつぞくを きる」選択
     SWITCH $select_pos
-    CASE msg_pc_mail_window_01 THEN _CALL_MAILBOX_PROC()
-    CASE msg_pc_mail_window_02 THEN $exit = TRUE
-    CASE EV_WIN_B_CANCEL       THEN $exit = TRUE
-    ENDSWITCH 
+    CASE msg_pc_mail_window_02 THEN _RET
+    CASE EV_WIN_B_CANCEL       THEN _RET
+    ENDSWITCH
+    // メールボックス呼び出し
+    _MAP_FADE_BLACK_OUT()        // フェードアウト
+    _MAP_FADE_END_CHECK()        //
+    _CALL_MAILBOX_PROC()         // メールボックス画面へ
+    _POKECEN_PC_RUN()            // パソコンアニメ再生
+    _MAP_FADE_BLACK_IN()         // フェードイン
+    _MAP_FADE_END_CHECK()        //
+    _SE_PLAY( SEQ_SE_PC_LOGIN )  // SE
   ENDWHILE
 }
 _RET

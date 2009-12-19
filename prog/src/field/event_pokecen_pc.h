@@ -27,6 +27,20 @@ extern GMEVENT* EVENT_PokecenPcOn( GMEVENT* parent,
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ポケセンのPC起動中イベントを作成する
+ *
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//-----------------------------------------------------------------------------------------
+extern GMEVENT* EVENT_PokecenPcRun( GMEVENT* parent, 
+                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ポケセンのPC停止イベントを作成する
  *
  * @param parent   親イベント
