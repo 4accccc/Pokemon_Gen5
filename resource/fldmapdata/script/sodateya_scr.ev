@@ -254,7 +254,7 @@ EVENT_START ev_sodateya_grandma
     ENDIF
 
     // 所持金表示
-    _GOLD_WIN_OPEN( 1, 1 )
+    _GOLD_WIN_OPEN( 17, 1 )
 
     // メニュー作成
     _BMPMENU_INIT_EX( 1, 1, 0, 1, menu_select )
@@ -269,8 +269,8 @@ EVENT_START ev_sodateya_grandma
     // メニュー表示
     _BMPMENU_START()
 
-    // 所持金表示
-    _GOLD_WIN_OPEN( 1, 1 )
+    // 所持金非表示
+    _GOLD_WIN_CLOSE()
 
     // 選択結果で分岐
     SWITCH $menu_select
@@ -282,9 +282,6 @@ EVENT_START ev_sodateya_grandma
       $message_id = msg_sodateya_oldwoman_03  //「そうかい またおいで」
       _CALL say
     ENDSWITCH
-
-    // 所持金非表示
-    _GOLD_WIN_CLOSE()
 
   ENDIF
 }
@@ -490,11 +487,17 @@ take_back_pokemon_core:
      _CALL say
    ENDIF
 
+   // 所持金表示
+   _GOLD_WIN_OPEN( 17, 1 )
+
    // 質問「引き取るかい?」
    _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
    _NUMBER( 1, charge, 4 )
    $message_id = msg_sodateya_oldwoman_13
    _CALL ask
+
+   // 所持金ウィンドウ消去
+	 _GOLD_WIN_CLOSE()
 
    // 『いいえ』を選択
    IF $ask_retval == 1 THEN
@@ -511,7 +514,6 @@ take_back_pokemon_core:
      ELSE
        // お金を払う
        _SUBTRACT_GOLD( charge )
-			 _GOLD_WIN_UPDATE( 1, 1 )
 
        // 支払いSE
        _SE_PLAY( SEQ_SE_SYS_22 )
