@@ -547,15 +547,15 @@ sub convData
 					#èoóÕ
 					if( $one_datasiz == 1 )
 					{
-						print( FILEOUT_LINEPOS pack( "C", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "c", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 2 )
 					{
-						print( FILEOUT_LINEPOS pack( "S", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "s", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 4 )
 					{
-						print( FILEOUT_LINEPOS pack( "I", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "i", &get10Number($work_number) ) );
 					}
 					$datasiz += $one_datasiz;
 
@@ -608,15 +608,15 @@ sub convData
 					#èoóÕ
 					if( $one_datasiz == 1 )
 					{
-						print( FILEOUT_CAMERA pack( "C", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "c", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 2 )
 					{
-						print( FILEOUT_CAMERA pack( "S", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "s", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 4 )
 					{
-						print( FILEOUT_CAMERA pack( "I", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "i", &get10Number($work_number) ) );
 					}
 					$datasiz += $one_datasiz;
 
