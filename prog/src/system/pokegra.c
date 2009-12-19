@@ -340,6 +340,7 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 {	
 	u32 file_start;
 	u32 file_offset;
+	u32 mf_ratio;
 
   //モンスターナンバーは１オリジン
   //リソースは０オリジンのため、－１
@@ -347,6 +348,7 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 
   file_start	= POKEGRA_FILE_MAX * mons_no;
   file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
+  mf_ratio	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCBR: POKEGRA_BACK_M_NCBR;
 
   //本来は別フォルム処理を入れる@todo
 #if defined(DEBUG_ONLY_FOR_sogabe) || defined(DEBUG_ONLY_FOR_toru_nagihashi)
@@ -359,7 +361,7 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
     break;
   case PTL_SEX_FEMALE:
     //オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
-    sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+    sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + mf_ratio + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
     break;
   case PTL_SEX_UNKNOWN:
     //性別なしは、オス扱いにする
