@@ -2713,6 +2713,25 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     break;
   case BTLEFF_POKEMON_SIDE_ATTACK:    //UŒ‚‘¤
     position = bevw->attack_pos;
+    if( position == BTLV_MCSS_POS_ERROR )
+    { 
+      if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+      { 
+        return BTLV_MCSS_POS_AA;
+      }
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+      { 
+        return BTLV_MCSS_POS_A;
+      }
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_C ) == TRUE )
+      { 
+        return BTLV_MCSS_POS_C;
+      }
+      else
+      { 
+        return BTLV_MCSS_POS_E;
+      }
+    }
     break;
   case BTLEFF_POKEMON_SIDE_ATTACK_PAIR: //UŒ‚‘¤ƒyƒA
     if( bevw->attack_pos > BTLV_MCSS_POS_BB ){
