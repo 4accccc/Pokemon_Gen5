@@ -163,5 +163,6 @@ extern BOOL FIELD_PLAYER_CheckAttrNaminori(
 extern void FIELD_PLAYER_CheckSpecialDrawForm(
     FIELD_PLAYER *fld_player, BOOL menu_open_flag );
 extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );
+extern void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
 
