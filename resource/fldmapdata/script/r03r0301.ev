@@ -160,6 +160,9 @@ ev_r03r0301_rival02:
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//ライバル会話
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_07 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
