@@ -82,6 +82,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//サポート：ボールの横へ
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_gamestart_support_move_02 )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_02 )
 
 	//ライバル会話：時間まもれよー
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_02 , T01R0102_RIVAL_01 )
@@ -96,12 +97,13 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：ボールを見る
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_02 )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_03 )
 	_OBJ_ANIME_WAIT()
 
 	//ライバル会話：ボールを調べなよ
 	_PLAYER_NAME( 0 )		//主人公名取得
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 //================フラグ操作==================//
@@ -150,9 +152,17 @@ _ANIME_LABEL	anm_gamestart_support_move_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//ライバル：ボールを見る
+//ライバル：サポートを見る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gamestart_rival_look_02
+	_ANIME_DATA	AC_WAIT_8F,5
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：ボールを見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gamestart_rival_look_03
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -173,16 +183,6 @@ EVENT_START	ev_pos_t01r0102_stopper
 
 	//主人公：一歩戻る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_posstop_player_back_01 )
-	_OBJ_ANIME_WAIT()
-
-	//サポート：その場歩き
-	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_dir_l )
-	_OBJ_ANIME_WAIT()
-
-	//サポート会話：迷っちゃうよねー
-	_BALLOONWIN_OBJMSG( msg_t01r0102_white_03 , T01R0102_SUPPORT_01 )
-	_BALLOONWIN_CLOSE()
-
 	//ライバル：左を向く
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()

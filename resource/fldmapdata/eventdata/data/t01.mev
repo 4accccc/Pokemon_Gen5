@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 12:09:12
+#save date:2009/12/19 16:06:30
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_WAZA_OMOIDASHI
+SCRID_T01_MAN3_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -80,7 +80,7 @@ T01_BABYGIRL1_01
 #OBJ CODE Number
 BABYGIRL1
 #MOVE CODE Number
-MV_RT2
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_T01_BABYGIRL1_01
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
-#Move Limit Z Number
 0
+#Move Limit Z Number
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 40
+72 0 104
 #event number: 3
 #type
 1
