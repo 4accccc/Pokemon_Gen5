@@ -1021,6 +1021,8 @@ static BM_SEARCH_ID BMINFO_getSearchID( const BMINFO * bmInfo )
     BM_SEARCH_ID_PCEV_DOOR,   //BM_PROG_ID_PCEV_DOOR,
     BM_SEARCH_ID_PCEV_FLOOR,  //BM_PROG_ID_PCEV_FLOOR,
   };
+  SDK_COMPILER_ASSERT( NELEMS(search_id) == BM_PROG_ID_MAX );
+
   if ( bmInfo->prog_id >= BM_PROG_ID_MAX )
   {
     GF_ASSERT_MSG(0, "配置モデルプログラム指定(%d)のエラーです\n", bmInfo->prog_id );
@@ -1422,7 +1424,7 @@ static void OBJHND_TYPETIMEZONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND
   GF_ASSERT( anmData->anmset_num == 1 );  //時間帯アニメはセット数が大きいのは無理！
   nowNo = TIMEANIME_CTRL_getIndex( &man->tmanm_ctrl );
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
-    if (anmNo == nowNo)
+    if (anmNo != nowNo)
     {
       objHdl->anmMode[anmNo] = BM_ANMMODE_NOTHING;
     }
