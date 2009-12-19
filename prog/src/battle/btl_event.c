@@ -60,14 +60,15 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority;
+  u32       priority    : 16;  ///< ソートプライオリティ
+  u32       numHandlers :  8;  ///< ハンドラテーブル要素数
+  u32       callingFlag :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
+  u32       sleepFlag   :  1;  ///< 休眠フラグ
+  u32       dmy         :  6;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
-  u8        pokeID;     ///< ポケ依存イベントならポケID／それ以外BTL_POKEID_NULL
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
-  u8        callingFlag    : 1;      ///< 呼び出し中を再呼び出ししないためのフラグ
-  u8        sleepFlag      : 1;      ///< 休眠フラグ
-  u8        dummy          : 6;
+  u8        pokeID;     ///< ポケ依存イベントならポケID／それ以外BTL_POKEID_NULL
 };
 
 /*--------------------------------------------------------------------------*/
@@ -186,6 +187,11 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->prev = NULL;
     newFactor->next = NULL;
     newFactor->handlerTable = handlerTable;
+    newFactor->numHandlers = 0;
+    while( handlerTable[ newFactor->numHandlers ].eventType != BTL_EVENT_NULL ){
+      newFactor->numHandlers++;
+    }
+    newFactor->numHandlers--;
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
@@ -403,8 +409,8 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     if( (factor->callingFlag==FALSE) && (factor->sleepFlag == FALSE) )
     {
       const BtlEventHandlerTable* tbl = factor->handlerTable;
-      int i;
-      for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+      u32 i;
+      for(i=0; factor->numHandlers; i++)
       {
         if( tbl[i].eventType == eventID )
         {

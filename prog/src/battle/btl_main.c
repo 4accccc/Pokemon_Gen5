@@ -64,6 +64,7 @@ struct _BTL_PARTY {
   BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
   POKEPARTY*      srcParty;
   u8  memberCount;
+  u8  numCoverPos;
 };
 
 struct _BTL_POKE_CONTAINER {
@@ -160,7 +161,7 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static inline u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
 static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID );
-static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
+static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
@@ -441,6 +442,42 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
   BTL_Printf("デバッグフラグbit=%04x\n", sp->DebugFlagBit);
 }
 
+/**
+ *  クライアントが管理する位置数を取得
+ */
+static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  switch( wk->setupParam->rule ){
+  case BTL_RULE_SINGLE:
+    return 1;
+  case BTL_RULE_ROTATION:
+    return 2;
+  case BTL_RULE_TRIPLE:
+    return 3;
+  case BTL_RULE_DOUBLE:
+    if( wk->setupParam->multiMode == FALSE ){
+      return 2;
+    }else{
+      if( wk->setupParam->competitor == BTL_COMPETITOR_COMM ){
+        return 1;
+      }
+      else
+      {
+        // マルチで非通信時、相方のパーティデータがあるなら自分の管理領域は１
+        u8 friendClientID = (clientID + 2) & 0x03;
+        if(  (wk->setupParam->party[friendClientID] != NULL)
+        &&   (PokeParty_GetPokeCount( wk->setupParam->party[friendClientID] ) > 0)
+        ){
+          return 1;
+        }
+        return 2;
+      }
+    }
+  }
+  GF_ASSERT(0);
+  return 1;
+}
+
 //--------------------------------------------------------------------------
 /**
  * スタンドアローン／シングルバトル
@@ -460,12 +497,12 @@ static BOOL setup_alone_single( int* seq, void* work )
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -573,14 +610,13 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
-
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -643,12 +679,12 @@ static BOOL setup_alone_triple( int* seq, void* work )
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -710,12 +746,12 @@ static BOOL setup_alone_rotation( int* seq, void* work )
 
 
   PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -1021,7 +1057,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       {
         srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
         Bspstore_Party( wk, i, BTL_NET_GetPartyData(i) );
-        PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
+        PokeCon_AddParty( &wk->pokeconForClient, wk, i );
       }
       (*seq)++;
     }
@@ -1034,7 +1070,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
       //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
       for(i=0; i<wk->numClients; ++i){
-        PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
+        PokeCon_AddParty( &wk->pokeconForServer, wk, i );
       }
     }
     (*seq)++;
@@ -1113,7 +1149,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 netID = sp->commPos;
   u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
@@ -2304,17 +2340,19 @@ static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID )
   return (wk->party[ clientID ].memberCount != 0);
 }
 
-static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID )
+static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  u8 pokeID = ClientBasePokeID[ clientID ];
+  const POKEPARTY* party_src = srcParty_Get( wk, clientID );
   BTL_PARTY* party = &pokecon->party[ clientID ];
-  u32 max = PokeParty_GetPokeCount( party_src );
+  u32 poke_count = PokeParty_GetPokeCount( party_src );
+  u8 pokeID = ClientBasePokeID[ clientID ];
   u8  fIllusion = FALSE;
+
   POKEMON_PARAM* pp;
   u8 i;
 
-  BTL_Printf(" CreateClient(%d)'s party ... numMembers=%d\n", clientID, max);
-  for(i=0; i<max; ++i, ++pokeID)
+  BTL_Printf(" CreateClient(%d)'s party ... numMembers=%d\n", clientID, poke_count);
+  for(i=0; i<poke_count; ++i, ++pokeID)
   {
     pp = PokeParty_GetMemberPointer( party_src, i );
     pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create( pp, pokeID, HEAPID_BTL_SYSTEM );
@@ -2330,7 +2368,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
   }
 
   // 最後の１体がイリュージョン使いなら、先頭のSrcPPを見せかけデータにする
-  if( fIllusion && (max>1)){
+  if( fIllusion && (poke_count>1)){
     pp = PokeParty_GetMemberPointer( party_src, 0 );
     BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
   }
@@ -2491,7 +2529,20 @@ BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pok
   }
   return FALSE;
 }
-
+//=============================================================================================
+/**
+ * クライアントの管理位置数を返す
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_MAIN_GetClientCoverPosCount( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  return CheckNumCoverPos( wk, clientID );
+}
 
 
 //=============================================================================================
@@ -2549,6 +2600,7 @@ static void BTL_PARTY_Initialize( BTL_PARTY* party )
 {
   int i;
   party->memberCount = 0;
+  party->numCoverPos = 0;
   party->srcParty = NULL;
   for(i=0; i<TEMOTI_POKEMAX; i++)
   {
@@ -2567,7 +2619,6 @@ static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty )
     party->srcParty = srcParty;
   }
 }
-
 u8 BTL_PARTY_GetMemberCount( const BTL_PARTY* party )
 {
   return party->memberCount;
