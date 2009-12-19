@@ -56,6 +56,8 @@ typedef struct {
 
 	int alphaWork;
 
+  BOOL bg_init_flag;
+
 } FADE_EVENT_WORK;
 
 //------------------------------------------------------------------
@@ -392,13 +394,16 @@ static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
       {
         GFL_FADE_SetMasterBrightReq(few->brightFadeMode, 16, 0, 0);
 
-        // BGモード設定と表示設定の復帰
+        if ( few->bg_init_flag )
         {
-          int mv = GFL_DISP_GetMainVisible();
-          FIELDMAP_InitBGMode();
-          GFL_DISP_GX_SetVisibleControlDirect( mv );
+          // BGモード設定と表示設定の復帰
+          {
+            int mv = GFL_DISP_GetMainVisible();
+            FIELDMAP_InitBGMode();
+            GFL_DISP_GX_SetVisibleControlDirect( mv );
+          }
+          FIELDMAP_InitBG(few->fieldmap);
         }
-        FIELDMAP_InitBG(few->fieldmap);
       }
     }
 		(*seq) ++;
@@ -523,13 +528,15 @@ static GMEVENT* EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
  * @param	type		  フェードの種類指定
  * @param season    季節表示を許可するかどうか
  * @param wait      フェード完了を待つかどうか
+ * @param bg_init_flag  BG初期化を内部でおこなうかどうか
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
 static GMEVENT* EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                      FIELD_FADE_TYPE type, 
                                      FIELD_FADE_SEASON_FLAG season, 
-                                     FIELD_FADE_WAIT_TYPE wait )
+                                     FIELD_FADE_WAIT_TYPE wait,
+                                     BOOL bg_init_flag )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
@@ -539,6 +546,7 @@ static GMEVENT* EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldma
   few->season_flag = season;
   few->wait_type   = wait;
   few->brightFadeMode = GetBrightFadeMode( type );
+  few->bg_init_flag = bg_init_flag;
 
 	return event;
 }
@@ -551,13 +559,15 @@ static GMEVENT* EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldma
  * @param	type		  フェードの種類指定
  * @param season    季節表示を許可するかどうか(輝度フェード時のみ有効)
  * @param wait      フェード完了を待つかどうか(輝度フェード時のみ有効)
+ * @param bg_init_flag  BG初期化を内部でおこなうかどうか(輝度フェード時のみ有効)
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
 GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                             FIELD_FADE_TYPE type, 
                             FIELD_FADE_SEASON_FLAG season,
-                            FIELD_FADE_WAIT_TYPE wait )
+                            FIELD_FADE_WAIT_TYPE wait,
+                            BOOL bg_init_flag )
 {
   GMEVENT* event;
 
@@ -570,7 +580,7 @@ GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
     break;
   case FIELD_FADE_BLACK: // 輝度フェード(ブラック)
   case FIELD_FADE_WHITE: // 輝度フェード(ホワイト)
-    event = EVENT_FieldBrightIn( gsys, fieldmap, type, season, wait );
+    event = EVENT_FieldBrightIn( gsys, fieldmap, type, season, wait, bg_init_flag );
     break;
   }
 	return event; 

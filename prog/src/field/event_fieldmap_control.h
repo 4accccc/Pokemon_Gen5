@@ -88,25 +88,30 @@ extern GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldma
  * @param	type		  フェードの種類指定
  * @param season    季節表示を許可するかどうか(輝度フェード時のみ有効)
  * @param wait      フェード完了を待つかどうか(輝度フェード時のみ有効)
+ * @param bg_init_flag  BG初期化を内部でおこなうかどうか(輝度フェード時のみ有効)
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                     FIELD_FADE_TYPE type, 
                                     FIELD_FADE_SEASON_FLAG season,
-                                    FIELD_FADE_WAIT_TYPE wait );
+                                    FIELD_FADE_WAIT_TYPE wait,
+                                    BOOL bg_init_flag );
 // クロスフェード
 #define EVENT_FieldFadeIn_Cross( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_CROSS, 0, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_CROSS, 0, 0, TRUE )
 // 輝度フェード(ブラック)
 #define EVENT_FieldFadeIn_Black( gsys, fieldmap, wait ) \
-        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, wait )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, wait, TRUE )
 // 輝度フェード(ホワイト)
 #define EVENT_FieldFadeIn_White( gsys, fieldmap, wait ) \
-        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_WHITE, FIELD_FADE_SEASON_OFF, wait )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_WHITE, FIELD_FADE_SEASON_OFF, wait, TRUE )
 // 季節フェード
 #define EVENT_FieldFadeIn_Season( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, 0, TRUE )
+// メニュー状態フェード（Yボタンメニューを出したままなど）
+#define EVENT_FieldFadeIn_Menu( gsys, fieldmap ) \
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, wait, FALSE )
 
 
 //============================================================================================
