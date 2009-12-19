@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 4:16:08
+#save date:2009/12/19 19:31:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -452,7 +452,7 @@ R05_LEADER4_01
 #OBJ CODE Number
 LEADER4
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -474,7 +474,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 0 104
+424 0 -104
 #event number: 15
 #type
 1
@@ -491,7 +491,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R05_CAMERAMAN_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -505,7 +505,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -24
+-56 0 40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -515,7 +515,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+3
 #event number: 0
 #Bg Event Label
 BGID_R05_BOARD_01
@@ -544,7 +544,7 @@ EVENTDATA_POSTYPE_GRID
 328 0 24
 #event number: 2
 #Bg Event Label
-BGID_R05_BOARD_02r
+BGID_R05_BOARD_02
 #Bg Event Type
 BG_TALK_TYPE_BOARD
 #Bg Event Reaction Direction ID
@@ -554,20 +554,7 @@ SCRID_BG_R05_BOARD_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 24
-#event number: 3
-#Bg Event Label
-BGID_R05_BOARD_02l
-#Bg Event Type
-BG_TALK_TYPE_BOARD
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_BG_R05_BOARD_02
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 24
+-8 0 24
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -580,7 +567,7 @@ EVENTDATA_POSTYPE_GRID
 3
 #event number: 0
 #Pos Event Label
-POSID_DUMMY
+POS_R05_RIVAL_01
 #Pos Script Name
 SCRID_POS_R05_RIVAL_01
 #Pos Check Type
@@ -609,7 +596,7 @@ WK_SCENE_R05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 8
+-56 0 8
 #size
 1 5
 #event number: 2
@@ -626,9 +613,9 @@ WK_SCENE_R05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 24
+-8 0 8
 #size
-5 1
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -41,13 +41,9 @@ INIT_EVENT_START	ev_init_r05
 	IF $WK_SCENE_R05 == 2 THEN
 		//ライバル戦posイベント後
 		//カミツレ＆ライバル：位置移動
-		_OBJ_POS_CHANGE( R05_LEADER4_01, 333, 0, 432, DIR_LEFT )
-		_OBJ_POS_CHANGE( R05_RIVAL_01, 335, 0, 433, DIR_LEFT )
+		_OBJ_POS_CHANGE( R05_RIVAL_01, 333, 0, 432, DIR_LEFT )
+		_OBJ_POS_CHANGE( R05_LEADER4_01, 332, 0, 433, DIR_LEFT )
 
-	ELSIF $WK_SCENE_R05 == 3 THEN
-		//H02開通デモイベント後
-		//カメラマン（ストッパー）の位置を変更
-		_OBJ_POS_CHANGE( R05_CAMERAMAN_01, 333, 0, 431, DIR_DOWN )
 	ENDIF
 
 INIT_EVENT_END
@@ -74,7 +70,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_OBJMSG( msg_r05_black_01 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
-	//トレーナー戦呼び出し　【仮】トレーナーIDが仮ID
+	//トレーナー戦呼び出し
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//初期３匹が草タイプなら
 		_TRAINER_BTL_SET( TRID_RIVAL_07,0 )
@@ -131,10 +127,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_CLOSE()
 
 	//３人：広場の方へ　ライバルが途中でチャンプに気づく
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
-	_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01 )
-	_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01 )
-	_OBJ_ANIME_WAIT()
+	//マップ調整の必要があるのでコメントアウト　091219
+//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
+//	_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01 )
+//	_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01 )
+//	_OBJ_ANIME_WAIT()
 
 	//ライバル：じいさんが…
 	_BALLOONWIN_OBJMSG( msg_r05_black_06 , R05_RIVAL_01 )
@@ -161,9 +158,9 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_CLOSE()
 
 	//３人：チャンプを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
-	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
-	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：なぜやめた？
@@ -202,8 +199,8 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//カミツレ＆ライバル：位置移動
-	_OBJ_POS_CHANGE( R05_LEADER4_01, 333, 0, 432, DIR_LEFT )
-	_OBJ_POS_CHANGE( R05_RIVAL_01, 335, 0, 433, DIR_LEFT )
+	_OBJ_POS_CHANGE( R05_RIVAL_01, 333, 0, 432, DIR_LEFT )
+	_OBJ_POS_CHANGE( R05_LEADER4_01, 332, 0, 433, DIR_LEFT )
 
 	//========================================//
 		//ライバル戦闘posイベントを無効、橋デモposイベントを有効
@@ -224,9 +221,7 @@ _ANIME_LABEL	anm_rival_move_01
 //ジムリーダー：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_move_01
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,12
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -274,7 +269,8 @@ _ANIME_LABEL	anm_leader_walk_01
 //チャンプ：近づく
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_come_01
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -282,14 +278,12 @@ _ANIME_LABEL	anm_champion_come_01
 //--------------------------------------------------------------------
 //ジムリーダー
 _ANIME_LABEL	anm_leader_move_02
-	_ANIME_DATA	AC_WALK_U_8F,5
-	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //ジムリーダー
 _ANIME_LABEL	anm_rival_move_02
-	_ANIME_DATA	AC_WALK_U_8F,5
-	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -331,10 +325,6 @@ EVENT_START	ev_pos_r05_h02demo_01
 	//【仮】H02デモ
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
-
-	//カメラマン（ストッパー）の位置を変更
-	_OBJ_POS_CHANGE( R05_CAMERAMAN_01, 331, 0, 431, DIR_LEFT )
-
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
@@ -380,8 +370,7 @@ EVENT_END
 //カミツレ：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_goaway_01
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -400,17 +389,12 @@ EVENT_START	ev_pos_r05_h02stop_01
 	_OBJ_ANIME( R05_CAMERAMAN_01, anm_obj_gyoe )
 	_OBJ_ANIME_WAIT()
 
-	//カメラマン：主人公前へ
-	_OBJ_ANIME( R05_CAMERAMAN_01, anm_camera_come_01 )
-	_OBJ_ANIME_WAIT()
-
 	//カメラマン：橋を渡りたいなら
 	_BALLOONWIN_OBJMSG( msg_r05_cameraman_01 , R05_CAMERAMAN_01 )
 	_BALLOONWIN_CLOSE()
 
 	//主人公：一歩下がる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
-	_OBJ_ANIME( R05_CAMERAMAN_01, anm_camera_back_01 )
 	_OBJ_ANIME_WAIT()
 
 EVENT_END
@@ -420,21 +404,6 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//カメラマン：主人公前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_camera_come_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//カメラマン：戻る
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_camera_back_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -449,6 +418,7 @@ _ANIME_LABEL	anm_player_back_01
 /*					カメラマン（話しかけ）					*/
 /************************************************************/
 EVENT_START	ev_r05_cameraman_01
+	//【仮】開通前の話しかけメッセージが未対応　キー待ち有り版が必要になる
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_02 )
 EVENT_END
 
