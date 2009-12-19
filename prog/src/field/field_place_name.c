@@ -17,7 +17,7 @@
 #include "msg/msg_place_name.h"
 #include "system/bmp_oam.h"
 #include "pm_define.h"
-#include "field_oam_pal.h"  // for FIELDOAM_PALNO_PLACENAME
+#include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
 
 
 //===================================================================================
@@ -908,7 +908,7 @@ static void LoadClactResource( FIELD_PLACE_NAME* sys )
 	sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				p_arc_handle, NARC_place_name_place_name_string_NCLR,
-				CLSYS_DRAW_MAIN, FIELDOAM_PALNO_PLACENAME * 32, 0, 1, sys->heapID );
+				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, sys->heapID );
 
 	GFL_ARC_CloseDataHandle( p_arc_handle );
 }
