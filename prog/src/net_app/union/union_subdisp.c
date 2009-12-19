@@ -260,7 +260,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   UNION_SUBDISP_PTR unisub;
   ARCHANDLE *handle;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  
+
   unisub = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(UNION_SUBDISP));
   unisub->gsys = gsys;
   
@@ -323,6 +323,8 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
   int i;
   
+	G2S_BlendNone();  //¦check@‚Ç‚±‚©‚ÅŸè‚ÉBLEND‚ª‚©‚©‚é‚Ì‚Åb’è‘Îˆ 2009.12.18(‹à)
+
   INFOWIN_Update();
 	PRINTSYS_QUE_Main(unisub->printQue);
   PMS_DRAW_Main(unisub->pmsdraw);
