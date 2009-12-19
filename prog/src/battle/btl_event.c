@@ -175,7 +175,8 @@ static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
  * @retval  BTL_EVENT_FACTOR*
  */
 //=============================================================================================
-BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 dependID, const BtlEventHandlerTable* handlerTable )
+BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 dependID,
+  const BtlEventHandlerTable* handlerTable )
 {
   BTL_EVENT_FACTOR* newFactor;
 
@@ -191,7 +192,8 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     while( handlerTable[ newFactor->numHandlers ].eventType != BTL_EVENT_NULL ){
       newFactor->numHandlers++;
     }
-    newFactor->numHandlers--;
+    OS_TPrintf("ƒnƒ“ƒhƒ‰”=%d\n", newFactor->numHandlers);
+
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
@@ -410,7 +412,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     {
       const BtlEventHandlerTable* tbl = factor->handlerTable;
       u32 i;
-      for(i=0; factor->numHandlers; i++)
+      for(i=0; i<factor->numHandlers; i++)
       {
         if( tbl[i].eventType == eventID )
         {
