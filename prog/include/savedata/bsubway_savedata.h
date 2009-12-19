@@ -94,6 +94,20 @@ typedef enum
 }BSWAY_SCORE_POKE_DATA;
 
 //--------------------------------------------------------------
+/// 
+//--------------------------------------------------------------
+typedef enum
+{
+  BSWAY_PLAYMODE_SINGLE,
+  BSWAY_PLAYMODE_DOUBLE,
+  BSWAY_PLAYMODE_MULTI,
+  BSWAY_PLAYMODE_COMM_MULTI,
+  BSWAY_PLAYMODE_WIFI,
+  BSWAY_PLAYMODE_RETRY,
+  BSWAY_PLAYMODE_WIFI_MULTI,
+}BSWAY_PLAYMODE;
+
+//--------------------------------------------------------------
 /// íËêî
 //--------------------------------------------------------------
 ///ëIëÇ∑ÇÈéËéùÇøÉ|ÉPÉÇÉìêîÇÃMAX
@@ -179,8 +193,8 @@ extern u8 BSUBWAY_SCOREDATA_SetWifiRank(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 extern u16 BSUBWAY_SCOREDATA_SetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
-extern u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score );
-extern u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score );
+extern u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 
 //----
 #if 0 //wb null

@@ -554,7 +554,7 @@ u8 BSUBWAY_SCOREDATA_SetWifiRank(
  * @retval
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score )
+u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
   return bsw_score->renshou;
 }
@@ -566,7 +566,8 @@ u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score )
  * @retval
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score )
+u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
   return bsw_score->renshou_max;
 }
