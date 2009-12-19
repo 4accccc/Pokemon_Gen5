@@ -229,12 +229,18 @@ void BR_RES_LoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID, HEAPID heapID )
     break;
     
   case BR_RES_BG_RNDMATCH_M_NONE:
-    /* fallthrough */
-  case BR_RES_BG_SUBWAY_M_NONE:
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_win_NCGR,
         BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
 
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_win2_NSCR,
+				BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_SUBWAY_M_NONE:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
+        BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_subway_u0_NSCR,
 				BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
     break;
 

@@ -141,14 +141,15 @@ enum {
 	NARC_battle_recorder_gra_batt_rec_browse_bg7_NCLR = 127,
 	NARC_battle_recorder_gra_batt_rec_browse_obj7_NCLR = 128,
 	NARC_battle_recorder_gra_batt_rec_subway_d_NSCR = 129,
-	NARC_battle_recorder_gra_batt_rec_subway_u1_NSCR = 130,
-	NARC_battle_recorder_gra_batt_rec_subway_u2_NSCR = 131,
-	NARC_battle_recorder_gra_batt_rec_subway_u3_NSCR = 132,
-	NARC_battle_recorder_gra_batt_rec_subway_u4_NSCR = 133,
-	NARC_battle_recorder_gra_batt_rec_rndmatch_d_NSCR = 134,
-	NARC_battle_recorder_gra_batt_rec_rndmatch_u1_NSCR = 135,
-	NARC_battle_recorder_gra_batt_rec_rndmatch_u2_NSCR = 136,
-	NARC_battle_recorder_gra_batt_rec_rndmatch_u3_NSCR = 137
+	NARC_battle_recorder_gra_batt_rec_subway_u0_NSCR = 130,
+	NARC_battle_recorder_gra_batt_rec_subway_u1_NSCR = 131,
+	NARC_battle_recorder_gra_batt_rec_subway_u2_NSCR = 132,
+	NARC_battle_recorder_gra_batt_rec_subway_u3_NSCR = 133,
+	NARC_battle_recorder_gra_batt_rec_subway_u4_NSCR = 134,
+	NARC_battle_recorder_gra_batt_rec_rndmatch_d_NSCR = 135,
+	NARC_battle_recorder_gra_batt_rec_rndmatch_u1_NSCR = 136,
+	NARC_battle_recorder_gra_batt_rec_rndmatch_u2_NSCR = 137,
+	NARC_battle_recorder_gra_batt_rec_rndmatch_u3_NSCR = 138
 };
 
 /* NARC_BATTLE_RECORDER_GRA_NAIX_ */

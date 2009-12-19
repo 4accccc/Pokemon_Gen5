@@ -12,6 +12,7 @@
 #include "br_proc_sys.h"
 #include "br_res.h"
 #include "br_fade.h"
+#include "savedata/bsubway_savedata.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -28,10 +29,11 @@
 //=====================================
 typedef struct 
 {
-  BR_FADE_WORK    *p_fade;      //[in]フェード
-  GFL_CLUNIT			*p_unit;			//[in]ユニット
-	BR_RES_WORK			*p_res;				//[in]リソース管理
-	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  BR_FADE_WORK      *p_fade;      //[in]フェード
+  GFL_CLUNIT			  *p_unit;			//[in]ユニット
+	BR_RES_WORK			  *p_res;				//[in]リソース管理
+	BR_PROC_SYS			  *p_procsys;		//[in]プロセス管理
+  BSUBWAY_SCOREDATA *p_subway;    //[in]バトルサブウェイセーブデータ
 } BR_BTLSUBWAY_PROC_PARAM;
 
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-11-21T15:54:55"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-12-19T17:55:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="8" top="167" right="713" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="367" top="214" right="1072" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1024,6 +1024,21 @@
 	<row id="msg_813">
 		<language name="JPN" font=" 1:small" width="216">ともだちとマルチ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ともだちとマルチ</language>
+	</row>
+
+	<row id="msg_814">
+		<language name="JPN" font=" 1:small" width="216">ランク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランク</language>
+	</row>
+
+	<row id="msg_815">
+		<language name="JPN" font=" 1:small" width="216">げんざいの　きろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">げんざいの　きろく</language>
+	</row>
+
+	<row id="msg_816">
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]Wi-Fiバトルルーム　せいせき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]Wi-Fiバトルルーム　せいせき</language>
 	</row>
 
 	<row id="msg_900">

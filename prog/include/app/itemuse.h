@@ -38,6 +38,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_ANANUKENOHIMO, // あなぬけのひも
   BAG_NEXTPROC_AMAIMITU,      // あまいミツ
   BAG_NEXTPROC_TURIZAO,       // つりざお
+  BAG_NEXTPROC_BATTLERECORDER,       // バトルレコーダー
 };
 
 

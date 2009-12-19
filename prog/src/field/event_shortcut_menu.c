@@ -521,7 +521,7 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->select_param	= EVENT_ITEMUSE_CALL_PALACEJUMP;
 		return CALLTYPE_ITEM;
 	case SHORTCUT_ID_BTLRECORDER:	//バトルレコーダー
-		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->call = EVENT_PROCLINK_CALL_BTLRECORDER;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_FRIENDNOTE:		//友達手賞
 		p_param->call = EVENT_PROCLINK_CALL_WIFINOTE;
@@ -609,7 +609,10 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 			FLDMSGBG *p_msgbg;
 
 			p_msgbg	= FIELDMAP_GetFldMsgBG( p_wk->p_fieldmap );
-			FLDMSGBG_ReleaseBGResouce( p_msgbg );
+      if( p_msgbg )
+      { 
+        FLDMSGBG_ReleaseBGResouce( p_msgbg );
+      }
 		}
 
 		{	

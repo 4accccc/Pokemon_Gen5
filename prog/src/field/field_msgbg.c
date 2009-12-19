@@ -412,7 +412,7 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
   
   GFL_TCBL_Exit( fmb->printTCBLSys );
 	
-  GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
+  GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
 	GFL_BG_FreeBGControl( fmb->bgFrame );
 	
 	do{

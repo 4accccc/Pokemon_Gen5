@@ -38,14 +38,16 @@
 #include "app/mailtool.h" //MAIL_PARAM
 #include "poke_tool/shinka_check.h" //進化デモ
 #include "demo/shinka_demo.h" //進化デモ
+#include "net_app/battle_recorder.h"  //バトルレコーダー
 
 //アーカイブ
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
 
+//その他
 #include "item/item.h"  //ITEM_GetMailDesign
 
-//自分
+//自分の外部公開
 #include "field/event_field_proclink.h"
 
 //-------------------------------------
@@ -55,8 +57,9 @@ FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(townmap);
 FS_EXTERN_OVERLAY(wifinote);
 FS_EXTERN_OVERLAY(pokelist);
-
 FS_EXTERN_OVERLAY(app_mail);
+FS_EXTERN_OVERLAY(battle_recorder);
+
 //=============================================================================
 /**
  *          定数宣言
@@ -189,6 +192,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
 //進化画面
 static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param_adrs);
+//バトルレコーダー
+static void * FMenuCallProc_BattleRecorder(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
+static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* param_adrs);
 
 //-------------------------------------
 /// レポートと図鑑のイベント
@@ -308,7 +314,14 @@ static const struct
     FMenuReturnProc_Evolution,
     NULL,
   },
-
+  //EVENT_PROCLINK_CALL_BTLRECORDER
+  { 
+    FS_OVERLAY_ID(battle_recorder),
+    &BattleRecorder_ProcData,
+    FMenuCallProc_BattleRecorder,
+    FMenuReturnProc_BattleRecorder,
+    NULL,
+  },
 };
 
 //=============================================================================
@@ -1243,6 +1256,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
     wk->next_type = EVENT_PROCLINK_CALL_TOWNMAP;
     return RETURNFUNC_RESULT_NEXT;
 
+  case BAG_NEXTPROC_BATTLERECORDER:
+    wk->next_type = EVENT_PROCLINK_CALL_BTLRECORDER;
+    return RETURNFUNC_RESULT_NEXT;
 
   default:
     wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
@@ -1701,15 +1717,65 @@ static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param
   if( wk->mode == PROCLINK_MODE_EVOLUTION_ITEM )
   {
     wk->next_type = EVENT_PROCLINK_CALL_BAG;
+    return RETURNFUNC_RESULT_NEXT;
+  }
+  else
+  { 
+    return RETURNFUNC_RESULT_RETURN;
+  }
+}
+
+//-------------------------------------
+/// バトルレコーダー画面
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CALL関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param   起動時引数
+ *  @param  pre     一つ前のプロック
+ *  @param  void* pre_param_adrs  一つ前のプロックパラメータ
+ *
+ *  @return プロセスパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void * FMenuCallProc_BattleRecorder(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
+{ 
+  BATTLERECORDER_PARAM* p_btlrecorder_param;
+  
+  p_btlrecorder_param = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(BATTLERECORDER_PARAM) );
+  p_btlrecorder_param->p_gamedata = GAMESYSTEM_GetGameData(wk->param->gsys);
+
+  return p_btlrecorder_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  RETURN関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param_adrs  自分のプロックパラメータ
+ *
+ *  @return   RETURNFUNC_RESULT_RETURN,     //メニューに戻る
+ *            RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
+ *            RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
+ *            RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
+ *            RETURNFUNC_RESULT_NEXT,       //次のプロセスへ行く
+ */ 
+//-----------------------------------------------------------------------------
+static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* param_adrs)
+{ 
+  if( wk->param->call == EVENT_PROCLINK_CALL_BTLRECORDER )
+  { 
+    return RETURNFUNC_RESULT_RETURN;
   }
   else
   {
     wk->next_type = EVENT_PROCLINK_CALL_BAG;
+    return RETURNFUNC_RESULT_NEXT;
   }
-
-  return RETURNFUNC_RESULT_NEXT;
-
 }
+
 //=============================================================================
 /**
  *  レポートと図鑑のイベント

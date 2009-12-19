@@ -2240,7 +2240,7 @@ static s16 OBJNUMBER_GetFigPosX( const OBJNUMBER_WORK *cp_wk, int fig )
 //-----------------------------------------------------------------------------
 static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
 {	
-	static const u8 sc_num_table[] = 
+	static const u32 sc_num_table[] = 
 	{
 		1,
 		10,

@@ -17,6 +17,8 @@
 
 //アーカイブ
 #include "msg/msg_battle_rec.h"
+#include "arc_def.h"
+#include "battle_recorder_gra.naix"
 
 //自分のモジュール
 #include "br_btn.h"
@@ -53,7 +55,6 @@ typedef enum
 typedef enum
 {
   BR_BTLSUBWAY_MSGWINID_M_NONE_CAPTION = 0,  //バトルサブウェイ
-  BR_BTLSUBWAY_MSGWINID_M_NONE_MSG,         //メッセージ
   BR_BTLSUBWAY_MSGWINID_M_NONE_MAX,
 
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_CAPTION = 0,      //バトルサブウェイ
@@ -120,11 +121,29 @@ typedef enum
   BR_BTLSUBWAY_SELECT_MAX
 } BR_BTLSUBWAY_SELECT;
 
+//-------------------------------------
+///	数
+//=====================================
+#define OBJNUMBER_MAX				(4)
+
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+
+//-------------------------------------
+///	OBJ数字
+//=====================================
+typedef struct
+{
+	GFL_CLWK *p_clwk;
+	GFL_CLWK *p_num[OBJNUMBER_MAX];
+  u32 res_chr;
+  u32 res_cel;
+  u32 res_plt;
+} OBJNUMBER_WORK;
+
 //-------------------------------------
 ///	バトルサブウェイメインワーク
 //=====================================
@@ -132,6 +151,8 @@ typedef struct
 {
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;   //プリントキュー
+  OBJNUMBER_WORK      objnum;   //OBJ数字
+  BR_TEXT_WORK        *p_text;  //テキスト
 
 	BR_BTN_WORK	        *p_btn[ BR_BTLSUBWAY_BTNID_MAX ];
   BR_MSGWIN_WORK      *p_msgwin_s[ BR_BTLSUBWAY_MSGWINID_S_MAX ];
@@ -157,26 +178,6 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Exit
 static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 
-//=============================================================================
-/**
- *					外部参照
-*/
-//=============================================================================
-//-------------------------------------
-///	バトルサブウェイプロセスプロセス
-//=====================================
-const GFL_PROC_DATA BR_BTLSUBWAY_ProcData =
-{	
-	BR_BTLSUBWAY_PROC_Init,
-	BR_BTLSUBWAY_PROC_Main,
-	BR_BTLSUBWAY_PROC_Exit,
-};
-
-//=============================================================================
-/**
- *					プロトタイプ
- */
-//=============================================================================
 //-------------------------------------
 ///	各画面構築
 //=====================================
@@ -193,6 +194,28 @@ static void Br_BtlSubway_DeleteSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
 ///	private
 //=====================================
 static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 x, u32 y );
+
+//-------------------------------------
+///	OBJNUMBER
+//=====================================
+static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int number, s16 x, s16 y, HEAPID heapID );
+static void OBJNUMBER_Exit( OBJNUMBER_WORK *p_wk );
+static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number );
+
+//=============================================================================
+/**
+ *					外部参照
+*/
+//=============================================================================
+//-------------------------------------
+///	バトルサブウェイプロセスプロセス
+//=====================================
+const GFL_PROC_DATA BR_BTLSUBWAY_ProcData =
+{	
+	BR_BTLSUBWAY_PROC_Init,
+	BR_BTLSUBWAY_PROC_Main,
+	BR_BTLSUBWAY_PROC_Exit,
+};
 
 //=============================================================================
 /**
@@ -406,6 +429,12 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
 
   PRINTSYS_QUE_Main( p_wk->p_que );
  
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
+
+
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -435,18 +464,11 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   { 
     {
       4,
-      3,
-      11,
+      6,
+      24,
       2,
       msg_804
     },
-    { 
-      1,
-      19,
-      30,
-      4,
-      msg_805,
-    }
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
@@ -463,12 +485,17 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     int i;
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_NONE_MAX; i++ )
     { 
-      if( i == BR_BTLSUBWAY_MSGWINID_M_NONE_MSG )
-      { 
-        p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
-      }
+      p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
+      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
     }
+  }
+
+  p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
+  BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_805 );
+
+  { 
+    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88, 88, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -549,9 +576,13 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
@@ -563,9 +594,47 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_SINGLE_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM:  //ぜんかいの数値
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      case BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_NUM: //さいこうの数値
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
+
+
+  { 
+    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -645,9 +714,13 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
@@ -659,10 +732,45 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM:  //ぜんかいの数値
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_NUM: //さいこうの数値
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
   }
 
+  { 
+    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -798,9 +906,13 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //リソース読み込み
@@ -812,8 +924,65 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_MULTI_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_CAPTION:   //ぜんかい
+        { 
+         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_NUM:       //９９９９
+        { 
+         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM:  //ぜんかいの数値
+        { 
+         const int number  = 9999;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_NUM: //さいこうの数値
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
+
     }
+  }
+
+  { 
+    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -847,35 +1016,39 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
       6,
       24,
       2,
-      msg_801,
+      msg_816,
     },
     { 
       4,
       10,
-      7,
+      13,
       2,
-      msg_807,
+      msg_815,
     },
     { 
-      14,
+      19,
       10,
-      7,
+      5,
+      2,
+      msg_814,
+    },
+    { 
+      25,
+      10,
+      5,
       2,
       msg_809,
-    },
-    { 
-      21,
-      10,
-      7,
-      2,
-      msg_811,
     },
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+  WORDSET *p_word;
+  STRBUF  *p_strbuf;
+  STRBUF  *p_src;
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
   //リソース読み込み
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_WIFI, p_wk->heapID );
@@ -886,8 +1059,32 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_WIFI_MAX; i++ )
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_BTLSUBWAY_MSGWINID_M_WIFI_NOW_NUM:  //ランク
+        { 
+         const int number  = 1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+        }
+        break;
+
+      default:
+        p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+
+      GFL_STR_DeleteBuffer( p_strbuf ); 
     }
+  }
+  { 
+    const u16 bp  =1234;//BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -900,6 +1097,8 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
 //-----------------------------------------------------------------------------
 static void Br_BtlSubway_DeleteMainDisplay( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLSUBWAY_PROC_PARAM *p_param )
 { 
+  OBJNUMBER_Exit( &p_wk->objnum );
+
   { 
     int i;
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_M_MAX; i++ )
@@ -912,6 +1111,12 @@ static void Br_BtlSubway_DeleteMainDisplay( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLSUBWA
     }
   }
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_SINGLE );
+
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1089,3 +1294,164 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
 
   return BR_BTLSUBWAY_SELECT_NONE;
 }
+//=============================================================================
+/**
+ *      OBJ数字
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ数字 初期化
+ *
+ *	@param	OBJNUMBER_WORK *p_wk  ワーク
+ *	@param	*p_clunit             CLUNIT
+ *	@param	number                セットする数字
+ *	@param  原点座標
+ */
+//-----------------------------------------------------------------------------
+static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int number, s16 x, s16 y, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(OBJNUMBER_WORK) );
+
+  //リソース読み込み
+  { 
+    ARCHANDLE *p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, GFL_HEAP_LOWID(heapID) );
+
+
+    //パレット、セル
+    p_wk->res_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+        NARC_battle_recorder_gra_batt_rec_bpfont_NCLR,
+        CLSYS_DRAW_MAIN, PLT_OBJ_M_BTLSUBWAY_BP*0x20, 0, 1, heapID );
+    p_wk->res_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+        NARC_battle_recorder_gra_batt_rec_bpfont_64k_NCER, NARC_battle_recorder_gra_batt_rec_bpfont_64k_NANR, heapID );
+    p_wk->res_chr = GFL_CLGRP_CGR_Register( p_handle,
+              NARC_battle_recorder_gra_batt_rec_browse_bpfont_NCGR,
+              FALSE, CLSYS_DRAW_MAIN, heapID );
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
+  //CLWK作成
+  { 
+    
+    int i;
+    GFL_CLWK_DATA cldata;
+
+
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    //BP
+    cldata.pos_x  = x;
+    cldata.pos_y  = y;
+    cldata.anmseq = 10;
+    p_wk->p_clwk = GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+
+    //数字
+    for( i = 0; i < OBJNUMBER_MAX; i++ )
+    {
+      cldata.pos_x  = x + 32 + i * 16;
+      cldata.pos_y  = y;
+
+      p_wk->p_num[i] = GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+    }
+  }
+
+  //数字をセット
+  ObjNumber_SetNumber( p_wk, number );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ数字 破棄
+ *
+ *	@param	OBJNUMBER_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void OBJNUMBER_Exit( OBJNUMBER_WORK *p_wk )
+{
+  //CLWK破棄
+  { 
+    int i;
+    for( i = 0; i < OBJNUMBER_MAX; i++ )
+    { 
+      if( p_wk->p_num[i] )
+      { 
+        GFL_CLACT_WK_Remove( p_wk->p_num[i] );
+        p_wk->p_num[i] = NULL;
+      }
+    }
+    GFL_CLACT_WK_Remove( p_wk->p_clwk );
+  }
+
+  //リソース破棄
+  { 
+    GFL_CLGRP_CGR_Release(p_wk->res_chr);
+    GFL_CLGRP_PLTT_Release(p_wk->res_plt);
+    GFL_CLGRP_CELLANIM_Release(p_wk->res_cel);
+  }
+
+  GFL_STD_MemClear( p_wk, sizeof(OBJNUMBER_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJに番号をセット
+ *
+ *	@param	OBJNUMBER_WORK *p_wk	ワーク
+ *	@param	number							番号
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
+{	
+	static const u32 sc_num_table[] = 
+	{
+		1,
+		10,
+		100,
+		1000,
+    10000,
+	};
+	u8 fig;
+	u8 n;
+	int i;
+  int anmseq;
+
+	//何桁か調べる
+	n		= number;
+	fig	= 0;
+	if( n == 0 )
+	{	
+		fig	= 1;
+	}
+	else
+	{	
+		while( 1 )
+		{
+			if( n == 0 )
+			{	
+				break;
+			}
+			n	/= 10;
+			fig++;
+		}
+	}
+	
+
+	//一端消去
+	for( i = 0; i < OBJNUMBER_MAX; i++ )
+	{
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_num[i], 0 );
+	}
+
+	//OBJのアニメを桁の数値に合わせる
+	for( i = 0; i < /*fig*/OBJNUMBER_MAX; i++ )
+	{
+		anmseq	= number % sc_num_table[ i+1 ] / sc_num_table[ i ];
+		//+1はセルの順番
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_num[OBJNUMBER_MAX-1-i], anmseq );
+	}
+}
+
