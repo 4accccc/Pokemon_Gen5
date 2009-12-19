@@ -59,6 +59,8 @@ enum {
 
   INPUTBOX_NUM_ARG_EXP = 0xffffffff,
   INPUTBOX_NUM_ARG_DEPEND = 0xfffffffe,
+
+  DMPSTR_NULL = -1,
 };
 
 #define CALC_NUMBOX_WIDTH(keta)      ((keta)*NUMBOX_CHAR_WIDTH +NUMBOX_MARGIN*2)
@@ -71,14 +73,14 @@ enum {
   LINE_MARGIN = 2,
   LINE_DIFFER = LINE_HEIGHT + LINE_MARGIN,
 
-  LY_LV1 = 2,
+  LY_LV1 = 4,
   LY_LV2 = LY_LV1+LINE_DIFFER,
   LY_LV3 = LY_LV2+LINE_DIFFER,
-  LY_LV4 = LY_LV3+LINE_DIFFER + 4,
+  LY_LV4 = LY_LV3+LINE_DIFFER + 3,
   LY_LV5 = LY_LV4+LINE_DIFFER,
   LY_LV6 = LY_LV5+LINE_DIFFER,
   LY_LV7 = LY_LV6+LINE_DIFFER,
-  LY_LV8 = LY_LV7+LINE_DIFFER + 4,
+  LY_LV8 = LY_LV7+LINE_DIFFER + 3,
   LY_LV9 = LY_LV8+LINE_DIFFER,
   LY_LV10 = LY_LV9+LINE_DIFFER,
   LY_LV11 = LY_LV10+LINE_DIFFER,
@@ -110,7 +112,7 @@ enum {
   LX_TOKUSEI_BOX = LX_TOKUSEI_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_TOKUSEI_BOX = LY_TOKUSEI_CAP,
 
-  LX_SEX_CAP = 202,
+  LX_SEX_CAP = 198,
   LY_SEX_CAP = LY_LV2,
   LX_SEX_BOX = LX_SEX_CAP+CALC_CAP_BOX_MARGIN(4),
   LY_SEX_BOX = LY_SEX_CAP,
@@ -140,46 +142,67 @@ enum {
   LX_WAZA4_BOX = LX_WAZA4_CAP + CALC_CAP_BOX_MARGIN(3),
   LY_WAZA4_BOX = LY_WAZA4_CAP,
 
-  LX_PPCNT1_CAP = 104,
+  //-------------------------------------------------------------
+  // PP欄レイアウト
+  //-------------------------------------------------------------
+  LX_PP_UPCNT_CAP = 104,
+  LX_PP_UPCNT_BOX = LX_PP_UPCNT_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
+  LX_PP_EDIT_BOX = LX_PP_UPCNT_BOX + CALC_CAP_BOX_MARGIN_HALF(4),
+  LX_PP_MAX_CAP = LX_PP_EDIT_BOX + CALC_CAP_BOX_MARGIN_HALF(5),
+  LX_PP_MAX_BOX = LX_PP_MAX_CAP + 8,
+
+
+  LX_PPCNT1_CAP = LX_PP_UPCNT_CAP,
   LY_PPCNT1_CAP = LY_LV4,
-  LX_PPCNT1_BOX = LX_PPCNT1_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
+  LX_PPCNT1_BOX = LX_PP_UPCNT_BOX,
   LY_PPCNT1_BOX = LY_PPCNT1_CAP,
 
-  LX_PPCNT2_CAP = 104,
+  LX_PPCNT2_CAP = LX_PP_UPCNT_CAP,
   LY_PPCNT2_CAP = LY_LV5,
-  LX_PPCNT2_BOX = LX_PPCNT2_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
+  LX_PPCNT2_BOX = LX_PP_UPCNT_BOX,
   LY_PPCNT2_BOX = LY_PPCNT2_CAP,
 
-  LX_PPCNT3_CAP = 104,
+  LX_PPCNT3_CAP = LX_PP_UPCNT_CAP,
   LY_PPCNT3_CAP = LY_LV6,
-  LX_PPCNT3_BOX = LX_PPCNT3_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
+  LX_PPCNT3_BOX = LX_PP_UPCNT_BOX,
   LY_PPCNT3_BOX = LY_PPCNT3_CAP,
 
-  LX_PPCNT4_CAP = 104,
+  LX_PPCNT4_CAP = LX_PP_UPCNT_CAP,
   LY_PPCNT4_CAP = LY_LV7,
-  LX_PPCNT4_BOX = LX_PPCNT4_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
+  LX_PPCNT4_BOX = LX_PP_UPCNT_BOX,
   LY_PPCNT4_BOX = LY_PPCNT4_CAP,
 
-  LX_PPMAX1_CAP = 156,
+  LX_PPMAX1_CAP = LX_PP_MAX_CAP,
   LY_PPMAX1_CAP = LY_LV4,
-  LX_PPMAX1_BOX = LX_PPMAX1_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
+  LX_PPMAX1_BOX = LX_PP_MAX_BOX,
   LY_PPMAX1_BOX = LY_PPMAX1_CAP,
 
-  LX_PPMAX2_CAP = LX_PPMAX1_CAP,
+  LX_PPMAX2_CAP = LX_PP_MAX_CAP,
   LY_PPMAX2_CAP = LY_LV5,
-  LX_PPMAX2_BOX = LX_PPMAX2_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
+  LX_PPMAX2_BOX = LX_PP_MAX_BOX,
   LY_PPMAX2_BOX = LY_PPMAX2_CAP,
 
-  LX_PPMAX3_CAP = LX_PPMAX1_CAP,
+  LX_PPMAX3_CAP = LX_PP_MAX_CAP,
   LY_PPMAX3_CAP = LY_LV6,
-  LX_PPMAX3_BOX = LX_PPMAX3_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
+  LX_PPMAX3_BOX = LX_PP_MAX_BOX,
   LY_PPMAX3_BOX = LY_PPMAX3_CAP,
 
-  LX_PPMAX4_CAP = LX_PPMAX1_CAP,
+  LX_PPMAX4_CAP = LX_PP_MAX_CAP,
   LY_PPMAX4_CAP = LY_LV7,
-  LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
+  LX_PPMAX4_BOX = LX_PP_MAX_BOX,
   LY_PPMAX4_BOX = LY_PPMAX4_CAP,
 
+  LX_PPEDIT1_BOX = LX_PP_EDIT_BOX,
+  LY_PPEDIT1_BOX = LY_PPMAX1_CAP,
+
+  LX_PPEDIT2_BOX = LX_PP_EDIT_BOX,
+  LY_PPEDIT2_BOX = LY_PPMAX2_CAP,
+
+  LX_PPEDIT3_BOX = LX_PP_EDIT_BOX,
+  LY_PPEDIT3_BOX = LY_PPMAX3_CAP,
+
+  LX_PPEDIT4_BOX = LX_PP_EDIT_BOX,
+  LY_PPEDIT4_BOX = LY_PPMAX4_CAP,
 
   //-------------------------------------------------------------
   // ステータス欄レイアウト
@@ -206,7 +229,7 @@ enum {
   LY_HPEDIT_BOX  = LY_LV8,
   LX_HPSLASH_CAP = LX_HPEDIT_BOX + CALC_NUMBOX_WIDTH(3)+2,
   LY_HPSLASH_CAP = LY_LV8,
-  LX_HPVAL_BOX   = LX_HPSLASH_CAP + 6,
+  LX_HPVAL_BOX   = LX_HPSLASH_CAP + 8,
   LY_HPVAL_BOX   = LY_LV8,
 
   // POW -------------------------------------------------------------
@@ -285,6 +308,9 @@ enum {
   LX_TYPE_BOX = LX_TYPE_CAP + CALC_CAP_BOX_MARGIN(3),
   LY_TYPE_BOX = LY_TYPE_CAP,
 
+  LX_DEFAULT_BTN = LX_HPVAL_BOX+CALC_NUMBOX_WIDTH(3)+4,
+  LY_DEFAULT_BTN = LY_LV8,
+
   ID_PARA_SEIKAKU = ID_PARA_end,
 };
 
@@ -321,6 +347,11 @@ typedef enum {
   INPUTBOX_ID_PPMAX3,
   INPUTBOX_ID_PPMAX4,
 
+  INPUTBOX_ID_PPEDIT1,
+  INPUTBOX_ID_PPEDIT2,
+  INPUTBOX_ID_PPEDIT3,
+  INPUTBOX_ID_PPEDIT4,
+
   INPUTBOX_ID_HPRND,
   INPUTBOX_ID_HPEXP,
   INPUTBOX_ID_HPVAL,
@@ -352,9 +383,6 @@ typedef enum {
 
   INPUTBOX_ID_MAX,
 
-  //
-  INPUTBOX_EXID_EXP_MIN,
-  INPUTBOX_EXID_EXP_MAX,
 
 }InputBoxID;
 
@@ -448,6 +476,9 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     LX_WAZA4_BOX,   LY_WAZA4_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
     ID_PARA_waza4, NARC_message_wazaname_dat,    0 },
 
+  //---------------------------------------------------
+  // PP系
+  //---------------------------------------------------
   { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT1,   LX_PPCNT1_CAP,   LY_PPCNT1_CAP,
     LX_PPCNT1_BOX,   LY_PPCNT1_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
     ID_PARA_pp_count1, 3,  0 },
@@ -464,22 +495,41 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     LX_PPCNT4_BOX,   LY_PPCNT4_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
     ID_PARA_pp_count4, 3,    0 },
 
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX1,   LX_PPMAX1_CAP,  LY_PPMAX1_CAP,
+  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX1_CAP,  LY_PPMAX1_CAP,
     LX_PPMAX1_BOX,   LY_PPMAX1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max1, 100,  0 },
 
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX2,   LX_PPMAX2_CAP,  LY_PPMAX2_CAP,
+  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX2_CAP,  LY_PPMAX2_CAP,
     LX_PPMAX2_BOX,   LY_PPMAX2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max2, 100,    0 },
 
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX3,   LX_PPMAX3_CAP,  LY_PPMAX3_CAP,
+  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX3_CAP,  LY_PPMAX3_CAP,
     LX_PPMAX3_BOX,   LY_PPMAX3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max3, 100,    0 },
 
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX4,   LX_PPMAX4_CAP,  LY_PPMAX4_CAP,
+  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX4_CAP,  LY_PPMAX4_CAP,
     LX_PPMAX4_BOX,   LY_PPMAX4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max4,  100,  0 },
 
+  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
+    LX_PPEDIT1_BOX,   LY_PPEDIT1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
+    ID_PARA_pp1, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX1 },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
+    LX_PPEDIT2_BOX,   LY_PPEDIT2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
+    ID_PARA_pp2, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX2 },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
+    LX_PPEDIT3_BOX,   LY_PPEDIT3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
+    ID_PARA_pp3, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX3 },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
+    LX_PPEDIT4_BOX,   LY_PPEDIT4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
+    ID_PARA_pp4, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX4 },
+
+  //---------------------------------------------------
+  // パラメータ系
+  //---------------------------------------------------
   { INPUTBOX_TYPE_NUM,  DMPSTR_HP_RND,   LX_HPRND_CAP,   LY_HPRND_CAP,
     LX_HPRND_BOX,    LY_HPRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_hp_rnd,  31,  0 },
@@ -560,12 +610,12 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     LX_TYPE_BOX,    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
     ID_PARA_type1,  NARC_message_typename_dat,  0 },
 
-  { INPUTBOX_TYPE_FIXSTR,  -1,      LX_TYPE_CAP,   LY_TYPE_CAP,
+  { INPUTBOX_TYPE_FIXSTR,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_TYPE_BOX+CALC_STRBOX_WIDTH(4),    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_typename_dat,  0 },
 
-  { INPUTBOX_TYPE_BTN,  -1,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_PPMAX1_BOX+CALC_NUMBOX_WIDTH(2)+4, LY_PPMAX2_BOX+6,    CALC_STRBOX_WIDTH(3), LINE_HEIGHT,
+  { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
+    LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
 
 };
@@ -1065,6 +1115,7 @@ static void update_dst( DMP_MAINWORK* wk )
         PP_SetWazaPos( wk->dst, box_getvalue(wk, INPUTBOX_ID_WAZA1+i), i );
       }
       PP_Put( wk->dst, ID_PARA_pp_count1+i, box_getvalue(wk, INPUTBOX_ID_PPCNT1+i) );
+      PP_Put( wk->dst, ID_PARA_pp1+i, box_getvalue(wk, INPUTBOX_ID_PPEDIT1+i) );
     }
 
     PP_Put( wk->dst, ID_PARA_hp_exp,  box_getvalue(wk, INPUTBOX_ID_HPEXP) );
@@ -1098,7 +1149,7 @@ static void update_dst( DMP_MAINWORK* wk )
 //----------------------------------------------------------------------------------
 static void print_caption( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 {
-  if( p->cap_strID >= 0 ){
+  if( p->cap_strID != DMPSTR_NULL ){
     u32 ypos = p->cap_ypos + ((LINE_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2);
     GFL_MSG_GetString( wk->msgData, p->cap_strID, wk->strbuf );
     PRINT_UTIL_Print( &wk->printUtil, wk->printQue, p->cap_xpos, ypos, wk->strbuf, wk->font );
@@ -1132,6 +1183,9 @@ static int box_getvalue( const DMP_MAINWORK* wk, u32 boxIdx )
   return wk->boxValue[ boxIdx ];
 }
 
+/**
+ *  ボックスに値のセットと同時にPPも更新
+ */
 static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
 {
   const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
@@ -1162,6 +1216,20 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
   case ID_PARA_pp_max4:
     {
       u16 idx = p->paraID - ID_PARA_pp_max1;
+      u16 waza = PP_Get( pp, ID_PARA_waza1 + idx, NULL );
+      if( waza != WAZANO_NULL ){
+        value = PP_Get( pp, p->paraID, NULL );
+      }else{
+        value = 0;
+      }
+    }
+    break;
+  case ID_PARA_pp1:
+  case ID_PARA_pp2:
+  case ID_PARA_pp3:
+  case ID_PARA_pp4:
+    {
+      u16 idx = p->paraID - ID_PARA_pp1;
       u16 waza = PP_Get( pp, ID_PARA_waza1 + idx, NULL );
       if( waza != WAZANO_NULL ){
         value = PP_Get( pp, p->paraID, NULL );
@@ -1284,7 +1352,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
         keta = 8;
         break;
       case INPUTBOX_NUM_ARG_DEPEND:
-        keta = 3;
+        keta = calc_keta( box_getvalue(wk, p->arg2) );
         break;
       }
       STRTOOL_SetNumber( wk->strbuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
@@ -1375,6 +1443,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       u16 waza = box_getvalue( wk, updateBoxID );
       PP_SetWazaPos( wk->dst, waza, idx );
       box_setup( wk, INPUTBOX_ID_PPMAX1+idx, wk->dst );
+      box_setup( wk, INPUTBOX_ID_PPEDIT1+idx, wk->dst );
     }
     break;
 
