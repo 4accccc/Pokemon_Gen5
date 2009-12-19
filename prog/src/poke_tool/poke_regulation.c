@@ -686,6 +686,9 @@ REGULATION_PRINT_MSG * PokeRegulation_CreatePrintMsg(const REGULATION* pReg, WOR
     rpm->category[category] = GFL_MSG_CreateString( rpm->msgdata, msg_reg_000 + category );
     rpm->prerequisite[category] = PrerequisiteFunc[category](pReg, wordset, rpm, tempbuf, heap_id);
   }
+  
+  GFL_STR_DeleteBuffer(tempbuf);
+  
   return rpm;
 }
 
