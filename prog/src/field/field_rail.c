@@ -185,6 +185,12 @@ struct _FIELD_RAIL_MAN{
 
 //============================================================================================
 //============================================================================================
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+// 中途半端な位置を求める
+static BOOL RailMan_CalcRailKeyAndOfs( const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, u32 add_line_ofs, VecFx32* pos );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static int RailKeyTokeyCont(RAIL_KEY key);
@@ -1321,36 +1327,55 @@ BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work )
 void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
 {
   FIELD_RAIL_WORK* local_work;
-  BOOL line_ofs_plus;
+  VecFx32 now_pos;
   GF_ASSERT( work );
-  
 
   // 値変更後元に戻すので、constでＯＫとする
   local_work = (FIELD_RAIL_WORK*)work;
+
+  // 今の位置の座標（width_ofsは０を求める）
+  {
+    s32 width_ofs_tmp = local_work->width_ofs;
+
+    local_work->width_ofs = 0;
+
+    // 座標を求める
+    getRailPosition(local_work, &now_pos);
+
+    local_work->width_ofs = width_ofs_tmp;
+  }
 
   // 前の方向を求める
   {
     VecFx32 pos;
     s32 line_ofs_tmp = local_work->line_ofs;
-    if( local_work->line_ofs < RAIL_WALK_OFS ){
-      line_ofs_plus = TRUE;
+    s32 width_ofs_tmp = local_work->width_ofs;
+    if( (local_work->line_ofs + RAIL_WALK_OFS) < (local_work->line_ofs_max) ){
       local_work->line_ofs += RAIL_WALK_OFS;
+      local_work->width_ofs = 0;
+
+      // 座標を求める
+      getRailPosition(local_work, &pos);
+
+      // 元に戻す
+      local_work->width_ofs = width_ofs_tmp;
+      local_work->line_ofs = line_ofs_tmp;
     }else{
-      line_ofs_plus = FALSE;
-      local_work->line_ofs -= RAIL_WALK_OFS;
+
+      // 1歩進んだ先のロケーションを取得し、その先で、あまりオフセット分進んだ場所の座標を求める
+      {
+        u32 add_ofs = (local_work->line_ofs + RAIL_WALK_OFS) - (local_work->line_ofs_max);
+        RAIL_LOCATION now_location;
+
+        now_location = work->now_location;
+        now_location.width_grid = 0;
+        
+        RailMan_CalcRailKeyAndOfs( work->cp_man, &now_location, work->line->key, add_ofs, &pos );
+      }
     }
 
-    // 座標を求める
-    getRailPosition(local_work, &pos);
 
-    // 元に戻す
-    local_work->line_ofs = line_ofs_tmp;
-
-    if( line_ofs_plus ){
-      VEC_Subtract( &pos, &local_work->pos, &pos );
-    }else{
-      VEC_Subtract( &local_work->pos, &pos, &pos );
-    }
+    VEC_Subtract( &pos, &now_pos, &pos );
     VEC_Normalize( &pos, &pos );
     VEC_Fx16Set( way, pos.x, pos.y, pos.z );
   }
@@ -3093,6 +3118,53 @@ static RAIL_KEY updateLine( FIELD_RAIL_WORK * work, const RAIL_LINE * line, u32 
 
 	return key;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールを　キー　と　ofs分進めた先の座標を求める
+ *
+ *	@param	man
+ *	@param	now_location
+ *	@param	key
+ *	@param	add_line_ofs
+ *	@param	pos 
+ */
+//-----------------------------------------------------------------------------
+static BOOL RailMan_CalcRailKeyAndOfs( const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, u32 add_line_ofs, VecFx32* pos )
+{
+  int i;
+  
+  GF_ASSERT( man );
+  GF_ASSERT( now_location );
+  GF_ASSERT( pos );
+
+  GF_ASSERT( add_line_ofs < RAIL_WALK_OFS );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, now_location );
+  FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_1, key );
+  FIELD_RAIL_WORK_Update( man->calc_work );
+
+  FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_16, key );
+  for( i=0; i<RAIL_WALK_OFS; i++ )
+  {
+    if( add_line_ofs == i )
+    {
+      FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
+    }
+    FIELD_RAIL_WORK_Update( man->calc_work );
+  }
+
+  // 変化があったか？
+  if( GFL_STD_MemComp( now_location, &man->calc_work->now_location, sizeof(RAIL_LOCATION) ) == 0 )
+  {
+    return FALSE;
+  }
+
+  return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
