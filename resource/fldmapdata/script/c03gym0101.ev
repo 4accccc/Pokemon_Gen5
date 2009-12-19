@@ -72,20 +72,44 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_c03gym0101_sunglasses_01
 
-	//ジムバッジを持っているのかを判定
+	_TALK_OBJ_START()
+
+	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
 
-	//ジムバッジを取得していない場合
+	//バッジフラグで分岐
 	IF $SCWK_TEMP0 == 0 THEN
-	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
-	
-	//ジムバッジを取得している場合
+		//バッジ入手前の処理
+
+		//アイテム入手フラグで分岐
+		IF FLAG_OFF( FE_C03GYM_ITEM ) THEN
+			//アイテム未入手なら、おいしいみず入手イベント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_01 )
+			_BALLOONWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			_FLAG_SET( FE_C03GYM_ITEM )			//アイテム入手フラグをセット
+
+		ELSE
+			//入手済みならメッセージのみ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+
 	ELSE
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_03)
-		
+		//バッジ入手後の処理
+
+		//さすがっすよ！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_03 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
 	ENDIF
+	
 EVENT_END
 	
 /************************************************************/
@@ -229,6 +253,9 @@ ev_leader3_btl:
 	//ジムトレーナーの視線無効
 	_TRAINER_FLAG_SET( TRID_JUGGLING_05 )
 	_TRAINER_FLAG_SET( TRID_JUGGLING_06 )
+	
+	//R04ストッパーの解除
+	$WK_SCENE_R04 = 1
 
 	//================================================//
 

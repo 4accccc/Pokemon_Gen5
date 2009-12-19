@@ -29,16 +29,6 @@ _EVENT_DATA		ev_c03_businessman2_01
 _EVENT_DATA		ev_c03_businessman3_01
 _EVENT_DATA		ev_c03_businessman4_01
 _EVENT_DATA		ev_c03_businessman5_01
-_EVENT_DATA		ev_c03_businessman6_01
-_EVENT_DATA		ev_c03_businessman7_01
-_EVENT_DATA		ev_c03_businessman8_01
-_EVENT_DATA		ev_c03_businessman9_01
-_EVENT_DATA		ev_c03_businessman10_01
-_EVENT_DATA		ev_c03_businessman11_01
-_EVENT_DATA		ev_c03_businessman12_01
-_EVENT_DATA		ev_c03_businessman13_01
-_EVENT_DATA		ev_c03_businessman14_01
-_EVENT_DATA		ev_c03_businessman15_01
 _EVENT_DATA_END
 
 
@@ -117,74 +107,3 @@ EVENT_END
 EVENT_START		ev_c03_businessman5_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman5_01 )
 EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN6	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman6_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman6_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN7	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman7_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman7_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN8	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman8_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman8_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN9	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman9_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman9_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN10	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman10_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman10_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN11	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman11_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman11_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN12	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman12_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman12_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN13	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman13_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman13_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN14	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman14_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman14_01 )
-EVENT_END
-
-/**************************************************************/
-/*		BUSINESSMAN15	会話スクリプト						  */
-/**************************************************************/
-EVENT_START		ev_c03_businessman15_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman15_01 )
-EVENT_END
-

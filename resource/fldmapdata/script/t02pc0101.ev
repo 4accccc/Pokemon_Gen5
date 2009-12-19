@@ -59,14 +59,12 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	_OBJ_ANIME_WAIT()
 	
 	//ここがポケモンセンター！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：カウンターの真横に動く、自機：カウンター前に移動、サポート：自機真横に移動
 	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_counter )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_counter )
-	_OBJ_ANIME_WAIT()
-	
 	//サポート：自機に気付いて横に行く
 	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_counter )
 	_OBJ_ANIME_WAIT()
@@ -75,7 +73,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	_OBJ_ANIME_WAIT()
 
 	//ポケモンセンターの凄いところ！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_02,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_02, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 
 	//BGM終了
@@ -112,17 +110,17 @@ _ANIME_LABEL	anm_hakase_counter
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_player_counter
 	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 //-------------------------------------------------------------
 //     サポート、カウンター前まで移動       
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_support_counter
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //-------------------------------------------------------------
@@ -146,7 +144,7 @@ EVENT_START		ev_pos_t02pc0101_kaifuku_01
 	_OBJ_ANIME_WAIT()
 	
 	//ちょっと　どこへ　行くのよ！？
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_03 , T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_03, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//自機：一歩戻る
@@ -200,7 +198,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME_WAIT()
 	
 	//こいつはパソコン！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_04,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_04, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：博士の方に向く
@@ -212,7 +210,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_BALLOONWIN_CLOSE()
 	
 	//なるほど……　いい　しつもんだ
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_05,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_05, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
@@ -222,11 +220,11 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME_WAIT()
 	
 	//こちらは　フレンドリィショップ！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_06,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//よーしよしよし！
-	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_07,T02PC0101_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_07, T02PC0101_HAKASE2_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//博士、立ち去る

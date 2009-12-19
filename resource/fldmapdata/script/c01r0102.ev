@@ -164,19 +164,18 @@ EVENT_START   ev_c01r0102_inventor_01
 	
 		//重要アイテム「？？？」を持っていない場合
 		IF $WK_SCENE_D01R0101 <= 5 THEN
-		
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
-			_BALLOONWIN_CLOSE()
 		
 		//重要アイテム「？？？」を持っている場合
 		ELSE
-		
 			//マコモ『それって！　ムシャーナの「？？？？？」！？』
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
-			_BALLOONWIN_CLOSE()
 			
 		ENDIF
+		
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
 EVENT_END
   
@@ -194,14 +193,15 @@ EVENT_START   ev_c01r0102_girl3_01
 		_BALLOONWIN_CLOSE()
 		
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
-		_BALLOONWIN_CLOSE()
 	
 	//PDWイベントが終わっている場合
 	ELSE
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
-		_BALLOONWIN_CLOSE()
 	
 	ENDIF
+
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
 EVENT_END
 

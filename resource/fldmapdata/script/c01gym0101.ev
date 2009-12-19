@@ -75,29 +75,29 @@ INIT_EVENT_START	ev_init_c01gym0101
 			//くさタイプ選択の場合
 			IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
 		
-				//コーンの位置を変更する
-				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 14, 1, 3, DIR_DOWN )
 				//ポッドの位置を変更する
-				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 12, 1, 4, DIR_DOWN )
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 12, 1, 4, DIR_DOWN )
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 14, 1, 3, DIR_DOWN )
 				//デントの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 10, 1, 3, DIR_DOWN )
 
 			//ほのおタイプ選択の場合
 			ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
 
-				//コーンの位置を変更する
-				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 12, 1, 4, DIR_DOWN )
 				//ポッドの位置を変更する
-				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 10, 1, 3, DIR_DOWN )
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 10, 1, 3, DIR_DOWN )
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 12, 1, 4, DIR_DOWN )
 				//デントの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 14, 1, 3, DIR_DOWN )
 
 			//みずタイプ選択の場合
 			ELSE
 		
-				//コーンの位置を変更する
-				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 14, 1, 3, DIR_DOWN )
 				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 14, 1, 3, DIR_DOWN )
+				//コーンの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 10, 1, 3, DIR_DOWN )
 				//デントの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 12, 1, 4, DIR_DOWN )
@@ -201,7 +201,14 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//自機の位置取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
-	
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,819200,65551,221184,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	IF $LWK_HERO_X == 11 THEN
 	//X軸が11グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
@@ -309,7 +316,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　ほのおタイプの
 		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1A_01 )
-		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	//ほのおタイプ選択の場合
@@ -329,7 +335,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		
 		//ということで　みずタイプの
 		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1B_01 )
-		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	//みずタイプ選択の場合
@@ -346,10 +351,15 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　くさタイプを
 		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1C_01 )
-		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	ENDIF
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//===========フラグワーク操作===========//
 	
@@ -529,7 +539,6 @@ EVENT_START		ev_c01gym0101_leader1b_01
 
 			//よかったね！　３にんの　トップと　たたかう
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20b )
-			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 			//戦闘処理
@@ -649,7 +658,6 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20a )
-			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
 			//戦闘処理
@@ -776,7 +784,6 @@ EVENT_START		ev_c01gym0101_leader1c_01
 		
 			//はい　ぼくで　よろしければ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20c )
-			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
 			//戦闘処理

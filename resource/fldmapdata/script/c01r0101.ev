@@ -195,11 +195,12 @@ _ANIME_LABEL anm_inventor_yudo2
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo3
 	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo3
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_VANISH_ON,1
 	_ANIME_DATA		ACMD_END,0

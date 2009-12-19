@@ -39,7 +39,7 @@ EVENT_START   ev_t02_babygirl1_01
 _TALK_OBJ_START()
 	
 	//ねえねえ　ポケモンじゃんけん　しようよ！
-	_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_01,T02_BABYGIRL1_01,WIN_DOWN )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
@@ -49,7 +49,7 @@ _TALK_OBJ_START()
 		DEFINE_LOCAL	LWK_SCWK_JANKEN
 		DEFINE_LOCAL	LWK_JANKEN_SELECT
 
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_03 )
+		_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_03,T02_BABYGIRL1_01,WIN_DOWN )
 		
 		//三択表示・くさ、みず、ほのお
     	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
@@ -69,33 +69,33 @@ _TALK_OBJ_START()
 		SWITCH $LWK_JANKEN_SELECT
 		CASE 0 THEN		//『ほのお』
 			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_04 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_04,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ELSE
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_05 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_05,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
 	
 		CASE 1 THEN		//『くさ』
 			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_08 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_08,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ELSE
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_09 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_09,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
 		
 		CASE 2 THEN		//『みず』
 			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_06 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_06,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ELSE
-				_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_07 )
+				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_07,T02_BABYGIRL1_01,WIN_DOWN )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
@@ -106,7 +106,7 @@ _TALK_OBJ_START()
 
 	ELSE	//いいえ
 		//なんだ　がっかり……　つまんないの
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_02 )
+		_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_02,T02_BABYGIRL1_01,WIN_DOWN )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
@@ -360,9 +360,6 @@ _TALK_OBJ_START()
 	_OBJ_ANIME( T02_HAKASE_GUIDE, anm_doctor_pokecen )
 	_OBJ_ANIME_WAIT()
 
-	//博士の動作モデルを削除する
-	_OBJ_DEL( T02_HAKASE_GUIDE )
-
 	//自機も一緒についていく
 	_PLAYER_DIR_GET( SCWK_ANSWER )
 	SWITCH $SCWK_ANSWER
@@ -401,7 +398,8 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL anm_doctor_pokecen
 	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -561,6 +559,13 @@ EVENT_END
 
 t02_speech:
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51273728,0,43012096,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//ライバル、広場の方へ向く
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_l )
 	_OBJ_ANIME_WAIT()
@@ -637,13 +642,13 @@ t02_speech:
 
 	//ゲーチス・団員：ゲートへ移動
 	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave )
-	_OBJ_ANIME( T02_HAKAIW_02, anm_hakai_leave )
-	_OBJ_ANIME( T02_HAKAIM_02, anm_hakai_leave )
-	_OBJ_ANIME( T02_HAKAIM_03, anm_hakai_leave )
-	_OBJ_ANIME( T02_HAKAIM_04, anm_hakai_leave )
-	_OBJ_ANIME( T02_HAKAIM_05, anm_hakai_leave2 )
-	_OBJ_ANIME( T02_HAKAIM_06, anm_hakai_leave2 )
-	_OBJ_ANIME( T02_HAKAIW_03, anm_hakai_leave2 )
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakai_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_02, anm_hakai_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_03, anm_hakai_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakai_leave4 )
+	_OBJ_ANIME( T02_HAKAIM_05, anm_hakai_leave5 )
+	_OBJ_ANIME( T02_HAKAIM_06, anm_hakai_leave6 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakai_leave7 )
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス・団員のＯＢＪを消す
@@ -657,7 +662,13 @@ t02_speech:
 	_OBJ_DEL( T02_HAKAIM_04 )
 	_OBJ_DEL( T02_HAKAIM_05 )
 	_OBJ_DEL( T02_HAKAIM_06 )
-	
+
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
 	//群集おじいさん：キョロキョロ
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle2_look )
 
@@ -906,19 +917,48 @@ _ANIME_LABEL anm_sage_move
 //--------------------------------------------------------------
 _ANIME_LABEL anm_sage1_leave
 	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_WALK_U_8F,6
+	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 	
-_ANIME_LABEL anm_hakai_leave
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,8
+_ANIME_LABEL anm_hakai_leave1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_leave2
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave3
+	_ANIME_DATA		AC_WALK_U_8F,5
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave4
+	_ANIME_DATA		AC_WALK_U_8F,6
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave5
+	_ANIME_DATA		AC_WAIT_8F,3
+	_ANIME_DATA		AC_WALK_U_8F,7
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave6
+	_ANIME_DATA		AC_WAIT_8F,3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_leave7
 	_ANIME_DATA		AC_WAIT_8F,3
 	_ANIME_DATA		AC_WALK_U_8F,9
+	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
