@@ -59,6 +59,7 @@
 //#define _ENDTABLE  {192-32, 192, 256-32, 256}     //終了
 //#define _SEARCHTABLE  {192-32, 192, 0, 32}        //検索ボタン
 
+#include "pokemontrade.cdat"
 
 
 static void _recvSelectPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -1253,71 +1254,6 @@ static void _endRequestState(POKEMON_TRADE_WORK* pWork)
 }
 
 
-#define _MOJITOP   (44)
-#define _MOJILEFT  (4)
-
-
-static GFL_UI_TP_HITTBL tp_mojidata[]={
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT , _MOJILEFT+24},  //あ
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT , _MOJILEFT+24},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT , _MOJILEFT+24},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT , _MOJILEFT+24},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT , _MOJILEFT+24},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24 , _MOJILEFT+24*2},  //か
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24 , _MOJILEFT+24*2},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24 , _MOJILEFT+24*2},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24 , _MOJILEFT+24*2},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24 , _MOJILEFT+24*2},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*2 , _MOJILEFT+24*3},  //さ
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*3 , _MOJILEFT+24*4},  //た
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*4 , _MOJILEFT+24*5},  //な
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*5 , _MOJILEFT+24*6},  //は
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*6 , _MOJILEFT+24*7},  //ま
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*7 , _MOJILEFT+24*8},  //や
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*7 , _MOJILEFT+24*8},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*7 , _MOJILEFT+24*8},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*8 , _MOJILEFT+24*9},  //ら
-  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
-  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
-  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
-  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
-
-  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*9 , _MOJILEFT+24*10},  //わ
-
-  //  _ENDTABLE,
-
-  {GFL_UI_TP_HIT_END,0,0,0},
-};
-
-#if 1
 static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
 {
   int i,j,monsno;
@@ -1348,7 +1284,6 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
     }
   }
 }
-#endif
 
 // 検索文字パネル表示中
 static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
@@ -1472,43 +1407,6 @@ static BOOL _isCursorInScreen(POKEMON_TRADE_WORK* pWork, int line)
   return FALSE;
 }
 
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief 基本のRLキー操作
- * @param POKEMON_TRADE_WORK* ワーク
- */
-//--------------------------------------------------------------------------------------------
-#define _MAXDOT ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
-#define _NEXTPOS ((_MAXDOT+_STARTDOT_OFFSET)+(_BOXTRAY_MAX/2)+(_TEMOTITRAY_MAX/2)-_MAXDOT)
-
-static int centerPOS[BOX_MAX_TRAY+1]={
-  _NEXTPOS,
-  _NEXTPOS+(_BOXTRAY_MAX),
-  _NEXTPOS+(_BOXTRAY_MAX)*2,
-  _NEXTPOS+(_BOXTRAY_MAX)*3,
-  _NEXTPOS+(_BOXTRAY_MAX)*4,
-  _NEXTPOS+(_BOXTRAY_MAX)*5,
-  _NEXTPOS+(_BOXTRAY_MAX)*6,
-  _NEXTPOS+(_BOXTRAY_MAX)*7,
-  _NEXTPOS+(_BOXTRAY_MAX)*8,
-  _NEXTPOS+(_BOXTRAY_MAX)*9,
-  _NEXTPOS+(_BOXTRAY_MAX)*10,
-  _NEXTPOS+(_BOXTRAY_MAX)*11,
-  _NEXTPOS+(_BOXTRAY_MAX)*12,
-  _NEXTPOS+(_BOXTRAY_MAX)*13,
-  _NEXTPOS+(_BOXTRAY_MAX)*14,
-  _NEXTPOS+(_BOXTRAY_MAX)*15,
-  _NEXTPOS+(_BOXTRAY_MAX)*16,
-  _NEXTPOS+(_BOXTRAY_MAX)*17,
-  _NEXTPOS+(_BOXTRAY_MAX)*18,
-  _NEXTPOS+(_BOXTRAY_MAX)*19,
-  _NEXTPOS+(_BOXTRAY_MAX)*20,
-  _NEXTPOS+(_BOXTRAY_MAX)*21,
-  _NEXTPOS+(_BOXTRAY_MAX)*22,
-  _NEXTPOS+(_BOXTRAY_MAX)*23,
-  (_MAXDOT+_STARTDOT_OFFSET),
-};
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1924,7 +1822,10 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       PMSND_PlaySystemSE(POKETRADESE_MARKON);
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
 
+      POKETRADE_MESSAGE_AppMenuClose(pWork);
       _CHANGE_STATE(pWork,_dispSubState);
+
+
       return;
     }
     else{
@@ -1958,11 +1859,10 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
   default:
     break;
   }
-  if(pWork->pAppTask){  //決定ボタン
+  if(pWork->pAppTask){  //GTS決定ボタン
     if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
       int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
       POKETRADE_MESSAGE_AppMenuClose(pWork);
-      pWork->pAppTask=NULL;
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
       _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
@@ -1993,81 +1893,6 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
 
   }
 }
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  TOUCHBAR初期化
- *  @param  POKEMON_TRADE_WORK
- *  @return none
- */
-//-----------------------------------------------------------------------------
-
-void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
-{
-  //アイコンの設定
-  //数分作る
-  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]  =
-  {
-    {
-      TOUCHBAR_ICON_RETURN,
-      { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-    },
-    {
-      TOUCHBAR_ICON_CUR_L,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
-    },
-    {
-      TOUCHBAR_ICON_CUR_R,
-      { TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
-    },
-    {
-      TOUCHBAR_ICON_CUTSOM1,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
-    },
-    {
-      TOUCHBAR_ICON_CUTSOM2,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
-    },
-  };
-
-  TOUCHBAR_SETUP  touchbar_setup;
-  GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-  touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
-  touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-  touchbar_setup.p_unit   = pWork->cellUnit;                    //OBJ読み込みのためのCLUNIT
-  touchbar_setup.is_notload_bg =TRUE;  //BGはなし
-  touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG読み込みのためのBG面上下画面判定にも必要
-  touchbar_setup.bg_plt   = 0;      //BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt  = 0;      //OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
-
-  touchbar_icon_tbl[3].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
-  touchbar_icon_tbl[3].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
-  touchbar_icon_tbl[3].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[3].active_anmseq  = 6;            //アクティブのときのアニメ
-  touchbar_icon_tbl[3].noactive_anmseq  =   5;            //ノンアクティブのときのアニメ
-  touchbar_icon_tbl[3].push_anmseq  =   4;            //押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[3].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
-  touchbar_icon_tbl[3].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
-
-  touchbar_icon_tbl[4].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
-  touchbar_icon_tbl[4].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
-  touchbar_icon_tbl[4].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[4].active_anmseq  = 9;            //アクティブのときのアニメ
-  touchbar_icon_tbl[4].noactive_anmseq  =   8;            //ノンアクティブのときのアニメ
-  touchbar_icon_tbl[4].push_anmseq  =   7;            //押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[4].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
-  touchbar_icon_tbl[4].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
-
-  pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-
-}
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -2210,8 +2035,6 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 
-  MyStatus_SetMyNameFromString(myStatus, pStrBuf);
-
   pMail=MailData_MailEventDataMake(pp, 1, MyStatus_GetMySex( myStatus ),pStrBuf,
                                    123, heapID);
   itemno = ITEM_MailNumGet(MailData_GetDesignNo(pMail));
@@ -2334,6 +2157,58 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief        交換のコアのメモリを開放
+ * @param pwk    EVENT_IRCBATTLE_WORKが必要
+ * @retval       none
+ */
+//------------------------------------------------------------------------------
+
+void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
+{
+  IRC_POKETRADEDEMO_RemoveModel( pWork);
+  POKE_GTS_ReleasePokeIconResource(pWork);
+  IRC_POKETRADE_ResetBoxNameWindow(pWork);
+  IRCPOKETRADE_PokeDeleteMcss(pWork,1);
+  POKETRADE_MESSAGE_SixStateDelete(pWork);
+    
+  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
+  if(pWork->pTouchWork){
+    TOUCHBAR_Exit(pWork->pTouchWork);
+    pWork->pTouchWork=NULL;
+  }
+  IRC_POKETRADE_EndIconResource(pWork);
+  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  POKETRADE_MESSAGE_HeapEnd(pWork);
+  
+  POKE_GTS_EndWork(pWork);
+    
+  IRC_POKETRADE_MainGraphicExit(pWork);
+  IRC_POKETRADE_SubGraphicExit(pWork);
+
+  IRC_POKETRADE_ResetSubDispGraphic(pWork);
+
+  if(pWork->pD2Fade){
+    GFL_HEAP_FreeMemory(pWork->pD2Fade);
+    pWork->pD2Fade=NULL;
+  }
+  if(pWork->pMoveMcss[0]){
+    GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
+    pWork->pMoveMcss[0]=NULL;
+  }
+  if(pWork->pMoveMcss[1]){
+    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
+    pWork->pMoveMcss[1]=NULL;
+  }
+
+  GFL_HEAP_DEBUG_PrintExistMemoryBlocks(pWork->heapID);
+
+}
+
+
 
 
 
@@ -2408,6 +2283,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   return GFL_PROC_RES_FINISH;
 }
 
+//ユニオンルーム
 static GFL_PROC_RESULT PokemonTradeUnionProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GTSNEGO_WORK* pParent=pwk;
@@ -2420,6 +2296,7 @@ static GFL_PROC_RESULT PokemonTradeUnionProcInit( GFL_PROC * proc, int * seq, vo
   return PokemonTradeProcInit(proc,seq,pwk,pWork,POKEMONTRADE_UNION);
 }
 
+// 赤外線用
 static GFL_PROC_RESULT PokemonTradeIrcProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GTSNEGO_WORK* pParent=pwk;
@@ -2432,6 +2309,7 @@ static GFL_PROC_RESULT PokemonTradeIrcProcInit( GFL_PROC * proc, int * seq, void
   return PokemonTradeProcInit(proc,seq,pwk,pWork,POKEMONTRADE_IRC);
 }
 
+// GTSネゴシエーション用
 static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GTSNEGO_WORK* pParent=pwk;
@@ -2442,15 +2320,26 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
   GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
 
-  for(i=0;i<2;i++){
-    pWork->GTStype[i]=pParent->aUser[i].selectType;  //
-    pWork->GTSlv[i]=pParent->aUser[i].selectLV;  //
+  if(pParent){
+    for(i=0;i<2;i++){
+      pWork->GTStype[i]=pParent->aUser[i].selectType;  //
+      pWork->GTSlv[i]=pParent->aUser[i].selectLV;  //
+    }
+    pWork->pFriend=pParent->pStatus[1];
   }
-  pWork->pFriend=pParent->pStatus[1];
+#if PM_DEBUG
+  else{
+    for(i=0;i<2;i++){
+      pWork->GTStype[i] = 0;  //
+      pWork->GTSlv[i] = 1;  //
+    }
+  }
+#endif
 
-  return PokemonTradeProcInit(proc,seq,pParent->gsys ,pWork,POKEMONTRADE_GTSNEGO);
+  return PokemonTradeProcInit(proc,seq,pParent ,pWork,POKEMONTRADE_GTSNEGO);
 }
 
+//IRデモのみ表示
 static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GFL_PROC_RESULT ret;
@@ -2553,11 +2442,8 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   int i;
   POKEMON_TRADE_WORK* pWork = mywk;
 
+  POKMEONTRADE_RemoveCoreResource(pWork);
 
-  if(pWork->type == POKEMONTRADE_GTSNEGO){
-    POKE_GTS_EndWork(pWork);
-  }  
-  IRC_POKETRADE_ResetBoxNameWindow(pWork);
   DEBUGWIN_ExitProc();
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
@@ -2565,36 +2451,23 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   if(GFL_NET_IsInit()){
     GFL_NET_DelCommandTable(GFL_NET_CMD_IRCTRADE);
   }
-  //  TOUCH_SW_FreeWork( pWork->TouchSubWindowSys );
 
-
-  IRC_POKETRADE_MainGraphicExit(pWork);
-  IRC_POKETRADE_SubGraphicExit(pWork);
-  if(pWork->pTouchWork){
-    TOUCHBAR_Exit(pWork->pTouchWork);
-  }
-
-  IRC_POKETRADEDEMO_RemoveModel( pWork);
   IRC_POKETRADEDEMO_End(pWork);
-
-  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-
-  IRC_POKETRADE_EndIconResource(pWork);  //OAMを全部消去
-
 
   GFL_HEAP_FreeMemory(pWork->recvPoke[0]);
   GFL_HEAP_FreeMemory(pWork->recvPoke[1]);
 
   GFL_TCB_DeleteTask( pWork->g3dVintr );
 
-  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
 
   _savedataHeapEnd(pWork,(pwk!=NULL));
-  POKETRADE_MESSAGE_HeapEnd(pWork);
   _mcssSystemHeapEnd(pWork);
   _dispSystemHeapEnd(pWork);
 
   GFL_PROC_FreeWork(proc);
+#if PM_DEBUG
+  GFL_HEAP_DEBUG_PrintExistMemoryBlocks(HEAPID_IRCBATTLE);
+#endif// PM_DEBUG
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
   //オーバーレイ破棄
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));

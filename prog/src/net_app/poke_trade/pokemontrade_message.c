@@ -353,8 +353,11 @@ BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork)
 
 void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork)
 {
-  G2_BlendNone();
-  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  if(pWork->pAppTask){
+    G2_BlendNone();
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
 }
 
 void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
@@ -369,7 +372,7 @@ void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int n
   appinit.posType = ATPT_RIGHT_DOWN;
   if(num==1){
     appinit.charPosX = 32;
-    appinit.charPosY = 22;
+    appinit.charPosY = 21;
   }
   else{
     appinit.charPosX = 32;
@@ -900,3 +903,21 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_MakeScreen(pWin);
   }
 }
+
+
+//--------------------------------------------------------------
+//	６体ポケモンステータス消去
+//--------------------------------------------------------------
+
+void POKETRADE_MESSAGE_SixStateDelete(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  for(i=0;i<GTS_PLAYER_WORK_NUM*2 ;i++){
+    if( pWork->TriStatusWin[i] ){
+      GFL_BMPWIN_Delete(pWork->TriStatusWin[i]);
+      pWork->TriStatusWin[i]=NULL;
+    }
+  }
+}
+

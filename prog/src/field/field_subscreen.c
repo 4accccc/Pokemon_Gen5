@@ -258,9 +258,21 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 {
 	u8 mode = pWork->mode;
-	GF_ASSERT(funcTable[pWork->mode].mode == pWork->mode);
-	funcTable[pWork->mode].exit_func(pWork);
+  GF_ASSERT(funcTable[pWork->mode].mode == pWork->mode);
+  funcTable[pWork->mode].exit_func(pWork);
 
+#if PM_DEBUG
+  {
+    switch(mode){
+    case FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER:
+    case FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA:
+    case FIELD_SUBSCREEN_DEBUG_LIGHT:
+      mode = FIELD_SUBSCREEN_NORMAL;
+      break;
+    }
+  }
+#endif
+  
   GFL_HEAP_FreeMemory(pWork);
 	return mode;
 }

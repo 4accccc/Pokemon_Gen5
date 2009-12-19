@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  pokemontrade_gra.c
+ * @file	  pokemontrade_2d.c
  * @bfief	  ポケモン交換グラフィック部分
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/08/28
@@ -14,6 +14,7 @@
 
 #include "trade.naix"
 #include "poke_icon.naix"
+#include "system/main.h"
 
 #include "net_app/pokemontrade.h"
 #include "pokemontrade_local.h"

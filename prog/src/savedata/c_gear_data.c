@@ -20,8 +20,9 @@
 
 struct _CGEAR_SAVEDATA {
 	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u16 CGearPictCRC;
+  u8 CGearPictureON;
   u8 CGearON;
-  u8 padding;
 };
 
 
@@ -125,6 +126,54 @@ void CGEAR_SV_SetCGearONOFF(CGEAR_SAVEDATA* pSV,BOOL bON)
 BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV)
 {
   return pSV->CGearON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEARの絵が入っているかどうかONOFFをおこなう
+ * @param   pSV     CGEARセーブ構造体
+ * @param   bON     ONならTRUE OFFならFALSE
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearPictureONOFF(CGEAR_SAVEDATA* pSV,BOOL bON)
+{
+  pSV->CGearPictureON = bON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEARの絵があるかONOFFを得る
+ * @param   pSV     CGEARセーブ構造体
+ * @return   ONならTRUE OFFならFALSE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL CGEAR_SV_GetCGearPictureONOFF(CGEAR_SAVEDATA* pSV)
+{
+  return pSV->CGearPictureON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief    CGEARの絵が入っているかどうか確認の為CRC保存
+ * @param    pSV     CGEARセーブ構造体
+ * @param    pictureCRC     CRC
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC)
+{
+  pSV->CGearPictCRC = pictureCRC;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief    CGEARの絵があるか確認の為CRCGET
+ * @param    pSV     CGEARセーブ構造体
+ * @return   PictureのCRC
+ */
+//--------------------------------------------------------------------------------------------
+u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV)
+{
+  return pSV->CGearPictCRC;
 }
 
 //--------------------------------------------------------------------------------------------

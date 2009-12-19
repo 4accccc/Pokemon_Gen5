@@ -616,6 +616,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 #else
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
+  u16 crc=0;
   ARCHANDLE* p_handle;
   GMEVENT *event = wk->gmEvent;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
@@ -643,9 +644,10 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
     GFL_STD_MemCopy(palData->pRawData, pPic->palette, CGEAR_PICTURTE_PAL_SIZE);
   }
   GFL_HEAP_FreeMemory(pArc);
-
-
   GFL_ARC_CloseDataHandle( p_handle );
+
+  crc = GFL_STD_CrcCalc( pPic, CGEAR_DECAL_SIZE_MAX+CGEAR_PICTURTE_PAL_SIZE );
+
   SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE);
   while(1){
     if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
@@ -655,8 +657,9 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   }
   SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
   GFL_HEAP_FreeMemory(pCGearWork);
-  OS_TPrintf("完了\n");
-  CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(pSave), TRUE);
+  CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(pSave), TRUE);  //CGEAR表示有効
+  CGEAR_SV_SetCGearPictureONOFF(CGEAR_SV_GetCGearSaveData(pSave),TRUE);  //CGEARデカール有効
+  CGEAR_SV_SetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave),crc);  //CGEARデカール有効
 
   return( FALSE );
 }

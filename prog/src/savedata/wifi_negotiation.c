@@ -19,8 +19,8 @@
 //----------------------------------------------------------
 
 struct _WIFI_NEGOTIATION_SAVEDATA{
-  DWCAccFriendData aFriendData[WIFI_NEGOTIATION_DATAMAX];
-  int count;
+  s32 aFriendData[WIFI_NEGOTIATION_DATAMAX];
+  u32 count;
 };
 
 
@@ -64,17 +64,17 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 /**
  * @brief   Wi-Fiネゴシエーション用ともだちデータをループ保存
  * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
- * @param   DWCAccFriendData  フレンドデータのポインタ
+ * @param   profileID  ProfileID
  * @return	type  パネルタイプ CGEAR_PANELTYPE_ENUM
  */
 //--------------------------------------------------------------------------------------------
-void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,DWCAccFriendData* pFriendData)
+void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profileID)
 {
-  GFL_STD_MemCopy(pFriendData, &pSV->aFriendData[ pSV->count ], sizeof(DWCAccFriendData));
-  pSV->count++;
   if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
     pSV->count=0;
   }
+  pSV->aFriendData[ pSV->count ] = profileID;
+  pSV->count++;  //繰り返し保存
 }
 
 //--------------------------------------------------------------------------------------------
@@ -82,16 +82,16 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,DWCAccFriendDa
  * @brief   Wi-Fiネゴシエーション用ともだちデータを引き出す
  * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
  * @param   index インデックス WIFI_NEGOTIATION_DATAMAXまで
- * @return	none
+ * @return	profileID
  */
 //--------------------------------------------------------------------------------------------
-DWCAccFriendData* WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index)
+s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
 {
   GF_ASSERT(index < WIFI_NEGOTIATION_DATAMAX);
   if(index >= WIFI_NEGOTIATION_DATAMAX){
-    return &pSV->aFriendData[0];
+    return pSV->aFriendData[0];
   }
-  return &pSV->aFriendData[ index ];
+  return pSV->aFriendData[ index ];
 }
 
 //----------------------------------------------------------

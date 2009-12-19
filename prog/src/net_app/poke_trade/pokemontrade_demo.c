@@ -340,42 +340,13 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
   if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-    IRC_POKETRADEDEMO_RemoveModel( pWork);
 
-//    IRC_POKETRADEDEMO_End(pWork);
-//    IRC_POKETRADEDEMO_Init(pWork);
-
-
-    IRC_POKETRADE_ResetBoxNameWindow(pWork);
-    IRCPOKETRADE_PokeDeleteMcss(pWork,1);
-//    MCSS_SetVanishFlag( pWork->pokeMcss[1] );
-    
-    IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
-    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
-    TOUCHBAR_Exit(pWork->pTouchWork);
-    pWork->pTouchWork=NULL;
-    IRC_POKETRADE_EndIconResource(pWork);
-    GFL_CLACT_UNIT_Delete(pWork->cellUnit);
-    POKETRADE_MESSAGE_HeapEnd(pWork);
+    POKMEONTRADE_RemoveCoreResource( pWork);
     
     pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
-
-    
-    IRC_POKETRADE_MainGraphicExit(pWork);
-    IRC_POKETRADE_SubGraphicExit(pWork);
-
-    IRC_POKETRADE_ResetSubDispGraphic(pWork);
-
-
-    GFL_HEAP_FreeMemory(pWork->pD2Fade);
-    pWork->pD2Fade=NULL;
     _freePaletteFade(pWork->pModelFade);
     pWork->pModelFade = NULL;
-    GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
-    pWork->pMoveMcss[0]=NULL;
-    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
-    pWork->pMoveMcss[1]=NULL;
+
     _setNextAnim(pWork, 0);
 
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);

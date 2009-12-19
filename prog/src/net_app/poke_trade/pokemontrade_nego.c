@@ -1,7 +1,7 @@
 //=============================================================================
 /**
- * @file	  pokemontrade_message.c
- * @brief	  ポケモン交換して通信を終了する メッセージ関係
+ * @file	  pokemontrade_nego.c
+ * @brief	  ポケモン交換して通信を終了する ネゴシエーションのフロー
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/11/21
  */
@@ -75,7 +75,10 @@ void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork)
   int i,j;
   for(j = 0;j < GTS_PLAYER_WORK_NUM;j++){
     for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
-      GFL_HEAP_FreeMemory(pWork->GTSSelectPP[j][i]);
+      if(pWork->GTSSelectPP[j][i]){
+        GFL_HEAP_FreeMemory(pWork->GTSSelectPP[j][i]);
+        pWork->GTSSelectPP[j][i]=NULL;
+      }
     }
   }
 
@@ -87,7 +90,9 @@ void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork)
   for(j = 0;j < GTS_PLAYER_WORK_NUM;j++){
     for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
       pWork->GTSSelectIndex[j][i] = -1;
-      pWork->GTSSelectPP[j][i] = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize() );
+      if(pWork->GTSSelectPP[j][i]==NULL){
+        pWork->GTSSelectPP[j][i] = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize() );
+      }
     }
   }
 
@@ -160,7 +165,7 @@ void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub)
 //------------------------------------------------------------------------------
 
 
-static void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
+void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
 {
   
   if(pWork->cellRes[PLT_GTS_POKEICON]!=0){
@@ -241,6 +246,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_Delete(pWork->StatusWin[0]);
   }
   pWork->StatusWin[0] = GFL_BMPWIN_Create(frame,	0, 0, 32, 20,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+
   pWin = pWork->StatusWin[0];
 
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
@@ -352,7 +358,19 @@ static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
 
 #if PM_DEBUG
   if(!GFL_NET_IsInit()){
-    POKE_MAIN_Pokemonset(pWork, 3/GTS_NEGO_POKESLT_MAX, pWork->GTSSelectPP[3/GTS_NEGO_POKESLT_MAX][3%GTS_NEGO_POKESLT_MAX]);
+    POKE_MAIN_Pokemonset(pWork, 1, pWork->GTSSelectPP[1][0]);
+    {
+      const STRCODE *name;
+      POKEMON_PARAM* pp2; 
+
+      pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+      name = MyStatus_GetMyName( pWork->pMy );
+      PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
+      PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
+      POKE_MAIN_Pokemonset(pWork,1,pp2); 
+      GFL_STD_MemCopy(pp2,pWork->recvPoke[1],POKETOOL_GetWorkSize());
+      GFL_HEAP_FreeMemory(pp2);
+    }
   }
 #endif
 
@@ -445,10 +463,11 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
 //  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
   POKEMON_PARAM* pp = pWork->GTSSelectPP[0][0];
-  
-  POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
-  _CHANGE_STATE(pWork, _pokemonStatusWait);
 
+  if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
+    POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+  }
+  _CHANGE_STATE(pWork, _pokemonStatusWait);
 }
 
 
@@ -493,7 +512,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   trgno = GFL_UI_TP_HitTrg(_tp_data);
   if(trgno != -1){
     POKEMON_PARAM* pp = pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX];
-    if(pp){
+    if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
       if(trgno/GTS_NEGO_POKESLT_MAX){
         int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
         POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
@@ -502,6 +521,11 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
       else{
         int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
         POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+#if PM_DEBUG
+        {
+          GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
+        }
+#endif
         _CHANGE_STATE(pWork,_menuMyPokemon);
       }
       POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX]);

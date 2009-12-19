@@ -699,3 +699,8 @@ extern void POKETRADE_PROC_PokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height);
 
+extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_SixStateDelete(POKEMON_TRADE_WORK* pWork);
+

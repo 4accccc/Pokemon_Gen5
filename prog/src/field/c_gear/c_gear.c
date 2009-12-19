@@ -747,6 +747,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
+  u32 scrno=0;
 	
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
 																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
@@ -781,12 +782,6 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
 
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_c_gear_c_gear00_NSCR,
-																				 GEAR_BMPWIN_FRAME, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-																				 pWork->heapID);
-
 	pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
 																											 _objpal[sex],
 																											 CLSYS_DRAW_SUB , 0 , pWork->heapID );
@@ -811,6 +806,31 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 	GFL_NET_ReloadIcon();
 
 }
+
+
+
+static void _gearDecalScreenArcCreate(C_GEAR_WORK* pWork,BOOL bDecal)
+{
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
+  u32 scrno=0;
+
+  if(bDecal){
+    scrno = NARC_c_gear_c_gear00_NSCR;
+  }
+  else{
+    scrno = NARC_c_gear_c_gear00_nodecal_NSCR;
+  }
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                         scrno,
+                                         GEAR_BMPWIN_FRAME, 0,
+                                         GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                         pWork->heapID);
+
+	GFL_ARC_CloseDataHandle( p_handle );
+
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1279,7 +1299,6 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
 
 static void _modeInit(C_GEAR_WORK* pWork)
 {
-	_createSubBg(pWork);   //BGVRAM設定
 	_gearArcCreate(pWork);  //ARC読み込み BG&OBJ
 	_gearPanelBgCreate(pWork);	// パネル作成
 
@@ -1292,7 +1311,6 @@ static void _modeInit(C_GEAR_WORK* pWork)
 //	GFL_NET_ReloadIcon();
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-//	pWork->touch = &_modeSelectMenuButtonCallback;
 
 
 
@@ -1310,7 +1328,6 @@ static void _modeInit(C_GEAR_WORK* pWork)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 	
-	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 
 }
 
@@ -1578,25 +1595,40 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
 }
 
-static void _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
+static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 {
   int i;
   u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
+  BOOL ret=FALSE;
+  
 
   if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
                                                  pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE)){
     CGEAR_PICTURE_SAVEDATA* pPic = (CGEAR_PICTURE_SAVEDATA*)pCGearWork;
 
-    if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
-      for(i=0;i<CGEAR_DECAL_SIZEY;i++){
-        GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+    {
+      u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE );
+      u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
+      if(crc == crc2){
+        if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
+          ret = TRUE;
+          for(i=0;i<CGEAR_DECAL_SIZEY;i++){
+            GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+          }
+          GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
+        }
       }
-      GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
+#if PM_DEBUG
+      else{
+        OS_TPrintf("CRCDIFF chk%x pict%x\n",crc,crc2);
+      }
+#endif
     }
   }
   SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
   GFL_HEAP_FreeMemory(pCGearWork);
+  return ret;
 }
 
 //------------------------------------------------------------------------------
@@ -1608,6 +1640,7 @@ static void _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys )
 {
 	C_GEAR_WORK *pWork = NULL;
+  BOOL ret = FALSE;
 
 	//GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
@@ -1619,22 +1652,16 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	pWork->bAction = TRUE;
 
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
+	_CHANGE_STATE(pWork,_modeSelectMenuWait);
+
+
+  _createSubBg(pWork);   //BGVRAM設定
 	_modeInit(pWork);
-
-//#if DEBUG_ONLY_FOR_ohno
-  _loadExData(pWork,pGameSys);
-//#endif
-  
-
-#if 0
-  {  //@todo 松田さんが入れてくれるまで仮
-		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
-
-    GameCommSys_Boot(pGC, GAME_COMM_NO_FIELD_BEACON_SEARCH, pWork->pGameSys);
+  if(CGEAR_SV_GetCGearPictureONOFF(pWork->pCGSV)){
+    ret = _loadExData(pWork,pGameSys);  //デカール読み込み
   }
-#endif
+  _gearDecalScreenArcCreate(pWork,ret);
   
-	//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
 }
 

@@ -43,6 +43,10 @@ extern void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV);
 
 extern void CGEAR_SV_SetCGearONOFF(CGEAR_SAVEDATA* pSV,BOOL bON);
 extern BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV);
+extern void CGEAR_SV_SetCGearPictureONOFF(CGEAR_SAVEDATA* pSV,BOOL bON);
+extern BOOL CGEAR_SV_GetCGearPictureONOFF(CGEAR_SAVEDATA* pSV);
+extern void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC);
+extern u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV);
 
 
 extern CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y);
