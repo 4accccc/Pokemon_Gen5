@@ -122,10 +122,22 @@ u16 RNDMATCH_GetParam( const RNDMATCH_DATA *cp_wk, RNDMATCH_TYPE type, RNDMATCH_
  *	@param	type                  ランダムマッチの種類
  *	@param	idx                   取得するデータ
  *	@param  num                   設定するデータ            
- *
  */
 //-----------------------------------------------------------------------------
 void RNDMATCH_SetParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx, u16 num )
 { 
   p_wk->data[ type ][ idx ] = num;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データをインクリメント
+ *
+ *	@param	RNDMATCH_DATA *p_wk   ワーク
+ *	@param	type                  ランダムマッチの種類
+ *	@param	idx                   取得するデータ
+ */
+//-----------------------------------------------------------------------------
+void RNDMATCH_AddParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx )
+{ 
+  p_wk->data[ type ][ idx ]++;
 }

@@ -802,14 +802,14 @@ static void Br_RndMatch_CreateMainDisplayRate( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
       if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_W )
       { 
         //Ÿ‚¿“_
-        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE+i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_W,
             RNDMATCH_PARAM_IDX_WIN ); 
         is_expand = TRUE;
       }
       else if( BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L <= i && i <= BR_RNDMATCH_MSGWINID_M_RND_SHOT_L )
       { 
         //•‰‚¯“_
-        number  = RNDMATCH_GetParam( p_param->p_rndmatch, i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,
+        number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE+i-BR_RNDMATCH_MSGWINID_M_RND_SINGLE_L,
             RNDMATCH_PARAM_IDX_LOSE ); 
 
         is_expand = TRUE;

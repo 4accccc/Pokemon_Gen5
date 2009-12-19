@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-12-01T15:55:36"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-12-19T21:22:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -547,6 +547,13 @@
 	<row id="WIFIMATCH_TEXT_016">
 		<language name="JPN" width="256">ランダムマッチを　やめますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチを　やめますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_017">
+		<language name="JPN" width="256">セーブを　しています……
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI" width="256">セーブを　しています……
+でんげんを　きらないで　ください</language>
 	</row>
 
 	<flowchart-group-list>

@@ -1179,6 +1179,11 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
         info_setup.lose_cnt = p_wk->rnd_score.single_lose;
         info_setup.btl_cnt  = p_wk->rnd_score.single_win + p_wk->rnd_score.single_lose; //@todo
 
+        //セーブデータ
+        RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE + info_setup.btl_rule, RNDMATCH_PARAM_IDX_RATE, info_setup.rate );
+        RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE + info_setup.btl_rule, RNDMATCH_PARAM_IDX_WIN, info_setup.win_cnt );
+        RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE + info_setup.btl_rule, RNDMATCH_PARAM_IDX_LOSE, info_setup.btl_cnt );
+
         if( p_wk->p_playerinfo )
         { 
           PLAYERINFO_RND_Exit( p_wk->p_playerinfo );
@@ -1191,22 +1196,9 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
           p_wk->p_playerinfo	= PLAYERINFO_RND_Init( &info_setup, TRUE, p_my, p_unit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );
         }
 
-        *p_subseq       = SEQ_START_SAVE_MSG;
+        *p_subseq       = SEQ_START_DISCONNECT;
       }
     }
-    break;
-
-    //-------------------------------------
-    /// レーティングセーブ処理
-    //=====================================
-  case SEQ_START_SAVE_MSG:
-    *p_subseq       = SEQ_START_SAVE;
-    break;
-  case SEQ_START_SAVE:
-    *p_subseq       = SEQ_WAIT_SAVE;
-    break;
-  case SEQ_WAIT_SAVE:
-    *p_subseq       = SEQ_START_DISCONNECT;
     break;
 
     //-------------------------------------
@@ -1220,6 +1212,33 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
     { 
       *p_subseq = SEQ_START_SELECT_BTLREC_MSG;
+    }
+    break;
+
+    //-------------------------------------
+    /// レーティングセーブ処理
+    //=====================================
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, p_wk->p_font );
+    *p_subseq       = SEQ_START_SAVE;
+    break;
+  case SEQ_START_SAVE:
+    GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
+    *p_subseq       = SEQ_WAIT_SAVE;
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT result;
+      result = GAMEDATA_SaveAsyncMain(p_param->p_param->p_game_data);
+      switch(result){
+      case SAVE_RESULT_CONTINUE:
+      case SAVE_RESULT_LAST:
+        break;
+      case SAVE_RESULT_OK:
+      case SAVE_RESULT_NG:
+        *p_subseq       = SEQ_START_SELECT_BTLREC_MSG;
+        break;
+      }
     }
     break;
 
@@ -1410,10 +1429,10 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
 
       GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_RANDOMMATCH_DATA) );
       info_setup.btl_rule = p_param->p_param->btl_rule;
-      info_setup.rate     = p_wk->rnd_score.single_rate;
-      info_setup.win_cnt  = p_wk->rnd_score.single_win;
-      info_setup.lose_cnt = p_wk->rnd_score.single_lose;
-      info_setup.btl_cnt  = p_wk->rnd_score.single_win + p_wk->rnd_score.single_lose; //@todo
+      info_setup.rate     = 0;
+      info_setup.win_cnt  = RNDMATCH_GetParam( p_param->p_rndmatch, p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      info_setup.lose_cnt = RNDMATCH_GetParam( p_param->p_rndmatch, p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+      info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt; //@todo
       if( p_wk->p_playerinfo )
       { 
         PLAYERINFO_RND_Exit( p_wk->p_playerinfo );
@@ -1653,6 +1672,10 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     SEQ_START_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
 
+    SEQ_START_SAVE_MSG,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+
     SEQ_START_SELECT_CONTINUE_MSG,
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
@@ -1711,7 +1734,6 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
     }
     break;
 
-
     //-------------------------------------
     /// 切断処理
     //=====================================
@@ -1722,7 +1744,49 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
   case SEQ_WAIT_DISCONNECT:
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
     { 
+
+      switch( p_param->btl_result )
+      {
+      case BTL_RESULT_WIN:
+      case BTL_RESULT_RUN_ENEMY:
+        RNDMATCH_AddParam( p_param->p_rndmatch, p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+        break;
+      case BTL_RESULT_LOSE:
+      case BTL_RESULT_RUN:
+        RNDMATCH_AddParam( p_param->p_rndmatch, p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+        break;
+      }
+
+
       *p_subseq = SEQ_START_SELECT_CONTINUE_MSG;
+    }
+    break;
+
+    //-------------------------------------
+    /// セーブ処理
+    //=====================================
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, p_wk->p_font );
+    *p_subseq = SEQ_START_SAVE;
+    break;
+
+  case SEQ_START_SAVE:
+    GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
+    *p_subseq       = SEQ_WAIT_SAVE;
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT result;
+      result = GAMEDATA_SaveAsyncMain(p_param->p_param->p_game_data);
+      switch(result){
+      case SAVE_RESULT_CONTINUE:
+      case SAVE_RESULT_LAST:
+        break;
+      case SAVE_RESULT_OK:
+      case SAVE_RESULT_NG:
+        *p_subseq       = SEQ_START_SELECT_CONTINUE_MSG;
+        break;
+      }
     }
     break;
 

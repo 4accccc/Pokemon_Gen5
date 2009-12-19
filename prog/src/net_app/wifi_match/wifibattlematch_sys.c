@@ -95,6 +95,7 @@ typedef struct
 
   //バトルの結果
   BtlResult                 btl_result;
+  BtlRule                   btl_rule;
 
   //バトル用に選んだパーティ
   POKEPARTY                 *p_btl_party;
@@ -561,8 +562,10 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param->mode           = p_wk->core_mode;
   p_param->retmode        = p_wk->core_ret;
   p_param->btl_result     = p_wk->btl_result;
+  p_param->btl_rule       = p_wk->btl_rule;
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
+  p_param->p_rndmatch     = SaveData_GetRndMatch( GAMEDATA_GetSaveControlWork( p_wk->p_param->p_game_data ) );
 		
 	return p_param;
 }
@@ -743,6 +746,7 @@ static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
   //受け取り
   p_wk->btl_result  = p_param->result;
+  p_wk->btl_rule  = p_param->rule;
 
   OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_result);
 

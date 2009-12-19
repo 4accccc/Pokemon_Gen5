@@ -13,6 +13,7 @@
 #include "net_app/wifibattlematch.h"
 #include "battle/battle.h"
 #include "wifibattlematch_data.h"
+#include "savedata/rndmatch_savedata.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -60,6 +61,8 @@ typedef struct
   WIFIBATTLEMATCH_PARAM       *p_param;     //[in ]外部引数
   WIFIBATTLEMATCH_CORE_MODE   mode;         //[in ]起動モード
   BtlResult                   btl_result;   //[in ]バトル結果
+  BtlResult                   btl_rule;     //[in ]バトルルール
+  RNDMATCH_DATA               *p_rndmatch;  //[in ]セーブデータ
   //以下、[in ]常駐データ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;

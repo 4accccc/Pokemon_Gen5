@@ -80,3 +80,4 @@ extern RNDMATCH_DATA * SaveData_GetRndMatch( SAVE_CONTROL_WORK * p_sv );
 //----------------------------------------------------------
 extern u16 RNDMATCH_GetParam( const RNDMATCH_DATA *cp_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx );
 extern void RNDMATCH_SetParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx, u16 num );
+extern void RNDMATCH_AddParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx );
