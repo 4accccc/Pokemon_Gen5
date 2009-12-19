@@ -709,29 +709,23 @@ GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef struct
-{
-	GAMESYS_WORK*             gsys;
-	FIELDMAP_WORK*        fieldmap;
-	FSOverlayID              ov_id;
-	const GFL_PROC_DATA* proc_data;
-	void*                proc_work;
-
-} CHANGE_SAMPLE_WORK;
+typedef struct {
+	GAMESYS_WORK * gsys;
+	FIELDMAP_WORK * fieldmap;
+	FSOverlayID ov_id;
+	const GFL_PROC_DATA * proc_data;
+	void * proc_work;
+}CHANGE_SAMPLE_WORK;
 //------------------------------------------------------------------
-/**
- * @brief イベント処理関数
- */
 //------------------------------------------------------------------
-static GMEVENT_RESULT GameChangeEvent( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 {
-	CHANGE_SAMPLE_WORK* csw = work;
-	GAMESYS_WORK*      gsys = csw->gsys;
+	CHANGE_SAMPLE_WORK * csw = work;
+	GAMESYS_WORK *gsys = csw->gsys;
 
-	switch( *seq )
-  {
+	switch(*seq) {
 	case 0:
-    { // フェードアウト
+    {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeOut_Black(gsys, csw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
@@ -739,57 +733,30 @@ static GMEVENT_RESULT GameChangeEvent( GMEVENT* event, int* seq, void* work )
 		(*seq) ++;
 		break;
 	case 1:
-    { // サブプロセス呼び出しイベント
-      GMEVENT* ev_sub;
-      event = EVENT_FieldSubProcNoFade( csw->gsys, csw->fieldmap, 
-                                        csw->ov_id, csw->proc_data, csw->proc_work );
-      GMEVENT_CallEvent( event, ev_sub );
-    }
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, csw->fieldmap));
 		(*seq) ++;
 		break;
 	case 2:
-    { // フェードイン
+		GAMESYSTEM_CallProc(gsys, csw->ov_id, csw->proc_data, csw->proc_work);
+		(*seq) ++;
+		break;
+	case 3:
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+		(*seq) ++;
+		break;
+	case 4:
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case 5:
+    {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black(gsys, csw->fieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
 		(*seq) ++;
 		break;
-	case 3:
-		return GMEVENT_RES_FINISH;
-		
-	}
-	return GMEVENT_RES_CONTINUE;
-}
-//------------------------------------------------------------------
-/**
- * @brief イベント処理関数(フェードなし)
- */
-//------------------------------------------------------------------
-static GMEVENT_RESULT GameChangeEvent_NoFade(GMEVENT * event, int * seq, void * work)
-{
-	CHANGE_SAMPLE_WORK* csw = work;
-	GAMESYS_WORK*      gsys = csw->gsys;
-
-	switch( *seq )
-  {
-	case 0:  // フィールドマップ破棄
-		GMEVENT_CallEvent( event, EVENT_FieldClose(gsys, csw->fieldmap) );
-		(*seq) ++;
-		break;
-	case 1:  // サブプロセス呼び出し
-		GAMESYSTEM_CallProc( gsys, csw->ov_id, csw->proc_data, csw->proc_work );
-		(*seq) ++;
-		break;
-	case 2:  // サブプロセス終了待ち
-		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) break;
-		(*seq) ++;
-		break;
-	case 3:  // フィールドマップ再開
-		GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
-		(*seq) ++;
-		break;
-	case 4:
+	case 6:
 		return GMEVENT_RES_FINISH;
 		
 	}
@@ -798,67 +765,19 @@ static GMEVENT_RESULT GameChangeEvent_NoFade(GMEVENT * event, int * seq, void * 
 
 
 //------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成
- * @param	gsys		  GAMESYS_WORKへのポインタ
- * @param	fieldmap	フィールドマップワークへのポインタ
- * @param	ov_id		  遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	遷移するサブプロセスで使用するワークへのポインタ
- * @return 生成したイベントへのポインタ
- *
- * フェードアウト→フィールドマップ終了→サブプロセス呼び出し
- * →フィールドマップ再開→フェードインを処理する
- */
 //------------------------------------------------------------------
-GMEVENT* EVENT_FieldSubProc( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
-		                         FSOverlayID ov_id, 
-                             const GFL_PROC_DATA* proc_data, void* proc_work )
+GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work)
 {
-	GMEVENT* event;
-	CHANGE_SAMPLE_WORK* csw; 
-
-  // 生成
-  event = GMEVENT_Create( gsys, NULL, GameChangeEvent, sizeof(CHANGE_SAMPLE_WORK) );
-  // 初期化
-	csw = GMEVENT_GetEventWork( event );
-	csw->gsys      = gsys;
-	csw->fieldmap  = fieldmap;
-	csw->ov_id     = ov_id;
+#if 1
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameChangeEvent, sizeof(CHANGE_SAMPLE_WORK));
+	CHANGE_SAMPLE_WORK * csw = GMEVENT_GetEventWork(event);
+	csw->gsys = gsys;
+	csw->fieldmap = fieldmap;
+	csw->ov_id = ov_id;
 	csw->proc_data = proc_data;
 	csw->proc_work = proc_work;
-	return event;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成(フェードなし)
- * @param	gsys		  GAMESYS_WORKへのポインタ
- * @param	fieldmap	フィールドマップワークへのポインタ
- * @param	ov_id		  遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	遷移するサブプロセスで使用するワークへのポインタ
- * @return 生成したイベントへのポインタ
- *
- * フィールドマップ終了 → サブプロセス呼び出し → フィールドマップ再開
- */
-//------------------------------------------------------------------
-GMEVENT* EVENT_FieldSubProcNoFade( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
-		                               FSOverlayID ov_id, 
-                                   const GFL_PROC_DATA* proc_data, void* proc_work )
-{
-	GMEVENT* event;
-	CHANGE_SAMPLE_WORK* csw; 
-
-  // 生成
-  event = GMEVENT_Create( gsys, NULL, GameChangeEvent_NoFade, sizeof(CHANGE_SAMPLE_WORK) );
-  // 初期化
-	csw = GMEVENT_GetEventWork( event );
-	csw->gsys      = gsys;
-	csw->fieldmap  = fieldmap;
-	csw->ov_id     = ov_id;
-	csw->proc_data = proc_data;
-	csw->proc_work = proc_work;
+#endif
 	return event;
 }
 
@@ -870,17 +789,15 @@ GMEVENT* EVENT_FieldSubProcNoFade( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef struct
-{
-	GAMESYS_WORK*             gsys;
-	FIELDMAP_WORK*        fieldmap;
-	FSOverlayID              ov_id;
-	const GFL_PROC_DATA* proc_data;
-	void*                proc_work;
-  void ( *callback )( void* );      // コールバック関数
-  void*            callback_work;   // コールバック関数の引数
-
-} SUBPROC_WORK;
+typedef struct {
+	GAMESYS_WORK * gsys;
+	FIELDMAP_WORK * fieldmap;
+	FSOverlayID ov_id;
+	const GFL_PROC_DATA * proc_data;
+	void * proc_work;
+  void ( *callback )( void* );  // コールバック関数
+  void * callback_work;         // コールバック関数の引数
+}SUBPROC_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT GameChangeEvent_Callback(GMEVENT * event, int * seq, void * work)
@@ -890,50 +807,44 @@ static GMEVENT_RESULT GameChangeEvent_Callback(GMEVENT * event, int * seq, void 
 
 	switch(*seq) 
   {
-	case 0:
-    { // サブプロセス呼び出しイベント
-      GMEVENT* ev_sub;
-      event = EVENT_FieldSubProc( spw->gsys, spw->fieldmap, 
-                                  spw->ov_id, spw->proc_data, spw->proc_work );
-      GMEVENT_CallEvent( event, ev_sub );
+	case 0: // フェードアウト
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut_Black(gsys, spw->fieldmap, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
     }
 		(*seq) ++;
 		break;
-	case 1: // コールバック関数呼び出し
-    if( spw->callback ) spw->callback( spw->callback_work );
+	case 1: // フィールドマップ終了
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, spw->fieldmap));
 		(*seq) ++;
-    break;
-  case 2:  // コールバックワーク破棄
-    if( spw->callback_work ){ GFL_HEAP_FreeMemory( spw->callback_work ); }
-		return GMEVENT_RES_FINISH;
-		
-	}
-	return GMEVENT_RES_CONTINUE;
-} 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT GameChangeEventNoFade_Callback(GMEVENT * event, int * seq, void * work)
-{
-	SUBPROC_WORK * spw = work;
-	GAMESYS_WORK *gsys = spw->gsys;
-
-	switch(*seq) 
-  {
-	case 0:
-    { // サブプロセス呼び出しイベント
-      GMEVENT* ev_sub;
-      event = EVENT_FieldSubProcNoFade( spw->gsys, spw->fieldmap, 
-                                        spw->ov_id, spw->proc_data, spw->proc_work );
-      GMEVENT_CallEvent( event, ev_sub );
+		break;
+	case 2: // プロセス呼び出し
+		GAMESYSTEM_CallProc(gsys, spw->ov_id, spw->proc_data, spw->proc_work);
+		(*seq) ++;
+		break;
+	case 3: // プロセス終了待ち
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+		(*seq) ++;
+		break;
+	case 4: // フィールドマップ復帰
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case 5: // フェードイン
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black(gsys, spw->fieldmap, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
     }
 		(*seq) ++;
 		break;
-	case 1: // コールバック関数呼び出し
+	case 6: // コールバック関数呼び出し
     if( spw->callback ) spw->callback( spw->callback_work );
 		(*seq) ++;
     break;
-  case 2:  // コールバックワーク破棄
-    if( spw->callback_work ){ GFL_HEAP_FreeMemory( spw->callback_work ); }
+  case 7:
+    if( spw->callback_work ) GFL_HEAP_FreeMemory( spw->callback_work );
 		return GMEVENT_RES_FINISH;
 		
 	}
@@ -942,20 +853,6 @@ static GMEVENT_RESULT GameChangeEventNoFade_Callback(GMEVENT * event, int * seq,
 
 
 //------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成(コールバック関数付き)
- * @param	gsys		      GAMESYS_WORKへのポインタ
- * @param	fieldmap	    フィールドマップワークへのポインタ
- * @param	ov_id		      遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	    遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	    遷移するサブプロセスで使用するワークへのポインタ
- * @param callback      コールバック関数
- * @param callback_work コールバック関数にわたすポインタ
- * @return	GMEVENT		生成したイベントへのポインタ
- *
- * フェードアウト→フィールドマップ終了→サブプロセス呼び出し
- * →フィールドマップ再開→フェードインを処理する
- */
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldSubProc_Callback(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
@@ -964,39 +861,6 @@ GMEVENT * EVENT_FieldSubProc_Callback(
 {
 	GMEVENT *     event = GMEVENT_Create(gsys, NULL, GameChangeEvent_Callback, sizeof(SUBPROC_WORK));
 	SUBPROC_WORK *  spw = GMEVENT_GetEventWork(event);
-	spw->gsys          = gsys;
-	spw->fieldmap      = fieldmap;
-	spw->ov_id         = ov_id;
-	spw->proc_data     = proc_data;
-	spw->proc_work     = proc_work;
-  spw->callback      = callback;
-  spw->callback_work = callback_work;
-	return event;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成(フェードなし, コールバック関数付き)
- * @param	gsys		      GAMESYS_WORKへのポインタ
- * @param	fieldmap	    フィールドマップワークへのポインタ
- * @param	ov_id		      遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	    遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	    遷移するサブプロセスで使用するワークへのポインタ
- * @param callback      コールバック関数
- * @param callback_work コールバック関数にわたすポインタ
- * @return	GMEVENT		生成したイベントへのポインタ
- *
- * フェードアウト→フィールドマップ終了→サブプロセス呼び出し
- * →フィールドマップ再開→フェードインを処理する
- */
-//------------------------------------------------------------------
-GMEVENT * EVENT_FieldSubProcNoFade_Callback(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work,
-    void (*callback)(void*), void* callback_work )
-{
-	GMEVENT*     event = GMEVENT_Create(gsys, NULL, GameChangeEventNoFade_Callback, sizeof(SUBPROC_WORK));
-	SUBPROC_WORK*  spw = GMEVENT_GetEventWork(event);
 	spw->gsys          = gsys;
 	spw->fieldmap      = fieldmap;
 	spw->ov_id         = ov_id;

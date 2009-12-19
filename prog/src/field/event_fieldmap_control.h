@@ -192,35 +192,20 @@ extern GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap);
 //------------------------------------------------------------------
 /**
  * @brief	サブプロセス呼び出しイベント生成
- * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	gsys		GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
- * @param	ov_id		  遷移するサブプロセスのオーバーレイ指定
+ * @param	ov_id		遷移するサブプロセスのオーバーレイ指定
  * @param	proc_data	遷移するサブプロセスのプロセスデータへのポインタ
  * @param	proc_work	遷移するサブプロセスで使用するワークへのポインタ
- * @return 生成したイベントへのポインタ
+ * @return	GMEVENT		生成したイベントへのポインタ
  *
  * フェードアウト→フィールドマップ終了→サブプロセス呼び出し
  * →フィールドマップ再開→フェードインを処理する
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldSubProc( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+extern GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work);
 
-//------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成(フェードなし)
- * @param	gsys		  GAMESYS_WORKへのポインタ
- * @param	fieldmap	フィールドマップワークへのポインタ
- * @param	ov_id		  遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	遷移するサブプロセスで使用するワークへのポインタ
- * @return 生成したイベントへのポインタ
- *
- * フィールドマップ終了 → サブプロセス呼び出し → フィールドマップ再開
- */
-//------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldSubProcNoFade( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work); 
 
 //------------------------------------------------------------------
 /**
@@ -243,31 +228,6 @@ extern GMEVENT * EVENT_FieldSubProc_Callback(
 		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work,
     void (*callback)(void*), void* callback_work );
 
-//------------------------------------------------------------------
-/**
- * @brief	サブプロセス呼び出しイベント生成(フェードなし, コールバック関数付き)
- * @param	gsys		      GAMESYS_WORKへのポインタ
- * @param	fieldmap	    フィールドマップワークへのポインタ
- * @param	ov_id		      遷移するサブプロセスのオーバーレイ指定
- * @param	proc_data	    遷移するサブプロセスのプロセスデータへのポインタ
- * @param	proc_work	    遷移するサブプロセスで使用するワークへのポインタ
- * @param callback      コールバック関数
- * @param callback_work コールバック関数にわたすポインタ
- * @return	GMEVENT		生成したイベントへのポインタ
- *
- * フェードアウト→フィールドマップ終了→サブプロセス呼び出し
- * →フィールドマップ再開→フェードインを処理する
- */
-//------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldSubProcNoFade_Callback(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work,
-    void (*callback)(void*), void* callback_work );
-
-
-//============================================================================================
-// ■手持ちポケモン選択
-//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	ポケモン選択イベント

@@ -117,7 +117,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   cw->box_param = box_param;
 
   // イベントを呼び出す
-  event = EVENT_FieldSubProcNoFade_Callback(
+  event = EVENT_FieldSubProc_Callback(
       gsys, fieldmap, 
       FS_OVERLAY_ID(box), &BOX2_ProcData, box_param, // 呼び出すプロセスを指定
       callback_BoxProc, cw );  // コールバック関数と, その引数を指定
