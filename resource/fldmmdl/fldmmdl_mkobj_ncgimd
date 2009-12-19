@@ -546,12 +546,12 @@
 #fishhero.imd
 ./mmdl_res/fishhero.imd: ./mmdl_nchara/fishhero.ncg ./mmdl_nchara/fishhero.ncl
 	@echo convert ncg_imd fishhero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishhero.ncg ./mmdl_res ./mmdl_res/ncg4x4fishhero.imd 4 4 12
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishhero.ncg ./mmdl_res ./mmdl_res/ncg8x8fishgirl.imd 8 8 12
 
 #fishheroine.imd
 ./mmdl_res/fishheroine.imd: ./mmdl_nchara/fishheroine.ncg ./mmdl_nchara/fishheroine.ncl
 	@echo convert ncg_imd fishheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4fishhero.imd 4 4 12
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fishheroine.ncg ./mmdl_res ./mmdl_res/ncg8x8fishgirl.imd 8 8 12
 
 #leader1b.imd
 ./mmdl_res/leader1b.imd: ./mmdl_nchara/leader1b.ncg ./mmdl_nchara/leader1b.ncl
