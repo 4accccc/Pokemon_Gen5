@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T18:52:07"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-12-19T20:15:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -532,6 +532,18 @@
 ■0＝入力された名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　であってる？▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　であってる？▼</language>
+	</row>
+
+	<row id="msg_intro_yesno_01" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>名前入力確認の選択肢用</comment>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="msg_intro_yesno_02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>名前入力確認の選択肢用</comment>
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
 	<row id="msg_intro_06">
