@@ -94,17 +94,17 @@ typedef enum
 }BSWAY_SCORE_POKE_DATA;
 
 //--------------------------------------------------------------
-/// 
+/// BSWAY_PLAYMODE
 //--------------------------------------------------------------
 typedef enum
 {
-  BSWAY_PLAYMODE_SINGLE,
-  BSWAY_PLAYMODE_DOUBLE,
-  BSWAY_PLAYMODE_MULTI,
-  BSWAY_PLAYMODE_COMM_MULTI,
-  BSWAY_PLAYMODE_WIFI,
-  BSWAY_PLAYMODE_RETRY,
-  BSWAY_PLAYMODE_WIFI_MULTI,
+  BSWAY_PLAYMODE_SINGLE, //シングル
+  BSWAY_PLAYMODE_DOUBLE, //ダブル
+  BSWAY_PLAYMODE_MULTI, //マルチ
+  BSWAY_PLAYMODE_COMM_MULTI, //通信マルチ
+  BSWAY_PLAYMODE_WIFI, //Wifi
+  BSWAY_PLAYMODE_RETRY, //リトライ
+  BSWAY_PLAYMODE_WIFI_MULTI, //Wifiマルチ
 }BSWAY_PLAYMODE;
 
 //--------------------------------------------------------------
