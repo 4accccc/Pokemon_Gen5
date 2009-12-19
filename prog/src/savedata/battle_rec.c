@@ -455,15 +455,15 @@ SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int n
 void BattleRec_ClientTemotiGet(const BATTLE_REC_WORK_PTR rec, int *client_max, int *temoti_max)
 {
   int i;
-  
+
   *client_max = 0;
-  
+
   for(i = 0; i < BTL_CLIENT_MAX; i++){
     if(rec->clientStatus[i].type != BTLREC_CLIENTSTATUS_NONE){
       (*client_max)++;
     }
   }
-  
+
   if((*client_max) == BTL_CLIENT_MAX){
     *temoti_max = TEMOTI_POKEMAX / 2;
   }
@@ -1123,9 +1123,29 @@ void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp)
 
 
 
+//=====================================================================================================
+// 録画データの格納・復元ツール
+//=====================================================================================================
+FS_EXTERN_OVERLAY(battle_recorder_tools);
 
-
-
+//=============================================================================================
+/**
+ * 録画データ格納・復元に使うツールオーバーレイモジュールをロードする
+ */
+//=============================================================================================
+void BattleRec_LoadToolModule( void )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_recorder_tools) );
+}
+//=============================================================================================
+/**
+ * 録画データ格納・復元に使うツールオーバーレイモジュールをアンロードする
+ */
+//=============================================================================================
+void BattleRec_UnloadToolModule( void )
+{
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_recorder_tools) );
+}
 
 
 
@@ -1133,6 +1153,9 @@ void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp)
 //=============================================================================================
 /**
  * バトルセットアップパラメータを録画セーブデータに変換して録画セーブバッファに格納する
+ *
+ * ※事前に BattleRec_LoadToolModule の呼び出しが必要。
+ *    使い終わったら BattleRec_UnoadToolModule を呼び出してください。
  *
  * @param   setup   バトルセットアップパラメータ
  */
@@ -1150,6 +1173,9 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
 //=============================================================================================
 /**
  * 録画セーブバッファからバトルセットアップパラメータを復元する
+ *
+ * ※事前に BattleRec_LoadToolModule の呼び出しが必要。
+ *    使い終わったら BattleRec_UnoadToolModule を呼び出してください。
  *
  * @param   setup   [out] 復元先
  */

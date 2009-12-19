@@ -745,6 +745,8 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
 
   wk->printQue = PRINTSYS_QUE_Create( heapID );
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
+
+  BattleRec_LoadToolModule();
 }
 //----------------------------------------------------------------------------------
 /**
@@ -755,6 +757,8 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
 //----------------------------------------------------------------------------------
 static void deleteTemporaryModules( DEBUG_BTL_WORK* wk )
 {
+  BattleRec_UnloadToolModule();
+
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_FONT_Delete( wk->fontHandle );
 
@@ -1525,7 +1529,6 @@ FS_EXTERN_OVERLAY(battle);
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
 
-    changeScene_start( wk );
     if( btltype_IsComm(wk->saveData.btlType)
     &&  (wk->saveData.recMode != DBF_RECMODE_PLAY)
     ){
@@ -1662,6 +1665,7 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_START:
+    changeScene_start( wk );
     setDebugParams( &wk->saveData, &wk->setupParam );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
@@ -1669,6 +1673,8 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_RETURN:
+    changeScene_recover( wk );
+    PMSND_StopBGM();
     if( wk->fNetConnect ){
       GFL_NET_Exit( btlExitConnectCallback );
     }
@@ -1713,8 +1719,6 @@ FS_EXTERN_OVERLAY(battle);
     }else{
       BATTLE_PARAM_Release( &wk->setupParam );
     }
-    changeScene_recover( wk );
-    PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
     break;
 
@@ -1791,7 +1795,8 @@ static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
   if( result == LOAD_RESULT_OK )
   {
     TAYA_Printf("録画データが正しくロードできた\n");
-    BTL_SETUP_InitForRecordPlay( dst, BattleRec_WorkPtrGet(), wk->gameData, wk->heapID );
+    BTL_SETUP_InitForRecordPlay( dst, wk->gameData, wk->heapID );
+    BattleRec_RestoreSetupParam( dst, wk->heapID );
     return TRUE;
   }
   else

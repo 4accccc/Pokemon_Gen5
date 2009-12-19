@@ -125,8 +125,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/mcss.c \
         system/mcss_tool.c \
         poke_tool/poke_tool.c \
-	poke_tool/pp_to_rpp.c \
-	poke_tool/rpp_to_pp.c \
         poke_tool/poke_regulation.c \
         poke_tool/pokeparty.c \
         poke_tool/poke_personal.c \
@@ -1225,34 +1223,41 @@ SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
 
 #バトルレコーダーコア部分
 #===> SRCS_OVERLAY_MUSICAL
-SRCS_OVERLAY_BATTLE_RECORDER_CORE	= net_app/battle_recorder/br_core.c \
-																net_app/battle_recorder/br_btn.c \
-																net_app/battle_recorder/br_btn_data.c \
-																net_app/battle_recorder/br_res.c \
-																net_app/battle_recorder/br_graphic.c \
-																net_app/battle_recorder/br_proc_sys.c \
-																net_app/battle_recorder/br_start_proc.c \
-																net_app/battle_recorder/br_menu_proc.c \
-																net_app/battle_recorder/br_record_proc.c \
-																net_app/battle_recorder/br_btlsubway_proc.c \
-																net_app/battle_recorder/br_rndmatch_proc.c \
-																net_app/battle_recorder/br_bvrank_proc.c \
-																net_app/battle_recorder/br_bvsearch_proc.c \
-																net_app/battle_recorder/br_codein_proc.c \
-																net_app/battle_recorder/br_bvsend_proc.c \
-																net_app/battle_recorder/br_musicallook_proc.c \
-																net_app/battle_recorder/br_musicalsend_proc.c \
-                                net_app/battle_recorder/br_util.c \
-                                net_app/battle_recorder/br_pokesearch.c \
-                                net_app/battle_recorder/br_codein.c \
-                                net_app/battle_recorder/br_codein_disp.c \
-                                net_app/battle_recorder/br_codein_pv.c \
-                                net_app/battle_recorder/br_fade.c
+SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
+						net_app/battle_recorder/br_btn.c \
+						net_app/battle_recorder/br_btn_data.c \
+						net_app/battle_recorder/br_res.c \
+						net_app/battle_recorder/br_graphic.c \
+						net_app/battle_recorder/br_proc_sys.c \
+						net_app/battle_recorder/br_start_proc.c \
+						net_app/battle_recorder/br_menu_proc.c \
+						net_app/battle_recorder/br_record_proc.c \
+						net_app/battle_recorder/br_btlsubway_proc.c \
+						net_app/battle_recorder/br_rndmatch_proc.c \
+						net_app/battle_recorder/br_bvrank_proc.c \
+						net_app/battle_recorder/br_bvsearch_proc.c \
+						net_app/battle_recorder/br_codein_proc.c \
+						net_app/battle_recorder/br_bvsend_proc.c \
+						net_app/battle_recorder/br_musicallook_proc.c \
+						net_app/battle_recorder/br_musicalsend_proc.c \
+		                                net_app/battle_recorder/br_util.c \
+		                                net_app/battle_recorder/br_pokesearch.c \
+		                                net_app/battle_recorder/br_codein.c \
+		                                net_app/battle_recorder/br_codein_disp.c \
+		                                net_app/battle_recorder/br_codein_pv.c \
+		                                net_app/battle_recorder/br_fade.c
+
+
+#バトルレコーダーツール
+#===> main
+SRCS_OVERLAY_BATTLE_RECORDER_TOOLS	= 	poke_tool/pp_to_rpp.c \
+						poke_tool/rpp_to_pp.c
 
 
 # 戦闘デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_BATTLE_RECORDER_TOOLS
 SRCS_OVERLAY_DEBUG_FIGHT   = test/taya/debug_fight.c
 
 

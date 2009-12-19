@@ -104,7 +104,7 @@ typedef enum{
   BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
   BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
   BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
-  
+
   //--------------------------------------------------------------
   //  ï°êîåüçı
   //--------------------------------------------------------------
@@ -239,6 +239,8 @@ extern BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id);
 extern void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp);
 
 
+extern void BattleRec_LoadToolModule( void );
+extern void BattleRec_UnloadToolModule( void );
 extern void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup );
 extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID );
 

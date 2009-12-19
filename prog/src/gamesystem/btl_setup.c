@@ -593,12 +593,11 @@ void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
  * 録画データ再生用の初期化処理
  *
  * @param   dst
- * @param   recData
  * @param   gameData
  * @param   heapID
  */
 //=============================================================================================
-void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR recData, GAMEDATA* gameData, HEAPID heapID )
+void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEAPID heapID )
 {
   GFL_STD_MemClear( dst, sizeof(BATTLE_SETUP_PARAM) );
   {
@@ -614,7 +613,6 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR r
   dst->configData = CONFIG_AllocWork( heapID );
   dst->fRecordPlay = TRUE;
   BTL_SETUP_AllocRecBuffer( dst, heapID );
-  BattleRec_RestoreSetupParam( dst, heapID );
 }
 
 //=============================================================================================

@@ -136,7 +136,7 @@ extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData
 //////////////////////////////////////////////
 // ò^âÊÉfÅ[É^ïúå≥
 //////////////////////////////////////////////
-extern void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, BATTLE_REC_WORK_PTR recData, GAMEDATA* gameData, HEAPID heapID );
+extern void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEAPID heapID );
 extern void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp );
 
 //-----------------------------------------------------------------------------
