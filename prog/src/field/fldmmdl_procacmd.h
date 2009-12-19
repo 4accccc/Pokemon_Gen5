@@ -228,6 +228,11 @@ extern int (* const DATA_AC_DashGUD4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_DashGUL4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_DashGUR4F_Tbl[])( MMDL * );
 
+extern int (* const DATA_AC_SandWalkU_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_SandWalkD_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_SandWalkL_16F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_SandWalkR_16F_Tbl[])( MMDL * );
+
 //--------------------------------------------------------------
 ///	AC_JUMPGLŒn
 //--------------------------------------------------------------

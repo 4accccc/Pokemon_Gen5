@@ -439,14 +439,14 @@
 #define AC_WALKGU_L_2F			0x97 ///<上壁移動 左 2フレーム
 #define AC_WALKGU_R_2F			0x98 ///<上壁移動 右 2フレーム
 #define AC_MARK_GYOE_TWAIT		0x99 ///<!マークを出す グラフィックデータ転送待ち版
-#define AC_SANDWALK_U_16F  0x9a ///<上に移動 16F移動、表示アニメは2Fアニメ
-#define AC_SANDWALK_D_16F  0x9b ///<下に移動 16F移動、表示アニメは2Fアニメ
-#define AC_SANDWALK_L_16F  0x9c ///<左に移動 16F移動、表示アニメは2Fアニメ
-#define AC_SANDWALK_R_16F  0x9d ///<右に移動 16F移動、表示アニメは2Fアニメ
-
 #define AC_HERO_ITEMGET     0x9a ///<自機アイテムゲットアニメ
+#define AC_SANDWALK_U_16F  0x9b ///<上に移動 16F移動、表示アニメは2Fアニメ
+#define AC_SANDWALK_D_16F  0x9c ///<下に移動 16F移動、表示アニメは2Fアニメ
+#define AC_SANDWALK_L_16F  0x9d ///<左に移動 16F移動、表示アニメは2Fアニメ
+#define AC_SANDWALK_R_16F  0x9e ///<右に移動 16F移動、表示アニメは2Fアニメ
 
-#define ACMD_MAX				0x9b ///<アニメーションコマンド最大数
+
+#define ACMD_MAX				0x9f ///<アニメーションコマンド最大数
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
 

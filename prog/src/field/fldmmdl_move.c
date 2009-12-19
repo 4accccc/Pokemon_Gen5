@@ -83,7 +83,9 @@ static void MMdl_MapAttrGrassProc_12(
 static void MMdl_MapAttrFootMarkProc_1(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
-static void MMdl_MapAttrSplashProc_012(
+static void MMdl_MapAttrSplashProc_0(
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
+static void MMdl_MapAttrSplashProc_12(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrSplashProc_Jump1(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
@@ -342,7 +344,7 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * fmmdl )
 		
 		MMdl_MapAttrBridgeProc_01( fmmdl, now, old, prm );
 		MMdl_MapAttrGrassProc_0( fmmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		MMdl_MapAttrSplashProc_0( fmmdl, now, old, prm );
 		MMdl_MapAttrShadowProc_0( fmmdl, now, old, prm );
 		MMdl_MapAttrHeight_02( fmmdl, now, old, prm );
 		MMdl_MapAttrLGrassProc_0( fmmdl, now, old, prm );
@@ -371,7 +373,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * fmmdl )
 		MMdl_MapAttrBridgeProc_01( fmmdl, now, old, prm );
 		MMdl_MapAttrGrassProc_12( fmmdl, now, old, prm );
 		MMdl_MapAttrFootMarkProc_1( fmmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		MMdl_MapAttrSplashProc_12( fmmdl, now, old, prm );
 		MMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
 		MMdl_MapAttrLGrassProc_1( fmmdl, now, old, prm );
 		MMdl_MapAttrNGrassProc_1( fmmdl, now, old, prm );
@@ -404,6 +406,7 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * fmmdl )
 		MMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
 		MMdl_MapAttrReflect_01( fmmdl, now, old, prm );
 		MMdl_MapAttrSplashProc_Jump1( fmmdl, now, old, prm );
+
 		MMdl_MapAttrSEProc_1( fmmdl, now, old, prm );//描画関係ない?
 	}
 }
@@ -429,7 +432,7 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * fmmdl )
 		MMdl_MapAttrHeight_02( fmmdl, now, old, prm );
 		MMdl_MapAttrPoolProc_2( fmmdl, now, old, prm );
 		MMdl_MapAttrSwampProc_2( fmmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		MMdl_MapAttrSplashProc_12( fmmdl, now, old, prm );
 		MMdl_MapAttrReflect_2( fmmdl, now, old, prm );
 		MMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
     MMdl_MapAttrBiriBiri_2( fmmdl, now, old, prm );
@@ -457,7 +460,7 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl )
 		MMdl_MapAttrHeight_02( fmmdl, now, old, prm );
 		MMdl_MapAttrPoolProc_2( fmmdl, now, old, prm );
 		MMdl_MapAttrSwampProc_2( fmmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		MMdl_MapAttrSplashProc_12( fmmdl, now, old, prm );
 		MMdl_MapAttrReflect_2( fmmdl, now, old, prm );
 		MMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
 		MMdl_MapAttrGrassProc_12( fmmdl, now, old, prm );
@@ -647,14 +650,14 @@ static void MMdl_MapAttrFootMarkProc_1(
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 水飛沫　動作開始終了 012
+ * 水飛沫　動作開始 0
  * @param	fmmdl	MMDL *
  * @param	now		現在のアトリビュート
  * @param	old		過去のアトリビュート
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_MapAttrSplashProc_012(
+static void MMdl_MapAttrSplashProc_0(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
@@ -665,7 +668,35 @@ static void MMdl_MapAttrSplashProc_012(
       FLDEFF_SPLASH_SetMMdl( fectrl, fmmdl, TRUE );
 			MMDL_SetStatusBitShoalEffect( fmmdl, TRUE );
 		}
-	}else{
+  }else{
+		MMDL_SetStatusBitShoalEffect( fmmdl, FALSE );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * 水飛沫　動作開始終了 12
+ * @param	fmmdl	MMDL *
+ * @param	now		現在のアトリビュート
+ * @param	old		過去のアトリビュート
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void MMdl_MapAttrSplashProc_12(
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
+{
+  MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
+  
+  if( MAPATTR_VALUE_CheckShoal(val) == TRUE ){
+		if( MMDL_CheckStatusBitShoalEffect(fmmdl) == FALSE ){
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+      FLDEFF_SPLASH_SetMMdl( fectrl, fmmdl, TRUE );
+			MMDL_SetStatusBitShoalEffect( fmmdl, TRUE );
+		}
+	}else if( MAPATTR_VALUE_CheckMarsh(val) == TRUE ){
+    FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+    FLDEFF_SPLASH_SetMMdl( fectrl, fmmdl, FALSE );
+  }else{
 		MMDL_SetStatusBitShoalEffect( fmmdl, FALSE );
 	}
 }

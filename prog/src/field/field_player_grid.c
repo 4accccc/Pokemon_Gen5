@@ -2171,7 +2171,7 @@ static void gjikiCycle_SetMove_Walk(
       
       if( MAPATTR_VALUE_CheckDesertDeep(val) == TRUE ){
         FLDEFF_CTRL *fectrl;
-        code = AC_WALK_U_16F; //ê—p
+        code = AC_SANDWALK_U_16F; //ê—p
         
         fectrl = FIELDMAP_GetFldEffCtrl( gjiki->fieldWork );
         FLDEFF_KEMURI_SetMMdl( mmdl, fectrl ); //‰Œo‚·

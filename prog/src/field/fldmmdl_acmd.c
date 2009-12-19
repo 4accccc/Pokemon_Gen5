@@ -1191,6 +1191,62 @@ static int AC_DashR4F_0( MMDL * mmdl )
 	return( TRUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_SANDWALK_U_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_SandWalkU16F_0( MMDL * mmdl )
+{
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SANDWALK_D_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_SandWalkD16F_0( MMDL * mmdl )
+{
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SANDWALK_L_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_SandWalkL16F_0( MMDL * mmdl )
+{
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SANDWALK_R_16F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_SandWalkR16F_0( MMDL * mmdl )
+{
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_16, GRID_FRAME_16, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
 //======================================================================
 //	AC_STAY_WALK系	共通
 //======================================================================
@@ -5518,6 +5574,47 @@ int (* const DATA_AC_HeroItemGet_Tbl[])( MMDL * ) =
   AC_HeroItemGet_1,
 	AC_End,
 };
+
+//--------------------------------------------------------------
+///	AC_SANDWALK_U_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_SandWalkU_16F_Tbl[])( MMDL * ) =
+{
+	AC_SandWalkU16F_0,
+	AC_Walk_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SANDWALK_D_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_SandWalkD_16F_Tbl[])( MMDL * ) =
+{
+	AC_SandWalkD16F_0,
+	AC_Walk_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SANDWALK_L_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_SandWalkL_16F_Tbl[])( MMDL * ) =
+{
+	AC_SandWalkL16F_0,
+	AC_Walk_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SANDWALK_R_16F
+//--------------------------------------------------------------
+int (* const DATA_AC_SandWalkR_16F_Tbl[])( MMDL * ) =
+{
+	AC_SandWalkR16F_0,
+	AC_Walk_1,
+	AC_End,
+};
+
 
 //======================================================================
 //	data

@@ -1326,6 +1326,12 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
 	DATA_AC_MarkGyoeTWait_Tbl,							//AC_MARK_GYOE_TWAIT
   
   DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
+  
+	DATA_AC_SandWalkU_16F_Tbl,									//AC_SANDWALK_U_16F
+	DATA_AC_SandWalkD_16F_Tbl,									//AC_SANDWALK_D_16F
+	DATA_AC_SandWalkL_16F_Tbl,									//AC_SANDWALK_L_16F
+	DATA_AC_SandWalkR_16F_Tbl,									//AC_SANDWALK_R_16F
+
 };
 
 //--------------------------------------------------------------
