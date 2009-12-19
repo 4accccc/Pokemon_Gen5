@@ -668,10 +668,10 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work->charaType[1] = LTCT_SUPPORT;
   work->charaType[2] = LTCT_RIVAL;
   work->charaType[3] = LTCT_PLAYER_M;
-  work->bgType[0] = 0;
-  work->bgType[1] = 1;
-  work->bgType[2] = 2;
-  work->bgType[3] = 3;
+  work->bgType[0] = 1;
+  work->bgType[1] = 0;
+  work->bgType[2] = 0;
+  work->bgType[3] = 0;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
     work->mode = LTM_2_MEMBER;
