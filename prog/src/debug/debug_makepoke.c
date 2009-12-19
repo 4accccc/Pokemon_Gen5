@@ -1320,7 +1320,13 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_POKETYPE:
     {
       u16 monsno = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+      u16 level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
+      u32 exp = POKETOOL_GetMinExp( monsno, PTL_FORM_NONE, level );
+
       PP_ChangeMonsNo( wk->dst, monsno );
+      PP_Put( wk->dst, ID_PARA_exp, exp );
+      PP_Renew( wk->dst );
+
       box_setup( wk, INPUTBOX_ID_TYPE1, wk->dst );
       box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
       box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
@@ -1332,17 +1338,9 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
 
       UpdatePokeExpMinMax( wk, wk->dst );
-      {
-        u32 exp = box_getvalue( wk, INPUTBOX_ID_EXP );
-        if( (exp < wk->pokeExpMin) || (exp > wk->pokeExpMax) )
-        {
-          exp = wk->pokeExpMin;
-          PP_Put( wk->dst, ID_PARA_exp, exp );
-          box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
-        }
-      }
     }
     break;
   case INPUTBOX_ID_SEIKAKU:
