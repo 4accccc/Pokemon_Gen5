@@ -13,10 +13,10 @@ include $(PROJECT_RSCDIR)macro_define
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 DSTDIR	= ..
-TARGET	=	hide_item.ev
+TARGET_EV		=	hide_item.ev
+TARGET_CDAT	= hide_item.cdat
 SRCFILE	= hide_item.xls
 SRCTXT	= hide_item.txt
-CDATFILE	= hide_item.cdat
 
 XLS2TAB = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb -c
 
@@ -24,12 +24,13 @@ XLS2TAB = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb -c
 
 #--------------------------------------------------------------
 #--------------------------------------------------------------
-do-build:	$(DSTDIR)/$(TARGET)
+do-build:	$(DSTDIR)/$(TARGET_EV)
 
 
-$(DSTDIR)/$(TARGET): $(SRCTXT)
-	ruby hideitem.rb $(SRCTXT) $(CDATFILE) $(TARGET)
-	$(COPY) $(TARGET) $(DSTDIR)
+$(DSTDIR)/$(TARGET_EV): $(SRCTXT) $(PROJECT_ROOT)tools/hash/item_hash.rb
+	ruby hideitem.rb $(SRCTXT) $(TARGET_CDAT) $(TARGET_EV)
+	unix2dos -D $(TARGET_EV)
+	$(COPY) $(TARGET_EV) $(DSTDIR)
 
 
 $(SRCTXT): $(SRCFILE)
@@ -39,5 +40,5 @@ $(SRCTXT): $(SRCFILE)
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 clean:
-	rm -f $(TARGET) $(SRCTXT) $(CDATFILE)
+	rm -f $(TARGET_EV) $(SRCTXT) $(TARGET_CDAT)
 

@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/18 (Fri) 10:48
+ * @date  2009 12/20 (Sun) 01:28
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -100,6 +100,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_INIT_SCR_OFFSET,             //( 9600),
       ID_INIT_SCR_OFFSET_END,         //( 9699),
       NARC_script_seq_init_scr_bin,
+      NARC_script_message_common_scr_dat
+    },
+    {//隠しアイテムスクリプト
+      ID_HIDE_ITEM_OFFSET,            //( 8000),
+      ID_HIDE_ITEM_OFFSET_END,        //( 8799),
+      NARC_script_seq_hide_item_bin,
       NARC_script_message_common_scr_dat
     },
     {//フィールドアイテムスクリプト

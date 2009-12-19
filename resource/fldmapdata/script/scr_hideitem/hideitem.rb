@@ -52,16 +52,21 @@ end
 class HideItem
   attr_reader  :mapname, :mapid, :posx, :posz, :itemno, :num, :response, :special, :id
 
-  def initialize(mapname, mapid, x, z, itemno, num, response, special, id)
+  attr_reader :itemname, :mapid_name
+
+  def initialize(mapname, mapid, x, z, itemname, num, response, special, id)
     @mapname = mapname
     @mapid = Dict.checkZoneID( mapid )
     @posx = x
     @posz = z
-    @itemno = Dict.getItemSymbol( itemno )
+    @itemno = Dict.getItemSymbol( itemname )
     @num = num
     @response = response
     @special = special
     @id = id
+
+    @mapid_name = mapid
+    @itemname = itemname
   end
 end
 
@@ -118,30 +123,45 @@ def getEV( items )
 //
 //
 //    hide_item.ev
+//
 //    スクリプトファイル：hide_item用
+//    このファイルはhide_item.xlsから自動生成されています。
 //
 //======================================================================
 
   .text
 
   .include  "scr_seq_def.h"
- 	.include "msg_item_get_scr.h
+ 	//.include "msg_item_get_scr.h
   //.include  "hide_item.h"
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+
 HEADSTRING
+  items.each_with_index{|item, index|
+    output += sprintf("_EVENT_DATA  ev_hide_item_%03d\n", index )
+  }
+
+  output += <<MIDDLESTRING
+//--------------------------------------------------------------
+//               スクリプト本体 開始
+//--------------------------------------------------------------
+MIDDLESTRING
 
   items.each_with_index{|item, index|
-    output += sprintf("ev_hide_item_%03d:\n", index)
+    output += sprintf("EVENT_START ev_hide_item_%03d\n", index)
+    output += sprintf("//%s ( %d, %d )\n", item.mapname, item.posx, item.posz )
+    output += sprintf("\t_ITEM_EVENT_FIELD( %d, %d )// %s\n", item.itemno, item.num, item.itemname )
+    output += sprintf("EVENT_END\n\n")
   }
+
   output += <<TAILSTRING
 //--------------------------------------------------------------
-//               スクリプト本体
+//               スクリプト本体 終了
 //--------------------------------------------------------------
 TAILSTRING
-
   return output
 end
 

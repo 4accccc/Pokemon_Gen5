@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2009 12/18 (Fri) 10:48
+# @date  2009 12/20 (Sun) 01:28
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -21,6 +21,7 @@ UNIQ_SCRIPTFILES = \
 	item_get_scr.ev \
 	trainer.ev \
 	fld_item.ev \
+	hide_item.ev \
 	init_scr.ev \
 	hiden.ev \
 	pasokon.ev \
@@ -46,6 +47,7 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	poke_waza.ev \
 	trainer.ev \
 	fld_item.ev \
+	hide_item.ev \
 	hiden.ev \
 	pasokon.ev \
 	wifi_club_scr.ev \
