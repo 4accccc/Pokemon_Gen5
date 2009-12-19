@@ -76,7 +76,7 @@ struct _TAG_MMDLSYS
 	HEAPID heapID;					///<ヒープID
 	s16 mmdl_count;				///<フィールド動作モデル現在数
 	u16 tcb_pri;					///<TCBプライオリティ
-	u16 dummy;						///<余り
+	u16 all_pause_f;			///<全体ポーズフラグ
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
 	FLDNOGRID_MAPPER *pNOGRIDMapper;	///<FLDNOGRID_MAPPER
   
@@ -3192,8 +3192,8 @@ void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		MMDL_OnStatusBitMoveProcPause( mmdl );
 	}
+  mmdlsys->all_pause_f = TRUE;
 }
-
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデル全体の一時停止を解除
@@ -3209,7 +3209,17 @@ void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys )
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		MMDL_OffStatusBitMoveProcPause( mmdl );
 	}
+  mmdlsys->all_pause_f = FALSE;
 }
+
+/**
+ * @brief 全体ポーズフラグを取得 
+ */
+BOOL MMDLSYS_GetPauseMoveFlag( MMDLSYS* mmdlsys )
+{
+  return mmdlsys->all_pause_f;
+}
+
 
 //======================================================================
 //	MMDL ステータスビット関連

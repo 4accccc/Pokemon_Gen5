@@ -868,6 +868,7 @@ extern void MMDLSYS_StopProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_PlayProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys );
+extern BOOL MMDLSYS_GetPauseMoveFlag( MMDLSYS* mmdlsys );
 
 extern u32 MMDL_CheckMMdlSysStatusBit(
 	const MMDL *mmdl, MMDLSYS_STABIT bit );
