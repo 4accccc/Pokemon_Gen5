@@ -235,7 +235,7 @@ BOOL EFFECT_ENC_CheckEffectPos( const FIELD_ENCOUNT* enc, MMDL_GRIDPOS* pos )
 {
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
 
-  if( ewk->effect_encount.param.valid_f ){
+  if( !ewk->effect_encount.param.valid_f ){
     return FALSE;
   }
   return effect_CheckEffectPos( &ewk->effect_encount.param, pos );
@@ -320,7 +320,7 @@ void EFFECT_ENC_EffectAnmPauseSet( FIELD_ENCOUNT* enc, BOOL pause_f )
   EFFECT_ENCOUNT* eff_wk = enc->eff_enc; 
   
   //起動中チェック
-  if( ewk->effect_encount.param.valid_f ){
+  if( !ewk->effect_encount.param.valid_f ){
     return;
   }
   if( eff_wk->eff_task != NULL){
