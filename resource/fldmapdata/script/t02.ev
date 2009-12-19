@@ -428,7 +428,7 @@ _ANIME_LABEL anm_player_pokecen_right
 /************************************************************/
 EVENT_START   ev_t02_rival_01
 	_PLAYER_NAME(0)
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02_black_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02_black_01a )
 EVENT_END
 
 /**************************************************************/
