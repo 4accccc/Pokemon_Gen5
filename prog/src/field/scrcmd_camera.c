@@ -307,8 +307,9 @@ VMCMD_RESULT EvCmdCamera_DefaultCamMove( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
-  frame = VMGetU16( core );  
-  FIELD_CAMERA_RecvLinerParamDefault( camera, frame);
+  frame = VMGetU16( core );
+  //@todo 現行は処理をフックしておく　要望があったときに解禁　20091219
+//  FIELD_CAMERA_RecvLinerParamDefault( camera, frame);
 
   return VMCMD_RESULT_CONTINUE;
 }
