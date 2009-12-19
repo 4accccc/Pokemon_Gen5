@@ -899,6 +899,7 @@ static void g2d_vblank(GFL_TCB* tcb, void* work)
  *
  */
 //============================================================================================
+static void changeVStatus(int vpIdx, u8 pan, int vofs, int sofs);
 //------------------------------------------------------------------
 /**
  * @brief タッチパネルイベント判定
@@ -979,19 +980,22 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
   case SNDTEST_TPEV_VOICE_PLAY:
     vpIdx = PMV_PlayVoice(  sw->setNo[NOIDX_VOICENO], 0 );
-    PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
   case SNDTEST_TPEV_VOICE_PLAYCHROUS:
     vpIdx = PMV_PlayVoice_Chorus( sw->setNo[NOIDX_VOICENO], 0,
                     sw->setNo[NOIDX_VOICECHORUSVOL],
                     sw->setNo[NOIDX_VOICECHORUSSPEED] );
-    PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
   case SNDTEST_TPEV_VOICE_PLAYREVERSE:
     vpIdx = PMV_PlayVoice_Reverse( sw->setNo[NOIDX_VOICENO], 0 );
-    PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
   case SNDTEST_TPEV_VOICE_PLAYREVERSECHORUS:
@@ -1001,7 +1005,8 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
                     sw->setNo[NOIDX_VOICECHORUSVOL],
                     sw->setNo[NOIDX_VOICECHORUSSPEED],
                     TRUE );
-    PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
   case SNDTEST_TPEV_SE_PLAY:
@@ -1029,6 +1034,16 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
     break;
   }
   return TRUE;
+}
+
+static void changeVStatus(int vpIdx, u8 pan, int vofs, int sofs)
+{
+	s8	volume = PMV_GetVolume(vpIdx) + vofs;
+	int	speed = PMV_GetSpeed(vpIdx) + sofs;
+
+	PMV_SetPan(vpIdx, pan);
+	PMV_SetVolume(vpIdx, volume);
+	PMV_SetSpeed(vpIdx, speed);
 }
 
 //------------------------------------------------------------------

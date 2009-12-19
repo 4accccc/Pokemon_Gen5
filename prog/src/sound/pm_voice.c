@@ -43,12 +43,12 @@ typedef struct {
 
 	NNSSndWaveOutHandle waveHandle;	
 	NNSSndWaveOutHandle waveHandleSub;	
-	u8					volume;
-	u8					volumeSub;
+	s8					volume;
+	s8					volumeSubDiff;
 	u8					channel:4;
 	u8					channelSub:4;
 	int					speed;
-	int					speedSub;
+	int					speedSubDiff;
 	u8					pan;
 	BOOL				subWaveUse;
 	BOOL				heapReserveFlag;
@@ -327,9 +327,9 @@ static void resetPlayerWork( PMVOICE_PLAYER* voicePlayer )
 	voicePlayer->waveSize = 0;
 	voicePlayer->waveRate = VOICE_RATE_DEFAULT;
 	voicePlayer->volume = 0;
-	voicePlayer->volumeSub = 0;
+	voicePlayer->volumeSubDiff = 0;
 	voicePlayer->speed = VOICE_SPEED_DEFAULT;
-	voicePlayer->speedSub = VOICE_SPEED_DEFAULT;
+	voicePlayer->speedSubDiff = 0;
 	voicePlayer->pan = 64;
 	voicePlayer->subWaveUse = FALSE;
 }
@@ -391,28 +391,35 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 	result = NNS_SndWaveOutStart(	voicePlayer->waveHandle,	// 波形再生ハンドル
 									NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
 									voicePlayer->waveData,		// 波形データアドレス
-									FALSE, 0,					// ループフラグ,開始位置
+									FALSE, 0,									// ループフラグ,開始位置
 									voicePlayer->waveSize,		// 波形データサンプル数
 									voicePlayer->waveRate,		// 波形データサンプリングレート
-									voicePlayer->volume,		// 再生volume
-									voicePlayer->speed,			// 再生speed
-									voicePlayer->pan );			// 再生pan
+									voicePlayer->volume,			// 再生volume
+									voicePlayer->speed,				// 再生speed
+									voicePlayer->pan );				// 再生pan
 	if( result == FALSE ){ return FALSE; }
 
 	if( voicePlayer->subWaveUse == TRUE ){
+		int	volumeSub;
+		int	speedSub;
 		// 使用チャンネル確保
 		voicePlayer->waveHandleSub = NNS_SndWaveOutAllocChannel(voicePlayer->channelSub);		
 		if( voicePlayer->waveHandleSub == NNS_SND_WAVEOUT_INVALID_HANDLE ){ return FALSE; } 
 
+		volumeSub = voicePlayer->volume + voicePlayer->volumeSubDiff;
+		if( volumeSub < 0 ){ volumeSub = 0; }
+		if( volumeSub > 127 ){ volumeSub = 127; }
+		speedSub = voicePlayer->speed + voicePlayer->speedSubDiff;
+
 		result = NNS_SndWaveOutStart(	voicePlayer->waveHandleSub,	// 波形再生ハンドル
 										NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
 										voicePlayer->waveData,		// 波形データアドレス
-										FALSE, 0,					// ループフラグ,開始位置
+										FALSE, 0,									// ループフラグ,開始位置
 										voicePlayer->waveSize,		// 波形データサンプル数
 										voicePlayer->waveRate,		// 波形データサンプリングレート
-										voicePlayer->volumeSub,		// 再生volume
-										voicePlayer->speedSub,		// 再生speed
-										voicePlayer->pan );			// 再生pan
+										(s8)volumeSub,						// 再生volume
+										speedSub,									// 再生speed
+										voicePlayer->pan );				// 再生pan
 		if( result == FALSE ){ return FALSE; }
 	}
 	voicePlayer->active = TRUE;
@@ -516,10 +523,8 @@ u32		PMVOICE_Play
 	voicePlayer->volume = VOICE_VOLUME;
 	voicePlayer->pan = pan;
 	voicePlayer->subWaveUse = chorus;
-	voicePlayer->volumeSub = voicePlayer->volume + chorusVolOfs;
-	if( voicePlayer->volumeSub < 0 ){ voicePlayer->volumeSub = 0; }
-	if( voicePlayer->volumeSub > 127 ){ voicePlayer->volumeSub = 127; }
-	voicePlayer->speedSub = voicePlayer->speed + chorusSpOfs;
+	voicePlayer->volumeSubDiff = chorusVolOfs;
+	voicePlayer->speedSubDiff = chorusSpOfs;
 
 	// 波形再生
 	if( playWave(voicePlayer) == FALSE ){ stopWave(voicePlayer); };
@@ -540,67 +545,75 @@ void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan)
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
+	voicePlayer->pan = pan;
 	NNS_SndWaveOutSetPan(voicePlayer->waveHandle, pan);
 	if( voicePlayer->subWaveUse == TRUE ){
 		NNS_SndWaveOutSetPan(voicePlayer->waveHandleSub, pan);
 	}
 }
 
-void	PMVOICE_SetVolume( u32 voicePlayerIdx, int volOfs)
+void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume)
 {
 	PMVOICE_PLAYER* voicePlayer;
 
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
-	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume + volOfs);
+	voicePlayer->volume = volume;
+	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume);
+
 	if( voicePlayer->subWaveUse == TRUE ){
-		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, voicePlayer->volumeSub + volOfs);
+		int	volumeSub = voicePlayer->volume + voicePlayer->volumeSubDiff;
+		if( volumeSub < 0 ){ volumeSub = 0; }
+		if( volumeSub > 127 ){ volumeSub = 127; }
+		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, (s8)volumeSub);
 	}
 }
 
-void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs)
+void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int speed)
 {
 	PMVOICE_PLAYER* voicePlayer;
 
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
-	NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed + spdOfs);
+	voicePlayer->speed = speed;
+	NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed);
+
 	if( voicePlayer->subWaveUse == TRUE ){
-		NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, voicePlayer->speedSub + spdOfs);
+		int speedSub = voicePlayer->speed + voicePlayer->speedSubDiff;
+		NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, speedSub);
 	}
 }
 
-void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
-{
-#if 0
+u8	PMVOICE_GetPan( u32 voicePlayerIdx)
+{	
 	PMVOICE_PLAYER* voicePlayer;
 
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
-	if(voicePlayer->active == FALSE){ return; }
+	if(voicePlayer->active == FALSE){ return 64; }
 
-	NNS_SndWaveOutSetPan(voicePlayer->waveHandle, pan);
-	if( voicePlayer->subWaveUse == TRUE ){
-		NNS_SndWaveOutSetPan(voicePlayer->waveHandleSub, pan);
-	}
-	if(volOfs){
-		NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume + volOfs);
-		if( voicePlayer->subWaveUse == TRUE ){
-			NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, voicePlayer->volumeSub + volOfs);
-		}
-	}
-	if(spdOfs){
-		NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed + spdOfs);
-		if( voicePlayer->subWaveUse == TRUE ){
-			NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, voicePlayer->speedSub + spdOfs);
-		}
-	}
-#else
-	PMVOICE_SetPan(voicePlayerIdx, pan);
-	if(volOfs){ PMVOICE_SetVolume(voicePlayerIdx, volOfs); }
-	if(spdOfs){ PMVOICE_SetSpeed(voicePlayerIdx, spdOfs); }
-#endif
+	return voicePlayer->pan;
+}
+
+s8	PMVOICE_GetVolume( u32 voicePlayerIdx)
+{	
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return 0; }
+
+	return voicePlayer->volume;
+}
+
+int	PMVOICE_GetSpeed( u32 voicePlayerIdx)
+{	
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return VOICE_SPEED_DEFAULT; }
+
+	return voicePlayer->speed;
 }
 
 //------------------------------------------------------------------
