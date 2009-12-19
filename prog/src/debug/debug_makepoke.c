@@ -27,7 +27,7 @@
  */
 //--------------------------------------------------------------
 enum {
-  PROC_HEAP_SIZE = 0x18000,
+  PROC_HEAP_SIZE = 0x20000,
   PRINT_FRAME = GFL_BG_FRAME1_M,
 
   PRINT_PALIDX  = 0,
@@ -1639,7 +1639,7 @@ static u16 calc_keta( u32 value )
 static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID )
 {
   wk->skb = skb;
-  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgDataID, heapID );
+  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, msgDataID, heapID );
   wk->buf = buf;
   wk->subword  = GFL_STR_CreateBuffer( 32, heapID );
   wk->fullword = GFL_STR_CreateBuffer( 32, heapID );
