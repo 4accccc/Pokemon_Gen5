@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 2 0
+0 1 0
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 15 0
+0 2 0
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 11 -1
+0 3 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -283,7 +283,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-6 2 -1
+0 2 -1
 #size
 1 4
 #Map Event List Data End
