@@ -1,5 +1,0 @@
-#../data/wfblock.mev
-../tmp/wfblock.bin:../data/wfblock.mev $(UNIQ_SCRIPTHEADER) ../tmp/wfblock.h 
-	@echo ../data/wfblock.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wfblock.h 
-

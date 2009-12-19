@@ -76,6 +76,8 @@ ITEM_HEADER = ../../itemconv/itemsort_abc_def.h
 TRDATA_HEADER = ../../trdata/trno_def.h
 
 LAND_DATA_PATCH = ../../fldmapdata/land_data_patch/land_data_patch_def.h
+EVENT_BC_HEADER = ../../fldmapdata/eventdata/tmp/bc10.h
+EVENT_WF_HEADER = ../../fldmapdata/eventdata/tmp/wc10.h
 
 
 #------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ $(COPY_DIR)$(OUTPUT_HEADER): $(OUTPUT_HEADER)
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER)
+$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER) $(EVENT_BC_HEADER) $(EVENT_WF_HEADER)
 	
 	#エクセルデータをタブ区切りにする。
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 1 -s tab $(XLSFILE)
@@ -135,7 +137,7 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 
 	perl wfbc_camera_conv.pl $(CAMERA_FILE) $(CAMERA_BIN)
 
-	perl wfbc_event_conv.pl $(EVENT_FILE) $(LAND_DATA_PATCH) $(BLOCK_BC_HEADER) $(BLOCK_WF_HEADER) $(EVENT_BC_PARA) $(EVENT_WF_PARA)
+	perl wfbc_event_conv.pl $(EVENT_FILE) $(LAND_DATA_PATCH) $(BLOCK_BC_HEADER) $(BLOCK_WF_HEADER) $(EVENT_BC_HEADER) $(EVENT_WF_HEADER) $(EVENT_BC_PARA) $(EVENT_WF_PARA)
 
 	
 

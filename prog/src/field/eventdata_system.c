@@ -456,6 +456,58 @@ u32 EVENTDATA_SYS_AddPosEvent( EVENTDATA_SYSTEM * evdata, const POS_EVENT_DATA* 
   return index;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続イベント　削除
+ *
+ *	@param	evdata          イベントデータ
+ *	@param	link_zone_id    接続先ZONEID
+ *	@param	link_exit_id    接続先EXITID
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_SYS_DelConnectEvent( EVENTDATA_SYSTEM * evdata, u16 link_zone_id, u16 link_exit_id )
+{
+  int i;
+  CONNECT_DATA * connect_data = (CONNECT_DATA *)evdata->connect_data;
+
+  //  link_zone_id link_exit_idのデータを調べる
+  for( i=0; i<evdata->connect_count; i++ )
+  {
+    if( (evdata->connect_data[i].link_zone_id == link_zone_id) && (evdata->connect_data[i].link_zone_id == link_exit_id) )
+    {
+      // 情報の破棄
+      connect_data[i].link_zone_id = ZONE_ID_NONE; 
+      connect_data[i].link_exit_id = EXIT_ID_NONE; 
+      break;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続イベント　削除
+ *
+ *	@param	evdata          イベントデータ
+ *	@param	idx             削除するデータのインデックス
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx )
+{
+  int i;
+  CONNECT_DATA * connect_data = (CONNECT_DATA *)evdata->connect_data;
+
+  if( evdata->connect_count <= idx )
+  {
+    GF_ASSERT( evdata->connect_count > idx );
+    return ;
+  }
+  
+  // 情報の破棄
+  connect_data[idx].link_zone_id = ZONE_ID_NONE; 
+  connect_data[idx].link_exit_id = EXIT_ID_NONE; 
+}
+
+
 
 
 //------------------------------------------------------------------

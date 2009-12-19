@@ -145,4 +145,10 @@ extern u32 EVENTDATA_SYS_AddMmdlEvent( EVENTDATA_SYSTEM * evdata, const MMDL_HEA
 extern u32 EVENTDATA_SYS_AddConnectEvent( EVENTDATA_SYSTEM * evdata, const CONNECT_DATA* cp_data );
 extern u32 EVENTDATA_SYS_AddPosEvent( EVENTDATA_SYSTEM * evdata, const POS_EVENT_DATA* cp_data );
 
+//------------------------------------------------------------------
+//  接続データ　を　後から削除するための関数
+//------------------------------------------------------------------
+extern void EVENTDATA_SYS_DelConnectEvent( EVENTDATA_SYSTEM * evdata, u16 link_zone_id, u16 link_exit_id );
+extern void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx );
+
 

@@ -24,7 +24,6 @@ SUBDIRS	=	wmi \
 			message\
 			fldmmdl \
 			encount \
-			field_wfbc_data/before \
 			fld3d_ci \
 			fldmapdata\
 			pokegra\

@@ -42,11 +42,11 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\bc10r0201.wms
 1
 #event number: 0
 #Door Event Label
-DOOR_ID_BC10R0201_EXIT01
+DOOR_ID_BC10R0201_BC10_EXIT01
 #Next Zone ID Name
 ZONE_ID_BC10
 #Next Door ID Name
-DOOR_ID_BCBLOCK_BUILD02
+DOOR_ID_BC10_BC10R0201_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type

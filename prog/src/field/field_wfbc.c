@@ -125,6 +125,9 @@ typedef struct
   // 条件
   u16 block_tag;
   u16 block_id;
+
+  // 接続イベントインデックス
+  u32 connect_idx;
 } FIELD_WFBC_EVENT_IF;
 
 
@@ -418,70 +421,36 @@ int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMOD
 //-----------------------------------------------------------------------------
 void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID )
 {
-  u16 bg_num, npc_num, connect_num, pos_num;
   int i;
   FIELD_WFBC_EVENT_IF* p_event_if;
-  int add_connect_num;
   u32 load_size;
-  EVENTDATA_TABLE* p_eventdata;
   const CONNECT_DATA* cp_connect;
   static const u32 sc_EVIF[ FIELD_WFBC_CORE_TYPE_MAX ] = 
   {
     NARC_field_wfbc_data_bc_block_event_evp,
     NARC_field_wfbc_data_wf_block_event_evp,
   };
-  static const u32 sc_EVDATA[ FIELD_WFBC_CORE_TYPE_MAX ] = 
-  {
-    FIELD_WFBC_EVENT_BC,
-    FIELD_WFBC_EVENT_WF,
-  };
-
-  // 今のイベント数
-  bg_num      = EVENTDATA_GetBgEventNum(p_evdata);
-  npc_num     = EVENTDATA_GetNpcEventNum(p_evdata);
-  connect_num = EVENTDATA_GetConnectEventNum(p_evdata);
-  pos_num     = EVENTDATA_GetPosEventNum(p_evdata);
+  u32 add_connect_num;
 
   // 拡張イベント情報を取得
   load_size = GFL_ARC_GetDataSizeByHandle( cp_wk->p_handle, sc_EVIF[ cp_wk->type ] );
   p_event_if = GFL_ARC_LoadDataAllocByHandle( cp_wk->p_handle, sc_EVIF[ cp_wk->type ], GFL_HEAP_LOWID(heapID) );
-  p_eventdata = GFL_ARC_UTIL_Load( ARCID_FLD_EVENTDATA, sc_EVDATA[ cp_wk->type ], FALSE, GFL_HEAP_LOWID(heapID) );
   
-  // データサイズから、追加接続ポイントの数をチェック
+  // データサイズから、管理接続ポイントの数をチェック
   add_connect_num = load_size / sizeof(FIELD_WFBC_EVENT_IF);
-  connect_num += add_connect_num;
-  
-  // 接続ポイントのエリアを増やしつつ再読み込み
-  EVENTDATA_SYS_ReloadEventDataEx( p_evdata, bg_num, npc_num, connect_num, pos_num );
 
-  // 接続情報の追加処理
-  cp_connect = EVENTDATA_SYS_HEADER_GetConnectEvent( p_eventdata );
   // 足しこむ
   for( i=0; i<add_connect_num; i++ )
   {
-    if( WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if->block_tag, p_event_if->block_id ) )
+    if( !WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if[i].block_tag, p_event_if[i].block_id ) )
     {
-#ifdef PM_DEBUG
-      {
-        const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cp_connect[i].pos_buf;
-        TOMOYA_Printf( "link zone_id %d\n", cp_connect[i].link_zone_id );
-        TOMOYA_Printf( "link door_id %d\n", cp_connect[i].link_exit_id );
-        TOMOYA_Printf( "exit_dir %d\n", cp_connect[i].exit_dir );
-        TOMOYA_Printf( "exit_type %d\n", cp_connect[i].exit_type );
-        TOMOYA_Printf( "pos_x %d\n", cp_pos->x );
-        TOMOYA_Printf( "pos_z %d\n", cp_pos->z );
-        TOMOYA_Printf( "siz_x %d\n", cp_pos->sizex );
-        TOMOYA_Printf( "siz_z %d\n", cp_pos->sizez );
-      }
-#endif // PM_DEBUG
       
-      // 追加
-      EVENTDATA_SYS_AddConnectEvent( p_evdata, &cp_connect[i] );
+      // 削除
+      EVENTDATA_SYS_DelConnectEventIdx( p_evdata, p_event_if[i].connect_idx );
     }
   }
 
   GFL_HEAP_FreeMemory( p_event_if );
-  GFL_HEAP_FreeMemory( p_eventdata );
 }
 
 

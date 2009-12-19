@@ -1713,13 +1713,20 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 	
   //目の前チェック（階段、壁、ドア）
   idx = getConnectID(req, &front_pos);
-  if (idx == EXIT_ID_NONE) {
-    return NULL;
+  if (idx != EXIT_ID_NONE) 
+  {
+    const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+    if ( CONNECTDATA_IsClosedExit(cnct) == FALSE )
+    {
+      //マップ遷移発生の場合、出入口を記憶しておく
+      rememberExitInfo(req, fieldWork, idx, &front_pos);
+      return getChangeMapEvent(req, fieldWork, idx, &front_pos);
+    }
   }
 
-	//マップ遷移発生の場合、出入口を記憶しておく
-  rememberExitInfo(req, fieldWork, idx, &front_pos);
-  return getChangeMapEvent(req, fieldWork, idx, &front_pos);
+
+  // 無効イベントだった
+  return NULL;
 }
 
 //--------------------------------------------------------------
