@@ -7461,9 +7461,9 @@
 		<language name="JPN" width="256">W227-03</language>
 		<language name="JPN_KANJI" width="256">W227-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_113">
-		<language name="JPN" width="256">DMY-113</language>
-		<language name="JPN_KANJI" width="256">DMY-113</language>
+	<row id="msg_seq_se_w254_04">
+		<language name="JPN" width="256">W254-04</language>
+		<language name="JPN_KANJI" width="256">W254-04</language>
 	</row>
 	<row id="msg_seq_se_dmy_114">
 		<language name="JPN" width="256">DMY-114</language>
