@@ -421,7 +421,6 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     SEQ_FLD_CLOSE,
     SEQ_FLD_OPEN,
     SEQ_FLD_FADEIN,
-    SEQ_FLD_FADEIN2,
 
     //プロック繋がり
     SEQ_PROC_CALL,
@@ -541,17 +540,14 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
   case SEQ_FLD_FADEIN:
     //フィールドを作り直したため、再度取得
     wk->param->field_wk = GAMESYSTEM_GetFieldMapWork(wk->param->gsys);
-    //PROCLINK_CALLBACK_Open( &wk->callback );  フェードの中でBG初期化になったので・・・
+    FIELDMAP_InitBGMode();
+    FIELDMAP_InitBG( wk->param->field_wk );
+    PROCLINK_CALLBACK_Open( &wk->callback );  
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(wk->param->gsys, wk->param->field_wk, FIELD_FADE_WAIT);
+      fade_event = EVENT_FieldFadeIn_Menu(wk->param->gsys, wk->param->field_wk, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
-    *seq = SEQ_FLD_FADEIN2;
-    break;
-
-  case SEQ_FLD_FADEIN2:
-    PROCLINK_CALLBACK_Open( &wk->callback );
     *seq = SEQ_JUNCTION;
     break;
 

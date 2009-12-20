@@ -110,7 +110,7 @@ extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
 #define EVENT_FieldFadeIn_Season( gsys, fieldmap ) \
         EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_ON, 0, TRUE )
 // メニュー状態フェード（Yボタンメニューを出したままなど）
-#define EVENT_FieldFadeIn_Menu( gsys, fieldmap ) \
+#define EVENT_FieldFadeIn_Menu( gsys, fieldmap, wait ) \
         EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_SEASON_OFF, wait, FALSE )
 
 
