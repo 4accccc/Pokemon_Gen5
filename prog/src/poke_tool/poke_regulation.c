@@ -424,6 +424,7 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
   }
   ans = Regulation_GetParam(pReg, REGULATION_MUST_POKE);
   form = Regulation_GetParam(pReg, REGULATION_MUST_POKE_FORM);
+  i = 0;
   if((ans) && (cnt > 1)){ //•K{ƒ|ƒPƒ‚ƒ“‚ª‚¢‚é
     for(i = 0; i < 6; i++){
       if(monsTbl[i] == ans){
