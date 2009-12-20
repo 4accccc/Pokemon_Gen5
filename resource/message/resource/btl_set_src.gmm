@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-20T22:58:29"/>
+	<create user="taya" host="W00146" date="2009-12-21T00:24:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1013,6 +1013,13 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+メロメロに　なった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MeromeroGetItem">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 メロメロに　なった！</language>
 	</row>
 
@@ -2495,7 +2502,7 @@
 当たりやすくなった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_UseItem_Damage">
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent">
 		<comment>攻撃してきた相手にダメージ</comment>
 		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2503,6 +2510,14 @@
 ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_Damage">
+		<comment>自分にダメージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　受けた！</language>
 	</row>
 

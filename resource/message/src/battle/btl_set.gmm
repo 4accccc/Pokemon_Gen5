@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-20T22:58:29"/>
+	<create user="taya" host="W00146" date="2009-12-21T00:24:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1942,6 +1942,25 @@
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+メロメロに　なった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MeromeroGetItem">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+	</row>
+	<row id="BTL_STRID_SET_MeromeroGetItem_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+	</row>
+	<row id="BTL_STRID_SET_MeromeroGetItem_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+メロメロに　なった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 メロメロに　なった！</language>
 	</row>
 
@@ -5694,7 +5713,7 @@
 当たりやすくなった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_UseItem_Damage">
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent">
 		<comment>攻撃してきた相手にダメージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
@@ -5703,7 +5722,7 @@
 [1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
 ダメージを　受けた！</language>
 	</row>
-	<row id="BTL_STRID_SET_UseItem_Damage_2Y">
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_2Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 やせいの　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
 ダメージを　うけた！</language>
@@ -5711,44 +5730,64 @@
 野生の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
 ダメージを　受けた！</language>
 	</row>
-	<row id="BTL_STRID_SET_UseItem_Damage_2E">
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_2E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 あいての　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
 ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 相手の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_Y2Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_DamageOpponent_E2E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_Damage">
+		<comment>自分にダメージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　受けた！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Damage_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
-ダメージを　受けた！</language>
-	</row>
-	<row id="BTL_STRID_SET_UseItem_Damage_Y2Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
-ダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　受けた！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Damage_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
-ダメージを　受けた！</language>
-	</row>
-	<row id="BTL_STRID_SET_UseItem_Damage_E2E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
-ダメージを　うけた！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ダメージを　受けた！</language>
 	</row>
 
