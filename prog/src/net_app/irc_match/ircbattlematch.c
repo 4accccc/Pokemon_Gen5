@@ -13,6 +13,7 @@
 
 #include "ircbattlematch.h"
 #include "system/main.h"
+#include "system/wipe.h"
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -149,7 +150,6 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork);
 static void _fadeInWait(IRC_BATTLE_MATCH* pWork);
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork);
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork);
-static void _ircStartTiming(IRC_BATTLE_MATCH* pWork);
 static void _modeSelectEntryNumInit(IRC_BATTLE_MATCH* pWork);
 static void _modeSelectEntryNumWait(IRC_BATTLE_MATCH* pWork);
 static void _modeReportInit(IRC_BATTLE_MATCH* pWork);
@@ -316,6 +316,35 @@ static void _endCallBack(void* pWork)
   commsys->connect_bit = 0;
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeout(IRC_BATTLE_MATCH* pWork)
+{
+	if(WIPE_SYS_EndCheck()){
+		_CHANGE_STATE(pWork, NULL);        // 終わり
+	}
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeoutStart(IRC_BATTLE_MATCH* pWork)
+{
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	波紋OBJ表示
@@ -479,14 +508,8 @@ static void _wirelessConnectCallback(void* pWk)
   IRC_BATTLE_MATCH *pWork = pWk;
   int no;
 
-#if 1 //
+  _CHANGE_STATE(pWork,_modeFadeoutStart);
 
-  _CHANGE_STATE(pWork,NULL);
-
-#else
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
-  _CHANGE_STATE(pWork,_ircStartTiming);
-#endif
 }
 
 
@@ -495,8 +518,6 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
   IRC_BATTLE_MATCH *pWork = pWk;
 
   pWork->bParent = bParent;
-  //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
-
   pWork->irccenterflg=TRUE;
   pWork->ircCenterAnim=TRUE;
 
@@ -507,13 +528,6 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
       pWork->ircmatchanim=TRUE;
     }
   }
-  OS_TPrintf("_wirelessPreConnectCallback\n");
-
-  //  _CHANGE_STATE(pWork,_ircMatchWait);
-
-
-
-  //  _CHANGE_STATE(pWork,_ircPreConnect);
 }
 
 
@@ -954,7 +968,7 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
       EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
       _buttonWindowDelete(pWork);
       GFL_NET_Exit(NULL);
-      _CHANGE_STATE(pWork,NULL);
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
     else
     {  // いいえを選択した場合
@@ -982,7 +996,7 @@ static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
 
     EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
     GFL_NET_Exit(NULL);
-    _CHANGE_STATE(pWork,NULL);
+    _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
 }
 
@@ -1116,32 +1130,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircPreConnect(IRC_BATTLE_MATCH* pWork)
 {
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _ircStartTiming(IRC_BATTLE_MATCH* pWork)
-{
-
-  //  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_START_TIMING) == TRUE){
-  //    OS_TPrintf("タイミング取り成功\n");
-  //  OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
-  //    }
-  // ワイプ終了待ち
-
-
-#if 1
-  _CHANGE_STATE(pWork,NULL);
-
-#else
-  if( GFL_FADE_CheckFade() ){
-    _CHANGE_STATE(pWork,NULL);
-  }
-#endif
 }
 
 //--------------------------------------------------------------

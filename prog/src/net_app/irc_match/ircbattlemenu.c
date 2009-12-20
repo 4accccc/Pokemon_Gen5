@@ -365,6 +365,35 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   メッセージの画面消去
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageDispClear(IRC_BATTLE_MENU* pWork)
+{
+  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージの終了
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageEnd(IRC_BATTLE_MENU* pWork)
+{
+  _infoMessageDispClear(pWork);
+  GFL_BMPWIN_Delete(pWork->infoDispWin);
+  pWork->infoDispWin=NULL;
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   ボタンを点滅させる＆点滅し終わったらTRUEを返す
  * @retval  点滅し終わったらTRUE
  */
@@ -417,8 +446,9 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
 
-	//_buttonWindowDelete(pWork);
-
+ // GFL_BG_SetVisible(frame,VISIBLE_OFF);
+  GFL_BG_ClearScreen(frame);
+  
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -434,34 +464,29 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
 
   for(i=0;i < num;i++){
     GFL_FONTSYS_SetColor(0xe,0xf,3);
-//    GFL_FONTSYS_SetDefaultColor();
+
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
       _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
-//      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
 
- //   PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
-     //                   pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
-//void PRINTSYS_PrintColor( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
-
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   }
-
 
 	if(pWork->pButton){
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
-	 
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-	 
+//  GFL_BG_LoadScreenV_Req(frame);
+  GFL_BG_LoadScreenV_Req(frame);
+ // GFL_BG_SetVisible(frame,VISIBLE_ON);
 }
 
 //----------------------------------------------------------------------------
@@ -666,6 +691,8 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
 	int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_14};
 
+  _touchScreenChange( pWork, NARC_cg_comm_comm_ir_btn_NSCR);
+  
 	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork, wind_irmain);
 
 	pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
@@ -882,7 +909,9 @@ static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
 static void _modeAppWinFlash2(IRC_BATTLE_MENU* pWork)
 {
   if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    _CHANGE_STATE(pWork,_modeInit);        // 最初に戻る
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);        // モード選択にもどる
   }
 }
 
@@ -971,7 +1000,10 @@ static void _modeSelectBattleTypeButtonFlash(IRC_BATTLE_MENU* pWork)
 static void _modeAppWinFlash3(IRC_BATTLE_MENU* pWork)
 {
   if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    _CHANGE_STATE(pWork,_modeInit);        // 最初に戻る
+
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+    _CHANGE_STATE(pWork,_modeSelectEntryNumInit);        // ２人４人選択へ
   }
 }
 
@@ -1310,23 +1342,16 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
-
-
-#if 1
       GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
       _infoMessageDisp(pWork);
-      //セーブ開始
       GAMEDATA_SaveAsyncStart(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
-
       _CHANGE_STATE(pWork,_modeReporting);
-#else
-      _CHANGE_STATE(pWork,NULL);
-#endif
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _infoMessageEnd(pWork);
       pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-      _CHANGE_STATE(pWork,NULL);
+      _CHANGE_STATE(pWork,  _modeSelectMenuInit);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
