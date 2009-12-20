@@ -406,7 +406,7 @@ static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum )
 //=============================================================================================
 /**
  * セットメッセージの生成
- * ※セットメッセージ：自分側，敵側（やせいの），敵側（あいての）が必ず３つセットになった文字列
+ * ※セットメッセージ：自分側，敵側（やせいの），敵側（あいての）が一定の法則でセットになった文字列
  *
  * @param   buf
  * @param   strID
@@ -426,12 +426,6 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
     { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_rankup_item      },
     { BTL_STRID_STD_UseItem_Self,         ms_set_useitem          },
-    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke        },
-    { BTL_STRID_SET_Dorobou,              ms_set_poke2poke        },
-    { BTL_STRID_SET_MirrorType,           ms_set_poke2poke        },
-    { BTL_STRID_SET_GiftPass,             ms_set_poke2poke        },
-    { BTL_STRID_SET_FreeFall,             ms_set_poke2poke        },
-    { BTL_STRID_SET_RedCard,              ms_set_poke2poke        },
   };
 
   int i;
@@ -444,6 +438,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
       return;
     }
   }
+
 
   ms_set_default( buf, strID, args );
 }
@@ -589,6 +584,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             clientID = BTL_CLIENT_MAX;
             break;
           case TAGIDX_POKE_NICKNAME:
+            BTL_Printf("setPokeNickName ID=%d ....\n", args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NICKNAME_TRUTH:
@@ -608,6 +604,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             WORDSET_RegisterWazaName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_ITEM_NAME:
+            BTL_Printf("set Item Name argIdx=%d, ID=%d ....\n", argIdx, args[argIdx]);
             WORDSET_RegisterItemName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_POKETYPE_NAME:
@@ -633,8 +630,15 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 //--------------------------------------------------------------
 static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
 {
-  BTL_Printf("ms set_default strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
-  strID = get_setStrID( args[0], strID );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+
+  if( searchPokeTagCount(SysWork.tmpBuf) == 2 ){
+    strID = get_setStrID_Poke2( args[0], args[1], strID );
+    BTL_Printf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+  }else{
+    strID = get_setStrID( args[0], strID );
+    BTL_Printf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+  }
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 

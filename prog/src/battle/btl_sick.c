@@ -473,7 +473,7 @@ void BTL_SICKEVENT_CheckFlying( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bp
   }
 }
 /**-------------------------------------------------------------
- * 飛行フラグチェックハンドラ
+ * 押し出しチェックハンドラ
  *------------------------------------------------------------*/
 void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 {
@@ -481,7 +481,20 @@ void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARA
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
-
+/**-------------------------------------------------------------
+ * 命中率チェックハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+{
+  if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
+    fx32 ratio;
+    BPP_SICK_CONT cont = BPP_GetSickCont( attacker, WAZASICK_HITRATIO_UP );
+    u16 param = BPP_SICKCONT_GetParam( cont );
+    ratio = FX32_CONST( param ) / 100;
+    BTL_Printf("命中率アップ状態のポケ[%d] : %d -> %08x\n", BPP_GetID(attacker), param, ratio);
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+  }
+}
 
 
 

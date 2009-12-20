@@ -1160,6 +1160,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
   SVCL_WORK* clwk;
   const BTL_ACTION_PARAM* actParam;
   const BTL_POKEPARAM* bpp;
+  u32   hem_state;
   u16 agility;
   u8  action, actionPri, wazaPri, spPri_A, spPri_B;
   u8  i, j, p, numPoke;
@@ -1187,6 +1188,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
   numPoke = p;
   for(i=0; i<numPoke; ++i)
   {
+    hem_state = Hem_PushState( &wk->HEManager );
     bpp = order[i].bpp;
     actParam = &(order[i].action);
 
@@ -1230,23 +1232,33 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     BTL_Printf("行動プライオリティ決定！ Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
         i, j, actionPri, wazaPri, agility );
 
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+
     // プライオリティ値とクライアントIDを対にして配列に保存
     order[i].priority = MakePriValue( actionPri, spPri_A, wazaPri, spPri_B, agility );
   }
 // プライオリティ値によるソート
-  for(i=0; i<numPoke; i++){
-    for(j=i+1; j<numPoke; j++){
-      if( order[i].priority < order[j].priority ){
+  for(i=0; i<numPoke; i++)
+  {
+    for(j=i+1; j<numPoke; j++)
+    {
+      if( order[i].priority > order[j].priority ){
+        continue;
+      }
+      if( order[i].priority == order[j].priority ){ // 全く同じプライオリティ値があったらランダム
+        if( BTL_CALC_GetRand(2) == 0 ){
+          continue;
+        }
+      }
+
+      {
         ACTION_ORDER_WORK tmp = order[i];
         order[i] = order[j];
         order[j] = tmp;
       }
     }
   }
-// 全く同じプライオリティ値があったらランダムシャッフル
-// @todo 未実装
-
-//
 
   return p;
 }
@@ -3609,18 +3621,19 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   if( scEvent_IsExcuseCalcHit(wk, attacker, defender, wazaParam->wazaID) ){
-    BTL_Printf("特殊条件発生で命中率チェックをスキップ。当たった当たったことにします\n");
+    BTL_Printf("特殊条件発生で命中率チェックをスキップ。当たったことに。\n");
     return TRUE;
   }
 
   if( BPP_CheckSick(defender, WAZASICK_TELEKINESIS) ){
-    BTL_Printf("相手がテレキネシス状態だからあたります\n");
     return TRUE;
   }
 
   {
-    u8 wazaHitPer, totalPer;
+    u8 wazaHitPer;
     s8 hitRank, avoidRank, totalRank;
+    u32 totalPer;
+    fx32 ratio;
 
     wazaHitPer = scEvent_getHitPer(wk, attacker, defender, wazaParam);
 
@@ -3629,19 +3642,28 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
+      BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.01f), FX32_CONST(32) );
+      BTL_SICKEVENT_CheckHitRatio( wk, attacker, defender );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RANK );
 
       hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
       avoidRank = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_RANK );
+      ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
 
     BTL_EVENTVAR_Pop();
 
     totalRank = roundValue( (int)(BTL_CALC_HITRATIO_MID + hitRank - avoidRank), BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
     totalPer  = BTL_CALC_HitPer( wazaHitPer, totalRank );
 
-    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d\n", BPP_GetID(attacker), hitRank );
+    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d  ワザ的中率=%d\n", BPP_GetID(attacker), hitRank, wazaHitPer );
     BTL_Printf("防御ポケ[%d]  回避Rank=%d\n", BPP_GetID(defender), avoidRank );
-    BTL_Printf("ワザ的中率=%d  最終命中ランク=%d, 最終命中率=%d\n", wazaHitPer, totalRank, totalPer );
+    BTL_Printf("命中ランク=%d, 命中率=%d, 命中率補正=%08x\n", totalRank, totalPer, ratio );
+
+    totalPer = BTL_CALC_MulRatio( totalPer, ratio );
+    if( totalPer > 100 ){
+      totalPer = 100;
+    }
+    BTL_Printf("最終命中率 = %d\n", totalPer);
 
     return perOccur( wk, totalPer );
   }
@@ -7724,7 +7746,7 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
 static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_DEFAULT );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_B, BTL_SPPRI_B_DEFAULT );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SP_PRIORITY );
@@ -8534,6 +8556,7 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
   BTL_EVENTVAR_Pop();
@@ -9225,8 +9248,8 @@ static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
 static int scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, u32 volume )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_DRAIN );
     volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
@@ -9247,7 +9270,7 @@ static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, u32 total_damage )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, total_damage );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_SPECIAL_DRAIN );
   BTL_EVENTVAR_Pop();
