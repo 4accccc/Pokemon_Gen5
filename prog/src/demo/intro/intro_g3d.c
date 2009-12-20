@@ -55,7 +55,8 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_setup[ UNIT_MAX ] =
 
 
 // カメラ設定
-static const VecFx32 sc_camera_pos    = { 0xfffffdeb, 0x809b, 0x1b406 };
+#define CAMERA_POS_Z ( 0x1b406 )
+static const VecFx32 sc_camera_pos    = { 0xfffffdeb, 0x809b, CAMERA_POS_Z };
 static const VecFx32 sc_camera_up     = { 0x0, 0x4272, 0x9f0 };
 static const VecFx32 sc_camera_target = { 0x0, 0x23e0, 0xffff3802 }; 
 
@@ -76,6 +77,7 @@ struct _INTRO_G3D_WORK {
   BOOL          is_man;
   BOOL          is_load;
   u32 seq;
+  u32 start_seq;
   u32 cnt;
   fx32 anmseq;
 };
@@ -207,10 +209,10 @@ void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
   
   {
     // アニメーション調整
-//    debug_g3d_util_anime_frame_test( wk->g3d_util, 0 );
+//  debug_g3d_util_anime_frame_test( wk->g3d_util, 0 );
 
     // 座標調整
-//  debug_camera_test( INTRO_GRAPHIC_GetCamera( wk->graphic ) );
+//  debug_camera_test( wk->camera );
   }
 
   // 専用カメラにスイッチ
@@ -237,7 +239,7 @@ void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  3D選択肢スタート
  *
  *	@param	INTRO_G3D_WORK* wk 
  *
@@ -246,8 +248,43 @@ void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
 //-----------------------------------------------------------------------------
 BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
 {
-  // @TODO スライドイン
-  return TRUE;
+  fx32 val;
+  VecFx32 pos;
+
+  switch( wk->start_seq )
+  {
+  case 0:
+    // カメラを離す
+    GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
+    pos.z = 0x200000;
+    GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
+    wk->start_seq++;
+    break;
+  case 1:
+    // 拡大
+    GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
+    
+    val = MATH_IAbs( pos.z - CAMERA_POS_Z ) / 4;
+
+    // 誤差修正
+    if( val < 0x100 ){ val = 0x100; }
+
+    pos.z -= val;
+
+    if( pos.z < CAMERA_POS_Z )
+    {
+      pos.z = CAMERA_POS_Z;
+      GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
+
+      return TRUE;
+    }
+      
+    GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
+    break;
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------

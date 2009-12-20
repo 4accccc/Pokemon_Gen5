@@ -41,6 +41,7 @@
 #include "intro_cmd.h" // for extern宣言
 
 #include "sound/pm_sndsys.h" // for SEQ_SE_XXX
+#include "sound/pm_voice.h" // for 
 
 //=============================================================================
 /**
@@ -108,6 +109,7 @@ static BOOL CMD_COMP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 // 一般コマンド
 static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -155,6 +157,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   //-----------------------------------------
   CMD_LOAD_BG,
   CMD_SET_RETCODE,
+  CMD_WAIT,
   CMD_FADE_REQ,
   CMD_BRIGHTNESS_SET,
   CMD_BRIGHTNESS_REQ,
@@ -443,6 +446,29 @@ static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  コマンドウェイト
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  if( sdat->cnt > param[0] )
+  {
+    return TRUE;
+  }
+  
+  sdat->cnt++;
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  フェードリクエスト
  *
  *  PARAM[0]  GFL_FADE_MASTER_BRIGHT_XXX
@@ -488,7 +514,7 @@ static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  ブライドネス変更リクエスト
  *
  *	@param	param[0]
  *	@param	param[1]
@@ -506,7 +532,7 @@ static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  ブライドネス終了待ち
  *
  *	@param	param[0]
  *
@@ -898,6 +924,9 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   //@TODO
+
+  // 鳴き声
+  PMVOICE_Play( param[0], 0, 0, FALSE, 0, 0, FALSE, NULL );
 
   return TRUE;
 }

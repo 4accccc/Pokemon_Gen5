@@ -424,6 +424,10 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
     switch( state )
     {
     case PRINTSTREAM_STATE_DONE : // 終了
+      // キーカーソルをクリア
+      KeyCursor_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );   
+      GFL_BMPWIN_TransVramCharacter( wk->win_dispwin );
+
       PRINTSYS_PrintStreamDelete( wk->print_stream );
       wk->print_stream = NULL;
       return TRUE;
