@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T14:23:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T15:35:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,7 +299,7 @@
 		<language name="JPN" width="256">ブラッカー『おばさん
 それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『おばさん
-それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
+それでは　失礼します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0101_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -355,30 +355,34 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・テレビトランシーバー入手処理
 ※アイテムではない</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
-		<language name="JPN" width="256">そうだ！　これこれ！
+		<language name="JPN" width="256">ポケモン
+元気に　なったわね！▼
+そうだ！　これこれ！
 テレビトランシーバー！！[BE:00:ページ切り替え（行送り）]
 しゅうりから　もどってきてたわ！[BE:01:ページ切り替え（クリア）]
-ともだちの　ばんごうも
+おともだちの　ばんごうも
 ちゃんと　とうろく　されたままよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうだ！　これこれ！
+		<language name="JPN_KANJI" width="256">ポケモン
+元気に　なったわね！▼
+そうだ！　これこれ！
 テレビトランシーバー！！[BE:00:ページ切り替え（行送り）]
 修理から　戻ってきてたわ！[BE:01:ページ切り替え（クリア）]
-友達の　番号も
+お友達の　番号も
 ちゃんと　登録されたままよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
 		<language name="JPN" width="256">じゃ　いってらっしゃい！
 アララギはかせに　よろしくね！</language>
 		<language name="JPN_KANJI" width="256">じゃ　いってらっしゃい！
-アララギはかせに　よろしくね！</language>
+アララギ博士に　よろしくね！</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
