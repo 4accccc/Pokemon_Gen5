@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-19T23:30:23"/>
+	<create user="taya" host="W00146" date="2009-12-20T18:22:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -432,7 +432,7 @@
 		<band id="2" index="3" style="0000" width="494"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="671"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2467,6 +2467,35 @@
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_PriorityUpOnce">
+		<comment>１度だけ行動優先順が高くなる</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+こうどうが　はやくなった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+行動が　はやくなった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_HitRatioUpOnce">
+		<comment>１度だけワザの命中率があがる</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+つぎに　くりだす　わざが▽
+あたりやすくなった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+次にくりだす　わざが▽
+当たりやすくなった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_Damage">
+		<comment>攻撃してきた相手にダメージ</comment>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　[1:09:どうぐ名:2]で▽
+ダメージを　受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KiaiDame">

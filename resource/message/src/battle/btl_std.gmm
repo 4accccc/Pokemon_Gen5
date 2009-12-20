@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-17T11:51:52"/>
+	<create user="taya" host="W00146" date="2009-12-20T13:56:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]が
 とびだした！</language>
 		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]が
-飛び出した！</language>
+飛びだした！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_Wild2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
