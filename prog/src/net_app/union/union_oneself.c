@@ -576,6 +576,39 @@ static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
 
 //--------------------------------------------------------------
 /**
+ * バトルボックスのPOKEPARTYをAllocして作成します
+ *
+ * @param   unisys		
+ *
+ * @retval  POKEPARTY *		AllocしたPOKEPARTY (バトルボックスが無い場合はNULL)
+ */
+//--------------------------------------------------------------
+static POKEPARTY * _BBox_PokePartyAlloc(UNION_SYSTEM_PTR unisys)
+{
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+  BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+  
+  if(BATTLE_BOX_SAVE_IsIn( bb_save ) == FALSE){
+    return NULL;
+  }
+  
+  return BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルボックスのPOKEPARTYをFreeします
+ * @param   party		
+ */
+//--------------------------------------------------------------
+static void _BBox_PokePartyFree(POKEPARTY *party)
+{
+  GF_ASSERT(party != NULL);
+  GFL_HEAP_FreeMemory(party);
+}
+
+//--------------------------------------------------------------
+/**
  * unisys->alloc.regulationにplay_categoryに対応したレギュレーションデータをロードします
  *
  * @param   play_category		
@@ -628,16 +661,15 @@ static POKE_REG_RETURN_ENUM _CheckRegulation_Temoti(UNION_SYSTEM_PTR unisys, u32
 static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(UNION_SYSTEM_PTR unisys, u32 *fail_bit)
 {
   POKE_REG_RETURN_ENUM reg_ret;
-  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
-  BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+  POKEPARTY *bb_party = _BBox_PokePartyAlloc(unisys);
   
   *fail_bit = 0;
   
-  if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+  if(bb_party != NULL){
     POKEPARTY *bb_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
     reg_ret = PokeRegulationMatchLookAtPokeParty(
       unisys->alloc.regulation, bb_party, fail_bit);
-    GFL_HEAP_FreeMemory(bb_party);
+    _BBox_PokePartyFree(bb_party);
   }
   else{ //バトルボックスのセーブデータが存在しない
     *fail_bit = 0xffffffff;
@@ -674,8 +706,6 @@ static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_i
   temoti_ret = _CheckRegulation_Temoti(unisys, temoti_fail_bit);
   bbox_ret = _CheckRegulation_BBox(unisys, bbox_fail_bit);
 
-  OS_TPrintf("手持ちNG bit=%d\n", *temoti_fail_bit);
-  OS_TPrintf("ボックスNG bit=%d\n", *bbox_fail_bit);
   if(temoti_ret == POKE_REG_OK || bbox_ret == POKE_REG_OK){
     return TRUE;
   }
@@ -2790,8 +2820,6 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
 
   case _MENU:   //メインメニュー描画
     {
-      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
-      BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
       u32 temoti_ng_bit, bbox_ng_bit;
       BOOL temoti_fail, bbox_fail;
       
@@ -2802,7 +2830,7 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       _CheckRegulation_BBox(unisys, &bbox_ng_bit);
       temoti_fail = temoti_ng_bit > 0 ? TRUE : FALSE;
       bbox_fail = bbox_ng_bit > 0 ? TRUE : FALSE;
-      unisys->alloc.bbox_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
+      unisys->alloc.bbox_party = _BBox_PokePartyAlloc(unisys);
       unisys->alloc.psl = PARTY_SELECT_LIST_Setup(fieldWork, 
         GAMEDATA_GetMyPokemon(unisys->uniparent->game_data),
         unisys->alloc.bbox_party, temoti_fail, bbox_fail, HEAPID_FIELDMAP);
@@ -2829,7 +2857,7 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
           clsys->select_pokeparty = COLOSSEUM_SELECT_PARTY_BOX;
           break;
         }
-        GFL_HEAP_FreeMemory(unisys->alloc.bbox_party);
+        _BBox_PokePartyFree(unisys->alloc.bbox_party);
         unisys->alloc.bbox_party = NULL;
         UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         (*seq)++;
@@ -2847,12 +2875,10 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       if(clsys->select_pokeparty == COLOSSEUM_SELECT_PARTY_TEMOTI){
         reg_ret = _CheckRegulation_Temoti(unisys, &fail_bit);
         regwin_type = REGWIN_TYPE_NG_TEMOTI;
-        OS_TPrintf("手持ちNG FailBit =%d\n", fail_bit);
       }
       else{
         reg_ret = _CheckRegulation_BBox(unisys, &fail_bit);
         regwin_type = REGWIN_TYPE_NG_BBOX;
-        OS_TPrintf("BBOXNG FailBit =%d\n", fail_bit);
       }
       
       if(fail_bit > 0){
@@ -2978,9 +3004,11 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
         clsys->recvbuf.pokeparty[my_net_id]);
       break;
     case COLOSSEUM_SELECT_PARTY_BOX:
-      //※check　とりあえず手持ち
-      PokeParty_Copy(GAMEDATA_GetMyPokemon(unisys->uniparent->game_data), 
-        clsys->recvbuf.pokeparty[my_net_id]);
+      {
+        POKEPARTY *bbox_party = _BBox_PokePartyAlloc(unisys);
+        PokeParty_Copy(bbox_party, clsys->recvbuf.pokeparty[my_net_id]);
+        _BBox_PokePartyFree(bbox_party);
+      }
       break;
     }
     (*seq)++;
