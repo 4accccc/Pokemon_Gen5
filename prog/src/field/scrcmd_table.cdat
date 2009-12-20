@@ -613,7 +613,7 @@
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )
   
   DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
-  NO_CMD()
+  DEF_CMD( EvCmdSymbolPokeSet, EV_SEQ_SYMBOL_POKE_SET )
   NO_CMD()
   NO_CMD()
 

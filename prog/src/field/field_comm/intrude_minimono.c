@@ -107,7 +107,7 @@ void MINIMONO_AddPosRand(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldWork)
  * @param   fx_y		  YÀ•W(fx32)
  */
 //==================================================================
-static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y)
+static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y, u32 monsno)
 {
   MMDL_HEADER head;
   MMDL_HEADER_GRIDPOS *grid_pos;
@@ -118,9 +118,7 @@ static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, 
   zone_id = FIELDMAP_GetZoneID( fieldWork );
   
   head = data_MMdlHeader;
-  if(GFUser_GetPublicRand(2) == 0){
-    head.obj_code = TPOKE_0001 + GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1;
-  }
+  head.obj_code = TPOKE_0001 + monsno;
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
   
   grid_pos->gx = grid_x;
@@ -142,12 +140,27 @@ void DEBUG_INTRUDE_Pokemon_Add(FIELDMAP_WORK *fieldWork)
   static u16 gx = 20;
   static u16 gz = 30;
   
-  DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx, gz, 0);
+  DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx, gz, 0, GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1);
   gx += 1;
   if(gx % 10 == 0){
     gz += 2;
     gx -= 10;
   }
 }
+
+void DEBUG_INTRUDE_BingoPokeSet(FIELDMAP_WORK *fieldWork)
+{
+  u32 gx = 18, gz = 17;
+  u32 gx_space = 6, gz_space = 4;
+  int x, y;
+  
+  for(y = 0; y < 4; y++){
+    for(x = 0; x < 4; x++){
+      DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx + gx_space*x, gz + gz_space*y, 0, 
+        GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1);
+    }
+  }
+}
+
 #endif  //-------- PM_DEBUG --------
 

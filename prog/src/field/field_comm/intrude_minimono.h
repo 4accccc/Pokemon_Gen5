@@ -20,4 +20,5 @@ extern void MINIMONO_AddPosRand(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fiel
 //--------------------------------------------------------------
 #ifdef PM_DEBUG
 extern void DEBUG_INTRUDE_Pokemon_Add(FIELDMAP_WORK *fieldWork);
+extern void DEBUG_INTRUDE_BingoPokeSet(FIELDMAP_WORK *fieldWork);
 #endif

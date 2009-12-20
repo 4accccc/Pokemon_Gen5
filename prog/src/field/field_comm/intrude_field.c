@@ -332,6 +332,17 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     }
   }
   
+  if(ZONEDATA_IsBingo(zone_id) == TRUE){  //ビンゴマップから脱出監視
+    FIELD_PLAYER_GetPos( pcActor, &pos );
+    if(pos.z >= FX32_CONST(680)){
+    	pos.x = PALACE_MAP_LEN/2;
+    	pos.y = 0;
+    	pos.z = 408 << FX32_SHIFT;
+      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE01, &pos, 0);
+    }
+    return NULL;
+  }
+  
   if(ZONEDATA_IsPalace(zone_id) == FALSE){
     return NULL;
   }
