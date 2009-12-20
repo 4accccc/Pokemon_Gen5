@@ -442,9 +442,11 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
   // ë´ÇµÇ±Çﬁ
   for( i=0; i<add_connect_num; i++ )
   {
+    TOMOYA_Printf( "Event Check blockTag=%d  blockID=%d\n", p_event_if[i].block_tag, p_event_if[i].block_id );
     if( !WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if[i].block_tag, p_event_if[i].block_id ) )
     {
       
+      TOMOYA_Printf( "Event Check EventDel\n" );
       // çÌèú
       EVENTDATA_SYS_DelConnectEventIdx( p_evdata, p_event_if[i].connect_idx );
     }
