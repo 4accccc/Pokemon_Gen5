@@ -396,21 +396,11 @@
 	</row>
 
 	<row id="search_abc_10">
-		<language name="JPN" width="216">のらこ</language>
-		<language name="JPN_KANJI" width="216">のらこ</language>
-	</row>
-
-	<row id="search_abc_11">
-		<language name="JPN" width="216">のらにやー</language>
-		<language name="JPN_KANJI" width="216">のらにやー</language>
-	</row>
-
-	<row id="search_abc_12">
 		<language name="JPN" width="216">のろい</language>
 		<language name="JPN_KANJI" width="216">のろい</language>
 	</row>
 
-	<row id="search_abc_13">
+	<row id="search_abc_11">
 		<language name="JPN" width="216">のろわれほてい</language>
 		<language name="JPN_KANJI" width="216">のろわれほてい</language>
 	</row>
