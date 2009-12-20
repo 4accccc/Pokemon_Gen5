@@ -1,0 +1,576 @@
+//======================================================================
+/**
+ * @file	ctvt_talk.c
+ * @brief	通信TVTシステム：落書き
+ * @author	ariizumi
+ * @data	09/12/19
+ *
+ * モジュール名：CTVT_DRAW
+ */
+//======================================================================
+#include <gflib.h>
+
+#include "system/main.h"
+#include "system/gfl_use.h"
+#include "system/wipe.h"
+#include "system/camera_system.h"
+#include "net/network_define.h"
+#include "app/app_menu_common.h"
+
+#include "comm_tvt.naix"
+
+#include "ctvt_draw.h"
+#include "ctvt_comm.h"
+#include "ctvt_camera.h"
+
+//======================================================================
+//	define
+//======================================================================
+#pragma mark [> define
+
+#define CTVT_DRAW_BAR_ICON_Y (192-12)
+#define CTVT_DRAW_PEN_X (16)
+#define CTVT_DRAW_SPOITO_X (64)
+#define CTVT_DRAW_KESHIGOMU_X (112)
+#define CTVT_DRAW_PAUSE_X (192)
+#define CTVT_DRAW_RETURN_X (224)
+
+#define CTVT_DRAW_PEN_SIZE_X (CTVT_DRAW_PEN_X)
+#define CTVT_DRAW_PEN_SIZE_Y (192-24)
+
+//======================================================================
+//	enum
+//======================================================================
+#pragma mark [> enum
+//編集ボタン種類
+typedef enum
+{
+  CDED_PEN,
+  CDED_SPOITO,
+  CDED_KESHIGOMU,
+  CDED_PAUSE,
+  CDED_RETURN,
+
+  CDED_MAX,
+}CTVT_DRAW_EDTI_BUTTON_TYPE;
+//説明ボタン種類
+typedef enum
+{
+  CDEX_PEN,
+  CDEX_SPOITO,
+  CDEX_KESHIGOMU,
+  CDEX_RETURN,
+
+  CDEX_MAX,
+}CTVT_DRAW_EXPLAIN_BUTTON_TYPE;
+
+//ステート
+typedef enum
+{
+  CDS_FADEIN,
+  CDS_FADEIN_WAIT,
+
+  CDS_FADEOUT, //両方フェード
+  CDS_FADEOUT_WAIT,
+
+  CDS_DRAW,
+  CDS_EDIT,
+}CTVT_DRAW_STATE;
+
+//======================================================================
+//	typedef struct
+//======================================================================
+#pragma mark [> struct
+
+//ワーク
+struct _CTVT_DRAW_WORK
+{
+  CTVT_DRAW_STATE state;
+  
+  u8 barScroll;     //目標座標
+  u8 dispBarScroll; //実座標
+  
+  BOOL isTouch; //落書ききのTrgをはじくフラグ
+  BOOL isHold;
+  BOOL isDispPenSize;
+  CTVT_DRAW_EDTI_BUTTON_TYPE editMode;
+
+  u32 befPenX;
+  u32 befPenY;
+  
+  u16 penCol;
+  u8  penSize;
+  
+  //セル関係
+  GFL_CLWK    *clwkEditButton[CDED_MAX];
+  GFL_CLWK    *clwkExplainButton[CDEX_MAX];
+  GFL_CLWK    *clwkPenSize;
+  
+};
+
+//======================================================================
+//	proto
+//======================================================================
+#pragma mark [> proto
+static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
+static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
+static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
+//--------------------------------------------------------------
+//	初期化
+//--------------------------------------------------------------
+CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId )
+{
+  u8 i;
+  CTVT_DRAW_WORK* drawWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_DRAW_WORK) );
+
+  drawWork->penCol = 0x7FFF+0x8000;  //最上位ビットがα
+  return drawWork;
+}
+
+//--------------------------------------------------------------
+//	開放
+//--------------------------------------------------------------
+void CTVT_DRAW_TermSystem( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  GFL_HEAP_FreeMemory( drawWork );
+}
+//--------------------------------------------------------------
+//	モード切替時初期化
+//--------------------------------------------------------------
+void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
+
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_oekaki_win_NSCR , 
+                    CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
+  GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , FALSE );
+  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+
+  {
+    u8 i;
+    //編集ボタン
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = CTVT_DRAW_PEN_X;
+    cellInitData.pos_y = CTVT_DRAW_BAR_ICON_Y+24;
+    cellInitData.anmseq = CTOAM_PEN;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    
+    drawWork->clwkEditButton[CDED_PEN] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    
+    cellInitData.pos_x = CTVT_DRAW_SPOITO_X;
+    cellInitData.anmseq = CTOAM_SUPOITO;
+    drawWork->clwkEditButton[CDED_SPOITO] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    
+    cellInitData.pos_x = CTVT_DRAW_KESHIGOMU_X;
+    cellInitData.anmseq = CTOAM_KESHIGOMU;
+    drawWork->clwkEditButton[CDED_KESHIGOMU] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    
+    //TODO 一時停止対応
+    cellInitData.pos_x = CTVT_DRAW_PAUSE_X;
+    cellInitData.anmseq = CTOAM_PAUSE;
+    drawWork->clwkEditButton[CDED_PAUSE] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+
+    cellInitData.pos_x = CTVT_DRAW_RETURN_X;
+    cellInitData.pos_y = CTVT_DRAW_BAR_ICON_Y-12+24;
+    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    drawWork->clwkEditButton[CDED_RETURN] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    for( i=0;i<CDED_MAX;i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkEditButton[i] , TRUE );
+    }
+    
+    //ペンサイズ
+    cellInitData.pos_x = CTVT_DRAW_PEN_SIZE_X;
+    cellInitData.pos_y = CTVT_DRAW_PEN_SIZE_Y;
+    cellInitData.anmseq = CTOAM_PEN_SELECT;
+    drawWork->clwkPenSize = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+
+  }
+  
+  drawWork->state = CDS_FADEIN;
+  drawWork->barScroll = 24;
+  drawWork->dispBarScroll = 24;
+  drawWork->isHold = FALSE;
+  drawWork->isTouch = FALSE;
+  drawWork->editMode = CDEX_PEN;
+  drawWork->isDispPenSize = FALSE;
+
+}
+
+//--------------------------------------------------------------
+//	モード切替時開放
+//--------------------------------------------------------------
+void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  u8 i;
+  for( i=0;i<CDED_MAX;i++ )
+  {
+    GFL_CLACT_WK_Remove( drawWork->clwkEditButton[i] );
+  }
+
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
+  GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+  GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , TRUE );
+  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+}
+
+//--------------------------------------------------------------
+//	更新
+//--------------------------------------------------------------
+const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  
+
+  switch( drawWork->state )
+  {
+  case CDS_FADEIN:
+    if( COMM_TVT_GetUpperFade( work ) == TRUE )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+              WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+    }
+    else
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+              WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+    }
+    drawWork->state = CDS_FADEIN_WAIT;
+    break;
+  case CDS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      drawWork->state = CDS_DRAW;
+    }
+    break;
+
+  case CDS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+    COMM_TVT_SetUpperFade( work , TRUE );
+    drawWork->state = CDS_FADEOUT_WAIT;
+    break;
+
+  case CDS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return CTM_TALK;
+    }
+    break;
+    
+  case CDS_DRAW:
+    CTVT_DRAW_UpdateDraw( work , drawWork );
+    break;
+
+  case CDS_EDIT:
+    CTVT_DRAW_UpdateEdit( work , drawWork );
+    break;
+  }
+  
+  //バースクロール更新
+  CTVT_DRAW_UpdateBar( work,drawWork );
+  
+  //落書き更新
+  CTVT_DRAW_UpdateDrawing( work,drawWork );
+  return CTM_DRAW;
+}
+
+//--------------------------------------------------------------
+//	お絵書き更新
+//  キー操作・モード変更周り
+//--------------------------------------------------------------
+static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT )
+  {
+    drawWork->state = CDS_EDIT;
+    drawWork->barScroll = 0;
+  }
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW )
+  {
+    drawWork->state = CDS_FADEOUT;
+  }
+}
+
+//--------------------------------------------------------------
+//	編集更新
+//--------------------------------------------------------------
+static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  static const GFL_UI_TP_HITTBL hitTbl[CDED_MAX+1] = 
+  {
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_PEN_X-12,      CTVT_DRAW_PEN_X+12,
+    },
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_SPOITO_X-12,   CTVT_DRAW_SPOITO_X+12,
+    },
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_KESHIGOMU_X-12,CTVT_DRAW_KESHIGOMU_X+12,
+    },
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_PAUSE_X-12,    CTVT_DRAW_PAUSE_X+12,
+    },
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_RETURN_X-12,   CTVT_DRAW_RETURN_X+12,
+    },
+    {GFL_UI_TP_HIT_END,0,0,0}
+  };
+  
+  const int ret = GFL_UI_TP_HitTrg( hitTbl );
+  if( ret == CDED_PEN )
+  {
+    //TODO 処理無し
+    drawWork->editMode = CDED_PEN;
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+    drawWork->isTouch = TRUE;
+    drawWork->isDispPenSize = TRUE;
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , TRUE );
+    CTVT_TPrintf("PenMode\n");
+  }
+  if( ret == CDED_SPOITO )
+  {
+    drawWork->editMode = CDED_SPOITO;
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+    drawWork->isTouch = TRUE;
+    CTVT_TPrintf("SpoitoMode\n");
+  }
+  if( ret == CDED_KESHIGOMU )
+  {
+    drawWork->editMode = CDED_KESHIGOMU;
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+    drawWork->isTouch = TRUE;
+    CTVT_TPrintf("KeshigomuMode\n");
+  }
+  if( ret == CDED_PAUSE )
+  {
+    //TODO 処理無し
+  }
+  
+  //ペンサイズ
+  if( drawWork->isDispPenSize == TRUE )
+  {
+    static const GFL_UI_TP_HITTBL penHitTbl[CDED_MAX+1] = 
+    {
+      {
+        CTVT_DRAW_PEN_SIZE_Y-8, CTVT_DRAW_PEN_SIZE_Y,
+        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+      },
+      {
+        CTVT_DRAW_PEN_SIZE_Y-16, CTVT_DRAW_PEN_SIZE_Y-8,
+        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+      },
+      {
+        CTVT_DRAW_PEN_SIZE_Y-24, CTVT_DRAW_PEN_SIZE_Y-16,
+        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+      },
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    static const penSizeArr[3] = {DSPS_CIRCLE_8,DSPS_CIRCLE_4,DSPS_CIRCLE_1};
+    const int retPen = GFL_UI_TP_HitTrg( penHitTbl );
+    if( retPen != GFL_UI_TP_HIT_NONE )
+    {
+      drawWork->penSize = penSizeArr[retPen];
+      drawWork->isTouch = TRUE;
+
+      drawWork->isDispPenSize = FALSE;
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    }
+  }
+  
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT ||
+      ret == CDED_RETURN )
+  {
+    drawWork->state = CDS_DRAW;
+    drawWork->barScroll = 24;
+    drawWork->isTouch = TRUE;
+  }
+}
+
+//--------------------------------------------------------------
+//	落書き更新
+//--------------------------------------------------------------
+static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  if( GFL_UI_TP_GetTrg() == TRUE &&
+      drawWork->isTouch == FALSE )
+  {
+    u32 tpx,tpy;
+    GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+    if( drawWork->editMode == CDED_SPOITO )
+    {
+      u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 3*32 + 2*0xf);
+      u16* adr2 = (u16*)((u32)G2_GetBG2ScrPtr() + tpx*2 + tpy*256*2);
+      if( *adr2 | 0x8000 )
+      {
+        drawWork->penCol = *adr2;
+      }
+      else
+      {
+        u16* adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
+        drawWork->penCol = *adr3;
+      }
+      *spoitColAdr = (drawWork->penCol&0x7FFF);
+      
+      drawWork->editMode = CDED_PEN;
+      CTVT_DRAW_UpdateEditButton( work , drawWork );
+      CTVT_TPrintf("Spoit!![%x]\n",drawWork->penCol-0x8000);
+    }
+    else
+    {
+      drawWork->befPenX = tpx;
+      drawWork->befPenY = tpy;
+      drawWork->isHold = TRUE;
+    }
+  }
+  drawWork->isTouch = FALSE;
+  
+  if( GFL_UI_TP_GetCont() == TRUE )
+  {
+    u32 tpx,tpy;
+    GFL_UI_TP_GetPointCont( &tpx,&tpy );
+    if( drawWork->befPenX != tpx &&
+        drawWork->befPenY != tpy )
+    {
+      if( drawWork->isHold == TRUE )
+      {
+        BOOL isFull;
+        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+        DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+        DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
+        if( isFull == FALSE )
+        {
+          info->startX = drawWork->befPenX;
+          info->startY = drawWork->befPenY;
+        }
+        info->endX = tpx;
+        info->endY = tpy;
+        info->penType = drawWork->penSize;
+        if( drawWork->editMode == CDED_KESHIGOMU )
+        {
+          info->col = 0;
+        }
+        else
+        {
+          info->col  = drawWork->penCol;
+        }
+        
+        CTVT_COMM_AddDrawBuf( work , commWork );
+        //DRAW_SYS_SetPenInfo( drawSys , &info );
+      }
+      drawWork->befPenX = tpx;
+      drawWork->befPenY = tpy;
+    }
+  }
+  else
+  {
+    drawWork->isHold = FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+//	バー位置更新
+//--------------------------------------------------------------
+static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  BOOL isUpdate = FALSE;
+  if( drawWork->barScroll < drawWork->dispBarScroll )
+  {
+    drawWork->dispBarScroll -= 2;
+    isUpdate = TRUE;
+  }
+  else
+  if( drawWork->barScroll > drawWork->dispBarScroll )
+  {
+    drawWork->dispBarScroll += 2;
+    isUpdate = TRUE;
+  }
+  
+  if( isUpdate == TRUE )
+  {
+    u8 i;
+    GFL_BG_SetScrollReq( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -drawWork->dispBarScroll );
+    for( i=0;i<CDED_MAX;i++ )
+    {
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos( drawWork->clwkEditButton[i] , &pos , CLSYS_DRAW_MAIN );
+      pos.y = CTVT_DRAW_BAR_ICON_Y+drawWork->dispBarScroll;
+      if( i == CDED_RETURN )
+      {
+        pos.y -= 12;
+      }
+      GFL_CLACT_WK_SetPos( drawWork->clwkEditButton[i] , &pos , CLSYS_DRAW_MAIN );
+    }
+  }
+}
+
+
+//--------------------------------------------------------------
+//	ボタングラフィック更新
+//--------------------------------------------------------------
+static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  {
+    static const u8 anmIdx[CDED_MAX][2] = 
+    {
+      {CTOAM_PEN,CTOAM_PEN_ACTIVE},
+      {CTOAM_SUPOITO,CTOAM_SUPOITO_ACTIVE},
+      {CTOAM_KESHIGOMU,CTOAM_KESHIGOMU_ACTIVE},
+    };
+    
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_PEN] , 
+                            anmIdx[CDED_PEN][(drawWork->editMode==CDED_PEN?1:0)] );
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_SPOITO] , 
+                            anmIdx[CDED_SPOITO][(drawWork->editMode==CDED_SPOITO?1:0)] );
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_KESHIGOMU] , 
+                            anmIdx[CDED_KESHIGOMU][(drawWork->editMode==CDED_KESHIGOMU?1:0)] );
+  }
+  
+  if( drawWork->editMode != CDED_PEN &&
+      drawWork->isDispPenSize == TRUE ) 
+  {
+    drawWork->isDispPenSize = FALSE;
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+  }
+
+}

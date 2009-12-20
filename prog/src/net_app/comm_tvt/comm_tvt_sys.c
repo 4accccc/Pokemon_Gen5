@@ -21,6 +21,7 @@
 #include "ctvt_camera.h"
 #include "ctvt_comm.h"
 #include "ctvt_talk.h"
+#include "ctvt_draw.h"
 #include "comm_tvt_local_def.h"
 
 //======================================================================
@@ -62,6 +63,9 @@ struct _COMM_TVT_WORK
   CTVT_COMM_WORK   *commWork;
   
   CTVT_TALK_WORK   *talkWork;
+  CTVT_DRAW_WORK   *drawWork;
+
+  DRAW_SYS_WORK   *drawSys;
 
   COMM_TVT_INIT_WORK *initWork;
 };
@@ -116,6 +120,21 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
   
   work->talkWork = CTVT_TALK_InitSystem( work , work->heapId );
+  work->drawWork = CTVT_DRAW_InitSystem( work , work->heapId );
+  
+  {
+    DRAW_SYS_INIT_WORK initWork;
+    initWork.heapId = work->heapId;
+    initWork.frame = CTVT_FRAME_MAIN_DRAW;
+    initWork.bufferNum = CTVT_DRAW_BUFFER_NUM;
+    initWork.areaLeft = 0;
+    initWork.areaRight = 256;
+    initWork.areaTop = 0;
+    initWork.areaBottom = 192;
+
+    
+    work->drawSys = DRAW_SYS_CreateSystem( &initWork );
+  }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
 
@@ -133,6 +152,8 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
 {
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
+  DRAW_SYS_DeleteSystem( work->drawSys );
+  CTVT_DRAW_TermSystem( work , work->drawWork );
   CTVT_TALK_TermSystem( work , work->talkWork );
 
   CTVT_COMM_TermSystem( work , work->commWork );
@@ -155,6 +176,7 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   case CTM_CALL: //呼び出し
     break;
   case CTM_DRAW: //落書き
+    work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
     break;
   }
   
@@ -166,6 +188,8 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   CTVT_CAMERA_Main( work , work->camWork );
   CTVT_COMM_Main( work , work->commWork );
   
+  DRAW_SYS_UpdateSystem( work->drawSys );
+
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
@@ -190,6 +214,8 @@ static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
   CTVT_CAMERA_VBlank( work , work->camWork );
   //OBJの更新
   GFL_CLACT_SYS_VBlankFunc();
+  //お絵描きの更新
+  DRAW_SYS_UpdateSystemVBlank( work->drawSys );
 }
 
 //--------------------------------------------------------------
@@ -247,8 +273,27 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
       GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
+    //Main
+    // BG0 MSG (文字
+    static const GFL_BG_BGCNT_HEADER header_main0 = {
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x07000,
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG1 BAR (バー
+    static const GFL_BG_BGCNT_HEADER header_main1 = {
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+
     GFL_BG_SetBGMode( &sys_data );
     
+    COMM_TVT_SetupBgFunc( &header_main0 , CTVT_FRAME_MAIN_MSG  , GFL_BG_MODE_TEXT );
+    COMM_TVT_SetupBgFunc( &header_main1 , CTVT_FRAME_MAIN_BAR  , GFL_BG_MODE_TEXT );
+
     COMM_TVT_SetupBgFunc( &header_sub0 , CTVT_FRAME_SUB_MSG  , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_sub1 , CTVT_FRAME_SUB_BAR  , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_sub2 , CTVT_FRAME_SUB_MISC , GFL_BG_MODE_TEXT );
@@ -262,11 +307,12 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     GFL_STD_MemClear( G2_GetBG2ScrPtr() , 256*192*sizeof(u16) );
     GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
 
-    G2S_SetBG2Priority(2);
-    G2S_SetBG3Priority(3);
+    G2_SetBG2Priority(2);
+    G2_SetBG3Priority(3);
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_DRAW, VISIBLE_ON );
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_CAMERA, VISIBLE_ON );
-
+    
+    GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
   }
   //OBJ系の初期化
   {
@@ -293,6 +339,8 @@ static void COMM_TVT_TermGraphic( COMM_TVT_WORK *work )
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_MISC );
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_BAR );
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_MSG );
+  GFL_BG_FreeBGControl( CTVT_FRAME_MAIN_BAR );
+  GFL_BG_FreeBGControl( CTVT_FRAME_MAIN_MSG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 }
@@ -348,6 +396,15 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
     
     //BG
+    GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
+                      PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BAR*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
+                      CTVT_FRAME_MAIN_BAR , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                      CTVT_FRAME_MAIN_BAR ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_BAR , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
+    GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BAR );
+
     GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
                       PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BAR*32 , 32 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
@@ -414,6 +471,7 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   case CTM_CALL: //呼び出し
     break;
   case CTM_DRAW: //落書き
+    CTVT_DRAW_TermMode( work , work->drawWork );
     break;
   }
 
@@ -426,6 +484,7 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   case CTM_CALL: //呼び出し
     break;
   case CTM_DRAW: //落書き
+    CTVT_DRAW_InitMode( work , work->drawWork );
     break;
   }
   
@@ -448,6 +507,10 @@ CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work )
 CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work )
 {
   return CTVT_TALK_GetMicWork( work , work->talkWork );
+}
+DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work )
+{
+  return work->drawSys;
 }
 
 #pragma mark [>outer func (value

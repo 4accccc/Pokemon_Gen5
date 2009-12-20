@@ -9,6 +9,7 @@
  */
 //======================================================================
 #pragma once
+#include "draw_system.h"
 
 //======================================================================
 //	define
@@ -26,6 +27,8 @@
 #endif //DEB_ARI
 
 
+#define CTVT_FRAME_MAIN_MSG     (GFL_BG_FRAME0_M)
+#define CTVT_FRAME_MAIN_BAR     (GFL_BG_FRAME1_M)
 #define CTVT_FRAME_MAIN_DRAW    (GFL_BG_FRAME2_M)
 #define CTVT_FRAME_MAIN_CAMERA  (GFL_BG_FRAME3_M)
 
@@ -33,6 +36,8 @@
 #define CTVT_FRAME_SUB_BAR   (GFL_BG_FRAME1_S)
 #define CTVT_FRAME_SUB_MISC  (GFL_BG_FRAME2_S)
 #define CTVT_FRAME_SUB_BG    (GFL_BG_FRAME3_S)
+
+#define CTVT_PAL_BG_MAIN_BAR   (0) //1本
 
 #define CTVT_PAL_BG_SUB_BG    (0) //5本
 #define CTVT_PAL_BG_BUTTON_NONE (1)
@@ -47,8 +52,13 @@
 #define CTVT_PAL_OBJ_SUB_BARICON  (5) //3本
 
 #define CTVT_BUTTON_TALK (PAD_BUTTON_A|PAD_BUTTON_R)
+#define CTVT_BUTTON_DRAW (PAD_BUTTON_START)
+
+#define CTVT_BUTTON_PAUSE (PAD_BUTTON_SELECT)
+#define CTVT_BUTTON_DRAW_EDIT (PAD_BUTTON_X)
 
 #define CTVT_MEMBER_NUM (4)
+#define CTVT_DRAW_BUFFER_NUM (100)
 
 
 //スクリーンのバッファサイズ
@@ -106,23 +116,39 @@ typedef enum
 //セルアニメインデックス
 typedef enum
 {
+  CTOAS_PAUSE,
+  CTOAS_PAUSE_ACTIVE,
+  CTOAS_PLAY,
+  CTOAS_PLAY_ACTIVE,
+  CTOAS_SLIDER,
+  CTOAS_SLIDER_ACTIVE,
+  CTOAS_YOBIDASHI,
+  CTOAS_YOBIDASHI_ACTIVE,
+  CTOAS_YOBIDASHI_BAR,
+  CTOAS_CHECK,
+  CTOAS_CHECK_SELECT,
+  CTOAS_CHECK_NONE,
+  CTOAS_SCROLL_BAR,
+  CTOAS_SCROLL_BAR_ACTIVE,
+  CTOAS_PEN,
+  CTOAS_SUPOITO,
+  CTOAS_KESHIGOMU,
+}COMM_TVT_OBJ_ANM_SUB;
+
+typedef enum
+{
+  CTOAM_TALK,
+  CTOAM_PEN,
+  CTOAM_PEN_ACTIVE,
+  CTOAM_SUPOITO,
+  CTOAM_SUPOITO_ACTIVE,
+  CTOAM_KESHIGOMU,
+  CTOAM_KESHIGOMU_ACTIVE,
+  CTOAM_PEN_SELECT,
   CTOAM_PAUSE,
   CTOAM_PAUSE_ACTIVE,
   CTOAM_PLAY,
   CTOAM_PLAY_ACTIVE,
-  CTOAM_SLIDER,
-  CTOAM_SLIDER_ACTIVE,
-  CTOAM_YOBIDASHI,
-  CTOAM_YOBIDASHI_ACTIVE,
-  CTOAM_YOBIDASHI_BAR,
-  CTOAM_CHECK,
-  CTOAM_CHECK_SELECT,
-  CTOAM_CHECK_NONE,
-  CTOAM_SCROLL_BAR,
-  CTOAM_SCROLL_BAR_ACTIVE,
-  CTOAM_PEN,
-  CTOAM_SUPOITO,
-  CTOAM_KESIGOMU,
 }COMM_TVT_OBJ_ANM_MAIN;
 
 //======================================================================
@@ -136,6 +162,7 @@ typedef struct _CTVT_COMM_WORK CTVT_COMM_WORK;
 typedef struct _CTVT_MIC_WORK CTVT_MIC_WORK;
 
 typedef struct _CTVT_TALK_WORK CTVT_TALK_WORK;
+typedef struct _CTVT_DRAW_WORK CTVT_DRAW_WORK;
 
 //======================================================================
 //	proto
@@ -147,6 +174,7 @@ extern CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work );
 extern CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work );
 extern CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work );
 extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
+extern DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work );
 
 //数値取得系
 extern const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work );

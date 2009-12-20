@@ -75,7 +75,9 @@ typedef enum
   CTSS_INIT_REC,
   CTSS_RECORDING,
   CTSS_REC_TRANS, //“]‘—
-  CTSS_WAIT_PLAY, //“]‘—
+  CTSS_WAIT_PLAY, 
+  
+  CTSS_GO_DRAW,
 }CTVT_TALK_SUB_STATE;
 
 //Recƒ{ƒ^ƒ“Ží—Þ
@@ -138,6 +140,16 @@ static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] =
   {GFL_UI_TP_HIT_END,0,0,0}
 };
 
+static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[2] = 
+{
+  {
+    CTVT_TALK_DRAW_BUTTON_TOP*8,
+    (CTVT_TALK_DRAW_BUTTON_TOP+CTVT_TALK_DRAW_BUTTON_WIDTH)*8,
+    CTVT_TALK_DRAW_BUTTON_LEFT*8,
+    (CTVT_TALK_DRAW_BUTTON_LEFT+CTVT_TALK_DRAW_BUTTON_HEIGHT)*8,
+  },
+  {GFL_UI_TP_HIT_END,0,0,0}
+};
 //--------------------------------------------------------------
 //	‰Šú‰»
 //--------------------------------------------------------------
@@ -150,10 +162,7 @@ CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   talkWork->sendWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE );
   talkWork->sendWaveData = talkWork->sendWaveBuf;
   talkWork->sendWaveBufTop = (void*)((u32)talkWork->sendWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
-  talkWork->state = CTS_FADEIN;
   talkWork->sliderPos = 0;
-  talkWork->recButtonState = CRBT_NONE;
-  talkWork->befRecButtonState = CRBT_MAX;
   return talkWork;
 }
 
@@ -184,7 +193,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = CTVT_TALK_SLIDER_X;
     cellInitData.pos_y = CTVT_TALK_SLIDER_Y - talkWork->sliderPos;
-    cellInitData.anmseq = CTOAM_SLIDER;
+    cellInitData.anmseq = CTOAS_SLIDER;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
@@ -198,7 +207,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     //ŒÄ‚Ño‚µƒ{ƒ^ƒ“
     cellInitData.pos_x = CTVT_TALK_YOBIDASHI_X;
     cellInitData.pos_y = CTVT_TALK_BAR_ICON_Y;
-    cellInitData.anmseq = CTOAM_YOBIDASHI;
+    cellInitData.anmseq = CTOAS_YOBIDASHI;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
@@ -213,7 +222,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     cellInitData.pos_x = CTVT_TALK_PAUSE_X;
     cellInitData.pos_y = CTVT_TALK_BAR_ICON_Y;
     //TODO ˆêŽž’âŽ~‘Î‰ž
-    cellInitData.anmseq = CTOAM_PAUSE;
+    cellInitData.anmseq = CTOAS_PAUSE;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
@@ -237,9 +246,11 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( talkWork->clwkReturn , TRUE );
-
-
   }
+
+  talkWork->state = CTS_FADEIN;
+  talkWork->recButtonState = CRBT_NONE;
+  talkWork->befRecButtonState = CRBT_MAX;
 }
 
 //--------------------------------------------------------------
@@ -261,15 +272,6 @@ void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
-  
-  {
-    static u8 befState = CTS_FADEIN;
-    if( befState != talkWork->state )
-    {
-      OS_TFPrintf(2,"[%d]\n",talkWork->state);
-      befState = talkWork->state;
-    }
-  }
   switch( talkWork->state )
   {
   case CTS_FADEIN:
@@ -308,7 +310,14 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      return CTM_END;
+      if( talkWork->subState == CTSS_GO_DRAW )
+      {
+        return CTM_DRAW;
+      }
+      else
+      {
+        return CTM_END;
+      }
     }
     break;
     
@@ -319,7 +328,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_REQ_TALK:
     {
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 || GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK )
+      if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
       {
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
         const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_REQ_TALK , 0 );
@@ -341,7 +350,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       const u8 talkMember = CTVT_COMM_GetTalkMember( work , commWork );
       const u8 selfId = CTVT_COMM_GetSelfNetId( work , commWork );
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 || GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK  )
+      if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK)  )
       {
         if( talkMember != CTVT_COMM_INVALID_MEMBER )
         {
@@ -384,10 +393,10 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
 {
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
 
-  u32 trgX,trgY,contX,contY;
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
-  const BOOL isTrg = GFL_UI_TP_GetPointTrg( &trgX,&trgY );
-  const BOOL isCont = GFL_UI_TP_GetPointTrg( &contX,&contY );
+  //u32 trgX,trgY,contX,contY;
+  //const BOOL isTrg = GFL_UI_TP_GetPointTrg( &trgX,&trgY );
+  //const BOOL isCont = GFL_UI_TP_GetPointTrg( &contX,&contY );
 
 
   //‰ï˜bƒ{ƒ^ƒ“
@@ -424,6 +433,17 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       talkWork->recButtonState = CRBT_NONE;
     }
   }
+  
+  //‚¨ŠG•`‚«ƒ{ƒ^ƒ“
+  if( talkWork->state == CTS_WAIT )
+  {
+    if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW ||
+        (GFL_UI_TP_HitTrg( CTVT_TALK_HitDrawButton ) == 0) )
+    {
+      talkWork->state = CTS_FADEOUT_BOTH;
+      talkWork->subState = CTSS_GO_DRAW;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -448,7 +468,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     break;
   case CTSS_RECORDING:
-    if( !(isContTbl == 0) && !(GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK) )
+    if( !(isContTbl == 0) && !(GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
     {
       CTVT_MIC_StopRecord( talkWork->micWork );
     }

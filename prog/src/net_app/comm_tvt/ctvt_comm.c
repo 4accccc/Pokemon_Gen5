@@ -34,6 +34,9 @@
 #define CTVT_COMM_JPG_OUT_OPT  (SSP_JPEG_RGB555)
 #define CTVT_COMM_JPG_QUALITY  (70)
 
+//お絵描きバッファ
+#define CTVT_COMM_DRAW_BUF_NUM (5)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -62,6 +65,7 @@ typedef enum
 {
   CCST_SEND_FLG = GFL_NET_CMD_COMM_TVT,
   CCST_SEND_WAVE,
+  CCST_SEND_DRAW,
   CCST_MAX,
 }CTVT_COMM_SEND_TYPE;
 
@@ -112,6 +116,9 @@ struct _CTVT_COMM_WORK
   u16  waveSize;
   void *postWaveBuf;  //Wave受信バッファ
   void *decodeWaveBuf;      //デコード後データ
+  
+  u8   drawBufNum;
+  DRAW_SYS_PEN_INFO   drawBuf[CTVT_COMM_DRAW_BUF_NUM];
   //親機から子機へ共有する処理
   u8  talkMember;
   
@@ -142,11 +149,14 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    CTVT_COMM_Post_WaveData_Buff( int netID, void* pWork , int size );
 static void CTVT_COMM_Post_WaveData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+static void CTVT_COMM_PostDrawData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable CTVT_COMM_RecvTable[] = 
 {
   { CTVT_COMM_PostFlg   ,NULL  },
   { CTVT_COMM_Post_WaveData   ,CTVT_COMM_Post_WaveData_Buff  },
+  { CTVT_COMM_PostDrawData   ,NULL  },
 };
 
 //--------------------------------------------------------------
@@ -184,12 +194,14 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->isFinishPostWave = FALSE;
   commWork->postWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE_REAL );
   commWork->decodeWaveBuf = GFL_HEAP_AllocClearMemory( heapId , CTVT_SEND_WAVE_SIZE );
+  commWork->drawBufNum = 0;
   
   commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
   
   commWork->updateReqTalk = FALSE;
   commWork->updateTalkMember = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+  
   
   return commWork;
 }
@@ -361,6 +373,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
   {
     if( commWork->connectNum > 1 )
     {
+      //写真
       if( commWork->isSendWait == TRUE )
       {
         if( GFL_NET_LDATA_IsFinishSend() == TRUE )
@@ -401,6 +414,16 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
           {
             CTVT_TPrintf("JpegEncode Error!!\n");
           }
+        }
+      }
+      
+      //お絵描き
+      if( commWork->drawBufNum > 0 )
+      {
+        const BOOL ret = CTVT_COMM_SendDrawData( work , commWork );
+        if( ret == TRUE )
+        {
+          commWork->drawBufNum = 0;
         }
       }
     }
@@ -754,6 +777,47 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
   
 }
 
+//--------------------------------------------------------------
+// お絵描き送信
+//--------------------------------------------------------------
+static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  
+  CTVT_TPrintf("Send Draw[%d].\n",commWork->drawBufNum );
+  
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_DRAW , sizeof(DRAW_SYS_PEN_INFO)*commWork->drawBufNum , 
+      (void*)commWork->drawBuf , TRUE , TRUE , FALSE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send Draw failue!\n");
+    }
+    return ret;
+  }
+}
+
+//--------------------------------------------------------------
+// お絵描き受信
+//--------------------------------------------------------------
+static void CTVT_COMM_PostDrawData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys(commWork->parentWork);
+  const DRAW_SYS_PEN_INFO *drawBuf = pData;
+  const u8 num = size/sizeof(DRAW_SYS_PEN_INFO);
+  u8 i;
+
+  CTVT_TPrintf("Post Draw[%d]\n",num );
+  for( i=0;i<num;i++ )
+  {
+    DRAW_SYS_SetPenInfo( drawSys , &drawBuf[i] );
+  }
+  
+}
+
 #pragma mark [>outer func
 const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
@@ -774,4 +838,24 @@ const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
 void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   commWork->isFinishPostWave = FALSE;
+}
+//お絵描きバッファ取得
+DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull )
+{
+  if( commWork->drawBufNum == CTVT_COMM_DRAW_BUF_NUM )
+  {
+    *isFull = TRUE;
+    return &commWork->drawBuf[CTVT_COMM_DRAW_BUF_NUM-1];
+  }
+  *isFull = FALSE;
+  return &commWork->drawBuf[commWork->drawBufNum];
+}
+
+//お絵描きバッファ追加通知
+void CTVT_COMM_AddDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  if( commWork->drawBufNum < CTVT_COMM_DRAW_BUF_NUM )
+  {
+    commWork->drawBufNum++;
+  }
 }
