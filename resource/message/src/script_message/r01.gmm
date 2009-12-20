@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:05:04"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T16:14:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,10 +297,10 @@
 ついで主人公を向き合いながら
 次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『アララギはかせ
-みんな　そろったけど？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『アララギ博士
-みんな　そろったけど？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『はかせ
+みんな　そろったよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『博士
+みんな　そろったよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -410,9 +410,9 @@
 		<comment>♂
 ・続けてmsg_r01_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">それじゃ　おれたちも
+		<language name="JPN" width="256">それじゃ　オレたちも
 カラクサタウンに　むかうか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それじゃ　おれたちも
+		<language name="JPN_KANJI" width="256">それじゃ　オレたちも
 カラクサタウンに　向かうか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -516,15 +516,15 @@
 　T02側に出現</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
-ホワイティと　しょうぶ　する？[BE:01:ページ切り替え（クリア）]
+ホワイティと　しょうぶ　するのか？[BE:01:ページ切り替え（クリア）]
 オレは　２ひき　つかまえて
-ホワイティと　ひきわけ　だったんだ[BE:01:ページ切り替え（クリア）]
+ホワイティと　ひきわけ　だった[BE:01:ページ切り替え（クリア）]
 あっ……　どれだけ
 つかまえたか　いってしまった……</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
-ホワイティと　勝負する？[BE:01:ページ切り替え（クリア）]
+ホワイティと　勝負するのか？[BE:01:ページ切り替え（クリア）]
 オレは　２匹　つかまえて
-ホワイティと　引き分け　だったんだ[BE:01:ページ切り替え（クリア）]
+ホワイティと　引き分け　だった[BE:01:ページ切り替え（クリア）]
 あっ……　ホワイティが
 どれだけ　捕まえたか　教えてしまった……</language>
 	</row>
@@ -585,10 +585,14 @@
 		<comment>♀
 ・はい選択＆1匹以下</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『その　ちょうしだと
-ポケモンずかん　かんせいは　きびしそう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『その　調子だと
-ポケモン図鑑　完成は　厳しそう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ホワイティ『いっぴき　なの？[BE:01:ページ切り替え（クリア）]
+その　ちょうしだと
+ポケモンずかんの　かんせいは[BE:00:ページ切り替え（行送り）]
+ちょっと　きびしいかもね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『……１匹なの？[BE:01:ページ切り替え（クリア）]
+その　調子だと
+ポケモン図鑑の　完成は[BE:00:ページ切り替え（行送り）]
+ちょっと　厳しいかもね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
