@@ -7,8 +7,20 @@
  */
 //==============================================================================
 #include <gflib.h>
-#include "field_msgbg.h"
+#include "field/fieldmap_proc.h"
+#include "field/field_msgbg.h"
 #include "pm_define.h"
+#include "poke_tool/pokeparty.h"
+#include "pokeicon/pokeicon.h"
+#include "party_select_list.h"
+#include "message.naix"
+#include "msg/msg_party_select_list.h"
+#include "arc_def.h"
+#include "app/app_menu_common.h"
+#include "field_oam_pal.h"
+#include "fieldmap.h"
+#include "font/font.naix" //NARC_font_small_gftr
+#include "print/wordset.h"
 
 
 //==============================================================================
@@ -20,21 +32,26 @@
 #define PSL_ACTOR_UNIT_PRI  (10)
 
 enum{
-  POKEICON_POS_START_X = 32,    ///<ポケモンアイコン配置開始位置X
-  POKEICON_POS_SPACE_X = 32,    ///<ポケモンアイコン毎の配置間隔X
-  POKEICON_POS_Y = 64,          ///<ポケモンアイコンY座標
+  POKEICON_POS_START_X = 3*8,    ///<ポケモンアイコン配置開始位置X
+  POKEICON_POS_SPACE_X = 5*8,    ///<ポケモンアイコン毎の配置間隔X
+  POKEICON_POS_Y = 4*8,          ///<ポケモンアイコンY座標
 
-  ITEMICON_POS_START_X = 32,    ///<アイテムアイコン配置開始位置X
+  ITEMICON_POS_START_X = POKEICON_POS_START_X+8,    ///<アイテムアイコン配置開始位置X
   ITEMICON_POS_SPACE_X = POKEICON_POS_SPACE_X,    ///<アイテムアイコン毎の配置間隔X
-  ITEMICON_POS_Y = 64,          ///<アイテムアイコンY座標
+  ITEMICON_POS_Y = POKEICON_POS_Y+8,          ///<アイテムアイコンY座標
   
-  LV_POS_X = 8,
+  LV_POS_X = 0,
   LV_POS_SPACE_X = POKEICON_POS_SPACE_X,
-  LV_POS_Y = 7*8,
+  LV_POS_Y = 4*8,
   
-  SEX_POS_X = 5*8,
+  SEX_POS_X = 4*8,
   SEX_POS_SPACE_X = POKEICON_POS_SPACE_X,
-  SEX_POS_Y = 3*8,
+  SEX_POS_Y = 2*8,
+  
+  POKESTATUS_BMP_X = 1,
+  POKESTATUS_BMP_Y = 2,
+  POKESTATUS_BMP_SIZE_X = 30,
+  POKESTATUS_BMP_SIZE_Y = 6,
 };
 
 ///フォント：ノーマル色
@@ -50,8 +67,8 @@ enum{
 
 ///BGプライオリティ
 enum{
-  BGPRI_ITEMICON = 1,
-  BGPRI_POKEICON = 1,
+  BGPRI_ITEMICON = 0,
+  BGPRI_POKEICON = 0,
 };
 
 
@@ -59,7 +76,7 @@ enum{
 //  構造体定義
 //==============================================================================
 typedef struct _PARTY_SELECT_LIST{
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   const POKEPARTY *temoti_party;  ///<手持ちパーティ
   const POKEPARTY *bbox_party;    ///<バトルボックスパーティ(作成していない場合はNULL)
   HEAPID heap_id;
@@ -69,13 +86,30 @@ typedef struct _PARTY_SELECT_LIST{
   GFL_CLUNIT *clunit;
   GFL_CLWK *temoti_clwk[TEMOTI_POKEMAX];
   GFL_CLWK *bbox_clwk[TEMOTI_POKEMAX];
+  GFL_CLWK *item_temoti_clwk[TEMOTI_POKEMAX];
+  GFL_CLWK *item_bbox_clwk[TEMOTI_POKEMAX];
+
+  u16 pokeicon_pltt_index;
+  u16 pokeicon_cell_index;
+  u16 temoti_cgr_index[TEMOTI_POKEMAX];
+  u16 bbox_cgr_index[TEMOTI_POKEMAX];
+  u16 item_pltt_index;
+  u16 item_cell_index;
+  u16 item_cgr_index;
+  u8 padding[2];
   
+  WORDSET *wordset;
   FLDMSGBG *msgBG;
   GFL_MSGDATA *msgdata;
   FLDMENUFUNC *fldmenufunc;
   FLDMSGWIN_STREAM *msgwin_stream;
   FLDMSGWIN *fldmsgwin_poke;
   GFL_FONT *font_handle_small;
+  
+  SELECT_PARTY return_select;     ///<最終的に決定した項目
+  u8 seq;
+  u8 finish;
+  u8 padding2[2];
 }PARTY_SELECT_LIST;
 
 
@@ -86,12 +120,12 @@ static void _PokeIcon_ResourceSet(PARTY_SELECT_LIST_PTR psl);
 static void _PokeIcon_ResourceFree(PARTY_SELECT_LIST_PTR psl);
 static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl);
 static void _PokeIcon_ActorDel(PARTY_SELECT_LIST_PTR psl);
-static void _PokeIcon_DrawSet(SELECT_PARTY select_party);
+static void _PokeIcon_DrawSet(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party);
 static void _Item_ResourceSet(PARTY_SELECT_LIST_PTR psl);
 static void _Item_ResourceFree(PARTY_SELECT_LIST_PTR psl);
 static void _Item_ActorAdd(PARTY_SELECT_LIST_PTR psl);
 static void _Item_ActorDel(PARTY_SELECT_LIST_PTR psl);
-static void _Item_DrawSet(SELECT_PARTY select_party);
+static void _Item_DrawSet(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party);
 static void _Print_SetupFieldMsg(PARTY_SELECT_LIST_PTR psl);
 static void _Print_ExitFieldMsg(PARTY_SELECT_LIST_PTR psl);
 static void _Print_AddMenuList(PARTY_SELECT_LIST_PTR psl);
@@ -107,6 +141,7 @@ static void _Print_AddPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl);
 static void _Print_DelPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl);
 static void _Print_DrawPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl, const POKEPARTY *party);
 static void _PokeStatusDraw(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party);
+static void _PokeStatusErase(PARTY_SELECT_LIST_PTR psl);
 
 
 //==============================================================================
@@ -167,9 +202,11 @@ static const FLDMENUFUNC_HEADER MenuHeader_PokePartySelect =
  * @retval  PARTY_SELECT_LIST_PTR		
  */
 //==================================================================
-PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELD_MAIN_WORK *fieldWork, const POKEPARTY *temoti, const POKEPARTY *bbox, BOOL temoti_reg_fail, BOOL bbox_reg_fail, HEAPID heap_id)
+PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELDMAP_WORK *fieldWork, const POKEPARTY *temoti, const POKEPARTY *bbox, BOOL temoti_reg_fail, BOOL bbox_reg_fail, HEAPID heap_id)
 {
   PARTY_SELECT_LIST_PTR psl;
+  
+  GF_ASSERT(temoti != NULL && bbox != NULL);
   
   psl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PARTY_SELECT_LIST));
   psl->fieldWork = fieldWork;
@@ -180,12 +217,17 @@ PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELD_MAIN_WORK *fieldWork, const 
   psl->bbox_reg_fail = bbox_reg_fail;
 
   psl->clunit = GFL_CLACT_UNIT_Create( PSL_ACTOR_MAX, PSL_ACTOR_UNIT_PRI, psl->heap_id );
+  psl->font_handle_small = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, 
+    GFL_FONT_LOADTYPE_FILE, FALSE, psl->heap_id );
   _Print_SetupFieldMsg(psl);
 
   _PokeIcon_ResourceSet(psl);
   _PokeIcon_ActorAdd(psl);
   _Item_ResourceSet(psl);
   _Item_ActorAdd(psl);
+  
+  OS_TPrintf("temoti_fail=%d, box_fail=%d\n", temoti_reg_fail, bbox_reg_fail);
+  return psl;
 }
 
 //==================================================================
@@ -209,6 +251,7 @@ SELECT_PARTY PARTY_SELECT_LIST_Exit(PARTY_SELECT_LIST_PTR psl)
   _PokeIcon_ResourceFree(psl);
   
   _Print_ExitFieldMsg(psl);
+  GFL_FONT_Delete(psl->font_handle_small);
   GFL_CLACT_UNIT_Delete(psl->clunit);
   
   GFL_HEAP_FreeMemory(psl);
@@ -234,7 +277,6 @@ BOOL PARTY_SELECT_LIST_Main(PARTY_SELECT_LIST_PTR psl)
     break;
   case 1: //メッセージストリーム出力待ち
     if(_Print_WaitStream(psl) == TRUE){
-      _Print_AddPokeStatusBmpWin(psl);
       _Print_AddMenuList(psl);  //選択リスト作成
 //      _PokeStatusDraw(psl, psl->select_party);  //最初は手持ちの表示
       psl->seq++;
@@ -303,11 +345,14 @@ static void _PokeIcon_ResourceSet(PARTY_SELECT_LIST_PTR psl)
   ARCHANDLE *handle;
   int temoti_max, bbox_max;
   POKEMON_PARAM *pp;
+  int i;
   
   handle = GFL_ARC_OpenDataHandle(ARCID_POKEICON, psl->heap_id);
 
-  psl->pokeicon_pltt_index = GFL_CLGRP_PLTT_RegisterEx( handle, POKEICON_GetPalArcIndex(), 
-    CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_PSL_POKEICON * 0x20, 0, POKEICON_PAL_MAX, psl->heap_id );
+//  psl->pokeicon_pltt_index = GFL_CLGRP_PLTT_RegisterEx( handle, POKEICON_GetPalArcIndex(), 
+//    CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_PSL_POKEICON * 0x20, 0, POKEICON_PAL_MAX, psl->heap_id );
+  psl->pokeicon_pltt_index = GFL_CLGRP_PLTT_RegisterComp( handle, POKEICON_GetPalArcIndex(), 
+    CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_PSL_POKEICON * 0x20, psl->heap_id );
   psl->pokeicon_cell_index = GFL_CLGRP_CELLANIM_Register( handle, POKEICON_GetCellArcIndex(), 
     POKEICON_GetAnmArcIndex(), psl->heap_id );
   
@@ -341,6 +386,7 @@ static void _PokeIcon_ResourceSet(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _PokeIcon_ResourceFree(PARTY_SELECT_LIST_PTR psl)
 {
+  int temoti_max, bbox_max;
   int i;
   
   //バトルボックスCGX
@@ -370,7 +416,9 @@ static void _PokeIcon_ResourceFree(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
 {
-  int i, temoti_max, bbox_max;
+  int i, temoti_max, bbox_max, palno;
+  u32 monsno, form, egg;
+  POKEMON_PARAM *pp;
   GFL_CLWK_DATA head = {
     0, POKEICON_POS_Y, 
     0,
@@ -385,6 +433,12 @@ static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
     psl->temoti_clwk[i] = GFL_CLACT_WK_Create( psl->clunit, psl->temoti_cgr_index[i], 
       psl->pokeicon_pltt_index, psl->pokeicon_cell_index, 
       &head, CLSYS_DRAW_MAIN, psl->heap_id);
+    pp = PokeParty_GetMemberPointer(psl->temoti_party, i);
+    monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+    form = PP_Get(pp, ID_PARA_form_no, NULL);
+    egg = (PP_Get(pp, ID_PARA_monsno_egg, NULL) == MONSNO_TAMAGO) ? TRUE : FALSE;
+    palno = POKEICON_GetPalNum( monsno, form, egg );
+    GFL_CLACT_WK_SetPlttOffs( psl->temoti_clwk[i], palno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( psl->temoti_clwk[i], FALSE );
   }
   
@@ -396,6 +450,12 @@ static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
       psl->bbox_clwk[i] = GFL_CLACT_WK_Create( psl->clunit, psl->bbox_cgr_index[i], 
         psl->pokeicon_pltt_index, psl->pokeicon_cell_index, 
         &head, CLSYS_DRAW_MAIN, psl->heap_id);
+      pp = PokeParty_GetMemberPointer(psl->bbox_party, i);
+      monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+      form = PP_Get(pp, ID_PARA_form_no, NULL);
+      egg = (PP_Get(pp, ID_PARA_monsno_egg, NULL) == MONSNO_TAMAGO) ? TRUE : FALSE;
+      palno = POKEICON_GetPalNum( monsno, form, egg );
+      GFL_CLACT_WK_SetPlttOffs( psl->bbox_clwk[i], palno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       GFL_CLACT_WK_SetDrawEnable( psl->bbox_clwk[i], FALSE );
     }
   }
@@ -434,7 +494,7 @@ static void _PokeIcon_ActorDel(PARTY_SELECT_LIST_PTR psl)
  * @param   select_party		
  */
 //--------------------------------------------------------------
-static void _PokeIcon_DrawSet(SELECT_PARTY select_party)
+static void _PokeIcon_DrawSet(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party)
 {
   int i;
 
@@ -454,7 +514,7 @@ static void _PokeIcon_DrawSet(SELECT_PARTY select_party)
       }
     }
   }
-  else{
+  else if(select_party == SELECT_PARTY_BBOX){
     for(i = 0; i < TEMOTI_POKEMAX; i++){
       if(psl->bbox_clwk[i] != NULL){
         GFL_CLACT_WK_SetDrawEnable( psl->bbox_clwk[i], TRUE );
@@ -481,8 +541,8 @@ static void _Item_ResourceSet(PARTY_SELECT_LIST_PTR psl)
 
   psl->item_pltt_index = GFL_CLGRP_PLTT_RegisterEx( handle, 
     APP_COMMON_GetPokeItemIconPltArcIdx(), 
-    CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_PSL_ITEM * 0x20, 0, APP_COMMON_ITEMICON_PLT_NUM, 
-    psl->heap_id );
+    CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_PSL_ITEM * 0x20, 0, 
+    APP_COMMON_ITEMICON_PLT_NUM, psl->heap_id );
   
   psl->item_cell_index = GFL_CLGRP_CELLANIM_Register( handle, 
     APP_COMMON_GetPokeItemIconCellArcIdx(APP_COMMON_MAPPING_64K), 
@@ -518,9 +578,10 @@ static void _Item_ResourceFree(PARTY_SELECT_LIST_PTR psl)
 static void _Item_ActorAdd(PARTY_SELECT_LIST_PTR psl)
 {
   int i, temoti_max, bbox_max, item;
+  POKEMON_PARAM *pp;
   GFL_CLWK_DATA head = {
     0, ITEMICON_POS_Y, 
-    APP_COMMON_ITEMICON_ITEM,   //anm_seq
+    APP_COMMON_ITEMICON_ITEM,   //anmseq
     SOFTPRI_ITEMICON,
     BGPRI_ITEMICON,
   };
@@ -528,14 +589,16 @@ static void _Item_ActorAdd(PARTY_SELECT_LIST_PTR psl)
   //手持ち
   temoti_max = PokeParty_GetPokeCount(psl->temoti_party);
   for(i = 0; i < temoti_max; i++){
+    pp = PokeParty_GetMemberPointer(psl->temoti_party, i);
+    item = PP_Get( pp, ID_PARA_item, NULL );
     if(item == 0){
       continue;
     }
     else if(ITEM_CheckMail( item ) == TRUE){
-      head.anm_seq = APP_COMMON_ITEMICON_MAIL;
+      head.anmseq = APP_COMMON_ITEMICON_MAIL;
     }
     else{
-      head.anm_seq = APP_COMMON_ITEMICON_ITEM;
+      head.anmseq = APP_COMMON_ITEMICON_ITEM;
     }
     head.pos_x = ITEMICON_POS_START_X + ITEMICON_POS_SPACE_X * i;
     psl->item_temoti_clwk[i] = GFL_CLACT_WK_Create( psl->clunit, psl->item_cgr_index, 
@@ -548,14 +611,16 @@ static void _Item_ActorAdd(PARTY_SELECT_LIST_PTR psl)
   if(psl->bbox_party != NULL){
     bbox_max = PokeParty_GetPokeCount(psl->bbox_party);
     for(i = 0; i < bbox_max; i++){
+      pp = PokeParty_GetMemberPointer(psl->bbox_party, i);
+      item = PP_Get( pp, ID_PARA_item, NULL );
       if(item == 0){
         continue;
       }
       else if(ITEM_CheckMail( item ) == TRUE){
-        head.anm_seq = APP_COMMON_ITEMICON_MAIL;
+        head.anmseq = APP_COMMON_ITEMICON_MAIL;
       }
       else{
-        head.anm_seq = APP_COMMON_ITEMICON_ITEM;
+        head.anmseq = APP_COMMON_ITEMICON_ITEM;
       }
       head.pos_x = ITEMICON_POS_START_X + ITEMICON_POS_SPACE_X * i;
       psl->item_bbox_clwk[i] = GFL_CLACT_WK_Create( psl->clunit, psl->item_cgr_index, 
@@ -603,30 +668,30 @@ static void _Item_ActorDel(PARTY_SELECT_LIST_PTR psl)
  * @param   select_party		
  */
 //--------------------------------------------------------------
-static void _Item_DrawSet(SELECT_PARTY select_party)
+static void _Item_DrawSet(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party)
 {
   int i;
 
   for(i = 0; i < TEMOTI_POKEMAX; i++){
     if(psl->item_temoti_clwk[i] != NULL){
-      GFL_CLACT_WK_SetDrawEnable( psl->temoti_clwk[i], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( psl->item_temoti_clwk[i], FALSE );
     }
     if(psl->item_bbox_clwk[i] != NULL){
-      GFL_CLACT_WK_SetDrawEnable( psl->bbox_clwk[i], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( psl->item_bbox_clwk[i], FALSE );
     }
   }
   
   if(select_party == SELECT_PARTY_TEMOTI){
     for(i = 0; i < TEMOTI_POKEMAX; i++){
       if(psl->item_temoti_clwk[i] != NULL){
-        GFL_CLACT_WK_SetDrawEnable( psl->temoti_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( psl->item_temoti_clwk[i], TRUE );
       }
     }
   }
-  else{
+  else if(select_party == SELECT_PARTY_BBOX){
     for(i = 0; i < TEMOTI_POKEMAX; i++){
       if(psl->item_bbox_clwk[i] != NULL){
-        GFL_CLACT_WK_SetDrawEnable( psl->bbox_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( psl->item_bbox_clwk[i], TRUE );
       }
     }
   }
@@ -649,6 +714,7 @@ static void _Print_SetupFieldMsg(PARTY_SELECT_LIST_PTR psl)
   
   psl->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_party_select_list_dat );
   psl->msgBG = msgBG;
+  psl->wordset = WORDSET_Create(psl->heap_id);
 }
 
 //--------------------------------------------------------------
@@ -660,6 +726,7 @@ static void _Print_SetupFieldMsg(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _Print_ExitFieldMsg(PARTY_SELECT_LIST_PTR psl)
 {
+  WORDSET_Delete(psl->wordset);
   FLDMSGBG_DeleteMSGDATA(psl->msgdata);
 }
 
@@ -681,7 +748,7 @@ static void _Print_AddMenuList(PARTY_SELECT_LIST_PTR psl)
     PokePartySelectMenuList, NELEMS(PokePartySelectMenuList), psl->msgdata, psl->heap_id);
 
   psl->fldmenufunc = FLDMENUFUNC_AddMenuListEx( psl->msgBG,
-  	MenuHeader_PokePartySelect, fldmenu_listdata,
+  	&MenuHeader_PokePartySelect, fldmenu_listdata,
     0, 0, _MenuList_CursorCallback, _MenuList_PrintCallback, psl);
 }
 
@@ -725,7 +792,10 @@ static void _MenuList_CursorCallback(BMPMENULIST_WORK * wk, u32 param, u8 mode)
   PARTY_SELECT_LIST_PTR psl = BmpMenuList_GetWorkPtr(wk);
   
   if(param < SELECT_PARTY_CANCEL){
-    _PokeStatusDraw(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party);
+    _PokeStatusDraw(psl, param);
+  }
+  else{
+    _PokeStatusErase(psl);
   }
 }
 
@@ -744,17 +814,17 @@ static void	_MenuList_PrintCallback(BMPMENULIST_WORK * wk, u32 param, u8 y)
 {
   PARTY_SELECT_LIST_PTR psl = BmpMenuList_GetWorkPtr(wk);
   
-  if(y == 0 && psl->temoti_reg_fail == TRUE){
+  if(param == 0 && psl->temoti_reg_fail == TRUE){
     BmpMenuList_TmpColorChange( wk, PRINTSYS_LSB_GetL(FONT_GRAY_COLOR), 
-      PRINTSYS_LSB_GetS(FONT_GRAY_COLOR), PRINTSYS_LSB_GetB(FONT_GRAY_COLOR) );
+      PRINTSYS_LSB_GetB(FONT_GRAY_COLOR), PRINTSYS_LSB_GetS(FONT_GRAY_COLOR) );
   }
-  else if(y == 1 && psl->bbox_reg_fail == TRUE){
+  else if(param == 1 && psl->bbox_reg_fail == TRUE){
     BmpMenuList_TmpColorChange( wk, PRINTSYS_LSB_GetL(FONT_GRAY_COLOR), 
-      PRINTSYS_LSB_GetS(FONT_GRAY_COLOR), PRINTSYS_LSB_GetB(FONT_GRAY_COLOR) );
+      PRINTSYS_LSB_GetB(FONT_GRAY_COLOR), PRINTSYS_LSB_GetS(FONT_GRAY_COLOR) );
   }
   else{
     BmpMenuList_TmpColorChange( wk, PRINTSYS_LSB_GetL(FONT_NORMAL_COLOR), 
-      PRINTSYS_LSB_GetS(FONT_NORMAL_COLOR), PRINTSYS_LSB_GetB(FONT_NORMAL_COLOR) );
+      PRINTSYS_LSB_GetB(FONT_NORMAL_COLOR), PRINTSYS_LSB_GetS(FONT_NORMAL_COLOR) );
   }
 }
 
@@ -820,10 +890,10 @@ static BOOL _Print_WaitStream(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _Print_AddPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl)
 {
-  psl->fldmsgwin_poke = FLDMSGWIN_Add(psl->msgBG, psl->msgdata, bmp_x, bmp_y, size_x, size_y);
-  psl->font_handle_small = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, 
-    GFL_FONT_LOADTYPE_FILE, FALSE, psl->heap_id );
-
+  if(psl->fldmsgwin_poke == NULL){
+    psl->fldmsgwin_poke = FLDMSGWIN_Add(psl->msgBG, psl->msgdata, 
+      POKESTATUS_BMP_X, POKESTATUS_BMP_Y, POKESTATUS_BMP_SIZE_X, POKESTATUS_BMP_SIZE_Y);
+  }
 }
 
 //--------------------------------------------------------------
@@ -835,8 +905,10 @@ static void _Print_AddPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _Print_DelPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl)
 {
-  FLDMSGWIN_Delete(psl->fldmsgwin_poke);
-  GFL_FONT_Delete(psl->font_handle_small);
+  if(psl->fldmsgwin_poke != NULL){
+    FLDMSGWIN_Delete(psl->fldmsgwin_poke);
+    psl->fldmsgwin_poke = NULL;
+  }
 }
 
 //--------------------------------------------------------------
@@ -849,21 +921,22 @@ static void _Print_DelPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl)
 //--------------------------------------------------------------
 static void _Print_DrawPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl, const POKEPARTY *party)
 {
-  STRBUF * buf_lv, buf_sex, tempbuf;
+  STRBUF *buf_lv, *buf_sex, *tempbuf;
   int i, party_max;
   u32 monsno, level, sex, nidoran_nickname;
   POKEMON_PARAM *pp;
   
+  _Print_AddPokeStatusBmpWin(psl);
   FLDMSGWIN_ClearWindow(psl->fldmsgwin_poke);
   
   buf_lv = GFL_STR_CreateBuffer(64, psl->heap_id);
   tempbuf = GFL_STR_CreateBuffer(64, psl->heap_id);
   
   //レベル＆性別描画
-  GFL_MSG_GetString( msgdata, msg_psl_lv, tempbuf );
+  GFL_MSG_GetString( psl->msgdata, msg_psl_lv, tempbuf );
   WORDSET_ExpandStr( psl->wordset, buf_lv, tempbuf );
 
-  GFL_MSG_GetString( msgdata, msg_psl_lv, tempbuf );
+  GFL_MSG_GetString( psl->msgdata, msg_psl_lv, tempbuf );
   WORDSET_ExpandStr( psl->wordset, buf_lv, tempbuf );
 
   party_max = PokeParty_GetPokeCount(party);
@@ -911,8 +984,6 @@ static void _PokeStatusDraw(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party
 {
   const POKEPARTY *party;
   
-  OS_TPrintf("select_party = %d\n", select_party);
-  
   if(select_party == SELECT_PARTY_TEMOTI){
     party = psl->temoti_party;
   }
@@ -921,7 +992,20 @@ static void _PokeStatusDraw(PARTY_SELECT_LIST_PTR psl, SELECT_PARTY select_party
   }
   
   _Print_DrawPokeStatusBmpWin(psl, party);
-  _PokeIcon_DrawSet(select_party);
-  _Item_DrawSet(select_party);
+  _PokeIcon_DrawSet(psl, select_party);
+  _Item_DrawSet(psl, select_party);
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちかバトルボックス、選択した方のポケモンステータス表示を一括OFF
+ *
+ * @param   psl		
+ */
+//--------------------------------------------------------------
+static void _PokeStatusErase(PARTY_SELECT_LIST_PTR psl)
+{
+  _Print_DelPokeStatusBmpWin(psl);
+  _PokeIcon_DrawSet(psl, SELECT_PARTY_CANCEL);
+  _Item_DrawSet(psl, SELECT_PARTY_CANCEL);
+}

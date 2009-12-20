@@ -40,6 +40,7 @@
 #include "net_app/pokemontrade.h"
 
 #include "gamesystem/game_beacon.h"
+#include "field/party_select_list.h"
 
 
 //==============================================================================
@@ -2745,7 +2746,9 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
       BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
       if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+#if 0
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_battle_01_22);
+#endif
         (*seq)++;
       }
       else{ //バトルボックスのセーブデータが存在していないなら手持ち選択したことにする
@@ -2755,6 +2758,7 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       }
     }
     break;
+#if 0
   case _MENU:   //メインメニュー描画
     UnionMsg_Menu_PokePartySelectMenuSetup(unisys, fieldWork);
     (*seq)++;
@@ -2782,6 +2786,58 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       }
     }
     break;
+#else
+
+  case _MENU:   //メインメニュー描画
+    {
+      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+      BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv_ctrl );
+      u32 temoti_ng_bit, bbox_ng_bit;
+      BOOL temoti_fail, bbox_fail;
+      
+      //POKEPARTY選択リスト表示前にこちらで使っている関連したものを全て解放
+      UnionMsg_AllDel(unisys);
+      
+      _CheckRegulation_Temoti(unisys, &temoti_ng_bit);
+      _CheckRegulation_BBox(unisys, &bbox_ng_bit);
+      temoti_fail = temoti_ng_bit > 0 ? TRUE : FALSE;
+      bbox_fail = bbox_ng_bit > 0 ? TRUE : FALSE;
+      unisys->alloc.bbox_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
+      unisys->alloc.psl = PARTY_SELECT_LIST_Setup(fieldWork, 
+        GAMEDATA_GetMyPokemon(unisys->uniparent->game_data),
+        unisys->alloc.bbox_party, temoti_fail, bbox_fail, HEAPID_FIELDMAP);
+    }
+    (*seq)++;
+    break;
+        
+  case _MENU_WAIT:
+    if(PARTY_SELECT_LIST_Main(unisys->alloc.psl) == TRUE){
+      SELECT_PARTY select_party = PARTY_SELECT_LIST_Exit(unisys->alloc.psl);
+      unisys->alloc.psl = NULL;
+      if(select_party == SELECT_PARTY_CANCEL){
+        OS_TPrintf("メニューをキャンセルしました\n");
+        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+        return TRUE;
+      }
+      else{
+        switch(select_party){
+        case SELECT_PARTY_TEMOTI:
+          clsys->select_pokeparty = COLOSSEUM_SELECT_PARTY_TEMOTI;
+          break;
+        case SELECT_PARTY_BBOX:
+          clsys->select_pokeparty = COLOSSEUM_SELECT_PARTY_BOX;
+          break;
+        }
+        GFL_HEAP_FreeMemory(unisys->alloc.bbox_party);
+        unisys->alloc.bbox_party = NULL;
+        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
+        (*seq)++;
+      }
+    }
+    break;
+
+#endif
   case _REG_CHECK:
     {
       POKE_REG_RETURN_ENUM reg_ret = 0;
@@ -2791,14 +2847,17 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       if(clsys->select_pokeparty == COLOSSEUM_SELECT_PARTY_TEMOTI){
         reg_ret = _CheckRegulation_Temoti(unisys, &fail_bit);
         regwin_type = REGWIN_TYPE_NG_TEMOTI;
+        OS_TPrintf("手持ちNG FailBit =%d\n", fail_bit);
       }
       else{
         reg_ret = _CheckRegulation_BBox(unisys, &fail_bit);
         regwin_type = REGWIN_TYPE_NG_BBOX;
+        OS_TPrintf("BBOXNG FailBit =%d\n", fail_bit);
       }
       
       if(fail_bit > 0){
         //NGレギュレーションの表示
+        UnionMsg_TalkStream_WindowSetup(unisys, fieldWork); //msgdataなどのセット
         UnionMsg_Menu_RegulationSetup(unisys, fieldWork, fail_bit, 
           Union_GetPlayCategory_to_Shooter(situ->play_category), regwin_type);
         *seq = _REG_FAIL_PRINT_WAIT;

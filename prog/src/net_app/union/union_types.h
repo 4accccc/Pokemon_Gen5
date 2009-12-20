@@ -13,6 +13,7 @@
 #include "system\pms_data.h"
 #include "savedata/regulation.h"
 #include "poke_tool/poke_regulation.h"
+#include "field/party_select_list.h"
 
 
 //==============================================================================
@@ -414,6 +415,8 @@ typedef struct{
 typedef struct{
   REGULATION *regulation;    ///<バトルレギュレーション
   REGULATION_PRINT_MSG *rpm; ///<レギュレーション内容を一覧表示
+  PARTY_SELECT_LIST_PTR psl;  ///<手持ちorバトルボックス選択リストイベント
+  POKEPARTY *bbox_party;      ///<バトルボックス用のPOKEPARTY
 }UNION_ALLOC;
 
 //--------------------------------------------------------------

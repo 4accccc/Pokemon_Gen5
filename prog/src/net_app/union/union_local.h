@@ -50,6 +50,8 @@ typedef struct _UNION_SYSTEM{
 
   FLDMSGWIN *fldmsgwin;
   FLDMSGPRINT *fldmsgprint;
+  u8 fld_msgwin_stream_print_on;      ///<TRUE:stream出力中
+  u8 padding[3];
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン

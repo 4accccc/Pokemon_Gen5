@@ -427,6 +427,7 @@ void UnionMsg_TalkStream_WindowDel(UNION_SYSTEM_PTR unisys)
     FLDMSGWIN_STREAM_ClearWindow(unisys->fld_msgwin_stream);
     FLDMSGWIN_STREAM_Delete(unisys->fld_msgwin_stream);
     unisys->fld_msgwin_stream = NULL;
+    unisys->fld_msgwin_stream_print_on = FALSE;
   }
 
   if(unisys->msgdata != NULL){
@@ -447,6 +448,7 @@ void UnionMsg_TalkStream_Print(UNION_SYSTEM_PTR unisys, u32 str_id)
 {
   GF_ASSERT(unisys->fld_msgwin_stream != NULL);
   FLDMSGWIN_STREAM_PrintStart(unisys->fld_msgwin_stream, 0, 0, str_id);
+  unisys->fld_msgwin_stream_print_on = TRUE;
 }
 
 //==================================================================
@@ -460,7 +462,7 @@ void UnionMsg_TalkStream_Print(UNION_SYSTEM_PTR unisys, u32 str_id)
 //==================================================================
 BOOL UnionMsg_TalkStream_Check(UNION_SYSTEM_PTR unisys)
 {
-  if(unisys->fld_msgwin_stream == NULL){
+  if(unisys->fld_msgwin_stream == NULL || unisys->fld_msgwin_stream_print_on == FALSE){
     return TRUE;
   }
   return FLDMSGWIN_STREAM_Print(unisys->fld_msgwin_stream);
