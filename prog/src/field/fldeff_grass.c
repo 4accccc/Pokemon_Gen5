@@ -15,6 +15,8 @@
 
 #include "fldeff_grass.h"
 
+#include "include/gamesystem/pm_season.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -34,8 +36,12 @@ typedef struct _TAG_FLDEFF_GRASS FLDEFF_GRASS;
 struct _TAG_FLDEFF_GRASS
 {
 	FLDEFF_CTRL *fectrl;
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RES *g3d_res_anm;
+  GFL_G3D_RES *g3d_res_mdl_grass;
+  GFL_G3D_RES *g3d_res_anm_grass;
+  GFL_G3D_RES *g3d_res_mdl_long_grass;
+  GFL_G3D_RES *g3d_res_anm_long_grass;
+  GFL_G3D_RES *g3d_res_mdl_snow_grass;
+  GFL_G3D_RES *g3d_res_anm_snow_grass;
 };
 
 //--------------------------------------------------------------
@@ -50,6 +56,7 @@ typedef struct
   u16 obj_id;
   u16 zone_id;
   VecFx32 pos;
+  FLDEFF_GRASSTYPE type;
 }TASKHEADER_GRASS;
 
 //--------------------------------------------------------------
@@ -65,6 +72,15 @@ typedef struct
   GFL_G3D_RND *obj_rnd;
 }TASKWORK_GRASS;
 
+//--------------------------------------------------------------
+/// GRASS_ARCIDX
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 idx_mdl;
+  u16 idx_anm;
+}GRASS_ARCIDX;
+
 //======================================================================
 //	プロトタイプ
 //======================================================================
@@ -72,6 +88,10 @@ static void grass_InitResource( FLDEFF_GRASS *grass );
 static void grass_DeleteResource( FLDEFF_GRASS *grass );
 
 static const FLDEFF_TASK_HEADER DATA_grassTaskHeader;
+
+static const GRASS_ARCIDX data_ArcIdxGrass[PMSEASON_TOTAL];
+static const GRASS_ARCIDX data_ArcIdxLongGrass[PMSEASON_TOTAL];
+static const GRASS_ARCIDX data_ArcIdxSnowGrass;
 
 //======================================================================
 //	草エフェクト　システム
@@ -123,19 +143,46 @@ void FLDEFF_GRASS_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void grass_InitResource( FLDEFF_GRASS *grass )
 {
   BOOL ret;
+  int season;
   ARCHANDLE *handle;
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK *fieldmap;
   
+  fieldmap = FLDEFF_CTRL_GetFieldMapWork( grass->fectrl );
+  gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  season = GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData(gsys) );
   handle = FLDEFF_CTRL_GetArcHandleEffect( grass->fectrl );
   
-  grass->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kusaeff_nsbmd );
-  DEBUG_Field_Grayscale(grass->g3d_res_mdl);
-  ret = GFL_G3D_TransVramTexture( grass->g3d_res_mdl );
-  
+  //短い草
+  grass->g3d_res_mdl_grass	= GFL_G3D_CreateResourceHandle(
+      handle, data_ArcIdxGrass[season].idx_mdl );
+  DEBUG_Field_Grayscale(grass->g3d_res_mdl_grass);
+  ret = GFL_G3D_TransVramTexture( grass->g3d_res_mdl_grass );
   GF_ASSERT( ret );
   
-  grass->g3d_res_anm	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kusaeff_nsbtp );
+  grass->g3d_res_anm_grass	=
+    GFL_G3D_CreateResourceHandle( 
+      handle, data_ArcIdxGrass[season].idx_anm );
+
+  //長い草
+  grass->g3d_res_mdl_long_grass	= GFL_G3D_CreateResourceHandle(
+      handle, data_ArcIdxLongGrass[season].idx_mdl );
+  ret = GFL_G3D_TransVramTexture( grass->g3d_res_mdl_long_grass );
+  GF_ASSERT( ret );
+  
+  grass->g3d_res_anm_long_grass	=
+    GFL_G3D_CreateResourceHandle( 
+      handle, data_ArcIdxLongGrass[season].idx_anm );
+  
+  //豪雪用短い草
+  grass->g3d_res_mdl_snow_grass	= GFL_G3D_CreateResourceHandle(
+      handle, data_ArcIdxSnowGrass.idx_mdl );
+  ret = GFL_G3D_TransVramTexture( grass->g3d_res_mdl_snow_grass );
+  GF_ASSERT( ret );
+  
+  grass->g3d_res_anm_snow_grass	=
+    GFL_G3D_CreateResourceHandle( 
+      handle, data_ArcIdxSnowGrass.idx_anm );
 }
 
 //--------------------------------------------------------------
@@ -147,8 +194,12 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
 //--------------------------------------------------------------
 static void grass_DeleteResource( FLDEFF_GRASS *grass )
 {
- 	GFL_G3D_DeleteResource( grass->g3d_res_anm );
- 	GFL_G3D_DeleteResource( grass->g3d_res_mdl );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_anm_grass );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_mdl_grass );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_anm_long_grass );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_mdl_long_grass );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_anm_snow_grass );
+ 	GFL_G3D_DeleteResource( grass->g3d_res_mdl_snow_grass );
 }
 
 //======================================================================
@@ -162,7 +213,8 @@ static void grass_DeleteResource( FLDEFF_GRASS *grass )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm )
+void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
+    MMDL *fmmdl, BOOL anm, FLDEFF_GRASSTYPE type )
 {
   fx32 h;
   VecFx32 pos;
@@ -172,11 +224,11 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm )
   grass = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GRASS );
   head.eff_grass = grass;
   head.fmmdl = fmmdl;
+  head.type = type;
   head.obj_id = MMDL_GetOBJID( fmmdl );
   head.zone_id = MMDL_GetZoneID( fmmdl );
   head.init_gx = MMDL_GetGridPosX( fmmdl );
   head.init_gz = MMDL_GetGridPosZ( fmmdl );
-//  KAGAYA_Printf( "草エフェクト GX=%d,GZ=%d\n", head.init_gx, head.init_gz );
   MMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
   pos.y = MMDL_GetVectorPosY( fmmdl );
   
@@ -219,14 +271,34 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
   MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
   FLDEFF_TASK_SetPos( task, &head->pos );
   
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->head.eff_grass->g3d_res_mdl, 0,
-        work->head.eff_grass->g3d_res_mdl );
-  
-  work->obj_anm =
-    GFL_G3D_ANIME_Create(
-        work->obj_rnd, work->head.eff_grass->g3d_res_anm, 0 );
+  switch( work->head.type ){
+  case FLDEFF_GRASS_SHORT:
+    work->obj_rnd =
+      GFL_G3D_RENDER_Create(
+          work->head.eff_grass->g3d_res_mdl_grass, 0,
+          work->head.eff_grass->g3d_res_mdl_grass );
+    work->obj_anm =
+      GFL_G3D_ANIME_Create(
+          work->obj_rnd, work->head.eff_grass->g3d_res_anm_grass, 0 );
+    break;
+  case FLDEFF_GRASS_LONG:
+    work->obj_rnd =
+      GFL_G3D_RENDER_Create(
+          work->head.eff_grass->g3d_res_mdl_long_grass, 0,
+          work->head.eff_grass->g3d_res_mdl_long_grass );
+    work->obj_anm =
+      GFL_G3D_ANIME_Create(
+          work->obj_rnd, work->head.eff_grass->g3d_res_anm_long_grass, 0 );
+    break;
+  default: //FLDEFF_GRASS_SNOW
+    work->obj_rnd =
+      GFL_G3D_RENDER_Create(
+          work->head.eff_grass->g3d_res_mdl_snow_grass, 0,
+          work->head.eff_grass->g3d_res_mdl_snow_grass );
+    work->obj_anm =
+      GFL_G3D_ANIME_Create(
+          work->obj_rnd, work->head.eff_grass->g3d_res_anm_snow_grass, 0 );
+  }
   
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
@@ -327,3 +399,34 @@ static const FLDEFF_TASK_HEADER DATA_grassTaskHeader =
   grassTask_Update,
   grassTask_Draw,
 };
+
+//======================================================================
+//  data
+//======================================================================
+//--------------------------------------------------------------
+/// 季節別　短い草アーカイブインデックス
+//--------------------------------------------------------------
+static const GRASS_ARCIDX data_ArcIdxGrass[PMSEASON_TOTAL] =
+{
+  { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+  { NARC_fldeff_kusaeff_sm_nsbmd, NARC_fldeff_kusaeff_sm_nsbtp },
+  { NARC_fldeff_kusaeff_at_nsbmd, NARC_fldeff_kusaeff_at_nsbtp },
+  { NARC_fldeff_kusaeff_wt_nsbmd, NARC_fldeff_kusaeff_wt_nsbtp },
+};
+
+//--------------------------------------------------------------
+/// 季節別　長い草アーカイブインデックス
+//--------------------------------------------------------------
+static const GRASS_ARCIDX data_ArcIdxLongGrass[PMSEASON_TOTAL] =
+{
+  { NARC_fldeff_lgrass_sp_nsbmd, NARC_fldeff_lgrass_sp_nsbtp },
+  { NARC_fldeff_lgrass_sm_nsbmd, NARC_fldeff_lgrass_sm_nsbtp },
+  { NARC_fldeff_lgrass_at_nsbmd, NARC_fldeff_lgrass_at_nsbtp },
+  { NARC_fldeff_lgrass_wt_nsbmd, NARC_fldeff_lgrass_wt_nsbtp },
+};
+
+//--------------------------------------------------------------
+/// 豪雪地帯用
+//--------------------------------------------------------------
+static const GRASS_ARCIDX data_ArcIdxSnowGrass =
+{ NARC_fldeff_kusaeff_sn_nsbmd, NARC_fldeff_kusaeff_sn_nsbtp };

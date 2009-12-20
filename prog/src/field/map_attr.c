@@ -768,3 +768,18 @@ BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val )
   return ( val == MATTR_E_DESERT_01 );
 }
 
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　豪雪地帯草
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSnowGrass( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_SNOW_GRASS_LOW || val == MATTR_SNOW_GRASS_HIGH ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+

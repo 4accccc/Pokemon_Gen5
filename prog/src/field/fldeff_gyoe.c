@@ -39,9 +39,9 @@ typedef struct _TAG_FLDEFF_GYOE FLDEFF_GYOE;
 struct _TAG_FLDEFF_GYOE
 {
 	FLDEFF_CTRL *fectrl;
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RND *g3d_rnd;
-  GFL_G3D_OBJ *g3d_obj;
+  GFL_G3D_RES *g3d_res_mdl[FLDEFF_GYOETYPE_MAX];
+  GFL_G3D_RND *g3d_rnd[FLDEFF_GYOETYPE_MAX];
+  GFL_G3D_OBJ *g3d_obj[FLDEFF_GYOETYPE_MAX];
 };
 
 //--------------------------------------------------------------
@@ -79,6 +79,7 @@ static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe );
 
 static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader;
 static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader_only;
+static const u32 data_ArcIdxTbl[FLDEFF_GYOETYPE_MAX];
 
 //======================================================================
 //	びっくりマークエフェクト　システム
@@ -128,20 +129,23 @@ void FLDEFF_GYOE_Delete( FLDEFF_CTRL *fectrl, void *work )
 //--------------------------------------------------------------
 static void gyoe_InitResource( FLDEFF_GYOE *gyoe )
 {
+  int i;
   BOOL ret;
   ARCHANDLE *handle;
   
   handle = FLDEFF_CTRL_GetArcHandleEffect( gyoe->fectrl );
   
-  gyoe->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_sisen_ef_nsbmd );
-  ret = GFL_G3D_TransVramTexture( gyoe->g3d_res_mdl );
-  GF_ASSERT( ret );
+  for( i = 0; i < FLDEFF_GYOETYPE_MAX; i++ ){
+    gyoe->g3d_res_mdl[i]	=
+      GFL_G3D_CreateResourceHandle( handle, data_ArcIdxTbl[i] );
+    ret = GFL_G3D_TransVramTexture( gyoe->g3d_res_mdl[i] );
+    GF_ASSERT( ret );
   
-  gyoe->g3d_rnd = GFL_G3D_RENDER_Create(
-      gyoe->g3d_res_mdl, 0, gyoe->g3d_res_mdl );
+    gyoe->g3d_rnd[i] = GFL_G3D_RENDER_Create(
+        gyoe->g3d_res_mdl[i], 0, gyoe->g3d_res_mdl[i] );
   
-  gyoe->g3d_obj = GFL_G3D_OBJECT_Create( gyoe->g3d_rnd, NULL, 0 );
+    gyoe->g3d_obj[i] = GFL_G3D_OBJECT_Create( gyoe->g3d_rnd[i], NULL, 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -153,9 +157,13 @@ static void gyoe_InitResource( FLDEFF_GYOE *gyoe )
 //--------------------------------------------------------------
 static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe )
 {
-  GFL_G3D_OBJECT_Delete( gyoe->g3d_obj );
-	GFL_G3D_RENDER_Delete( gyoe->g3d_rnd );
- 	GFL_G3D_DeleteResource( gyoe->g3d_res_mdl );
+  int i;
+
+  for( i = 0; i < FLDEFF_GYOETYPE_MAX; i++ ){
+    GFL_G3D_OBJECT_Delete( gyoe->g3d_obj[i] );
+	  GFL_G3D_RENDER_Delete( gyoe->g3d_rnd[i] );
+ 	  GFL_G3D_DeleteResource( gyoe->g3d_res_mdl[i] );
+  }
 }
 
 //======================================================================
@@ -366,7 +374,8 @@ static void gyoeTask_Draw( FLDEFF_TASK *task, void *wk )
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->head.eff_gyoe->g3d_obj, &status );
+  GFL_G3D_DRAW_DrawObjectCullingON(
+      work->head.eff_gyoe->g3d_obj[work->head.type], &status );
 }
 
 //--------------------------------------------------------------
@@ -388,4 +397,18 @@ static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader_only =
   gyoeTask_Delete,
   gyoeTask_Update_only,
   gyoeTask_Draw,
+};
+
+//======================================================================
+//  
+//======================================================================
+//--------------------------------------------------------------
+//  各アーカイブインデックス
+//--------------------------------------------------------------
+static const u32 data_ArcIdxTbl[FLDEFF_GYOETYPE_MAX] =
+{
+  NARC_fldeff_sisen_ef_nsbmd,
+  NARC_fldeff_mark_hate_nsbmd,
+  NARC_fldeff_mark_onpu_nsbmd,
+  NARC_fldeff_mark_ten_nsbmd,
 };

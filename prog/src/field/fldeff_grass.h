@@ -17,6 +17,16 @@
 //======================================================================
 //  define
 //======================================================================
+//--------------------------------------------------------------
+/// FLDEFF_GRASSTYPE
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDEFF_GRASS_SHORT = 0,
+  FLDEFF_GRASS_LONG,
+  FLDEFF_GRASS_SNOW,
+}FLDEFF_GRASSTYPE;
+
 
 //======================================================================
 //  struct
@@ -28,5 +38,5 @@
 extern void * FLDEFF_GRASS_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_GRASS_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_GRASS_SetMMdl(
-    FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm );
+extern void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
+    MMDL *fmmdl, BOOL anm, FLDEFF_GRASSTYPE type );

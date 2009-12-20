@@ -2585,6 +2585,45 @@ static int AC_MarkGyoeTWait_0( MMDL * mmdl )
 	return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_MARK_HANETA 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=çƒãA
+ */
+//--------------------------------------------------------------
+static int AC_MarkHatena_0( MMDL * mmdl )
+{
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_HATE, FALSE );
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MARK_ONPU 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=çƒãA
+ */
+//--------------------------------------------------------------
+static int AC_MarkOnpu_0( MMDL * mmdl )
+{
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_ONPU, FALSE );
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MARK_TENTEN 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=çƒãA
+ */
+//--------------------------------------------------------------
+static int AC_MarkTenTen_0( MMDL * mmdl )
+{
+	AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_TEN, FALSE );
+	return( FALSE );
+}
+
 //======================================================================
 //	AC_WALK_ODDån
 //======================================================================
@@ -4872,6 +4911,36 @@ int (* const DATA_AC_MarkGyoe_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MarkSaisen_Tbl[])( MMDL * ) =
 {
 	AC_MarkSaisen_0,
+	AC_Mark_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MARK_HATENA_0
+//--------------------------------------------------------------
+int (* const DATA_AC_MarkHatena_Tbl[])( MMDL * ) =
+{
+	AC_MarkHatena_0,
+	AC_Mark_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MARK_ONPU_0
+//--------------------------------------------------------------
+int (* const DATA_AC_MarkOnpu_Tbl[])( MMDL * ) =
+{
+	AC_MarkOnpu_0,
+	AC_Mark_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MARK_TENTEN_0
+//--------------------------------------------------------------
+int (* const DATA_AC_MarkTenTen_Tbl[])( MMDL * ) =
+{
+	AC_MarkTenTen_0,
 	AC_Mark_1,
 	AC_End,
 };

@@ -444,9 +444,12 @@
 #define AC_SANDWALK_D_16F  0x9c ///<下に移動 16F移動、表示アニメは2Fアニメ
 #define AC_SANDWALK_L_16F  0x9d ///<左に移動 16F移動、表示アニメは2Fアニメ
 #define AC_SANDWALK_R_16F  0x9e ///<右に移動 16F移動、表示アニメは2Fアニメ
+#define AC_MARK_HATENA 0x9f ///<？マークを出す
+#define AC_MARK_ONPU 0xa0 ///<♪マークを出す
+#define AC_MARK_TENTEN 0xa1 ///<…マークを出す
 
+#define ACMD_MAX				0xa2 ///<アニメーションコマンド最大数
 
-#define ACMD_MAX				0x9f ///<アニメーションコマンド最大数
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
 

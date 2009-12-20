@@ -23,7 +23,10 @@
 typedef enum
 {
   FLDEFF_GYOETYPE_GYOE = 0,
-//  FLDEFF_GYOETYPE_SISEN,
+  FLDEFF_GYOETYPE_HATE,
+  FLDEFF_GYOETYPE_ONPU,
+  FLDEFF_GYOETYPE_TEN,
+  FLDEFF_GYOETYPE_MAX,
 }FLDEFF_GYOETYPE;
 
 //======================================================================
