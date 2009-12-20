@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T18:44:36"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T18:11:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -500,10 +500,12 @@
 		<comment>♀
 ・廃墟内のPOSを踏む前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ゆめのなかって……
-（仮メッセージ）</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ゆめのなかって……
-（仮メッセージ）</language>
+		<language name="JPN" width="256">ホワイティ『それにしても
+ゆめを　みせるって▽
+どんな　しくみ　なのかしら？</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『それにしても
+夢を　見せるって[BE:00:ページ切り替え（行送り）]
+どんな　仕組み　なのかしら？</language>
 	</row>
 
 	<row id="msg_d01r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -557,13 +559,13 @@
 　r03でのイベント発動時</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『それ　マコモさんが
-さがしていた　？？？？？？？　だよね[BE:01:ページ切り替え（クリア）]
+さがしていた　「ゆめのけむり」だよね[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]　
 マコモさんに　とどけてあげて[BE:01:ページ切り替え（クリア）]
 あたし？　あたしはね
 さっきの　ポケモン　さがしてみる！</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『それ　マコモさんが
-さがしていた　？？？？？？？　だよね[BE:01:ページ切り替え（クリア）]
+探していた　「ゆめのけむり」だよね[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]　
 マコモさんに　届けてあげて[BE:01:ページ切り替え（クリア）]
 あたし？　あたしはね
