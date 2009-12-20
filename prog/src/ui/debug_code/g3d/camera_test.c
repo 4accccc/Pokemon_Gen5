@@ -65,42 +65,42 @@ static void debug_camera_test( GFL_G3D_CAMERA* camera )
   if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
   {
     num++;
-    HOSAKA_Printf("num=%d \n",num);
+    OS_Printf("num=%d \n",num);
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
   {
     num--;
-    HOSAKA_Printf("num=%d \n",num);
+    OS_Printf("num=%d \n",num);
   }
   else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
   {
     pos.y += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
   {
     pos.y -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }    
   else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
   {
     pos.x += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
   {
     pos.x -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
   {
     pos.z += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
   {
     pos.z -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   
   // データセット
@@ -121,11 +121,11 @@ static void debug_camera_test( GFL_G3D_CAMERA* camera )
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     GFL_G3D_CAMERA_GetPos( camera, &pos );
-    OS_Printf("pos { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("static const sc_camera_pos = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
     GFL_G3D_CAMERA_GetCamUp( camera, &pos );
-    OS_Printf("CamUp { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("static const sc_camera_up =  { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
     GFL_G3D_CAMERA_GetTarget( camera, &pos );
-    OS_Printf("Taraget { 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    OS_Printf("static const sc_camera_target = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
   }
 }
 
