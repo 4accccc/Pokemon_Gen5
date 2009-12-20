@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:58:18"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T17:56:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -533,7 +533,7 @@
 ポケモン勝負　してみたかったです</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_06a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01gym0101_leader1_06a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・続けて最初に選んだポケモンが
@@ -546,11 +546,11 @@
 ポケモンリーグの　きまりだ
 この　ジムバッジを　うけとってくれ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">うわーッ！　おまえ　すげえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　きまりだ
-この　ジムバッジを　うけとってくれ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンリーグの　決まりだ
+この　ジムバッジを　受け取ってくれ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_06b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01gym0101_leader1_06b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・続けて最初に選んだポケモンが
@@ -563,7 +563,7 @@
 ポケモンリーグの　きまりです
 この　バッジを　どうぞ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">すごいですね！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　きまりです
+ポケモンリーグの　決まりです
 この　バッジを　どうぞ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 

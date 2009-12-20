@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T22:21:04"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T17:43:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -487,7 +487,7 @@
 ポケモンを　くりだすんだよなあ……</language>
 	</row>
 
-	<row id="msg_c01_boy2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c01_boy2_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2
 少年（活発）</attribute>
@@ -498,7 +498,7 @@
 ジムリーダーに　おしえてもらったんだ</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　タイプと
 技の　タイプが　同じだと[BE:00:ページ切り替え（行送り）]
-いりょくが　アップ！[BE:01:ページ切り替え（クリア）]
+なんと　技の　威力が　アップ！[BE:01:ページ切り替え（クリア）]
 すごいだろ？
 ジムリーダーに　教えてもらったんだ</language>
 	</row>
