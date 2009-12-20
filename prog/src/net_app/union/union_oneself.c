@@ -2977,6 +2977,47 @@ static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_
 
 //--------------------------------------------------------------
 /**
+ * レギュレーションに沿ってPOKEPARTYのレベルを補正
+ *
+ * @param   regulation		
+ * @param   party		
+ */
+//--------------------------------------------------------------
+static void _PokeParty_RegulationLevelRevise(REGULATION* regulation, POKEPARTY *party)
+{
+  int party_max, i, level;
+  int reg_range, reg_level;
+  POKEMON_PARAM *pp;
+  
+  reg_range = Regulation_GetParam( regulation, REGULATION_LEVEL_RANGE );
+  reg_level = Regulation_GetParam( regulation, REGULATION_LEVEL );
+  
+  party_max = PokeParty_GetPokeCount(party);
+  for(i = 0; i < party_max; i++){
+    pp = PokeParty_GetMemberPointer( party, i );
+    level = PP_Get(pp, ID_PARA_level, NULL);
+    switch(reg_range){
+    case REGULATION_LEVEL_RANGE_DRAG_DOWN:  //引き下げ
+      if(level > reg_level){
+        POKETOOL_MakeLevelRevise(pp, reg_level);
+      }
+      break;
+    case REGULATION_LEVEL_RANGE_SAME:         //全補正
+      if(level != reg_level){
+        POKETOOL_MakeLevelRevise(pp, reg_level);
+      }
+      break;
+    case REGULATION_LEVEL_RANGE_PULL_UP:     //引き上げ
+      if(level < reg_level){
+        POKETOOL_MakeLevelRevise(pp, reg_level);
+      }
+      break;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * コロシアム、ポケモンリスト呼び出し前の全員データ送受信：更新
  *
  * @param   unisys		
@@ -3010,6 +3051,10 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
       }
       break;
     }
+    //レベル補正
+    _PokeParty_RegulationLevelRevise(
+      unisys->alloc.regulation, clsys->recvbuf.pokeparty[my_net_id]);
+
     (*seq)++;
     break;
   case 1:
