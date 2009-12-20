@@ -2362,7 +2362,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			// 幅チェック
 			ofs_max = getLineOfsMax( front, work->ofs_unit, work->rail_dat );
 			next_line_width_max = getLineWidthOfsMax( front, work->line_ofs - nLine_ofs_max, ofs_max, work->rail_dat );
-      TOMOYA_Printf( "↑ front\n" );
+      //TOMOYA_Printf( "↑ front\n" );
       result = setLine(work, front, key,
 						/*l_ofs*/work->line_ofs - nLine_ofs_max,
 						/*w_ofs*/work->width_ofs,
@@ -2381,7 +2381,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( left, -work->width_ofs, ofs_max, work->rail_dat );
 
-        TOMOYA_Printf( "↑ left s\n" );
+        //TOMOYA_Printf( "↑ left s\n" );
         result = setLine(work, left, key,
             /*l_ofs*/-work->width_ofs,
             /*w_ofs*/(work->line_ofs-nLine_ofs_max),
@@ -2397,7 +2397,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↑ left e\n" );
+        //TOMOYA_Printf( "↑ left e\n" );
         result = setLine(work, left, key,
             /*l_ofs*/ofs_max + work->width_ofs, //width_ofs < 0なので実質減算
             /*w_ofs*/-(work->line_ofs-nLine_ofs_max),
@@ -2417,7 +2417,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( right, work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↑ right s\n" );
+        //TOMOYA_Printf( "↑ right s\n" );
         result = setLine(work, right, key,
             /*l_ofs*/work->width_ofs,
             /*w_ofs*/-(work->line_ofs-nLine_ofs_max),
@@ -2433,7 +2433,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↑ right e\n" );
+        //TOMOYA_Printf( "↑ right e\n" );
         result = setLine(work, right, key,
             /*l_ofs*/ofs_max - work->width_ofs,
             /*w_ofs*/(work->line_ofs-nLine_ofs_max),
@@ -2488,7 +2488,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			// 幅チェック
 			next_line_width_max = getLineWidthOfsMax( back, ofs_max - MATH_ABS(work->line_ofs), ofs_max, work->rail_dat );
       
-      TOMOYA_Printf( "↓ back\n" );
+      //TOMOYA_Printf( "↓ back\n" );
       result = setLine(work, back, key,
           /*l_ofs*/ofs_max - MATH_ABS(work->line_ofs),	// ここには、必ず負の値が来る ofs_maxを使用する
           /*w_ofs*/work->width_ofs,
@@ -2506,7 +2506,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( left, -work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↓ left s\n" );
+        //TOMOYA_Printf( "↓ left s\n" );
         result = setLine(work, left, key,
             /*l_ofs*/-work->width_ofs,
             /*w_ofs*/work->line_ofs,
@@ -2522,7 +2522,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↓ left e\n" );
+        //TOMOYA_Printf( "↓ left e\n" );
         result = setLine(work, left, key,
             /*l_ofs*/ofs_max + work->width_ofs, //
             /*w_ofs*/-work->line_ofs,
@@ -2542,7 +2542,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( right, work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↓ right s\n" );
+        //TOMOYA_Printf( "↓ right s\n" );
         result = setLine(work, right, key,
             /*l_ofs*/work->width_ofs,
             /*w_ofs*/-work->line_ofs,
@@ -2558,7 +2558,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
 			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
-        TOMOYA_Printf( "↓ right e\n" );
+        //TOMOYA_Printf( "↓ right e\n" );
         result = setLine(work, right, key,
             /*l_ofs*/ofs_max - work->width_ofs,
             /*w_ofs*/work->line_ofs,
@@ -2598,7 +2598,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( right, work->width_ofs, ofs_max, work->rail_dat );
-            TOMOYA_Printf( "→ right s s\n" );
+            //TOMOYA_Printf( "→ right s s\n" );
             result = setLine(work, right, key,
                 work->width_ofs,
                 - work->line_ofs,
@@ -2615,7 +2615,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
             
-            TOMOYA_Printf( "→ right e s\n" );
+            //TOMOYA_Printf( "→ right e s\n" );
             result = setLine(work, right, key,
                 ofs_max - work->width_ofs,
                 work->line_ofs,
@@ -2639,7 +2639,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( right, work->width_ofs, ofs_max, work->rail_dat );
-            TOMOYA_Printf( "→ right s e\n" );
+            //TOMOYA_Printf( "→ right s e\n" );
             result = setLine(work, right, key,
                 work->width_ofs,
                 nLine_ofs_max - work->line_ofs,
@@ -2655,7 +2655,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
-            TOMOYA_Printf( "→ right e e\n" );
+            //TOMOYA_Printf( "→ right e e\n" );
             result = setLine(work, right, key,
                 ofs_max - work->width_ofs,
                 - (nLine_ofs_max - work->line_ofs),
@@ -2704,7 +2704,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( left, MATH_ABS(work->width_ofs), ofs_max, work->rail_dat );
-            TOMOYA_Printf( "← left s s\n" );
+            //TOMOYA_Printf( "← left s s\n" );
             result = setLine(work, left, key,
                 MATH_ABS(work->width_ofs), 
                 work->line_ofs,
@@ -2720,7 +2720,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( left, ofs_max - MATH_ABS(work->width_ofs), ofs_max, work->rail_dat );
-            TOMOYA_Printf( "← left e s\n" );
+            //TOMOYA_Printf( "← left e s\n" );
             result = setLine(work, left, key,
                 ofs_max - MATH_ABS(work->width_ofs),
                 - work->line_ofs,
@@ -2743,7 +2743,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( left, MATH_ABS(work->width_ofs), ofs_max, work->rail_dat );
-            TOMOYA_Printf( "← left s e\n" );
+            //TOMOYA_Printf( "← left s e\n" );
             result = setLine(work, left, key,
                 MATH_ABS(work->width_ofs),
                 - (nLine_ofs_max - work->line_ofs),
@@ -2759,7 +2759,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             debugCheckPointData(nPoint, work->rail_dat);
             ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
             next_line_width_max = getLineWidthOfsMax( left, ofs_max - MATH_ABS(work->width_ofs), ofs_max, work->rail_dat );
-            TOMOYA_Printf( "← left e e\n" );
+            //TOMOYA_Printf( "← left e e\n" );
             result = setLine(work, left, key,
                 ofs_max - MATH_ABS(work->width_ofs),
                 nLine_ofs_max - work->line_ofs,
@@ -3079,9 +3079,26 @@ static s32 getLineWidthOfsMax( const RAIL_LINE * line, s32 line_ofs, u32 line_of
 	}
 	GF_ASSERT( width_s >= 0 );
 
-	width_ofs_div = width_e - width_s;
-	width_ofs_max = (width_ofs_div * (s32)line_ofs) / (s32)line_ofs_max;
-	width_ofs_max += width_s;
+  // line_ofs_maxには、ならないので、-16して出来るだけ早く幅が合うようにする。
+  line_ofs_max -= 16;
+
+  // line_ofsがline_ofs_maxでくる可能性もなくはないので、対応しておく
+  if( line_ofs > line_ofs_max )
+  {
+    line_ofs = line_ofs_max;
+  }
+
+  
+  width_ofs_div = width_e - width_s;
+  if(line_ofs_max > 0)
+  {
+    width_ofs_max = (width_ofs_div * (s32)line_ofs) / (s32)line_ofs_max;
+  }
+  else
+  {
+    width_ofs_max = width_ofs_div;
+  }
+  width_ofs_max += width_s;
 	
 
 	return width_ofs_max;
@@ -3140,7 +3157,7 @@ static BOOL RailMan_CalcRailKeyAndOfs( const FIELD_RAIL_MAN * man, const RAIL_LO
   GF_ASSERT( now_location );
   GF_ASSERT( pos );
 
-  GF_ASSERT( add_line_ofs < RAIL_WALK_OFS );
+  GF_ASSERT( add_line_ofs <= RAIL_WALK_OFS );
 
   FIELD_RAIL_WORK_SetLocation( man->calc_work, now_location );
   FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_1, key );

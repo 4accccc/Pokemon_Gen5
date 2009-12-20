@@ -322,6 +322,7 @@ static int AC_RailWalk_1( MMDL * mmdl )
 	MMDL_OnStatusBit(
 		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
 
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
