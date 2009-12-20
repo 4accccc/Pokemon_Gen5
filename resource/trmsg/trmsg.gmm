@@ -423,10 +423,10 @@
 	</row>
 
 	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">さて　わたしの　ポケモンちゃんが
-どれだけ　そだったか　みせますね！▼</language>
-		<language name="JPN_KANJI" width="216">さて　わたしの　ポケモンちゃんが
-どれだけ　育ったか　みせますね！▼</language>
+		<language name="JPN" width="216">さて　わたしの　ポケモンが
+どれだけ　そだったか　みせましょう！▼</language>
+		<language name="JPN_KANJI" width="216">さて　わたしの　ポケモンが
+どれだけ　育ったか　みせましょう！▼</language>
 	</row>
 
 	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_LOSE">
@@ -439,11 +439,11 @@
 	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ありがとう　ございます！▼
 しょうぶ　したことで
-わたしの　ポケモンちゃんを▽
+わたしの　ポケモンを▽
 どう　そだてればいいか　わかりました</language>
 		<language name="JPN_KANJI" width="216">ありがとう　ございます！▼
 勝負したことで
-わたしの　ポケモンちゃんを▽
+わたしの　ポケモンを▽
 どう　育てればいいか　わかりました</language>
 	</row>
 
@@ -1768,12 +1768,12 @@
 	<row id="TRID_MINI_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">アタシたち！
 ここで　しゅぎょう　してるの！▼
-いいよ！　アナタも
-いっしょに　きたえましょ！▼</language>
+いいよ！　アナタも いっしょに
+ポケモン　きたえましょ！▼</language>
 		<language name="JPN_KANJI" width="216">アタシたち！
 ここで　修行してるの！▼
-いいよ！　アナタも
-一緒に　鍛えましょ！▼</language>
+いいよ！　アナタも　一緒に
+ポケモン　鍛えましょ！▼</language>
 	</row>
 
 	<row id="TRID_MINI_02_TRMSG_FIGHT_LOSE">
@@ -2047,10 +2047,10 @@
 	<row id="TRID_RANGERW_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">だいしぜんに　さかわらず……
 おおいなる　ちからを　える▽
-それが　レナジャーの　つよさ　なの！▼</language>
+それが　レンジャーの　つよさ　なの！▼</language>
 		<language name="JPN_KANJI" width="216">大自然に　逆らわず……
 おおいなる　力を　得る▽
-それが　レナジャーの　強さ　なの！▼</language>
+それが　レンジャーの　強さ　なの！▼</language>
 	</row>
 
 	<row id="TRID_RANGERW_02_TRMSG_FIGHT_LOSE">
