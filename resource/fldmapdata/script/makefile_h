@@ -1,0 +1,65 @@
+#----------------------------------------------------------------------------
+#
+#
+#
+#----------------------------------------------------------------------------
+#対象ユーザー
+include ../event_script_users_def
+
+#共通マクロ
+include $(PROJECT_RSCDIR)/macro_define
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+#マップ依存のスクリプト（t01.ev,sp_t01.ev etc.）：定義ファイルは自動生成
+SCRIPTFILES	=
+include zone_script.list
+
+#マップ非依存スクリプト（common_scr.ev init_scr.ev等）：定義ファイルは自動生成
+#UNIQ_SCRIPTFILES =
+include uniq_script.list
+
+#
+HEADER_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=_def.h) $(SCRIPTFILES:.ev=_def.h)
+
+
+
+SCR_OFFS_ID_H	= scrid_offset/scr_offset_id.h
+#ev_def
+EV_DEF = ruby ./scr_tools/ev_def.rb
+
+
+#----------------------------------------------------------------------------
+#
+#----------------------------------------------------------------------------
+.PHONY:	do-build	clean
+
+#----------------------------------------------------------------------------
+#	SUFFIXES
+#----------------------------------------------------------------------------
+.SUFFIXES: _def.h .ev
+
+%_def.h:	%.ev
+		@$(EV_DEF) $< $(SCR_OFFS_ID_H)
+
+ifeq ($(CONVERTUSER),true) #CONVERTUSER
+#--- target-user ---
+do-build: $(HEADER_TARGETS)
+
+clean:
+	@-rm -f $(HEADER_TARGETS)
+
+else
+#--- non-user ------
+do-build:
+	#do nothing!
+
+clean:
+	#do nothing!
+
+endif
+
+test:
+	@echo $(HEADER_TARGETS)
+
+
