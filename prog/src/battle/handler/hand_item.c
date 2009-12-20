@@ -242,6 +242,10 @@ static void handler_PowefulHarb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Tabenokosi( u32* numElems );
 static void handler_Tabenokosi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiHedoro( u32* numElems );
+static void handler_KuroiHedoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_AkaiIto( u32* numElems );
+static void handler_AkaiIto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DokudokuDama( u32* numElems );
 static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -497,6 +501,7 @@ static const struct {
   { ITEM_SIRATAMA,          HAND_ADD_ITEM_Siratama        },
   { ITEM_KONGOUDAMA,        HAND_ADD_ITEM_Kongoudama      },
   { ITEM_KUROITEKKYUU,      HAND_ADD_ITEM_KuroiTekkyuu    },
+  { ITEM_AKAIITO,           HAND_ADD_ITEM_AkaiIto         },
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
   { ITEM_GOTUGOTUMETTO,     HAND_ADD_ITEM_GotugotuMet     },  // ゴツゴツメット
@@ -2011,7 +2016,7 @@ static void handler_RenbuNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     target = BTL_SVFTOOL_GetPokeParam( flowWk, param->pokeID );
     param->damage = BTL_CALC_QuotMaxHP( target, quot );
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_DamageOpponent );
     HANDEX_STR_AddArg( &param->exStr, param->pokeID );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
@@ -3119,8 +3124,96 @@ static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
     param->pokeID = pokeID;
     param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
   }
 }
+//------------------------------------------------------------------------------
+/**
+ *  くろいヘドロ
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiHedoro( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_END, handler_KuroiHedoro  },  // ターンチェックハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ターンチェックハンドラ
+static void handler_KuroiHedoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+  if( PokeTypePair_IsMatch(BPP_GetPokeType(bpp), POKETYPE_DOKU) )
+  {
+    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+    param->pokeID = pokeID;
+    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, common_GetItemParam(myHandle, ITEM_PRM_ATTACK) );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+  }
+  else
+  {
+    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    param->pokeID = pokeID;
+    param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ *  あかいいと
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_AkaiIto( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASICK_FIXED, handler_AkaiIto  },  // ワザ系状態異常確定
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ワザ系状態異常確定
+static void handler_AkaiIto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_MEROMERO)
+  ){
+    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    if( atkPokeID != BTL_POKEID_NULL )
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = atkPokeID;
+      param->sickID = WAZASICK_MEROMERO;
+      param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
+      param->fStdMsgDisable = TRUE;
+
+      // うまくいったらアイテムエフェクト発動＆メッセージ
+      {
+        BTL_HANDEX_PARAM_HEADER* header;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+        header = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_EFFECT, pokeID );
+        header->failSkipFlag = TRUE;
+
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        msg_param->header.failSkipFlag = TRUE;
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MeromeroGetItem );
+        HANDEX_STR_AddArg( &msg_param->str, atkPokeID );
+        HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
+      }
+    }
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  *  どくどくだま

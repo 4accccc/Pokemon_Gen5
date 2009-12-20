@@ -108,6 +108,7 @@ typedef enum {
   BTL_EVENT_ADDSICK_FIX,            ///< 状態異常確定
   BTL_EVENT_ADDSICK_FAILED,         ///< 状態異常失敗
   BTL_EVENT_POKESICK_FIXED,         ///< ポケモン系状態異常確定
+  BTL_EVENT_WAZASICK_FIXED,         ///< ワザ系状態異常確定
   BTL_EVENT_IEKI_FIXED,             ///< いえきによる特性無効化の確定
   BTL_EVENT_SICK_DAMAGE,            ///< 状態異常によるダメージ計算
   BTL_EVENT_WAZA_SHRINK_PER,        ///< ワザによるひるみ確率計算
