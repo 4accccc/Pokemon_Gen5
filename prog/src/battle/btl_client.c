@@ -2231,7 +2231,7 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq)++;
     break;
   case 1:
-    if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
+    if( BTLV_WaitRankEffect(wk->viewCore, vpos) ){
       return TRUE;
     }
   }
@@ -2251,7 +2251,7 @@ static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq)++;
     break;
   case 1:
-    if( !BTLV_WaitRankEffect(wk->viewCore, vpos) ){
+    if( BTLV_WaitRankEffect(wk->viewCore, vpos) ){
       return TRUE;
     }
   }

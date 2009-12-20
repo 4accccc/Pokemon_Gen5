@@ -233,6 +233,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NebariNoKagidume( u32* numElems
 static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems );
 static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HikariNoNendo( u32* numElems );
+static void handler_HikariNoNendo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Tabenokosi( u32* numElems );
 static void handler_Tabenokosi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -483,6 +485,7 @@ static const struct {
   { ITEM_METORONOOMU,       HAND_ADD_ITEM_MetroNome       },
   { ITEM_NEBARINOKAGIDUME,  HAND_ADD_ITEM_NebariNoKagidume},
   { ITEM_KAIGARANOSUZU,     HAND_ADD_ITEM_KaigaraNoSuzu   },
+  { ITEM_HIKARINONENDO,     HAND_ADD_ITEM_HikariNoNendo   },
   { ITEM_TABENOKOSI,        HAND_ADD_ITEM_Tabenokosi      },
   { ITEM_DOKUDOKUDAMA,      HAND_ADD_ITEM_DokudokuDama    },
   { ITEM_KAENDAMA,          HAND_ADD_ITEM_KaenDama        },
@@ -2986,7 +2989,7 @@ static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_SPECIAL_DRAIN, handler_KaigaraNoSuzu },
+    { BTL_EVENT_DAMAGEPROC_END, handler_KaigaraNoSuzu },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2995,29 +2998,47 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u16 volume, item_pow;
+    u32 damage_sum = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+    damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
 
-    item_pow = common_GetItemParam(myHandle, ITEM_PRM_ATTACK);
-    if( item_pow )
     {
-      u16 volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME ) / item_pow;
-      if( volume )
-      {
-        BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-        param->pokeID = pokeID;
-        param->recoverHP = volume;
-        {
-          BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-
-          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
-          HANDEX_STR_AddArg( &msg_param->str, pokeID );
-          HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-        }
-      }
+      BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+      param->pokeID = pokeID;
+      param->recoverHP = damage_sum;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     }
-    else
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ *  ひかりのねんど
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HikariNoNendo( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CHECK_SIDEEFF_PARAM, handler_HikariNoNendo },
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_HikariNoNendo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BtlSide  mySide = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_SIDE) == mySide )
+  {
+    BtlSideEffect sideEff = BTL_EVENTVAR_GetValue( BTL_EVAR_SIDE_EFFECT );
+    if( (sideEff == BTL_SIDEEFF_HIKARINOKABE) || (sideEff == BTL_SIDEEFF_REFRECTOR) )
     {
-      GF_ASSERT(0);
+      BPP_SICK_CONT cont;
+      u8 inc_turns;
+      cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
+      inc_turns = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+//      BTL_Printf("サイドエフェクトの継続ターン数を %d ターン増加\n", inc_turns);
+      BPP_SICKCONT_IncTurn( &cont, inc_turns );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
     }
   }
 }

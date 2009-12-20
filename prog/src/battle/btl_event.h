@@ -141,6 +141,7 @@ typedef enum {
   BTL_EVENT_ITEMSET_CHECK,          ///< アイテム書き換え前の成否チェック
   BTL_EVENT_ITEMSET_FIXED,          ///< アイテム書き換え確定
   BTL_EVENT_FIELD_EFFECT_CALL,      ///< フィールドエフェクト追加
+  BTL_EVENT_CHECK_SIDEEFF_PARAM,    ///< サイドエフェクトパラメータ調整
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
 
@@ -236,6 +237,8 @@ typedef enum {
   BTL_EVAR_GEN_FLAG,
   BTL_EVAR_FLAT_FLAG,
   BTL_EVAR_FLATMASTER_FLAG,
+  BTL_EVAR_SIDE,
+  BTL_EVAR_SIDE_EFFECT,
 
   BTL_EVAR_MAX,
 

@@ -84,6 +84,7 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
+extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk );
@@ -220,6 +221,7 @@ typedef enum {
   BTL_HANDEX_RESET_TURNFLAG,    ///< ターンフラグ強制リセット
   BTL_HANDEX_SET_CONTFLAG,      ///< 継続フラグセット
   BTL_HANDEX_RESET_CONTFLAG,    ///< 継続フラグリセット
+  BTL_HANDEX_SIDEEFF_ADD,       ///< サイドエフェクト追加
   BTL_HANDEX_SIDEEFF_REMOVE,    ///< サイドエフェクト削除
   BTL_HANDEX_ADD_FLDEFF,        ///< フィールドエフェクト追加
   BTL_HANDEX_REMOVE_FLDEFF,     ///< フィールドエフェクト追加
@@ -502,8 +504,9 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlSideEffect   effect;
   BPP_SICK_CONT   cont;
-  u8              pokeID;
-}BTL_HANDEX_PARAM_SIDE_EFFECT;
+  BtlSide         side;
+  BTL_HANDEX_STR_PARAMS    exStr;
+}BTL_HANDEX_PARAM_SIDEEFF_ADD;
 
 /**
  * サイドエフェクト除去処理

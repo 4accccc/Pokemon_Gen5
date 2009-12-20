@@ -357,8 +357,22 @@ static inline BOOL BPP_SICKCONT_GetFlag( BPP_SICK_CONT cont )
   }
   return 0;
 }
-
-
+/*
+ *  継続ターン数増加
+ */
+static inline void BPP_SICKCONT_IncTurn( BPP_SICK_CONT* cont, u8 inc )
+{
+  if( cont->type == WAZASICK_CONT_TURN ){
+    if( cont->turn.count < 8 ){
+      cont->turn.count += inc;
+    }
+  }
+  if( cont->type == WAZASICK_CONT_POKETURN ){
+    if( cont->poketurn.count < 8 ){
+      cont->poketurn.count += inc;
+    }
+  }
+}
 //===================================================================
 // ポケモンタイプを合成して１変数として扱うための措置
 //===================================================================

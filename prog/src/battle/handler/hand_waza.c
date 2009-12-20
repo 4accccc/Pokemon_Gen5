@@ -6104,16 +6104,15 @@ static void handler_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID )
 {
-  BTL_Printf("ワシ=%d, 使ったポケ=%d, エフェクト=%d\n", pokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK), effect);
+//  BTL_Printf("ワシ=%d, 使ったポケ=%d, エフェクト=%d\n", pokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK), effect);
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_HANDLER_SIDE_Add(side, effect, cont) )
-    {
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, strID );
-      HANDEX_STR_AddArg( &param->str, side );
-      BTL_Printf("サイドエフェクト[%d]発動　文字列=%d\n", effect, strID);
-    }
+    BTL_HANDEX_PARAM_SIDEEFF_ADD* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_ADD, pokeID );
+    param->effect = effect;
+    param->side = side;
+    param->cont = cont;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, strID );
+    HANDEX_STR_AddArg( &param->exStr, side );
   }
 }
 //----------------------------------------------------------------------------------

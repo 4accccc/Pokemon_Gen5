@@ -472,12 +472,31 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
+    if( BTL_SVFLOW_MakeShooterChargeCommand(server->flowWork) ){
+      BTL_Printf("シューターチャージコマンド発行\n");
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+      (*seq)++;
+    }else{
+      (*seq) += 2;
+    }
+    break;
+
+  case 1:
+    if( WaitAdapterCmd(server) )
+    {
+      BTL_Printf("全クライアントでシューターチャージコマンド処理終了\n");
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+
+  case 2:
     BTL_Printf("アクション選択コマンド発行\n");
     SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
     (*seq)++;
     break;
 
-  case 1:
+  case 3:
     if( WaitAdapterCmd(server) )
     {
       BTL_Printf("アクション受け付け完了\n");
@@ -493,7 +512,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     }
     break;
 
-  case 2:
+  case 4:
     if( WaitAdapterCmd(server) )
     {
       BTL_Printf("操作記録データの送信完了\n");
@@ -502,13 +521,13 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     }
     break;
 
-  case 3:
+  case 5:
       BTL_Printf("サーバコマンド送信します ... result=%d\n", server->flowResult);
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
       break;
 
-  case 4:
+  case 6:
     if( WaitAdapterCmd(server) )
     {
       BTL_Printf("全クライアントのコマンド再生終了...result=%d\n", server->flowResult);

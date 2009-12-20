@@ -1341,6 +1341,7 @@ BOOL BTLV_TokWin_Renew_Wait( BTLV_CORE* wk, BtlPokePos pos )
 
 void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 vpos )
 {
+  BTL_Printf("ランクダウンエフェクト開始 : %d\n", vpos);
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_STATUS_DOWN );
 }
 void BTLV_StartRankUpEffect( BTLV_CORE* wk, u8 vpos )
@@ -1349,7 +1350,11 @@ void BTLV_StartRankUpEffect( BTLV_CORE* wk, u8 vpos )
 }
 BOOL BTLV_WaitRankEffect( BTLV_CORE* wk, u8 vpos )
 {
-  return !BTLV_EFFECT_CheckExist( vpos );
+  if( !BTLV_EFFECT_CheckExist( vpos ) ){
+    BTL_Printf("エフェクト終了した ... 一応vpos=%d\n", vpos);
+    return TRUE;
+  }
+  return FALSE;
 }
 
 

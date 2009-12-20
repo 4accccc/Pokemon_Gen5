@@ -614,6 +614,7 @@ static u8 scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 static u8 scproc_HandEx_resetTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_setContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_sideEffectAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_addFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_removeFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -716,11 +717,27 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 
   scproc_AfterMemberIn( wk );
 
+  // @@@ しぬこともあるかも?
+  return SVFLOW_RESULT_DEFAULT;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * シューターチャージコマンド生成
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------
+BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk )
+{
+  SCQUE_Init( wk->que );
+
   // シューターのエネルギーチャージ
   scproc_countup_shooter_energy( wk );
 
-  // @@@ しぬこともあるかも?
-  return SVFLOW_RESULT_DEFAULT;
+  return wk->que->writePtr != 0;
 }
 
 //--------------------------------------------------------------------------
@@ -2124,6 +2141,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     }
   }
 
+  // ボール投げならボール投げシーケンスへ
   if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
   {
     scproc_TrainerItem_BallRoot( wk, bpp, itemID );
@@ -2134,6 +2152,11 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   if( targetIdx != BTL_PARTY_MEMBER_MAX ){
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
     target = BTL_PARTY_GetMemberData( party, targetIdx );
+  }
+
+  {
+    BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
+    SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
   }
 
   // シューター独自のアイテム処理
@@ -6161,9 +6184,6 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     }
   }
 
-  // シューターのエネルギーチャージ
-  scproc_countup_shooter_energy( wk );
-
   if( wk->turnCount < BTL_TURNCOUNT_MAX ){
     wk->turnCount++;
   }
@@ -9135,13 +9155,15 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
-      u32 i, cnt = BTL_POKESET_GetCount( targets );
+      u32 i, damage_sum, cnt = BTL_POKESET_GetCount( targets );
       const BTL_POKEPARAM* bpp;
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
-      for(i=0; i<cnt; ++i){
+      for(i=0, damage_sum=0; i<cnt; ++i){
         bpp = BTL_POKESET_Get( targets, i );
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
+        damage_sum += BTL_POKESET_GetDamage( targets, bpp );
       }
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
     }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
   BTL_EVENTVAR_Pop();
@@ -9394,6 +9416,27 @@ static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID )
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI_AFTER );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] サイドエフェクト継続パラメータ調整
+ *
+ * @param   wk
+ * @param   param->effect
+ * @param   param->side
+ * @param   &param->cont
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SIDE, side );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SIDE_EFFECT, effect );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, cont->raw );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SIDEEFF_PARAM );
+    cont->raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //----------------------------------------------------------------------------------------------------------
 // 以下、ハンドラからの応答受信関数とユーティリティ群
@@ -10094,6 +10137,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_RESET_TURNFLAG,   sizeof(BTL_HANDEX_PARAM_TURNFLAG)        },
     { BTL_HANDEX_SET_CONTFLAG,     sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
     { BTL_HANDEX_RESET_CONTFLAG,   sizeof(BTL_HANDEX_PARAM_SET_CONTFLAG)    },
+    { BTL_HANDEX_SIDEEFF_ADD,      sizeof(BTL_HANDEX_PARAM_SIDEEFF_ADD)     },
     { BTL_HANDEX_SIDEEFF_REMOVE,   sizeof(BTL_HANDEX_PARAM_SIDEEFF_REMOVE)  },
     { BTL_HANDEX_ADD_FLDEFF,       sizeof(BTL_HANDEX_PARAM_ADD_FLDEFF)      },
     { BTL_HANDEX_CHANGE_WEATHER,   sizeof(BTL_HANDEX_PARAM_CHANGE_WEATHER)  },
@@ -10272,6 +10316,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_RESET_TURNFLAG:   fPrevSucceed = scproc_HandEx_resetTurnFlag( wk, handEx_header ); break;
     case BTL_HANDEX_SET_CONTFLAG:     fPrevSucceed = scproc_HandEx_setContFlag( wk, handEx_header ); break;
     case BTL_HANDEX_RESET_CONTFLAG:   fPrevSucceed = scproc_HandEx_resetContFlag( wk, handEx_header ); break;
+    case BTL_HANDEX_SIDEEFF_ADD:      fPrevSucceed = scproc_HandEx_sideEffectAdd( wk, handEx_header ); break;
     case BTL_HANDEX_SIDEEFF_REMOVE:   fPrevSucceed = scproc_HandEx_sideEffectRemove( wk, handEx_header ); break;
     case BTL_HANDEX_ADD_FLDEFF:       fPrevSucceed = scproc_HandEx_addFieldEffect( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_WEATHER:   fPrevSucceed = scproc_HandEx_changeWeather( wk, handEx_header ); break;
@@ -10808,6 +10853,24 @@ static u8 scproc_HandEx_resetContFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 
   if( !BPP_IsDead(bpp) ){
     scPut_ResetContFlag( wk, bpp, param->flag );
+    return 1;
+  }
+  return 0;
+}
+/**
+ * サイドエフェクト追加
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_sideEffectAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SIDEEFF_ADD* param = (const BTL_HANDEX_PARAM_SIDEEFF_ADD*)(param_header);
+  BPP_SICK_CONT cont = param->cont;
+
+  scEvent_CheckSideEffectParam( wk, param->effect, param->side, &cont );
+
+  if( BTL_HANDLER_SIDE_Add(param->side, param->effect, cont) )
+  {
+    handexSub_putString( wk, &param->exStr );
     return 1;
   }
   return 0;
