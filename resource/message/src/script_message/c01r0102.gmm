@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T18:28:03"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T18:07:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,11 +347,11 @@
 ほそいきを　きることが　できる[BE:00:ページ切り替え（行送り）]
 いあいぎりと　いう　わざが　つかえるわ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　おぼえる　技には
-たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
+戦っていない　ときでも[BE:00:ページ切り替え（行送り）]
 使える　技があるの[BE:01:ページ切り替え（クリア）]
 その　わざマシンを　使うと
 細い木を　切ることが　できる[BE:00:ページ切り替え（行送り）]
-いあいぎりと　いう　わざが　使えるわ[BE:01:ページ切り替え（クリア）]</language>
+いあいぎりと　いう　技が　使えるわ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -472,8 +472,14 @@
 		<comment>♀
 ・msg_c01r0102_girl3_01表示後から
 　PDWのチュートリアル終了まで</comment>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ショウロ『パソコンの
+あずかりシステムは　もともと[BE:00:ページ切り替え（行送り）]
+マサキって　いう　ひとが[BE:00:ページ切り替え（行送り）]
+つくりあげた　もの　なんです</language>
+		<language name="JPN_KANJI" width="256">ショウロ『パソコンの
+預かりシステムは　もともと[BE:00:ページ切り替え（行送り）]
+マサキって　いう　人が[BE:00:ページ切り替え（行送り）]
+つくりあげた　もの　なんです</language>
 	</row>
 
 	<row id="msg_c01r0102_girl3_03">

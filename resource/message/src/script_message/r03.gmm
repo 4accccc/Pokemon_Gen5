@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:39:08"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T18:25:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -639,18 +639,14 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN3
 保育士</attribute>
-		<language name="JPN" width="256">この　ようちえん　は
-なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
-だから　ポケモンしょうぶも
-ふたりで　なかよく　ポケモンを[BE:00:ページ切り替え（行送り）]
-１ひきずつ　だしあって　しょうぶ！[BE:00:ページ切り替え（行送り）]
-つまり　ダブルバトルって　わけ！</language>
-		<language name="JPN_KANJI" width="256">この　幼稚園は
-なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
-だから　ポケモン勝負も
-２人で　なかよく　ポケモンを[BE:00:ページ切り替え（行送り）]
-１匹ずつ　だしあって　勝負！[BE:00:ページ切り替え（行送り）]
-つまり　ダブルバトルって　わけ！</language>
+		<language name="JPN" width="256">この　ようちえんでは
+ポケモンしょうぶが　だいにんき！▼
+そのさきの　にわに　はいると
+あいてを　せがまれますよ！</language>
+		<language name="JPN_KANJI" width="256">この　幼稚園では
+ポケモン勝負が　大人気！▼
+その先の　園庭に　はいると
+相手を　せがまれますよ！</language>
 	</row>
 
 	<row id="msg_r03_babygirl1a_01">
