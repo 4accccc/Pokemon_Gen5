@@ -400,6 +400,11 @@ static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 static void _timingCheck2( GTSNEGO_WORK *pWork )
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3)){
+
+
+
+
+
     _CHANGE_STATE(pWork,NULL);
   }
 }
@@ -852,7 +857,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
 
 
 
-  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   
   

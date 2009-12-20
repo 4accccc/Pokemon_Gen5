@@ -473,9 +473,11 @@ struct _POKEMON_TRADE_WORK{
   int GTStype[GTS_PLAYER_WORK_NUM];  //
   int GTSlv[GTS_PLAYER_WORK_NUM];  //
   BOOL bGTSSelect[GTS_PLAYER_WORK_NUM];  //決定したかどうか
-  
 
+  BOOL pokemonThreeSet;  //相手側のポケモンが３体セットされた
   
+  POKEMON_PARAM* TempBuffer[GTS_PLAYER_WORK_NUM]; //ポケモン受信用バッファ
+
   BOOL bParent;
   BOOL bTouchReset;
 
@@ -655,6 +657,10 @@ typedef enum {
   _NETCMD_CHANGE_CANCEL,
   _NETCMD_END,
   _NETCMD_CANCEL_POKEMON,
+  _NETCMD_THREE_SELECT1,
+  _NETCMD_THREE_SELECT2,
+  _NETCMD_THREE_SELECT3,
+  _NETCMD_THREE_SELECT_END,
   _NETCMD_SCROLLBAR,
 } _POKEMON_TRADE_SENDCMD;
 
@@ -703,4 +709,6 @@ extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_SixStateDelete(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON_PARAM* pp);
+extern void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork);
 

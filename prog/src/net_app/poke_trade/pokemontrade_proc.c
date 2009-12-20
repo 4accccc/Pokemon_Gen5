@@ -88,6 +88,11 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork);
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch);
 static int _boxScrollLine2Num(int line);
 
+static u8* _setThreePokemon(int netID, void* pWk, int size);
+static void _recvThreePokemon1(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvThreePokemon2(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvThreePokemon3(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvThreePokemonEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 ///通信コマンドテーブル
@@ -99,6 +104,10 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvChangeCancel,   NULL},    ///_NETCMD_CHANGE_CANCEL  3 最後にキャンセルする
   {_recvEnd, NULL},         //_NETCMD_END           1 おわり
   {_recvCancelPokemon, NULL},         //  _NETCMD_CANCEL_POKEMON
+  {_recvThreePokemon1,   _setThreePokemon},    ///_NETCMD_THREE_SELECT1 ポケモン３匹みせあい
+  {_recvThreePokemon2,   _setThreePokemon},    ///_NETCMD_THREE_SELECT2 ポケモン３匹みせあい
+  {_recvThreePokemon3,   _setThreePokemon},    ///_NETCMD_THREE_SELECT3 ポケモン３匹みせあい
+  {_recvThreePokemonEnd,   NULL},    ///_NETCMD_THREE_SELECT_END ポケモン３匹みせあい
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
 
 };
@@ -321,6 +330,26 @@ u8* _setChangePokemonBuffer(int netID, void* pWk, int size)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ３体格納ポケモンの受信バッファを返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static u8* _setThreePokemon(int netID, void* pWk, int size)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  if((netID >= 0) && (netID < 2)){
+    return (u8*)pWork->TempBuffer[netID];
+  }
+  return NULL;
+}
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   自分と相手でindex指定でバッファを返す
  * @retval  none
  */
@@ -354,6 +383,72 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
   pWork->pokemonsetCall = netID+1;
 
 }
+
+
+static void _recvThreePokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle,int num)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  GF_ASSERT(netID==0 || netID==1);
+  
+  if(PP_Get( pWork->TempBuffer[netID], ID_PARA_poke_exist, NULL  )){
+    POKE_GTS_DirectAddPokemon(pWork, num, pWork->TempBuffer[netID]);
+    POKETRADE_2D_GTSPokemonIconSet(pWork, 1, num, pWork->TempBuffer[netID],TRUE);
+  }
+  else{
+    GF_ASSERT(0);
+  }
+}
+
+
+//_NETCMD_THREE_SELECT1
+static void _recvThreePokemon1(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  _recvThreePokemon(netID, size, pData, pWk, pNetHandle, 0);
+}
+
+//_NETCMD_THREE_SELECT1
+static void _recvThreePokemon2(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  _recvThreePokemon(netID, size, pData, pWk, pNetHandle, 1);
+}
+
+//_NETCMD_THREE_SELECT1
+static void _recvThreePokemon3(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  _recvThreePokemon(netID, size, pData, pWk, pNetHandle, 2);
+}
+
+
+
+
+//_NETCMD_THREE_SELECT_POKEMON
+static void _recvThreePokemonEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  NET_PRINT("---------------------3set------------------------------------------\n");
+  pWork->pokemonThreeSet=TRUE;
+
+
+//POKETRADE_STR2_14
+
+}
+
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1549,7 +1644,10 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
   }
 
   if(GFL_NET_IsInit() && bNetSend){  // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
+    GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
+                       _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
+    
+//    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
   }
 }
 
@@ -1658,6 +1756,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
   pWork->oldLine++;
   pWork->bgscrollRenew = TRUE;
+  pWork->pokemonThreeSet = FALSE;  //キャンセルされたときのみフラグをOFF
 
   _scrollMainFunc(pWork,FALSE,FALSE);
 
@@ -1796,8 +1895,7 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
         GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
         _PokemonsetAndSendData(pWork);
       }
-      else{
-        POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
+      else if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //記録
         _CatchPokemonPositionRewind(pWork);
       }
     }
@@ -2067,6 +2165,9 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
 
 static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMESYS_WORK* pParentWork)
 {
+  pWork->TempBuffer[0] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
+  pWork->TempBuffer[1] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
+
   if(pParentWork){
     GAMEDATA* pGameData = GAMESYSTEM_GetGameData(pParentWork);
     pWork->pGameData=pGameData;
@@ -2079,10 +2180,8 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMESYS_WORK* pParentWor
   else{
     pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
     pWork->pMy = MyStatus_AllocWork(pWork->heapID);
-    pWork->pFriend = MyStatus_AllocWork(pWork->heapID);
 
     MyStatus_Init(pWork->pMy);
-    MyStatus_Init(pWork->pFriend);
     
     pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
     MAIL_Init(pWork->pMailBlock);
@@ -2123,6 +2222,9 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMESYS_WORK* pParentWor
 
 static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
 {
+  GFL_HEAP_FreeMemory(pWork->TempBuffer[0]);
+  GFL_HEAP_FreeMemory(pWork->TempBuffer[1]);
+
   if(bParentWork){
   }
 #if PM_DEBUG
@@ -2167,12 +2269,15 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
 
 void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 {
+  POKETRADE_2D_GTSPokemonIconResetAll(pWork);
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   POKE_GTS_ReleasePokeIconResource(pWork);
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);
+
+
   POKETRADE_MESSAGE_SixStateDelete(pWork);
-    
+
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
   IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
   IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
@@ -2319,7 +2424,8 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
   GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
 
-  if(pParent){
+
+  if(pParent && pGTS){
     for(i=0;i<2;i++){
       pWork->GTStype[i]=pGTS->aUser[i].selectType;  //
       pWork->GTSlv[i]=pGTS->aUser[i].selectLV;  //
@@ -2332,6 +2438,7 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
       pWork->GTStype[i] = 0;  //
       pWork->GTSlv[i] = 1;  //
     }
+    pWork->pFriend = MyStatus_AllocWork(pWork->heapID);
   }
 #endif
 
@@ -2490,7 +2597,11 @@ const GFL_PROC_DATA PokemonTradeProcData = {
 
 //IR用
 const GFL_PROC_DATA PokemonTradeIrcProcData = {
+#if DEBUG_ONLY_FOR_ohno
+  PokemonTradeGTSNegoProcInit,
+#else
   PokemonTradeIrcProcInit,
+#endif
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };

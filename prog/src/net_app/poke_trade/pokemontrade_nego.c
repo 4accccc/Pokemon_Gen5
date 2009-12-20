@@ -99,6 +99,17 @@ void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork)
 }
 
 
+
+//ダイレクトにポケモン追加 相手用 
+void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON_PARAM* pp)
+{
+  
+
+  pWork->GTSSelectIndex[1][index] = index;
+  pWork->GTSSelectBoxno[1][index] = index;
+  GFL_STD_MemCopy(pp,pWork->GTSSelectPP[1][index],POKETOOL_GetWorkSize());
+}
+
 //ポケモン追加
 static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,const POKEMON_PARAM* pp)
 {
@@ -114,7 +125,7 @@ static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,co
       return i;
     }
   }
-  return -1;
+  return -1;  //帰ることは無い
 }
 
 //ポケモン削除
@@ -179,34 +190,40 @@ void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
 }
 
 
-
-
-
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン登録＋相手に情報転送
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno)
 { //選択ポケモン表示
-  BOOL bRet = FALSE;
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
   POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
   int no;
-  
-  {
+
+  if(GFL_NET_IsInit()){
     no = _addPokemon(pWork,0,index,boxno, pp);
-    if(-1 != no){
-      POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE);
-      bRet= TRUE;
+    if( FALSE == GFL_NET_SendDataEx(pNet, GFL_NET_SENDID_ALLUSER, _NETCMD_THREE_SELECT1+no,
+                                    POKETOOL_GetWorkSize(),pWork->GTSSelectPP[0][no],
+                                    FALSE, FALSE, TRUE)){
+      _deletePokemon(pWork,0,index,boxno);  //取り消し
+      GFL_HEAP_FreeMemory(pp);
+      return FALSE;
     }
+  }
+  {
+    POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE);
   }
 #if PM_DEBUG
   if(!GFL_NET_IsInit()){
     no = _addPokemon(pWork, 1, index,boxno, pp);
-    if(-1 != no){
-      POKETRADE_2D_GTSPokemonIconSet(pWork,1,no,pp,TRUE);
-      bRet= TRUE;
-    }
+    POKETRADE_2D_GTSPokemonIconSet(pWork,1,no,pp,TRUE);
   }
 #endif
-
   GFL_HEAP_FreeMemory(pp);
 
   if(pWork->pAppTask==NULL){
@@ -214,7 +231,7 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
     POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
 
-  return bRet;
+  return TRUE;
 }
 
 
@@ -340,7 +357,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   int i;
   int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-  if(pWork->userNetCommand[1-targetID]==_NETCMD_LOOKATPOKE){
+  if(pWork->userNetCommand[targetID]==_NETCMD_LOOKATPOKE){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
     for(i=0;i<2;i++){
       POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
@@ -352,6 +369,9 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+//交換選択通信送信
 
 static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
 {
@@ -373,8 +393,6 @@ static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
     }
   }
 #endif
-
-
   if(!GFL_NET_IsInit()){
     pWork->userNetCommand[0]=_NETCMD_LOOKATPOKE;
     pWork->userNetCommand[1]=_NETCMD_LOOKATPOKE;
@@ -519,20 +537,23 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
         _CHANGE_STATE(pWork,_menuFriendPokemon);
       }
       else{
-        int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
-        POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+        if(!GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, POKETOOL_GetWorkSize(), pp)){
+          int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
+          POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+          POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
 #if PM_DEBUG
-        {
-          GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
-        }
+          if(!GFL_NET_IsInit()){
+            GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
+          }
 #endif
-        _CHANGE_STATE(pWork,_menuMyPokemon);
+          _CHANGE_STATE(pWork,_menuMyPokemon);
+        }
       }
-      POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX]);
-      _CHANGE_STATE(pWork,_menuMyPokemon);
     }
   }
 }
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -542,7 +563,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
+static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 {
   GFL_BMPWIN* pWin;
   int side,poke;
@@ -595,6 +616,46 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
 
 
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   6体表示確認まち
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+static void _send5Wait(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->pokemonThreeSet){   //相手から届いたかどうかいまだとずっとまつ
+    _CHANGE_STATE(pWork,_Select6Init);
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   6体表示OK転送
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(GFL_NET_IsInit()){
+    if( GFL_NET_SendData(pNet,_NETCMD_THREE_SELECT_END,0,NULL)){
+      _CHANGE_STATE(pWork, _send5Wait);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork,_Select6Init);
+  }
+}
+
 
 //------------------------------------------------------------------------------
 /**

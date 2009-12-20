@@ -2236,3 +2236,22 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
 
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンの全部消去
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
+{
+  int i,side;
+
+  for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
+    for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+      POKETRADE_2D_GTSPokemonIconReset(pWork,side,i);
+    }
+  }
+}
