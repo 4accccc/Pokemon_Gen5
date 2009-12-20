@@ -136,6 +136,7 @@ typedef enum {
   BTL_EVENT_CHECK_ITEM_REACTION,    ///< アイテム反応チェック
   BTL_EVENT_CHECK_TAMETURN_SKIP,    ///< 溜めターンスキップ判定
   BTL_EVENT_TAME_START,             ///< 溜め開始
+  BTL_EVENT_TAME_SKIP,              ///< 溜めスキップ確定
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_ITEMSET_CHECK,          ///< アイテム書き換え前の成否チェック

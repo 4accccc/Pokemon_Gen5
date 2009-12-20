@@ -235,6 +235,10 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems );
 static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HikariNoNendo( u32* numElems );
 static void handler_HikariNoNendo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowefulHarb( u32* numElems );
+static void handler_PowefulHarb_CheckTameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_PowefulHarb_FixTameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_PowefulHarb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Tabenokosi( u32* numElems );
 static void handler_Tabenokosi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -486,6 +490,7 @@ static const struct {
   { ITEM_NEBARINOKAGIDUME,  HAND_ADD_ITEM_NebariNoKagidume},
   { ITEM_KAIGARANOSUZU,     HAND_ADD_ITEM_KaigaraNoSuzu   },
   { ITEM_HIKARINONENDO,     HAND_ADD_ITEM_HikariNoNendo   },
+  { ITEM_PAWAHURUHAABU,     HAND_ADD_ITEM_PowefulHarb     },
   { ITEM_TABENOKOSI,        HAND_ADD_ITEM_Tabenokosi      },
   { ITEM_DOKUDOKUDAMA,      HAND_ADD_ITEM_DokudokuDama    },
   { ITEM_KAENDAMA,          HAND_ADD_ITEM_KaenDama        },
@@ -3041,6 +3046,50 @@ static void handler_HikariNoNendo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
     }
   }
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワフルハーブ
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowefulHarb( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CHECK_TAMETURN_SKIP,   handler_PowefulHarb_CheckTameSkip }, // 溜めスキップチェック
+    { BTL_EVENT_TAME_SKIP,             handler_PowefulHarb_FixTameSkip   }, // 溜めスキップ確定
+    { BTL_EVENT_USE_ITEM,              handler_PowefulHarb_Use           }, // アイテム使用
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// 溜めスキップチェック
+static void handler_PowefulHarb_CheckTameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) ){
+      work[0] = 1;
+    }
+  }
+}
+// 溜めスキップ確定
+static void handler_PowefulHarb_FixTameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( work[0] )
+    {
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    }
+  }
+}
+// アイテム使用
+static void handler_PowefulHarb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_TameSkip );
+  HANDEX_STR_AddArg( &param->str, pokeID );
+  HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
 }
 
 //------------------------------------------------------------------------------
