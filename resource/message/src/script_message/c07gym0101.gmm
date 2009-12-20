@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:55:32"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:45:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,11 +330,13 @@
 		<comment>アイテム入手処理後
 </comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説</language>
+		<language name="JPN" width="256">かならず　きゅうしょに　あたる……
+それが「こおりのいぶき」……</language>
+		<language name="JPN_KANJI" width="256">必ず　急所に　当たる……
+それが「こおりのいぶき」……</language>
 	</row>
 
-	<row id="msg_c07gym0101_leader_06" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c07gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>・msg_c07gym0101_leader_05
 　表示後に表示
 ・msg_c07_leader7_01を表示後
@@ -351,11 +353,13 @@
 なにか　答えを　みつけるやもな</language>
 	</row>
 
-	<row id="msg_c07gym0101_leader_07" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c07gym0101_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>仮：竜の塔イベント後</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">……つよさを　ひけらかすのは
+よわい　ものが　することだ</language>
+		<language name="JPN_KANJI" width="256">……強さを　ひけらかすのは
+弱い　ものが　することだ</language>
 	</row>
 
 	<row id="msg_c07gym0101_glasses_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

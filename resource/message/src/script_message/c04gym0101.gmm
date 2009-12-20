@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:54:44"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:22:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,20 +338,32 @@
 アナタに　したがってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
 わたしの　すきな　わざ……[BE:00:ページ切り替え（行送り）]
-よければ　アナタも　つかって</language>
+よければ　アナタも　つかって[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ボルトバッジが　あれば
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
 アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
 わたしの　好きな　技……[BE:00:ページ切り替え（行送り）]
-よければ　アナタも　使って</language>
+よければ　アナタも　使って[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_05">
 		<comment>♀
 ・アイテム入手処理後</comment>
-		<language name="JPN" width="256">わざマシンのかいせつ（よてい）</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
+		<language name="JPN" width="256">その「ボルトチェンジ」はね……▼
+あいてに　こうげきを　したあと
+ボールに　もどって▽
+ほかの　ポケモンと　いれかわるの▼
+もっとも
+ほかの　ポケモンが　いないときは▽
+そのまま　なんだけど</language>
+		<language name="JPN_KANJI" width="256">その「ボルトチェンジ」はね……▼
+相手に　攻撃を　したあと
+ボールに　もどって▽
+他の　ポケモンと　入れ替わるの▼
+もっとも
+他の　ポケモンが　いないときは▽
+そのまま　なんだけど</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_06">

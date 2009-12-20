@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:55:18"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:40:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,8 +350,18 @@
 		<comment>アイテム入手処理後
 </comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説</language>
+		<language name="JPN" width="256">プレゼントした　「アクロバット」はね
+ちょっと　テクニカル　なんだよ▼
+どうぐを　もっていなければ
+いりょくが　２ばい　になるの！▼
+つかえば　なくなる　どうぐと
+くみあわせれば　おもしろいかもよ！</language>
+		<language name="JPN_KANJI" width="256">プレゼントした　「アクロバット」はね
+ちょっと　テクニカル　なんだよ▼
+どうぐを　持っていなければ
+威力が　２倍　になるの！▼
+使えば　なくなる　どうぐと
+組みあわせれば　おもしろいかもよ！</language>
 	</row>
 
 	<row id="msg_c06gym0201_leader_06">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T22:41:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:30:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,10 +309,10 @@
 		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_02">
+	<row id="msg_d06_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後
-　ポケモン「」の動作モデル出現
+　ポケモン「モグリュー」の動作モデル出現
 ・続けてmsg_d06_leader_03</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">これは　デンチュラという
@@ -321,21 +321,21 @@
 すが　あるのか　わからんが[BE:00:ページ切り替え（行送り）]
 でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
 こうかてきめん　よ[BE:01:ページ切り替え（クリア）]
-ポケモン名！[BE:01:ページ切り替え（クリア）]</language>
+モグリュー！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">これは　デンチュラという
 でんきタイプ　ポケモンの　巣だな[BE:01:ページ切り替え（クリア）]
 なんで　こんな　ところに
 巣があるのか　わからんが[BE:00:ページ切り替え（行送り）]
 でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
 こうかてきめん　よ[BE:01:ページ切り替え（クリア）]
-ポケモン名！[BE:01:ページ切り替え（クリア）]</language>
+モグリュー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d06_leader_03">
 		<comment>♂
 ・ポケモンが巣に向かい技を出したような演出
 ・巣を削除する処理
-・続けてmsg_d06_leader_04</comment>
+・続けてleader_04</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ポケモン名
 技名！[BE:01:ページ切り替え（クリア）]</language>
@@ -345,9 +345,8 @@
 
 	<row id="msg_d06_leader_04">
 		<comment>♂
-・主人公と向き合って
-・アイテム入手処理
-・続けてmsg_d06_leader_05</comment>
+・主人公と向き合ってアイテム入手処理
+・続けてleader_05</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ほらよ！
 この　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
@@ -363,10 +362,22 @@
 
 	<row id="msg_d06_leader_05">
 		<comment>♂
-・msg_d06_leader_06</comment>
+・続けてleader_06</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">わざマシンの解説（予定）</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
+		<language name="JPN" width="256">その「じならし」はだな……
+ダメージを　あたえつつ▽
+あいての　すばやさを　さげる　わざ▼
+じめんタイプの　ポケモンは
+そうじて　すばやさが　ひくい▼
+「じならし」を　つかいこなせば
+その　じゃくてんを　カバーできるだろ▼</language>
+		<language name="JPN_KANJI" width="256">その「じならし」はだな……
+ダメージを　与えつつ▽
+相手の　すばやさを　下げる　技▼
+じめんタイプの　ポケモンは
+総じて　すばやさが　低い▼
+「じならし」を　使いこなせば
+その　弱点を　カバーできるだろ▼</language>
 	</row>
 
 	<row id="msg_d06_leader_06">
