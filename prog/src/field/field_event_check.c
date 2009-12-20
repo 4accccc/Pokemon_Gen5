@@ -442,11 +442,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       if( fmmdl_talk != NULL )
       {
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-        FIELD_PLAYER_GRID_ForceStop( req.field_player );
-        *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
-        return EVENT_FieldTalk( gsys, fieldWork,
-          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+        if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
+        {
+          MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+          FIELD_PLAYER_GRID_ForceStop( req.field_player );
+          *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
+          return EVENT_FieldTalk( gsys, fieldWork,
+            scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+        }
       }
     }
     
@@ -866,12 +869,15 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       if( fmmdl_talk != NULL )
       {
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
-        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-        
-        FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
-        return EVENT_FieldTalk( gsys, fieldWork,
-          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+        if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
+        {
+          FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
+          MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+          
+          FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
+          return EVENT_FieldTalk( gsys, fieldWork,
+            scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+        }
       }
     }
     

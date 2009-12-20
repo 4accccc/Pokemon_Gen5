@@ -39,6 +39,7 @@
 #include "system/main.h"  //HEAPID_PROC
 
 #include "../../../resource/fldmapdata/script/init_scr_def.h" //SCRID_INIT_SCRIPT
+#include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_DUMMY
 
 // scr_offset.cdat内で参照
 #include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
@@ -274,9 +275,9 @@ SCRIPT_WORK * SCRIPT_CallScript( GMEVENT *event,
 {
 	GMEVENT *sc_event;
 	SCRIPT_WORK *sc;
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork( event );
 
-  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID,
-      GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk);
+  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID, gsys, scr_id, obj, ret_script_wk);
 	sc_event = FldScript_CreateControlEvent( sc );
 	GMEVENT_CallEvent( event, sc_event );
 
@@ -301,9 +302,9 @@ SCRIPT_WORK * SCRIPT_ChangeScript( GMEVENT *event,
 {
 	GMEVENT *sc_event;
   SCRIPT_WORK *sc;
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork( event );
 
-  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID,
-      GMEVENT_GetGameSysWork(event), scr_id, obj, NULL);
+  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID, gsys, scr_id, obj, NULL);
   sc_event = FldScript_CreateControlEvent( sc );
   GMEVENT_ChangeEvent( event, sc_event );
   return sc;
@@ -421,13 +422,6 @@ static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID, HEAPID temp_heapID,
 
   //フィールドパラメータ生成
 	initFldParam( &sc->fld_param, gsys );
-#ifndef SCRIPT_PL_NULL
-	//隠しアイテムのスクリプトIDだったら(あとで移動する予定)
-	if( (scr_id >= ID_HIDE_ITEM_OFFSET) &&
-		(scr_id <= ID_HIDE_ITEM_OFFSET_END) ){
-		HideItemParamSet( sc, scr_id );
-	}
-#endif
   //ミュージカルの制御イベントで渡される
   sc->musicalEventWork = NULL;
 
@@ -1292,6 +1286,30 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
 //
 //
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief スクリプトIDのチェック
+ * @param script_id
+ * @return  BOOL  FALSEのとき、実行可能なスクリプト
+ *
+ * @todo
+ * できたら厳密な範囲チェックを行って暴走しないように制限する
+ */
+//------------------------------------------------------------------
+BOOL SCRIPT_IsValidScriptID( u16 script_id )
+{
+  if ( script_id == SCRID_DUMMY ) return FALSE;
+  if ( script_id >= ID_DEBUG_SCR_OFFSET_END )
+  {
+    GF_ASSERT(0);
+    return FALSE;
+  }
+
+  /* ここに範囲チェックを入れる？ */
+
+  return TRUE;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	ゲーム開始 スクリプト初期設定の実行

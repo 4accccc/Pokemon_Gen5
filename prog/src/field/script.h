@@ -84,6 +84,15 @@ extern SCRIPT_WORK * SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID temp_heapID );
 
 
+//------------------------------------------------------------------
+/**
+ * @brief スクリプトIDのチェック
+ * @param script_id
+ * @return  BOOL  FALSEのとき、実行可能なスクリプト
+ */
+//------------------------------------------------------------------
+extern BOOL SCRIPT_IsValidScriptID( u16 script_id );
+
 //======================================================================
 //
 //
