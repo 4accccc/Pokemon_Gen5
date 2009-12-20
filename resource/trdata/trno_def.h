@@ -3,7 +3,7 @@
  * @file	trno_def.h
  * @bfief	トレーナーID定義ファイル
  * @author	TrainerDataConverter
- * @date	2009-12-16
+ * @date	2009-12-20
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -240,8 +240,8 @@
 #define	TRID_HAKAIW1_02   ( 226 ) 
 #define	TRID_HAKAIW1_03   ( 227 ) 
 #define	TRID_BIGFOUR1_01   ( 228 ) 
-#define	TRID_BIGFOUR2_01   ( 229 ) 
-#define	TRID_BIGFOUR3_01   ( 230 ) 
+#define	TRID_BIGFOUR3_01   ( 229 ) 
+#define	TRID_BIGFOUR2_01   ( 230 ) 
 #define	TRID_BIGFOUR4_01   ( 231 ) 
 #define	TRID_SAGE1_01   ( 232 ) 
 #define	TRID_ESPM_04   ( 233 ) 

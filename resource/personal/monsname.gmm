@@ -2462,7 +2462,7 @@
 	</row>
 
 	<row id="MONSNAME_529">
-		<language name="JPN" width="216">ノラコ</language>
+		<language name="JPN" width="216">チョロネコ</language>
 	</row>
 
 	<row id="MONSNAME_530">
@@ -2522,7 +2522,7 @@
 	</row>
 
 	<row id="MONSNAME_544">
-		<language name="JPN" width="216">ノラニャー</language>
+		<language name="JPN" width="216">レパルダス</language>
 	</row>
 
 	<row id="MONSNAME_545">
@@ -2662,11 +2662,11 @@
 	</row>
 
 	<row id="MONSNAME_579">
-		<language name="JPN" width="216">ダストダス</language>
+		<language name="JPN" width="216">ヤブクロン</language>
 	</row>
 
 	<row id="MONSNAME_580">
-		<language name="JPN" width="216">ヤブクロン</language>
+		<language name="JPN" width="216">ダストダス</language>
 	</row>
 
 	<row id="MONSNAME_581">

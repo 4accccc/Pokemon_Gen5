@@ -558,39 +558,39 @@
 	</row>
 
 	<row id="rival_01">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_02">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_03">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_04">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_05">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_06">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="support_01">
-		<language name="JPN" width="216">サポート</language>
+		<language name="JPN" width="216">ホワイティ</language>
 	</row>
 
 	<row id="support_02">
-		<language name="JPN" width="216">サポート</language>
+		<language name="JPN" width="216">ホワイティ</language>
 	</row>
 
 	<row id="support_03">
-		<language name="JPN" width="216">サポート</language>
+		<language name="JPN" width="216">ホワイティ</language>
 	</row>
 
 	<row id="hakaim1_01">
@@ -706,15 +706,15 @@
 	</row>
 
 	<row id="rival_07">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_08">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="rival_09">
-		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN" width="216">ブラッカー</language>
 	</row>
 
 	<row id="ol_01">
@@ -1261,11 +1261,11 @@
 		<language name="JPN" width="216">シキミ</language>
 	</row>
 
-	<row id="bigfour2_01">
+	<row id="bigfour3_01">
 		<language name="JPN" width="216">レンブ</language>
 	</row>
 
-	<row id="bigfour3_01">
+	<row id="bigfour2_01">
 		<language name="JPN" width="216">ギーマ</language>
 	</row>
 

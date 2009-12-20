@@ -657,11 +657,11 @@
 		<language name="JPN" width="216">してんのう</language>
 	</row>
 
-	<row id="MSG_TRTYPE_BIGFOUR2">
+	<row id="MSG_TRTYPE_BIGFOUR3">
 		<language name="JPN" width="216">してんのう</language>
 	</row>
 
-	<row id="MSG_TRTYPE_BIGFOUR3">
+	<row id="MSG_TRTYPE_BIGFOUR2">
 		<language name="JPN" width="216">してんのう</language>
 	</row>
 
