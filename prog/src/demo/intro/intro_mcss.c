@@ -2,8 +2,8 @@
 /**
  *
  *	@file		intro_mcss.c
- *	@brief
- *	@author		hosaka genya
+ *	@brief  イントロデモ MCSSラッパー
+ *	@author	hosaka genya
  *	@data		2009.12.18
  *
  */
@@ -13,8 +13,12 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
-#include "intro_mcss.h"
+// MCSS ポケモン
+#include "system/mcss_tool.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
 
+#include "intro_mcss.h"
 
 //=============================================================================
 /**
@@ -37,8 +41,9 @@ enum
 //==============================================================
 struct _INTRO_MCSS_WORK
 {
-  MCSS_SYS_WORK* mcss;
-  MCSS_WORK* mcss_work[ MCSS_ID_MAX ];
+  HEAPID          heap_id;
+  MCSS_SYS_WORK*  mcss;
+  MCSS_WORK*      mcss_work[ MCSS_ID_MAX ];
 };
 
 
@@ -78,7 +83,8 @@ INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id )
 
   wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(INTRO_MCSS_WORK) );
 
-  wk->mcss = MCSS_Init( MCSS_ID_MAX, heap_id );
+  wk->mcss    = MCSS_Init( MCSS_ID_MAX, heap_id );
+  wk->heap_id = heap_id;
 
   MCSS_SetTextureTransAdrs( wk->mcss, 0 );
   MCSS_SetOrthoMode( wk->mcss );
@@ -111,62 +117,6 @@ void INTRO_MCSS_Exit( INTRO_MCSS_WORK* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
-
-#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
-
-static void debug_mcss_camera( MCSS_WORK* mcss_work )
-{
-  VecFx32 pos;
-  static int num = 1;
-
-  GF_ASSERT( mcss_work );
-    
-  MCSS_GetPosition( mcss_work, &pos );
-
-  if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
-  {
-    num++;
-    HOSAKA_Printf("num=%d \n",num);
-  }
-  else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
-  {
-    num--;
-    HOSAKA_Printf("num=%d \n",num);
-  }
-  else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
-  {
-    pos.y += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }
-  else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
-  {
-    pos.y -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }    
-  else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
-  {
-    pos.x += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }
-  else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
-  {
-    pos.x -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }
-  else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
-  {
-    pos.z += num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }
-  else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
-  {
-    pos.z -= num;
-    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
-  }
-  
-  MCSS_SetPosition( mcss_work, &pos );
-}
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  MCSS主処理
@@ -178,24 +128,6 @@ static void debug_mcss_camera( MCSS_WORK* mcss_work )
 //-----------------------------------------------------------------------------
 void INTRO_MCSS_Main( INTRO_MCSS_WORK* wk )
 {
-  // @TODO debug
-#ifdef PM_DEBUG
-  {
-    static BOOL is_on = FALSE;
-
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-    {
-      is_on ^= 1;
-    }
-
-    if( is_on && wk->mcss_work[0] )
-    {
-      debug_mcss_camera( wk->mcss_work[0] );
-    }
-  }
-#endif
-
-
   MCSS_Main( wk->mcss );
   MCSS_Draw( wk->mcss );
 }
@@ -230,7 +162,42 @@ void INTRO_MCSS_Add( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, const MCSS_
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MCSS指定ワークの表示非表示切替
+ *	@brief  MCSSワーク生成（ポケモン)
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	px
+ *	@param	py
+ *	@param	pz
+ *	@param	monsno
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int monsno, u8 id )
+{
+  MCSS_ADD_WORK   add;
+  POKEMON_PARAM*  pp;
+  VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+  
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] == NULL );
+
+  pp = PP_Create( MONSNO_HITOKAGE, 0, 0, wk->heap_id );
+      
+  MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
+
+  GFL_HEAP_FreeMemory( pp );
+
+  wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, &add );
+  MCSS_SetScale( wk->mcss_work[id], &scale );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSS指定ワークの表示/非表示切替
  *
  *	@param	INTRO_MCSS_WORK* wk
  *	@param	is_visible
@@ -246,16 +213,77 @@ void INTRO_MCSS_SetVisible( INTRO_MCSS_WORK* wk, BOOL is_visible, u8 id )
   GF_ASSERT( id < MCSS_ID_MAX );
   GF_ASSERT( wk->mcss_work[id] );
 
-  if( is_visible )
-  {
-    MCSS_SetVanishFlag( wk->mcss_work[id] );
-  }
-  else
+  if( is_visible == TRUE )
   {
     MCSS_ResetVanishFlag( wk->mcss_work[id] );
   }
+  else
+  {
+    MCSS_SetVanishFlag( wk->mcss_work[id] );
+  }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	id
+ *	@param	anm_idx 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
+{
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] );
 
+  MCSS_SetAnimeIndex( wk->mcss_work[id], anm_idx );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	id
+ *	@param	VecFx32* scale 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_SetScale( INTRO_MCSS_WORK* wk, u8 id, VecFx32* scale )
+{ 
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] );
+
+  MCSS_SetScale( wk->mcss_work[id], scale );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	id
+ *	@param	alpha 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_SetAlpha( INTRO_MCSS_WORK* wk, u8 id, u8 alpha )
+{
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] );
+
+  MCSS_SetAlpha( wk->mcss_work[id], alpha );
+}
 
 

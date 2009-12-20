@@ -14,19 +14,26 @@
 #include "message.naix" // for NARC_message_
 #include "msg/msg_intro.h"  // for GMM Index
 
-// シーン init
+//---------------------------------------------------------------------------
+// シーン init > 初期化コマンド
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_init[] = 
 { 
   { INTRO_CMD_TYPE_LOAD_GMM, { GFL_MSG_LOAD_FAST, NARC_message_intro_dat }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_LOAD_BG, { 0 }, CMD_READ_NEXT },
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING } },
-  
-  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_00 }, // シーン00へ
+  { INTRO_CMD_TYPE_START_SCENE, }, // 外部から指定されたシーンにジャンプ
 };
 
-// シーン 00 
+//---------------------------------------------------------------------------
+// シーン 00 > 漢字選択
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
+  // 初期化
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
+  { INTRO_CMD_TYPE_BRIGHTNESS_SET, { -16, }, CMD_READ_NEXT },
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
+
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
   
   { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, }, },
@@ -36,14 +43,16 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_01 }, // シーン01へ
 };
 
-// シーン 01 
+//---------------------------------------------------------------------------
+// シーン 01 > 博士登場
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 6, 6 }, CMD_READ_NEXT }, // BGM切替
-  { INTRO_CMD_TYPE_DOCTOR_LOAD, CMD_READ_NEXT },    // 博士ロード
-  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 8, 0, -16 } }, // ブラックからフェードイン
-  
-//{ INTRO_CMD_TYPE_DOCTOR_SET_VISIBLE, 1 },
+  { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_HITOKAGE, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
+  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 12, 0, -16 } }, // ブラックからフェードイン
 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
   
@@ -55,63 +64,112 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
 };
 
-// シーン 02 
+//---------------------------------------------------------------------------
+// シーン 02 > ポケモン説明
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_02[] =
 {
-  // @TODO ポケモン出現演出
-  
+//  { INTRO_CMD_TYPE_BRIGHTNESS_SET, { 16, }, }, // 真っ白
+//  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 6, 0, 16, }, CMD_READ_NEXT }, // ホワイトからフェードイン
+//
+  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, CMD_READ_NEXT }, // 博士のアニメをボールなしに変更
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, TRUE }, CMD_READ_NEXT }, // ポケモン表示
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
+
+  { INTRO_CMD_TYPE_POKEMON_APPER, }, // ポケモン出現演出 //@TODO コマンドの中が空
+
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_03 } }, // そう！　この　せかいには
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_04 } }, // ふしぎな　ちからを　ひめている
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_03 }, // シーン03へ
 };
 
-// シーン 03 
+//---------------------------------------------------------------------------
+// シーン 03 > 博士退場
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_03[] =
 {
-  // ポケモン出現演出
+  // @TODO フェードリクエスト
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示 
+
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_05 } }, // さて　わたしの　はなしは
 
-  // @TODO 博士 非表示（フェードあり）
+  // @TODO フェードリクエスト
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 0, FALSE },  // 博士 非表示 
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_04 }, // シーン04へ
 };
 
-// シーン 04 
+//---------------------------------------------------------------------------
+// シーン 04 > 男女選択
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_04[] =
 {
   // @TODO 主人公 立ち絵 スライドイン
-  
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_gender_01 } }, // あなたは　おとこのこ？
 
-  // @TODO 性別選択
-  
-  // @TODO 性別 決定演出
-  
-  // @TODO 選択肢 確認メッセージ
+  // 性別選択
+  { INTRO_CMD_TYPE_YESNO, { msg_intro_gender_04, msg_intro_gender_05, }, }, //@TODO 仮選択肢
+    { INTRO_CMD_TYPE_SELECT_SEX, 0, }, // 性別決定 
+    { INTRO_CMD_TYPE_SELECT_SEX, 1, }, // 性別決定
 
-  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 }, //@TODO 分岐
+  // 男女判定
+  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX },
+    { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_gender_02 } },  // おとこのこ　なのね？
+    { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_gender_03 } },  // おんなのこ　なのね？
+
+  // 分岐 確認メッセージ
+  { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, }, },
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 },  // はい
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_04 },  // いいえ
 };
 
-// シーン 05
+
+//---------------------------------------------------------------------------
+// シーン 05 > 名前入力呼び出し
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_05[] = 
 { 
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_RETAKE }, // 外部アプリにリトライを返す
+
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_01 } }, // なまえも しりたいな
 
-  // @TODO 呼び出し 名前入力 
-  
-  // @TODO 分岐 確認メッセージ
-
-  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 }, //@TODO 分岐
+  { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
 };
 
+//---------------------------------------------------------------------------
+// シーン 05 > リトライ判定（名前入力から復帰）
+//---------------------------------------------------------------------------
+static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] = 
+{ 
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 }, }, // 画面フェードイン
+
+  { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 0, TRUE },  // 博士フェードイン
+  // @TODO 博士フェードイン
+
+  { INTRO_CMD_TYPE_WORDSET, { INTRO_WORDSET_TRAINER, 0 }, CMD_READ_NEXT },  // トレーナー名をレジスト
+  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX }, // 男女判定
+    { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_02 } }, //[トレーナー名]くん　でいい？
+    { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_03 } }, //[トレーナー名]さん　でいい？
+
+  // 分岐 確認メッセージ
+  { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, }, },
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 }, // はい > シーン6にジャンプ
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 }, // いいえ
+
+};
+
+//---------------------------------------------------------------------------
 // シーン 06
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_06[] = 
 { 
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_NORMAL }, // 外部アプリに通常終了を返す
+  
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_06 } }, // [トレーナー名]と いう　なまえ！
 
   // @TODO 分岐
-  
   // @TODO A:セーブ初期化が終わっていなければ、初期化待ち
   // @TODO B:スルー
   
@@ -122,16 +180,20 @@ static const INTRO_CMD_DATA c_intro_scene_06[] =
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_07 },
 };
 
+//---------------------------------------------------------------------------
 // シーン 07
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_07[] = 
 { 
   // @TODO 主人公立ち絵：（フェードイン）
-
   // @TODO 主人公立ち絵→フィールドOBJへ
 
   { INTRO_CMD_TYPE_END }, ///< 終了
 };
 
+//---------------------------------------------------------------------------
+// アクセステーブル
+//---------------------------------------------------------------------------
 static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] = 
 { 
   c_intro_scene_init,
@@ -141,6 +203,7 @@ static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] =
   c_intro_scene_03,
   c_intro_scene_04,
   c_intro_scene_05,
+  c_intro_scene_05_retake_yesno,
   c_intro_scene_06,
   c_intro_scene_07,
 };

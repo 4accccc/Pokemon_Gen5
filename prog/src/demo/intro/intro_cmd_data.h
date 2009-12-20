@@ -10,6 +10,7 @@
 //============================================================================
 #pragma once
 
+#include "demo/intro.h"
 #include "intro_cmd_def.h"
 
 //=============================================================================
@@ -17,19 +18,6 @@
  *								íËêîíËã`
  */
 //=============================================================================
-typedef enum
-{ 
-  INTRO_SCENE_ID_INIT = 0,
-  INTRO_SCENE_ID_00,
-  INTRO_SCENE_ID_01,
-  INTRO_SCENE_ID_02,
-  INTRO_SCENE_ID_03,
-  INTRO_SCENE_ID_04,
-  INTRO_SCENE_ID_05,
-  INTRO_SCENE_ID_06,
-  INTRO_SCENE_ID_07,
-  INTRO_SCENE_ID_MAX,
-} INTRO_SCENE_ID;
 
 #define INTRO_CMD_PARAM_MAX (4)
 

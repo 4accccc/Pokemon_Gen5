@@ -175,11 +175,14 @@ void GameStart_Debug_SelectName(void)
 //	最初から始める
 //
 //==============================================================================
+#include "demo/intro.h"
 typedef struct
 {
   SELECT_MODE_INIT_WORK selModeParam;
+  INTRO_PARAM introParam;
 	NAMEIN_PARAM *nameInParam;
 }GAMESTART_FIRST_WORK;
+
 //--------------------------------------------------------------
 /**
  * @brief   
@@ -187,15 +190,28 @@ typedef struct
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
-	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
-	work->selModeParam.type = SMT_START_GAME;
+	GAMESTART_FIRST_WORK*   work;
+  
+  // ワーク アロケート
+  work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
+  
+  // セーブデータ:ワークエリアのの初期化
+  SaveControl_ClearData( SaveControl_GetPointer() );
+
+  // イントロデモのパラメータ初期化
+  work->introParam.save_ctrl  = SaveControl_GetPointer();
+  work->introParam.scene_id   = INTRO_SCENE_ID_00;
+
+  // SELMODE 初期化
+	work->selModeParam.type       = SMT_START_GAME;
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
-	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+	work->selModeParam.mystatus   = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
 	//主人公の性別は、性別設定が終わってから入れる
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );	
 	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -206,20 +222,63 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  enum 
+  {
+    SEQ_INIT,
+    SEQ_INPUT_NAME,
+    SEQ_INPUT_NAME_RETAKE_YESNO,
+    SEQ_INPUT_NAME_RETAKE_CHECK,
+    SEQ_END,
+  };
+
 	GAMESTART_FIRST_WORK *work = mywk;
 	switch(*seq){
-	case 0:
+	case SEQ_INIT:
+    //イントロデモ
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
 	  //漢字選択
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
-		(*seq)++;
+//  GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
+		(*seq) = SEQ_INPUT_NAME;
 		break;
-	case 1:
+	case SEQ_INPUT_NAME:
 	  //名前入力
 		work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
 		GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
-		(*seq)++;
+		(*seq) = SEQ_INPUT_NAME_RETAKE_YESNO;
 		break;
-	case 2:
+	case SEQ_INPUT_NAME_RETAKE_YESNO:
+    //名前のセット
+    {
+	    MYSTATUS * myStatus;
+
+      myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
+      MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
+      MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+
+      MyStatus_SetTrainerView(myStatus, 
+        UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
+    }
+
+    //イントロデモ 名前入力の判定
+    work->introParam.scene_id = INTRO_SCENE_ID_05_RETAKE_YESNO;
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+		(*seq) = SEQ_INPUT_NAME_RETAKE_CHECK;
+		break;
+	case SEQ_INPUT_NAME_RETAKE_CHECK:
+    // 名前入力復帰判定
+    if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
+    {
+      (*seq) = SEQ_END;
+    }
+    else
+    {
+      // 名前入力に復帰
+      (*seq) = SEQ_INPUT_NAME;
+    }
+    break;
+  case SEQ_END:
+    // 終了
 		return GFL_PROC_RES_FINISH;
 		break;
 	}
@@ -235,17 +294,10 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GAMESTART_FIRST_WORK *work = mywk;
-	GAME_INIT_WORK * init_param;
+  GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
-	MYSTATUS		*myStatus;
-	
-	//名前のセット
-	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
-	MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
-	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
-	MyStatus_SetTrainerView(myStatus, 
-	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
+
+  init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	NAMEIN_FreeParam(work->nameInParam);

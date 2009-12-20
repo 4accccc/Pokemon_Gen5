@@ -34,7 +34,7 @@ typedef struct _INTRO_CMD_WORK INTRO_CMD_WORK;
  */
 //=============================================================================
 
-extern INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, const INTRO_PARAM* init_param, HEAPID heap_id );
+extern INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id );
 
 extern void Intro_CMD_Exit( INTRO_CMD_WORK* wk );
 

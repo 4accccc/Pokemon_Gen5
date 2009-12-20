@@ -61,7 +61,7 @@ extern void INTRO_MSG_Main( INTRO_MSG_WORK* wk );
 extern void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id );
 
 // stream
-extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg );
+extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id );
 extern BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk );
 
 // list
@@ -69,4 +69,7 @@ extern void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_
 extern void INTRO_MSG_LIST_Finish( INTRO_MSG_WORK *wk );
 extern void INTRO_MSG_LIST_Main( INTRO_MSG_WORK *wk );
 extern INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_select );
+
+// データ公開
+extern WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk );
 

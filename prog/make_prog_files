@@ -669,9 +669,10 @@ SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/trainer_viewer.c
 
 # タイトル
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_SOGABE_DEBUG
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_TITLE  = title/title.c \
         title/startmenu.c \
         title/game_start.c \
@@ -1316,10 +1317,10 @@ SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
                       demo/demo3d/demo3d_graphic.c \
 					            demo/demo3d/demo3d_engine.c \
 					            demo/demo3d/demo3d_data.c \
-								demo/demo3d/demo3d_cmd.c
+								      demo/demo3d/demo3d_cmd.c
 
 # イントロデモ
-#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_TITLE
 SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_graphic.c \
 					 demo/intro/intro_cmd.c \

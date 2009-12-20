@@ -72,7 +72,7 @@ typedef struct {
 struct _INTRO_CMD_WORK {
   // [IN]
   HEAPID heap_id;
-  const INTRO_PARAM* init_param;
+  INTRO_PARAM* init_param;
   INTRO_MCSS_WORK* mcss;
   // [PRIVATE]
   INTRO_SCENE_ID scene_id;
@@ -95,10 +95,17 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
 //=============================================================================
 // コマンド
 //=============================================================================
-static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
-static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
+// 特殊コマンド
+static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_COMP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
+// 一般コマンド
 static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -107,12 +114,16 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
-static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // イントロ用コマンド
-static BOOL CMD_DOCTOR_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
-static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -121,10 +132,21 @@ static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
 static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() = 
 { 
   NULL, // null
+  
+  //-----------------------------------------
+  // ◆ 特殊コマンド ◆
+  //-----------------------------------------
   CMD_SET_SCENE,
+  CMD_START_SCENE,
   CMD_YESNO,
+  CMD_COMP,
 
+  //-----------------------------------------
+  // ◆ 一般コマンド ◆
+  //-----------------------------------------
   CMD_LOAD_BG,
+  CMD_SET_RETCODE,
+  CMD_FADE_REQ,
   CMD_BRIGHTNESS_SET,
   CMD_BRIGHTNESS_REQ,
   CMD_BRIGHTNESS_WAIT,
@@ -133,12 +155,47 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SE_STOP,
   CMD_KEY_WAIT,
   CMD_LOAD_GMM,
+  CMD_WORDSET,
   CMD_PRINT_MSG,
-  CMD_SELECT_MOJI,
+  CMD_MCSS_LOAD,
+  CMD_MCSS_SET_VISIBLE,
+  CMD_MCSS_SET_ANIME,
 
-  CMD_DOCTOR_LOAD,
-  CMD_DOCTOR_SET_VISIBLE,
+  //-----------------------------------------
+  // ◆ イントロデモ用コマンド ◆
+  //-----------------------------------------
+  CMD_SELECT_MOJI,
+  CMD_SELECT_SEX,
+  CMD_POKEMON_APPER,
   NULL, // end
+};
+
+//=============================================================================
+// 判定関数
+//=============================================================================
+static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk );
+
+// INTRO_CMD_COMP と対応
+//--------------------------------------------------------------
+///	判定関数テーブル (関数ポインタテーブル)
+//==============================================================
+static BOOL (*c_cmdtbl_comp[ INTRO_CMD_COMP_MAX ])() = 
+{ 
+  CMD_COMP_SEX,
+};
+
+//=============================================================================
+// WORDSET関数
+//=============================================================================
+static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID );
+
+// INTRO_WORDSET と対応
+//--------------------------------------------------------------
+///	WORDSETテーブル (関数ポインタテーブル)
+//==============================================================
+static void (*c_cmdtbl_wordset[ INTRO_WORDSET_MAX ])() = 
+{ 
+  CMD_WORDSET_TRAINER,
 };
 
 //-----------------------------------------------------------------------------
@@ -163,10 +220,40 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  シーン開始
+ *
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  int inner_param[1];
+      
+  inner_param[0] = wk->init_param->scene_id;
+
+  // 無限ループ対策
+  if( inner_param[0] == INTRO_SCENE_ID_INIT )
+  {
+    GF_ASSERT(0);
+    inner_param[0] += 1;
+  }
+
+  CMD_SET_SCENE( wk, NULL, inner_param );
+
+  OS_TPrintf("\n*** start scene_id=%d ***\n",wk->scene_id);
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  YESNO選択
  *
- *	@param	INTRO_CMD_WORK* wk
  *	@param	param 
+ * 
+ *  @note   TRUEなら一個下のコマンドをストア、FALSEなら2個下のコマンドをストア
  *
  *	@retval
  */
@@ -212,13 +299,19 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
         if( select_id == 0 )
         {
-          // 上が選択された場合は直後のコマンドをストア
-          cmd_store( wk, data );
+          if( data != NULL )
+          {
+            // 上が選択された場合は直後のコマンドをストア
+            cmd_store( wk, data );
+          }
         }
         else
         {
           data++;
-          cmd_store( wk, data );
+          if( data != NULL )
+          {
+            cmd_store( wk, data );
+          }
         }
          
         // 結果コマンドの次をシーク
@@ -233,6 +326,46 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
   }
 
   return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  判定関数呼び出し
+ *
+ *  @param  PARAM[0] INTRO_CMD_COMP
+ 
+ *  @note   TRUEなら一個下のコマンドをストア、FALSEなら2個下のコマンドをストア
+ *
+ *	@retval TRUE=コマンド終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_COMP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  BOOL is_comp;
+  const INTRO_CMD_DATA* data;
+
+  data = Intro_DATA_GetCmdData( wk->scene_id );
+  data += wk->cmd_idx;
+
+  is_comp = c_cmdtbl_comp[ param[0] ]( wk );
+
+  // 判定コマンドを実行
+  if( is_comp == FALSE )
+  {
+    data++;
+  }
+  
+  OS_TPrintf("comp = %d \n", is_comp );
+  
+  if( data != NULL )
+  {
+    cmd_store( wk, data );
+  }
+  
+  // 結果コマンドの次をシーク
+  wk->cmd_idx += 2;
+
+  return TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -277,9 +410,54 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  外部アプリに対する戻り値を設定
  *
- *	@param	param[0]
+ *	@param	param[0] INTRO_RETCODE
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  wk->init_param->retcode =  param[0];
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  フェードリクエスト
+ *
+ *  PARAM[0]  GFL_FADE_MASTER_BRIGHT_XXX
+ *  PARAM[1]  スタート輝度(0～16)
+ *  PARAM[2]  エンド輝度(0～16)
+ *  PARAM[3]  フェードスピード
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{ 
+  switch( sdat->seq )
+  {
+  case 0:
+    GFL_FADE_SetMasterBrightReq( param[0], param[1], param[2], param[3] );
+    sdat->seq++;
+    break;
+  case 1:
+    if( GFL_FADE_CheckFade() == FALSE )
+    {
+      return TRUE;
+    }
+    break;
+  default : GF_ASSERT(0);
+  };
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ブライドネスをセット
+ *
+ *	@param	param[0]  輝度
  *
  *	@retval
  */
@@ -436,6 +614,25 @@ static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  WORDSETする
+ *
+ *	@param	param[0] INTRO_WORDSET レジストする種類を設定
+ *	@param	param[1] レジストするIDを指定
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  GF_ASSERT( param[0] < INTRO_WORDSET_MAX );
+
+  // 関数テーブルから引っ張り出す
+  c_cmdtbl_wordset[ param[0] ]( wk, param[1] );
+
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -451,7 +648,8 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
   switch( sdat->seq )
   {
     case 0:
-      INTRO_MSG_SetPrint( wk->wk_msg, param[0], NULL, NULL );
+      INTRO_MSG_SetPrint( wk->wk_msg, param[0] );
+
       sdat->seq++;
       break;
 
@@ -467,6 +665,83 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
   return FALSE;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  イントロ画面用MCSSをロード
+ *	@param  param[0] MCSS_ID
+ *	@param  param[1] 0=博士, MONSNO=ポケモン
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  GF_ASSERT( param[1] <= MONSNO_MAX );
+
+  if( param[1] == 0 )
+  {
+    static const MCSS_ADD_WORK add = 
+    {
+      ARCID_INTRO_GRA,
+      NARC_intro_intro_doctor_NCBR,
+      NARC_intro_intro_doctor_NCLR,
+      NARC_intro_intro_doctor_NCER,
+      NARC_intro_intro_doctor_NANR,
+      NARC_intro_intro_doctor_NMCR,
+      NARC_intro_intro_doctor_NMAR,
+      NARC_intro_intro_doctor_NCEC,
+    };
+
+    // 博士表示
+    INTRO_MCSS_Add( wk->mcss, param[2], param[3], 0, &add, param[0] );
+  }
+  else
+  {
+    // ポケモン表示
+    INTRO_MCSS_AddPoke( wk->mcss, param[2], param[3], 0, param[1], param[0] );
+  }
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSS表示切替
+ *
+ *	@param	param[0] MCSS_ID
+ *	@param	param[1] 0:非表示, 1:表示
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_MCSS_SetVisible( wk->mcss, param[1], param[0] );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSSアニメーション指定
+ *
+ *	@param	param[0]  MCSS_ID
+ *	@param	param[1]  アニメーションID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_MCSS_SetAnimeIndex( wk->mcss, param[0], param[1] );
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ * イントロ用コマンド
+ */
+//=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
@@ -487,81 +762,114 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
   
   if( param[0] == 0 )
   {
-      GFL_MSGSYS_SetLangID( 0 );
-      CONFIG_SetMojiMode( config, MOJIMODE_HIRAGANA );
+    GFL_MSGSYS_SetLangID( 0 );
+    CONFIG_SetMojiMode( config, MOJIMODE_HIRAGANA );
   }
   else
   {
-      GFL_MSGSYS_SetLangID( 1 );
-      CONFIG_SetMojiMode( config, MOJIMODE_KANJI );
+    GFL_MSGSYS_SetLangID( 1 );
+    CONFIG_SetMojiMode( config, MOJIMODE_KANJI );
   }
 
   return TRUE;
 }
 
-
-//=============================================================================
-/**
- * イントロ用コマンド
- */
-//=============================================================================
-
-//#include "system/mcss_tool.h"
-//#include "poke_tool/poke_tool.h"
-//#include "poke_tool/monsno_def.h"
 //-----------------------------------------------------------------------------
 /**
- *	@brief  博士をロード
- */
-//-----------------------------------------------------------------------------
-static BOOL CMD_DOCTOR_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
-{
-#if 1
-  static const MCSS_ADD_WORK add = 
-  {
-    ARCID_INTRO_GRA,
-    NARC_intro_intro_doctor_NCBR,
-    NARC_intro_intro_doctor_NCLR,
-    NARC_intro_intro_doctor_NCER,
-    NARC_intro_intro_doctor_NANR,
-    NARC_intro_intro_doctor_NMCR,
-    NARC_intro_intro_doctor_NMAR,
-    NARC_intro_intro_doctor_NCEC,
-  };
-  // とりあえず表示
-//  INTRO_MCSS_Add( wk->mcss, 0, FX32_CONST(2.5), 0, &add, 0 );
-  INTRO_MCSS_Add( wk->mcss, 0, 0x5a0c, 0, &add, 0 );
-#else
-  // DEBUG:ヒトカゲを表示
-  {
-    MCSS_ADD_WORK   add;
-    POKEMON_PARAM*  pp;
-
-    pp = PP_Create( MONSNO_HITOKAGE, 0, 0, wk->heap_id );
-
-    MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
-    INTRO_MCSS_Add( wk->mcss, 0, 0, 0, &add, 0 );
-  }
-#endif
-
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  博士表示切替
+ *	@brief  性別を決定
  *
- *	@param	param[0] 0:非表示, 1:表示
+ *	@param	param[0]  0=おとこのこ,1=おんなのこ
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  INTRO_MCSS_SetVisible( wk->mcss, param[0], 0 );
+  MYSTATUS* mystatus;
+
+  mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+
+  if( param[0] == 0 )
+  {
+    MyStatus_SetMySex( mystatus , PTL_SEX_MALE );
+  }
+  else
+  { 
+    MyStatus_SetMySex( mystatus , PTL_SEX_FEMALE );
+  }
 
   return TRUE;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン登場演出
+ *
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  //@TODO
+
+  return TRUE;
+}
+
+//=============================================================================
+// 判定関数
+//=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  男女判定
+ *
+ *	@param	INTRO_CMD_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk )
+{
+  MYSTATUS* mystatus;
+
+  mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+
+  if( MyStatus_GetMySex( mystatus ) == PTL_SEX_MALE )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//=============================================================================
+// WORDSET関数
+//=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナー名をレジスト
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	bufID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
+{
+  WORDSET* wordset;
+  const MYSTATUS* mystatus;
+
+  wordset   = INTRO_MSG_GetWordSet( wk->wk_msg );
+  mystatus  = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+
+  WORDSET_RegisterPlayerName( wordset, bufID, mystatus );
+}
+
+
 
 //=============================================================================
 /**
@@ -579,7 +887,7 @@ static BOOL CMD_DOCTOR_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, const INTRO_PARAM* init_param, HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
 
@@ -593,8 +901,9 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, const INTRO_PARAM* init_p
   wk->init_param  = init_param;
   wk->mcss = mcss;
 
-  // 選択肢モジュール初期化
+  // 文字操作モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( heap_id );
+
 
   return wk;
 }
@@ -659,14 +968,6 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
         // 次のシーンの先頭コマンド
         data = Intro_DATA_GetCmdData( wk->scene_id );
       }
-#if 0
-      else if( data->type == INTRO_CMD_TYPE_YESNO )
-      {
-        //@TODO 次のコマンドを差される前じゃないと困るので一旦ここにおく
-        c_cmdtbl[ data->type ]( wk, &wk->store_data[i], data->param );
-      }
-#endif
-
       //---------------------------------------------
 
       // コマンド終了判定
@@ -782,4 +1083,5 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
 
   return is_continue;
 }
+
 

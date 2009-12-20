@@ -137,7 +137,8 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 
   // ウィンドウ生成
   // @TODO リストを出す場所指定
-  wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 24, 14, 7, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
+  // @TODO ウィンドウフレーム
+  wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 18, 14, 13, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリアしておく
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win_list );
 
@@ -236,7 +237,8 @@ void INTRO_MSG_Main( INTRO_MSG_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg )
+//void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg )
+void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
 {
   const u8 clear_color = 15;
   GFL_BMPWIN* win;
@@ -262,11 +264,13 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callba
   GFL_STR_CheckBufferValid( wk->strbuf ); ///< 破損チェック
 #endif
 
+#if 0
   // コールバックでWORDSET
   if( callback_func )
   {
     callback_func( wk->wordset, callback_arg );
   }
+#endif
 
   WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
 
@@ -532,3 +536,17 @@ INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_select )
 	return INTRO_LIST_SELECT_NONE;
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  WORDSETへのポインタを取得
+ *
+ *	@param	INTRO_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk )
+{
+  return wk->wordset;
+}

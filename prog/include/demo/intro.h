@@ -28,6 +28,30 @@ extern const GFL_PROC_DATA IntroProcData;
  *								定数定義
  */
 //=============================================================================
+//@TODO cdatと公開ヘッダの連動は美しくない。
+// src/demo/intro/intro_cmd_data.cdat と対応
+typedef enum
+{ 
+  INTRO_SCENE_ID_INIT = 0,
+  INTRO_SCENE_ID_00,
+  INTRO_SCENE_ID_01,
+  INTRO_SCENE_ID_02,
+  INTRO_SCENE_ID_03,
+  INTRO_SCENE_ID_04,
+  INTRO_SCENE_ID_05,
+  INTRO_SCENE_ID_05_RETAKE_YESNO,
+  INTRO_SCENE_ID_06,
+  INTRO_SCENE_ID_07,
+  INTRO_SCENE_ID_MAX,
+} INTRO_SCENE_ID;
+
+//--------------------------------------------------------------
+///	
+//==============================================================
+typedef enum {
+  INTRO_RETCODE_NORMAL = 0, ///< 通常
+  INTRO_RETCODE_RETAKE,     ///< やり直し
+} INTRO_RETCODE;
 
 //=============================================================================
 /**
@@ -40,7 +64,10 @@ extern const GFL_PROC_DATA IntroProcData;
 //=====================================
 typedef struct {	
   // [IN]
-  SAVE_CONTROL_WORK* save_ctrl;
+  SAVE_CONTROL_WORK*  save_ctrl;
+  INTRO_SCENE_ID      scene_id;
+  // [OUT]
+  INTRO_RETCODE       retcode;
 } INTRO_PARAM;
 
 FS_EXTERN_OVERLAY(intro);

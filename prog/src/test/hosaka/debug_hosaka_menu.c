@@ -14,14 +14,14 @@
  *							プロトタイプ宣言
  */
 //=============================================================================
-static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
+//static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
 // メニューリスト
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
-	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
+//	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -34,6 +34,7 @@ static TESTMODE_MENU_LIST menuHosaka[] =
  */
 //=============================================================================
 
+#if 0
 // イントロデモ
 #include "demo/intro.h"
 static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
@@ -46,6 +47,7 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 
   return TRUE;
 }
+#endif
 
 // 簡易会話 選択
 #include "app/pms_select.h"
