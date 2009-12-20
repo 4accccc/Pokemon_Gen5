@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T16:52:47"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:12:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="952" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="177" right="951" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,10 +297,10 @@
 ・仮メッセージ
 ・下記OBJと隣接</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
-		<language name="JPN" width="256">ぼくたちは　サッカーだいすき　でね
+		<language name="JPN" width="256">ぼくたちは　スポーツだいすき　でね
 しあい　だけでなく[BE:00:ページ切り替え（行送り）]
 れんしゅうも　けんがく　しているのさ</language>
-		<language name="JPN_KANJI" width="256">ぼくたちは　サッカー大好きでね
+		<language name="JPN_KANJI" width="256">ぼくたちは　スポーツ大好きでね
 試合だけでなく[BE:00:ページ切り替え（行送り）]
 練習も　見学しているのさ</language>
 	</row>
@@ -311,10 +311,12 @@
 ・上記OBJと隣接</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ひとと　ポケモンとが　おりなす
-あたらしい　かたちの　サッカー[BE:00:ページ切り替え（行送り）]
+あたらしい　かたちの[BE:00:ページ切り替え（行送り）]
+バスケや　テニス……[BE:00:ページ切り替え（行送り）]
 これって　スポーツの　しんかけいかも</language>
 		<language name="JPN_KANJI" width="256">人と　ポケモンとが　織り成す
-新しい　形の　サッカー[BE:00:ページ切り替え（行送り）]
+新しい　形の[BE:00:ページ切り替え（行送り）]
+バスケや　テニス……[BE:00:ページ切り替え（行送り）]
 これって　スポーツの　進化系かも</language>
 	</row>
 
@@ -333,9 +335,11 @@
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
-		<language name="JPN" width="256">サッカーせんしゅの　ボールさばき
+		<language name="JPN" width="256">サッカーせんしゅの　ボールコントロールに
+ポケモンへの　しじ！▽
 しあいでも　しょうぶでも　たっしゃよ！</language>
-		<language name="JPN_KANJI" width="256">サッカー選手の　ボールさばき
+		<language name="JPN_KANJI" width="256">選手の　ボールコントロールに
+ポケモンへの　指示！▽
 試合でも　勝負でも　達者よ！</language>
 	</row>
 

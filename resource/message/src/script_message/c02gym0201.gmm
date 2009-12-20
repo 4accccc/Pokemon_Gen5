@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T22:27:02"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:10:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="155" top="0" right="851" bottom="995" maximized="no" rayout="Vertical2">
+	<dialog left="155" top="0" right="851" bottom="617" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="521"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="688"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -488,11 +488,11 @@
 		<language name="JPN" width="256">いま　よんでいるのは
 「こどもを　げんきに　そだてる」よ▼
 このほんを　よみたくなったら
-わたしに　いってね▼</language>
+わたしに　いってね</language>
 		<language name="JPN_KANJI" width="256">今　読んでいるのは
 「子供を　げんきに　育てる」よ▼
 この本を　読みたくなったら
-私に　言ってね▼</language>
+私に　言ってね</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

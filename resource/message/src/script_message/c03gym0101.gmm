@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T18:34:00"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T14:05:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="330" top="242" right="1036" bottom="862" maximized="no" rayout="Vertical2">
+	<dialog left="351" top="292" right="1057" bottom="912" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
@@ -320,7 +320,7 @@
 さっそくだけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_leader_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">あうう
@@ -337,7 +337,7 @@
 ボクに　勝ったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_03">
+	<row id="msg_c03gym0101_leader_03" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アーティから
@@ -346,7 +346,7 @@
 ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
@@ -359,12 +359,20 @@
 これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>アイテム入手処理後
 </comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説</language>
+		<language name="JPN" width="256">「むしのていこう」は
+ダメージを　あたえた　あいての▽
+とくこうも　さげるんだよね▼
+そういう　なんでもないような　ことが
+だいじ　だったり　するからさ</language>
+		<language name="JPN_KANJI" width="256">「むしのていこう」は
+ダメージを　与えた　相手の▽
+特攻も　下げるんだよね▼
+そういう　なんでもないような　ことが
+大事だったり　するからさ</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -391,15 +399,19 @@
 ・トランシーバー持っていない</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ところでさ
-この　まちの　？？？？？には[BE:00:ページ切り替え（行送り）]
-行ってみたの？[BE:01:ページ切り替え（クリア）]
-トランシーバー　もらえるし
-あれが　あると　べんりかもしれないし</language>
+この　まちの　バトルカンパニーに▽
+いってみたの？▼
+パレスって　ふしぎな　ばしょの
+けんきゅうを　していてさ▼
+なんだか　ちんみょうで　でも
+べんりな　どうぐが　もらえるってよ</language>
 		<language name="JPN_KANJI" width="256">ところでさ
-この　街の　？？？？？には[BE:00:ページ切り替え（行送り）]
-行ってみたの？[BE:01:ページ切り替え（クリア）]
-トランシーバー　もらえるし
-あれが　あると　便利かもしれないし</language>
+この　街の　バトルカンパニーに▽
+行ってみたの？▼
+パレスって　不思議な　場所の
+研究を　していてさ▼
+なんだか　珍妙で　でも
+便利な　道具が　もらえるってよ</language>
 	</row>
 
 	<row id="msg_c03gym0101_jugglimg_05_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

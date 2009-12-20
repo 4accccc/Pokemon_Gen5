@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T19:03:21"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T13:39:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -636,25 +636,25 @@
 	</row>
 
 	<row id="msg_r03_woman3_01">
-		<comment>♀
-・7月末ROM用</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN3
 保育士</attribute>
-		<language name="JPN" width="256">この　？？？？ほいくえんは
+		<language name="JPN" width="256">この　ようちえん　は
 なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
-だから　ポケモンしょうぶも　なかよく
-ポケモン２ひき　ずつ　だしあって[BE:00:ページ切り替え（行送り）]
-ダブルバトルで　しょうぶ　するのよ！</language>
-		<language name="JPN_KANJI" width="256">この　？？？？保育園は
+だから　ポケモンしょうぶも
+ふたりで　なかよく　ポケモンを[BE:00:ページ切り替え（行送り）]
+１ひきずつ　だしあって　しょうぶ！[BE:00:ページ切り替え（行送り）]
+つまり　ダブルバトルって　わけ！</language>
+		<language name="JPN_KANJI" width="256">この　幼稚園は
 なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
-だから　ポケモン勝負も　なかよく
-ポケモン２匹ずつ　だしあって　勝負[BE:00:ページ切り替え（行送り）]
+だから　ポケモン勝負も
+２人で　なかよく　ポケモンを[BE:00:ページ切り替え（行送り）]
+１匹ずつ　だしあって　勝負！[BE:00:ページ切り替え（行送り）]
 つまり　ダブルバトルって　わけ！</language>
 	</row>
 
 	<row id="msg_r03_babygirl1a_01">
-		<comment>♀
-・7月末ROM用</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">ダ　ダブルバトルの　おさそい　なの？[BE:01:ページ切り替え（クリア）]
@@ -668,8 +668,7 @@
 	</row>
 
 	<row id="msg_r03_babygirl1b_01">
-		<comment>♀
-・7月末ROM用</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">あたちたちの　ぴったり

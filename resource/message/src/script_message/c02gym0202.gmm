@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T22:28:00"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T13:56:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -351,33 +351,55 @@
 レベル３０までなら　アンタの
 いうことを　きいてくれるよ！[BE:01:ページ切り替え（クリア）]
 あと　この　わざマシンも
-もっていくと　いいさ！</language>
+もっていくと　いいさ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">その　バッジを　持っていれば
 どんな　ポケモンでも[BE:01:ページ切り替え（クリア）]
 レベル３０までなら　アンタの
 いうことを　きいてくれるよ！[BE:01:ページ切り替え（クリア）]
 あと　この　わざマシンも
-持っていくと　いいさ！</language>
+持っていくと　いいさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0202_leader_05">
+	<row id="msg_c02gym0202_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・アイテム入手処理後
-・初回は続けて
-　msg_c02gym0202_ad_01表示
-</comment>
+・続けてmsg_c02gym0202_ad_01表示</comment>
 		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
+		<language name="JPN" width="256">「かたきうち」は　まえの　ターンで
+みかたの　ポケモンが　たおれていたら▽
+いりょくが　ばいに　なる　わざ！▼
+つかいどころを　きわめれば
+きょうてきも　たおせるんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">「かたきうち」は　前の　ターンで
+味方の　ポケモンが　たおれていたら▽
+威力が　倍になる　技！▼
+使いどころを　極めれば
+強敵も　倒せるんだよ！▼</language>
 	</row>
 
-	<row id="msg_c02gym0202_leader_06">
+	<row id="msg_c02gym0202_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・msg_c02gym0101_leader_05
-　表示後に再度会話（仮）</comment>
+・msg_d02r0101_leader2_04表示後に
+　再度会話したとき</comment>
 		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">わざマシンを　もらったあと</language>
-		<language name="JPN_KANJI" width="256">わざマシンをもらった後</language>
+		<language name="JPN" width="256">いっしょうを　かけて　かんがえても
+わからない　もんだいも　ある▼
+ひとによって　こたえの　ことなる
+もんだいも　ある……▼
+それでもさ　こうきしんを
+おさえることが　できないのは▼
+しんじつを　ときあかしたい　きもち
+ロマンを　もとめる　おもいの▽
+２つが　いりまじって　いるからさ</language>
+		<language name="JPN_KANJI" width="256">一生を　かけて　考えても
+わからない　問題も　ある▼
+人によって　答えの　異なる
+問題も　ある……▼
+それでもさ　好奇心を
+抑えることが　できないのは▼
+真実を　解き明かしたい　気持ち
+ロマンを　求める　思いの▽
+２つが　入り混じって　いるからさ</language>
 	</row>
 
 	<row id="msg_c02gym0202_ad_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
