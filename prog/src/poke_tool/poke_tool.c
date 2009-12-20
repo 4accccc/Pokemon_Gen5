@@ -3304,3 +3304,23 @@ u32 POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID par
   return POKE_PERSONAL_GetParam( ppd, param );
 }
 
+//==================================================================
+/**
+ * 指定したレベルにポケモンパラメータを補正します
+ *
+ * @param   pp		  対象のポケモンへのポインタ
+ * @param   level		レベル
+ */
+//==================================================================
+void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level)
+{
+  u32 level_exp;
+  u32 monsno, form_no;
+  
+  monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+  form_no = PP_Get(pp, ID_PARA_form_no, NULL);
+  
+  level_exp = POKETOOL_GetMinExp( monsno, form_no, level );
+  PP_Put(pp, ID_PARA_exp, level_exp);
+  PP_Renew( pp );
+}

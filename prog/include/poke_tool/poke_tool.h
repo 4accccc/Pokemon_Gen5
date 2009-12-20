@@ -709,5 +709,8 @@ extern u16 POKETOOL_make_checksum( const void *data, u32 size );
 extern void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec);
 extern void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp);
 
+//ÉåÉxÉãï‚ê≥
+extern void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level);
+
 #endif __ASM_NO_DEF_
 
