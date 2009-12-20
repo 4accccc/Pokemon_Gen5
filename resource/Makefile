@@ -113,7 +113,8 @@ SUBDIRS	=	wmi \
 			demo3d \
 			fld_trade \
 			intro \
-			comm_tvt
+			comm_tvt \
+			guru2
 
 include $(RESOURCE_MACRO)
 
