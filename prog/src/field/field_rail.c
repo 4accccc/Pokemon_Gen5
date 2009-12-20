@@ -1367,7 +1367,7 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
         u32 add_ofs = (local_work->line_ofs + RAIL_WALK_OFS) - (local_work->line_ofs_max);
         RAIL_LOCATION now_location;
 
-        now_location = work->now_location;
+        getRailLocation( work, &now_location );
         now_location.width_grid = 0;
         
         RailMan_CalcRailKeyAndOfs( work->cp_man, &now_location, work->line->key, add_ofs, &pos );
