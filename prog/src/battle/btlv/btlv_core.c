@@ -1350,7 +1350,7 @@ void BTLV_StartRankUpEffect( BTLV_CORE* wk, u8 vpos )
 }
 BOOL BTLV_WaitRankEffect( BTLV_CORE* wk, u8 vpos )
 {
-  if( !BTLV_EFFECT_CheckExist( vpos ) ){
+  if( !BTLV_EFFECT_CheckExecute() ){
     BTL_Printf("エフェクト終了した ... 一応vpos=%d\n", vpos);
     return TRUE;
   }
