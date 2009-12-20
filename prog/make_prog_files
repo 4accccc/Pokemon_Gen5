@@ -1320,7 +1320,7 @@ SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
                       demo/demo3d/demo3d_graphic.c \
 					            demo/demo3d/demo3d_engine.c \
 					            demo/demo3d/demo3d_data.c \
-								      demo/demo3d/demo3d_cmd.c
+								      demo/demo3d/demo3d_cmd.c 
 
 # イントロデモ
 #===> SRCS_OVERLAY_TITLE
@@ -1329,7 +1329,8 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_cmd.c \
 					 demo/intro/intro_cmd_data.c \
            demo/intro/intro_msg.c \
-           demo/intro/intro_mcss.c
+           demo/intro/intro_mcss.c \
+           demo/intro/intro_g3d.c
 
 # ゲームクリアデモ（仮）
 #===> SRCS_OVERLAY_UI_COMMON

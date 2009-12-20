@@ -21,6 +21,8 @@
 
 #include "font/font.naix"
 
+#include "sound/pm_sndsys.h" // for 
+
 //アーカイブ
 #include "arc_def.h" // for ARCID_XXX
 
@@ -50,6 +52,112 @@ enum
 
 #define LISTDATA_STR_LENGTH	(32)
 
+//--------------------------------------------------------------
+/// KEYCURSOR_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  u8 cursor_anm_no;
+  u8 cursor_anm_frame;
+  GFL_BMP_DATA *bmp_cursor;
+}KEYCURSOR_WORK;
+
+//======================================================================
+//  キー送りカーソル
+//======================================================================
+
+// 送りカーソルデータ
+static const u8 ALIGN4 skip_cursor_Character[128] = {
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x22,0x22,0x22,0x22,
+0x21,0x22,0x22,0x22,0x10,0x22,0x22,0x12, 0x00,0x21,0x22,0x11,0x00,0x10,0x12,0x01,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x12,0x00,0x00,0x00,
+0x11,0x00,0x00,0x00,0x01,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+
+0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 初期化
+ * @param work KEYCURSOR_WORK
+ * @param heapID HEAPID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void KeyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID )
+{
+  MI_CpuClear8( work, sizeof(KEYCURSOR_WORK) );
+  work->bmp_cursor = GFL_BMP_CreateWithData(
+        (u8*)skip_cursor_Character,
+        2, 2, GFL_BMP_16_COLOR, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 削除
+ * @param work KEYCURSOR_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void KeyCursor_Delete( KEYCURSOR_WORK *work )
+{
+  GFL_BMP_Delete( work->bmp_cursor );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル クリア
+ * @param work KEYCURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void KeyCursor_Clear( KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+{
+  u16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  x = GFL_BMP_GetSizeX( bmp ) - 11;
+  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  offs = tbl[work->cursor_anm_no];
+  GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 表示
+ * @param work KEYCURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void KeyCursor_Write( KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+{
+  u16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  KeyCursor_Clear( work, bmp, n_col );
+  
+  work->cursor_anm_frame++;
+  
+  if( work->cursor_anm_frame >= 4 ){
+    work->cursor_anm_frame = 0;
+    work->cursor_anm_no++;
+    work->cursor_anm_no %= 3;
+  }
+
+  x = GFL_BMP_GetSizeX( bmp ) - 11;
+  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  offs = tbl[work->cursor_anm_no];
+  
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+}
+
 //-------------------------------------
 ///	リスト
 //=====================================
@@ -75,6 +183,9 @@ struct _INTRO_MSG_WORK {
   PRINT_STREAM* print_stream;
   GFL_TCBLSYS*  msg_tcblsys;
   GFL_BMPWIN*   win_dispwin;
+  
+  // キーカーソル
+  KEYCURSOR_WORK cursor_work;
   
   // リスト
   INTRO_LIST_WORK   list;
@@ -137,10 +248,11 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 
   // ウィンドウ生成
   // @TODO リストを出す場所指定
-  // @TODO ウィンドウフレーム
-  wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 18, 14, 13, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
+  wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 22, 13, 9, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリアしておく
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win_list );
+
+  KeyCursor_Init( &wk->cursor_work, wk->heap_id );
 
   return wk;
 }
@@ -156,6 +268,8 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 //-----------------------------------------------------------------------------
 void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 {
+  KeyCursor_Delete( &wk->cursor_work );
+
   GFL_STR_DeleteBuffer( wk->strbuf );
   GFL_STR_DeleteBuffer( wk->exp_strbuf );
   
@@ -314,17 +428,29 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       wk->print_stream = NULL;
       return TRUE;
 
-    case PRINTSTREAM_STATE_PAUSE : // キー入力待ち
+    case PRINTSTREAM_STATE_PAUSE : // 一時停止中
+
+      // キー入力待ち
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
       {
-//      GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
+        GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
+        KeyCursor_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
       }
+      else
+      {
+        if( PRINTSYS_PrintStreamGetPauseType( wk->print_stream ) == PRINTSTREAM_PAUSE_CLEAR )
+        {
+          KeyCursor_Write( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
+        }
+      }
+
+      GFL_BMPWIN_TransVramCharacter( wk->win_dispwin );
       break;
 
     case PRINTSTREAM_STATE_RUNNING :  // 実行中
       // メッセージスキップ
-      if( GFL_UI_KEY_GetCont() & MSG_SKIP_BTN )
+      if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetTrg() )
       {
         PRINTSYS_PrintStreamShortWait( wk->print_stream, 0 );
       }
@@ -465,6 +591,8 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 		BmpMenuList_SetCursorBmp( list->p_list, heapID );
 	}
 
+  GFL_BMPWIN_MakeTransWindow( p_bmpwin ); // スクリーン＆キャラ転送
+  BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M ); // 周りにフレームを書く
 }
 
 //----------------------------------------------------------------------------
@@ -479,6 +607,7 @@ void INTRO_MSG_LIST_Finish( INTRO_MSG_WORK *wk )
 {
   INTRO_LIST_WORK* list = &wk->list;
 
+  BmpWinFrame_Clear( wk->win_list, WINDOW_TRANS_ON_V );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリア
   GFL_BMPWIN_TransVramCharacter( wk->win_list ); // 転送
 

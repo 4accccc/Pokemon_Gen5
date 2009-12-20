@@ -36,6 +36,7 @@
 
 #include "intro_msg.h" // for INTRO_MSG_WORK
 #include "intro_mcss.h" // for INTRO_MCSS_WORK
+#include "intro_g3d.h" // for INTRO_G3D_WORK
 
 #include "intro_cmd.h" // for extern宣言
 
@@ -51,7 +52,6 @@ enum
   STORE_NUM = 8,  ///< 同時実行コマンドの限界数
 };
 
-
 //=============================================================================
 /**
  *								構造体定義
@@ -63,6 +63,7 @@ enum
 //==============================================================
 typedef struct {
   int   seq;      // コマンド内シーケンス
+  int   cnt;      // 汎用カウンタ
   void* wk_user;  // ユーザーワーク
 } INTRO_STORE_DATA;
 
@@ -74,6 +75,7 @@ struct _INTRO_CMD_WORK {
   HEAPID heap_id;
   INTRO_PARAM* init_param;
   INTRO_MCSS_WORK* mcss;
+  INTRO_G3D_WORK* g3d;
   // [PRIVATE]
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
@@ -91,6 +93,7 @@ struct _INTRO_CMD_WORK {
 //=============================================================================
 static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data );
 static BOOL cmd_store_exec( INTRO_CMD_WORK* wk );
+static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id );
 
 //=============================================================================
 // コマンド
@@ -119,11 +122,17 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // イントロ用コマンド
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_G3D_SELECT_SEX_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -160,6 +169,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_MCSS_LOAD,
   CMD_MCSS_SET_VISIBLE,
   CMD_MCSS_SET_ANIME,
+  CMD_MCSS_FADE_REQ,
 
   //-----------------------------------------
   // ◆ イントロデモ用コマンド ◆
@@ -167,6 +177,13 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SELECT_MOJI,
   CMD_SELECT_SEX,
   CMD_POKEMON_APPER,
+
+  CMD_G3D_SELECT_SEX_SET_VISIBLE,
+  CMD_G3D_SELECT_SEX_SET_FRAME,
+  CMD_G3D_SELECT_SEX_INIT,
+  CMD_G3D_SELECT_SEX_MAIN,
+  CMD_G3D_SELECT_SEX_RETURN,
+
   NULL, // end
 };
 
@@ -723,7 +740,7 @@ static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, in
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MCSSアニメーション指定
+ *	@brief  MCSS アニメーション指定
  *
  *	@param	param[0]  MCSS_ID
  *	@param	param[1]  アニメーションID
@@ -737,11 +754,79 @@ static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSS フェードリクエスト
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  // @TODO 上手くいかない。モザイクみたいになる。
+  switch( sdat->seq )
+  {
+  case 0 :
+    sdat->cnt = 31;
+    sdat->seq++;
+    break;
+  case 1 :
+    sdat->cnt--;
+    if( sdat->cnt <= 0 )
+    {
+      return TRUE;
+    }
+    else
+    {
+      HOSAKA_Printf("mode=%d alpha=%d\n",param[0], sdat->cnt);
+      if( param[1] == TRUE )
+      {
+        INTRO_MCSS_SetAlpha( wk->mcss, param[0], 31-sdat->cnt );
+      }
+      else if( param[1] == FALSE )
+      {
+        INTRO_MCSS_SetAlpha( wk->mcss, param[0], sdat->cnt );
+      }
+      else
+      {
+        GF_ASSERT(0);
+      }
+    }
+    break;
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+
 //=============================================================================
 /**
  * イントロ用コマンド
  */
 //=============================================================================
+
+// セーブ処理
+#if 0
+static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  IntrSave_Init( wk->heap_id, )
+  wk->b_saveing = TRUE;
+}
+
+static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  IntrSave_ReqSuspend(  )
+}
+
+static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+}
+#endif 
 
 //-----------------------------------------------------------------------------
 /**
@@ -817,6 +902,163 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3D選択肢 表示
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_G3D_SELECT_SEX_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_G3D_SelectVisible( wk->g3d, param[0] ); 
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3D男女選択 フレーム直指定
+ *
+ *	@param	param[0] フレーム値
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  INTRO_G3D_SelectSet( wk->g3d, param[0] );
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3D男女洗濯開始
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{ 
+  if( INTRO_G3D_SelectStart( wk->g3d ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3D男女選択主処理
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{ 
+  switch( sdat->seq )
+  {
+  case 0 :
+    INTRO_G3D_SelectSet( wk->g3d, 20 ); // デフォルトフレーム指定
+    sdat->seq++;
+    break;
+  case 1 :
+
+    // キー入力
+    if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) || 
+        (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
+    {
+      GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+      sdat->cnt ^= 1; 
+      HOSAKA_Printf("cnt=%d\n",sdat->cnt);
+      // 表示切り替え
+      if( sdat->cnt )
+      {
+        INTRO_G3D_SelectSet( wk->g3d, 19 );
+      }
+      else
+      {
+        INTRO_G3D_SelectSet( wk->g3d, 21 );
+      }
+    }
+    // 決定
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
+      sdat->seq++;
+    }
+    break;
+
+  case 2 :
+    // 性別決定
+    {
+      BOOL is_woman = sdat->cnt;
+      MYSTATUS* mystatus;
+
+      mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+
+      if( is_woman == FALSE )
+      {
+        MyStatus_SetMySex( mystatus , PTL_SEX_MALE );
+      }
+      else
+      { 
+        MyStatus_SetMySex( mystatus , PTL_SEX_FEMALE );
+      }
+    
+      // 決定演出開始
+      INTRO_G3D_SelectDecideStart( wk->g3d, !is_woman );
+
+      sdat->seq++;
+    }
+    break;
+
+  case 3: 
+    // 決定演出終了待ち
+    if( INTRO_G3D_SelectDecideWait( wk->g3d ) )
+    {
+      return TRUE;
+    }
+    break;
+  
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	param[0]
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  if( INTRO_G3D_SelectDecideReturn( wk->g3d ) )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
 //=============================================================================
 // 判定関数
 //=============================================================================
@@ -887,7 +1129,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
 
@@ -899,11 +1141,11 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, 
   // メンバ初期化
   wk->heap_id     = heap_id;
   wk->init_param  = init_param;
-  wk->mcss = mcss;
+  wk->mcss  = mcss;
+  wk->g3d   = g3d;
 
   // 文字操作モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( heap_id );
-
 
   return wk;
 }
@@ -1072,11 +1314,8 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
       }
       else
       {
-        // 終了したコマンドを消去
-        wk->store[i] = NULL;
-        // シーケンスをクリア
-        wk->store_data[i].seq = 0; 
-        HOSAKA_Printf("store [%d] is finish \n", i );
+        // 指定したIDのストアをクリア
+        cmd_store_clear( wk, i );
       }
     }
   }
@@ -1084,4 +1323,25 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
   return is_continue;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定したコマンドをクリア
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id )
+{
+  GF_ASSERT( id < STORE_NUM );
 
+  // 終了したコマンドを消去
+  wk->store[id] = NULL;
+  // シーケンスをクリア
+  wk->store_data[id].seq = 0; 
+  wk->store_data[id].cnt = 0;
+
+  HOSAKA_Printf("store [%d] is clear \n", id );
+}

@@ -12,6 +12,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+
 #include "system/brightness.h"
 
 //タスクメニュー
@@ -46,7 +47,9 @@
 
 #include "message.naix"
 
-#include "intro_mcss.h"
+#include "intro_mcss.h" // for INTRO_MCSS_WORK
+#include "intro_g3d.h" // for INTRO_G3D_WORK
+
 #include "intro_cmd.h"
 
 //=============================================================================
@@ -91,6 +94,7 @@ typedef struct
 
   INTRO_CMD_WORK*   cmd;
   INTRO_MCSS_WORK*  mcss;
+  INTRO_G3D_WORK*   g3d;
 
 } INTRO_MAIN_WORK;
 
@@ -183,8 +187,11 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
   // MCSS初期化
   wk->mcss = INTRO_MCSS_Create( wk->heapID );
 
+  // 3D関連初期化
+  wk->g3d = INTRO_G3D_Create( wk->graphic, wk->heapID );
+
   // コマンド初期化
-  wk->cmd = Intro_CMD_Init( wk->mcss, wk->param, wk->heapID );
+  wk->cmd = Intro_CMD_Init( wk->g3d, wk->mcss, wk->param, wk->heapID );
 
   // ブライドネス設定 真っ黒
 //  SetBrightness( -16, (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
@@ -223,6 +230,7 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
   }
   
   INTRO_MCSS_Exit( wk->mcss );
+  INTRO_G3D_Exit( wk->g3d );
 
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
@@ -299,6 +307,7 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
   INTRO_GRAPHIC_3D_StartDraw( wk->graphic );
 
   INTRO_MCSS_Main( wk->mcss );
+  INTRO_G3D_Main( wk->g3d );
 
   INTRO_GRAPHIC_3D_EndDraw( wk->graphic );
 

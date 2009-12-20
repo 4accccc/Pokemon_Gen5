@@ -50,7 +50,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
+	GX_VRAM_TEX_01_BD,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
@@ -226,7 +226,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
-#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX256K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
 #define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
@@ -793,6 +793,7 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
+
 static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GRAPHIC_G3D_TEXSIZE,

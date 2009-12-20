@@ -86,7 +86,8 @@ INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id )
   wk->mcss    = MCSS_Init( MCSS_ID_MAX, heap_id );
   wk->heap_id = heap_id;
 
-  MCSS_SetTextureTransAdrs( wk->mcss, 0 );
+  // intro_g3d‚Æ•Às‚³‚¹‚é‚½‚ß‚É‚¸‚ç‚µ‚Ş
+  MCSS_SetTextureTransAdrs( wk->mcss, 0x10000 );
   MCSS_SetOrthoMode( wk->mcss );
 
   return wk;
