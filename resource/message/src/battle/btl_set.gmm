@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-20T18:22:10"/>
+	<create user="taya" host="W00146" date="2009-12-20T22:58:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5626,6 +5626,26 @@
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_TameSkip">
+		<comment>溜めて出すワザを１発で出す</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ちからが　みなぎった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+力が　みなぎった！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_TameSkip_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ちからが　みなぎった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+力が　みなぎった！</language>
+	</row>
+	<row id="BTL_STRID_SET_UseItem_TameSkip_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ちからが　みなぎった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+力が　みなぎった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_PriorityUpOnce">
