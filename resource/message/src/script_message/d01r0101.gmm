@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T18:11:44"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T18:13:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -517,13 +517,13 @@
 　※何か遊びを入れたい</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
-なんだか　あっちの　ほうから
+なんだか　かべの　むこうから
 ものおと　きこえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　いってみようよ！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
-なんだか　あっちの　方から
-物音　聞こえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　行ってみようよ！▼</language>
+ねえねえ　いってみようよ！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『！▼
+なんだか　壁の　向こうから
+物音　聞こえなかった！？▽
+ねえねえ　行ってみようよ！</language>
 	</row>
 
 	<row id="msg_d01r0101_poke_01">
