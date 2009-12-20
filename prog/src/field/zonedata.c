@@ -473,6 +473,43 @@ u16 ZONEDATA_GetWeatherID(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+/// 自転車に乗れるマップかどうか
+//------------------------------------------------------------------
+BOOL ZONEDATA_BicycleEnable( u16 zone_id )
+{
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.dash_flag;
+}
+//------------------------------------------------------------------
+/// ダッシュできるマップかどうか
+//------------------------------------------------------------------
+BOOL ZONEDATA_DashEnable( u16 zone_id )
+{
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.dash_flag;
+}
+//------------------------------------------------------------------
+/// 「そらをとぶ」等が使えるマップかどうか
+//------------------------------------------------------------------
+BOOL ZONEDATA_FlyEnable( u16 zone_id )
+{
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.fly_flag;
+}
+//------------------------------------------------------------------
+/// 「あなぬけ」による脱出を使えるマップかどうか
+//------------------------------------------------------------------
+BOOL ZONEDATA_EscapeEnable( u16 zone_id )
+{
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.escape_flag;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief 特殊なサンプルOBJを使用するかどうかの設定取得
  * @param zone_id ゾーン指定ID

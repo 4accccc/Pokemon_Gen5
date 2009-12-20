@@ -18,6 +18,7 @@
 #include "fskill_sorawotobu.h"
 #include "fieldskill_mapeff.h"
 #include "eventwork.h"
+#include "field/zonedata.h"
 
 #include "script.h"
 #include "../../../resource/fldmapdata/script/hiden_def.h" //script id
@@ -168,13 +169,15 @@ void FLDSKILL_InitCheckWork(
   }
 #endif
   
-  //屋内屋外チェック
-  if (AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldmap ) ) != 0 )
+  //if (AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldmap ) ) != 0 )
+  if ( ZONEDATA_FlyEnable( scwk->zone_id ) == TRUE )
   {
-      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_SORAWOTOBU );
-      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_TELEPORT );
-  } else {
-      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_ANAWOHORU );
+    scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_SORAWOTOBU );
+    scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_TELEPORT );
+  }
+  if ( ZONEDATA_EscapeEnable( scwk->zone_id ) == TRUE )
+  {
+    scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_ANAWOHORU );
   }
 
   {
