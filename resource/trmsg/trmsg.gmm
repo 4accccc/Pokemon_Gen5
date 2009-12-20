@@ -1453,19 +1453,13 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">この　ジムはですね
-ジムリーダーおすすめの　ほんを▽
-さがしていくと　さきに　すすめます▼
-ちなみに　さいしょの　おすすめは
+		<language name="JPN" width="216">さいしょの　おすすめの　ほんは
 「はじめまして　ポケモンちゃん」です▼
 じどうしょの　ほんだなは
 いりぐち　ちかくに　ありますよ</language>
-		<language name="JPN_KANJI" width="216">この　ジムはですね
-ジムリーダーお薦めの　本を▽
-読んでいくと　先に　進めます▼
-ちなみに　最初の　お薦めは
+		<language name="JPN_KANJI" width="216">最初の　お薦め本は
 「はじめまして　ポケモンちゃん」です▼
-児童書の　本棚は
+児童書の　本棚なら
 入り口近くに　ありますよ</language>
 	</row>
 
