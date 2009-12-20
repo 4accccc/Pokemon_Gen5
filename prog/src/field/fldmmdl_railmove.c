@@ -665,7 +665,7 @@ static void MMdl_MapAttrGrassProc_0(
     
     if( (flag&MAPATTR_FLAGBIT_GRASS) ){
       FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( mmdl );
-      FLDEFF_GRASS_SetMMdl( fectrl, mmdl, FALSE );
+      FLDEFF_GRASS_SetMMdl( fectrl, mmdl, FALSE, FLDEFF_GRASS_SHORT );
     }
   }
   #endif
@@ -699,7 +699,7 @@ static void MMdl_MapAttrGrassProc_12(
     
       if( (flag&MAPATTR_FLAGBIT_GRASS) ){
         FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( mmdl );
-        FLDEFF_GRASS_SetMMdl( fectrl, mmdl, TRUE );
+        FLDEFF_GRASS_SetMMdl( fectrl, mmdl, TRUE, FLDEFF_GRASS_SHORT  );
       }
     }
   }
