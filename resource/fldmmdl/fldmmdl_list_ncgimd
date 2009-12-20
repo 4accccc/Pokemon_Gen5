@@ -16,7 +16,9 @@ FMMDL_RESLIST_NCGIMD = \
 	girl2.imd \
 	girl3.imd \
 	girl4.imd \
+	man1.imd \
 	man2.imd \
+	man3.imd \
 	woman1.imd \
 	woman2.imd \
 	woman3.imd \
@@ -34,12 +36,15 @@ FMMDL_RESLIST_NCGIMD = \
 	breederw.imd \
 	rangerm.imd \
 	rangerw.imd \
+	cyclem.imd \
+	cyclew.imd \
 	swimmerm.imd \
 	swimmerw.imd \
 	waiter.imd \
 	waitress.imd \
 	gentleman.imd \
 	lady.imd \
+	fighterm.imd \
 	fighterw.imd \
 	backpackerm.imd \
 	backpackerw.imd \
@@ -48,10 +53,14 @@ FMMDL_RESLIST_NCGIMD = \
 	businessman.imd \
 	ol.imd \
 	clown.imd \
+	dancer.imd \
 	baseballm.imd \
 	soccerm.imd \
 	footballm.imd \
 	tennisw.imd \
+	badman.imd \
+	badrider.imd \
+	fishing.imd \
 	mountman.imd \
 	maid.imd \
 	baker.imd \
@@ -72,6 +81,7 @@ FMMDL_RESLIST_NCGIMD = \
 	wifism.imd \
 	wifisw.imd \
 	sunglasses.imd \
+	ambrella.imd \
 	leader1c.imd \
 	leader8w.imd \
 	hakase2.imd \
