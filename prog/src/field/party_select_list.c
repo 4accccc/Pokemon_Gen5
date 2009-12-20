@@ -193,13 +193,13 @@ static const FLDMENUFUNC_HEADER MenuHeader_PokePartySelect =
  * 手持ち or バトルボックス、選択リスト：初期設定
  *
  * @param   fieldWork		
- * @param   temoti		
- * @param   bbox		
- * @param   temoti_reg_fail		
- * @param   bbox_reg_fail		
- * @param   heap_id		
+ * @param   temoti		        手持ちPOKEPARTYへのポインタ
+ * @param   bbox		          バトルボックスPOKEPARTYへのポインタ
+ * @param   temoti_reg_fail		TRUE:手持ち灰色表示(レギュレーションNGを表現)
+ * @param   bbox_reg_fail		  TRUE:バトルボックス灰色表示(レギュレーションNGを表現)
+ * @param   heap_id		        ヒープID
  *
- * @retval  PARTY_SELECT_LIST_PTR		
+ * @retval  PARTY_SELECT_LIST_PTR		手持ちorバトルボックス選択リスト制御システムのポインタ
  */
 //==================================================================
 PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELDMAP_WORK *fieldWork, const POKEPARTY *temoti, const POKEPARTY *bbox, BOOL temoti_reg_fail, BOOL bbox_reg_fail, HEAPID heap_id)
