@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T21:04:16"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T15:37:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,12 +305,12 @@
 ポケモンと　いっしょに
 どこかに　いきたい　きもち[BE:00:ページ切り替え（行送り）]
 わかるけどさ……[BE:01:ページ切り替え（クリア）]
-まず　アララギはかせに　あおうぜ[BE:01:ページ切り替え（クリア）]</language>
+まず　アララギはかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 ポケモンと　一緒に
 どこかに　行きたい　気持ち[BE:00:ページ切り替え（行送り）]
 よくわかるけど[BE:01:ページ切り替え（クリア）]
-まず　アララギ博士に　会おうぜ[BE:01:ページ切り替え（クリア）]</language>
+まず　アララギ博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -346,11 +346,11 @@
 		<language name="JPN" width="256">ブラッカー『ん……
 なんか　あったか？[BE:01:ページ切り替え（クリア）]
 まあ　いいか
-さ！　はかせに　あうぞ[BE:01:ページ切り替え（クリア）]</language>
+さ！　はかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『ん……
 なんか　あったか？[BE:01:ページ切り替え（クリア）]
 まあ　いいか
-さ！　博士に　会うぞ[BE:01:ページ切り替え（クリア）]</language>
+さ！　博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_bigman_01">
@@ -367,7 +367,7 @@
 お話　できるんだと！</language>
 	</row>
 
-	<row id="msg_t01_woman2_01">
+	<row id="msg_t01_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい・いいえの選択肢表示
 　はいだと文字モード切替</comment>
@@ -379,7 +379,7 @@
 ひらがなのほうが　好きなのかしら？</language>
 	</row>
 
-	<row id="msg_t01_woman2_02">
+	<row id="msg_t01_woman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択時</comment>
 		<language name="JPN" width="256">では
@@ -388,7 +388,7 @@
 はなしかたを　かえてみるわね</language>
 	</row>
 
-	<row id="msg_t01_woman2_03">
+	<row id="msg_t01_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">そうね……　ひらがなには
@@ -452,16 +452,16 @@
 		<comment>BGメッセージ
 ・友達♂の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達１</attribute>
-		<language name="JPN" width="256">ライバルの　いえ</language>
-		<language name="JPN_KANJI" width="256">ライバルの　家</language>
+		<language name="JPN" width="256">ブラッカーの　いえ</language>
+		<language name="JPN_KANJI" width="256">ブラッカーの　家</language>
 	</row>
 
 	<row id="msg_t01_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・友達♀の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達２</attribute>
-		<language name="JPN" width="256">サポートの　いえ</language>
-		<language name="JPN_KANJI" width="256">サポートの　家</language>
+		<language name="JPN" width="256">ホワイティの　いえ</language>
+		<language name="JPN_KANJI" width="256">ホワイティの　家</language>
 	</row>
 
 	<row id="msg_t01_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
