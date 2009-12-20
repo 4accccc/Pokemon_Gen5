@@ -666,7 +666,6 @@ static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(UNION_SYSTEM_PTR unisys, u32 *
   *fail_bit = 0;
   
   if(bb_party != NULL){
-    POKEPARTY *bb_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_UNION );
     reg_ret = PokeRegulationMatchLookAtPokeParty(
       unisys->alloc.regulation, bb_party, fail_bit);
     _BBox_PokePartyFree(bb_party);
