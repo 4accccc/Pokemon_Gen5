@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T18:25:38"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T18:42:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -569,18 +569,18 @@
 　主人公に隣接してこのメッセージ表示
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『まてっ！　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『待てッ！　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・草むらを向いてこのメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">この　いろの　こい　くさむら……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あっちの　いろの　こい　くさむら……[BE:01:ページ切り替え（クリア）]
 とびだしてくるのは
 はんぱなく　つよい　ポケモンみたいだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　色の濃い　草むら……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">あっちの　色の濃い　草むら……[BE:01:ページ切り替え（クリア）]
 飛びだしてくるのは
 半端なく　強い　ポケモンみたいだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -593,14 +593,10 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">というわけで
 はいるなら　きをつけな！[BE:01:ページ切り替え（クリア）]
-オレは　キズぐすり
-たくさん　もっているから　いいけど[BE:01:ページ切り替え（クリア）]
 じゃ　オレ　このまま
 シッポウシティに　いくよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">というわけで
 入るなら　気をつけな！[BE:01:ページ切り替え（クリア）]
-オレは　キズぐすり
-たくさん　持っているから　いいけど[BE:01:ページ切り替え（クリア）]
 じゃ　オレ　このまま
 シッポウシティに　行くよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
