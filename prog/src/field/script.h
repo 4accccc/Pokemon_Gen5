@@ -179,32 +179,6 @@ extern GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID);
 
 
 //======================================================================
-//======================================================================
-//------------------------------------------------------------------
-/**
- * @brief	スクリプトから指定するOBJコードを取得
- *
- * @param	no			0-15
- *
- * @return	"OBJキャラコード"
- */
-//------------------------------------------------------------------
-extern u16 GetEvDefineObjCode( SCRIPT_WORK * sc, u16 no );
-
-//------------------------------------------------------------------
-/**
- * @brief	スクリプトから指定するOBJコードをセット
- *
- * @param	no			0-15
- * @param	obj_code	OBJコード
- *
- * @return	"TRUE=セット出来た、FALSE=セット出来なかった"
- */
-//------------------------------------------------------------------
-extern BOOL SetEvDefineObjCode( SCRIPT_WORK * sc, u16 no, u16 obj_code );
-
-
-//======================================================================
 //
 //	フラグ関連
 //
@@ -362,6 +336,5 @@ extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
  */
 //--------------------------------------------------------------
 extern SCRIPT_WORK* SCRIPT_GetEventWorkToScriptWork( GMEVENT *event );
-
 
 #endif	/* SCRIPT_H */

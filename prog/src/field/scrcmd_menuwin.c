@@ -875,7 +875,6 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
   
   u16 tr_id = SCRCMD_GetVMWorkValue( core, work );
   u16 kind_id = SCRCMD_GetVMWorkValue( core, work );

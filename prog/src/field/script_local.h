@@ -46,7 +46,7 @@ enum{
 	ID_EVSCR_ANMCOUNT,				//アニメーションの数
 	ID_EVSCR_WIN_OPEN_FLAG,			//会話ウィンドウを開いたかフラグ
 
-	ID_EVSCR_SCRIPT_ID,				//メインのスクリプトID
+	//ID_EVSCR_SCRIPT_ID,				//メインのスクリプトID
 
 	//ID_EVSCR_PLAYER_DIR,			//イベント起動時の主人公の向き
 	ID_EVSCR_TARGET_OBJ,			//話しかけ対象のOBJのポインタ
@@ -230,3 +230,13 @@ extern BOOL SCRIPT_SetEventWorkValue(
  */
 //--------------------------------------------------------------
 extern void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork );
+
+//--------------------------------------------------------------
+/**
+ * @brief   開始時のスクリプトID取得
+ * @param	sc		    SCRIPT_WORKのポインタ
+ * @return  u16   スクリプトID
+ */
+//--------------------------------------------------------------
+extern u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc );
+

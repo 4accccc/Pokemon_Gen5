@@ -707,6 +707,18 @@ void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin )
 
 //--------------------------------------------------------------
 /**
+ * @brief   開始時のスクリプトID取得
+ * @param	sc		    SCRIPT_WORKのポインタ
+ * @return  u16   スクリプトID
+ */
+//--------------------------------------------------------------
+u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc )
+{
+  return sc->start_scr_id;
+}
+
+//--------------------------------------------------------------
+/**
  * スクリプト制御ワークのメンバーアドレス取得
  * @param	sc		SCRIPT型のポインタ
  * @param	id		取得するメンバID(script.h参照)
@@ -725,9 +737,6 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//会話ウィンドウを開いたかフラグのポインタ
 	case ID_EVSCR_WIN_OPEN_FLAG:
 		return &sc->win_open_flag;
-	//メインのスクリプトID
-	case ID_EVSCR_SCRIPT_ID:
-		return &sc->start_scr_id;
 	//話しかけ対象のOBJのポインタ
 	case ID_EVSCR_TARGET_OBJ:
 		return &sc->target_obj;

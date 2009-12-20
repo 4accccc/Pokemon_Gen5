@@ -59,41 +59,6 @@
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 {
-#if 0
-	int *range;
-	int *scr_id;
-	int *tr_id;
-	int *tr_type;
-	int *dir;
-  GMEVENT **ev_eye_move;
-	MMDL **mmdl;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
-  
-	if( pos == 0 ){ //視線0
-		range	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_RANGE );
-		dir		= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_DIR );
-		scr_id	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_SCR_ID );
-		tr_id	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_ID );
-		tr_type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE );
-		mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_FLDOBJ );
-		ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
-	}else{ //視線1
-		range	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_RANGE );
-		dir		= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_DIR );
-		scr_id	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_SCR_ID );
-		tr_id	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_ID );
-		tr_type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TYPE );
-		mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_FLDOBJ );
-		ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
-	}
-  *ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap,
-      *mmdl, FIELDMAP_GetFieldPlayer(fparam->fieldMap),
-      *dir, *range, 0, *tr_type, pos );
-#endif
-
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
@@ -130,7 +95,6 @@ static BOOL EvWaitTrainer0Move( VMHANDLE *core, void *wk )
   EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 
   ev_eye_move = &eye->ev_eye_move;
-  //ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
   res = GMEVENT_Run( *ev_eye_move );
   
   if( res == GMEVENT_RES_FINISH ){
@@ -158,7 +122,6 @@ static BOOL EvWaitTrainer1Move( VMHANDLE *core, void *wk )
   EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
 
   ev_eye_move = &eye->ev_eye_move;
-  //ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   res = GMEVENT_Run( *ev_eye_move );
   
   if( res == GMEVENT_RES_FINISH ){
@@ -278,8 +241,6 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
   
   ev_eye_move0 = &eye0->ev_eye_move;
   ev_eye_move1 = &eye1->ev_eye_move;
-  //ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
-	//ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   
 	//登録されていない時
   if( *ev_eye_move0 == NULL && *ev_eye_move1 == NULL ){
@@ -306,12 +267,10 @@ VMCMD_RESULT EvCmdEyeTrainerTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	//u16 *type	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TYPE ); //WB kari TR0_TYPE固定
   EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
-	//*ret_wk = *type;
   *ret_wk = eye0->tr_type;
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -325,16 +284,13 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	//u16 *tr_id_0	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_ID );
-	//u16 *tr_id_1	= SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_ID );
   EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
   EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
   *ret_wk = (pos == SCR_EYE_TR_0) ? (eye0->tr_id) : (eye1->tr_id);
-	//*ret_wk = (pos == SCR_EYE_TR_0) ? (*tr_id_0) : (*tr_id_1);
   KAGAYA_Printf( "視線トレーナーID取得 %d\n", *ret_wk );
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //======================================================================
@@ -352,12 +308,12 @@ VMCMD_RESULT EvCmdTrainerIdGet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   
 	//スクリプトIDから、トレーナーIDを取得
-	*ret_wk = SCRIPT_GetTrainerID_ByScriptID( *script_id );
-	return 0;
+	*ret_wk = SCRIPT_GetTrainerID_ByScriptID( script_id );
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -369,28 +325,10 @@ VMCMD_RESULT EvCmdTrainerIdGet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 {
-#if 0 //pl null
-	u32 fight_type;
-	FIELDSYS_WORK * fsys	= core->fsys;
-	u16* script_id			= SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
-	VMCMD_RESULT* win_flag			= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16 tr_id_0				= SCRCMD_GetVMWorkValue(core);
-	u16 tr_id_1				= SCRCMD_GetVMWorkValue(core);
-	u16 partner_id;
-  
-	partner_id = 0;
-	if (SysFlag_PairCheck(SaveData_GetEventWork(core->fsys->savedata)) == 1) {
-		partner_id = SysWork_PairTrainerIDGet( SaveData_GetEventWork(fsys->savedata) );
-	}
-
-	EventCmd_TrainerBattle(core->event_work, tr_id_0, tr_id_1, partner_id, HEAPID_WORLD, win_flag);
-	return 1;
-#else
   u32 fight_type;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
-	VMCMD_RESULT *win_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
 	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
   u16 flags = SCRCMD_GetVMWorkValue( core, work );
@@ -412,7 +350,6 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -424,8 +361,7 @@ VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
-	VMCMD_RESULT *win_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 partner_id = SCRCMD_GetVMWorkValue( core, work );
 	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
 	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
@@ -453,14 +389,14 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	u16 btl_type,lr,start_type,after_type,one_type;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *script_id			= SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 *wk1				= SCRCMD_GetVMWork( core, work );
 	u16 *wk2				= SCRCMD_GetVMWork( core, work );
 	u16 *wk3				= SCRCMD_GetVMWork( core, work );
   
 	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
 	btl_type = SCRIPT_CheckTrainer2vs2Type(
-      SCRIPT_GetTrainerID_ByScriptID(*script_id) );
+      SCRIPT_GetTrainerID_ByScriptID(script_id) );
   
 	//シングルかダブルかチェック
 	if( btl_type == 0 ){
@@ -470,7 +406,7 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 		one_type   = 0;
 	}else{
 		//ダブル
-		lr = SCRIPT_GetTrainerLR_ByScriptID( *script_id );
+		lr = SCRIPT_GetTrainerLR_ByScriptID( script_id );
     
 		if( lr == 0 ){
 			//左
@@ -491,7 +427,7 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	OS_Printf( "start_type = %d\n", *wk1 );
 	OS_Printf( "after_type = %d\n", *wk2 );
 	OS_Printf( "one_type = %d\n", *wk3 );
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -506,14 +442,14 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	u16 btl_type,lr,start_type,after_type,one_type;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *script_id			= SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 *wk1				= SCRCMD_GetVMWork( core, work );
 	u16 *wk2				= SCRCMD_GetVMWork( core, work );
 	u16 *wk3				= SCRCMD_GetVMWork( core, work );
   
 	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
 	btl_type = SCRIPT_CheckTrainer2vs2Type(
-      SCRIPT_GetTrainerID_ByScriptID(*script_id) );
+      SCRIPT_GetTrainerID_ByScriptID(script_id) );
   
 	//シングルかダブルかチェック
 	if( btl_type == 0 ){
@@ -523,7 +459,7 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 		one_type   = 0;
 	}else{
 		//ダブル
-		lr = SCRIPT_GetTrainerLR_ByScriptID( *script_id );
+		lr = SCRIPT_GetTrainerLR_ByScriptID( script_id );
 
 		if( lr == 0 ){
 			//左
@@ -544,7 +480,7 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
   OS_Printf( "start_type = %d\n", *wk1 );
 	OS_Printf( "after_type = %d\n", *wk2 );
 	OS_Printf( "one_type = %d\n", *wk3 );
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -558,13 +494,13 @@ VMCMD_RESULT EvCmdTrainerTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 *script_id	= SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
 
 	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
 	*ret_wk = SCRIPT_CheckTrainer2vs2Type(
-      SCRIPT_GetTrainerID_ByScriptID(*script_id) );
-	return 0;
+      SCRIPT_GetTrainerID_ByScriptID(script_id) );
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -576,11 +512,6 @@ VMCMD_RESULT EvCmdTrainerTypeGet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 {
-#if 0
-	u16 tr_id = SCRCMD_GetVMWorkValue(core);
-	Snd_EyeBgmSet( Snd_EyeBgmGet(tr_id) );
-	return 1;
-#else //wb
   u16 tr_id = SCRCMD_GetVMWorkValue(core,wk);
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
@@ -588,8 +519,7 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
   u32 type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
   u32 seq = FIELD_SOUND_GetTrainerEyeBgmNo( type );
   FIELD_SOUND_PushPlayEventBGM( fsnd, seq );
-  return 0;
-#endif
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -624,7 +554,7 @@ VMCMD_RESULT EvCmd2vs2BattleCheck( VMHANDLE *core, void *wk )
 	u16* ret_wk	= SCRCMD_GetVMWork( core, work );
   
   *ret_wk = FIELD_EVENT_Check2vs2Battle( gsys );
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -654,57 +584,6 @@ VMCMD_RESULT EvCmdDebugBattleSet( VMHANDLE *core, void *wk )
 #endif
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * デバックトレーナーフラグセット(10月末ROM用、あとで削除します！)
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdDebugTrainerFlagSet( VMHANDLE *core, void *wk )
-{
-	FIELD_OBJ_PTR* fldobj;
-	FIELDSYS_WORK * fsys = core->fsys;
-
-	fldobj = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-
-	SetEventFlagTrainer( FieldOBJ_FieldSysWorkGet(*fldobj), FieldOBJ_OBJIDGet(*fldobj) );
-	return 0;
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-/**
- * デバックトレーナーフラグセット(10月末ROM用、あとで削除します！)
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdDebugTrainerFlagOnJump( VMHANDLE *core, void *wk )
-{
-	int ret;
-	s32	pos;
-	FIELD_OBJ_PTR* fldobj;
-	FIELDSYS_WORK* fsys = core->fsys;
-
-	fldobj = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
-
-	pos = (s32)VMGetU32(core);
-
-	ret = CheckEventFlagTrainer( FieldOBJ_FieldSysWorkGet(*fldobj), FieldOBJ_OBJIDGet(*fldobj) );
-
-	//フラグがONならジャンプ
-	if( ret == TRUE ){
-		VMJump( core, (VM_CODE *)(core->PC+pos) );	//JUMP
-		//VM_End( core );
-		return 1;			//10月ROMのぎりぎりの変更に対処するため仮！！！！！
-	}
-
-	return 0;
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -717,16 +596,9 @@ VMCMD_RESULT EvCmdBattleResultGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT *win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
 	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
   
-#if 0
-	*ret_wk = *win_flag;
-	OS_Printf( "*ret_wk = %d\n", *ret_wk );
-	return 1;
-#else //wb kari
 	*ret_wk = 0;
 	OS_Printf( "*ret_wk = %d\n", *ret_wk );
-	return 0;
-#endif
+	return VMCMD_RESULT_CONTINUE;
 }
