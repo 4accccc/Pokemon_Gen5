@@ -12,6 +12,7 @@
  *	<操作説明>
  *    START：モード切り替え（Pos, CamUp, Target）
  *    SELECT:データ吐き出し
+ *	  XY：変化量+,変化量-;
  *	  LR：z+,z-;
  *    ↑↓：y+,y-;
  *　  ←→：x+,x-;
@@ -21,10 +22,13 @@
 
 #if PM_DEBUG
 
+#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
+
 static void debug_camera_test( GFL_G3D_CAMERA* camera )
 { 
   VecFx32 pos;
 
+  static int num = 1;
   static BOOL mode = 0;
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
@@ -58,35 +62,45 @@ static void debug_camera_test( GFL_G3D_CAMERA* camera )
     GFL_G3D_CAMERA_GetTarget( camera, &pos );
   }
 
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+  if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
   {
-    pos.y += 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    num++;
+    HOSAKA_Printf("num=%d \n",num);
   }
-  else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+  else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
   {
-    pos.y -= 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    num--;
+    HOSAKA_Printf("num=%d \n",num);
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
+  {
+    pos.y += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
+  {
+    pos.y -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }    
-  else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+  else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
   {
-    pos.x += 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    pos.x += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
-  else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+  else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
   {
-    pos.x -= 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    pos.x -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
-  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
   {
-    pos.z += 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    pos.z += num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
-  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
   {
-    pos.z -= 1;
-    OS_Printf("mode=%d pos{ 0x%x, 0x%x, 0x%x } \n", mode, pos.x, pos.y, pos.z );
+    pos.z -= num;
+    HOSAKA_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
   }
   
   // データセット
