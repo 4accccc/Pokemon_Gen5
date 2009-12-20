@@ -94,7 +94,6 @@ typedef struct{
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
-static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk);
 
 
@@ -495,29 +494,6 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 	
 	return FALSE;
 }
-
-
-static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
-{
-	EVENT_GTSNEGO_WORK *pWork;
-
-  
-	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
-  
-  pWork->aUser[0].selectLV = 0;
-  pWork->aUser[1].selectLV = 1;
-  pWork->aUser[0].selectType = 0;
-  pWork->aUser[1].selectType = 1;
-
-  pWork->pStatus[0] = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP,MyStatus_GetWorkSize());
-  pWork->pStatus[1] = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP,MyStatus_GetWorkSize());
-
-  MyStatus_Init( pWork->pStatus[0]);
-  MyStatus_Init( pWork->pStatus[1]);
-  
-  return pWork;
-}
-
 
 
 

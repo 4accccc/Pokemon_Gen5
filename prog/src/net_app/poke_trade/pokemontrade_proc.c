@@ -2225,7 +2225,7 @@ FS_EXTERN_OVERLAY(app_mail);
 static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk,int type )
 {
   int i;
-  GAMESYS_WORK* pParentWork = pwk;
+  POKEMONTRADE_PARAM* pParentWork = pwk;
   POKEMON_TRADE_WORK *pWork = mywk;
 
   //オーバーレイ読み込み
@@ -2237,7 +2237,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->type = type;
   pWork->recvPoke[0] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
   pWork->recvPoke[1] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
-  _savedataHeapInit(pWork,pParentWork);
+  _savedataHeapInit(pWork,pParentWork->gsys);
   _maxTrayNumInit(pWork);
   _mcssSystemHeapInit(pWork);
   _dispSystemHeapInit(pWork);
@@ -2286,7 +2286,6 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 //ユニオンルーム
 static GFL_PROC_RESULT PokemonTradeUnionProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  EVENT_GTSNEGO_WORK* pParent=pwk;
   POKEMON_TRADE_WORK *pWork;
   
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
@@ -2299,7 +2298,6 @@ static GFL_PROC_RESULT PokemonTradeUnionProcInit( GFL_PROC * proc, int * seq, vo
 // 赤外線用
 static GFL_PROC_RESULT PokemonTradeIrcProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  EVENT_GTSNEGO_WORK* pParent=pwk;
   POKEMON_TRADE_WORK *pWork;
   
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
@@ -2312,7 +2310,8 @@ static GFL_PROC_RESULT PokemonTradeIrcProcInit( GFL_PROC * proc, int * seq, void
 // GTSネゴシエーション用
 static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  EVENT_GTSNEGO_WORK* pParent=pwk;
+  POKEMONTRADE_PARAM* pParent=pwk;
+  EVENT_GTSNEGO_WORK* pGTS=pParent->pNego;
   POKEMON_TRADE_WORK *pWork;
   int i;
   
@@ -2322,10 +2321,10 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
 
   if(pParent){
     for(i=0;i<2;i++){
-      pWork->GTStype[i]=pParent->aUser[i].selectType;  //
-      pWork->GTSlv[i]=pParent->aUser[i].selectLV;  //
+      pWork->GTStype[i]=pGTS->aUser[i].selectType;  //
+      pWork->GTSlv[i]=pGTS->aUser[i].selectLV;  //
     }
-    pWork->pFriend=pParent->pStatus[1];
+    pWork->pFriend=pGTS->pStatus[1];
   }
 #if PM_DEBUG
   else{

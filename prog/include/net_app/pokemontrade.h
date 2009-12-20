@@ -27,6 +27,16 @@ typedef enum{
 typedef struct _POKEMON_TRADE_WORK POKEMON_TRADE_WORK;
 typedef struct _POKEMONTRADE_DEMO_WORK POKEMONTRADE_DEMO_WORK;
 
+
+
+///ポケモン交換呼び出し用パラメータ
+typedef struct{
+  POKEMONTRADE_TYPE type;
+  GAMESYS_WORK* gsys;
+  void* pNego;
+} POKEMONTRADE_PARAM;
+
+
 ///ポケモンデモ呼び出し用パラメータ
 typedef struct{
   POKEMON_PARAM* pMyPoke;      ///< ユーザーのポケモン

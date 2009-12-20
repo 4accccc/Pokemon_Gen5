@@ -90,6 +90,7 @@ enum _EVENT_IRCBATTLE {
 struct _EVENT_IRCBATTLE_WORK{
   GAMESYS_WORK * gsys;
   GAMEDATA* gamedata;
+  POKEMONTRADE_PARAM aPokeTr;
   POKEPARTY* pParty;
   SAVE_CONTROL_WORK *ctrl;
   int selectType;
@@ -254,7 +255,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
   case _CALL_TRADE:  //  ƒ|ƒPƒ‚ƒ“ŒðŠ·
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, dbw->gsys);
+    dbw->aPokeTr.gsys=dbw->gsys;
+    dbw->aPokeTr.type=POKEMONTRADE_IRC;
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, &dbw->aPokeTr);
     (*seq)++;
     break;
   case _WAIT_TRADE:

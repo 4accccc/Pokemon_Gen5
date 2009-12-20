@@ -35,8 +35,9 @@
 #include "poke_tool/poke_regulation.h"
 #include "savedata/battle_box_save.h"
 
-#include "field/event_ircbattle.h"
+//#include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
+#include "net_app/pokemontrade.h"
 
 #include "gamesystem/game_beacon.h"
 
@@ -1977,22 +1978,12 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     break;
   case 3:
     {
-      struct _EVENT_IRCBATTLE_WORK{
-        GAMESYS_WORK * gsys;
-        FIELDMAP_WORK * fieldmap;
-        SAVE_CONTROL_WORK *ctrl;
-        BATTLE_SETUP_PARAM para;
-        BOOL isEndProc;
-        int selectType;
-      	IRC_COMPATIBLE_PARAM	compatible_param;	//ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ
-      } * eibw;
+      POKEMONTRADE_PARAM* eibw;
 
-      eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(struct _EVENT_IRCBATTLE_WORK));
+      eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(POKEMONTRADE_PARAM));
       
       eibw->gsys = unisys->uniparent->gsys;
-      eibw->fieldmap = fieldWork;
-      eibw->ctrl = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
-      eibw->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
+      eibw->type = POKEMONTRADE_UNION;
       
       unisys->parent_work = eibw;
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRADE, eibw);
