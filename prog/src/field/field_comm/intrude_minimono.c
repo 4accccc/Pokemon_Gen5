@@ -14,6 +14,7 @@
 #include "intrude_work.h"
 #include "intrude_main.h"
 #include "../../../resource/fldmapdata/script/plc04_def.h"  //SCRID_`
+#include "../../../resource/fldmapdata/script/palace02_def.h"  //SCRID_`
 
 
 //--------------------------------------------------------------
@@ -119,6 +120,8 @@ static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, 
   
   head = data_MMdlHeader;
   head.obj_code = TPOKE_0001 + monsno;
+  head.event_id = SCRID_PALACE02_SYMBOL_POKE;
+  head.move_code = GFUser_GetPublicRand0(2) == 0 ? MV_RND_V : MV_RND_H;
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
   
   grid_pos->gx = grid_x;
@@ -153,10 +156,13 @@ void DEBUG_INTRUDE_BingoPokeSet(FIELDMAP_WORK *fieldWork)
   u32 gx = 18, gz = 17;
   u32 gx_space = 6, gz_space = 4;
   int x, y;
+  int rnd_x, rnd_z;
   
   for(y = 0; y < 4; y++){
     for(x = 0; x < 4; x++){
-      DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx + gx_space*x, gz + gz_space*y, 0, 
+      rnd_x = GFUser_GetPublicRand0(2);
+      rnd_z = GFUser_GetPublicRand0(2);
+      DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx + gx_space*x + rnd_x, gz + gz_space*y + rnd_z, 0,
         GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1);
     }
   }
