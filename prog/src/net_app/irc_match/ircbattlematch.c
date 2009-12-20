@@ -156,18 +156,25 @@ static void _modeReportInit(IRC_BATTLE_MATCH* pWork);
 static void _modeReportWait(IRC_BATTLE_MATCH* pWork);
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 static void _connectCallBack(void* pWork, int netID);
-static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _RecvModeCheckData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvResultData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _ircPreConnect(IRC_BATTLE_MATCH* pWork);
 
+
+///通信コマンド
+typedef enum {
+  _NETCMD_TYPESEND = GFL_NET_CMD_IRCBATTLE,
+} _BATTLEIRC_SENDCMD;
+
+
+#define _TIMINGNO_CS (120)
 
 //--------------------------------------------
 // 内部ワーク
 //--------------------------------------------
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
-  {_RecvFirstData,         NULL},    ///NET_CMD_FIRST
-  {_RecvResultData,          NULL},  ///NET_CMD_RESULT
+  {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -326,9 +333,9 @@ static void _endCallBack(void* pWork)
 
 static void _modeFadeout(IRC_BATTLE_MATCH* pWork)
 {
-	if(WIPE_SYS_EndCheck()){
-		_CHANGE_STATE(pWork, NULL);        // 終わり
-	}
+  if(WIPE_SYS_EndCheck()){
+    _CHANGE_STATE(pWork, NULL);        // 終わり
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -340,7 +347,7 @@ static void _modeFadeout(IRC_BATTLE_MATCH* pWork)
 
 static void _modeFadeoutStart(IRC_BATTLE_MATCH* pWork)
 {
-  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
 }
@@ -491,6 +498,72 @@ static void _ircConnectEndCallback(void* pWk)
       pWork->ircmatchanim=TRUE;
     }
   }
+}
+
+
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   移動コマンド受信関数
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void _RecvModeCheckData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_BATTLE_MATCH *pWork = pWk;
+  const int* pType = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
+  if(pWork->selectType > pType[0] ){
+    NET_PRINT("BattleChange %d ->%d\n",pWork->selectType, pType[0]);
+    pWork->selectType = pType[0];
+  }
+}
+
+static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS)){
+    _CHANGE_STATE(pWork,_modeFadeoutStart);
+  }
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   接続完了コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _modeCheckStart(IRC_BATTLE_MATCH* pWork)
+{
+  switch(pWork->selectType){
+  case EVENTIRCBTL_ENTRYMODE_SINGLE:
+  case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+  case EVENTIRCBTL_ENTRYMODE_TRI:
+  case EVENTIRCBTL_ENTRYMODE_ROTATE:
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND,
+                        sizeof(pWork->selectType), &pWork->selectType)){
+      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS);
+      _CHANGE_STATE(pWork,_modeCheckStart2);
+    }
+    break;
+  default:
+    _CHANGE_STATE(pWork,_modeFadeoutStart);
+    break;
+  }
 
 
 }
@@ -506,10 +579,8 @@ static void _ircConnectEndCallback(void* pWk)
 static void _wirelessConnectCallback(void* pWk)
 {
   IRC_BATTLE_MATCH *pWork = pWk;
-  int no;
 
-  _CHANGE_STATE(pWork,_modeFadeoutStart);
-
+  _CHANGE_STATE(pWork, _modeCheckStart);
 }
 
 
@@ -605,7 +676,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-   // GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    // GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     //		GFL_BG_LoadScreenReq( frame );
     //        GFL_BG_ClearFrame(frame);
@@ -796,8 +867,8 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
-		GFL_ARC_CloseDataHandle(p_handle);
-	}
+    GFL_ARC_CloseDataHandle(p_handle);
+  }
 
 
   pWork->bgchar2 = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
@@ -897,7 +968,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.gsid = WB_NET_IRCBATTLE;
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
-      net_ini_data.gsid = WB_NET_IRCBATTLE;
+      net_ini_data.gsid = WB_NET_IRCBATTLE_MULTI;
       net_ini_data.maxConnectNum = 4;
       break;
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
@@ -1244,6 +1315,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MATCH* pWork = mywk;
 
+    
+  EVENT_IrcBattleSetType(pWork->pBattleWork, pWork->selectType);
+
   _workEnd(pWork);
   GFL_TCB_DeleteTask( pWork->g3dVintr );
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
@@ -1252,7 +1326,6 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-
 
 
   return GFL_PROC_RES_FINISH;

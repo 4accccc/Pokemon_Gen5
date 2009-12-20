@@ -161,6 +161,7 @@ enum NetworkServiceID_e {
   WB_NET_GTSNEGO,          ///< GTSネゴシエーション
 	WB_NET_DEBUG_BEACON_FRIENDCODE,	///<デバッグ　ビーコンでの友達コード交換
   WB_NET_WIFIMATCH,         ///<WIFI世界対戦
+  WB_NET_IRCBATTLE_MULTI,  ///< 赤外線バトルマルチ
 
   WB_NET_SERVICEID_MAX   // 終端
 };
@@ -202,7 +203,10 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_GTSNEGO   = (WB_NET_GTSNEGO<<8),    ///< GTSネゴシエーション
 	GFL_NET_CMD_DEBUG_BEACON_FRIENDCODE	= (WB_NET_DEBUG_BEACON_FRIENDCODE<<8),	///<デバッグ　ビーコンでの友達コード交換
   GFL_NET_CMD_WIFIMATCH = (WB_NET_WIFIMATCH<<8),         ///<WIFI世界対戦
- 
+  GFL_NET_CMD_IRCBATTLE_MULTI = (WB_NET_IRCBATTLE_MULTI<<8),         ///<赤外線バトルマルチ
+
+
+  
 };
 
 #include "net_irc.h"
