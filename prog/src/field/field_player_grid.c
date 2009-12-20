@@ -526,6 +526,55 @@ static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
 }
 
 //--------------------------------------------------------------
+/// SE再生チェック用アトリビュートデータ
+//--------------------------------------------------------------
+#define ATTRFLAG_NONE (MAPATTR_FLAGBIT_NONE)
+
+typedef struct
+{
+  BOOL (*check)(const MAPATTR_VALUE);
+  int se;
+}ATTR_VALUE_SE;
+
+typedef struct
+{
+  u32 flag;
+  int se;
+}ATTR_FLAG_SE;
+
+//now value
+static const ATTR_VALUE_SE data_PlaySE_NowValue[] =
+{
+  {NULL,0},
+};
+
+//next value
+static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
+{
+  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08},
+  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11},
+  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13},
+  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13},
+  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13},
+  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91},
+  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14},
+  {MAPATTR_FLAGBIT_NONE,0}, //end
+};
+
+//now flag
+static const ATTR_FLAG_SE data_PlaySE_NowFlag[] =
+{
+  {ATTRFLAG_NONE,0}, //end
+};
+
+//next flag
+static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
+{
+  {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09},
+  {ATTRFLAG_NONE,0}, //end
+};
+
+//--------------------------------------------------------------
 /**
  * 移動開始時に鳴らすSE
  * @param
@@ -535,32 +584,71 @@ static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
 static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     JIKI_MOVEORDER set, u16 dir )
 {
-  if( set == JIKI_MOVEORDER_WALK ){
-    VecFx32 pos;
-    MAPATTR attr;
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
-    
-    MMDL_GetVectorPos( mmdl, &pos );
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-    
-    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-      int se;
-      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
-      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
-      
-      if( (flag & MAPATTR_FLAGBIT_GRASS) ){
-        se = SEQ_SE_FLD_09;
-        if( MAPATTR_VALUE_CheckLongGrass(val) == TRUE ){
-          se = SEQ_SE_FLD_08;
-        }
-        PMSND_PlaySE( se );
-      }else{
-        if( MAPATTR_VALUE_CheckShoal(val) == TRUE ||
-            MAPATTR_VALUE_CheckPool(val) == TRUE  ||
-            MAPATTR_VALUE_CheckMarsh(val) == TRUE ){
-          PMSND_PlaySE( SEQ_SE_FLD_13 );
+  VecFx32 pos;
+  int se = -1;
+  const ATTR_FLAG_SE *p0;
+  const ATTR_VALUE_SE *p1;
+  MMDL *mmdl;
+  MAPATTR attr;
+  MAPATTR_FLAG flag;
+  MAPATTR_VALUE val;
+  
+  if( set != JIKI_MOVEORDER_WALK ){
+    return;
+  }
+  
+  mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  MMDL_GetVectorPos( mmdl, &pos );
+  
+  if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
+    flag = MAPATTR_GetAttrFlag( attr );
+
+    for( p0 = data_PlaySE_NowFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
+      if( (p0->flag & flag) ){
+        se = p0->se;
+        break;
+      }
+    }
+  
+    if( se == -1 ){
+      for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
+        if( p1->check(attr) == TRUE ){
+          se = p1->se;
+          break;
         }
       }
+    }
+    
+    if( se != -1 ){
+      PMSND_PlaySE( se );
+      return;
+    }
+  }
+  
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+
+  if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
+    flag = MAPATTR_GetAttrFlag( attr );
+
+    for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
+      if( (p0->flag & flag) ){
+        se = p0->se;
+        break;
+      }
+    }
+  
+    if( se == -1 ){
+      for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
+        if( p1->check(attr) == TRUE ){
+          se = p1->se;
+          break;
+        }
+      }
+    }
+    
+    if( se != -1 ){
+      PMSND_PlaySE( se );
+      return;
     }
   }
 }
@@ -3616,3 +3704,4 @@ static BOOL gjiki_GetAttr(
   ret = MMDL_GetMapPosAttr( mmdl, &pos, attr );
   return( ret );
 }
+

@@ -332,12 +332,20 @@ static void MMdl_ProcMoveEnd( MMDL * mmdl )
 //--------------------------------------------------------------
 static void mmdl_InitAttrData( const MMDL *mmdl, ATTRDATA *data )
 {
+  MI_CpuClear( data, sizeof(ATTRDATA) );
+  
   data->attr_old = MMDL_GetMapAttrOld( mmdl );
   data->attr_now = MMDL_GetMapAttr( mmdl );
-  data->attr_val_old = MAPATTR_GetAttrValue( data->attr_old );
-  data->attr_val_now = MAPATTR_GetAttrValue( data->attr_now );
-  data->attr_flag_old = MAPATTR_GetAttrFlag( data->attr_old );
-  data->attr_flag_now = MAPATTR_GetAttrFlag( data->attr_now );
+  
+  if( data->attr_now != MAPATTR_ERROR ){
+    data->attr_val_now = MAPATTR_GetAttrValue( data->attr_now );
+    data->attr_flag_now = MAPATTR_GetAttrFlag( data->attr_now );
+  }
+  
+  if( data->attr_old != MAPATTR_ERROR ){
+    data->attr_val_old = MAPATTR_GetAttrValue( data->attr_old );
+    data->attr_flag_old = MAPATTR_GetAttrFlag( data->attr_old );
+  }
   
   data->objcode_prm =
       MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
