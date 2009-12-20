@@ -603,8 +603,7 @@ static void MMdl_MapAttrGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrGrassProc_12( MMDL *mmdl, ATTRDATA *data )
 {
-  if( data->attr_now != MAPATTR_ERROR &&
-      (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) )
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) )
   {
     if( MAPATTR_VALUE_CheckLongGrass(data->attr_val_now) ){
       FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, FLDEFF_GRASS_LONG );
@@ -630,8 +629,7 @@ static void MMdl_MapAttrGrassProc_12( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  if( data->attr_old != MAPATTR_ERROR &&
-      (data->attr_flag_old & MAPATTR_FLAGBIT_FOOTMARK) )
+  if( (data->attr_flag_old & MAPATTR_FLAGBIT_FOOTMARK) )
   {
     FOOTMARK_TYPE type;
     

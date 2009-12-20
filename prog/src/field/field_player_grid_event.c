@@ -750,6 +750,9 @@ static BOOL ev_Takinobori_0( TAKINOBORI_WORK *work )
   
   FIELDMAP_TCB_AddTask_CameraZoom_Sharp( work->fieldmap,
       TAKINOBORI_START_SHAKE_FRAME, TAKINOBORI_ZOOM_VALUE );
+  
+  
+  PMSND_PlaySE( SEQ_SE_FLD_81 );
   work->seq_no++;
   return( TRUE );
 }
@@ -938,6 +941,7 @@ static BOOL ev_Takinobori_4( TAKINOBORI_WORK *work )
       FLDEFF_NAMIPOKE_EFFECT_SetEffect( fectrl, type, task );
   }
   
+  PMSND_PlaySE( SEQ_SE_FLD_83 );
   work->seq_no++;
   return( FALSE );
 }
@@ -1050,6 +1054,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
       FIELDMAP_TCB_AddTask_CameraZoom_Sharp( work->fieldmap,
           TAKIKUDARI_START_W_FRAME, TAKINOBORI_ZOOM_VALUE );
       
+      PMSND_PlaySE( SEQ_SE_FLD_82 );
       work->seq_no++;
     }
   case 1: //U“®•‰¡•ûŒüˆÚ“®
@@ -1142,6 +1147,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
       FLDEFF_CTRL_DeleteEffect( fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
       work->eff_task = NULL;
       work->end_flag = TRUE;
+      PMSND_PlaySE( SEQ_SE_FLD_83 );
       work->seq_no++;
     }
   }
