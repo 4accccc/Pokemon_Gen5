@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T21:10:08"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T16:18:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,15 +299,15 @@
 つよく　そだてる……[BE:00:ページ切り替え（行送り）]
 それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
 だけど　むりしちゃ　ダメね[BE:01:ページ切り替え（クリア）]
-よわい　ポケモンは
+よわった　ポケモンは
 ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
-たいりょくを　かいふく　させてね</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　闘わせて　強く育てる
+たいりょくを　かいふく　させないとね</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　戦わせて　強く育てる
 それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
 だけど　無理しちゃ　ダメね[BE:01:ページ切り替え（クリア）]
-弱い　ポケモンは
+弱った　ポケモンは
 ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
-体力を　回復　させてね</language>
+体力を　回復させないとね</language>
 	</row>
 
 	<row id="msg_t02r0101_woman1_01">

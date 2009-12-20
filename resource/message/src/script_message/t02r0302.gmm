@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T12:00:13"/>
+	<create user="matsumiya" host="W00207" date="2009-12-20T16:23:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -316,18 +316,13 @@
 ポケモンを　つかまえやすい！[BE:01:ページ切り替え（クリア）]
 モンスターボールには　ほかにも
 いろんな　しゅるいが　あるから[BE:00:ページ切り替え（行送り）]
-つかいわけると　いいよ！</language>
+つかいわけると　いいだろう！</language>
 		<language name="JPN_KANJI" width="256">スーパーボールは
 モンスターボールよりも[BE:00:ページ切り替え（行送り）]
 ポケモンを　捕まえやすい　ボール！[BE:01:ページ切り替え（クリア）]
 モンスターボールには　他にも
 いろんな　種類が　あるから[BE:00:ページ切り替え（行送り）]
-使い分けるのも　ありかもね！</language>
-	</row>
-
-	<row id="msg_t02r0302_middleman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+使い分けると　いいだろう！</language>
 	</row>
 
 	<row id="msg_t02r0302_poke_01">
@@ -335,8 +330,8 @@
 ・暫定
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">ポケモン『？？？</language>
-		<language name="JPN_KANJI" width="256">ポケモン『？？？</language>
+		<language name="JPN" width="256">ポケモン『ばうわう！</language>
+		<language name="JPN_KANJI" width="256">ポケモン『ばうわう！</language>
 	</row>
 
 	<flowchart-group-list>
