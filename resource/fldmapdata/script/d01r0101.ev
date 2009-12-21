@@ -65,7 +65,7 @@ _TALK_OBJ_START()
 			//0に選択ポケモンの名前をセット
 			_MONS_NAME(0,MONSNO_KUSAHEBI)
 			//1に有効ポケモンの名前をセット
-			_MONS_NAME(1,MONSNO_WANINOKO)
+			_MONS_NAME(1,MONSNO_FAUN)
 				
 		ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
 			//最初の３匹で炎タイプを選択した時の処理
@@ -73,7 +73,7 @@ _TALK_OBJ_START()
 			//0に選択ポケモンの名前をセット
 			_MONS_NAME(0,MONSNO_HOTTON)
 			//1に有効ポケモンの名前をセット
-			_MONS_NAME(1,MONSNO_TIKORIITA)
+			_MONS_NAME(1,MONSNO_BUROKKO)
 			
 		ELSE
 			//最初の３匹で水タイプを選択した時の処理
@@ -81,7 +81,7 @@ _TALK_OBJ_START()
 			//0に選択ポケモンの名前をセット
 			_MONS_NAME(0,MONSNO_SUIKKO)
 			//1に有効ポケモンの名前をセット
-			_MONS_NAME(1,MONSNO_HINOARASI)
+			_MONS_NAME(1,MONSNO_SUTIKKU)
 				
 		ENDIF
 		
@@ -116,7 +116,7 @@ ev_d01r0101_pokecount:
 		//0に選択ポケモンの名前をセット
 		_MONS_NAME(0,MONSNO_KUSAHEBI)
 		//1に有効ポケモンの名前をセット
-		_MONS_NAME(1,MONSNO_WANINOKO)
+		_MONS_NAME(1,MONSNO_FAUN)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2,POKETYPE_HONOO)
 			
@@ -126,7 +126,7 @@ ev_d01r0101_pokecount:
 		//0に選択ポケモンの名前をセット
 		_MONS_NAME(0,MONSNO_HOTTON)
 		//1に有効ポケモンの名前をセット
-		_MONS_NAME(1,MONSNO_TIKORIITA)
+		_MONS_NAME(1,MONSNO_BUROKKO)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2, POKETYPE_MIZU)
 		
@@ -137,7 +137,7 @@ ev_d01r0101_pokecount:
 		//0に選択ポケモンの名前をセット
 		_MONS_NAME(0,MONSNO_SUIKKO)
 		//1に有効ポケモンの名前をセット
-		_MONS_NAME(1,MONSNO_HINOARASI)
+		_MONS_NAME(1,MONSNO_SUTIKKU)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2,POKETYPE_KUSA)
 				
@@ -177,19 +177,19 @@ ev_d01r0101_pokecount:
 				//最初の３匹で草タイプを選択した時の処理
 				_BALLOONWIN_OBJMSG(msg_d01r0101_girl_06,D01R0101_GIRL_01)
 				_BALLOONWIN_CLOSE()
-				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_WANINOKO, 0, 0, 5, 0 )
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_FAUN, 0, 0, 5, 0 )
 				
 			ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
 				//最初の３匹で炎タイプを選択した時の処理
 				_BALLOONWIN_OBJMSG(msg_d01r0101_girl_07,D01R0101_GIRL_01)
 				_BALLOONWIN_CLOSE()
-				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_TIKORIITA, 0, 0, 5, 0 )
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_BUROKKO, 0, 0, 5, 0 )
 				
 			ELSE
 				//最初の３匹で水タイプを選択した時の処理
 				_BALLOONWIN_OBJMSG(msg_d01r0101_girl_05,D01R0101_GIRL_01)
 				_BALLOONWIN_CLOSE()
-				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_HINOARASI, 0, 0, 5, 0 )
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_SUTIKKU, 0, 0, 5, 0 )
 				
 			ENDIF
 		
