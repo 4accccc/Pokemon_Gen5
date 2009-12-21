@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-13T17:46:18"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-17T14:08:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="363" top="236" right="1068" bottom="864" maximized="no" rayout="Vertical2">
+	<dialog left="751" top="418" right="1456" bottom="1046" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,25 +336,25 @@
 	<row id="MUSICAL_AUDIENCE_TYPE_01">
 		<comment>クール</comment>
 		<language name="JPN" font=" 1:small" width="64">おとこのひと</language>
-		<language name="JPN_KANJI">おとこのひと</language>
+		<language name="JPN_KANJI">男の人</language>
 	</row>
 
 	<row id="MUSICAL_AUDIENCE_TYPE_02">
 		<comment>キュート</comment>
 		<language name="JPN" font=" 1:small" width="64">おんなのこ</language>
-		<language name="JPN_KANJI">おんなのこ</language>
+		<language name="JPN_KANJI">女の子</language>
 	</row>
 
 	<row id="MUSICAL_AUDIENCE_TYPE_03">
 		<comment>エレガント</comment>
 		<language name="JPN" font=" 1:small" width="64">おんなのひと</language>
-		<language name="JPN_KANJI">おんなのひと</language>
+		<language name="JPN_KANJI">女の人</language>
 	</row>
 
 	<row id="MUSICAL_AUDIENCE_TYPE_04">
 		<comment>ユニーク</comment>
 		<language name="JPN" font=" 1:small" width="64">おとこのこ</language>
-		<language name="JPN_KANJI">おとこのこ</language>
+		<language name="JPN_KANJI">男の子</language>
 	</row>
 
 	<row id="MUSICAL_AUDIENCE_CON_01">
@@ -383,33 +383,38 @@
 
 	<row id="MUSICAL_PROGRAM_01">
 		<comment>デフォルト演目名</comment>
-		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ</language>
-		<language name="JPN_KANJI">ポケッターリモンスターリ</language>
+		<language name="JPN" font=" 1:small" width="64">クールきょく</language>
+		<language name="JPN_KANJI">クール曲</language>
 	</row>
 
 	<row id="MUSICAL_PROGRAM_02">
-		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ２</language>
-		<language name="JPN_KANJI">ポケッターリモンスターリ２</language>
+		<comment>デフォルト演目名</comment>
+		<language name="JPN" font=" 1:small" width="64">キュートきょく</language>
+		<language name="JPN_KANJI">キュート曲</language>
 	</row>
 
 	<row id="MUSICAL_PROGRAM_03">
-		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ３</language>
-		<language name="JPN_KANJI">ポケッターリモンスターリ３</language>
+		<comment>デフォルト演目名</comment>
+		<language name="JPN" font=" 1:small" width="64">エレガントきょく</language>
+		<language name="JPN_KANJI">エレガント曲</language>
 	</row>
 
 	<row id="MUSICAL_PROGRAM_04">
-		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ４</language>
-		<language name="JPN_KANJI">ポケッターリモンスターリ４</language>
+		<comment>デフォルト演目名</comment>
+		<language name="JPN" font=" 1:small" width="64">ユニークきょく</language>
+		<language name="JPN_KANJI">ユニーク曲</language>
 	</row>
 
 	<row id="MUSICAL_PROGRAM_05">
-		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ５</language>
-		<language name="JPN_KANJI">ポケッターリモンスターリ５</language>
+		<comment>配信演目</comment>
+		<language name="JPN" font=" 1:small" width="64">ストリーミングきょく</language>
+		<language name="JPN_KANJI">ストリーミング曲</language>
 	</row>
 
 	<row id="MUSICAL_PROGRAM_06">
-		<language name="JPN" font=" 1:small" width="64">はいしんデータ</language>
-		<language name="JPN_KANJI">配信データ</language>
+		<comment>テストや実験用</comment>
+		<language name="JPN" font=" 1:small" width="64">ポケッターリモンスターリ（テスト）</language>
+		<language name="JPN_KANJI">ポケッターリモンスターリ（テスト）</language>
 	</row>
 
 	<flowchart-group-list>
