@@ -52,7 +52,6 @@ EVENT_START ev_pc
     // 「どこの パソコンに せつぞく …」
     _SYSWIN_MSG_DOWN( msg_pc_on_02 )
     _AB_KEYWAIT()
-    _SYSWIN_CLOSE()
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     IF $f_pcname == FALSE THEN
@@ -69,6 +68,7 @@ EVENT_START ev_pc
     _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START()
+    _SYSWIN_CLOSE()
     // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_window_01 THEN _CALL( pc_box )
@@ -98,11 +98,10 @@ pc_box:
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
-  //「ポケモンの あずかりシステムを …」
-  _SYSWIN_MSG_DOWN( msg_pc_box_01 )
-
   $exit = FALSE
   WHILE $exit == FALSE
+    //「ポケモンの あずかりシステムを …」
+    _SYSWIN_MSG_DOWN( msg_pc_box_01 ) 
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_01, msg_pc_box_02, msg_pc_box_window_01 )  // あずける
@@ -147,13 +146,12 @@ pc_mail_box:
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
-  //「○○の パソコンに せつぞくした！」
-  _PLAYER_NAME( 0 )
-  _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
-  _AB_KEYWAIT()
-
   $exit = FALSE
   WHILE $exit == FALSE
+    //「○○の パコンに せつぞくした！」
+    _PLAYER_NAME(0)
+    _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
+    _AB_KEYWAIT()
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_01, msg_pc_mail_02, msg_pc_mail_window_01 )  // メールボックス
