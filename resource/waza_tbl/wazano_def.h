@@ -554,4 +554,4 @@
 #define		WAZANO_BOUHUU					( 542 )		//ぼうふう
 #define		WAZANO_AHUROBUREIKU		( 543 )		//アフロブレイク
 #define		WAZANO_GIASOOSAA			( 544 )		//ギアソーサー
-#define		WAZANO_MAX						( 544 )
+#define		WAZANO_MAX						( 545 )
