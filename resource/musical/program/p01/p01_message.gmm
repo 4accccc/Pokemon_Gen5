@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-17T12:11:12"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-21T16:24:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1728" top="530" right="2433" bottom="1158" maximized="no" rayout="Vertical2">
+	<dialog left="1701" top="145" right="2380" bottom="765" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="504"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="671"/>
+		<band id="3" index="3" style="0000" width="671"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,22 +335,29 @@
 
 	<row id="TITLE">
 		<comment>最初のメッセージはタイトル固定でお願いします</comment>
-		<language name="JPN" width="256">クールきょく</language>
-		<language name="JPN_KANJI" width="256">クール曲</language>
+		<language name="JPN" width="256">ユニークきょく</language>
+		<language name="JPN_KANJI" width="256">ユニーク曲</language>
 	</row>
 
 	<row id="MSG_01">
-		<language name="JPN" width="256">おおきかったり　ちいさかったり
-ふわふわしてたり　そらとんだり</language>
-		<language name="JPN_KANJI" width="256">おおきかったり　ちいさかったり
-ふわふわしてたり　そらとんだり</language>
+		<language name="JPN" width="256">いそげや　いそげ　まよわず　すすめ
+なつが　おわってしまう　まえに</language>
+		<language name="JPN_KANJI" width="256">いそげや　いそげ　まよわず　すすめ
+なつが　おわってしまう　まえに</language>
 	</row>
 
 	<row id="MSG_02">
-		<language name="JPN" width="256">みんな　ちがっているけれど
-みんな　いっしょさ　ともだちさ！</language>
-		<language name="JPN_KANJI" width="256">みんな　ちがっているけれど
-みんな　いっしょさ　ともだちさ！</language>
+		<language name="JPN" width="256">この　じょうねつを　とどけよう
+この　きもちを　きみに　おくろう</language>
+		<language name="JPN_KANJI" width="256">この　じょうねつを　とどけよう
+この　きもちを　きみに　おくろう</language>
+	</row>
+
+	<row id="MSG_03">
+		<language name="JPN" width="256">なつの　ひざしに　まけないくらい
+あつい　きもちを　うたにこめて！</language>
+		<language name="JPN_KANJI" width="256">なつの　ひざしに　まけないくらい
+あつい　きもちを　うたにこめて！</language>
 	</row>
 
 	<flowchart-group-list>

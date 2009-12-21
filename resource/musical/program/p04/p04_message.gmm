@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-17T15:54:20"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-21T16:24:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="658" top="336" right="1337" bottom="956" maximized="no" rayout="Vertical2">
+	<dialog left="1701" top="145" right="2380" bottom="765" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
 		<band id="0" index="0" style="0000" width="504"/>
@@ -340,24 +340,24 @@
 	</row>
 
 	<row id="MSG_01">
-		<language name="JPN" width="256">いちぎょうめ
-あーあー　あーあー　あーあー　あーあー</language>
-		<language name="JPN_KANJI" width="256">いちぎょうめ
-あーあー　あーあー　あーあー　あーあー</language>
+		<language name="JPN" width="256">いそげや　いそげ　まよわず　すすめ
+なつが　おわってしまう　まえに</language>
+		<language name="JPN_KANJI" width="256">いそげや　いそげ　まよわず　すすめ
+なつが　おわってしまう　まえに</language>
 	</row>
 
 	<row id="MSG_02">
-		<language name="JPN" width="256">にぎょうめ
-テステス　テステス　テステス　テステス</language>
-		<language name="JPN_KANJI" width="256">にぎょうめ
-テステス　テステス　テステス　テステス</language>
+		<language name="JPN" width="256">この　じょうねつを　とどけよう
+この　きもちを　きみに　おくろう</language>
+		<language name="JPN_KANJI" width="256">この　じょうねつを　とどけよう
+この　きもちを　きみに　おくろう</language>
 	</row>
 
 	<row id="MSG_03">
-		<language name="JPN" width="256">さんぎょうめ
-さんぎょうめ　ひょうじの　てすと</language>
-		<language name="JPN_KANJI" width="256">さんぎょうめ
-さんぎょうめ　ひょうじの　てすと</language>
+		<language name="JPN" width="256">なつの　ひざしに　まけないくらい
+あつい　きもちを　うたにこめて！</language>
+		<language name="JPN_KANJI" width="256">なつの　ひざしに　まけないくらい
+あつい　きもちを　うたにこめて！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-17T12:01:42"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-18T19:28:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1635" top="612" right="2340" bottom="1240" maximized="no" rayout="Vertical2">
+	<dialog left="1625" top="631" right="2330" bottom="1259" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,16 +341,16 @@
 
 	<row id="MSG_01">
 		<language name="JPN" width="256">おうちを　とびだし　おさんぽしよう
-ゆきどけ　みずは　まだ　つめたいけれど</language>
+ゆきどけみずは　つめたいけれど</language>
 		<language name="JPN_KANJI" width="256">おうちを　とびだし　おさんぽしよう
-ゆきどけ　みずは　まだ　つめたいけれど</language>
+ゆきどけみずは　つめたいけれど</language>
 	</row>
 
 	<row id="MSG_02">
 		<language name="JPN" width="256">みちゆく　くさばなに　であえたなら
-いっしょに　おどろう　はるは　すぐそこ！</language>
+みんなで　おどろう　はるは　すぐそこ</language>
 		<language name="JPN_KANJI" width="256">みちゆく　くさばなに　であえたなら
-いっしょに　おどろう　はるは　すぐそこ！</language>
+いっしょに　おどろう　はるは　すぐそこ</language>
 	</row>
 
 	<flowchart-group-list>
