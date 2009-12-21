@@ -1023,7 +1023,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       return TRUE;
     }
   }
@@ -1035,7 +1035,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       return TRUE;
     }
   }
@@ -1047,7 +1047,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->page++;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
       return TRUE;
     }
   }
@@ -1059,7 +1059,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->page--;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
       return TRUE;
     }
   }
@@ -1083,7 +1083,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
-    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+    PMSND_PlaySystemSE(PSTATUS_SND_EXIT);
     return TRUE;
   }
   else
@@ -1120,7 +1120,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
     {
       work->page++;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
       return TRUE;
     }
   }
@@ -1132,7 +1132,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
     {
       work->page--;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
       return TRUE;
     }
   }
@@ -1152,7 +1152,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_INFO;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
     }
     break;
   case SBT_PAGE2:
@@ -1161,7 +1161,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_SKILL;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
     }
     break;
   case SBT_PAGE3:
@@ -1170,7 +1170,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_RIBBON;
       PSTATUS_RefreshDisp( work );
-      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
     }
     break;
   case SBT_CHECK:
@@ -1196,7 +1196,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       {
         PSTATUS_RefreshDisp( work );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
-        PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+        PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       }
     }
     break;
@@ -1207,7 +1207,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       {
         PSTATUS_RefreshDisp( work );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
-        PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+        PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       }
     }
     break;
@@ -1219,7 +1219,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       work->mainSeq = SMS_FADEOUT;
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
       work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
-      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+      PMSND_PlaySystemSE(PSTATUS_SND_EXIT);
     }
     break;
   case SBT_RETURN:

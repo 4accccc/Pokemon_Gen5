@@ -662,6 +662,7 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_Switching( work->camera );
   }
   */
+  PSTATUS_SUB_SetShadowScale( work , subWork );
 
 }
 
@@ -1381,6 +1382,7 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
     MCSS_ResetVanishFlag( subWork->pokeMcssBack );
     MCSS_SetVanishFlag( subWork->pokeMcss );
   }
+  
 }
 
 //--------------------------------------------------------------

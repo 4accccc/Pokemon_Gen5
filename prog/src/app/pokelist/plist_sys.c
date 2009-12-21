@@ -1777,7 +1777,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = PL_SEL_POS_EXIT2;
     work->plData->ret_mode = PL_RET_NORMAL;
-    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
+    PMSND_PlaySystemSE( PLIST_SND_EXIT );
 
     work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
