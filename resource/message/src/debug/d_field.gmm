@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-12-18T17:48:51"/>
+	<create user="tamada" host="W00139" date="2009-12-21T23:47:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="129" top="208" right="834" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="412" top="136" right="940" bottom="658" visible="yes"/>
+		<tag-palette left="1090" top="128" right="1618" bottom="650" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -835,6 +835,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_NUMINPUT">
 		<language name="JPN" width="160">すうちにゅうりょく</language>
 		<language name="JPN_KANJI" width="160">数値入力</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVENT_CONTROL">
+		<language name="JPN" width="160">イベントそうさ</language>
+		<language name="JPN_KANJI" width="160">イベント操作</language>
 	</row>
 
 	<row id="DEBUG_FIELD_SEASON_DISPLAY">
