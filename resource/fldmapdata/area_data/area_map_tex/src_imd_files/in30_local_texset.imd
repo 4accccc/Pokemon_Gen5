@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-18T14:09:20" source="in30_local_texset.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-19T11:54:12" source="in30_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-18T14:09:20" source="in30_local_texset.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-12-19T11:54:12" source="in30_local_texset.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1368,38 +1368,38 @@
 		path="C:/home/wb_data3d/field/in30/chip/tex/in30_dan01.tga"
 	>
 		<bitmap size="256">
-			9533 0002 bbbb bbbb bbbb bbbb bbbb bbbb
-			9533 b002 8888 8888 8888 8888 8888 8888
-			9533 8b02 8888 8888 8888 8888 8888 8888
-			9533 8b02 8888 8888 8888 8888 8888 8888
-			9533 77d2 7777 7777 7777 7777 7777 7777
-			9533 ddd2 dddd dddd dddd dddd dddd dddd
-			9533 eee2 eeee eeee eeee eeee eeee eeee
-			9533 ee02 eeee eeee eeee e22e eeee eeee
-			a633 ee02 eeee eeee eeee e222 eeee eeee
-			a633 e002 eeee eeee eeee eeee eeee eeee
-			c633 0001 dddd dddd dddd dddd dddd dddd
-			c643 0001 bbbb bbbb bbbb bbbb bbbb bbbb
-			c643 b001 8888 8888 8888 8888 8888 8888
-			c643 8b01 8888 8888 8888 8888 8888 8888
-			c643 8b01 8888 8888 8888 8888 8888 8888
-			c643 77d1 7777 7777 7777 7777 7777 7777
-			c643 ddd1 dddd dddd dddd dddd dddd dddd
-			c643 eee1 eeee eeee eeee eeee eeee eeee
-			c643 ee01 eeee eeee eeee eeee eeee eeee
-			c643 ee01 eeee eeee eeee eeee eeee eeee
-			a643 e002 eeee eeee eeee eeee eeee eeee
-			a643 0002 dddd dddd dddd dddd dddd dddd
-			a643 0002 bbbb bbbb bbbb bbbb bbbb bbbb
-			a643 b002 8888 8888 8888 8888 8888 8888
-			a643 8b02 8888 8888 8888 8888 8888 8888
-			9543 8b02 8888 8888 8888 8888 8888 8888
-			9543 77d2 7777 7777 7777 7777 7777 7777
-			9543 ddd2 dddd dddd dddd dddd dddd dddd
-			9533 eee2 eeee eeee eeee eeee eeee eeee
-			9533 ee02 eeee eeee eeee eeee eeee eeee
-			9533 ee02 eeee eeee eeee eeee eeee eeee
-			9533 e002 eeee eeee eeee eeee eeee eeee
+			8bbb 9331 6666 6666 6666 6666 6666 6666
+			8bbb 6931 7777 7777 7777 7777 7777 7777
+			8bbb 7631 7777 7777 7777 7777 7777 7777
+			8bbb 7691 7777 7777 7777 7777 7777 7777
+			8bbb cc51 cccc cccc cccc cccc cccc cccc
+			8bbb 5551 5555 5555 5555 5555 5555 5555
+			28bb aaa1 aaaa aaaa aaaa aaaa aaaa aaaa
+			28bb aa41 aaaa aaaa aaaa a11a aaaa aaaa
+			28bb a491 aaaa aaaa aaaa a111 aaaa aaaa
+			28bb 4991 aaaa aaaa aaaa aaaa aaaa aaaa
+			228b 9994 5555 5555 5555 5555 5555 5555
+			228b 9994 6666 6666 6666 6666 6666 6666
+			428b 6994 7777 7777 7777 7777 7777 7777
+			428b 7694 7777 7777 7777 7777 7777 7777
+			428b 7694 7777 7777 7777 7777 7777 7777
+			428b cc54 cccc cccc cccc cccc cccc cccc
+			128b 5554 5555 5555 5555 5555 5555 5555
+			128b aaa4 aaaa aaaa aaaa aaaa aaaa aaaa
+			128b aa44 aaaa aaaa aaaa aaaa aaaa aaaa
+			128b a494 aaaa aaaa aaaa aaaa aaaa aaaa
+			188b a494 aaaa aaaa aaaa aaaa aaaa aaaa
+			28bb 4991 5555 5555 5555 5555 5555 5555
+			28bb 9991 6666 6666 6666 6666 6666 6666
+			28bb 6991 7777 7777 7777 7777 7777 7777
+			28bb 7691 7777 7777 7777 7777 7777 7777
+			28bb 7691 7777 7777 7777 7777 7777 7777
+			28bb cc51 cccc cccc cccc cccc cccc cccc
+			28bb 5551 5555 5555 5555 5555 5555 5555
+			2bbb aaa1 aaaa aaaa aaaa aaaa aaaa aaaa
+			8bbb aa41 aaaa aaaa aaaa aaaa aaaa aaaa
+			8bbb a491 aaaa aaaa aaaa aaaa aaaa aaaa
+			8bbb 4491 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="6" name="in30_mat02"
@@ -1429,36 +1429,36 @@
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 9990 0009 0000 0000 0000
-			0000 0000 9000 2299 0887 0000 0000 0000
-			0000 0000 9900 2222 8722 0007 0000 0000
-			0000 0000 2990 2222 2222 007a 0000 0000
-			0000 0000 2299 2222 2222 07a2 0000 0000
-			0000 0000 2299 2222 2222 07a2 0000 0000
-			0000 9000 2229 4222 2244 aa42 0000 0000
-			0000 9000 2224 4222 7744 a942 000a 0000
-			0000 b900 4224 4444 9744 a447 007a 0000
-			0000 b990 4427 4444 7774 a449 007a 0000
-			0000 9b90 4774 7444 7747 a997 08aa 0000
-			0000 48b9 7444 7777 7444 9977 07aa 0000
-			0000 78b9 4444 4777 7444 9977 7aaa 0000
-			9000 999b 7447 7777 7744 9997 8aab 0000
-			9000 999b 7777 9777 7777 a999 abbb 0000
-			9000 999c 9979 9777 7779 aa99 bbbb 0008
-			c000 9999 9aa9 9777 9799 aa99 bbbb 0008
-			c000 9999 9aa9 9979 9999 aaaa 6bba 000c
-			c600 9999 9aa9 9979 9999 aaaa 6bba 006c
-			c560 699a 9aaa 9999 a999 aabb 6bba 0662
-			a220 66aa 9aaa 9999 b9a9 abbb 6bba 0626
-			2220 6662 9aaa 9999 baaa b6bb 6bbb 0622
-			2266 6662 abbb 999a baaa 666b 66bb 6622
-			2266 2266 aabb a9aa baaa 226b 66b6 0662
-			2260 2266 6aa2 aa66 baaa 226b 6662 0602
-			2200 2226 2662 a611 baaa 1126 2662 0002
-			2000 2262 1111 6211 baaa 1126 2221 0000
-			0000 2202 1111 6221 6666 1126 0211 0000
-			0000 0000 1110 2222 2222 1122 0001 0000
-			0000 0000 5000 2635 2222 0022 0000 0000
+			0000 0000 0000 9900 0999 0000 0000 0000
+			0000 0000 0000 4999 9944 0009 0000 0000
+			0000 0000 9000 2249 7422 0099 0000 0000
+			0000 0000 9900 2224 4222 0997 0000 0000
+			0000 0000 4990 2222 2222 9974 0000 0000
+			0000 0000 4499 2222 2222 9974 0000 0000
+			0000 9000 4249 2244 4222 9744 0009 0000
+			0000 9900 2224 2244 4442 a944 0099 0000
+			0000 4900 4724 4244 4744 9999 0099 0000
+			0000 7990 7797 4247 9774 9799 0999 0000
+			0000 4790 9994 7477 7747 9977 09a9 0000
+			0000 4799 9974 7999 7444 9977 99a9 0000
+			9000 79a9 9744 4799 7444 9977 9aaa 0000
+			9000 999a 7447 7777 7744 9997 9aaa 0000
+			9000 999a 7777 9777 7777 a999 9aaa 0009
+			9900 999a 9979 9777 7779 aa99 aaaa 0009
+			a900 99aa 99a9 9777 9799 aa99 aaaa 0009
+			a900 99aa 99a9 9979 9999 aaaa aaaa 0009
+			a900 9aaa 9aa9 9979 9999 aaaa 6baa 0069
+			a960 aaaa 9aaa 9999 a999 aabb 6baa 0622
+			a220 6baa aaab 9999 b9a9 abbb 6baa 0626
+			2220 66bb aaab 9999 baaa b6bb 6bbb 6222
+			2266 6662 aabb a99a baaa 666b 26bb 2212
+			2266 2266 aab6 a9aa baaa 226b 26b6 0221
+			2260 2266 6bb2 aa66 baaa 226b 2262 0222
+			2200 2226 2662 a611 baaa 1126 2222 0002
+			2000 2262 1111 6211 66ba 1116 1121 0000
+			0000 2202 1111 6221 2266 1111 0111 0000
+			0000 0000 1110 2222 1122 1121 0001 0000
+			0000 0000 5000 2635 2112 0022 0000 0000
 			0000 0000 5000 2635 2222 0022 0000 0000
 		</bitmap>
 	</tex_image>
@@ -2309,8 +2309,8 @@
 		18c6 14a5 14a5 14a5 14a5 1084 1084 0c63
 	</tex_palette>
 	<tex_palette index="5" name="in30_dan01_pl" color_size="16">
-		2529 294a 2d6b 7fff 7fff 6f7b 6318 5294
-		4a52 4a52 4631 4210 3def 3def 2d6b 7fff
+		77bc 62f5 6f7a 5271 5ad4 6f59 739b 7bdd
+		77bd 5ab3 62f6 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="in30_mat02_pl" color_size="8">
 		5aae 62f0 7375 632f 7fff 7fff 7fff 7fff
