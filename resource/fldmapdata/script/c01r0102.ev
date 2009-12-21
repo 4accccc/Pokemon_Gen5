@@ -130,7 +130,7 @@ EVENT_START   ev_c01r0102_inventor_01
 	//重要アイテム「？？？」を所持しているか、いないかの分岐
 	
 		//重要アイテム「？？？」を持っていない場合
-		IF $WK_SCENE_D01R0101 <= 5 THEN
+		IF $WK_SCENE_D01R0101_POKE <= 3 THEN
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
 		
@@ -153,7 +153,7 @@ EVENT_START   ev_c01r0102_girl3_01
 	_TALK_OBJ_START()
 
 	//重要アイテム「？？？」を持っていない場合
-	IF $WK_SCENE_D01R0101 <= 5 THEN
+	IF $WK_SCENE_D01R0101_POKE <= 3 THEN
 		
 		//あなた　トレーナー？　じゃあ　ポケモンセンターの
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_01 )

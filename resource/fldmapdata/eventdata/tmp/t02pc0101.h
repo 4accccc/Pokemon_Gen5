@@ -16,5 +16,8 @@
 #define T02PC0101_WOMAN1                   3
 #define T02PC0101_SUPPORT_01               4
 #define T02PC0101_SHOPM1_01                5
+#define T02PC0101_CONNECT_00               6
+#define T02PC0101_CONNECT_01               7
+#define T02PC0101_CONNECT_02               8
 
 #endif //ZONE_T02PC0101_EVC_H

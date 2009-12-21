@@ -202,13 +202,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//自機の位置取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-				
-	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,819200,65551,221184,30 )	//一番最後の引数は移動にかかるフレーム数
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
 	IF $LWK_HERO_X == 11 THEN
 	//X軸が11グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
@@ -225,7 +218,14 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_OBJ_ANIME_WAIT()
 		
 	ENDIF
-	
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,819200,65551,221184,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//ようこそ　こちら　サンヨウシティ　ポケモンジムです
 	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1C_01 )
 	_BALLOONWIN_CLOSE()
