@@ -22,6 +22,7 @@
 #include "field/event_mapchange.h"
 #include "field/script.h"
 #include "field/script_local.h"
+#include "field/field_sound.h"
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
 #include "sound/pm_sndsys.h"
@@ -737,14 +738,15 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData(evWork->gsys);
+  FIELD_SOUND *fieldSound = GAMEDATA_GetFieldSound( gameData );
   switch( evWork->subSeq )
   {
   case 0:
-    PMSND_PopBGM();
+    FIELD_SOUND_FadeInPopBGM( fieldSound , 30 );
     evWork->subSeq++;
     break;
   case 1:
-    PMSND_FadeInBGM( 30 );
     GMEVENT_CallEvent(event, EVENT_FieldOpen(evWork->gsys));
     evWork->subSeq++;
     break;
@@ -770,6 +772,8 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
 //--------------------------------------------------------------
 static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData(evWork->gsys);
+  FIELD_SOUND *fieldSound = GAMEDATA_GetFieldSound( gameData );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
   switch( evWork->subSeq )
   {
@@ -778,16 +782,15 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     evWork->subSeq++;
     break;
   case 1:
-    PMSND_FadeOutBGM( 30 );
+    FIELD_SOUND_FadeOutPushBGM( fieldSound , 30 );
     GMEVENT_CallEvent(event, EVENT_FieldClose(evWork->gsys, fieldWork));
     evWork->subSeq++;
     break;
   case 2:
-    if( PMSND_CheckFadeOnBGM() == FALSE )
+    if( FIELD_SOUND_IsBGMFade(fieldSound) == FALSE )
     {
-      PMSND_PushBGM();
+      return TRUE;
     }
-    return TRUE;
     break;
   }
   return FALSE;
