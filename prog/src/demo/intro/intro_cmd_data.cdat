@@ -50,7 +50,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 6, 6 }, CMD_READ_NEXT }, // BGM切替
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
-  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_HITOKAGE, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_HATTHE, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
   { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 12, 0, -16 } }, // ブラックからフェードイン
 
@@ -80,10 +80,10 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 
   { INTRO_CMD_TYPE_SE, { SEQ_SE_BOWA2 }, CMD_READ_NEXT }, // ボールから出てくる音
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, TRUE }, CMD_READ_NEXT }, // ポケモン表示
-  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
+//  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
 
-  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_HITOKAGE }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
+  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_HATTHE }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
@@ -167,9 +167,9 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
   { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_VISIBLE, { TRUE }, CMD_READ_NEXT },    // 3G選択肢表示
 
   // 男女に元づいたを表示ロード
-  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX }, // 男女判定
-    { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_FRAME, 0 }, //男の子の絵
-    { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_FRAME, 50 }, //女の子の絵
+  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX },        //男女判定
+    { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_FRAME, 0 },   //男の子の絵
+    { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_FRAME, 50 },  //女の子の絵
 
   //↑ROMアクセスはここまで↑
   //@TODO セーブ開始
@@ -177,9 +177,13 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 }, }, // 画面フェードイン
 
   { INTRO_CMD_TYPE_WORDSET, { INTRO_WORDSET_TRAINER, 0 }, CMD_READ_NEXT },  // トレーナー名をレジスト
-  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX }, // 男女判定
+
+  // 男女判定
+  { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX },
     { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_02 } }, //[トレーナー名]くん　でいい？
     { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_03 } }, //[トレーナー名]さん　でいい？
+
+  //@TODO 何故かここでメッセージウェイトが入らない
 
   // 分岐 確認メッセージ
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, }, },

@@ -186,7 +186,7 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
   GF_ASSERT( id < MCSS_ID_MAX );
   GF_ASSERT( wk->mcss_work[id] == NULL );
 
-  pp = PP_Create( MONSNO_HITOKAGE, 0, 0, wk->heap_id );
+  pp = PP_Create( monsno, 0, 0, wk->heap_id );
       
   MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
 

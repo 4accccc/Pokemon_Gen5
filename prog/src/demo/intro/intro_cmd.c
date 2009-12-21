@@ -1015,11 +1015,11 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
       // •\Ž¦Ø‚è‘Ö‚¦
       if( sdat->cnt )
       {
-        INTRO_G3D_SelectSet( wk->g3d, 19 );
+        INTRO_G3D_SelectSet( wk->g3d, 21 );
       }
       else
       {
-        INTRO_G3D_SelectSet( wk->g3d, 21 );
+        INTRO_G3D_SelectSet( wk->g3d, 19 );
       }
     }
     // Œˆ’è

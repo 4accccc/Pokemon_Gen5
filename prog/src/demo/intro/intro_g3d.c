@@ -152,7 +152,7 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
 
       for( j=0; j<anime_count; j++ )
       {
-        const int frame = FX32_CONST(21); // @TODO 開始値
+        const int frame = FX32_CONST(20); 
 
         GFL_G3D_OBJECT_EnableAnime( obj, j );
         GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
@@ -258,6 +258,8 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
     pos.z = 0x200000;
     GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
+    // ブレンド指定
+    G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
     wk->start_seq++;
     break;
   case 1:
@@ -375,7 +377,7 @@ BOOL INTRO_G3D_SelectDecideReturn( INTRO_G3D_WORK* wk )
     INTRO_G3D_SelectSet( wk, wk->cnt );
   }
 
-  if( wk->cnt == 21 ){ return TRUE; }
+  if( wk->cnt == 20 ){ return TRUE; }
   
   return FALSE;
 
