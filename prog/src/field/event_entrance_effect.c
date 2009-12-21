@@ -45,6 +45,7 @@ typedef struct {
   GAMESYS_WORK * gsys;  //<<<ゲームシステムへのポインタ
   LOCATION loc_req;     //<<<次のマップを指すロケーション指定（BGMフェード処理の係数）
   VecFx32 pos;          //<<<ドアを検索する場所
+  BOOL cam_anm_flag;    //<<<カメラアニメーションの有無
 
   //以下はシーケンス動作中にセットされる
   //FIELD_BMODEL * entry;
@@ -80,7 +81,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   {
   case SEQ_DOOROUT_INIT:
     // フェードインする前に, カメラの初期設定を行う
-    EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
+    if( fdaw->cam_anm_flag )
+    {
+      EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
+    }
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
     *seq = SEQ_DOOROUT_WAIT_SOUND_LOAD;
@@ -108,7 +112,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_CAMERA_ACT:
-    EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
+    if( fdaw->cam_anm_flag )
+    {
+      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
+    }
     *seq = SEQ_DOOROUT_FADEIN;
     break;
 
@@ -193,7 +200,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
  * @return  GMEVENT
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorOutAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+GMEVENT * EVENT_FieldDoorOutAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BOOL cam_anm_flag )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
@@ -203,6 +210,7 @@ GMEVENT * EVENT_FieldDoorOutAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   fdaw->gsys = gsys;
   //fdaw->loc_req = * loc;
   getPlayerFrontPos(fieldmap, &fdaw->pos);
+  fdaw->cam_anm_flag = cam_anm_flag;
 
   return event;
 }
@@ -245,7 +253,10 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_CAMERA_ACT: 
-    EVENT_CAMERA_ACT_CallDoorInEvent( event, gsys, fieldmap ); 
+    if( fdaw->cam_anm_flag )
+    {
+      EVENT_CAMERA_ACT_CallDoorInEvent( event, gsys, fieldmap ); 
+    }
     if (fdaw->ctrl == NULL)
     { /* エラーよけ、ドアがない場合 */
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
@@ -311,7 +322,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldDoorInAnime
-( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc )
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc, BOOL cam_anm_flag )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
@@ -322,6 +333,7 @@ GMEVENT * EVENT_FieldDoorInAnime
   fdaw->loc_req = * loc;
   getPlayerFrontPos(fieldmap, &fdaw->pos);
   fdaw->ctrl = NULL;
+  fdaw->cam_anm_flag = cam_anm_flag;
 
   return event;
 }

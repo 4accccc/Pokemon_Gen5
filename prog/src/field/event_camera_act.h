@@ -16,44 +16,44 @@
 /**
  * @brief カメラ動作イベントを呼び出す( 入った時 )
  *
- * @param p_parent   親イベント
- * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //----------------------------------------------------------------------
 extern void EVENT_CAMERA_ACT_CallDoorInEvent( 
-    GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
 
 //---------------------------------------------------------------------
 /**
  * @brief ドアから出てきた際の, カメラの初期設定を行う
  *
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  */
 //---------------------------------------------------------------------
-extern void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap );
+extern void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* fieldmap );
 
 //--------------------------------------------------------------------
 /**
  * @brief カメラ動作イベントを呼び出す( 出た時 )
  *
- * @param p_parent   親イベント
- * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //--------------------------------------------------------------------
 extern void EVENT_CAMERA_ACT_CallDoorOutEvent( 
-    GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap ); 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap ); 
 
 //--------------------------------------------------------------------
 /**
  * @breif カメラのNearプレーンとFarプレーンをデフォルト設定に戻す
  *
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  */
 //--------------------------------------------------------------------
-extern void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap );
+extern void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* fieldmap );

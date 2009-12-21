@@ -10,7 +10,7 @@
 #pragma once
 
 extern GMEVENT * EVENT_FieldDoorInAnime
-( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc );
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc, BOOL cam_anm_flag );
 
 extern GMEVENT * EVENT_FieldDoorOutAnime
-( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BOOL cam_anm_flag );

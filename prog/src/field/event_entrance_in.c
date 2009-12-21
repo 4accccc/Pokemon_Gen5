@@ -190,7 +190,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor(GMEVENT * event, int *s
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, TRUE ) );
     ++ *seq;
     break;
   case 1:
@@ -340,11 +340,19 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *se
       }
     }
     break;
-  case 2:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+  case 2: 
+    { // ƒJƒƒ‰ŽålŒö’Ç”öOFF
+      FIELD_CAMERA* camera;
+      camera = FIELDMAP_GetFieldCamera( fieldmap );
+      FIELD_CAMERA_FreeTarget( camera );
+    }
     ++ *seq;
     break;
   case 3:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
+    ++ *seq;
+    break;
+  case 4:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -364,7 +372,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP2(GMEVENT * event, int *se
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -387,7 +395,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP3(GMEVENT * event, int *se
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -410,7 +418,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP4(GMEVENT * event, int *se
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -433,7 +441,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP5(GMEVENT * event, int *se
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
     ++ *seq;
     break;
   case 1:

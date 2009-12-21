@@ -198,7 +198,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, TRUE ) );
     ++ *seq;
     break;
   case 1:
@@ -319,7 +319,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSP1(GMEVENT * event, int *s
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -349,7 +349,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSP2(GMEVENT * event, int *s
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -379,7 +379,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSP3(GMEVENT * event, int *s
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -409,7 +409,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSP4(GMEVENT * event, int *s
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, FALSE ) );
     ++ *seq;
     break;
   case 1:
@@ -439,7 +439,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSP5(GMEVENT * event, int *s
   switch (*seq)
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap, FALSE ) );
     ++ *seq;
     break;
   case 1:
