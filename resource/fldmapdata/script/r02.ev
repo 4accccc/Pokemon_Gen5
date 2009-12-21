@@ -143,8 +143,9 @@ EVENT_START   ev_pos_r02_mama_01
 	//キーアイテムを入手ME
 
 
-	
-//【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
+
+	//ランニングシューズ入手処理
+	_GET_SHOES()
 	_ME_PLAY( SEQ_ME_KEYITEM )
 	_SYSWIN_MSG_ALLPUT_DOWN( msg_r02_mama_03 )
 	_ME_WAIT()
