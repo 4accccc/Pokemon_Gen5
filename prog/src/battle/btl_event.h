@@ -100,6 +100,7 @@ typedef enum {
   BTL_EVENT_RANKEFF_FAILED,         ///< 能力ランク増減失敗確定
   BTL_EVENT_RANKEFF_FIXED,          ///< 能力ランク増減処理後
   BTL_EVENT_WAZA_RANKEFF_FIXED,     ///< ワザによるランク増減効果成功
+  BTL_EVENT_WAZASICK_TURN_COUNT,    ///< 特殊処理の状態異常ターン数
   BTL_EVENT_WAZASICK_SPECIAL,       ///< 特殊処理の状態異常ID決定
   BTL_EVENT_WAZASICK_PARAM,         ///< ワザによる状態異常のパラメータチェック
   BTL_EVENT_ADD_SICK_TYPE,          ///< ワザの追加効果による状態異常のタイプ調整
@@ -122,6 +123,7 @@ typedef enum {
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
   BTL_EVENT_WEATHER_CHECK,          ///< 天候のチェック
+  BTL_EVENT_WAZA_WEATHER_TURNCNT,   ///< ワザによる天候変化時のターン数チェック
   BTL_EVENT_WEATHER_CHANGE,         ///< 天候の変化（直前）
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）
   BTL_EVENT_WEATHER_REACTION,       ///< 天候ダメージに対する反応

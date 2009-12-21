@@ -2307,29 +2307,38 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
 {
+  static const struct {
+    u16 strID;
+    u16 effectID;
+  }ParamTbl[] = {
+    { BTL_STRID_STD_ShineStart,   BTLEFF_WEATHER_HARE       },
+    { BTL_STRID_STD_ShineStart,   BTLEFF_WEATHER_HARE       },
+    { BTL_STRID_STD_RainStart,    BTLEFF_WEATHER_AME        },
+    { BTL_STRID_STD_StormStart,   BTLEFF_WEATHER_SUNAARASHI },
+    { BTL_STRID_STD_SnowStart,    BTLEFF_WEATHER_ARARE      },
+  };
+
+  BtlWeather weather = args[0];
+
   switch( *seq ){
   case 0:
+    if( weather < NELEMS(ParamTbl) )
     {
-      BtlWeather weather = args[0];
-      u16  msgID;
-      switch( weather ){
-      case BTL_WEATHER_SHINE: msgID = BTL_STRID_STD_ShineStart; break;
-      case BTL_WEATHER_RAIN:  msgID = BTL_STRID_STD_RainStart; break;
-      case BTL_WEATHER_SAND:  msgID = BTL_STRID_STD_StormStart; break;
-      case BTL_WEATHER_SNOW:  msgID = BTL_STRID_STD_SnowStart; break;
-//      case BTL_WEATHER_MIST:  msgID = BTL_STRID_STD_MistStart; break;
-      default:
-        GF_ASSERT(0); // おかしな天候ID
-        return TRUE;
-      }
-      BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
-      wk->weather = weather;
+      BTLV_EFFECT_Add( ParamTbl[weather].effectID );
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      BTLV_StartMsgStd( wk->viewCore, ParamTbl[weather].strID, NULL );
       (*seq)++;
     }
     break;
-  case 1:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
+
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
       return TRUE;
     }
     break;
@@ -2535,6 +2544,9 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 {
+   u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+   u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
   switch( *seq ){
   case 0:
     {
@@ -2546,9 +2558,6 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 
       if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
       {
-        u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-        u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-
         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
         (*seq)++;
       }
@@ -2560,19 +2569,21 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
+      BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
       (*seq)++;
     }
     break;
   case 2:
+      if( BTLV_WaitEffectByPos(wk->viewCore, vpos) )
       {
         BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
-        BTL_Printf("レベルアップメッセージ：numArgs=%d, arg0=%d, arg1=%d\n",
-          wk->strParam.argCnt, wk->strParam.args[0], wk->strParam.args[1] );
+
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
+
         (*seq)++;
       }
       break;

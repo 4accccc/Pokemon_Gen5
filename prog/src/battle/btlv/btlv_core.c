@@ -613,6 +613,8 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+  wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
+  wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
@@ -724,6 +726,8 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+    wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
+    wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
     wk->plistData.font = wk->largeFontHandle;
     wk->plistData.heap = wk->heapID;
     wk->plistData.mode = BPL_MODE_ITEMUSE;
@@ -1754,6 +1758,8 @@ BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result )
 void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+  wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
+  wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = BPL_MODE_WAZASET;

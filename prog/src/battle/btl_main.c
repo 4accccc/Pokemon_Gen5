@@ -2776,14 +2776,12 @@ POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
   if( BTL_MAIN_IsMultiMode(wk) )
   {
     u8 friendClientID = GetFriendCrientID( wk->myClientID );
-    srcParty_RefrectBtlParty( wk, wk->myClientID );
     srcParty_RefrectBtlParty( wk, friendClientID );
-    // @todo –¢ŽÀ‘•
-    return BTL_MAIN_GetPlayerPokeParty( wk );
+    return srcParty_Get( wk, friendClientID );
   }
   else
   {
-    return BTL_MAIN_GetPlayerPokeParty( wk );
+    return NULL;
   }
 }
 

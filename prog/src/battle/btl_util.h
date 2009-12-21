@@ -373,6 +373,22 @@ static inline void BPP_SICKCONT_IncTurn( BPP_SICK_CONT* cont, u8 inc )
     }
   }
 }
+/*
+ *  継続ターン数セット
+ */
+static inline void BPP_SICKCONT_SetTurn( BPP_SICK_CONT* cont, u8 turn )
+{
+  if( cont->type == WAZASICK_CONT_TURN ){
+    if( cont->turn.count < 8 ){
+      cont->turn.count = turn;
+    }
+  }
+  if( cont->type == WAZASICK_CONT_POKETURN ){
+    if( cont->poketurn.count < 8 ){
+      cont->poketurn.count = turn;
+    }
+  }
+}
 //===================================================================
 // ポケモンタイプを合成して１変数として扱うための措置
 //===================================================================

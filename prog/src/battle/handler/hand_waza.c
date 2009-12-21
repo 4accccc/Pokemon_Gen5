@@ -2956,21 +2956,24 @@ static void handler_AquaRing( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 // ターンチェック開始ハンドラ
 static void handler_AquaRing_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[WORKIDX_STICK] != 0 )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_IsHPFull(bpp)
-    &&  !BPP_IsDead(bpp)
-    ){
-      BTL_HANDEX_PARAM_RECOVER_HP* param;
-      const BTL_POKEPARAM* bpp;
+    if( work[WORKIDX_STICK] != 0 )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_IsHPFull(bpp)
+      &&  !BPP_IsDead(bpp)
+      ){
+        BTL_HANDEX_PARAM_RECOVER_HP* param;
+        const BTL_POKEPARAM* bpp;
 
-      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-      param->pokeID = pokeID;
-      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
+        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+        param->pokeID = pokeID;
+        param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+      }
     }
   }
 }
@@ -3017,22 +3020,25 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 }
 static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[WORKIDX_STICK] != 0)
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
-    &&  !BPP_CheckSick(bpp, WAZASICK_KONRAN)
-    ){
-      BTL_HANDEX_PARAM_ADD_SICK* param;
+    if( work[WORKIDX_STICK] != 0)
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
+      &&  !BPP_CheckSick(bpp, WAZASICK_KONRAN)
+      ){
+        BTL_HANDEX_PARAM_ADD_SICK* param;
 
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      param->sickID = WAZASICK_KONRAN;
-      BTL_CALC_MakeDefaultWazaSickCont( param->sickID, bpp, &param->sickCont );
-      param->fAlmost = FALSE;
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        param->sickID = WAZASICK_KONRAN;
+        BTL_CALC_MakeDefaultWazaSickCont( param->sickID, bpp, &param->sickCont );
+        param->fAlmost = FALSE;
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
 
-      BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+        BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      }
     }
   }
 }
@@ -3103,17 +3109,20 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 }
 static void handler_Sawagu_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[WORKIDX_STICK] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
-    &&  !BPP_IsDead(bpp)
-    ){
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguCure );
-      HANDEX_STR_AddArg( &param->str, pokeID );
+    if( work[WORKIDX_STICK] )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
+      &&  !BPP_IsDead(bpp)
+      ){
+        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguCure );
+        HANDEX_STR_AddArg( &param->str, pokeID );
 
-      BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+        BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      }
     }
   }
 }
@@ -4210,8 +4219,8 @@ static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_MagicCoat },           // 未分類ワザ処理
-    { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob },       // ワザ乗っ取り判定
-    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect },       // ワザ乗っ取り判定
+    { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob },  // ワザ乗っ取り判定
+    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect },   // ワザ乗っ取り判定
     { BTL_EVENT_TURNCHECK_BEGIN,              handler_MagicCoat_TurnCheck }, // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
@@ -4265,8 +4274,11 @@ static void handler_MagicCoat_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 }
 static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // ターンチェックで自殺
-  BTL_EVENT_FACTOR_Remove( myHandle );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // ターンチェックで自殺
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -4276,7 +4288,7 @@ static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Yokodori( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,     handler_Yokodori },           // 未分類ワザ処理
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,     handler_Yokodori }, // 未分類ワザ処理
     { BTL_EVENT_CHECK_WAZA_ROB,        handler_Yokodori_CheckRob },  // 乗っ取り判定
     { BTL_EVENT_WAZASEQ_ROB,           handler_Yokodori_Rob      },  // 乗っ取り確定
     { BTL_EVENT_TURNCHECK_BEGIN,       handler_Yokodori_TurnCheck }, // ターンチェック
@@ -4326,7 +4338,9 @@ static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 }
 static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_EVENT_FACTOR_Remove( myHandle );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6630,7 +6644,7 @@ static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_Tedasuke( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,    handler_Tedasuke_Ready },       // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Tedasuke_Ready },       // 未分類ワザハンドラ
     { BTL_EVENT_WAZA_POWER,         handler_Tedasuke_WazaPow },     // ワザ威力チェック
     { BTL_EVENT_TURNCHECK_BEGIN,    handler_Tedasuke_TurnCheck },   // ターンチェック開始ハンドラ
   };
@@ -6670,7 +6684,9 @@ static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 }
 static void handler_Tedasuke_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7218,7 +7234,9 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 }
 static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7279,7 +7297,9 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 }
 static void handler_Onnen_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
+  }
 }
 
 //----------------------------------------------------------------------------------
