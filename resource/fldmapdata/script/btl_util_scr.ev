@@ -53,6 +53,8 @@ ev_btl_util_party_select_call:
   //ÉÅÉjÉÖÅ[ï\é¶
 	_BMPMENU_START()
 
+  _SYSWIN_CLOSE()
+
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $i_ret = BTL_UTIL_PARTY_SELECT_CANCEL
   ELSIF $i_ret == BTL_UTIL_PARTY_SELECT_BTLBOX THEN
