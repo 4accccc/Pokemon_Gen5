@@ -78,6 +78,7 @@ typedef struct{
 typedef struct{
 	GFL_G3D_UTIL*			g3Dutil;
 	u16								g3DutilUnitIdx;
+  GFL_G3D_LIGHTSET* g3Dlightset;
 }G3D_CONTROL;
 
 typedef struct{
@@ -578,15 +579,25 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
 //	G3DControl
 //==============================================================================
 static const GFL_G3D_LOOKAT cameraLookAt = {
-	{ -252.446045*FX32_ONE, 268.627930*FX32_ONE, 721.645996*FX32_ONE },	//カメラの位置(＝視点)
+	//{ -252.446045*FX32_ONE, 268.627930*FX32_ONE, 721.645996*FX32_ONE },	//カメラの位置(＝視点)
+	{ -477.457031*FX32_ONE, 205.554199*FX32_ONE, 784.570801*FX32_ONE },	//カメラの位置(＝視点)
 	{ 0, FX32_ONE, 0 },												//カメラの上方向
-	{ 110.435803*FX32_ONE, 1395.428467*FX32_ONE, 279.511475*FX32_ONE },	//カメラの焦点(＝注視点)
-
+	//{ 110.435803*FX32_ONE, 1395.428467*FX32_ONE, 279.511475*FX32_ONE },	//カメラの焦点(＝注視点)
+	{ 195.185791*FX32_ONE, 1299.894775*FX32_ONE, 189.700439*FX32_ONE },	//カメラの焦点(＝注視点)
 };
 #define cameraPerspway	( 30/2 * PERSPWAY_COEFFICIENT )
 #define cameraAspect	( FX32_ONE * 4/3 )
 #define cameraNear		( 32 << FX32_SHIFT )
 #define cameraFar		( 2048 << FX32_SHIFT )
+
+//ライト初期設定データ
+static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
+  { 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 1, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+};
+static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl) };
 
 #define g3DanmRotateSpeed	( 0x100 )
 #define g3DanmFrameSpeed	( FX32_ONE )
@@ -598,8 +609,10 @@ static const GFL_G3D_OBJSTATUS drawStatus[] = {
 		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 	},
 	{
-		{ 0xfffebef9, 0x00378800, 0x0019a82f },	//座標
-		{ 0x3000, 0x3000, 0x3000 },											//スケール
+		//{ 0xfffebef9, 0x00378800, 0x0019a82f },	//座標
+		{ 0xffffecf9, 0x00392c00, 0x001a122f },	//座標
+		//{ 0x3000, 0x3000, 0x3000 },											//スケール
+		{ 0x4600, 0x4600, 0x4600 },											//スケール
 		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },					//回転
 	},
 };
@@ -650,6 +663,8 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
 #define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
 
+//VecFx32 debugVec;
+//fx32 debugScale;
 //--------------------------------------------------------------
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
@@ -671,7 +686,15 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 		GFL_G3D_SetSystemProjection( &initProjection );	
 		GFL_G3D_SetSystemLookAt( &cameraLookAt );	
 	}
+	//ライトセット
+  CG3d->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
+  GFL_G3D_LIGHT_Switching(CG3d->g3Dlightset);
+
 	GFL_BG_SetBGControl3D(BGPRI_3D);
+#if 0
+	debugVec = drawStatus[1].trans;
+	debugScale = drawStatus[1].scale.x;
+#endif
 }
 
 static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
@@ -697,10 +720,22 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 		g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + 1 );
 		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
 	}
+#if 0
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){ debugVec.x -= FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){ debugVec.x += FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){ debugVec.z -= FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){ debugVec.z += FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){ debugVec.y -= FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){ debugVec.y += FX32_ONE/8; }
+
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){ debugScale -= FX32_ONE/8; }
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){ debugScale += FX32_ONE/8; }
+#endif
 }
 
 static void releaseG3Dcontrol(G3D_CONTROL* CG3d)
 {
+	GFL_G3D_LIGHT_Delete( CG3d->g3Dlightset );
 	GFL_G3D_UTIL_DelUnit( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
 	GFL_G3D_UTIL_Delete( CG3d->g3Dutil );
 }
