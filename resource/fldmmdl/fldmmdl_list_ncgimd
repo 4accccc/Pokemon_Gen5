@@ -107,11 +107,6 @@ FMMDL_RESLIST_NCGIMD = \
 	blackmonolith.imd \
 	whitemonolith.imd \
 	mama.imd \
-	spider.imd \
-	pipe.imd \
-	grasssound.imd \
-	fiddle.imd \
-	guitar.imd \
 	babyboy2.imd \
 	babygirl2.imd \
 	workman2.imd \
@@ -123,9 +118,7 @@ FMMDL_RESLIST_NCGIMD = \
 	fishheroine.imd \
 	leader1b.imd \
 	leader1a.imd \
-	leader8b.imd \
 	corn.imd \
-	ninja.imd \
 	espm.imd \
 	espw.imd \
 	tsure_001.imd \

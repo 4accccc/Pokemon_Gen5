@@ -538,31 +538,6 @@
 	@echo convert ncg_imd mama
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mama.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
-#spider.imd
-./mmdl_res/spider.imd: ./mmdl_nchara/spider.ncg ./mmdl_nchara/spider.ncl
-	@echo convert ncg_imd spider
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/spider.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#pipe.imd
-./mmdl_res/pipe.imd: ./mmdl_nchara/pipe.ncg ./mmdl_nchara/pipe.ncl
-	@echo convert ncg_imd pipe
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pipe.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#grasssound.imd
-./mmdl_res/grasssound.imd: ./mmdl_nchara/grasssound.ncg ./mmdl_nchara/grasssound.ncl
-	@echo convert ncg_imd grasssound
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/grasssound.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#fiddle.imd
-./mmdl_res/fiddle.imd: ./mmdl_nchara/fiddle.ncg ./mmdl_nchara/fiddle.ncl
-	@echo convert ncg_imd fiddle
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fiddle.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
-#guitar.imd
-./mmdl_res/guitar.imd: ./mmdl_nchara/guitar.ncg ./mmdl_nchara/guitar.ncl
-	@echo convert ncg_imd guitar
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/guitar.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
 #babyboy2.imd
 ./mmdl_res/babyboy2.imd: ./mmdl_nchara/babyboy2.ncg ./mmdl_nchara/babyboy2.ncl
 	@echo convert ncg_imd babyboy2
@@ -618,20 +593,10 @@
 	@echo convert ncg_imd leader1a
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1a.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
-#leader8b.imd
-./mmdl_res/leader8b.imd: ./mmdl_nchara/leader8b.ncg ./mmdl_nchara/leader8b.ncl
-	@echo convert ncg_imd leader8b
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8b.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
 #corn.imd
 ./mmdl_res/corn.imd: ./mmdl_nchara/corn.ncg ./mmdl_nchara/corn.ncl
 	@echo convert ncg_imd corn
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/corn.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
-
-#ninja.imd
-./mmdl_res/ninja.imd: ./mmdl_nchara/ninja.ncg ./mmdl_nchara/ninja.ncl
-	@echo convert ncg_imd ninja
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ninja.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #espm.imd
 ./mmdl_res/espm.imd: ./mmdl_nchara/espm.ncg ./mmdl_nchara/espm.ncl
