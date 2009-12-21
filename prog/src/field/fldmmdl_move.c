@@ -581,13 +581,15 @@ static void MMdl_MapAttrHeight_02(
 static void MMdl_MapAttrGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
+    FLDEFF_GRASSTYPE type = FLDEFF_GRASS_SHORT;
+    
     if( MAPATTR_VALUE_CheckLongGrass(data->attr_val_now) ){
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, FALSE, FLDEFF_GRASS_LONG );
+      type = FLDEFF_GRASS_LONG;
     }else if( MAPATTR_VALUE_CheckSnowGrass(data->attr_val_now) ){
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, FALSE, FLDEFF_GRASS_SNOW );
-    }else{
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, FALSE, FLDEFF_GRASS_SHORT );
+      type = FLDEFF_GRASS_SNOW;
     }
+    
+    FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, FALSE, type );
   }
 }
 
@@ -605,13 +607,15 @@ static void MMdl_MapAttrGrassProc_12( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) )
   {
+    FLDEFF_GRASSTYPE type = FLDEFF_GRASS_SHORT;
+    
     if( MAPATTR_VALUE_CheckLongGrass(data->attr_val_now) ){
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, FLDEFF_GRASS_LONG );
+      type = FLDEFF_GRASS_LONG;
     }else if( MAPATTR_VALUE_CheckSnowGrass(data->attr_val_now) ){
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, FLDEFF_GRASS_SNOW );
-    }else{
-      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, FLDEFF_GRASS_SHORT );
+      type = FLDEFF_GRASS_SNOW;
     }
+    
+    FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, type );
   }
 }
 

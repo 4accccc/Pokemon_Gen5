@@ -240,7 +240,8 @@ static void MMdl_SetHeaderBefore(
 static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
 static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
-static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys );
+static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id );
+static void MMdl_InitDir( MMDL *mmdl );
 static void MMdl_InitCallMoveProcWork( MMDL * mmdl );
 static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
 static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
@@ -492,9 +493,9 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
 	mmdl = MMdlSys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
-	MMdl_InitWork( mmdl, fos );
-	MMDL_SetZoneID( mmdl, zone_id );
+	MMdl_InitWork( mmdl, fos, zone_id );
 	MMdl_SetHeaderBefore( mmdl, head, ev );
+  MMdl_InitDir( mmdl );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
     MMDL_OnStatusBit( mmdl,
@@ -840,8 +841,11 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys )
+static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id )
 {
+	mmdl->pMMdlSys = sys;
+	MMDL_SetZoneID( mmdl, zone_id );
+  
 	MMDL_OnStatusBit( mmdl,
 		MMDL_STABIT_USE |				//使用中
 		MMDL_STABIT_HEIGHT_GET_ERROR |	//高さ取得が必要
@@ -850,11 +854,21 @@ static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys )
 	if( MMDL_CheckAliesEventID(mmdl) == TRUE ){
 		MMDL_SetStatusBitAlies( mmdl, TRUE );
 	}
-	
-	mmdl->pMMdlSys = sys;
+  
+	MMDL_FreeAcmd( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド動作モデル　方向初期化
+ * @param mmdl 
+ * @retval
+ */
+//--------------------------------------------------------------
+static void MMdl_InitDir( MMDL *mmdl )
+{
 	MMDL_SetForceDirDisp( mmdl, MMDL_GetDirHeader(mmdl) );
 	MMDL_SetDirMove( mmdl, MMDL_GetDirHeader(mmdl) );
-	MMDL_FreeAcmd( mmdl );
 }
 
 //--------------------------------------------------------------
