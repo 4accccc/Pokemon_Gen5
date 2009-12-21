@@ -6,10 +6,7 @@ typedef struct
 
 static const ENTRY_DATA entry_table[] =
 {
-  { ZONE_ID_T02, 0 },
-  { ZONE_ID_T01, 1 },
-  { ZONE_ID_C02, 2 },
-  { ZONE_ID_T02R0401, 3 },
-  { ZONE_ID_C05GYM0101, 4 },
-  { ZONE_ID_C07, 5 },
+  { ZONE_ID_C02, 0 },
+  { ZONE_ID_C05GYM0101, 1 },
+  { ZONE_ID_C07, 2 },
 };

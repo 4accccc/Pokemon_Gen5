@@ -11,12 +11,9 @@
 #define NARC_ISS_CITY_NAIX_
 
 enum {
-	NARC_iss_city_iss_city_unit_t02_bin = 0,
-	NARC_iss_city_iss_city_unit_t01_bin = 1,
-	NARC_iss_city_iss_city_unit_c02_bin = 2,
-	NARC_iss_city_iss_city_unit_t02r0401_bin = 3,
-	NARC_iss_city_iss_city_unit_c05gym0101_bin = 4,
-	NARC_iss_city_iss_city_unit_c07_bin = 5
+	NARC_iss_city_iss_city_unit_c02_bin = 0,
+	NARC_iss_city_iss_city_unit_c05gym0101_bin = 1,
+	NARC_iss_city_iss_city_unit_c07_bin = 2
 };
 
 /* NARC_ISS_CITY_NAIX_ */

@@ -7465,37 +7465,37 @@
 		<language name="JPN" width="256">W254-04</language>
 		<language name="JPN_KANJI" width="256">W254-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_114">
-		<language name="JPN" width="256">DMY-114</language>
-		<language name="JPN_KANJI" width="256">DMY-114</language>
+	<row id="msg_seq_se_w234_hikari">
+		<language name="JPN" width="256">W234-HIKARI</language>
+		<language name="JPN_KANJI" width="256">W234-HIKARI</language>
 	</row>
-	<row id="msg_seq_se_dmy_115">
-		<language name="JPN" width="256">DMY-115</language>
-		<language name="JPN_KANJI" width="256">DMY-115</language>
+	<row id="msg_seq_se_w288_onnen">
+		<language name="JPN" width="256">W288-ONNEN</language>
+		<language name="JPN_KANJI" width="256">W288-ONNEN</language>
 	</row>
-	<row id="msg_seq_se_dmy_116">
-		<language name="JPN" width="256">DMY-116</language>
-		<language name="JPN_KANJI" width="256">DMY-116</language>
+	<row id="msg_seq_se_w357_jirori">
+		<language name="JPN" width="256">W357-JIRORI</language>
+		<language name="JPN_KANJI" width="256">W357-JIRORI</language>
 	</row>
-	<row id="msg_seq_se_dmy_117">
-		<language name="JPN" width="256">DMY-117</language>
-		<language name="JPN_KANJI" width="256">DMY-117</language>
+	<row id="msg_seq_se_w379_power">
+		<language name="JPN" width="256">W379-POWER</language>
+		<language name="JPN_KANJI" width="256">W379-POWER</language>
 	</row>
-	<row id="msg_seq_se_dmy_118">
-		<language name="JPN" width="256">DMY-118</language>
-		<language name="JPN_KANJI" width="256">DMY-118</language>
+	<row id="msg_seq_se_w381_omajinai">
+		<language name="JPN" width="256">W381-OMAJINAI</language>
+		<language name="JPN_KANJI" width="256">W381-OMAJINAI</language>
 	</row>
-	<row id="msg_seq_se_dmy_119">
-		<language name="JPN" width="256">DMY-119</language>
-		<language name="JPN_KANJI" width="256">DMY-119</language>
+	<row id="msg_seq_se_w396_hadoken">
+		<language name="JPN" width="256">W396-HADOKEN</language>
+		<language name="JPN_KANJI" width="256">W396-HADOKEN</language>
 	</row>
-	<row id="msg_seq_se_dmy_120">
-		<language name="JPN" width="256">DMY-120</language>
-		<language name="JPN_KANJI" width="256">DMY-120</language>
+	<row id="msg_seq_se_w445_yuuwaku">
+		<language name="JPN" width="256">W445-YUUWAKU</language>
+		<language name="JPN_KANJI" width="256">W445-YUUWAKU</language>
 	</row>
-	<row id="msg_seq_se_dmy_121">
-		<language name="JPN" width="256">DMY-121</language>
-		<language name="JPN_KANJI" width="256">DMY-121</language>
+	<row id="msg_seq_se_w343_hoshigari">
+		<language name="JPN" width="256">W343-HOSHIGARI</language>
+		<language name="JPN_KANJI" width="256">W343-HOSHIGARI</language>
 	</row>
 	<row id="msg_seq_se_dmy_122">
 		<language name="JPN" width="256">DMY-122</language>
