@@ -312,7 +312,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *se
       FIELD_TASK* pitch;
       FIELD_TASK* yaw;
       FIELD_TASK* target;
-      frame     = 60;
+      frame     = 30;
       val_len   = 0x00ed << FX32_SHIFT;
       val_pitch = 0x25fc;
       val_yaw   = 0x0000;
