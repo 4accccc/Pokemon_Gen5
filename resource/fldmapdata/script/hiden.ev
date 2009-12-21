@@ -108,7 +108,9 @@ ev_hiden_kairiki_02:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
+  _CALL sub_curin_player_form_set
   _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
+  _CALL sub_cutin_player_player_form_return
 //  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
   _SYSWIN_MSG_DOWN( msg_kairiki_06 )
@@ -132,7 +134,10 @@ EVENT_START ev_hiden_kairiki_menu
     _SYSWIN_MSG_DOWN( msg_kairiki_05 )
     _SYSWIN_CLOSE()
 
+    _CALL sub_curin_player_form_set
     _CALL_POKE_CUTIN(SCWK_PARAM0) //カットイン
+    _CALL sub_cutin_player_player_form_return
+
 
     
       _SYSWIN_MSG_DOWN( msg_kairiki_06 )
@@ -194,7 +199,9 @@ ev_hiden_naminori_02:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
+  _CALL sub_curin_player_form_set
   _CALL_POKE_CUTIN(SCWK_TEMP0)
+  _CALL sub_cutin_player_player_form_return
   _NAMINORI()
   
   //冒険ノート
@@ -259,7 +266,9 @@ ev_hiden_iaigiri_02:
   _SYSWIN_CLOSE()
   
   //カットイン
+  _CALL sub_curin_player_form_set
   _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
+  _CALL sub_cutin_player_player_form_return
   
   //居合い切りエフェクト
   _IAIGIRI_EFFECT()
@@ -290,7 +299,9 @@ EVENT_START ev_hiden_iaigiri_menu
 	_SYSWIN_CLOSE()
   
   //カットイン
+  _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
+  _CALL sub_cutin_player_player_form_return
   
   //居合い切りエフェクト
   _IAIGIRI_EFFECT()
@@ -386,10 +397,10 @@ EVENT_START ev_hiden_flash_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_flash_01 )
 	_SYSWIN_CLOSE()
+
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-  
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
@@ -402,11 +413,10 @@ EVENT_START ev_hiden_teleport_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_teleport_01 )
 	_SYSWIN_CLOSE()
+
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
-  
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-  
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
@@ -419,11 +429,10 @@ EVENT_START ev_hiden_anawohoru_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_anawohoru_01 )
 	_SYSWIN_CLOSE()
+
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
-  
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-  
 //  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
