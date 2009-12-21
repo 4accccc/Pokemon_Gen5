@@ -86,6 +86,7 @@ typedef struct {
 	u32	buttonID:31;				// ボタンアニメ用ＩＤ
 	u32	pokeGraFlag:1;			// ポケモン正面絵表示制御
 
+	// リスト関連
 	ZUKAN_LIST_WORK * list;
 	s32	listPutIndex;
 	u8	listScroll;
@@ -93,6 +94,22 @@ typedef struct {
 	u8	listRepeat;
 	u8	listConut;
 	u8	listBgScroll;
+
+
+	BOOL	initTouchFlag;
+	u32	initTouchPY;
+	u32	frameTouchPY;
+
+//	u32	autoSpeed;
+	u32	autoScroll;
+	u32	autoSpeed;
+	u32	autoCount;
+	u32	autoWait;
+
+/*
+	u32	tsCount;
+	u32	targetPos;
+*/
 
 	u32	BaseScroll;
 
@@ -217,7 +234,7 @@ extern void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk );
 #define	ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN			( 5 )
 #define	ZKNLISTMAIN_LIST_MOVE_POS_DIRECT			( 6 )
 #define	ZKNLISTMAIN_LIST_MOVE_SCROLL_DIRECT		( 7 )
-#define	ZKNLISTMAIN_LIST_MOVE_NONE		( 0xffffffff )
+#define	ZKNLISTMAIN_LIST_MOVE_NONE						( 0xffffffff )
 
 extern ZUKAN_LIST_WORK * ZKNLISTMAIN_CreateList( u32 siz, HEAPID heapID );
 extern void ZKNLISTMAIN_ExitList( ZUKAN_LIST_WORK * wk );
@@ -238,3 +255,4 @@ extern u32 ZKNLISTMAIN_MoveLeft( ZUKAN_LIST_WORK * wk );
 extern u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk );
 extern void ZKNLISTMAIN_SetPosDirect( ZUKAN_LIST_WORK * wk, s16 pos );
 extern void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 scroll );
+extern u32 ZKNLISTMAIN_SetListDirect( ZUKAN_LIST_WORK * wk, s16 pos, s16 mv, BOOL autoFlag );

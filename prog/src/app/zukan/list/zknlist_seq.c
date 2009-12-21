@@ -39,6 +39,8 @@ enum {
 	MAINSEQ_LIST_MOVE_RIGHT,
 
 	MAINSEQ_LIST_MOVE_TOUCH,
+	MAINSEQ_LIST_SCROLL_TOUCH,
+	MAINSEQ_LIST_AUTO_SCROLL,
 
 	MAINSEQ_LIST_MOVE_BAR,
 
@@ -61,6 +63,8 @@ static int MainSeq_ListScroll( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveLeft( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveTouch( ZKNLISTMAIN_WORK * wk );
+static int MainSeq_ListScrollTouch( ZKNLISTMAIN_WORK * wk );
+static int MainSeq_ListAutoScroll( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk );
@@ -71,6 +75,8 @@ static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next );
 static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos );
 static int SetListMoveBar( ZKNLISTMAIN_WORK * wk );
 static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk );
+
+static u32 GetTouchPos( u32 tpy );
 
 static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk );
 
@@ -94,6 +100,8 @@ static const pZKNLIST_FUNC MainSeq[] = {
 	MainSeq_ListMoveRight,
 
 	MainSeq_ListMoveTouch,
+	MainSeq_ListScrollTouch,
+	MainSeq_ListAutoScroll,
 
 	MainSeq_ListMoveBar,
 
@@ -342,13 +350,222 @@ static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+/*
+static void SetListScrollSpeedTouch( ZKNLISTMAIN_WORK * wk, u32 abs )
+{
+	switch( abs ){
+	case 1:
+		wk->listSpeed = 3;
+		break;
+	case 2:
+		wk->listSpeed = 4;
+		break;
+	case 3:
+		wk->listSpeed = 6;
+		break;
+	case 4:
+		wk->listSpeed = 8;
+		break;
+	case 5:
+		wk->listSpeed = 12;
+		break;
+	case 6:
+		wk->listSpeed = 24;
+		break;
+	default:
+		wk->listSpeed = 3;
+	}
+	OS_Printf( "abs = %d, speed = %d\n", abs, wk->listSpeed );
+}
+*/
+
+static BOOL CheckListMoveTouch( ZKNLISTMAIN_WORK * wk, u32 tpy )
+{
+	u32	mvPos;
+	u32	nowPos;
+	s16	nowScroll;
+
+	mvPos  = GetTouchPos( tpy );
+	nowPos = ZKNLISTMAIN_GetListPos( wk->list );
+
+	nowScroll = ZKNLISTMAIN_GetListScroll( wk->list );
+
+	if( mvPos < nowPos ){
+		if( nowScroll == ZKNLISTMAIN_GetListScrollMax(wk->list) ){
+			return FALSE;
+		}
+//		wk->targetPos = mvPos;
+//		wk->tsCount = GFL_STD_Abs( mvPos - nowPos );
+//		SetListScrollSpeedTouch( wk, wk->tsCount );
+		wk->listSpeed = 12;
+		wk->listConut = 0;
+		wk->listScroll = GFL_BG_SCROLL_Y_INC;
+		ZKNLISTMAIN_SetListDirect( wk->list, 0, 1, FALSE );
+		return TRUE;
+	}else if( mvPos > nowPos ){
+		if( nowScroll == 0 ){
+			return FALSE;
+		}
+//		wk->tsCount = GFL_STD_Abs( mvPos - nowPos );
+//		SetListScrollSpeedTouch( wk, wk->tsCount );
+		wk->listSpeed = 12;
+		wk->listConut = 0;
+		wk->listScroll = GFL_BG_SCROLL_Y_DEC;
+		ZKNLISTMAIN_SetListDirect( wk->list, 0, -1, FALSE );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 static int MainSeq_ListMoveTouch( ZKNLISTMAIN_WORK * wk )
 {
+/*
 	if( GFL_UI_TP_GetCont() == FALSE ){
 		return MAINSEQ_MAIN;
 	}
+*/
+	u32	x, y;
+
+	if( ZKNLISTUI_CheckListHit( &x, &y ) == FALSE ){
+		return MAINSEQ_MAIN;
+	}
+
+	if( CheckListMoveTouch( wk, y ) == TRUE ){
+		wk->initTouchFlag = TRUE;
+		wk->initTouchPY = y;
+		wk->frameTouchPY = y;
+		wk->autoScroll = 0;
+		return MAINSEQ_LIST_SCROLL_TOUCH;
+	}
+
 	return MAINSEQ_LIST_MOVE_TOUCH;
 }
+
+static const u32 ListScrollSpeed[] = {
+	24, 12, 8, 6, 4, 3
+};
+
+static int SetAutoListScroll( ZKNLISTMAIN_WORK * wk, u32 scroll, u32 cnt, u32 speed )
+{
+	if( wk->listConut != 24 ){
+		while(1){
+			if( MainSeq_ListScroll( wk ) == MAINSEQ_MAIN ){
+				break;
+			}
+		}
+	}
+
+	if( wk->listScroll == GFL_BG_SCROLL_Y_INC ){
+		ZKNLISTMAIN_SetListDirect( wk->list, 0, 1, TRUE );
+	}else{
+		ZKNLISTMAIN_SetListDirect( wk->list, 0, -1, TRUE );
+	}
+
+	wk->autoSpeed = speed;
+	wk->autoScroll = scroll;
+	wk->autoCount = cnt;
+	wk->autoWait = 0;
+
+	wk->listSpeed = ListScrollSpeed[ wk->autoSpeed ];
+	wk->listConut = 0;
+
+	return MAINSEQ_LIST_AUTO_SCROLL;
+}
+
+static int MainSeq_ListScrollTouch( ZKNLISTMAIN_WORK * wk )
+{
+	u32	x, y;
+/*
+	if( ZKNLISTUI_CheckListHit( &x, &y ) == FALSE ){
+		u32	abs = GFL_STD_Abs( wk->initTouchPY - wk->frameTouchPY );
+		wk->initTouchFlag = FALSE;
+		if( abs >= 64 ){
+			return SetAutoListScroll( wk, MONSNO_END, 0 );
+		}else if( abs >= 48 ){
+			return SetAutoListScroll( wk, MONSNO_END/2, 1 );
+		}else if( abs >= 32 ){
+			return SetAutoListScroll( wk, MONSNO_END/4, 2 );
+		}
+	}else{
+		if( wk->initTouchFlag == TRUE ){
+			wk->frameTouchPY = y;
+		}
+	}
+*/
+	if( ZKNLISTUI_CheckListHit( &x, &y ) == TRUE ){
+		wk->frameTouchPY = y;
+	}
+
+	if( MainSeq_ListScroll( wk ) == MAINSEQ_MAIN ){
+		if( ZKNLISTUI_CheckListHit( &x, &y ) == FALSE ){
+			u32	abs = GFL_STD_Abs( wk->initTouchPY - wk->frameTouchPY );
+			if( abs >= 64 ){
+				return SetAutoListScroll( wk, MONSNO_END, 400, 0 );
+			}else if( abs >= 48 ){
+				return SetAutoListScroll( wk, 256, 51, 1 );
+			}else if( abs >= 32 ){
+				return SetAutoListScroll( wk, 128, 32, 2 );
+			}
+			return MAINSEQ_MAIN;
+		}else{
+			if( CheckListMoveTouch( wk, y ) == TRUE ){
+				wk->initTouchFlag = TRUE;
+				wk->initTouchPY = y;
+				wk->frameTouchPY = y;
+				wk->autoScroll = 0;
+				return MAINSEQ_LIST_SCROLL_TOUCH;
+			}
+			return MAINSEQ_LIST_MOVE_TOUCH;
+		}
+	}
+
+	return MAINSEQ_LIST_SCROLL_TOUCH;
+}
+
+static int MainSeq_ListAutoScroll( ZKNLISTMAIN_WORK * wk )
+{
+	u32	x, y;
+
+	OS_Printf( "%d - %d\n", wk->initTouchPY, wk->frameTouchPY );
+
+	if( MainSeq_ListScroll( wk ) == MAINSEQ_MAIN ){
+		s16	nowScroll = ZKNLISTMAIN_GetListScroll( wk->list );
+
+		if( ZKNLISTUI_CheckListHit( &x, &y ) == TRUE ){
+			ZKNLISTMAIN_SetPosDirect( wk->list, GetTouchPos(y) );
+			return MAINSEQ_MAIN;
+		}
+
+		if( nowScroll == 0 || nowScroll == ZKNLISTMAIN_GetListScrollMax(wk->list) ){
+			return MAINSEQ_MAIN;
+		}
+		if( wk->autoScroll == 0 ){
+			return MAINSEQ_MAIN;
+		}
+
+		wk->listConut = 0;
+		wk->autoScroll--;
+		wk->autoWait++;
+		if( wk->autoWait == wk->autoCount ){
+			if( ListScrollSpeed[wk->autoSpeed] != 3 ){
+				wk->autoSpeed++;
+				wk->listSpeed = ListScrollSpeed[ wk->autoSpeed ];
+			}
+			wk->autoWait = 0;
+		}
+		if( wk->listScroll == GFL_BG_SCROLL_Y_INC ){
+			ZKNLISTMAIN_SetListDirect( wk->list, 0, 1, TRUE );
+		}else{
+			wk->listConut = 0;
+			ZKNLISTMAIN_SetListDirect( wk->list, 0, -1, TRUE );
+		}
+	}
+
+	return MAINSEQ_LIST_AUTO_SCROLL;
+}
+
+
 
 static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk )
 {
@@ -430,7 +647,9 @@ static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk )
 
 	GFL_UI_TP_GetPointCont( &x, &y );
 
-	y = y / 8 / ZKNLISTMAIN_LIST_SY;
+	wk->initTouchPY = y;
+
+	y = GetTouchPos( y );
 	if( y > ZKNLISTMAIN_GetListPosMax(wk->list) ){
 		return MAINSEQ_MAIN;
 	}
@@ -444,6 +663,12 @@ static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk )
 
 	return MAINSEQ_LIST_MOVE_TOUCH;
 }
+
+static u32 GetTouchPos( u32 tpy )
+{
+	return ( tpy / 8 / ZKNLISTMAIN_LIST_SY );
+}
+
 
 
 

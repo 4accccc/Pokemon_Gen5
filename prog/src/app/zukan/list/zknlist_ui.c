@@ -69,24 +69,6 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		return ret;
 	}
 
-/*
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP  ){
-		return ZKNLISTUI_ID_LIST_UP;
-	}
-
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		return ZKNLISTUI_ID_LIST_DOWN;
-	}
-
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		return ZKNLISTUI_ID_LEFT;
-	}
-
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		return ZKNLISTUI_ID_RIGHT;
-	}
-*/
-
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		return ZKNLISTUI_ID_ICON1;
 	}
@@ -114,15 +96,19 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	return ret;
 }
 
-/*
-static void CursorMoveCallBack( void * work, int now_pos, int old_pos )
-{
-}
-*/
 
 BOOL ZKNLISTUI_CheckRailHit( u32 * x, u32 * y )
 {
 	if( GFL_UI_TP_HitCont( RailHitTbl ) != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_TP_GetPointCont( x, y );
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL ZKNLISTUI_CheckListHit( u32 * x, u32 * y )
+{
+	if( GFL_UI_TP_HitCont( TouchHitTbl ) == ZKNLISTUI_ID_LIST ){
 		GFL_UI_TP_GetPointCont( x, y );
 		return TRUE;
 	}

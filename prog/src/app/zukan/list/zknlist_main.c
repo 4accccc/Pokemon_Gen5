@@ -922,3 +922,36 @@ void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 scroll )
 		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_SCROLL_DIRECT );
 	}
 }
+
+u32 ZKNLISTMAIN_SetListDirect( ZUKAN_LIST_WORK * wk, s16 pos, s16 mv, BOOL autoFlag )
+{
+	if( mv < 0  ){
+		if( wk->scroll != 0 ){
+			s16	tmpPos    = wk->pos;
+			s16	tmpScroll = wk->scroll;
+			wk->scroll--;
+			if( autoFlag == FALSE ){
+				wk->pos++;
+			}
+			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_SCROLL_UP );
+			return ZKNLISTMAIN_LIST_MOVE_SCROLL_UP;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+	}
+
+	if( mv > 0 ){
+		if( wk->scroll < (wk->listMax-wk->posMax) ){
+			s16	tmpPos    = wk->pos;
+			s16	tmpScroll = wk->scroll;
+			wk->scroll++;
+			if( autoFlag == FALSE ){
+				wk->pos--;
+			}
+			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN );
+			return ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN;
+		}
+		return ZKNLISTMAIN_LIST_MOVE_NONE;
+	}
+
+	return ZKNLISTMAIN_LIST_MOVE_NONE;
+}
