@@ -705,7 +705,7 @@
   
   //対戦系受付ユーティリティ
   DEF_CMD( EvCmdBtlUtilSetRegulationOutPokeName, EV_SEQ_BTL_UTIL_SET_REGULATION_OUT_POKE_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdBtlUtilPartySelect, EV_SEQ_BTL_UTIL_PARTY_SELECT )
   NO_CMD()
   NO_CMD()
   

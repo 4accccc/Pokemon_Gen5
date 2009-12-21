@@ -5609,6 +5609,28 @@
   .short  \mode
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _BTL_UTIL_PARTY_SELECT_CALL
+ * @brief パーティ選択ウィンドウ呼び出し
+ *
+ * @param regulation  poke_tool/regulation_def.hに定義されたコード
+ * @param ret_wk  どのパーティを選択したかを取得 btl_util_scr_local.h
+ *                SCR_BTL_PARTY_SELECT_TEMOTI  手持ちを選択
+ *                SCR_BTL_PARTY_SELECT_BTLBOX  バトルボックスを選択
+ *                SCR_BTL_PARTY_SELECT_NG      どちらも適合しない
+ *                SCR_BTL_PARTY_SELECT_CANCEL  キャンセル
+ */
+//--------------------------------------------------------------
+#define _BTL_UTIL_PARTY_SELECT_CALL( regulation, ret_wk )  \
+    _ASM_BTL_UTIL_PARTY_SELECT_CALL  regulation, ret_wk
+
+  .macro  _ASM_BTL_UTIL_PARTY_SELECT_CALL regulation, ret_wk 
+  .short  EV_SEQ_BTL_UTIL_PARTY_SELECT
+  .short  \regulation
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //  秘伝技関連
 //======================================================================
@@ -5816,22 +5838,6 @@
 //--------------------------------------------------------------
 #define _FIELD_COMM_EXIT_EVENT_CALL( ret_wk )  \
     _ASM_FIELD_COMM_EXIT_EVENT_CALL  ret_wk
-
-//--------------------------------------------------------------
-/**
- * @def _BTL_UTIL_PARTY_SELECT_CALL
- * @brief 簡易イベントコマンド：対戦系受付　パーティ選択ウィンドウ呼び出し
- *
- * @param regulation  poke_tool/regulation_def.hに定義されたコード
- * @param ret_wk  どのパーティを選択したかを取得 btl_util_scr_local.h
- *                BTL_UTIL_PARTY_SELECT_TEMOTI  手持ちを選択
- *                BTL_UTIL_PARTY_SELECT_BTLBOX  バトルボックスを選択
- *                BTL_UTIL_PARTY_SELECT_NG      どちらも適合しない
- *                BTL_UTIL_PARTY_SELECT_CANCEL  キャンセル
- */
-//--------------------------------------------------------------
-#define _BTL_UTIL_PARTY_SELECT_CALL( regulation, ret_wk )  \
-    _ASM_BTL_UTIL_PARTY_SELECT_CALL  regulation, ret_wk
 
 //--------------------------------------------------------------
 /**

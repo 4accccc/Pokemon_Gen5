@@ -197,8 +197,10 @@
 //--------------------------------------------------------------
 /// 対戦時パーティタイプ指定
 //--------------------------------------------------------------
-#define SCRCMD_BTL_PARTY_TEMOTI   (0) //手持ち
-#define SCRCMD_BTL_PARTY_BTLBOX   (1) //バトルボックス
+#define SCR_BTL_PARTY_SELECT_TEMOTI   (0) //手持ち
+#define SCR_BTL_PARTY_SELECT_BTLBOX   (1) //バトルボックス
+#define SCR_BTL_PARTY_SELECT_CANCEL   (2) //選択キャンセル
+#define SCR_BTL_PARTY_SELECT_NG       (3) //レギュレーションNG
 
 //--------------------------------------------------------------
 /// ゲーム内交換可能チェック戻り値

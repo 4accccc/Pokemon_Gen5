@@ -9,15 +9,15 @@
 #pragma once
 
 #include "field/fieldmap_proc.h"
-
+#include "field/script_def.h"
 
 //==============================================================================
 //  定数定義
 //==============================================================================
 typedef enum{
-  SELECT_PARTY_TEMOTI,    ///<手持ちが選択された
-  SELECT_PARTY_BBOX,      ///<バトルボックスが選択された
-  SELECT_PARTY_CANCEL,    ///<キャンセルで終了
+  SELECT_PARTY_TEMOTI = SCR_BTL_PARTY_SELECT_TEMOTI,    ///<手持ちが選択された
+  SELECT_PARTY_BBOX = SCR_BTL_PARTY_SELECT_BTLBOX,      ///<バトルボックスが選択された
+  SELECT_PARTY_CANCEL = SCR_BTL_PARTY_SELECT_CANCEL,    ///<キャンセルで終了
 }SELECT_PARTY;
 
 

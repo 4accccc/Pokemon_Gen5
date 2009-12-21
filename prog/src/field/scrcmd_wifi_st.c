@@ -58,7 +58,7 @@ VMCMD_RESULT EvCmdWifiGeoNetCall( VMHANDLE* core, void* wk )
  * @retval VMCMD_RESULT
  *
  * @regulation  poke_tool/regulation_def.h
- * @party field/script_def.h SCRCMD_BTL_PARTY_TEMOTI,SCRCMD_BTL_PARTY_BTLBOX
+ * @party field/script_def.h SCR_BTL_PARTY_SELECT_TEMOTI,SCR_BTL_PARTY_SELECT_BTLBOX
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
@@ -95,10 +95,10 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
 
   switch( party )
   { 
-  case SCRCMD_BTL_PARTY_TEMOTI:
+  case SCR_BTL_PARTY_SELECT_TEMOTI:
     poke  = WIFIBATTLEMATCH_POKE_TEMOTI;
     break;
-  case SCRCMD_BTL_PARTY_BTLBOX:
+  case SCR_BTL_PARTY_SELECT_BTLBOX:
     poke  = WIFIBATTLEMATCH_POKE_BTLBOX;
     break;
   }

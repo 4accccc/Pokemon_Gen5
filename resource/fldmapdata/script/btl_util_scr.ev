@@ -18,52 +18,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_btl_util_party_select_call
 _EVENT_DATA    ev_btl_util_party_regulation_ng_msg_call
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
 
-{ //BTL_UTIL_COUNTER
+{ //SCR_BTL_COUNTER
 DEFINE_LOCAL  lwk_return 
-
-//==============================================================
-/// 
-/// パーティを手持ちにするか、バトルボックスにするか選ぶ
-///
-/// SCWK_PARAM0に戻り値を返す
-//==============================================================
-ev_btl_util_party_select_call:
-{
-  DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_regu
-
-  $i_regu = $SCWK_PARAM0 //レギュレーションID
-
-  //手持ちかバトルボックスか選んでください
-  _SYSWIN_MSG_DOWN( msg_btl_util_party_select_01 )
-
-  //分岐・手持ち/バトルボックス/やめる
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
-	
-  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win01, BTL_UTIL_PARTY_SELECT_TEMOTI )   //手持ち
-  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win02, BTL_UTIL_PARTY_SELECT_BTLBOX )   //バトルボックス
-  _BMPMENU_MAKE_LIST( msg_btl_util_party_select_win03, BTL_UTIL_PARTY_SELECT_CANCEL )   //やめる
-		
-  //メニュー表示
-	_BMPMENU_START()
-
-  _SYSWIN_CLOSE()
-
-  IF $i_ret == EV_WIN_B_CANCEL THEN
-    $i_ret = BTL_UTIL_PARTY_SELECT_CANCEL
-  ELSIF $i_ret == BTL_UTIL_PARTY_SELECT_BTLBOX THEN
-    $i_ret = BTL_UTIL_PARTY_SELECT_NG //@todo　本当は手持ちもバトルボックスもNGの時このコードが返る
-  ENDIF
-  $SCWK_PARAM0 = $i_ret
-}
-_CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
-_END
 
 //==============================================================
 /// 
@@ -106,4 +67,4 @@ ev_btl_util_party_regulation_ng_msg_call:
 _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 _END
 
-} //BTL_UTIL_END
+} //SCR_BTL_END

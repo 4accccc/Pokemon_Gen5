@@ -18,3 +18,12 @@
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdBtlUtilSetRegulationOutPokeName( VMHANDLE * core, void *wk );
 
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちかバトルボックスかを選択させるウィンドウ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdBtlUtilPartySelect( VMHANDLE * core, void *wk );
+
