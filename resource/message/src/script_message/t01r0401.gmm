@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T15:54:14"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T15:04:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -382,14 +382,14 @@
 しんらい　しはじめた……[BE:00:ページ切り替え（行送り）]
 そんな　かんじ！[BE:01:ページ切り替え（クリア）]
 ところで　ポケモンに
-ニックネームを　つける？[BE:01:ページ切り替え（クリア）]</language>
+ニックネームを　つける？</language>
 		<language name="JPN_KANJI" width="256">あっ　すごーい！
 もう　ポケモン勝負を　したのね[BE:01:ページ切り替え（クリア）]
 それでかな
 ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
 信頼しはじめた……　そんな感じ！[BE:01:ページ切り替え（クリア）]
 ところで　ポケモンに
-ニックネームを　つける？[BE:01:ページ切り替え（クリア）]</language>
+ニックネームを　つける？</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
