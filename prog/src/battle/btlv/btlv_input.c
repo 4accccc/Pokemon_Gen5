@@ -620,6 +620,9 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  inline  void  SePlaySelect( void );
+static  inline  void  SePlayRotateSelect( void );
+static  inline  void  SePlayRotateDecide( void );
+static  inline  void  SePlayRotation( void );
 
 //============================================================================================
 /**
@@ -1145,10 +1148,12 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
         //けっていを選択
         if( hit == 2 )
         {
+          SePlayRotateDecide();
           hit = biw->rotate_flag + 1;
         }
         else
         {
+          SePlayRotateSelect();
           SetupRotateAction( biw, hit );
           hit = GFL_UI_TP_HIT_NONE;
         }
@@ -2185,6 +2190,10 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
 
   switch( tra->seq_no ){
   case 0:
+    SePlayRotation();
+    tra->seq_no++;
+    /*fallthru*/
+  case 1:
     {
       int           i;
       GFL_CLACTPOS  pos;
@@ -2206,7 +2215,7 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
       }
     }
     break;
-  case 1:
+  case 2:
     if( tra->biw->tcb_execute_flag == 1 )
     {
       int i;
@@ -2775,6 +2784,12 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     int         max = ( biw->type == BTLV_INPUT_TYPE_ROTATION ) ? 2 : biw->type + 1;
     int         mask = 0;
 
+    //シングルでは出さないように仕様変更（後でまた出すことになると困るので、処理自体は残しておく）
+    if( biw->type == BTLV_INPUT_TYPE_SINGLE )
+    { 
+      return;
+    }
+
     hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
 
     biw->pokeicon_cellID = GFL_CLGRP_CELLANIM_Register( hdl, POKEICON_GetCellSubArcIndex(), POKEICON_GetAnmSubArcIndex(),
@@ -3268,3 +3283,26 @@ static  inline  void  SePlaySelect( void )
   PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
+//=============================================================================================
+//  ローテーション選択音
+//=============================================================================================
+static  inline  void  SePlayRotateSelect( void )
+{ 
+  PMSND_PlaySE( SEQ_SE_ROTATION_S );
+}
+
+//=============================================================================================
+//  ローテーション決定音
+//=============================================================================================
+static  inline  void  SePlayRotateDecide( void )
+{ 
+  PMSND_PlaySE( SEQ_SE_DECIDE2 );
+}
+
+//=============================================================================================
+//  ローテーション音
+//=============================================================================================
+static  inline  void  SePlayRotation( void )
+{ 
+  PMSND_PlaySE( SEQ_SE_ROTATION_B );
+}
