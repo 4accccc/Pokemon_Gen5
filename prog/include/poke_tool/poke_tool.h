@@ -546,6 +546,21 @@ enum{
   UNK_END
 };
 
+typedef enum
+{ 
+  PTL_TASTE_KARAI = 0,
+  PTL_TASTE_SIBUI,
+  PTL_TASTE_AMAI,
+  PTL_TASTE_NIGAI,
+  PTL_TASTE_SUPPAI,
+  PTL_TASTE_MAX,
+}PtlTaste;
+
+#define PTL_TASTE_NORMAL  ( 0 )
+#define PTL_TASTE_LIKE    ( 1 )
+#define PTL_TASTE_DISLIKE ( -1 )
+typedef s8  PtlTasteJudge;
+
 //-----------------------------------------------------------------------------
 /**
  *  SetupEx系関数の引数
@@ -695,9 +710,14 @@ extern PokeType POKETOOL_GetMezaPa_Type( const POKEMON_PARAM* pp );
 extern u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp );
 
 // 技マシンで技を覚えるかチェック
-BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no );
-BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no );
-BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no );
+extern  BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no );
+extern  BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no );
+extern  BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no );
+
+//ポケモンの好みの味かチェック
+extern  PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste );
+extern  PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlTaste taste );
+extern  PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste );
 
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );
@@ -711,6 +731,9 @@ extern void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *p
 
 //レベル補正
 extern void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level);
+
+//構造体コピー
+extern  void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst );
 
 #endif __ASM_NO_DEF_
 
