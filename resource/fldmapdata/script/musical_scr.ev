@@ -78,8 +78,7 @@ EVENT_START	ev_musical_change_program
 	_BMPMENU_MAKE_LIST( msg_msucail_program_03, 2 )
 	_BMPMENU_MAKE_LIST( msg_msucail_program_04, 3 )
 	_BMPMENU_MAKE_LIST( msg_msucail_program_05, 4 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_06, 5 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_07, 6 )	//Ç‚ÇﬂÇÈ
+	_BMPMENU_MAKE_LIST( msg_msucail_program_06, 5 )	//Ç‚ÇﬂÇÈ
 	//ÉÅÉjÉÖÅ[ï\é¶
 	_BMPMENU_START()
 	_BALLOONWIN_CLOSE()

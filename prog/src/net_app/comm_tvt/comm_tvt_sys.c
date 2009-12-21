@@ -153,6 +153,9 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
 
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
 }
 
 //--------------------------------------------------------------

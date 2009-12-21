@@ -510,6 +510,11 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
   }
 
+  PMSND_PlayBGM( SEQ_BGM_MSL_DRESSUP );
+
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
   return work;
 }
 
@@ -519,6 +524,9 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 void  DUP_FIT_TermFitting( FITTING_WORK *work )
 {
   u8 i;
+
+  PMSND_StopBGM();
+
   INFOWIN_Exit();
   DUP_FIT_TermMessage( work );
 

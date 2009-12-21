@@ -261,7 +261,8 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     break;
     
   case CCS_DISCONNECT:
-    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+    //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+    GFL_NET_Exit(NULL);
     {
       commWork->state = CCS_DISCONNECT_WAIT;
     }
@@ -270,7 +271,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_DISCONNECT_WAIT:
     if( GFL_NET_IsExit() == TRUE )
     {
-      //commWork->state = CCS_FINISH;
+      commWork->state = CCS_FINISH;
     }
     break;
   }
@@ -431,8 +432,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       if( (commWork->reqCheckBit & commWork->photoReqBit) == commWork->reqCheckBit&&
           commWork->reqCheckBit != 0 )
       {
-        //if( COMM_TVT_GetSusspend( work ) == FALSE )
-        if( 0 )
+        if( COMM_TVT_GetSusspend( work ) == FALSE )
         {
           CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
           void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );

@@ -298,6 +298,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
 
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
 #if USE_DEBUGWIN_SYSTEM
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );

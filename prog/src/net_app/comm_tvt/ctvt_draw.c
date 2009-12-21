@@ -298,6 +298,8 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 
   CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , heapId );
+  GFL_NET_ReloadIcon();
 }
 
 //--------------------------------------------------------------
@@ -306,7 +308,11 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 {
   u8 i;
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
   
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
+  GFL_NET_ReloadIcon();
+
   GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
   GFL_BMPWIN_Delete( drawWork->infoWin );
   

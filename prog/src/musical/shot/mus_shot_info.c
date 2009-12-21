@@ -41,12 +41,12 @@
 #define MUS_INFO_PAL_YESNO ( 0x0c ) //‚Q–{
 
 #define MUS_INFO_MSGWIN_X ( 1 )
-#define MUS_INFO_MSGWIN_Y ( 1 )
+#define MUS_INFO_MSGWIN_Y ( 3 )
 #define MUS_INFO_MSGWIN_WIDTH ( 30 )
 #define MUS_INFO_MSGWIN_HEIGHT ( 4 )
 
 #define MUS_INFO_YESNO_X ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
-#define MUS_INFO_YESNO_Y ( 6 )
+#define MUS_INFO_YESNO_Y ( 6+2 )
 #define MSU_INFO_YESNO_COLOR (PRINTSYS_LSB_Make(0xE,0xF,0))
 
 #define MUS_INFO_CGX_WIN (1)
@@ -132,6 +132,10 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
   MUS_SHOT_INFO_InitMessage( infoWork );
 
 	infoWork->takmenures	= APP_TASKMENU_RES_Create( MUS_INFO_FRAME_MSG, MUS_INFO_PAL_YESNO, infoWork->fontHandle, infoWork->printQue, infoWork->heapId );
+
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , infoWork->heapId );
+  GFL_NET_ReloadIcon();
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
   return infoWork;
 }
