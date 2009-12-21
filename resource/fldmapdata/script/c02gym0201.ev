@@ -1233,10 +1233,10 @@ EVENT_START		 ev_c02gym0201_book_01l
 			
 			//本棚が動く音の開始
 			_SE_PLAY( SEQ_SE_FLD_36)
-			_SE_WAIT()	
 			
 			//本棚が動くアニメーション
 			_GYM_NORMAL_MOVE_WALL(0)
+			_SE_WAIT()	
 	
 			_OBJ_ANIME( C02GYM0201_BOOK_01A, anm_book_open )
 			_OBJ_ANIME( C02GYM0201_BOOK_01B, anm_book_open )
