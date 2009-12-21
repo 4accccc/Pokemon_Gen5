@@ -9,8 +9,8 @@
 #ifndef ZONE_T01R0102_EVC_H
 #define ZONE_T01R0102_EVC_H
 
-#define T01R0102_BALL2                     0
-#define T01R0102_BALL3                     1
+#define T01R0102_BALL0                     0
+#define T01R0102_BALL2                     1
 #define T01R0102_BALL1                     2
 #define T01R0102_RIVAL_01                  3
 #define T01R0102_SUPPORT_01                4

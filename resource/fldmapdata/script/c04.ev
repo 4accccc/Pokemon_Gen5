@@ -187,6 +187,12 @@ EVENT_START	ev_pos_c04_hakai_01
 	//‚µ‚½‚Á‚Ï•ˆç‚Ä‰®‚¶‚¢‚³‚ñ‚ð”ñ•\Ž¦
 	_FLAG_SET( FV_C04_HAKAI_01 )
 	
+	//‚R”Ô“¹˜H‚Éˆç‚Ä‰®‚¶‚¢‚³‚ñ‚ð•\Ž¦
+	_FLAG_RESET( FV_R03_SODATEYA_01 )
+	
+	//ˆç‚Ä‰®‚É‚Q•C—a‚¯‚ç‚ê‚é‚æ‚¤‚É‚·‚é
+	_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
+	
 //========================================//
 	
 EVENT_END

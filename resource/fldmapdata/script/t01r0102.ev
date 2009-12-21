@@ -324,7 +324,17 @@ t01r0102_poke_get_yes:
 
 	//==========ポケモン入手処理==============//
 
+	//モンスターボールを消す処理
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+		_OBJ_DEL( T01R0102_BALL0 )
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		_OBJ_DEL( T01R0102_BALL1 )
+	ELSE
+		_OBJ_DEL( T01R0102_BALL2 )
+	ENDIF
+
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+	_MONS_NAME( 1, SCWK_TEMP0 )
 	_SYSWIN_MSG_DOWN(msg_t01r0102_ball_get_01)
 
 	//ME鳴らす
@@ -364,10 +374,17 @@ t01r0102_poke_get_yes:
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 
-	//ボール削除
-	_OBJ_DEL( T01R0102_BALL1 )
-	_OBJ_DEL( T01R0102_BALL2 )
-	_OBJ_DEL( T01R0102_BALL3 )
+	//選ばれなかったボールを消す
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+		_OBJ_DEL( T01R0102_BALL1 )
+		_OBJ_DEL( T01R0102_BALL2 )
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		_OBJ_DEL( T01R0102_BALL0 )
+		_OBJ_DEL( T01R0102_BALL2 )
+	ELSE
+		_OBJ_DEL( T01R0102_BALL0 )
+		_OBJ_DEL( T01R0102_BALL1 )
+	ENDIF
 
 //========================================//
 
@@ -382,11 +399,15 @@ t01r0102_poke_get_yes:
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
-	//サポート：左を向く
+	//サポート：主人公を見る
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
-	//サポート曲再生。演出をつめる。サポートは問題ないが、ライバルＢＧＭの鳴らすタイミングが難しい。
+	//主人公：サポートを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	_OBJ_ANIME_WAIT()
+
+	//サポート曲再生。
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
 
 	//サポート会話：勝負しましょ！
