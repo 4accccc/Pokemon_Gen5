@@ -64,5 +64,9 @@ ARC_TARGET_DATA = \
 	fly_out1.nsbmd \
 	fly_out1.nsbca \
 	fly_out1.nsbma \
+	fly_out1.nsbtp \
+	fly_in.spa \
 	fly_in1.nsbmd \
-	fly_in1.nsbca
+	fly_in1.nsbca \
+	fly_in1.nsbma \
+	fly_in1.nsbtp

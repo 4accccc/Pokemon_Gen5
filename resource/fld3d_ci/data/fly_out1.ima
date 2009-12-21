@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-12-17T16:23:30" source="fly_out13.mb"/>
+	<create user="unno" host="W00199" date="2009-12-20T18:14:00" source="fly_out15.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -32,7 +32,7 @@
 </mat_color_data>
 
 <mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="line">
+	<mat_color_anm index="0" material_name="bird02_line">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>

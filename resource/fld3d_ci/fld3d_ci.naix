@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-12-18T21:56:04
+	Update:2009-12-20T18:26:04
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -76,8 +76,12 @@ enum {
 	NARC_fld3d_ci_fly_out1_nsbmd = 62,
 	NARC_fld3d_ci_fly_out1_nsbca = 63,
 	NARC_fld3d_ci_fly_out1_nsbma = 64,
-	NARC_fld3d_ci_fly_in1_nsbmd = 65,
-	NARC_fld3d_ci_fly_in1_nsbca = 66
+	NARC_fld3d_ci_fly_out1_nsbtp = 65,
+	NARC_fld3d_ci_fly_in_spa = 66,
+	NARC_fld3d_ci_fly_in1_nsbmd = 67,
+	NARC_fld3d_ci_fly_in1_nsbca = 68,
+	NARC_fld3d_ci_fly_in1_nsbma = 69,
+	NARC_fld3d_ci_fly_in1_nsbtp = 70
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
