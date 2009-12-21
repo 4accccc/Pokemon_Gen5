@@ -44,10 +44,17 @@ _EVENT_DATA_END
 /*　カットイン自機 */
 /**************************************************************/
 //ev_hiden_flag_change:
+
+//自機カットインポーズ
+_ANIME_LABEL  anm_hero_cutin
+  _ANIME_DATA AC_HERO_CUTIN,1
+  _ANIME_DATA ACMD_END,0
+
 sub_curin_player_form_set:
 {
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_CUTIN )
-  _TIME_WAIT( 10 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_cutin )
+  _OBJ_ANIME_WAIT()
 }
 _RET
 
