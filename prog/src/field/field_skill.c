@@ -118,17 +118,21 @@ void FLDSKILL_InitCheckWork(
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   scwk->moveform = FIELD_PLAYER_GetMoveForm( fld_player );
   
-  if( FLDMAP_BASESYS_RAIL == FIELDMAP_GetBaseSystemType(fieldmap) ){
-    return;
-  }
-
-  FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
-  
+  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_GRID )
   {
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
-    MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
-    mmdl = MMDLSYS_SearchGridPos( mmdlsys, gx, gz, FALSE );
-    scwk->front_mmdl = mmdl;
+    FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
+    
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
+      MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
+      mmdl = MMDLSYS_SearchGridPos( mmdlsys, gx, gz, FALSE );
+      scwk->front_mmdl = mmdl;
+    }
+  }
+  else
+  {
+    mmdl = NULL;
+    scwk->front_mmdl = NULL;
   }
   
   if( mmdl != NULL ){
@@ -149,14 +153,14 @@ void FLDSKILL_InitCheckWork(
   
   {
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+    u16 dir = FIELD_PLAYER_GetDir( fld_player );
     
     //現在地のアトリビュート
     FIELD_PLAYER_GetPos( fld_player, &pos );
     nattr = MAPATTR_GetAttribute( mapper, &pos );
     
     //自機前のアトリビュート
-    MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
-    fattr = MAPATTR_GetAttribute( mapper, &pos );
+    fattr = FIELD_PLAYER_GetDirMapAttr( fld_player, dir );
   }
   
   if( FIELD_PLAYER_CheckAttrNaminori(fld_player,nattr,fattr) == TRUE ){
@@ -188,7 +192,6 @@ void FLDSKILL_InitCheckWork(
     }
   }
 
-#if 1 
   {
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
@@ -200,7 +203,6 @@ void FLDSKILL_InitCheckWork(
       scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
     }
   }
-#endif
 }
 
 //--------------------------------------------------------------
