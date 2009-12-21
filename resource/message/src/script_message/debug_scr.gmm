@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-16T12:46:37"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-12-21T22:59:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="953" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -362,6 +362,34 @@
 	<row id="msg_deb_iwasawa_mvp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">カザカミ</language>
 		<language name="JPN_KANJI" width="256">カザカミ</language>
+	</row>
+
+	<row id="msg_debug_common_00" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">ゲームクリア</language>
+		<language name="JPN_KANJI" width="256">ゲームクリア</language>
+	</row>
+
+	<row id="msg_debug_common_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">ジムバッジ全部</language>
+		<language name="JPN_KANJI" width="256">ジムバッジ全部</language>
+	</row>
+
+	<row id="msg_debug_common_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_common_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_common_04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>

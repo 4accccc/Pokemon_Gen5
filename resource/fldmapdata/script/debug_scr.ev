@@ -37,14 +37,9 @@ _EVENT_DATA   ev_debug_obata
 _EVENT_DATA   ev_debug_hosaka
 _EVENT_DATA   ev_debug_ariizumi
 _EVENT_DATA   ev_debug_ohkubo
+_EVENT_DATA   ev_debug_common
 _EVENT_DATA_END
 
-
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_debug_scr:
-//  _END
 
 /**************************************************************/
 /*                                                            */
@@ -158,8 +153,10 @@ EVENT_START ev_debug_masafumi
 			_FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
 		ELSIF $SCWK_ANSWER == 4 THEN
 			$SCWK_TEMP0 = 555
-			_MAP_CHANGE( ZONE_ID_N01R0101, 25, 20, DIR_UP )
+			_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
 		ELSIF $SCWK_ANSWER == 5 THEN
+			$LOCALWORK10 = 555
+			$WK_SCENE_R05 = 1
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
@@ -375,4 +372,48 @@ EVENT_START   ev_debug_ohkubo
 
   _MAP_CHANGE( ZONE_ID_R10R0101, 15, 19, DIR_UP )
 EVENT_END
+
+
+/************************************************************/
+/*				一般向けデバッグメニュー					*/
+/************************************************************/
+EVENT_START ev_debug_common
+	$SCWK_TEMP0 = 0
+	
+	WHILE $SCWK_TEMP0 != 555
+		
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//ゲームクリア
+		_BMPMENU_MAKE_LIST( msg_debug_common_01, 1 )	//ジムバッジ全部
+		_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		IF $SCWK_ANSWER == 0 THEN
+			
+			_FLAG_SET( SYS_FLAG_GAME_CLEAR )
+			
+		ELSIF $SCWK_ANSWER == 1 THEN
+			
+			_SET_BADGE_FLAG( BADGE_ID_01 )
+			_SET_BADGE_FLAG( BADGE_ID_02 )
+			_SET_BADGE_FLAG( BADGE_ID_03 )
+			_SET_BADGE_FLAG( BADGE_ID_04 )
+			_SET_BADGE_FLAG( BADGE_ID_05 )
+			_SET_BADGE_FLAG( BADGE_ID_06 )
+			_SET_BADGE_FLAG( BADGE_ID_07 )
+			_SET_BADGE_FLAG( BADGE_ID_08 )
+			
+		ELSE
+			
+			$SCWK_TEMP0 = 555
+			
+		ENDIF
+	
+	ENDWHILE
+
+EVENT_END
+
 
