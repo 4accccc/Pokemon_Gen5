@@ -99,7 +99,7 @@ extern void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   u16 x, u16 y, u16 cursor, u16 cancel, u16 *ret,
   WORDSET *wordset, GFL_MSGDATA *msgData );
 extern void SCRCMD_WORK_AddMenuList(
-    SCRCMD_WORK *work, u32 msg_id, u32 param,
+    SCRCMD_WORK *work, u32 msg_id, u32 ex_msg_id, u32 param,
     STRBUF *msgbuf, STRBUF *tmpbuf );
 extern void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work );

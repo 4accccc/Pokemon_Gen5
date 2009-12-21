@@ -2758,7 +2758,7 @@
  */
 //--------------------------------------------------------------
 #define _BMPMENU_MAKE_LIST( msg_id, param ) \
-    _ASM_BMPMENU_MAKE_LIST msg_id, 0, param
+    _ASM_BMPMENU_MAKE_LIST msg_id, SCR_BMPMENU_EXMSG_NULL, param
 
 //--------------------------------------------------------------
 /**

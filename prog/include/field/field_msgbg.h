@@ -246,8 +246,9 @@ extern FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
   const FLDMENUFUNC_HEADER *pMenuHead,
   FLDMENUFUNC_LISTDATA *pMenuListData );
 extern FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
-  const FLDMENUFUNC_HEADER *pMenuHead,
-  FLDMENUFUNC_LISTDATA *pMenuListData,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  BMPMENULIST_CURSOR_CALLBACK callback, void* cb_work,
   u16 list_pos, u16 cursor_pos, BOOL cancel );
 extern void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc );
 extern u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc );

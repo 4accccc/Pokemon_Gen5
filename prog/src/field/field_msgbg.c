@@ -1400,11 +1400,12 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData,
+  BMPMENULIST_CURSOR_CALLBACK callback, void* cb_work,
   u16 list_pos, u16 cursor_pos, BOOL cancel )
 {
 	FLDMENUFUNC *menuFunc;
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
-    list_pos, cursor_pos, fmb->deriveWin_plttNo, NULL, NULL, NULL );
+    list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, NULL, cb_work );
   
   if( cancel == FALSE ){
     BmpMenuList_SetCancelMode(

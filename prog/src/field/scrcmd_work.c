@@ -11,6 +11,7 @@
 #include "scrcmd_work.h"
 #include "arc_def.h"
 #include "script_local.h"
+#include "script_def.h"
 
 #include "script_message.naix"
 
@@ -43,6 +44,8 @@ typedef struct
   
   FLDMENUFUNC_LISTDATA *listData;
 	FLDMENUFUNC *menuFunc;
+
+  STRBUF*   exMsgBuf[SCRCMD_MENU_LIST_MAX];
 }SCRCMD_MENU_WORK;
 
 //--------------------------------------------------------------
@@ -66,6 +69,7 @@ struct _TAG_SCRCMD_WORK
 //======================================================================
 //	proto
 //======================================================================
+static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode);
 
 //======================================================================
 //	SCRCMD_WORK 初期化、削除
@@ -399,7 +403,9 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   menuWork->ret = ret;
   menuWork->wordset = wordset;
   menuWork->msgData = msgData;
-  
+ 
+  MI_CpuClear32( menuWork->exMsgBuf, 4*SCRCMD_MENU_LIST_MAX );
+
   if( menuWork->msgData == NULL ){ //メニュー用共通メッセージ
     menuWork->free_msg = TRUE;
     menuWork->msgData = GFL_MSG_Create(
@@ -419,12 +425,24 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
  */
 //--------------------------------------------------------------
 void SCRCMD_WORK_AddMenuList(
-    SCRCMD_WORK *work, u32 msg_id, u32 param,
+    SCRCMD_WORK *work, u32 msg_id, u32 ex_msg_id, u32 param,
     STRBUF *msgbuf, STRBUF *tmpbuf )
 {
   SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  
+  if(ex_msg_id != SCR_BMPMENU_EXMSG_NULL){
+    u32  num = BmpMenuWork_GetListMax( (BMP_MENULIST_DATA*)menuWork->listData );
+    if( num >= SCRCMD_MENU_LIST_MAX ){
+      GF_ASSERT(0);
+      return;
+    }
+    GFL_MSG_GetString( menuWork->msgData, ex_msg_id, tmpbuf );
+    WORDSET_ExpandStr( menuWork->wordset, msgbuf, tmpbuf );
+    menuWork->exMsgBuf[num] = GFL_STR_CreateCopyBuffer( msgbuf, work->heapID );
+  }
   GFL_MSG_GetString( menuWork->msgData, msg_id, tmpbuf );
   WORDSET_ExpandStr( menuWork->wordset, msgbuf, tmpbuf );
+
   FLDMENUFUNC_AddStringListData(
       menuWork->listData, msgbuf, param, work->heapID );
 }
@@ -488,8 +506,9 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
 
 	menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
-      work->head.fldMsgBG, &menuH, menuWork->listData, 0, 0,
-      menuWork->cancel );
+      work->head.fldMsgBG, &menuH, menuWork->listData,
+      BmpMenu_CallbackFunc, work,
+      0, 0, menuWork->cancel );
 }
 
 //--------------------------------------------------------------
@@ -515,6 +534,16 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
   if( menuWork->free_msg == TRUE ){
     GFL_MSG_Delete( menuWork->msgData );
   }
+  {
+    int i;
+
+    for(i = 0;i < SCRCMD_MENU_LIST_MAX;i++){
+      if( menuWork->exMsgBuf[i] != NULL ){
+        GFL_STR_DeleteBuffer( menuWork->exMsgBuf[i] );
+        menuWork->exMsgBuf[i] = NULL;
+      }
+    }
+  }
 
   if( ret != FLDMENUFUNC_CANCEL ){	//決定
     *(menuWork->ret) = ret;
@@ -529,4 +558,37 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
   
   return( TRUE );
 }
+
+/*
+ *  @brief  メニューコールバック
+ */
+static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode)
+{
+  u16 cursor = 0;
+  SCRCMD_WORK* work = (SCRCMD_WORK*)BmpMenuList_GetWorkPtr(wk);
+  SCRCMD_MENU_WORK* menu = &work->menuWork;
+
+  BmpMenuList_DirectPosGet( wk, &cursor );
+
+  if( menu->exMsgBuf[ cursor ] == NULL ){
+    return;
+  }
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ) //システムウィンドウ
+  {
+    FLDSYSWIN_STREAM *sysWin;
+    sysWin = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDSYSWIN_STREAM_ClearMessage( sysWin );
+    FLDSYSWIN_STREAM_AllPrintStrBuf( sysWin, 0, 0, menu->exMsgBuf[ cursor ] );
+  }
+  else if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ) //バルーンウィンドウ
+  {
+  }
+  else if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ) //プレーンウィンドウ
+  {
+  
+  }else{
+    GF_ASSERT(0);
+  }
+}
+
 

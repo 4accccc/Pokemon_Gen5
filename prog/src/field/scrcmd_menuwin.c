@@ -208,7 +208,7 @@ VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk )
 	u16 param	= VMGetU16( core );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-  SCRCMD_WORK_AddMenuList( work, msg_id, param, *msgbuf, *tmpbuf );
+  SCRCMD_WORK_AddMenuList( work, msg_id, ex_msg_id, param, *msgbuf, *tmpbuf );
 	return VMCMD_RESULT_CONTINUE;
 }
 

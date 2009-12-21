@@ -100,7 +100,6 @@ pc_box:
 
   //「ポケモンの あずかりシステムを …」
   _SYSWIN_MSG_DOWN( msg_pc_box_01 )
-  _SYSWIN_CLOSE()
 
   $exit = FALSE
   WHILE $exit == FALSE
@@ -113,6 +112,7 @@ pc_box:
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_04, msg_pc_box_05, msg_pc_box_window_04 )  // もちもの
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_05, msg_pc_box_06, msg_pc_box_window_05 )  // さようなら
     _BMPMENU_START() 
+    _SYSWIN_CLOSE()
     //「さようなら」選択
     SWITCH $select_pos
     CASE msg_pc_box_window_05 THEN _RET
@@ -151,7 +151,6 @@ pc_mail_box:
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
   _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
 
   $exit = FALSE
   WHILE $exit == FALSE
@@ -160,6 +159,7 @@ pc_mail_box:
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_01, msg_pc_mail_02, msg_pc_mail_window_01 )  // メールボックス
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_02, msg_pc_mail_03, msg_pc_mail_window_02 )  // せつぞくを きる
     _BMPMENU_START()
+    _SYSWIN_CLOSE()
     //「せつぞくを きる」選択
     SWITCH $select_pos
     CASE msg_pc_mail_window_02 THEN _RET
