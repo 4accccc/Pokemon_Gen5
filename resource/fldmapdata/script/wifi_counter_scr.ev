@@ -855,7 +855,6 @@ sub_gterminal_musical:
 
     //ミュージカルをみますか？
     _BALLOONWIN_OBJMSG_POS( msg_gterminal_musical_01, SCWK_TARGET_OBJID, WIN_DOWN )
-    _BALLOONWIN_CLOSE()
 
     //分岐・ミュージカルショットを見る/説明を聞く/やめる
 	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
@@ -866,6 +865,9 @@ sub_gterminal_musical:
 		
 	  //メニュー表示
   	_BMPMENU_START()
+
+    //ミュージカルをみますか？（消）
+    _BALLOONWIN_CLOSE()
 
     IF $i_ret == 0 THEN
       $reg_param = SCRCMD_BTL_RECORDER_MODE_MUSICAL
