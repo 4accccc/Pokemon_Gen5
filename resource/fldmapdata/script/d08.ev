@@ -143,7 +143,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//============フラグワーク操作=============//
 	
 	//シンとムの復活のPOSイベントを無効
-	$WK_SCENE_D08_LEGEND = 5
+	$WK_SCENE_D08_LEGEND = 6
 	
 	//ライバル、ジムリーダー7、チャンピオン、博士（父）を消す
 	_OBJ_DEL( D08_RIVEL_01 )

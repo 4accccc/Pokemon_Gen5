@@ -36,11 +36,11 @@ EVENT_START    ev_d08r0801_boss_01
 	//Nがしゃべる
 	//ふうん……　きみ　なんだ
 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_01)
-    _BALLOONWIN_CLOSE()
 	
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
-	
+   _BALLOONWIN_CLOSE()
+   
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合

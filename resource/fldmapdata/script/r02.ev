@@ -142,11 +142,13 @@ EVENT_START   ev_pos_r02_mama_01
 	_BALLOONWIN_CLOSE()
 	
 	//キーアイテムを入手ME
-	_ME_PLAY( SEQ_ME_KEYITEM )
-	_ME_WAIT()
+
+
 	
 //【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
+	_ME_PLAY( SEQ_ME_KEYITEM )
 	_SYSWIN_MSG_ALLPUT_DOWN( msg_r02_mama_03 )
+	_ME_WAIT()
 	_SYSWIN_CLOSE()
 
 	//ママがランニングシューズの説明

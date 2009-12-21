@@ -13,5 +13,6 @@
 #define C02R0601_BIGMAN_01                 1
 #define C02R0601_MIDDLEMAN2_01             2
 #define C02R0601_WOMAN3_01                 3
+#define C02R0601_MAN2_01                   4
 
 #endif //ZONE_C02R0601_EVC_H

@@ -85,6 +85,7 @@ EVENT_START	ev_c02gym0202_leader2_01
 	//【仮】盗難イベントの解決後
 	//わざマシンを　もらったあと
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_06 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	ENDIF
@@ -151,10 +152,6 @@ ev_c02gym_tounan:
     
 	//ジムリーダー夫を配置
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
-	
-	//ジムリーダー夫：たいへんだよ！
-	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
-	_BALLOONWIN_CLOSE()
 
 	//ジムリーダーが夫を振り向く
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_common_turn_d  )
@@ -168,9 +165,6 @@ ev_c02gym_tounan:
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_come )
 	_OBJ_ANIME_WAIT()
 	
-	//間を作る為のウェイト
-	_TIME_WAIT  ( 16 )
-    
    	//主人公、びっくりして、横に飛び退く
     //プレイヤーが通る3グリッド分を用意
     SWITCH $POSX
@@ -188,7 +182,11 @@ ev_c02gym_tounan:
 	
     DEFAULT
     ENDSWITCH
-    
+
+	//ジムリーダー夫：たいへんだよ！
+	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
 	//アロエ：びっくりして、ジャンプする
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_leader_jump  )
 	_OBJ_ANIME_WAIT()
@@ -210,7 +208,7 @@ ev_c02gym_tounan:
 	_OBJ_ANIME_WAIT()
 	
 	//間を作る為のウェイト
-	_TIME_WAIT  ( 32 )
+	_TIME_WAIT  ( 16 )
 		
 	//ジムリーダー夫：アロエを追いかけて、博物館に。
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_dush )
@@ -247,7 +245,7 @@ EVENT_END
 	
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_WALK_L_8F,2
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
@@ -259,7 +257,7 @@ EVENT_END
 	
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
@@ -271,7 +269,7 @@ EVENT_END
 	
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_WALK_R_8F,1
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
@@ -281,7 +279,9 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_leader_jump  
 		
-	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -290,7 +290,7 @@ EVENT_END
 	_ANIME_LABEL	anm_ad_jump 
 	
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
@@ -300,7 +300,6 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_leader_dush 
 	
-	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
 	_ANIME_DATA	AC_WALK_D_2F,9
 	_ANIME_DATA	ACMD_END,0
 	
@@ -310,7 +309,6 @@ EVENT_END
 	_ANIME_LABEL	anm_ad_01_dush  
 	
 	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
 	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_WALK_D_4F,7
 	_ANIME_DATA	ACMD_END,0

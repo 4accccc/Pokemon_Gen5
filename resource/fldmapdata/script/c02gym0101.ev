@@ -63,6 +63,14 @@ INIT_EVENT_START	ev_init_c02gym0101
 			ENDIF
 				
 		ENDIF
+	ELSE
+		IF $WK_SCENE_C02GYM0101 == 2  THEN 
+
+			//アロエと、ジムリーダー夫を配置する
+			_OBJ_ADD_EX( 10, 11, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
+			_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
+			
+		ENDIF
 	ENDIF
 	
 INIT_EVENT_END
@@ -439,10 +447,6 @@ _ANIME_LABEL	anm_ad_turn
 /**************************************************************/
 EVENT_START		ev_pos_c02gym0101_leader_01
 	
-	//アロエと、ジムリーダー夫を配置する
-	_OBJ_ADD_EX( 12, 11, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
-	_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
-	
 	//主人公が、アロエの元まで歩く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_idu_tounan )
 	_OBJ_ANIME_WAIT()
@@ -454,7 +458,8 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	//アロエが喋る
 	//なんてこったい……
 	_BALLOONWIN_OBJMSG( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
-	_BALLOONWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 
 	//アロエが退場
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_b )
@@ -477,7 +482,6 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idu_tounan
 	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_D_4F,7,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -488,7 +492,7 @@ _ANIME_LABEL	anm_leader_idou_tounan_a
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_WAIT_32F,1
 	_ANIME_DATA	AC_WALK_U_16F,1,1
-	_ANIME_DATA	AC_WALK_L_16F,6,1
+	_ANIME_DATA	AC_WALK_L_16F,4,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_32F,1,1
 	_ANIME_DATA AC_WAIT_32F,1
@@ -500,7 +504,6 @@ _ANIME_LABEL	anm_leader_idou_tounan_a
 //アロエ:博物館の外に退場                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_idou_tounan_b
-	_ANIME_DATA AC_STAY_JUMP_D_8F,2
 	_ANIME_DATA	AC_WALK_D_2F,10,1
 	_ANIME_DATA	ACMD_END,0
 	

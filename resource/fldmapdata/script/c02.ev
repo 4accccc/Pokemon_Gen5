@@ -224,11 +224,11 @@ EVENT_START   ev_pos_c02_boss_01
 	//Nがしゃべる
 	//まよえる　トレーナーよ
 	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00 )
-    _BALLOONWIN_CLOSE()
 	
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
-	
+	_BALLOONWIN_CLOSE()
+	 
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合
@@ -328,7 +328,7 @@ _ANIME_LABEL	anm_player_02_turn_l
 _ANIME_LABEL	anm_boss_01_walk_01
 
 	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -336,8 +336,8 @@ _ANIME_LABEL	anm_boss_01_walk_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_01_walk_02
 
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -408,10 +408,6 @@ EVENT_START   ev_scene_c02_leader02_01
 	_BALLOONWIN_OBJMSG( msg_c02_leader3_02, C02_LEADER3_01 )
     _BALLOONWIN_CLOSE()
 	
-	//アロエがジャンプ
-	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump1 )
-	_OBJ_ANIME_WAIT()
-	
 	//アロエが喋る
 	//アロエ『そうなんだよ！！
 	_BALLOONWIN_OBJMSG( msg_c02_leader2_03 , C02_LEADER02_01)
@@ -472,10 +468,6 @@ EVENT_START   ev_scene_c02_leader02_01
 	//そして　あんたたちは
 	_BALLOONWIN_OBJMSG( msg_c02_leader2_06, C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
-	
-	//アロエが3番道路に向かって走る
-	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump3 )
-	_OBJ_ANIME_WAIT()
 
 	//アロエが3番道路に向かって走る
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_dush )
@@ -616,24 +608,10 @@ _ANIME_LABEL	anm_leader02_turn4
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-//アロエ:走る前にジャンプする                             
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader02_jump1
-	_ANIME_DATA AC_STAY_JUMP_D_8F,1				
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
 //アロエ: 怒ってジャンプする                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_jump2
 	_ANIME_DATA AC_STAY_JUMP_D_8F,2				
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//アロエ:    アロエ・走る前にジャンプ                          
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader02_jump3
-	_ANIME_DATA AC_STAY_JUMP_R_8F,1				
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

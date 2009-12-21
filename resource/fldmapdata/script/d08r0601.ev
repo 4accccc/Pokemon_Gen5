@@ -26,7 +26,27 @@ _EVENT_DATA    ev_d08r0601_hakaim_02
 _EVENT_DATA    ev_d08r0601_hakaiw_01
 _EVENT_DATA    ev_d08r0601_hakaiw_02
 _EVENT_DATA    ev_d08r0601_leader7_01
+_EVENT_DATA  	ev_init_d08r0601
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d08r0601
+
+	//ハチクと、ライバルがプラズマ団を押しのけた後は、押しのけた位置に移動させておく
+	IF $WK_SCENE_D08_LEGEND >= 4 && $WK_SCENE_D08_LEGEND != 6 THEN 
+		
+    	_OBJ_POS_CHANGE( D08R0601_RIVEL_01, 17, 10, 14 , DIR_LEFT)
+    	_OBJ_POS_CHANGE( D08R0601_LEADER7_01, 20, 10, 17 , DIR_DOWN)
+    	_OBJ_POS_CHANGE( D08R0601_HAKAIM_01, 16, 10, 13 , DIR_RIGHT)
+    	_OBJ_POS_CHANGE( D08R0601_HAKAIM_02, 15, 10, 14 , DIR_RIGHT)
+    	_OBJ_POS_CHANGE( D08R0601_HAKAIW_01, 19, 10, 18 , DIR_UP)
+    	_OBJ_POS_CHANGE( D08R0601_HAKAIW_02, 20, 10, 19 , DIR_UP)
+
+   ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /* ライバル、ハチクがプラズマ団を押しのける                   */

@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 22:03:35
+#save date:2009/12/21 13:23:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ R02_BOY2_01
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_DIR_RND
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+4
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 -16 -360
+136 0 -136
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ R02_GIRL2_01
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 -248
+-8 0 -392
 #event number: 2
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 32 -40
+200 0 -40
 #event number: 8
 #type
 1
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 0 -264
+56 0 -264
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
