@@ -92,6 +92,7 @@ typedef enum {
   TRC_KEY_REQ_TRAINER_TYPE,
   TRC_KEY_REQ_PERSONALITY,
   TRC_KEY_REQ_SCALE_BUTTON,
+  TRC_KEY_REQ_PMS_CALL,
 }TRC_KEY_REQ;
 
 typedef enum {
@@ -159,6 +160,12 @@ enum{
 #define TP_PERSONAL_Y  (   64 )
 #define TP_PERSONAL_W  (  136 )
 #define TP_PERSONAL_H  (  2*8 )
+
+// 簡易会話
+#define TP_PMS_X  (   16 )
+#define TP_PMS_Y  (  120 )
+#define TP_PMS_W  (  223 )
+#define TP_PMS_H  (   31 )
 
 //============================================
 // 結構広いタッチ範囲定義
@@ -543,6 +550,9 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 //        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_TURN ,TRUE);
         wk->sub_seq = 0;
         *seq = SEQ_SIGN_CALL;
+      }else if(req == TRC_KEY_REQ_PMS_CALL){
+        wk->sub_seq = 0;
+        *seq = SEQ_SIGN;
       }else if (req == TRC_KEY_REQ_END_BUTTON){
         //終了
         SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
@@ -1741,6 +1751,11 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       return TRC_KEY_REQ_PERSONALITY;
     }
     break;
+  case 9:     // 簡易会話
+    if(wk->is_back==0){
+      return TRC_KEY_REQ_PMS_CALL;
+    }
+    break;
   }
   return TRC_KEY_REQ_NONE;
 }
@@ -1885,6 +1900,7 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_BOOKMARK_Y, TP_BOOKMARK_Y+TP_BOOKMARK_H,TP_BOOKMARK_X, TP_BOOKMARK_X+TP_BOOKMARK_W },   // ブックマークボタン
     { TP_TRTYPE_Y, TP_TRTYPE_Y+TP_TRTYPE_H,TP_TRTYPE_X, TP_TRTYPE_X+TP_TRTYPE_W },          // トレーナータイプ
     { TP_PERSONAL_Y, TP_PERSONAL_Y+TP_PERSONAL_H,TP_PERSONAL_X, TP_PERSONAL_X+TP_PERSONAL_W },   // 性格
+    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },        // 簡易会話
     {GFL_UI_TP_HIT_END,0,0,0}
   };
 

@@ -268,9 +268,9 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
                                                wk->resCell[entry_dat[i].cgx].ncgIdx,
                                                wk->resCell[entry_dat[i].cel].anmIdx ,
                                                &addData , CLSYS_DEFREND_SUB , wk->heapId );
-      GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i], TRUE); //”ñ•\Ž¦
+      GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i],   TRUE); //”ñ•\Ž¦
       GFL_CLACT_WK_SetAutoAnmSpeed( wk->ClActWorkS[i], FX32_ONE );
-      GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWorkS[i], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWorkS[i],  TRUE );
       
     }
     

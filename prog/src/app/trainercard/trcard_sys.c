@@ -13,6 +13,8 @@
 #include "savedata/trainercard_data.h"
 #include "savedata/mystatus.h"
 #include "savedata/gametime.h"
+#include "system/pms_data.h"
+#include "app/pms_select.h"
 #include "savedata/record.h"
 
 #include "app/mysign.h"
@@ -25,10 +27,11 @@
 typedef struct _TR_CARD_SYS{
   int heapId;
 
-  void  *app_wk;  ///<簡易会話モジュールワークの保存
-  GFL_PROCSYS*  procSys;    ///<サブプロセスワーク
+  void              *app_wk;    ///<簡易会話モジュールワークの保存
+  GFL_PROCSYS       *procSys;   ///<サブプロセスワーク
+  PMS_SELECT_PARAM  PmsParam;   ///<簡易会話アプリ呼び出し用ワーク
 
-  TRCARD_CALL_PARAM* tcp;
+  TRCARD_CALL_PARAM *tcp;
 
 }TR_CARD_SYS;
 
@@ -226,6 +229,8 @@ static int sub_CardWait(TR_CARD_SYS* wk)
   return CARDSYS_END;
 }
 
+FS_EXTERN_OVERLAY(pmsinput);
+
 /**
  *  @brief  サイン呼び出し
  */
@@ -244,7 +249,9 @@ static int sub_SignInit(TR_CARD_SYS* wk)
   { 
     wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
   }
-  GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
+//  GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
+  wk->PmsParam.save_ctrl = GAMEDATA_GetSaveControlWork( wk->tcp->gameData );
+  GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, &wk->PmsParam );
   return SIGN_WAIT;
 }
 
@@ -256,6 +263,12 @@ static int sub_SignWait(TR_CARD_SYS* wk)
   if(!TrCardSysProcCall(&wk->procSys)){
     return SIGN_WAIT;
   }
+  
+  // 作成した簡易会話があれば書き換え
+  if(wk->PmsParam.out_pms_data!=NULL){
+    wk->tcp->TrCardData->Pms = *wk->PmsParam.out_pms_data;
+  }
+/*
   //サインデータを呼び出しテンポラリに書き戻し
   {
     TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
@@ -265,6 +278,7 @@ static int sub_SignWait(TR_CARD_SYS* wk)
     MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
         wk->tcp->TrCardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
   }
+*/
   return CARD_INIT;
 }
 
