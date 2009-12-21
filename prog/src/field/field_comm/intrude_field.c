@@ -260,7 +260,7 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(ngwin->fieldWork);
       ngwin->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       ngwin->msgWin = FLDMSGWIN_AddTalkWin( msgBG, ngwin->msgData );
-      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, msg_invasion_test08_01 );
+      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, msg_invasion_test09_00 );
       GXS_SetMasterBrightness(-16);
       (*seq)++;
     }

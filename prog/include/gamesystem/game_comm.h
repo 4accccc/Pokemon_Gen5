@@ -113,6 +113,7 @@ extern GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid);
 extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
+extern void GameCommInfo_MessageEntry_Mission(GAME_COMM_SYS_PTR gcsp, int accept_netid);
 
 
 #endif  //__ASM_NO_DEF_

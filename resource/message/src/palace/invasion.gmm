@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2009-12-18T12:08:36"/>
+	<create user="matsuda" host="W00142" date="2009-12-21T16:48:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -473,7 +473,41 @@
 		<language name="JPN_KANJI" width="256">INTRUDE</language>
 	</row>
 
-	<row id="msg_invasion_test08_01">
+	<row id="msg_invasion_test08_00" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>侵入時
+ ・親プレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パレスに　います</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パレスに　います</language>
+	</row>
+
+	<row id="msg_invasion_test08_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>侵入時
+・子プレイヤー１</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]の　パレスに　います</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の　パレスに　います</language>
+	</row>
+
+	<row id="msg_invasion_test08_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>侵入時
+・子プレイヤー２</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:2]の　パレスに　います</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]の　パレスに　います</language>
+	</row>
+
+	<row id="msg_invasion_test08_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>侵入時
+・子プレイヤー３</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:3]の　パレスに　います</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]の　パレスに　います</language>
+	</row>
+
+	<row id="msg_invasion_mission_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション受注時</comment>
+		<language name="JPN" width="256">ミッションちゅう　です</language>
+		<language name="JPN_KANJI" width="256">ミッションちゅう　です</language>
+	</row>
+
+	<row id="msg_invasion_test09_00">
 		<comment>通信相手不在時</comment>
 		<language name="JPN" width="256">だれとも　つながっていないので
 これいじょう　すすめません</language>

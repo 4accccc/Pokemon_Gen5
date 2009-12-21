@@ -23,6 +23,8 @@
 #include "intrude_mission.h"
 #include "field/zonedata.h"
 #include "intrude_comm_command.h"
+#include "font/font.naix"
+#include "message.naix"
 
 
 //==============================================================================
@@ -35,6 +37,12 @@ enum{
   INTRUDE_FRAME_S_BAR = GFL_BG_FRAME2_S,             ///<プレート面
   INTRUDE_FRAME_S_BACKGROUND = GFL_BG_FRAME3_S,      ///<背景面
 };
+
+///インフォメーションメッセージ更新ウェイト
+#define INFOMSG_UPDATE_WAIT   (150)
+
+///フォントBGパレット展開位置
+#define _FONT_BG_PALNO      (14)
 
 ///アクターIndex
 enum{
@@ -186,6 +194,17 @@ typedef struct _INTRUDE_SUBDISP{
   u32 index_pltt;
   u32 index_cell;
 
+  GFL_FONT *font_handle;
+  GFL_TCBLSYS *tcbl_sys;
+  WORDSET *wordset;
+  PRINT_QUE *print_que;
+	GFL_MSGDATA *msgdata;
+	
+	STRBUF *strbuf_temp;
+	STRBUF *strbuf_info;
+	
+	PRINT_UTIL printutil_info;  ///<インフォメーションメッセージ
+	
 	GFL_CLUNIT *clunit;
   GFL_CLWK *act[INTSUB_ACTOR_MAX];
   
@@ -194,8 +213,9 @@ typedef struct _INTRUDE_SUBDISP{
   u8 now_bg_pal;          ///<現在のBGのパレット番号
   u8 wfbc_go;             ///<TRUE:WFBCへのワープを押した
   
+  s16 infomsg_wait;       ///<インフォメーションメッセージ更新ウェイト
   u8 wfbc_seq;
-  u8 padding[3];
+  u8 padding;
   
   u32 senkyo_eff_bit;     ///<占拠エフェクト起動中の街(bit管理)
 }INTRUDE_SUBDISP;
@@ -208,6 +228,8 @@ static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_BGUnload(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorResouceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
@@ -242,6 +264,7 @@ static void _IntSub_ActorUpdate_LvNum(
 static void _IntSub_ActorUpdate_PointNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
@@ -327,6 +350,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   _IntSub_SystemSetup(intsub);
   _IntSub_BGLoad(intsub, handle);
+  _IntSub_BmpWinAdd(intsub);
   _IntSub_ActorResouceLoad(intsub, handle);
   _IntSub_ActorCreate(intsub, handle);
   
@@ -346,6 +370,7 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
+  _IntSub_BmpWinDel(intsub);
   _IntSub_BGUnload(intsub);
   _IntSub_SystemExit(intsub);
 
@@ -370,6 +395,10 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
     return;
   }
   
+	GFL_TCBL_Main( intsub->tcbl_sys );
+	PRINTSYS_QUE_Main( intsub->print_que );
+  PRINT_UTIL_Trans( &intsub->printutil_info, intsub->print_que );
+
   area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
   
   //タッチ判定チェック
@@ -407,6 +436,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   //BGスクリーンカラー変更チェック
   _IntSub_BGColorUpdate(intcomm, intsub);
   
+  //インフォメーションメッセージ
+  _IntSub_InfoMsgUpdate(intsub);
+  
   //アクター更新
   _IntSub_ActorUpdate_Town(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_TouchTown(intsub, intcomm, area_occupy);
@@ -418,6 +450,8 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   _IntSub_ActorUpdate_Power(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
+
+	GFL_CLACT_SYS_Main();
 }
 
 //==================================================================
@@ -446,6 +480,17 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
 static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
 {
   intsub->clunit = GFL_CLACT_UNIT_Create(INTSUB_ACTOR_MAX, 5, HEAPID_FIELDMAP);
+
+	intsub->tcbl_sys = GFL_TCBL_Init(HEAPID_FIELDMAP, HEAPID_FIELDMAP, 4, 32);
+	intsub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
+	intsub->wordset = WORDSET_Create(HEAPID_FIELDMAP);
+  intsub->print_que = PRINTSYS_QUE_Create( HEAPID_FIELDMAP );
+  intsub->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+    NARC_message_invasion_dat, HEAPID_FIELDMAP );
+  
+  intsub->strbuf_temp = GFL_STR_CreateBuffer(64, HEAPID_FIELDMAP);
+  intsub->strbuf_info = GFL_STR_CreateBuffer(64, HEAPID_FIELDMAP);
 }
 
 //--------------------------------------------------------------
@@ -457,6 +502,15 @@ static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
 {
+  GFL_STR_DeleteBuffer(intsub->strbuf_temp);
+  GFL_STR_DeleteBuffer(intsub->strbuf_info);
+  
+  GFL_MSG_Delete(intsub->msgdata);
+  PRINTSYS_QUE_Delete(intsub->print_que);
+  WORDSET_Delete(intsub->wordset);
+	GFL_FONT_Delete(intsub->font_handle);
+	GFL_TCBL_Exit(intsub->tcbl_sys);
+
   GFL_CLACT_UNIT_Delete(intsub->clunit);
 }
 
@@ -506,6 +560,9 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   //パレット転送
   GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_palace_palace_bg_NCLR, PALTYPE_SUB_BG, 0, 
     0x20 * INTSUB_BG_PAL_MAX, HEAPID_FIELDMAP);
+	//フォントパレット転送
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, 
+    PALTYPE_SUB_BG, _FONT_BG_PALNO * 0x20, 0x20, HEAPID_FIELDMAP);
 
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_NULL_0, VISIBLE_OFF );
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_NULL_1, VISIBLE_OFF );
@@ -526,6 +583,35 @@ static void _IntSub_BGUnload(INTRUDE_SUBDISP_PTR intsub)
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_BACKGROUND, VISIBLE_OFF );
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BAR);
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BACKGROUND);
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN作成
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub)
+{
+  GFL_BMPWIN *bmpwin;
+  
+  bmpwin = GFL_BMPWIN_Create( INTRUDE_FRAME_S_BAR, 
+    0, 0x14, 0x18, 2, _FONT_BG_PALNO, GFL_BMP_CHRAREA_GET_B );
+  PRINT_UTIL_Setup( &intsub->printutil_info, bmpwin );
+  GFL_BMPWIN_MakeTransWindow(bmpwin);
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN削除
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub)
+{
+  GFL_BMPWIN_Delete(intsub->printutil_info.win);
 }
 
 //--------------------------------------------------------------
@@ -1338,6 +1424,41 @@ static void _IntSub_ActorUpdate_PointNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COM
     act = intsub->act[INTSUB_ACTOR_POINT_NUM_KETA_0 + i];
     GFL_CLACT_WK_SetAnmIndex(act, point % 10);
     point /= 10;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * インフォメーションメッセージ更新処理
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  GAME_COMM_INFO_MESSAGE infomsg;
+  int k;
+  
+  if(intsub->infomsg_wait > 0){
+    intsub->infomsg_wait--;
+    return;
+  }
+  
+  if(GameCommInfo_GetMessage(game_comm, &infomsg) == TRUE){
+    GFL_MSG_GetString(intsub->msgdata, infomsg.message_id, intsub->strbuf_temp );
+    for(k = 0 ; k < INFO_WORDSET_MAX; k++){
+      if(infomsg.name[k]!=NULL){
+        WORDSET_RegisterWord( intsub->wordset, infomsg.wordset_no[k], infomsg.name[k], 
+          PM_MALE, TRUE, PM_LANG);
+      }
+    }
+    WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(intsub->printutil_info.win), 0 );
+    PRINT_UTIL_PrintColor( &intsub->printutil_info, intsub->print_que, 
+      0, 0, intsub->strbuf_info, intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
+    intsub->infomsg_wait = INFOMSG_UPDATE_WAIT;
+    OS_TPrintf("メッセージ描画：id=%d\n", infomsg.message_id);
   }
 }
 

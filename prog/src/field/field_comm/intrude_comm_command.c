@@ -1008,6 +1008,7 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
   new_mission = MISSION_SetMissionData(&intcomm->mission, mdata);
   if(new_mission == TRUE){  //連続受信で上書きされないように直接代入はしない
     intcomm->new_mission_recv = TRUE;
+    GameCommInfo_MessageEntry_Mission(intcomm->game_comm, mdata->accept_netid);
   }
   
   OS_TPrintf("ミッション受信：new_mission_recv = %d\n", new_mission);

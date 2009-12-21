@@ -693,3 +693,15 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
   return TRUE;
 }
 
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：ミッション受注
+ *
+ * @param   gcsp		
+ * @param   accept_netid		ミッション受注者のNetID
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_Mission(GAME_COMM_SYS_PTR gcsp, int accept_netid)
+{
+  GameCommInfo_SetQue(gcsp, accept_netid, msg_invasion_mission_000);
+}
