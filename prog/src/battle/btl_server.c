@@ -407,7 +407,6 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTL_Printf("ローテーション選択へ\n");
     SetAdapterCmd( server, BTL_ACMD_SELECT_ROTATION );
     (*seq)++;
     break;
@@ -648,7 +647,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("入場ポケモン選択し終わった\n");
+      BTL_Printf("入場ポケモン選択後\n");
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
@@ -721,11 +720,11 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("入れ替えポケモン選択し終わった\n");
+      BTL_Printf("入れ替えポケモン選択後\n");
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
-      BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
+      BTL_Printf("サーバー結果=%d\n", server->flowResult );
 
       if( SendActionRecord(server) ){
         (*seq)++;

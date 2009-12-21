@@ -5149,6 +5149,19 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
   fSucceed = addsick_core( wk, target, attacker, sick, sickCont, fAlmost );
   if( fSucceed )
   {
+    // エフェクトの用意されている異常はそれを表示
+    switch( sick ){
+    case WAZASICK_DOKU:
+    case WAZASICK_DOKUDOKU:
+      scPut_EffectByPokePos( wk, target, BTLEFF_DOKU ); break;
+    case WAZASICK_YAKEDO:   scPut_EffectByPokePos( wk, target, BTLEFF_YAKEDO ); break;
+    case WAZASICK_MAHI:     scPut_EffectByPokePos( wk, target, BTLEFF_MAHI ); break;
+    case WAZASICK_KOORI:    scPut_EffectByPokePos( wk, target, BTLEFF_KOORI ); break;
+    case WAZASICK_NEMURI:   scPut_EffectByPokePos( wk, target, BTLEFF_NEMURI ); break;
+    case WAZASICK_KONRAN:   scPut_EffectByPokePos( wk, target, BTLEFF_KONRAN ); break;
+    case WAZASICK_MEROMERO: scPut_EffectByPokePos( wk, target, BTLEFF_MEROMERO ); break;
+    }
+
     if( fDefaultMsgEnable ){
       BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
       handexSub_putString( wk, &wk->strParam );

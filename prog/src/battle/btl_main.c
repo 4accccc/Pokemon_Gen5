@@ -1222,7 +1222,7 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
@@ -1234,27 +1234,27 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
 
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-    BTL_Printf("myClientID=%d\n", netID);
-    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
-    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, numCoverPos );
+    OS_TPrintf("SV:myClientID=%d\n", clientID);
+    wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
 
     for(i=0; i<wk->numClients; ++i)
     {
-      if(i==netID){ continue; }
+      if(i==clientID){ continue; }
       BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
     }
   }
   // 自分がサーバではない
   else
   {
-    u8 netID, numCoverPos;
+    u8 numCoverPos;
 
-    netID = GFL_NET_GetNetID( sp->netHandle );
     numCoverPos = (sp->multiMode==0)? 2 : 1;
 
-    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+    OS_TPrintf("CL:myClientID=%d\n", clientID);
+    wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
 
   }
   return TRUE;
@@ -1276,7 +1276,7 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   };
 
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+  u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
@@ -1284,15 +1284,15 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   {
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, NUM_COVERPOS, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
-    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, NUM_COVERPOS );
-    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, NUM_COVERPOS );
+    wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, NUM_COVERPOS, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, NUM_COVERPOS );
+    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !clientID, NUM_COVERPOS );
   }
   // 自分がサーバではない
   else
   {
-    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, NUM_COVERPOS,
+    wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, NUM_COVERPOS,
     BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
   }
 
@@ -1314,11 +1314,10 @@ static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
   case 0:
     {
       const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-      u32 netID = GFL_NET_GetNetID( sp->netHandle );
 
       // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+      wk->viewCore = BTLV_Create( wk, wk->client[wk->myClientID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+      BTL_CLIENT_AttachViewCore( wk->client[wk->myClientID], wk->viewCore );
 
       if( wk->ImServer ){
         // Server 始動
