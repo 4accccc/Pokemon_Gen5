@@ -31,8 +31,8 @@ typedef struct {
   // [IN]
   SAVE_CONTROL_WORK* save_ctrl;
   // [OUT]
-  BOOL      out_cancel_flag;  ///< キャンセルで抜けたか？
-  PMS_DATA* out_pms_data;     ///< out_cancel_flagがTRUEの場合は NULL
+  BOOL            out_cancel_flag;  ///< キャンセルで抜けたか？
+  const PMS_DATA* out_pms_data;     ///< out_cancel_flagがTRUEの場合は NULL。FALSEの場合はSAVEDATAから
 } PMS_SELECT_PARAM;
 
 //=============================================================================

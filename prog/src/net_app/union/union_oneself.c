@@ -846,7 +846,7 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case 2:
     {
      	PMS_SELECT_PARAM	*initParam = unisys->parent_work;
-    	PMS_DATA* pmsdata = initParam->out_pms_data;
+    	const PMS_DATA* pmsdata = initParam->out_pms_data;
      	
     	// 簡易会話を更新したか？
     	if( initParam->out_cancel_flag == FALSE ){
