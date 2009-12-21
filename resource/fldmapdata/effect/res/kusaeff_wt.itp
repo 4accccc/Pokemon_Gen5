@@ -3,9 +3,9 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="kanako_eo" host="W00107" date="2005-10-04T15:50:03" source="kusaeff.mb"/>
+	<create user="fuchino" host="W00152" date="2009-12-21T16:51:58" source="kusaeff6.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20050324"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 	frame_size="13"
 	tool_start_frame="0"
 	tool_end_frame="12"
-	compress_material="off" material_size="1 1"
+	compress_material="on" material_size="1 1"
 />
 
 <tex_pattern_list_data image_size="4" palette_size="1">
@@ -27,7 +27,7 @@
 
 <tex_pattern_data>
 	<frame_idx size="4">
-		0 4 8 12
+		0 3 6 10
 	</frame_idx>
 	<image_idx size="4">
 		0 1 2 3
@@ -38,7 +38,7 @@
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="kusaeff_mat" data_size="4" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="kusaeff_lm1" data_size="4" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
