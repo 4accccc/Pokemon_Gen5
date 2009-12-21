@@ -64,6 +64,9 @@ extern void FIELD_PLAYER_NOGRID_ChangeForm( FIELD_PLAYER_NOGRID* p_player, PLAYE
 // 自機動作の停止
 extern void FIELD_PLAYER_NOGRID_ForceStop( FIELD_PLAYER_NOGRID* p_player );
 
+// 自機変更リクエストの反映
+extern void FIELD_PLAYER_NOGRID_SetRequestBit( FIELD_PLAYER_NOGRID* p_player, u32 req_bit );
+
 
 
 //======================================================================

@@ -588,6 +588,66 @@ void FIELD_PLAYER_NOGRID_ForceStop( FIELD_PLAYER_NOGRID* p_player )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRID　見た目変更リクエスト設定
+ *
+ *	@param	p_player
+ *	@param	req_bit 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_SetRequestBit( FIELD_PLAYER_NOGRID* p_player, u32 req_bit )
+{
+  int i;
+  static const u32 sc_REQ_FORM[ FIELD_PLAYER_REQBIT_MAX ] = 
+  {
+    PLAYER_MOVE_FORM_NORMAL,
+    PLAYER_MOVE_FORM_CYCLE,
+    PLAYER_MOVE_FORM_SWIM,
+    0,
+    PLAYER_DRAW_FORM_ITEMGET,
+    PLAYER_DRAW_FORM_SAVEHERO,
+    PLAYER_DRAW_FORM_PCHERO,
+  };
+  enum
+  {
+    SETUP_MOVE_FORM,
+    SETUP_DRAW_FORM,
+    SETUP_RESET_MOVE_FORM,
+  };
+  static const u32 sc_REQ_SETUP[ FIELD_PLAYER_REQBIT_MAX ] = 
+  {
+    SETUP_MOVE_FORM,
+    SETUP_MOVE_FORM,
+    SETUP_MOVE_FORM,
+    SETUP_RESET_MOVE_FORM,
+    SETUP_DRAW_FORM,
+    SETUP_DRAW_FORM,
+    SETUP_DRAW_FORM,
+  };
+
+  for( i=0; i<FIELD_PLAYER_REQBIT_MAX; i++ )
+  {
+    if( req_bit & 0x1 )
+    {
+      if( sc_REQ_SETUP[i] == SETUP_MOVE_FORM )
+      {
+        FIELD_PLAYER_SetMoveForm( p_player->p_player, sc_REQ_FORM[i] );
+      }
+      else if( sc_REQ_SETUP[i] == SETUP_DRAW_FORM )
+      {
+        FIELD_PLAYER_ChangeDrawForm( p_player->p_player, sc_REQ_FORM[i] );
+      }
+      else
+      {
+        FIELD_PLAYER_ResetMoveForm( p_player->p_player );
+      }
+      
+    }
+  }
+}
+
+
 
 
 

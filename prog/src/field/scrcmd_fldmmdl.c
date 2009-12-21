@@ -785,7 +785,9 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
     FIELD_PLAYER_GRID_SetRequest( gjiki, req );
     FIELD_PLAYER_GRID_UpdateRequest( gjiki );
   }else{
-    OS_Printf( "ERROR: GRID PLAYER REQ" );
+    FIELD_PLAYER_NOGRID *gjiki = FIELDMAP_GetPlayerNoGrid( fieldmap );
+
+    FIELD_PLAYER_NOGRID_SetRequestBit( gjiki, req );
   }
 
   return VMCMD_RESULT_CONTINUE;
