@@ -140,6 +140,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
       BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
+      wk->shinka_poke_pos = 0;
+      wk->shinka_poke_bit = 0;
+
       // 野生orゲーム内通常トレーナー（サブウェイ除く）の後のみ行う処理
       if( (param->btlResult->competitor == BTL_COMPETITOR_WILD)
       ||  (param->btlResult->competitor == BTL_COMPETITOR_TRAINER)
@@ -322,9 +325,6 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
 {
-  wk->shinka_poke_pos = 0;
-  wk->shinka_poke_bit = 0;
-
   //勝利、逃げる、ゲット以外は進化チェックしない（逃げる、ゲットは2vs2野生でありうるので）
   if( ( param->btlResult->result != BTL_RESULT_WIN ) &&
       ( param->btlResult->result != BTL_RESULT_RUN ) &&
