@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-14T18:46:40"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-12-21T20:17:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -340,7 +340,7 @@
 Aボタンを　おしてください</language>
 		<language name="JPN_KANJI" width="256">対戦する　相手と
 赤外線通信　します[BE:01:ページ切り替え（クリア）]
-相手にに　赤外線を　合わせて
+相手に　赤外線を　合わせて
 Aボタンを　押してください</language>
 	</row>
 
