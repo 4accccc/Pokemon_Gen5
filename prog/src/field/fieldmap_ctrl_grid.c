@@ -22,6 +22,10 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/camera_scroll.naix"
 
+#ifdef PM_DEBUG
+//@todo 12月ＲＯＭ用対処
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
+#endif
 
 //======================================================================
 //	範囲情報
@@ -185,6 +189,22 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	{	//自機移動
 		int key_trg = GFL_UI_KEY_GetTrg( );
 		int key_cont = GFL_UI_KEY_GetCont( );
+
+
+#ifdef PM_DEBUG
+    //@todo 12月ＲＯＭ用対処
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+      if ( !EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_RUNNINGSHOES) ){
+        //Bボタンをマスク
+        if (key_trg & PAD_BUTTON_B) key_trg ^= PAD_BUTTON_B;
+        if (key_cont & PAD_BUTTON_B) key_cont ^= PAD_BUTTON_B;
+      }
+    }
+#endif  //PM_DEBUG
+
 		FIELD_PLAYER_GRID_Move( gridPlayer, key_trg, key_cont );
 		
 		{
