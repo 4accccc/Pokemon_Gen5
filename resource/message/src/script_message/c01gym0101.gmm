@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T17:56:23"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T12:22:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -740,13 +740,25 @@
 あいてのポケモンに　たいして
 ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
 ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
-しょうりは　めのまえ　ッすよね</language>
+しょうりは　めのまえ　ッすよね▼
+ということで　この　ジムは
+カーテンに　かかれた▽
+ポケモンの　タイプに　たいして▼
+あいしょうの　いい　ポケモンの
+タイプの　スイッチを　ふめば▽
+さきに　すすめるっす！！</language>
 		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
 タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
 相手のポケモンに　対して
 有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
 有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
-勝利は　目前ッすよね</language>
+勝利は　目前ッすよね▼
+ということで　この　ジムは
+カーテンに　かかれた▽
+ポケモンの　タイプに　対して▼
+相性のいい　ポケモンの　タイプの
+スイッチを　踏めば▽
+先に　進めるっす！！</language>
 	</row>
 
 	<row id="msg_c01gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
