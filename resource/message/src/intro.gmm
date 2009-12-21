@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-12-19T20:15:50"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T12:32:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -449,7 +449,7 @@
 力を　合わせ　助け合い　
 大変な　仕事を　こなしたり▼
 なかでも　人気　なのは
-ポケモン同士を　闘わせて▽
+ポケモン同士を　戦わせて▽
 きずなを　深める　ことね▼
 で　私は　ポケモンたちを
 研究　しているわけ▼</language>
