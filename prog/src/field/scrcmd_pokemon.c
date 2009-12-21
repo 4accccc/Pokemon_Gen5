@@ -1221,4 +1221,5 @@ VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
   waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
   *ret_wk = WAZAOSHIE_WazaTableChack( waza );
   GFL_HEAP_FreeMemory( waza );
+  return VMCMD_RESULT_CONTINUE;
 }
