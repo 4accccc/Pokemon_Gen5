@@ -14,7 +14,7 @@
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
 #include "arc_def.h"
-#include "monolith.naix"
+#include "beacon_status.naix"
 #include "font/font.naix"
 #include "field/beacon_view.h"
 #include "print\printsys.h"
@@ -54,6 +54,7 @@ typedef struct _BEACON_VIEW{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
+static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR view);
 static void _BeaconView_SystemSetup(BEACON_VIEW_PTR view);
 static void _BeaconView_SystemExit(BEACON_VIEW_PTR view);
 static void _BeaconView_BGLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
@@ -64,6 +65,33 @@ static void _BeaconView_ActorCreate(BEACON_VIEW_PTR view, ARCHANDLE *handle);
 static void _BeaconView_ActorDelete(BEACON_VIEW_PTR view);
 static void _BeaconView_BmpWinCreate(BEACON_VIEW_PTR view);
 static void _BeaconView_BmpWinDelete(BEACON_VIEW_PTR view);
+
+
+//==============================================================================
+//  データ
+//==============================================================================
+///タッチ範囲テーブル
+static const GFL_UI_TP_HITTBL TouchRect[] = {
+  {//Gパワー
+    0x15*8,
+    0x18*8,
+    0*8,
+    6*8,
+  },
+  {//おめでとう
+    0x15*8,
+    0x18*8,
+    6*8,
+    12*8,
+  },
+  {//戻る
+    0x15*8,
+    0x18*8,
+    (0x20-3)*8,
+    0x20*8,
+  },
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },
+};
 
 
 //==============================================================================
@@ -90,7 +118,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   view->subscreen = subscreen;
   
   
-  handle = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_FIELDMAP);
+  handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, HEAPID_FIELDMAP);
   
   _BeaconView_SystemSetup(view);
   _BeaconView_BGLoad(view, handle);
@@ -135,9 +163,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR view)
   s32 new_log_num, copy_src, copy_dest, write_start;
   int i;
   
-  if(GFL_UI_TP_GetTrg()){
-    FIELD_SUBSCREEN_SetAction(view->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
-  }
+  BEACON_VIEW_TouchUpdata(view);
 
   PRINTSYS_QUE_Main(view->printQue);
   for(i = 0; i < VIEW_LOG_MAX; i++){
@@ -197,6 +223,33 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR view)
   ;
 }
 
+//--------------------------------------------------------------
+/**
+ * タッチ判定
+ *
+ * @param   view		
+ */
+//--------------------------------------------------------------
+static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR view)
+{
+  u32 tp_x, tp_y;
+  
+  int tp_ret = GFL_UI_TP_HitTrg(TouchRect);
+  
+  switch(tp_ret){
+  case 0: //Gパワー
+    OS_TPrintf("Gパワー ビーコンセット\n");
+    GAMEBEACON_Set_EncountDown();
+    break;
+  case 1: //おめでとう
+    OS_TPrintf("おめでとう ビーコンセット\n");
+    GAMEBEACON_Set_Congratulations();
+    break;
+  case 2: //戻る
+    FIELD_SUBSCREEN_SetAction(view->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
+    break;
+  }
+}
 
 //==============================================================================
 //  
@@ -275,18 +328,18 @@ static void _BeaconView_BGLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle)
 	
   //キャラ転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
-    handle, NARC_monolith_mono_bgd_lz_NCGR, GFL_BG_FRAME3_S, 0, 
+    handle, NARC_beacon_status_beacon_status_lz_NCGR, GFL_BG_FRAME3_S, 0, 
     0, TRUE, HEAPID_FIELDMAP);
   
   //スクリーン転送
   GFL_ARCHDL_UTIL_TransVramScreen(
-    handle, NARC_monolith_mono_bgd_base_lz_NSCR, GFL_BG_FRAME3_S, 0, 
+    handle, NARC_beacon_status_beacon_status_lz_NSCR, GFL_BG_FRAME3_S, 0, 
     0x800, TRUE, HEAPID_FIELDMAP);
   GFL_BG_ClearScreen(GFL_BG_FRAME2_S);
   
   //パレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_monolith_mono_bgd_NCLR, PALTYPE_SUB_BG, 0, 
-    0x20 * 3, HEAPID_FIELDMAP);
+  GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_beacon_status_beacon_status_NCLR, 
+    PALTYPE_SUB_BG, 0, 0x20 * 4, HEAPID_FIELDMAP);
   //フォントパレット転送
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
     0x20*FONT_PAL, 0x20, HEAPID_FIELDMAP);

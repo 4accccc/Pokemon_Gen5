@@ -10,6 +10,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
 #include "msg/msg_beacon_status.h"
+#include "savedata/encount_sv.h"
 
 
 //==============================================================================
@@ -28,6 +29,7 @@ typedef enum{
   GAMEBEACON_ACTION_POKE_GET,             ///<ポケモン捕獲
   GAMEBEACON_ACTION_UNION_IN,             ///<ユニオンルーム入室
   GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
+  GAMEBEACON_ACTION_ENCOUNT_DOWN,         ///<エンカウント率ダウン
   
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
@@ -50,6 +52,7 @@ typedef struct{
 
 ///ゲームビーコン管理システムのポインタ
 typedef struct{
+  GAMEDATA *gamedata;
   GAMEBEACON_SEND_MANAGER send;       ///<送信ビーコン管理
   GAMEBEACON_LOG log[GAMEBEACON_LOG_MAX]; ///<ログ(チェーンバッファ)
   u32 log_count;                      ///<ログ全体の受信件数をカウント
@@ -136,6 +139,7 @@ void GAMEBEACON_Setting(GAMEDATA *gamedata)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
 
+  GameBeaconSys->gamedata = gamedata;
   SendBeacon_Init(send, gamedata);
 }
 
@@ -239,6 +243,18 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   BeaconInfo_Set(bsys, info);
   bsys->log_count++;
   OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
+  
+  //ログのパワー情報反映　※check ある程度パワーが決まってきたらフォーマット化する
+  switch(info->action_no){
+  case GAMEBEACON_ACTION_ENCOUNT_DOWN:
+    {
+      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
+      ENC_SV_PTR evc_sv = EncDataSave_GetSaveDataPtr(sv_ctrl);
+      EncDataSave_SetSprayCnt(evc_sv, 100);
+    }
+    break;
+  }
+  
   return TRUE;
 }
 
@@ -369,17 +385,11 @@ void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID te
   WORDSET_RegisterWord(wordset, 0, name_strbuf, 0, TRUE, PM_LANG);
 
   switch(info->action_no){
-  case GAMEBEACON_ACTION_APPEAL:               ///<「ちかくにいます」
-  case GAMEBEACON_ACTION_CONGRATULATIONS:      ///<「おめでとう！」
-    break;
   case GAMEBEACON_ACTION_POKE_EVOLUTION:       ///<ポケモン進化
   case GAMEBEACON_ACTION_POKE_LVUP:            ///<ポケモンレベルアップ
   case GAMEBEACON_ACTION_POKE_GET:             ///<ポケモン捕獲
   	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->nickname, BUFLEN_POKEMON_NAME);
     WORDSET_RegisterWord(wordset, 1, name_strbuf, 0, TRUE, PM_LANG);
-    break;
-  case GAMEBEACON_ACTION_UNION_IN:             ///<ユニオンルーム入室
-  case GAMEBEACON_ACTION_UNION_OUT:            ///<ユニオンルーム退室
     break;
   }
 
@@ -487,5 +497,18 @@ void GAMEBEACON_Set_UnionOut(void)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.action_no = GAMEBEACON_ACTION_UNION_OUT;
+  SendBeacon_SetCommon(send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：エンカウント率ダウン
+ */
+//==================================================================
+void GAMEBEACON_Set_EncountDown(void)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  
+  send->info.action_no = GAMEBEACON_ACTION_ENCOUNT_DOWN;
   SendBeacon_SetCommon(send);
 }

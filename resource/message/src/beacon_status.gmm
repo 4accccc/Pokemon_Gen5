@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2009-12-18T15:06:15"/>
+	<create user="matsuda" host="W00142" date="2009-12-21T12:21:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,10 +296,10 @@
 	</row>
 
 	<row id="msg_beacon_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
-ポケモンと　そうぐう　しづらくなった！</language>
-		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
-ポケモンと　そうぐう　しづらくなった！</language>
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』が
+「おめでとう！」と　いっています！</language>
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』が
+「おめでとう！」と　いっています！</language>
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -335,6 +335,13 @@
 ユニオンルームから　でた</language>
 		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』は
 ユニオンルームから　でた</language>
+	</row>
+
+	<row id="msg_beacon_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
+ポケモンと　そうぐう　しづらくなった！</language>
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　Ｇパワーで
+ポケモンと　そうぐう　しづらくなった！</language>
 	</row>
 
 	<flowchart-group-list>

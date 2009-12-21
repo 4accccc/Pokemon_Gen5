@@ -65,3 +65,4 @@ extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname);
 extern void GAMEBEACON_Set_UnionIn(void);
 extern void GAMEBEACON_Set_UnionOut(void);
+extern void GAMEBEACON_Set_EncountDown(void);
