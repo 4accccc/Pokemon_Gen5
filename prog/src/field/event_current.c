@@ -203,6 +203,14 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
       *seq = SEQ_EXIT;
       break;
     }
+    // 波ポケ後部の水飛沫エフェクトOFF
+    {
+      FIELD_PLAYER_GRID* player;
+      FLDEFF_TASK* task;
+      player = FIELDMAP_GetPlayerGrid( work->fieldmap );
+      task   = FIELD_PLAYER_GRID_GetEffectTaskWork( player );
+      FLDEFF_NAMIPOKE_SetRippleEffect( task, FALSE );
+    }
     *seq = SEQ_MAIN;
     break;
   // メイン処理
@@ -480,4 +488,12 @@ static void RockCheck( EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static void ExitEvent( EVENT_WORK* work )
 {
+  // 波ポケ後部の水飛沫エフェクトON
+  {
+    FIELD_PLAYER_GRID* player;
+    FLDEFF_TASK* task;
+    player = FIELDMAP_GetPlayerGrid( work->fieldmap );
+    task   = FIELD_PLAYER_GRID_GetEffectTaskWork( player );
+    FLDEFF_NAMIPOKE_SetRippleEffect( task, TRUE );
+  }
 }
