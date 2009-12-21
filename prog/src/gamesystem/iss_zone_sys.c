@@ -150,14 +150,8 @@ void ISS_ZONE_SYS_Update( ISS_ZONE_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_ZONE_SYS_ZoneChange( ISS_ZONE_SYS* sys, u16 next_zone_id )
 {
-  // 起動していない ==> ゾーンデータが存在する場合は起動
-  if( !sys->boot )
-  {
-    BootSystem( sys, next_zone_id );
-  }
-
-  // 起動せず
-  if( !sys->boot ) return; 
+  // 起動していない
+  if( !sys->boot ){ return; }
 
   // 参照するデータを変更
   ChangeZoneData( sys, next_zone_id );
