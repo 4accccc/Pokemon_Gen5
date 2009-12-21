@@ -363,6 +363,10 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
   wk->now_type  = wk->param->call;
   wk->pre_type  = wk->param->call;
   wk->next_type = wk->param->call;
+  
+  wk->sel_poke = 0;
+  wk->item_no = 0;
+  wk->mode = 0;
 
   PROCLINK_CALLBACK_Set( &wk->callback, wk->param, wk->param->open_func, wk->param->close_func, wk->param->wk_adrs );
 
@@ -741,6 +745,12 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->waza = 0;
   plistData->place    = ZONEDATA_GetPlaceNameID( GAMEDATA_GetMyPlayerWork(gmData)->zoneID ); 
 
+  if( pre == EVENT_PROCLINK_CALL_POKELIST )
+  { 
+    //初回時だったら
+    plistData->ret_sel  = 0;
+  }
+  else
   if( pre == EVENT_PROCLINK_CALL_BAG )
   { 
     //１つ前がバッグで、ポケリストへ移行したいとき
