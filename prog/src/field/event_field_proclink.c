@@ -1334,8 +1334,15 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
   GAMEDATA *gdata;
   
   gdata = GAMESYSTEM_GetGameData( wk->param->gsys );
+
   tr_param = TRAINERCASR_CreateCallParam_SelfData( gdata, HEAPID_PROC );
 
+  // 表か裏の指定をtr_paramに格納する
+  if(param==FALSE || param==EVENT_PROCLINK_DATA_NONE){
+    OS_Printf("トレーナーカードの表呼び出し\n");
+  }else{
+    OS_Printf("トレーナーカードの裏呼び出し\n");
+  }
   return tr_param;
 }
 //----------------------------------------------------------------------------

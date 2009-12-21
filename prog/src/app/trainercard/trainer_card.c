@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
+#include "savedata/trainercard_data.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 #include "arc_def.h"
@@ -37,6 +38,10 @@
 #include "message.naix"
 #include "system/wipe.h"
 #include "test/ariizumi/ari_debug.h"
+
+// キーでカードがめくれないようにする
+//#define KEY_LR_OK
+
 
 #define MIN_SCRUCH  (3)
 #define MAX_SCRUCH  (40)
@@ -70,10 +75,11 @@ enum {
   SEQ_IN,
   SEQ_MAIN,
   SEQ_OUT,
-  SEQ_REV,
+  SEQ_REVERSE,
   SEQ_SIGN_CALL,
   SEQ_SIGN,
   SEQ_COVER,
+  SEQ_SCALING,
 };
 
 typedef enum {
@@ -85,6 +91,7 @@ typedef enum {
   TRC_KEY_REQ_END_BUTTON,
   TRC_KEY_REQ_TRAINER_TYPE,
   TRC_KEY_REQ_PERSONALITY,
+  TRC_KEY_REQ_SCALE_BUTTON,
 }TRC_KEY_REQ;
 
 typedef enum {
@@ -92,25 +99,12 @@ typedef enum {
   COVER_OPEN = 1,
 }COVER_STATE;
 
-#if 0
-enum {
-  CASE_BUTTON,
-  BADGE0,
-  BADGE1,
-  BADGE2,
-  BADGE3,
-  BADGE4,
-  BADGE5,
-  BADGE6,
-  BADGE7,
+enum{
+  SCREEN_SIGN_LEFT=0,
+  SCREEN_SIGN_RIGHT,
+  SCREEN_SIGN_ALL,
 };
-#endif
 
-enum {
-  ANIME_NOTHING,
-  ANIME_BUTTON_PUSH,
-  ANIME_BUTTON_PULL
-};
 
 // 戻るボタン座標
 #define TP_RETURN_X   (  228 )
@@ -188,11 +182,15 @@ enum {
 #define TP_PAINTL_W  (  208 )
 #define TP_PAINTL_H  (  128 )
 
-#if 0
-typedef struct {
-  const RECT_HIT_TBL *const CoverTpRect[2]; //0:カバー閉じてるとき 1:カバー開けてるとき
-}RECT_HIT_TBL_LIST;
-#endif
+// カードアフィン座標初期値
+#define TRCARD_CENTER_POSX  ( 128 )
+#define TRCARD_CENTER_POSY  (  96 )
+#define TRCARD_OFFSET_POSX  (   0 )
+#define TRCARD_OFFSET_POSY  (   0 )
+#define TRCARD_LEFT_SCALE_CENTER_POSX   (  32 ) // 左側拡大時
+#define TRCARD_RIGHT_SCALE_CENTER_POSX  ( 224 ) // 右側拡大時
+#define TRCARD_SCALE_CENTER_POSY        ( 152 ) // 拡大時Y座標共通
+
 
 //ユニオンルームトレーナー表示テーブル
 static const int UniTrTable[UNION_TR_MAX] =
@@ -252,7 +250,7 @@ static void CardDesignDraw(TR_CARD_WORK* wk);
 static void CardDataDraw(TR_CARD_WORK* wk);
 static BOOL CardRev(TR_CARD_WORK * wk );
 static void CardRevAffineSet(TR_CARD_WORK* wk);
-static int CheckInput(TR_CARD_WORK *wk);
+static int  CheckInput(TR_CARD_WORK *wk);
 static void SetCardPalette(TR_CARD_WORK *wk ,const u8 inCardRank, const u8 inPokeBookHold);
 static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion);
 static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo);
@@ -264,13 +262,28 @@ static void ClearTrainer(TR_CARD_WORK *wk);
 static void ResetAffinePlane(void);
 static const u8 GetBadgeLevel(const int inCount);
 
-static void MakeSignData(const u8 *inRawData, u8 *outData);
-static void TransSignData(const int inFrame, const u8 *inSignData);
+static void DecodeSignData(const u8 *inRawData, u8 *outData);
+static void EncodeSignData( const u8 *inBmpData, u8 *outData );
+
+static void TransSignData(const int inFrame, const u8 *inSignData, int flag);
 static void UpdatePlayTime(TR_CARD_WORK *wk, const u8 inUpdateFlg);
 static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back );
+static void UpdateSignAnime( TR_CARD_WORK *wk );
+static void Trans_SignScreen( const int inFrame, const int flag );
+static BOOL CardScaling( TR_CARD_WORK *wk );
 
 static int SignCall( TR_CARD_WORK *wk );
 
+static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode );
+static void _BmpWinPrint_Rap(     GFL_BMPWIN * win, void * src,
+      int src_x, int src_y, int src_dx, int src_dy,
+      int win_x, int win_y, int win_dx, int win_dy );
+static void DrawPoint_to_Line(  GFL_BMPWIN *win, 
+  const u8 *brush, 
+  int px, int py, int *sx, int *sy, 
+  int count, int flag );
+static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock );
+static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode );
 //============================================================================================
 //  グローバル変数
 //============================================================================================
@@ -333,14 +346,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
       flag <<= 1;
     }
   }
-  //FullOpen!
-#if DEB_ARI&0
-  {
-    u8 i;
-    wk->isClear = TRUE;
-    for(i=0;i<TR_BADGE_NUM_MAX;i++)wk->badge[i] = 1;
-  }
-#endif
 
   //通信中かどうか？
 //  if( CommIsConnect(u16 netID) ){
@@ -385,9 +390,20 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 //  wk->touch = RECT_HIT_NONE;      //タッチパネルは押されていない
 
   wk->ButtonPushFlg = FALSE;      //ボタン押されてない
-  wk->AnimeType     = ANIME_NOTHING;    //ボタンアニメ無し
+  wk->SignAnimeWait    = 0;
+  if(wk->TrCardData->SignAnimeOn){  // サインアニメしているか？
+    wk->SignAnimePat = SCREEN_SIGN_LEFT;    
+  }else{
+    wk->SignAnimePat = SCREEN_SIGN_ALL;    
+  }
   wk->scrol_point   = 0;
   wk->pen = 0;
+  wk->CardCenterX = TRCARD_CENTER_POSX;
+  wk->CardCenterY = TRCARD_CENTER_POSY;
+  wk->CardOffsetX = TRCARD_OFFSET_POSX;
+  wk->CardOffsetY = TRCARD_OFFSET_POSY;
+
+
 
   //拡縮面をリセット
   ResetAffinePlane();
@@ -416,6 +432,65 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   return GFL_PROC_RES_FINISH;
 }
 
+static void debug_scale( TR_CARD_WORK *wk )
+{
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+    wk->CardScaleX -= 0x100;
+    wk->CardScaleY -= 0x100;
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    wk->CardScaleX += 0x100;
+    wk->CardScaleY += 0x100;
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      wk->CardOffsetY -= 1;
+    }else{
+      wk->CardCenterY -= 1;
+    }
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }else if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      wk->CardOffsetY += 1;
+    }else{
+      wk->CardCenterY += 1;
+    }
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }else if(GFL_UI_KEY_GetCont()&PAD_KEY_LEFT){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      wk->CardOffsetX -= 1;
+    }else{
+      wk->CardCenterX -= 1;
+    }
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }else if(GFL_UI_KEY_GetCont()&PAD_KEY_RIGHT){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      wk->CardOffsetX += 1;
+    }else{
+      wk->CardCenterX += 1;
+    }
+    OS_Printf("scaleX=%d, scaleY=%d, cx=%d, cy=%d, ox=%d, oy=%d\n", 
+               wk->CardScaleX, wk->CardScaleY,wk->CardCenterX, wk->CardCenterY,wk->CardOffsetX, wk->CardOffsetY);
+    //アフィン変換実行リクエスト
+    wk->aff_req = TRUE;
+  }
+
+}
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
@@ -450,7 +525,9 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       if (req == TRC_KEY_REQ_REV_BUTTON){
         //カードひっくり返す
         wk->sub_seq = 0;  //サブシーケンス初期化
-        *seq = SEQ_REV; //カード回転
+        *seq = SEQ_REVERSE; //カード回転
+      }else if(req == TRC_KEY_REQ_SCALE_BUTTON){
+        *seq = SEQ_SCALING;
       }else if(req == TRC_KEY_REQ_SIGN_CALL){
         SetSActDrawSt(&wk->ObjWork,ACTS_BTN_TURN,ANMS_SIGN_ON,TRUE);
         SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_TURN ,TRUE);
@@ -478,6 +555,11 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       }
       
       UpdatePlayTime(wk, wk->TrCardData->TimeUpdate);
+      UpdateSignAnime(wk);
+      
+      DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
+                      &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+      debug_scale(wk);
     }
     break;
 
@@ -487,8 +569,13 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
     }
     break;
 
-  case SEQ_REV: //リバース処理
+  case SEQ_REVERSE: //リバース処理
     if ( CardRev(wk) ){
+      *seq = SEQ_MAIN;
+    }
+    break;
+  case SEQ_SCALING:
+    if( CardScaling(wk)){
       *seq = SEQ_MAIN;
     }
     break;
@@ -514,6 +601,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
     *seq = SEQ_OUT;
     break;
   }
+  
   if(++wk->scrl_ct >= 128){
     wk->scrl_ct = 0;
   }
@@ -521,37 +609,6 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
   if( wk->vblankTcblSys != NULL )
     GFL_TCBL_Main( wk->vblankTcblSys );
 
-#if DEB_ARI
-  {
-    int x,y;
-    u8 bgPlane = TRC_BG_FONT;
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-      bgPlane = TRC_BG_MSG;
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
-    {
-      for( y=0;y<24;y++ )
-      {
-        for( x=0;x<32;x++ )
-        {
-          GFL_BG_FillScreen( bgPlane , x+y*32 , x,y,1,1 ,GFL_BG_SCRWRT_PALIN );
-        }
-      }
-      GFL_BG_LoadScreenV_Req( bgPlane);
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-    {
-      for( y=0;y<24;y++ )
-      {
-        for( x=0;x<32;x++ )
-        {
-          GFL_BG_FillScreen( bgPlane , x+y*32+32*24 , x,y,1,1 ,GFL_BG_SCRWRT_PALIN );
-        }
-      }
-      GFL_BG_LoadScreenV_Req( bgPlane);
-    }
-  }
-
-#endif
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -568,6 +625,18 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_WORK * wk  = mywk;
+  TRCARD_CALL_PARAM *param = pwk;
+
+  //サイン圧縮
+  EncodeSignData( wk->TrSignData, wk->TrCardData->SignRawData);
+
+  {
+    u8 *SignBuf;
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(param->gameData);
+    // サイン書き出しバッファポインタ取得
+    SignBuf = (u8*)TRCSave_GetSignDataPtr(TRCSave_GetSaveDataPtr(sv));
+    MI_CpuCopyFast(  wk->TrCardData->SignRawData, SignBuf, SIGN_SIZE_X*SIGN_SIZE_Y*8);
+  }
 
   //使用した拡縮面を元に戻す
   ResetAffinePlane();
@@ -839,7 +908,7 @@ static void SetTrCardBg( void )
 
   { // FONT (BMP) BG3
     GFL_BG_BGCNT_HEADER  ExAffineBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256, //TODO 256から変えて平気？
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256, 
       GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, 0x10000, GX_BG_EXTPLTT_01,
       1, 0, 0, FALSE
     };
@@ -912,15 +981,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 {
   // TRAINER_PALETTE(UP_DISPLAY)
   {
-  /*
-    void *buf;
-    NNSG2dPaletteData *dat;
-    buf = ArcUtil_PalDataGet(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_0_NCLR, &dat, wk->heapId );
-    DC_FlushRange( dat->pRawData, 2*16*16 );
-    GXS_LoadBGPltt( dat->pRawData, 0, 2*16*16 );
-    sys_FreeMemoryEz(buf);
-  */
     GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_0_NCLR,
           PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
   }
@@ -930,15 +990,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 
   // UNSER_CASE_COVER PALETTE(UNDER_DISPLAY)
   {
-  /*
-    void *buf;
-    NNSG2dPaletteData *dat;
-    buf = ArcUtil_PalDataGet(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR, &dat, wk->heapId );
-    DC_FlushRange( dat->pRawData, 16*2*16 );
-    GX_LoadBGPltt( dat->pRawData, 0, 16*2*16 );
-    sys_FreeMemoryEz(buf);
-  */
     GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR,
           PALTYPE_MAIN_BG , 0 , 16*2*16 ,wk->heapId );
   }
@@ -948,15 +999,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   //TRAINER
   if (wk->TrCardData->UnionTrNo == UNION_TR_NONE){
     {
-      /*
-      BOOL rc;
-      //アーカイブデータ取得
-      wk->TrArcData = ArcUtil_Load( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer_NCGR,
-                      FALSE, wk->heapId, ALLOC_TOP );
-      GF_ASSERT(wk->TrArcData!=NULL);
-      rc = NNS_G2dGetUnpackedBGCharacterData( wk->TrArcData, &wk->TrCharData);
-      GF_ASSERT(rc);
-      */
       wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer_NCGR,
                     FALSE, &wk->TrCharData, wk->heapId);
     }
@@ -973,15 +1015,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   }else{
     //ユニオンルームで他の人のデータを見る時
     {
-      /*
-      BOOL rc;
-      //アーカイブデータ取得
-      wk->TrArcData = ArcUtil_Load( ARCID_TRAINERCARD, UniTrTable[wk->TrCardData->UnionTrNo],
-                      FALSE, wk->heapId, ALLOC_TOP );
-      GF_ASSERT(wk->TrArcData!=NULL);
-      rc = NNS_G2dGetUnpackedBGCharacterData( wk->TrArcData, &wk->TrCharData);
-      GF_ASSERT(rc);
-      */
       wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRC_UNION, UniTrTable[wk->TrCardData->UnionTrNo],
                     FALSE, &wk->TrCharData, wk->heapId);
 
@@ -1054,7 +1087,7 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   }
   GFL_BG_LoadScreenReq(TRC_BG_BADGE_CASE);
   //サイン展開
-  MakeSignData(wk->TrCardData->SignRawData, wk->TrSignData);
+  DecodeSignData(wk->TrCardData->SignRawData, wk->TrSignData);
 
   // タッチバー準備
   GFL_ARC_UTIL_TransVramBgCharacter( APP_COMMON_GetArcId(),
@@ -1122,6 +1155,26 @@ static void HardWareWindow_Set( int flag )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 裏面スクリーンを替える
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void Trans_CardBackScreen( TR_CARD_WORK *wk )
+{
+  // アニメONかOFFかで転送するスクリーンを替える
+  if(wk->TrCardData->SignAnimeOn){
+    GFL_ARC_UTIL_TransVramScreen(
+      ARCID_TRAINERCARD, NARC_trainer_case_card_back2_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+  }else{
+    GFL_ARC_UTIL_TransVramScreen(
+      ARCID_TRAINERCARD, NARC_trainer_case_card_back_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+  }
+  
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1135,15 +1188,15 @@ static void CardDesignDraw(TR_CARD_WORK* wk)
         ARCID_TRAINERCARD, NARC_trainer_case_card_faca_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
     //スクリーンクリア
     GFL_BG_ClearScreen( TRC_BG_TRAINER );
-    HardWareWindow_Set( 0 );
+//    HardWareWindow_Set( 0 );
   }else{
-    GFL_ARC_UTIL_TransVramScreen(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_back_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+    // 裏面カードスクリーン転送
+    Trans_CardBackScreen(wk);
     //トレーナー消す
     ClearTrainer(wk);
     //スクリーンクリア
     GFL_BG_ClearScreen( TRC_BG_SIGN );
-    HardWareWindow_Set( 1 );
+//    HardWareWindow_Set( 1 );
   }
 }
 
@@ -1162,7 +1215,7 @@ static void CardDataDraw(TR_CARD_WORK* wk)
     //トレーナー表示
     DispTrainer(wk);
   }else{  //裏面表示
-    TransSignData(TRC_BG_SIGN, wk->TrSignData);
+    TransSignData(TRC_BG_SIGN, wk->TrSignData, wk->SignAnimePat);
   }
   
   // タッチバーOBJ周りの再描画
@@ -1191,21 +1244,44 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,   ANMS_BLACK_PEN_L,         FALSE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_BADGE_L,             TRUE);
 
+    // ショートカット登録しているか
     flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_FRONT );
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
 
   }else{           // 裏
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             TRUE);
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,   ANMS_BLACK_PEN_L,         TRUE);
-    if(wk->TrCardData->SignAnimeOn){
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_ANIME_L,       TRUE);
-    }else{
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_STOP_G,       TRUE);
-    }
-    flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_BACK );
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
+    // 通常表示
+    if(wk->ScaleMode==0){
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             TRUE);
 
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+
+      // サインアニメ中
+      if(wk->TrCardData->SignAnimeOn){
+        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_STOP_L,       TRUE);
+      }else{
+        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_ANIME_G,       TRUE);
+      }
+
+      // ショートカット登録しているか
+      flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_BACK );
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
+
+    // 拡大表示
+    }else{
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN_OFF,TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT_OFF,  TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_SIMPLE_L,             TRUE);
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+
+      // サインアニメ中
+      if(wk->TrCardData->SignAnimeOn){
+        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_STOP_L,       TRUE);
+      }else{
+        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_ANIME_G,       TRUE);
+      }
+    }
   }
 }
 
@@ -1334,7 +1410,7 @@ static BOOL CardRev( TR_CARD_WORK *wk )
       //トレーナー表示
       DispTrainer(wk);
     }else{
-      TransSignData(TRC_BG_SIGN, wk->TrSignData);
+      TransSignData(TRC_BG_SIGN, wk->TrSignData, wk->SignAnimePat);
     }
     wk->sub_seq++;
     break;
@@ -1366,6 +1442,84 @@ static BOOL CardRev( TR_CARD_WORK *wk )
   return rc;
 }
 
+
+#define SCALE_CENTERX   (
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 拡大サイン画面に変更する(行く・戻る）
+ *
+ * @param   wk    
+ *
+ * @retval  BOOL    TRUE:終了
+ */
+//----------------------------------------------------------------------------------
+static BOOL CardScaling( TR_CARD_WORK *wk )
+{
+  switch(wk->sub_seq){
+
+  // 拡大画面へ移行
+  case 0:
+    if(wk->ScaleSide==0){
+      wk->CardCenterX = TRCARD_LEFT_SCALE_CENTER_POSX;
+      wk->CardCenterY = TRCARD_SCALE_CENTER_POSY;
+    }else{
+      wk->CardCenterX = TRCARD_RIGHT_SCALE_CENTER_POSX;
+      wk->CardCenterY = TRCARD_SCALE_CENTER_POSY;
+    }
+    wk->sub_seq = 1;
+    break;
+  case 1:
+    wk->CardScaleX+=0x100;
+    wk->CardScaleY+=0x100;
+    if(wk->CardScaleX >= 0x2000){
+      wk->CardScaleX = 0x2000;
+      wk->CardScaleY = 0x2000;
+      wk->sub_seq = 2;
+    }
+    break;
+  case 2:
+    wk->ScaleMode = 1;
+    DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
+    return TRUE;
+    break;
+
+  // 通常画面へ移行
+  case 3:
+    wk->sub_seq = 4;
+    break;
+  case 4:
+    wk->CardScaleX-=0x100;
+    wk->CardScaleY-=0x100;
+    if(wk->CardScaleX <= 0x1000){
+      wk->CardScaleX = 0x1000;
+      wk->CardScaleY = 0x1000;
+      wk->sub_seq = 5;
+    }
+    break;
+  case 5:
+    wk->CardCenterX = TRCARD_CENTER_POSX;
+    wk->CardCenterY = TRCARD_CENTER_POSY;
+    wk->ScaleMode = 0;
+    DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
+    return TRUE;
+    break;
+
+  }
+  
+  //アフィン変換実行リクエスト
+  wk->aff_req = TRUE;
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief BGアフィン変換リクエスト
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
 static void CardRevAffineSet(TR_CARD_WORK* wk)
 {
   MtxFx22 mtx;
@@ -1376,12 +1530,12 @@ static void CardRevAffineSet(TR_CARD_WORK* wk)
   mtx._11 = FX_Inv(wk->CardScaleY);
 //  SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
   G2S_SetBG2Affine(&mtx,          // a matrix for rotation and scaling
-          128, 96,      // the center of rotation
-          0, 0           // the reference point before rotation and scaling applied
+          wk->CardCenterX, wk->CardCenterY,      // the center of rotation
+          wk->CardOffsetX, wk->CardOffsetY       // the reference point before rotation and scaling applied
       );
   G2S_SetBG3Affine(&mtx,          // a matrix for rotation and scaling
-          128, 96,      // the center of rotation
-          0, 0           // the reference point before rotation and scaling applied
+          wk->CardCenterX, wk->CardCenterY,      // the center of rotation
+          wk->CardOffsetX, wk->CardOffsetY       // the reference point before rotation and scaling applied
       );
   wk->aff_req = FALSE;
 }
@@ -1444,11 +1598,12 @@ static int CheckKey(TR_CARD_WORK* wk)
     return TRC_KEY_REQ_END_BUTTON;
   }
 
+#ifdef KEY_LR_OK
   if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))
   {
     return TRC_KEY_REQ_REV_BUTTON;
   }
-
+#endif
   return TRC_KEY_REQ_NONE;
 }
 
@@ -1474,6 +1629,230 @@ static void SetBookMark( TR_CARD_WORK *wk)
   
   }
 
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief アニメボタンの表示を切り替える
+ *
+ * @param   wk    
+ *
+ * @retval  static    
+ */
+//----------------------------------------------------------------------------------
+static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag )
+{
+  if(flag==0){
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_L, TRUE);
+  }else{
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_L, TRUE);
+  }
+
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サインアニメ初期化処理
+ *
+ * @param   wk    
+ * @param   flag    
+ */
+//----------------------------------------------------------------------------------
+static void Change_SignAnime( TR_CARD_WORK *wk, int flag )
+{
+  if(flag){
+    wk->SignAnimePat  = SCREEN_SIGN_LEFT;
+    wk->SignAnimeWait = 0;
+  }else{
+    wk->SignAnimePat  = SCREEN_SIGN_ALL;
+  }
+  Trans_SignScreen( TRC_BG_SIGN, wk->SignAnimePat );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 通常時タッチ処理
+ *
+ * @param   wk    
+ * @param   hitNo   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
+{
+  switch(hitNo){
+  case 0:     // 戻る
+    return TRC_KEY_REQ_END_BUTTON;
+    break;
+  case 1:     // 終了
+    return TRC_KEY_REQ_END_BUTTON;
+    break;
+  case 2:     // カード裏返しボタン
+    GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
+    SetEffActDrawSt(&wk->ObjWork,ACTS_BTN_EFF,TRUE);
+    return TRC_KEY_REQ_REV_BUTTON;
+    break;
+  case 3:     // バッジ画面ボタン・アニメON/OFFボタン
+    if(wk->is_back){
+      wk->TrCardData->SignAnimeOn ^=1;
+      Trans_CardBackScreen(wk);
+      Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn);
+      Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
+      OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
+    }
+    break;
+  case 4:     // 精密描画ボタン
+    if(wk->is_back && (!wk->isComm) && wk->TrCardData->SignAnimeOn==0){
+//      return TRC_KEY_REQ_SIGN_CALL;
+        if(wk->ScaleMode==0){
+          wk->sub_seq = 0;
+        }else{
+          wk->sub_seq = 3;
+        }
+        return TRC_KEY_REQ_SCALE_BUTTON;
+    }
+    break;
+  case 5:     // ペン先ボタン
+    if(wk->is_back){
+      wk->pen ^=1;
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+      OS_Printf("pen touch\n");
+    }
+    break;
+  case 6:     // ブックマークボタン
+    SetBookMark( wk );
+    break;
+  case 7:     // トレーナータイプ
+    if(wk->is_back==0){
+      return TRC_KEY_REQ_TRAINER_TYPE;
+    }
+    break;
+  case 8:     // 性格
+    if(wk->is_back==0){
+      return TRC_KEY_REQ_PERSONALITY;
+    }
+    break;
+  }
+  return TRC_KEY_REQ_NONE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 拡大モード時タッチ処理(かなりの処理が無視される）
+ *
+ * @param   wk    
+ * @param   hitNo   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
+{
+  switch(hitNo){
+  case 0:     // 戻る
+  case 1:     // 終了
+  case 2:     // カード裏返しボタン
+  case 3:     // バッジ画面ボタン・アニメON/OFFボタン
+  case 7:     // トレーナータイプ
+  case 8:     // 性格
+    break;
+  case 4:     // 精密描画ボタン
+    if(wk->is_back && (!wk->isComm)){
+      wk->sub_seq = 3;
+      return TRC_KEY_REQ_SCALE_BUTTON;
+    }
+    break;
+  case 5:     // ペン先ボタン
+    if(wk->is_back){
+      wk->pen ^=1;
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+      OS_Printf("pen touch\n");
+    }
+    break;
+  case 6:     // ブックマークボタン
+    SetBookMark( wk );
+    break;
+  }
+  return TRC_KEY_REQ_NONE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void normal_sign_func( TR_CARD_WORK *wk )
+{
+  // スクロールとサイン簡易版
+  static const GFL_UI_TP_HITTBL Scrol_TpRect[] = {
+    { TP_SCORE_SCROL_Y, TP_SCORE_SCROL_Y+TP_SCORE_SCROL_H, TP_SCORE_SCROL_X, TP_SCORE_SCROL_X+TP_SCORE_SCROL_W }, // スクロール
+    { TP_PAINTS_Y, TP_PAINTS_Y+TP_PAINTS_H, TP_PAINTS_X, TP_PAINTS_X+TP_PAINTS_W }, // サイン面
+    {GFL_UI_TP_HIT_END,0,0,0}
+  };
+    u32 x,y;
+    if(GFL_UI_TP_HitCont(Scrol_TpRect)==0){
+      if(GFL_UI_TP_GetTrg()){
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        wk->touch_sy    = y;
+        wk->scrol_start = wk->scrol_point;
+      }
+      if(GFL_UI_TP_GetCont()){
+        GFL_UI_TP_GetPointCont( &x, &y );
+        wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
+        OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
+      }
+      // 範囲外チェック
+      if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
+        wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
+      }else if(wk->scrol_point>0){
+        wk->scrol_point = 0;
+      }
+      if(wk->old_scrol_point!=wk->scrol_point){
+        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1 );
+      }
+      wk->old_scrol_point=wk->scrol_point;
+    }
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void large_sign_func( TR_CARD_WORK *wk )
+{
+  // サイン精密版
+  static const GFL_UI_TP_HITTBL PaintL_TpRect[] = {
+    { TP_PAINTL_Y, TP_PAINTL_Y+TP_PAINTL_H, TP_PAINTL_X, TP_PAINTL_X+TP_PAINTL_W }, // サイン面
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },
+  };
+
+    u32 x,y;
+    if(GFL_UI_TP_HitCont(PaintL_TpRect)==0){
+      if(GFL_UI_TP_GetCont()){
+        GFL_UI_TP_GetPointCont( &x, &y );
+      }
+      // 範囲外チェック
+      if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
+        wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
+      }else if(wk->scrol_point>0){
+        wk->scrol_point = 0;
+      }
+      if(wk->old_scrol_point!=wk->scrol_point){
+        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1 );
+      }
+      wk->old_scrol_point=wk->scrol_point;
+    }
+  
 }
 
 //----------------------------------------------------------------------------------
@@ -1502,105 +1881,45 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_PERSONAL_Y, TP_PERSONAL_Y+TP_PERSONAL_H,TP_PERSONAL_X, TP_PERSONAL_X+TP_PERSONAL_W },   // 性格
     {GFL_UI_TP_HIT_END,0,0,0}
   };
-  // スクロールとサイン簡易版
-  static const GFL_UI_TP_HITTBL Scrol_TpRect[] = {
-    { TP_SCORE_SCROL_Y, TP_SCORE_SCROL_Y+TP_SCORE_SCROL_H, TP_SCORE_SCROL_X, TP_SCORE_SCROL_X+TP_SCORE_SCROL_W }, // スクロール
-    { TP_PAINTS_Y, TP_PAINTS_Y+TP_PAINTS_H, TP_PAINTS_X, TP_PAINTS_X+TP_PAINTS_W }, // スクロール
-    {GFL_UI_TP_HIT_END,0,0,0}
-  };
 
-  // サイン精密版
-  static const GFL_UI_TP_HITTBL PaintL_TpRect[] = {
-    { TP_PAINTL_Y, TP_PAINTL_Y+TP_PAINTL_H, TP_PAINTL_X, TP_PAINTL_X+TP_PAINTL_W }, // スクロール
-    {GFL_UI_TP_HIT_END,0,0,0}
-  };
 
+  // ボタン処理
   const int hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
-  switch(hitNo){
-  case 0:     // 戻る
-    return TRC_KEY_REQ_END_BUTTON;
-    break;
-  case 1:     // 終了
-    return TRC_KEY_REQ_END_BUTTON;
-    break;
-  case 2:     // カード裏返しボタン
-    GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
-    SetEffActDrawSt(&wk->ObjWork,ACTS_BTN_EFF,TRUE);
-    return TRC_KEY_REQ_REV_BUTTON;
-    break;
-  case 3:     // バッジ画面ボタン・アニメON/OFFボタン
-    if(wk->is_back){
-      wk->TrCardData->SignAnimeOn ^=1;
-      if(wk->TrCardData->SignAnimeOn==0){
-        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_L, TRUE);
-      }else{
-        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_L, TRUE);
-      }
-    }
-    break;
-  case 4:     // 精密描画ボタン
-    if(wk->is_back && (!wk->isComm)){
-      return TRC_KEY_REQ_SIGN_CALL;
-    }
-    break;
-  case 5:     // ペン先ボタン
-    if(wk->is_back){
-      wk->pen ^=1;
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
-      OS_Printf("pen touch\n");
-    }
-    break;
-  case 6:     // ブックマークボタン
-    SetBookMark( wk );
-    break;
-  case 7:     // トレーナータイプ
-    if(wk->is_back==0){
-      return TRC_KEY_REQ_TRAINER_TYPE;
-    }
-    break;
-  case 8:     // 性格
-    if(wk->is_back==0){
-      return TRC_KEY_REQ_PERSONALITY;
-    }
-    break;
+  if(wk->ScaleMode==0){
+    ret = normal_touch_func( wk, hitNo );
+  }else{
+    ret = large_touch_func( wk, hitNo );
+  }
+  if(ret!=TRC_KEY_REQ_NONE){
+    return ret;
   }
 
+  // 裏面用処理
   if(wk->is_back){
-    u32 x,y;
-    if(GFL_UI_TP_HitCont(Scrol_TpRect)==0){
-      if(GFL_UI_TP_GetTrg()){
-        GFL_UI_TP_GetPointTrg( &x, &y );
-        wk->touch_sy    = y;
-        wk->scrol_start = wk->scrol_point;
-      }
-      if(GFL_UI_TP_GetCont()){
-        GFL_UI_TP_GetPointCont( &x, &y );
-        wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
-        OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
-      }
-      // 範囲外チェック
-      if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
-        wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
-      }else if(wk->scrol_point>0){
-        wk->scrol_point = 0;
-      }
-      if(wk->old_scrol_point!=wk->scrol_point){
-        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1 );
-      }
-      wk->old_scrol_point=wk->scrol_point;
+    if(wk->ScaleMode==0){
+      // スクロール・サイン処理
+      normal_sign_func(wk);
+      Stock_TouchPoint( wk, 0 );
+    }else{
+      // サイン面情報取得処理
+      Stock_TouchPoint( wk, 1 );
     }
-  }
 
-
-  //現在の座標を取得
-  if( hitNo == 2 ){
-    GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
-    SetEffActDrawSt(&wk->ObjWork,ACTS_BTN_EFF,TRUE);
-    return TRC_KEY_REQ_REV_BUTTON;
   }
 
   return TRC_KEY_REQ_NONE;
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 入力検出（キー・タッチ）
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
 static int CheckInput(TR_CARD_WORK *wk)
 {
   int key_req;
@@ -1690,6 +2009,13 @@ static void ResetAffinePlane(void)
       );
 }
 
+#define TRAINER_SCREEN_PASTE_X  ( 21 )
+#define TRAINER_SCREEN_PASTE_Y  (  4 )
+#define TRAINER_SCREEN_PASTE_W  ( 10 )
+#define TRAINER_SCREEN_PASTE_H  ( 11 )
+#define TRAINER_SCREEN_SRC_X    ( 21 )
+#define TRAINER_SCREEN_SRC_Y    (  7 )
+
 //--------------------------------------------------------------------------------------------
 /**
  * トレーナースクリーン転送
@@ -1716,7 +2042,11 @@ static void DispTrainer(TR_CARD_WORK *wk)
   GFL_BG_LoadScreen( TRC_BG_TRAINER, wk->ScrnData->rawData, transSize, 0 );
 #else
   GFL_BG_WriteScreenExpand(TRC_BG_TRAINER,
-    21,7,10,11,wk->ScrnData->rawData,21,7,
+    TRAINER_SCREEN_PASTE_X,TRAINER_SCREEN_PASTE_Y,
+    TRAINER_SCREEN_PASTE_W,TRAINER_SCREEN_PASTE_H,
+    wk->ScrnData->rawData,
+    TRAINER_SCREEN_SRC_X,
+    TRAINER_SCREEN_SRC_Y,
     wk->ScrnData->screenWidth/8,wk->ScrnData->screenHeight/8);
   GFL_BG_LoadScreenReq( TRC_BG_TRAINER );
 #endif
@@ -1768,7 +2098,7 @@ static const u8 GetBadgeLevel(const int inCount)
 
 //--------------------------------------------------------------------------------------------
 /**
- * サインデータ作成
+ * サインデータ展開（bitデータをBMP256データに展開）
  *
  * @param *inRawData  ビット単位で持っているサインデータ
  * @param *outData  サインデータ格納場所
@@ -1776,7 +2106,7 @@ static const u8 GetBadgeLevel(const int inCount)
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void MakeSignData(const u8 *inRawData, u8 *outData)
+static void DecodeSignData( const u8 *inRawData, u8 *outData )
 {
 
   int dot,raw_dot;
@@ -1790,6 +2120,92 @@ static void MakeSignData(const u8 *inRawData, u8 *outData)
   }
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サインデータ圧縮（BMP256データを1bitデータに圧縮）
+ *
+ * @param   inBmpData   
+ * @param   outData   
+ */
+//----------------------------------------------------------------------------------
+static void EncodeSignData( const u8 *inBmpData, u8 *outData )
+{
+  int i,r,tmp;
+
+  // 1bit単位で格納するので1/8のループですむはず
+  for(i=0;i<SIGN_SIZE_X*SIGN_SIZE_Y*8;i++){
+    tmp = 0;
+    for(r=0;r<8;r++){
+      tmp |= (inBmpData[i*8+r]<<r);
+    }
+    outData[i] = tmp;
+  }
+}
+
+#define SIGN_HALF_SIZE    ( SIGN_SX/2 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サイン画面のスクリーンデータ加工・転送を行う
+ *
+ * @param   inFrame   指定スクリーン
+ * @param   flag      SCREEN_SIGN_ALL: SCREEN_SIGN_LEFT:  SCREEN_SIGN_RIGHT
+ */
+//----------------------------------------------------------------------------------
+static void Trans_SignScreen( const int inFrame, const int flag )
+{
+  u16 *buf;
+  u8 x,y;
+  u16 count;
+
+  // スクリーンデータの加工
+  buf   = (u16 *)GFL_BG_GetScreenBufferAdrs( inFrame );
+  
+  // 全クリア 
+  for( y=0; y<SIGN_SY; y++ ){
+    for( x=0; x<SIGN_SX; x++ ){
+      buf[ (SIGN_PY+y)*TRC_SCREEN_WIDTH + x+SIGN_PX ]=0;
+    }
+  }
+
+  // モードにあわせてスクリーンを加工  
+  count = 0;
+  switch(flag){
+  case SCREEN_SIGN_ALL:   // 全面
+    for( y=0; y<SIGN_SY; y++ ){
+      for( x=0; x<SIGN_SX; x++ ){
+        buf[ (SIGN_PY+y)*TRC_SCREEN_WIDTH + x+SIGN_PX ] = (SIGN_CGX+count);
+        count++;
+      }
+    }
+    break;
+  case SCREEN_SIGN_LEFT:  // 左半分
+    for( y=0; y<SIGN_ANIME_SY; y++ ){
+      for( x=0; x<SIGN_ANIME_SX; x++ ){
+        buf[ (SIGN_ANIME_PY+y)*TRC_SCREEN_WIDTH + x+SIGN_ANIME_PX ] = (SIGN_CGX+count);
+        count++;
+      }
+      count+=SIGN_HALF_SIZE;
+    }
+    break;
+  case SCREEN_SIGN_RIGHT: // 右半分
+    count+=SIGN_HALF_SIZE;
+    for( y=0; y<SIGN_ANIME_SY; y++ ){
+      for( x=0; x<SIGN_ANIME_SX; x++ ){
+        buf[ (SIGN_ANIME_PY+y)*TRC_SCREEN_WIDTH + x+SIGN_ANIME_PX ] = (SIGN_CGX+count);
+        count++;
+      }
+      count+=SIGN_HALF_SIZE;
+    }
+    break;
+  }
+  
+  // スクリーン転送
+  GFL_BG_LoadScreenV_Req( inFrame );
+
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * サインデータ転送
@@ -1801,24 +2217,14 @@ static void MakeSignData(const u8 *inRawData, u8 *outData)
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void TransSignData(const int inFrame, const u8 *inSignData)
+static void TransSignData(const int inFrame, const u8 *inSignData, const int flag)
 {
-  u16 *buf;
-  u8 x,y;
-  u16 count;
 
+  // サイングラフィックデータをVRAMに転送
   GFL_BG_LoadCharacter( inFrame, inSignData, SIGN_BYTE_SIZE, SIGN_CGX );
 
-  buf   = (u16 *)GFL_BG_GetScreenBufferAdrs( inFrame );
-
-  count = 0;
-  for( y=0; y<SIGN_SY; y++ ){
-        for( x=0; x<SIGN_SX; x++ ){
-            buf[ (SIGN_PY+y)*TRC_SCREEN_WIDTH + x+SIGN_PX ] = (SIGN_CGX+count);
-      count++;
-        }
-    }
-  GFL_BG_LoadScreenV_Req( inFrame );
+  // スクリーンデータの加工・転送を行う
+  Trans_SignScreen( inFrame, flag );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1852,5 +2258,355 @@ static void UpdatePlayTime(TR_CARD_WORK *wk, const u8 inUpdateFlg)
   wk->SecCount++;   //  1/TRC_FRAME_RATEなので
   if( wk->SecCount >= TRC_FRAME_RATE )
     wk->SecCount -= TRC_FRAME_RATE;
+}
+
+
+#define SIGN_ANIME_SWITCH_FRAME   ( 20 )
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サイン画面アニメの再生処理
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void UpdateSignAnime( TR_CARD_WORK *wk )
+{
+  // 裏面でアニメフラグが立っているならサインアニメを行う
+  if(wk->is_back && wk->TrCardData->SignAnimeOn ){
+    wk->SignAnimeWait++;
+    if(wk->SignAnimeWait>SIGN_ANIME_SWITCH_FRAME){
+      wk->SignAnimePat^=1;
+      Trans_SignScreen( TRC_BG_SIGN, wk->SignAnimePat );
+      wk->SignAnimeWait = 0;
+    }
+  }
+}
+
+
+
+
+//---------------------------------------------------------
+// ブラシパターン
+//---------------------------------------------------------
+
+// どうしてもパレットデータを3bitに縮めてしまいたいので、透明色を8にして
+// 色指定自体は0-7に当てている。0は透明色だがBD面を黒にして黒く見えるようにしている
+
+// BMPデータは最低横8dot分必要なので、4x4のドットデータを作りたい時は
+// ２バイトごとに参照されないデータがもう２バイト必要
+static const u8 sign_brush[2][2][16]={
+  {
+    {
+      0,1,1,0, 
+      1,1,1,1,  
+      1,1,1,1,  
+      0,1,1,0,  
+    },
+    {
+      0,2,2,0, 
+      2,2,2,2, 
+      2,2,2,2,
+      0,2,2,0,  
+    },
+  },
+  {
+    {
+      0,0,0,0, 
+      0,1,1,0,  
+      0,1,1,0,  
+      0,0,0,0,  
+    },
+    {
+      0,0,0,0, 
+      0,2,2,0, 
+      0,2,2,0,
+      0,0,0,0,  
+    },
+  },    
+};                                                                    
+
+// おえかきボードBMP（下画面）
+#define OEKAKI_BOARD_POSX  (  4 )
+#define OEKAKI_BOARD_POSY  ( 11 )
+#define OEKAKI_BOARD_W     ( 24 )
+#define OEKAKI_BOARD_H     (  8 )
+
+#define LARGE_BOARD_POSX  (  4 )
+#define LARGE_BOARD_POSY  (  3 )
+#define LARGE_BOARD_W     ( 24 )
+#define LARGE_BOARD_H     ( 16 )
+
+static const GFL_UI_TP_HITTBL sign_tbl[]={
+  {OEKAKI_BOARD_POSY*8,(OEKAKI_BOARD_POSY+OEKAKI_BOARD_H)*8-1, OEKAKI_BOARD_POSX*8, (OEKAKI_BOARD_POSX+OEKAKI_BOARD_W)*8-1},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+static const GFL_UI_TP_HITTBL large_sign_tbl[]={
+  {LARGE_BOARD_POSY*8,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8-1, LARGE_BOARD_POSX*8, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8-1},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サイン面のタッチパネル情報取得
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
+{
+  //  サンプリング情報を取得して格納
+  u32 x,y;
+  if(GFL_UI_TP_GetPointCont( &x, &y )){
+
+    // 通常
+    if(scale_mode==0){
+      if( GFL_UI_TP_HitSelf( sign_tbl, x, y )==0){
+        wk->MyTouchResult.x = x;
+        wk->MyTouchResult.y = y;
+        wk->MyTouchResult.brush = wk->pen;
+        wk->MyTouchResult.on    = 1;
+  
+        // 拡大する際の左右を決める
+        if(x<128){
+          wk->ScaleSide=0;
+        }else{
+          wk->ScaleSide=1;
+        }
+      }else{
+        wk->MyTouchResult.on    = 0;
+      }
+
+    // 精密
+    }else{
+      if( GFL_UI_TP_HitSelf( large_sign_tbl, x, y )==0){
+        wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*24*8)/2;
+        wk->MyTouchResult.y = OEKAKI_BOARD_POSY*8+(y-LARGE_BOARD_POSY*8)/2;
+        wk->MyTouchResult.brush = wk->pen;
+        wk->MyTouchResult.on    = 1;
+      }else{
+        wk->MyTouchResult.on    = 0;
+      }
+    }
+  }else{
+    wk->MyTouchResult.on    = 0;
+  }
+
+  wk->AllTouchResult = wk->MyTouchResult;
+
+}
+
+static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
+{
+  int bx,by,px,py,wx,wy;
+  int i,offset,w,h,count=0;
+  
+  for(h=0;h<4;h++){
+    for(w=0;w<4;w++){
+      wx = x+w;
+      wy = y+h;
+      if(wx<0 || wx >=ww || wy <0 || wy >=hh){
+        continue;
+      }
+      bx = wx / 8;
+      by = wy / 8;
+      px = wx % 8;
+      py = wy % 8;
+      offset = (by*OEKAKI_BOARD_W+bx)*64 + py*8+px;
+      if(brush[count]==1){
+        sign[offset] = 1;
+      }else if(brush[count]==2){
+        sign[offset] = 0;
+      }
+      count++;
+    }
+  }
+}
+
+//==============================================================================
+/**
+ * @brief   描画開始位置がマイナス方向にあっても描画できるBmpWinPrintラッパー
+ * @retval  none    
+ */
+//==============================================================================
+static void _BmpWinPrint_Rap(
+      GFL_BMPWIN * win, void * src,
+      int src_x, int src_y, int src_dx, int src_dy,
+      int win_x, int win_y, int win_dx, int win_dy )
+{
+
+  if(win_x < 0){
+    int diff;
+    diff = win_x*-1;
+    if(diff>win_dx){
+      diff = win_dx;
+    }
+    win_x   = 0;
+    src_x  += diff;
+    src_dx -= diff;
+    win_dx -= diff;
+  }
+
+  if(win_y < 0){
+    int diff;
+    diff = win_y*-1;
+    if(diff>win_dy){
+      diff = win_dy;
+    }
+    win_y   = 0;
+    src_y  += diff;
+    src_dy -= diff;
+    win_dy -= diff;
+  }
+
+
+//  GF_BGL_BmpWinPrint( win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
+/*
+  GFL_BMP_Print( src, win, src_x, src_y, src_dx, src_dy, win_x, win_y, 0 );
+*/
+  {
+    u8 *sign = (u8*)win;
+    draw_pen( sign, src, win_x, win_y, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8 );
+  }
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   ライン描画
+ *
+ * @param   win   
+ * @param   brush   
+ * @param   px    
+ * @param   py    
+ * @param   sx    
+ * @param   sy    
+ * @param   count   
+ * @param   flag    
+ *
+ * @retval  none    
+ */
+//------------------------------------------------------------------
+static void DrawPoint_to_Line( 
+  GFL_BMPWIN *win, 
+  const u8 *brush, 
+  int px, int py, int *sx, int *sy, 
+  int count, int flag )
+{
+  int dx, dy, s, step;
+  int x1 = *sx;
+  int y1 = *sy;
+  int x2 = px;
+  int y2 = py;
+
+  // 初回は原点保存のみ
+  if(count==0 && flag == 0){
+    *sx = px;   *sy = py;
+    return;
+  }
+  
+
+  dx = MATH_IAbs(x2 - x1);  dy = MATH_IAbs(y2 - y1);
+  if (dx > dy) {
+    if (x1 > x2) {
+      step = (y1 > y2) ? 1 : -1;
+      s = x1;  x1 = x2;  x2 = s;  y1 = y2;
+    } else step = (y1 < y2) ? 1: -1;
+
+    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    s = dx >> 1;
+    while (++x1 <= x2) {
+      if ((s -= dy) < 0) {
+        s += dx;  y1 += step;
+      };
+    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    }
+  } else {
+    if (y1 > y2) {
+      step = (x1 > x2) ? 1 : -1;
+      s = y1;  y1 = y2;  y2 = s;  x1 = x2;
+    } else step = (x1 < x2) ? 1 : -1;
+    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    s = dy >> 1;
+    while (++y1 <= y2) {
+      if ((s -= dx) < 0) {
+        s += dy;  x1 += step;
+      }
+      _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    }
+  }
+  
+  
+  *sx = px;     *sy = py;
+
+}
+
+static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock )
+{
+  *stock = *all;
+
+/*
+  int i;
+  stock[i].size = all[i].size;
+  if(all[i].size!=0){
+    stock[i].x = all[i].x[all[i].size-1];
+    stock[i].y = all[i].y[all[i].size-1];
+  }
+*/
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 取得したしたタッチパネルの結果データを下に描画する
+ *
+ * @param   win   
+ * @param   all   
+ * @param   old   
+ * @param   draw    メモリ上で行ったCGX変更を転送するか？(0:しない  1:する）
+ * @param   SignData    
+ * @param   sign_mode   
+ */
+//----------------------------------------------------------------------------------
+static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode )
+{
+  int px,py,i,r,flag=0, sx, sy;
+
+//  OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
+
+  if(all->on!=0){
+    if(old->on){
+      sx = old->x-OEKAKI_BOARD_POSX*8;
+      sy = old->y-OEKAKI_BOARD_POSY*8;
+    }
+    px = all->x - OEKAKI_BOARD_POSX*8;
+    py = all->y - OEKAKI_BOARD_POSY*8;
+      
+    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
+
+    // BG1面用BMP（お絵かき画像）ウインドウ確保
+    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
+    flag = 1;
+    
+  }
+  if(flag && draw){
+
+    // サイングラフィックデータをVRAMに転送
+    GFL_BG_LoadCharacter( TRC_BG_SIGN, SignData, SIGN_BYTE_SIZE, SIGN_CGX );
+    
+//    OS_Printf("write board %d times\n",debug_count++);
+    //GF_BGL_BmpWinOn( win );
+    
+  }
+  
+  // 今回の最終座標のバックアップを取る   
+    Stock_OldTouch(all, old);
+//  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    all->on = 0;    // 一度描画したら座標情報は捨てる
+//  }
+  
 }
 

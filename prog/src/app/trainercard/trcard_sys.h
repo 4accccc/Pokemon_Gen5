@@ -65,6 +65,15 @@ typedef struct TR_SCRUCH_SND_tag
   u8 Snd;
 }TR_SCRUCH_SND;
 
+// タッチパネル情報構造体
+typedef struct{
+  u8  x;      // 最大8回分のタッチ座標
+  u8  y;      // 
+  u8  brush;  // サンプリング成功個数
+  u8  on;     // 入力ありかどうか
+}TOUCH_INFO;
+
+
 typedef struct TR_CARD_WORK_tag
 {
   HEAPID heapId;
@@ -82,6 +91,12 @@ typedef struct TR_CARD_WORK_tag
   fx32 CardScaleY;
   fx32 CoverScaleY;
   int  RotateCount;
+  int  CardCenterX;
+  int  CardCenterY;
+  int  CardOffsetX;
+  int  CardOffsetY;
+  u16  ScaleSide;     // カードの左右どっちを拡大しているか？( 0:左 1:右）
+  u16  ScaleMode;
 
 //  int touch;
   int key_mode;
@@ -125,8 +140,8 @@ typedef struct TR_CARD_WORK_tag
   u8 Counter;
   u8 sub_seq;
   
-  u8 AnmNum;
-  u8 AnimeType;
+  u8 SignAnimeWait;   // トレーナーサインアニメ用ワーク
+  u8 SignAnimePat;    // トレーナーサインアニメのパターン指定（SIGN_ALL,SIGN_LEFT,SIGN_RIGHT)
   u8 SecCount;        //秒表示のためのカウンタ
   u8 isClear:1;       //殿堂入りしているか否か？
   u8 isComm:1;        //通信中か否か？
@@ -148,7 +163,10 @@ typedef struct TR_CARD_WORK_tag
   s16 old_scrol_point;  // スクロールポイント過去位置
   s16 touch_sy;         // タッチスタートY座標
   s16 scrol_start;      // スクロールスタート位置
-  
+
+  TOUCH_INFO      MyTouchResult;  
+  TOUCH_INFO      AllTouchResult; // 通信で取得したサンプリング結果（このデータで描画する
+  TOUCH_INFO      OldTouch;       // 前回からのポイント履歴
   u8  pen;              // サインの色(0:黒 1:白）
 }TR_CARD_WORK;
 

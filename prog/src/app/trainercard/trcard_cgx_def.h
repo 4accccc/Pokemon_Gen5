@@ -17,6 +17,12 @@
 #define SIGN_BYTE_SIZE  (SIGN_SX*SIGN_SY*64)
 #define TR_SIGN_SIZE  (SIGN_SX*SIGN_SY) //サインサイズ
 
+#define SIGN_ANIME_PX ( 10 )
+#define SIGN_ANIME_PY ( 11 )
+#define SIGN_ANIME_SX ( 12 )
+#define SIGN_ANIME_SY (  8 )
+
+
 //リーダーアイコン
 #define LEADER_ICON_X (7)
 #define LEADER_ICON_JY  (7)
