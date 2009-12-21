@@ -55,7 +55,7 @@
 #define ZUKAN_INFO_BACK_BG_PAL_NO   (0)
 #define ZUKAN_INFO_FORE_BG_PAL_NO_D (1)
 #define ZUKAN_INFO_FORE_BG_PAL_NO_L (2)
-#define ZUKAN_INFO_BG_CHARA_SIZE    ( 32 * 3 * GFL_BG_1CHRDATASIZ )
+#define ZUKAN_INFO_BG_CHARA_SIZE    ( 32 * 4 * GFL_BG_1CHRDATASIZ )
 #define ZUKAN_INFO_BG_SCREEN_W      (32)
 #define ZUKAN_INFO_BG_SCREEN_H      (24)
 #define ZUKAN_INFO_BG_SCREEN_SIZE   ( ZUKAN_INFO_BG_SCREEN_W * ZUKAN_INFO_BG_SCREEN_H * GFL_BG_1SCRDATASIZ )
@@ -893,13 +893,15 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
   GFL_MSGDATA* msgdata_weight;
   GFL_MSGDATA* msgdata_explain;
 
+  PALTYPE paltype = (work->disp==ZUKAN_INFO_DISP_M)?(PALTYPE_MAIN_BG):(PALTYPE_SUB_BG);
+
   msgdata_common = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, work->heap_id );
   msgdata_kind = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_type_dat, work->heap_id );
   msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_height_dat, work->heap_id );
   msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_gram_dat, work->heap_id );
   msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_comment_00_dat, work->heap_id );
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, paltype,
                                  PSTATUS_BG_PLT_FONT * ZUKAN_INFO_BG_PAL_LINE_SIZE, 1 * ZUKAN_INFO_BG_PAL_LINE_SIZE, work->heap_id );
 
   {
@@ -923,7 +925,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
     }
 
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common, work->print_que, work->font,
-                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );  // ポケモンずかん　とうろく　かんりょう！
+                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );  // ポケモンずかん　とうろく　かんりょう！
     {
       WORDSET* wordset = WORDSET_Create( work->heap_id );  // WORDSET_RegisterPokeMonsName, WORDSET_RegisterPokeMonsNamePPP  // PPP_Get( ppp, ID_PARA_monno, NULL );  // POKEMON_PASO_PARAM* ppp
       WORDSET_RegisterNumber( wordset, 0, work->monsno, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -991,6 +993,9 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
     { 8*21, 8*11 -4, 0, 0, 0 },
     { 8*26, 8*11 -4, 0, 0, 0 },
   };
+  
+  CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+  CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
 
   type[0] = type1;
   type[1] = type2;
@@ -1008,12 +1013,12 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
       }
       work->typeicon_cg_idx[i] = GFL_CLGRP_CGR_Register( handle,
                                                          APP_COMMON_GetPokeTypeCharArcIdx(type[i]),
-                                                         FALSE, CLSYS_DRAW_MAIN, heap_id );
+                                                         FALSE, draw_type, heap_id );
     }
 
     work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
                                                        APP_COMMON_GetPokeTypePltArcIdx(),
-                                                       CLSYS_DRAW_MAIN,
+                                                       draw_type,
                                                        PLTID_OBJ_TYPEICON_M * 0x20,
                                                        0, 3, heap_id );
 
@@ -1038,7 +1043,7 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
                                                     work->typeicon_cl_idx,
                                                     work->typeicon_cean_idx,
                                                     &(data[i]),
-                                                    CLSYS_DEFREND_MAIN, heap_id );
+                                                    defrend_type, heap_id );
       GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[i], APP_COMMON_GetPokeTypePltOffset(type[i]),
                                 CLWK_PLTTOFFS_MODE_PLTT_TOP );
       GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
@@ -1100,15 +1105,17 @@ static void UITemplate_POKE2D_LoadResourceOBJ( ZUKAN_INFO_WORK *wk, HEAPID heapI
 	POKEMON_PASO_PARAM	*ppp;
 	ARCHANDLE						*handle;
 
+  CLSYS_DRAW_TYPE draw_type = (wk->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+
 	//PPP作成
 	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( (u16)wk->monsno, 0, 0, heapID );
 
 	//ハンドル
 	handle	= POKE2DGRA_OpenHandle( heapID );
 	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
+	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type, heapID );
+	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,draw_type,  PLTID_OBJ_POKE_M*0x20,  heapID );
+	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, draw_type, heapID );
 	GFL_ARC_CloseDataHandle( handle );
 
 	//PP破棄
@@ -1150,6 +1157,9 @@ static void UITemplate_POKE2D_UnLoadResourceOBJ( ZUKAN_INFO_WORK *wk )
 static void UITemplate_POKE2D_CreateCLWK( ZUKAN_INFO_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID, u16 pos_x, u16 pos_y )
 {	
 	GFL_CLWK_DATA	cldata;
+
+  CLSYS_DEFREND_TYPE defrend_type = (wk->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
+
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 		cldata.pos_x	= pos_x;
 		cldata.pos_y	= pos_y;
@@ -1158,7 +1168,7 @@ static void UITemplate_POKE2D_CreateCLWK( ZUKAN_INFO_WORK *wk, GFL_CLUNIT *cluni
 				wk->ncl_poke2d,
 				wk->nce_poke2d,
 				&cldata, 
-				CLSYS_DEFREND_MAIN, heapID );
+				defrend_type, heapID );
   
   GFL_CLACT_WK_SetSoftPri( wk->clwk_poke2d, 0 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥  // clunitの優先順位は生成時に0にしてあったので、BGで最前面のものより手前になる？
 }
@@ -1193,8 +1203,9 @@ CGR charDataのマッピングモードをレジスタの値に書き換えました。register[0x200010]
 static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, GFL_CLUNIT* unit, HEAPID heap_id )
 {
   UI_EASY_CLWK_RES_PARAM prm;
+  CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
 
-  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.draw_type = draw_type;
   prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCGR;  // NCLR非圧縮、NCGR圧縮、NCER圧縮、NANR圧縮なので、NCGRの圧縮にしか対応していないこのフラグではうまくいかない → NCLR非圧縮、NCGR圧縮、NCER非圧縮、NANR日圧縮に変更した
   prm.arc_id    = PokeFootArcFileGet();
   prm.pltt_id   = PokeFootPlttDataIdxGet();
