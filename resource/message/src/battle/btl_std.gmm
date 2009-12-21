@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-20T13:56:04"/>
+	<create user="taya" host="W00146" date="2009-12-21T14:36:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]と
 [1:01:ポケモン種族名:1]が　とびだした！</language>
 		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]と
-[1:01:ポケモン種族名:1]が　飛び出した！</language>
+[1:01:ポケモン種族名:1]が　飛びだした！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_NPC1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -626,7 +626,7 @@
 		<language name="JPN" width="216">[1:01:ポケモン種族名:0]のデータが　あたらしく
 ポケモンずかんに　とうろく　されます！</language>
 		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]のデータが　新しく
-ポケモンずかんに　登録されます！</language>
+ポケモン図鑑に　登録されます！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -651,7 +651,7 @@
 
 	<row id="BTL_STRID_STD_EscapeSuccess">
 		<language name="JPN" width="216">うまく　にげきれた！</language>
-		<language name="JPN_KANJI" width="216">うまく　にげ切れた！</language>
+		<language name="JPN_KANJI" width="216">うまく　逃げ切れた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeFail">
@@ -1207,7 +1207,7 @@
 		<language name="JPN" width="216">すべてのポケモンの
 ぼうぎょと　とくぼうが　いれかわった！</language>
 		<language name="JPN_KANJI" width="216">全てのポケモンの
-ぼうぎょと　とくぼうが　入れかわった！</language>
+防御と　特防が　入れかわった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WonderRoom_End">
@@ -1215,7 +1215,7 @@
 		<language name="JPN" width="216">すべてのポケモンの
 ぼうぎょと　とくぼうが　もとにもどった！</language>
 		<language name="JPN_KANJI" width="216">全てのポケモンの
-ぼうぎょと　とくぼうが　元に戻った！</language>
+防御と　特防が　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MagicRoom_Start">
