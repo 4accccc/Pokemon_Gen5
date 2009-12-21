@@ -4887,9 +4887,17 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     scproc_HandEx_Root( wk, itemID );
     Hem_PopState( &wk->HEManager, hem_state_2nd );
     if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
+      OS_TPrintf("è¡îÔÉAÉCÉeÉÄÇ≈Ç∑\n");
       scPut_RemoveItem( wk, bpp );
       scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_REMOVED );
     }
+/*
+    else if(ITEM_CheckNuts(itemID)){
+      OS_TPrintf("ñÿÇÃé¿Ç≈Ç∑\n");
+      scPut_RemoveItem( wk, bpp );
+      scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_REMOVED );
+    }
+*/
   }
   else
   {
