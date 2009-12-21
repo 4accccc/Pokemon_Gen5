@@ -34,10 +34,10 @@ typedef enum{
 
 
 /// 状態確認構造体
-struct DREAM_WORLD_SERVER_STATUS_DATA{
-  DREAM_WORLD_SERVER_ERROR_TYPE type;   /// DREAM_WORLD_SERVER_ERROR_TYPE
+typedef struct {
+//  DREAM_WORLD_SERVER_ERROR_TYPE type;   /// DREAM_WORLD_SERVER_ERROR_TYPE
   DREAM_WORLD_SERVER_PLAY_TYPE PlayStatus; //DREAM_WORLD_SERVER_PLAY_TYPE
-};
+}DREAM_WORLD_SERVER_STATUS_DATA;
 
 
 
@@ -49,7 +49,7 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 
 
 /// ダウンロードデータ構造体
-struct DREAM_WORLD_SERVER_DOWNLOAD_DATA{
+typedef struct {
   u32 RomCodeBit;   ///< ROMコード	4byte			ROMのバージョン		pm_version.hのBIT管理 一致したら受け取る
   u32 PassCode;     ///<  特殊イベント用起動キーコード（簡単に起動できないように暗号化）
   u16 TreatType;    ///< 2byte		DREAM_WORLD_RESULT_TYPE	夢の結果データのカテゴリ
@@ -58,7 +58,7 @@ struct DREAM_WORLD_SERVER_DOWNLOAD_DATA{
   u16 CountryBit;   ///<	国コード	2byte			言語バージョン		pm_version.hのBIT管理 一致したら受け取る
   u8 OnceBit;       ///<  一回だけかどうか 特殊イベントを1回しか受け取れないよう設定するフラグ
   u8 PokemonState;  ///< 寝ているポケモンの状態
-};
+} DREAM_WORLD_SERVER_DOWNLOAD_DATA;
 
 /// ポケモンリストデータ構造体
 typedef struct {
@@ -76,17 +76,17 @@ typedef enum{
 
 
 /// 世界対戦確認用データ構造体
-struct DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA{
+typedef struct {
   u32 WifiMatchUpID;   ///< 世界対戦の開催ID
   u8 GPFEntryFlg;      ///< GPFからエントリーしたフラグ
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
-};
+} DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA;
 
 
 /// 世界対戦書き込みデータ構造体
-struct DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA{
+typedef struct {
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
   u8 padding;
-};
+} DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA;
 
 

@@ -366,8 +366,8 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
       
       STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0", proid);
 
-      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,sizeof(pWork->tempbuffer));
-      NHTTP_AddPostDataRaw( pWork->pNHTTPRap, pWork->tempbuffer, GFL_STD_StrLen(pWork->tempbuffer) );
+      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,GFL_STD_StrLen(pWork->tempbuffer));
+      NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->tempbuffer, GFL_STD_StrLen(pWork->tempbuffer) );
 
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_ghttpInfoWait1);

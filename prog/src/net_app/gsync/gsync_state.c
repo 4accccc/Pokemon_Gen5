@@ -253,6 +253,96 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_wakeupActio8);
 }
 
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン状態検査
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _wakeupAction_test4(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      NET_PRINT("終了\n");
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        
+      }
+      _CHANGE_STATE(_wakeupAction7);
+    }
+  }
+}
+
+//テスト 
+
+static DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA aDWSBattle;
+
+static void _wakeupAction_test3(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_BATTLE_UPLOAD, pWork->pNHTTPRap)){
+      aDWSBattle.WifiMatchUpState=1;
+      aDWSBattle.padding=0;
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &aDWSBattle, sizeof(aDWSBattle) );
+
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+        _CHANGE_STATE(_wakeupAction_test4);
+      }
+    }
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン状態検査
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _wakeupAction_test2(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      NET_PRINT("終了\n");
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA* pDream = (DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA*)&pEvent[sizeof(gs_response)];
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        
+        NET_PRINT("ID %x\n",pDream->WifiMatchUpID);
+        NET_PRINT("FLG %x\n",pDream->GPFEntryFlg);
+        NET_PRINT("ST %d\n",pDream->WifiMatchUpState);
+        
+      }
+      _CHANGE_STATE(_wakeupAction_test3);
+    }
+  }
+}
+
+//テスト 
+
+static void _wakeupAction_test1(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_BATTLE_DOWNLOAD, pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+        _CHANGE_STATE(_wakeupAction_test2);
+      }
+    }
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン状態検査
@@ -266,13 +356,20 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream = (DREAM_WORLD_SERVER_DOWNLOAD_DATA*)&pEvent[sizeof(gs_response)];
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
         
-
+        NET_PRINT("ROM %x\n",pDream->RomCodeBit);
+        NET_PRINT("PASS %x\n",pDream->PassCode);
+        NET_PRINT("Type %d\n",pDream->TreatType);
+        NET_PRINT("Country %d\n",pDream->CountryBit);
+        NET_PRINT("Once %d\n",pDream->OnceBit);
+        NET_PRINT("PSt %d\n",pDream->PokemonState);
+        
       }
-
-      
-      _CHANGE_STATE(_wakeupAction7);
+      _CHANGE_STATE(_wakeupAction_test1);
     }
   }
   else{
@@ -403,8 +500,11 @@ static void _ghttpInfoWait1(G_SYNC_WORK* pWork)
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-        
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        DREAM_WORLD_SERVER_STATUS_DATA* pDream = (DREAM_WORLD_SERVER_STATUS_DATA*)&pEvent[sizeof(gs_response)];
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        NET_PRINT("PlayStatus %d\n",pDream->PlayStatus);
 
       }
       _CHANGE_STATE(_wakeupAction1);
@@ -572,18 +672,11 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         int d,j;
         u32 size;
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
         
-        OS_TPrintf("%d \n",	pEvent->rom_code);
-        OS_TPrintf("%d \n",	 pEvent->country_code);
-        OS_TPrintf("%d \n",	pEvent->id);
-        OS_TPrintf("%d \n",	pEvent->send_flag);
-        OS_TPrintf("%d \n",	pEvent->dec_code);
-        OS_TPrintf("%d \n",	 pEvent->cat_id);
-        OS_TPrintf("%d \n",	 pEvent->present);
-        OS_TPrintf("%d \n",	pEvent->status);
 
       }
       _CHANGE_STATE(_upeffectLoop6);

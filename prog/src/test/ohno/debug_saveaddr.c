@@ -167,9 +167,12 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
 
-    for(i=0;i<22;i++){
-      REGULATION* pData = GFL_ARC_UTIL_Load(ARCID_REGULATION, 1, FALSE, HEAPID_PROC );
-      OS_TPrintf("%d %d\n",Regulation_GetParam(pData, REGULATION_SHOOTER),sizeof(REGULATION));
+    for(i=0;i<26;i++){
+      REGULATION* pData = GFL_ARC_UTIL_Load(ARCID_REGULATION, i, FALSE, HEAPID_PROC );
+
+      OS_TPrintf("read %d \n",i);
+
+      OS_TPrintf("LOHI %d %d\n",Regulation_GetParam(pData, REGULATION_NUM_LO), Regulation_GetParam(pData, REGULATION_NUM_HI));
       GFL_HEAP_FreeMemory(pData);
     }
 

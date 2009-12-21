@@ -43,11 +43,15 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 //#define GETURL1 "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php"
 
 
-const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/gs?p=test.get&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
-const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
-const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=test.get&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
-const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //POST
-const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=account.createdata"; //POST
+const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/gs?p=account.playstatus&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
+const static char POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
+const static char DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
+const static char UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //POST
+const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=account.createdata\0"; //POST
+const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //GET
+const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //POST
+
+//const static char ACCOUNT_URL[] ="http://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?p=account.createdata\0"; //POST
 
 
 
@@ -65,6 +69,8 @@ static NHTTPRAP_URLTBL urltable[]={
   {DOWNLOAD_URL, NHTTP_REQMETHOD_GET},
   {UPLOAD_URL, NHTTP_REQMETHOD_POST},
   {ACCOUNT_URL, NHTTP_REQMETHOD_POST},
+  {BTL_DL_URL, NHTTP_REQMETHOD_GET},
+  {BTL_UP_URL, NHTTP_REQMETHOD_POST},
 };
 
 
@@ -144,10 +150,10 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 
 
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
-  GFL_STD_MemCopy(urltable[urlno].url, pWork->urlbuff, GFL_STD_StrLen(urltable[urlno].url));
+  GFL_STD_MemClear(pidbuff,_URL_BUFFER);
 
-  // ID‡¬
-  GFL_STD_MemCopy(pWork->urlbuff, pidbuff, _URL_BUFFER);
+  STD_StrCpy(pidbuff, urltable[urlno].url );
+
   STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
  // GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
 
@@ -162,7 +168,6 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
     return FALSE;
   }
   pWork->handle = handle;
-
   if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)cainfos, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
   {
     GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
