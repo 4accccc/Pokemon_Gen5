@@ -59,7 +59,6 @@ EVENT_START   ev_r02_boy1_01
 			_OBJ_ANIME_WAIT()
 			_SE_WAIT()
 
-			_TURN_HERO_SITE()
 			_BALLOONWIN_OBJMSG_POS( msg_r02_boy2a_03 , R02_BOY1_01, WIN_UP )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
@@ -77,9 +76,9 @@ EVENT_END
 //段差説明少年:段差を飛び降りる                       
 //--------------------------------------------------------------------
 	_ANIME_LABEL test01anime
-	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA AC_JUMP_D_2G_16F,1
 	_ANIME_DATA AC_WALK_D_16F,1			//<下に移動　16フレーム
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA ACMD_END,0
 
 /**************************************************************/
