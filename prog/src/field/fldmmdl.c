@@ -492,9 +492,9 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
 	mmdl = MMdlSys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
-	MMdl_SetHeaderBefore( mmdl, head, ev );
 	MMdl_InitWork( mmdl, fos );
 	MMDL_SetZoneID( mmdl, zone_id );
+	MMdl_SetHeaderBefore( mmdl, head, ev );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
     MMDL_OnStatusBit( mmdl,
@@ -4975,6 +4975,8 @@ static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id )
     z = DATA_MMDL_PushRockPosNum[i][0];
     o = DATA_MMDL_PushRockPosNum[i][1];
     
+    KAGAYA_Printf( "âˆóÕä‚ ç¿ïWÉèÅ[ÉNåüçı zone_id = %xH, obj_id = %xH,  data zone_id = %xH, data obj_id = %xH\n", zone_id, obj_id, z, o );
+
     if( z == zone_id && o == obj_id ){
       return( DATA_MMDL_PushRockPosNum[i][2] );
     }

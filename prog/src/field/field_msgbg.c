@@ -55,6 +55,8 @@
 
 #define PAD_KEY_ALL (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)
 
+#define BGFRAME_ERROR (0xff)
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -358,6 +360,7 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	
 	fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
 	fmb->heapID = heapID;
+//	fmb->bgFrame = BGFRAME_ERROR;
 	fmb->bgFrame = FLDMSGBG_BGFRAME;
 	fmb->g3Dcamera = g3Dcamera;
   
@@ -410,10 +413,14 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
   }
   
-  GFL_TCBL_Exit( fmb->printTCBLSys );
+  if( fmb->printTCBLSys != NULL ){
+    GFL_TCBL_Exit( fmb->printTCBLSys );
+  }
 	
-  GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
-	GFL_BG_FreeBGControl( fmb->bgFrame );
+  if( fmb->bgFrame != BGFRAME_ERROR ){
+    GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
+	  GFL_BG_FreeBGControl( fmb->bgFrame );
+  }
 	
 	do{
 		#if 0
@@ -428,8 +435,14 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 		i++;
 	}while( i < FLDMSGBG_PRINT_MAX );
 	
-	PRINTSYS_QUE_Delete( fmb->printQue );
-	GFL_FONT_Delete( fmb->fontHandle );
+  if( fmb->printQue != NULL ){
+	  PRINTSYS_QUE_Delete( fmb->printQue );
+  }
+  
+  if( fmb->fontHandle != NULL ){
+	  GFL_FONT_Delete( fmb->fontHandle );
+  }
+
 	GFL_HEAP_FreeMemory( fmb );
 }
 
@@ -447,8 +460,11 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
     fmb->talkMsgWinSys = NULL;
   }
   
-	GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
-  GFL_BG_FreeBGControl( fmb->bgFrame );
+  if( fmb->bgFrame != BGFRAME_ERROR ){
+	  GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
+    GFL_BG_FreeBGControl( fmb->bgFrame );
+    fmb->bgFrame = BGFRAME_ERROR;
+  }
 }
 
 //--------------------------------------------------------------
@@ -4016,6 +4032,8 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 static void setBGResource( FLDMSGBG *fmb )
 {
+	fmb->bgFrame = FLDMSGBG_BGFRAME;
+
 	{	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,

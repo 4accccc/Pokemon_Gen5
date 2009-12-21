@@ -512,6 +512,10 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
   if( work->joint == NAMIPOKE_JOINT_ONLY || work->ripple_off == TRUE ){
     RIPPLE_WORK *rip = &work->ripple_work;      //波を出さない
     rip->dir = DIR_NOT; //次回更新時に初期化
+    
+    if( work->ripple_off == TRUE ){
+      rip->vanish_flag = TRUE;
+    }
   }else{ //波エフェクト
     fx32 ret;
     VecFx32 pos;
