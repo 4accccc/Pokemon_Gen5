@@ -140,17 +140,17 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
       BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
-      check_lvup_poke( wk, param );
+      // 野生orゲーム内通常トレーナー（サブウェイ除く）の後のみ行う処理
+      if( (param->btlResult->competitor == BTL_COMPETITOR_WILD)
+      ||  (param->btlResult->competitor == BTL_COMPETITOR_TRAINER)
+      ){
+        // レベルアップ進化チェック
+        check_lvup_poke( wk, param );
+        // パーティデータ書き戻し
+        PokeParty_Copy( param->btlResult->party[ BTL_CLIENT_PLAYER ], party );
 
-      PokeParty_Copy( param->btlResult->party[ BTL_CLIENT_PLAYER ], party );
-
-      //ポケルス感染チェック
-      //通信対戦では感染チェックをしない
-      if( param->btlResult->competitor != BTL_COMPETITOR_COMM )
-      {
-        //感染チェック
+        //ポケルス感染＆伝染チェック
         POKERUS_CheckCatchPokerus( party );
-        //伝染チェック
         POKERUS_CheckContagion( party );
       }
 
@@ -180,10 +180,10 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           empty = BOXDAT_GetEmptyTrayNumberAndPos( boxman, &tray_num, &pos );  // これの結果はBOXDAT_PutPokemonと同じはず
           GF_ASSERT_MSG( empty, "BtlRet_ProcMain : ボックスに空きがありませんでした。\n" );
           wk->box_tray = (u32)tray_num;
-         
+
           // STRBUFを作成する
           msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, HEAPID_BTLRET_SYS );
-          flag_pcname = EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(param->gameData), SYS_FLAG_PCNAME ); 
+          flag_pcname = EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(param->gameData), SYS_FLAG_PCNAME );
           wk->box_strbuf = GFL_MSG_CreateString( msgdata, (flag_pcname)?(ZKN_POKEGET_BOX_02):(ZKN_POKEGET_BOX_01) );
           GFL_MSG_Delete( msgdata );
         }
