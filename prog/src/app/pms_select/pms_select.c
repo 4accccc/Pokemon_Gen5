@@ -792,16 +792,19 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
 
 //プレートのアニメ。sin使うので0～0xFFFFのループ
 #define PLATE_PLTT_ANIME_VALUE (0x400)
-#define PLATE_PLTT_ANIME_S_R (5)
-#define PLATE_PLTT_ANIME_S_G (10)
-#define PLATE_PLTT_ANIME_S_B (13)
-#define PLATE_PLTT_ANIME_E_R (12)
-#define PLATE_PLTT_ANIME_E_G (25)
-#define PLATE_PLTT_ANIME_E_B (30)
+
+#define PLATE_PLTT_ANIME_S_R (0)
+#define PLATE_PLTT_ANIME_S_G (30)
+#define PLATE_PLTT_ANIME_S_B (29)
+
+#define PLATE_PLTT_ANIME_E_R (24)
+#define PLATE_PLTT_ANIME_E_G (31)
+#define PLATE_PLTT_ANIME_E_B (31)
+
 //プレートのアニメする色
 #define PLATE_PLTT_ANIME_COL (0x5)
 // パレット列
-#define PLATE_PLTT_ANIME_NO   (0x7)
+#define PLATE_PLTT_ANIME_NO  (0x7)
 
 // BGアニメ
 static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
@@ -809,7 +812,7 @@ static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
   //プレートアニメ
   if( *anmCnt + PLATE_PLTT_ANIME_VALUE >= 0x10000 )
   {
-    *anmCnt = *anmCnt+PLATE_PLTT_ANIME_VALUE-0x10000;
+    *anmCnt = *anmCnt + PLATE_PLTT_ANIME_VALUE-0x10000;
   }
   else
   {
