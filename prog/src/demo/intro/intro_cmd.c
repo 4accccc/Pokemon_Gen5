@@ -293,7 +293,7 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
       data[1].str_id  = param[1];
       data[1].param   = 1;
 
-      INTRO_MSG_LIST_Start( wk->wk_msg, data, NELEMS(data) );
+      INTRO_MSG_LIST_Start( wk->wk_msg, data, NELEMS(data), param[2] );
 
       sdat->seq++;
     }
@@ -1005,22 +1005,19 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     break;
   case 1 :
 
-    // キー入力
-    if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) || 
-        (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
+    // キー入力 →
+    if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) )
     {
+      sdat->cnt = 1;  //おんなのこ
       GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
-      sdat->cnt ^= 1; 
-      HOSAKA_Printf("cnt=%d\n",sdat->cnt);
-      // 表示切り替え
-      if( sdat->cnt )
-      {
-        INTRO_G3D_SelectSet( wk->g3d, 21 );
-      }
-      else
-      {
-        INTRO_G3D_SelectSet( wk->g3d, 19 );
-      }
+      INTRO_G3D_SelectSet( wk->g3d, 21 );
+    }
+    // キー入力 ←
+    else if( (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
+    {
+      sdat->cnt = 0;  //おとこのこ
+      GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+      INTRO_G3D_SelectSet( wk->g3d, 19 );
     }
     // 決定
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )

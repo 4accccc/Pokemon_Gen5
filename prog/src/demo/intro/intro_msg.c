@@ -536,10 +536,11 @@ static PRINT_UTIL * MSG_GetPrintUtil( INTRO_MSG_WORK *wk, GFL_BMPWIN*	p_bmpwin )
  *	@param	INTRO_LIST_WORK *wk	ワーク
  *	@param	*cp_tbl					設定テーブル
  *	@param	tbl_max					設定テーブル数
+ *	@param  is_cansel       キャンセル
  *
  */
 //-----------------------------------------------------------------------------
-void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u32 tbl_max )
+void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u32 tbl_max, BOOL is_cansel )
 {	
   INTRO_LIST_WORK* list = &wk->list;
   HEAPID heapID         = wk->heap_id;
@@ -597,6 +598,15 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 
   GFL_BMPWIN_MakeTransWindow( p_bmpwin ); // スクリーン＆キャラ転送
   BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M ); // 周りにフレームを書く
+
+  if( is_cansel )
+  {
+    BmpMenuList_SetCancelMode( list->p_list, BMPMENULIST_CANCELMODE_USE );
+  }
+  else
+  {
+    BmpMenuList_SetCancelMode( list->p_list, BMPMENULIST_CANCELMODE_NOT );
+  }
 }
 
 //----------------------------------------------------------------------------

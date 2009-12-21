@@ -36,7 +36,7 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
   
-  { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, }, },
+  { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, 1 }, },
     { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // かな
     { INTRO_CMD_TYPE_SELECT_MOJI, 1 }, // 漢字
 
@@ -50,7 +50,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2, 6, 6 }, CMD_READ_NEXT }, // BGM切替
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
-  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_HATTHE, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_BANBIINA, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
   { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 12, 0, -16 } }, // ブラックからフェードイン
 
@@ -83,7 +83,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 //  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
 
-  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_HATTHE }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
+  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_BANBIINA }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
