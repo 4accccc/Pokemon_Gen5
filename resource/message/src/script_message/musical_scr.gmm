@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-13T18:55:53"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-18T14:37:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1416" top="145" right="2119" bottom="775" maximized="no" rayout="Vertical2">
+	<dialog left="127" top="76" right="627" bottom="706" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<tag-palette left="631" top="77" right="1104" bottom="475" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,10 +297,10 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">きみ　かがやいているね！
-ミュージカル　やってみない？</language>
-		<language name="JPN_KANJI">キミ　輝いているね！
-ミュージカル　やってみない？</language>
+		<language name="JPN">ようこそ　ミュージカルへ！
+ミュージカルへ　さんかいたしますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">ようこそ　ミュージカルへ！
+ミュージカルへ　さんかいたしますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_musical_test_02">
@@ -308,10 +308,8 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">では　ミュージカルの　せかいを
-おもうぞんぶん　たのしんで！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">では　ミュージカルの　世界を
-思う存分　楽しんで！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN">では　ひかえしつへ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">では　控え室へ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_musical_test_03">
@@ -319,10 +317,21 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">えんりょ　すること　ないのに……
-きがむいたら　また　はなしかけてよ</language>
-		<language name="JPN_KANJI">遠慮すること　ないのに……
-気が向いたら　また　話しかけてよ</language>
+		<language name="JPN">また　おこしください</language>
+		<language name="JPN_KANJI">また　おこしください</language>
+	</row>
+
+	<row id="msg_musical_test_04">
+		<comment>♂
+・ミュージカル確認用
+　テスト受付メッセージ</comment>
+		<attribute name="キャラ指定">MAN2</attribute>
+		<language name="JPN">やあ　ぼく　きゃくほんか！[BE:01:ページ切り替え（クリア）]
+さんかしたい　えんもくが　あれば
+ぼくが　えんもくを　へんこうするよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">やあ　僕　脚本家！[BE:01:ページ切り替え（クリア）]
+参加したい　演目が　あれば
+僕が　演目を　変更するよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_musical_fan_cheer_01" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
@@ -394,9 +403,9 @@
 		<attribute name="キャラ指定">汎用ファン:贈り物
 キュート</attribute>
 		<language name="JPN" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このグッズ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このグッズ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_musical_fan_gift_03" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
@@ -412,9 +421,9 @@
 		<attribute name="キャラ指定">汎用ファン:贈り物
 ユニーク</attribute>
 		<language name="JPN" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このグッズ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このグッズ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_msucail_fan_none" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
@@ -431,33 +440,33 @@
 
 	<row id="msg_msucail_program_01" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">デフォルト演目名</attribute>
-		<language name="JPN" width="256">ポケッターリモンスターリ</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ</language>
+		<language name="JPN" width="256">クールきょく</language>
+		<language name="JPN_KANJI" width="256">クール曲</language>
 	</row>
 
 	<row id="msg_msucail_program_02" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ポケッターリモンスターリ２</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ２</language>
+		<language name="JPN" width="256">キュートきょく</language>
+		<language name="JPN_KANJI" width="256">キュート曲</language>
 	</row>
 
 	<row id="msg_msucail_program_03" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ポケッターリモンスターリ３</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ３</language>
+		<language name="JPN" width="256">エレガントきょく</language>
+		<language name="JPN_KANJI" width="256">エレガント曲</language>
 	</row>
 
 	<row id="msg_msucail_program_04" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ポケッターリモンスターリ４</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ４</language>
+		<language name="JPN" width="256">ユニークきょく</language>
+		<language name="JPN_KANJI" width="256">ユニーク曲</language>
 	</row>
 
 	<row id="msg_msucail_program_05" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ポケッターリモンスターリ５</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ５</language>
+		<language name="JPN" width="256">ストリーミングきょく</language>
+		<language name="JPN_KANJI" width="256">ストリーミング曲</language>
 	</row>
 
 	<row id="msg_msucail_program_06" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">はいしんデータ</language>
-		<language name="JPN_KANJI" width="256">配信データ</language>
+		<language name="JPN" width="256">ポケッターリモンスターリ（テスト）</language>
+		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ（テスト）</language>
 	</row>
 
 	<row id="msg_msucail_program_07" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
