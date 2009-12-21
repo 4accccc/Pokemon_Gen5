@@ -1593,7 +1593,6 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
-  default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
       SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
@@ -1604,6 +1603,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     }
     break;
   case 2:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
       ttw->biw->tcb_execute_flag = 0;
@@ -1645,6 +1645,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     }
     break;
   case 2:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
@@ -1696,6 +1697,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     }
     break;
   case 2:
+  default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
       int i;
@@ -2190,10 +2192,6 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
 
   switch( tra->seq_no ){
   case 0:
-    SePlayRotation();
-    tra->seq_no++;
-    /*fallthru*/
-  case 1:
     {
       int           i;
       GFL_CLACTPOS  pos;
@@ -2215,7 +2213,8 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
       }
     }
     break;
-  case 2:
+  default:
+  case 1:
     if( tra->biw->tcb_execute_flag == 1 )
     {
       int i;
