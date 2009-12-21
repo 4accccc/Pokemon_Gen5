@@ -1336,8 +1336,8 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 
 # ƒQ[ƒ€ƒNƒŠƒAƒfƒ‚i‰¼j
 #===> SRCS_OVERLAY_UI_COMMON
-SRCS_OVERLAY_GAMECLEAR_DEMO = field/proc_gameclear_save.c
-
+SRCS_OVERLAY_GAMECLEAR_DEMO = field/proc_gameclear_save.c \
+                              field/proc_gameover.c
 # }ŠÓ“o˜^
 #===> SRCS_OVERLAY_BATTLE_RETURN
 #===> SRCS_OVERLAY_UI_COMMON
