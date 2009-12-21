@@ -33,6 +33,8 @@
 #include "map_replace.h"    //MAPREPLACE_ChangeFlag
 #include "field/field_const.h"  //GRID_TO_FX32
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
+
 
 //======================================================================
 //======================================================================
@@ -622,3 +624,21 @@ VMCMD_RESULT EvCmdGetWirelessSaveMode( VMHANDLE *core, void *wk )
   }
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief シューズゲット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetShoes( VMHANDLE *core, void *wk )
+{
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+  EVENTWORK_SetEventFlag( evwork, SYS_FLAG_RUNNINGSHOES );
+  return VMCMD_RESULT_CONTINUE;
+}
+

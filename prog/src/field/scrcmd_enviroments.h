@@ -38,4 +38,5 @@ extern VMCMD_RESULT EvCmdGetZukanFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetCGearFlag( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetWirelessSaveMode( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetShoes( VMHANDLE *core, void *wk );
 
