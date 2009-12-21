@@ -158,6 +158,8 @@ extern void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
 extern PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
+extern BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckAttrNaminori(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 extern void FIELD_PLAYER_CheckSpecialDrawForm(

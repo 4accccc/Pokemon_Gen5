@@ -34,7 +34,9 @@
 #define ALPHA_2ND (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_OBJ)
 
 typedef enum{
+ SEQ_CUTIN_INIT,
  SEQ_CUTIN,
+ SEQ_CUTIN_WAIT,
  SEQ_WEATHER_CHECK,
  SEQ_ENCOUNT_CHECK,
  SEQ_ENCOUNT_FAILED,
@@ -47,6 +49,7 @@ typedef struct _AMAIKAORI_WORK{
   GAMESYS_WORK* gsys;
   GAMEDATA* gdata;
   FIELDMAP_WORK *fieldWork;
+  FIELD_PLAYER* field_player;
 }AMAIKAORI_WORK;
 
 typedef struct _AMAIKAORI_EFFECT{
@@ -88,6 +91,7 @@ GMEVENT * EVENT_FieldSkillAmaikaori( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap
   wk->poke_pos = poke_pos;
   wk->gsys = gsys;
   wk->fieldWork = fieldmap;
+  wk->field_player = FIELDMAP_GetFieldPlayer( fieldmap );
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
 	return event;
 }
@@ -97,12 +101,24 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
 	AMAIKAORI_WORK * wk = work;
 	
   switch (*seq) {
+  case SEQ_CUTIN_INIT:
+    if(wk->poke_pos >= 6){
+      *seq = SEQ_WEATHER_CHECK;
+      break;
+    }
+    FIELD_PLAYER_ChangeFormRequest( wk->field_player, PLAYER_DRAW_FORM_CUTIN );
+    (*seq)++;
+    break;
   case SEQ_CUTIN:
-    if(wk->poke_pos < 6){
+    if( FIELD_PLAYER_ChangeFormWait( wk->field_player )){
       GMEVENT *cutin_ev;
       cutin_ev = FLD3D_CI_CreatePokeCutInEvtTemoti( wk->gsys, FIELDMAP_GetFld3dCiPtr(wk->fieldWork), wk->poke_pos );
       GMEVENT_CallEvent( event, cutin_ev );
     }
+    (*seq)++;
+    break;
+  case SEQ_CUTIN_WAIT:
+    FIELD_PLAYER_ResetMoveForm( wk->field_player );
     *seq = SEQ_WEATHER_CHECK;
     break;
 	case SEQ_WEATHER_CHECK:

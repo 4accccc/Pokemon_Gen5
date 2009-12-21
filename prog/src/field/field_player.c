@@ -1041,6 +1041,49 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
 
 //--------------------------------------------------------------
 /**
+ * 自機を指定フォームに変更リクエスト(アニメコール込み)
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ *
+ * FIELD_PLAYER_ChangeFormWait()で待つこと
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
+{
+  u16 code;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+
+  FIELD_PLAYER_ChangeDrawForm( fld_player, form );
+
+  switch(form){
+  case PLAYER_DRAW_FORM_CUTIN:
+    code = AC_HERO_CUTIN;
+    break;
+  default:
+    return;
+  }
+  MMDL_SetAcmd( mmdl, code );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の指定フォーム変更を待つ
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ *
+ * FIELD_PLAYER_ChangeFormRequest()とセット
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  return MMDL_CheckEndAcmd( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
  * 自機波乗りアトリビュートチェック
  * @param fld_player
  * @param nattr
