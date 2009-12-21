@@ -58,6 +58,9 @@
 
 #include "field_sound.h"
 
+#include "script.h" //SCRIPT_ChangeScript
+#include "../../../resource/fldmapdata/script/debug_scr_def.h"  //SCRID_DEBUG_COMMON
+
 #include "eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -117,6 +120,7 @@ static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
 static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_EventFlagScript( DEBUG_MENU_EVENT_WORK *now_wk );
 static BOOL debugMenuCallProc_ScriptSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_GameEnd( DEBUG_MENU_EVENT_WORK * wk );
@@ -189,6 +193,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
   { DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
+  { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript },
   { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
@@ -421,6 +426,16 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 //======================================================================
 //  デバッグメニュー呼び出し
 //======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_EventFlagScript( DEBUG_MENU_EVENT_WORK *now_wk )
+{
+  SCRIPT_ChangeScript( now_wk->gmEvent, SCRID_DEBUG_COMMON, NULL, HEAPID_FIELDMAP );
+  //GMEVENT * new_event = DEBUG_EVENT_FLDMENU_DebugScript( now_wk );
+  //GMEVENT_ChangeEvent( now_wk->gmEvent, new_event );
+  
+  return TRUE;
+}
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　デバッグスクリプト
