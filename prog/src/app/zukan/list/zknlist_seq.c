@@ -38,6 +38,8 @@ enum {
 	MAINSEQ_LIST_MOVE_LEFT,
 	MAINSEQ_LIST_MOVE_RIGHT,
 
+	MAINSEQ_LIST_MOVE_TOUCH,
+
 	MAINSEQ_LIST_MOVE_BAR,
 
 	MAINSEQ_BUTTON_ANM,
@@ -58,6 +60,7 @@ static int MainSeq_ListWait( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListScroll( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveLeft( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk );
+static int MainSeq_ListMoveTouch( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk );
@@ -67,6 +70,7 @@ static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next );
 static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next );
 static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos );
 static int SetListMoveBar( ZKNLISTMAIN_WORK * wk );
+static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk );
 
 static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk );
 
@@ -88,6 +92,8 @@ static const pZKNLIST_FUNC MainSeq[] = {
 	MainSeq_ListScroll,
 	MainSeq_ListMoveLeft,
 	MainSeq_ListMoveRight,
+
+	MainSeq_ListMoveTouch,
 
 	MainSeq_ListMoveBar,
 
@@ -243,7 +249,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 
 	switch( ret ){
 	case ZKNLISTUI_ID_LIST:				// 00: ƒŠƒXƒg
-		break;
+		return SetListMoveTouch( wk );
 
 	case ZKNLISTUI_ID_RAIL:				// 01: ƒŒ[ƒ‹
 		return SetListMoveBar( wk );
@@ -336,12 +342,19 @@ static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+static int MainSeq_ListMoveTouch( ZKNLISTMAIN_WORK * wk )
+{
+	if( GFL_UI_TP_GetCont() == FALSE ){
+		return MAINSEQ_MAIN;
+	}
+	return MAINSEQ_LIST_MOVE_TOUCH;
+}
+
 static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk )
 {
 	u32	x, y;
 	u32	pos;
 
-//	if( GFL_UI_TP_GetPointCont( &x, &y ) == FALSE ){
 	if( ZKNLISTUI_CheckRailHit( &x, &y ) == FALSE ){
 		return MAINSEQ_MAIN;
 	}
@@ -350,7 +363,6 @@ static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk )
 
 	pos = ZKNLISTOBJ_GetListScrollBarPos( wk );
 	ZKNLISTMAIN_SetScrollDirect( wk->list, pos );
-//	ZKNLISTMAIN_SetListScroll( wk, pos );
 
 	return MAINSEQ_LIST_MOVE_BAR;
 }
@@ -410,6 +422,27 @@ static int SetListMoveBar( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTOBJ_SetScrollBar( wk, y );
 
 	return MAINSEQ_LIST_MOVE_BAR;
+}
+
+static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk )
+{
+	u32	x, y;
+
+	GFL_UI_TP_GetPointCont( &x, &y );
+
+	y = y / 8 / ZKNLISTMAIN_LIST_SY;
+	if( y > ZKNLISTMAIN_GetListPosMax(wk->list) ){
+		return MAINSEQ_MAIN;
+	}
+
+	ZKNLISTMAIN_SetPosDirect( wk->list, y );
+/*
+	ZKNLISTMAIN_PutListCursor( wk, 1, ZKNLISTMAIN_GetListPos(wk->list) );
+	ZKNLISTMAIN_PutListCursor( wk, 2, y );
+	ZKNLISTMAIN_SetListPos( wk->list, y );
+*/
+
+	return MAINSEQ_LIST_MOVE_TOUCH;
 }
 
 

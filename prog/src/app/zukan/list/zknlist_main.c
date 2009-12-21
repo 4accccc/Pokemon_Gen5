@@ -474,9 +474,9 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	wk->list = ZKNLISTMAIN_CreateList( MONSNO_END, HEAPID_ZUKAN_LIST );
 
 	// 仮です。
-//	for( i=1; i<=MONSNO_END; i++ ){
+	for( i=1; i<=MONSNO_END; i++ ){
 //	for( i=1; i<=4; i++ ){
-	for( i=1; i<=12; i++ ){
+//	for( i=1; i<=12; i++ ){
 		if( ( i % 3 ) == 0 ){
 			srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
 			ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
@@ -655,8 +655,17 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 		}
 		return;
 
+	// 位置を直接指定
+	case ZKNLISTMAIN_LIST_MOVE_POS_DIRECT:
+		ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
+		ZKNLISTMAIN_PutListCursor( wk, 2, nowPos );
+		ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
+		ZKNLISTOBJ_ChgListPosAnm( wk, nowPos, TRUE );
+		ZKNLISTOBJ_PutListPosPokeGra( wk, nowPos+nowScroll );
+		return;
+
 	// スクロール値を直接指定
-	case ZKNLISTMAIN_LIST_MOVE_DIRECT:
+	case ZKNLISTMAIN_LIST_MOVE_SCROLL_DIRECT:
 		ZKNLISTMAIN_InitListPut( wk );
 		return;
 	}
@@ -770,6 +779,11 @@ STRBUF * ZKNLISTMAIN_GetListStr( ZUKAN_LIST_WORK * wk, u32 pos )
 u32 ZKNLISTMAIN_GetListParam( ZUKAN_LIST_WORK * wk, u32 pos )
 {
 	return wk->dat[pos].prm;
+}
+
+void ZKNLISTMAIN_SetListPos( ZUKAN_LIST_WORK * wk, s16 pos )
+{
+	wk->pos = pos;
 }
 
 void ZKNLISTMAIN_SetListScroll( ZUKAN_LIST_WORK * wk, s16 scroll )
@@ -889,12 +903,22 @@ u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk )
 	return ZKNLISTMAIN_LIST_MOVE_NONE;
 }
 
-void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 pos )
+void ZKNLISTMAIN_SetPosDirect( ZUKAN_LIST_WORK * wk, s16 pos )
 {
-	if( pos != wk->scroll ){
+	if( pos != wk->pos ){
 		s16	tmpPos    = wk->pos;
 		s16	tmpScroll = wk->scroll;
-		ZKNLISTMAIN_SetListScroll( wk, pos );
-		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_DIRECT );
+		ZKNLISTMAIN_SetListPos( wk, pos );
+		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_POS_DIRECT );
+	}
+}
+
+void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 scroll )
+{
+	if( scroll != wk->scroll ){
+		s16	tmpPos    = wk->pos;
+		s16	tmpScroll = wk->scroll;
+		ZKNLISTMAIN_SetListScroll( wk, scroll );
+		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_SCROLL_DIRECT );
 	}
 }

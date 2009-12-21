@@ -23,7 +23,7 @@ typedef struct {
 // 終了モード
 enum {
 	ZKNLIST_RET_EXIT = 0,			// 図鑑終了
-	ZKNLIST_RET_EXIT_X,				// 図鑑を終了してメニューへ
+	ZKNLIST_RET_EXIT_X,				// 図鑑を終了してメニューを閉じる
 	ZKNLIST_RET_INFO,					// 詳細画面へ
 	ZKNLIST_RET_SEARCH,				// 検索画面へ
 };

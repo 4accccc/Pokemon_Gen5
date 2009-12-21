@@ -1057,7 +1057,11 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adrs)
 {
 	ZUKAN_PARAM * prm = param_adrs;
-  return RETURNFUNC_RESULT_RETURN;
+
+	if( prm->retMode == ZUKAN_RET_NORMAL ){
+	  return RETURNFUNC_RESULT_RETURN;
+	}
+	return RETURNFUNC_RESULT_EXIT;
 }
 
 //-------------------------------------

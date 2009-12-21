@@ -38,6 +38,7 @@ enum {
 };
 
 typedef struct {
+	ZUKAN_PARAM * prm;
 	int	seq;
 	void * work;
 }ZUKAN_MAIN_WORK;
@@ -99,7 +100,6 @@ static const pZUKAN_FUNC MainSeq[] = {
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	ZUKAN_PARAM * prm;
 	ZUKAN_MAIN_WORK * wk;
 
 	OS_Printf( "↓↓↓↓↓　図鑑処理開始　↓↓↓↓↓\n" );
@@ -109,17 +109,17 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	wk = GFL_PROC_AllocWork( proc, sizeof(ZUKAN_MAIN_WORK), HEAPID_ZUKAN_SYS );
 	GFL_STD_MemClear( wk, sizeof(ZUKAN_MAIN_WORK) );
 
-	prm = pwk;
+	wk->prm = pwk;
 
-	if( prm->callMode == ZUKAN_MODE_LIST ){
+	if( wk->prm->callMode == ZUKAN_MODE_LIST ){
 		wk->seq = SEQ_LIST_CALL;
-	}else if( prm->callMode == ZUKAN_MODE_INFO ){
+	}else if( wk->prm->callMode == ZUKAN_MODE_INFO ){
 		wk->seq = SEQ_INFO_CALL;
-	}else if( prm->callMode == ZUKAN_MODE_MAP ){
+	}else if( wk->prm->callMode == ZUKAN_MODE_MAP ){
 		wk->seq = SEQ_MAP_CALL;
-	}else if( prm->callMode == ZUKAN_MODE_VOICE ){
+	}else if( wk->prm->callMode == ZUKAN_MODE_VOICE ){
 		wk->seq = SEQ_VOICE_CALL;
-	}else if( prm->callMode == ZUKAN_MODE_FORM ){
+	}else if( wk->prm->callMode == ZUKAN_MODE_FORM ){
 		wk->seq = SEQ_FORM_CALL;
 	}else{
 		wk->seq = SEQ_SEARCH_CALL;
@@ -193,24 +193,29 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 	switch( list->retMode ){
 	case ZKNLIST_RET_EXIT:		// 図鑑終了
+		wk->prm->retMode = ZUKAN_RET_NORMAL;
 		ret = SEQ_PROC_FINISH;
 		break;
 
-	case ZKNLIST_RET_EXIT_X:	// 図鑑を終了してメニューへ
+	case ZKNLIST_RET_EXIT_X:	// 図鑑を終了してメニューを閉じる
+		wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
 		ret = SEQ_PROC_FINISH;
 		break;
 
 	case ZKNLIST_RET_INFO:		// 詳細画面へ
 //		ret = SEQ_INFO_CALL;
+		wk->prm->retMode = ZUKAN_RET_NORMAL;
 		ret = SEQ_PROC_FINISH;
 		break;
 
 	case ZKNLIST_RET_SEARCH:	// 検索画面へ
 //		ret = SEQ_SEARCH_CALL;
+		wk->prm->retMode = ZUKAN_RET_NORMAL;
 		ret = SEQ_PROC_FINISH;
 		break;
 
 	default:
+		wk->prm->retMode = ZUKAN_RET_NORMAL;
 		ret = SEQ_PROC_FINISH;
 	}
 

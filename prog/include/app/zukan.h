@@ -15,9 +15,14 @@
 //	定数定義
 //============================================================================================
 typedef struct {
-	u32	callMode;
+	// [ in ]
+	u16	callMode;
+
+	// [ out ]
+	u16	retMode;
 }ZUKAN_PARAM;
 
+// 呼び出しモード
 enum {
 	ZUKAN_MODE_LIST = 0,		// リスト画面
 	ZUKAN_MODE_INFO,				// 情報
@@ -25,6 +30,12 @@ enum {
 	ZUKAN_MODE_VOICE,				// 鳴き声
 	ZUKAN_MODE_FORM,				// 姿
 	ZUKAN_MODE_SEARCH,			// 検索
+};
+
+// 終了モード
+enum {
+	ZUKAN_RET_NORMAL = 0,		// 通常終了（戻るボタン）
+	ZUKAN_RET_MENU_CLOSE,		// 終了してフィールドメニューを閉じる（×ボタン）
 };
 
 
