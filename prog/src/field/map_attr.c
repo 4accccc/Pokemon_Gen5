@@ -542,6 +542,18 @@ BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー　チェック　自転車進入不可な雪
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSnowNotCycle( const MAPATTR_VALUE val )
+{
+  return( val == MATTR_SNOW_02 );
+}
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー　チェック　雪系アトリビュート
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う

@@ -631,12 +631,22 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_old & MAPATTR_FLAGBIT_FOOTMARK) )
   {
-    FOOTMARK_TYPE type;
+    FOOTMARK_TYPE type = FOOTMARK_TYPE_MAX;
     
-    if( MAPATTR_VALUE_CheckSnowType(data->attr_val_old) == TRUE ||
-        (data->season == PMSEASON_WINTER &&
-          (MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_old) ||
-          MAPATTR_VALUE_CheckSeasonGround2(data->attr_val_old))) )
+    if( (MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_old) ||
+        MAPATTR_VALUE_CheckSeasonGround2(data->attr_val_old)) )
+    {
+      if( data->season == PMSEASON_WINTER )
+      {
+        type = FOOTMARK_TYPE_HUMAN_SNOW;
+      
+        if( data->objcode_prm->footmark_type == MMDL_FOOTMARK_CYCLE )
+        {
+          type = FOOTMARK_TYPE_CYCLE_SNOW;
+        }
+      }
+    }
+    else if( MAPATTR_VALUE_CheckSnowType(data->attr_val_old) == TRUE )
     {
       type = FOOTMARK_TYPE_HUMAN_SNOW;
       
@@ -660,7 +670,9 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
       }
     }
      
-    FLDEFF_FOOTMARK_SetMMdl( mmdl, data->fectrl, type );
+    if( type != FOOTMARK_TYPE_MAX ){
+      FLDEFF_FOOTMARK_SetMMdl( mmdl, data->fectrl, type );
+    }
   }
 }
 

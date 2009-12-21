@@ -24,6 +24,7 @@ typedef enum
   FOOTMARK_TYPE_HUMAN_SNOW,
   FOOTMARK_TYPE_CYCLE_SNOW,
   FOOTMARK_TYPE_DEEPSNOW,
+  FOOTMARK_TYPE_MAX,
 }FOOTMARK_TYPE;
 
 //======================================================================

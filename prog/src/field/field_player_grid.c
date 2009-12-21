@@ -1424,6 +1424,11 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
   }
   
   {
+    BOOL ret;
+    VecFx32 pos;
+    MAPATTR attr;
+    MAPATTR_VALUE val;
+    MAPATTR_FLAG flag;
     u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
     
     if( debug_flag == TRUE )
@@ -1431,30 +1436,21 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
       if( hit != MMDL_MOVEHITBIT_NON &&
           !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
       {
-        hit = MMDL_MOVEHITBIT_NON;
+        return( JIKI_MOVEORDER_WALK );
       }
     }
     
-    if( hit == MMDL_MOVEHITBIT_NON )
-    {
-      return( JIKI_MOVEORDER_WALK );
-    }
+    MMDL_GetVectorPos( mmdl, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
+    val = MAPATTR_GetAttrValue( attr );
+    flag = MAPATTR_GetAttrFlag( attr );
     
     if( (hit & MMDL_MOVEHITBIT_ATTR) )
     {
-      BOOL ret;
-      u32 attr;
-      VecFx32 pos;
-      
-      MMDL_GetVectorPos( mmdl, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
-      
       if( ret == TRUE )
       {
         u16 attr_dir = DIR_NOT;
-        MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
-        MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
         
         if( MAPATTR_VALUE_CheckJumpUp(val) ){
           attr_dir = DIR_UP;
@@ -1470,6 +1466,13 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
         {
           return( JIKI_MOVEORDER_JUMP );
         }
+      }
+    }
+    
+    if( hit == MMDL_MOVEHITBIT_NON )
+    {
+      if( MAPATTR_VALUE_CheckSnowNotCycle(val) == FALSE ){
+        return( JIKI_MOVEORDER_WALK );
       }
     }
   }
