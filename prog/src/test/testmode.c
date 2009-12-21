@@ -25,6 +25,7 @@
 #include "app/config_panel.h"   //ConfigPanelProcData参照
 #include "infowin/infowin.h"
 #include "net_app/union/union_beacon_tool.h"
+#include "sound/pm_sndsys.h"  //PMSND_PlaySystemSE
 
 #include "debug/gf_mcs.h"
 //======================================================================
@@ -84,6 +85,7 @@ typedef struct
 {
   HEAPID heapId_;
   void  *parentWork_;
+  SAVE_CONTROL_WORK * saveControl_;
   TESTMODE_STATE state_;
   TESTMODE_NEXTACT nextAction_;
   u8  refreshCount_;
@@ -534,6 +536,7 @@ FS_EXTERN_OVERLAY(testmode);
 //------------------------------------------------------------------
 /**
  * @brief   初期化
+ *
  */
 //------------------------------------------------------------------
 static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
@@ -547,6 +550,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
   GFL_STD_MemClear(work, sizeof(TESTMODE_WORK));
   work->heapId_ = heapID;
   work->parentWork_ = pwk;
+  work->saveControl_ = SaveControl_GetPointer();  //グローバル参照。あまりよくない
   work->nextMenu_ = NULL;
   work->state_  = TMS_INIT_MENU;
   work->nextAction_ = TMN_MAX;
@@ -823,14 +827,26 @@ static BOOL TESTMODE_ITEM_SelectFuncDebugStartComm( TESTMODE_WORK *work , const 
 //続きから
 static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE_NET_OFF );
-  return TRUE;
+  if ( SaveData_GetExistFlag( work->saveControl_ ) == TRUE )
+  {
+    TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE_NET_OFF );
+    return TRUE;
+  } else {
+    PMSND_PlaySystemSE( SEQ_SE_BEEP );
+    return FALSE;
+  }
 }
 //続きから
 static BOOL TESTMODE_ITEM_SelectFuncContinueComm( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE_NET );
-  return TRUE;
+  if ( SaveData_GetExistFlag( work->saveControl_ ) == TRUE )
+  {
+    TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE_NET );
+    return TRUE;
+  } else {
+    PMSND_PlaySystemSE( SEQ_SE_BEEP );
+    return FALSE;
+  }
 }
 
 //人名選択
@@ -1099,7 +1115,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 
   GFL_MSG_GetString( msgMng , idx , str );
   //名前のセット
-  myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  myStatus = SaveData_GetMyStatus( work->saveControl_ );
   MyStatus_SetMyNameFromString( myStatus , str );
   MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
   MyStatus_SetTrainerView(myStatus,
