@@ -224,7 +224,7 @@
   DEF_CMD( EvCmdObjTurn, EV_SEQ_OBJ_TURN )
   DEF_CMD( EvCmdPlayerRequest, EV_SEQ_PLAYER_REQUEST )
   DEF_CMD( EvCmdPlayerUpDown, EV_SEQ_PLAYER_UPDOWN )
-  NO_CMD()
+  DEF_CMD( EvCmdPosPlayerTurn, EV_SEQ_POS_PLAYER_TURN )
   
   //視線トレーナー関連
   DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )

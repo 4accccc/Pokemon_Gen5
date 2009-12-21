@@ -31,6 +31,8 @@
 
 #include "field_task_player_drawoffset.h"
 
+#include "event_fldmmdl_control.h"
+
 //======================================================================
 //  ツール関数
 //======================================================================
@@ -848,4 +850,91 @@ static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work )
   MMDL *fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
   return( fmmdl );
 }
+
+static const MMDL_ACMD_LIST anime_up_table[] = {
+  AC_STAY_WALK_U_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_down_table[] = {
+  AC_STAY_WALK_D_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_left_table[] = {
+  AC_STAY_WALK_L_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_right_table[] = {
+  AC_STAY_WALK_R_8F, 1,
+  ACMD_END, 0
+};
+//--------------------------------------------------------------
+/**
+ * 方向起動ＰＯＳ用向き直り処理   @todo
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  u16 dir;
+  {
+    int i;
+    VecFx32 pos;
+    FIELD_PLAYER *fld_player;
+    u16 player_dir;
+
+    u16 dir_base[4] = {DIR_UP,DIR_DOWN,DIR_LEFT,DIR_RIGHT};
+
+    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+
+    fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    for (i=0;i<4;i++)
+    {
+      const POS_EVENT_DATA *evt_data = EVENTDATA_GetPosEvent(
+          evdata, evwork, &pos, dir_base[i] );
+      if ( evt_data != NULL )
+      {
+        dir = dir_base[i];
+        break;
+      }
+    }
+  
+    //自機の見た目の向きを取得
+    player_dir = FIELD_PLAYER_GetDir( fld_player );
+    //向きの比較をする
+    if (player_dir != dir)
+    {
+      GMEVENT * child;
+      void *tbl;
+      if ( dir == DIR_UP ){
+        tbl = (void*)anime_up_table;
+      }else if (dir == DIR_DOWN){
+        tbl = (void*)anime_down_table;
+      }else if (dir == DIR_LEFT){
+        tbl = (void*)anime_left_table;
+      }else if (dir == DIR_RIGHT){
+        tbl = (void*)anime_right_table;
+      }else{
+        GF_ASSERT(0);
+        return VMCMD_RESULT_CONTINUE;
+      }
+      child = EVENT_ObjAnime( gsys, fieldmap, MMDL_ID_PLAYER, tbl );
+      SCRIPT_CallEvent( sc, child );
+      return VMCMD_RESULT_SUSPEND;
+    }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
 

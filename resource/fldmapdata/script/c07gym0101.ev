@@ -346,6 +346,7 @@ EVENT_END
 /*   地面POS（１）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_01
+  _POS_PLAYER_TURN()
   _GYM_ICE_CHG_RAIL(0)
 EVENT_END
 
@@ -353,6 +354,7 @@ EVENT_END
 /*   地面POS（２）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_02
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(1)
 EVENT_END
 
@@ -360,6 +362,7 @@ EVENT_END
 /*   地面POS（３）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_03
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(2)
 EVENT_END
 
@@ -367,6 +370,7 @@ EVENT_END
 /*   地面POS（４）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_04
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(3)
 EVENT_END
 
@@ -374,6 +378,7 @@ EVENT_END
 /*   地面POS（５）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_05
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(5)
 EVENT_END
 
@@ -381,6 +386,7 @@ EVENT_END
 /*   地面POS（６）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_06
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(4)
 EVENT_END
 
@@ -388,6 +394,7 @@ EVENT_END
 /*   地面POS（７）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_07
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(7)
 EVENT_END
 
@@ -395,6 +402,7 @@ EVENT_END
 /*   地面POS（８）                                            */
 /**************************************************************/
 EVENT_START	ev_pos_c07gym0101_zimen_08
+  _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(6)
 EVENT_END
 
