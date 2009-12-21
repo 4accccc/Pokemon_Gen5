@@ -23,6 +23,7 @@ _EVENT_DATA		ev_t02pc0101_shop
 _EVENT_DATA		ev_init_t02pc0101
 _EVENT_DATA		ev_scene_t02pc0101_hakaseguide_02
 _EVENT_DATA		ev_pos_t02pc0101_kaifuku_01
+_EVENT_DATA		ev_t02pc0101_hakase2_01
 _EVENT_DATA_END
 
 
@@ -389,7 +390,19 @@ EVENT_END
 /*                  サポート                                    */
 /**************************************************************/
 EVENT_START   ev_t02pc0101_support_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_02 )
+
+	//博士イベント中なら
+	IF $WK_SCENE_T02PC0101 == 1 THEN
+		
+		_PLAYER_NAME( 0 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_04 )
+	
+	//博士イベント終了後なら
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_02 )
+
+	ENDIF
+
 EVENT_END
 
 /************************************************************/
@@ -399,3 +412,11 @@ EVENT_START		ev_t02pc0101_shop
 	_TALK_OBJ_START()
 	_SHOP_CALL()
 EVENT_END
+
+/**************************************************************/
+/*                  アララギ博士                              */
+/**************************************************************/
+EVENT_START   ev_t02pc0101_hakase2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_hakase2_03a )
+EVENT_END
+
