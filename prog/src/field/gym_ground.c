@@ -793,9 +793,10 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
         {
           VecFx32 pos;
           MMDL_GetVectorPos( mmdl, &pos );
+
           //自機と同じ高さのＯＢＪをエントリ（多少のずれを考慮し上下1グリッドの猶予をもつことにする）
-          if ( (player_pos.y-FIELD_CONST_GRID_SIZE < pos.y) &&
-              (pos.y < player_pos.y+FIELD_CONST_GRID_SIZE)  )
+          if ( (player_pos.y-FIELD_CONST_GRID_FX32_SIZE < pos.y) &&
+              (pos.y < player_pos.y+FIELD_CONST_GRID_FX32_SIZE)  )
           {
             if ( count >= LIFT_ON_MAX ){
               GF_ASSERT(0);
