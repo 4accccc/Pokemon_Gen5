@@ -62,7 +62,7 @@ static const GFL_UI_TP_HITTBL btn_wifi[] = {
 
 //ボタンのパレット場所
 static u8 Btn_PalettePos[] =
-{ 5, 5 };  //
+{ 6, 7 };  //
 
 
 //ボタンのパレット変化テーブル

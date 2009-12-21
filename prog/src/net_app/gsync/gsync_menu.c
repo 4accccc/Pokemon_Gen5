@@ -336,9 +336,8 @@ static void _lightPaletteMake(u16* pal, u16* PaletteTable, int num)
 
 static void _modeFadeoutStart(GAMESYNC_MENU* pWork)
 {
-  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-
 
   if(GFL_NET_IsInit()){
     GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
@@ -667,9 +666,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_GSYNC:
 #if DEBUG_ONLY_FOR_ohno
-    pWork->bit=GAME_COMM_STATUS_BIT_WIFI_ALL;  //‚Ç‚ñ‚Èó‘Ô‚Å‚à‹N“®
+    pWork->bit=GAME_COMM_SBIT_WIFI_ALL;  //‚Ç‚ñ‚Èó‘Ô‚Å‚à‹N“®
 #endif
-    if(GAME_COMM_STATUS_BIT_WIFI_ALL & pWork->bit){
+    if(GAME_COMM_SBIT_WIFI_ALL & pWork->bit){
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _CHANGE_STATE(pWork,_modeButtonFlash);
       pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
@@ -1098,7 +1097,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;

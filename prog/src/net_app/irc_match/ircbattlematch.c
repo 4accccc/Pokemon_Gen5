@@ -33,6 +33,7 @@
 #include "net_app/connect_anm.h"
 #include "../../field/event_ircbattle.h"
 #include "ir_ani_NANR_LBLDEFS.h"
+#include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
 
 typedef enum
@@ -92,6 +93,7 @@ static void Snd_SePlay(int a){}
 
 #define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
 
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
 #define	FBMP_COL_WHITE		(15)
@@ -193,6 +195,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 };
 
 
+#define _SUBMENU_LISTMAX (2)
 
 
 struct _IRC_BATTLE_MATCH {
@@ -237,6 +240,12 @@ struct _IRC_BATTLE_MATCH {
   BOOL ircCenterAnim;
   int ircCenterAnimCount;
   int yoffset;
+
+  PRINT_QUE*            SysMsgQue;
+  APP_TASKMENU_WORK* pAppTask;
+	APP_TASKMENU_RES* pAppTaskRes;
+  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+
 };
 
 
@@ -360,7 +369,7 @@ static void _CLACT_SetAnim(IRC_BATTLE_MATCH* pWork,int x,int y,int no,int anm)
     cellInitData.pos_y = y;
     cellInitData.anmseq = anm;
     cellInitData.softpri = no;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 3;
     pWork->curIcon[no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                               pWork->cellRes[CHAR_DS],
                                               pWork->cellRes[PLT_DS],
@@ -715,6 +724,41 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 }
 
+
+static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  2;
+  appinit.itemWork =  &pWork->appitem[0];
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 14;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_27, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_28, pWork->appitem[1].str);
+  pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+
+  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+  GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+}
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   受け取った数のウインドウを等間隔に作る 幅は3char
@@ -862,6 +906,11 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
+  pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
+  pWork->pAppTaskRes =
+    APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
+                             pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
+  
 
 
   _CLACT_SetResource(pWork);
@@ -970,6 +1019,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+  APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
   _graphicEnd(pWork);
 
@@ -997,14 +1047,12 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
 {
-  int ret = BmpMenu_YesNoSelectMain(pWork->pYesNoWork);
-  if(ret == BMPMENU_NULL)
-  {  // まだ選択中
-    return;
-  }
-  else
-  {
-    if(ret == 0)
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    if(selectno == 0)
     { // はいを選択した場合
       EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
       _buttonWindowDelete(pWork);
@@ -1020,7 +1068,6 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     }
   }
 }
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1141,7 +1188,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       return;
     }
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+  if(GFL_UI_TP_GetTrg()){
     int aMsgBuff[]={IRCBTL_STR_16};
     _buttonWindowDelete(pWork);
 
@@ -1149,13 +1196,11 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
                                   0x20*12, 0x20, pWork->heapID);
 
     _msgWindowCreate(aMsgBuff, pWork);
-    BmpWinFrame_GraphicSet(
-      GFL_BG_FRAME2_S, 512-24, 11, 0, pWork->heapID );
 
-    GFL_FONTSYS_SetColor( 1, 2, 15 );
 
-    pWork->pYesNoWork =
-      BmpMenu_YesNoSelectInit(&_yesNoBmpDatSys2, 512-24, 11, 0, pWork->heapID );
+    _YesNoStart(pWork);
+    
+
     GFL_FONTSYS_SetDefaultColor();
     _CHANGE_STATE(pWork,_ircExitWait);
   }
@@ -1246,6 +1291,8 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
     pWork->pBattleWork = pwk;
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
+
+
     _CHANGE_STATE( pWork, _modeInit);
   }
   return GFL_PROC_RES_FINISH;
@@ -1267,10 +1314,14 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
     state(pWork);
     retCode = GFL_PROC_RES_CONTINUE;
   }
+  if(pWork->pAppTask){
+    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  }
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
   ConnectBGPalAnm_Main(&pWork->cbp);
   GFL_CLACT_SYS_Main();
+  PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
   return retCode;
 }
@@ -1292,6 +1343,8 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   GFL_TCB_DeleteTask( pWork->g3dVintr );
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
+  PRINTSYS_QUE_Clear(pWork->SysMsgQue);
+  PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
   ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
