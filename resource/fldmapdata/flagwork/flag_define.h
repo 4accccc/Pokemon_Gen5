@@ -2368,7 +2368,7 @@
 #define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 ゲームクリアフラグ（N城攻略時にセット） */
 #define SYS_FLAG_FIRST_POKE_GET           2401 /* 0x0961 最初のポケモンを入手した */
 #define SYS_FLAG_ZUKAN_GET                2402 /* 0x0962 ずかんをもらった */
-#define SYS_FLAG_DENDOUIRI                2403 /* 0x0963 ゲームクリアフラグ（殿堂入り時にセット） */
+#define SYS_FLAG_RUNNINGSHOES             2403 /* 0x0963 ランニングシューズ入手フラグ（Bダッシュ判定に使用） */
 #define SYS_FLAG_KAIRIKI                  2404 /* 0x0964 かいりき状態フラグ */
 		/* not used  2405(0x0965) */
 #define SYS_FLAG_SPEXIT_REQUEST           2406 /* 0x0966 特殊接続リクエスト：これがONのとき、コンティニューは特殊接続から開始 */
