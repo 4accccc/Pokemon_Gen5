@@ -622,7 +622,7 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
       NAGI_Printf( "ショートカットメニュー確保前　PROC=0x%x FIELD=0x%x CUTIN=0x%x\n",
 			GFL_HEAP_GetHeapFreeSize( HEAPID_PROC ), GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP), GFL_HEAP_GetHeapFreeSize(HEAPID_FLD3DCUTIN));
 
-			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, HEAPID_FLD3DCUTIN, HEAPID_PROC );
+			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, HEAPID_FLD3DCUTIN, HEAPID_FIELDMAP );
 		}
 	}
 }
