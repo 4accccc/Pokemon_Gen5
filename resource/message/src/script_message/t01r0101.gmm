@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T15:35:11"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T16:06:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,7 +361,7 @@
 ※アイテムではない</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ポケモン
-元気に　なったわね！▼
+げんきに　なったわね！▼
 そうだ！　これこれ！
 テレビトランシーバー！！[BE:00:ページ切り替え（行送り）]
 しゅうりから　もどってきてたわ！[BE:01:ページ切り替え（クリア）]
