@@ -2314,8 +2314,8 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
     { BTL_STRID_STD_ShineStart,   BTLEFF_WEATHER_HARE       },
     { BTL_STRID_STD_ShineStart,   BTLEFF_WEATHER_HARE       },
     { BTL_STRID_STD_RainStart,    BTLEFF_WEATHER_AME        },
-    { BTL_STRID_STD_StormStart,   BTLEFF_WEATHER_SUNAARASHI },
     { BTL_STRID_STD_SnowStart,    BTLEFF_WEATHER_ARARE      },
+    { BTL_STRID_STD_StormStart,   BTLEFF_WEATHER_SUNAARASHI },
   };
 
   BtlWeather weather = args[0];

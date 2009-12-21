@@ -457,6 +457,7 @@ static inline BOOL perOccur( BTL_SVFLOW_WORK* wk, u8 per );
 static void eventWork_Init( BTL_EVENT_WORK_STACK* stack );
 static void* eventWork_Push( BTL_EVENT_WORK_STACK* stack, u32 size );
 static void eventWork_Pop( BTL_EVENT_WORK_STACK* stack, void* adrs );
+static void scPut_EffectByPokePos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 effectNo );
 static void scPut_CantAction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConfCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_MeromeroAct( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -2134,9 +2135,10 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 
   // ○○は××を使った！
   {
-    int args[2];
+    int args[3];
     args[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-    args[1] = itemID;
+    args[1] = BPP_GetID( bpp );
+    args[2] = itemID;
     if( wk->bagMode != BBAG_MODE_SHOOTER ){
       scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Self, 2, args );
     }else{
@@ -3964,6 +3966,12 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     scPut_ConfDamage( wk, attacker, conf_dmg );
     scproc_CheckDeadCmd( wk, attacker );
   }else{
+    switch( fail_cause ){
+    case SV_WAZAFAIL_NEMURI:    scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI ); break;
+    case SV_WAZAFAIL_MAHI:      scPut_EffectByPokePos( wk, attacker, BTLEFF_MAHI ); break;
+    case SV_WAZAFAIL_KOORI:     scPut_EffectByPokePos( wk, attacker, BTLEFF_KOORI ); break;
+    case SV_WAZAFAIL_MEROMERO:  scPut_EffectByPokePos( wk, attacker, BTLEFF_MEROMERO ); break;
+    }
     scPut_WazaExecuteFailMsg( wk, attacker, waza, fail_cause );
   }
 
@@ -6994,6 +7002,21 @@ static void eventWork_Pop( BTL_EVENT_WORK_STACK* stack, void* adrs )
 
 //--------------------------------------------------------------------------
 /**
+ * [Put] 指定ポケモン位置にエフェクト発動
+ */
+//--------------------------------------------------------------------------
+static void scPut_EffectByPokePos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 effectNo )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+  if( pos != BTL_POS_NULL )
+  {
+    SCQUE_PUT_ACT_EffectByPos( wk->que, pos, effectNo );
+  }
+}
+
+//--------------------------------------------------------------------------
+/**
  * [Put] 「○○は　はんどうでうごけない」表示
  */
 //--------------------------------------------------------------------------
@@ -7008,6 +7031,7 @@ static void scPut_CantAction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 //--------------------------------------------------------------------------
 static void scPut_ConfCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
+  scPut_EffectByPokePos( wk, bpp, BTLEFF_KONRAN );
   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KonranAct, BPP_GetID(bpp) );
 }
 //--------------------------------------------------------------------------
