@@ -40,7 +40,7 @@
 #include "test/ariizumi/ari_debug.h"
 
 // キーでカードがめくれないようにする
-//#define KEY_LR_OK
+#define KEY_LR_OK
 
 
 #define MIN_SCRUCH  (3)
@@ -271,6 +271,7 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back );
 static void UpdateSignAnime( TR_CARD_WORK *wk );
 static void Trans_SignScreen( const int inFrame, const int flag );
 static BOOL CardScaling( TR_CARD_WORK *wk );
+static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff );
 
 static int SignCall( TR_CARD_WORK *wk );
 
@@ -432,6 +433,14 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   return GFL_PROC_RES_FINISH;
 }
 
+#if 0
+//----------------------------------------------------------------------------------
+/**
+ * @brief カードの拡大縮小ポイントのあたりを付けるためのデバッグルーチン
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
 static void debug_scale( TR_CARD_WORK *wk )
 {
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
@@ -489,8 +498,9 @@ static void debug_scale( TR_CARD_WORK *wk )
     //アフィン変換実行リクエスト
     wk->aff_req = TRUE;
   }
-
 }
+#endif
+
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
@@ -530,13 +540,13 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
         *seq = SEQ_SCALING;
       }else if(req == TRC_KEY_REQ_SIGN_CALL){
         SetSActDrawSt(&wk->ObjWork,ACTS_BTN_TURN,ANMS_SIGN_ON,TRUE);
-        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_TURN ,TRUE);
+//        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_TURN ,TRUE);
         wk->sub_seq = 0;
         *seq = SEQ_SIGN_CALL;
       }else if (req == TRC_KEY_REQ_END_BUTTON){
         //終了
         SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
-        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_BACK ,TRUE);
+//        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_BACK ,TRUE);
         WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
                 WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
                 WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
@@ -559,7 +569,6 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       
       DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
                       &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
-      debug_scale(wk);
     }
     break;
 
@@ -851,6 +860,7 @@ static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion)
   }
 */
   //とりあえずGOLDの動作に統一
+#if 0
   buf = GFL_ARC_UTIL_LoadPalette(
       ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR, &dat, wk->heapId );
 
@@ -859,6 +869,8 @@ static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion)
   GX_LoadBGPltt( dat->pRawData, CASE_BD_PAL*32, 2*16 );
   GXS_LoadBGPltt( dat->pRawData, CASE_BD_PAL*32, 2*16 );
   GFL_HEAP_FreeMemory(buf);
+ #endif
+ 
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1238,7 +1250,9 @@ static void CardDataDraw(TR_CARD_WORK* wk)
 static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
 {
   BOOL flag = FALSE;
-  if(is_back==0){  // 表
+
+  // 表
+  if(is_back==0){  
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,   ANMS_BLACK_PEN_L,         FALSE);
@@ -1248,21 +1262,19 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
     flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_FRONT );
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
 
-  }else{           // 裏
+  // 裏
+  }else{          
     // 通常表示
     if(wk->ScaleMode==0){
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
 
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
 
-      // サインアニメ中
-      if(wk->TrCardData->SignAnimeOn){
-        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_STOP_L,       TRUE);
-      }else{
-        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_ANIME_G,       TRUE);
-      }
+      // サインアニメ中か
+      Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
 
       // ショートカット登録しているか
       flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_BACK );
@@ -1270,17 +1282,12 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
 
     // 拡大表示
     }else{
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN_OFF,TRUE);
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT_OFF,  TRUE);
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_SIMPLE_L,             TRUE);
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
-
-      // サインアニメ中
-      if(wk->TrCardData->SignAnimeOn){
-        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_STOP_L,       TRUE);
-      }else{
-        SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_ANIME_G,       TRUE);
-      }
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,   APP_COMMON_BARICON_RETURN_OFF, TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,    APP_COMMON_BARICON_EXIT_OFF,   TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE,  ANMS_SIMPLE_L,                 TRUE);
+      SetSActDrawSt(&wk->ObjWork,  ACTS_BTN_PEN,    ANMS_BLACK_PEN_L+wk->pen*2,    TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,   ANMS_TURN_L,                   FALSE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_ANIME_L,                  FALSE);
     }
   }
 }
@@ -1641,12 +1648,12 @@ static void SetBookMark( TR_CARD_WORK *wk)
  * @retval  static    
  */
 //----------------------------------------------------------------------------------
-static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag )
+static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff )
 {
   if(flag==0){
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_L, TRUE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_L, OnOff);
   }else{
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_L, TRUE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_L,  OnOff);
   }
 
 }
@@ -1692,14 +1699,13 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 2:     // カード裏返しボタン
     GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
-    SetEffActDrawSt(&wk->ObjWork,ACTS_BTN_EFF,TRUE);
     return TRC_KEY_REQ_REV_BUTTON;
     break;
   case 3:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
       wk->TrCardData->SignAnimeOn ^=1;
       Trans_CardBackScreen(wk);
-      Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn);
+      Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
       Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
       OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
     }

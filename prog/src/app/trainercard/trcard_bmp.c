@@ -635,10 +635,12 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
             STR_NUM_DISP_SPACE,1);
 
     break;
-  case SCORE_LINE_START_DATE: // ÇÕÇ∂ÇﬂÇΩÇ–
+  case SCORE_LINE_START_DATE_1: // ÇÕÇ∂ÇﬂÇΩÇ–ÇPçsñ⁄
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+2], wk->fontHandle );
+    break;
+  case SCORE_LINE_START_DATE_2: // ÇÕÇ∂ÇﬂÇΩÇ–ÇQçsñ⁄
     WriteNumDateYYMMDD( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_ZERO );
-
+    break;
 
 #if 0
     WriteNumData( wk, win,

@@ -273,6 +273,10 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
       GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWorkS[i], TRUE );
       
     }
+    
+    // エフェクトアクターは非表示にする
+    GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[ANMS_EFF], FALSE); //非表示
+   
   } 
 }
 //--------------------------------------------------------------------------------------------
