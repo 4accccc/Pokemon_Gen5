@@ -115,6 +115,7 @@ struct _BTL_CLIENT {
   u8  escapeClientID;
 
   u8          myChangePokeCnt;
+  u8          myPuttablePokeCnt;
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
@@ -161,10 +162,12 @@ static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* pa
 static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
+static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
@@ -409,7 +412,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
        { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 
     { BTL_ACMD_SELECT_POKEMON_FOR_COVER,
-       { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
+       { SubProc_UI_SelectPokemonForCover, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
 
     { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,
        { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
@@ -419,6 +422,9 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
     { BTL_ACMD_RECORD_DATA,
        { SubProc_UI_RecordData,    NULL,                      NULL                       } },
+
+    { BTL_ACMD_EXIT_WIN_TRAINER,
+      { SubProc_UI_WinToTrainer,   NULL,  NULL }, },
   };
 
   int i;
@@ -1552,7 +1558,109 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
 
   return cnt;
 }
+extern void BTLV_StartSelectChangeOrEscape( BTLV_CORE* wk );
+extern BOOL BTLV_WaitSelectChangeOrEscape( BTLV_CORE* wk, u8* fSelect );
+void BTLV_StartSelectChangeOrEscape( BTLV_CORE* wk )
+{
 
+}
+BOOL BTLV_WaitSelectChangeOrEscape( BTLV_CORE* wk, u8* fSelect )
+{
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * ポケが死んだ時の交換
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
+      if( wk->myChangePokeCnt )
+      {
+        wk->myPuttablePokeCnt = calcPuttablePokemons( wk, NULL );
+        if( wk->myPuttablePokeCnt )
+        {
+          if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+          &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
+          ){
+            BTLV_StartSelectChangeOrEscape( wk->viewCore );
+            (*seq)++;
+          }
+          else{
+            (*seq) += 2;
+          }
+        }
+        else
+        {
+          BTL_Printf("myID=%d もう戦えるポケモンいないことを返信\n", wk->myID);
+          BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          wk->returnDataSize = sizeof(wk->actionParam[0]);
+          return TRUE;
+        }
+      }
+      else
+      {
+          BTL_Printf("myID=%d 誰も死んでないので選ぶ必要なし\n", wk->myID);
+          BTL_ACTION_SetNULL( &wk->actionParam[0] );
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          wk->returnDataSize = sizeof(wk->actionParam[0]);
+          return TRUE;
+      }
+    }
+    break;
+
+  // 繰り出せるポケモンがいるが、入れ替えるか逃げるか判定（野生&&シングルのみ）
+  case 1:
+    {
+      u8 fSelect;
+      if( BTLV_WaitSelectChangeOrEscape( wk->viewCore, &fSelect ) )
+      {
+        if( fSelect ){
+          (*seq)++;
+        }else{
+          BTL_ACTION_SetEscapeParam( &wk->actionParam[0] );
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          wk->returnDataSize = sizeof(wk->actionParam[0]);
+          return TRUE;
+        }
+      }
+    }
+    break;
+
+  case 2:
+    {
+       u8 numSelect = wk->myChangePokeCnt;
+
+       // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
+       if( numSelect > wk->myPuttablePokeCnt ){
+         numSelect = wk->myPuttablePokeCnt;
+       }
+       BTL_Printf("myID=%d 戦闘ポケ位置が死んだのでポケモン%d体選択\n", wk->myID, numSelect);
+       setup_pokesel_param_dead( wk, numSelect, &wk->pokeSelParam );
+       BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
+    }
+
+    if( BTLV_WaitPokeSelect(wk->viewCore) )
+    {
+      store_pokesel_to_action( wk, &wk->pokeSelResult );
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
@@ -1679,6 +1787,46 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
   return TRUE;
 }
 //---------------------------------------------------
+// ゲーム内トレーナー戦に勝利
+//---------------------------------------------------
+static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WinTrainer );
+      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+      u32 getMoney = BTL_MAIN_GetBonusMoney( wk->mainModule );
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
+      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+      BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq )
@@ -1793,7 +1941,7 @@ restart:
   case 1:
     if( SCQUE_IsFinishRead(wk->cmdQue) )
     {
-      BTL_Printf("サーバーコマンド読み終わりました\n");
+      BTL_Printf("サーバコマンド読み終わり\n");
       return TRUE;
     }
     (*seq)++;

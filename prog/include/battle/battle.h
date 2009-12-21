@@ -219,6 +219,7 @@ typedef struct {
 
   //----- 以下、バトルの結果格納パラメータ ----
   BtlResult   result;           ///< 勝敗結果
+  u16         getMoney;         ///< 手に入れたお小遣い
   u8          capturedPokeIdx;  ///< 捕獲したポケモンのメンバー内インデックス（partyEnemy1 内）
 
   u8*         recBuffer;        ///< 録画データ生成先

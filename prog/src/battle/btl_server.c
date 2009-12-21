@@ -103,6 +103,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq );
 static BOOL SendActionRecord( BTL_SERVER* server );
 static BOOL SendRotateRecord( BTL_SERVER* server );
 static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
@@ -733,9 +734,52 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     PMSND_PlayBGM( SEQ_BGM_WIN1 );
+    if( BTL_MAIN_GetCompetitor(server->mainModule) == BTL_COMPETITOR_TRAINER ){
+      setMainProc( server, ServerMain_ExitBattle_ForTrainer );
+    }else{
+      (*seq)++;
+    }
+    break;
+  case 1:
+    {
+      u8 touch = FALSE;
+      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+      ||  (GFL_UI_TP_GetTrg())
+      ){
+        touch = TRUE;
+      }
+      if( touch ){
+        return TRUE;
+      }
+    }
+    break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了（ゲーム内通常トレーナーとの対戦に勝利）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmd( server, BTL_ACMD_EXIT_WIN_TRAINER );
     (*seq)++;
     break;
   case 1:
+    if( WaitAdapterCmd(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  case 2:
     {
       u8 touch = FALSE;
       if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))

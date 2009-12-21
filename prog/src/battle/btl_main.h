@@ -54,6 +54,7 @@ extern u8 BTL_MAIN_GetClientCoverPosCount( const BTL_MAIN_MODULE* wk, u8 clientI
 extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
+extern u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx );
 extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
 
 //-------------------------------------------------------------------------------
@@ -94,11 +95,12 @@ static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
 /*------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------*/
-/* フィールドへ引き継ぐ情報の通知                                               */
+/* フィールドへ引き継ぐ情報の取得・通知                                         */
 /*------------------------------------------------------------------------------*/
 extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 extern void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID );
+extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
 
 
 //-------------------------

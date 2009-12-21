@@ -127,6 +127,8 @@ struct _BTL_MAIN_MODULE {
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static u32 calcBonusSub( const POKEPARTY * party );
+static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp );
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
@@ -220,6 +222,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
 
+      wk->bonusMoney = calcBonusMoneyBase( setup_param );
+
       if( !(wk->setupParam->fRecordPlay) ){
         GFL_STD_RandGeneralInit( &wk->randomContext );
       }else{
@@ -278,6 +282,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
     checkWinner( wk );
     Bspstore_RecordData( wk );
     reflectPartyData( wk );
+    wk->setupParam->getMoney = wk->bonusMoney;
     return GFL_PROC_RES_FINISH;
   }
 
@@ -338,6 +343,38 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
 //======================================================================================================
 //======================================================================================================
+
+static u32 calcBonusSub( const POKEPARTY * party )
+{
+  enum {
+    BASE_MONEY_RATIO = 10,  // @todo 本来はトレーナーごとにレートが変動する
+  };
+
+  if( party )
+  {
+    u8 poke_cnt = PokeParty_GetPokeCount( party );
+    if( poke_cnt )
+    {
+      const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, poke_cnt-1 );
+      return (PP_Get(pp, ID_PARA_level, NULL) * BASE_MONEY_RATIO * 4);
+    }
+  }
+  return 0;
+}
+static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp )
+{
+  if( sp->competitor == BTL_COMPETITOR_TRAINER )
+  {
+    u32 sum = 0;
+
+    sum += calcBonusSub( sp->party[BTL_CLIENT_ENEMY1] );
+    sum += calcBonusSub( sp->party[BTL_CLIENT_ENEMY2] );
+
+    return sum;
+  }
+
+  return 0;
+}
 
 // 各種モジュール生成＆関連付けルーチンを設定
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
@@ -2789,6 +2826,10 @@ u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
 {
   return wk->myClientID;
 }
+u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
+{
+  return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );
+}
 
 u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
 {
@@ -2922,7 +2963,7 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 }
 //=============================================================================================
 /**
- * おこずかいボーナス額の受け付け
+ * おこずかいボーナス額の増量受け付け
  *
  * @param   wk
  * @param   volume
@@ -2934,6 +2975,19 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
   if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
     wk->bonusMoney = BTL_BONUS_MONEY_MAX;
   }
+}
+//=============================================================================================
+/**
+ * おこずかいボーナス額の取得
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
+{
+  return wk->bonusMoney;
 }
 
 //----------------------------------------------------------------------------------------------

@@ -155,6 +155,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         //ポケルス感染＆伝染チェック
         POKERUS_CheckCatchPokerus( party );
         POKERUS_CheckContagion( party );
+
+        // おこづかい増やす
+        MyStatus_SetGold( myStatus, MyStatus_GetGold(myStatus) + param->btlResult->getMoney );
       }
 
       // 捕獲した
