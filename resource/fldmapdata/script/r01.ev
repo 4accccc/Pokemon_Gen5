@@ -37,8 +37,8 @@ EVENT_START   ev_r01_poke_getdemo_01
 
 
 	//【仮】専用曲鳴らす
-	//_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
-	_BGM_PLAY( SEQ_BGM_E_DOCTOR )
+	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
+	//_BGM_PLAY( SEQ_BGM_E_DOCTOR )
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
