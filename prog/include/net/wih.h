@@ -168,7 +168,7 @@
 
 
 // 無線で使用するDMA番号
-#define WH_DMA_NO                 _NETWORK_DMA_NO
+//#define WH_DMA_NO                 _NETWORK_DMA_NO
 
 // 子機最大数（親機を含まない数）
 //#define WH_CHILD_MAX              15

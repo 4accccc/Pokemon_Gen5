@@ -113,8 +113,10 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 #define GFL_WICON_POSX (240)   ///< ワイヤレスアイコンのデフォルトＸＹ位置
 #define GFL_WICON_POSY (0)
 
-// 無線で使用するDMA番号
-#define _NETWORK_DMA_NO                 (1)
+// 無線で使用するDMA番号   dma.hに移動しました 通信は2になります
+///#define _NETWORK_DMA_NO                 (1)
+
+
 //WMのパワーモード 必ず1を指定する
 #define _NETWORK_POWERMODE       (1)
 //SSL処理のスレッド優先順位

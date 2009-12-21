@@ -13,7 +13,8 @@
 #include "gflib.h"
 #include <nitroWiFi/nhttp.h>
 #include "nitrowifidummy.h"
-
+#include "dreamworld_netdata.h"
+#include "webresp_defs.h"
 
 
 typedef struct _NHTTP_RAP_WORK NHTTP_RAP_WORK;
@@ -24,6 +25,7 @@ typedef enum{
   NHTTPRAP_URL_POKEMONLIST,
   NHTTPRAP_URL_DOWNLOAD,
   NHTTPRAP_URL_UPLOAD,
+  NHTTPRAP_URL_ACCOUNT_CREATE,
 } NHTTPRAP_URL_ENUM;
 
 
@@ -38,5 +40,7 @@ extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid);
 extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
 
 
-
+#if PM_DEBUG
+void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep);
+#endif
 

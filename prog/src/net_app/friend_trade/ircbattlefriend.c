@@ -32,6 +32,8 @@
 #include "../../field/event_ircbattle.h"
 #include "net/dwc_rapfriend.h"
 #include "savedata/wifilist.h"
+#include "savedata/system_data.h"
+#include "savedata/wifi_negotiation.h"
 
 
 #define _TIMING_ENDNO (12)
@@ -39,6 +41,7 @@
 typedef enum {
   _NETCMD_MYSTATUS = GFL_NET_CMD_IRCFRIEND,
   _NETCMD_FRIENDCODE,
+  _NETCMD_PROFILEID,
 } _BATTLEIRC_SENDCMD;
 
 typedef void (StateFunc)(IRC_BATTLE_FRIEND* pState);
@@ -48,12 +51,6 @@ struct _IRC_BATTLE_FRIEND {
   StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
   HEAPID heapID;
-  //    GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
-  //    GFL_MSGDATA *pMsgData;  //
-  //    WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
-  //    GFL_FONT* pFontHandle;
-  //    STRBUF* pStrBuf;
-  //    BMPWINFRAME_AREAMANAGER_POS aPos;
   int windowNum;
   BOOL IsIrc;
   u32 connect_bit;
@@ -62,10 +59,6 @@ struct _IRC_BATTLE_FRIEND {
   u32 receive_result_param;
   u32 receive_first_param;
   DWCFriendData friendData;
-  //    GFL_ARCUTIL_TRANSINFO bgchar;
-  //    GFL_ARCUTIL_TRANSINFO bgchar2;
-  //    GFL_ARCUTIL_TRANSINFO subchar;
-  //	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
   BOOL bParent;
 };
 
@@ -75,6 +68,7 @@ static void _changeState(IRC_BATTLE_FRIEND* pWork,StateFunc* state);
 static void _changeStateDebug(IRC_BATTLE_FRIEND* pWork,StateFunc* state, int line);
 static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatus(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvProfile(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -88,6 +82,8 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvMystatus,          NULL},  ///_NETCMD_MYSTATUS
   {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
+  {_recvProfile,         NULL},    ///_NETCMD_PROFILEID
+
 };
 
 
@@ -135,6 +131,27 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
 
   GFL_STD_MemCopy(pData,&pWork->friendData, sizeof(DWCFriendData));
 }
+
+static void _recvProfile(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_BATTLE_FRIEND *pWork = pWk;
+  const s32* pProfID=pData;
+  
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
+
+  WIFI_NEGOTIATION_SV_SetFriend(
+    WIFI_NEGOTIATION_SV_GetSaveData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)),
+    pProfID[0]);
+
+  
+}
+
+
 
 static void _recvMystatus(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
@@ -212,6 +229,14 @@ static void _sendFriendCode(IRC_BATTLE_FRIEND* pWork)
     GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))) ,&friendData);
   GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
                    sizeof(DWCFriendData),&friendData);
+
+  {
+    s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)) );
+
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_PROFILEID,
+                     sizeof(proid),&proid);
+
+  }
 
 
   _CHANGE_STATE(pWork,_sendMystatus);

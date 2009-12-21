@@ -35,6 +35,8 @@
 #include "sound/pm_sndsys.h"
 
 #include "savedata/wifilist.h"
+#include "savedata/wifi_negotiation.h"
+#include "savedata/system_data.h"
 
 #include "msg/msg_gtsnego.h"
 #include "../../field/event_gtsnego.h"
@@ -110,9 +112,7 @@ enum _CHANGEMODE_IMAGE {
 
 
 enum _GTSNEGO_MATCHKEY {
-  _MATCHKEY_PROFILE1,   //Profile1
-  _MATCHKEY_PROFILE2,   //Profile2
-  _MATCHKEY_PROFILE3,   //Profile3
+  _MATCHKEY_PROFILE,   //Profile
   _MATCHKEY_TYPE,     //交換タイプ 知り合いかどうか
   _MATCHKEY_LEVEL,    //交換LV
   _MATCHKEY_IMAGE_MY,  //自分の希望
@@ -124,7 +124,7 @@ enum _GTSNEGO_MATCHKEY {
 
 
 
-static char matchkeystr[_MATCHKEY_MAX][2]={"p1","p2","p3","ty","lv","my","fr","rm","db"};
+static char matchkeystr[_MATCHKEY_MAX][2]={"p1","ty","lv","my","fr","rm","db"};
 
 
 typedef void (StateFunc)(GTSNEGO_WORK* pState);
@@ -166,7 +166,7 @@ struct _GTSNEGO_WORK {
   int myChageType;   //自分が交換したいタイプ
   int friendChageType;  //相手に交換してもらいたいタイプ
   int chageLevel;    // ポケモンレベル範囲
-
+  s32 profileID;
 };
 
 
@@ -580,18 +580,20 @@ static void _matchingState( GTSNEGO_WORK *pWork )
 static int _evalcallback(int index, void* param)
 {
   GTSNEGO_WORK *pWork=param;
-  int value=0;
-  int targetlv,targetfriend,targetmy;
+  int value = -1;
+  int targetlv,targetfriend,targetmy,profile;
 
   targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
   targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
   targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
+  profile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_PROFILE].keyStr,-1);
   
   if(pWork->changeMode==1){//ともだち
+    if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
+      value=100;
+    }
   }
   else{
-    
-    
     if(pWork->chageLevel==targetlv){
       if(pWork->myChageType==targetfriend){
         value+=10;
@@ -628,12 +630,14 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
 
   
   GFL_NET_DWC_GetMySendedFriendCode(pWork->pList, (DWCFriendData*)&buff[0]);
-  buff[3] = pWork->changeMode;
-  buff[4] = pWork->chageLevel;
-  buff[5] = pWork->myChageType;
-  buff[6] = pWork->friendChageType;
-  buff[7] = PM_VERSION + (PM_LANG<<16); 
-  buff[8] = MATCHINGKEY;
+
+  buff[0] = pWork->profileID;
+  buff[1] = pWork->changeMode;
+  buff[2] = pWork->chageLevel;
+  buff[3] = pWork->myChageType;
+  buff[4] = pWork->friendChageType;
+  buff[5] = PM_VERSION + (PM_LANG<<16); 
+  buff[6] = MATCHINGKEY;
 
   for(i = 0; i < _MATCHKEY_MAX; i++)
   {
@@ -850,7 +854,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
       GAMESYSTEM_GetGameData(
         ((pEv->gsys))) ));
 
-
+  pWork->profileID = SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSave) );
+  
   if(GFL_NET_IsInit()){
     GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);
   }

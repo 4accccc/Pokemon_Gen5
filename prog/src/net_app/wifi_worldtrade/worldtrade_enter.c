@@ -843,7 +843,7 @@ static int Enter_InternetConnect( WORLDTRADE_WORK *wk )
 	//sys_SleepNG(SLEEPTYPE_COMM);
 
 	WorldTrade_WifiIconAdd( wk );  //2768
-	DWC_InitInetEx(&wk->stConnCtrl,COMM_DMA_NO,COMM_POWERMODE,COMM_SSL_PRIORITY);
+	DWC_InitInetEx(&wk->stConnCtrl,GFL_DMA_NET_NO,COMM_POWERMODE,COMM_SSL_PRIORITY);
 	DWC_ConnectInetAsync();
 	
 	wk->subprocess_seq = ENTER_INTERNET_CONNECT_WAIT;

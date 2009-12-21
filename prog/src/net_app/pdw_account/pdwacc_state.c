@@ -109,6 +109,7 @@ struct _PDWACC_WORK {
   int req;
   int getdataCount;
   int countTimer;
+  char tempbuffer[12];
   BOOL bEnd;
 };
 
@@ -215,7 +216,7 @@ static void _createAccount6(PDWACC_WORK* pWork)
 static void _createAccount5(PDWACC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD, pWork->pNHTTPRap)){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_createAccount6);
       }
@@ -322,17 +323,24 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-
+        gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
+          _CHANGE_STATE(_createAccount7);
+        }
+        else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
+          _CHANGE_STATE(_createAccount7);
+        }
+        else{
+#if DEBUG_ONLY_FOR_ohno
+          GF_ASSERT(0);
+#endif
+          _CHANGE_STATE(_createAccount7);
+          //その他のエラー
+        }
       }
-
-
-      //アカウントがあったら表示に
-
       //アカウントがなければ作成に
-      _CHANGE_STATE(_createAccount1);
-
-
+//      _CHANGE_STATE(_createAccount1);
     }
   }
 
@@ -352,7 +360,15 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 {
 
   if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNTINFO, pWork->pNHTTPRap)){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
+
+      s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
+      
+      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0", proid);
+
+      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,sizeof(pWork->tempbuffer));
+      NHTTP_AddPostDataRaw( pWork->pNHTTPRap, pWork->tempbuffer, GFL_STD_StrLen(pWork->tempbuffer) );
+
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_ghttpInfoWait1);
       }

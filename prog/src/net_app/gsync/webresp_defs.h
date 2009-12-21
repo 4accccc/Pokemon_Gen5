@@ -23,7 +23,7 @@
  *		に変更した。
  *		これにともない、メンバの位置を調整。
  */
-typedef struct
+typedef struct 
 {
 	long ret_cd;				/* 処理結果コード			=0:正常, <>0:以上				*/
 	unsigned long body_size;	/* データ部バイトサイズ										*/
@@ -33,7 +33,7 @@ typedef struct
 	char desc_msg[80];			/* 詳細エラー文言			PHP サーバプログラム内部情報	*/
 	char yobi2[25];				/* 予備														*/
 	char ext_info[1];			/* 位置確認用				常に 'Z'						*/
-}  gs_response;
+}gs_response;
 
 /*
  * DS が受け取る HTTP レスポンス（HTTP BODY 部）の機能別データ部
@@ -86,7 +86,7 @@ typedef struct
  *           str_val1                    ... 文字列を反転
  *
  */
-typedef struct 
+typedef struct
 {
 	unsigned long u32_val1;
 	unsigned short u16_val1;

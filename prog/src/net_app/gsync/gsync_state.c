@@ -37,8 +37,6 @@
 #include "msg/msg_gsync.h"
 #include "gsync.naix"
 
-#include "webresp_defs.h"
-
 /*
 ■BGM■
 
@@ -147,17 +145,6 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc state, int line)
   OS_TPrintf("gsync: %d\n",line);
 #endif
   _changeState(pWork, state);
-}
-#endif
-
-#if PM_DEBUG
-static void _DEBUG_HEADER_PRINT(gs_response* prep)
-{
-
-  NET_PRINT("処理結果コード       %d\n",prep->ret_cd);
-  NET_PRINT("データ部バイトサイズ %d\n",prep->body_size);
-  NET_PRINT("詳細エラーコード     %d\n",prep->desc_cd);
-  NET_PRINT("%s\n",prep->desc_msg);
 }
 #endif
 
@@ -472,7 +459,7 @@ static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
       {
         u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
 
-        _DEBUG_HEADER_PRINT((gs_response*)pEvent);
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
 
         GFL_STD_MemCopy(&pEvent[sizeof(gs_response)],pWork->pParent->selectPokeList.pokemonList,
                         DREAM_WORLD_SERVER_POKMEONLIST_MAX/8);

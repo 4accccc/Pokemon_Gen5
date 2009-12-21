@@ -70,6 +70,9 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profileID)
 {
+  if(profileID==0){
+    return;
+  }
   if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
     pSV->count=0;
   }
@@ -93,6 +96,30 @@ s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
   }
   return pSV->aFriendData[ index ];
 }
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   渡したプロファイルIDに一致する物があるかどうかさがす
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   profile 検査profileID
+ * @return	一致したらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profile)
+{
+  int i;
+
+  for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
+    if(pSV->aFriendData[ i ] == profile){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

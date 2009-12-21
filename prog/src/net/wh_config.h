@@ -19,14 +19,12 @@
 
  */
 
-#ifndef __WH_CONFIG_H__
-#define __WH_CONFIG_H__
+#pragma once
 
 #include "../net_def.h"
-xxxkkk
 
 // 無線で使用するDMA番号
-#define WH_DMA_NO                 _NETWORK_DMA_NO
+//#define WH_DMA_NO                 GFL_DMA_NET_NO
 
 // 通常の MP 通信で使用するポート
 //#define WH_DATA_PORT              (4)  //14
@@ -41,4 +39,3 @@ xxxkkk
 //#define WH_MP_4CHILD_DATA_SIZE         (GFL_NET_CHILD_DATA_SIZE*2)
 
 
-#endif // __WH_CONFIGH_H__

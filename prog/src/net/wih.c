@@ -3028,11 +3028,11 @@ static BOOL WH_StateInInitialize(NetDevEndCallback callback,const BOOL isScanOnl
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
 	if( isScanOnly == FALSE )
 	{
-		result = WM_Initialize(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, WH_DMA_NO);
+		result = WM_Initialize(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, GFL_DMA_NET_NO);
 	}
 	else
 	{
-		result = WM_InitializeForListening(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, WH_DMA_NO,FALSE);
+		result = WM_InitializeForListening(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, GFL_DMA_NET_NO,FALSE);
 	}
 	if (result != WM_ERRCODE_OPERATING)
 	{
@@ -3043,7 +3043,7 @@ static BOOL WH_StateInInitialize(NetDevEndCallback callback,const BOOL isScanOnl
 
 #else
 	// WM_Init ÇÕìØä˙ä÷êîÇ≈Ç∑ÅB
-	result = WM_Init(&sWmBuffer, WH_DMA_NO);
+	result = WM_Init(&sWmBuffer, GFL_DMA_NET_NO);
 	if (result != WM_ERRCODE_SUCCESS)
 	{
 		WH_REPORT_FAILURE(result);

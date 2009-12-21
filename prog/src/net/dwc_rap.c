@@ -369,7 +369,7 @@ int GFL_NET_DWC_connect()
       // メモリ確保関数設定
       //DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
       // ネット接続初期化
-      DWC_InitInetEx(&_dWork->stConnCtrl, _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
+      DWC_InitInetEx(&_dWork->stConnCtrl, GFL_DMA_NET_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
 
       //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 

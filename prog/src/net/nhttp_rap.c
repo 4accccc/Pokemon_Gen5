@@ -47,6 +47,7 @@ const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems
 const static char  POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
 const static char  DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=test.get&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //GET
 const static char  UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d";  //POST
+const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=account.createdata"; //POST
 
 
 
@@ -63,6 +64,7 @@ static NHTTPRAP_URLTBL urltable[]={
   {POKEMONLISTURL, NHTTP_REQMETHOD_GET},
   {DOWNLOAD_URL, NHTTP_REQMETHOD_GET},
   {UPLOAD_URL, NHTTP_REQMETHOD_POST},
+  {ACCOUNT_URL, NHTTP_REQMETHOD_POST},
 };
 
 
@@ -319,5 +321,15 @@ void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 }
 
 
+#if PM_DEBUG
+void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
+{
+
+  NET_PRINT("処理結果コード       %d\n",prep->ret_cd);
+  NET_PRINT("データ部バイトサイズ %d\n",prep->body_size);
+  NET_PRINT("詳細エラーコード     %d\n",prep->desc_cd);
+  NET_PRINT("%s\n",prep->desc_msg);
+}
+#endif
 
 
