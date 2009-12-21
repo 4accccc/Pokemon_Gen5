@@ -602,7 +602,14 @@ static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max )
     return;
   }
   
-  PMSND_PauseBGM( TRUE );
+  if( fsnd->state == FS_STATE_FADE_OUT )
+  {
+    PMSND_PauseBGM( FALSE );
+  }
+  else
+  {
+    PMSND_PauseBGM( TRUE );
+  } 
   PMSND_PushBGM();
   fsnd->push_count++;
   // ŠÄ‹ó‘Ô‚ğ’â~
