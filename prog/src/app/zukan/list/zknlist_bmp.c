@@ -25,7 +25,8 @@
 
 // フォントカラー
 #define FCOL_WP01WN		( PRINTSYS_LSB_Make(14,15,0) )	// フォントカラー：両用０１白抜
-#define FCOL_SP00BW		( PRINTSYS_LSB_Make(11,9,0) )		// フォントカラー：サブ００黒抜
+#define FCOL_SP00WN		( PRINTSYS_LSB_Make(14,15,0) )	// フォントカラー：サブ００白抜
+#define FCOL_SP00BN		( PRINTSYS_LSB_Make(12,13,0) )	// フォントカラー：サブ００黒抜
 #define FCOL_SP15WN		( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：サブ１５白抜
 
 
@@ -46,7 +47,7 @@
 #define	BMPWIN_TITLE_PY			( 0 )
 #define	BMPWIN_TITLE_SX			( 12 )
 #define	BMPWIN_TITLE_SY			( 3 )
-#define	BMPWIN_TITLE_PAL		( ZKNLISTMAIN_SBG_PAL_FONT )
+#define	BMPWIN_TITLE_PAL		( 0 )
 
 // 見つけた数
 #define	BMPWIN_SEENUM_FRM		( GFL_BG_FRAME1_S )
@@ -399,8 +400,9 @@ static void PutSubDispStr( ZKNLISTMAIN_WORK * wk, u32 idx )
 
 static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 {
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNLISTBMP_WINIDX_TITLE].win), 0 );
-	StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_00, 0, 4, FCOL_SP15WN, PRINTTOOL_MODE_LEFT );
+//	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNLISTBMP_WINIDX_TITLE].win), 0 );
+	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_TITLE );
+	StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_00, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_TITLE] );
 }
 
@@ -409,15 +411,15 @@ void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_SEENUM );
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_GETNUM );
 
-	StrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see, 9*8, 4, FCOL_SP00BW, PRINTTOOL_MODE_RIGHT );
+	StrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see, 9*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 	WORDSET_RegisterNumber(
 		wk->wset, 0, 256, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-	ExStrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see_get_num, 13*8, 4, FCOL_SP00BW, PRINTTOOL_MODE_RIGHT );
+	ExStrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see_get_num, 13*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 
-	StrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_get, 11*8, 4, FCOL_SP00BW, PRINTTOOL_MODE_RIGHT );
+	StrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_get, 11*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 	WORDSET_RegisterNumber(
 		wk->wset, 0, 256, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-	ExStrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_see_get_num, 15*8, 4, FCOL_SP00BW, PRINTTOOL_MODE_RIGHT );
+	ExStrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_see_get_num, 15*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_SEENUM] );
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_GETNUM] );
