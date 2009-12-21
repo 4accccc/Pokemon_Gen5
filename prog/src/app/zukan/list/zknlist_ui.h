@@ -39,3 +39,6 @@ enum {
 
 
 extern int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk );
+
+
+extern BOOL ZKNLISTUI_CheckRailHit( u32 * x, u32 * y );

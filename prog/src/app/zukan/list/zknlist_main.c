@@ -474,7 +474,9 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	wk->list = ZKNLISTMAIN_CreateList( MONSNO_END, HEAPID_ZUKAN_LIST );
 
 	// 仮です。
-	for( i=1; i<=MONSNO_END; i++ ){
+//	for( i=1; i<=MONSNO_END; i++ ){
+//	for( i=1; i<=4; i++ ){
+	for( i=1; i<=12; i++ ){
 		if( ( i % 3 ) == 0 ){
 			srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
 			ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
@@ -556,11 +558,11 @@ void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk )
 
 	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
 
-	for( i=0; i<7; i++ ){
+	for( i=0; i<ZKNLISTMAIN_GetListPosMax(wk->list); i++ ){
 		PutListOne( wk, i, scroll+i );
 		PutListOneSub( wk, i, scroll+i-7 );
 		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_M1+i, 16, i*3 );
-		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_S1+i, 16, i*3 );
+		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_S1+i, 16, i*3+3 );
 	}
 
 	ZKNLISTMAIN_PutListCursor( wk, 2, ZKNLISTMAIN_GetListPos(wk->list) );
@@ -601,26 +603,22 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 	// カーソル移動
 	case ZKNLISTMAIN_LIST_MOVE_UP:
 	case ZKNLISTMAIN_LIST_MOVE_DOWN:
-//	if( nowPos != oldPos ){
 		ZKNLISTMAIN_PutListCursor( wk, 1, oldPos );
 		ZKNLISTMAIN_PutListCursor( wk, 2, nowPos );
 		ZKNLISTOBJ_ChgListPosAnm( wk, oldPos, FALSE );
 		ZKNLISTOBJ_ChgListPosAnm( wk, nowPos, TRUE );
 		ZKNLISTOBJ_PutListPosPokeGra( wk, nowPos+nowScroll );
 		return;
-//	}
 
 	// ページスクロール
 	case ZKNLISTMAIN_LIST_MOVE_LEFT:
 	case ZKNLISTMAIN_LIST_MOVE_RIGHT:
-//	if( GFL_STD_Abs(nowScroll-oldScroll) >= 2 ){
 		ZKNLISTMAIN_InitListPut( wk );
+		ZKNLISTOBJ_SetListScrollBarPos( wk );
 		return;
-//	}
 
 	// 上方向にスクロール
 	case ZKNLISTMAIN_LIST_MOVE_SCROLL_UP:
-//	if( nowScroll < oldScroll ){
 		wk->listPutIndex -= 1;
 		if( wk->listPutIndex < 0 ){
 			wk->listPutIndex = 7;
@@ -630,13 +628,13 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 		PutListOne( wk, wk->listPutIndex, nowScroll );
 		PutListOneSub( wk, wk->listPutIndex, nowScroll-7 );
 		ZKNLISTOBJ_PutScrollList( wk, wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
+		ZKNLISTOBJ_SetListScrollBarPos( wk );
 		ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
 		ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+wk->listPutIndex, ZKNLISTBGWFRM_LISTPUT_UP );
 		return;
 
 	// 下方向にスクロール
 	case ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN:
-//	}else if( nowScroll > oldScroll ){
 		{
 			u8	idx = wk->listPutIndex + 7;
 			if( idx >= 8 ){
@@ -647,6 +645,7 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 			PutListOne( wk, idx, nowScroll+6 );
 			PutListOneSub( wk, idx, nowScroll-1 );
 			ZKNLISTOBJ_PutScrollList( wk, idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
+			ZKNLISTOBJ_SetListScrollBarPos( wk );
 			ZKNLISTBGWFRM_PutScrollList( wk, ZKNLISTBGWFRM_IDX_NAME_M1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
 			ZKNLISTBGWFRM_PutScrollListSub( wk, ZKNLISTBGWFRM_IDX_NAME_S1+idx, ZKNLISTBGWFRM_LISTPUT_DOWN );
 			wk->listPutIndex += 1;
@@ -654,11 +653,14 @@ static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s1
 				wk->listPutIndex = 0;
 			}
 		}
-//		}
+		return;
+
+	// スクロール値を直接指定
+	case ZKNLISTMAIN_LIST_MOVE_DIRECT:
+		ZKNLISTMAIN_InitListPut( wk );
 		return;
 	}
 }
-
 
 
 
@@ -737,9 +739,27 @@ s16 ZKNLISTMAIN_GetListScroll( ZUKAN_LIST_WORK * wk )
 	return wk->scroll;
 }
 
+s16 ZKNLISTMAIN_GetListPosMax( ZUKAN_LIST_WORK * wk )
+{
+	return wk->posMax;
+}
+
+s16 ZKNLISTMAIN_GetListMax( ZUKAN_LIST_WORK * wk )
+{
+	return wk->listMax;
+}
+
 s16 ZKNLISTMAIN_GetListCursorPos( ZUKAN_LIST_WORK * wk )
 {
 	return ( wk->pos + wk->scroll );
+}
+
+s16 ZKNLISTMAIN_GetListScrollMax( ZUKAN_LIST_WORK * wk )
+{
+	if( wk->posMax > wk->listMax ){
+		return 0;
+	}
+	return ( wk->listMax - wk->posMax );
 }
 
 STRBUF * ZKNLISTMAIN_GetListStr( ZUKAN_LIST_WORK * wk, u32 pos )
@@ -751,6 +771,12 @@ u32 ZKNLISTMAIN_GetListParam( ZUKAN_LIST_WORK * wk, u32 pos )
 {
 	return wk->dat[pos].prm;
 }
+
+void ZKNLISTMAIN_SetListScroll( ZUKAN_LIST_WORK * wk, s16 scroll )
+{
+	wk->scroll = scroll;
+}
+
 
 
 
@@ -861,4 +887,14 @@ u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk )
 		return ZKNLISTMAIN_LIST_MOVE_RIGHT;
 	}
 	return ZKNLISTMAIN_LIST_MOVE_NONE;
+}
+
+void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 pos )
+{
+	if( pos != wk->scroll ){
+		s16	tmpPos    = wk->pos;
+		s16	tmpScroll = wk->scroll;
+		ZKNLISTMAIN_SetListScroll( wk, pos );
+		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_DIRECT );
+	}
 }

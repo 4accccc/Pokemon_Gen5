@@ -318,6 +318,7 @@ static int MainSeq_ListScroll( ZKNLISTMAIN_WORK * wk )
 		ZKNLISTMAIN_PutListCursor( wk, 2, ZKNLISTMAIN_GetListPos(wk->list) );
 		ZKNLISTOBJ_ChgListPosAnm( wk, ZKNLISTMAIN_GetListPos(wk->list), TRUE );
 		ZKNLISTOBJ_PutListPosPokeGra( wk, ZKNLISTMAIN_GetListCursorPos(wk->list) );
+		ZKNLISTOBJ_SetListScrollBarPos( wk );
 		return MAINSEQ_MAIN;
 	}
 	return MAINSEQ_LIST_SCROLL;
@@ -338,12 +339,18 @@ static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk )
 static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk )
 {
 	u32	x, y;
+	u32	pos;
 
-	if( GFL_UI_TP_GetPointCont( &x, &y ) == FALSE ){
+//	if( GFL_UI_TP_GetPointCont( &x, &y ) == FALSE ){
+	if( ZKNLISTUI_CheckRailHit( &x, &y ) == FALSE ){
 		return MAINSEQ_MAIN;
 	}
 
 	ZKNLISTOBJ_SetScrollBar( wk, y );
+
+	pos = ZKNLISTOBJ_GetListScrollBarPos( wk );
+	ZKNLISTMAIN_SetScrollDirect( wk->list, pos );
+//	ZKNLISTMAIN_SetListScroll( wk, pos );
 
 	return MAINSEQ_LIST_MOVE_BAR;
 }

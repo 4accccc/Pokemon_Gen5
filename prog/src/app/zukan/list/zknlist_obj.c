@@ -745,10 +745,12 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 
 
 	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON+i, 1+i, 0, TRUE );
+//		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON+i, 1+i, 0, TRUE );
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON+i, FALSE );
 	}
 	for( i=0; i<ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, 8+i, 0, FALSE );
+//		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, 8+i, 0, FALSE );
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, FALSE );
 	}
 
 }
@@ -883,4 +885,45 @@ void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
 		py = SCROLL_BAR_DY;
 	}
 	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, py, CLSYS_DRAW_MAIN );
+}
+
+u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
+{
+	u32	max;
+	u32	cnt;
+	s16	x, y;
+
+	ZKNLISTOBJ_GetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, &x, &y, CLSYS_DRAW_MAIN );
+	max = ZKNLISTMAIN_GetListScrollMax( wk->list );
+
+	if( y == SCROLL_BAR_UY ){
+		cnt = 0;
+	}else if( y == SCROLL_BAR_DY ){
+		cnt = max;
+	}else{
+//		cnt = ( ( (max+1) << 8 ) / ( SCROLL_BAR_DY - SCROLL_BAR_UY ) * ( y - SCROLL_BAR_UY ) ) >> 8;
+		cnt = ( ( max << 8 ) / ( SCROLL_BAR_DY - SCROLL_BAR_UY ) * ( y - SCROLL_BAR_UY ) ) >> 8;
+	}
+
+	return cnt;
+}
+
+void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
+{
+	u32	max;
+	s16	scroll;
+	s16	y;
+	
+	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
+	max    = ZKNLISTMAIN_GetListScrollMax( wk->list );
+
+	if( scroll == 0 ){
+		y = SCROLL_BAR_UY;
+	}else if( scroll == max ){
+		y = SCROLL_BAR_DY;
+	}else{
+		y = ( ( ( (SCROLL_BAR_DY-SCROLL_BAR_UY) << 8 ) / max * scroll ) >> 8 ) + SCROLL_BAR_UY;
+	}
+
+	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, y, CLSYS_DRAW_MAIN );
 }

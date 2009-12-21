@@ -215,6 +215,7 @@ extern void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk );
 #define	ZKNLISTMAIN_LIST_MOVE_RIGHT				( 3 )
 #define	ZKNLISTMAIN_LIST_MOVE_SCROLL_UP		( 4 )
 #define	ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN	( 5 )
+#define	ZKNLISTMAIN_LIST_MOVE_DIRECT			( 6 )
 #define	ZKNLISTMAIN_LIST_MOVE_NONE		( 0xffffffff )
 
 extern ZUKAN_LIST_WORK * ZKNLISTMAIN_CreateList( u32 siz, HEAPID heapID );
@@ -223,9 +224,14 @@ extern void ZKNLISTMAIN_AddListData( ZUKAN_LIST_WORK * wk, STRBUF * str, u32 prm
 extern void ZKNLISTMAIN_InitList( ZUKAN_LIST_WORK * wk, s16 pos, s16 posMax, s16 scroll, void * work, pZUKAN_LIST_CALLBACK func );
 extern s16 ZKNLISTMAIN_GetListPos( ZUKAN_LIST_WORK * wk );
 extern s16 ZKNLISTMAIN_GetListScroll( ZUKAN_LIST_WORK * wk );
+extern s16 ZKNLISTMAIN_GetListPosMax( ZUKAN_LIST_WORK * wk );
+extern s16 ZKNLISTMAIN_GetListMax( ZUKAN_LIST_WORK * wk );
 extern s16 ZKNLISTMAIN_GetListCursorPos( ZUKAN_LIST_WORK * wk );
+extern s16 ZKNLISTMAIN_GetListScrollMax( ZUKAN_LIST_WORK * wk );
 extern STRBUF * ZKNLISTMAIN_GetListStr( ZUKAN_LIST_WORK * wk, u32 pos );
 extern u32 ZKNLISTMAIN_GetListParam( ZUKAN_LIST_WORK * wk, u32 pos );
+extern void ZKNLISTMAIN_SetListScroll( ZUKAN_LIST_WORK * wk, s16 scroll );
 extern u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk );
 extern u32 ZKNLISTMAIN_MoveLeft( ZUKAN_LIST_WORK * wk );
 extern u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk );
+extern void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 pos );

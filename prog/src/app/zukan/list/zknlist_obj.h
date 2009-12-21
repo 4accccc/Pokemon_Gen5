@@ -231,3 +231,7 @@ extern void ZKNLISTOBJ_InitScrollList( ZKNLISTMAIN_WORK * wk );
 extern void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg );
 
 extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py );
+
+extern u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk );

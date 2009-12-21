@@ -27,7 +27,7 @@
 static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 {
 	{   0, 167, 128, 247 },		// 00: リスト
-	{   0, 167, 248, 255 },		// 01: レール
+	{   8, 159, 248, 255 },		// 01: レール
 
 	{   0,  95,   0,  95 },		// 02: ポケモン正面絵
 
@@ -50,6 +50,12 @@ static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
+// レールスクロールタッチ座標テーブル
+static const GFL_UI_TP_HITTBL RailHitTbl[] =
+{
+	{   0, 191, 224, 255 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
 
 
 
@@ -108,7 +114,17 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	return ret;
 }
 
-
+/*
 static void CursorMoveCallBack( void * work, int now_pos, int old_pos )
 {
+}
+*/
+
+BOOL ZKNLISTUI_CheckRailHit( u32 * x, u32 * y )
+{
+	if( GFL_UI_TP_HitCont( RailHitTbl ) != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_TP_GetPointCont( x, y );
+		return TRUE;
+	}
+	return FALSE;
 }
