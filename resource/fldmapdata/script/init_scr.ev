@@ -161,7 +161,9 @@ INIT_EVENT_START  ev_init_debug_script
   //メニュー項目「ポケモン」をON
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
   //メニュー項目「ずかん」をON
-	_FLAG_SET( SYS_FLAG_ZUKAN_GET )
+  _FLAG_SET( SYS_FLAG_ZUKAN_GET )
+  //ランニングシューズを入手済みにする
+  _GET_SHOES()
 INIT_EVENT_END
 
 
