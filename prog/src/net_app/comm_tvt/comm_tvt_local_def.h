@@ -12,6 +12,7 @@
 #include "print/printsys.h"
 
 #include "draw_system.h"
+#include "net_app/comm_tvt_sys.h"
 
 //======================================================================
 //	define
@@ -140,6 +141,7 @@ typedef enum
   CTOAS_PEN,
   CTOAS_SUPOITO,
   CTOAS_KESHIGOMU,
+  CTOAS_CALL_BAR,
 }COMM_TVT_OBJ_ANM_SUB;
 
 typedef enum
@@ -170,6 +172,7 @@ typedef struct _CTVT_MIC_WORK CTVT_MIC_WORK;
 
 typedef struct _CTVT_TALK_WORK CTVT_TALK_WORK;
 typedef struct _CTVT_DRAW_WORK CTVT_DRAW_WORK;
+typedef struct _CTVT_CALL_WORK CTVT_CALL_WORK;
 
 //======================================================================
 //	proto
@@ -183,6 +186,7 @@ extern CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work );
 extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
 extern DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work );
 
+extern const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work );
 //êîíléÊìæån
 extern const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work );
 extern ARCHANDLE* COMM_TVT_GetArcHandle( const COMM_TVT_WORK *work );

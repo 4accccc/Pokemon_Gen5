@@ -24,6 +24,7 @@
 #include "ctvt_comm.h"
 #include "ctvt_talk.h"
 #include "ctvt_draw.h"
+#include "ctvt_call.h"
 #include "comm_tvt_local_def.h"
 
 //======================================================================
@@ -71,6 +72,7 @@ struct _COMM_TVT_WORK
   
   CTVT_TALK_WORK   *talkWork;
   CTVT_DRAW_WORK   *drawWork;
+  CTVT_CALL_WORK   *callWork;
 
   DRAW_SYS_WORK   *drawSys;
 
@@ -131,6 +133,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   
   work->talkWork = CTVT_TALK_InitSystem( work , work->heapId );
   work->drawWork = CTVT_DRAW_InitSystem( work , work->heapId );
+  work->callWork = CTVT_CALL_InitSystem( work , work->heapId );
   
   {
     DRAW_SYS_INIT_WORK initWork;
@@ -149,12 +152,31 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
 
   work->mode = CTM_NONE;
-  work->nextMode = CTM_TALK;
+  work->nextMode = CTM_CALL;
+
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
+  
+  switch( work->initWork->mode )
+  {
+  case CTM_TEST:   //テスト用(changeOver
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_SCAN );
+    break;
+  case CTM_PARENT: //親起動
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_PARENT );
+    break;
+  case CTM_CHILD:  //子起動
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_CHILD );
+    CTVT_COMM_SetMacAddress( work , work->commWork , work->initWork->macAddress );
+    break;
+  case CTM_WIFI:   //Wifi起動
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_CONNECTED );
+    break;
+  }
+
 
 }
 
@@ -166,6 +188,7 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   DRAW_SYS_DeleteSystem( work->drawSys );
+  CTVT_CALL_TermSystem( work , work->callWork );
   CTVT_DRAW_TermSystem( work , work->drawWork );
   CTVT_TALK_TermSystem( work , work->talkWork );
 
@@ -188,6 +211,7 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     work->nextMode = CTVT_TALK_Main( work , work->talkWork );
     break;
   case CTM_CALL: //呼び出し
+    work->nextMode = CTVT_CALL_Main( work , work->callWork );
     break;
   case CTM_DRAW: //落書き
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
@@ -507,6 +531,7 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_TALK_TermMode( work , work->talkWork );
     break;
   case CTM_CALL: //呼び出し
+    CTVT_CALL_TermMode( work , work->callWork );
     break;
   case CTM_DRAW: //落書き
     CTVT_DRAW_TermMode( work , work->drawWork );
@@ -520,6 +545,7 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_TALK_InitMode( work , work->talkWork );
     break;
   case CTM_CALL: //呼び出し
+    CTVT_CALL_InitMode( work , work->callWork );
     break;
   case CTM_DRAW: //落書き
     CTVT_DRAW_InitMode( work , work->drawWork );
@@ -552,6 +578,10 @@ CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work )
 DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work )
 {
   return work->drawSys;
+}
+const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work )
+{
+  return work->initWork;
 }
 
 #pragma mark [>outer func (value
@@ -691,6 +721,13 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
   if( pwk == NULL )
   {
     work->initWork = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP , sizeof(COMM_TVT_INIT_WORK) );
+    work->initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
+    work->initWork->mode = CTM_TEST;
+
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      work->initWork->mode = CTM_PARENT;
+    }
   }
   else
   {

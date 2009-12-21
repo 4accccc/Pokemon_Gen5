@@ -12,11 +12,18 @@
 #pragma once
 
 #include "comm_tvt_local_def.h"
+#include "buflen.h"
 //======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
 #define CTVT_COMM_INVALID_MEMBER (0xFF)
+
+//ビーコン収集数
+#define CTVT_COMM_BEACON_NUM (16)
+
+#define CTVT_COMM_NAME_LEN (SAVELEN_PLAYER_NAME+EOM_SIZE)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -38,7 +45,16 @@ typedef enum
   CCFT_MAX,
 }CTVT_COMM_FLAG_TYPE;
 
+typedef enum
+{
+  CCIM_NONE,       //無し(システム用
+  CCIM_END,        //終了(システム用
 
+  CCIM_SCAN,       //サーチ中
+  CCIM_PARENT,     //親になる
+  CCIM_CHILD,      //子になる
+  CCIM_CONNECTED,  //すでにつながってる(Wifi
+}CTVT_COMM_INIT_MODE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -52,6 +68,15 @@ typedef struct
   u8  pad[2];
 }CTVT_COMM_WAVE_HEADER;
 
+//ビーコンデータ
+typedef struct
+{
+  STRCODE name[CTVT_COMM_NAME_LEN];
+  u16     id;
+  u8      connectNum;
+  u8      pad;
+}CTVT_COMM_BEACON;
+
 //======================================================================
 //	proto
 //======================================================================
@@ -62,6 +87,10 @@ extern void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
 extern void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_IsExit( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+extern void CTVT_COMM_SetMode( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_COMM_INIT_MODE mode );
+extern void CTVT_COMM_SetMacAddress( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 *address );
+
+extern const BOOL CTVT_COMM_IsInitNet( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
 extern const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
 extern const BOOL CTVT_COMM_SendWave( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , void* sendData );

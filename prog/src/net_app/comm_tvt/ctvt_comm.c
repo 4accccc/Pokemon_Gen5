@@ -47,6 +47,9 @@ typedef enum
   CCS_INIT_COMM,
   CCS_INIT_COMM_WAIT,
 
+  CCS_REQ_NEGOTIATION,
+  CCS_WAIT_NEGOTIATION,
+  
   CCS_CONNECT,
   
   CCS_DISCONNECT,
@@ -90,12 +93,6 @@ typedef struct
   CTVT_COMM_STATE_USER state;
 }CTVT_MEMBER_STATE;
 
-//ビーコンデータ
-typedef struct
-{
-  u32 dummy;
-}CTVT_COMM_BEACON;
-
 //ワーク
 struct _CTVT_COMM_WORK
 {
@@ -108,6 +105,10 @@ struct _CTVT_COMM_WORK
   CTVT_MEMBER_STATE member[CTVT_MEMBER_NUM];
   void *postPhotoBuf[CTVT_MEMBER_NUM-1];
   u8    PhotobufUseBit;
+  
+  CTVT_COMM_INIT_MODE mode;
+  CTVT_COMM_INIT_MODE nextMode;
+  u8 targetMacAddress[6];
   
   //自身の管理用
   u8 reqCheckBit;
@@ -173,9 +174,11 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   CTVT_COMM_WORK* commWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WORK) );
   
   commWork->parentWork = work;
-  commWork->state = CCS_INIT_COMM;
+  commWork->state = CCS_NONE;
   commWork->connectNum = 1;
   commWork->photoReqBit = 0;
+  commWork->mode = CCIM_NONE;
+  commWork->nextMode = CCIM_NONE;
   
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {
@@ -207,6 +210,15 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->updateTalkMember = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   
+  {
+    //ビーコンの初期化
+    const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( initWork->gameData );
+    
+    MyStatus_CopyNameStrCode( myStatus , commWork->beacon.name , CTVT_COMM_NAME_LEN );
+    commWork->beacon.id = MyStatus_GetID_Low( myStatus );
+    commWork->beacon.connectNum = 1;
+  }
   GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
@@ -241,6 +253,19 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   switch( commWork->state )
   {
   case CCS_NONE:
+    if( commWork->nextMode != CCIM_NONE )
+    {
+      if( commWork->nextMode == CCIM_CONNECTED )
+      {
+        //FIXME 本当はテーブル追加とかの処理
+        commWork->state = CCS_CONNECT;
+        commWork->mode = commWork->nextMode;
+      }
+      else
+      {
+        commWork->state = CCS_INIT_COMM;
+      }
+    }
     break;
   case CCS_INIT_COMM:
     CTVT_COMM_InitComm( work , commWork );
@@ -249,14 +274,49 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_INIT_COMM_WAIT:
     if( GFL_NET_IsInit() == TRUE )
     {
-      GFL_NET_ChangeoverConnect( NULL );
-      commWork->state = CCS_CONNECT;
+      switch( commWork->nextMode )
+      {
+      case CCIM_SCAN:
+        GFL_NET_StartBeaconScan();
+        commWork->state = CCS_CONNECT;
+        break;
+      case CCIM_PARENT:
+        GFL_NET_InitServer();
+        commWork->state = CCS_REQ_NEGOTIATION;
+        break;
+      case CCIM_CHILD:
+        GFL_NET_InitClientAndConnectToParent( commWork->targetMacAddress );
+        commWork->state = CCS_REQ_NEGOTIATION;
+        break;
+      }
+      commWork->mode = commWork->nextMode;
+    }
+    break;
+    
+  case CCS_REQ_NEGOTIATION:
+    if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+    {
+      commWork->state = CCS_WAIT_NEGOTIATION;
+    }
+    break;
+
+  case CCS_WAIT_NEGOTIATION:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE )
+      {
+        commWork->state = CCS_CONNECT;
+      }
     }
     break;
     
   case CCS_CONNECT:
     {
       CTVT_COMM_UpdateComm( work , commWork );
+      if( commWork->mode != commWork->nextMode )
+      {
+        commWork->state = CCS_DISCONNECT;
+      }
     }
     break;
     
@@ -271,7 +331,14 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_DISCONNECT_WAIT:
     if( GFL_NET_IsExit() == TRUE )
     {
-      commWork->state = CCS_FINISH;
+      if( commWork->nextMode == CCIM_END )
+      {
+        commWork->state = CCS_FINISH;
+      }
+      else
+      {
+        commWork->state = CCS_INIT_COMM;
+      }
     }
     break;
   }
@@ -316,7 +383,7 @@ static void CTVT_COMM_InitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     4,                      //_MAXNUM,  //最大接続人数
     110,                    //_MAXSIZE, //最大送信バイト数
-    4,                      //_BCON_GET_NUM,  // 最大ビーコン収集数
+    16,                     //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     FALSE,                  // MP通信＝親子型通信モードかどうか
     GFL_NET_TYPE_WIRELESS,  //通信タイプの指定
@@ -348,6 +415,7 @@ void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   {
     commWork->state = CCS_DISCONNECT;
   }
+  commWork->nextMode = CCIM_END;
 }
 const BOOL CTVT_COMM_IsExit( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
@@ -358,6 +426,37 @@ const BOOL CTVT_COMM_IsExit( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   return FALSE;
 }
 
+//--------------------------------------------------------------
+//	モード変更
+//--------------------------------------------------------------
+void CTVT_COMM_SetMode( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_COMM_INIT_MODE mode )
+{
+  commWork->nextMode = mode;
+}
+
+//--------------------------------------------------------------
+//	マックアドレス設定
+//--------------------------------------------------------------
+void CTVT_COMM_SetMacAddress( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 *address )
+{
+  u8 i;
+  for( i=0;i<6;i++ )
+  {
+    commWork->targetMacAddress[i] = address[i];
+  }
+}
+
+//--------------------------------------------------------------
+//	ネットが始まってるか？
+//--------------------------------------------------------------
+const BOOL CTVT_COMM_IsInitNet( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  if( commWork->state == CCS_CONNECT )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //--------------------------------------------------------------
 // ビーコンデータ取得関数  
@@ -402,7 +501,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     {
       CTVT_COMM_RefureshCommState( work , commWork );
       commWork->connectNum = connectNum;
-      
+      commWork->beacon.connectNum = connectNum;
     }
   }
   

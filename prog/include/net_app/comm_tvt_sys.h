@@ -10,6 +10,8 @@
 //======================================================================
 #pragma once
 
+#include "gamesystem/game_data.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -21,6 +23,14 @@ FS_EXTERN_OVERLAY(comm_tvt);
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  CTM_TEST,   //テスト用(changeOver
+  CTM_PARENT, //親起動
+  CTM_CHILD,  //子起動
+  CTM_WIFI,   //Wifi起動
+}COMM_TVT_INIT_MODE;
+
 
 //======================================================================
 //	typedef struct
@@ -29,7 +39,9 @@ FS_EXTERN_OVERLAY(comm_tvt);
 
 typedef struct
 {
-  u8 dummy;
+  GAMEDATA *gameData;
+  COMM_TVT_INIT_MODE mode;
+  u8  macAddress[6];    //子起動のみ
 }COMM_TVT_INIT_WORK;
 
 
