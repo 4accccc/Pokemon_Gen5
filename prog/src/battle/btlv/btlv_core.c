@@ -1207,6 +1207,40 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   param
+ * @param   dst
+ */
+//----------------------------------------------------------------------------------
+static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
+{
+  switch( param->strType ){
+  case BTL_STRTYPE_STD:
+    BTL_STR_MakeStringStdWithArgArray( dst, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_SET:
+    BTL_STR_MakeStringSet( dst, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_UI:
+    BTL_STR_GetUIString( dst, param->strID );
+    break;
+  case BTL_STRTYPE_WAZAOBOE:
+    BTL_STR_MakeStringWazaOboeWithArgArray( dst, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_YESNO:
+    BTL_STR_MakeStringYesNoWithArgArray( dst, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_WAZA:
+    BTL_STR_MakeStringWaza( dst, param->args[0], param->args[1] );
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+}
+
 
 //=============================================================================================
 /**
@@ -1218,26 +1252,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 {
-  switch( param->strType ){
-  case BTL_STRTYPE_STD:
-    BTL_STR_MakeStringStdWithArgArray( wk->strBuf, param->strID, param->args );
-    break;
-  case BTL_STRTYPE_SET:
-    BTL_STR_MakeStringSet( wk->strBuf, param->strID, param->args );
-    break;
-  case BTL_STRTYPE_WAZAOBOE:
-    BTL_STR_MakeStringWazaOboeWithArgArray( wk->strBuf, param->strID, param->args );
-    break;
-  case BTL_STRTYPE_YESNO:
-    BTL_STR_MakeStringYesNoWithArgArray( wk->strBuf, param->strID, param->args );
-    break;
-  case BTL_STRTYPE_WAZA:
-    BTL_STR_MakeStringWaza( wk->strBuf, param->args[0], param->args[1] );
-  default:
-    GF_ASSERT(0);
-    return;
-  }
-
+  StrParamToString( param, wk->strBuf );
   BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, param->wait );
 }
 //=============================================================================================
@@ -1716,6 +1731,7 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
   return FALSE;
 }
 
+
 //=============================================================================================
 /**
  * ‚Í‚¢^‚¢‚¢‚¦‘I‘ð
@@ -1729,11 +1745,13 @@ void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_
 {
   BTLV_INPUT_YESNO_PARAM* yesnoParam = getGenericWork( wk, sizeof( BTLV_INPUT_YESNO_PARAM ) );
 
-  yesnoParam->yes_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, wk->heapID );
-  yesnoParam->no_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, wk->heapID );
+  yesnoParam->yes_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, GFL_HEAP_LOWID(wk->heapID) );
+  yesnoParam->no_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, GFL_HEAP_LOWID(wk->heapID) );
 
-  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->yes_msg, yes_msg->strID, yes_msg->args );
-  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->no_msg, no_msg->strID, no_msg->args );
+  StrParamToString( yes_msg, yesnoParam->yes_msg );
+  StrParamToString( no_msg,  yesnoParam->no_msg );
+//  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->yes_msg, yes_msg->strID, yes_msg->args );
+//  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->no_msg, no_msg->strID, no_msg->args );
 
   BTLV_SCD_SelectYesNo_Start( wk->scrnD, yesnoParam );
 

@@ -100,6 +100,7 @@ static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
@@ -538,7 +539,15 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         break;
       case SVFLOW_RESULT_POKE_IN_REQ:
         BTL_Printf("空き位置への新ポケ投入リクエスト受け付け\n");
-        setMainProc( server, ServerMain_SelectPokemonIn );
+        {
+          BtlCompetitor competitor = BTL_MAIN_GetCompetitor( server->mainModule );
+          BtlRule rule = BTL_MAIN_GetRule( server->mainModule );
+          if( (competitor == BTL_COMPETITOR_WILD) &&  (rule == BTL_RULE_SINGLE) ){
+            setMainProc( server, ServerMain_ConfirmChangeOrEscape );
+          }else{
+            setMainProc( server, ServerMain_SelectPokemonIn );
+          }
+        }
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
         BTL_Printf("ターン途中のポケ入れ替え発生\n");
@@ -569,9 +578,53 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：自分のポケモンが倒れた時、逃げるか入れ替えるかを選択（野生シングルのみ）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmd( server, BTL_ACMD_SELECT_CHANGE_OR_ESCAPE );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAdapterCmd(server) ){
+      u8 clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
+      const u8* result;
 
+      ResetAdapterCmd( server );
+      result = BTL_ADAPTER_GetReturnData( server->client[clientID].adapter, NULL );
+      if( (*result) == BTL_CLIENTASK_CHANGE ){
+        setMainProc( server, ServerMain_SelectPokemonIn );
+      }else{
+        server->flowResult = BTL_SVFLOW_CreatePlayerEscapeCommand( server->flowWork );
+        SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:
+    if( WaitAdapterCmd(server) ){
+      ResetAdapterCmd( server );
 
-
+      if( server->flowResult ){
+        return TRUE;
+      }else{
+        setMainProc( server, ServerMain_SelectPokemonIn );
+      }
+    }
+    break;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入する
@@ -809,7 +862,7 @@ static BOOL SendActionRecord( BTL_SERVER* server )
   u32   recDataSize;
   recData = MakeSelectActionRecord( server, &recDataSize );
   if( recData != NULL ){
-    BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
+//    BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
   }
@@ -825,7 +878,7 @@ static BOOL SendRotateRecord( BTL_SERVER* server )
   u32   recDataSize;
   recData = MakeRotationRecord( server, &recDataSize );
   if( recData != NULL ){
-    BTL_Printf("ローテーション記録データを送信する (%dbytes)\n", recDataSize);
+//    BTL_Printf("ローテーション記録データを送信する (%dbytes)\n", recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
   }

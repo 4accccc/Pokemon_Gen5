@@ -632,7 +632,7 @@ BOOL BTL_NET_ReturnToServer( const void* data, u32 size )
   );
   if( result ){
     Sys->serverCmdReceived = FALSE;
-    BTL_Printf("サーバへ返信, フラグオフ\n");
+    BTL_Printf("サーバへ返信\n");
   }
   return result;
 }

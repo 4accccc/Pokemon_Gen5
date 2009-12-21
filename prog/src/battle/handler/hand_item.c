@@ -1829,7 +1829,6 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     s32 item_pow = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    BTL_Printf("ピンチリアクションアイテム: n=%d\n", item_pow );
     common_DamageReactCore( flowWk, pokeID, item_pow );
   }
 }

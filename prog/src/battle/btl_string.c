@@ -840,7 +840,6 @@ static void ms_wazaoboe_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int*
 //=============================================================================================
 void BTL_STR_MakeStringYesNoWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strID, const int* args )
 {
-  BTL_Printf(" strID=%d\n", strID);
   ms_yesno_simple( buf, strID, args );
 }
 

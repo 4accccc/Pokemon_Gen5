@@ -854,7 +854,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
   return FALSE;
 
 }
-
+//
 static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
 {
   BTL_POKEPARAM* bpp;
@@ -864,6 +864,33 @@ static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
     scPut_ActFlag_Clear( wk, bpp );
+  }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * サーバコマンド生成（ポケモン死亡・生き返りによるターン最初の入場処理）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    逃げることが出来たらTRUE
+ */
+//--------------------------------------------------------------------------
+BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
+{
+  u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, 0 );
+
+  SCQUE_Init( wk->que );
+
+  if( scproc_NigeruCmd( wk, bpp ) )
+  {
+    wk->escapeClientID = clientID;
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
   }
 }
 
@@ -933,7 +960,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
   BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
 
   SCQUE_Init( wk->que );
-//  scproc_CheckFlyingAllPoke( wk );
 
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
   BTL_SERVER_InitChangePokemonReq( wk->server );
@@ -962,6 +988,8 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
 
   return SVFLOW_RESULT_DEFAULT;
 }
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -1347,7 +1375,7 @@ static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_P
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
   u32 agi = BPP_GetValue( attacker, BPP_AGILITY );
-  BTL_Printf("素の素早さを表示する poke=%d, agi=%d\n", BPP_GetID(attacker), agi);
+  BTL_Printf("素の素早さ poke=%d, agi=%d\n", BPP_GetID(attacker), agi);
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_AGILITY, agi );
@@ -1366,7 +1394,7 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     {
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
         agi = (agi * BTL_MAHI_AGILITY_RATIO) / 100;
-        BTL_Printf("    さらにマヒで%d\n", agi);
+        BTL_Printf("    マヒで%d\n", agi);
       }
     }
     if( agi > BTL_CALC_AGILITY_MAX ){
@@ -1453,7 +1481,6 @@ static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder,
     }
   }
 
-  BTL_Printf("割り込み情報 : 元々=%d, 先頭=%d\n", prevOrder, topOrder );
 
   // どちらも有効値＆自分自身が未実行の先頭より後の順番なら並べ替え
   if( (prevOrder>=0) && (topOrder>=0)
@@ -1464,7 +1491,6 @@ static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder,
       wk->actOrder[prevOrder] = wk->actOrder[prevOrder-1];
       --prevOrder;
     }
-    BTL_Printf("！[%d]番目に割り込み\n", topOrder );
     wk->actOrder[topOrder] = wk->actOrderTmp;
     return topOrder;
   }
@@ -1535,9 +1561,6 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         }
         BTL_Printf("【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n", action.fight.waza, action.fight.targetPos);
         scproc_Fight( wk, bpp, &actOrder->reqWaza, &action );
-        if( wk->flowResult == SVFLOW_RESULT_BTL_QUIT ){
-          PMSND_PlaySE( SEQ_SE_NIGERU );
-        }
         break;
       case BTL_ACTION_ITEM:
         BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action.item.number, action.item.targetIdx);
@@ -1551,12 +1574,11 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         BTL_Printf("【にげる】を処理。\n");
         if( scproc_NigeruCmd( wk, bpp ) )
         {
-          PMSND_PlaySE( SEQ_SE_NIGERU );
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
           wk->escapeClientID = actOrder->clientID;
           BTL_Printf("クライアント[%d]が逃げて終了\n");
         } else {
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+          //SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
         }
         break;
       case BTL_ACTION_MOVE:
@@ -1567,7 +1589,6 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         scPut_CantAction( wk, bpp );
         break;
       case BTL_ACTION_NULL:
-        BTL_Printf("不明な処理\n");
         scPut_CantAction( wk, bpp );
         break;
       }
@@ -1844,6 +1865,7 @@ static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   {
     // @@@ 本来はココで逃げる計算
     // @@@ 今はすばやさ計算をせず誰でも逃げられるようにしている
+    // SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
     // return FALSE;
   }
 
@@ -1861,14 +1883,48 @@ static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  BOOL result = FALSE;
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_NIGERU_CALC );
-    result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
-  BTL_EVENTVAR_Pop();
-  return result;
+  if( !BPP_IsDead(bpp) )
+  {
+    BOOL result = FALSE;
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_NIGERU_CALC );
+      result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+    BTL_EVENTVAR_Pop();
+    return result;
+  }
+  return FALSE;
+}
+static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+  if( !BPP_IsDead(bpp) )
+  {
+    // 逃げ禁止チェック
+    if( !scEvent_SkipNigeruForbid(wk, bpp) )
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+      if( fForbid ){
+        return FALSE;
+      }
+    }
+  }
+
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    if( scEvent_NigeruExMessage(wk, bpp) ){
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    }else{
+//      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess );
+      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+    }
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1884,7 +1940,7 @@ static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 {
   BOOL result = FALSE;
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_NIGERU_FORBID );
     result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
@@ -1905,7 +1961,7 @@ static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 {
   BOOL result = FALSE;
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, result );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_NIGERU_FORBID );
     result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
@@ -1935,32 +1991,6 @@ static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* b
 }
 
 
-static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
-  // 逃げ禁止チェック
-  if( !scEvent_SkipNigeruForbid(wk, bpp) )
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-    if( fForbid ){
-      return FALSE;
-    }
-  }
-
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    if( scEvent_NigeruExMessage(wk, bpp) ){
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    }else{
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess );
-    }
-    Hem_PopState( &wk->HEManager, hem_state );
-  }
-
-  return TRUE;
-}
 //----------------------------------------------------------------------------------
 /**
  * メンバー入場コア
@@ -2045,11 +2075,8 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
     pokeID = BPP_GetID( bpp );
-    BTL_Printf("メンバーIN : pokeID=%d\n", pokeID);
     if( wk->pokeInFlag[ pokeID ] )
     {
-      BTL_Printf("メンバーIN EventCall: pokeID=%d\n", pokeID);
-
       scEvent_AfterMemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       wk->pokeInFlag[ pokeID ] = FALSE;
@@ -4857,7 +4884,6 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     scEvent_ItemEquip( wk, bpp );
 
     scPut_UseItemAct( wk, bpp );
-    BTL_Printf("ポケ[%d]のアイテム(%d)使用\n", BPP_GetID(bpp), itemID);
     scproc_HandEx_Root( wk, itemID );
     Hem_PopState( &wk->HEManager, hem_state_2nd );
     if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
@@ -5555,7 +5581,6 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 
   BTL_Printf("ポケ[%d]の能力ランク(%d)を%d段階、上昇させる\n", BPP_GetID(target), effect, volume );
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
-    BTL_Printf("でももう効果ありませんでした\n");
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
     }
@@ -8372,7 +8397,6 @@ static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
         BTL_EVENTVAR_SetValue( BTL_EVAR_POKE_HIDE, hideState[i] );
         BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_POKE_HIDE );
         if( BTL_EVENTVAR_GetValue(BTL_EVAR_AVOID_FLAG) ){
-          BTL_Printf("ポケ[%d], 状態[%d] なのでワザあたりません\n", BPP_GetID(defender), hideState[i]);
           avoidFlag = TRUE;
           break;
         }
@@ -8589,7 +8613,6 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         return TRUE;
       }
       if( WAZADATA_IsMustCritical(waza) ){
-        BTL_Printf("必ずクリティカルなワザ\n");
         flag = TRUE;
       }else{
         rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
@@ -9093,10 +9116,10 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       {
         if( criticalFlag ){
           power = BPP_GetValue_Critical( calc_attacker, vid );
-          BTL_Printf("クリティカルなので攻撃力=%d\n", power);
+          BTL_Printf("クリティカルで攻撃=%d\n", power);
         }else{
           power = BPP_GetValue( calc_attacker, vid );
-          BTL_Printf("通常ヒットなので攻撃力=%d\n", power);
+          BTL_Printf("通常ヒットで攻撃=%d\n", power);
         }
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
@@ -10214,7 +10237,7 @@ static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk )
 {
   u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
-  BTL_Printf(" *HEM-Push* sp=%d, rp=%d, next_rp=%d\n", wk->stack_ptr, wk->read_ptr, wk->stack_ptr);
+//  BTL_Printf(" *HEM-Push* sp=%d, rp=%d, next_rp=%d\n", wk->stack_ptr, wk->read_ptr, wk->stack_ptr);
   wk->read_ptr = wk->stack_ptr;
   return state;
 }
@@ -10223,7 +10246,7 @@ static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state )
 {
   wk->stack_ptr = (state >> 16) & 0xffff;
   wk->read_ptr  = state & 0xffff;
-  BTL_Printf(" *HEM-Pop* sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
+//  BTL_Printf(" *HEM-Pop* sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
 }
 
 static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk )
@@ -10237,7 +10260,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
   {
     BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*)(&wk->workBuffer[wk->read_ptr]);
     wk->read_ptr += header->size;
-    BTL_Printf(" *HEM-Read sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
+//    BTL_Printf(" *HEM-Read sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
 
     GF_ASSERT( header->equip < BTL_HANDEX_MAX );
     GF_ASSERT( wk->read_ptr <= wk->stack_ptr );
@@ -10913,7 +10936,6 @@ static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER
 {
   BTL_HANDEX_PARAM_KILL* param = (BTL_HANDEX_PARAM_KILL*)param_header;
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_Printf("ポケ[%d]を強制的にひんし\n", param->pokeID);
   if( !BPP_IsDead(pp_target) ){
     scproc_KillPokemon( wk, pp_target );
     handexSub_putString( wk, &param->exStr );
@@ -11166,8 +11188,6 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
-  BTL_Printf("元々のとくせい=%d, 変わりたいとくせい=%d\n", prevTokusei, param->tokuseiID);
-
   if( ( param->tokuseiID != prevTokusei )
   &&  !BTL_CALC_TOK_CheckCantChange(param->tokuseiID)
   ){
@@ -11376,7 +11396,6 @@ static u8 scproc_HandEx_counter( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   const BTL_HANDEX_PARAM_COUNTER* param = (const BTL_HANDEX_PARAM_COUNTER*)(param_header);
 
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_Printf("ポケ[%d]のカウンタ(%d)を %dにセット\n", param->pokeID, param->counterID, param->value);
   SCQUE_PUT_OP_SetPokeCounter( wk->que, param->pokeID, param->counterID, param->value );
   BPP_COUNTER_Set( target, param->counterID, param->value );
   return 1;
@@ -11501,7 +11520,6 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BPP_HpPlus( target, param->recoverHP );
   SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
   wk->pokeDeadFlag[param->pokeID] = FALSE;
-  BTL_Printf("回復HP量=%d ... %d\n", param->recoverHP, BPP_GetValue(target,BPP_HP));
   handexSub_putString( wk, &param->exStr );
   return 1;
 }

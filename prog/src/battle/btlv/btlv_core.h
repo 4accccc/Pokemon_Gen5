@@ -303,6 +303,9 @@ extern BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result );
 extern void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza );
 extern BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result );
 
+extern void BTLV_StartSelectChangeOrEscape( BTLV_CORE* wk );
+extern BOOL BTLV_WaitSelectChangeOrEscape( BTLV_CORE* wk, u8* fSelect );
+
 //-----------------------------------------------------------
 // äeéÌâ∫êøÇØÇ©ÇÁåƒÇ—èoÇ≥ÇÍÇÈä÷êî
 

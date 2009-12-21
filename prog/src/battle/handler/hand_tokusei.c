@@ -976,7 +976,6 @@ static void handler_SlowStart_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( (BPP_GetMonsNo(bpp) == MONSNO_REZIGIGASU)
     &&  (BPP_GetTurnCount(bpp) < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
     ){
-      BTL_Printf("まだスロースタートなので素早さダウン\n");
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SLOWSTART_AGIRATIO );
     }
   }
@@ -993,7 +992,6 @@ static void handler_SlowStart_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
       {
-        BTL_Printf("まだスロースタートなので攻撃ダウン\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SLOWSTART_ATKRATIO );
       }
     }
@@ -1614,7 +1612,6 @@ static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       // ダメージタイプが特殊の時、防御上昇
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
       {
-        BTL_Printf("ふしぎなうろこ発動したよ\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
       }
     }

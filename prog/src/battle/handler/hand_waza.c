@@ -926,7 +926,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
         }
       }
       else if( fRegistered ){
-        BTL_Printf("ワザハンドラ[%d]はすでに登録済み\n", waza);
+  //      BTL_Printf("ワザハンドラ[%d]はすでに登録済み\n", waza);
         return TRUE;
       }
       return FALSE;
@@ -956,12 +956,12 @@ static BOOL is_registable( u8 pokeID, WazaID waza, u8* fRegistered )
   while( factor )
   {
     if( BTL_EVENT_FACTOR_GetSubID(factor) == waza ){
-      BTL_Printf("既に同じワザが登録されている\n");
+  //    BTL_Printf("既に同じワザが登録されている\n");
       *fRegistered = TRUE;
       return FALSE;
     }
     if( ++cnt > EVENT_WAZA_STICK_MAX ){
-      BTL_Printf("同じポケモン[%d]の貼り付きワザが%dを越えた\n", pokeID, EVENT_WAZA_STICK_MAX);
+//      BTL_Printf("同じポケモン[%d]の貼り付きワザが%dを越えた\n", pokeID, EVENT_WAZA_STICK_MAX);
       return FALSE;
     }
     factor = BTL_EVENT_GetNextFactor( factor );
@@ -988,7 +988,6 @@ void BTL_HANDLER_Waza_Remove( const BTL_POKEPARAM* pp, WazaID waza )
     if( (BTL_EVENT_FACTOR_GetSubID(factor) == waza)
     &&  (BTL_EVENT_FACTOR_GetWorkValue(factor, WORKIDX_STICK) == 0)
     ){
-      BTL_Printf("pokeID[%d], waza[%d]ハンドラ削除\n", pokeID, waza);
       BTL_EVENT_FACTOR_Remove( factor );
     }
     factor = next;
@@ -1350,7 +1349,7 @@ static void handler_Tobigeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u32 maxHP = BPP_GetValue( target, BPP_MAX_HP );
 
-    BTL_Printf("与えるハズだったダメージ=%d, MaxHP=%d\n", damage, maxHP);
+//    BTL_Printf("与えるハズだったダメージ=%d, MaxHP=%d\n", damage, maxHP);
     damage /= 2;
     maxHP /= 2;
     if( damage > maxHP ){
@@ -4741,11 +4740,9 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     for(t=0; t<3; ++t)
     {
       cnt = BPP_WAZADMGREC_GetCount( bpp, t );
-      BTL_Printf("%dターン前のダメージ受け回数=%d...\n", t, cnt);
       if( cnt ){
         BPP_WAZADMG_REC  rec;
         BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
-        BTL_Printf("ターゲットをポケ%dに確定\n", rec.pokeID);
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, rec.pokeID );
         break;
       }
@@ -4759,11 +4756,9 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 dmg_sum = gaman_getTotalDamage( bpp );
-    BTL_Printf("３ターンダメージ合計:%d\n", dmg_sum);
     if( dmg_sum ){
       dmg_sum *= 2;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
-      BTL_Printf("がまん３ターン目：ダメージ吐き出し=%d\n", dmg_sum);
     }
     work[0] = GAMAN_STATE_END;
     gaman_ReleaseStick( flowWk, pokeID, work );
@@ -4776,10 +4771,8 @@ static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 dmg_sum = gaman_getTotalDamage( bpp );
-    BTL_Printf("３ターンダメージ合計:%d\n", dmg_sum);
     if( dmg_sum == 0 ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-      BTL_Printf("がまん３ターン目：ダメージ受けてないので失敗\n");
     }
     work[0] = GAMAN_STATE_END;
     gaman_ReleaseStick( flowWk, pokeID, work );
@@ -4811,7 +4804,6 @@ static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp )
   for(t=0; t<3; ++t)
   {
     cnt = BPP_WAZADMGREC_GetCount( bpp, t );
-    BTL_Printf("%dターン前のダメージ受け総数=%d\n", t, cnt);
     for(i=0; i<cnt; ++i)
     {
       BPP_WAZADMGREC_Get( bpp, t, i, &rec );
@@ -4935,8 +4927,6 @@ static void handler_Itamiwake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     param->pokeID[1] = target_pokeID;
     param->volume[1] = hp_avrg - hp_target;
 
-    BTL_Printf("ポケ[%d] のHP %d -> %d : value=%d\n", param->pokeID[0], hp_me, hp_avrg, param->volume[0] );
-    BTL_Printf("ポケ[%d] のHP %d -> %d : value=%d\n", param->pokeID[1], hp_me, hp_avrg, param->volume[1] );
 
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
@@ -5248,8 +5238,6 @@ static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
         param->next_type = PokeTypePair_MakePure( next_type );
-        BTL_Printf("対象ポケ=%d, そのワザ=%d, そのタイプ=%d, 抵抗タイプ=%d\n",
-            BPP_GetID(bpp), waza, type, param->next_type);
         param->pokeID = pokeID;
       }
     }

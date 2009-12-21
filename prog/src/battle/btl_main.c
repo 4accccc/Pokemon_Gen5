@@ -278,7 +278,6 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
   if( wk->mainLoop( wk ) )
   {
-    BTL_Printf("バトルメインプロセス終了します\n");
     checkWinner( wk );
     Bspstore_RecordData( wk );
     reflectPartyData( wk );

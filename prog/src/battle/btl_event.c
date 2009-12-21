@@ -31,7 +31,7 @@ enum {
 
   // 登録できるイベントファクター最大数（66 + 18 + 18 + 6) = 108
   FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF,
-  EVENTVAL_STACK_DEPTH = 128,   ///< イベント変数スタックの容量
+  EVENTVAL_STACK_DEPTH = 96,   ///< イベント変数スタックの容量
 
 };
 
