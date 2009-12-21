@@ -736,6 +736,8 @@ const GFL_PROC_DATA	TownMap_ProcData	=
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
+  BOOL is_debug;
+
 	TOWNMAP_WORK	*p_wk;
 	TOWNMAP_PARAM	*p_param	= p_param_adrs;
 	u16	data_len;
@@ -750,6 +752,8 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(TOWNMAP_WORK), HEAPID_TOWNMAP );
 	GFL_STD_MemClear( p_wk, sizeof(TOWNMAP_WORK) );
 	p_wk->p_param	= p_param;
+
+  is_debug  = p_wk->p_param->mode == TOWNMAP_MODE_DEBUGSKY;
 
 	//共通システム作成---------------------
 	//フォント
@@ -837,7 +841,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 		p_ev		= GAMEDATA_GetEventWork( p_gdata );
 #endif //DEBUG_GAMESYS_NONE
 		PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh,
-				p_ev, HEAPID_TOWNMAP, FALSE );
+				p_ev, HEAPID_TOWNMAP, is_debug );
 	}
 
 	//カーソル作成
@@ -2588,11 +2592,14 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 		}
 
 		//TOWNMAP_DATA_PARAM_SKY_FLAG
-#ifdef PM_DEBUG
-		p_wk->is_sky	= TRUE;
-#else
-		p_wk->is_sky	= p_wk->is_arrive && TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_SKY_FLAG );
-#endif
+    if( is_debug )
+    {
+      p_wk->is_sky  = TRUE;
+    }
+    else
+    { 
+      p_wk->is_sky	= p_wk->is_arrive && TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_SKY_FLAG );
+    }
 	}
 
 	//タイプ別設定
