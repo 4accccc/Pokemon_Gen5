@@ -18,7 +18,8 @@ extern "C" {
 
 //DMA‚ðŽg‚¤Ží•Ê
 typedef enum {
-  GFL_DMA_NET_NO = 1,
+  GFL_DMA_FS_NO = 1,
+  GFL_DMA_NET_NO = 2,
   GFL_DMA_GX_NO= 3,
 } GFL_DMA_NO ;
 
