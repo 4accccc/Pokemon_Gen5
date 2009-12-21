@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T20:55:46"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T21:00:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -507,13 +507,13 @@
 ３つの　ボールに[BE:00:ページ切り替え（行送り）]
 それぞれ　ポケモンが　はいっているね[BE:01:ページ切り替え（クリア）]
 どんな　ポケモンか　しりたければ
-モンスターボールを　しらべなよ[BE:01:ページ切り替え（クリア）]</language>
+モンスターボールを　しらべなよ</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『オレも　そのつもり[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]
 ３つの　ボールに[BE:00:ページ切り替え（行送り）]
 それぞれ　ポケモンが　入っているね[BE:01:ページ切り替え（クリア）]
 どんな　ポケモンか　知りたければ
-モンスターボールを　調べなよ[BE:01:ページ切り替え（クリア）]</language>
+モンスターボールを　調べなよ</language>
 	</row>
 
 	<row id="msg_t01r0102_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -537,10 +537,10 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『どの　ポケモンにするか
 まよっちゃうよね[BE:00:ページ切り替え（行送り）]
-だって　みんな　かわいいもん</language>
+だって　みんな　かわいいもん[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『どの　ポケモンにするか
 迷っちゃうよね[BE:00:ページ切り替え（行送り）]
-だって　みんな　かわいいもん</language>
+だって　みんな　かわいいもん[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_white_04">
