@@ -31,6 +31,7 @@
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
 #include "app/bag.h" // BAG_PARAM
+#include "app/zukan.h" // 図鑑
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/townmap.h" //TOWNMAP_PARAM
@@ -165,7 +166,9 @@ static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk );
 static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_adrs);
 //図鑑
-static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param );
+//static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param );
+static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
+static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adrs);
 //ステータス
 static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_PokeStatus(PROCLINK_WORK* wk,void* param_adrs);
@@ -237,12 +240,15 @@ static const struct
   },
   //EVENT_PROCLINK_CALL_ZUKAN,
   { 
-    0 , NULL , NULL, NULL, 
-    FMenuEvent_Zukan,
+		FS_OVERLAY_ID(zukan),
+		&ZUKAN_ProcData,
+    FMenuCallProc_Zukan,
+    FMenuReturnProc_Zukan,
+//    FMenuEvent_Zukan,
+		NULL,
   },
   //EVENT_PROCLINK_CALL_BAG,          
   { 
-
     FS_OVERLAY_ID(bag) , 
     &ItemMenuProcData  ,
     FMenuCallProc_Bag,
@@ -251,7 +257,6 @@ static const struct
   },
   //EVENT_PROCLINK_CALL_TRAINERCARD,  
   { 
-
     TRCARD_OVERLAY_ID, 
     &TrCardSysProcData ,
     FMenuCallProc_TrainerCard,
@@ -995,6 +1000,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
  *  @param  param   起動時引数
  */
 //-----------------------------------------------------------------------------
+/*
 static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
 { 
   GMEVENT * subevent = createFMenuMsgWinEvent( wk->param->gsys, wk->heapID,
@@ -1002,6 +1008,46 @@ static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
   GMEVENT_CallEvent(wk->event, subevent);
 
   wk->result  = RETURNFUNC_RESULT_RETURN;
+}
+*/
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CALL関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param   起動時引数
+ *  @param  pre     一つ前のプロック
+ *  @param  void* pre_param_adrs  一つ前のプロックパラメータ
+ *
+ *  @return プロセスパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
+{
+	ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
+
+	prm->callMode = ZUKAN_MODE_LIST;
+
+	return prm;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  RETURN関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param_adrs  自分のプロックパラメータ
+ *
+ *  @return   RETURNFUNC_RESULT_RETURN,     //メニューに戻る
+ *            RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
+ *            RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
+ *            RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
+ *            RETURNFUNC_RESULT_NEXT,       //次のプロセスへ行く
+ */ 
+//-----------------------------------------------------------------------------
+static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adrs)
+{
+	ZUKAN_PARAM * prm = param_adrs;
+  return RETURNFUNC_RESULT_RETURN;
 }
 
 //-------------------------------------
