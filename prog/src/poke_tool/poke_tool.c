@@ -3444,10 +3444,10 @@ void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level)
 
 //==================================================================
 /**
- * 指定したレベルにポケモンパラメータを補正します
+ * ポケモンパラメータ構造体をコピー
  *
- * @param   pp		  対象のポケモンへのポインタ
- * @param   level		レベル
+ * @param   src コピー元
+ * @param   dst コピー先
  */
 //==================================================================
 void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
