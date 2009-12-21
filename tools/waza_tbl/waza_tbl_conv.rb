@@ -168,7 +168,7 @@ end
     cnt += 1
   }
 
-  fp_wazano.printf( "#define\t\tWAZANO_MAX\t\t\t\t\t\t( %d )\n", cnt - 1 )
+  fp_wazano.printf( "#define\t\tWAZANO_MAX\t\t\t\t\t\t( %d )\n", cnt )
   fp_wazano.close
 
   fp_hash.printf("\t}\n" )
