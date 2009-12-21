@@ -341,6 +341,7 @@ EVENT_START   ev_pos_d01r0101_support_03
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_03)
 	_OBJ_ANIME_WAIT()
 	
+	
 	//プレイヤーが通る3グリッド分をアニメを用意
     SWITCH $POSZ
 	CASE 22 THEN
@@ -503,16 +504,17 @@ _ANIME_LABEL	anm_d01r0101_player_pos_z24
 _ANIME_LABEL	anm_d01r0101_support_02
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_DIR_R,16
-	_ANIME_DATA	AC_DIR_L,16
-	_ANIME_DATA	AC_DIR_R,16
-	_ANIME_DATA	AC_DIR_L,16
+	_ANIME_DATA	AC_DIR_R,24
+	_ANIME_DATA	AC_DIR_L,24
+	_ANIME_DATA	AC_DIR_R,24
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：POS踏むとサポートが気づいて駆け寄って来る  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_03
+	_ANIME_DATA	AC_DIR_U,8
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 

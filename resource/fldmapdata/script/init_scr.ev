@@ -31,6 +31,8 @@ init_flags:
 	//R03道路：ハカイ団と遭遇イベント
 	_FLAG_SET( FV_R03_RIVAL_01 )
 	_FLAG_SET( FV_R03_SUPPORT_01 )
+	//R03道路：育て屋じいさん
+	_FLAG_SET( FV_R03_SODATEYA_01 )
 
 	//カラクサタウン：演説イベント
 	_FLAG_SET( FV_T02_SAGE )
