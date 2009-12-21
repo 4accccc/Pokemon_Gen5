@@ -1,4 +1,0 @@
-"op001_LZ.bin" 
-"op002_LZ.bin" 
-"op003_LZ.bin" 
-"op004_LZ.bin" 

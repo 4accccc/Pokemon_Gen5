@@ -22,7 +22,6 @@ REM ===========================================================
 REM アーカイブ作成＆コピー
 REM ===========================================================
 nnsarc -c -l -n -i op_demo -S arclist.txt
-nnsarc -c -l -n -i op_demo_dmy -S arc_dmy.txt
 
 REM ===========================================================
 REM narcコピー
@@ -30,7 +29,6 @@ REM ===========================================================
 REM copy op_demo.naix ..\..\prog\demo\command_demo
 copy op_demo.naix ..\..\prog\arc
 copy op_demo.narc ..\..\prog\arc
-copy op_demo_dmy.narc ..\..\prog\arc
 
 REM ===========================================================
 REM 中間ファイル削除
