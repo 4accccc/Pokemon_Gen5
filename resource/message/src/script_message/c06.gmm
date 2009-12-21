@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T18:00:37"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T19:36:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -691,8 +691,10 @@
 	<row id="msg_c06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラクター">看板：街</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">フキヨセシティ
+かぜが　はなを　あつめる　まち</language>
+		<language name="JPN_KANJI" width="256">フキヨセシティ
+風が　花を　集める　街</language>
 	</row>
 
 	<flowchart-group-list>
