@@ -2179,19 +2179,31 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   }
 
   // 通常のアイテム処理
-  hem_state = Hem_PushState( &wk->HEManager );
-  for(i=0; i<NELEMS(ItemParallelEffectTbl); ++i)
   {
-    itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemParallelEffectTbl[i].effect );
-    if( itemParam ){
-      if( !ItemParallelEffectTbl[i].func(wk, target, itemID, itemParam, actParam) )
-      {
-        scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_NoEffect, 0, NULL );
+    BOOL fEffective = FALSE;
+    hem_state = Hem_PushState( &wk->HEManager );
+    for(i=0; i<NELEMS(ItemParallelEffectTbl); ++i)
+    {
+      itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemParallelEffectTbl[i].effect );
+      if( itemParam ){
+        if( ItemParallelEffectTbl[i].func(wk, target, itemID, itemParam, actParam) ){
+          fEffective = TRUE;
+        }
       }
     }
+    // 使用効果あり
+    if( fEffective )
+    {
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      if( wk->bagMode != BBAG_MODE_SHOOTER ){
+        BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
+      }
+    }
+    else{
+      scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_NoEffect, 0, NULL );
+    }
+    Hem_PopState( &wk->HEManager, hem_state );
   }
-  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-  Hem_PopState( &wk->HEManager, hem_state );
 }
 
 //----------------------------------------------------------------------------------

@@ -297,7 +297,6 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
     if( sv->mainProc( sv, &sv->seq ) )
     {
       sv->escapeClientID = BTL_SVFLOW_GetEscapeClientID( sv->flowWork );
-      BTL_Printf( "逃げクライアントID=%d\n", sv->escapeClientID );
       SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, &sv->escapeClientID, sizeof(sv->escapeClientID) );
       sv->quitStep = QUITSTEP_CORE;
     }
@@ -358,7 +357,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     BTL_EVENT_InitSystem();
-    BTL_Printf("バトルセットアップコマンド発行\n");
     SetAdapterCmd( server, BTL_ACMD_WAIT_SETUP );
     (*seq)++;
     /* fallthru */
@@ -369,7 +367,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
       if( server->que->writePtr )
       {
-        BTL_Printf("全ポケ出場後、最初の再生コマンド発行\n");
         SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
         (*seq)++;
       }

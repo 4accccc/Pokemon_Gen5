@@ -2551,9 +2551,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BTL_Printf(" GetExp with Levelup ... level=%d ->", BPP_GetValue(bpp, BPP_LEVEL) );
       BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
-      BTL_PrintfSimple(" %d\n", BPP_GetValue(bpp, BPP_LEVEL));
       BPP_HpPlus( bpp, args[2] );
 
       if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
@@ -2774,7 +2772,6 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTL_Printf("ボールなげアクション:itemID=%d, Pos=%d, ゆれ回数=%d\n", args[4], args[0], args[1]);
       BTLV_EFFECT_BallThrow( vpos, args[4], args[1], args[2] );
       (*seq)++;
     }
@@ -3102,7 +3099,6 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_SICK_CONT cont;
   cont.raw = args[2];
-  BTL_Printf("状態異常コード:%d\n", args[1]);
   BPP_SetWazaSick( pp, args[1], cont );
   return TRUE;
 }
@@ -3129,7 +3125,6 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
     BTL_POKEPARAM* bpp;
     if( posIdx != memberIdx ){
-      BTL_Printf("クライアント側：%d <-> %d ポケ入れ替え\n", posIdx, memberIdx);
       BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
     }
     BTL_Printf("メンバーイン 位置 %d <- %d にいたポケ\n", posIdx, memberIdx);

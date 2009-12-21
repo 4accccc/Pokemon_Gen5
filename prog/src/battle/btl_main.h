@@ -219,6 +219,7 @@ static inline BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
  *  セーブデータアクセス
  */
 //----------------------------------------------------------------------------------------------
+extern void  BTL_MAIN_DecrementPlayerItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID );
 extern MYITEM_PTR BTL_MAIN_GetItemDataPtr( BTL_MAIN_MODULE* wk );
 extern BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk );
 
