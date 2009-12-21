@@ -53,18 +53,14 @@ DEFINE_LOCAL party_battle_num  // 戦闘可能なポケモン数
 //======================================================================
 get_sodateya_state:
 {
-  DEFINE_LOCAL flag_no
-
   _CHECK_SODATEYA_HAVE_EGG( sodateya_have_egg )   // タマゴの有無
   _GET_SODATEYA_POKEMON_NUM( sodateya_poke_num )  // 預けポケの数
-  $scenario_flag = TRUE   // @todo 【仮】シナリオフラグ
 
   // 初回会話フラグ
-  $flag_no = FE_SODATEYA_FIRSTTALK
   _FLAG_CHECK( FE_SODATEYA_FIRSTTALK, first_talk )
-  //_FLAG_CHECK_WK flag_no, first_talk  
 
   // 預けポケ最大数
+  _FLAG_CHECK( FE_SODATEYAOLDMAN_OPEN, scenario_flag )
   IF $scenario_flag == TRUE THEN
     $sodateya_poke_max = 2
   ELSE
