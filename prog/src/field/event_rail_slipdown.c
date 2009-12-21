@@ -221,7 +221,7 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       if( !result )
       {
         OS_TPrintf( "slipdown ‰º‚ÌƒŒ[ƒ‹‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB\n" );
-        GF_ASSERT( result );
+        //GF_ASSERT( result );
         return GMEVENT_RES_FINISH;
       }
 
