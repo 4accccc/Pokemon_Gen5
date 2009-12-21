@@ -13,6 +13,7 @@
 #include "field/field_subscreen.h"
 #include "fieldmap.h"
 #include "event_mapchange.h"
+#include "event_subscreen.h"
 
 
 //==============================================================================

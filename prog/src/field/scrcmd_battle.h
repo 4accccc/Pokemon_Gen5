@@ -20,6 +20,8 @@ extern VMCMD_RESULT EvCmdTrainerFlagSet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerFlagReset( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdWildBattleRevengeCheck( VMHANDLE *core, void *wk );
+
 extern VMCMD_RESULT EvCmdWildLose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk );
 
