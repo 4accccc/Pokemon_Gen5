@@ -63,6 +63,11 @@ typedef enum
 //=====================================
 typedef struct _NAMEIN_KEYMAP NAMEIN_KEYMAP;
 
+//-------------------------------------
+///	名前入力データワークハンドル
+//=====================================
+typedef struct _NAMEIN_KEYMAP_HANDLE NAMEIN_KEYMAP_HANDLE;
+
 //=============================================================================
 /**
  *					キー配列データの外部公開
@@ -71,6 +76,11 @@ typedef struct _NAMEIN_KEYMAP NAMEIN_KEYMAP;
 //データ読みこみ
 extern NAMEIN_KEYMAP *NAMEIN_KEYMAP_Alloc( NAMEIN_KEYMAPTYPE type, HEAPID heapID );
 extern void NAMEIN_KEYMAP_Free( NAMEIN_KEYMAP *p_wk );
+
+//メモリに全データをおいて、読み込む版
+extern NAMEIN_KEYMAP_HANDLE * NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID heapID );
+extern void NAMEIN_KEYMAP_HANDLE_Free( NAMEIN_KEYMAP_HANDLE *p_handle );
+extern NAMEIN_KEYMAP *NAMEIN_KEYMAP_HANDLE_GetData( NAMEIN_KEYMAP_HANDLE *p_handle, NAMEIN_KEYMAPTYPE type );
 
 //データ取得
 extern u16 NAMEIN_KEYMAP_GetWidth( const NAMEIN_KEYMAP *cp_wk );

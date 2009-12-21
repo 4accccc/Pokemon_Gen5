@@ -62,6 +62,15 @@ struct _NAMEIN_STRCHANGE
 	CHANGECODE	word[0];
 } ;
 
+//-------------------------------------
+///	ハンドル
+//=====================================
+struct _NAMEIN_KEYMAP_HANDLE
+{ 
+  NAMEIN_KEYMAP *p_data[ NAMEIN_KEYMAPTYPE_MAX ];
+};
+
+
 //=============================================================================
 /**
  *	プロトタイプ宣言
@@ -107,6 +116,64 @@ void NAMEIN_KEYMAP_Free( NAMEIN_KEYMAP *p_wk )
 {	
 	GFL_HEAP_FreeMemory( p_wk );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリ上に全データをおくためのハンドル作成
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return KEYMAPをすべてメモリ上におくためのワーク
+ */
+//-----------------------------------------------------------------------------
+NAMEIN_KEYMAP_HANDLE * NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID heapID )
+{ 
+  NAMEIN_KEYMAP_HANDLE *p_wk;
+  p_wk= GFL_HEAP_AllocMemory( heapID, sizeof(NAMEIN_KEYMAP_HANDLE) );
+  GFL_STD_MemClear( p_wk, sizeof(NAMEIN_KEYMAP_HANDLE) );
+
+  {
+    int i;
+    for( i = 0; i < NAMEIN_KEYMAPTYPE_MAX; i++ )
+    { 
+      p_wk->p_data[i] = NAMEIN_KEYMAP_Alloc( i, heapID );
+    }
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハンドル破棄
+ *
+ *	@param	NAMEIN_KEYMAP_HANDLE *p_handleハンドル
+ */
+//-----------------------------------------------------------------------------
+void NAMEIN_KEYMAP_HANDLE_Free( NAMEIN_KEYMAP_HANDLE *p_handle )
+{ 
+  {
+    int i;
+    for( i = 0; i < NAMEIN_KEYMAPTYPE_MAX; i++ )
+    { 
+      NAMEIN_KEYMAP_Free( p_handle->p_data[i] );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_handle );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハンドルからデータを取得
+ *
+ *	@param	NAMEIN_KEYMAP_HANDLE *p_handle ハンドル
+ */
+//-----------------------------------------------------------------------------
+NAMEIN_KEYMAP *NAMEIN_KEYMAP_HANDLE_GetData( NAMEIN_KEYMAP_HANDLE *p_handle, NAMEIN_KEYMAPTYPE type )
+{ 
+  return p_handle->p_data[ type ];
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	データ幅を取得

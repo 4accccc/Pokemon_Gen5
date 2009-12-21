@@ -86,6 +86,12 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 #define MATH_ROUND(x,min,max)		(x < min? max: x > max ? min: x)
 
 //-------------------------------------
+///	ヒープサイズ
+//=====================================
+#define NAMEIN_HEAP_HIGH_SIZE (0x90000)
+#define NAMEIN_HEAP_LOW_SIZE (0x40000)
+
+//-------------------------------------
 ///	BGフレーム
 //=====================================
 enum
@@ -483,6 +489,12 @@ typedef struct
 	BOOL						is_change_anm;		//モード切替のアニメリクエスト
 	NAMEIN_INPUTTYPE change_mode;			//モード切替する入力モード（かな・ABCとか）
 	BOOL						is_btn_move;			//ボタンも動作するか
+
+  void              *p_scr_adrs[2];
+  NNSG2dScreenData  *p_scr[2];
+
+  NAMEIN_KEYMAP_HANDLE *p_keymap_handle;
+
 } KEYBOARD_WORK;
 //-------------------------------------
 ///	アイコン
@@ -518,6 +530,9 @@ typedef struct
 
 	//キーボード
 	KEYBOARD_WORK	keyboard;
+
+  //キーマップデータ
+  NAMEIN_KEYMAP_HANDLE *p_keymap_handle;
 
 	//上画面ウィンドウ
 	MSGWND_WORK		msgwnd;
@@ -602,7 +617,7 @@ static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 //-------------------------------------
 ///	KEYMAP
 //=====================================
-static void KEYMAP_Create( KEYMAP_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID );
+static void KEYMAP_Create( KEYMAP_WORK *p_wk, NAMEIN_INPUTTYPE mode, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID );
 static void KEYMAP_Delete( KEYMAP_WORK *p_wk );
 static KEYMAP_KEYTYPE KEYMAP_GetKeyInfo( const KEYMAP_WORK *cp_wk, const GFL_POINT *cp_cursor, STRCODE *p_code );
 static BOOL KEYMAP_GetTouchCursor( const KEYMAP_WORK *cp_wk, const GFL_POINT *cp_trg, GFL_POINT *p_cursor );
@@ -622,7 +637,7 @@ static KEYMAP_KEYTYPE KeyMap_QWERTY_GetKeyType( const GFL_POINT *cp_cursor, GFL_
 //-------------------------------------
 ///	KEYBOARD_WORK
 //=====================================
-static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, HEAPID heapID );
+static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID );
 static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk );
 static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput );
 static KEYBOARD_STATE KEYBOARD_GetState( const KEYBOARD_WORK *cp_wk );
@@ -898,6 +913,10 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	NAMEIN_PARAM	*p_param;
 	NAMEIN_INPUTTYPE	mode;
 
+  u32 heap_size;
+  GFL_FONT_LOADTYPE font_load;
+  GflMsgLoadType    msg_load;
+
 	//引数受け取り
 	p_param	= p_param_adrs;
 
@@ -907,9 +926,23 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 		cp_misc	= SaveData_GetMisc( SaveControl_GetPointer() );
 		mode		= MISC_GetNameInMode( cp_misc, p_param->mode );
 	}
+  
+  if( 1 )
+  { 
+    heap_size = NAMEIN_HEAP_HIGH_SIZE;
+    font_load = GFL_FONT_LOADTYPE_MEMORY;
+    msg_load  = GFL_MSG_LOAD_FAST;
+  }
+  else
+  { 
+    heap_size = NAMEIN_HEAP_LOW_SIZE;
+    font_load = GFL_FONT_LOADTYPE_FILE;
+    msg_load  = GFL_MSG_LOAD_NORMAL;
+  }
+
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAME_INPUT, 0x30000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAME_INPUT, heap_size );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(NAMEIN_WORK), HEAPID_NAME_INPUT );
@@ -920,9 +953,9 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
 	//共通モジュールの作成
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NAME_INPUT );
+			font_load, FALSE, HEAPID_NAME_INPUT );
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_NAME_INPUT );
-	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+	p_wk->p_msg		= GFL_MSG_Create( msg_load, ARCID_MESSAGE, 
 												NARC_message_namein_dat, HEAPID_NAME_INPUT );
 	p_wk->p_word	= WORDSET_Create( HEAPID_NAME_INPUT );
 
@@ -936,11 +969,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 		OBJ_Init( &p_wk->obj, p_clunit, HEAPID_NAME_INPUT );
 		ICON_Init( &p_wk->icon, p_param->mode, p_param->param1, p_param->param2, p_clunit, HEAPID_NAME_INPUT );
 	}
+  p_wk->p_keymap_handle = NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID_NAME_INPUT );
 
 	//モジュール作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
 	STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
-	KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, HEAPID_NAME_INPUT );
+	KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, HEAPID_NAME_INPUT );
 	MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
 	//文字描画
@@ -984,6 +1018,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   PS_Exit( &p_wk->ps );
 	MSGWND_Exit( &p_wk->msgwnd );
 	KEYBOARD_Exit( &p_wk->keyboard );
+  NAMEIN_KEYMAP_HANDLE_Free( p_wk->p_keymap_handle );
 	STRINPUT_Exit( &p_wk->strinput );
 	SEQ_Exit( &p_wk->seq );
 
@@ -2126,13 +2161,13 @@ static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift )
  *	@param	heapID						ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KEYMAP_Create( KEYMAP_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID )
+static void KEYMAP_Create( KEYMAP_WORK *p_wk, NAMEIN_INPUTTYPE mode, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID )
 {
 	GF_ASSERT( mode < NAMEIN_INPUTTYPE_MAX );
 
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYMAP_WORK) );
-	p_wk->p_key	= NAMEIN_KEYMAP_Alloc( mode, heapID );
+	p_wk->p_key	= NAMEIN_KEYMAP_HANDLE_GetData( p_keymap_handle, mode );
 
 	switch( mode )
 	{
@@ -2183,7 +2218,8 @@ static void KEYMAP_Create( KEYMAP_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heap
 //-----------------------------------------------------------------------------
 static void KEYMAP_Delete( KEYMAP_WORK *p_wk )
 {	
-	NAMEIN_KEYMAP_Free( p_wk->p_key );
+ // 全部メモリにおくようにしたので消すのは大元にした
+	//NAMEIN_KEYMAP_Free( p_wk->p_key );
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYMAP_WORK) );
 }
@@ -3272,7 +3308,7 @@ static KEYMAP_KEYTYPE KeyMap_QWERTY_GetKeyType( const GFL_POINT *cp_cursor, GFL_
  *	@param	heapID	ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, HEAPID heapID )
+static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYBOARD_WORK) );
@@ -3283,26 +3319,29 @@ static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT 
 	p_wk->heapID		= heapID;
 	p_wk->mode			= mode;
 	p_wk->change_mode	= mode;
+  p_wk->p_keymap_handle = p_keymap_handle;
 
-	//モードによって読み込むスクリーンが違う
+	//モードによって読み込むスクリーンが違うのでメモリに取っておく
+  p_wk->p_scr_adrs[0] = GFL_ARC_UTIL_LoadScreen(ARCID_NAMEIN_GRA, NARC_namein_gra_name_romaji_NSCR, FALSE, &p_wk->p_scr[0], heapID );
+  p_wk->p_scr_adrs[1] = GFL_ARC_UTIL_LoadScreen(ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR, FALSE, &p_wk->p_scr[1], heapID );
+
 	if( mode == NAMEIN_INPUTTYPE_QWERTY )
 	{	
-		GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_romaji_NSCR,
-				BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+    GFL_BG_LoadScreenBuffer( BG_FRAME_KEY_M, p_wk->p_scr[0]->rawData, 0x800 );
 		GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
 	}
 	else
 	{	
-		GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR,
-				BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+    GFL_BG_LoadScreenBuffer( BG_FRAME_KEY_M, p_wk->p_scr[1]->rawData, 0x800 );
 		GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
 	}
+  GFL_BG_LoadScreenReq( BG_FRAME_KEY_M );
 
 	//キーアニメ作成
 	KEYANM_Init( &p_wk->keyanm, mode, heapID );
 
 	//キーマップ作成
-	KEYMAP_Create( &p_wk->keymap, mode, heapID );
+  KEYMAP_Create( &p_wk->keymap, mode, p_wk->p_keymap_handle, heapID );
 
 	//キー用BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( BG_FRAME_FONT_M, KEYBOARD_BMPWIN_X, KEYBOARD_BMPWIN_Y, KEYBOARD_BMPWIN_W, KEYBOARD_BMPWIN_H, PLT_BG_FONT_M, GFL_BMP_CHRAREA_GET_B );
@@ -3327,10 +3366,13 @@ static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk )
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
 	//キーマップ破棄
-	KEYMAP_Delete( &p_wk->keymap );
+  KEYMAP_Delete( &p_wk->keymap );
 
 	//キーアニメ破棄
 	KEYANM_Exit( &p_wk->keyanm );
+
+  GFL_HEAP_FreeMemory( p_wk->p_scr_adrs[0] );
+  GFL_HEAP_FreeMemory( p_wk->p_scr_adrs[1] );
 
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYBOARD_WORK) );
@@ -3686,7 +3728,8 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 	{	
 		//キー配列作成しなおし
 		KEYMAP_Delete( &p_wk->keymap );
-		KEYMAP_Create( &p_wk->keymap, mode, p_wk->heapID );
+    KEYMAP_Create( &p_wk->keymap, mode, p_wk->p_keymap_handle, p_wk->heapID );
+
 
 		//キー配列描画
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );
@@ -3695,15 +3738,14 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 		//モードにより、読み込むスクリーンを切り替え
 		if( mode == NAMEIN_INPUTTYPE_QWERTY )
 		{	
-			GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_romaji_NSCR,
-					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+      GFL_BG_LoadScreenBuffer( BG_FRAME_KEY_M, p_wk->p_scr[0]->rawData, 0x800 );
 			GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
 		}
 		else
 		{	
-			GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR,
-					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+      GFL_BG_LoadScreenBuffer( BG_FRAME_KEY_M, p_wk->p_scr[1]->rawData, 0x800 );
 		}
+    GFL_BG_LoadScreenReq( BG_FRAME_KEY_M );
 
 		//前か後がQWERTYだった場合、カーソル位置変更
 		if( mode == NAMEIN_INPUTTYPE_QWERTY || p_wk->mode == NAMEIN_INPUTTYPE_QWERTY )
