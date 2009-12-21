@@ -69,6 +69,7 @@ static POKEMON_PERSONAL_DATA* Personal_Load( u16 monsno, u16 formno );
 static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
 static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
+static  PokeType	get_type_from_item( u16 item );
 
 
 //============================================================================================
@@ -1677,6 +1678,54 @@ BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no )
 	return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & machine_bit ) != 0 );
 }
 
+//=============================================================================================
+/**
+ * ポケモンの好みの味かチェック
+ *
+ * @param[in] pp     ポケモンパラメータ構造体
+ * @param[in] taste  チェックする味
+ *
+ * @retval  PTL_TASTE_LIKE:好き　PTL_TASTE_DISLIKE:嫌い　PTL_TASTE_NORMAL:普通
+ */
+//=============================================================================================
+PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste )
+{ 
+  return PPP_CheckDesiredTaste( &pp->ppp, taste );
+}
+
+//=============================================================================================
+/**
+ * ポケモンの好みの味かチェック
+ *
+ * @param[in] ppp    ポケモンパラメータ構造体
+ * @param[in] taste  チェックする味
+ *
+ * @retval  PTL_TASTE_LIKE:好き　PTL_TASTE_DISLIKE:嫌い　PTL_TASTE_NORMAL:普通
+ */
+//=============================================================================================
+PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlTaste taste )
+{ 
+  u8 seikaku = PPP_Get( ppp, ID_PARA_seikaku, NULL );
+
+  return POKETOOL_CheckDesiredTaste( seikaku, taste );
+}
+
+//=============================================================================================
+/**
+ * ポケモンの好みの味かチェック
+ *
+ * @param[in] seikaku 性格
+ * @param[in] taste   チェックする味
+ *
+ * @retval  PTL_TASTE_LIKE:好き　PTL_TASTE_DISLIKE:嫌い　PTL_TASTE_NORMAL:普通
+ */
+//=============================================================================================
+#include "taste.cdat"
+PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste )
+{ 
+  return desired_taste_tbl[ seikaku ][ taste ];
+}
+
 //--------------------------------------------------------------------------
 /**
  * PPPデータ部からPP独自データ部を再計算
@@ -2341,14 +2390,12 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
       break;
     case ID_PARA_type1:
     case ID_PARA_type2:
-      if( ( ppp1->monsno == MONSNO_ARUSEUSU ) && ( ppp1->speabino == TOKUSYU_MARUTITAIPU ) ){
-//アイテム処理系がないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning ITEM_PRM_EQUIP Nothing
-#endif
-//        ret = AusuTypeGet( ItemParamGet( ppp1->item, ITEM_PRM_EQUIP, HEAPID_BASE_SYSTEM ) );
+      if( ( ppp1->monsno == MONSNO_ARUSEUSU ) && ( ppp1->speabino == TOKUSYU_MARUTITAIPU ) )
+      {
+          ret = get_type_from_item( ppp1->item );
       }
-      else{
+      else
+      {
         ret = POKETOOL_GetPersonalParam( ppp1->monsno, ppp2->form_no, POKEPER_ID_type1 + ( id - ID_PARA_type1 ) );
       }
       break;
@@ -3168,6 +3215,76 @@ static  u32 get_growtbl_param( int para, int level )
   return GrowTable[ level ];
 }
 
+//=============================================================================================
+/**
+ *  装備アイテムからタイプを取得
+ *
+ * @param[in] item 装備アイテム
+ *
+ * @retval  PokeType
+ */
+//=============================================================================================
+static  PokeType	get_type_from_item( u16 item )
+{
+	PokeType  type;
+
+	switch( item ){
+	case ITEM_HINOTAMAPUREETO:
+		type = POKETYPE_HONOO;
+		break;
+  case ITEM_SIZUKUPUREETO:
+		type = POKETYPE_MIZU;
+		break;
+	case ITEM_IKAZUTIPUREETO:
+		type = POKETYPE_DENKI;
+		break;
+	case ITEM_MIDORINOPUREETO:
+		type = POKETYPE_KUSA;
+		break;
+	case ITEM_TURARANOPUREETO:
+		type = POKETYPE_KOORI;
+		break;
+	case ITEM_KOBUSINOPUREETO:
+		type = POKETYPE_KAKUTOU;
+		break;
+	case ITEM_MOUDOKUPUREETO:
+		type = POKETYPE_DOKU;
+		break;
+	case ITEM_DAITINOPUREETO:
+		type = POKETYPE_JIMEN;
+		break;
+	case ITEM_AOZORAPUREETO:
+		type = POKETYPE_HIKOU;
+		break;
+	case ITEM_HUSIGINOPUREETO:
+		type = POKETYPE_ESPER;
+		break;
+	case ITEM_TAMAMUSIPUREETO:
+		type = POKETYPE_MUSHI;
+		break;
+	case ITEM_GANSEKIPUREETO:
+		type = POKETYPE_IWA;
+		break;
+	case ITEM_MONONOKEPUREETO:	
+		type = POKETYPE_GHOST;
+		break;
+	case ITEM_RYUUNOPUREETO:	
+		type = POKETYPE_DRAGON;
+		break;
+	case ITEM_KOWAMOTEPUREETO:	
+		type = POKETYPE_AKU;
+		break;
+	case ITEM_KOUTETUPUREETO:	
+		type = POKETYPE_HAGANE;
+		break;
+	default:
+		type = POKETYPE_NORMAL;
+		break;
+	}
+	return type;
+}
+
+
 //============================================================================================
 /**
  *  ボックスポケモンパラメータ構造体アドレス取得用テーブル値
@@ -3324,3 +3441,19 @@ void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level)
   PP_Put(pp, ID_PARA_exp, level_exp);
   PP_Renew( pp );
 }
+
+//==================================================================
+/**
+ * 指定したレベルにポケモンパラメータを補正します
+ *
+ * @param   pp		  対象のポケモンへのポインタ
+ * @param   level		レベル
+ */
+//==================================================================
+void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
+{ 
+  GF_ASSERT( pp_src != NULL );
+  GF_ASSERT( pp_dst != NULL );
+  *pp_dst = *pp_src;
+}
+
