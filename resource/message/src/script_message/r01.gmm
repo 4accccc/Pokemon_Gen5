@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T16:16:33"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T21:12:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -504,10 +504,10 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『あたしと
 ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
-いちばんに　きまってるもん！</language>
+いちばんに　きまってるもん！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あたしと
 ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
-一番に　決まってるもん！</language>
+一番に　決まってるもん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
