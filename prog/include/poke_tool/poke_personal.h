@@ -60,7 +60,6 @@ typedef enum {
   POKEPER_ID_reverse,         //反転フラグ
   POKEPER_ID_pltt_only,       //別フォルム時パレットのみ変化
   POKEPER_ID_rank,            //ポケモンランク
-  POKEPER_ID_padding,         //パディング
   POKEPER_ID_height,          //高さ
   POKEPER_ID_weight,          //重さ
 
