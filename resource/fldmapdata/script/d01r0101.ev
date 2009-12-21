@@ -318,6 +318,7 @@ EVENT_START   ev_d01r0101_support_02
 
 	//夢アイテム取得後
 	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
+		_PLAYER_NAME(0)
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_05)
 
 	//例外処理では夢の話をする
