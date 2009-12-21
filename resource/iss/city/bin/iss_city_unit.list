@@ -1,4 +1,5 @@
 ISS_C_UNIT_DATA = \
 ./bin/iss_city_unit_c02.bin \
 ./bin/iss_city_unit_c05gym0101.bin \
-./bin/iss_city_unit_c07.bin 
+./bin/iss_city_unit_c07.bin \
+./bin/iss_city_unit_c08.bin 
