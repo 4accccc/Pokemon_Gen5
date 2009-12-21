@@ -40,7 +40,8 @@ enum {
 // リストデータ
 typedef struct {
 	// [in]
-	POKEPARTY * pp;		// ポケモンデータ
+	POKEPARTY * pp;					// ポケモンデータ
+	POKEPARTY * multi_pp;		// マルチの相手側ポケモンデータ
 
 	GFL_FONT * font;
 
