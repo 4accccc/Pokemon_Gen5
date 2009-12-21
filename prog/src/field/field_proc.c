@@ -86,7 +86,7 @@ static GFL_PROC_RESULT FieldMapProcInit
   default:
     (*seq)++;
   	return GFL_PROC_RES_CONTINUE;
-  case 10:   //@todo ※check　超暫定 早く通信ONにすると停止してしまう
+  case 30:   //@todo ※check　超暫定 早く通信ONにすると停止してしまう
     //常時通信モード
     {
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
