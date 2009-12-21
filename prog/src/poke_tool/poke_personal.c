@@ -255,9 +255,6 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
   case POKEPER_ID_rank:             //ポケモンランク
 		ret = ppd->rank;
 		break;
-  case POKEPER_ID_padding:          //パディング
-		ret = ppd->padding;
-		break;
   case POKEPER_ID_height:           //高さ
 		ret = ppd->height;
 		break;

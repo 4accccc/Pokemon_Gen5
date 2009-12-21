@@ -32,7 +32,7 @@ struct  pokemon_personal_data
   u8    type2;          //属性２
 
   u8    get_rate;       //捕獲率
-  u8    give_exp;       //贈与経験値
+  u8    rank;           //ポケモンランク
   u16   pains_hp    :2; //贈与努力値ＨＰ
   u16   pains_pow   :2; //贈与努力値攻撃力
   u16   pains_def   :2; //贈与努力値防御力
@@ -65,8 +65,7 @@ struct  pokemon_personal_data
   u8    color     :6;   //色（図鑑で使用）
   u8    reverse   :1;   //反転フラグ
   u8    pltt_only :1;   //別フォルム時パレットのみ変化
-  u8    rank;           //ポケモンランク
-  u8    padding;        //パディング
+  u16   give_exp;       //贈与経験値
 
   u16   height;         //高さ
   u16   weight;         //重さ
