@@ -54,7 +54,7 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_BALLOONWIN_CLOSE()
 	
 	//わざマシン入手
-	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+	_ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN01, 1 )
 	
 	//ポケモンが　おぼえる　わざには　たたかっていない　ときでも
 	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_04 , C01R0102_INVENTOR_01 )
