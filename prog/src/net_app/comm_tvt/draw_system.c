@@ -84,7 +84,7 @@ DRAW_SYS_WORK* DRAW_SYS_CreateSystem( const DRAW_SYS_INIT_WORK *initWork )
 //--------------------------------------------------------------
 void DRAW_SYS_DeleteSystem( DRAW_SYS_WORK* work )
 {
-  GFL_HEAP_FreeMemory( work->infoBuf );
+  GFL_NET_Align32Free( work->infoBuf );
   GFL_HEAP_FreeMemory( work );
 }
 
@@ -177,9 +177,10 @@ void DRAW_SYS_SetPenInfo( DRAW_SYS_WORK* work , const DRAW_SYS_PEN_INFO *info )
 {
   DRAW_SYS_PEN_INFO *setPos = DRAW_SYS_GetInfoBuf(work,work->topBuffer);
 
-  GFL_STD_MemCopy32( info , setPos , sizeof(DRAW_SYS_PEN_INFO) );
+  GFL_STD_MemCopy( info , setPos , sizeof(DRAW_SYS_PEN_INFO) );
   
   //OS_TPrintf("[%d][%d][%d][%d][%x]\n",setPos->startX,setPos->startY,setPos->endX,setPos->endX,setPos->col);
+  OS_TPrintf("[%d][%d][%d][%d][%x]\n",info->startX,info->startY,info->endX,info->endX,info->col);
   DRAW_SYS_IncBufCnt( work , &work->topBuffer );
 
 }

@@ -17,6 +17,8 @@
 #include "net/network_define.h"
 #include "app/app_menu_common.h"
 
+#include "msg/msg_comm_tvt.h"
+
 #include "comm_tvt.naix"
 
 #include "ctvt_draw.h"
@@ -35,9 +37,20 @@
 #define CTVT_DRAW_PAUSE_X (192)
 #define CTVT_DRAW_RETURN_X (224)
 
+#define CTVT_DRAW_EXP_ICON_X      (56)
+#define CTVT_DRAW_EXP_PEN_Y       (116)
+#define CTVT_DRAW_EXP_SPOITO_Y    (136)
+#define CTVT_DRAW_EXP_KESHIGOMU_Y (156)
+#define CTVT_DRAW_EXP_RETURN_Y    (176-12)
+
 #define CTVT_DRAW_PEN_SIZE_X (CTVT_DRAW_PEN_X)
 #define CTVT_DRAW_PEN_SIZE_Y (192-24)
 
+//文字位置
+#define CTVT_DRAW_INFO_DRAW_X1 (8)
+#define CTVT_DRAW_INFO_DRAW_X2 (80)
+
+#define CTVT_DRAW_INFO_EDIT_X (64)
 //======================================================================
 //	enum
 //======================================================================
@@ -101,6 +114,9 @@ struct _CTVT_DRAW_WORK
   u16 penCol;
   u8  penSize;
   
+  BOOL isUpdateMsg;
+  GFL_BMPWIN *infoWin;
+  
   //セル関係
   GFL_CLWK    *clwkEditButton[CDED_MAX];
   GFL_CLWK    *clwkExplainButton[CDEX_MAX];
@@ -119,6 +135,8 @@ static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork 
 static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
 
 static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
+static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const BOOL isEditMode );
 
 //--------------------------------------------------------------
 //	初期化
@@ -208,6 +226,45 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
       GFL_CLACT_WK_SetDrawEnable( drawWork->clwkEditButton[i] , TRUE );
     }
     
+    //説明ボタン
+    cellInitData.pos_x = CTVT_DRAW_EXP_ICON_X;
+    cellInitData.pos_y = CTVT_DRAW_EXP_PEN_Y;
+    cellInitData.anmseq = CTOAS_PEN;
+    drawWork->clwkExplainButton[CDEX_PEN] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    
+    cellInitData.pos_y = CTVT_DRAW_EXP_SPOITO_Y;
+    cellInitData.anmseq = CTOAS_SUPOITO;
+    drawWork->clwkExplainButton[CDEX_SPOITO] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    
+    cellInitData.pos_y = CTVT_DRAW_EXP_KESHIGOMU_Y;
+    cellInitData.anmseq = CTOAS_KESHIGOMU;
+    drawWork->clwkExplainButton[CDEX_KESHIGOMU] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    
+    cellInitData.pos_x = CTVT_DRAW_EXP_ICON_X-12;
+    cellInitData.pos_y = CTVT_DRAW_EXP_RETURN_Y;
+    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    drawWork->clwkExplainButton[CDEX_RETURN] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    for( i=0;i<CDEX_MAX;i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
+    }
+    
     //ペンサイズ
     cellInitData.pos_x = CTVT_DRAW_PEN_SIZE_X;
     cellInitData.pos_y = CTVT_DRAW_PEN_SIZE_Y;
@@ -221,6 +278,15 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 
   }
   
+  drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        2 , 13 , 28 , 10 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0x0 );
+  GFL_BMPWIN_MakeScreen( drawWork->infoWin );
+  GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+  
   drawWork->state = CDS_FADEIN;
   drawWork->barScroll = 24;
   drawWork->dispBarScroll = 24;
@@ -228,7 +294,10 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isTouch = FALSE;
   drawWork->editMode = CDEX_PEN;
   drawWork->isDispPenSize = FALSE;
+  drawWork->isUpdateMsg = FALSE;
 
+  CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
+  
 }
 
 //--------------------------------------------------------------
@@ -237,6 +306,10 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 {
   u8 i;
+  
+  GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
+  GFL_BMPWIN_Delete( drawWork->infoWin );
+  
   for( i=0;i<CDED_MAX;i++ )
   {
     GFL_CLACT_WK_Remove( drawWork->clwkEditButton[i] );
@@ -307,6 +380,16 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   
   //落書き更新
   CTVT_DRAW_UpdateDrawing( work,drawWork );
+  
+  if( drawWork->isUpdateMsg == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
+      drawWork->isUpdateMsg = FALSE;
+    }
+  }
   return CTM_DRAW;
 }
 
@@ -320,6 +403,8 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   {
     drawWork->state = CDS_EDIT;
     drawWork->barScroll = 0;
+    CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
+
   }
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW )
   {
@@ -424,6 +509,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->state = CDS_DRAW;
     drawWork->barScroll = 24;
     drawWork->isTouch = TRUE;
+    CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   }
 }
 
@@ -441,7 +527,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     {
       u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 3*32 + 2*0xf);
       u16* adr2 = (u16*)((u32)G2_GetBG2ScrPtr() + tpx*2 + tpy*256*2);
-      if( *adr2 | 0x8000 )
+      if( *adr2 & 0x8000 )
       {
         drawWork->penCol = *adr2;
       }
@@ -475,10 +561,12 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       if( drawWork->isHold == TRUE )
       {
         BOOL isFull;
+        const u8 connectNum = COMM_TVT_GetConnectNum( work );
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
         DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
         DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-        if( isFull == FALSE )
+        if( isFull == FALSE ||
+            connectNum == 1 )
         {
           info->startX = drawWork->befPenX;
           info->startY = drawWork->befPenY;
@@ -495,8 +583,14 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
           info->col  = drawWork->penCol;
         }
         
-        CTVT_COMM_AddDrawBuf( work , commWork );
-        //DRAW_SYS_SetPenInfo( drawSys , &info );
+        if( connectNum == 1 )
+        {
+          DRAW_SYS_SetPenInfo( drawSys , info );
+        }
+        else
+        {
+          CTVT_COMM_AddDrawBuf( work , commWork );
+        }
       }
       drawWork->befPenX = tpx;
       drawWork->befPenY = tpy;
@@ -573,4 +667,85 @@ static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *dr
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
   }
 
+}
+
+//--------------------------------------------------------------
+//	説明メッセージ更新
+//--------------------------------------------------------------
+static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const BOOL isEditMode )
+{
+  GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0x0 );
+
+  if( isEditMode == TRUE )
+  {
+    u8 i;
+    STRBUF *str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_007 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_EDIT_X , 4 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_008 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_EDIT_X , 24 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_009 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_EDIT_X , 44 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_010 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_EDIT_X , 64 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    for( i=0;i<CDEX_MAX;i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , TRUE );
+    }
+  }
+  else
+  {
+    u8 i;
+
+    STRBUF *str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_001 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X1 , 16 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_002 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X1 , 32 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_003 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X1 , 48 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_004 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X2 , 16 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_005 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X2 , 32 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_006 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_DRAW_X2 , 48 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+
+    for( i=0;i<CDEX_MAX;i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
+    }
+  }
+  drawWork->isUpdateMsg = TRUE;
 }

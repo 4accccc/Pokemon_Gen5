@@ -16,6 +16,8 @@
 
 #include "arc_def.h"
 #include "comm_tvt.naix"
+#include "message.naix"
+#include "font/font.naix"
 
 #include "net_app/comm_tvt_sys.h"
 #include "ctvt_camera.h"
@@ -58,6 +60,11 @@ struct _COMM_TVT_WORK
   u32         cellResIdx[CTOR_MAX];
   GFL_CLUNIT  *cellUnit;
 
+  //メッセージ系
+  GFL_FONT        *fontHandle;
+  GFL_MSGDATA     *msgHandle;
+  PRINT_QUE *printQue;
+
   //各ワーク
   CTVT_CAMERA_WORK *camWork;
   CTVT_COMM_WORK   *commWork;
@@ -85,6 +92,8 @@ static void COMM_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 
 static void COMM_TVT_LoadResource( COMM_TVT_WORK *work );
 static void COMM_TVT_ReleaseResource( COMM_TVT_WORK *work );
+static void COMM_TVT_InitMessage( COMM_TVT_WORK *work );
+static void COMM_TVT_TermMessage( COMM_TVT_WORK *work );
 
 static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work );
 
@@ -115,6 +124,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 
   COMM_TVT_InitGraphic( work );
   COMM_TVT_LoadResource( work );
+  COMM_TVT_InitMessage( work );
     
   work->camWork = CTVT_CAMERA_Init( work , work->heapId );
   work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
@@ -159,6 +169,7 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
 
+  COMM_TVT_TermMessage( work );
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
 }
@@ -178,6 +189,9 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   case CTM_DRAW: //落書き
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
     break;
+  case CTM_END:
+    return TRUE;
+    break;
   }
   
   if( work->mode != work->nextMode )
@@ -193,14 +207,8 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
-  if( work->mode == CTM_END )
-  {
-    return TRUE;
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
-  {
-    return TRUE;
-  }
+  PRINTSYS_QUE_Main( work->printQue );
+
   return FALSE;
 }
 //--------------------------------------------------------------
@@ -454,7 +462,34 @@ static void COMM_TVT_ReleaseResource( COMM_TVT_WORK *work )
   {
     GFL_CLGRP_CELLANIM_Release( work->cellResIdx[i] );
   }
+  GFL_ARC_CloseDataHandle( work->arcHandle );
 
+}
+
+//--------------------------------------------------------------------------
+//  メッセージ系初期化
+//--------------------------------------------------------------------------
+static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
+{
+  //フォント読み込み
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  //メッセージ
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_comm_tvt_dat , work->heapId );
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_FONT*0x20, 16*2, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG  , CTVT_PAL_BG_SUB_FONT *0x20, 16*2, work->heapId );
+  GFL_FONTSYS_SetDefaultColor();
+}
+
+//--------------------------------------------------------------------------
+//  メッセージ系開放
+//--------------------------------------------------------------------------
+static void COMM_TVT_TermMessage( COMM_TVT_WORK *work )
+{
+  PRINTSYS_QUE_Delete( work->printQue );
+  GFL_MSG_Delete( work->msgHandle );
+  GFL_FONT_Delete( work->fontHandle );
 }
 
 //--------------------------------------------------------------------------
@@ -485,6 +520,9 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     break;
   case CTM_DRAW: //落書き
     CTVT_DRAW_InitMode( work , work->drawWork );
+    break;
+  case CTM_END: //終了
+    CTVT_COMM_ExitComm( work , work->commWork );
     break;
   }
   
@@ -541,6 +579,22 @@ void COMM_TVT_SetUpperFade( COMM_TVT_WORK *work , const BOOL flg )
 {
   work->isUpperFade = flg;
 }
+
+GFL_FONT* COMM_TVT_GetFontHandle( COMM_TVT_WORK *work )
+{
+  return work->fontHandle;
+}
+
+GFL_MSGDATA* COMM_TVT_GetMegHandle( COMM_TVT_WORK *work )
+{
+  return work->msgHandle;
+}
+
+PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work )
+{
+  return work->printQue;
+}
+
 
 //--------------------------------------------------------------------------
 //  モードとか人数
@@ -650,6 +704,11 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   COMM_TVT_WORK *work = mywk;
+  
+  if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
+  {
+    return GFL_PROC_RES_CONTINUE;
+  }
 
   COMM_TVT_Term( work );
 

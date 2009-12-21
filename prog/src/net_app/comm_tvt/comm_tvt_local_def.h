@@ -9,6 +9,8 @@
  */
 //======================================================================
 #pragma once
+#include "print/printsys.h"
+
 #include "draw_system.h"
 
 //======================================================================
@@ -38,6 +40,7 @@
 #define CTVT_FRAME_SUB_BG    (GFL_BG_FRAME3_S)
 
 #define CTVT_PAL_BG_MAIN_BAR   (0) //1本
+#define CTVT_PAL_BG_MAIN_FONT   (10) //1本
 
 #define CTVT_PAL_BG_SUB_BG    (0) //5本
 #define CTVT_PAL_BG_BUTTON_NONE (1)
@@ -45,6 +48,7 @@
 #define CTVT_PAL_BG_BUTTON_DISABLE (4)
 
 #define CTVT_PAL_BG_SUB_BAR   (5) //1本
+#define CTVT_PAL_BG_SUB_FONT   (10) //1本
 
 #define CTVT_PAL_OBJ_MAIN_COMMON (0) //5本
 
@@ -60,6 +64,9 @@
 #define CTVT_MEMBER_NUM (4)
 #define CTVT_DRAW_BUFFER_NUM (100)
 
+#define CTVT_FONT_COLOR_WHITE (PRINTSYS_MACRO_LSB(0xf,2,0))
+#define CTVT_FONT_COLOR_BLACK (PRINTSYS_MACRO_LSB(1,2,0))
+#define CTVT_FONT_COLOR_NAME   (PRINTSYS_MACRO_LSB(1,0xf,0))
 
 //スクリーンのバッファサイズ
 #define CTVT_BUFFER_SCR_SIZE (256*192*2)  //0x18000
@@ -183,6 +190,11 @@ extern const u32 COMM_TVT_GetObjResIdx( const COMM_TVT_WORK *work , const COMM_T
 extern GFL_CLUNIT* COMM_TVT_GetCellUnit( const COMM_TVT_WORK *work );
 extern const BOOL COMM_TVT_GetUpperFade( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetUpperFade( COMM_TVT_WORK *work , const BOOL flg );
+
+extern GFL_FONT* COMM_TVT_GetFontHandle( COMM_TVT_WORK *work );
+extern GFL_MSGDATA* COMM_TVT_GetMegHandle( COMM_TVT_WORK *work );
+extern PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work );
+
 
 extern const u8   COMM_TVT_GetConnectNum( const COMM_TVT_WORK *work );
 extern void   COMM_TVT_SetConnectNum( COMM_TVT_WORK *work , const u8 num);

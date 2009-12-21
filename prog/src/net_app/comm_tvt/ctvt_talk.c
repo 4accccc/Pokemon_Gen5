@@ -17,6 +17,7 @@
 #include "net/network_define.h"
 #include "app/app_menu_common.h"
 
+#include "msg/msg_comm_tvt.h"
 
 #include "comm_tvt.naix"
 
@@ -78,6 +79,7 @@ typedef enum
   CTSS_WAIT_PLAY, 
   
   CTSS_GO_DRAW,
+  CTSS_GO_END,
 }CTVT_TALK_SUB_STATE;
 
 //Recボタン種類
@@ -110,6 +112,12 @@ struct _CTVT_TALK_WORK
   void  *sendWaveBuf;  //下の2つはここからアドレスを持つ
   CTVT_COMM_WAVE_HEADER *sendWaveData;
   void *sendWaveBufTop;
+  
+  BOOL isUpdateMsgRec;
+  BOOL isUpdateMsgDraw;
+  GFL_BMPWIN *recWin;
+  GFL_BMPWIN *drawWin;
+  
   
   //セル関係
   GFL_CLWK    *clwkSlider;
@@ -144,9 +152,9 @@ static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[2] =
 {
   {
     CTVT_TALK_DRAW_BUTTON_TOP*8,
-    (CTVT_TALK_DRAW_BUTTON_TOP+CTVT_TALK_DRAW_BUTTON_WIDTH)*8,
+    (CTVT_TALK_DRAW_BUTTON_TOP+CTVT_TALK_DRAW_BUTTON_HEIGHT)*8,
     CTVT_TALK_DRAW_BUTTON_LEFT*8,
-    (CTVT_TALK_DRAW_BUTTON_LEFT+CTVT_TALK_DRAW_BUTTON_HEIGHT)*8,
+    (CTVT_TALK_DRAW_BUTTON_LEFT+CTVT_TALK_DRAW_BUTTON_WIDTH)*8,
   },
   {GFL_UI_TP_HIT_END,0,0,0}
 };
@@ -251,6 +259,43 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->state = CTS_FADEIN;
   talkWork->recButtonState = CRBT_NONE;
   talkWork->befRecButtonState = CRBT_MAX;
+
+  talkWork->recWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        7 , 10 , 17 , 2 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  talkWork->drawWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        7 , 17 , 17 , 2 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->recWin ) , 0x0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->drawWin) , 0x0 );
+  GFL_BMPWIN_MakeScreen( talkWork->recWin );
+  GFL_BMPWIN_MakeScreen( talkWork->drawWin );
+  {
+    GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+    GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    STRBUF *str;
+    u16 len;
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_TALK_01 );
+    len = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->recWin ) , 
+            (17*8-len)/2 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_TALK_02 );
+    len = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->drawWin ) , 
+            (17*8-len)/2 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+    GFL_STR_DeleteBuffer( str );
+    
+  }
+  talkWork->isUpdateMsgRec = TRUE;
+  talkWork->isUpdateMsgDraw = TRUE;
+  GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+
 }
 
 //--------------------------------------------------------------
@@ -258,6 +303,12 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 //--------------------------------------------------------------
 void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
+
+  GFL_BMPWIN_ClearTransWindow( talkWork->recWin );
+  GFL_BMPWIN_ClearTransWindow( talkWork->drawWin );
+  GFL_BMPWIN_Delete( talkWork->recWin );
+  GFL_BMPWIN_Delete( talkWork->drawWin );
+  
   GFL_CLACT_WK_Remove( talkWork->clwkReturn );
   GFL_CLACT_WK_Remove( talkWork->clwkPause );
   GFL_CLACT_WK_Remove( talkWork->clwkYobidasi );
@@ -382,6 +433,25 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   CTVT_TALK_UpdateButton( work , talkWork );
   CTVT_MIC_Main( talkWork->micWork );
 
+  if( talkWork->isUpdateMsgRec == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( talkWork->recWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( talkWork->recWin );
+      talkWork->isUpdateMsgRec = FALSE;
+    }
+  }
+  if( talkWork->isUpdateMsgDraw == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( talkWork->drawWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( talkWork->drawWin );
+      talkWork->isUpdateMsgDraw = FALSE;
+    }
+  }
+
   return CTM_TALK;
 }
 
@@ -443,6 +513,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       talkWork->state = CTS_FADEOUT_BOTH;
       talkWork->subState = CTSS_GO_DRAW;
     }
+  }
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  {
+    talkWork->subState = CTSS_GO_END;
+    talkWork->state = CTS_FADEOUT_BOTH;
   }
 }
 

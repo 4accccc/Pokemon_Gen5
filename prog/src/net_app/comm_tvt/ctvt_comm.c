@@ -48,6 +48,11 @@ typedef enum
   CCS_INIT_COMM_WAIT,
 
   CCS_CONNECT,
+  
+  CCS_DISCONNECT,
+  
+  CCS_DISCONNECT_WAIT,
+  CCS_FINISH,
 }CTVT_COMM_STATE;
 
 typedef enum
@@ -202,6 +207,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->updateTalkMember = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   
+  GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
 }
@@ -214,14 +220,16 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   u8 i;
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
   GFL_HEAP_FreeMemory( commWork->postWaveBuf );
-  GFL_HEAP_FreeMemory( commWork->encBuffer );
-  GFL_HEAP_FreeMemory( commWork->sendBuffer );
-  GFL_HEAP_FreeMemory( commWork->encWorkBuf );
+  GFL_NET_Align32Free( commWork->encBuffer );
+  GFL_NET_Align32Free( commWork->sendBuffer );
+  GFL_NET_Align32Free( commWork->encWorkBuf );
   for( i=0;i<CTVT_MEMBER_NUM-1;i++ )
   {
-    GFL_HEAP_FreeMemory( commWork->postPhotoBuf[i] );
+    GFL_NET_Align32Free( commWork->postPhotoBuf[i] );
   }
   GFL_HEAP_FreeMemory( commWork );
+  
+  GFL_NET_LDATA_ExitSystem();
   
 }
 
@@ -249,6 +257,20 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_CONNECT:
     {
       CTVT_COMM_UpdateComm( work , commWork );
+    }
+    break;
+    
+  case CCS_DISCONNECT:
+    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+    {
+      commWork->state = CCS_DISCONNECT_WAIT;
+    }
+    break;
+    
+  case CCS_DISCONNECT_WAIT:
+    if( GFL_NET_IsExit() == TRUE )
+    {
+      //commWork->state = CCS_FINISH;
     }
     break;
   }
@@ -308,9 +330,33 @@ static void CTVT_COMM_InitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
 
   GFL_NET_Init( &aGFLNetInit , NULL , (void*)commWork );
-  
-  GFL_NET_LDATA_InitSystem( heapId );
+  GFL_NET_SetNoChildErrorCheck( FALSE );
 }
+
+//--------------------------------------------------------------
+//	通信終了
+//--------------------------------------------------------------
+void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  if( commWork->connectNum <= 1 )
+  {
+    GFL_NET_Exit(NULL);
+    commWork->state = CCS_DISCONNECT_WAIT;
+  }
+  else
+  {
+    commWork->state = CCS_DISCONNECT;
+  }
+}
+const BOOL CTVT_COMM_IsExit( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  if( commWork->state == CCS_FINISH )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //--------------------------------------------------------------
 // ビーコンデータ取得関数  
@@ -385,7 +431,8 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       if( (commWork->reqCheckBit & commWork->photoReqBit) == commWork->reqCheckBit&&
           commWork->reqCheckBit != 0 )
       {
-        if( COMM_TVT_GetSusspend( work ) == FALSE )
+        //if( COMM_TVT_GetSusspend( work ) == FALSE )
+        if( 0 )
         {
           CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
           void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );
