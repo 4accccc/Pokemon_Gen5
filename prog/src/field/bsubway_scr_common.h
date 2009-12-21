@@ -51,8 +51,10 @@ struct _BSUBWAY_SCRWORK
   int  magicNo;  ///<マジックナンバー
   int  heapID;  ///<ヒープ
   u32  play_rnd_seed;  ///<プレイ用ランダムシード
+  
   u8  now_round;  ///<現在何人目？
   u8  now_win;  ///<現在何人に勝った？
+  
   u8  member_num;  ///<メンバー数
   u8  play_mode;  ///<プレイデータ
 

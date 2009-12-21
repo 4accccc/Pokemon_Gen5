@@ -239,17 +239,24 @@ ev_train_rooms_sbtl_02:
   
   _BMPMENU_INIT_EX( 21,11,0,0,SCWK_ANSWER ) //Bキャンセル無効
   _BMPMENU_MAKE_LIST( msg_c04r0110_02,0 )   //つづける
-  _BMPMENU_MAKE_LIST( msg_c04r0110_03,1 )   //やすむ
-  _BMPMENU_MAKE_LIST( msg_c04r0110_04,2 )   //リタイア
+  _BMPMENU_MAKE_LIST( msg_c04r0110_03,1 )   //きろくする
+  _BMPMENU_MAKE_LIST( msg_c04r0110_04,2 )   //やすむ
+  _BMPMENU_MAKE_LIST( msg_c04r0110_05,3 )   //リタイア
   _BMPMENU_START()
   _SYSWIN_CLOSE()
   
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_train_rooms_next      //つづける
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_train_rooms_is_rest    //やすむ
-  _IFVAL_JUMP SCWK_ANSWER,EQ,2,ev_train_rooms_is_retire    //リタイア
+  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_train_rooms_save_battle //きろくする
+  _IFVAL_JUMP SCWK_ANSWER,EQ,2,ev_train_rooms_is_rest    //やすむ
+  _IFVAL_JUMP SCWK_ANSWER,EQ,3,ev_train_rooms_is_retire    //リタイア
   _JUMP ev_train_rooms_next      //つづける
   _END
 
+ev_train_rooms_save_battle:
+  _SYSWIN_MSG_DOWN( msg_c04r0110_08 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+  _JUMP ev_train_rooms_sbtl_02
+  
 //--------------------------------------------------------------
 //  連戦つなぎ処理　自機を次の車両へ
 //--------------------------------------------------------------

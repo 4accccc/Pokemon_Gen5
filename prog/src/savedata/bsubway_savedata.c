@@ -97,12 +97,12 @@ struct _BSUBWAY_SCOREDATA
   u16  tower_stage[6];
   
   //連勝記録
-  u16 renshou;
-  u16 renshou_max;
-
+  u16 renshou[BSWAY_PLAYMODE_MAX];
+  u16 renshou_max[BSWAY_PLAYMODE_MAX];
+ 
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
-
+  
   //WiFiポケモンデータストック
   struct _BSUBWAY_POKEMON  wifi_poke[3];
   //トレーナーロード用シングルデータストック
@@ -387,7 +387,6 @@ u16 BSUBWAY_SCOREDATA_SetBattlePoint(
   SVLD_SetCrc(GMDATA_ID_FRONTIER);
   #endif //CRC_LOADCHECK
   */
-  
   return bsw_score->btl_point;
 }
 
@@ -398,16 +397,16 @@ u16 BSUBWAY_SCOREDATA_SetBattlePoint(
  * @retval
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_SetRenshou(
+u16 BSUBWAY_SCOREDATA_CalcRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
 {
   switch(mode){
   case BSWAY_SETMODE_reset:
-    bsw_score->renshou = 0;
+    bsw_score->renshou[mode] = 0;
     break;
   case BSWAY_SETMODE_inc:
-    if( bsw_score->renshou < 65534 ){
-      bsw_score->renshou++;
+    if( bsw_score->renshou[mode] < 65534 ){
+      bsw_score->renshou[mode]++;
     }
     break;
   case BSWAY_SETMODE_get:
@@ -416,7 +415,7 @@ u16 BSUBWAY_SCOREDATA_SetRenshou(
     GF_ASSERT( 0 );
   }
   
-  return( bsw_score->renshou );
+  return( bsw_score->renshou[mode] );
 }
 
 //--------------------------------------------------------------
@@ -556,7 +555,7 @@ u8 BSUBWAY_SCOREDATA_SetWifiRank(
 //--------------------------------------------------------------
 u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  return bsw_score->renshou;
+  return bsw_score->renshou[mode];
 }
 
 //--------------------------------------------------------------
@@ -569,7 +568,7 @@ u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY
 u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  return bsw_score->renshou_max;
+  return bsw_score->renshou_max[mode];
 }
 
 //======================================================================

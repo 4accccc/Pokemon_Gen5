@@ -294,14 +294,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     #endif
     break;
   case BSWAY_TOOL_GET_RENSHOU_CNT:
-#if 0
-    *ret_wk = BSUBWAY_SCOREDATA_SetRenshou( scoreData, BSWAY_SETMODE_get );
-#else
     *ret_wk = BSUBWAY_PLAYDATA_GetData(
         playData, BSWAY_PLAYDATA_ID_round, NULL );
-    (*ret_wk)--;
-    (*ret_wk) = 0;
-#endif
+    
+    (*ret_wk) -= 1;
+    
+    if( (s16)(*ret_wk) < 0 ){
+      *ret_wk = 0;
+    }
+    
+    KAGAYA_Printf( "PLAYDATA ƒ‰ƒEƒ“ƒh = %d\n", (*ret_wk) );
     break;
   case BSWAY_SUB_GET_RENSHOU_CNT:
     if( (u32)bsw_scr->renshou+bsw_scr->now_win > 0xFFFF ){

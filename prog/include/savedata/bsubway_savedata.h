@@ -105,6 +105,7 @@ typedef enum
   BSWAY_PLAYMODE_WIFI, //Wifi
   BSWAY_PLAYMODE_RETRY, //リトライ
   BSWAY_PLAYMODE_WIFI_MULTI, //Wifiマルチ
+  BSWAY_PLAYMODE_MAX,
 }BSWAY_PLAYMODE;
 
 //--------------------------------------------------------------
@@ -191,7 +192,7 @@ extern BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     BSWAY_SCOREDATA_FLAG id, BSWAY_SETMODE mode );
 extern u8 BSUBWAY_SCOREDATA_SetWifiRank(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
-extern u16 BSUBWAY_SCOREDATA_SetRenshou(
+extern u16 BSUBWAY_SCOREDATA_CalcRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 extern u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 extern u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
