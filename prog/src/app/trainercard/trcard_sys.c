@@ -9,6 +9,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "gamesystem/game_data.h"
 #include "savedata/config.h"
 #include "savedata/trainercard_data.h"
 #include "savedata/mystatus.h"
@@ -16,6 +17,11 @@
 #include "system/pms_data.h"
 #include "app/pms_select.h"
 #include "savedata/record.h"
+#include "savedata/bsubway_savedata.h"
+#include "savedata/zukan_savedata.h"
+#include "field/eventwork.h"
+#include "field/eventwork_def.h"
+
 
 #include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -91,9 +97,19 @@ static BOOL TrCardSysProcCall(GFL_PROCSYS ** procSys)
   return FALSE;
 }
 
+
+//=============================================================================================
 /**
- *  @brief  トレーナーカードシステム呼び出し　初期化
+ * @brief  トレーナーカードシステム呼び出し　初期化
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
  */
+//=============================================================================================
 GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = NULL;
@@ -136,9 +152,18 @@ GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, 
 }
 
 
+//=============================================================================================
 /**
- *  @brief  トレーナーカード　システムメイン
+ * @brief  トレーナーカード　システムメイン
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
  */
+//=============================================================================================
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
@@ -162,9 +187,19 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
   return GFL_PROC_RES_CONTINUE;
 }
 
+
+//=============================================================================================
 /**
- *  @brief  トレーナーカード　システム終了
+ * @brief トレーナーカード　システム終了
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
  */
+//=============================================================================================
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
@@ -178,6 +213,20 @@ GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void 
   GFL_HEAP_DeleteHeap(HEAPID_TRCARD_SYS);
   return GFL_PROC_RES_FINISH;
 }
+
+
+//=============================================================================================
+/**
+ * @brief 通信トレーナーカード閲覧終了時
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
 GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
@@ -191,9 +240,15 @@ GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, v
   return GFL_PROC_RES_FINISH;
 }
 
+//----------------------------------------------------------------------------------
 /**
- *  @brief  トレーナーカード呼び出し
+ * @brief トレーナーカード呼び出し
+ *
+ * @param   wk    
+ *
+ * @retval  int   
  */
+//----------------------------------------------------------------------------------
 static int sub_CardInit(TR_CARD_SYS* wk)
 {
   // オーバーレイID宣言
@@ -214,9 +269,16 @@ static int sub_CardInit(TR_CARD_SYS* wk)
   return CARD_WAIT;
 }
 
+
+//----------------------------------------------------------------------------------
 /**
- *  @brief  トレーナーカード待ち
+ * @brief トレーナーカード終了待ち
+ *
+ * @param   wk    
+ *
+ * @retval  int   
  */
+//----------------------------------------------------------------------------------
 static int sub_CardWait(TR_CARD_SYS* wk)
 {
   if(!TrCardSysProcCall(&wk->procSys)){
@@ -230,10 +292,15 @@ static int sub_CardWait(TR_CARD_SYS* wk)
 }
 
 FS_EXTERN_OVERLAY(pmsinput);
-
+//----------------------------------------------------------------------------------
 /**
- *  @brief  サイン呼び出し
+ * @brief 簡易会話呼び出し
+ *
+ * @param   wk    
+ *
+ * @retval  int   
  */
+//----------------------------------------------------------------------------------
 static int sub_SignInit(TR_CARD_SYS* wk)
 {
 //  FS_EXTERN_OVERLAY(mysign);
@@ -255,9 +322,15 @@ static int sub_SignInit(TR_CARD_SYS* wk)
   return SIGN_WAIT;
 }
 
+//----------------------------------------------------------------------------------
 /**
- *  @brief  サイン待ち
+ * @brief 簡易会話終了待ち
+ *
+ * @param   wk    
+ *
+ * @retval  int   
  */
+//----------------------------------------------------------------------------------
 static int sub_SignWait(TR_CARD_SYS* wk)
 {
   if(!TrCardSysProcCall(&wk->procSys)){
@@ -282,6 +355,15 @@ static int sub_SignWait(TR_CARD_SYS* wk)
   return CARD_INIT;
 }
 
+//=============================================================================================
+/**
+ * @brief 自分のトレーナーカードデータを収集する
+ *
+ * @param   cardData    
+ * @param   gameData    
+ * @param   isSendData    
+ */
+//=============================================================================================
 void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData )
 {
   u8 i,flag;
@@ -308,10 +390,15 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->TrainerName[6] = GFL_STR_GetEOMCode();
   }
   
+  // カードランク取得
+  cardData->CardRank = TRAINERCARD_GetCardRank( gameData );
+
   cardData->TrSex = MyStatus_GetMySex( mystatus );
   cardData->TrainerID = MyStatus_GetID( mystatus );
   cardData->Money = MyStatus_GetGold( mystatus );
   cardData->BadgeFlag = 0;
+  cardData->Version   = PM_VERSION;
+
   //FIXME 正しいバッヂ個数の定義に(8個)
   flag = 1;
   for( i=0; i<8; i++ )
@@ -394,7 +481,17 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
       cardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
 }
-//CALL_PARAMの作成
+
+//=============================================================================================
+/**
+ * @brief CALL_PARAMの作成
+ *
+ * @param   gameData    
+ * @param   heapId    
+ *
+ * @retval  TRCARD_CALL_PARAM*    
+ */
+//=============================================================================================
 TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId )
 {
   TRCARD_CALL_PARAM* callParam;
@@ -407,7 +504,17 @@ TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HE
   return callParam;
 }
 
-//通信時のCALL_PARAMの作成
+//=============================================================================================
+/**
+ * @brief 通信時のCALL_PARAMの作成
+ *
+ * @param   gameData    
+ * @param   pCardData   
+ * @param   heapId    
+ *
+ * @retval  TRCARD_CALL_PARAM*    
+ */
+//=============================================================================================
 TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , void* pCardData , HEAPID heapId )
 {
   TRCARD_CALL_PARAM* callParam;
@@ -418,4 +525,41 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
   callParam->value = 0;
 
   return callParam;
+}
+
+
+// バトルサブウェイでランクアップになる条件(シングル49連勝）
+#define BSUBWAY_BADGE_TERMS ( 49 )
+
+//=============================================================================================
+/**
+ * @brief トレーナーカードのランクを取得する
+ *
+ * @param   gameData    
+ *
+ * @retval  int   
+ */
+//=============================================================================================
+int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
+{
+  int rank=0;
+  //殿堂入り（クリアフラグ）
+  if (EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gameData ),SYS_FLAG_GAME_CLEAR)){
+    rank++;
+  }
+  //全国図鑑完成（イベント系ポケモンを除くポケモンをゲットしているか）
+  if ( ZUKANSAVE_CheckZenkokuComp(GAMEDATA_GetZukanSave(gameData)) ){
+       
+    rank++;
+  }
+
+#if 0
+  // バトルサブウェイで49連勝
+  bs_save = SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_SCOREDATA );    /// @@TODO まだバトルサブウェイの連勝未実装
+  if(BSUBWAY_SCOREDATA_GetMaxRenshouCount( bs_save, BSWAY_PLAYMODE_SINGLE) > BSUBWAY_BADGE_TERMS){
+    rank++;
+  }
+#endif
+
+  return rank;
 }

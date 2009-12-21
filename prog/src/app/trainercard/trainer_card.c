@@ -258,7 +258,7 @@ static void CardDataDraw(TR_CARD_WORK* wk);
 static BOOL CardRev(TR_CARD_WORK * wk );
 static void CardRevAffineSet(TR_CARD_WORK* wk);
 static int  CheckInput(TR_CARD_WORK *wk);
-static void SetCardPalette(TR_CARD_WORK *wk ,const u8 inCardRank, const u8 inPokeBookHold);
+static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold);
 static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion);
 static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo);
 
@@ -374,7 +374,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 
   //音関連初期化
 //  Snd_BadgeWorkInit( &wk->SndBadgeWork );
-  PMSND_PlaySE( SND_TRCARD_CALL );    //呼び出し音
+//  PMSND_PlaySE( SND_TRCARD_CALL );    //呼び出し音
 
   InitTRCardCellActor( &wk->ObjWork , &vramBank );
 
@@ -773,64 +773,48 @@ static void FreeStrBuf( TR_CARD_WORK * wk )
   GFL_FONT_Delete(wk->fontHandle);
 }
 
-//--------------------------------------------------------------------------------------------
+// カード面パレットをＷＢで替えるためのテーブル
+static int card_palette_table[][2]={
+  {    NARC_trainer_case_card_w0_NCLR, NARC_trainer_case_card_0_NCLR, },
+  {    NARC_trainer_case_card_w1_NCLR, NARC_trainer_case_card_1_NCLR, },
+  {    NARC_trainer_case_card_w2_NCLR, NARC_trainer_case_card_2_NCLR, },
+  {    NARC_trainer_case_card_w3_NCLR, NARC_trainer_case_card_3_NCLR, },
+  {    NARC_trainer_case_card_w4_NCLR, NARC_trainer_case_card_4_NCLR, },
+  {    NARC_trainer_case_card_w5_NCLR, NARC_trainer_case_card_5_NCLR, },
+  {    NARC_trainer_case_card_6_NCLR,  NARC_trainer_case_card_6_NCLR, },  // バージョン違い
+};
+
+//----------------------------------------------------------------------------------
 /**
- * カードパレット設定
+ * @brief カードのパレット転送をランク・WBに対応して行う
  *
- * @param inCardRank    カードランク
- * @param inPokeBookHold  図鑑所持フラグ
- *
- * @return  なし
+ * @param   wk    
+ * @param   inCardRank    
+ * @param   inPokeBookHold    
  */
-//--------------------------------------------------------------------------------------------
-static void SetCardPalette(TR_CARD_WORK *wk ,const u8 inCardRank, const u8 inPokeBookHold)
+//----------------------------------------------------------------------------------
+static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold)
 {
-  {
-    void *buf;
-    NNSG2dPaletteData *dat;
+  if (inPokeBookHold){
+      int Version = 1;
 
-    if (inPokeBookHold){
-      switch(inCardRank){
-      case 0:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_0_NCLR, &dat, wk->heapId );
-        break;
-      case 1:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_1_NCLR, &dat, wk->heapId );
-        break;
-      case 2:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_2_NCLR, &dat, wk->heapId );
-        break;
-      case 3:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_3_NCLR, &dat, wk->heapId );
-        break;
-      case 4:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_4_NCLR, &dat, wk->heapId );
-        break;
-      case 5:
-        buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_5_NCLR, &dat, wk->heapId );
-        break;
+      // ＷＢのバージョンにあわせてバレット切り替え（WB以外は全て青）
+      if(wk->TrCardData->Version==VERSION_WHITE){
+        Version = 0;
+      }else if(wk->TrCardData->Version==VERSION_BLACK){
+        Version = 1;
+      }else{
+        inCardRank = 6;
       }
-    }else{
-      buf = GFL_ARC_UTIL_LoadPalette(
-          ARCID_TRAINERCARD, NARC_trainer_case_card_6_NCLR, &dat, wk->heapId );
-    }
-
-    {
-      u16 * adr;
-      DC_FlushRange( dat->pRawData, 2*16*16 );  //16本分をフラッシュ
-      adr = dat->pRawData;
-      //16パレット１番目から8本分ロード
-      GXS_LoadBGPltt( &adr[16], 2*16, 2*16*8 );
-      //f番目のパレット１本をロード
-      GXS_LoadBGPltt( &adr[16*15], 2*16*15, 2*16 );
-      GFL_HEAP_FreeMemory(buf);
-    }
+      
+      OS_Printf("rank=%d, version=%d", inCardRank, Version);
+      // ＷＢにあわせてパレット読み込み
+      GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, card_palette_table[inCardRank][Version],
+        PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
+  } else{
+      GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_6_NCLR,
+        PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
+   
   }
 }
 
@@ -990,6 +974,44 @@ static void SetTrCardBg( void )
   }
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カードグラフィックをVERSIONで読み分けるためのID変更処理
+ *
+ * @param   version   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _get_card_ncgr( int version )
+{
+  if(version==VERSION_WHITE){
+    return NARC_trainer_case_card_w_NCGR;
+  }else{
+    return NARC_trainer_case_card_NCGR;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カードスクリーン面(表）をVERSIONで読み分けるためのID変更処理
+ *
+ * @param   version   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _get_card_face_nscr( int version )
+{
+  if(version==VERSION_WHITE){
+    return NARC_trainer_case_card_faca_w_NSCR;
+  }else{
+    return NARC_trainer_case_card_faca_NSCR;
+  }
+
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * グラフィックデータセット
@@ -1002,11 +1024,6 @@ static void SetTrCardBg( void )
 static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 {
   // TRAINER_PALETTE(UP_DISPLAY)
-  {
-    GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_0_NCLR,
-          PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
-  }
-
   // CARD PALETTE
   SetCardPalette(wk,wk->TrCardData->CardRank, wk->TrCardData->PokeBookFlg);
 
@@ -1050,9 +1067,9 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 
   //CARD
   GFL_ARC_UTIL_TransVramBgCharacter(
-      ARCID_TRAINERCARD, NARC_trainer_case_card_NCGR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+      ARCID_TRAINERCARD, _get_card_ncgr( wk->TrCardData->Version ), TRC_BG_CARD, 0, 0, 0, wk->heapId );
   GFL_ARC_UTIL_TransVramScreen(
-      ARCID_TRAINERCARD, NARC_trainer_case_card_faca_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+      ARCID_TRAINERCARD, _get_card_face_nscr( wk->TrCardData->Version), TRC_BG_CARD, 0, 0, 0, wk->heapId );
   //CASE
   GFL_ARC_UTIL_TransVramBgCharacter(
       ARCID_TRAINERCARD, NARC_trainer_case_card_case_NCGR, TRC_BG_BACK, 0, 0, 0, wk->heapId );
@@ -1177,6 +1194,7 @@ static void HardWareWindow_Set( int flag )
   }
 }
 
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 裏面スクリーンを替える
@@ -1184,9 +1202,23 @@ static void HardWareWindow_Set( int flag )
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void Trans_CardBackScreen( TR_CARD_WORK *wk )
+static void Trans_CardBackScreen( TR_CARD_WORK *wk, int version )
 {
   // アニメONかOFFかで転送するスクリーンを替える
+  const int card_back_screen[][2]={
+    { NARC_trainer_case_card_back_w_NSCR, NARC_trainer_case_card_back_NSCR,},    // サインアニメOFF
+    { NARC_trainer_case_card_back2_w_NSCR, NARC_trainer_case_card_back2_NSCR,}, // サインアニメON
+  };
+  if(version==VERSION_WHITE){
+    version = 0;
+  }else{
+    version = 1;
+  }
+
+  GFL_ARC_UTIL_TransVramScreen( ARCID_TRAINERCARD, 
+                                card_back_screen[wk->TrCardData->SignAnimeOn][version],
+                                TRC_BG_CARD, 0, 0, 0, wk->heapId );
+/*
   if(wk->TrCardData->SignAnimeOn){
     GFL_ARC_UTIL_TransVramScreen(
       ARCID_TRAINERCARD, NARC_trainer_case_card_back2_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
@@ -1194,7 +1226,7 @@ static void Trans_CardBackScreen( TR_CARD_WORK *wk )
     GFL_ARC_UTIL_TransVramScreen(
       ARCID_TRAINERCARD, NARC_trainer_case_card_back_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
   }
-  
+*/
 }
 
 
@@ -1207,13 +1239,13 @@ static void CardDesignDraw(TR_CARD_WORK* wk)
 {
   if (wk->is_back == FALSE){
     GFL_ARC_UTIL_TransVramScreen(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_faca_NSCR, TRC_BG_CARD, 0, 0, 0, wk->heapId );
+        ARCID_TRAINERCARD, _get_card_face_nscr( wk->TrCardData->Version), TRC_BG_CARD, 0, 0, 0, wk->heapId );
     //スクリーンクリア
     GFL_BG_ClearScreen( TRC_BG_TRAINER );
 //    HardWareWindow_Set( 0 );
   }else{
     // 裏面カードスクリーン転送
-    Trans_CardBackScreen(wk);
+    Trans_CardBackScreen(wk, wk->TrCardData->Version);
     //トレーナー消す
     ClearTrainer(wk);
     //スクリーンクリア
@@ -1611,7 +1643,7 @@ static int CheckKey(TR_CARD_WORK* wk)
   }
   else if( keyTrg & PAD_BUTTON_CANCEL )
   {
-    PMSND_PlaySE( SND_TRCARD_END );   //終了音
+    PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
     return TRC_KEY_REQ_END_BUTTON;
   }
 
@@ -1702,9 +1734,11 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
 {
   switch(hitNo){
   case 0:     // 戻る
+    PMSND_PlaySE( SND_TRCARD_DECIDE );
     return TRC_KEY_REQ_END_BUTTON;
     break;
   case 1:     // 終了
+    PMSND_PlaySE( SND_TRCARD_END );
     return TRC_KEY_REQ_END_BUTTON;
     break;
   case 2:     // カード裏返しボタン
@@ -1714,10 +1748,11 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
   case 3:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
       wk->TrCardData->SignAnimeOn ^=1;
-      Trans_CardBackScreen(wk);
+      Trans_CardBackScreen(wk, wk->TrCardData->Version);
       Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
       Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
       OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
+      PMSND_PlaySE( SND_TRCARD_ANIME );
     }
     break;
   case 4:     // 精密描画ボタン
@@ -1728,31 +1763,37 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
         }else{
           wk->sub_seq = 3;
         }
+        PMSND_PlaySE( SND_TRCARD_LOUPE );
         return TRC_KEY_REQ_SCALE_BUTTON;
     }
     break;
   case 5:     // ペン先ボタン
     if(wk->is_back){
+      PMSND_PlaySE( SND_TRCARD_PEN );
       wk->pen ^=1;
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
       OS_Printf("pen touch\n");
     }
     break;
   case 6:     // ブックマークボタン
+    PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
   case 7:     // トレーナータイプ
     if(wk->is_back==0){
+      PMSND_PlaySE( SND_TRCARD_TRTYPE );
       return TRC_KEY_REQ_TRAINER_TYPE;
     }
     break;
   case 8:     // 性格
     if(wk->is_back==0){
+      PMSND_PlaySE( SND_TRCARD_PERSONALITY );
       return TRC_KEY_REQ_PERSONALITY;
     }
     break;
   case 9:     // 簡易会話
     if(wk->is_back==0){
+      PMSND_PlaySE( SND_TRCARD_PMS );
       return TRC_KEY_REQ_PMS_CALL;
     }
     break;
@@ -1782,18 +1823,21 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 4:     // 精密描画ボタン
     if(wk->is_back && (!wk->isComm)){
+      PMSND_PlaySE( SND_TRCARD_ANIME );
       wk->sub_seq = 3;
       return TRC_KEY_REQ_SCALE_BUTTON;
     }
     break;
   case 5:     // ペン先ボタン
     if(wk->is_back){
+      PMSND_PlaySE( SND_TRCARD_PEN );
       wk->pen ^=1;
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
       OS_Printf("pen touch\n");
     }
     break;
   case 6:     // ブックマークボタン
+    PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
   }
