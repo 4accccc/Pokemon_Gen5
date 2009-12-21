@@ -12,6 +12,7 @@
 
 #include "demo/shinka_demo.h"
 
+#include "gamesystem/game_beacon.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "arc_def.h"
@@ -287,6 +288,14 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   case 3:
     if( TextWait( wk ) )
     { 
+      { 
+        //すれ違い用データをセット
+        STRBUF* buf = GFL_STR_CreateBuffer( BUFLEN_SHINKA_DEMO_MSG, wk->heapID );
+        PP_Get( wk->pp, ID_PARA_nickname, buf );
+        GAMEBEACON_Set_PokemonEvolution( buf );
+        GFL_STR_DeleteBuffer( buf );
+      }
+      
       //技覚えチェック
       wk->wazaoboe_no = PP_CheckWazaOboe( wk->pp, &wk->wazaoboe_index, wk->heapID );
       if( wk->wazaoboe_no == PTL_WAZAOBOE_NONE )
@@ -685,7 +694,7 @@ static  void  TextPrint( SHINKA_DEMO_WORK *wk, int bmp_win, int x, int y, GFL_MS
       x = ( x & ( STR_X_CENTERING ^ 0xffffffff ) ) - ( dot_len / 2 );
     }
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmp_win ] ), x, y, expbuf, wk->font );
-    GFL_HEAP_FreeMemory( expbuf );
+    GFL_STR_DeleteBuffer( expbuf );
   }
   GFL_HEAP_FreeMemory( strbuf );
 
@@ -715,7 +724,7 @@ static  BOOL  TextWait( SHINKA_DEMO_WORK* wk )
   case PRINTSTREAM_STATE_DONE:
     if( wk->expbuf )
     { 
-      GFL_HEAP_FreeMemory( wk->expbuf );
+      GFL_STR_DeleteBuffer( wk->expbuf );
       wk->expbuf = NULL;
     }
     PRINTSYS_PrintStreamDelete( wk->ps );
