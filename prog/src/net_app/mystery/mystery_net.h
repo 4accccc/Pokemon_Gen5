@@ -22,10 +22,15 @@
 typedef enum
 {
   MYSTERY_NET_STATE_WAIT, //待機中
+
   //ビーコン
-  MYSTERY_NET_STATE_START_BEACON,
+  MYSTERY_NET_STATE_START_BEACON,   //START終了時、MAINへ勝手に状態遷移
   MYSTERY_NET_STATE_MAIN_BEACON,
   MYSTERY_NET_STATE_END_BEACON,
+
+  //WiFiダウンロード
+  MYSTERY_NET_STATE_WIFI_DOWNLOAD,          //
+  MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD,  //ダウンロードのキャンセル
 
   //WIFIログアウト  ( ログインは外部で行うため　)
   MYSTERY_NET_STATE_LOGOUT_WIFI,
@@ -48,7 +53,7 @@ typedef struct _MYSTERY_NET_WORK  MYSTERY_NET_WORK;
 */
 //=============================================================================
 //初期化。破棄、メイン処理
-extern MYSTERY_NET_WORK * MYSTERY_NET_Init( HEAPID heapID );
+extern MYSTERY_NET_WORK * MYSTERY_NET_Init( const SAVE_CONTROL_WORK *cp_sv, HEAPID heapID );
 extern void MYSTERY_NET_Exit( MYSTERY_NET_WORK *p_wk );
 extern void MYSTERY_NET_Main( MYSTERY_NET_WORK *p_wk );
 
@@ -56,4 +61,8 @@ extern void MYSTERY_NET_Main( MYSTERY_NET_WORK *p_wk );
 extern void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state );
 extern MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk );
 
+//現在の通信を検知
 extern GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *cp_wk );
+
+//ダウンロードしたデータうけとり
+extern BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size );

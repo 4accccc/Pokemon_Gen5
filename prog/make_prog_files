@@ -310,7 +310,6 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libstubsssl.$HYB.a
 #LIB=>          libwcm.$HYB.a
 #LIB=>          libdwcnonport.$HYB.a
-#LIB=>          libdwcnd.$HYB.a
 #LIB=>          libdwcnas.$HYB.a
 #LIB=>          libdwcmatch.$HYB.a
 #LIB=>          libdwcauth.$HYB.a
@@ -941,10 +940,10 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #WIFI 世界 共通
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libdwcnd.$HYB.a
 #LIB=>          libnhttp.$HYB.a
 #LIB=>          libdwcghttp.$HYB.a
 #LIB=>          libdwcgsghttp.$HYB.a
+#LIB=>          libdwcnd.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c \
@@ -1248,12 +1247,13 @@ SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 						net_app/battle_recorder/br_bvsend_proc.c \
 						net_app/battle_recorder/br_musicallook_proc.c \
 						net_app/battle_recorder/br_musicalsend_proc.c \
-		                                net_app/battle_recorder/br_util.c \
-		                                net_app/battle_recorder/br_pokesearch.c \
-		                                net_app/battle_recorder/br_codein.c \
-		                                net_app/battle_recorder/br_codein_disp.c \
-		                                net_app/battle_recorder/br_codein_pv.c \
-		                                net_app/battle_recorder/br_fade.c
+		        net_app/battle_recorder/br_util.c \
+		        net_app/battle_recorder/br_pokesearch.c \
+		        net_app/battle_recorder/br_codein.c \
+		        net_app/battle_recorder/br_codein_disp.c \
+		        net_app/battle_recorder/br_codein_pv.c \
+		        net_app/battle_recorder/br_fade.c \
+            net_app/battle_recorder/br_sidebar.c
 
 
 #バトルレコーダーツール

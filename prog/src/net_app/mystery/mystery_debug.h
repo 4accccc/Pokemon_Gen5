@@ -67,10 +67,11 @@ static inline void MYSTERY_DEBUG_SetGiftData( DOWNLOAD_GIFT_DATA *p_data )
   p_data->data.event_name[ 9] = L'ね';
   p_data->data.event_name[10] = L'ん';
   p_data->data.event_name[11] = L'　';
-  p_data->data.event_name[12] = L'ミ';
-  p_data->data.event_name[13] = L'ュ';
-  p_data->data.event_name[14] = L'ウ';
-  p_data->data.event_name[15] = 0xffff;
+  p_data->data.event_name[12] = L'デ';
+  p_data->data.event_name[13] = L'バ';
+  p_data->data.event_name[14] = L'ッ';
+  p_data->data.event_name[15] = L'ク';
+  p_data->data.event_name[16] = 0xffff;
 
   //受信した時間
   p_data->data.recv_date      = (2010<<MYSTERYGIFT_DATE_SHIFT_YEAR) | (12<<MYSTERYGIFT_DATE_SHIFT_MONTH) | (30<<MYSTERYGIFT_DATE_SHIFT_DAY);
@@ -126,18 +127,19 @@ static inline void MYSTERY_DEBUG_SetGiftData( DOWNLOAD_GIFT_DATA *p_data )
     p_data->event_text[30] = L'モ';
     p_data->event_text[31] = L'ン';
     p_data->event_text[32] = 0xfffe;
-    p_data->event_text[33] = L'ミ';
-    p_data->event_text[34] = L'ュ';
-    p_data->event_text[35] = L'ウ';
-    p_data->event_text[36] = L'を';
-    p_data->event_text[37] = L'　';
-    p_data->event_text[38] = L'プ';
-    p_data->event_text[39] = L'レ';
-    p_data->event_text[40] = L'ゼ';
-    p_data->event_text[41] = L'ン';
-    p_data->event_text[42] = L'ト';
-    p_data->event_text[43] = L'！';
-    p_data->event_text[44] = 0xffff;
+    p_data->event_text[33] = L'デ';
+    p_data->event_text[34] = L'バ';
+    p_data->event_text[35] = L'ッ';
+    p_data->event_text[36] = L'ク';
+    p_data->event_text[37] = L'を';
+    p_data->event_text[38] = L'　';
+    p_data->event_text[39] = L'プ';
+    p_data->event_text[40] = L'レ';
+    p_data->event_text[41] = L'ゼ';
+    p_data->event_text[42] = L'ン';
+    p_data->event_text[43] = L'ト';
+    p_data->event_text[44] = L'！';
+    p_data->event_text[45] = 0xffff;
   }
 }
 #endif //DEBUG_SET_SAVEDATA

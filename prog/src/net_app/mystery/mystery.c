@@ -43,9 +43,15 @@
 
 //デバッグ
 #include "mystery_debug.h"
+#include "debug/debug_str_conv.h"
 
 //外部公開
 #include "net_app/mystery.h"
+
+//-------------------------------------
+///	オーバーレイ
+//=====================================
+FS_EXTERN_OVERLAY(dpw_common);
 
 //-------------------------------------
 ///	デバッグ
@@ -393,6 +399,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   MYSTERY_WORK  *p_wk;
   MYSTERY_PARAM *p_param  = p_param_adrs;
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+
   //ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MYSTERYGIFT, 0x30000 );
 
@@ -409,6 +417,20 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     for( i = 0; i < 6; i++ )
     { 
       MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data );
+    }
+    
+    { 
+      int i;
+      const u8  *cp_data = (const u8*)&p_wk->data;
+      NAGI_Printf( "size == %d\n",sizeof(DOWNLOAD_GIFT_DATA) );
+      NAGI_Printf( "adrs == 0x%x\n",&p_wk->data );
+      NAGI_Printf( "!!!!!!!!!!!!-- binary start --!!!!!!!!!!!!!!!\n\n" );
+      for( i = 0; i < sizeof(DOWNLOAD_GIFT_DATA); i++ )
+      { 
+        NAGI_Printf( "%x", cp_data[i] );
+      }
+      NAGI_Printf( "\n" );
+      NAGI_Printf( "!!!!!!!!!!!!-- binary end --!!!!!!!!!!!!!!!\n\n" );
     }
   }
 #endif 
@@ -432,7 +454,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //モジュール作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_Start );
   p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, PLT_BG_TEXT_M, BG_CGX_OFS_M_TEXT, p_wk->p_que, HEAPID_MYSTERYGIFT );
-  p_wk->p_net   = MYSTERY_NET_Init( HEAPID_MYSTERYGIFT );
+  p_wk->p_net   = MYSTERY_NET_Init( SaveControl_GetPointer(), HEAPID_MYSTERYGIFT );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -482,6 +504,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
   //タイトルに戻る
   GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
+
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -1199,21 +1224,63 @@ static void SEQFUNC_RecvGift( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
+    { 
+      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_WIFI_DOWNLOAD );
+    }
+
     //さがしています
     MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, p_wk->p_font );
     *p_seq  = SEQ_SEARCH;
     break;
 
   case SEQ_SEARCH:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+
+    if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
     { 
-      //見つかった  本来Aボタンじゃない
-      *p_seq  = SEQ_SELECT_GIFT_INIT;
+      if( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
+      {
+        BOOL ret;
+        ret = MYSTERY_NET_GetDownloadData( p_wk->p_net, &p_wk->data, sizeof(DOWNLOAD_GIFT_DATA) );
+        if( ret )
+        { 
+          static char title_buff[GIFT_DATA_CARD_TITLE_MAX];
+          static char text_buff[GIFT_DATA_CARD_TEXT_MAX];
+          DEB_STR_CONV_StrcodeToSjis( p_wk->data.data.event_name, title_buff, GIFT_DATA_CARD_TITLE_MAX );
+          DEB_STR_CONV_StrcodeToSjis( p_wk->data.event_text, text_buff, GIFT_DATA_CARD_TEXT_MAX );
+
+          NAGI_Printf( "取得しました\n" );
+          NAGI_Printf( "TITLE: %s\n", title_buff );
+          NAGI_Printf( "TEXT : %s\n", text_buff );
+          NAGI_Printf( "EV_ID: %d\n", p_wk->data.data.event_id );
+          NAGI_Printf( "TYPE : %d\n",   p_wk->data.data.gift_type );
+
+          *p_seq  = SEQ_SELECT_GIFT_INIT;
+        }
+        else
+        { 
+          NAGI_Printf( "取得できなかった\n" );
+          *p_seq = SEQ_NO_GIFT_INIT;
+        }
+     
+      }
+    }
+    else
+    { 
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+      { 
+        //見つかった  本来Aボタンじゃない
+        *p_seq  = SEQ_SELECT_GIFT_INIT;
+      }
     }
 
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL
-        || 0 )
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
     { 
+      if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
+      { 
+        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD );
+      }
+
       //Bキャンセルorタイムアウト
       *p_seq = SEQ_NO_GIFT_INIT;
     }
@@ -1764,8 +1831,8 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       
     case UTIL_MENU_TYPE_GIFT:
       setup.p_msg   = NULL;
-      setup.p_strbuf[0] = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX, heapID );
-      GFL_STR_SetStringCode( setup.p_strbuf[0], p_wk->data.data.event_name );
+      setup.p_strbuf[0] = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
+      GFL_STR_SetStringCodeOrderLength( setup.p_strbuf[0], p_wk->data.data.event_name, GIFT_DATA_CARD_TITLE_MAX );
       setup.list_max    = 1;
       break;
     }
@@ -1826,11 +1893,11 @@ static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID )
         2,5,28,18,
       },
     };
-    tbl[0].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX, heapID );
-    GFL_STR_SetStringCode( tbl[0].p_strbuf, p_wk->data.data.event_name ); 
+    tbl[0].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
+    GFL_STR_SetStringCodeOrderLength( tbl[0].p_strbuf, p_wk->data.data.event_name, GIFT_DATA_CARD_TITLE_MAX ); 
 
-    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TEXT_MAX, heapID );
-    GFL_STR_SetStringCode( tbl[1].p_strbuf, p_wk->data.event_text ); 
+    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TEXT_MAX+1, heapID );
+    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, p_wk->data.event_text, GIFT_DATA_CARD_TEXT_MAX ); 
 
     p_wk->p_winset_s  = MYSTERY_MSGWINSET_Init( tbl, NELEMS(tbl), BG_FRAME_S_TEXT, PLT_BG_FONT_S, p_wk->p_que, p_wk->p_msg, p_wk->p_font, heapID );
 

@@ -11,6 +11,9 @@
 //ライブラリ
 #include <gflib.h>
 
+//システム
+#include "system/palanm.h"
+
 //外部公開
 #include "br_fade.h"
 //=============================================================================
@@ -52,6 +55,9 @@ struct _BR_FADE_WORK
   u32             max;
   u32             sync;
   BR_FADE_MAINFUNCTION  MainFunction;
+  PALETTE_FADE_PTR      p_pfd;
+  GXRgb           pfd_color;
+  u16             dummy;
 };
 
 //=============================================================================
@@ -62,6 +68,7 @@ struct _BR_FADE_WORK
 //実行関数
 static BOOL Br_Fade_MainMasterBrightBlack( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq );
+static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq );
 //その他
 static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type );
 
@@ -82,6 +89,14 @@ BR_FADE_WORK * BR_FADE_Init( HEAPID heapID )
   BR_FADE_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_FADE_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(BR_FADE_WORK) );
+  p_wk->p_pfd = PaletteFadeInit( heapID );
+
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_BG, FADE_PAL_ALL_SIZE, heapID );
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, heapID );
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, heapID );
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, heapID );
+  PaletteTrans_AutoSet( p_wk->p_pfd, TRUE );
+
   return p_wk;
 }
 
@@ -94,6 +109,12 @@ BR_FADE_WORK * BR_FADE_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void BR_FADE_Exit( BR_FADE_WORK *p_wk )
 { 
+  PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_MAIN_OBJ );	///< main	oam
+  PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_MAIN_BG );	///< main	bg
+  PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_SUB_OBJ );	///< main	oam
+  PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_SUB_BG );	///< main	bg
+  
+  PaletteFadeFree( p_wk->p_pfd );
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -163,6 +184,61 @@ void BR_FADE_StartFadeEx( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY
 BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk )
 { 
   return cp_wk->is_end;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードで使用するパレットをコピー
+ *
+ *	@param	BR_FADE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_PALETTE_Copy( BR_FADE_WORK *p_wk )
+{
+  int i;
+  for( i = 0; i < 0x10; i++ )
+  { 
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, i, FADE_PAL_ONE_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, i, FADE_PAL_ONE_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, i, FADE_PAL_ONE_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, i, FADE_PAL_ONE_SIZE );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェードで使用する色を設定
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param	rgb                 RGB
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_PALETTE_SetColor( BR_FADE_WORK *p_wk, GXRgb rgb )
+{ 
+  p_wk->pfd_color = rgb;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェードの指定色を転送
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param  画面
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
+{ 
+  //画面による設定
+  if( display & BR_FADE_DISPLAY_MAIN )
+  { 
+    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0xFFFF, 16, p_wk->pfd_color );	///< main	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xFFFF, 16, p_wk->pfd_color );	///< main	bg
+  }
+  if( display & BR_FADE_DISPLAY_SUB )
+  { 
+    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, 16, p_wk->pfd_color );	///< main	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xFFFF, 16, p_wk->pfd_color );	///< main	bg
+  }
+
+  PaletteTransSwitch( p_wk->p_pfd, TRUE );
+  PaletteFadeTrans( p_wk->p_pfd );
 }
 //=============================================================================
 /**
@@ -350,6 +426,83 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットでのフェードメイン処理
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param  u32 seq             シーケンス
+ *
+ *	@return TRUEならば処理終了  FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
+{ 
+  enum
+  { 
+    SEQ_PFD_INIT,
+    SEQ_PFD_MAIN,
+    SEQ_PFD_EXIT,
+  };
+
+  switch( *p_seq )
+  { 
+  case SEQ_PFD_INIT:
+    { 
+      int i;
+
+      p_wk->cnt = 0;
+      p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
+
+      PaletteTransSwitch( p_wk->p_pfd, TRUE );
+
+      *p_seq  = SEQ_PFD_MAIN;
+    }
+    break;
+
+  case SEQ_PFD_MAIN:
+    { 
+      u8 ev;
+      //フェード方向
+      if( p_wk->dir == BR_FADE_DIR_IN )
+      { 
+        ev = 16 - 16 * p_wk->cnt / p_wk->max;
+      }
+      else if( p_wk->dir == BR_FADE_DIR_OUT )
+      { 
+        ev = 0 + 16 * p_wk->cnt / p_wk->max;
+      }
+
+      //画面による設定
+      if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+      { 
+        ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< main	oam
+        ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xFFFF, ev, p_wk->pfd_color );	///< main	bg
+      }
+      if( p_wk->display & BR_FADE_DISPLAY_SUB )
+      { 
+        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< main	oam
+        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xFFFF, ev, p_wk->pfd_color );	///< main	bg
+      }
+
+      PaletteFadeTrans( p_wk->p_pfd );
+
+      if( p_wk->cnt++ >= p_wk->max )
+      { 
+        *p_seq  = SEQ_PFD_EXIT;
+      }
+    }
+    break;
+
+  case SEQ_PFD_EXIT:
+    return TRUE;
+  }
+
+
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  フェードの種類により実行関数を返す
@@ -368,6 +521,9 @@ static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type )
 
   case BR_FADE_TYPE_ALPHA_BG012OBJ:
     return Br_Fade_MainAlpha;
+
+  case BR_FADE_TYPE_PALLETE:
+    return Br_Fade_MainPallete;
 
   default:
     GF_ASSERT( 0 );

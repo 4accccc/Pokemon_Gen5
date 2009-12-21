@@ -2,7 +2,7 @@
 /**
  *
  *	@file		br_start_proc.h
- *	@brief	起動プロセス
+ *	@brief	起動・終了プロセス
  *	@author	Toru=Nagihashi
  *	@date		2009.11.13
  *
@@ -12,11 +12,21 @@
 #include "br_proc_sys.h"
 #include "br_res.h"
 #include "br_fade.h"
+#include "br_sidebar.h"
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	起動モード
+//=====================================
+typedef enum
+{
+  BR_START_PROC_MODE_OPEN,
+  BR_START_PROC_MODE_CLOSE,
+  BR_START_PROC_MODE_NONE,
+} BR_START_PROC_MODE;
 
 //=============================================================================
 /**
@@ -24,15 +34,16 @@
 */
 //=============================================================================
 //-------------------------------------
-///	起動プロセス引数
+///	起動・終了プロセス引数
 //=====================================
 typedef struct 
 {
-	
+  BR_START_PROC_MODE  mode;     //[in]起動モード
 	GFL_CLUNIT			*p_unit;			//[in]ユニット
   BR_FADE_WORK    *p_fade;      //[in]フェード
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  BR_SIDEBAR_WORK *p_sidebar;   //[in]サイドバー
 } BR_START_PROC_PARAM;
 
 

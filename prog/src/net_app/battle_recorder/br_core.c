@@ -20,6 +20,7 @@
 #include "br_res.h"
 #include "br_proc_sys.h"
 #include "br_fade.h"
+#include "br_sidebar.h"
 
 //各プロセス
 #include "br_start_proc.h"
@@ -70,9 +71,11 @@ typedef struct
   //フェード
   BR_FADE_WORK    *p_fade;
 
+  //サイドバー
+  BR_SIDEBAR_WORK *p_sidebar;
+
 	//引数
 	BR_CORE_PARAM		*p_param;
-
 
 } BR_CORE_WORK;
 
@@ -267,11 +270,20 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_S, HEAPID_BATTLE_RECORDER_CORE );
 
 	//コアプロセス初期化
-	p_wk->p_procsys	= BR_PROC_SYS_Init( BR_PROCID_MENU, sc_procdata_tbl, 
-			BR_PROCID_MAX, p_wk, HEAPID_BATTLE_RECORDER_CORE );
+  p_wk->p_procsys	= BR_PROC_SYS_Init( BR_PROCID_START, sc_procdata_tbl, 
+      BR_PROCID_MAX, p_wk, HEAPID_BATTLE_RECORDER_CORE );
 
   //フェードプロセス
   p_wk->p_fade  = BR_FADE_Init( HEAPID_BATTLE_RECORDER_CORE );
+  BR_FADE_PALETTE_Copy( p_wk->p_fade );  //BR_RES_Initでよんでいるので
+  BR_FADE_PALETTE_SetColor( p_wk->p_fade, BR_FADE_COLOR_BLUE );
+  BR_FADE_PALETTE_TransColor( p_wk->p_fade, BR_FADE_DISPLAY_BOTH );
+
+  //サイドバー作成
+  {
+    GFL_CLUNIT  *p_clunit = BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+    p_wk->p_sidebar = BR_SIDEBAR_Init( p_clunit, p_wk->p_fade, p_wk->p_res, HEAPID_BATTLE_RECORDER_CORE );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -290,6 +302,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  //サイドバー破棄
+  BR_SIDEBAR_Exit( p_wk->p_sidebar, p_wk->p_res );
 
   //フェードプロセス破棄
   BR_FADE_Exit( p_wk->p_fade );
@@ -342,7 +357,8 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 	{	
 	case SEQ_INIT:
     //バトルから戻ってきた時だけ、フェード
-    if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
+ //   if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
+    if(1)
     { 
       *p_seq	= SEQ_FADEIN;
     }
@@ -369,6 +385,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 			BOOL is_end;
       //フェードプロセス処理
       BR_FADE_Main( p_wk->p_fade );
+
+      //サイドバー処理
+      BR_SIDEBAR_Main( p_wk->p_sidebar );
 
       //プロセス処理
       BR_PROC_SYS_Main( p_wk->p_procsys );
@@ -435,6 +454,25 @@ static void BR_START_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_sidebar  = p_wk->p_sidebar;
+
+  if( preID == BR_PROCID_MENU )
+  { 
+    p_param->mode = BR_START_PROC_MODE_CLOSE;
+  }
+  else
+  { 
+      
+    if( p_wk->p_param->mode == BR_CORE_MODE_INIT )
+    { 
+      p_param->mode = BR_START_PROC_MODE_OPEN;
+    }
+    else
+    { 
+      p_param->mode = BR_START_PROC_MODE_NONE;
+    }
+  }
+
 }
 //----------------------------------------------------------------------------
 /**

@@ -460,6 +460,34 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 
 	switch( objID )
 	{	
+  case BR_RES_OBJ_SIDEBAR_M:
+		{	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= p_wk->obj_common_plt[ CLSYS_DRAW_MAIN ];
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_browse_line_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_line_64k_NCER, NARC_battle_recorder_gra_batt_rec_line_64k_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+    break;
+  case BR_RES_OBJ_SIDEBAR_S:
+    {	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= p_wk->obj_common_plt[ CLSYS_DRAW_SUB ];
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_browse_line_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_line_64k_NCER, NARC_battle_recorder_gra_batt_rec_line_64k_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+    break;
 	case BR_RES_OBJ_BROWSE_BTN_M:
 		{	
 			ARCHANDLE *p_handle;
@@ -602,8 +630,6 @@ void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
 	case BR_RES_OBJ_BROWSE_BTN_M:
 		/* fallthrough */
 	case BR_RES_OBJ_BROWSE_BTN_S:
-		/* fallthrough */
-	case BR_RES_OBJ_LINE:
 		/* fallthrough */
 	case BR_RES_OBJ_SHORT_BTN_S:
     GFL_CLGRP_CGR_Release( p_data->ncg );

@@ -70,7 +70,7 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 p
   p_wk->frm       = frm;
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );

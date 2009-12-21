@@ -176,7 +176,13 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       GFL_HEAP_FreeMemory(pData);
     }
 
-
+    {//ミステリー関連 
+      MYSTERY_DATA *pMystery = SaveData_GetMysteryData(pWork->pSaveData); 
+      GIFT_PACK_DATA  *pGift  = MYSTERYDATA_GetCardData( pMystery, 0 );
+      pAddr = (u8*)pGift;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MYSTERY", (u32)pAddr-(u32)topAddr, sizeof(GIFT_PACK_DATA));
+      OS_TPrintf( "download %d  pack%d present%d\n", sizeof(DOWNLOAD_GIFT_DATA), sizeof(GIFT_PACK_DATA), sizeof(GIFT_PRESENT) );
+    }
 
     
     {//DreamWorld関連

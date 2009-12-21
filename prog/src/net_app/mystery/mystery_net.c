@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //ライブラリ
 #include <gflib.h>
+#include <dwc.h>
 
 //システム
 #include "system/main.h"
@@ -31,6 +32,23 @@
  *					定数宣言
 */
 //=============================================================================
+
+#define WIFI_FILE_ATTR1			"MYSTERY"
+#define WIFI_FILE_ATTR2			""
+#define WIFI_FILE_ATTR3			""
+
+#define MYSTERY_DOWNLOAD_FILE_MAX  3
+
+#define MYSTERY_DOWNLOAD_GIFT_DATA_SIZE (4096)
+
+enum {
+  ND_RESULT_EXECUTE,		// 実行中
+  ND_RESULT_COMPLETE,		// 正常ダウンロード終了
+  ND_RESULT_NOT_FOUND_FILES,	// ファイルが見つからなかった
+  ND_RESULT_DOWNLOAD_CANCEL,	// ユーザーからキャンセルされた
+  ND_RESULT_DOWNLOAD_ERROR,	// なんらかのエラーが起きた
+  ND_RESULT_MAX
+};
 
 //=============================================================================
 /**
@@ -62,6 +80,24 @@ typedef struct
 } BEACON_DATA;
 
 //-------------------------------------
+///	WIFIダウンロード
+//=====================================
+typedef struct 
+{
+  DWCNdFileInfo     fileInfo[ MYSTERY_DOWNLOAD_FILE_MAX ];
+  s32               next_seq;
+  BOOL              cancel_req;
+  BOOL              wifi_cancel;
+  int               server_filenum;
+  char              filebuffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
+  BOOL              is_recv;
+  u32               percent;
+  u32               recived;
+  u32               contentlen;
+  u32               target;
+} WIFI_DOWNLOAD_DATA;
+
+//-------------------------------------
 ///	ふしぎなおくりもの通信ワーク
 //=====================================
 struct _MYSTERY_NET_WORK
@@ -73,7 +109,18 @@ struct _MYSTERY_NET_WORK
   GAME_COMM_STATUS_BIT  comm_status;
   HEAPID            heapID;
   BOOL              is_exit;
+  WIFI_DOWNLOAD_DATA  wifi_download_data;
+  const SAVE_CONTROL_WORK *cp_sv;
 } ;
+
+//-------------------------------------
+///	コールバックフラグ
+//    コールバックに引数がないのでしかたなくstatic
+//=====================================
+static BOOL s_callback_flag;
+static int  s_callback_result;
+static BOOL s_cleanup_callback_flag;
+static int  s_cleanup_callback_result;
 
 //=============================================================================
 /**
@@ -105,7 +152,15 @@ static void SEQFUNC_InitIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 static void SEQFUNC_ExitIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_MainIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
+static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 static void SEQFUNC_LogoutWifi( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//-------------------------------------
+///	WIFI_DOWNLOADで使う関数
+//=====================================
+static void WIFI_DOWNLOAD_WaitNdCallback( WIFI_DOWNLOAD_DATA *p_wk, int *p_seq, int next_seq );
+static void WIFI_DOWNLOAD_WaitNdCleanCallback( WIFI_DOWNLOAD_DATA *p_wk, int result, int *p_seq, int next_seq, int false_seq);
 
 //-------------------------------------
 ///	通信コールバック
@@ -114,6 +169,14 @@ static void * NETCALLBACK_GetBeaconData( void *p_wk_adrs );
 static int NETCALLBACK_GetBeaconSize( void *p_wk_adrs );
 static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
 static void	NETCALLBACK_ExitCallback(void* p_wk_adrs);
+// wifi downloadで使用するコールバック
+static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
+static void NdCleanupCallback( void );
+
+//-------------------------------------
+///	その他
+//=====================================
+static int UTIL_StringToInteger( const char *buf );
 
 //=============================================================================
 /**
@@ -177,17 +240,19 @@ static const GFLNetInitializeStruct sc_net_init =
 /**
  *	@brief  初期化
  *
+ *  @param  cp_sv           せーぶ
  *	@param	HEAPID heapID   ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_NET_WORK * MYSTERY_NET_Init( HEAPID heapID )
+MYSTERY_NET_WORK * MYSTERY_NET_Init( const SAVE_CONTROL_WORK *cp_sv, HEAPID heapID )
 { 
   MYSTERY_NET_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_NET_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_NET_WORK) );
   p_wk->heapID  = heapID;
+  p_wk->cp_sv   = cp_sv;
 
   //モジュール作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_Wait );
@@ -246,6 +311,20 @@ void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state
       SEQ_SetNext( &p_wk->seq, SEQFUNC_ExitBeaconScan );
     }
     break;
+
+  case MYSTERY_NET_STATE_WIFI_DOWNLOAD:
+    if( SEQ_IsComp(&p_wk->seq, SEQFUNC_Wait ) )
+    { 
+      SEQ_SetNext( &p_wk->seq, SEQFUNC_WifiDownload );
+    }
+    break;
+
+  case MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD:
+    if( SEQ_IsComp(&p_wk->seq, SEQFUNC_WifiDownload ) )
+    {
+      p_wk->wifi_download_data.cancel_req = TRUE;
+    }
+    break;
   }
 }
 
@@ -276,6 +355,14 @@ MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk )
   { 
     return MYSTERY_NET_STATE_END_BEACON;
   }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_WifiDownload ) )
+  { 
+    return MYSTERY_NET_STATE_WIFI_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_LogoutWifi ) )
+  { 
+    return MYSTERY_NET_STATE_LOGOUT_WIFI;
+  }
 
 
   GF_ASSERT(0);
@@ -294,6 +381,26 @@ MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk )
 GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *cp_wk )
 { 
   return cp_wk->comm_status;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロードしたデータを取得
+ *
+ *	@param	const MYSTERY_NET_WORK *cp_wk ワーク
+ *	@param	*p_data     データ
+ *	@param	size        サイズ
+ *
+ *	@return TRUEでダウンロードしている  FALSEでしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size )
+{ 
+  if( cp_wk->wifi_download_data.is_recv )
+  { 
+    GFL_STD_MemCopy( cp_wk->wifi_download_data.filebuffer, p_data, size );
+    return TRUE;
+  }
+  return FALSE;
 }
 //=============================================================================
 /**
@@ -429,6 +536,328 @@ static void SEQFUNC_MainBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  Wifiからダウンロード
+ *
+ *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
+ *	@param	*p_seq              シーケンス
+ *	@param	*p_wk_adrs          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_ATTR,
+    SEQ_FILENUM,
+    SEQ_FILELIST,
+    SEQ_CHECKLIST,
+    SEQ_GET_FILE,
+    SEQ_GETTING_FILE,
+
+    SEQ_CANCEL,
+    SEQ_DOWNLOAD_COMPLETE,
+    SEQ_END,
+
+    SEQ_WAIT_CALLBACK         = 100,
+    SEQ_WAIT_CLEANUP_CALLBACK = 200,
+  };
+
+  MYSTERY_NET_WORK    *p_wk       = p_wk_adrs;
+  WIFI_DOWNLOAD_DATA  *p_nd_data  = &p_wk->wifi_download_data;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    p_nd_data->cancel_req   = FALSE;
+    p_nd_data->wifi_cancel  = FALSE;
+    p_nd_data->target = 0;
+
+    if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
+      GF_ASSERT(0);//@todo
+      break;
+    }
+    WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_ATTR );
+    break;
+
+  case SEQ_ATTR:
+    //キャンセル
+    if( p_nd_data->wifi_cancel )
+    { 
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL );
+      break;
+    }
+
+    // ファイル属性の設定
+    if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
+      GF_ASSERT(0);//@todo
+      break;
+    }
+    *p_seq = SEQ_FILENUM;
+    break;
+
+//-------------------------------------
+///	サーバーのファイルチェック
+//=====================================
+  case SEQ_FILENUM:
+    // サーバーにおかれているファイルの数を得る
+    if( DWC_NdGetFileListNumAsync( &p_nd_data->server_filenum ) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+      GF_ASSERT( 0 ); //@todo
+      break;
+    }
+    WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_FILELIST );
+    break;
+
+  case SEQ_FILELIST:
+    //ファイルがなかった場合
+    if( p_nd_data->server_filenum == 0 )
+    { 
+      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE );
+      break;
+    }
+    else if( p_nd_data->server_filenum == 1 )
+    { 
+      //ファイルが１つだけの場合決定
+      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
+      if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
+      {
+        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+        GF_ASSERT(0);
+        break;
+      }
+      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_GET_FILE );
+    }
+    else
+    { 
+      //ファイルがたくさんある場合（何度かファイル属性を換え、リストを取得し直す）
+      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
+      if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
+      {
+        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+        GF_ASSERT(0);
+        break;
+      }
+      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECKLIST );
+    }
+    break;
+
+  case SEQ_CHECKLIST:
+    {
+      int i, j;
+      u8 comp_file  = 0;
+      u16 target_num;
+      u16 event_id[  MYSTERY_DOWNLOAD_FILE_MAX ]  = {0};
+      BOOL comp_id[  MYSTERY_DOWNLOAD_FILE_MAX ]  = {0};
+      //文字列を数値へ変換
+      for( i = 0; i < p_nd_data->server_filenum; i++ )
+      { 
+        event_id[i]  = UTIL_StringToInteger( p_nd_data->fileInfo[ i ].param2 );
+        OS_TPrintf( "[%d}=event_id%d\n", i, event_id[i] );
+      }
+      
+      //一番早い数字をチェック
+      target_num  = event_id[0];
+      p_nd_data->target = 0;
+      for( i = 0; i < p_nd_data->server_filenum; i++ )
+      {
+        for( j = 0; j < p_nd_data->server_filenum; j++ )
+        {
+          if( event_id[i] < event_id[j] )
+          { 
+            p_nd_data->target = i;
+            target_num  = event_id[i];
+          }
+        }
+      }
+      OS_TPrintf( "値が古いもの　index=%d num=%d", p_nd_data->target, target_num );
+
+      //重複チェック
+      for( i = 0; i < p_nd_data->server_filenum; i++ )
+      {
+        if( target_num == event_id[i] )
+        { 
+          comp_file++;
+          comp_id[i]  = TRUE;
+        }
+      }
+      OS_TPrintf( "重複している数 %d\n", comp_file );
+
+      if( comp_file > 1 )
+      { 
+        const u32 playerID  = MyStatus_GetID_Low( SaveData_GetMyStatus((SAVE_CONTROL_WORK *)p_wk->cp_sv) );
+        const u32 index     = playerID % comp_file;
+        int cnt = 0;
+        //２つ以上重複しているので、
+        //その重複している中から、プレイヤーID%Nのものを取り出す
+        for( i = 0; i < p_nd_data->server_filenum; i++ )
+        {
+          if( comp_id[i] )
+          { 
+            if( cnt == index )
+            { 
+              break;
+            }
+            cnt++;
+          }
+        }
+        if( i >= p_nd_data->server_filenum ) 
+        { 
+          OS_TPrintf("おかしいチェック");
+          i = 0;
+        }
+        p_nd_data->target = i;
+        OS_TPrintf( "重複しているので、プレイヤーごとの固定値でとるよ ID%d index%d \n", index, p_nd_data->target );
+      }
+      else
+      { 
+        OS_TPrintf( "\n重複していないので、数字が早いものからとるよ%d\n", p_nd_data->target );
+      }
+
+      *p_seq  = SEQ_GET_FILE;
+    }
+    break;
+//-------------------------------------
+///	ファイル読み込み開始
+//=====================================
+  case SEQ_GET_FILE:
+    // ファイル読み込み開始
+    OS_TPrintf( "取得するもの target%d max%d\n", p_nd_data->target, p_nd_data->server_filenum );
+    if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->filebuffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
+      OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
+      GF_ASSERT(0);
+      break;
+    }
+    p_nd_data->percent = 0;
+    s_callback_flag   = FALSE;
+    s_callback_result = DWC_ND_ERROR_NONE;
+    *p_seq = SEQ_GETTING_FILE;
+    break;
+    
+  case SEQ_GETTING_FILE:
+    // ファイル読み込み中
+    DWC_NdProcess();
+    if( s_callback_flag == FALSE )
+    {
+      // ファイル読み込み中
+      if( p_nd_data->cancel_req )
+      {
+        // ダウンロードキャンセル
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL ); 
+      }
+      else
+      {
+        // 進行度を表示
+        if(DWC_NdGetProgress( &p_nd_data->recived, &p_nd_data->contentlen ) == TRUE)
+        {
+          if(p_nd_data->percent != (p_nd_data->recived*100)/p_nd_data->contentlen)
+          {
+            p_nd_data->percent = (p_nd_data->recived*100)/p_nd_data->contentlen;
+            OS_Printf( "Download %d/100\n", p_nd_data->percent );
+          }
+        }
+      }
+    }
+    else if( s_callback_result != DWC_ND_ERROR_NONE)
+    {
+      GF_ASSERT(0);
+    }
+    else
+    { //callback1_result
+      if(p_nd_data->wifi_cancel == FALSE)
+      {
+        // ファイル読み込み終了
+        p_wk->wifi_download_data.is_recv  = TRUE;
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_COMPLETE, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
+      } else {
+        // ダウンロードキャンセル
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
+      }
+    }
+    break;
+
+//-------------------------------------
+///	終了・キャンセル処理
+//=====================================
+  case SEQ_CANCEL:
+    if( DWC_NdCancelAsync() == FALSE )
+    {
+      *p_seq = SEQ_DOWNLOAD_COMPLETE;
+    }
+    else 
+    {
+      //wk->wifi_check_func = NULL;
+      // エラー管理用処理の終了
+       // _commEnd();
+
+      OS_Printf("download cancel\n");
+      GF_ASSERT(0);
+      //return wifi_result;
+    }
+    break;
+
+  case SEQ_DOWNLOAD_COMPLETE:
+    *p_seq  = SEQ_END;
+    break;
+
+  case SEQ_END:
+    SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
+    break;
+
+//-------------------------------------
+///	エラー処理
+//=====================================
+
+//-------------------------------------
+///	コールバック待ち処理  
+//　　WIFI_DOWNLOAD_WaitNdCallbackやWIFI_DOWNLOAD_WaitNdCleanCallback等を使ってください
+//=====================================
+  case SEQ_WAIT_CALLBACK:
+    //コールバック処理を待つ
+    DWC_NdProcess();
+    if( s_callback_flag )
+    { 
+      s_callback_flag = FALSE;
+      if( s_callback_result != DWC_ND_ERROR_NONE)
+      { 
+        GF_ASSERT(0); //@todo
+      }
+      else
+      { 
+        *p_seq  = p_nd_data->next_seq;
+      }
+    }
+    else if( p_nd_data->cancel_req )
+    { 
+      OS_Printf( "キャンセルしました!\n" );
+      p_nd_data->wifi_cancel  = TRUE;
+    }
+    break;
+
+  case SEQ_WAIT_CLEANUP_CALLBACK:
+    DWC_NdProcess();
+    if( s_cleanup_callback_flag )
+    { 
+      s_cleanup_callback_flag = FALSE;
+      *p_seq  = p_nd_data->next_seq;
+    }
+    else if( p_nd_data->cancel_req )
+    { 
+      OS_Printf( "キャンセルしました! 2\n" );
+      p_nd_data->wifi_cancel  = TRUE;
+    }
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  Wifiからログアウト
  *
  *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
@@ -471,6 +900,45 @@ static void SEQFUNC_LogoutWifi( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_END:
     SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
     break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コールバック待ち
+ *
+ *	@param	WIFI_DOWNLOAD_DATA *p_wk  ワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	next_seq                  コールバック成功後へいくシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void WIFI_DOWNLOAD_WaitNdCallback( WIFI_DOWNLOAD_DATA *p_wk, int *p_seq, int next_seq )
+{ 
+  s_callback_flag   = FALSE;
+  s_callback_result = DWC_ND_ERROR_NONE;
+  p_wk->next_seq  = next_seq;
+  *p_seq          = 100;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コールバック待ち２
+ *
+ *	@param	WIFI_DOWNLOAD_DATA *p_wk  ワーク
+ *	@param	result                    結果
+ *	@param	*seq                      シーケンス
+ *	@param	next_seq                  コールバック成功後にいくシーケンス
+ *	@param	false_seq                 コールバック失敗後にいくシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void WIFI_DOWNLOAD_WaitNdCleanCallback( WIFI_DOWNLOAD_DATA *p_wk, int result, int *p_seq, int next_seq, int false_seq)
+{ 
+  s_cleanup_callback_flag = FALSE;
+  s_callback_result       = result;
+  p_wk->next_seq          = next_seq;
+  *p_seq                  = 200;
+
+  if( !DWC_NdCleanupAsync(  ) ){  //FALSEの場合コールバックが呼ばれない
+    OS_Printf("DWC_NdCleanupAsyncに失敗\n");
+    *p_seq = false_seq;
   }
 }
 //=============================================================================
@@ -641,4 +1109,118 @@ static void	NETCALLBACK_ExitCallback(void* p_wk_adrs)
   
   OS_TPrintf("GameBeacon:ExitCallback\n");
   p_wk->is_exit = TRUE;
+}
+
+
+/*-------------------------------------------------------------------------*
+ * Name        : NdCallback
+ * Description : ND用コールバック
+ * Arguments   : None.
+ * Returns     : None.
+ *-------------------------------------------------------------------------*/
+static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror)
+{
+  OS_Printf("NdCallback: Called\n");
+  switch(reason) {
+  case DWC_ND_CBREASON_GETFILELISTNUM:
+    OS_Printf("DWC_ND_CBREASON_GETFILELISTNUM\n");
+    break;
+  case DWC_ND_CBREASON_GETFILELIST:
+    OS_Printf("DWC_ND_CBREASON_GETFILELIST\n");
+    break;
+  case DWC_ND_CBREASON_GETFILE:
+    OS_Printf("DWC_ND_CBREASON_GETFILE\n");
+    break;
+  case DWC_ND_CBREASON_INITIALIZE:
+    OS_Printf("DWC_ND_CBREASON_INITIALIZE\n");
+    break;
+  }
+	
+  switch(error) {
+  case DWC_ND_ERROR_NONE:
+    OS_Printf("DWC_ND_NOERR\n");
+    break;
+  case DWC_ND_ERROR_ALLOC:
+    OS_Printf("DWC_ND_MEMERR\n");
+    break;
+  case DWC_ND_ERROR_BUSY:
+    OS_Printf("DWC_ND_BUSYERR\n");
+    break;
+  case DWC_ND_ERROR_HTTP:
+    OS_Printf("DWC_ND_HTTPERR\n");
+    // ファイル数の取得でＨＴＴＰエラーが発生した場合はダウンロードサーバに繋がっていない可能性が高い
+    if( reason == DWC_ND_CBREASON_GETFILELISTNUM )
+      {
+          OS_Printf( "It is not possible to connect download server.\n." );
+          ///	OS_Terminate();
+      }
+    break;
+  case DWC_ND_ERROR_BUFFULL:
+    OS_Printf("DWC_ND_BUFFULLERR\n");
+    break;
+  case DWC_ND_ERROR_DLSERVER:
+    OS_Printf("DWC_ND_SERVERERR\n");
+    break;
+  case DWC_ND_ERROR_CANCELED:
+    OS_Printf("DWC_ND_CANCELERR\n");
+    break;
+  }
+  OS_Printf("errorcode = %d\n", servererror);
+  s_callback_flag   = TRUE;
+  s_callback_result = error;
+
+  NdCleanupCallback();
+}
+
+/*-------------------------------------------------------------------------*
+ * Name        : NdCleanupCallback
+ * Description : DWC_NdCleanupAsync用コールバック
+ * Arguments   : None.
+ * Returns     : None.
+ *-------------------------------------------------------------------------*/
+static void NdCleanupCallback( void )
+{
+  OS_Printf("--------------------------------\n");
+  switch( s_cleanup_callback_result )
+    {
+    case ND_RESULT_COMPLETE:
+      OS_Printf("DWC_ND: finished - complete -\n");
+      break;
+    case ND_RESULT_NOT_FOUND_FILES:
+      OS_Printf("DWC_ND: finished - no files -\n");
+      break;
+    case ND_RESULT_DOWNLOAD_CANCEL:
+      OS_Printf("DWC_ND: finished - cancel -\n");
+      break;
+    }
+  OS_Printf("--------------------------------\n");
+  s_cleanup_callback_flag = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字列を数値へ変換する
+ *
+ *	@param	char *str   文字列アスキーコード
+ *
+ *	@return 変換後の整数
+ */
+//-----------------------------------------------------------------------------
+static int UTIL_StringToInteger( const char *buf )
+{ 
+  int i, ans, ret;
+
+  if(*buf == '-') ans = -1;
+  else ans = 1;
+
+  i = ret = 0;
+  while(1){
+    if( (48 <= *(buf + i)) && (*(buf + i) <= 57) ){
+      ret *= 10;
+      ret += (*(buf + i) - 48);
+    }
+    else if(*(buf + i) == '\0') break;
+    i++;
+  }
+  return ans * ret;
 }

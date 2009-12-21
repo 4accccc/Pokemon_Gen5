@@ -77,6 +77,7 @@ IRAJ
 //DWC_Init～で仕様する、GameCode
 #ifdef VERSION_BLACK
 #define GF_DWC_GAMECODE		('IRAJ')
+#define GF_DWC_ND_LOGIN		"IRAJ"
 #elif defined(VERSION_WHITE)
 #define GF_DWC_GAMECODE		('IRBJ')
 #endif
@@ -112,6 +113,13 @@ IRAJ
 #define MATCHINGKEY (1)
 
 #endif  //---------- DEBUG_SERVER
+
+//不思議な贈り物でしようするパスワード
+#ifdef USE_AUTHSERVER_RELEASE
+#define WIFI_ND_LOGIN_PASSWD		"fZrUY6SVMLp4tdmB"		// パスワード(本番サーバ)
+#else
+#define WIFI_ND_LOGIN_PASSWD		"JDXNcp79mr54RUga"    // パスワード(テストサーバ)
+#endif
 
 
 //==============================================================================

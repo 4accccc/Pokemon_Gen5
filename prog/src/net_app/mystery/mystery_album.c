@@ -1281,11 +1281,11 @@ static ARCHANDLE * MYSTERY_CARD_DATA_GetArcHandle( const MYSTERY_CARD_DATA *cp_w
   case MYSTERYGIFT_TYPE_RULE:
     /* fallthrow */
   case MYSTERYGIFT_TYPE_NUTSET:
-    return NULL; //@todo
+    return GFL_ARC_OpenDataHandle( ARCID_ITEMICON, heapID );
   }
 
   GF_ASSERT(0);
-  return NULL;
+  return GFL_ARC_OpenDataHandle( ARCID_ITEMICON, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1313,11 +1313,11 @@ static u32 MYSTERY_CARD_DATA_GetResPlt( const MYSTERY_CARD_DATA *cp_wk )
   case MYSTERYGIFT_TYPE_RULE:
     /* fallthrow */
   case MYSTERYGIFT_TYPE_NUTSET:
-    return 0; //@todo
+    return ITEM_GetIndex( 1, ITEM_GET_ICON_PAL );
   }
 
   GF_ASSERT(0);
-  return 0;
+  return ITEM_GetIndex( 1, ITEM_GET_ICON_PAL );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1373,11 +1373,11 @@ static u32 MYSTERY_CARD_DATA_GetResCgx( const MYSTERY_CARD_DATA *cp_wk )
   case MYSTERYGIFT_TYPE_RULE:
     /*  fallthrow */
   case MYSTERYGIFT_TYPE_NUTSET:
-    return 0; //@todo
+    return ITEM_GetIndex( 0, ITEM_GET_ICON_CGX );
   }
 
   GF_ASSERT(0);
-  return 0;
+  return ITEM_GetIndex( 0, ITEM_GET_ICON_CGX );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1401,11 +1401,11 @@ static u32 MYSTERY_CARD_DATA_GetResCel( const MYSTERY_CARD_DATA *cp_wk )
   case MYSTERYGIFT_TYPE_RULE:
     /* fallthrow */
   case MYSTERYGIFT_TYPE_NUTSET:
-    return 0; //@todo
+    return NARC_item_icon_itemicon_NCER;
   }
 
   GF_ASSERT(0);
-  return 0;
+  return NARC_item_icon_itemicon_NCER;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1429,11 +1429,11 @@ static u32 MYSTERY_CARD_DATA_GetResAnm( const MYSTERY_CARD_DATA *cp_wk )
   case MYSTERYGIFT_TYPE_RULE:
     /* fallthrow */
   case MYSTERYGIFT_TYPE_NUTSET:
-    return 0; //@todo
+    return NARC_item_icon_itemicon_NANR;
   }
 
   GF_ASSERT(0);
-  return 0;
+  return NARC_item_icon_itemicon_NANR;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2368,8 +2368,8 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
     STRBUF  *p_wordbuf;
     s32 y,m,d;
 
-    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX, heapID );
-    GFL_STR_SetStringCode( tbl[1].p_strbuf, cp_setup->p_data->event_name );
+    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
+    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, cp_setup->p_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
     tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_card_txt_00_01 + cp_setup->p_data->card_message*2 + cp_setup->p_data->have );
     tbl[4].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
 
