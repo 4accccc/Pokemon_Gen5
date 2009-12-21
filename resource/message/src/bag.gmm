@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="genya_hosaka" host="W00159" date="2009-12-20T16:59:15"/>
+	<create user="matsuda" host="W00142" date="2009-12-21T23:35:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,8 +312,8 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -810,13 +810,9 @@ const u8 msg_waza_machine01[]</comment>
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine02[]
 ０＝わざ名</comment>
-		<language name="JPN" font=" 1:small">なかには　[1:07:わざ名:0]が
-きろく　されていた！▼
-[1:07:わざ名:0]を
+		<language name="JPN" font=" 1:small">[1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
-		<language name="JPN_KANJI" font=" 1:small">なかには　[1:07:わざ名:0]が
-きろく　されていた！▼
-[1:07:わざ名:0]を
+		<language name="JPN_KANJI" font=" 1:small">[1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
 	</row>
 
@@ -1423,6 +1419,17 @@ const u8 str_konanoryou[]
 		<comment>ポケットに何もない時に表示</comment>
 		<language name="JPN" width="160">もっていません</language>
 		<language name="JPN_KANJI" width="160">持っていません</language>
+	</row>
+
+	<row id="msg_bag_item_none0002" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+		<language name="JPN" width="160">なかには　[1:07:わざ名:0]が
+きろく　されていた！▼
+[1:07:わざ名:0]を
+ポケモンに　おぼえさせますか？</language>
+		<language name="JPN_KANJI" width="160">なかには　[1:07:わざ名:0]が
+きろく　されていた！▼
+[1:07:わざ名:0]を
+ポケモンに　おぼえさせますか？</language>
 	</row>
 
 	<flowchart-group-list>
