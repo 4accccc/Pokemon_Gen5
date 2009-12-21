@@ -26,6 +26,13 @@
 #include "event_disappear.h"  // for EVENT_DISAPPEAR_xxxx
 #include "field_status_local.h"  // for FIELD_STATUS_
 
+#include "fieldmap.h"
+#include "field_task.h"  
+#include "field_task_manager.h"
+#include "field_task_camera_zoom.h"
+#include "field_task_camera_rot.h"
+#include "field_task_target_offset.h"
+
 //=======================================================================================
 /**
  * @brief イベント・ワーク
@@ -281,6 +288,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *s
 //---------------------------------------------------------------------------------------
 /**
  * @breif 進入イベント( SP1 )
+ *
+ * ※C01のジム
  */
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *seq, void * work)
@@ -292,10 +301,50 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *se
   switch ( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    // タスク登録
+    {
+      u16 frame;
+      fx32 val_len;
+      u16 val_pitch, val_yaw;
+      VecFx32 val_target;
+      FIELD_TASK_MAN* man;
+      FIELD_TASK* zoom;
+      FIELD_TASK* pitch;
+      FIELD_TASK* yaw;
+      FIELD_TASK* target;
+      frame     = 60;
+      val_len   = 0x00ed << FX32_SHIFT;
+      val_pitch = 0x25fc;
+      val_yaw   = 0x0000;
+      VEC_Set( &val_target, 0x0000, 0x0028<<FX32_SHIFT, 0xfffD9000 );
+      zoom   = FIELD_TASK_CameraLinearZoom( fieldmap, frame, val_len );
+      pitch  = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, val_pitch );
+      yaw    = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, val_yaw );
+      target = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &val_target );
+      man = FIELDMAP_GetTaskManager( fieldmap );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+      FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+      FIELD_TASK_MAN_AddTask( man, target, NULL );
+    }
     ++ *seq;
     break;
   case 1:
+    // タスク終了待ち
+    {
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      {
+        ++ *seq; 
+      }
+    }
+    break;
+  case 2:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
