@@ -28,5 +28,7 @@
 #define FIELD_PLAYER_REQBIT_REPORT (1<<5)
 ///PC預け自機表示にする
 #define FIELD_PLAYER_REQBIT_PC_AZUKE (1<<6)
+///カットイン自機表示にする
+#define FIELD_PLAYER_REQBIT_CUTIN (1<<7)
 ///ビット最大
-#define FIELD_PLAYER_REQBIT_MAX (7)
+#define FIELD_PLAYER_REQBIT_MAX (8)

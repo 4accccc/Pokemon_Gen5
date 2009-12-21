@@ -41,6 +41,23 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*　カットイン自機 */
+/**************************************************************/
+//ev_hiden_flag_change:
+sub_curin_player_form_set:
+{
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_CUTIN )
+  _TIME_WAIT( 10 )
+}
+_RET
+
+sub_cutin_player_player_form_return:
+{
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+}
+_RET
+
+/**************************************************************/
 /*  かいりき */
 /**************************************************************/
 EVENT_START ev_hiden_kairiki
@@ -369,11 +386,12 @@ EVENT_START ev_hiden_flash_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_flash_01 )
 	_SYSWIN_CLOSE()
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
-  
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  _CALL sub_cutin_player_player_form_return
 
 EVENT_END
 
@@ -384,11 +402,13 @@ EVENT_START ev_hiden_teleport_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_teleport_01 )
 	_SYSWIN_CLOSE()
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  _CALL sub_curin_player_form_set
   
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  _CALL sub_cutin_player_player_form_return
 
 EVENT_END
 
@@ -399,11 +419,13 @@ EVENT_START ev_hiden_anawohoru_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG_DOWN( msg_anawohoru_01 )
 	_SYSWIN_CLOSE()
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
+  _CALL sub_curin_player_form_set
   
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  _CALL sub_cutin_player_player_form_return
 
 EVENT_END
 

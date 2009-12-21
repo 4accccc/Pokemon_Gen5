@@ -2758,6 +2758,18 @@ static void gjikiReq_SetPCAzukeHero( FIELD_PLAYER_GRID *gjiki )
 }
 
 //--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　カットイン自機に変更
+ * @param gjiki FIELD_PLYER
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void gjikiReq_SetCutInHero( FIELD_PLAYER_GRID *gjiki )
+{
+  FIELD_PLAYER_ChangeDrawForm( gjiki->fld_player, PLAYER_DRAW_FORM_CUTIN );
+}
+
+//--------------------------------------------------------------
 /// 自機リクエスト処理テーブル
 //--------------------------------------------------------------
 static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki ) =
@@ -2769,6 +2781,7 @@ static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_REQBIT_MAX])( FIELD_P
   gjikiReq_SetItemGetHero,
   gjikiReq_SetReportHero,
   gjikiReq_SetPCAzukeHero,
+  gjikiReq_SetCutInHero,
 };
 
 //======================================================================
