@@ -17,7 +17,7 @@
   u8    type2;          //属性２
 
   u8    get_rate;       //捕獲率
-  u8    give_exp;       //贈与経験値
+  u8    rank;           //ポケモンランク
   u16   pains_hp    :2; //贈与努力値ＨＰ
   u16   pains_pow   :2; //贈与努力値攻撃力
   u16   pains_def   :2; //贈与努力値防御力
@@ -50,8 +50,7 @@
   u8    color     :6;   //色（図鑑で使用）
   u8    reverse   :1;   //反転フラグ
   u8    pltt_only :1;   //別フォルム時パレットのみ変化  
-  u8    rank;           //ポケモンランク
-  u8    padding;        //パディング
+  u16   give_exp;       //贈与経験値
 
   u16   height;         //高さ
   u16   weight;         //重さ
@@ -885,7 +884,7 @@ end
       fp_per.printf( "\t.byte\t\t%d\t\t//属性２\n",                             type_table[ split_data[ PARA::TYPE2 ] ] )
 
       fp_per.printf( "\t.byte\t\t%s\t\t//捕獲率\n",                             split_data[ PARA::GET ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//贈与経験値\n",                         split_data[ PARA::EXP ] )
+      fp_per.printf( "\t.byte\t\t%s\t\t//ポケモンランク\n", rank_table[ split_data[ PARA::RANK ] ] )
       exp_value = ( split_data[ PARA::HP_EXP ].to_i     <<  0 ) |
                   ( split_data[ PARA::POW_EXP ].to_i    <<  2 ) |
                   ( split_data[ PARA::DEF_EXP ].to_i    <<  4 ) |
@@ -961,8 +960,7 @@ end
         exit( 1 )
       end
 
-      fp_per.printf( "\t.byte\t\t%s\t\t//ポケモンランク\n", rank_table[ split_data[ PARA::RANK ] ] )
-      fp_per.print( "\t.byte\t\t0\t\t//パディング\n" )
+      fp_per.printf( "\t.short\t\t%s\t\t//贈与経験値\n",                         split_data[ PARA::EXP ] )
 
       if split_data[ PARA::HEIGHT ] == "" || split_data[ PARA::HEIGHT ] == nil
         fp_per.printf( "\t.short\t\t10\t\t//高さ\n" )
