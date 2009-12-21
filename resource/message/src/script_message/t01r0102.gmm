@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T12:46:23"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T13:19:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -425,14 +425,12 @@
 なかよく　えらんでください[BE:01:ページ切り替え（クリア）]
 それでは　よろしく！
 　　　　　　　　　　　アララギ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">『……この　てがみと　いっしょに
-３びきの　ポケモンを　とどけます[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">『……この　手紙と　いっしょに
+３匹の　ポケモンを　届けます[BE:01:ページ切り替え（クリア）]
 きみと　きみのともだち　とで
-なかよく　えらんでください[BE:01:ページ切り替え（クリア）]
+仲良く　選んでください[BE:01:ページ切り替え（クリア）]
 それでは　よろしく！
-　　　　　　　　　　　アララギ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]は
-はかせからの　てがみを　よみおえた！</language>
+　　　　　　　　　　　アララギ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -827,9 +825,9 @@
 		<comment>7月ROM用
 ・本来であればシステムメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ポケモンを　てにいれた！[BE:01:ページ切り替え（クリア）]</language>
+[1:01:ポケモン種族名:1]を　てにいれた！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ポケモンを　てにいれた！[BE:01:ページ切り替え（クリア）]</language>
+[1:01:ポケモン種族名:1]を　てにいれた！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
