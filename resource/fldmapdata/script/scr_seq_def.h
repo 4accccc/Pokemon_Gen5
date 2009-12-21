@@ -965,6 +965,12 @@
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
+#define _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_id ) \
+    _ASM_BALLOONWIN_OBJMSG_POS msg_id, SCWK_TARGET_OBJID, WIN_DOWN 
+
+#define _BALLOONWIN_TALKOBJ_MSG_UP( msg_id ) \
+    _ASM_BALLOONWIN_OBJMSG_POS msg_id, SCWK_TARGET_OBJID, WIN_UP
+
 //--------------------------------------------------------------
 /**
  * @def _BALLOONWIN_TALKOBJ_MSG_ARC

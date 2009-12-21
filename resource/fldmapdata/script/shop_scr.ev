@@ -63,14 +63,14 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //ようこそ
-  _SYSWIN_MSG_DOWN( msg_shop_01 )
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_01 )
 
   $i_seq = SEQ_MENU
   $i_loop = TRUE
   WHILE $i_loop == TRUE
     SWITCH $i_seq
     CASE SEQ_MENU_CONTINUE THEN
-      _SYSWIN_MSG_DOWN( msg_shop_02 ) //そのほかにお手伝いできることは？
+      _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_02 ) //そのほかにお手伝いできることは？
       $i_seq = SEQ_MENU
 
     CASE SEQ_MENU THEN
@@ -90,9 +90,9 @@ sub_shop_main:
     ENDSWITCH
   ENDWHILE
   
-  _SYSWIN_MSG_DOWN( msg_shop_03 ) //またどうぞ
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_03 ) //またどうぞ
   _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _BALLOONWIN_CLOSE()
 }
 _RET
 
@@ -103,7 +103,7 @@ sub_shop_menu:
 {
   DEFINE_LOCAL  i_ret
 
-  //分岐・Wi-Fiクラブへいく・せつめいをきく・やめる
+  //分岐　かう・うる・やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_shop_menu01_01, SEQ_BUY )	//かう
@@ -112,6 +112,7 @@ sub_shop_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
+  _BALLOONWIN_CLOSE()
   
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_EXIT
@@ -128,8 +129,6 @@ sub_shop_buy:
 {
   DEFINE_LOCAL  ret_mode
   
-  _SYSWIN_CLOSE()
-
   $ret_mode = SCR_PROC_RETMODE_NORMAL
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
   
@@ -148,17 +147,17 @@ sub_shop_sell:
 {
   DEFINE_LOCAL  ret_mode
   DEFINE_LOCAL  ret_item
-
-  _BLACK_OUT()
+ 
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
   _DISP_FADE_END_CHECK()
-  _SYSWIN_CLOSE()
   _FIELD_CLOSE()
   
   _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
 
   _FIELD_OPEN()
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT
