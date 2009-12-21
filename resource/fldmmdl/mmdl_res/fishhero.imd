@@ -836,8 +836,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='8x8fishgirl0' color_size='16' index='0'>
-		2e47 416b 28e7 35bd 3554 728e 61e8 4d47 
-		1ca5 7779 3a7a 192d 5f5f 7fff 6af5 0000 
+		2e4b 416b 2d08 35bd 3573 728e 61e8 4d47 
+		1ca7 7779 3a7a 190c 5f5f 7fff 6af5 0000 
 	</tex_palette>
 </tex_palette_array>
 

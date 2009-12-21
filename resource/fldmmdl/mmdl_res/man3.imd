@@ -452,7 +452,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='accordion' color_size='16' index='0'>
-		4f11 20a8 392e 5dd6 05b2 1e99 379f 0885 
+		4f11 20a8 392e 5dd6 05b2 0d3a 365f 0885 
 		1909 258e 192f 3a7b 5f5f 7fff 6af5 0000 
 	</tex_palette>
 </tex_palette_array>

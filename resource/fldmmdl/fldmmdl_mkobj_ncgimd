@@ -418,6 +418,11 @@
 	@echo convert ncg_imd leader1c
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1c.ncg ./mmdl_res ./mmdl_res/ncg4x4pcwoman1.imd 4 4 9
 
+#leader4.imd
+./mmdl_res/leader4.imd: ./mmdl_nchara/leader4.ncg ./mmdl_nchara/leader4.ncl
+	@echo convert ncg_imd leader4
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader4.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #leader8w.imd
 ./mmdl_res/leader8w.imd: ./mmdl_nchara/leader8w.ncg ./mmdl_nchara/leader8w.ncl
 	@echo convert ncg_imd leader8w
