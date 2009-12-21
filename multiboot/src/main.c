@@ -185,6 +185,7 @@ static  void  GameInit(void)
 {
   /* ユーザーレベルで必要な初期化をここに記述する */
 
+//	GFL_NET_DebugPrintOn();
   // 通信ブート処理 VBlank割り込み後に行うためここに記述
   GFL_NET_Boot( GFL_HEAPID_APP, FatalError_Disp, GFL_HEAPID_APP, GFL_HEAPID_APP );
   /* 起動プロセスの設定 */
