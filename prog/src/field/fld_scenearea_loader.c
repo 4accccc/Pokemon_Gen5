@@ -52,6 +52,8 @@ static void C3_SCENEAREA_FxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEA
 
 static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 
 
 static FLD_SCENEAREA_CHECK_AREA_FUNC* sp_FLD_SCENEAREA_CHECK_AREA_FUNC[FLD_SCENEAREA_AREACHECK_MAX] = 
@@ -67,6 +69,8 @@ static FLD_SCENEAREA_UPDATA_FUNC* sp_FLD_SCENEAREA_UPDATA_FUNC[FLD_SCENEAREA_UPD
 	C3_SCENEAREA_FxCamera,
 
   SCENEAREA_UpdateGridAngleChange,
+  SCENEAREA_UpdateGridAngleChange_IN,
+  SCENEAREA_UpdateGridAngleChange_OUT,
 };
 
 static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC = 
@@ -491,6 +495,7 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
+
   TOMOYA_Printf( "param\n" );
   TOMOYA_Printf( "start angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->start_pitch, cp_param->start_yaw, cp_param->start_length );
   TOMOYA_Printf( "end angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->end_pitch, cp_param->end_yaw, cp_param->end_length );
@@ -531,6 +536,33 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
   FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
   FIELD_CAMERA_SetAngleLen( p_camera, length );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングルスムーズ変更    IN
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  FIELD_CAMERA* p_camera;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+  FIELD_CAMERA_StopTraceRequest( p_camera );
+
+  SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングルスムーズ変更    OUT
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  FIELD_CAMERA* p_camera;
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+  FIELD_CAMERA_RestartTrace( p_camera );
 }
 
 
