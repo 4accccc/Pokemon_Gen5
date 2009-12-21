@@ -32,10 +32,14 @@ enum {
 	MAINSEQ_WIPE,
 
 	MAINSEQ_MAIN,
+
 	MAINSEQ_LIST_WAIT,
 	MAINSEQ_LIST_SCROLL,
 	MAINSEQ_LIST_MOVE_LEFT,
 	MAINSEQ_LIST_MOVE_RIGHT,
+
+	MAINSEQ_LIST_MOVE_BAR,
+
 	MAINSEQ_BUTTON_ANM,
 
 	MAINSEQ_END_SET,
@@ -54,7 +58,7 @@ static int MainSeq_ListWait( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListScroll( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveLeft( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk );
-
+static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk );
 
@@ -62,6 +66,8 @@ static int SetFadeIn( ZKNLISTMAIN_WORK * wk, int next );
 static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next );
 static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next );
 static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos );
+static int SetListMoveBar( ZKNLISTMAIN_WORK * wk );
+
 static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk );
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -77,10 +83,14 @@ static const pZKNLIST_FUNC MainSeq[] = {
 	MainSeq_Wipe,
 
 	MainSeq_Main,
+
 	MainSeq_ListWait,
 	MainSeq_ListScroll,
 	MainSeq_ListMoveLeft,
 	MainSeq_ListMoveRight,
+
+	MainSeq_ListMoveBar,
+
 	MainSeq_ButtonAnm,
 
 	MainSeq_EndSet,
@@ -195,7 +205,13 @@ static void SetListScrollSpeed( ZKNLISTMAIN_WORK * wk )
 static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 {
 	u32	ret;
-	
+
+/*
+  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return MAINSEQ_MAIN;
+	}
+*/
+
 	// リストのキー操作
 	switch( ZKNLISTMAIN_Main( wk->list ) ){
 	case ZKNLISTMAIN_LIST_MOVE_UP:
@@ -227,8 +243,10 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 
 	switch( ret ){
 	case ZKNLISTUI_ID_LIST:				// 00: リスト
-	case ZKNLISTUI_ID_RAIL:				// 01: レール
 		break;
+
+	case ZKNLISTUI_ID_RAIL:				// 01: レール
+		return SetListMoveBar( wk );
 
 	case ZKNLISTUI_ID_POKE:				// 02: ポケモン正面絵
 		return SetInfoData( wk, 0 );
@@ -317,6 +335,19 @@ static int MainSeq_ListMoveRight( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+static int MainSeq_ListMoveBar( ZKNLISTMAIN_WORK * wk )
+{
+	u32	x, y;
+
+	if( GFL_UI_TP_GetPointCont( &x, &y ) == FALSE ){
+		return MAINSEQ_MAIN;
+	}
+
+	ZKNLISTOBJ_SetScrollBar( wk, y );
+
+	return MAINSEQ_LIST_MOVE_BAR;
+}
+
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk )
 {
 	if( ZKNLISTOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
@@ -364,6 +395,15 @@ static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos )
 	return SetFadeOut( wk, MAINSEQ_RELEASE );
 }
 
+static int SetListMoveBar( ZKNLISTMAIN_WORK * wk )
+{
+	u32	x, y;
+
+	GFL_UI_TP_GetPointCont( &x, &y );
+	ZKNLISTOBJ_SetScrollBar( wk, y );
+
+	return MAINSEQ_LIST_MOVE_BAR;
+}
 
 
 

@@ -46,6 +46,10 @@
 #define	POKEICON_PY		( 8 )
 #define	POKEICON_SY		( 24 )
 
+#define	SCROLL_BAR_PX	( 252 )
+#define	SCROLL_BAR_UY	( 12 )
+#define	SCROLL_BAR_DY	( 156 )
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -67,12 +71,12 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk );
 static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 {
 	{	// スクロールバー
-		{ 252, 4, ZKNLISTOBJ_ANM_BAR, 0, 1 },
+		{ SCROLL_BAR_PX, SCROLL_BAR_UY, ZKNLISTOBJ_ANM_BAR, 0, 1 },
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// レール
-		{ 252, 84, ZKNLISTOBJ_ANM_RAIL, 10, 1 },
+		{ SCROLL_BAR_PX, 84, ZKNLISTOBJ_ANM_RAIL, 10, 1 },
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
@@ -867,4 +871,16 @@ void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg )
 	}else{
 		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_POKEICON+i, POKEICON_ANM_DEATH );
 	}
+}
+
+
+// スクロールバー
+void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
+{
+	if( py < SCROLL_BAR_UY ){
+		py = SCROLL_BAR_UY;
+	}else if( py > SCROLL_BAR_DY ){
+		py = SCROLL_BAR_DY;
+	}
+	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, py, CLSYS_DRAW_MAIN );
 }

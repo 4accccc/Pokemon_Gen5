@@ -474,7 +474,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	wk->list = ZKNLISTMAIN_CreateList( MONSNO_END, HEAPID_ZUKAN_LIST );
 
 	// âºÇ≈Ç∑ÅB
-	for( i=1; i<MONSNO_END; i++ ){
+	for( i=1; i<=MONSNO_END; i++ ){
 		if( ( i % 3 ) == 0 ){
 			srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
 			ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
@@ -556,9 +556,9 @@ void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk )
 
 	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
 
-	for( i=0; i<8; i++ ){
+	for( i=0; i<7; i++ ){
 		PutListOne( wk, i, scroll+i );
-		PutListOneSub( wk, i, scroll+i-8 );
+		PutListOneSub( wk, i, scroll+i-7 );
 		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_M1+i, 16, i*3 );
 		BGWINFRM_FramePut( wk->wfrm, ZKNLISTBGWFRM_IDX_NAME_S1+i, 16, i*3 );
 	}
@@ -681,6 +681,7 @@ struct _ZUKAN_LIST_WORK {
 	s16	scroll;
 	s16	posMax;
 	s16	listMax;
+	s16	listSize;
 	void * work;
 	pZUKAN_LIST_CALLBACK	func;
 };
@@ -690,6 +691,7 @@ ZUKAN_LIST_WORK * ZKNLISTMAIN_CreateList( u32 siz, HEAPID heapID )
 	ZUKAN_LIST_WORK * wk;
 	wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(ZUKAN_LIST_WORK) );
 	wk->dat = GFL_HEAP_AllocClearMemory( heapID, sizeof(LIST_DATA)*siz );
+	wk->listSize = siz;
 	return wk;
 }
 
@@ -706,6 +708,8 @@ void ZKNLISTMAIN_ExitList( ZUKAN_LIST_WORK * wk )
 
 void ZKNLISTMAIN_AddListData( ZUKAN_LIST_WORK * wk, STRBUF * str, u32 prm )
 {
+	GF_ASSERT( wk->listMax < wk->listSize );
+
 	wk->dat[wk->listMax].str = str;
 	wk->dat[wk->listMax].prm = prm;
 	wk->listMax++;
@@ -773,7 +777,7 @@ u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk )
 			wk->pos++;
 			wk->func( wk->work, wk->pos, wk->scroll, tmp, wk->scroll, ZKNLISTMAIN_LIST_MOVE_DOWN );
 			return ZKNLISTMAIN_LIST_MOVE_DOWN;
-		}else if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+		}else if( wk->scroll < (wk->listMax-wk->posMax) ){
 			s16	tmp = wk->scroll;
 			wk->scroll++;
 			wk->func( wk->work, wk->pos, wk->scroll, wk->pos, tmp, ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN );
@@ -803,10 +807,10 @@ u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-		if( wk->pos != (wk->posMax-1) || wk->scroll != (wk->listMax-wk->posMax-1) ){
+		if( wk->pos != (wk->posMax-1) || wk->scroll != (wk->listMax-wk->posMax) ){
 			s16	tmpPos    = wk->pos;
 			s16	tmpScroll = wk->scroll;
-			wk->scroll = wk->listMax - wk->posMax - 1;
+			wk->scroll = wk->listMax - wk->posMax;
 			wk->pos    = wk->posMax - 1;
 			wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );
 			return ZKNLISTMAIN_LIST_MOVE_RIGHT;
@@ -840,12 +844,12 @@ u32 ZKNLISTMAIN_MoveLeft( ZUKAN_LIST_WORK * wk )
 
 u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk )
 {
-	if( wk->scroll < (wk->listMax-wk->posMax-1) ){
+	if( wk->scroll < (wk->listMax-wk->posMax) ){
 		s16	tmpPos    = wk->pos;
 		s16	tmpScroll = wk->scroll;
 		wk->scroll += wk->posMax;
-		if( wk->scroll > (wk->listMax-wk->posMax-1) ){
-			wk->scroll = wk->listMax - wk->posMax - 1;
+		if( wk->scroll > (wk->listMax-wk->posMax) ){
+			wk->scroll = wk->listMax - wk->posMax;
 			wk->pos    = wk->posMax - 1;
 		}
 		wk->func( wk->work, wk->pos, wk->scroll, tmpPos, tmpScroll, ZKNLISTMAIN_LIST_MOVE_RIGHT );

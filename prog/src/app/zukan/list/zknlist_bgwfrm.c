@@ -132,8 +132,6 @@ void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 		py += 21;
 	}
 
-	OS_Printf( "py = %d\n", py );
-
 	for( i=0; i<sy; i++ ){
 		if( py < 0 ){
 			py += 32;
