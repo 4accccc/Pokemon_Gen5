@@ -1870,7 +1870,7 @@ static void normal_sign_func( TR_CARD_WORK *wk )
       if(GFL_UI_TP_GetCont()){
         GFL_UI_TP_GetPointCont( &x, &y );
         wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
-        OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
+//        OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
       }
       // 範囲外チェック
       if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
@@ -2651,7 +2651,7 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
     px = all->x - OEKAKI_BOARD_POSX*8;
     py = all->y - OEKAKI_BOARD_POSY*8;
       
-    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
+//    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
     DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
