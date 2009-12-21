@@ -2456,7 +2456,7 @@
 #define SYS_FLAG_ARRIVE_C07               2488 /* 0x09b8 到着フラグ：C07 */
 #define SYS_FLAG_ARRIVE_C08               2489 /* 0x09b9 到着フラグ：C08 */
 #define SYS_FLAG_ARRIVE_T03               2490 /* 0x09ba 到着フラグ：T0３ */
-		/* not used  2491(0x09bb) */
+#define SYS_FLAG_ARRIVE_C09               2491 /* 0x09bb 到着フラグ：C09 */
 		/* not used  2492(0x09bc) */
 		/* not used  2493(0x09bd) */
 		/* not used  2494(0x09be) */
