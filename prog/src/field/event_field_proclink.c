@@ -71,11 +71,11 @@ FS_EXTERN_OVERLAY(battle_recorder);
 //=====================================
 typedef enum
 {
-  RETURNFUNC_RESULT_RETURN,     //メニューに戻る
-  RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
-  RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
-  RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
-  RETURNFUNC_RESULT_NEXT,   //次のプロセスへ行く
+  RETURNFUNC_RESULT_RETURN,     // メニューに戻る
+  RETURNFUNC_RESULT_EXIT,       // メニューも抜けて歩ける状態まで戻る
+  RETURNFUNC_RESULT_USE_SKILL,  // メニューを抜けて技を使う
+  RETURNFUNC_RESULT_USE_ITEM,   // メニュを抜けてアイテムを使う
+  RETURNFUNC_RESULT_NEXT,       // 次のプロセスへ行く
 } RETURNFUNC_RESULT;
 
 typedef enum
@@ -240,12 +240,12 @@ static const struct
   },
   //EVENT_PROCLINK_CALL_ZUKAN,
   { 
-		FS_OVERLAY_ID(zukan),
-		&ZUKAN_ProcData,
+    FS_OVERLAY_ID(zukan),
+    &ZUKAN_ProcData,
     FMenuCallProc_Zukan,
     FMenuReturnProc_Zukan,
 //    FMenuEvent_Zukan,
-		NULL,
+    NULL,
   },
   //EVENT_PROCLINK_CALL_BAG,          
   { 
@@ -853,9 +853,9 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     else
     if( wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )
     {
-      plistData->mode = PL_MODE_MAILSET_BAG;
+      plistData->mode    = PL_MODE_MAILSET_BAG;
       plistData->ret_sel = wk->sel_poke;
-      plistData->item = wk->item_no;
+      plistData->item    = wk->item_no;
     }
     else
     {
@@ -1034,11 +1034,11 @@ static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
 //-----------------------------------------------------------------------------
 static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 {
-	ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
+  ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
 
-	prm->callMode = ZUKAN_MODE_LIST;
+  prm->callMode = ZUKAN_MODE_LIST;
 
-	return prm;
+  return prm;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1056,12 +1056,12 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 //-----------------------------------------------------------------------------
 static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adrs)
 {
-	ZUKAN_PARAM * prm = param_adrs;
+  ZUKAN_PARAM * prm = param_adrs;
 
-	if( prm->retMode == ZUKAN_RET_NORMAL ){
-	  return RETURNFUNC_RESULT_RETURN;
-	}
-	return RETURNFUNC_RESULT_EXIT;
+  if( prm->retMode == ZUKAN_RET_NORMAL ){
+    return RETURNFUNC_RESULT_RETURN;
+  }
+  return RETURNFUNC_RESULT_EXIT;
 }
 
 //-------------------------------------
@@ -1321,7 +1321,10 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
   case BAG_NEXTPROC_BATTLERECORDER:
     wk->next_type = EVENT_PROCLINK_CALL_BTLRECORDER;
     return RETURNFUNC_RESULT_NEXT;
-
+  case BAG_NEXTPROC_MAILVIEW:
+    wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+    return RETURNFUNC_RESULT_NEXT;
+    
   default:
     wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
     return RETURNFUNC_RESULT_NEXT;
@@ -1657,6 +1660,11 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
       OS_TPrintf("MailPos[%d]\n",plistData->ret_sel);
       mailParam = MailSys_GetWorkViewPoke( gmData, PokeParty_GetMemberPointer(party,plistData->ret_sel), HEAPID_PROC );
     }
+
+  }else{
+    wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
+    OS_TPrintf("メールデザイン見るだけ\n");
+    mailParam = MailSys_GetWorkViewPrev( gmData, wk->item_no-ITEM_GURASUMEERU, HEAPID_PROC );
   }
 
   return mailParam;
@@ -1700,10 +1708,17 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
     {
       wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
     }
+    // ワーク解放
+//    MailSys_ReleaseCallWork( mailParam);
+
     //オーバーレイ開放！
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
     return RETURNFUNC_RESULT_NEXT;
   }
+
+  // ワーク解放
+//  MailSys_ReleaseCallWork( mailParam);
+  wk->next_type = EVENT_PROCLINK_CALL_BAG;
   //オーバーレイ開放！！！
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
   return RETURNFUNC_RESULT_RETURN;

@@ -21,24 +21,25 @@
 /// バッグから抜けるときの動作
 enum BAG_NEXTPROC_ENUM
 {
-  BAG_NEXTPROC_EXIT,    //終了
-  BAG_NEXTPROC_RETURN,   //手前に戻る
-  BAG_NEXTPROC_HAVE,  // ポケモンにアイテムをもたせる
-  BAG_NEXTPROC_ITEMEQUIP,  //ポケモンリストのアイテム装備に戻る
-  BAG_NEXTPROC_ITEMHAVE_RET,  //ポケモンリストのアイテム装備に戻るが、キャンセルのとき
-  BAG_NEXTPROC_ITEMUSE,  //使う
-  BAG_NEXTPROC_WAZASET, //技セット
-  BAG_NEXTPROC_TOWNMAP, //タウンマップ
-  BAG_NEXTPROC_FRIENDNOTE,  //ともだち手帳
-  BAG_NEXTPROC_EXITEM,
-  BAG_NEXTPROC_RIDECYCLE,  //のる
-  BAG_NEXTPROC_DROPCYCLE,  //おりる
-  BAG_NEXTPROC_EVOLUTION,  //しんか
-  BAG_NEXTPROC_PALACEJUMP, //パレス移動
+  BAG_NEXTPROC_EXIT,          // 終了
+  BAG_NEXTPROC_RETURN,        // 手前に戻る
+  BAG_NEXTPROC_HAVE,          // ポケモンにアイテムをもたせる
+  BAG_NEXTPROC_ITEMEQUIP,     // ポケモンリストのアイテム装備に戻る
+  BAG_NEXTPROC_ITEMHAVE_RET,  // ポケモンリストのアイテム装備に戻るが、キャンセルのとき
+  BAG_NEXTPROC_ITEMUSE,       // 使う
+  BAG_NEXTPROC_WAZASET,       // 技セット
+  BAG_NEXTPROC_TOWNMAP,       // タウンマップ
+  BAG_NEXTPROC_FRIENDNOTE,    // ともだち手帳
+  BAG_NEXTPROC_EXITEM,        
+  BAG_NEXTPROC_RIDECYCLE,     // のる
+  BAG_NEXTPROC_DROPCYCLE,     // おりる
+  BAG_NEXTPROC_EVOLUTION,     // しんか
+  BAG_NEXTPROC_PALACEJUMP,    // パレス移動
   BAG_NEXTPROC_ANANUKENOHIMO, // あなぬけのひも
   BAG_NEXTPROC_AMAIMITU,      // あまいミツ
   BAG_NEXTPROC_TURIZAO,       // つりざお
-  BAG_NEXTPROC_BATTLERECORDER,       // バトルレコーダー
+  BAG_NEXTPROC_BATTLERECORDER,// バトルレコーダー
+  BAG_NEXTPROC_MAILVIEW,      // メール閲覧
 };
 
 

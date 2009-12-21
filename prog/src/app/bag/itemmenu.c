@@ -895,6 +895,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
+    else if(pWork->ret_item>=ITEM_GURASUMEERU && pWork->ret_item<=ITEM_BURIKKUMEERU){
+      pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
+      _CHANGE_STATE(pWork,NULL);
+    }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){ //つかう
       // バッグ内で使うアイテム判定
       if( BAG_IsInnerItem( pWork->ret_item ) )
