@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 19:09:25
+#save date:2009/12/21 15:34:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+D09_FLD_ITEM_01
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_17
+#Event Script Name
+SCRID_FLD_ITEM_17
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+19 5 0
+#event number: 1
+#type
+1
+#ID name
+D09_FLD_ITEM_02
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_18
+#Event Script Name
+SCRID_FLD_ITEM_18
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+33 4 0
+#event number: 2
+#type
+1
+#ID name
+D09_FLD_ITEM_03
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_19
+#Event Script Name
+SCRID_FLD_ITEM_19
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+45 1 0
+#event number: 3
+#type
+1
+#ID name
+D09_FLD_ITEM_04
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_20
+#Event Script Name
+SCRID_FLD_ITEM_20
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+30 4 0
+#event number: 4
+#type
+1
+#ID name
+D09_FLD_ITEM_05
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_21
+#Event Script Name
+SCRID_FLD_ITEM_21
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+12 3 -3
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
