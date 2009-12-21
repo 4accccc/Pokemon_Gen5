@@ -644,6 +644,7 @@ void FIELD_PLAYER_NOGRID_SetRequestBit( FIELD_PLAYER_NOGRID* p_player, u32 req_b
       }
       
     }
+    req_bit >>= 1;
   }
 }
 
