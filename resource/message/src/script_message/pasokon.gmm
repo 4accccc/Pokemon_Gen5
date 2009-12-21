@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-12-08T16:20:46"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-12-21T23:22:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -578,6 +578,12 @@
 パソコンに　せつぞくした！</language>
 		<language name="JPN_KANJI" width="256">（博士の名前）の
 パソコンに　接続した！</language>
+	</row>
+
+	<row id="msg_exp_window">
+		<comment> ■選択項目の説明文を表示するウィンドウに使用</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>

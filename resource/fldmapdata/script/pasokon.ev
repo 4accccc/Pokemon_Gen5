@@ -98,10 +98,14 @@ pc_box:
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
+  //「ポケモンの あずかりシステムを …」
+  _SYSWIN_MSG_DOWN( msg_pc_box_01 ) 
+  _SYSWIN_CLOSE()
+
   $exit = FALSE
   WHILE $exit == FALSE
-    //「ポケモンの あずかりシステムを …」
-    _SYSWIN_MSG_DOWN( msg_pc_box_01 ) 
+    // 説明文表示用のウィンドウを表示
+    _SYSWIN_MSG_DOWN( msg_exp_window )
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_01, msg_pc_box_02, msg_pc_box_window_01 )  // あずける
@@ -146,12 +150,16 @@ pc_mail_box:
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
+  //「○○の パコンに せつぞくした！」
+  _PLAYER_NAME(0)
+  _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+
   $exit = FALSE
   WHILE $exit == FALSE
-    //「○○の パコンに せつぞくした！」
-    _PLAYER_NAME(0)
-    _SYSWIN_MSG_DOWN( msg_pc_mail_01 ) 
-    _AB_KEYWAIT()
+    // 説明文表示用のウィンドウを表示
+    _SYSWIN_MSG_DOWN( msg_exp_window )
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_01, msg_pc_mail_02, msg_pc_mail_window_01 )  // メールボックス
