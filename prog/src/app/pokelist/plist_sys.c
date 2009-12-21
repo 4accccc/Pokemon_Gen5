@@ -1071,6 +1071,8 @@ static void PLIST_InitMode( PLIST_WORK *work )
 
         work->nextMainSeq = work->mainSeq;
         work->mainSeq = PSMS_FADEIN;
+
+        PLIST_SubBagItem( work , work->plData->item );
       }
       else
       {
@@ -1295,6 +1297,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
             PMSND_PlaySystemSE( PLIST_SND_RECOVER );
           }
+          PLIST_SubBagItem( work , work->plData->item );
         }
         else
         {
@@ -2649,6 +2652,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         //ŽÀÛ‚ÉÁ”ï‚Æ“K—p
         STATUS_RCV_Recover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        PLIST_SubBagItem( work , work->plData->item );
         PMSND_PlaySystemSE( PLIST_SND_RECOVER );
       }
       else
