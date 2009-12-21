@@ -45,8 +45,11 @@ EVENT_END
 EVENT_START   ev_gameover_recover_home
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+
+//マップフェードイン
+	_MAP_FADE_BLACK_IN_FORCE( )
+	_MAP_FADE_END_CHECK()
+
   //_EASY_MSG( msg_common_pc_heal_01 )  //仮
 
   //_BLACK_OUT()
@@ -66,8 +69,11 @@ EVENT_END
 EVENT_START   ev_gameover_recover_pokecen
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
-  _WHITE_IN()
-  _DISP_FADE_END_CHECK()
+
+//マップフェードイン
+	_MAP_FADE_BLACK_IN_FORCE( )
+	_MAP_FADE_END_CHECK()
+
   _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
   //_EASY_MSG( msg_common_pc_heal_01 )
 EVENT_END
