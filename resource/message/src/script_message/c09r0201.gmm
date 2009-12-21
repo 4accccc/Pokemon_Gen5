@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T18:52:28"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T14:18:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="298" top="270" right="1003" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="298" top="270" right="1001" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,13 +307,13 @@
 その　やくわりに　したがい
 おあいて　するまで▼</language>
 		<language name="JPN_KANJI" width="256">やれやれ……
-きょうは　どういう　ひ　かな？▼
-つづけざまに　ちょうせんしゃが
+きょうは　どういう　日かな？▼
+続けざまに　挑戦者が
 やってくるとは……▼
 まあいいさ
-してんのう　ギーマ▼
-その　やくわりに　したがい
-おあいて　するまで▼</language>
+四天王　ギーマ▼
+その　役割に　従い
+お相手　するまで▼</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -326,11 +326,11 @@
 しょうりは　ひかりかがやく▼
 そう　いまの　きみたち
 すごく　まぶしいよ</language>
-		<language name="JPN_KANJI" width="256">ぜんりょくを　つくそうと
-うんが　あろうと　なかろうと▽
-まけは　まけ……▼
+		<language name="JPN_KANJI" width="256">全力を　尽くそうと
+運が　あろうと　なかろうと▽
+負けは　負け……▼
 だからこそさ
-しょうりは　ひかりかがやく▼
+勝利は　光り　輝く▼
 そう　いまの　きみたち
 すごく　まぶしいよ</language>
 	</row>
@@ -345,13 +345,13 @@
 きみの　その　つよさ……▼
 ほかの　してんのう　あいてに
 ためすが　いい</language>
-		<language name="JPN_KANJI" width="256">そう　いまの　オレは
-ぶざまな　はいぼくしゃ……▽
-それいじょうでも　いかでもない▼
+		<language name="JPN_KANJI" width="256">そう　今の　オレは
+無様な　敗北者……▽
+それ以上でも　以下でもない▼
 さて……
-きみの　その　つよさ……▼
-ほかの　してんのう　あいてに
-ためすが　いい</language>
+きみの　その　強さ……▼
+他の　四天王　相手に
+試すが　いい</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -372,15 +372,15 @@
 さいごの　へやに　すすむが　いいさ</language>
 		<language name="JPN_KANJI" width="256">……すごいね▼
 きみは　ポケモンリーグ　すべての
-してんのうに　しょうりした▼
-だが　まだ　おわりではない！▼
-きみの　その　つよさを　しめすべき
-あいてが　もうひとり　いる▼
-……Ｎという　おとこ
-あいつに　かてると　おもうなら……▽
-いや　かたねばならぬと　きめたなら▼
-エレベータに　のり
-さいごの　へやに　すすむが　いいさ</language>
+四天王に　勝利した▼
+だが　まだ　終わりではない！▼
+きみの　その　強さを　示すべき
+相手が　もうひとり　いる▼
+……Ｎという　男
+アイツに　勝てると　思うなら……▽
+いや　勝たねばならぬと　決めたなら▼
+エレベータに　乗り
+最後の　部屋に　進むが　いいさ</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_05">

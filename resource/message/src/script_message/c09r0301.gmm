@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T18:52:19"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T14:21:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,26 +307,26 @@
 みとめた　トレーナー！▼
 その　つよさ……
 おしえて　もらいたいッ！！▼</language>
-		<language name="JPN_KANJI" width="256">ちょうせんしゃ　よ……
-わたしの　なまえは　レンブ▼
-かくとうの　みちを　きわめるべく
-ししょう　アデクの　もと▽
-しゅぎょうを　つづけている……▼
-そして　おまえも　わが　ししょうが
-みとめた　トレーナー！▼
-その　つよさ……
-おしえて　もらいたいッ！！▼</language>
+		<language name="JPN_KANJI" width="256">挑戦者よ……
+わたしの　名前は　レンブ▼
+格闘の　道を　極めるべく
+師匠　アデクの　もと▽
+修行を　続けている……▼
+そして　おまえも　我が　師匠が
+認めた　トレーナー！▼
+その　強さ……
+教えて　もらいたいッ！！▼</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">さすがの　ひとこと！▼
+		<language name="JPN" width="256">さすが　だな！▼
 ほかの　してんのう　とも　たたかい
-さらなる　つよみを　めざせ……！</language>
-		<language name="JPN_KANJI" width="256">さすがの　ひとこと！▼
-ほかの　してんのう　とも　たたかい
-さらなる　つよみを　めざせ……！</language>
+さらなる　たかみを　めざせ……！</language>
+		<language name="JPN_KANJI" width="256">流石　だな！▼
+他の　四天王とも　戦い
+さらなる　高みを　めざせ……！</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -335,22 +335,22 @@
 		<language name="JPN" width="256">……チャンピオン　ふざいの
 ポケモンリーグを　まもるのは▽
 でしである　わたしの　やくめ▼
-そう　おもっていたが
+そう　きめていたが
 つよさの　ともなわぬ　ことば　ほど▽
 うつろなものは　ないな……▼
 つよき　ちょうせんしゃ　よ
 ほかの　してんおうは▽
-はるかに　つよく　てごわい……▽
+はるかに　てごわい……▽
 ゆめゆめ　あなどるなよ！</language>
-		<language name="JPN_KANJI" width="256">……チャンピオン　ふざいの
-ポケモンリーグを　まもるのは▽
-でしである　わたしの　やくめ▼
-そう　おもっていたが
-つよさの　ともなわぬ　ことば　ほど▽
+		<language name="JPN_KANJI" width="256">……チャンピオン不在の
+ポケモンリーグを　守るのは▽
+弟子である　わたしの　役目▼
+そう　決めていたが
+強さの　伴わぬ　言葉ほど▽
 うつろなものは　ないな……▼
-つよき　ちょうせんしゃ　よ
-ほかの　してんおうは▽
-はるかに　つよく　てごわい……▽
+たくましき　挑戦者よ
+他の　四天王は▽
+はるかに　手強い……▽
 ゆめゆめ　あなどるなよ！</language>
 	</row>
 
@@ -369,16 +369,16 @@
 その　へやに　いる　おとこに……
 あの　つよすぎる　おとこに……▽
 ぜひ　しょうり　してほしいッ！</language>
-		<language name="JPN_KANJI" width="256">いま……　おまえは
+		<language name="JPN_KANJI" width="256">今……　おまえは
 この　ポケモンリーグで▽
-さいきょうの　トレーナーとなった▼
-エレベータに　のり
-チャンピオンの　へやに　いけッ！▼
-……そして　してんのう　として
+最強の　トレーナーとなった▼
+エレベータに　乗り
+チャンピオンの　部屋に　行けッ！▼
+……そして　四天王として
 フェアでは　ないが▼
-その　へやに　いる　おとこに……
-あの　つよすぎる　おとこに……▽
-ぜひ　しょうり　してほしいッ！</language>
+その　部屋に　いる　男に……
+あの　強すぎる　男に……▽
+ぜひ　勝利してほしいッ！</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_05">
