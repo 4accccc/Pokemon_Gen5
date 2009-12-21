@@ -80,7 +80,7 @@ static void Snd_SePlay(int a){}
 
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
 #define _BUTTON_WIN_CENTERY (13)   //
-#define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
+#define _BUTTON_WIN_WIDTH (30)    // ウインドウ幅
 #define _BUTTON_WIN_HEIGHT (5)    // ウインドウ高さ
 #define _BUTTON_WIN_PAL   (14)  // ウインドウ
 #define _BUTTON_MSG_PAL   (13)  // メッセージフォント
@@ -96,35 +96,6 @@ static void Snd_SePlay(int a){}
 
 #define	FBMP_COL_WHITE		(15)
 
-
-typedef struct {
-  int leftx;
-  int lefty;
-  int width;
-  int height;
-} _WINDOWPOS;
-
-
-static _WINDOWPOS wind4[]={
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*4), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*3), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*2), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-};
-
-
-static const GFL_UI_TP_HITTBL bttndata[] = {
-  //上下左右
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
 
 
 
@@ -527,7 +498,8 @@ static void _RecvModeCheckData(const int netID, const int size, const void* pDat
   }
   if(pWork->selectType > pType[0] ){
     NET_PRINT("BattleChange %d ->%d\n",pWork->selectType, pType[0]);
-    pWork->selectType = pType[0];
+    EVENT_IrcBattleSetType(pWork->pBattleWork, pType[0]);
+    //pWork->selectType = pType[0];
   }
 }
 
@@ -755,8 +727,6 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
   int i=0;
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
-  _WINDOWPOS* pos = wind4;
-  //    GFL_FONTSYS_SetColor( 1, 1, 1 );
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -1316,7 +1286,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   IRC_BATTLE_MATCH* pWork = mywk;
 
     
-  EVENT_IrcBattleSetType(pWork->pBattleWork, pWork->selectType);
+//  EVENT_IrcBattleSetType(pWork->pBattleWork, pWork->selectType);
 
   _workEnd(pWork);
   GFL_TCB_DeleteTask( pWork->g3dVintr );
