@@ -8,13 +8,16 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	nishino
+USERS	=	nishino sogabe
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 TOKUSEI_HASH = tokusei_hash.rb
 TOKUSYU_DEF	 = tokusyu_def.h
+TOKUSEI_GMM	 = tokusei.gmm
+TOKUSEIINFO_GMM	 = tokuseiinfo.gmm
+
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -22,6 +25,7 @@ TOKUSYU_DEF	 = tokusyu_def.h
 RUBYDIR	= ../../tools/tokusei/
 TOKUSEI_HASH_DIR = ../../tools/hash/
 TOKUSYU_DEF_DIR		= ../../prog/include/poke_tool/
+TOKUSEI_GMM_DIR		= ../../resource/message/src/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -48,7 +52,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build: $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH) $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF)
+do-build: $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH) $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF) $(TOKUSEI_GMM_DIR)$(TOKUSEI_GMM) $(TOKUSEI_GMM_DIR)$(TOKUSEIINFO_GMM)
 
 $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH): $(TOKUSEI_HASH)
 	$(COPY)	$(TOKUSEI_HASH) $(TOKUSEI_HASH_DIR)
@@ -56,12 +60,18 @@ $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH): $(TOKUSEI_HASH)
 $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF): $(TOKUSYU_DEF)
 	$(COPY)	$(TOKUSYU_DEF) $(TOKUSYU_DEF_DIR)
 
+$(TOKUSEI_GMM_DIR)$(TOKUSEI_GMM): $(TOKUSEI_GMM)
+	$(COPY)	$(TOKUSEI_GMM) $(TOKUSEI_GMM_DIR)
+
+$(TOKUSEI_GMM_DIR)$(TOKUSEIINFO_GMM): $(TOKUSEIINFO_GMM)
+	$(COPY)	$(TOKUSEIINFO_GMM) $(TOKUSEI_GMM_DIR)
+
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH) $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF)
+LDIRT_CLEAN = $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH) $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF) $(TOKUSEI_GMM_DIR)$(TOKUSEI_GMM) $(TOKUSEI_GMM_DIR)$(TOKUSEIINFO_GMM)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(TOKUSEI_HASH) $(TOKUSYU_DEF)
+LDIRT_CLEAN += $(TOKUSEI_HASH) $(TOKUSYU_DEF) $(TOKUSEI_GMM) $(TOKUSEIINFO_GMM)
 endif
 

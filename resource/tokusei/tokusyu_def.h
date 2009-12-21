@@ -156,7 +156,7 @@
 #define		TOKUSYU_SAISEIRYOKU					( 144 )		//さいせいりょく
 #define		TOKUSYU_HATOMUNE						( 145 )		//はとむね
 #define		TOKUSYU_SUNAKAKI						( 146 )		//すなかき
-#define		TOKUSYU_MIRAKURUGAADO				( 147 )		//ミラクルガード
+#define		TOKUSYU_MIRAKURUSUKIN				( 147 )		//ミラクルスキン
 #define		TOKUSYU_SINUTI							( 148 )		//しんうち
 #define		TOKUSYU_IRYUUZYON						( 149 )		//イリュージョン
 #define		TOKUSYU_HENSIN							( 150 )		//へんしん

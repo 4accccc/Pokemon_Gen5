@@ -346,7 +346,7 @@
 
 
 	<row id="TOKUSEIINFO_000">
-		<language name="JPN" width="216">ーー</language>
+		<language name="JPN" width="216">ーー</language>
 	</row>
 
 	<row id="TOKUSEIINFO_001">
@@ -637,9 +637,9 @@
 	</row>
 
 	<row id="TOKUSEIINFO_042">
-		<language name="JPN" width="216">はがねタイプの　ポケモンを
+		<language name="JPN" width="216">はがねの　ポケモンを
 にげられなくする。</language>
-		<language name="JPN_KANJI" width="216">はがねタイプの　ポケモンを
+		<language name="JPN_KANJI" width="216">はがねの　ポケモンを
 にげられなくする。</language>
 	</row>
 
@@ -700,9 +700,9 @@
 	</row>
 
 	<row id="TOKUSEIINFO_051">
-		<language name="JPN" width="216">あいてに　めいちゅうりつを
+		<language name="JPN" width="216">めいちゅうりつを
 さげられない。</language>
-		<language name="JPN_KANJI" width="216">あいてに　めいちゅうりつを
+		<language name="JPN_KANJI" width="216">めいちゅうりつを
 さげられない。</language>
 	</row>
 
@@ -1211,255 +1211,255 @@
 	</row>
 
 	<row id="TOKUSEIINFO_124">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">さわられた　あいてから
+どうぐを　ぬすむ。</language>
+		<language name="JPN_KANJI" width="216">さわられた　あいてから
+どうぐを　ぬすむ。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_125">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ちからが　つよくなるが
+ついかこうかが　だせない。</language>
+		<language name="JPN_KANJI" width="216">ちからが　つよくなるが
+ついかこうかが　だせない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_126">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">のうりょくの　へんかが
+ぎゃくてんする。</language>
+		<language name="JPN_KANJI" width="216">のうりょくの　へんかが
+ぎゃくてんする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_127">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">あいてを　きんちょうさせ
+きのみを　たべさせない。</language>
+		<language name="JPN_KANJI" width="216">あいてを　きんちょうさせ
+きのみを　たべさせない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_128">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">のうりょくが　さがると
+こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">のうりょくが　さがると
+こうげきが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_129">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ＨＰが　はんぶんになると
+ちからが　よわくなる。</language>
+		<language name="JPN_KANJI" width="216">ＨＰが　はんぶんになると
+ちからが　よわくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_130">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">たまに　ふれた　あいてを
+かなしばりにする。</language>
+		<language name="JPN_KANJI" width="216">たまに　ふれた　あいてを
+かなしばりにする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_131">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">みかたの　じょうたいを
+たまに　なおしてしまう。</language>
+		<language name="JPN_KANJI" width="216">みかたの　じょうたいを
+たまに　なおしてしまう。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_132">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">みかたの　ダメージを
+へらすことができる。</language>
+		<language name="JPN_KANJI" width="216">みかたの　ダメージを
+へらすことができる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_133">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ぶつりわざで　ぼうぎょが
+さがり　すばやさがあがる。</language>
+		<language name="JPN_KANJI" width="216">ぶつりわざで　ぼうぎょが
+さがり　すばやさがあがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_134">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">じぶんの　おもさが
+２ばいに　なる。</language>
+		<language name="JPN_KANJI" width="216">じぶんの　おもさが
+２ばいに　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_135">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">じぶんの　おもさが
+はんぶんに　なる。</language>
+		<language name="JPN_KANJI" width="216">じぶんの　おもさが
+はんぶんに　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_136">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ＨＰが　まんたんのときに
+ダメージが　すくなくなる。</language>
+		<language name="JPN_KANJI" width="216">ＨＰが　まんたんのときに
+ダメージが　すくなくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_137">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">どくのとき　ぶつりの
+いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">どくのとき　ぶつりの
+いりょくが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_138">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">やけどのとき　とくしゅの
+いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">やけどのとき　とくしゅの
+いりょくが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_139">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">つかった　きのみを
+なんかいも　つくりだす。</language>
+		<language name="JPN_KANJI" width="216">つかった　きのみを
+なんかいも　つくりだす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_140">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">いきをあわせて　みかたの
+こうげきを　うけない。</language>
+		<language name="JPN_KANJI" width="216">いきをあわせて　みかたの
+こうげきを　うけない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_141">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">のうりょくが　あがったり
+さがったりする。</language>
+		<language name="JPN_KANJI" width="216">のうりょくが　あがったり
+さがったりする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_142">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">てんきの　えいきょうで
+ダメージを　うけない。</language>
+		<language name="JPN_KANJI" width="216">てんきの　えいきょうで
+ダメージを　うけない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_143">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">さわるだけで　あいてを　
+どくにすることがある。</language>
+		<language name="JPN_KANJI" width="216">さわるだけで　あいてを　
+どくにすることがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_144">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ひっこめると ＨＰが
+すこし　かいふくする。</language>
+		<language name="JPN_KANJI" width="216">ひっこめると ＨＰが
+すこし　かいふくする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_145">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">ぼうぎょを　さげる
+こうげきを　うけない。</language>
+		<language name="JPN_KANJI" width="216">ぼうぎょを　さげる
+こうげきを　うけない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_146">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">すなあらしで
+すばやさが　あがる。</language>
+		<language name="JPN_KANJI" width="216">すなあらしで
+すばやさが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_147">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">へんかわざを　うけにくい
+からだに　なっている。</language>
+		<language name="JPN_KANJI" width="216">へんかわざを　うけにくい
+からだに　なっている。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_148">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">いちばん　さいごに
+わざをだすと　つよくなる。</language>
+		<language name="JPN_KANJI" width="216">いちばん　さいごに
+わざをだすと　つよくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_149">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">うしろの　ポケモンに
+なりきって　でてくる。</language>
+		<language name="JPN_KANJI" width="216">うしろの　ポケモンに
+なりきって　でてくる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_150">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">めのまえの　ポケモンに
+へんしん　してしまう。</language>
+		<language name="JPN_KANJI" width="216">めのまえの　ポケモンに
+へんしん　してしまう。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_151">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">あいての　かべを
+すりぬけて　こうげき。</language>
+		<language name="JPN_KANJI" width="216">あいての　かべを
+すりぬけて　こうげき。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_152">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">あいてに　さわられると
+あいてを　ミイラにする。</language>
+		<language name="JPN_KANJI" width="216">あいてに　さわられると
+あいてを　ミイラにする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_153">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">あいてを　たおすと
+こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">あいてを　たおすと
+こうげきが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_154">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">あくを　うけると
+こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">あくを　うけると
+こうげきが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_155">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">びびって　すばやさが
+あがる　タイプがある。</language>
+		<language name="JPN_KANJI" width="216">びびって　すばやさが
+あがる　タイプがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_156">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">へんかわざを　かえす
+ことが　できる。</language>
+		<language name="JPN_KANJI" width="216">へんかわざを　かえす
+ことが　できる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_157">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">くさの　わざを　うけると
+とくこうが　あがる。</language>
+		<language name="JPN_KANJI" width="216">くさの　わざを　うけると
+とくこうが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_158">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">へんかわざを　せんせいで
+だすことができる。</language>
+		<language name="JPN_KANJI" width="216">へんかわざを　せんせいで
+だすことができる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_159">
-		<language name="JPN" width="216">
-</language>
-		<language name="JPN_KANJI" width="216">
-</language>
+		<language name="JPN" width="216">すなあらしで　いりょくが
+あがる　わざがある。</language>
+		<language name="JPN_KANJI" width="216">すなあらしで　いりょくが
+あがる　わざがある。</language>
 	</row>
 
 	<flowchart-group-list>
