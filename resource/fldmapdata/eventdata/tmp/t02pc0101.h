@@ -3,9 +3,7 @@
 #define ZONE_T02PC0101_EVD_H
 
 #define DOOR_ID_T02PC0101_T02_EXIT01      0
-#define DOOR_ID_T02PC0101_T02_EXIT02      1
-#define DOOR_ID_T02PC0101_T02_EXIT03      2
-#define DOOR_ID_T02PC0101_UNION_EXIT01    3
+#define DOOR_ID_T02PC0101_UNION_EXIT01    1
 
 #endif //ZONE_T02PC0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

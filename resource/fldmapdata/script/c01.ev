@@ -245,10 +245,7 @@ _ANIME_LABEL	anm_player_miru
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_back
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_D_16F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

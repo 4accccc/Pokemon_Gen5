@@ -146,23 +146,23 @@ EVENT_END
 EVENT_START   ev_c01r0501_rival_01
 _TALK_OBJ_START()
 
-	_PLAYER_NAME( 0 )
-	_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-		
-	_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
 	//ゆめのあとちに行っている場合
 	IF $WK_SCENE_D01R0101 >= 1 THEN
 
 		//ライバルと既に話している場合
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
 
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
 		//ライバルとまだ話していない場合
 		ELSE
+			
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 			
 			//=========フラグワーク操作==========//
 	
@@ -185,10 +185,24 @@ _TALK_OBJ_START()
 		//ライバルと既に話している場合
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
 
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
 		//ライバルとまだ話していない場合
 		ELSE
-
+		
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+			//=========フラグワーク操作==========//
+			
+			//ライバルと話した
 			_FLAG_SET( FE_C01R0501_RIVALTALK )
+
+			//===================================//
 
 		ENDIF
 		

@@ -701,7 +701,7 @@ t02_speech:
 	_DISP_FADE_END_CHECK()
 
 	_OBJ_ANIME_WAIT()
-	_TIME_WAIT( 20 )
+	_TIME_WAIT( 10 )
 	
 	//åQèWè¡Ç∑
 	_OBJ_DEL( T02_BOODLE_01 )

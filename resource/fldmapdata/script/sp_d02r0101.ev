@@ -15,13 +15,5 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
-_SCENE_CHANGE_LABEL		sp_d02r0101_tbl
-_FIELD_INIT_LABEL		SCRID_INIT_D02R0101
 _SP_EVENT_DATA_END
-
-//テーブル定義
-sp_d02r0101_tbl:
-	_SCENE_CHANGE_DATA		WK_SCENE_D02R0101,0,SCRID_SCENE_D02R0101_STOP_01
-	_SCENE_CHANGE_END
-	
 

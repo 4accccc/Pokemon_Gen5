@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/09 11:25:40
+#save date:2009/12/21 12:48:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ FV_D02R0101_HAKAI
 #Event Script Name
 SCRID_D02_HAKAIM1_01
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -88,7 +88,7 @@ FV_D02R0101_HAKAI
 #Event Script Name
 SCRID_D02_HAKAIM2_01
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -119,7 +119,7 @@ FV_D02R0101_HAKAI
 #Event Script Name
 SCRID_D02_HAKAIW_01
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
