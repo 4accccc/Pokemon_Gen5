@@ -2482,9 +2482,43 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
 
 //--------------------------------------------------------------
 /**
- * FLDTALKMSGWIN 吹き出しウィンドウ削除
+ * FLDTALKMSGWIN 吹き出しウィンドウ閉じる開始
  * @param tmsg FLDTALKMSGWIN
  * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDTALKMSGWIN_StartClose( FLDTALKMSGWIN *tmsg )
+{ 
+  if( tmsg->strBuf != NULL ){
+    GFL_STR_DeleteBuffer( tmsg->strBuf );
+  }
+  
+  keyCursor_Delete( &tmsg->cursor_work );
+  TALKMSGWIN_CloseWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ閉じる　待ち
+ * @param tmsg FLDTALKMSGWIN
+ * @retval BOOL TRUE=閉じた
+ */
+//--------------------------------------------------------------
+BOOL FLDTALKMSGWIN_WaitClose( FLDTALKMSGWIN *tmsg )
+{
+  if( TALKMSGWIN_CheckCloseStatus(tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) ){
+    GFL_HEAP_FreeMemory( tmsg );
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ削除
+ * @param tmsg FLDTALKMSGWIN
+ * @retval BOOL TRUE=閉じた
  */
 //--------------------------------------------------------------
 void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
@@ -2493,8 +2527,7 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
 		GFL_STR_DeleteBuffer( tmsg->strBuf );
   }
   
-  //TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-  TALKMSGWIN_CloseWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   keyCursor_Delete( &tmsg->cursor_work );
   GFL_HEAP_FreeMemory( tmsg );
 }

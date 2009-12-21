@@ -810,7 +810,9 @@ static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data )
 {
-  FLDEFF_KEMURI_SetMMdl( mmdl, data->fectrl );
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_WATER) == 0 ){
+    FLDEFF_KEMURI_SetMMdl( mmdl, data->fectrl );
+  }
 }
 
 //======================================================================

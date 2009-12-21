@@ -53,6 +53,7 @@ extern void FLDEFF_NAMIPOKE_Delete( FLDEFF_CTRL *fectrl, void *work );
 extern FLDEFF_TASK * FLDEFF_NAMIPOKE_SetMMdl( FLDEFF_CTRL *fectrl,
     u16 dir, const VecFx32 *pos, MMDL *mmdl, NAMIPOKE_JOINT joint );
 extern void FLDEFF_NAMIPOKE_SetJointFlag( FLDEFF_TASK *task, NAMIPOKE_JOINT flag );
+extern void FLDEFF_NAMIPOKE_SetRippleEffect( FLDEFF_TASK *task, BOOL flag );
 
 extern void * FLDEFF_NAMIPOKE_EFFECT_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_NAMIPOKE_EFFECT_Delete( FLDEFF_CTRL *fectrl, void *work );

@@ -95,8 +95,9 @@ typedef struct
 {
   int seq_no;
   
-  BOOL joint;
-  
+  u8 joint;
+  u8 ripple_off;
+
   u16 dir;
   fx32 shake_offs;
   fx32 shake_value;
@@ -314,6 +315,24 @@ void FLDEFF_NAMIPOKE_SetJointFlag( FLDEFF_TASK *task, NAMIPOKE_JOINT flag )
   work->joint = flag;
 }
 
+//--------------------------------------------------------------
+/**
+ * 動作モデル用波乗りポケモン　水飛沫エフェクトON,OFF
+ * @param task FLDEFF_TASK*
+ * @param flag TRUE=表示 FALSE=非表示
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_NAMIPOKE_SetRippleEffect( FLDEFF_TASK *task, BOOL flag )
+{
+  TASKWORK_NAMIPOKE *work = FLDEFF_TASK_GetWork( task );
+  if( flag == TRUE ){
+    work->ripple_off = FALSE;
+  }else{
+    work->ripple_off = TRUE;
+  }
+}
+
 #define RIP_SCALE_VECTOR_MAX (GRID_SIZE_FX32(4))
 #define RIP_SCALE_VECTOR_PER (RIP_SCALE_VECTOR_MAX/100)
 #define RIP_SCALE_MAX (FX32_ONE)
@@ -490,8 +509,8 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     #endif
   }
   
-  if( work->joint == NAMIPOKE_JOINT_ONLY ){ //波を出さない
-    RIPPLE_WORK *rip = &work->ripple_work;
+  if( work->joint == NAMIPOKE_JOINT_ONLY || work->ripple_off == TRUE ){
+    RIPPLE_WORK *rip = &work->ripple_work;      //波を出さない
     rip->dir = DIR_NOT; //次回更新時に初期化
   }else{ //波エフェクト
     fx32 ret;

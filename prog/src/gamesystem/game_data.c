@@ -1386,7 +1386,7 @@ BSUBWAY_SCRWORK * GAMEDATA_GetBSubwayScrWork(GAMEDATA * gamedata)
  * @return	nothing
  */
 //----------------------------------------------------------
-BSUBWAY_SCRWORK * GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
+void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
 {
 	gamedata->bsubway_scrwork = bsw_scr;
 }

@@ -170,7 +170,7 @@ static u16 rescode_RegCodeIdx( MMDL_G3DOBJCONT *objcont, u16 code, u16 idx )
     if( tbl->code == OBJCODEMAX ){
       tbl->code = code;
       tbl->residx = idx;
-      return;
+      return( i );
     }
   }
   

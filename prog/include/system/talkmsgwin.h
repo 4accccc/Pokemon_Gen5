@@ -119,6 +119,7 @@ extern void TALKMSGWIN_CreateFixWindowAuto(		TALKMSGWIN_SYS* tmsgwinSys,
 extern void TALKMSGWIN_DeleteWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_OpenWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_CloseWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
+extern BOOL TALKMSGWIN_CheckCloseStatus( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 
 extern BOOL						TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );	

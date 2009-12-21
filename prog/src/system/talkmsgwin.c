@@ -514,6 +514,17 @@ void TALKMSGWIN_CloseWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 }
 
 //------------------------------------------------------------------
+BOOL TALKMSGWIN_CheckCloseStatus( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
+{
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+  
+	if( tmsgwinSys->tmsgwin[tmsgwinIdx].seq == WINSEQ_EMPTY ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//------------------------------------------------------------------
 BOOL	TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )	
 {
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );

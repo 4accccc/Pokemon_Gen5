@@ -39,7 +39,8 @@
 //  proto
 //======================================================================
 static void CloseWin(SCRCMD_WORK *work);
-static void CloseBalloonWin(SCRCMD_WORK *work);
+static void CloseBalloonWin(VMHANDLE *core, SCRCMD_WORK *work);
+static void DeleteBalloonWin(SCRCMD_WORK *work);
 
 static void setBalloonWindow( SCRCMD_WORK *work,
   FLDMSGBG *fmb, FLDTALKMSGWIN_IDX idx,
@@ -75,7 +76,7 @@ BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
 //--------------------------------------------------------------
 BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq)
 {
-  CloseBalloonWin(end_check->ScrCmdWk);
+  DeleteBalloonWin(end_check->ScrCmdWk);
   return  TRUE;
 }
 
@@ -856,7 +857,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  CloseBalloonWin(work);       //<<内部で既閉チェックをしています
+  CloseBalloonWin(core,work);       //<<内部で既閉チェックをしています
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -1404,10 +1405,6 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
     CloseWin( work );
   }
   
-  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
-   CloseBalloonWin( work );
-  }
-  
   if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
     ClosePlainWin( work );
   }
@@ -1419,7 +1416,11 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
   if( SCREND_CHK_CheckBit(SCREND_CHK_SPWIN_OPEN) ){
     CloseSpWin( work );
   }
-  
+
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+   CloseBalloonWin( core, work );
+  }
+ 
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -1457,12 +1458,58 @@ static void CloseWin( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- *  バルーンウィンドウ終了
+ * バルーンウィンドウクローズ待ち
+ * @param core  VMHANDLE*
+ * @param wk
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitCloseBalloonWin( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  FLDTALKMSGWIN *tmsg;
+  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+
+  if( FLDTALKMSGWIN_WaitClose(tmsg) == TRUE ){
+    SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ *  バルーンウィンドウ閉じる
+ * @param   work    スクリプトコマンドワークポインタ
+ * @retval  none
+ * @note 終了待ちのWait処理をVMHANDLEにセットしています。
+ */
+//--------------------------------------------------------------
+static void CloseBalloonWin(VMHANDLE *core, SCRCMD_WORK *work)
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+    FLDTALKMSGWIN *tmsg;
+    tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDTALKMSGWIN_StartClose( tmsg );
+    VMCMD_SetWait( core, EvWaitCloseBalloonWin );
+  }else{
+    #ifdef SCR_ASSERT_ON    
+    GF_ASSERT_MSG(0,"バルーンウィンドウはありません");
+    #else
+    OS_Printf("==========バルーンウィンドウはありません============\n");
+    #endif
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ *  バルーンウィンドウ削除
  * @param   work    スクリプトコマンドワークポインタ
  * @retval  none
  */
 //--------------------------------------------------------------
-static void CloseBalloonWin(SCRCMD_WORK *work)
+static void DeleteBalloonWin(SCRCMD_WORK *work)
 {
   if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
     FLDTALKMSGWIN *tmsg;
