@@ -293,7 +293,7 @@ _ANIME_LABEL	anm_zukan_player_move_01
 //îéémÅFëﬁé∫
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_doc_goaway_02
-	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

@@ -34,7 +34,28 @@ _EVENT_DATA    ev_n01r0101_leader6_01
 _EVENT_DATA    ev_n01r0101_leader7_01
 _EVENT_DATA    ev_n01r0101_leader8w_01
 _EVENT_DATA    ev_n01r0101_leader8b_01
+_EVENT_DATA    ev_init_n01r0101
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*				フィールドイニットスクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_init_n01r0101
+
+	//七人衆vsジムリーダーイベント後ならジムリーダーの位置をイベント後の位置へ
+	IF $WK_SCENE_N01R0101 == 1 THEN
+		_OBJ_POS_CHANGE( N01R0101_LEADER2_01, 23, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER3_01, 27, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER4_01, 21, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER5_01, 26, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER6_01, 29, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER7_01, 19, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER8W_01, 31, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_LEADER8B_01, 24, 0, 15, DIR_UP )
+	ENDIF
+
+INIT_EVENT_END
 
 
 /************************************************************/
@@ -51,57 +72,71 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
 	_OBJ_ANIME_WAIT()
 	
+	//七人衆にカメラを合わせる
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,1671168,0,872448,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	
 	//天に従うものは
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_01, N01R0101_SAGE2_02, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
-	//７人衆３：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage3_move_01 )
-	_OBJ_ANIME_WAIT()
 	
 	//仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage3_01, N01R0101_SAGE2_03, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	//７人衆４：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_04, anm_sage4_move_01 )
-	_OBJ_ANIME_WAIT()
-	
 	//仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage4_01, N01R0101_SAGE2_04, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
-	
-	//７人衆５：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_05, anm_sage5_move_01 )
-	_OBJ_ANIME_WAIT()
 	
 	//仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage5_01, N01R0101_SAGE2_05, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	
-	//７人衆６：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_01 )
-	_OBJ_ANIME_WAIT()
-	
 	//仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage6_01, N01R0101_SAGE2_06, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
-	
-	//７人衆７：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_01 )
-	_OBJ_ANIME_WAIT()
 	
 	//仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage7_01, N01R0101_SAGE2_07, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	
-	//???だいじょうぶだろうよ
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_01, N01R0101_LEADER5_01, WIN_NONE )
+	//七人衆：主人公を囲む
+	//７人衆３：前へ
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage3_move_01 )
+	//７人衆４：前へ
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_sage4_move_01 )
+	//７人衆５：前へ
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_sage5_move_01 )
+	//７人衆６：前へ
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_01 )
+	//７人衆７：前へ
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_01 )
+	//７人衆２：前へ
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//われら６人を相手に勝ち残れるとは思えん
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_02, N01R0101_SAGE2_02, WIN_NONE )
 	_MSGWIN_CLOSE()
+	
+	
+	//???だいじょうぶだろうよ
+	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
+	_MSGWIN_CLOSE()
+	
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
 	
 	//ヤーコン：登場
 	_OBJ_ADD( N01R0101_LEADER5_01 )
@@ -112,10 +147,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_02, N01R0101_LEADER5_01, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
-	//７人衆２：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
-	_OBJ_ANIME_WAIT()
 	
 	//きさまホドモエの！？
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_03, N01R0101_SAGE2_02, WIN_NONE )
@@ -202,7 +233,7 @@ _ANIME_LABEL	anm_player_move_01
 //７人衆：前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sage2_move_01
-	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_sage3_move_01
