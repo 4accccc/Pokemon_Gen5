@@ -355,7 +355,6 @@ EVENT_START ev_union
   IF $room_in == TRUE THEN
     //「おたのしみ ください」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, WIN_DOWN )
-    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL sub_pokecen_elevator_in
     //復帰時の出現先をここにする
