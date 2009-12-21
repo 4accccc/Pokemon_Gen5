@@ -2225,11 +2225,14 @@ BOOL FIELD_BMODEL_CheckCurrentSE( const FIELD_BMODEL * bmodel )
 //------------------------------------------------------------------
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
 {
-  enum { RECT_SIZE = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT };
-  rect->top = pos->z - RECT_SIZE;
-  rect->bottom = pos->z + RECT_SIZE;
-  rect->left = pos->x - RECT_SIZE;
-  rect->right = pos->x + RECT_SIZE;
+  enum {
+    RECT_SIZE_W = (FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT,
+    RECT_SIZE_H = (FIELD_CONST_GRID_SIZE * 3) << FX32_SHIFT      
+  };
+  rect->top = pos->z - RECT_SIZE_H;
+  rect->bottom = pos->z + RECT_SIZE_H;
+  rect->left = pos->x - RECT_SIZE_W;
+  rect->right = pos->x + RECT_SIZE_W;
 }
 
 
