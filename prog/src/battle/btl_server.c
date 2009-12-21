@@ -573,7 +573,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
 //----------------------------------------------------------------------------------
 /**
- * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入した直後の処理
+ * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入する
  *
  * @param   server
  * @param   seq
@@ -586,7 +586,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     BTL_Printf("入場ポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
-    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
+    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_COVER, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
     break;
@@ -659,7 +659,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     BTL_Printf("入れ替えポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
-    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
+    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_CHANGE, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
     break;

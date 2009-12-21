@@ -408,7 +408,10 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_SELECT_ACTION,
        { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 
-    { BTL_ACMD_SELECT_POKEMON,
+    { BTL_ACMD_SELECT_POKEMON_FOR_COVER,
+       { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
+
+    { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,
        { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
 
     { BTL_ACMD_SERVER_CMD,

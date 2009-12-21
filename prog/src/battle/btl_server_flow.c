@@ -2135,15 +2135,15 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 
   // ››‚Í~~‚ðŽg‚Á‚½I
   {
-    int args[3];
-    args[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-    args[1] = BPP_GetID( bpp );
-    args[2] = itemID;
+    u8 pokeID = BPP_GetID( bpp );
+    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
     if( wk->bagMode != BBAG_MODE_SHOOTER ){
+      int args[2];
+      args[0] = clientID;
+      args[1] = itemID;
       scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Self, 2, args );
     }else{
-//      scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Shooter, 2, args );
-      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, args[0], args[1] );
+      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, clientID, pokeID, itemID );
     }
   }
 
