@@ -88,7 +88,8 @@ $(targetname).narc: $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 $(BIN)/ship_ica_data.bin: $(GRAPHIC)/h01_ship.ica
-	ruby $(ICACONV) -rt $(GRAPHIC)/h01_ship.ica $(BIN)/ship_ica_data.bin
+	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/h01_ship.ica $(GRAPHIC)/ica_conv/h01_ship_conv.ica 2048 0 3072
+	ruby $(ICACONV) -rt $(GRAPHIC)/ica_conv/h01_ship_conv.ica $(BIN)/ship_ica_data.bin
 
 $(BIN)/trailer1_head_ica_data.bin: $(GRAPHIC)/trailer_01a_up.ica
 	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/trailer_01a_up.ica $(GRAPHIC)/ica_conv/trailer_01a_up_conv.ica 2048 0 3072
