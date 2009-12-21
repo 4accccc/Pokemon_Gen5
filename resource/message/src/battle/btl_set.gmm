@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-21T00:24:55"/>
+	<create user="taya" host="W00146" date="2009-12-21T16:23:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1580,21 +1580,21 @@
 
 	<row id="BTL_STRID_SET_DokuAlready">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-どくを　あびている！</language>
+どくを　あびている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-毒を　あびている！</language>
+毒を　あびている</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
-どくを　あびている！</language>
+どくを　あびている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
-毒を　あびている！</language>
+毒を　あびている</language>
 	</row>
 	<row id="BTL_STRID_SET_DokuAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
-どくを　あびている！</language>
+どくを　あびている</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　すでに
-毒を　あびている！</language>
+毒を　あびている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoGet">
@@ -1676,21 +1676,21 @@
 
 	<row id="BTL_STRID_SET_YakedoAlready">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　おっている！</language>
+やけどを　おっている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　負っている！</language>
+やけどを　負っている</language>
 	</row>
 	<row id="BTL_STRID_SET_YakedoAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　おっている！</language>
+やけどを　おっている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　負っている！</language>
+やけどを　負っている</language>
 	</row>
 	<row id="BTL_STRID_SET_YakedoAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　おっている！</language>
+やけどを　おっている</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　すでに
-やけどを　負っている！</language>
+やけどを　負っている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MahiGet">
@@ -1715,21 +1715,21 @@
 
 	<row id="BTL_STRID_SET_MahiAct">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-からだが　しびれて　うごかない！</language>
+からだが　しびれて　うごけない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-体がしびれて動かない！</language>
+体がしびれて　動けない！</language>
 	</row>
 	<row id="BTL_STRID_SET_MahiAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-からだが　しびれて　うごかない！</language>
+からだが　しびれて　うごけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-体がしびれて動かない！</language>
+体がしびれて　動けない！</language>
 	</row>
 	<row id="BTL_STRID_SET_MahiAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-からだが　しびれて　うごかない！</language>
+からだが　しびれて　うごけない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-体がしびれて動かない！</language>
+体がしびれて　動けない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MahiCure">
@@ -1753,21 +1753,21 @@
 
 	<row id="BTL_STRID_SET_MahiAlready">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 	</row>
 	<row id="BTL_STRID_SET_MahiAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 	</row>
 	<row id="BTL_STRID_SET_MahiAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-すでに　まひしている！</language>
+すでに　まひしている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KoriGet">
@@ -1850,21 +1850,21 @@
 
 	<row id="BTL_STRID_SET_NemuriAct">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-ねむっている！</language>
+ぐうぐう　ねむっている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-眠っている！</language>
+ぐうぐう　眠っている</language>
 	</row>
 	<row id="BTL_STRID_SET_NemuriAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-ねむっている！</language>
+ぐうぐう　ねむっている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-眠っている！</language>
+ぐうぐう　眠っている</language>
 	</row>
 	<row id="BTL_STRID_SET_NemuriAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-ねむっている！</language>
+ぐうぐう　ねむっている</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-眠っている！</language>
+ぐうぐう　眠っている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_NemuriWake">
@@ -2081,21 +2081,21 @@
 
 	<row id="BTL_STRID_SET_KonranAlready">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-こんらん　している！</language>
+こんらん　している</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
-混乱している！</language>
+混乱している</language>
 	</row>
 	<row id="BTL_STRID_SET_KonranAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
-こんらん　している！</language>
+こんらん　している</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
-混乱している！</language>
+混乱している</language>
 	</row>
 	<row id="BTL_STRID_SET_KonranAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
-こんらん　している！</language>
+こんらん　している</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　すでに
-混乱している！</language>
+混乱している</language>
 	</row>
 
 	<row id="BTL_STRID_SET_ShrinkExe">
