@@ -13,6 +13,7 @@
 #include "field_task.h"
 #include "field_task_manager.h"
 #include "field_gimmick_gate.h"
+#include "event_look_elboard.h"
 
 
 //==========================================================================================
