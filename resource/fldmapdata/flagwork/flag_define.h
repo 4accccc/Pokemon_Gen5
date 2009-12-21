@@ -166,7 +166,7 @@
 #define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
 #define FE_ELBOARD_TOUNAN                  151 /* 0x0097 電光掲示板用フラグ：Ｃ02博物館の盗難イベント発生ニュース */
 #define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 電光掲示板用フラグ：Ｃ02ジムリーダー勝利フラグ */
-		/* not used   153(0x0099) */
+#define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
 		/* not used   154(0x009a) */
 		/* not used   155(0x009b) */
 		/* not used   156(0x009c) */
@@ -646,7 +646,7 @@
 #define FV_C08R0101_LEADER8B_01            622 /* 0x026e ソウリュウシティR0101：アイリス */
 #define FV_MUSEUM_STONE                    623 /* 0x026f C02GYM0101博物館：パッケージポケモン関連の&#xff5e;&#xff5e;ストーン */
 #define FV_D08R0101_NONDRAW_01             624 /* 0x0270 リュウラセンの塔入り口：バッジ入手まで接続をブロックするための透明OBJ */
-		/* not used   625(0x0271) */
+#define FV_R03_SODATEYA_01                 625 /* 0x0271 ３番道路の育て屋じいさん */
 		/* not used   626(0x0272) */
 		/* not used   627(0x0273) */
 		/* not used   628(0x0274) */
