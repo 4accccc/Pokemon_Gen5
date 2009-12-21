@@ -25,5 +25,10 @@
 #ifndef ZONE_D09_EVC_H
 #define ZONE_D09_EVC_H
 
+#define D09_FLD_ITEM_01                    0
+#define D09_FLD_ITEM_02                    1
+#define D09_FLD_ITEM_03                    2
+#define D09_FLD_ITEM_04                    3
+#define D09_FLD_ITEM_05                    4
 
 #endif //ZONE_D09_EVC_H
