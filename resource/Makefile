@@ -114,7 +114,8 @@ SUBDIRS	=	wmi \
 			fld_trade \
 			intro \
 			comm_tvt \
-			guru2
+			guru2 \
+			beacon_status
 
 include $(RESOURCE_MACRO)
 

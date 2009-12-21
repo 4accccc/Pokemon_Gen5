@@ -1,0 +1,4 @@
+"beacon_status_lz.NCGR"
+"beacon_status_lz.NSCR"
+"beacon_status.NCLR"
+
