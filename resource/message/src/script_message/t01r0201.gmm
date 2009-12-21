@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-09T21:50:46"/>
+	<create user="matsumiya" host="W00207" date="2009-12-21T20:14:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,8 +307,8 @@
 ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
-りっぱな　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
-ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
+立派な　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
+冒険だって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0201_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
