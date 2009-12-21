@@ -46,6 +46,24 @@ static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work );
 #define  OTHER_BIT      (1<<2)
 #define  OTHER_PAIR_BIT    (1<<3)
 
+static const MMDL_ACMD_LIST anime_up_table[] = {
+  AC_STAY_WALK_U_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_down_table[] = {
+  AC_STAY_WALK_D_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_left_table[] = {
+  AC_STAY_WALK_L_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_right_table[] = {
+  AC_STAY_WALK_R_8F, 1,
+  ACMD_END, 0
+};
+
+
 static u8 step_watch_bit;
 
 static inline void InitStepWatchBit(void)
@@ -851,22 +869,6 @@ static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work )
   return( fmmdl );
 }
 
-static const MMDL_ACMD_LIST anime_up_table[] = {
-  AC_STAY_WALK_U_8F, 1,
-  ACMD_END, 0
-};
-static const MMDL_ACMD_LIST anime_down_table[] = {
-  AC_STAY_WALK_D_8F, 1,
-  ACMD_END, 0
-};
-static const MMDL_ACMD_LIST anime_left_table[] = {
-  AC_STAY_WALK_L_8F, 1,
-  ACMD_END, 0
-};
-static const MMDL_ACMD_LIST anime_right_table[] = {
-  AC_STAY_WALK_R_8F, 1,
-  ACMD_END, 0
-};
 //--------------------------------------------------------------
 /**
  * •ûŒü‹N“®‚o‚n‚r—pŒü‚«’¼‚èˆ—   @todo
