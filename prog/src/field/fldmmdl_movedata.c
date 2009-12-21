@@ -1335,6 +1335,8 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_MarkHatena_Tbl,             //AC_MARK_HATENA
   DATA_AC_MarkOnpu_Tbl,               //AC_MARK_ONPU
   DATA_AC_MarkTenTen_Tbl,             //AC_MARK_TENTEN
+
+  DATA_AC_HeroCutin_Tbl, //AC_HERO_CUTIN
 };
 
 //--------------------------------------------------------------

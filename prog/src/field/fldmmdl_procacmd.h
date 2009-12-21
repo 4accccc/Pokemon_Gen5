@@ -189,6 +189,7 @@ extern int (* const DATA_AC_HidePullOFF_Tbl[])( MMDL * );
 extern int (* const DATA_AC_HeroBanzai_Tbl[])( MMDL * );
 extern int (* const DATA_AC_HeroBanzaiUke_Tbl[])( MMDL * );
 extern int (* const DATA_AC_HeroItemGet_Tbl[])( MMDL * );
+extern int (* const DATA_AC_HeroCutin_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
 ///	AC_WALKGLŒn

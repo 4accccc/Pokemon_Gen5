@@ -3100,6 +3100,20 @@ static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 	return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_HERO_CUTIN 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_HeroCutIn_0( MMDL * mmdl )
+{
+  AC_InitHeroWaitAnmWork( mmdl, 0, 12 );
+	MMDL_IncAcmdSeq( mmdl );
+	return( FALSE );
+}
+
 //======================================================================
 //  自機アイテムゲット
 //======================================================================
@@ -5141,6 +5155,16 @@ int (* const DATA_AC_HeroBanzai_Tbl[])( MMDL * ) =
 int (* const DATA_AC_HeroBanzaiUke_Tbl[])( MMDL * ) =
 {
 	AC_HeroBanzaiUke_0,
+	AC_HeroWaitAnmFrame_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_HERO_CUTIN
+//--------------------------------------------------------------
+int (* const DATA_AC_HeroCutin_Tbl[])( MMDL * ) =
+{
+  AC_HeroCutIn_0,
 	AC_HeroWaitAnmFrame_1,
 	AC_End,
 };

@@ -447,8 +447,9 @@
 #define AC_MARK_HATENA 0x9f ///<？マークを出す
 #define AC_MARK_ONPU 0xa0 ///<♪マークを出す
 #define AC_MARK_TENTEN 0xa1 ///<…マークを出す
+#define AC_HERO_CUTIN 0xa2 ///<…マークを出す
 
-#define ACMD_MAX				0xa2 ///<アニメーションコマンド最大数
+#define ACMD_MAX				0xa3 ///<アニメーションコマンド最大数
 
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
