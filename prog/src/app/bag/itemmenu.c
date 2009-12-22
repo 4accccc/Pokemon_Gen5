@@ -2911,6 +2911,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pAppTaskRes  = APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
 
   // ネットワーク初期化
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, pWork->heapID );
   GFL_NET_ChangeIconPosition(256-16, 0);
   GFL_NET_ReloadIcon();
 
