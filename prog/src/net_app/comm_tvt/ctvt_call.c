@@ -15,8 +15,10 @@
 #include "system/wipe.h"
 #include "system/camera_system.h"
 #include "net/network_define.h"
+#include "net/net_whpipe.h"
 #include "app/app_menu_common.h"
 #include "print/wordset.h"
+#include "field/game_beacon_search.h"
 
 #include "msg/msg_comm_tvt.h"
 
@@ -31,9 +33,9 @@
 #pragma mark [> define
 
 //表示バーの個数
-#define CTVT_CALL_BAR_NUM (7) //とりあえず画面分
+#define CTVT_CALL_BAR_NUM (16) //とりあえず画面分
 //データ個数
-#define CTVT_CALL_SEARCH_NUM (7) //とりあえず画面分
+#define CTVT_CALL_SEARCH_NUM (16) //とりあえず画面分
 #define CTVT_CALL_INVALID_NO (0xFF)
 
 
@@ -41,7 +43,12 @@
 #define CTVT_CALL_BAR_Y (16)
 #define CTVT_CALL_BAR_HEIGHT (32)
 
+#define CTVT_CALL_SCROLL_LEN (CTVT_CALL_BAR_HEIGHT*CTVT_CALL_SEARCH_NUM-20*8)
+
 #define CTVT_CALL_CHECK_X (16)
+
+#define CTVT_CALL_BEACONSIZE (sizeof(GBS_BEACON)<sizeof(CTVT_COMM_BEACON)?sizeof(CTVT_COMM_BEACON):sizeof(GBS_BEACON))
+
 
 #define CTVT_STRBMP_X (6)
 #define CTVT_STRBMP_Y (0)
@@ -77,7 +84,8 @@ struct _CTVT_CALL_MEMBER_WORK
 {
   BOOL isEnable;
   BOOL isLost;
-  CTVT_COMM_BEACON beacon;
+  void *beacon;
+  GameServiceID serviceType;
   u8 macAddress[6];
   
   u8 barWorkNo;
@@ -101,8 +109,10 @@ struct _CTVT_CALL_BAR_WORK
 //ワーク
 struct _CTVT_CALL_WORK
 {
+  u16 scrollOfs;
   CTVT_CALL_STATE state;
-  
+  BOOL isUpdateBarPos;
+
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
 };
@@ -115,6 +125,8 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 
 static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
+static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
+static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 
 
 //--------------------------------------------------------------
@@ -182,6 +194,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       callWork->memberData[i].isEnable = FALSE;
       callWork->memberData[i].isLost = FALSE;
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
+      callWork->memberData[i].beacon = GFL_HEAP_AllocClearMemory( heapId , CTVT_CALL_BEACONSIZE );
     }
     for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
     {
@@ -194,7 +207,8 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                           GFL_BMP_CHRAREA_GET_B );
     }
   }
-
+  callWork->scrollOfs = 0;
+  callWork->isUpdateBarPos = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -210,6 +224,10 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     GFL_CLACT_WK_Remove( callWork->barWork[i].clwkCheck );
     GFL_CLACT_WK_Remove( callWork->barWork[i].clwkBar );
   }
+  for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
+  {
+    GFL_HEAP_FreeMemory( callWork->memberData[i].beacon );
+  }
 
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
@@ -221,7 +239,7 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
-
+  
   switch( callWork->state )
   {
   case CCS_FADEIN:
@@ -266,6 +284,24 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       callWork->state = CCS_FADEOUT;
       CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
     }
+    if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+    {
+      if( callWork->scrollOfs < CTVT_CALL_SCROLL_LEN )
+      {
+        callWork->isUpdateBarPos = TRUE;
+        callWork->scrollOfs += 2;
+        GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
+      }
+    }
+    if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+    {
+      if( callWork->scrollOfs > 0 )
+      {
+        callWork->isUpdateBarPos = TRUE;
+        callWork->scrollOfs -= 2;
+        GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
+      }
+    }
     break;
   case CCS_WAIT_CONNECT:
     {
@@ -293,6 +329,14 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           callWork->barWork[i].isUpdateStr = FALSE;
         }
       }
+    }
+  }
+  if( callWork->isUpdateBarPos == TRUE )
+  {
+    u8 i;
+    for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
+    {
+      CTVT_CALL_UpdateBarPosFunc( work , callWork , &callWork->barWork[i] , i );
     }
   }
 
@@ -357,6 +401,18 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       u8 emptyNo = 0xFF;
       u8 mem;
       u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
+      const GameServiceID serviceType = GFL_NET_WLGetUserGameServiceId( i );
+      if( serviceType == WB_NET_FIELDMOVE_SERVICEID )
+      {
+        //フィールドビーコンをはじく
+        GBS_BEACON *becData = beaconData;
+        if( becData->beacon_type != GBS_BEACONN_TYPE_PALACE &&
+            becData->beacon_type != GBS_BEACONN_TYPE_INFO )
+        {
+          continue;
+        }
+      }
+
       for( mem=0;mem<CTVT_CALL_SEARCH_NUM;mem++ )
       {
         if( callWork->memberData[mem].isEnable == TRUE )
@@ -397,13 +453,23 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         {
           //空きがあったので登録
           u8 k;
+
           callWork->memberData[emptyNo].isEnable = TRUE;
           callWork->memberData[emptyNo].isLost = FALSE;
           for( k=0;k<6;k++ )
           {
             callWork->memberData[emptyNo].macAddress[k] = macAddress[k];
           }
-          GFL_STD_MemCopy( beaconData , &callWork->memberData[emptyNo].beacon , sizeof(CTVT_COMM_BEACON) );
+          if( serviceType == WB_NET_COMM_TVT )
+          {
+            callWork->memberData[emptyNo].serviceType = WB_NET_COMM_TVT;
+            GFL_STD_MemCopy( beaconData , callWork->memberData[emptyNo].beacon , sizeof(CTVT_COMM_BEACON) );
+          }
+          else
+          {
+            callWork->memberData[emptyNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
+            GFL_STD_MemCopy( beaconData , callWork->memberData[emptyNo].beacon , sizeof(GBS_BEACON) );
+          }
           
           for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
           {
@@ -448,7 +514,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   
   if( isUpdate == TRUE )
   {
-    //*
+    /*
     u8 i;
     OS_TFPrintf(3,"--------------------------------\n");
     for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
@@ -466,13 +532,13 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     //*/
     CTVT_TPrintf("UpdateBar\n");
     CTVT_CALL_UpdateBar( work , callWork );
+    callWork->isUpdateBarPos = TRUE;
     
   }
 }
 //--------------------------------------------------------------
 //	バー更新
 //--------------------------------------------------------------
-static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
@@ -482,6 +548,7 @@ static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork 
     CTVT_CALL_UpdateBarFunc( work , callWork , &callWork->barWork[i] , i );
   }
 }
+
 static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx )
 {
   if( barWork->isUpdate == TRUE )
@@ -500,7 +567,16 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
       
       //名前
       str = GFL_STR_CreateBuffer( 32 , heapId );
-      GFL_STR_SetStringCodeOrderLength( str , memberWork->beacon.name , CTVT_COMM_NAME_LEN );
+      if( memberWork->serviceType == WB_NET_COMM_TVT )
+      {
+        CTVT_COMM_BEACON *becData = memberWork->beacon;
+        GFL_STR_SetStringCodeOrderLength( str , becData->name , CTVT_COMM_NAME_LEN );
+      }
+      else
+      {
+        GBS_BEACON *becData = memberWork->beacon;
+        GFL_STR_SetStringCodeOrderLength( str , becData->info.name , CTVT_COMM_NAME_LEN );
+      }
       PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
               0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
       GFL_STR_DeleteBuffer( str );
@@ -509,7 +585,17 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
       str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_01 );
       {
         STRBUF *tempStr = GFL_STR_CreateBuffer( 32 , heapId );
-        WORDSET_RegisterNumber( wordSet , 0 , memberWork->beacon.id , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+        if( memberWork->serviceType == WB_NET_COMM_TVT )
+        {
+          CTVT_COMM_BEACON *becData = memberWork->beacon;
+          WORDSET_RegisterNumber( wordSet , 0 , becData->id , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+        }
+        else
+        {
+          GBS_BEACON *becData = memberWork->beacon;
+          u16 id = (becData->info.trainer_id & 0xFFFF);
+          WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+        }
         WORDSET_ExpandStr( wordSet , tempStr , str );
         GFL_STR_DeleteBuffer( str );
         str = tempStr;
@@ -519,32 +605,66 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
       GFL_STR_DeleteBuffer( str );
 
       //人数
-      str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_03 );
+      if( memberWork->serviceType == WB_NET_COMM_TVT )
       {
-        STRBUF *tempStr = GFL_STR_CreateBuffer( 32 , heapId );
-        WORDSET_RegisterNumber( wordSet , 0 , memberWork->beacon.connectNum , 1 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-        WORDSET_ExpandStr( wordSet , tempStr , str );
-        GFL_STR_DeleteBuffer( str );
-        str = tempStr;
+        CTVT_COMM_BEACON *becData = memberWork->beacon;
+        str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_03 );
+        {
+          STRBUF *tempStr = GFL_STR_CreateBuffer( 32 , heapId );
+          WORDSET_RegisterNumber( wordSet , 0 , becData->connectNum , 1 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( wordSet , tempStr , str );
+          GFL_STR_DeleteBuffer( str );
+          str = tempStr;
+        }
       }
+      else
+      {
+        str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_02 );
+      }
+
       PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
               152 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
       GFL_STR_DeleteBuffer( str );
       
       
       WORDSET_Delete( wordSet );
-      GFL_CLACT_WK_SetDrawEnable( barWork->clwkBar , TRUE );
-      GFL_CLACT_WK_SetDrawEnable( barWork->clwkCheck , TRUE );
-
       barWork->isUpdateStr = TRUE;
     }
     else
     {
       GFL_BMPWIN_ClearTransWindow_VBlank( barWork->strWin );
-      
+    }
+    barWork->isUpdate = FALSE;
+  }
+}
+
+static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx )
+{
+  if( barWork->memberWorkNo == CTVT_CALL_INVALID_NO )
+  {
+    GFL_CLACT_WK_SetDrawEnable( barWork->clwkBar , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( barWork->clwkCheck , FALSE );
+  }
+  else
+  {
+    s16 posY = idx*CTVT_CALL_BAR_HEIGHT - callWork->scrollOfs;
+    if( posY >= -CTVT_CALL_BAR_HEIGHT &&
+        posY <= 192-CTVT_CALL_BAR_HEIGHT )
+    {
+      GFL_CLACTPOS pos;
+      pos.x = CTVT_CALL_BAR_X;
+      pos.y = CTVT_CALL_BAR_Y + posY;
+      GFL_CLACT_WK_SetPos( barWork->clwkBar , &pos , CLSYS_DRAW_SUB );
+      GFL_CLACT_WK_SetDrawEnable( barWork->clwkBar , TRUE );
+      pos.x = CTVT_CALL_CHECK_X;
+      GFL_CLACT_WK_SetPos( barWork->clwkCheck , &pos , CLSYS_DRAW_SUB );
+      GFL_CLACT_WK_SetDrawEnable( barWork->clwkCheck , TRUE );
+    }
+    else
+    {
       GFL_CLACT_WK_SetDrawEnable( barWork->clwkBar , FALSE );
       GFL_CLACT_WK_SetDrawEnable( barWork->clwkCheck , FALSE );
     }
-    barWork->isUpdate = FALSE;
+    
   }
 }

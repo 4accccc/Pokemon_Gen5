@@ -310,6 +310,15 @@ extern void* GFL_NET_WLGetUserBss(int index);
 
 extern void* GFL_NET_WLGetUserMacAddress(int index);
 
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコンのGameserviceIDを取得する
+ * @param   index ビーコンバッファに対するindex
+ * @return  maccaddressの配列
+ */
+//-------------------------------------------------------------
+extern GameServiceID GFL_NET_WLGetUserGameServiceId(int index);
+
 //==============================================================================
 /**
  * @brief   macアドレスをバックアップする

@@ -1337,6 +1337,23 @@ void* GFL_NET_WLGetUserMacAddress(int index)
 
 //-------------------------------------------------------------
 /**
+ * @brief   ビーコンのGameserviceIDを取得する
+ * @param   index ビーコンバッファに対するindex
+ * @return  maccaddressの配列
+ */
+//-------------------------------------------------------------
+GameServiceID GFL_NET_WLGetUserGameServiceId(int index)
+{
+	GFL_NETWL* pNetWL = _pNetWL;
+	if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+		_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
+		return pGF->serviceNo;
+	}
+	return WB_NET_NOP_SERVICEID;
+}
+
+//-------------------------------------------------------------
+/**
  * @brief    ビーコンデータを消す
  * @param    index ビーコンバッファに対するindex
  * @retval   none

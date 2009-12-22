@@ -39,7 +39,8 @@
 #define CTVT_COMM_DRAW_BUF_NUM (5)
 
 #define CTVT_COMM_ADD_COMMAND_SYNC (8)
-#define CTVT_COMM_SCAN_BEACON_NUM (4)
+#define CTVT_COMM_SCAN_BEACON_NUM (16)
+
 
 //======================================================================
 //	enum
@@ -142,10 +143,6 @@ struct _CTVT_COMM_WORK
   BOOL updateTalkMember;
   u8 tempTalkMember;
   
-  //スキャン用
-  WIH_DWC_WORK      *scanWork;  //フィールドビーコンをスキャン！
-
-  
   COMM_TVT_WORK *parentWork;  //受信コールバックで使うため
 };
 
@@ -232,7 +229,6 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     commWork->beacon.id = MyStatus_GetID_Low( myStatus );
     commWork->beacon.connectNum = 1;
   }
-  commWork->scanWork = NULL;
   GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
@@ -247,10 +243,6 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   if( commWork->mode == CCIM_CONNECTED )
   {
     GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
-  }
-  if( commWork->scanWork != NULL )
-  {
-    WIH_DWC_AllBeaconEnd( commWork->scanWork );
   }
   
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
@@ -301,7 +293,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       {
       case CCIM_SCAN:
         GFL_NET_StartBeaconScan();
-        commWork->scanWork = WIH_DWC_AllBeaconStart(CTVT_COMM_SCAN_BEACON_NUM, heapId );
         commWork->state = CCS_CONNECT;
         break;
       case CCIM_PARENT:
@@ -368,11 +359,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     break;
     
   case CCS_DISCONNECT:
-    if( commWork->mode == CCIM_SCAN )
-    {
-      WIH_DWC_AllBeaconEnd( commWork->scanWork );
-      commWork->scanWork = NULL;
-    }
     //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
     GFL_NET_Exit(NULL);
     {
@@ -427,7 +413,7 @@ static void CTVT_COMM_InitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     0,                      ///< DWCへのHEAPサイズ
     TRUE,                   ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-    0x333,                  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    0x222,                  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,         //元になるheapid
     HEAPID_NETWORK,         //通信用にcreateされるHEAPID
     HEAPID_WIFI,            //wifi用にcreateされるHEAPID
@@ -533,7 +519,8 @@ static int CTVT_COMM_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2)
 {
-  if( GameServiceID1 == GameServiceID2 )
+  if( GameServiceID2 == WB_NET_COMM_TVT ||
+      GameServiceID2 == WB_NET_FIELDMOVE_SERVICEID)
   {
     return TRUE;
   }
@@ -668,6 +655,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 //--------------------------------------------------------------
 static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
+  #if 0
   u8 i;
   WIH_DWC_MainLoopScanBeaconData();
   for( i=0;i<CTVT_COMM_SCAN_BEACON_NUM;i++ )
@@ -675,6 +663,8 @@ static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     if( WIH_DWC_IsEnableBeaconData(i) == TRUE )
     {
       const WMBssDesc* beacon = WIH_DWC_GetBeaconData(i);
+      const _GF_BSS_DATA_INFO* gfInfo = (_GF_BSS_DATA_INFO*)beacon->gameInfo.userGameInfo;
+
       OS_TPrintf("[%x:%x:%x:%x:%x:%x]\n",
                       beacon->bssid[0],
                       beacon->bssid[1],
@@ -684,6 +674,7 @@ static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
                       beacon->bssid[5]);
     }
   }
+  #endif
 }
 
 #pragma mark [>comm util

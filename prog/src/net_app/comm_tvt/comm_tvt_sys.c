@@ -284,21 +284,21 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_sub0 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x08000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG1 BAR (ƒo[
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x00000,0x05000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (‚»‚Ì‘¼(‰æ–Ê•ÊBG
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
-      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x08000,
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (”wŒi
@@ -357,7 +357,7 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
-    work->cellUnit = GFL_CLACT_UNIT_Create( 48 , 0, work->heapId );
+    work->cellUnit = GFL_CLACT_UNIT_Create( 64 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
 }
