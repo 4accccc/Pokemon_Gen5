@@ -1,9 +1,9 @@
 //==============================================================================
 /**
- * @file	game_start.c
- * @brief	「さいしょから」or「つづきから」を選択後の処理
- * @author	matsuda
- * @date	2009.01.07(水)
+ * @file  game_start.c
+ * @brief 「さいしょから」or「つづきから」を選択後の処理
+ * @author  matsuda
+ * @date  2009.01.07(水)
  */
 //==============================================================================
 #include <gflib.h>
@@ -34,7 +34,7 @@
 #include "sound/sound_manager.h"
 
 //==============================================================================
-//	
+//  
 //==============================================================================
 FS_EXTERN_OVERLAY(title);
 
@@ -46,7 +46,7 @@ typedef enum
 }CONTINUE_MODE_TYPE;
 
 //==============================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //==============================================================================
 static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk);
@@ -63,40 +63,40 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 
 
 //==============================================================================
-//	データ
+//  データ
 //==============================================================================
 ///最初から始める
 static const GFL_PROC_DATA GameStart_FirstProcData = {
-	GameStart_FirstProcInit,
-	GameStart_FirstProcMain,
-	GameStart_FirstProcEnd,
+  GameStart_FirstProcInit,
+  GameStart_FirstProcMain,
+  GameStart_FirstProcEnd,
 };
 
 ///続きから始める
 static const GFL_PROC_DATA GameStart_ContinueProcData = {
-	GameStart_ContinueProcInit,
-	GameStart_ContinueProcMain,
-	GameStart_ContinueProcEnd,
+  GameStart_ContinueProcInit,
+  GameStart_ContinueProcMain,
+  GameStart_ContinueProcEnd,
 };
 
 ///デバッグ開始
 static const GFL_PROC_DATA GameStart_DebugProcData = {
-	GameStart_DebugProcInit,
-	GameStart_DebugProcMain,
-	GameStart_DebugProcEnd,
+  GameStart_DebugProcInit,
+  GameStart_DebugProcMain,
+  GameStart_DebugProcEnd,
 };
 
 ///じんめいせんたく開始
 static const GFL_PROC_DATA GameStart_DebugSelectNameProcData = {
-	GameStart_DebugSelectNameProcInit,
-	GameStart_DebugSelectNameProcMain,
-	GameStart_DebugSelectNameProcEnd,
+  GameStart_DebugSelectNameProcInit,
+  GameStart_DebugSelectNameProcMain,
+  GameStart_DebugSelectNameProcEnd,
 };
 
 
 //==============================================================================
 //
-//	
+//  
 //
 //==============================================================================
 //--------------------------------------------------------------
@@ -106,7 +106,7 @@ static const GFL_PROC_DATA GameStart_DebugSelectNameProcData = {
 //--------------------------------------------------------------
 void GameStart_Beginning(void)
 {
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_FirstProcData, NULL);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_FirstProcData, NULL);
 }
 
 //--------------------------------------------------------------
@@ -116,7 +116,7 @@ void GameStart_Beginning(void)
 //--------------------------------------------------------------
 void GameStart_Continue(void)
 {
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_SELECT);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_SELECT);
 }
 
 //--------------------------------------------------------------
@@ -126,7 +126,7 @@ void GameStart_Continue(void)
 //--------------------------------------------------------------
 void GameStart_ContinueNetOff(void)
 {
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_COMM_OFF);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_COMM_OFF);
 }
 
 //--------------------------------------------------------------
@@ -136,7 +136,7 @@ void GameStart_ContinueNetOff(void)
 //--------------------------------------------------------------
 void GameStart_ContinueNet(void)
 {
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_COMM_ON);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)CONTINUE_MODE_COMM_ON);
 }
 
 //--------------------------------------------------------------
@@ -147,7 +147,7 @@ void GameStart_ContinueNet(void)
 void GameStart_Debug(void)
 {
 #ifdef PM_DEBUG
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, NULL);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, NULL);
 #endif
 }
 
@@ -159,7 +159,7 @@ void GameStart_Debug(void)
 void GameStart_DebugNet(void)
 {
 #ifdef PM_DEBUG
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)TRUE);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)TRUE);
 #endif
 }
 
@@ -171,7 +171,7 @@ void GameStart_DebugNet(void)
 void GameStart_Debug_SelectName(void)
 {
 #ifdef PM_DEBUG
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugSelectNameProcData, NULL);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugSelectNameProcData, NULL);
 #endif
 }
 
@@ -179,7 +179,7 @@ void GameStart_Debug_SelectName(void)
 
 //==============================================================================
 //
-//	最初から始める
+//  最初から始める
 //
 //==============================================================================
 #include "demo/intro.h"
@@ -187,7 +187,7 @@ typedef struct
 {
   SELECT_MODE_INIT_WORK selModeParam;
   INTRO_PARAM introParam;
-	NAMEIN_PARAM *nameInParam;
+  NAMEIN_PARAM *nameInParam;
   INTR_SAVE_CONTROL* intr_save;
   GFL_PROCSYS* procsys_up;
   SOUNDMAN_PRESET_HANDLE* bgm_handle;
@@ -202,7 +202,7 @@ typedef struct
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK*   work;
+  GAMESTART_FIRST_WORK*   work;
   
   // ワーク アロケート
   work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
@@ -221,14 +221,14 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->introParam.intr_save  = work->intr_save;
 
   // SELMODE 初期化
-	work->selModeParam.type       = SMT_START_GAME;
-	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
-	work->selModeParam.mystatus   = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  work->selModeParam.type       = SMT_START_GAME;
+  work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
+  work->selModeParam.mystatus   = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
-	//主人公の性別は、性別設定が終わってから入れる
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );	
-	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+  //主人公の性別は、性別設定が終わってから入れる
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
+  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
 
@@ -242,7 +242,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
     u32 intro_se_num;
     u32 i = 0;
 
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );	
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
     namein_se_num = NAMEIN_SE_PresetNum;
     for( i = 0; i < namein_se_num; i++ )
     { 
@@ -250,7 +250,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
     }
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(intro) );	
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(intro) ); 
     intro_se_num = Intro_Se_PresetNum;
     for( i = 0; i < intro_se_num; i++ )
     { 
@@ -261,7 +261,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
     work->bgm_handle  = SOUNDMAN_PresetSoundTbl( se_tbl, namein_se_num + intro_se_num );
   }
 
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -282,7 +282,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     SEQ_INPUT_NAME_RETAKE_CHECK_WAIT,
     SEQ_END,
   };
-	
+  
   GAMESTART_FIRST_WORK *work = mywk;
   GFL_PROC_MAIN_STATUS up_status;
 
@@ -292,8 +292,8 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 
   up_status = GFL_PROC_LOCAL_Main( work->procsys_up );
 
-	switch(*seq){
-	case SEQ_INIT:
+  switch(*seq){
+  case SEQ_INIT:
     //漢字選択
 //  GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
     //イントロデモ
@@ -306,25 +306,25 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     {
       (*seq) = SEQ_INPUT_NAME;
     }
-		break;
-	case SEQ_INPUT_NAME:
+    break;
+  case SEQ_INPUT_NAME:
     //名前入力
-    work->nameInParam->hero_sex	  = MyStatus_GetMySex(work->selModeParam.mystatus);
+    work->nameInParam->hero_sex   = MyStatus_GetMySex(work->selModeParam.mystatus);
     work->nameInParam->p_intr_sv  = work->intr_save;
-//	GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
+//  GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(namein), &NameInputProcData, work->nameInParam );
     (*seq) = SEQ_INPUT_NAME_WAIT;
     break;
   case SEQ_INPUT_NAME_WAIT :
     if( up_status != GFL_PROC_MAIN_VALID )
     {
-		  (*seq) = SEQ_INPUT_NAME_RETAKE_YESNO;
+      (*seq) = SEQ_INPUT_NAME_RETAKE_YESNO;
     }
-		break;
-	case SEQ_INPUT_NAME_RETAKE_YESNO:
+    break;
+  case SEQ_INPUT_NAME_RETAKE_YESNO:
     //名前のセット
     {
-	    MYSTATUS * myStatus;
+      MYSTATUS * myStatus;
 
       myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
@@ -337,7 +337,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 
     //イントロデモ 名前入力の判定
     work->introParam.scene_id = INTRO_SCENE_ID_05_RETAKE_YESNO;
-		
+    
 //  GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
     (*seq) = SEQ_INPUT_NAME_RETAKE_CHECK_WAIT;
@@ -345,10 +345,10 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
   case SEQ_INPUT_NAME_RETAKE_CHECK_WAIT :
     if( up_status != GFL_PROC_MAIN_VALID )
     {
-		  (*seq) = SEQ_INPUT_NAME_RETAKE_CHECK;
+      (*seq) = SEQ_INPUT_NAME_RETAKE_CHECK;
     }
-		break;
-	case SEQ_INPUT_NAME_RETAKE_CHECK:
+    break;
+  case SEQ_INPUT_NAME_RETAKE_CHECK:
     // 名前入力復帰判定
     if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
     {
@@ -362,11 +362,11 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     break;
   case SEQ_END:
     // 終了
-		return GFL_PROC_RES_FINISH;
-		break;
-	}
+    return GFL_PROC_RES_FINISH;
+    break;
+  }
 
-	return GFL_PROC_RES_CONTINUE;
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------------------
@@ -376,9 +376,9 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK *work = mywk;
+  GAMESTART_FIRST_WORK *work = mywk;
   GAME_INIT_WORK * init_param;
-	VecFx32 pos = {0,0,0};
+  VecFx32 pos = {0,0,0};
   
   SOUNDMAN_ReleasePresetData( work->bgm_handle );
 
@@ -391,21 +391,21 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-	NAMEIN_FreeParam(work->nameInParam);
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
-	GFL_PROC_FreeWork( proc );
-	
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
+  NAMEIN_FreeParam(work->nameInParam);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+  GFL_PROC_FreeWork( proc );
+  
+  GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 
 
 //==============================================================================
 //
-//	続きから始める
+//  続きから始める
 //
 //==============================================================================
 //--------------------------------------------------------------
@@ -415,13 +415,13 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_ContinueProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
-	work->selModeParam.type = SMT_CONTINUE_GAME;
-	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
-	work->selModeParam.mystatus = NULL;
-	
-	
-	return GFL_PROC_RES_FINISH;
+  GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
+  work->selModeParam.type = SMT_CONTINUE_GAME;
+  work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
+  work->selModeParam.mystatus = NULL;
+  
+  
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -431,32 +431,32 @@ static GFL_PROC_RESULT GameStart_ContinueProcInit( GFL_PROC * proc, int * seq, v
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_ContinueProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK *work = mywk;
-	CONTINUE_MODE_TYPE continueType = (CONTINUE_MODE_TYPE)pwk;
-	switch(*seq){
-	case 0:
-	  //通信選択
-  	if( continueType == CONTINUE_MODE_SELECT )
-  	{
-  		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
-  	}
-  	else
-  	if( continueType == CONTINUE_MODE_COMM_OFF )
-  	{
-			CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_OFF );
+  GAMESTART_FIRST_WORK *work = mywk;
+  CONTINUE_MODE_TYPE continueType = (CONTINUE_MODE_TYPE)pwk;
+  switch(*seq){
+  case 0:
+    //通信選択
+    if( continueType == CONTINUE_MODE_SELECT )
+    {
+      GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
     }
     else
-  	if( continueType == CONTINUE_MODE_COMM_ON )
-  	{
-			CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_ON );
+    if( continueType == CONTINUE_MODE_COMM_OFF )
+    {
+      CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_OFF );
     }
-		(*seq)++;
-		break;
-	case 1:
-		return GFL_PROC_RES_FINISH;
-		break;
-	}
-	return GFL_PROC_RES_FINISH;
+    else
+    if( continueType == CONTINUE_MODE_COMM_ON )
+    {
+      CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_ON );
+    }
+    (*seq)++;
+    break;
+  case 1:
+    return GFL_PROC_RES_FINISH;
+    break;
+  }
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -466,28 +466,35 @@ static GFL_PROC_RESULT GameStart_ContinueProcMain( GFL_PROC * proc, int * seq, v
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GAMESTART_FIRST_WORK *work = mywk;
-	GAME_INIT_WORK * init_param;
-	PLAYERWORK_SAVE plsv;
+  GAMESTART_FIRST_WORK *work = mywk;
+  GAME_INIT_WORK * init_param;
+  PLAYERWORK_SAVE plsv;
 
-	SaveControl_Load(SaveControl_GetPointer());
-	SaveData_SituationLoad_PlayerWorkSave(SaveControl_GetPointer(), &plsv);
+  // 直前の選択肢で選んだ通信モードを取得する
+  int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
 
-	init_param = DEBUG_GetGameInitWork(
-	GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
-	
-	GFL_PROC_FreeWork( proc );
-	
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+  SaveControl_Load(SaveControl_GetPointer());
+  SaveData_SituationLoad_PlayerWorkSave(SaveControl_GetPointer(), &plsv);
 
-	return GFL_PROC_RES_FINISH;
+  init_param = DEBUG_GetGameInitWork(
+  GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
+  
+  GFL_PROC_FreeWork( proc );
+  
+  GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+
+  // セーブデータで通信モードが上書きされてしまっているのでとっておいた通信モードを再度格納する
+  CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, search_mode_temp );
+
+  return GFL_PROC_RES_FINISH;
+
 }
 
 
 
 //==============================================================================
 //
-//	デバッグスタート
+//  デバッグスタート
 //
 //==============================================================================
 extern BOOL DebugScanOnly;
@@ -498,7 +505,7 @@ extern BOOL DebugScanOnly;
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_DebugProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -508,7 +515,7 @@ static GFL_PROC_RESULT GameStart_DebugProcInit( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_DebugProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -519,26 +526,26 @@ static GFL_PROC_RESULT GameStart_DebugProcMain( GFL_PROC * proc, int * seq, void
 static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #ifdef PM_DEBUG
-	GAME_INIT_WORK * init_param;
-	VecFx32 pos = {0,0,0};
-	BOOL always_net;
-	int sex = 0;
-	
-	always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
+  GAME_INIT_WORK * init_param;
+  VecFx32 pos = {0,0,0};
+  BOOL always_net;
+  int sex = 0;
+  
+  always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
 
-	SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
+  SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
   
   {//名前のセット
-  	MYSTATUS		*myStatus;
-  	GFL_MSGDATA *msgman;
-  	STRBUF *namebuf;
-  	u32 msg_id;
-  	
-  	msgman = GFL_MSG_Create( 
-  	  GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, GFL_HEAPID_APP );
+    MYSTATUS    *myStatus;
+    GFL_MSGDATA *msgman;
+    STRBUF *namebuf;
+    u32 msg_id;
+    
+    msgman = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, GFL_HEAPID_APP );
 #if 0
   #if PM_VERSION == VERSION_BLACK
-  	namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
+    namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
   #else
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
   #endif
@@ -552,40 +559,40 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
       sex = PM_FEMALE;
     }
 #endif
-  	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
-  	MyStatus_SetMyNameFromString( myStatus , namebuf );
-  	MyStatus_SetMySex(myStatus, sex);
-  	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
-  	MyStatus_SetTrainerView(myStatus, 
-  	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
-  	
-  	GFL_STR_DeleteBuffer(namebuf);
-  	GFL_MSG_Delete(msgman);
+    myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+    MyStatus_SetMyNameFromString( myStatus , namebuf );
+    MyStatus_SetMySex(myStatus, sex);
+    MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+    MyStatus_SetTrainerView(myStatus, 
+      UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
+    
+    GFL_STR_DeleteBuffer(namebuf);
+    GFL_MSG_Delete(msgman);
   }
-	{	
-		//常時通信モードのセット
-		CONFIG *config;
-		NETWORK_SEARCH_MODE	mode;
+  { 
+    //常時通信モードのセット
+    CONFIG *config;
+    NETWORK_SEARCH_MODE mode;
 
-		config	= SaveData_GetConfig( SaveControl_GetPointer() );
-		mode	= always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
-		DebugScanOnly = (mode == NETWORK_SEARCH_ON) ? FALSE : TRUE;
-		CONFIG_SetNetworkSearchMode( config, mode );
+    config  = SaveData_GetConfig( SaveControl_GetPointer() );
+    mode  = always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+    DebugScanOnly = (mode == NETWORK_SEARCH_ON) ? FALSE : TRUE;
+    CONFIG_SetNetworkSearchMode( config, mode );
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
-	}
-	
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+  }
+  
+  init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
+  GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 
 //==============================================================================
 //
-//	じんめいせんたくでスタート
+//  じんめいせんたくでスタート
 //
 //==============================================================================
 //--------------------------------------------------------------
@@ -596,13 +603,13 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #ifdef PM_DEBUG
-	TESTMODE_PROC_WORK *work;
-	work = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_PROC_WORK), GFL_HEAPID_APP );
-	work->startMode_ = TESTMODE_NAMESELECT;
-	work->work_ = (void*)0;
-	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
+  TESTMODE_PROC_WORK *work;
+  work = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_PROC_WORK), GFL_HEAPID_APP );
+  work->startMode_ = TESTMODE_NAMESELECT;
+  work->work_ = (void*)0;
+  SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
 #endif
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------------------
@@ -613,18 +620,18 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcInit( GFL_PROC * proc, int *
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #ifdef PM_DEBUG
-	FS_EXTERN_OVERLAY(testmode);
+  FS_EXTERN_OVERLAY(testmode);
 
-	switch(*seq){
-	case 0:
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mywk);
-		(*seq)++;
-		break;
-	case 1:
-		return GFL_PROC_RES_FINISH;
-	}
+  switch(*seq){
+  case 0:
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mywk);
+    (*seq)++;
+    break;
+  case 1:
+    return GFL_PROC_RES_FINISH;
+  }
 #endif
-	return GFL_PROC_RES_CONTINUE;
+  return GFL_PROC_RES_CONTINUE;
 
 }
 
@@ -636,31 +643,31 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int *
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #ifdef PM_DEBUG
-	TESTMODE_PROC_WORK *work = mywk;
-	if( (int)work->work_ == 0 )
-	{
-		GAME_INIT_WORK * init_param;
-		VecFx32 pos = {0,0,0};
-		
-		{	
-			//常時通信モードのセット
-			CONFIG *config;
+  TESTMODE_PROC_WORK *work = mywk;
+  if( (int)work->work_ == 0 )
+  {
+    GAME_INIT_WORK * init_param;
+    VecFx32 pos = {0,0,0};
+    
+    { 
+      //常時通信モードのセット
+      CONFIG *config;
 
-			config	= SaveData_GetConfig( SaveControl_GetPointer() );
-			CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
-  		DebugScanOnly = TRUE;
-		}
+      config  = SaveData_GetConfig( SaveControl_GetPointer() );
+      CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
+      DebugScanOnly = TRUE;
+    }
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
-		
-		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
-	}
-	else
-	{
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
-	}
-	GFL_PROC_FreeWork(proc);
+    
+    init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
+    GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+  }
+  else
+  {
+    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
+  }
+  GFL_PROC_FreeWork(proc);
 #endif
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
