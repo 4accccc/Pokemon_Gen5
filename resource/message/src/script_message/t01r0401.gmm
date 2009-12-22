@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T20:14:06"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T11:56:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -536,14 +536,16 @@
 　いいえ→msg_t01r0401_doctor_jr_11</comment>
 		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
-		<language name="JPN" width="256">アララギ『わたしが　ききたいのは
+		<language name="JPN" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+わたしが　ききたいのは
 せかいを　きりひらく[BE:01:ページ切り替え（クリア）]
 ゆうきある　ことば　だけなの！！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]たちは
 いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
 この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
 ポケモンに　であってほしいのッ！</language>
-		<language name="JPN_KANJI" width="256">アララギ『わたしが　聞きたいのは
+		<language name="JPN_KANJI" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+わたしが　聞きたいのは
 世界を　切り開く[BE:01:ページ切り替え（クリア）]
 勇気ある　言葉だけなの！！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]たちは
