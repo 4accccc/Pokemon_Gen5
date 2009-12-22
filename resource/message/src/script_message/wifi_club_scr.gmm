@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-23T17:21:16"/>
+	<create user="iwasawa" host="W00157" date="2009-12-22T17:54:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,9 +469,11 @@ C-Gear入手前</comment>
 		<comment>エラーメッセージ
 フィールド通信接続終了処理エラー時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">もういちど　さいしょから
+		<language name="JPN" width="256">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]
+もういちど　さいしょから
 やりなおして　ください</language>
-		<language name="JPN_KANJI" width="256">もう一度　最初から
+		<language name="JPN_KANJI" width="256">通信エラーが　発生しました[BE:01:ページ切り替え（クリア）]
+もう一度　最初から
 やり直して　ください</language>
 	</row>
 

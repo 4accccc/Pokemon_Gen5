@@ -56,6 +56,7 @@ static BOOL VM_WAIT_FUNC_FieldCommExitWait( VMHANDLE* core, void* wk )
     GFL_HEAP_FreeMemory(fcew);
     return TRUE;
   case FIELDCOMM_EXIT_ERROR:    // エラー発生
+#if 0
     NetErr_ErrorSet();
     { // イベント呼び出し
       GMEVENT* parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
@@ -65,6 +66,11 @@ static BOOL VM_WAIT_FUNC_FieldCommExitWait( VMHANDLE* core, void* wk )
     }
     OBATA_Printf( "VM_WAIT_FUNC_FieldCommExitWait: エラー発生\n" );
     GFL_HEAP_FreeMemory(fcew);
+#else
+    *fcew->ret_work = SCR_FIELD_COMM_EXIT_ERROR;
+    OBATA_Printf( "VM_WAIT_FUNC_FieldCommExitWait: エラー発生\n" );
+    GFL_HEAP_FreeMemory(fcew);
+#endif
     return TRUE;
   }
 
