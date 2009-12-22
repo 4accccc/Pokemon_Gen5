@@ -409,6 +409,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_debug_menu.c \
         field/event_debug_menu_jump.c \
         field/event_debug_menu_script.c \
+        field/event_debug_menu_musical.c \
 				field/fieldmap_ctrl_grid.c \
 				field/field_player.c \
 				field/field_player_grid.c \
@@ -479,6 +480,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_exp_obj.c \
         field/test_gimmick.c \
         field/field_gimmick_h01.c \
+        field/event_field_fade.c \
         field/event_appear.c \
         field/event_disappear.c \
         field/height_ex.c \
