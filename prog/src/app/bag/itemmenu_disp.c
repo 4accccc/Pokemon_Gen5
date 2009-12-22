@@ -1458,6 +1458,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+		pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   }
 	pWork->appitem[i-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
