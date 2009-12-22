@@ -47,6 +47,10 @@
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
 
+#include "net/net_whpipe.h"
+#include "net/ctvt_beacon.h"
+
+
 
 
 #define _PALETTE_R(pal)  (pal & 0x001f)
@@ -679,7 +683,28 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
     break;
   case _SELECTMODE_TV:
     pWork->selectType = CG_WIRELESS_RETURNMODE_TV;
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+
+    {
+      int i,num;
+      u8 selfMacAdr[6];
+      GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
+      pWork->dbw->aTVT.mode = CTM_PARENT;
+      pWork->dbw->aTVT.gameData = pWork->gamedata;
+      num = pIn->maxBeaconNum;
+
+      for( i = 0; i < num; i++ ){
+        if(WB_NET_COMM_TVT == GFL_NET_WLGetUserGameServiceId( i )){
+          if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , pWork->dbw->aTVT.macAddress )){
+            pWork->dbw->aTVT.gameData = pWork->gamedata;
+            pWork->dbw->aTVT.mode = CTM_CHILD;
+            OS_TPrintf("Žq‹@‚É‚È‚Á‚½\n");
+            break;
+          }
+        }
+      }
+    }
+
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeButtonFlash);
     break;
   case _SELECTMODE_EXIT:
