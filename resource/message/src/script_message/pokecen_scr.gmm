@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T12:03:18"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-12-22T13:32:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="375" top="82" right="1088" bottom="861" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="538"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="155"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="705"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -543,16 +543,15 @@
 　いいえ→msg_union_07
 ※仮メッセージ</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
-		<language name="JPN" width="256">ユニオンルーム　は　あなたの
+		<language name="JPN" width="256">ユニオンルームは　あなたの
 ちかくで　ユニオンルームに▽
 はいっている　ひとが　あらわれます▼
-レベル３０までの　ポケモン２ひきで
-１たい１の　たいせん▼
-もっている　ポケモンの　こうかん▼
-みんなで　レコードを　まぜたり▼
-おえかき　をして
-たのしむことが　できます▼
-また　チャットで　へやにいる
+ふたりや　よにんで　たいせんしたり
+ポケモンを　こうかん　できます▼
+また　みんなで　タマゴを
+こうかんしたり　おえかきをして▽
+たのしむことも　できます▼
+チャットを　つかって　へやにいる
 みんなと　おはなしが　できますし▼
 おはなしした　ことばを　タッチすれば
 ともだちを　さがすことも　できます▼
@@ -560,13 +559,12 @@
 		<language name="JPN_KANJI" width="256">ユニオンルーム　は　あなたの
 近くで　ユニオンルームに▽
 入っている　人が　現れます▼
-レベル３０までの　ポケモン２匹で
-１対１の　対戦▼
-もっている　ポケモンの　交換▼
-みんなで　レコードを　まぜたり▼
-おえかき　をして
-楽しむことが　できます▼
-また　チャットで　部屋にいる
+２人や　４人で　対戦したり
+ポケモンを　交換できます▼
+また　みんなで　タマゴを
+交換したり　おえかき　をして▽
+楽しむことも　できます▼
+チャットで　部屋にいる
 みんなと　お話が　できますし▼
 お話した　言葉を　タッチすれば
 友達を　探すことも　できます▼
