@@ -54,6 +54,8 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
   syswk->next_seq  = MBSEQ_MAINSEQ_START;
   syswk->vintr_tcb = NULL;
 
+  // テスト用にメールデータを追加
+#ifdef PM_DEBUG
   {
     int i;
     MAIL_DATA *mail = MailData_CreateWork(HEAPID_MAILBOX_SYS);
@@ -73,7 +75,8 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
       OS_Printf("メールデータは無効\n");
     }
 
-    for(i=0;i<15;i++){
+    // テストデータ追加
+    for(i=0;i<3;i++){
       MAIL_AddMailFormWork( syswk->sv_mail, MAILBLOCK_PASOCOM, i, mail );
     }
 
@@ -81,6 +84,7 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
 
     OS_Printf("mail num = %d\n",MAIL_GetEnableDataNum(syswk->sv_mail,MAILBLOCK_PASOCOM));
   }
+#endif
   return GFL_PROC_RES_FINISH;
 }
 
