@@ -592,7 +592,7 @@ static const GFL_G3D_LOOKAT cameraLookAt = {
 
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
-  { 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 0, {{ (FX16_ONE-1), -(FX16_ONE-1)/2, -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
   { 1, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
   { 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
   { 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
@@ -677,6 +677,16 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 	objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
 	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 1), 0); 
 
+	//モデル１のマテリアル再設定
+	{
+		NNSG3dResFileHeader* fs = GFL_G3D_GetResourceFileHeader
+													(GFL_G3D_UTIL_GetResHandle(CG3d->g3Dutil, G3DRES_PM_BMD));
+		NNSG3dResMdlSet* ms = NNS_G3dGetMdlSet(fs);
+		NNSG3dResMdl* pm = NNS_G3dGetMdlByIdx(ms, 0);
+
+		NNS_G3dMdlSetMdlAmbAll(pm, GX_RGB(16,16,16));
+	}
+
 	//カメラセット
 	{
 		GFL_G3D_PROJECTION initProjection = 
@@ -718,7 +728,7 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 
 	{
 		g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + 1 );
-		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
+		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE/2 );
 	}
 #if 0
 	if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){ debugVec.x -= FX32_ONE/8; }
