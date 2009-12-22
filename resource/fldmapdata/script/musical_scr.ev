@@ -69,7 +69,7 @@ EVENT_START	ev_musical_change_program
 
   _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_04 )
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
