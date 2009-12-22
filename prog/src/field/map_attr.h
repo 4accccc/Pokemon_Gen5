@@ -83,6 +83,10 @@ extern BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountShortGrassHigh( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountLongGrassLow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountLongGrassHigh( const MAPATTR_VALUE val );
 
 extern BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val );
@@ -113,4 +117,5 @@ extern BOOL MAPATTR_VALUE_CheckOze01( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckOzeStairs( const MAPATTR_VALUE val );
 
 extern BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckSnowGrass( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSnowGrassLow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSnowGrassHigh( const MAPATTR_VALUE val );

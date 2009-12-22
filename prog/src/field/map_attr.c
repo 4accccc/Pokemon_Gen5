@@ -470,6 +470,54 @@ BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー チェック 草むら　短い草むら　弱
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_GRASS_LOW );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むら　短い草むら　強
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountShortGrassHigh( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_GRASS_HIGH );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むら　長い草むら　弱
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountLongGrassLow( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_LGRASS_LOW );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むら　長い草むら　強
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountLongGrassHigh( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_LGRASS_HIGH );
+}
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー チェック 怪力穴
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
@@ -787,11 +835,19 @@ BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckSnowGrass( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckSnowGrassLow( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_SNOW_GRASS_LOW || val == MATTR_SNOW_GRASS_HIGH ){
-    return( TRUE );
-  }
-  return( FALSE );
+  return ( val == MATTR_SNOW_GRASS_LOW );
 }
 
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　豪雪地帯草　強
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSnowGrassHigh( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_SNOW_GRASS_HIGH );
+}
