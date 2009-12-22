@@ -1270,7 +1270,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
 
     // 「ムーブ」の場合、アイテム装備等による優先フラグを見る
     }else if( actParam->gen.cmd == BTL_ACTION_MOVE ){
-      wazaPri = 0;
+      wazaPri = 0 - WAZAPRI_MIN;
       scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
 
     // それ以外は行動優先順のみで判定
