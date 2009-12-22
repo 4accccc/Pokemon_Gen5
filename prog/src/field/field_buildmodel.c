@@ -1747,6 +1747,9 @@ static G3DMAPOBJST * G3DMAPOBJST_create(
     G3DMAPOBJST * obj = &man->g3DmapObjSt[i];
     if ( G3DMAPOBJST_exists(obj) == FALSE )
     {
+      // 多重登録チェック
+      GF_ASSERT( GFL_G3D_MAP_GetGlobalObj(g3Dmap, idx) == NULL );
+      
       GFL_G3D_MAP_ResistGlobalObj( g3Dmap, status, idx );
       obj->g3Dmap = g3Dmap;
       obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
