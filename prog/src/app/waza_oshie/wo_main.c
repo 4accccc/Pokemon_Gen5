@@ -555,22 +555,7 @@ static const CLACT_ENTRY_DATA ClactParamTbl[] =
     { WO_CHR_ID_TYPE8, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
     2, 0
   },
-/*
-  s16 x;              ///< [ X ] 座標
-  s16 y;              ///< [ Y ] 座標
-  s16 z;              ///< [ Z ] 座標
 
-  u16 anm;            ///< アニメ番号
-  int pri;            ///< 優先順位
-  int pal;            ///< パレット番号 ※この値を TCATS_ADD_S_PAL_AUTO にすることで、
-                      ///< NCEデータのカラーNo指定を受け継ぐ
-  int d_area;           ///< 描画エリア
-
-  int id[ CLACT_U_RES_MAX ];    ///< 使用リソースIDテーブル
-
-  int bg_pri;           ///< BG面への優先度
-  int vram_trans;         ///< Vram転送フラグ
-*/
   { // ポケモン正面絵(上画面）
     POKE_PX, POKE_PY, 0,
     0, 0, 0, CLSYS_DEFREND_MAIN,
