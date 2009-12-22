@@ -2672,11 +2672,13 @@ static void fldPlainMsgWin_Add(
   if( up_down == 0 ){
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
-        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31), type );
+//        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31), type );
+        strBuf, 1, 1, 30, 5, GX_RGB(31,31,31), type );
   }else{
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
-        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31), type );
+//        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31), type );
+        strBuf, 1, 18, 30, 5, GX_RGB(31,31,31), type );
   }
   
   TALKMSGWIN_OpenWindow( plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
