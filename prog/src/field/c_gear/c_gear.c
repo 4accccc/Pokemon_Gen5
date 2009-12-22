@@ -1194,7 +1194,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
     GFL_CLWK_DATA cellInitData;
     //ÉZÉãÇÃê∂ê¨
 
-    cellInitData.pos_x = 44+16*i;
+    cellInitData.pos_x = 128-(8*_CLACT_CROSS_MAX/2) + 8*i;
     cellInitData.pos_y = 180;
     cellInitData.anmseq = NANR_c_gear_obj_CellAnime_sure01;
     cellInitData.softpri = 0;
