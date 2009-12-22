@@ -393,7 +393,8 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
   // ƒLƒƒƒ‰
   res = &wk->chrRes[BPLIST_CHRRES_POKE1];
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
-		pos = BPLISTMAIN_GetListRow( wk, i );
+//		pos = BPLISTMAIN_GetListRow( wk, i );
+		pos = i;
     if( wk->poke[pos].mons != 0 ){
       res[i] = GFL_CLGRP_CGR_Register(
                 ah,
@@ -792,7 +793,8 @@ static void BPL_PokeIconPaletteChg( BPLIST_WORK * wk )
   s16 i;
 
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
-		pos = BPLISTMAIN_GetListRow( wk, i );
+//		pos = BPLISTMAIN_GetListRow( wk, i );
+		pos = i;
     if( wk->poke[pos].mons == 0 ){ continue; }
 /*
     CATS_ObjectPaletteSetCap(

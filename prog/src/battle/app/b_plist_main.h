@@ -37,8 +37,8 @@ enum {
 
 // パレット定義
 #define	BPL_PAL_NN_PLATE	( 0 )		///< パレット00：プレート（通常）
-#define	BPL_PAL_MN_PLATE	( 1 )		///< パレット01：プレート（マルチ）
-#define	BPL_PAL_DN_PLATE	( 2 )		///< パレット02：プレート（瀕死）
+#define	BPL_PAL_MN_PLATE	( 5 )		///< パレット01：プレート（マルチ）
+#define	BPL_PAL_DN_PLATE	( 7 )		///< パレット02：プレート（瀕死）
 #define	BPL_PAL_HPGAGE		( 9 )		///< パレット09：HPゲージ
 
 #define	BPL_PAL_B_RED		( 10 )		///< パレット09：ボタン（赤）
@@ -442,7 +442,7 @@ typedef struct {
 	u8	wws_page_cp;			// ステータス技忘れ技選択ページのカーソル位置
 	u8	wwm_page_cp;			// ステータス技忘れ技詳細ページのカーソル位置
 
-	u8	multi_pos;				// マルチバトルの立ち位置
+//	u8	multi_pos;				// マルチバトルの立ち位置
 
 	// 瀕死入れ替え
 	BGWINFRM_WORK * chg_wfrm;
@@ -504,7 +504,7 @@ extern u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk );
  * @retval	"FALSE = ダブルバトル以外"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 BattlePokeList_MultiCheck( BPLIST_WORK * wk );
+extern BOOL BattlePokeList_MultiCheck( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

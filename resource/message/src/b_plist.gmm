@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-12-01T20:06:07"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-12-22T12:24:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -959,7 +959,7 @@ HP表示</comment>
 
 	<row id="mes_b_plist_m04">
 		<comment>タマゴを選択したときの戦闘用メッセージ
-0：選択したポケモンにニックネーム</comment>
+</comment>
 		<language name="JPN" width="216" line="2">タマゴを
 せんとうに　だすことは　できません</language>
 		<language name="JPN_KANJI" width="216" line="2">タマゴを
@@ -968,10 +968,10 @@ HP表示</comment>
 
 	<row id="mes_b_plist_m05">
 		<comment>他人のポケモンを選択したときの戦闘用メッセージ
-0：選択したポケモンのトレーナー名</comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　ポケモンと　
+</comment>
+		<language name="JPN" width="216" line="2">パートナーの　ポケモンと　
 いれかえることは　できません！</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　ポケモンと　
+		<language name="JPN_KANJI" width="216" line="2">パートナーの　ポケモンと　
 いれかえることは　できません！</language>
 	</row>
 

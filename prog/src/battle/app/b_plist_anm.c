@@ -596,13 +596,13 @@ static u16 * BPL_ButtonScreenBufGet( BPLIST_WORK * wk, u8 id, u8 num, u8 pat )
 	return NULL;
 }
 
-#define	POKE_SCRN_HP_PX		( 6 )
-#define	POKE_SCRN_HP_PY		( 2 )
-#define	POKE_SCRN_HP_SX		( 9 )
-#define	POKE_SCRN_HP_SY		( 2 )
-#define	POKE_COL_DEATH		( BPL_PAL_DN_PLATE << 12 )
-#define	POKE_COL_MULTI		( BPL_PAL_MN_PLATE << 12 )
-#define	WAZA_COL_DEL		( BPL_PAL_B_RED << 12 )
+#define	POKE_SCRN_HP_PX			( 6 )
+#define	POKE_SCRN_HP_PY			( 2 )
+#define	POKE_SCRN_HP_SX			( 9 )
+#define	POKE_SCRN_HP_SY			( 2 )
+#define	POKE_COL_DEATH(a)		( (BPL_PAL_DN_PLATE+a) << 12 )
+#define	POKE_COL_MULTI(a)		( (BPL_PAL_MN_PLATE+a) << 12 )
+#define	WAZA_COL_DEL				( BPL_PAL_B_RED << 12 )
 
 
 //--------------------------------------------------------------------------------------------
@@ -652,11 +652,12 @@ static void BPL_ButtonScreenMake( BPLIST_WORK * wk, u16 * buf, u8 id, u8 anm, u8
 			}else{
 				if( wk->poke[pos].hp == 0 ){
 					for( i=0; i<sx*sy; i++ ){
-						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_DEATH;
+						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_DEATH((anm&1));
 					}
-				}else if( BattlePokeList_MultiPosCheck( wk, id-BPL_BUTTON_POKE1 ) == TRUE ){
+//				}else if( BattlePokeList_MultiPosCheck( wk, id-BPL_BUTTON_POKE1 ) == TRUE ){
+				}else if( BattlePokeList_MultiPosCheck( wk, pos ) == TRUE ){
 					for( i=0; i<sx*sy; i++ ){
-						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_MULTI;
+						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_MULTI((anm&1));
 					}
 				}
 			}
