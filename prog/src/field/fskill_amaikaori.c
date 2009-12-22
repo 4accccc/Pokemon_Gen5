@@ -114,8 +114,8 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
       GMEVENT *cutin_ev;
       cutin_ev = FLD3D_CI_CreatePokeCutInEvtTemoti( wk->gsys, FIELDMAP_GetFld3dCiPtr(wk->fieldWork), wk->poke_pos );
       GMEVENT_CallEvent( event, cutin_ev );
+      (*seq)++;
     }
-    (*seq)++;
     break;
   case SEQ_CUTIN_WAIT:
     FIELD_PLAYER_ResetMoveForm( wk->field_player );
