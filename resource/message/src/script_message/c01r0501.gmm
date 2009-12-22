@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:21:40"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T15:49:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,7 +438,7 @@
 		<language name="JPN_KANJI" width="256">どくを　うけると
 体力が　減っていきます[BE:01:ページ切り替え（クリア）]
 戦闘のあとも　どくは　残り
-闘うと　体力が　減ります[BE:01:ページ切り替え（クリア）]
+戦うと　体力が　減ります[BE:01:ページ切り替え（クリア）]
 どくけしで　治しましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
