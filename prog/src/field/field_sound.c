@@ -141,6 +141,8 @@ void FIELD_SOUND_PlayBGM( u32 bgmNo )
 void FIELD_SOUND_PlayNextBGM_Ex( FIELD_SOUND* fsnd, u32 bgmNo, 
                                  u16 fadeOutFrame, u16 fadeInFrame )
 { 
+  OBATA_Printf( "FIELD_SOUND: play next BGM %d\n", bgmNo );
+
   // 何らかのリクエストがある場合, BGM変更リクエストは無効とする
   if( fsnd->reqFadeIn || fsnd->reqFadeOut || fsnd->reqPop || fsnd->reqPush )
   {
@@ -601,6 +603,16 @@ static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max )
     GF_ASSERT( 0 && "ERROR:FSOUND PUSH COUNT OVER" );
     return;
   }
+
+  if( PMSND_IsLoading() )
+  { 
+    OBATA_Printf( "*************** now loading ***************\n" );
+  }
+
+  {
+    u32 now = PMSND_GetBGMsoundNo();
+    OBATA_Printf( "FIELD_SOUND: push BGM %d\n", now );
+  }
   
   if( fsnd->state == FS_STATE_FADE_OUT )
   {
@@ -620,8 +632,6 @@ static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max )
   fsnd->reqPush    = FALSE;
   fsnd->reqPop     = FALSE;
 
-  // DEBUG:
-  OBATA_Printf( "FIELD_SOUND: push BGM\n" );
 }
 
 //--------------------------------------------------------------
@@ -652,5 +662,5 @@ static void fsnd_PopBGM( FIELD_SOUND *fsnd )
   fsnd->reqPop     = FALSE;
 
   // DEBUG:
-  OBATA_Printf( "FIELD_SOUND: pop BGM\n" );
+  OBATA_Printf( "FIELD_SOUND: pop BGM %d\n", fsnd->nextBGM );
 }

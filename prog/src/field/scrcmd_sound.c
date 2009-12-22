@@ -53,6 +53,28 @@ static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc );
 //======================================================================
 //  コマンド BGM
 //======================================================================
+
+//--------------------------------------------------------------
+/**
+ * BGMフェードアウト待ち　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitBgmPlay( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+  //if( PMSND_CheckFadeOnBGM() )
+  if( FIELD_SOUND_IsBGMFade(fsnd) == FALSE )
+  {
+    u16 music = VMGetU16( core );
+    FIELD_SOUND_PushPlayEventBGM( fsnd, music );
+    return( TRUE );
+  }
+  return FALSE;
+}
 //--------------------------------------------------------------
 /**
  * BGM変更
@@ -64,11 +86,9 @@ static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc );
 VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  u16 music = VMGetU16( core );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-  FIELD_SOUND_PushPlayEventBGM( fsnd, music );
-  return VMCMD_RESULT_CONTINUE;
+
+  VMCMD_SetWait( core, EvWaitBgmPlay );
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -192,6 +212,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
   FIELD_SOUND_PopBGM( fsnd );
   return VMCMD_RESULT_CONTINUE;
 }
+
 
 #if 0
 //--------------------------------------------------------------
