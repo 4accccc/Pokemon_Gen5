@@ -689,7 +689,7 @@
 
   DEF_CMD( EvCmdMapFadeCheck, EV_SEQ_MAP_FADE_CHECK )
   DEF_CMD( EvCmdMapFade_BlackIn_Force, EV_SEQ_MAP_FADE_BLACK_IN_FORCE )
-  NO_CMD()
+  DEF_CMD( EvCmdMapFade_InitBG, EV_SEQ_MAP_FADE_INIT_BG )
   NO_CMD()
 
   DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )

@@ -748,3 +748,31 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief フィールドマップBG初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_InitBG( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // BGモード設定と表示設定の復帰
+  {
+    int mv = GFL_DISP_GetMainVisible();
+    FIELDMAP_InitBGMode();
+    GFL_DISP_GX_SetVisibleControlDirect( mv );
+  }
+  FIELDMAP_InitBG(fieldmap);
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+
