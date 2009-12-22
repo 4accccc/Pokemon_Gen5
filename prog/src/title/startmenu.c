@@ -38,6 +38,7 @@
 //  define
 //======================================================================
 #define BG_PLANE_MENU (GFL_BG_FRAME1_M)
+#define BG_PLANE_INFO (GFL_BG_FRAME2_M)
 #define BG_PLANE_BACK_GROUND (GFL_BG_FRAME3_M)
 
 //BGキャラアドレス
@@ -66,6 +67,12 @@
 #define START_MENU_ANIME_E_R ( 5)
 #define START_MENU_ANIME_E_G (15)
 #define START_MENU_ANIME_E_B (21)
+
+// infoメッセージ
+#define _MESSAGE_BUF_NUM (200)
+#define _BUTTON_MSG_PAL   (12)  // ウインドウ
+#define _BUTTON_WIN_PAL   (13)  // ウインドウ
+
 //======================================================================
 //  enum
 //======================================================================
@@ -132,6 +139,10 @@ typedef struct
   GFL_MSGDATA *pMsgWiFiData;  //
   GFL_TCB   *vblankFuncTcb;
 
+  GFL_BMPWIN* infoDispWin;
+  STRBUF* pStrBuf;
+  u32 bgchar;
+  
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK  *cellCursor[2];
   u32     pltIdx;
@@ -266,8 +277,10 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   work->anime_g = START_MENU_ANIME_E_G;
   work->anime_b = START_MENU_ANIME_E_B;
 
+  work->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, HEAPID_STARTMENU );
 
-//  work->pMsgWiFiData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_system_dat, work->heapID );
+  
+  work->pMsgWiFiData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_system_dat, work->heapId );
 
 
   
@@ -346,11 +359,19 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
         GFL_BMPWIN_Delete( work->itemWork[i].win );
       }
     }
+    // infomsg
+    GFL_STR_DeleteBuffer(work->pStrBuf);
+    GFL_MSG_Delete(work->pMsgWiFiData);
+    if(work->infoDispWin){
+      GFL_BMPWIN_Delete(work->infoDispWin);
+      work->infoDispWin=NULL;
+    }
 
     GFL_FONT_Delete( work->fontHandle );
     GFL_BMPWIN_Exit();
 
     GFL_BG_FreeBGControl(BG_PLANE_MENU);
+    GFL_BG_FreeBGControl(BG_PLANE_INFO);
     GFL_BG_FreeBGControl(BG_PLANE_BACK_GROUND);
     GFL_BG_Exit();
     
@@ -450,13 +471,20 @@ static void START_MENU_InitGraphic( START_MENU_WORK *work )
   0, 0, 0x1000, 0,
   GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
   GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-  GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+  GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
   };
 
   static const GFL_BG_BGCNT_HEADER bgCont_BackGround = {
   0, 0, 0x800, 0,
   GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
   GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+  GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+  };
+
+  static const GFL_BG_BGCNT_HEADER bgCont_Info = {
+  0, 0, 0x800, 0,
+  GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+  GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
   GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
   
@@ -474,6 +502,7 @@ static void START_MENU_InitGraphic( START_MENU_WORK *work )
 
   START_MENU_InitBgFunc( &bgCont_Menu , BG_PLANE_MENU );
   START_MENU_InitBgFunc( &bgCont_BackGround , BG_PLANE_BACK_GROUND );
+  START_MENU_InitBgFunc( &bgCont_Info , BG_PLANE_INFO );
   
   GFL_BMPWIN_Init( work->heapId );
   
@@ -517,6 +546,18 @@ static void START_MENU_InitGraphic( START_MENU_WORK *work )
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor[1], TRUE );
         
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+
+    //infomsg
+    GFL_BG_FillCharacter( BG_PLANE_INFO, 0x00, 1, 0 );
+    GFL_BG_FillScreen( BG_PLANE_INFO,	0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( BG_PLANE_INFO );
+
+    work->bgchar = BmpWinFrame_GraphicSetAreaMan(BG_PLANE_INFO,
+                                                  _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, work->heapId);
+
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+                                  0x20*_BUTTON_MSG_PAL, 0x20, work->heapId);
+
   }
 
   GFL_ARC_CloseDataHandle( p_handle );
@@ -689,7 +730,6 @@ static BOOL START_MENU_ITEM_CommonSelect( START_MENU_WORK *work )
   //今のところ選択された
   return TRUE;
 }
-#if 0
 
 //------------------------------------------------------------------------------
 /**
@@ -698,14 +738,16 @@ static BOOL START_MENU_ITEM_CommonSelect( START_MENU_WORK *work )
  */
 //------------------------------------------------------------------------------
 
-static void _infoMessageDisp(GAMESYNC_MENU* pWork)
+static void _infoMessageDisp(START_MENU_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
 
   
   if(pWork->infoDispWin==NULL){
+
+
     pWork->infoDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME1_S ,
+      BG_PLANE_INFO,
       1 , 3, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
@@ -714,16 +756,15 @@ static void _infoMessageDisp(GAMESYNC_MENU* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->fontHandle);
 
-  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V,
+                     GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(BG_PLANE_INFO);
 }
-#endif
 //--------------------------------------------------------------------------
 //  決定時の動作  WIFI設定
 //  @return TRUE=スタートメニュの終了処理へ
@@ -734,13 +775,10 @@ static BOOL START_MENU_ITEM_WifiUtil( START_MENU_WORK *work )
     return TRUE;
   }
   else{
-
-
-    
-    //GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
-
-    
-//    GF_ASSERT(0);
+    GFL_MSG_GetString( work->pMsgWiFiData, dwc_message_0017, work->pStrBuf );
+    _infoMessageDisp(work);
+    GFL_BG_SetVisible( BG_PLANE_INFO, VISIBLE_ON );
+    return FALSE;
   }
 }
 
@@ -878,12 +916,19 @@ static void START_MENU_UpdatePad( START_MENU_WORK *work )
   else
   if( keyTrg & PAD_BUTTON_A )
   {
-    const BOOL ret = ItemSettingData[work->selectItem].selectFunc( work );
-    if( ret == TRUE )
-    {
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
-      work->state = SMS_FADE_OUT;
-      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+    if(work->infoDispWin!=NULL){
+      GFL_BG_SetVisible( BG_PLANE_INFO, VISIBLE_OFF );
+      GFL_BMPWIN_Delete(work->infoDispWin);
+      work->infoDispWin=NULL;
+    }
+    else{
+      const BOOL ret = ItemSettingData[work->selectItem].selectFunc( work );
+      if( ret == TRUE )
+      {
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
+        work->state = SMS_FADE_OUT;
+        PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+      }
     }
   }
   else
