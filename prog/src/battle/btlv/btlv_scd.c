@@ -739,6 +739,16 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
                                                BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) )
                                              );
   bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  //@todo ‚½‚¾‚µ‚­‰“Šuƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚È‚¢‚Ì‚ÅA¡‰ñ‚ÍŒ©‘—‚é
+#if 0
+  if( bisp.waza_target == WAZA_TARGET_OTHER_SELECT )
+  { 
+    if( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) )
+    { 
+      bisp.waza_target = WAZA_TARGET_LONG_SELECT;
+    }
+  }
+#endif
 
   BTL_Printf(" **** triple select **** \n");
   while( count-- )

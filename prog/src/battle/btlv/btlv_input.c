@@ -2485,40 +2485,42 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
   //‘I‘ð˜g•\Ž¦
   {
     int       pos = ( bisp->pos - BTLV_MCSS_POS_A ) / 2;
-    static  const ARCDATID  datID[ 2 ][ 3 ][ 14 ] = {
+    static  const ARCDATID  datID[ 2 ][ 3 ][ WAZA_TARGET_MAX + 1 ] = {
       //BUTTON_TYPE_DIR_4
       {
         //BTLV_MCSS_POS_A
         {
           NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel_nomine_l_NSCR,  ///< Ž©•ªˆÈŠO‘S‚Ä
-          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< ‘ŠŽè‘¤‘S‚Ä
-          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel_mine_sel_NSCR,  ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel_nomine_l_NSCR,  ///< Ž©•ªˆÈŠO‘S‚Ä
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< ‘ŠŽè‘¤‘Sƒ|ƒP
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< –¡•û‘¤‘Sƒ|ƒP
           NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< Ž©•ª‚Ì‚Ý
           NARC_battgra_wb_btl_sel_all_NSCR,       ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< Ž©•ª‘¤w‰c
-          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel_all_NSCR,       ///< ê‘S‘Ìi“VŒó‚È‚Çj
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< Ž©•ª‘¤w‰c
           NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
           NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
         },
         //BTLV_MCSS_POS_C
         {
           NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel_nomine_r_NSCR,  ///< Ž©•ªˆÈŠO‘S‚Ä
-          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< ‘ŠŽè‘¤‘S‚Ä
-          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel_mine_sel_NSCR,  ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel_nomine_r_NSCR,  ///< Ž©•ªˆÈŠO‘S‚Ä
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< ‘ŠŽè‘¤‘Sƒ|ƒP
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< –¡•û‘¤‘Sƒ|ƒP
           NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< Ž©•ª‚Ì‚Ý
           NARC_battgra_wb_btl_sel_all_NSCR,       ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< Ž©•ª‘¤w‰c
-          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel_all_NSCR,       ///< ê‘S‘Ìi“VŒó‚È‚Çj
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< Ž©•ª‘¤w‰c
           NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
           NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
         },
@@ -2527,12 +2529,13 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
           0xffffffff,                             ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
           0xffffffff,                             ///< Ž©•ªˆÈŠO‘S‚Ä
           0xffffffff,                             ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          0xffffffff,                             ///< ‘ŠŽè‘¤‘S‚Ä
+          0xffffffff,                             ///< ‘ŠŽè‘¤‘Sƒ|ƒP
           0xffffffff,                             ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           0xffffffff,                             ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           0xffffffff,                             ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
           0xffffffff,                             ///< Ž©•ª‚Ì‚Ý
           0xffffffff,                             ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
+          0xffffffff,                             ///< –¡•û‘¤‘Sƒ|ƒP
           0xffffffff,                             ///< Ž©•ª‘¤w‰c
           0xffffffff,                             ///< “G‘¤w‰c
           0xffffffff,                             ///< ê‘S‘Ìi“VŒó‚È‚Çj
@@ -2545,51 +2548,54 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         //BTLV_MCSS_POS_A
         {
           NARC_battgra_wb_btl_sel3_normal_l_NSCR,     ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_nomine_l_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
-          NARC_battgra_wb_btl_sel3_enemy_sel_l_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_enemy_l_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           NARC_battgra_wb_btl_sel3_pair_l_NSCR,       ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_enemy_sel_l_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_nomine_l_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
+          NARC_battgra_wb_btl_sel3_enemy_l_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< –¡•û‘¤‘Sƒ|ƒP
           NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< Ž©•ª‚Ì‚Ý
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
-          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‘S‘Ìi“VŒó‚È‚Çj
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
           NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
           NARC_battgra_wb_btl_sel3_long_l_NSCR,       ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
         },
         //BTLV_MCSS_POS_C
         {
           NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_nomine_c_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
-          NARC_battgra_wb_btl_sel3_enemy_sel_c_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           NARC_battgra_wb_btl_sel3_pair_c_NSCR,       ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_enemy_sel_c_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_nomine_c_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< –¡•û‘¤‘S‚Ä
           NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< Ž©•ª‚Ì‚Ý
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
-          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‘S‘Ìi“VŒó‚È‚Çj
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
           NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
           NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
         },
         //BTLV_MCSS_POS_E
         {
           NARC_battgra_wb_btl_sel3_normal_r_NSCR,     ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_nomine_r_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
-          NARC_battgra_wb_btl_sel3_enemy_sel_r_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-          NARC_battgra_wb_btl_sel3_enemy_r_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
           NARC_battgra_wb_btl_sel3_pair_r_NSCR,       ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_enemy_sel_r_NSCR,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+          NARC_battgra_wb_btl_sel3_nomine_r_NSCR,     ///< Ž©•ªˆÈŠO‘S‚Ä
+          NARC_battgra_wb_btl_sel3_enemy_r_NSCR,      ///< ‘ŠŽè‘¤‘S‚Ä
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< –¡•û‘¤‘S‚Ä
           NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< Ž©•ª‚Ì‚Ý
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
-          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
           NARC_battgra_wb_btl_sel3_all_NSCR,          ///< ê‘S‘Ìi“VŒó‚È‚Çj
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< “G‘¤w‰c
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< Ž©•ª‘¤w‰c
           NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
           NARC_battgra_wb_btl_sel3_long_r_NSCR,       ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
         },
