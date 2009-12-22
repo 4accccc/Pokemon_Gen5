@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		intro_cmd.c
- *	@brief  3Dデモコマンド
- *	@author	hosaka genya
- *	@data		2009.12.09
+ *  @file   intro_cmd.c
+ *  @brief  3Dデモコマンド
+ *  @author hosaka genya
+ *  @data   2009.12.09
  *
  */
 //=============================================================================
@@ -50,7 +50,7 @@
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 enum
@@ -60,12 +60,12 @@ enum
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 
 //--------------------------------------------------------------
-///	
+/// 
 //==============================================================
 typedef struct {
   int   seq;      // コマンド内シーケンス
@@ -74,7 +74,7 @@ typedef struct {
 } INTRO_STORE_DATA;
 
 //--------------------------------------------------------------
-///	コマンドワーク
+/// コマンドワーク
 //==============================================================
 struct _INTRO_CMD_WORK {
   // [IN]
@@ -97,7 +97,7 @@ struct _INTRO_CMD_WORK {
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data );
@@ -156,7 +156,7 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
-///	コマンドテーブル (関数ポインタテーブル)
+/// コマンドテーブル (関数ポインタテーブル)
 //==============================================================
 static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() = 
 { 
@@ -223,7 +223,7 @@ static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk );
 
 // INTRO_CMD_COMP と対応
 //--------------------------------------------------------------
-///	判定関数テーブル (関数ポインタテーブル)
+/// 判定関数テーブル (関数ポインタテーブル)
 //==============================================================
 static BOOL (*c_cmdtbl_comp[ INTRO_CMD_COMP_MAX ])() = 
 { 
@@ -237,7 +237,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID );
 
 // INTRO_WORDSET と対応
 //--------------------------------------------------------------
-///	WORDSETテーブル (関数ポインタテーブル)
+/// WORDSETテーブル (関数ポインタテーブル)
 //==============================================================
 static void (*c_cmdtbl_wordset[ INTRO_WORDSET_MAX ])() = 
 { 
@@ -246,12 +246,12 @@ static void (*c_cmdtbl_wordset[ INTRO_WORDSET_MAX ])() =
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  次のシーンをセット
+ *  @brief  次のシーンをセット
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -266,11 +266,11 @@ static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  シーン開始
+ *  @brief  シーン開始
  *
- *	@param	param 
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -295,12 +295,12 @@ static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BMPLISTをストア
+ *  @brief  BMPLISTをストア
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	select_id 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  select_id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void store_bmplist( INTRO_CMD_WORK* wk, int select_id )
@@ -339,13 +339,13 @@ static void store_bmplist( INTRO_CMD_WORK* wk, int select_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  YESNO選択
+ *  @brief  YESNO選択
  *
- *	@param	param 
+ *  @param  param 
  * 
  *  @note   TRUEなら一個下のコマンドをストア、FALSEなら2個下のコマンドをストア
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -401,13 +401,13 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  判定関数呼び出し
+ *  @brief  判定関数呼び出し
  *
  *  @param  PARAM[0] INTRO_CMD_COMP
  
  *  @note   TRUEなら一個下のコマンドをストア、FALSEなら2個下のコマンドをストア
  *
- *	@retval TRUE=コマンド終了
+ *  @retval TRUE=コマンド終了
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_COMP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -441,39 +441,39 @@ static BOOL CMD_COMP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  グラフィックロード
+ *  @brief  グラフィックロード
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   HEAPID heap_id;
-	ARCHANDLE	*handle;
+  ARCHANDLE *handle;
 
   heap_id = wk->heap_id;
   // @TODO 汎用性
-	handle	= GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
+  handle  = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
-	
-  //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_intro_intro_bg_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_intro_intro_bg_main_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
+  // 上下画面ＢＧパレット転送
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+  
+  //  ----- 下画面 -----
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_intro_intro_bg_NCGR,
+            BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_intro_intro_bg_main_NSCR,
+            BG_FRAME_BACK_S, 0, 0, 0, heap_id );  
 
-	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_intro_intro_bg_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_intro_intro_bg_sub_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
-	
+  //  ----- 上画面 -----
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_intro_intro_bg_NCGR,
+            BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_intro_intro_bg_sub_NSCR,
+            BG_FRAME_BACK_M, 0, 0, 0, heap_id );    
+  
   GFL_ARC_CloseDataHandle( handle );
 
   return TRUE;
@@ -481,11 +481,11 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  外部アプリに対する戻り値を設定
+ *  @brief  外部アプリに対する戻り値を設定
  *
- *	@param	param[0] INTRO_RETCODE
+ *  @param  param[0] INTRO_RETCODE
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -497,13 +497,13 @@ static BOOL CMD_SET_RETCODE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  コマンドウェイト
+ *  @brief  コマンドウェイト
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  sdat
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -520,7 +520,7 @@ static BOOL CMD_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  フェードリクエスト
+ *  @brief  フェードリクエスト
  *
  *  PARAM[0]  GFL_FADE_MASTER_BRIGHT_XXX
  *  PARAM[1]  スタート輝度(0～16)
@@ -549,11 +549,11 @@ static BOOL CMD_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ブライドネスをセット
+ *  @brief  ブライドネスをセット
  *
- *	@param	param[0]  輝度
+ *  @param  param[0]  輝度
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -565,13 +565,13 @@ static BOOL CMD_BRIGHTNESS_SET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ブライドネス変更リクエスト
+ *  @brief  ブライドネス変更リクエスト
  *
- *	@param	param[0]
- *	@param	param[1]
- *	@param	param[2]
+ *  @param  param[0]
+ *  @param  param[1]
+ *  @param  param[2]
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -583,11 +583,11 @@ static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ブライドネス終了待ち
+ *  @brief  ブライドネス終了待ち
  *
- *	@param	param[0]
+ *  @param  param[0]
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -599,13 +599,13 @@ static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BGM再生コマンド
+ *  @brief  BGM再生コマンド
  *
- *	@param	param[0] BGM_Label
- *	@param  param[1] fadeInFrame
- *	@param  param[2] fadeOutFrame
+ *  @param  param[0] BGM_Label
+ *  @param  param[1] fadeInFrame
+ *  @param  param[2] fadeOutFrame
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -619,11 +619,11 @@ static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BGMフェードアウト
+ *  @brief  BGMフェードアウト
  *
- *	@param	param[0] SYNC
+ *  @param  param[0] SYNC
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -635,13 +635,13 @@ static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  SE再生コマンド
+ *  @brief  SE再生コマンド
  *
- *	@param	param[0] SE_Label
- *	@param	param[1] volume : 0なら無効
- *	@param	param[2] pan : 0なら無効
+ *  @param  param[0] SE_Label
+ *  @param  param[1] volume : 0なら無効
+ *  @param  param[2] pan : 0なら無効
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -669,11 +669,11 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  SE:再生停止
+ *  @brief  SE:再生停止
  *
- *	@param	param[0] SE_Label
+ *  @param  param[0] SE_Label
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param)
@@ -689,12 +689,12 @@ static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  キーウェイト
+ *  @brief  キーウェイト
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -709,12 +709,12 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  GMMをリロード
+ *  @brief  GMMをリロード
  *
- *	@param	param[0] GflMsgLoadType
- *	@param	param[1] msg_dat_id
+ *  @param  param[0] GflMsgLoadType
+ *  @param  param[1] msg_dat_id
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -726,12 +726,12 @@ static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  WORDSETする
+ *  @brief  WORDSETする
  *
- *	@param	param[0] INTRO_WORDSET レジストする種類を設定
- *	@param	param[1] レジストするIDを指定
+ *  @param  param[0] INTRO_WORDSET レジストする種類を設定
+ *  @param  param[1] レジストするIDを指定
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -746,11 +746,11 @@ static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ表示
+ *  @brief  メッセージ表示
  *
- *	@param	param[0] str_id
+ *  @param  param[0] str_id
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -778,9 +778,9 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  イントロ画面用MCSSをロード
- *	@param  param[0] MCSS_ID
- *	@param  param[1] 0=博士, MONSNO=ポケモン
+ *  @brief  イントロ画面用MCSSをロード
+ *  @param  param[0] MCSS_ID
+ *  @param  param[1] 0=博士, MONSNO=ポケモン
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -816,12 +816,12 @@ static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MCSS表示切替
+ *  @brief  MCSS表示切替
  *
- *	@param	param[0] MCSS_ID
- *	@param	param[1] 0:非表示, 1:表示
+ *  @param  param[0] MCSS_ID
+ *  @param  param[1] 0:非表示, 1:表示
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -833,12 +833,12 @@ static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, in
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MCSS アニメーション指定
+ *  @brief  MCSS アニメーション指定
  *
- *	@param	param[0]  MCSS_ID
- *	@param	param[1]  アニメーションID
+ *  @param  param[0]  MCSS_ID
+ *  @param  param[1]  アニメーションID
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -849,13 +849,13 @@ static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MCSS フェードリクエスト
+ *  @brief  MCSS フェードリクエスト
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  sdat
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -981,11 +981,11 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ひらがな／漢字モードを決定
+ *  @brief  ひらがな／漢字モードを決定
  *
- *	@param	param[0] 0=ひらがな ／ 1=漢字
+ *  @param  param[0] 0=ひらがな ／ 1=漢字
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1012,11 +1012,11 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  性別を決定
+ *  @brief  性別を決定
  *
- *	@param	param[0]  0=おとこのこ,1=おんなのこ
+ *  @param  param[0]  0=おとこのこ,1=おんなのこ
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1039,11 +1039,11 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケモン登場演出
+ *  @brief  ポケモン登場演出
  *
- *	@param	param 
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1058,12 +1058,12 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  パーティクル モンスターボール
+ *  @brief  パーティクル モンスターボール
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  sdat 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_PARTICLE_MONSTERBALL( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1080,13 +1080,13 @@ static BOOL CMD_PARTICLE_MONSTERBALL( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3D選択肢 表示
+ *  @brief  3D選択肢 表示
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  sdat
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1099,11 +1099,11 @@ static BOOL CMD_G3D_SELECT_SEX_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3D男女選択 フレーム直指定
+ *  @brief  3D男女選択 フレーム直指定
  *
- *	@param	param[0] フレーム値
+ *  @param  param[0] フレーム値
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1115,13 +1115,13 @@ static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3D男女洗濯開始
+ *  @brief  3D男女洗濯開始
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	sdat
- *	@param	param 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  sdat
+ *  @param  param 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1135,11 +1135,11 @@ static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3D男女選択主処理
+ *  @brief  3D男女選択主処理
  *
- *	@param	
+ *  @param  
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1154,15 +1154,19 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     // キー入力 →
     if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) )
     {
+      if(sdat->cnt!=1){
+        GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+      }
       sdat->cnt = 1;  //おんなのこ
-      GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
       INTRO_G3D_SelectSet( wk->g3d, 21 );
     }
     // キー入力 ←
     else if( (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
     {
+      if(sdat->cnt!=0){
+        GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+      }
       sdat->cnt = 0;  //おとこのこ
-      GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
       INTRO_G3D_SelectSet( wk->g3d, 19 );
     }
     // 決定
@@ -1213,11 +1217,11 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	param[0]
+ *  @param  param[0]
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
@@ -1237,11 +1241,11 @@ static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sda
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  男女判定
+ *  @brief  男女判定
  *
- *	@param	INTRO_CMD_WORK* wk 
+ *  @param  INTRO_CMD_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk )
@@ -1264,12 +1268,12 @@ static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナー名をレジスト
+ *  @brief  トレーナー名をレジスト
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	bufID 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  bufID 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
@@ -1285,18 +1289,18 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
 
 //=============================================================================
 /**
- *								外部公開関数
+ *                外部公開関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3Dデモコマンドコントローラー 初期化
+ *  @brief  3Dデモコマンドコントローラー 初期化
  *
- *	@param  init_param
- *	@param	heap_id 
+ *  @param  init_param
+ *  @param  heap_id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
@@ -1338,11 +1342,11 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3Dデモコマンドコントローラー 破棄
+ *  @brief  3Dデモコマンドコントローラー 破棄
  *
- *	@param	INTRO_CMD_WORK* wk 
+ *  @param  INTRO_CMD_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
@@ -1358,11 +1362,11 @@ void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3Dデモコマンドコントローラー 主処理
+ *  @brief  3Dデモコマンドコントローラー 主処理
  *
- *	@param	INTRO_CMD_WORK* wk 
+ *  @param  INTRO_CMD_WORK* wk 
  *
- *	@retval TRUE:継続 FALSE:終了
+ *  @retval TRUE:継続 FALSE:終了
  */
 //-----------------------------------------------------------------------------
 BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
@@ -1424,17 +1428,17 @@ BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  コマンドをストア
+ *  @brief  コマンドをストア
  *
- *	@param	INTRO_CMD_DATA* data 
+ *  @param  INTRO_CMD_DATA* data 
  *
- *	@retval TRUE:継続して読み込む
+ *  @retval TRUE:継続して読み込む
  */
 //-----------------------------------------------------------------------------
 static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data )
@@ -1475,11 +1479,11 @@ static BOOL cmd_store( INTRO_CMD_WORK* wk, const INTRO_CMD_DATA* data )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ストアされたコマンドを実行
+ *  @brief  ストアされたコマンドを実行
  *
- *	@param	INTRO_CMD_WORK* wk 
+ *  @param  INTRO_CMD_WORK* wk 
  *
- *	@retval TRUE:継続 FALSE:全てのコマンドが終了
+ *  @retval TRUE:継続 FALSE:全てのコマンドが終了
  */
 //-----------------------------------------------------------------------------
 static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
@@ -1513,12 +1517,12 @@ static BOOL cmd_store_exec( INTRO_CMD_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定したコマンドをクリア
+ *  @brief  指定したコマンドをクリア
  *
- *	@param	INTRO_CMD_WORK* wk
- *	@param	id 
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id )
