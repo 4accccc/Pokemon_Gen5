@@ -109,7 +109,7 @@ struct _PDWACC_WORK {
   int req;
   int getdataCount;
   int countTimer;
-  char tempbuffer[12];
+  char tempbuffer[30];
   BOOL bEnd;
 };
 
@@ -149,16 +149,51 @@ static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc state, int line)
 #endif
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeout(PDWACC_WORK* pWork)
+{
+	if(WIPE_SYS_EndCheck()){
+		_CHANGE_STATE( NULL);        // 終わり
+	}
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeFadeStart(PDWACC_WORK* pWork)
+{
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(_modeFadeout);        // 終わり
+}
+
+static void _networkClose1(PDWACC_WORK* pWork)
+{
+  if(!GFL_NET_IsInit()){
+    _CHANGE_STATE(_modeFadeout);
+  }
+}
+
 
 
 static void _createAccount8(PDWACC_WORK* pWork)
 {
-//  if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-//    return;
-//  }
   if(GFL_UI_KEY_GetTrg()){
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
-    _CHANGE_STATE(NULL);
+
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(_networkClose1);
   }
 }
 
@@ -264,7 +299,9 @@ static void _createAccount3(PDWACC_WORK* pWork)
       _CHANGE_STATE(_createAccount4);
     }
     else{
-      //@todo 切断処理へ
+
+
+
       _CHANGE_STATE(NULL);
     }
     PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -302,10 +339,8 @@ static void _createAccount2(PDWACC_WORK* pWork)
 static void _createAccount1(PDWACC_WORK* pWork)
 {
 
-//  PDWACC_MESSAGE_SystemMessageDisp();
   
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_003);
-  //PMSND_PlaySE(SEQ_SE_SYS_26);
 
   _CHANGE_STATE(_createAccount2);
 }
@@ -365,11 +400,11 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
       s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
 
       GFL_STD_MemClear(pWork->tempbuffer, sizeof(pWork->tempbuffer));
-      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d", proid);
+      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0\0\0\0\0\0\0\0\0\0\0\0", proid);
 
-      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,STD_StrLen(pWork->tempbuffer));
+      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d %s\n",proid,STD_StrLen(pWork->tempbuffer),pWork->tempbuffer);
       NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
-                            pWork->tempbuffer, STD_StrLen(pWork->tempbuffer) );
+                            pWork->tempbuffer, 12 );
 
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_ghttpInfoWait1);

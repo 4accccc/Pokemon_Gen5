@@ -32,6 +32,7 @@
 #include "net_app/irc_battle.h"
 #include "test/ariizumi/ari_debug.h"
 #include "net_app/mystery.h"
+#include "msg/msg_wifi_system.h"
 
 //======================================================================
 //  define
@@ -128,6 +129,7 @@ typedef struct
   
   GFL_FONT *fontHandle;
   GFL_MSGDATA *msgMng; //メニュー作成のところでだけ有効
+  GFL_MSGDATA *pMsgWiFiData;  //
   GFL_TCB   *vblankFuncTcb;
 
   GFL_CLUNIT  *cellUnit;
@@ -182,6 +184,7 @@ static BOOL START_MENU_ITEM_TempCheck( START_MENU_WORK *work );
 static BOOL START_MENU_ITEM_TempCheckFalse( START_MENU_WORK *work );
 static BOOL START_MENU_ITEM_CheckContinue( START_MENU_WORK *work );
 static BOOL START_MENU_ITEM_CommonSelect( START_MENU_WORK *work );
+static BOOL START_MENU_ITEM_WifiUtil( START_MENU_WORK *work );
 static void START_MENU_ITEM_CommonDraw( START_MENU_WORK *work , GFL_BMPWIN *win, const u8 idx );
 static void START_MENU_ITEM_ContinueDraw( START_MENU_WORK *work , GFL_BMPWIN *win, const u8 idx );
 
@@ -213,7 +216,7 @@ static const START_MENU_ITEM_SETTING ItemSettingData[SMI_MAX] =
   { 10 , START_MENU_ITEM_CheckContinue , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_ContinueDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
-  {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
+  {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_WifiUtil , START_MENU_ITEM_CommonDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
 };
@@ -263,6 +266,10 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   work->anime_g = START_MENU_ANIME_E_G;
   work->anime_b = START_MENU_ANIME_E_B;
 
+
+//  work->pMsgWiFiData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_system_dat, work->heapID );
+
+
   
   return GFL_PROC_RES_FINISH;
 }
@@ -295,7 +302,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 
     case SMI_WIFI_SETTING: //WIFI設定
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
-        break;
+      break;
 
     case SMI_PDW_ACCOUNT: //ポケモンドリームワールド設定
       GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &PDW_ACC_MainProcData, NULL);
@@ -682,6 +689,63 @@ static BOOL START_MENU_ITEM_CommonSelect( START_MENU_WORK *work )
   //今のところ選択された
   return TRUE;
 }
+#if 0
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _infoMessageDisp(GAMESYNC_MENU* pWork)
+{
+  GFL_BMPWIN* pwin;
+
+  
+  if(pWork->infoDispWin==NULL){
+    pWork->infoDispWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME1_S ,
+      1 , 3, 30 ,4 ,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->infoDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+
+  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
+                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
+#endif
+//--------------------------------------------------------------------------
+//  決定時の動作  WIFI設定
+//  @return TRUE=スタートメニュの終了処理へ
+//--------------------------------------------------------------------------
+static BOOL START_MENU_ITEM_WifiUtil( START_MENU_WORK *work )
+{
+  if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
+    return TRUE;
+  }
+  else{
+
+
+    
+    //GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
+
+    
+//    GF_ASSERT(0);
+  }
+}
+
+
+
 //メニュー内描画共通(idxでmsgIdを読み分ける
 static void START_MENU_ITEM_CommonDraw( START_MENU_WORK *work , GFL_BMPWIN *win , const u8 idx )
 {
