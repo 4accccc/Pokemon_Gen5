@@ -283,7 +283,6 @@ EVENT_START		ev_pos_d02r0101_event_02
 	
 	//ちっ！　にげみちは　ないか！？
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM_01 )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//【仮】　下っ端を探す遊びを入れる予定　未作成
