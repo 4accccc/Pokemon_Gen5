@@ -4345,7 +4345,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     }
 
     // デバッグを簡単にするため必ず大ダメージにする措置
-    #ifdef PM_DEBUG
+    #if 0
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
     {
       u8 pokeID = BPP_GetID(defender);
