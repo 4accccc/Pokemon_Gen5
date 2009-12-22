@@ -120,6 +120,7 @@ SAVE_RESULT IntrSave_Main(INTR_SAVE_CONTROL *isc)
     if(isc->suspend_req == TRUE && GFL_BACKUP_SAVEASYNC_CheckCardLock() == FALSE){
       isc->backup_status = isc->status;
       isc->status = INTR_SAVE_STATUS_SUSPEND;
+      OS_TPrintf("IntSave ... カードUnlock確認 stateサスペンド\n");
       return SAVE_RESULT_CONTINUE;
     }
     
