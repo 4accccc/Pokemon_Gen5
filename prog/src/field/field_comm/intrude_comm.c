@@ -308,7 +308,10 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
     (*seq)++;
     break;
   case 2:
-    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT) == TRUE){
+    if((GFL_NET_IsParentMachine() == TRUE) && (GFL_NET_GetConnectNum() <= 1)){ //e‚ÍŽ©•ªˆêl‚È‚çŽŸ
+      (*seq)++;
+    }
+    else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT) == TRUE){
       OS_TPrintf("Ø’f“¯ŠúŠ®—¹\n");
       (*seq)++;
     }
