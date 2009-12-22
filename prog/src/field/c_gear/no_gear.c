@@ -245,7 +245,7 @@ static void _gearArcCreate(NO_GEAR_WORK* pWork)
 
 	GFL_ARC_CloseDataHandle( p_handle );
 
-	GFL_NET_ChangeIconPosition(240-22,10);
+//	GFL_NET_ChangeIconPosition(240-22,10);
 	GFL_NET_ReloadIcon();
 
 }
