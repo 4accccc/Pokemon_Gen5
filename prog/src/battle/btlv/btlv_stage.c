@@ -89,7 +89,14 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 	bsw->heapID = heapID;
 
 	//ƒŠƒ\[ƒX“Ç‚Ýž‚Ý
-	bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+	if( bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+  { 
+	  bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+  }
+  else
+  { 
+	  bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ 0 ] );
+  }
 	ret = GFL_G3D_TransVramTexture( bsw->stage_resource );
 	GF_ASSERT( ret == TRUE );
 

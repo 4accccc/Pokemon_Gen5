@@ -72,7 +72,14 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 	bfw->heapID = heapID;
 
 	//ƒŠƒ\[ƒX“Ç‚Ýž‚Ý
-	bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+  { 
+	  bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+  }
+  else
+  { 
+	  bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ 0 ] );
+  }
 	ret = GFL_G3D_TransVramTexture( bfw->field_resource );
 	GF_ASSERT( ret == TRUE );
 
