@@ -198,6 +198,7 @@ typedef enum
   INTRO_CMD_TYPE_G3D_SELECT_SEX_RETURN,
   //======================================================
   //======================================================
+  
   INTRO_CMD_TYPE_SAVE_INIT,
   INTRO_CMD_TYPE_SAVE_SASUPEND,
   INTRO_CMD_TYPE_SAVE_RESUME,

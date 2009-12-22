@@ -186,9 +186,10 @@ typedef struct
   INTRO_PARAM introParam;
 	NAMEIN_PARAM *nameInParam;
   INTR_SAVE_CONTROL* intr_save;
+  GFL_PROCSYS* procsys_up;
 }GAMESTART_FIRST_WORK;
 
-// #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
+#define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
 
 //--------------------------------------------------------------
 /**
@@ -225,6 +226,8 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
+  work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -238,31 +241,51 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
   enum 
   {
     SEQ_INIT,
+    SEQ_INTRO_WAIT,
     SEQ_INPUT_NAME,
+    SEQ_INPUT_NAME_WAIT,
     SEQ_INPUT_NAME_RETAKE_YESNO,
     SEQ_INPUT_NAME_RETAKE_CHECK,
+    SEQ_INPUT_NAME_RETAKE_CHECK_WAIT,
     SEQ_END,
   };
 	
   GAMESTART_FIRST_WORK *work = mywk;
+  GFL_PROC_MAIN_STATUS up_status;
 
 #ifdef USE_INTRSAVE
   IntrSave_Main( work->intr_save );
 #endif
 
+  up_status = GFL_PROC_LOCAL_Main( work->procsys_up );
+
 	switch(*seq){
 	case SEQ_INIT:
-    //イントロデモ
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
-	  //漢字選択
+    //漢字選択
 //  GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectModeProcData,&work->selModeParam);
-		(*seq) = SEQ_INPUT_NAME;
+    //イントロデモ
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+//  GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+    (*seq) = SEQ_INTRO_WAIT;
+    break;
+  case SEQ_INTRO_WAIT :
+    if( up_status != GFL_PROC_MAIN_VALID )
+    {
+      (*seq) = SEQ_INPUT_NAME;
+    }
 		break;
 	case SEQ_INPUT_NAME:
-	  //名前入力
-		work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
-		(*seq) = SEQ_INPUT_NAME_RETAKE_YESNO;
+    //名前入力
+    work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
+//	GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(namein), &NameInputProcData, &work->nameInParam );
+    (*seq) = SEQ_INPUT_NAME_WAIT;
+    break;
+  case SEQ_INPUT_NAME_WAIT :
+    if( up_status != GFL_PROC_MAIN_VALID )
+    {
+		  (*seq) = SEQ_INPUT_NAME_RETAKE_YESNO;
+    }
 		break;
 	case SEQ_INPUT_NAME_RETAKE_YESNO:
     //名前のセット
@@ -280,8 +303,16 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 
     //イントロデモ 名前入力の判定
     work->introParam.scene_id = INTRO_SCENE_ID_05_RETAKE_YESNO;
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
-		(*seq) = SEQ_INPUT_NAME_RETAKE_CHECK;
+		
+//  GFL_PROC_SysCallProc(FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+    (*seq) = SEQ_INPUT_NAME_RETAKE_CHECK_WAIT;
+    break;
+  case SEQ_INPUT_NAME_RETAKE_CHECK_WAIT :
+    if( up_status != GFL_PROC_MAIN_VALID )
+    {
+		  (*seq) = SEQ_INPUT_NAME_RETAKE_CHECK;
+    }
 		break;
 	case SEQ_INPUT_NAME_RETAKE_CHECK:
     // 名前入力復帰判定
@@ -319,6 +350,8 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 #ifdef USE_INTRSAVE
   IntrSave_Exit( work->intr_save );
 #endif
+
+  GFL_PROC_LOCAL_Exit( work->procsys_up );
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 

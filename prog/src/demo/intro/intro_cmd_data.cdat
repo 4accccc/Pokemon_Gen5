@@ -14,7 +14,7 @@
 #include "message.naix" // for NARC_message_
 #include "msg/msg_intro.h"  // for GMM Index
 
-//#define CMD_SAVE_ON // セーブ有効
+#define CMD_SAVE_ON // セーブ有効
 
 //---------------------------------------------------------------------------
 // シーン init > 初期化コマンド
@@ -50,13 +50,16 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_BGM_FADEOUT, { 60 }, CMD_READ_NEXT }, // BGMフェードアウト
-  { INTRO_CMD_TYPE_WAIT, { 60 } }, // ウェイト
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00 } }, // ……ごめんなさい ちょっと待ってね！
+
+  { INTRO_CMD_TYPE_BGM_FADEOUT, { 16 }, CMD_READ_NEXT }, // BGMフェードアウト
+  { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
-  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_TIRAAMHI, -FX32_CONST(10), -FX32_CONST(9) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_TIRAAMHI, -FX32_CONST(14), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
-  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 12, 0, -16 } }, // ブラックからフェードイン
+  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, CMD_READ_NEXT }, // ブラックからフェードイン
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 } }, // BGM切替
 
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_01 } }, // ハーイ！
 
@@ -90,7 +93,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 //  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
 
-  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_TIRAAMHI }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
+//  { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_TIRAAMHI }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
@@ -163,6 +166,7 @@ static const INTRO_CMD_DATA c_intro_scene_05[] =
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
 #endif
+
   { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
 };
 
@@ -245,7 +249,6 @@ static const INTRO_CMD_DATA c_intro_scene_07[] =
   // @TODO 主人公立ち絵→フィールドOBJへ
 
   { INTRO_CMD_TYPE_BGM_FADEOUT, { 60 } }, // BGMフェードアウト
-
   { INTRO_CMD_TYPE_END }, ///< 終了
 };
 

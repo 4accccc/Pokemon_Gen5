@@ -237,6 +237,8 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
   INTRO_MCSS_Exit( wk->mcss );
   INTRO_G3D_Exit( wk->g3d );
 
+  HOSAKA_Printf("%d, %p \n", wk->msg, wk->msg );
+
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
 
