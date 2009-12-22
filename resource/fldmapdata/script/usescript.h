@@ -55,6 +55,8 @@
 #include "../../../prog/include/poke_tool/poketype_def.h"
 //レギュレーション指定
 #include "../../../prog/include/poke_tool/regulation_def.h"
+//特性指定
+#include "../../../prog/include/poke_tool/tokusyu_def.h"
 
 //フィールド通信の種類定義
 #include "../../../prog/include/gamesystem/game_comm.h"
