@@ -16,6 +16,9 @@
 //system
 #include "gamesystem/gamesystem.h"
 
+#include "savedata/save_control.h" // for 
+#include "savedata/save_control_intr.h" // for INTR_SAVE_CONTROL
+
 //=============================================================================
 /**
  *					ŠO•”ŒöŠJ
@@ -66,6 +69,7 @@ typedef struct {
   // [IN]
   SAVE_CONTROL_WORK*  save_ctrl;
   INTRO_SCENE_ID      scene_id;
+  INTR_SAVE_CONTROL*  intr_save;
   // [OUT]
   INTRO_RETCODE       retcode;
 } INTRO_PARAM;

@@ -14,6 +14,8 @@
 
 #include "demo/intro.h"
 
+#include "intro_particle.h"
+
 typedef struct _INTRO_CMD_WORK INTRO_CMD_WORK;
 
 //=============================================================================
@@ -33,8 +35,7 @@ typedef struct _INTRO_CMD_WORK INTRO_CMD_WORK;
  *								EXTERNêÈåæ
  */
 //=============================================================================
-
-extern INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id );
+extern INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id );
 
 extern void Intro_CMD_Exit( INTRO_CMD_WORK* wk );
 

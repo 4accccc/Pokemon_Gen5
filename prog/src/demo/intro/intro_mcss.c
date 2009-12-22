@@ -87,7 +87,7 @@ INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id )
   wk->heap_id = heap_id;
 
   // intro_g3dと並行させるためにずらし込む
-  MCSS_SetTextureTransAdrs( wk->mcss, 0x10000 );
+  MCSS_SetTextureTransAdrs( wk->mcss, 0x30000 );
   MCSS_SetOrthoMode( wk->mcss );
 
   return wk;
@@ -226,7 +226,7 @@ void INTRO_MCSS_SetVisible( INTRO_MCSS_WORK* wk, BOOL is_visible, u8 id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  MCSSアニメーションインデックス
  *
  *	@param	INTRO_MCSS_WORK* wk
  *	@param	id
@@ -247,7 +247,7 @@ void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  MCSS拡大縮小セット
  *
  *	@param	INTRO_MCSS_WORK* wk
  *	@param	id
@@ -268,7 +268,7 @@ void INTRO_MCSS_SetScale( INTRO_MCSS_WORK* wk, u8 id, VecFx32* scale )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  MCSSアルファブレンドセット
  *
  *	@param	INTRO_MCSS_WORK* wk
  *	@param	id

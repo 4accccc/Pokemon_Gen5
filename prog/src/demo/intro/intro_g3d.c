@@ -207,13 +207,10 @@ void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
 {
   int i;
   
-  {
     // アニメーション調整
 //  debug_g3d_util_anime_frame_test( wk->g3d_util, 0 );
-
     // 座標調整
 //  debug_camera_test( wk->camera );
-  }
 
   // 専用カメラにスイッチ
   GFL_G3D_CAMERA_Switching( wk->camera );

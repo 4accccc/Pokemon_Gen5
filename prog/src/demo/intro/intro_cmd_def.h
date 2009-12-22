@@ -171,6 +171,12 @@ typedef enum
   //======================================================
   INTRO_CMD_TYPE_POKEMON_APPER,
   //======================================================
+  //パーティクルによるモンスターボール
+  //  PARAM[0]  PX
+  //  PARAM[1]  PY
+  //======================================================
+  INTRO_CMD_TYPE_PARTICLE_MONSTERBALL,
+  //======================================================
   //3D男女選択肢：表示切替
   //======================================================
   INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_VISIBLE,
@@ -187,8 +193,17 @@ typedef enum
   //3D男女選択肢
   //======================================================
   INTRO_CMD_TYPE_G3D_SELECT_SEX_MAIN,
+  //======================================================
+  //======================================================
   INTRO_CMD_TYPE_G3D_SELECT_SEX_RETURN,
-  
+  //======================================================
+  //======================================================
+  INTRO_CMD_TYPE_SAVE_INIT,
+  INTRO_CMD_TYPE_SAVE_SASUPEND,
+  INTRO_CMD_TYPE_SAVE_RESUME,
+  INTRO_CMD_TYPE_SAVE_MYSTATUS,
+  INTRO_CMD_TYPE_SAVE_CHECK_ALL_END,
+
   INTRO_CMD_TYPE_END, ///< コマンド終了
   INTRO_CMD_TYPE_MAX,
 } INTRO_CMD_TYPE;

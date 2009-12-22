@@ -26,6 +26,10 @@
 #include "arc_def.h"  //ARCID_MESSAGE
 
 #include "../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_T01
+
+#include "savedata/save_control.h" // for
+#include "savedata/save_control_intr.h" // for
+
 //==============================================================================
 //	
 //==============================================================================
@@ -181,6 +185,7 @@ typedef struct
   SELECT_MODE_INIT_WORK selModeParam;
   INTRO_PARAM introParam;
 	NAMEIN_PARAM *nameInParam;
+  INTR_SAVE_CONTROL* intr_save;
 }GAMESTART_FIRST_WORK;
 
 //--------------------------------------------------------------
@@ -198,9 +203,13 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   // セーブデータ:ワークエリアのの初期化
   SaveControl_ClearData( SaveControl_GetPointer() );
 
+  // セーブシステム作成
+  work->intr_save = IntrSave_Init( GFL_HEAPID_APP, SaveControl_GetPointer() );
+
   // イントロデモのパラメータ初期化
   work->introParam.save_ctrl  = SaveControl_GetPointer();
   work->introParam.scene_id   = INTRO_SCENE_ID_00;
+  work->introParam.intr_save  = work->intr_save;
 
   // SELMODE 初期化
 	work->selModeParam.type       = SMT_START_GAME;
@@ -230,8 +239,11 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     SEQ_INPUT_NAME_RETAKE_CHECK,
     SEQ_END,
   };
+	
+  GAMESTART_FIRST_WORK *work = mywk;
 
-	GAMESTART_FIRST_WORK *work = mywk;
+  IntrSave_Main( work->intr_save );
+
 	switch(*seq){
 	case SEQ_INIT:
     //イントロデモ
@@ -296,6 +308,9 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	GAMESTART_FIRST_WORK *work = mywk;
   GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
+  
+  // セーブシステム削除
+  IntrSave_Exit( work->intr_save );
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 

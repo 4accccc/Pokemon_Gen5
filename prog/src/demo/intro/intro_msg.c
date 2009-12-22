@@ -125,6 +125,7 @@ static void KeyCursor_Clear( KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col 
   y = GFL_BMP_GetSizeY( bmp ) - 9;
   offs = tbl[work->cursor_anm_no];
   GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+//  HOSAKA_Printf("x=%d y=%d offs=%d \n",x,y,offs);
 }
 
 //--------------------------------------------------------------
@@ -156,6 +157,7 @@ static void KeyCursor_Write( KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col 
   offs = tbl[work->cursor_anm_no];
   
   GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+//  HOSAKA_Printf("x=%d y=%d offs=%d \n",x,y,offs);
 }
 
 //-------------------------------------
@@ -178,6 +180,8 @@ struct _INTRO_MSG_WORK {
   WORDSET*      wordset;
   GFL_MSGDATA*  msghandle;
   GFL_FONT*     font;
+
+  BOOL          push_flag;
 
   // ストリーム再生
   PRINT_STREAM* print_stream;
@@ -424,26 +428,27 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
     switch( state )
     {
     case PRINTSTREAM_STATE_DONE : // 終了
+      wk->push_flag = FALSE;
       // キーカーソルをクリア
-//      KeyCursor_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );   
-//      GFL_BMPWIN_TransVramCharacter( wk->win_dispwin );
+//    KeyCursor_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );   
+//    GFL_BMPWIN_TransVramCharacter( wk->win_dispwin );
 
       PRINTSYS_PrintStreamDelete( wk->print_stream );
       wk->print_stream = NULL;
       return TRUE;
 
     case PRINTSTREAM_STATE_PAUSE : // 一時停止中
-
       // キー入力待ち
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
       {
+        wk->push_flag = TRUE;
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
         GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
         KeyCursor_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
       }
       else
       {
-        if( PRINTSYS_PrintStreamGetPauseType( wk->print_stream ) == PRINTSTREAM_PAUSE_CLEAR )
+        if( wk->push_flag == FALSE )
         {
           KeyCursor_Write( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
         }
@@ -453,6 +458,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       break;
 
     case PRINTSTREAM_STATE_RUNNING :  // 実行中
+      wk->push_flag = FALSE;
       // メッセージスキップ
       if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetTrg() )
       {
@@ -461,6 +467,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       break;
 
     default :
+      wk->push_flag = FALSE;
       break;
     }
 

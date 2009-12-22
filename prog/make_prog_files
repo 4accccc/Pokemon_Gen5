@@ -1332,7 +1332,8 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 					 demo/intro/intro_cmd_data.c \
            demo/intro/intro_msg.c \
            demo/intro/intro_mcss.c \
-           demo/intro/intro_g3d.c
+           demo/intro/intro_g3d.c \
+           demo/intro/intro_particle.c
 
 # ゲームクリアデモ（仮）
 #===> SRCS_OVERLAY_UI_COMMON

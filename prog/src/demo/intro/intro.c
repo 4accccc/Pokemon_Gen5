@@ -49,6 +49,7 @@
 
 #include "intro_mcss.h" // for INTRO_MCSS_WORK
 #include "intro_g3d.h" // for INTRO_G3D_WORK
+#include "intro_particle.h" // for INTRO_PARTICLE_WORK
 
 #include "intro_cmd.h"
 
@@ -95,6 +96,7 @@ typedef struct
   INTRO_CMD_WORK*   cmd;
   INTRO_MCSS_WORK*  mcss;
   INTRO_G3D_WORK*   g3d;
+  INTRO_PARTICLE_WORK*  ptc;
 
 } INTRO_MAIN_WORK;
 
@@ -152,8 +154,8 @@ const GFL_PROC_DATA ProcData_Intro =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
-	INTRO_MAIN_WORK *wk;
-	INTRO_PARAM *param;
+	INTRO_MAIN_WORK * wk;
+	INTRO_PARAM * param;
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
@@ -189,9 +191,10 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 
   // 3D関連初期化
   wk->g3d = INTRO_G3D_Create( wk->graphic, wk->heapID );
+  wk->ptc = INTRO_PARTICLE_Create( wk->graphic, wk->heapID );
 
   // コマンド初期化
-  wk->cmd = Intro_CMD_Init( wk->g3d, wk->mcss, wk->param, wk->heapID );
+  wk->cmd = Intro_CMD_Init( wk->g3d, wk->ptc, wk->mcss, wk->param, wk->heapID );
 
   // ブライドネス設定 真っ黒
 //  SetBrightness( -16, (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
@@ -200,6 +203,7 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 
   return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 終了処理
@@ -228,7 +232,8 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
     // フェード中は処理に入らない
     return GFL_PROC_RES_CONTINUE;
   }
-  
+
+  INTRO_PARTICLE_Exit( wk->ptc );
   INTRO_MCSS_Exit( wk->mcss );
   INTRO_G3D_Exit( wk->g3d );
 
@@ -307,6 +312,7 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
   INTRO_GRAPHIC_3D_StartDraw( wk->graphic );
 
   INTRO_MCSS_Main( wk->mcss );
+  INTRO_PARTICLE_Main( wk->ptc );
   INTRO_G3D_Main( wk->g3d );
 
   INTRO_GRAPHIC_3D_EndDraw( wk->graphic );

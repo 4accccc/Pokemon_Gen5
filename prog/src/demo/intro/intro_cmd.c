@@ -37,11 +37,15 @@
 #include "intro_msg.h" // for INTRO_MSG_WORK
 #include "intro_mcss.h" // for INTRO_MCSS_WORK
 #include "intro_g3d.h" // for INTRO_G3D_WORK
+#include "intro_particle.h" // for INTRO_PARTICLE_WORK
 
 #include "intro_cmd.h" // for extern宣言
 
 #include "sound/pm_sndsys.h" // for SEQ_SE_XXX
 #include "sound/pm_voice.h" // for 
+
+#include "savedata/save_control.h" // for
+#include "savedata/save_control_intr.h" // for
 
 //=============================================================================
 /**
@@ -85,6 +89,8 @@ struct _INTRO_CMD_WORK {
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
   INTRO_MSG_WORK* wk_msg;
+  INTRO_PARTICLE_WORK* ptc;
+  INTR_SAVE_CONTROL* intr_save;
 };
 
 //=============================================================================
@@ -131,11 +137,20 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_PARTICLE_MONSTERBALL( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
+static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SAVE_SASUPEND( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SAVE_RESUME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SAVE_MYSTATUS( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
+
 
 // INTRO_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -182,12 +197,19 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SELECT_MOJI,
   CMD_SELECT_SEX,
   CMD_POKEMON_APPER,
+  CMD_PARTICLE_MONSTERBALL,
 
   CMD_G3D_SELECT_SEX_SET_VISIBLE,
   CMD_G3D_SELECT_SEX_SET_FRAME,
   CMD_G3D_SELECT_SEX_INIT,
   CMD_G3D_SELECT_SEX_MAIN,
   CMD_G3D_SELECT_SEX_RETURN,
+
+  CMD_SAVE_INIT,
+  CMD_SAVE_SASUPEND,
+  CMD_SAVE_RESUME,
+  CMD_SAVE_MYSTATUS,
+  CMD_SAVE_CHECK_ALL_END,
 
   NULL, // end
 };
@@ -579,7 +601,6 @@ static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  HOSAKA_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
   PMSND_FadeOutBGM( param[0] );
 
   return TRUE;
@@ -855,23 +876,59 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
  */
 //=============================================================================
 
-// セーブ処理
-#if 0
+// セーブ処理 開始
 static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  IntrSave_Init( wk->heap_id, )
-  wk->b_saveing = TRUE;
+  IntrSave_Start( wk->intr_save );
+  return TRUE;
 }
 
-static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+//  セーブ中断リクエスト
+static BOOL CMD_SAVE_SASUPEND( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  IntrSave_ReqSuspend(  )
+  switch( sdat->seq )
+  {
+  case 0 :
+    // 中断リクエストをかける
+    IntrSave_ReqSuspend( wk->intr_save );
+    sdat->seq++;
+    break;
+  case 1 :
+    // 中断待ち
+    if( IntrSave_CheckSuspend( wk->intr_save ) == TRUE )
+    {
+      return TRUE;
+    }
+  };
+  return FALSE;
 }
 
-static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+// セーブ再開
+static BOOL CMD_SAVE_RESUME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
+  IntrSave_Resume( wk->intr_save );
+  return TRUE;
 }
-#endif 
+
+// マイステータスを実行
+static BOOL CMD_SAVE_MYSTATUS( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  IntrSave_ReqMyStatusSave( wk->intr_save );
+  return TRUE;
+}
+
+// セーブ終了チェック
+static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  // 全てのセーブが完了しているか調べる
+  if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -952,6 +1009,28 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  パーティクル モンスターボール
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	sdat 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_PARTICLE_MONSTERBALL( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  // ブレンド指定
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
+
+  // モンスターボールを表示
+  INTRO_PARTICLE_CreateEmitterMonsterBall( wk->ptc, param[0], param[1], 0 );
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  3D選択肢 表示
  *
  *	@param	INTRO_CMD_WORK* wk
@@ -1019,11 +1098,10 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
   switch( sdat->seq )
   {
   case 0 :
-    INTRO_G3D_SelectSet( wk->g3d, 20 ); // デフォルトフレーム指定
+    INTRO_G3D_SelectSet( wk->g3d, 19 ); // デフォルトフレーム指定
     sdat->seq++;
     break;
   case 1 :
-
     // キー入力 →
     if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) )
     {
@@ -1156,8 +1234,6 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
   WORDSET_RegisterPlayerName( wordset, bufID, mystatus );
 }
 
-
-
 //=============================================================================
 /**
  *								外部公開関数
@@ -1174,20 +1250,24 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
 
   GF_ASSERT( mcss );
+  GF_ASSERT( ptc );
 
   // メインワーク アロケーション
-  wk = GFL_HEAP_AllocClearMemory(  heap_id, sizeof( INTRO_CMD_WORK ) );
+  wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof( INTRO_CMD_WORK ) );
 
   // メンバ初期化
   wk->heap_id     = heap_id;
   wk->init_param  = init_param;
   wk->mcss  = mcss;
   wk->g3d   = g3d;
+  wk->ptc   = ptc;
+
+  wk->intr_save = wk->init_param->intr_save;
 
   // 文字操作モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( heap_id );
@@ -1390,3 +1470,4 @@ static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id )
 
   HOSAKA_Printf("store [%d] is clear \n", id );
 }
+
