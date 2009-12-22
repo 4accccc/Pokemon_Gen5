@@ -780,6 +780,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
     if( scproc_CheckShowdown(wk) ){
+      OS_TPrintf("決着ついた\n");
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
       return wk->flowResult;
     }

@@ -2718,18 +2718,17 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 {
-   u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-   u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
   switch( *seq ){
   case 0:
     {
+      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
+
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
       BPP_HpPlus( bpp, args[2] );
 
-      if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
-      {
+      if( vpos != BTLV_MCSS_POS_ERROR ){
         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
         (*seq)++;
       }
@@ -2741,12 +2740,20 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
+      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
       BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
       (*seq)++;
     }
     break;
   case 2:
-      if( BTLV_WaitEffectByPos(wk->viewCore, vpos) )
+    {
+      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
+      if( vpos != BTLV_MCSS_POS_ERROR ){
+        if( !BTLV_WaitEffectByPos(wk->viewCore, vpos) ){
+          break;
+        }
+      }
+
       {
         BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
@@ -2755,10 +2762,10 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
 
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
-
         (*seq)++;
       }
-      break;
+    }
+    break;
   case 3:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PlaySE( SEQ_SE_LVUP );

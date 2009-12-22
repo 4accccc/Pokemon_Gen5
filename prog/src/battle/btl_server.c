@@ -78,6 +78,7 @@ struct _BTL_SERVER {
   u8          numClient;
   u8          quitStep;
   u32         escapeClientID;
+  u32         exitTimer;
 
   BTL_SERVER_CMD_QUE  queBody;
   BTL_SERVER_CMD_QUE* que;
@@ -785,10 +786,17 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
   // @todo 本来は勝ちor負け、野生orトレーナー戦などで分岐する
   switch( *seq ){
   case 0:
-    PMSND_PlayBGM( SEQ_BGM_WIN1 );
-    if( BTL_MAIN_GetCompetitor(server->mainModule) == BTL_COMPETITOR_TRAINER ){
-      setMainProc( server, ServerMain_ExitBattle_ForTrainer );
-    }else{
+    if( BTL_MAIN_ChecBattleResult(server->mainModule) == BTL_RESULT_WIN )
+    {
+      PMSND_PlayBGM( SEQ_BGM_WIN1 );
+      if( BTL_MAIN_GetCompetitor(server->mainModule) == BTL_COMPETITOR_TRAINER ){
+        setMainProc( server, ServerMain_ExitBattle_ForTrainer );
+      }else{
+        (*seq)++;
+      }
+    }
+    else
+    {
       (*seq)++;
     }
     break;

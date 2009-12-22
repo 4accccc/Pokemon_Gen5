@@ -182,7 +182,7 @@ static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID );
 static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
 static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
-static void checkWinner( BTL_MAIN_MODULE* wk );
+static BtlResult checkWinner( BTL_MAIN_MODULE* wk );
 static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
 static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus );
 static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
@@ -2152,7 +2152,7 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
  * @param   wk
  * @param   pokeID
  *
- * @retval  BtlPokePos    ポケモン戦闘位置（戦闘に出ていなければBTL_POS_MAX）
+ * @retval  BtlPokePos    ポケモン戦闘位置（戦闘に出ていなければBTL_POS_NULL）
  */
 //=============================================================================================
 BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID )
@@ -2167,10 +2167,31 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_C
     {
       return pos;
     }
-    GF_ASSERT_MSG(0, " not fighting pokemon client=%d, idx=%d, pokeID [%d]", clientID, idx, pokeID );
   }
-  GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
-  return BTL_POS_MAX;
+  return BTL_POS_NULL;
+}
+//=============================================================================================
+/**
+ * バトルポケモンIDをポケモン描画位置に変換
+ *
+ * @param   wk
+ * @param   pokeCon
+ * @param   pokeID
+ *
+ * @retval  u8   （戦闘に出ていない場合 BTLV_MCSS_POS_ERROR )
+ */
+//=============================================================================================
+u8 BTL_MAIN_PokeIDtoViewPos( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID )
+{
+  BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk, pokeCon, pokeID );
+  if( pos != BTL_POS_NULL )
+  {
+    return BTL_MAIN_BtlPosToViewPos( wk, pos );
+  }
+  else
+  {
+    return BTLV_MCSS_POS_ERROR;
+  }
 }
 //=============================================================================================
 /**
@@ -2185,6 +2206,7 @@ u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID )
 {
   return PokeID_to_ClientID( pokeID );
 }
+
 
 //=============================================================================================
 /**
@@ -2987,6 +3009,19 @@ u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
 {
   return wk->bonusMoney;
 }
+//=============================================================================================
+/**
+ * プレイヤー側が勝ったか判定
+ *
+ * @param   wk
+ *
+ * @retval  BtlResult
+ */
+//=============================================================================================
+BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
+{
+  return checkWinner( wk );
+}
 
 //----------------------------------------------------------------------------------------------
 // トレーナーパラメータ関連
@@ -3231,7 +3266,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 //----------------------------------------------------------------------------------------------
 // 勝敗判定
 //----------------------------------------------------------------------------------------------
-static void checkWinner( BTL_MAIN_MODULE* wk )
+static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
 {
   // 種々メッセージのタグ解釈不備を解消すべし
   BtlResult result;
@@ -3286,6 +3321,7 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
   }
 
   wk->setupParam->result = result;
+  return result;
 }
 
 //----------------------------------------------------------------------------------------------
