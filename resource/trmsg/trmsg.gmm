@@ -523,10 +523,10 @@
 	</row>
 
 	<row id="TRID_FUTAGO_01_TRMSG_POKE_ONE_1">
-		<language name="JPN" width="216">ポケモン　１ひきだけ？
-それじゃあ　しょうぶ　できないわ</language>
-		<language name="JPN_KANJI" width="216">ポケモン　１ひきだけ？
-それじゃあ　しょうぶ　できないわ</language>
+		<language name="JPN" width="216">ポケモン　１ひき　だけ？
+それでも　トレーナー　なの？</language>
+		<language name="JPN_KANJI" width="216">ポケモン　１ひき　だけ？
+それでも　トレーナー　なの？</language>
 	</row>
 
 	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_START_2">
@@ -551,10 +551,10 @@
 	</row>
 
 	<row id="TRID_FUTAGO_01_TRMSG_POKE_ONE_2">
-		<language name="JPN" width="216">ポケモン　１ひきだけ？
-それじゃあ　しょうぶ　できないわ</language>
-		<language name="JPN_KANJI" width="216">ポケモン　１ひきだけ？
-それじゃあ　しょうぶ　できないわ</language>
+		<language name="JPN" width="216">ポケモン　１ひき　だけ？
+それでも　トレーナー　なの？</language>
+		<language name="JPN_KANJI" width="216">ポケモン　１ひき　だけ？
+それでも　トレーナー　なの？</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENM_01_TRMSG_FIGHT_START">
