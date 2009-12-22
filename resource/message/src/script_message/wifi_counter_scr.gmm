@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-12-19T19:19:42"/>
+	<create user="iwasawa" host="W00157" date="2009-12-22T12:59:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1490" top="175" right="2178" bottom="955" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="513"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="526"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -464,13 +464,9 @@ C-Gear入手前</comment>
 		<comment>グローバルターミナル説明</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">グローバルターミナルは
-……　……　……▼
-グローバルターミナルを
-ごりよう　ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナルは
-……　……　……▼
-グローバルターミナルを
-ご利用ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gterminal_win01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -545,20 +541,25 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
-	<row id="msg_gterminal_gts_exp" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_gterminal_gts_exp01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ＧＴＳでは　ポケモンを　あずけること
 ポケモンを　さがすことの[BE:01:ページ切り替え（クリア）]
 ２つの　ほうほうで
-ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳでは　ポケモンを　預けること
 ポケモンを　探すことの[BE:01:ページ切り替え（クリア）]
 ２つの　方法で
-ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
+ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gterminal_gts_exp02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>GTS</comment>
+		<attribute name="キャラ指定">GTS</attribute>
+		<language name="JPN" width="256">くわしい　せつめいを
+ごきぼうですか？</language>
+		<language name="JPN_KANJI" width="256">くわしい　説明を
 ご希望ですか？</language>
 	</row>
 
@@ -566,26 +567,18 @@ C-Gear入手前</comment>
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　あずけるには
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　預けるには
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
-ご希望ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_search" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">ポケモンを　さがすには
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　せつめいを
-ごきぼうですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　探すには
-……　……　……[BE:01:ページ切り替え（クリア）]
-くわしい　説明を
-ご希望ですか？</language>
+……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gterminal_gts_exp_win01" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
@@ -845,8 +838,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ランダムマッチの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
-どの　せつめいを　ききますか？</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -855,8 +847,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
-どの　せつめいを　ききますか？</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">レーティングモードの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -865,8 +856,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">フリーモードの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]
-どの　せつめいを　ききますか？</language>
+せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">フリーモードの
 せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>

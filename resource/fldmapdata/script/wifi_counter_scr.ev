@@ -452,16 +452,13 @@ sub_wifi_global_terminal:
   WHILE $i_loop == TRUE
     SWITCH  $i_seq
     CASE SEQ_SUB_GTERMINAL_MENU THEN
-      //グローバルターミナルをご利用ですか？
-      _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_01 )
       _CALL sub_gterminal_menu  //メニュー表示
       $i_seq = $reg_return
-      _BALLOONWIN_CLOSE()
     
     CASE SEQ_SUB_GTERMINAL_EXP THEN
       _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_exp01 ) //説明を聞く
-      $i_seq = SEQ_SUB_GTERMINAL_MENU
       _BALLOONWIN_CLOSE()
+      $i_seq = SEQ_SUB_GTERMINAL_MENU
  
     CASE SEQ_SUB_GTERMINAL_GTS THEN
       _CALL sub_gterminal_gts  //GTS
@@ -497,6 +494,9 @@ _RET
 sub_gterminal_menu:
 {
   DEFINE_LOCAL  i_ret
+  
+  //グローバルターミナルをご利用ですか？
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_01 )
 
   //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
@@ -510,6 +510,7 @@ sub_gterminal_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
+  _BALLOONWIN_CLOSE()
 
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_SUB_GTERMINAL_RETURN
@@ -528,18 +529,14 @@ sub_gterminal_gts:
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
 
-
   $i_seq = SEQ_SUB_GTERMINAL_GTS_MENU
   $i_loop = TRUE
 
   WHILE $i_loop == TRUE
     SWITCH  $i_seq
     CASE SEQ_SUB_GTERMINAL_GTS_MENU THEN
-      //グローバル交換をしますか？
-      _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gts_01 )
       _CALL sub_gterminal_gts_menu  //メニュー表示
       $i_seq = $reg_return
-      _BALLOONWIN_CLOSE()
     
     CASE SEQ_SUB_GTERMINAL_GTS_EXP THEN
       _CALL sub_gterminal_gts_exp  //説明を聞く
@@ -569,6 +566,9 @@ sub_gterminal_gts_menu:
 {
   DEFINE_LOCAL  i_ret
 
+  //グローバル交換をしますか？
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gts_01 )
+
   //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
@@ -578,6 +578,7 @@ sub_gterminal_gts_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
+  _BALLOONWIN_CLOSE()
 
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_SUB_GTERMINAL_GTS_RETURN
@@ -594,12 +595,15 @@ sub_gterminal_gts_exp:
 {
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_loop
-
-  //説明
-  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gts_exp )
+  
+  //GTSは
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gts_exp01 )
+  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
+    //詳しい説明をご希望ですか？
+    _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gts_exp02 )
 
     //分岐・預ける/探す/わかった
 	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
@@ -735,6 +739,7 @@ sub_gterminal_gts_nego_exp:
 
   //説明
   _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_gterminal_gtsnego_exp )
+  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
