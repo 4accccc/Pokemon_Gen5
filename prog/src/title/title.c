@@ -539,7 +539,8 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 		CG2d->strbufENG = GFL_STR_CreateBuffer( 64, heapID );
 		GFL_MSG_GetString(CG2d->mm, TITLE_STR_001, CG2d->strbufENG);
 		//メッセージ表示
-		PRINTSYS_PrintQue(CG2d->printQue, CG2d->bmp, 64, 0, CG2d->strbufENG, CG2d->fontHandle);
+		PRINTSYS_PrintQueColor(CG2d->printQue, CG2d->bmp, 64, 0, CG2d->strbufENG, 
+		  CG2d->fontHandle, PRINTSYS_MACRO_LSB(8,9,0));
 		CG2d->message_req = TRUE;
 	}
 }
