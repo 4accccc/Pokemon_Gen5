@@ -132,7 +132,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *p
 {
   u8 i;
   IRC_BATTLE_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRC_BATTLE, 0x18000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRC_BATTLE, 0x20000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(IRC_BATTLE_WORK), HEAPID_IRC_BATTLE );
   work->heapId = HEAPID_IRC_BATTLE;

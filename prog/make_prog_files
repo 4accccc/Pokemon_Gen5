@@ -1109,7 +1109,9 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/ribbon.c
 
 # バトル大会
-#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_BAG
+#===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
 				net_app/irc_battle/irc_battle_main.c \
 				net_app/irc_battle/irc_battle_subproc.c
@@ -1189,7 +1191,6 @@ SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_POKE_STATUS
 SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 # TVトランシーバー(非通信)
