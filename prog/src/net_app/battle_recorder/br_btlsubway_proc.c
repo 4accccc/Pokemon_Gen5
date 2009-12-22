@@ -520,7 +520,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
     {
       4,
       3,
-      11,
+      14,
       2,
       msg_804
     },
@@ -658,7 +658,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
     {
       4,
       3,
-      11,
+      14,
       2,
       msg_804
     },
@@ -794,7 +794,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
     {
       4,
       3,
-      11,
+      14,
       2,
       msg_804
     },
@@ -808,7 +808,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
     { 
       4,
       9,
-      11,
+      15,
       2,
       msg_812,
     },
@@ -857,7 +857,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
     { 
       4,
       17,
-      11,
+      15,
       2,
       msg_813,
     },
@@ -1007,7 +1007,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     {
       4,
       3,
-      11,
+      13,
       2,
       msg_804
     },

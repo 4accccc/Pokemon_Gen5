@@ -1094,21 +1094,21 @@ static void Br_RndMatch_CreateSubDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PR
     {
       8,
       3,
-      16,
+      24,
       2,
       msg_900
     },
     {
       8,
       8,
-      16,
+      24,
       2,
       msg_901
     },
     {
       8,
       13,
-      16,
+      24,
       2,
       msg_902
     },
