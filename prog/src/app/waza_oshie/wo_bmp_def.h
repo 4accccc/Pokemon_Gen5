@@ -220,7 +220,7 @@ enum {
 
 // キャラリソースID
 enum {
-  WO_CHR_ID_APP_COMMON=0, // リストカーソル
+  WO_CHR_ID_APP_COMMON = 0,		// リストカーソル
   WO_CHR_ID_CURSOR,           // 選択カーソル
   WO_CHR_ID_KIND,             // 分類アイコン
   WO_CHR_ID_TYPE1,            // タイプアイコン1
@@ -232,7 +232,8 @@ enum {
   WO_CHR_ID_TYPE7,            // タイプアイコン7
   WO_CHR_ID_TYPE8,            // タイプアイコン8
   WO_CHR_ID_TYPE_MAX=WO_CHR_ID_TYPE8,
-  WO_CHR_ID_MAX = WO_CHR_ID_TYPE_MAX - WO_CHR_ID_APP_COMMON + 1 // 最大
+	WO_CHR_ID_POKEGRA,					// ポケモン正面絵
+  WO_CHR_ID_MAX								// 最大
 };
 
 // パレットリソースID
@@ -241,7 +242,8 @@ enum {
   WO_PAL_ID_OBJ,            // いろいろ
   WO_PAL_ID_TYPE,           // タイプ・分類アイコン
   WO_PAL_ID_TYPE_M,         // タイプ・分類アイコン
-  WO_PAL_ID_MAX = WO_PAL_ID_TYPE_M - WO_PAL_ID_APP_COMMON + 1  // 最大
+	WO_PAL_ID_POKEGRA,				// ポケモン正面絵
+  WO_PAL_ID_MAX							// 最大
 };
 
 // セルリソースID
@@ -249,9 +251,11 @@ enum {
   WO_CEL_ID_APP_COMMON = 0,   // タッチバー共通素材
   WO_CEL_ID_CURSOR,           // 選択カーソル
   WO_CEL_ID_TYPE,             // タイプアイコン
-  WO_CEL_ID_MAX = WO_CEL_ID_TYPE - WO_CEL_ID_APP_COMMON + 1   // 最大
+	WO_CEL_ID_POKEGRA,					// ポケモン正面絵
+  WO_CEL_ID_MAX								// 最大
 };
 
+/*
 // セルアニメリソースID
 enum {
   WO_ANM_ID_APP_COMMON = 0,     // リストカーソル
@@ -259,6 +263,7 @@ enum {
   WO_ANM_ID_TYPE,             // タイプアイコン
   WO_ANM_ID_MAX = WO_ANM_ID_TYPE - WO_ANM_ID_APP_COMMON + 1   // 最大
 };
+*/
 
 // アニメナンバー
 enum{
@@ -343,8 +348,8 @@ enum{
 #define TYPE_ICON8_PX ( TYPE_ICON5_PX )
 #define TYPE_ICON8_PY ( TYPE_ICON7_PY+32 )
 
-#define POKE_PX (52)
-#define POKE_PY (128)
+#define POKE_PX (204)
+#define POKE_PY (124)
 
 ////////////////////////////////////////////////////////////////////
 //リスト

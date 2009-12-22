@@ -43,6 +43,7 @@
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
 #include "app/p_status.h"
+#include "system/poke2dgra.h"
 
 #include "app/waza_oshie.h"
 #include "wo_bmp_def.h"
@@ -109,6 +110,9 @@ enum {
   WO_CLA_TYPE6,     // タイプアイコン２
   WO_CLA_TYPE7,     // タイプアイコン３
   WO_CLA_TYPE8,     // タイプアイコン４
+
+	WO_CLA_POKEGRA,		// ポケモン正面絵
+
   WO_CLA_MAX
 };
 
@@ -549,6 +553,28 @@ static const CLACT_ENTRY_DATA ClactParamTbl[] =
     TYPE_ICON8_PX, TYPE_ICON8_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
     { WO_CHR_ID_TYPE8, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    2, 0
+  },
+/*
+  s16 x;              ///< [ X ] 座標
+  s16 y;              ///< [ Y ] 座標
+  s16 z;              ///< [ Z ] 座標
+
+  u16 anm;            ///< アニメ番号
+  int pri;            ///< 優先順位
+  int pal;            ///< パレット番号 ※この値を TCATS_ADD_S_PAL_AUTO にすることで、
+                      ///< NCEデータのカラーNo指定を受け継ぐ
+  int d_area;           ///< 描画エリア
+
+  int id[ CLACT_U_RES_MAX ];    ///< 使用リソースIDテーブル
+
+  int bg_pri;           ///< BG面への優先度
+  int vram_trans;         ///< Vram転送フラグ
+*/
+  { // ポケモン正面絵(上画面）
+    POKE_PX, POKE_PY, 0,
+    0, 0, 0, CLSYS_DEFREND_MAIN,
+    { WO_CHR_ID_POKEGRA, WO_PAL_ID_POKEGRA, WO_CEL_ID_POKEGRA, WO_CEL_ID_POKEGRA, },
     2, 0
   },
 };
@@ -2410,6 +2436,8 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
 {
   u32 i;
   ARCHANDLE *c_handle;
+	POKEMON_PASO_PARAM * ppp;
+	BOOL	fast;
   // キャラ
 //  CATS_LoadResourceCharArcH(
 //    wk->csp, wk->crp, p_handle,
@@ -2479,7 +2507,7 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
                                       p_handle, NARC_waza_oshie_gra_list_cur_NCER,
                                       NARC_waza_oshie_gra_list_cur_NANR, HEAPID_WAZAOSHIE );
 
-  wk->clres[2][WO_ANM_ID_TYPE] = GFL_CLGRP_CELLANIM_Register(
+  wk->clres[2][WO_CEL_ID_TYPE] = GFL_CLGRP_CELLANIM_Register(
                                       c_handle,
                                       APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K),
                                       APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K),
@@ -2500,6 +2528,18 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
 //    wk->csp, wk->crp, p_handle,
 //    NARC_waza_oshie_gra_list_cur_NANR, 0, WO_ANM_ID_CURSOR );
 //  WazaTypeIcon_CellAnmResourceLoad( wk->csp, wk->crp, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE );
+
+  GFL_ARC_CloseDataHandle( c_handle );
+
+	// ポケモン正面絵
+	c_handle = POKE2DGRA_OpenHandle( HEAPID_WAZAOSHIE );
+
+	ppp  = PP_GetPPPPointer( wk->dat->pp );
+	fast = PPP_FastModeOn( ppp );
+	wk->clres[0][WO_CHR_ID_POKEGRA] = POKE2DGRA_OBJ_CGR_RegisterPPP( c_handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
+	wk->clres[1][WO_PAL_ID_POKEGRA] = POKE2DGRA_OBJ_PLTT_RegisterPPP( c_handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, 4*32, HEAPID_WAZAOSHIE );
+	wk->clres[2][WO_CEL_ID_POKEGRA] = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
+	PPP_FastModeOff( ppp, fast );
 
   GFL_ARC_CloseDataHandle( c_handle );
 }
