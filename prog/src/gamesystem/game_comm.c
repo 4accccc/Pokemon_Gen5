@@ -670,6 +670,7 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
   GAME_COMM_INFO *comm_info = &gcsp->info;
   GAME_COMM_INFO_QUE *que = &comm_info->msg_que[comm_info->now_pos];
   MYSTATUS *myst;
+  int i;
   
   if(que->use == FALSE){
     return FALSE;
@@ -679,8 +680,10 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
   GFL_STD_MemClear(dest_msg, sizeof(GAME_COMM_INFO_MESSAGE));
   myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, que->net_id);
   MyStatus_CopyNameString(myst, comm_info->name_strbuf[que->net_id]);
-  dest_msg->name[0] = comm_info->name_strbuf[que->net_id];
-  dest_msg->wordset_no[0] = que->net_id;
+  for(i = 0; i < INFO_WORDSET_MAX; i++){
+    dest_msg->name[i] = comm_info->name_strbuf[que->net_id];
+    dest_msg->wordset_no[i] = que->net_id;
+  }
   dest_msg->message_id = que->message_id;
   
   //キューの参照位置を進める

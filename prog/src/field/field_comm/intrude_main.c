@@ -29,6 +29,7 @@
 #include "intrude_mission.h"
 #include "poke_tool/monsno_def.h"
 #include "field/field_status_local.h"  // for FIELD_STATUS_
+#include "intrude_work.h"
 
 
 //==============================================================================
@@ -506,8 +507,7 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
 
   //変装によるOBJCODEが変わっているチェック
   if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){
-    GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-    u16 obj_code = Intrude_GetObjCode(target_status, GAMEDATA_GetMyStatus(gamedata));
+    u16 obj_code = Intrude_GetObjCode(target_status, Intrude_GetMyStatus(intcomm, net_id));
     if(obj_code != CommPlayer_GetObjCode(intcomm->cps, net_id)){
       CommPlayer_Del(intcomm->cps, net_id);
       CommPlayer_Add(intcomm->cps, net_id, obj_code, &target_status->player_pack);
