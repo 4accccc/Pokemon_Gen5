@@ -30,6 +30,10 @@
 #include "savedata/save_control.h" // for
 #include "savedata/save_control_intr.h" // for
 
+//BGMメモリにおく
+#include "sound/sound_manager.h"
+#include "sound/wb_sound_data.sadl"
+
 //==============================================================================
 //	
 //==============================================================================
@@ -187,6 +191,7 @@ typedef struct
 	NAMEIN_PARAM *nameInParam;
   INTR_SAVE_CONTROL* intr_save;
   GFL_PROCSYS* procsys_up;
+  SOUNDMAN_PRESET_HANDLE* bgm_handle;
 }GAMESTART_FIRST_WORK;
 
 #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
@@ -227,6 +232,18 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
+
+  //BGMハンドル
+  //イントロの中でならすものだが、
+  //ここでメモリ上においておく、さもないと、
+  //名前入力中にならない
+  { 
+    static const u32 sc_bgm_tbl[]  =
+    { 
+      SEQ_BGM_STARTING2,
+    };
+    work->bgm_handle  = SOUNDMAN_PresetSoundTbl( sc_bgm_tbl, NELEMS(sc_bgm_tbl) );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -347,6 +364,8 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
   GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
   
+  SOUNDMAN_ReleasePresetData( work->bgm_handle );
+
   // セーブシステム削除
 #ifdef USE_INTRSAVE
   IntrSave_Exit( work->intr_save );
