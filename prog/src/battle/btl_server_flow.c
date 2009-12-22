@@ -791,6 +791,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
       wk->numEndActOrder = i+1;
       break;
     }
+    OS_TPrintf(" Que WritePtr=%d\n", wk->que->writePtr );
   }
 
   // 全アクション処理し終えた

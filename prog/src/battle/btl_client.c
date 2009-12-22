@@ -1431,7 +1431,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 #else
       //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER )
-      { 
+      {
         ai_bit = 1; //@todo とりあえずBASICだけ
       }
       //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
@@ -2793,7 +2793,8 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
-      BPP_HpPlus( bpp, args[2] );
+//      BPP_HpPlus( bpp, args[2] );
+      OS_TPrintf("クライアント側 : hp %d 増えて %d\n", args[2], BPP_GetValue(bpp, BPP_HP) );
 
       if( vpos != BTLV_MCSS_POS_ERROR ){
         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );

@@ -620,12 +620,12 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     va_end( list );
 
     #ifdef BTL_PRINT_SYSTEM_ENABLE
-    BTL_Printf("PutCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
+    OS_TPrintf("PutCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
     for(i=0; i<arg_cnt; ++i)
     {
-      BTL_PrintfSimple("%d,", ArgBuffer[i]);
+      OS_TPrintf("%d,", ArgBuffer[i]);
     }
-    BTL_PrintfSimple("\n");
+    OS_TPrintf("\n");
     #endif
 
     put_core( que, cmd, fmt, ArgBuffer );
@@ -750,12 +750,12 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
       {
         u8 arg_cnt = SC_ARGFMT_GetArgCount( fmt );
         u8 i;
-        BTL_Printf("ReadCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
+        OS_TPrintf("ReadCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
         for(i=0; i<arg_cnt; ++i)
         {
-          BTL_PrintfSimple("%d,", args[i]);
+          OS_TPrintf("%d,", args[i]);
         }
-        BTL_PrintfSimple("\n");
+        OS_TPrintf("\n");
       }
       #endif
     }

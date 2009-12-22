@@ -2271,7 +2271,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->agi    = bpp->baseParam.agility - info->agi;
 
       bpp->coreParam.hp += info->hp;
-      BTL_Printf("レベルアップしたのでHPが%dに増加\n", bpp->coreParam.hp);
+      OS_TPrintf("レベルアップしたのでHPが%dに増加\n", bpp->coreParam.hp);
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
 //      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
