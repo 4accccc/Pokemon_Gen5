@@ -137,6 +137,8 @@ enum
 
   BTLV_GAUGE_TYPE_3vs3_YOFFSET_E = -16,   //3vs3時のゲージY方向オフセット（相手側）
   BTLV_GAUGE_TYPE_3vs3_YOFFSET_M = -24,   //3vs3時のゲージY方向オフセット（自分側）
+
+  BTLV_GAUGE_EXP_SE_TIME = 16,
 };
 
 typedef enum
@@ -196,7 +198,8 @@ struct _BTLV_GAUGE_CLWK
   u32           level_up_req  :1;
   u32           gauge_enable  :1;
   u32           seq_no        :4;
-  u32                         :24;
+  u32           se_wait       :8;
+  u32                         :16;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -355,12 +358,20 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     }
     if( bgw->bgcl[ i ].exp_calc_req )
     {
-      PMSND_PlaySE( SEQ_SE_EXP );
-      Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
-      if( bgw->bgcl[ i ].exp_calc_req == 0 )
-      {
-        PMSND_StopSE();
+      if( bgw->bgcl[ i ].se_wait == 0 )
+      { 
+        PMSND_PlaySE( SEQ_SE_EXP );
       }
+      Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
+    }
+    if( bgw->bgcl[ i ].se_wait < BTLV_GAUGE_EXP_SE_TIME )
+    { 
+      bgw->bgcl[ i ].se_wait++;
+    }
+    if( ( bgw->bgcl[ i ].exp_calc_req == 0 ) && ( bgw->bgcl[ i ].se_wait == BTLV_GAUGE_EXP_SE_TIME ) )
+    {
+      PMSND_StopSE();
+      bgw->bgcl[ i ].se_wait++;
     }
     if( bgw->bgcl[ i ].level_up_req )
     {
@@ -663,6 +674,7 @@ void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 //============================================================================================
 void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 {
+  bgw->bgcl[ pos ].se_wait = 0;
   Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
 
@@ -695,6 +707,7 @@ void  BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp,
 
   bgw->bgcl[ pos ].seq_no = 0;
   bgw->bgcl[ pos ].level_up_req = 1;
+  bgw->bgcl[ pos ].se_wait = 0;
 
   Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
