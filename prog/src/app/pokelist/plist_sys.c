@@ -837,7 +837,7 @@ static void PLIST_InitMessage( PLIST_WORK *work )
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_FONT*16*2, 16*2, work->heapId );
   
   //キューが足りなかったので追加(デフォルト1024
-  work->printQue = PRINTSYS_QUE_CreateEx( 2048 , work->heapId );
+  work->printQue = PRINTSYS_QUE_CreateEx( 6144 , work->heapId );
   GFL_FONTSYS_SetDefaultColor();
 }
 
