@@ -2260,8 +2260,9 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 //----------------------------------------------------------------------------------
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
 {
-  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
-  {
+  if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+  &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
+  ){
     BTL_POKEPARAM* targetPoke;
     BtlPokePos  targetPos = BTL_POS_NULL;
 
