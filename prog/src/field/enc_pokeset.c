@@ -147,7 +147,6 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   //////////////////////////////
   //フラグチェック
   outEfp->gameclear_f = EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( (GAMEDATA*)gdata ),SYS_FLAG_GAME_CLEAR); 
-  outEfp->gameclear_f = TRUE; //@todo 仮　クリアフラグが立つようになったら削除
 
   //釣り戦闘かどうか
   if( location == ENC_LOCATION_FISHING || location == ENC_LOCATION_FISHING_SP ){
