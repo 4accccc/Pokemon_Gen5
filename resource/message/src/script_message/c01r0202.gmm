@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T23:17:54"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T19:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,11 +315,11 @@
 	<row id="msg_c01r0202_dancer_01">
 		<attribute name="キャラ指定">DANCER
 ダンサー</attribute>
-		<language name="JPN" width="256">ダンスって　ことばが　なくても
+		<language name="JPN" width="256">ダンスは　ことばが　なくても
 たのしめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
 ポケモンも　ことばが　つうじない
 あいてとも　たのしめて　すごいよな</language>
-		<language name="JPN_KANJI" width="256">ダンスって　言葉が　なくても
+		<language name="JPN_KANJI" width="256">ダンスは　言葉が　なくても
 楽しめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
 ポケモンも　言葉が　通じない
 相手とも　楽しめて　すごいよな</language>
