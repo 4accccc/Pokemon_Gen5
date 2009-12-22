@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-12-01T12:02:08"/>
+	<create user="mori" host="W00155" date="2009-12-22T20:56:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="191" top="128" right="896" bottom="748" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="957" top="173" right="1430" bottom="571" visible="no"/>
+		<tag-palette left="807" top="173" right="1280" bottom="571" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -415,9 +415,9 @@ msg_waza_oboe_10へ
 	<row id="msg_waza_oboe_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>Ｍ１６（ステータス画面なので、そっちを使用？）</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！▼</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2][2:07:８桁:]</language>
+[1:07:わざ名:1]を　おぼえた！▼</language>
 	</row>
 
 	<row id="msg_waza_oboe_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -530,11 +530,11 @@ msg_waza_omoi_10へ
 思い出した用のせりふ</comment>
 		<language name="JPN" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 \[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
-つかいかたを　きれいにわすれた！[2:07:８桁:]
+つかいかたを　きれいにわすれた！\[2:07:８桁:\]
 そして……！[2:07:８桁:]</language>
 		<language name="JPN_KANJI" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 \[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
-つかいかたを　きれいにわすれた！[2:07:８桁:]
+つかいかたを　きれいにわすれた！\[2:07:８桁:\]
 そして……！[2:07:８桁:]</language>
 	</row>
 
