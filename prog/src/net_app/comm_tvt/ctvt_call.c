@@ -84,6 +84,7 @@ struct _CTVT_CALL_MEMBER_WORK
 {
   BOOL isEnable;
   BOOL isLost;
+  BOOL isCheck;
   void *beacon;
   GameServiceID serviceType;
   u8 macAddress[6];
@@ -109,6 +110,7 @@ struct _CTVT_CALL_BAR_WORK
 //ワーク
 struct _CTVT_CALL_WORK
 {
+  u8 checkIdx[3];
   u16 scrollOfs;
   CTVT_CALL_STATE state;
   BOOL isUpdateBarPos;
@@ -193,6 +195,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       callWork->memberData[i].isEnable = FALSE;
       callWork->memberData[i].isLost = FALSE;
+      callWork->memberData[i].isCheck = FALSE;
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
       callWork->memberData[i].beacon = GFL_HEAP_AllocClearMemory( heapId , CTVT_CALL_BEACONSIZE );
     }
@@ -205,6 +208,13 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                           3 , i*(CTVT_CALL_BAR_HEIGHT/8)+1 , 25 , 2 ,
                                           CTVT_PAL_BG_SUB_FONT ,
                                           GFL_BMP_CHRAREA_GET_B );
+    }
+  }
+  {
+    u8 i;
+    for( i=0;i<3;i++ )
+    {
+      callWork->checkIdx[i] = CTVT_CALL_INVALID_NO;
     }
   }
   callWork->scrollOfs = 0;
@@ -283,6 +293,39 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       callWork->state = CCS_FADEOUT;
       CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
+      //ビーコンのセット
+      {
+        u8 i;
+        CTVT_COMM_BEACON *beacon = CTVT_COMM_GetCtvtBeaconData( work , commWork );
+        for( i=0;i<3;i++ )
+        {
+          u8 j;
+          if( callWork->checkIdx[i] == CTVT_CALL_INVALID_NO )
+          {
+            for( j=0;j<6;j++ )
+            {
+              beacon->callTarget[i][j] = 0xFF;
+            }
+          }
+          else
+          {
+            for( j=0;j<6;j++ )
+            {
+              beacon->callTarget[i][j] = callWork->memberData[ callWork->checkIdx[i] ].macAddress[j];
+            }
+          }
+          
+          
+          for( i=0;i<3;i++ )
+          {
+            for( j=0;j<6;j++ )
+            {
+              OS_TFPrintf(3,"[%02x]",beacon->callTarget[i][j]);
+            }
+            OS_TFPrintf(3,"\n");
+          }
+        }
+      }
     }
     if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
     {
@@ -356,15 +399,56 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   {
     if( tpx > 8 && tpx < 256-(8*4) )
     {
-      const u8 idx = tpy/CTVT_CALL_BAR_HEIGHT;
-      const u8 memIdx = callWork->barWork[idx].memberWorkNo;
-      const CTVT_CALL_MEMBER_WORK *memberWork = &callWork->memberData[memIdx];
-      
-      if( memberWork->isEnable == TRUE )
+      const s16 idx = (tpy+callWork->scrollOfs)/CTVT_CALL_BAR_HEIGHT;
+      OS_TFPrintf(3,"IDX[%d]\n",idx);
+      if( idx >= 0 && idx < CTVT_CALL_BAR_NUM )
       {
-        CTVT_COMM_SetMode( work , commWork , CCIM_CHILD );
-        CTVT_COMM_SetMacAddress( work , commWork , memberWork->macAddress );
-        callWork->state = CCS_WAIT_CONNECT;
+        const u8 memIdx = callWork->barWork[idx].memberWorkNo;
+        CTVT_CALL_MEMBER_WORK *memberWork = &callWork->memberData[memIdx];
+        
+        if( memberWork->isEnable == TRUE )
+        {
+          if( memberWork->serviceType == WB_NET_COMM_TVT )
+          {
+            CTVT_COMM_SetMode( work , commWork , CCIM_CHILD );
+            CTVT_COMM_SetMacAddress( work , commWork , memberWork->macAddress );
+            callWork->state = CCS_WAIT_CONNECT;
+          }
+          else
+          {
+            if( memberWork->isCheck == FALSE )
+            {
+              u8 i;
+              for( i=0;i<3;i++ )
+              {
+                if( callWork->checkIdx[i] == CTVT_CALL_INVALID_NO )
+                {
+                  callWork->checkIdx[i] = memIdx;
+                  break;
+                }
+              }
+              if( i<3 )
+              {
+                memberWork->isCheck = TRUE;
+                GFL_CLACT_WK_SetAnmSeq( callWork->barWork[idx].clwkCheck , CTOAS_CHECK_SELECT );
+              }
+            }
+            else
+            {
+              u8 i;
+              for( i=0;i<3;i++ )
+              {
+                if( callWork->checkIdx[i] == memIdx )
+                {
+                  callWork->checkIdx[i] = CTVT_CALL_INVALID_NO;
+                  break;
+                }
+              }
+              memberWork->isCheck = FALSE;
+              GFL_CLACT_WK_SetAnmSeq( callWork->barWork[idx].clwkCheck , CTOAS_CHECK );              
+            }
+          }
+        }
       }
     }
   }
@@ -487,6 +571,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     }
   }
   
+  //消える処理
   for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
   {
     if( callWork->memberData[i].isEnable == TRUE &&
@@ -503,6 +588,13 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         else
         {
           break;
+        }
+      }
+      for( j=0;j<3;j++ )
+      {
+        if( callWork->checkIdx[j] == i )
+        {
+          callWork->checkIdx[j] = CTVT_CALL_INVALID_NO;
         }
       }
       callWork->memberData[i].isEnable = FALSE;
@@ -622,6 +714,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
         str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_02 );
       }
 
+      
       PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
               152 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
       GFL_STR_DeleteBuffer( str );
@@ -659,6 +752,15 @@ static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *ca
       pos.x = CTVT_CALL_CHECK_X;
       GFL_CLACT_WK_SetPos( barWork->clwkCheck , &pos , CLSYS_DRAW_SUB );
       GFL_CLACT_WK_SetDrawEnable( barWork->clwkCheck , TRUE );
+
+      if( callWork->memberData[barWork->memberWorkNo].isCheck == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( callWork->barWork[idx].clwkCheck , CTOAS_CHECK_SELECT );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( callWork->barWork[idx].clwkCheck , CTOAS_CHECK );
+      }
     }
     else
     {

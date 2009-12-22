@@ -108,6 +108,7 @@ typedef struct
 //ワーク
 struct _CTVT_COMM_WORK
 {
+  BOOL isLowerDataInit;
   u8 connectNum;
   CTVT_COMM_STATE state;
   
@@ -225,14 +226,23 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   
   {
     //ビーコンの初期化
+    u8 i,j;
     const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( initWork->gameData );
     
     MyStatus_CopyNameStrCode( myStatus , commWork->beacon.name , CTVT_COMM_NAME_LEN );
     commWork->beacon.id = MyStatus_GetID_Low( myStatus );
     commWork->beacon.connectNum = 1;
+    for( i=0;i<3;i++ )
+    {
+      for( j=0;j<6;j++ )
+      {
+        commWork->beacon.callTarget[i][j] = 0xFF;
+      }
+    }
   }
   
+  commWork->isLowerDataInit = TRUE;
   GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
@@ -264,7 +274,7 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko&0
   {
     static CTVT_COMM_STATE befState = CCS_NONE;
     if( befState != commWork->state )
@@ -293,6 +303,11 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
     break;
   case CCS_INIT_COMM:
+    if( commWork->isLowerDataInit == FALSE )
+    {
+      commWork->isLowerDataInit = TRUE;
+      GFL_NET_LDATA_InitSystem(heapId);
+    }
     CTVT_COMM_InitComm( work , commWork );
     commWork->state = CCS_INIT_COMM_WAIT;
     break;
@@ -369,11 +384,41 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     break;
     
   case CCS_DISCONNECT:
-    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
-    //GFL_NET_Exit(NULL);
+    if( commWork->connectNum <= 1 )
     {
-      GFL_NET_LDATA_ExitSystem();
+      if( commWork->isLowerDataInit == TRUE )
+      {
+        commWork->isLowerDataInit = FALSE;
+        GFL_NET_LDATA_ExitSystem();
+      }
+      GFL_NET_Exit(NULL);
       commWork->state = CCS_DISCONNECT_WAIT;
+    }
+    else
+    {
+      if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+      {
+        if( commWork->isLowerDataInit == TRUE )
+        {
+          commWork->isLowerDataInit = FALSE;
+          GFL_NET_LDATA_ExitSystem();
+        }
+        commWork->state = CCS_DISCONNECT_WAIT;
+      }
+    }
+    break;
+    
+  case CCS_DISCONNECT_WAIT:
+    if( GFL_NET_IsExit() == TRUE )
+    {
+      if( commWork->nextMode == CCIM_END )
+      {
+        commWork->state = CCS_FINISH;
+      }
+      else
+      {
+        commWork->state = CCS_INIT_COMM;
+      }
     }
     break;
     
@@ -390,27 +435,17 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC ) == TRUE )
       {
-        GFL_NET_LDATA_ExitSystem();
+        if( commWork->isLowerDataInit == TRUE )
+        {
+          commWork->isLowerDataInit = FALSE;
+          GFL_NET_LDATA_ExitSystem();
+        }
         GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
         commWork->state = CCS_FINISH;
       }
     }
     break;
 
-    
-  case CCS_DISCONNECT_WAIT:
-    if( GFL_NET_IsExit() == TRUE )
-    {
-      if( commWork->nextMode == CCIM_END )
-      {
-        commWork->state = CCS_FINISH;
-      }
-      else
-      {
-        commWork->state = CCS_INIT_COMM;
-      }
-    }
-    break;
   }
   
 }
@@ -478,7 +513,11 @@ void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   if( commWork->connectNum <= 1 )
   {
-    GFL_NET_LDATA_ExitSystem();
+    if( commWork->isLowerDataInit == TRUE )
+    {
+      commWork->isLowerDataInit = FALSE;
+      GFL_NET_LDATA_ExitSystem();
+    }
     if( commWork->mode == CCIM_CONNECTED )
     {
       commWork->state = CCS_FINISH;
@@ -1099,6 +1138,12 @@ void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commW
 {
   commWork->isFinishPostWave = FALSE;
 }
+
+CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return &commWork->beacon;
+}
+
 //お絵描きバッファ取得
 DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull )
 {

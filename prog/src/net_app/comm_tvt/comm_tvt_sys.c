@@ -166,7 +166,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     work->nextMode = CTM_CALL;
     break;
   case CTM_PARENT: //親起動
-    CTVT_COMM_SetMode( work , work->commWork , CCIM_PARENT );
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_SCAN );
     work->nextMode = CTM_CALL;
     break;
   case CTM_CHILD:  //子起動

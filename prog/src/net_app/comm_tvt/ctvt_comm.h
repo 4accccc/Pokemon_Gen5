@@ -75,6 +75,8 @@ typedef struct
   u16     id;
   u8      connectNum;
   u8      pad;
+  //呼び出しターゲット
+  u8      callTarget[3][6];
 }CTVT_COMM_BEACON;
 
 //======================================================================
@@ -101,6 +103,7 @@ extern const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WOR
 extern const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
+extern CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 //お絵描きバッファ取得
 extern DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull );
 //お絵描きバッファ追加通知
