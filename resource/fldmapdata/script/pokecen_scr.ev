@@ -431,6 +431,7 @@ sub_pokecen_elevator_in:
   _SE_STOP()
 
   _BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
+
   _RET
 }
 
@@ -465,6 +466,7 @@ sub_pokecen_elevator_out:
   DEFINE_LOCAL  LWK_BM_DOOR_ID
 
   $WK_SYS_SCENE_COMM = 0
+  _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
 
   _PLAYER_POS_GET( BASEX, BASEZ )
   $BASEZ += 3  //受付のみなさんは基本位置がエレベーターの３歩下
