@@ -570,6 +570,9 @@ t02_speech:
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
+
 	//ゲーチス入場
 	_OBJ_ANIME( T02_SAGE_01, anm_sage1_in )
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in )
@@ -624,7 +627,7 @@ t02_speech:
 	
 	//群集：？
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 12 , 5 , 6 ) 
+	_SUBWIN_MSG( msg_t02_boodle_03 , 14 , 5 , 6 ) 
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_03a , 16 , 10 , 7 )
 
@@ -669,8 +672,15 @@ t02_speech:
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 
+	//BGM終了
+	_END_EVENT_BGM()
+
 	//群集おじいさん：キョロキョロ
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle2_look )
+
+	//Ｎ：右向き
+	_OBJ_ANIME( T02_N_01, anm_dir_r )
+	_OBJ_ANIME_WAIT()
 
 	//今の　演説　わしたちは　どうすれば　いいんだ
 	_BALLOONWIN_OBJMSG( msg_t02_boodle_04 , T02_BOODLE_01 )
@@ -712,6 +722,10 @@ t02_speech:
 	_OBJ_DEL( T02_BOODLE_06 )
 	_OBJ_DEL( T02_BOODLE_07 )
 	_OBJ_DEL( T02_BOODLE_08 )
+
+	//Ｎ：下向き
+	_OBJ_ANIME( T02_N_01, anm_dir_d )
+	_OBJ_ANIME_WAIT()
 	
 	//画面暗転解除
 	_BLACK_IN()
