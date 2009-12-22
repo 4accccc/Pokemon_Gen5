@@ -758,7 +758,8 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_gauge.c \
 			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/btlv_timer.c \
-			battle/btlv/btlv_bg.c
+			battle/btlv/btlv_bg.c \
+			battle/tr_ai/tr_ai.c
 
 # バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE
