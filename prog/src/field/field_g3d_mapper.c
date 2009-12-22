@@ -704,9 +704,6 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
     //マップブロック制御解除
     for( i=0; i<g3Dmapper->blockNum; i++ ){
 
-      // BuildModel の破棄
-      //FIELD_BMODEL_MAN_ReleaseAllMapObjects( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
-
       GFL_G3D_MAP_ReleaseGlobalObjResource( g3Dmapper->blockWk[i].g3Dmap );
       GFL_G3D_MAP_ReleaseGlobalTexResource( g3Dmapper->blockWk[i].g3Dmap );
       GFL_G3D_MAP_ReleaseArc( g3Dmapper->blockWk[i].g3Dmap );
