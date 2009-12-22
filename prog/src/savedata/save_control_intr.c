@@ -78,7 +78,9 @@ INTR_SAVE_CONTROL * IntrSave_Init(HEAPID heap_id, SAVE_CONTROL_WORK *ctrl)
 //==================================================================
 void IntrSave_Exit(INTR_SAVE_CONTROL *isc)
 {
-  GF_ASSERT(isc->status == INTR_SAVE_STATUS_2ND_FINISH);
+  if(isc->no_save == FALSE){
+    GF_ASSERT(isc->status == INTR_SAVE_STATUS_2ND_FINISH);
+  }
   GFL_HEAP_FreeMemory(isc);
 }
 
