@@ -1738,7 +1738,10 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           const GFLNetInitializeStruct *aNetStruct;
           if(GFL_NET_IsInit()){
             aNetStruct = GFL_NET_GetNETInitStruct();
-            if(aNetStruct->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY){	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
+
+          //  NET_PRINT("--%d \n",aNetStruct->bNetType);
+            {
+           // if(aNetStruct->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY){	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
               u32 bit = WIH_DWC_GetAllBeaconTypeBit();
               if(bit & GAME_COMM_SBIT_IRC_ALL){
                 pWork->beacon_bit |= _CGEAR_NET_BIT_IR;

@@ -259,8 +259,7 @@ enum
     WH_ERRCODE_MAX
 };
 
-#define DEFAULT_TIMEOUT_FRAME (60 * 10)  //拾ったビーコンを保存しておく時間 60frame * 10sec
-
+#define DEFAULT_TIMEOUT_FRAME (4)  //拾ったビーコンを保存しておく時間 4回
 
 typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 
