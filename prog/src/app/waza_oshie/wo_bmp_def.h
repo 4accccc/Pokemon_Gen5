@@ -144,7 +144,7 @@ enum {
 
 // 上　ポケモン名
 #define WIN_MPRM_PX ( 21 )
-#define WIN_MPRM_PY (  5 )
+#define WIN_MPRM_PY (  4 )
 #define WIN_MPRM_SX (  9 )
 #define WIN_MPRM_SY (  8 )
 #define WIN_MPRM_PAL  ( WO_PAL_SYS_FONT )
@@ -220,7 +220,7 @@ enum {
 
 // キャラリソースID
 enum {
-  WO_CHR_ID_APP_COMMON = 0,		// リストカーソル
+  WO_CHR_ID_APP_COMMON = 0,   // リストカーソル
   WO_CHR_ID_CURSOR,           // 選択カーソル
   WO_CHR_ID_KIND,             // 分類アイコン
   WO_CHR_ID_TYPE1,            // タイプアイコン1
@@ -232,8 +232,8 @@ enum {
   WO_CHR_ID_TYPE7,            // タイプアイコン7
   WO_CHR_ID_TYPE8,            // タイプアイコン8
   WO_CHR_ID_TYPE_MAX=WO_CHR_ID_TYPE8,
-	WO_CHR_ID_POKEGRA,					// ポケモン正面絵
-  WO_CHR_ID_MAX								// 最大
+  WO_CHR_ID_POKEGRA,          // ポケモン正面絵
+  WO_CHR_ID_MAX               // 最大
 };
 
 // パレットリソースID
@@ -242,8 +242,8 @@ enum {
   WO_PAL_ID_OBJ,            // いろいろ
   WO_PAL_ID_TYPE,           // タイプ・分類アイコン
   WO_PAL_ID_TYPE_M,         // タイプ・分類アイコン
-	WO_PAL_ID_POKEGRA,				// ポケモン正面絵
-  WO_PAL_ID_MAX							// 最大
+  WO_PAL_ID_POKEGRA,        // ポケモン正面絵
+  WO_PAL_ID_MAX             // 最大
 };
 
 // セルリソースID
@@ -251,8 +251,8 @@ enum {
   WO_CEL_ID_APP_COMMON = 0,   // タッチバー共通素材
   WO_CEL_ID_CURSOR,           // 選択カーソル
   WO_CEL_ID_TYPE,             // タイプアイコン
-	WO_CEL_ID_POKEGRA,					// ポケモン正面絵
-  WO_CEL_ID_MAX								// 最大
+  WO_CEL_ID_POKEGRA,          // ポケモン正面絵
+  WO_CEL_ID_MAX               // 最大
 };
 
 /*
@@ -307,8 +307,8 @@ enum{
 #define LIST_CUR_D_PX ( 0 )
 #define LIST_CUR_D_PY ( 192-24 )
 // 選択カーソル
-#define SEL_CURSOR_PX ( 127 )
-#define SEL_CURSOR_PY (  81 )
+#define SEL_CURSOR_PX ( 127+3 )
+#define SEL_CURSOR_PY (  84 )
 #define SEL_CURSOR_SY (  24 )
 
 #define SEL_CURSOR_P_PX (0)
@@ -373,10 +373,10 @@ enum{
 
 /////////////////////////////////////////////////////////////////////
 //タッチパネル
-#define TP_WAZA_PX  (0)
-#define TP_WAZA_SX  (16*8)
-#define TP_WAZA_SY  (LIST_SY)
-#define TP_WAZA1_PY (4*8)
+#define TP_WAZA_PX  (   32 )
+#define TP_WAZA_SX  ( 24*8 )
+#define TP_WAZA_SY  (   16 )
+#define TP_WAZA1_PY (   72 )
 #define TP_WAZA2_PY (TP_WAZA1_PY+TP_WAZA_SY)
 #define TP_WAZA3_PY (TP_WAZA2_PY+TP_WAZA_SY)
 #define TP_WAZA4_PY (TP_WAZA3_PY+TP_WAZA_SY)
