@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-21T12:21:12"/>
+	<create user="ohmori" host="W00185" date="2009-12-22T12:55:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,8 +303,8 @@
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　もっている
-[1:02:ポケモンニックネーム:1]が　しんかした！</language>
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』の　ポケモンが
+[1:02:ポケモンニックネーム:1]に　しんかした！</language>
 		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』の　もっている
 [1:02:ポケモンニックネーム:1]が　しんかした！</language>
 	</row>
