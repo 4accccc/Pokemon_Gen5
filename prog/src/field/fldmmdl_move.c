@@ -1905,6 +1905,8 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
     if( ret == TRUE ){
       vec_pos.y = height;
       MMDL_SetVectorPos( mmdl, &vec_pos );
+      MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
+      MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(height) );
       MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
     }else{
       MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
