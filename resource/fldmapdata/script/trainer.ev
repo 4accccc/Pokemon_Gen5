@@ -613,9 +613,23 @@ EVENT_START ev_trainer_talk_battle
     //_CALL ev_trainer_talk_after
 
   ELSE
+  {
+    DEFINE_LOCAL  LWK_TRAINER_IS_DOUBLE
+    DEFINE_LOCAL  LWK_2VS2_OK
 
-    _CALL sub_trainer_talk_battle
+    //トレーナータイプ取得(シングル＝０、ダブル＝１）
+    _TRAINER_TYPE_GET( LWK_TRAINER_IS_DOUBLE )
+    //2vs2が可能か？チェック
+    _2VS2_BATTLE_CHECK( LWK_2VS2_OK )
 
+    IF $LWK_TRAINER_IS_DOUBLE == TRUE && $LWK_2VS2_OK != TRUE THEN
+      //ダブルバトルで手持ちが足りない場合、NGメッセージへ
+      _CALL sub_trainer_talk_2vs2_NG
+    ELSE
+      //それ以外の場合、戦闘へ
+      _CALL sub_trainer_talk_battle
+    ENDIF
+  }
   ENDIF
   
 EVENT_END
@@ -641,6 +655,17 @@ sub_trainer_talk_battle:
 
   //トレーナーフラグセット
   _TRAINER_FLAG_SET( LWK_TRAINERID )
+  _RET
+
+//--------------------------------------------------------------------
+//  2vs2が不可能な（手持ちが足りない）場合
+//--------------------------------------------------------------------
+sub_trainer_talk_2vs2_NG:
+  _TRAINER_ID_GET( SCWK_ANSWER )
+  _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
+  _TRAINER_MSG_SET( LWK_TRAINERID, LWK_MSGID_NG )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
   _RET
 
 //--------------------------------------------------------------------

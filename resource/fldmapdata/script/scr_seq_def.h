@@ -2358,11 +2358,16 @@
 
 //--------------------------------------------------------------
 /**
- *  _2VS2_BATTLE_CHECK 手持ちチェック 2vs2が可能か取得
+ *  @def  _2VS2_BATTLE_CHECK
+ *  @brief  手持ちチェック 2vs2が可能か取得
  *  @param ret_wk 結果格納先
+ *  @return TRUE == 2vs2 ができる
  */
 //--------------------------------------------------------------
-  .macro  _2VS2_BATTLE_CHECK ret_wk
+#define _2VS2_BATTLE_CHECK( ret_wk ) \
+    _ASM_2VS2_BATTLE_CHECK ret_wk
+
+  .macro  _ASM_2VS2_BATTLE_CHECK ret_wk
   .short  EV_SEQ_2VS2_BATTLE_CHECK
   .short  \ret_wk
   .endm
