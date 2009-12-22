@@ -170,7 +170,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 
   //ダブルエンカウントチェック
   if( outEfp->location == ENC_LOCATION_GROUND_H ){
-    if(eps_GetPercentRand() < 10) {
+    if(PokeParty_GetPokeCountBattleEnable( party ) >= 2 && eps_GetPercentRand() < 10) {
       outEfp->enc_double_f = TRUE;
     }
   }
@@ -398,10 +398,16 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   u8 chr,sex;
   POKEMON_PERSONAL_DATA*  personal;
 
-  PP_Setup( pp,poke->monsNo,poke->level,efp->myID );
+//  PP_Setup( pp,poke->monsNo,poke->level,efp->myID );
 
   //エンカウントポケモンのパーソナルを取得
   personal = POKE_PERSONAL_OpenHandle( poke->monsNo, poke->form, HEAPID_PROC );
+
+  { //個体乱数セット
+    u32 p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
+
+    PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
+  }
 
   //フォルムセット
   PP_Put( pp, ID_PARA_form_no, poke->form );
@@ -415,11 +421,6 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
     eps_EncPokeItemSet(pp,personal,efp->spa_item_rate_up,FALSE,0);
   }
 
-  { //個体乱数セット
-    u32 p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
-
-    PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
-  }
   //親の性別と名前をPut
   PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(efp->my) );
   PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(efp->my) );
