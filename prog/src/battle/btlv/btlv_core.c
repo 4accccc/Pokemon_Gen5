@@ -1797,6 +1797,7 @@ BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
   switch( wk->selectItemSeq ){
   case 0:
     BTLV_SCD_FadeOut( wk->scrnD );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
   case 1:
@@ -1823,6 +1824,7 @@ BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
     break;
   default:
     *result = wk->plistData.sel_wp;
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq = 0;
     return TRUE;
   }
