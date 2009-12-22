@@ -45,6 +45,7 @@ enum _EVENT_CG_WIRELESS {
   _FIELD_FADE_CLOSE,
   _CALL_CG_WIRELESS_MENU,
   _WAIT_CG_WIRELESS_MENU,
+  _WAIT_TV,
   _FIELD_FADEOUT,
   _FIELD_OPEN,
   _FIELD_FADEIN,
@@ -100,12 +101,21 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       (*seq) = _FIELD_FADEOUT;
       break;
     case  CG_WIRELESS_RETURNMODE_TV:
-      (*seq) = _FIELD_FADEOUT;   //@@todo”ò‚Ñæ‚ð‘‚­
+      dbw->aTVT.gameData = gdata;
+      dbw->aTVT.mode = CTM_PARENT;
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &dbw->aTVT);
+      (*seq) = _WAIT_TV;
       break;
     default:
       (*seq) = _FIELD_FADEOUT;
       break;
     }
+    break;
+  case _WAIT_TV:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+    (*seq)=_CALL_CG_WIRELESS_MENU;
     break;
   case _FIELD_FADEOUT:
     dbw->isEndProc = FALSE;

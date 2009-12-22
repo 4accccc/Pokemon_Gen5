@@ -16,6 +16,7 @@
 #include "net_app/wifi_login.h"
 #include "app/box2.h"
 #include "app/box_mode.h"
+#include "net_app/comm_tvt_sys.h"  //TVトランシーバ
 
 
 typedef enum{
@@ -29,6 +30,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gameData;
   SAVE_CONTROL_WORK *ctrl;
+  COMM_TVT_INIT_WORK aTVT;
   BOOL isEndProc;
   int selectType;
   BOOL push;

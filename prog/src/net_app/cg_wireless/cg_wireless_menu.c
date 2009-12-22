@@ -567,7 +567,16 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
 static void _modeFadeout(CG_WIRELESS_MENU* pWork)
 {
 	if(WIPE_SYS_EndCheck()){
-		_CHANGE_STATE(pWork, NULL);        // 終わり
+    switch(pWork->selectType){
+    case CG_WIRELESS_RETURNMODE_TV:
+      if(GAME_COMM_NO_NULL==GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys))){
+        _CHANGE_STATE(pWork, NULL);        // 終わり
+      }
+      break;
+    default:
+      _CHANGE_STATE(pWork, NULL);        // 終わり
+      break;
+    }
 	}
 }
 
@@ -582,6 +591,12 @@ static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+
+  if(pWork->selectType == CG_WIRELESS_RETURNMODE_TV){
+    if(GFL_NET_IsInit()){
+      GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
+    }
+  }
   _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
 }
 
