@@ -140,6 +140,11 @@ void BATTLE_BOX_SAVE_SetPokeParty( BATTLE_BOX_SAVE * sv, POKEPARTY * party )
 	POKEMON_PARAM * pp;
 	u32	i;
 
+	// セーブデータ初期化
+	for( i=0; i<BATTLE_BOX_PARTY_MEMBER; i++ ){
+		PPP_Clear( &sv->ppp[0][i] );
+	}
+
 	for( i=0; i<PokeParty_GetPokeCount(party); i++ ){
 		pp = PokeParty_GetMemberPointer( party, i );
 		BATTLE_BOX_SAVE_SetPPP( sv, 0, i, PP_GetPPPPointerConst(pp) );
