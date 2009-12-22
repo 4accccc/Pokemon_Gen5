@@ -396,7 +396,7 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
   GFL_STR_CheckBufferValid( wk->exp_strbuf ); ///< 破損チェック
 #endif
 
-  wk->print_stream = PRINTSYS_PrintStream( win, 0, 0, wk->exp_strbuf, wk->font, msgspeed,
+  wk->print_stream = PRINTSYS_PrintStream( win, 4, 0, wk->exp_strbuf, wk->font, msgspeed,
                                            wk->msg_tcblsys, 0xffff, wk->heap_id, clear_color );
 
   BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M );
