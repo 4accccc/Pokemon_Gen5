@@ -27,6 +27,8 @@
 
 #include "btl_client.h"
 
+#include "tr_ai/tr_ai.h"
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -1363,6 +1365,8 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     if( !BPP_IsDead(pp) )
     {
       u8 wazaCount, wazaIdx, mypos, targetPos;
+      VMHANDLE* vmh;
+      u32 ai_bit = 0;
 
       mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 
@@ -1375,6 +1379,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         continue;
       }
 
+#if 0
       wazaCount = BPP_WAZA_GetCount( pp );
       {
         u8 usableWazaIdx[ PTL_WAZA_MAX ];
@@ -1398,7 +1403,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           continue;
         }
       }
-
       // シングルでなければ、対象をランダムで決定する処理
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
       {
@@ -1424,6 +1428,44 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           targetPos = alivePokePos[ rndIdx ];
         }
       }
+#else
+      //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
+      if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER )
+      { 
+        ai_bit = 1; //@todo とりあえずBASICだけ
+      }
+      //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
+      vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, mypos, wk->heapID );
+      wazaCount = BPP_WAZA_GetCount( pp );
+      {
+        u8 usableWazaIdx[ PTL_WAZA_MAX ];
+        WazaID waza;
+        u8 j, cnt=0;
+        for(j=0, cnt=0; j<PTL_WAZA_MAX; ++j){
+          usableWazaIdx[ j ] = 0;
+          if( j >= wazaCount ) continue;
+          if( BPP_WAZA_GetPP(pp, j) )
+          {
+            waza = BPP_WAZA_GetID( pp, j );
+            if( !is_unselectable_waza(wk, pp, waza, NULL) ){
+              usableWazaIdx[ j ] = waza;
+              cnt++;
+            }
+          }
+        }
+        if( cnt ){
+          TR_AI_Start( vmh, usableWazaIdx );
+          TR_AI_Main( vmh );
+          wazaIdx = TR_AI_GetSelectWazaPos( vmh );
+          targetPos = TR_AI_GetSelectWazaDir( vmh );
+        }else{
+          setWaruagakiAction( &wk->actionParam[i], wk, pp );
+          continue;
+        }
+      }
+      TR_AI_Exit( vmh );
+#endif
+
       {
         WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
         BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
@@ -2768,9 +2810,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   case 3:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      PMSND_PauseBGM( TRUE );
       PMSND_PlaySE( SEQ_SE_LVUP );
     }
-    if( BTLV_WaitMsg(wk->viewCore) ){
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
+      PMSND_PauseBGM( FALSE );
       wk->wazaoboe_index = 0;
       (*seq)++;
     }
@@ -2815,9 +2859,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 6:
     //技覚え処理
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      PMSND_PauseBGM( TRUE );
       PMSND_PlaySE( SEQ_SE_LVUP );
     }
-    if( BTLV_WaitMsg(wk->viewCore) ){
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
+      PMSND_PauseBGM( FALSE );
       (*seq) = 4;
     }
     break;
