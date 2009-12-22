@@ -216,7 +216,8 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
-  
+  bew->is_sub_event = TRUE;
+
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
