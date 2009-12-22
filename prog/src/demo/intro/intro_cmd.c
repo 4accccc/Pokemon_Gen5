@@ -380,13 +380,13 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 
       if( select == INTRO_LIST_SELECT_DECIDE )
       {
-        store_bmplist( wk, FALSE );
+        store_bmplist( wk, select_id );
 
         return TRUE;
       }
       else if( select == INTRO_LIST_SELECT_CANCEL )
       {
-        store_bmplist( wk, select_id );
+        store_bmplist( wk, FALSE );
 
         return TRUE;
       }
@@ -802,7 +802,7 @@ static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
     };
 
     // 博士表示
-    INTRO_MCSS_Add( wk->mcss, param[2], param[3], 0, &add, param[0] );
+    INTRO_MCSS_Add( wk->mcss, param[2], param[3], FX32_ONE, &add, param[0] );
   }
   else
   {
@@ -947,11 +947,24 @@ static BOOL CMD_SAVE_MYSTATUS( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 // セーブ終了チェック
 static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  // 全てのセーブが完了しているか調べる
-  if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+  switch( sdat->seq )
   {
-    return TRUE;
+    case 0 :
+      // 全てのセーブが完了しているか調べる
+      if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+      {
+      
+      }
+      break;
+    case 1 :
+      // 全てのセーブが完了しているか調べる
+      if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+      {
+        return TRUE;
+      }
+      break;
   }
+
   return FALSE;
 }
 

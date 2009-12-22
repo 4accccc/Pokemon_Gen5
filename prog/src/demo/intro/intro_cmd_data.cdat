@@ -50,7 +50,7 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00 } }, // ……ごめんなさい ちょっと待ってね！
+//  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00 } }, // ……ごめんなさい ちょっと待ってね！
 
   { INTRO_CMD_TYPE_BGM_FADEOUT, { 16 }, CMD_READ_NEXT }, // BGMフェードアウト
   { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
@@ -223,13 +223,13 @@ static const INTRO_CMD_DATA c_intro_scene_06[] =
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 0, TRUE },
   
   { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_06 } }, // [トレーナー名]と いう　なまえ！
+
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_07 } }, // [トレーナー名]！！
   
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_MYSTATUS }, // マイステータスのセーブ
   { INTRO_CMD_TYPE_SAVE_CHECK_ALL_END }, // セーブ終了終了チェック
 #endif
-
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_07 } }, // [トレーナー名]！！
 
   // 博士フェードアウト
   //@TODO
