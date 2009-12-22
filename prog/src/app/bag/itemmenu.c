@@ -52,6 +52,11 @@
 //  __TRASH     捨てる シーケンス
 //  __SELL      売る シーケンス
 
+//@TODO 一旦RepeatをContにしておく
+static int _GFL_UI_KEY_GetRepeat( void )
+{
+  return GFL_UI_KEY_GetCont();
+}
 
 //=============================================================================
 // データテーブル
@@ -560,10 +565,10 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
     int pos = pWork->curpos;
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
-    if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
       bChange = _posplus(pWork, length);
     }
-    if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
       bChange = _posminus(pWork, length);
     }
   }
@@ -591,10 +596,10 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
     int pos = pWork->curpos;
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
-    if(GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
       bChange = _posplus(pWork, length);
     }
-    if(GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
       bChange = _posminus(pWork, length);
     }
   }
@@ -1741,16 +1746,16 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
   // キー入力
   if( tp_result == GFL_UI_TP_HIT_NONE )
   {
-    if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+    if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
       pWork->InputNum++;
     }
-    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
       pWork->InputNum--;
     }
-    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
+    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
       pWork->InputNum += 10;
     }
-    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
+    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
       pWork->InputNum -= 10;
     }
   }
