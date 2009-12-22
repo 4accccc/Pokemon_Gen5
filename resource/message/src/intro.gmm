@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T11:15:07"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T16:21:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -384,17 +384,9 @@
 	</row>
 
 	<row id="msg_intro_00">
-		<comment>■アララギ博士（女性）表示
-・続けてmsg_intro_01
-・このときまだ暗転中</comment>
-		<language name="JPN" width="256">……　……　……
-……　……　……▼
-あら　ごめんなさい！
-ちょっと　まってね！▼</language>
-		<language name="JPN_KANJI" width="256">……　……　……
-……　……　……▼
-あら　ごめんなさい！
-ちょっと　まってね！▼</language>
+		<comment>■セーブ中</comment>
+		<language name="JPN" width="256">ちょっと　まってね！</language>
+		<language name="JPN_KANJI" width="256">ちょっと　まってね！</language>
 	</row>
 
 	<row id="msg_intro_01">
