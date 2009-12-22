@@ -113,6 +113,12 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 	  MP_JumpMovePokemonAll( data );
 	}
 
+  { //イベントフラグ
+    EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
+    EVENTWORK_ResetEventFlag( eventwork, SYS_FLAG_KAIRIKI );
+  }
+
+
 /* PLATINUM
 	if (fsys->scope_mode_flag == TRUE) {
 		//望遠鏡モードの場合は更新処理を行わない
