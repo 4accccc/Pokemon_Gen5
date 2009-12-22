@@ -386,7 +386,7 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
       }
       else if( select == INTRO_LIST_SELECT_CANCEL )
       {
-        store_bmplist( wk, FALSE );
+        store_bmplist( wk, 1 );
 
         return TRUE;
       }
@@ -953,14 +953,25 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
       // 全てのセーブが完了しているか調べる
       if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
       {
-      
+        return TRUE;
+      }
+      else
+      {
+        // ちょっとまってね！
+        INTRO_MSG_SetPrint( wk->wk_msg, msg_intro_00 );
+        sdat->seq++;
       }
       break;
+
     case 1 :
-      // 全てのセーブが完了しているか調べる
-      if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+      // メッセージプリント
+      if( INTRO_MSG_PrintProc( wk->wk_msg ) )
       {
-        return TRUE;
+        // 全てのセーブが完了しているか調べる
+        if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+        {
+          return TRUE;
+        }
       }
       break;
   }
