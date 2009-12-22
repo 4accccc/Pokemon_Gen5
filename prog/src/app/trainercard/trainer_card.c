@@ -388,7 +388,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], TRUE, wk->SecBuf);
 
   if(wk->tcp->value){
-    wk->is_back = TRUE;
+    wk->is_back = FALSE;
   }else{
     wk->is_back = FALSE;    //表面からスタート
   }

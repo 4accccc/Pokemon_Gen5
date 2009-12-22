@@ -355,20 +355,10 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
   {
     STRBUF* str = wk->DigitBuf;
     
-    //ID
-//    WriteNumData( wk, win[TRC_BMPWIN_TR_ID],
-//            BMP_WIDTH_TYPE0, 0, 0, str, inTrCardData->TrainerID, TR_ID_DIGIT,
-//            STR_NUM_DISP_ZERO,0);
-    
     //なまえ
     GFL_STR_SetStringCode( wk->TmpBuf, inTrCardData->TrainerName );
     WriteStrData( wk, win[TRC_BMPWIN_TR_NAME],
             BMP_WIDTH_TYPE1, 0, 0, wk->TmpBuf);
-
-    //おこづかい
-//    WriteNumData( wk, win[TRC_BMPWIN_MONEY],
-//            BMP_WIDTH_TYPE2, YEN_OFS, 0, str, inTrCardData->Money, MONEY_DIGIT,
-//            STR_NUM_DISP_SPACE,0);
 
     //ずかん
     if (inTrCardData->PokeBookFlg){ //表示フラグがたっているときのみ表示  
@@ -413,7 +403,7 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
     
     // 簡易会話描画
     {
-      STRBUF *str = PMSDAT_ToString( &wk->pms, wk->heapId );
+      STRBUF *str = PMSDAT_ToString( &wk->TrCardData->Pms, wk->heapId );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PMSWORD]) , 0, 0, str, wk->fontHandle );
       GFL_STR_DeleteBuffer( str );
     }
