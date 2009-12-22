@@ -259,15 +259,15 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
   if( work->actWork.actID == MMDL_BLACTID_NULL ){ //アクター追加まだ
     return;
   }
-
-#if 0  
+  
+#if 0
   if( work->flag_initfunc == FALSE ){
     GFL_BBDACT_SetFunc( work->head.bbdactsys,
         work->actWork.actID, reflectBlAct_Update );
     work->flag_initfunc = TRUE;
   }
 #endif
-
+  
   work->scale_x += work->scale_val_x;
   
  	if( work->scale_x >= REF_SCALE_X_UP ){
@@ -314,7 +314,8 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
   GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
-  
+
+#if 0  
   ret = GFL_BBDACT_GetAnimeEnable( bbdactsys, m_actID );
   GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, ret );
   
@@ -324,23 +325,20 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     ret = GFL_BBDACT_GetAnimeFrmIdx( bbdactsys, m_actID );
     GFL_BBDACT_SetAnimeFrmIdx( bbdactsys, actID, ret );
   }
+#else
+  GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, FALSE );
+#endif
   
   {
     fx32 x,y,z;
     VecFx32 pos;
-#if 0 //dp
- 	  fx32 offs[REFLECT_TYPE_MAX] = {
-	    NUM_FX32(12),
-		  NUM_FX32(16),
-		  NUM_FX32(12),
-	  };
-#else
- 	  fx32 offs[REFLECT_TYPE_MAX] = {
+ 	  
+    fx32 offs[REFLECT_TYPE_MAX] = {
 	    NUM_FX32(12*2)+NUM_FX32(1),
 		  NUM_FX32(16*2)+NUM_FX32(1),
 		  NUM_FX32(12*2)+NUM_FX32(1),
 	  };
-#endif
+
     MMDL_GetVectorDrawOffsetPos( work->head.mmdl, &pos );
     x = pos.x;
     z = -pos.z;
@@ -349,12 +347,13 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     pos.x += x;
     pos.z += z + REF_OFFS_Z;
     
-	  if( MMDL_GetMapPosHeight(work->head.mmdl,&pos,&y) == FALSE ){
-#if 1 //高さ取得エラー
-      pos.y = 0; //高さ取得エラー
-#else
+	  if( MMDL_GetMapPosHeight(work->head.mmdl,&pos,&y) == FALSE ){ 
+      //高さ取得エラー
+      #if 1
+      pos.y = 0;
+      #else
       pos.y -= offs[0];
-#endif
+      #endif
     }else{
       pos.y -= offs[work->head.type];
     }
@@ -368,20 +367,31 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
     fx16 sx = work->scale_x;
     fx16 sy = REF_SCALE_Y_DEF;
+    
+    {
+      u16 res_idx = 0;
+      u16 cell_idx = 0;
+      GFL_BBD_GetObjectResIdx( bbdsys, m_idx, &res_idx );
+      GFL_BBD_SetObjectResIdx( bbdsys, idx, &res_idx );
+      
+			GFL_BBD_GetObjectCelIdx( bbdsys, m_idx, &cell_idx );
+			GFL_BBD_SetObjectCelIdx( bbdsys, idx, &cell_idx );
+    }
+    
     GFL_BBD_SetObjectSiz( bbdsys, idx, &sx, &sy );
     GFL_BBD_SetObjectFlipT( bbdsys, idx, &flip );
     
-    flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx );
+    flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx ); //横Flip受け継ぐ
     GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
   }
   
-#ifdef DEBUG_REFLECT_CHECK
+  #ifdef DEBUG_REFLECT_CHECK
   if( MMDL_GetOBJID(work->head.mmdl) == 0xff ){
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
       KAGAYA_Printf( "自機横サイズ 0x%x\n", work->scale_x );
     }
   }
-#endif
+  #endif
 }
 
 static void reflectBlAct_Update(
