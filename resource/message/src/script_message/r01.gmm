@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T12:05:30"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T12:27:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="531"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="685"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -519,15 +519,17 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
 ホワイティと　しょうぶ　するのか？[BE:01:ページ切り替え（クリア）]
-オレは　２ひき　つかまえて
+オレは　１ひき　つかまえて
+ごうけい　２ひき　で▽
 ホワイティと　ひきわけ　だった[BE:01:ページ切り替え（クリア）]
-あっ……　どれだけ
+あっ……　アイツが　どれだけ
 つかまえたか　いってしまった……</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
 ホワイティと　勝負するのか？[BE:01:ページ切り替え（クリア）]
-オレは　２匹　つかまえて
+オレは　１匹　捕まえて
+合計２匹で▽
 ホワイティと　引き分け　だった[BE:01:ページ切り替え（クリア）]
-あっ……　ホワイティが
+あっ……　アイツが
 どれだけ　捕まえたか　教えてしまった……</language>
 	</row>
 
