@@ -89,7 +89,8 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 		if( cdemo_data.ret == COMMANDDEMO_RET_SKIP_DEBUG ){
 			CorpRet = CORPORATE_RET_DEBUG;
 		}
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
+//		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
+//		GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
 		return GFL_PROC_RES_FINISH;
 	}
 #else
@@ -108,7 +109,8 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 		break;
 
 	case 2:
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
+//		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
+//		GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
 		return GFL_PROC_RES_FINISH;
 	}
 #endif
@@ -123,5 +125,11 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT TitleControlProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#ifdef PM_DEBUG
+	GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
+#else
+	GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
+#endif
+
 	return GFL_PROC_RES_FINISH;
 }
