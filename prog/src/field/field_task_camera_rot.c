@@ -183,8 +183,12 @@ static void UpdateAngle( ROT_WORK* work )
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     switch( work->type )
     {
-    case CAMERA_ROT_TYPE_YAW:    FIELD_CAMERA_SetAngleYaw( camera, angle );    break;
-    case CAMERA_ROT_TYPE_PITCH:  FIELD_CAMERA_SetAnglePitch( camera, angle );  break;
+    case CAMERA_ROT_TYPE_YAW:    FIELD_CAMERA_SetAngleYaw( camera, angle );    
+                                 OBATA_Printf( "TASK-CAM-ROT: yaw = %x\n", angle );
+                                 break;
+    case CAMERA_ROT_TYPE_PITCH:  FIELD_CAMERA_SetAnglePitch( camera, angle );  
+                                 OBATA_Printf( "TASK-CAM-ROT: pitch = %x\n", angle );
+                                 break;
     }
     FIELD_CAMERA_ChangeMode( camera, cam_mode );
   }

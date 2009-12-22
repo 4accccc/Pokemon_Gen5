@@ -37,7 +37,7 @@
 #define L_DOOR_ZOOM_DIST  (120 << FX32_SHIFT)
 
 // 右ドアへの出入り
-#define R_DOOR_FRAME     (10)
+#define R_DOOR_FRAME     (15)
 #define R_DOOR_PITCH     (0x25fc)
 #define R_DOOR_YAW       (0xbfff)
 #define R_DOOR_ZOOM_DIST (0x00ec << FX32_SHIFT)
@@ -494,7 +494,7 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case 0:
-    SetFarNear( work->fieldmap );
+    //SetFarNear( work->fieldmap );
     { // タスク登録
       FIELD_TASK* pitch;
       FIELD_TASK* yaw;
@@ -502,17 +502,17 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* event, int* seq, void* wk
       FIELD_TASK* zoom;
       FIELD_TASK* wait2;
       FIELD_TASK_MAN* man;
-      pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
+      //pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
       yaw   = FIELD_TASK_CameraRot_Yaw( work->fieldmap, R_DOOR_FRAME, R_DOOR_YAW );
-      wait1 = FIELD_TASK_Wait( work->fieldmap, 10 );
-      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
-      wait2 = FIELD_TASK_Wait( work->fieldmap, 20 );
+      //wait1 = FIELD_TASK_Wait( work->fieldmap, 10 );
+      //zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
+      //wait2 = FIELD_TASK_Wait( work->fieldmap, 20 );
       man = FIELDMAP_GetTaskManager( work->fieldmap );
-      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+      //FIELD_TASK_MAN_AddTask( man, pitch, NULL );
       FIELD_TASK_MAN_AddTask( man, yaw, NULL );
-      FIELD_TASK_MAN_AddTask( man, wait1, NULL );
-      FIELD_TASK_MAN_AddTask( man, zoom, wait1 ); 
-      FIELD_TASK_MAN_AddTask( man, wait2, wait1 ); 
+      //FIELD_TASK_MAN_AddTask( man, wait1, NULL );
+      //FIELD_TASK_MAN_AddTask( man, zoom, wait1 ); 
+      //FIELD_TASK_MAN_AddTask( man, wait2, wait1 ); 
     }
     ++( *seq );
     break;

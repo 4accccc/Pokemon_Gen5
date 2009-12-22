@@ -305,7 +305,10 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_END:
-    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
+    if( fdaw->cam_anm_flag )
+    {
+      EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
+    }
     FIELD_BMODEL_Delete( fdaw->ctrl );
     return GMEVENT_RES_FINISH;
   }
