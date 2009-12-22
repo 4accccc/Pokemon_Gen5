@@ -323,10 +323,10 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   int i;
   
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
-    return NULL;
+//    return NULL;
   }
-  
-  if(intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
+
+  if(intcomm != NULL && intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
     if(intcomm->exit_recv == TRUE){
       return DEBUG_EVENT_ChildCommEnd(gameSys, fieldWork, intcomm);
     }
@@ -706,6 +706,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   int i, now_area, new_area;
   BOOL warp = FALSE;
   fx32 left_end, right_end;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSys);
   
 #if 1
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
@@ -758,6 +759,12 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     OS_TPrintf("new_palace_area = %d new_pos_x = %x\n", new_area, new_pos.x);
     intcomm->intrude_status_mine.palace_area = new_area;
     intcomm->send_status = TRUE;
+    if(GAMEDATA_GetIntrudeMyID(gamedata) == new_area){
+      GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+    }
+    else{
+      GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
+    }
   }
 }
 

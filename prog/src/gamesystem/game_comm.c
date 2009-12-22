@@ -682,7 +682,7 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
   MyStatus_CopyNameString(myst, comm_info->name_strbuf[que->net_id]);
   for(i = 0; i < INFO_WORDSET_MAX; i++){
     dest_msg->name[i] = comm_info->name_strbuf[que->net_id];
-    dest_msg->wordset_no[i] = que->net_id;
+    dest_msg->wordset_no[i] = i;//que->net_id;
   }
   dest_msg->message_id = que->message_id;
   

@@ -93,6 +93,8 @@ struct _GAMEDATA{
 
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
+  u8 intrude_reverse_area;  ///<TRUE:裏フィールド侵入中
+  
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
   
@@ -1030,6 +1032,34 @@ void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id)
 {
   gamedata->intrude_my_id = intrude_my_id;
   OS_TPrintf("自分の侵入MyNetID=%d\n", intrude_my_id);
+}
+
+//==================================================================
+/**
+ * 裏フィールド侵入フラグを取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  u8  TRUE:裏フィールド浸入中　FALSE:表フィールド
+ */
+//==================================================================
+int GAMEDATA_GetIntrudeReverseArea(const GAMEDATA *gamedata)
+{
+  return gamedata->intrude_reverse_area;
+}
+
+//==================================================================
+/**
+ * 裏フィールド侵入フラグをセット
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   reverse_flag  TRUE:裏フィールド侵入中
+ */
+//==================================================================
+void GAMEDATA_SetIntrudeReverseArea(GAMEDATA *gamedata, u8 reverse_flag)
+{
+  gamedata->intrude_reverse_area = reverse_flag;
+  OS_TPrintf("gamedata 裏フィールド侵入フラグセット =%d\n", reverse_flag);
 }
 
 //----------------------------------------------------------------------------

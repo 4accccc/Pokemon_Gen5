@@ -357,6 +357,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError() == TRUE){
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
+      GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
       CommPlayer_Exit(intcomm->cps);
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);

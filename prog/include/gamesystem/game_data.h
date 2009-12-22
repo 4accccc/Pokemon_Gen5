@@ -427,6 +427,27 @@ extern int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata);
 //==================================================================
 extern void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id);
 
+//==================================================================
+/**
+ * 裏フィールド侵入フラグを取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  u8  TRUE:裏フィールド浸入中　FALSE:表フィールド
+ */
+//==================================================================
+extern int GAMEDATA_GetIntrudeReverseArea(const GAMEDATA *gamedata);
+
+//==================================================================
+/**
+ * 裏フィールド侵入フラグをセット
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   reverse_flag  TRUE:裏フィールド侵入中
+ */
+//==================================================================
+extern void GAMEDATA_SetIntrudeReverseArea(GAMEDATA *gamedata, u8 reverse_flag);
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  常時通信モードフラグ取得
