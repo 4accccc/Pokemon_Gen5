@@ -340,6 +340,7 @@ extern void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_RemoveSubDispItemIcon( FIELD_ITEMMENU_WORK * pWork );
 extern void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void _dispMain(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork );

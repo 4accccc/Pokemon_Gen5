@@ -270,6 +270,22 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
+/*
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+
+  if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
+		ITEMDISP_RemoveSubDispItemIcon( pWork );
+  }else{
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
+	}
+*/
   ITEMDISP_upMessageRewrite(pWork);
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
