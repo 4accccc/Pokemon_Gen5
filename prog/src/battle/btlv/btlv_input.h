@@ -16,6 +16,26 @@
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
 
+//戦闘下画面OBJパレット内訳
+/*
+0:モンスターボール
+1:
+2:技＆対象選択ボタンアニメ
+3:天候アイコンうわもの
+4:天候アイコンベース
+5:天候アイコンベース
+6:天候アイコンベース
+7:天候アイコンベース
+8:技タイプアイコン
+9:技タイプアイコン
+A:技タイプアイコン
+B:空き
+C:ポケモンアイコン
+D:ポケモンアイコン
+E:ポケモンアイコン
+F:ローカライズ用予約
+*/
+
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
 ///技選択画面構成用のデータ
