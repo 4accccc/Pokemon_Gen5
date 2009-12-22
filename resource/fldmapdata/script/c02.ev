@@ -126,7 +126,6 @@ EVENT_START   ev_pos_c02_rival_01
 	//ライバルポケセンについて喋る
 	//このまま　まっすぐ　すすめば
 	_BALLOONWIN_OBJMSG( msg_c02_black_02, C02_RIVAL_02 )
-	_LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 	
 	//ライバルが画面端に消えていく

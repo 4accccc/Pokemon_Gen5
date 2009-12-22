@@ -193,10 +193,6 @@ ev_c02gym_tounan:
 	
 	//アロエ：なんだって！
 	_BALLOONWIN_OBJMSG( msg_c02gym0202_leader_07 , C02GYM0202_LEADER2_01 )
-	
-	//間を作る為のウェイト
-	_TIME_WAIT  ( 16 )
-	
 	_BALLOONWIN_CLOSE()
 	
 	//ジムリーダー夫：ぶつかって、横に退く

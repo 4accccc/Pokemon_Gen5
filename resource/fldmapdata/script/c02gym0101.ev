@@ -281,6 +281,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：ジムの説明
 		//あの扉の　先が　ポケモンジムと　なっております
 		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
@@ -458,7 +459,6 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	//アロエが喋る
 	//なんてこったい……
 	_BALLOONWIN_OBJMSG( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 	//アロエが退場

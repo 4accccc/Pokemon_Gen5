@@ -71,10 +71,10 @@ EVENT_START   ev_c02r0301_woman2_01
 	
 		//ねえねえ　あなた　　って　ポケモン　もってる？
 		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_01 )
-		_BALLOONWIN_CLOSE() 
 					
 		//はい/いいえの選択
 		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE() 
 		
 		//はいを選んだ！交換するぞ！
 		IF $SCWK_ANSWER ==  SCR_YES THEN
