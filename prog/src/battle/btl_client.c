@@ -2794,9 +2794,8 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
 //      BPP_HpPlus( bpp, args[2] );
-      OS_TPrintf("クライアント側 : hp %d 増えて %d\n", args[2], BPP_GetValue(bpp, BPP_HP) );
-
       if( vpos != BTLV_MCSS_POS_ERROR ){
+        OS_TPrintf("経験値ゲージ vpos=%d\n", vpos);
         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
         (*seq)++;
       }
@@ -2809,6 +2808,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
       BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
+      OS_TPrintf("レベルアップ vpos=%d\n", vpos);
       BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
       (*seq)++;
     }
@@ -2817,9 +2817,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     {
       BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
       if( vpos != BTLV_MCSS_POS_ERROR ){
+        OS_TPrintf("レベルアップエフェクト待ち vpos=%d\n", vpos);
         if( !BTLV_WaitEffectByPos(wk->viewCore, vpos) ){
-          break;
+          return FALSE;
         }
+        OS_TPrintf("エフェクト終わった\n");
       }
 
       {
@@ -3237,13 +3239,16 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
 {
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+
   switch( *seq ){
   case 0:
-    BTLV_AddEffectByPos( wk->viewCore, args[0], args[1] );
+    BTLV_AddEffectByPos( wk->viewCore, vpos, args[1] );
     (*seq)++;
     break;
+
   default:
-    if( BTLV_WaitEffectByPos( wk->viewCore, args[0] ) ){
+    if( BTLV_WaitEffectByPos( wk->viewCore, vpos ) ){
       return TRUE;
     }
     break;

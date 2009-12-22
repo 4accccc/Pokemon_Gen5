@@ -2254,8 +2254,6 @@ void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos
   btlPos_to_cliendID_and_posIdx( wk, pos, clientID, posIdx );
 }
 
-
-
 //=============================================================================================
 /**
  * 戦闘位置 -> 描画位置変換
@@ -2285,7 +2283,6 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
     u8 posIdx = btlPos_to_sidePosIdx( pos );
     u8 result = vpos[ isPlayerSide ][ posIdx ];
 
-    OS_TPrintf("[BTL] BtlPos=%d, posIdx=%d, Vpos=%d\n", pos, posIdx, result);
     return result;
   }
   else
@@ -2862,6 +2859,16 @@ u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
 u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
 {
   return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );
+}
+/**
+ * プレイヤーのマルチ立ち位置(0 or 1）を取得
+ */
+u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
+{
+  if( BTL_MAIN_IsMultiMode(wk) ){
+    return (wk->myClientID & 1);
+  }
+  return 0;
 }
 
 u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
