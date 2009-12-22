@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-21T20:47:15"/>
+	<create user="kagaya" host="W00143" date="2009-12-22T15:30:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,7 +356,8 @@
 		<comment>連勝中のメッセージ</comment>
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
 [2:02:３桁:1]れんしょうちゅう　です</language>
-		<language name="JPN_KANJI" width="256">げんざい　れんしょうちゅうです</language>
+		<language name="JPN_KANJI" width="256">げんざい　[1:00:トレーナー名:0]さまは
+[2:02:３桁:1]れんしょうちゅう　です</language>
 	</row>
 
 	<row id="msg_c04r0104_receipt_04">
