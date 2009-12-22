@@ -79,5 +79,8 @@ FS_EXTERN_OVERLAY(intro);
 extern const GFL_PROC_DATA ProcData_Intro;
 
 
-
-
+//--------------------------------------------------------------
+///	éñëOÇ…ÉÅÉÇÉäì«Ç›çûÇ›Ç∑ÇÈSE
+//==============================================================
+extern const u32 Intro_Se_PresetData[];
+extern const u32 Intro_Se_PresetNum;

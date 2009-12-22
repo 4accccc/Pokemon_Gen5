@@ -92,7 +92,6 @@ struct _INTRO_CMD_WORK {
   INTRO_MSG_WORK* wk_msg;
   INTRO_PARTICLE_WORK* ptc;
   INTR_SAVE_CONTROL* intr_save;
-  SOUNDMAN_PRESET_HANDLE* se_handle;
 };
 
 //=============================================================================
@@ -1325,17 +1324,6 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
 
   // 文字操作モジュール初期化
   wk->wk_msg = INTRO_MSG_Create( heap_id );
-  
-  {
-    //@TODO SEテーブル決め打ち
-    u32 se_tbl[] = 
-    {
-      SEQ_SE_NAGERU,
-      SEQ_SE_BOWA2,
-    };
-
-    wk->se_handle = SOUNDMAN_PresetSoundTbl( se_tbl ,NELEMS(se_tbl) );
-  }
 
   return wk;
 }
@@ -1351,8 +1339,6 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
 //-----------------------------------------------------------------------------
 void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 {
-  SOUNDMAN_ReleasePresetData( wk->se_handle );
-  
   // 選択肢モジュール破棄
   INTRO_MSG_Exit( wk->wk_msg );
 

@@ -32,7 +32,6 @@
 
 //BGMメモリにおく
 #include "sound/sound_manager.h"
-#include "sound/wb_sound_data.sadl"
 
 //==============================================================================
 //	
@@ -238,11 +237,28 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   //ここでメモリ上においておく、さもないと、
   //名前入力中にならない
   { 
-    static const u32 sc_bgm_tbl[]  =
+    u32 se_tbl[30]; //適当
+    u32 namein_se_num;
+    u32 intro_se_num;
+    u32 i = 0;
+
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );	
+    namein_se_num = NAMEIN_SE_PresetNum;
+    for( i = 0; i < namein_se_num; i++ )
     { 
-      SEQ_BGM_STARTING2,
-    };
-    work->bgm_handle  = SOUNDMAN_PresetSoundTbl( sc_bgm_tbl, NELEMS(sc_bgm_tbl) );
+      se_tbl[i] = NAMEIN_SE_PresetData[i];
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+    
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(intro) );	
+    intro_se_num = Intro_Se_PresetNum;
+    for( i = 0; i < intro_se_num; i++ )
+    { 
+      se_tbl[i+namein_se_num] = Intro_Se_PresetData[i];
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(intro) );
+
+    work->bgm_handle  = SOUNDMAN_PresetSoundTbl( se_tbl, namein_se_num + intro_se_num );
   }
 
 	return GFL_PROC_RES_FINISH;

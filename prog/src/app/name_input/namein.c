@@ -561,8 +561,6 @@ typedef struct
   //共通で使う単語
   WORDSET       *p_word;
 
-  SOUNDMAN_PRESET_HANDLE* p_snd_preset;
-
   //引数
   NAMEIN_PARAM  *p_param;
 } NAMEIN_WORK;
@@ -737,6 +735,19 @@ const GFL_PROC_DATA NameInputProcData =
   NAMEIN_PROC_Exit,
 };
 
+//-------------------------------------
+/// SE
+//=====================================
+const u32 NAMEIN_SE_PresetData[]  =
+{ 
+  NAMEIN_SE_MOVE_CURSOR,
+  NAMEIN_SE_DELETE_STR,
+  NAMEIN_SE_DECIDE_STR,
+  NAMEIN_SE_CHANGE_MODE,
+  NAMEIN_SE_DECIDE,
+};
+
+const u32 NAMEIN_SE_PresetNum = 5;
 //=============================================================================
 /**
  *    外部参照
@@ -969,17 +980,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   if( p_wk->p_param->p_intr_sv )
   { 
     //p_wk->p_intr_sv = IntrSave_Init(HEAPID_NAME_INPUT, SaveControl_GetPointer());
-    { 
-      static const u32 sc_sound_idx_tbl[]  =
-      { 
-        NAMEIN_SE_MOVE_CURSOR,
-        NAMEIN_SE_DELETE_STR,
-        NAMEIN_SE_DECIDE_STR,
-        NAMEIN_SE_CHANGE_MODE,
-        NAMEIN_SE_DECIDE,
-      };
-      p_wk->p_snd_preset    = SOUNDMAN_PresetSoundTbl( sc_sound_idx_tbl, NELEMS(sc_sound_idx_tbl) );
-    }
   }
 
 
@@ -1057,12 +1057,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   OBJ_Exit( &p_wk->obj );
   BG_Exit( &p_wk->bg );
   NAMEIN_GRAPHIC_Exit( p_wk->p_graphic );
-
-
-  if( p_wk->p_snd_preset )
-  { 
-    SOUNDMAN_ReleasePresetData( p_wk->p_snd_preset );
-  }
 
   //共通モジュールの破棄
   WORDSET_Delete( p_wk->p_word );

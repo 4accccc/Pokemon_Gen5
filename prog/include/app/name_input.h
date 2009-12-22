@@ -226,4 +226,15 @@ extern STRBUF* NAMEIN_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID );
  */
 //-----------------------------------------------------------------------------
 extern BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param );
+
+
+//=============================================================================
+/**
+ *    SEプリセット
+ */
+//=============================================================================
+extern const u32 NAMEIN_SE_PresetData[];
+extern const u32 NAMEIN_SE_PresetNum;
+
+
 #endif	//NAME_INPUT_H__
