@@ -251,6 +251,7 @@ extern int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid );
 
 extern BOOL BPP_IsDead( const BTL_POKEPARAM* pp );
+extern BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_IsHPFull( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 

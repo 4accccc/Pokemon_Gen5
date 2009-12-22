@@ -693,6 +693,17 @@ BOOL BPP_IsDead( const BTL_POKEPARAM* pp )
 {
   return BPP_GetValue( pp, BPP_HP ) == 0;
 }
+BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp )
+{
+  if( PP_Get(bpp->coreParam.ppSrc, ID_PARA_tamago_flag, NULL)){
+    return FALSE;
+  }
+  if( BPP_IsDead(bpp) ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
 //=============================================================================================
 /**
  * ƒƒUPP’l‚ğæ“¾

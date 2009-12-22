@@ -170,6 +170,7 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
+static void   BTL_PARTY_AlivePokeToFirst( BTL_PARTY* party );
 static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty );
 static void trainerParam_Init( BTL_MAIN_MODULE* wk );
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
@@ -409,6 +410,8 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
       break;
     }
+
+//    partyAlivePokeToTop(
   }
   else
   {
@@ -2440,6 +2443,8 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
     pp = PokeParty_GetMemberPointer( party_src, 0 );
     BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
   }
+
+  BTL_PARTY_AlivePokeToFirst( party );
 }
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
 {
@@ -2683,6 +2688,22 @@ static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )
 {
   GF_ASSERT(party->memberCount < TEMOTI_POKEMAX);
   party->member[party->memberCount++] = member;
+}
+static void   BTL_PARTY_AlivePokeToFirst( BTL_PARTY* party )
+{
+  if( !BPP_IsFightEnable(party->member[0]) )
+  {
+    u32 idx;
+    for(idx=0; idx < party->memberCount; ++idx )
+    {
+      if( BPP_IsFightEnable(party->member[idx]) )
+      {
+        BTL_PARTY_SwapMembers( party, 0, idx );
+        OS_TPrintf("先頭ポケが死んでるorタマゴの場合に戦える残りメンバー[%d]と入れ替え\n", idx);
+        break;
+      }
+    }
+  }
 }
 static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty )
 {
