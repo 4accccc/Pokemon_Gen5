@@ -319,6 +319,28 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
           }
         }
         GFL_CLACT_WK_SetPos( bbgw->bbgcl[ i ].clwk, &bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
+        if( bbgw->bbgcl[ i ].speed == 0 )
+        { 
+          int se_no;
+          GFL_CLACT_WK_SetAnmSeq( bbgw->bbgcl[ i ].clwk, bbgw->bbgcl[ i ].stop_anm_no );
+          switch( bbgw->bbgcl[ i ].stop_anm_no ){ 
+          case BTLV_BALL_GAUGE_ANM_NONE:
+            se_no = SEQ_SE_TB_KARA;
+            break;
+          case BTLV_BALL_GAUGE_ANM_ARROW_M:
+          case BTLV_BALL_GAUGE_ANM_ARROW_E:
+            se_no = 0;
+            break;
+          default:
+            se_no = SEQ_SE_TB_KON;
+            break;
+          }
+          if( se_no )
+          { 
+            PMSND_PlaySE_byPlayerID( se_no, bbgw->player_no );
+            bbgw->player_no ^= 1;
+          }
+        }
       }
     }
     if( flag == FALSE )
@@ -346,24 +368,6 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
           bbgw->bbgcl[ i ].now_pos.x = bbgw->bbgcl[ i ].stop_pos;
         }
         flag = TRUE;
-      }
-      else if( bbgw->bbgcl[ i ].now_pos.x == bbgw->bbgcl[ i ].stop_pos )
-      { 
-        int se_no;
-        GFL_CLACT_WK_SetAnmSeq( bbgw->bbgcl[ i ].clwk, bbgw->bbgcl[ i ].stop_anm_no );
-        switch( bbgw->bbgcl[ i ].stop_anm_no ){ 
-        case BTLV_BALL_GAUGE_ANM_NONE:
-          se_no = SEQ_SE_TB_KARA;
-          break;
-        case BTLV_BALL_GAUGE_ANM_ARROW_M:
-        case BTLV_BALL_GAUGE_ANM_ARROW_E:
-          break;
-        default:
-          se_no = SEQ_SE_TB_KON;
-          break;
-        }
-        PMSND_PlaySE_byPlayerID( se_no, bbgw->player_no );
-        bbgw->player_no ^= 1;
       }
       GFL_CLACT_WK_SetPos( bbgw->bbgcl[ i ].clwk, &bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
     }
