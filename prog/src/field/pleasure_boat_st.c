@@ -90,6 +90,23 @@ GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *
 
 //--------------------------------------------------------------
 /**
+ * @brief	終了関数
+ * @note  全滅処理から呼ばれる場合があるので、常駐領域におく
+ * @param	work      PL_BOAT_WORK_PTR
+ * @retval		none
+*/
+//--------------------------------------------------------------
+void PL_BOAT_End(PL_BOAT_WORK_PTR *work)
+{
+  if ( *work != NULL )
+  {
+    GFL_HEAP_FreeMemory( *work );
+    *work = NULL;
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   甲板デモコールイベント
  * @param	  event   イベントポインタ
  * @param   seq     シーケンサ

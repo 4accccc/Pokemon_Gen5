@@ -210,22 +210,6 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
 
 //--------------------------------------------------------------
 /**
- * @brief	èIóπä÷êî
- * @param	work      PL_BOAT_WORK_PTR
- * @retval		none
-*/
-//--------------------------------------------------------------
-void PL_BOAT_End(PL_BOAT_WORK_PTR *work)
-{
-  if ( *work != NULL )
-  {
-    GFL_HEAP_FreeMemory( *work );
-    *work = NULL;
-  }
-}
-
-//--------------------------------------------------------------
-/**
  * @brief	ìÆçÏä÷êî
  * @param	work      PL_BOAT_WORK_PTR
  * @retval		none
