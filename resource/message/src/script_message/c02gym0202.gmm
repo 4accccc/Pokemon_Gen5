@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:56:19"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T13:18:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,12 +324,12 @@
 みごとな　たたかいっぷり！[BE:01:ページ切り替え（クリア）]
 この　ベーシックバッジを
 うけとるのに　ふさわしい[BE:00:ページ切り替え（行送り）]
-ポケモントレーナーだね　アンタ！</language>
+ポケモントレーナーだね　アンタ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ほれぼれ　するような
 みごとな　戦いっぷり！[BE:01:ページ切り替え（クリア）]
 この　ベーシックバッジを
 受け取るのに　相応しい[BE:00:ページ切り替え（行送り）]
-ポケモントレーナーだね　アンタ！</language>
+ポケモントレーナーだね　アンタ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02gym0202_leader_03">

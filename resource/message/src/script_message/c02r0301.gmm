@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T22:23:01"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T13:19:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,11 +305,11 @@
 		<language name="JPN" width="256">ねえねえ　あなた
 [1:01:ポケモン種族名:0]　って　ポケモン　もってる？▼
 よかったら　あたしの　[1:01:ポケモン種族名:1]と
-あなたの　[1:01:ポケモン種族名:0]　こうかん　しよ？▼</language>
+あなたの　[1:01:ポケモン種族名:0]　こうかん　しよ？</language>
 		<language name="JPN_KANJI" width="256">ねえねえ　あなた
 [1:01:ポケモン種族名:0]　って　ポケモン　もってる？▼
 よかったら　あたしの　[1:01:ポケモン種族名:1]と
-あなたの　[1:01:ポケモン種族名:0]　交換しよ？▼</language>
+あなたの　[1:01:ポケモン種族名:0]　交換しよ？</language>
 	</row>
 
 	<row id="msg_c02r0301_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
