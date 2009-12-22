@@ -200,7 +200,8 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
     { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_02 } }, //[トレーナー名]くん　でいい？
     { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_name_03 } }, //[トレーナー名]さん　でいい？
 
-  //@TODO 何故かここでメッセージウェイトが入らない
+  //@TODO 何故かここでメッセージウェイトが入らない > 暫定バグフィクス
+  { INTRO_CMD_TYPE_WAIT, 1 },
 
   // 分岐 確認メッセージ
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },

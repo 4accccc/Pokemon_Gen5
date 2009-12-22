@@ -54,11 +54,23 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_setup[ UNIT_MAX ] =
 };
 
 
-// カメラ設定
-#define CAMERA_POS_Z ( 0x1b406 )
+#if 0
 static const VecFx32 sc_camera_pos    = { 0xfffffdeb, 0x809b, CAMERA_POS_Z };
 static const VecFx32 sc_camera_up     = { 0x0, 0x4272, 0x9f0 };
 static const VecFx32 sc_camera_target = { 0x0, 0x23e0, 0xffff3802 }; 
+
+static const VecFx32 sc_camera_pos = { 0, FX32_CONST(7), FX32_CONST(32) }; 
+static const VecFx32 sc_camera_up =  { 0x0, 0x4272, 0x9f0 }; 
+static const VecFx32 sc_camera_target = { 0x0, FX32_CONST(5.1), FX32_CONST(0.5) };
+#endif
+
+// カメラ設定
+#define CAMERA_POS_Z ( 0x21ccf) // 目的地トして使う
+
+static const VecFx32 sc_camera_pos = { 0x0, 0x70c2, 0x21ccf }; 
+static const VecFx32 sc_camera_up =  { 0x0, 0x4272, 0x9f0 }; 
+static const VecFx32 sc_camera_target = { 0x0, 0x519a, 0x800 }; 
+
 
 //=============================================================================
 /**
@@ -118,8 +130,8 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
 
   // 専用カメラを用意
   wk->camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+									FX_SinIdx( 26/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( 26/2 *PERSPWAY_COEFFICIENT ),
 									defaultCameraAspect, 0,
 									defaultCameraNear, defaultCameraFar, 0,
 									&sc_camera_pos, &sc_camera_up, &sc_camera_target, heap_id );
@@ -207,9 +219,10 @@ void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
 {
   int i;
   
-    // アニメーション調整
+  // アニメーション調整
 //  debug_g3d_util_anime_frame_test( wk->g3d_util, 0 );
-    // 座標調整
+ 
+  // 座標調整
 //  debug_camera_test( wk->camera );
 
   // 専用カメラにスイッチ
