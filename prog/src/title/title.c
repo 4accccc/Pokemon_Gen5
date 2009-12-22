@@ -613,7 +613,8 @@ static const GFL_G3D_OBJSTATUS drawStatus[] = {
 	},
 	{
 		//{ 0xfffebef9, 0x00378800, 0x0019a82f },	//座標
-		{ 0xffffecf9, 0x00392c00, 0x001a122f },	//座標
+		//{ 0xffffecf9, 0x00392c00, 0x001a122f },	//座標
+		{ 0xffff98f9, 0x00392c00, 0x0019902f },	//座標
 		//{ 0x3000, 0x3000, 0x3000 },											//スケール
 		{ 0x4600, 0x4600, 0x4600 },											//スケール
 		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },					//回転
@@ -666,8 +667,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
 #define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
 
-//VecFx32 debugVec;
-//fx32 debugScale;
+#if 0
+VecFx32 debugVec;
+fx32 debugScale;
+#endif
 //--------------------------------------------------------------
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
@@ -723,8 +726,17 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 		int i;
 
 		for(i=0; i<NELEMS(g3Dutil_objTbl); i++){
+#if 1
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
 			GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus[i]);
+#else
+			GFL_G3D_OBJSTATUS status;
+			status = drawStatus[i];
+			if(i==1){ VEC_Set(&status.trans, debugVec.x, debugVec.y, debugVec.z); }
+
+			g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
+			GFL_G3D_DRAW_DrawObject( g3Dobj, &status);
+#endif
 		}
 	}
 	GFL_G3D_DRAW_End();
