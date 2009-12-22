@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T18:42:22"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T13:11:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,9 +301,9 @@
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
-オレも　ボルトバッジを　手に入れた[BE:01:ページ切り替え（クリア）]
-というわけで　どっちが　強いか
-ポケモン勝負　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
+オレも　ボルトバッジを　てにいれた[BE:01:ページ切り替え（クリア）]
+というわけで　どっちが　つよいか
+ポケモンしょうぶ　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
 オレも　ボルトバッジを　手に入れた[BE:01:ページ切り替え（クリア）]
 というわけで　どっちが　強いか
@@ -315,10 +315,10 @@
 ・戦闘後メッセージ
 ・続いてカミツレ
 　msg_r05_leader_01表示</comment>
-		<language name="JPN" width="256">ブラッカー『今度は
-勝てると　思ったんだけどな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『……こんどは
+かてると　おもったけど[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『今度は
-勝てると　思ったんだけどな[BE:01:ページ切り替え（クリア）]</language>
+勝てると　思ったんだけ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -326,8 +326,8 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『遅いから　見に来れば[BE:01:ページ切り替え（クリア）]
-アナタたち　友達なの……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『おそいから　みにくれば[BE:01:ページ切り替え（クリア）]
+アナタたち　ともだち　なの……？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">カミツレ『遅いから　見に来れば[BE:01:ページ切り替え（クリア）]
 アナタたち　友達なの……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -566,7 +566,7 @@
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『さてと　れんらく[BE:01:ページ切り替え（クリア）]
-（シーバーの効果音）[BE:01:ページ切り替え（クリア）]
+（テレビトランシーバーの効果音）[BE:01:ページ切り替え（クリア）]
 アタシですけど
 はねばしを　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
 アナタに　ちょうせんしたい　って
@@ -574,7 +574,7 @@
 はい
 よろしく[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡[BE:01:ページ切り替え（クリア）]
-（シーバーの効果音）[BE:01:ページ切り替え（クリア）]
+（テレビトランシーバーの効果音）[BE:01:ページ切り替え（クリア）]
 アタシですけど
 跳ね橋を　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
 アナタに挑戦したいって
