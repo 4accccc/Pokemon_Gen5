@@ -964,13 +964,16 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
 
     case 1 :
       // メッセージプリント
-      if( INTRO_MSG_PrintProc( wk->wk_msg ) )
+      if( INTRO_MSG_PrintProc( wk->wk_msg ) == TRUE )
       {
-        // 全てのセーブが完了しているか調べる
-        if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
-        {
-          return TRUE;
-        }
+        sdat->seq++;
+      }
+      break;
+    case 2:
+      // 全てのセーブが完了しているか調べる
+      if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
+      {
+        return TRUE;
       }
       break;
   }

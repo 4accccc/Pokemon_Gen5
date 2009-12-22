@@ -419,12 +419,13 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
 //-----------------------------------------------------------------------------
 BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 {
-  PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->print_stream );
+  PRINTSTREAM_STATE state;
 
 //  HOSAKA_Printf("print state= %d \n", state );
 
   if( wk->print_stream )
   {
+    state = PRINTSYS_PrintStreamGetState( wk->print_stream );
     switch( state )
     {
     case PRINTSTREAM_STATE_DONE : // èIóπ
