@@ -565,7 +565,7 @@ u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY
  * @retval
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_SetRenshouCount(
+void BSUBWAY_SCOREDATA_SetRenshouCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
   bsw_score->renshou[mode] = count;
@@ -591,7 +591,7 @@ u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount(
  * @retval
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_SetMaxRenshouCount(
+void BSUBWAY_SCOREDATA_SetMaxRenshouCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
   bsw_score->renshou_max[mode] = count;
