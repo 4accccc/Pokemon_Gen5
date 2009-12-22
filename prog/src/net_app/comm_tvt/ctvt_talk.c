@@ -224,7 +224,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
-    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkYobidasi , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkYobidasi , FALSE );
 
     //ˆêŽž’âŽ~ƒ{ƒ^ƒ“
     cellInitData.pos_x = CTVT_TALK_PAUSE_X;

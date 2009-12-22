@@ -219,6 +219,9 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   }
   callWork->scrollOfs = 0;
   callWork->isUpdateBarPos = FALSE;
+
+  GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
+
 }
 
 //--------------------------------------------------------------
@@ -314,16 +317,16 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
               beacon->callTarget[i][j] = callWork->memberData[ callWork->checkIdx[i] ].macAddress[j];
             }
           }
-          
-          
-          for( i=0;i<3;i++ )
+        }
+        for( i=0;i<3;i++ )
+        {
+          u8 j;
+          OS_TFPrintf(3,"[%d][",callWork->checkIdx[i]);
+          for( j=0;j<6;j++ )
           {
-            for( j=0;j<6;j++ )
-            {
-              OS_TFPrintf(3,"[%02x]",beacon->callTarget[i][j]);
-            }
-            OS_TFPrintf(3,"\n");
+            OS_TFPrintf(3,"%02x",beacon->callTarget[i][j]);
           }
+          OS_TFPrintf(3,"]\n");
         }
       }
     }
