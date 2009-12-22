@@ -519,71 +519,78 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 	    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
 	    
 	    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
-	    
-	    
-	    //プレイヤーが通る2グリッド分を用意
-	   	SWITCH $POSX
-	   	CASE 5 THEN
-	    	_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_a )
-			_OBJ_ANIME_WAIT()
-	     	
-	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_a )
-			_OBJ_ANIME_WAIT()
-			
-	    CASE 6 THEN
-	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_b )
-			_OBJ_ANIME_WAIT()
-	     	
-	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_b )
-			_OBJ_ANIME_WAIT()
-			
-	    DEFAULT
-	   	ENDSWITCH
 	   	
-		//トレーナーがびっくり
-		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_obj_gyoe )
-		_OBJ_ANIME_WAIT()
+	   	IF FLAG_OFF( FE_C02GYM_TRBTL1) THEN
 
-		//前段階の本（カテゴリー3を読んでいる場合）
-		_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_02,C02GYM0201_ASSITANTW_01)
-	    _BALLOONWIN_CLOSE()
-	  	
-	    //トレーナー戦呼び出し
+		    //プレイヤーが通る2グリッド分を用意
+		   	SWITCH $POSX
+		   	CASE 5 THEN
+		    	_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_a )
+				_OBJ_ANIME_WAIT()
+		     	
+		    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_a )
+				_OBJ_ANIME_WAIT()
+				
+		    CASE 6 THEN
+		   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_b )
+				_OBJ_ANIME_WAIT()
+		     	
+		    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_b )
+				_OBJ_ANIME_WAIT()
+				
+		    DEFAULT
+		   	ENDSWITCH
+	   	
+			//トレーナーがびっくり
+			_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_obj_gyoe )
+			_OBJ_ANIME_WAIT()
 
-		_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
-			
-		//敗戦チェック
-		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		ELSE
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-		ENDIF
-			
-	    //対戦後メッセージ
-		_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_03,C02GYM0201_ASSITANTW_01)
-		_LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()
+			//前段階の本（カテゴリー3を読んでいる場合）
+			_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_02,C02GYM0201_ASSITANTW_01)
+		    _BALLOONWIN_CLOSE()
+		  	
+		    //トレーナー戦呼び出し
+			_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
+				
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+				
+		    //対戦後メッセージ
+			_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_03,C02GYM0201_ASSITANTW_01)
+			_LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()
+		    
+		    //プレイヤーが通る2グリッド分を用意
+		   	SWITCH $POSX
+		   	CASE 5 THEN
+		    	_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
+				_OBJ_ANIME_WAIT()
+		     
+		    CASE 6 THEN
+		   		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_b )
+				_OBJ_ANIME_WAIT()
+				
+		   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
+				_OBJ_ANIME_WAIT()
+
+		    DEFAULT
+		   	ENDSWITCH
+		   		 
+		    _FLAG_SET(FE_C02GYM_TRBTL1)
+		    
+	    ELSE
+			_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_03,C02GYM0201_ASSITANTW_01)
+			_LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()
+	    	
+	    ENDIF
 	    
-	    //プレイヤーが通る2グリッド分を用意
-	   	SWITCH $POSX
-	   	CASE 5 THEN
-	    	_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
-			_OBJ_ANIME_WAIT()
-	     
-	    CASE 6 THEN
-	   		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_b )
-			_OBJ_ANIME_WAIT()
-			
-	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
-			_OBJ_ANIME_WAIT()
-
-	     
-	    DEFAULT
-	   	ENDSWITCH
-	   		 
-	    _FLAG_SET(FE_C02GYM_TRBTL1)
-    	$WK_SCENE_C02GYM0201 = 4
+	    $WK_SCENE_C02GYM0201 = 4	    
 
 EVENT_END
 
