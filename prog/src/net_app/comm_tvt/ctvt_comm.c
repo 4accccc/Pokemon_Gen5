@@ -18,6 +18,7 @@
 #include "system/wipe.h"
 #include "system/camera_system.h"
 #include "net/network_define.h"
+#include "net/wih_dwc.h"
 
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
@@ -37,6 +38,9 @@
 //お絵描きバッファ
 #define CTVT_COMM_DRAW_BUF_NUM (5)
 
+#define CTVT_COMM_ADD_COMMAND_SYNC (8)
+#define CTVT_COMM_SCAN_BEACON_NUM (4)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -49,6 +53,10 @@ typedef enum
 
   CCS_REQ_NEGOTIATION,
   CCS_WAIT_NEGOTIATION,
+
+  CCS_ADD_COMMAND,
+  CCS_ADD_COMMAND_SYNC,
+  CCS_ADD_COMMAND_SYNC_WAIT,
   
   CCS_CONNECT,
   
@@ -134,6 +142,10 @@ struct _CTVT_COMM_WORK
   BOOL updateTalkMember;
   u8 tempTalkMember;
   
+  //スキャン用
+  WIH_DWC_WORK      *scanWork;  //フィールドビーコンをスキャン！
+
+  
   COMM_TVT_WORK *parentWork;  //受信コールバックで使うため
 };
 
@@ -143,6 +155,7 @@ struct _CTVT_COMM_WORK
 #pragma mark [> proto
 static void CTVT_COMM_InitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 static void*  CTVT_COMM_GetBeaconData(void* pWork);
 static int CTVT_COMM_GetBeaconSize(void *pWork);
 static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
@@ -219,6 +232,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     commWork->beacon.id = MyStatus_GetID_Low( myStatus );
     commWork->beacon.connectNum = 1;
   }
+  commWork->scanWork = NULL;
   GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
@@ -230,6 +244,15 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   u8 i;
+  if( commWork->mode == CCIM_CONNECTED )
+  {
+    GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
+  }
+  if( commWork->scanWork != NULL )
+  {
+    WIH_DWC_AllBeaconEnd( commWork->scanWork );
+  }
+  
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
   GFL_HEAP_FreeMemory( commWork->postWaveBuf );
   GFL_NET_Align32Free( commWork->encBuffer );
@@ -250,6 +273,7 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 //--------------------------------------------------------------
 void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
   switch( commWork->state )
   {
   case CCS_NONE:
@@ -257,8 +281,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     {
       if( commWork->nextMode == CCIM_CONNECTED )
       {
-        //FIXME 本当はテーブル追加とかの処理
-        commWork->state = CCS_CONNECT;
+        commWork->state = CCS_ADD_COMMAND;
         commWork->mode = commWork->nextMode;
       }
       else
@@ -278,6 +301,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       {
       case CCIM_SCAN:
         GFL_NET_StartBeaconScan();
+        commWork->scanWork = WIH_DWC_AllBeaconStart(CTVT_COMM_SCAN_BEACON_NUM, heapId );
         commWork->state = CCS_CONNECT;
         break;
       case CCIM_PARENT:
@@ -310,6 +334,25 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
     break;
     
+  case CCS_ADD_COMMAND:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_AddCommandTable( GFL_NET_CMD_COMM_TVT , CTVT_COMM_RecvTable , NELEMS(CTVT_COMM_RecvTable) , commWork );
+      GFL_NET_TimingSyncStart( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC );
+      commWork->state = CCS_ADD_COMMAND_SYNC_WAIT;
+    }
+    break;
+  case CCS_ADD_COMMAND_SYNC_WAIT:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC ) == TRUE )
+      {
+        commWork->state = CCS_CONNECT;
+      }
+    }
+    break;
+
+    
   case CCS_CONNECT:
     {
       CTVT_COMM_UpdateComm( work , commWork );
@@ -317,10 +360,19 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       {
         commWork->state = CCS_DISCONNECT;
       }
+      if( commWork->mode == CCIM_SCAN )
+      {
+        CTVT_COMM_UpdateScan( work , commWork );
+      }
     }
     break;
     
   case CCS_DISCONNECT:
+    if( commWork->mode == CCIM_SCAN )
+    {
+      WIH_DWC_AllBeaconEnd( commWork->scanWork );
+      commWork->scanWork = NULL;
+    }
     //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
     GFL_NET_Exit(NULL);
     {
@@ -607,6 +659,29 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       {
         commWork->updateTalkMember = FALSE;
       }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+// フィールドビーコンスキャン
+//--------------------------------------------------------------
+static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  u8 i;
+  WIH_DWC_MainLoopScanBeaconData();
+  for( i=0;i<CTVT_COMM_SCAN_BEACON_NUM;i++ )
+  {
+    if( WIH_DWC_IsEnableBeaconData(i) == TRUE )
+    {
+      const WMBssDesc* beacon = WIH_DWC_GetBeaconData(i);
+      OS_TPrintf("[%x:%x:%x:%x:%x:%x]\n",
+                      beacon->bssid[0],
+                      beacon->bssid[1],
+                      beacon->bssid[2],
+                      beacon->bssid[3],
+                      beacon->bssid[4],
+                      beacon->bssid[5]);
     }
   }
 }

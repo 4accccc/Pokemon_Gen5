@@ -391,3 +391,18 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
   //NAGI_Printf( "ret %d\n", retcode );
   return retcode;
 }
+
+
+const BOOL WIH_DWC_IsEnableBeaconData( const u8 idx )
+{
+  if( _localWork->aBeaconCatch[idx].timer > 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx )
+{
+  return &_localWork->aBeaconCatch[idx].sBssDesc;
+}

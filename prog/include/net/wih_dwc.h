@@ -39,3 +39,5 @@ extern GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void);
 extern void WIH_DWC_Stop(void);
 extern void WIH_DWC_Restart(void);
 
+extern const BOOL WIH_DWC_IsEnableBeaconData( const u8 idx );
+extern const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx );
