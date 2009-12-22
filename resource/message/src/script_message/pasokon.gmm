@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-12-21T23:22:50"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T13:00:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -348,15 +348,15 @@
 ・選択ウインドウ表示</comment>
 		<language name="JPN" width="256">どこの　パソコンに　せつぞくして
 つうしん　しますか？</language>
-		<language name="JPN_KANJI" width="256">どこの　パソコンに　せつぞくして
-つうしん　しますか？</language>
+		<language name="JPN_KANJI" width="256">どこの　パソコンに　接続して
+通信しますか？</language>
 	</row>
 
 	<row id="msg_pc_window_01" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
 ・ボックス管理者
 ・シナリオ中、フラグがたつと
-　「？？？？？のなまえ」に変更</comment>
+　「ショウロのなまえ」に変更</comment>
 		<language name="JPN" width="256">だれかのパソコン</language>
 		<language name="JPN_KANJI" width="256">だれかのパソコン</language>
 	</row>
@@ -365,8 +365,8 @@
 		<comment>■選択肢ウインドウ
 ・ボックス管理者
 </comment>
-		<language name="JPN" width="256">（かいはつしゃ）のパソコン</language>
-		<language name="JPN_KANJI" width="256">（開発者）のパソコン</language>
+		<language name="JPN" width="256">ショウロのパソコン</language>
+		<language name="JPN_KANJI" width="256">ショウロのパソコン</language>
 	</row>
 
 	<row id="msg_pc_window_03" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -381,7 +381,7 @@
 		<comment>■選択肢ウインドウ
 ・図鑑評価</comment>
 		<language name="JPN" width="256">はかせのパソコン</language>
-		<language name="JPN_KANJI" width="256">はかせのパソコン</language>
+		<language name="JPN_KANJI" width="256">博士のパソコン</language>
 	</row>
 
 	<row id="msg_pc_window_05" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -392,7 +392,7 @@
 　正常なら殿堂入り画面表示後にmsg_pc_on_02
 　異常ならmsg_pc_on_04</comment>
 		<language name="JPN" width="256">でんどういり</language>
-		<language name="JPN_KANJI" width="256">でんどういり</language>
+		<language name="JPN_KANJI" width="256">殿堂入り</language>
 	</row>
 
 	<row id="msg_pc_window_06" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -406,10 +406,10 @@
 		<comment>■「はかせのパソコン」選択時
 ・続けて図鑑評価
 　hyouka.gmmに</comment>
-		<language name="JPN" width="256">アララギの
+		<language name="JPN" width="256">アララギはかせの
 パソコンに　せつぞくした！▼</language>
-		<language name="JPN_KANJI" width="256">アララギの
-パソコンに　せつぞくした！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ博士の
+パソコンに　接続した！▼</language>
 	</row>
 
 	<row id="msg_pc_on_04">
@@ -421,10 +421,10 @@
 データが　こわれています▼
 もういちど　でんどういり　すれば
 だいじょうぶ　です▼</language>
-		<language name="JPN_KANJI" width="256">でんどういりの
-データが　こわれています▼
-もういちど　でんどういり　すれば
-だいじょうぶ　です▼</language>
+		<language name="JPN_KANJI" width="256">殿堂入りの
+データが　壊れています▼
+もういちど　殿堂入り　すれば
+大丈夫　です▼</language>
 	</row>
 
 	<row id="msg_pc_box_01">
@@ -432,7 +432,7 @@
 ・ボックスメニュー起動</comment>
 		<language name="JPN" width="256">ポケモンの　あずかりシステムを
 よびだした！▼</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　あずかりシステムを
+		<language name="JPN_KANJI" width="256">ポケモンの　預かりシステムを
 よびだした！▼</language>
 	</row>
 
@@ -483,8 +483,8 @@
 ・決定するとボックス預けるの処理へ</comment>
 		<language name="JPN" width="256">てもちの　ポケモンを
 ボックスに　あずけることが　できます</language>
-		<language name="JPN_KANJI" width="256">てもちの　ポケモンを
-ボックスに　あずけることが　できます</language>
+		<language name="JPN_KANJI" width="256">手持ちの　ポケモンを
+ボックスに　預けることが　できます</language>
 	</row>
 
 	<row id="msg_pc_box_03">
@@ -492,8 +492,8 @@
 ・決定するとボックス連れて行くの処理へ</comment>
 		<language name="JPN" width="256">ボックスに　あずけている　ポケモンを
 てもちに　くわえることが　できます</language>
-		<language name="JPN_KANJI" width="256">ボックスに　あずけている　ポケモンを
-てもちに　くわえることが　できます</language>
+		<language name="JPN_KANJI" width="256">ボックスに　預けている　ポケモンを
+手持ちに　くわえることが　できます</language>
 	</row>
 
 	<row id="msg_pc_box_04">
@@ -501,8 +501,8 @@
 ・決定するとボックス整理の処理へ</comment>
 		<language name="JPN" width="256">ボックスに　あずけている　ポケモンや
 てもちのポケモンを　せいり　できます</language>
-		<language name="JPN_KANJI" width="256">ボックスに　あずけている　ポケモンや
-てもちのポケモンを　せいり　できます</language>
+		<language name="JPN_KANJI" width="256">ボックスに　預けている　ポケモンや
+手持ちのポケモンを　整理できます</language>
 	</row>
 
 	<row id="msg_pc_box_05">
@@ -510,8 +510,8 @@
 ・決定するとボックス持ち物の処理へ</comment>
 		<language name="JPN" width="256">ポケモンが　もっている
 どうぐを　せいり　できます</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　もっている
-どうぐを　せいり　できます</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　持っている
+道具を　整理できます</language>
 	</row>
 
 	<row id="msg_pc_box_06">
@@ -519,8 +519,8 @@
 ・決定するとmsg_pc_on_02</comment>
 		<language name="JPN" width="256">ポケモンあずかりシステム　への
 つうしんを　せつだん　します</language>
-		<language name="JPN_KANJI" width="256">ポケモンあずかりシステム　への
-つうしんを　せつだん　します</language>
+		<language name="JPN_KANJI" width="256">ポケモン預かりシステム　への
+通信を　切断します</language>
 	</row>
 
 	<row id="msg_pc_box_07">
@@ -528,8 +528,8 @@
 ・決定するとバトルボックスの処理へ</comment>
 		<language name="JPN" width="256">てもちとは　べつに　たいせんでつかう
 ポケモンを　とうろく　できます</language>
-		<language name="JPN_KANJI" width="256">てもちとは　べつに　たいせんでつかう
-ポケモンを　とうろく　できます</language>
+		<language name="JPN_KANJI" width="256">手持ちとは　別に　対戦で使う
+ポケモンを　登録できます</language>
 	</row>
 
 	<row id="msg_pc_mail_01">
@@ -537,7 +537,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の
 パソコンに　せつぞくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の
-パソコンに　せつぞくした！</language>
+パソコンに　接続した！</language>
 	</row>
 
 	<row id="msg_pc_mail_window_01" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
@@ -551,7 +551,7 @@
 		<comment>■選択肢ウインドウ
 ・msg_pc_mail_03表示</comment>
 		<language name="JPN" width="256">せつぞくを　きる</language>
-		<language name="JPN_KANJI" width="256">せつぞくを　きる</language>
+		<language name="JPN_KANJI" width="256">接続を　きる</language>
 	</row>
 
 	<row id="msg_pc_mail_02">
@@ -559,8 +559,8 @@
 ・決定するとボックス預けるの処理へ</comment>
 		<language name="JPN" width="256">メールを　２０つう　まで
 ほぞん　することが　できます</language>
-		<language name="JPN_KANJI" width="256">メールを　２０つう　まで
-ほぞん　することが　できます</language>
+		<language name="JPN_KANJI" width="256">メールを　２０通　まで
+保存することが　できます</language>
 	</row>
 
 	<row id="msg_pc_mail_03">
@@ -569,14 +569,14 @@
 		<language name="JPN" width="256">じぶんのパソコン　への
 つうしんを　せつだん　します</language>
 		<language name="JPN_KANJI" width="256">じぶんのパソコン　への
-つうしんを　せつだん　します</language>
+通信を　切断します</language>
 	</row>
 
 	<row id="msg_pc_zukan_check_01">
 		<comment>■「はかせのパソコン」選択時</comment>
-		<language name="JPN" width="256">（はかせの　なまえ）の
+		<language name="JPN" width="256">アララギはかせの
 パソコンに　せつぞくした！</language>
-		<language name="JPN_KANJI" width="256">（博士の名前）の
+		<language name="JPN_KANJI" width="256">アララギ博士の
 パソコンに　接続した！</language>
 	</row>
 
