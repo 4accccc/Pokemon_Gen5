@@ -303,7 +303,8 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
           *p_seq  = SEQ_FADEOUT_START;
           break;
         }
-        if( Br_Rank_IsPushBattleBV( x, y ) )
+        //if( Br_Rank_IsPushBattleBV( x, y ) )
+        if(0)
         { 
           BR_RANK_GetSelect( &p_wk->rank );
           BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
