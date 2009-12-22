@@ -5322,8 +5322,7 @@ static void SEQFUNC_SaveEnd( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     break;
 
   case SEQ_SAVE_WAIT:
-    if( IntrSave_CheckAllSaveEnd( p_wk->p_param->p_intr_sv ) )
-    { 
+    if(IntrSave_CheckSuspend(p_wk->p_param->p_intr_sv) == TRUE){
       SEQ_End( p_seqwk );
     }
     break;
