@@ -613,7 +613,7 @@ static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub)
   GFL_BMPWIN *bmpwin;
   
   bmpwin = GFL_BMPWIN_Create( INTRUDE_FRAME_S_BAR, 
-    0, 0x14, 0x18, 2, _FONT_BG_PALNO, GFL_BMP_CHRAREA_GET_B );
+    0, 0x14, 0x20, 2, _FONT_BG_PALNO, GFL_BMP_CHRAREA_GET_B );
   PRINT_UTIL_Setup( &intsub->printutil_info, bmpwin );
   GFL_BMPWIN_MakeTransWindow(bmpwin);
 }
