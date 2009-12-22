@@ -440,7 +440,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 
     case PRINTSTREAM_STATE_PAUSE : // ˆê’â~’†
       // ƒL[“ü—Í‘Ò‚¿
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() )
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || (  GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
       {
         wk->push_flag = TRUE;
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
