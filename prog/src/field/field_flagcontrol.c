@@ -20,6 +20,8 @@
 #include "effect_encount.h"
 #include "field_flagcontrol.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -58,7 +60,12 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
     //歩いて移動した場合は移動ポケモンの移動処理
 		MP_MovePokemonNeighboring( data );//移動ポケモン隣接移動
 	}
-
+  
+  { //イベントフラグ
+    EVENTWORK *event_flag = GAMEDATA_GetEventWork( gdata );
+    EVENTWORK_ResetEventFlag( event_flag, SYS_FLAG_KAIRIKI );
+  }
+  
 /* PLATUNUM
 	//--冒険ノート用更新処理
 	FldFlgInit_FnoteTownDataSet( fsys );
