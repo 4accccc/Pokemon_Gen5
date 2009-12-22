@@ -152,7 +152,6 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
 
   work->mode = CTM_NONE;
-  work->nextMode = CTM_CALL;
 
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
@@ -164,16 +163,20 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   {
   case CTM_TEST:   //テスト用(changeOver
     CTVT_COMM_SetMode( work , work->commWork , CCIM_SCAN );
+    work->nextMode = CTM_CALL;
     break;
   case CTM_PARENT: //親起動
     CTVT_COMM_SetMode( work , work->commWork , CCIM_PARENT );
+    work->nextMode = CTM_CALL;
     break;
   case CTM_CHILD:  //子起動
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CHILD );
     CTVT_COMM_SetMacAddress( work , work->commWork , work->initWork->macAddress );
+    work->nextMode = CTM_TALK;
     break;
   case CTM_WIFI:   //Wifi起動
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CONNECTED );
+    work->nextMode = CTM_TALK;
     break;
   }
 
@@ -205,6 +208,8 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
 //--------------------------------------------------------------
 static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
 {
+  CTVT_COMM_Main( work , work->commWork );
+
   switch( work->mode )
   {
   case CTM_TALK: //会話
@@ -217,7 +222,14 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
     break;
   case CTM_END:
-    return TRUE;
+    if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
+    {
+      return TRUE;
+    }
+    else
+    {
+      return FALSE;
+    }
     break;
   }
   
@@ -227,7 +239,6 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   }
   
   CTVT_CAMERA_Main( work , work->camWork );
-  CTVT_COMM_Main( work , work->commWork );
   
   DRAW_SYS_UpdateSystem( work->drawSys );
 
@@ -745,7 +756,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work = mywk;
   
-  if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
+  if( CTVT_COMM_IsExit(work,work->commWork) == FALSE )
   {
     return GFL_PROC_RES_CONTINUE;
   }

@@ -515,10 +515,11 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
   }
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     talkWork->subState = CTSS_GO_END;
     talkWork->state = CTS_FADEOUT_BOTH;
+    COMM_TVT_SetSusspend( work , TRUE );
   }
 }
 

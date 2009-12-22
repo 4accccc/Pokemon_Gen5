@@ -39,6 +39,7 @@
 #define CTVT_COMM_DRAW_BUF_NUM (5)
 
 #define CTVT_COMM_ADD_COMMAND_SYNC (8)
+#define CTVT_COMM_RELEASE_COMMAND_SYNC (9)
 #define CTVT_COMM_SCAN_BEACON_NUM (16)
 
 
@@ -56,12 +57,14 @@ typedef enum
   CCS_WAIT_NEGOTIATION,
 
   CCS_ADD_COMMAND,
-  CCS_ADD_COMMAND_SYNC,
   CCS_ADD_COMMAND_SYNC_WAIT,
   
   CCS_CONNECT,
   
   CCS_DISCONNECT,
+
+  CCS_RELEASE_COMMAND,
+  CCS_RELEASE_COMMAND_SYNC_WAIT,
   
   CCS_DISCONNECT_WAIT,
   CCS_FINISH,
@@ -229,6 +232,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     commWork->beacon.id = MyStatus_GetID_Low( myStatus );
     commWork->beacon.connectNum = 1;
   }
+  
   GFL_NET_LDATA_InitSystem( heapId );
   
   return commWork;
@@ -240,10 +244,6 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   u8 i;
-  if( commWork->mode == CCIM_CONNECTED )
-  {
-    GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
-  }
   
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
   GFL_HEAP_FreeMemory( commWork->postWaveBuf );
@@ -256,8 +256,6 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   }
   GFL_HEAP_FreeMemory( commWork );
   
-  GFL_NET_LDATA_ExitSystem();
-  
 }
 
 //--------------------------------------------------------------
@@ -266,6 +264,16 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+  {
+    static CTVT_COMM_STATE befState = CCS_NONE;
+    if( befState != commWork->state )
+    {
+      OS_TFPrintf(3,"CommState[%d]->[%d]\n",befState,commWork->state);
+      befState = commWork->state;
+    }
+  }
+#endif //DEBUG_ONLY_FOR_ariizumi_nobuhiko
   switch( commWork->state )
   {
   case CCS_NONE:
@@ -273,6 +281,8 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     {
       if( commWork->nextMode == CCIM_CONNECTED )
       {
+        GFL_NET_SetWifiBothNet(FALSE);
+      
         commWork->state = CCS_ADD_COMMAND;
         commWork->mode = commWork->nextMode;
       }
@@ -359,12 +369,34 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     break;
     
   case CCS_DISCONNECT:
-    //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
-    GFL_NET_Exit(NULL);
+    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+    //GFL_NET_Exit(NULL);
     {
+      GFL_NET_LDATA_ExitSystem();
       commWork->state = CCS_DISCONNECT_WAIT;
     }
     break;
+    
+  case CCS_RELEASE_COMMAND:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_TimingSyncStart( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC );
+      commWork->state = CCS_RELEASE_COMMAND_SYNC_WAIT;
+    }
+    break;
+
+  case CCS_RELEASE_COMMAND_SYNC_WAIT:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC ) == TRUE )
+      {
+        GFL_NET_LDATA_ExitSystem();
+        GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
+        commWork->state = CCS_FINISH;
+      }
+    }
+    break;
+
     
   case CCS_DISCONNECT_WAIT:
     if( GFL_NET_IsExit() == TRUE )
@@ -446,12 +478,28 @@ void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   if( commWork->connectNum <= 1 )
   {
-    GFL_NET_Exit(NULL);
-    commWork->state = CCS_DISCONNECT_WAIT;
+    GFL_NET_LDATA_ExitSystem();
+    if( commWork->mode == CCIM_CONNECTED )
+    {
+      commWork->state = CCS_FINISH;
+      GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
+    }
+    else
+    {
+      GFL_NET_Exit(NULL);
+      commWork->state = CCS_DISCONNECT_WAIT;
+    }
   }
   else
   {
-    commWork->state = CCS_DISCONNECT;
+    if( commWork->mode == CCIM_CONNECTED )
+    {
+      commWork->state = CCS_RELEASE_COMMAND;
+    }
+    else
+    {
+      commWork->state = CCS_DISCONNECT;
+    }
   }
   commWork->nextMode = CCIM_END;
 }
