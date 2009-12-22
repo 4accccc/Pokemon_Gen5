@@ -2813,8 +2813,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       PMSND_PauseBGM( TRUE );
       PMSND_PlaySE( SEQ_SE_LVUP );
     }
-    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
+    if( !PMSND_CheckPlaySE() )
+    {
       PMSND_PauseBGM( FALSE );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       wk->wazaoboe_index = 0;
       (*seq)++;
     }
@@ -2862,8 +2865,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       PMSND_PauseBGM( TRUE );
       PMSND_PlaySE( SEQ_SE_LVUP );
     }
-    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
+    if( !PMSND_CheckPlaySE() )
+    {
       PMSND_PauseBGM( FALSE );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       (*seq) = 4;
     }
     break;
