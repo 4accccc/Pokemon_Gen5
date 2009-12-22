@@ -426,7 +426,6 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   int palace_area;
   
   intcomm = Intrude_Check_CommConnect(game_comm);
-  GF_ASSERT(intcomm != NULL);
   
   parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
 
