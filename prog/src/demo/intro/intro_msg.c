@@ -146,7 +146,7 @@ static void KeyCursor_Write( KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col 
   
   work->cursor_anm_frame++;
   
-  if( work->cursor_anm_frame >= 4 ){
+  if( work->cursor_anm_frame >= 4*2 ){
     work->cursor_anm_frame = 0;
     work->cursor_anm_no++;
     work->cursor_anm_no %= 3;
