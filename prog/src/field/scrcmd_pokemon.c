@@ -22,6 +22,7 @@
 #include "scrcmd_work.h"
 
 #include "scrcmd_pokemon.h"
+#include "poke_tool/tokusyu_def.h"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
@@ -766,16 +767,23 @@ extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   // 追加するポケモンを作成
   pp = PP_Create( monsno, level, PTL_SETUP_ID_AUTO, heap_id );
   PP_Put( pp, ID_PARA_form_no, formno );    // フォーム
-  PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
   PP_Put( pp, ID_PARA_item, itemno );       // 所持アイテム
-  { // 親の名前
-    STRBUF* buf = MyStatus_CreateNameString( status, heap_id );
-    PP_Put( pp, ID_PARA_oyaname, (u32)buf );
-    GFL_STR_DeleteBuffer( buf );
+
+  if( tokusei != TOKUSYU_NULL ){
+    PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
   }
+  // 親の名前と性別
+  PP_Put( pp, ID_PARA_id_no, (u32)MyStatus_GetID(status) );
+  PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(status) );
+  PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(status) );
+
+  PP_Renew( pp );
 
   // 手持ちに追加
   PokeParty_Add( party, pp );
+
+  //一応図鑑登録
+  ZUKANSAVE_SetPokeGet(GAMEDATA_GetZukanSave( gdata ), pp);
 
   GFL_HEAP_FreeMemory( pp );
   *ret_wk = TRUE;
