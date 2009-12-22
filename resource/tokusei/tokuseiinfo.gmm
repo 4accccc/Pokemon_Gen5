@@ -347,6 +347,7 @@
 
 	<row id="TOKUSEIINFO_000">
 		<language name="JPN" width="216">ーー</language>
+		<language name="JPN_KANJI" width="216">ーー</language>
 	</row>
 
 	<row id="TOKUSEIINFO_001">
