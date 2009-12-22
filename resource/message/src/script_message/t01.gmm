@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T15:25:35"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T11:51:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,8 +335,8 @@
 ・t01r0301でのイベント後
 　友達♂の隣に配置</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『……さっきのは　ヒミツね</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『……さっきのは　秘密ね</language>
+		<language name="JPN" width="256">ホワイティ『……さっきのは　ヒミツだよ</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『……さっきのは　秘密だよ</language>
 	</row>
 
 	<row id="msg_t01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
