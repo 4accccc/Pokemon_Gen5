@@ -149,7 +149,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 
 #ifdef PM_DEBUG
   //デバッグ強制エンカウントOffルーチン
-  if( !force_f && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
+  if( enc_type != ENC_TYPE_FORCE && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
     return NULL;
   }
 #endif
