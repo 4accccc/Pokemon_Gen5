@@ -499,11 +499,11 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 	//グラフィックデータロード(LOGO)
 	{
 		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_TITLE, NARC_title_wb_logo_bk_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
+			ARCID_TITLE, NARC_title_wb_logo_bk2_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
 		GFL_ARC_UTIL_TransVramScreen(
-			ARCID_TITLE, NARC_title_wb_logo_bk_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
+			ARCID_TITLE, NARC_title_wb_logo_bk2_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
 		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_TITLE, NARC_title_wb_logo_bk_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
+			ARCID_TITLE, NARC_title_wb_logo_bk2_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
 
 		GFL_BG_LoadScreenReq( FRAME_LOGO );
 		GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_ON);
@@ -524,8 +524,8 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 		GFL_BG_LoadScreenReq( FRAME_MSG );
 
 		//フォントパレット転送(緑字)
-		GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), GX_RGB(0, 20, 0), 0x20-2);
-		GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+6), GX_RGB(0, 31, 0), 2);
+//		GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), GX_RGB(0, 20, 0), 0x20-2);
+//		GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+6), GX_RGB(0, 31, 0), 2);
 
 		//フォント&プリントキューシステム作成
 		CG2d->fontHandle = GFL_FONT_Create

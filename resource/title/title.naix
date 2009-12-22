@@ -14,12 +14,15 @@ enum {
 	NARC_title_wb_logo_bk_NCGR = 0,
 	NARC_title_wb_logo_bk_NSCR = 1,
 	NARC_title_wb_logo_bk_NCLR = 2,
-	NARC_title_title_gira_nsbca = 3,
-	NARC_title_title_gira_nsbmd = 4,
-	NARC_title_title_gira_nsbta = 5,
-	NARC_title_mist_NCGR = 6,
-	NARC_title_mist_NSCR = 7,
-	NARC_title_mist_NCLR = 8
+	NARC_title_wb_logo_bk2_NCGR = 3,
+	NARC_title_wb_logo_bk2_NSCR = 4,
+	NARC_title_wb_logo_bk2_NCLR = 5,
+	NARC_title_title_gira_nsbca = 6,
+	NARC_title_title_gira_nsbmd = 7,
+	NARC_title_title_gira_nsbta = 8,
+	NARC_title_mist_NCGR = 9,
+	NARC_title_mist_NSCR = 10,
+	NARC_title_mist_NCLR = 11
 };
 
 /* NARC_TITLE_NAIX_ */
