@@ -3260,11 +3260,11 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  サケサーバーデバッグモードへ
+ *  @brief  サケサーバーデバッグモードへ
  *
- *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *  @param  DEBUG_MENU_EVENT_WORK *p_wk   ワーク
  *
- *	@return TRUEでイベンﾄ継続
+ *  @return TRUEでイベンﾄ継続
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
@@ -3274,11 +3274,11 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  アトラスサーバーデバッグモードへ
+ *  @brief  アトラスサーバーデバッグモードへ
  *
- *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *  @param  DEBUG_MENU_EVENT_WORK *p_wk   ワーク
  *
- *	@return TRUEでイベンﾄ継続
+ *  @return TRUEでイベンﾄ継続
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
@@ -3308,11 +3308,11 @@ typedef struct
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルレコーダーへ
+ *  @brief  バトルレコーダーへ
  *
- *	@param	DEBUG_MENU_EVENT_WORK *p_wk   ワーク
+ *  @param  DEBUG_MENU_EVENT_WORK *p_wk   ワーク
  *
- *	@return TRUEでイベンﾄ継続
+ *  @return TRUEでイベンﾄ継続
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
@@ -3349,13 +3349,13 @@ static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルレコーダー呼び出しイベント
+ *  @brief  バトルレコーダー呼び出しイベント
  *
- *	@param	GMEVENT *p_event  イベント
- *	@param	*p_seq      シーケンス
- *	@param	*p_wk_adrs  ワーク 
+ *  @param  GMEVENT *p_event  イベント
+ *  @param  *p_seq      シーケンス
+ *  @param  *p_wk_adrs  ワーク 
  *
- *	@return 終了コード
+ *  @return 終了コード
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
@@ -3612,7 +3612,7 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk )
   p_param->param.pp   = PokeParty_GetMemberPointer( party, 0 );
   p_param->param.myst = SaveData_GetMyStatus(sv);   // 自分データ
   p_param->param.cfg  = SaveData_GetConfig(sv);     // コンフィグデータ
-
+  p_param->param.gsys = p_gamesys;
   p_param->param.waza_tbl   = WAZAOSHIE_GetRemaindWaza( p_param->param.pp, HEAPID_WORLD );
 
   OS_Printf( "技教え Start\n" );

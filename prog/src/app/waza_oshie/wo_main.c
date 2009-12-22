@@ -783,6 +783,8 @@ static void WO_DispInit( WO_WORK * wk )
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN,   WIPE_TYPE_FADEIN,
                   WIPE_FADE_BLACK,  WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_WAZAOSHIE );
 
+  // 上下画面表示設定
+  GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
   // VblankFuncセット
   wk->vBlankTcb = GFUser_VIntr_CreateTCB( WO_VBlank , wk , 16 );
