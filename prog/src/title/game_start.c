@@ -276,7 +276,8 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 		break;
 	case SEQ_INPUT_NAME:
     //–¼‘O“ü—Í
-    work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
+    work->nameInParam->hero_sex	  = MyStatus_GetMySex(work->selModeParam.mystatus);
+    work->nameInParam->p_intr_sv  = work->intr_save;
 //	GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(namein), &NameInputProcData, &work->nameInParam );
     (*seq) = SEQ_INPUT_NAME_WAIT;
