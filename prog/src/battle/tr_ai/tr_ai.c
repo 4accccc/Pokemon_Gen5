@@ -605,7 +605,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work )
     int i;
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     { 
-      OS_TPrintf( "waza%d:%d\n", i+1, tr_ai_work->waza_point[ i ] ); 
+//      OS_TPrintf( "waza%d:%d\n", i+1, tr_ai_work->waza_point[ i ] ); 
     }
   }
 #endif
@@ -742,6 +742,9 @@ static	VMCMD_RESULT	AI_INCDEC( VMHANDLE* vmh, void* context_work )
   { 
     tr_ai_work->waza_point[ tr_ai_work->waza_pos ] = 0;
   }
+
+//  OS_TPrintf("INCDEC:\n",value);
+//  OS_TPrintf("pos:%d value:%d\n",tr_ai_work->waza_pos, value );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1103,8 +1106,6 @@ static	VMCMD_RESULT	AI_CHECK_TYPE( VMHANDLE* vmh, void* context_work )
 	int	side  = ( int )VMGetU32( vmh );
   PokeTypePair  atk_type = BPP_GetPokeType( tr_ai_work->atk_bpp );
   PokeTypePair  def_type = BPP_GetPokeType( tr_ai_work->def_bpp );
-  PokeTypePair  atk_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) ) );
-  PokeTypePair  def_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_DEFENCE_FRIEND ) ) );
 
 	switch( side ){
 	case CHECK_ATTACK_TYPE1:
@@ -1123,16 +1124,28 @@ static	VMCMD_RESULT	AI_CHECK_TYPE( VMHANDLE* vmh, void* context_work )
 		tr_ai_work->calc_work = WAZADATA_GetType( tr_ai_work->waza_no );
 		break;
 	case CHECK_ATTACK_FRIEND_TYPE1:
-		tr_ai_work->calc_work = PokeTypePair_GetType1( atk_type_f );
+    { 
+      PokeTypePair  atk_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) ) );
+		  tr_ai_work->calc_work = PokeTypePair_GetType1( atk_type_f );
+    }
 		break;
 	case CHECK_DEFENCE_FRIEND_TYPE1:
-		tr_ai_work->calc_work = PokeTypePair_GetType1( def_type_f );
+    { 
+      PokeTypePair  def_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_DEFENCE_FRIEND ) ) );
+		  tr_ai_work->calc_work = PokeTypePair_GetType1( def_type_f );
+    }
 		break;
 	case CHECK_ATTACK_FRIEND_TYPE2:
-		tr_ai_work->calc_work = PokeTypePair_GetType2( atk_type_f );
+    { 
+      PokeTypePair  atk_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) ) );
+		  tr_ai_work->calc_work = PokeTypePair_GetType2( atk_type_f );
+    }
 		break;
 	case CHECK_DEFENCE_FRIEND_TYPE2:
-		tr_ai_work->calc_work = PokeTypePair_GetType2( def_type_f );
+    { 
+      PokeTypePair  def_type_f = BPP_GetPokeType( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_DEFENCE_FRIEND ) ) );
+		  tr_ai_work->calc_work = PokeTypePair_GetType2( def_type_f );
+    }
 		break;
 	default:
 		GF_ASSERT(0);
@@ -1306,7 +1319,7 @@ static	VMCMD_RESULT	AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
 
   //@todo とりあえず特性とかなにも考えずに単純に相性チェック
 
-  OS_TPrintf("aff:%d\n",aff);
+//  OS_TPrintf("aff:%d\n",aff);
 
   branch_act( vmh, COND_EQUAL, aff, aisyou, adrs );
 
