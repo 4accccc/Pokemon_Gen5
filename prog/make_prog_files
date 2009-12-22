@@ -797,15 +797,6 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
 
 
 
-# トレーナーカード
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
-      app/trainercard/trcard_bmp.c \
-      app/trainercard/trcard_obj.c \
-      app/mysign/mysign.c
-
 #相性チェック
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -898,6 +889,17 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pmsiv_wordwin.c \
         app/pms_select/pms_select.c \
         app/pms_select/pms_select_graphic.c
+
+
+# トレーナーカード
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_PMSINPUT
+SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
+      app/trainercard/trcard_bmp.c \
+      app/trainercard/trcard_obj.c \
+      app/mysign/mysign.c
 
 
 # ミュージカル
