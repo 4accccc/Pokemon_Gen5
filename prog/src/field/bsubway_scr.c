@@ -331,6 +331,35 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
 
 //--------------------------------------------------------------
 /**
+ * BSUBWAY_SCRWORK
+ * @param bsw_scr BSUBWAY_SCRWORK*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_LoadPokemonMember( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys )
+{
+  int i;
+  POKEPARTY *party;
+  POKEMON_PARAM *pp;
+
+  bsw_scr->member_num = bswScr_GetMemberNum( bsw_scr->play_mode );
+  
+  //選んだポケモンNo
+  BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
+  
+  party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(gsys) );
+  
+  for( i = 0; i < bsw_scr->member_num; i++ ){
+    //ポケモン選択で取得した手持ちNo
+    pp = PokeParty_GetMemberPointer( party, bsw_scr->member[i] );
+    bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
+    bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * BSUBWAY_SCRWORK ゲームクリア時に現在のプレイ状況をセーブに書き出す
  * @param bsw_scr BSUBWAY_SCRWORK*
  * @retval nothing
@@ -618,6 +647,10 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
     }
   }
   
+  if( point == 0 ){
+    point = 1;
+  }
+
   BSUBWAY_SCOREDATA_SetBattlePoint( //バトルポイントを加算する
       bsw_scr->scoreData, point, BSWAY_SETMODE_add );
   return point;

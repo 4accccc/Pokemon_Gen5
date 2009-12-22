@@ -354,7 +354,6 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
       GFL_G3D_ANIME_Create(
           work->obj_rnd, work->head.eff_grass->g3d_res_anm_long_grass2, 0 );
     break;
-
   case FLDEFF_GRASS_SNOW:
     work->obj_rnd =
       GFL_G3D_RENDER_Create(
@@ -363,6 +362,7 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
     work->obj_anm =
       GFL_G3D_ANIME_Create(
           work->obj_rnd, work->head.eff_grass->g3d_res_anm_snow_grass, 0 );
+    break;
   case FLDEFF_GRASS_SNOW2:
     work->obj_rnd =
       GFL_G3D_RENDER_Create(
@@ -371,6 +371,7 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
     work->obj_anm =
       GFL_G3D_ANIME_Create(
           work->obj_rnd, work->head.eff_grass->g3d_res_anm_snow_grass2, 0 );
+    break;
   default:
     GF_ASSERT( 0 );
     return;

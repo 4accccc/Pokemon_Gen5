@@ -70,7 +70,10 @@ map_change_playmode_double:
 ev_bsubway_seq_challenge:
   _LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
   _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
-  
+
+  _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
+  _AB_KEYWAIT()
+ 
   _BSUBWAY_TOOL( BSWAY_TOOL_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,challenge_playmode_double
   
@@ -78,7 +81,10 @@ challenge_playmode_single:
   _LDVAL( WK_OTHER_SCENE_C04R0102, 255 ) //c04r0102 error
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_SINGLE )
   _BSUBWAY_TOOL( BSWAY_SUB_BTL_TRAINER_SET,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWAY_SUB_LOAD_POKEMON_MEMBER, BSWAY_NULL, BSWAY_NULL )
   _BSUBWAY_TOOL( BSWAY_SUB_SET_PLAY_MODE_LOCATION,BSWAY_NULL,BSWAY_NULL )
+  _REPORT_EVENT_CALL( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
@@ -88,7 +94,10 @@ challenge_playmode_double:
   _LDVAL( WK_OTHER_SCENE_C04R0104, 255 ) //c04r0102 error
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_DOUBLE )
   _BSUBWAY_TOOL( BSWAY_SUB_BTL_TRAINER_SET,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWAY_SUB_LOAD_POKEMON_MEMBER, BSWAY_NULL, BSWAY_NULL )
   _BSUBWAY_TOOL( BSWAY_SUB_SET_PLAY_MODE_LOCATION,BSWAY_NULL,BSWAY_NULL )
+  _REPORT_EVENT_CALL( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
@@ -102,7 +111,7 @@ challenge_playmode_double:
 //--------------------------------------------------------------
 ev_c04r0111_receipt_talk:
   _TALK_OBJ_START()
-  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,1,ev_receipt_talk_first_clear
+  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,2,ev_receipt_talk_boss_clear
   
   //どうしますか
   _SYSWIN_MSG_DOWN( msg_c04r0111_02 )
@@ -120,11 +129,6 @@ ev_c04r0111_receipt_talk:
 
 //続ける
 ev_c04r0111_receipt_continue:
-  _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
-  _AB_KEYWAIT()
-  
-  _REPORT_EVENT_CALL( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_seq_challenge
   _END
   
@@ -137,8 +141,8 @@ ev_c04r0111_receipt_map_change:
   _JUMP ev_bsubway_seq_map_change
   _END
 
-//初回クリア時
-ev_receipt_talk_first_clear:
+//クリア時
+ev_receipt_talk_boss_clear:
   //ライモンシティに戻るか
   _SYSWIN_MSG_DOWN( msg_c04r0111_00 )
   _YES_NO_WIN( SCWK_ANSWER )
@@ -200,8 +204,8 @@ ev_normal_clear_7:
   _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
   _REPORT_CALL( SCWK_ANSWER )
 
-  //ここが終点
-  _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+  //ごゆっくり
+  _SYSWIN_MSG_DOWN( msg_c04r0111_13 )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -212,6 +216,8 @@ ev_normal_clear_7:
 //  ノーマル　ボス倒してクリア
 //--------------------------------------------------------------
 ev_normal_clear_boss:
+  _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 0, BSWAY_NULL )
+
   //バトルポイントをプラス
   _BSUBWAY_TOOL( BSWAY_SUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
@@ -225,7 +231,7 @@ ev_normal_clear_boss:
   
   //ファンファーレ
   _PLAYER_NAME( 0 )
-  _NUMBER( 1, SCWK_ANSWER, 2 )
+  _NUMBER( 1, 20, 2 )
   _SYSWIN_MSG_DOWN( msg_c04r0111_point_get )
   _ME_PLAY( SEQ_ME_ITEM )
   _ME_WAIT()
@@ -239,7 +245,7 @@ ev_normal_clear_boss_first:
   
   //スーパーシングルトレインにチャレンジ可能
 //  _SYSWIN_MSG_DOWN( msg_c04r0111_10 )
-  _AB_KEYWAIT()
+//  _AB_KEYWAIT()
   
 ev_normal_clear_boss_save:
   //ライモン戻るのみの会話に

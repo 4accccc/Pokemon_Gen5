@@ -60,3 +60,5 @@ extern void BSUBWAY_SCRWORK_LocalBattleCall(
 extern u16 BSUBWAY_SCRWORK_GetPlayMode( BSUBWAY_SCRWORK *wk );
 extern u16 BSUBWAY_SCRWORK_GetLeaderClearFlag( BSUBWAY_SCRWORK *wk );
 extern u16  BSUBWAY_SCRWORK_AddBtlPoint( BSUBWAY_SCRWORK *wk );
+
+extern void BSUBWAY_SCRWORK_LoadPokemonMember( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );

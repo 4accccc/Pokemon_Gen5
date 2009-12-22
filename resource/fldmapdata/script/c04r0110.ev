@@ -231,6 +231,9 @@ ev_train_rooms_sbtl_01:
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
   
+  //ステージカウント
+  _BSUBWAY_TOOL( BSWAY_SUB_COUNT_NEXT_STAGE,BSWAY_NULL,BSWAY_NULL )
+
 ev_train_rooms_sbtl_02:
   //ただいま？連勝…対戦を続けますか
   _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )

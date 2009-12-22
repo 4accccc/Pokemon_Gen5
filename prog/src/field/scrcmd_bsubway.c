@@ -494,6 +494,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_SaveGameClearPlayData( bsw_scr );
     #endif
     break;
+  case BSWAY_SUB_LOAD_POKEMON_MEMBER:
+    BSUBWAY_SCRWORK_LoadPokemonMember( bsw_scr, gsys );
+    break;
+  case BSWAY_SUB_COUNT_NEXT_STAGE:
+    BSUBWAY_SCOREDATA_SetStage( bsw_scr->scoreData,
+      bsw_scr->play_mode, BSWAY_SETMODE_inc );
+    break;
   //ƒGƒ‰[
   default:
     OS_Printf( "“n‚³‚ê‚½com_id = %d\n", com_id );
