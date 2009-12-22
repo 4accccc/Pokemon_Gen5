@@ -251,27 +251,6 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 
 	ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_LIST );
 
-/*
-	NARC_zukan_gra_list_list_bgd_NCLR = 8,
-	NARC_zukan_gra_list_list_bgu_NCLR = 9,
-	NARC_zukan_gra_list_list_objd_NCLR = 10,
-	NARC_zukan_gra_list_list_bgd_NCGR = 11,
-	NARC_zukan_gra_list_list_bgu_NCGR = 12,
-	NARC_zukan_gra_list_list_objd_NCGR = 13,
-	NARC_zukan_gra_list_listbase_bgd_NCGR = 14,
-	NARC_zukan_gra_list_listbase_bgu_NCGR = 15,
-	NARC_zukan_gra_list_listframe_bgd_NCGR = 16,
-	NARC_zukan_gra_list_listframe_bgu_NCGR = 17,
-	NARC_zukan_gra_list_list_objd_NCER = 18,
-	NARC_zukan_gra_list_listbase_bgd_NSCR = 19,
-	NARC_zukan_gra_list_listbase_bgu_NSCR = 20,
-	NARC_zukan_gra_list_listbtn_bgd_NSCR = 21,
-	NARC_zukan_gra_list_listbtn_bgu_NSCR = 22,
-	NARC_zukan_gra_list_listtitle_bgu_NSCR = 23,
-	NARC_zukan_gra_list_list_objd_NANR = 24
-*/
-
-
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_zukan_gra_list_list_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_ZUKAN_LIST );
 	GFL_ARCHDL_UTIL_TransVramPalette(
@@ -300,49 +279,6 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 
 	GFL_ARC_CloseDataHandle( ah );
 
-/*
-//	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
-		ah, NARC_box_gra_box_m_bg2_lz_NCGR,
-		GFL_BG_FRAME2_M, 0, TRUE, HEAPID_BOX_APP );
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_box_gra_box_m_bg2_lz_NSCR,
-		GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_box_m_bg3_lz_NCGR,
-		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_BOX_APP );
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_box_gra_box_m_bg3_lz_NSCR,
-		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_box_gra_box_m_bg_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_selwin_lz_NCGR, GFL_BG_FRAME1_M,
-		BOX2MAIN_SELWIN_CGX_POS, BOX2MAIN_SELWIN_CGX_SIZ*0x20*2, TRUE, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_box_gra_selwin_NCLR, PALTYPE_MAIN_BG,
-		BOX2MAIN_BG_PAL_SELWIN*0x20, 0x40, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_box_s_bg3_lz_NCGR,
-		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_BOX_APP );
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_box_gra_box_s_bg3_lz_NSCR,
-		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_box_gra_box_s_bg3_lz_NCGR,
-		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_BOX_APP );
-
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_box_gra_box_s_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_BOX_APP );
-*/
-
-
 	// タッチバー
 	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_ZUKAN_LIST );
 
@@ -361,18 +297,6 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 
 	GFL_ARC_CloseDataHandle( ah );
 
-/*
-
-
-
-	syswk->app->syswinInfo = BmpWinFrame_GraphicSetAreaMan(
-														GFL_BG_FRAME0_M,
-														BOX2MAIN_BG_PAL_SYSWIN,
-														MENU_TYPE_SYSTEM,
-														HEAPID_BOX_APP );
-
-*/
-
 	// フォントパレット
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
@@ -380,7 +304,6 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		ZKNLISTMAIN_SBG_PAL_FONT*0x20, 0x20, HEAPID_ZUKAN_LIST );
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -485,23 +408,15 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 			cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
 			GFL_STR_DeleteBuffer( srcStr );
 			ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(i%3,i) );
+
+			// 見つけた数
+			wk->seeNum++;
+			// 捕まえた数
+			if( ( i % 3 ) == 2 ){
+				wk->getNum++;
+			}
 		}
 	}
-
-/*
-	srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, 1 );
-	cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
-	GFL_STR_DeleteBuffer( srcStr );
-	ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(LIST_INFO_MONS_GET,1) );
-	for( i=1; i<256; i++ ){
-		srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
-		ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
-	}
-	srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
-	cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
-	GFL_STR_DeleteBuffer( srcStr );
-	ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(LIST_INFO_MONS_SEE,i) );
-*/
 
 	ZKNLISTMAIN_InitList( wk->list, 0, 7, 0, wk, ListCallBack );
 

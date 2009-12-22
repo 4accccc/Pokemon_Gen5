@@ -86,6 +86,9 @@ typedef struct {
 	u32	buttonID:31;				// ボタンアニメ用ＩＤ
 	u32	pokeGraFlag:1;			// ポケモン正面絵表示制御
 
+	u16	seeNum;			// 見つけた数
+	u16	getNum;			// 捕まえた数
+
 	// リスト関連
 	ZUKAN_LIST_WORK * list;
 	s32	listPutIndex;

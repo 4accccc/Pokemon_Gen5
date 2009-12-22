@@ -151,9 +151,9 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTOBJ_Init( wk );
 	ZKNLISTBGWFRM_Init( wk );
 
-	ZKNLISTBMP_PutPokeEntryStr( wk );
-
 	ZKNLISTMAIN_MakeList( wk );
+
+	ZKNLISTBMP_PutPokeEntryStr( wk );
 
 	ZKNLISTMAIN_SetBlendAlpha();
 
