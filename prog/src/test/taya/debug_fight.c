@@ -442,8 +442,9 @@ struct _DEBUG_BTL_WORK {
   SelectItem      clipItem;
   void*           ppTmpWork;
   HEAPID          heapID;
-  u8              fNetConnect;
-  u8              pageNum;
+  u16             pageNum     : 8;
+  u16             fNetConnect : 1;
+  u16             NeedConnectMembers : 7;
   pMainProc       mainProc;
   int             mainSeq;
   u8              prevItemStrWidth[ SELITEM_MAX ];
@@ -1506,6 +1507,7 @@ FS_EXTERN_OVERLAY(battle);
     SEQ_COMM_START_2,
     SEQ_COMM_START_3,
     SEQ_COMM_START_4,
+    SEQ_COMM_START_5,
     SEQ_SETUP_START,
     SEQ_BTL_START,
     SEQ_BTL_RETURN,
@@ -1542,7 +1544,15 @@ FS_EXTERN_OVERLAY(battle);
   case SEQ_COMM_START_1:
     {
       const GFLNetInitializeStruct* initParam;
-      initParam = (btltype_IsMulti(wk->saveData.btlType))? &NetInitParamMulti : &NetInitParamNormal;
+      if( btltype_IsMulti( wk->saveData.btlType ) ){
+        TAYA_Printf("マルチモードで通信開始\n");
+        initParam = &NetInitParamMulti;
+        wk->NeedConnectMembers = 4;
+      }else{
+        TAYA_Printf("通常モードで通信開始\n");
+        initParam = &NetInitParamNormal;
+        wk->NeedConnectMembers = 2;
+      }
       GFL_NET_Init( initParam, comm_dummy_callback, (void*)wk );
       (*seq) = SEQ_COMM_START_2;
     }
@@ -1557,11 +1567,16 @@ FS_EXTERN_OVERLAY(battle);
     break;
   case SEQ_COMM_START_3:
     if( wk->fNetConnect ){
-      GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID );
       (*seq) = SEQ_COMM_START_4;
     }
     break;
   case SEQ_COMM_START_4:
+    if( GFL_NET_GetConnectNum() == wk->NeedConnectMembers ){
+      GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID );
+      (*seq) = SEQ_COMM_START_5;
+    }
+    break;
+  case SEQ_COMM_START_5:
     if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID) ){
       (*seq) = SEQ_SETUP_START;
     }
@@ -1924,39 +1939,39 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
 static const GFLNetInitializeStruct NetInitParamNormal = {
   BtlRecvFuncTable,        // 受信関数テーブル
   BTL_NETFUNCTBL_ELEMS,    // 受信テーブル要素数
-  NULL,    ///< ハードで接続した時に呼ばれる
-  NULL,    ///< ネゴシエーション完了時にコール
-  NULL,           // ユーザー同士が交換するデータのポインタ取得関数
-  NULL,           // ユーザー同士が交換するデータのサイズ取得関数
-  testBeaconGetFunc,      // ビーコンデータ取得関数
-  testBeaconGetSizeFunc,    // ビーコンデータサイズ取得関数
-  testBeaconCompFunc,     // ビーコンのサービスを比較して繋いで良いかどうか判断する
-  NULL,            // 普通のエラーが起こった場合 通信終了
-  FatalError_Disp,      // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-  NULL,           // 通信切断時に呼ばれる関数
-  NULL,           // オート接続で親になった場合
+  NULL,                    // ハードで接続した時に呼ばれる
+  NULL,                    // ネゴシエーション完了時にコール
+  NULL,                    // ユーザー同士が交換するデータのポインタ取得関数
+  NULL,                    // ユーザー同士が交換するデータのサイズ取得関数
+  testBeaconGetFunc,       // ビーコンデータ取得関数
+  testBeaconGetSizeFunc,   // ビーコンデータサイズ取得関数
+  testBeaconCompFunc,      // ビーコンのサービスを比較して繋いで良いかどうか判断する
+  NULL,                    // 普通のエラーが起こった場合 通信終了
+  FatalError_Disp,         // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+  NULL,                    // 通信切断時に呼ばれる関数
+  NULL,                    // オート接続で親になった場合
 #if GFL_NET_WIFI
-  NULL, ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-  NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-  NULL, ///< wifiフレンドリスト削除コールバック
-  NULL, ///< DWC形式の友達リスト
-  NULL, ///< DWCのユーザデータ（自分のデータ）
-  0,    ///< DWCへのHEAPサイズ
-  TRUE,        ///< デバック用サーバにつなぐかどうか
+  NULL,   ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+  NULL,   ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  NULL,   ///< wifiフレンドリスト削除コールバック
+  NULL,   ///< DWC形式の友達リスト
+  NULL,   ///< DWCのユーザデータ（自分のデータ）
+  0,      ///< DWCへのHEAPサイズ
+  TRUE,   ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-  TEST_GGID,          // ggid  DP=0x333,RANGER=0x178,WII=0x346
-  GFL_HEAPID_APP,       //元になるheapid
-  HEAPID_NETWORK,       //通信用にcreateされるHEAPID
-  HEAPID_WIFI,        //wifi用にcreateされるHEAPID
-  HEAPID_NETWORK,       //IRC用にcreateされるHEAPID
+  TEST_GGID,            // ggid  DP=0x333,RANGER=0x178,WII=0x346
+  GFL_HEAPID_APP,       // 元になるheapid
+  HEAPID_NETWORK,       // 通信用にcreateされるHEAPID
+  HEAPID_WIFI,          // wifi用にcreateされるHEAPID
+  HEAPID_NETWORK,       // IRC用にcreateされるHEAPID
   GFL_WICON_POSX,       // 通信アイコンXY位置
   GFL_WICON_POSY,
-  TEST_COMM_MEMBER_MAX,   // 最大接続人数
-  TEST_COMM_SEND_SIZE_MAX,  // １フレームあたりの最大送信バイト数
-  TEST_COMM_BCON_MAX,     // 最大ビーコン収集数
+  TEST_COMM_MEMBER_MAX, // 最大接続人数
+  TEST_COMM_SEND_SIZE_MAX, // １フレームあたりの最大送信バイト数
+  TEST_COMM_BCON_MAX,      // 最大ビーコン収集数
   TRUE,           // CRC計算
-  FALSE,            // MP通信＝親子型通信モードかどうか
-  FALSE,            // wifi通信を行うかどうか
+  FALSE,          // MP通信＝親子型通信モードかどうか
+  FALSE,          // wifi通信を行うかどうか
   TRUE,           // 親が再度初期化した場合、つながらないようにする場合TRUE
   WB_NET_BATTLE_SERVICEID,//GameServiceID
 #if GFL_NET_IRC
