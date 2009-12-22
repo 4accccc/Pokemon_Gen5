@@ -1632,16 +1632,7 @@ static int CheckKTStatus(TR_CARD_WORK* wk)
 static int CheckKey(TR_CARD_WORK* wk)
 {
   const int keyTrg = GFL_UI_KEY_GetTrg();
-  if ( keyTrg & PAD_BUTTON_DECIDE )
-  {
-    if(wk->is_back && (!wk->isComm))
-    {
-      //ÉTÉCÉìÇèëÇ≠
-      PMSND_PlaySE( SND_TRCARD_SIGN );
-      return TRC_KEY_REQ_SIGN_CALL;
-    }
-  }
-  else if( keyTrg & PAD_BUTTON_CANCEL )
+  if( keyTrg & PAD_BUTTON_CANCEL )
   {
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //èIóπâπ
     return TRC_KEY_REQ_END_BUTTON;
