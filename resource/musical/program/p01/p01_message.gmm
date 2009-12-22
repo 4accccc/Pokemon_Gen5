@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-21T16:24:20"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-12-22T16:20:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1701" top="145" right="2380" bottom="765" maximized="no" rayout="Vertical2">
+	<dialog left="1672" top="642" right="2377" bottom="1270" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
-		<band id="0" index="0" style="0000" width="504"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="671"/>
-		<band id="3" index="3" style="0000" width="671"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -340,9 +340,9 @@
 	</row>
 
 	<row id="MSG_01">
-		<language name="JPN" width="256">いそげや　いそげ　まよわず　すすめ
+		<language name="JPN" width="256">いそげや　いそげ　まよわずすすめ
 なつが　おわってしまう　まえに</language>
-		<language name="JPN_KANJI" width="256">いそげや　いそげ　まよわず　すすめ
+		<language name="JPN_KANJI" width="256">いそげや　いそげ　まよわずすすめ
 なつが　おわってしまう　まえに</language>
 	</row>
 
