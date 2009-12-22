@@ -124,7 +124,7 @@ SAVE_RESULT IntrSave_Main(INTR_SAVE_CONTROL *isc)
     }
     
     result = SaveControl_SaveAsyncMain(isc->ctrl);
-    if(result == SAVE_RESULT_OK || SAVE_RESULT_NG){
+    if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
       if(isc->first_save_end == FALSE){
         isc->first_save_end = TRUE;
         isc->status = INTR_SAVE_STATUS_1ST_FINISH;
