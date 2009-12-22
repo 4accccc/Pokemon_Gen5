@@ -621,8 +621,25 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
 
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
+	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
+	  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
+		// アイテムアイコン削除
+	  if(pWork->cellicon!=NULL){
+	    GFL_CLACT_WK_Remove( pWork->cellicon );
+	    GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
+	    GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
+			pWork->cellicon = NULL;
+	  }
     return;
   }
+
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
+
   wazano = ITEM_GetWazaNo( item->id );
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
