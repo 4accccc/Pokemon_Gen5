@@ -144,6 +144,8 @@ static  const VecFx32 poke_pos_triple_table[]={
   { 0x00004800, 0x00000666, 0xffff4000 }, //POS_B
   { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_C
   { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_D
+  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
+  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
 };
 
 static  const VecFx32 poke_pos_rotate_table[]={
