@@ -92,6 +92,9 @@
 #define TTC2S_START_SCALE ( FX32_ONE )
 #define TTC2S_END_SCALE   ( FX32_ONE * 3 )
 
+#define STANBY_POS_Y  ( 128 + 24 )
+#define COMMAND_POS_Y  ( 128 + 40 )
+
 //TCB_SCREEN_ANIME用のスクロール値
 enum{
   TSA_SCROLL_X = 0,
@@ -511,6 +514,7 @@ typedef struct
   fx32              start_scale;
   fx32              end_scale;
   fx32              scale_speed;
+  int               pos_y;
 }TCB_SCALE_UP;
 
 typedef struct
@@ -585,7 +589,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work );
 
-static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed );
+static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
 static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, int scroll_speed, int scroll_count );
 static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work );
@@ -968,7 +972,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       MTX_Scale22( &mtx, FX32_ONE * 3, FX32_ONE * 3 );
       GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, 128, &mtx, 256, 256 );
-      GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 40, &mtx, 256, 256 );
+      GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 24, &mtx, 256, 256 );
 
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
@@ -1266,7 +1270,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
-    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
@@ -1556,7 +1560,7 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
+    SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED, COMMAND_POS_Y );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
@@ -1595,7 +1599,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
   case 1:
     if( ttw->biw->tcb_execute_count == 0 )
     {
-      SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED );
+      SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED, COMMAND_POS_Y );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
@@ -1628,7 +1632,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
-    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
@@ -1677,7 +1681,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
-    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
@@ -1730,9 +1734,10 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
  *  @param[in]  start_scale   スケール初期値
  *  @param[in]  end_scale     最終的なスケール値
  *  @param[in]  scale_speed   スケール変更速度
+ *  @param[in]  pos_y         スクロールY初期値
  */
 //============================================================================================
-static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed )
+static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y )
 {
   TCB_SCALE_UP* tsu = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCALE_UP ) );
 
@@ -1740,6 +1745,7 @@ static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end
   tsu->start_scale  = start_scale;
   tsu->end_scale    = end_scale;
   tsu->scale_speed  = scale_speed;
+  tsu->pos_y        = pos_y;
 
   GFL_TCB_AddTask( biw->tcbsys, TCB_ScaleChange, tsu, 0 );
 
@@ -1757,10 +1763,18 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
   MtxFx22 mtx;
 
   tsu->start_scale += tsu->scale_speed;
+  if( tsu->scale_speed > 0 )
+  { 
+    tsu->pos_y -= 2;
+  }
+  else
+  { 
+    tsu->pos_y += 2;
+  }
 
   MTX_Scale22( &mtx, tsu->start_scale, tsu->start_scale );
   GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, 128, &mtx, 256, 256 );
-  GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 40, &mtx, 256, 256 );
+  GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, tsu->pos_y, &mtx, 256, 256 );
   if( tsu->start_scale == tsu->end_scale )
   {
     tsu->biw->tcb_execute_count--;
