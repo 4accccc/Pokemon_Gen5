@@ -205,6 +205,7 @@ void EFFECT_ENC_CheckObjHit( FIELD_ENCOUNT* enc )
   effect_DeleteCheck( enc );
 }
 
+#if 0
 /**
  *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
  */
@@ -214,6 +215,7 @@ void EFFECT_ENC_MapChangeUpdate( GAMEDATA* gdata )
 
   effenc_WalkCtClear( ewk ); 
 }
+#endif
 
 /*
  *  @brief  エフェクトエンカウント　座標チェック
