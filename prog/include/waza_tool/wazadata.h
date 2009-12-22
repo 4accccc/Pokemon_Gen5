@@ -200,6 +200,8 @@ typedef enum {
   // 特殊
   WAZA_TARGET_UNKNOWN,            ///< ゆびをふるなど特殊型
 
+  WAZA_TARGET_MAX,
+  WAZA_TARGET_LONG_SELECT = WAZA_TARGET_MAX,  ///<対象選択表示用に定義
 }WazaTarget;
 
 //------------------------------------------------------------------------------
