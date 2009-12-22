@@ -115,7 +115,8 @@ SUBDIRS	=	wmi \
 			intro \
 			comm_tvt \
 			guru2 \
-			beacon_status
+			beacon_status \
+			tr_ai
 
 include $(RESOURCE_MACRO)
 
