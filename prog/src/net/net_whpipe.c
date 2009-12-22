@@ -879,7 +879,12 @@ void GFI_NET_BeaconSetInfo( void )
 	u8 sBuff[_BEACON_FIXHEAD_SIZE];
 	_GF_BSS_DATA_INFO* pGF;
 	int size;
-	//    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+  if(!GFL_NET_IsInit()){
+    return;
+  }
+
+  //    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 	GFL_NETWL* pNetWL = _pNetWL;
 	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 
