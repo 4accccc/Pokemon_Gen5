@@ -560,6 +560,19 @@ u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY
 
 //--------------------------------------------------------------
 /**
+ * スコアデータ、前回の連勝記録をセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_SetRenshouCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+{
+  bsw_score->renshou[mode] = count;
+}
+
+//--------------------------------------------------------------
+/**
  * スコアデータ、最大連勝記録を取得
  * @param
  * @retval
@@ -569,6 +582,19 @@ u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
   return bsw_score->renshou_max[mode];
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ、最大連勝記録をセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_SetMaxRenshouCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+{
+  bsw_score->renshou_max[mode] = count;
 }
 
 //======================================================================

@@ -195,7 +195,11 @@ extern u8 BSUBWAY_SCOREDATA_SetWifiRank(
 extern u16 BSUBWAY_SCOREDATA_CalcRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 extern u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern u16 BSUBWAY_SCOREDATA_SetRenshouCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 extern u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern u16 BSUBWAY_SCOREDATA_SetMaxRenshouCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 
 //----
 #if 0 //wb null

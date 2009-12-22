@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-21T10:44:06"/>
+	<create user="kagaya" host="W00143" date="2009-12-21T21:06:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -293,6 +293,7 @@
 
 
 	<row id="msg_c04r0110_test00">
+		<comment>テスト</comment>
 		<language name="JPN" width="256">たいせあいて　かりメッセージ
 せんとうかいし</language>
 		<language name="JPN_KANJI" width="256">たいせあいて　かりメッセージ
@@ -300,6 +301,7 @@
 	</row>
 
 	<row id="msg_c04r0110_test01">
+		<comment>テスト</comment>
 		<language name="JPN">たいせあいて　かりメッセージ
 はいぼく</language>
 		<language name="JPN_KANJI">たいせあいて　かりメッセージ
@@ -307,6 +309,7 @@
 	</row>
 
 	<row id="msg_c04r0110_test02">
+		<comment>テスト</comment>
 		<language name="JPN">かいふく
 </language>
 		<language name="JPN_KANJI">かいふく
@@ -314,6 +317,7 @@
 	</row>
 
 	<row id="msg_c04r0110_test03">
+		<comment>テスト</comment>
 		<language name="JPN">かりメッセージ
 </language>
 		<language name="JPN_KANJI">かりメッセージ
@@ -321,10 +325,12 @@
 	</row>
 
 	<row id="msg_c04r0110_01">
-		<language name="JPN" width="256">れんしょうちゅう　めっせーじ
-たいせんを　つづけるか？</language>
-		<language name="JPN_KANJI" width="256">れんしょうちゅう　めっせーじ
-たいせんを　つづけるか？</language>
+		<language name="JPN" width="256">ただいま　[2:00:１桁:0]れんしょう！[BE:01:ページ切り替え（クリア）]
+つぎは　[2:00:１桁:1]りょうめと　なります
+たいせんを　つづけますか？</language>
+		<language name="JPN_KANJI" width="256">ただいま　[2:00:１桁:0]れんしょう！[BE:01:ページ切り替え（クリア）]
+つぎは　[2:00:１桁:1]りょうめと　なります
+たいせんを　つづけますか？</language>
 	</row>
 
 	<row id="msg_c04r0110_02">
@@ -364,8 +370,20 @@
 	</row>
 
 	<row id="msg_c04r0110_08">
-		<language name="JPN" width="256">バトルビデオ　きろく　がはいります</language>
-		<language name="JPN_KANJI" width="256">バトルビデオ　きろく　がはいります</language>
+		<language name="JPN" width="256">レポートに　かきこんでいます
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI" width="256">レポートに　かきこんでいます
+でんげんを　きらないで　ください</language>
+	</row>
+
+	<row id="msg_c04r0110_09">
+		<language name="JPN" width="256">バトルビデオ　きろく　が　はいります</language>
+		<language name="JPN_KANJI" width="256">バトルビデオ　きろく　が　はいります</language>
+	</row>
+
+	<row id="msg_c04r0110_10">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
 	</row>
 
 	<flowchart-group-list>

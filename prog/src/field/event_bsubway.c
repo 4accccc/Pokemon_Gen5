@@ -163,6 +163,16 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
     list->mode = PL_MODE_BATTLE;
     list->type = type;
+    
+    //debug
+#ifdef DEBUG_ONLY_FOR_kagaya
+    {
+      REGULATION *pReg = list->reg;
+      
+      KAGAYA_Printf( "BSWAY REG NUM_LO = %d, HI =%d, LV = %d\n",
+        pReg->NUM_LO, pReg->NUM_HI, pReg->LEVEL );
+    }
+#endif
   }
   
   {

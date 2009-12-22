@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-14T18:45:30"/>
+	<create user="kagaya" host="W00143" date="2009-12-21T23:47:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="258" top="180" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="538"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="687"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -341,13 +341,34 @@
 	</row>
 
 	<row id="msg_c04r0111_08">
-		<language name="JPN" width="256">７れんしょう　おめでとうメッセージ</language>
-		<language name="JPN_KANJI" width="256">７れんしょう　おめでとうメッセージ</language>
+		<language name="JPN" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
+みごと　７にんぬき　たっせいです[BE:01:ページ切り替え（クリア）]
+７にんぬきを　たっせい　しましたので
+バトルポイントを　しんてい　します！</language>
+		<language name="JPN_KANJI" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
+みごと　７にんぬき　たっせいです[BE:01:ページ切り替え（クリア）]
+７にんぬきを　たっせい　しましたので
+バトルポイントを　しんてい　します！</language>
+	</row>
+
+	<row id="msg_c04r0111_point_get">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　バトルポイントを
+[2:01:２桁:1]BP　てにいれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　バトルポイントを
+[2:01:２桁:1]BP　てにいれた！</language>
 	</row>
 
 	<row id="msg_c04r0111_09">
-		<language name="JPN" width="256">サブウェイマスターたおしたメッセージ</language>
-		<language name="JPN_KANJI" width="256">サブウェイマスターたおしたメッセージ</language>
+		<language name="JPN" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
+７れんしょうを　たっせいし
+みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
+たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
+しんてい　いたします</language>
+		<language name="JPN_KANJI" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
+７れんしょうを　たっせいし
+みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
+たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
+しんてい　いたします</language>
 	</row>
 
 	<row id="msg_c04r0111_10">
@@ -370,20 +391,58 @@
 	</row>
 
 	<row id="msg_c04r0111_13">
-		<language name="JPN" width="256">シングルトレインはここでしゅうてん
-ライモンもどる</language>
-		<language name="JPN_KANJI" width="256">シングルトレインはここでしゅうてん
-ライモンもどる</language>
+		<language name="JPN" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
+つづけて　チャレンジしたい　ばあいや
+いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
+ばあいは　また　おこえを　かけて　ください</language>
+		<language name="JPN_KANJI" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
+つづけて　チャレンジしたい　ばあいや
+いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
+ばあいは　また　おこえを　かけて　ください</language>
 	</row>
 
 	<row id="msg_c04r0111_14">
-		<language name="JPN" width="256">シングルはここでしゅうてん
-ライモンかつづけてチャレンジ</language>
-		<language name="JPN_KANJI" width="256">シングルはここでしゅうてん
-ライモンかつづけてチャレンジ</language>
+		<language name="JPN" width="256">シングルトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
+		<language name="JPN_KANJI" width="256">シングルトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
 	</row>
 
 	<row id="msg_c04r0111_15">
+		<language name="JPN" width="256">ダブルトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
+		<language name="JPN_KANJI" width="256">ダブルトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
+	</row>
+
+	<row id="msg_c04r0111_16">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c04r0111_17">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c04r0111_18">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c04r0111_19">
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>

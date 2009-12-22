@@ -190,7 +190,7 @@ static void BtlTower_PokeParaMake(
 	//monsno,level,pow_rnd,idno
   PP_SetupEx( dest, src->mons_no, 50, PTL_SETUP_ID_AUTO,
       (src->power_rnd & 0x3FFFFFFF), src->personal_rnd);
-
+  
   //form_no
   buf8 = src->form_no;
   PP_Put( dest, ID_PARA_form_no, buf8 );
@@ -523,11 +523,6 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     }
   }
   
-#if 0  
-  BTL_MAIN_GetClientPlayerData 
-  registerWords
-#endif
-
   { //プレイヤーセット
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
     POKEPARTY **party = &dst->party[client];
@@ -539,28 +534,48 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     
     data->tr_type = TRTYPE_HERO +
       MyStatus_GetMySex((const MYSTATUS*)&player->mystatus );
-    
+
     //ポケモンセット
     {
       int i;
-	    const POKEMON_PARAM *pp;
-      const POKEPARTY *myparty =  GAMEDATA_GetMyPokemon(gameData);
+      POKEMON_PARAM *entry_pp;
+	    const POKEMON_PARAM *my_pp;
+      const POKEPARTY *myparty = GAMEDATA_GetMyPokemon(gameData);
+      
+      entry_pp = GFL_HEAP_AllocMemoryLo(
+          HEAPID_PROC, POKETOOL_GetWorkSize() );
+      PP_Clear( entry_pp );
       
       *party = PokeParty_AllocPartyWork( HEAPID_PROC );
       PokeParty_Init( *party, TEMOTI_POKEMAX );
       
       for( i = 0; i < wk->member_num; i++ ){
-        pp = PokeParty_GetMemberPointer( myparty,
+        my_pp = PokeParty_GetMemberPointer( myparty,
             wk->member[i] );
-        PokeParty_Add( *party, pp );
+        
+        POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)my_pp, entry_pp );
+        
+        if( PP_Get(my_pp,ID_PARA_level,NULL) != 50 ){
+          u32 exp = POKETOOL_GetMinExp(
+              PP_Get(my_pp,ID_PARA_monsno,NULL),
+              PP_Get(my_pp,ID_PARA_form_no,NULL),
+              50 );
+          
+          PP_Put( entry_pp, ID_PARA_exp, exp );
+          PP_Renew( entry_pp );
+        }
+        
+        PokeParty_Add( *party, entry_pp );
       }
-
-#ifdef DEBUG_ONLY_FOR_kagaya
+      
+      #ifdef DEBUG_ONLY_FOR_kagaya
       {
         int count = PokeParty_GetPokeCount( *party );
         KAGAYA_Printf( "ポケモンセット　カウント=%d, max=%d\n", count, i );
       }
-#endif
+      #endif
+      
+      GFL_HEAP_FreeMemory( entry_pp );
     }
   }
   

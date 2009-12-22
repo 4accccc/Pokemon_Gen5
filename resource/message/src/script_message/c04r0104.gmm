@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-16T20:07:21"/>
+	<create user="kagaya" host="W00143" date="2009-12-21T20:47:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,17 +302,60 @@
 	</row>
 
 	<row id="msg_c04r0104_receipt_02">
-		<language name="JPN" width="256">バトルサブウェイ
-ダブル　ルール説明
-</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイ
-ダブル　ルール説明
-</language>
+		<language name="JPN" width="256">ダブルとレインでは　ポケモン
+３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
+ポケモンは　３ひき　すべて
+ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+もたせる　どうぐも　すべてちがう
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ダブルとレインでは　ポケモン
+３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
+ポケモンは　３ひき　すべて
+ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+もたせる　どうぐも　すべてちがう
+どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0104_receipt_02_02">
+		<comment>連勝中のメッセージ</comment>
+		<language name="JPN" width="256">たたかいのば　となる　れっしゃは
+７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
+７にんの　トレーナーと
+たたかうことに　なります[BE:01:ページ切り替え（クリア）]
+みごと　７にんを　たおせたら
+えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
+かくとく　することが　できますので[BE:00:ページ切り替え（行送り）]
+がんばって　ください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">たたかいのば　となる　れっしゃは
+７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
+７にんの　トレーナーと
+たたかうことに　なります[BE:01:ページ切り替え（クリア）]
+みごと　７にんを　たおせたら
+えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
+かくとく　することが　できますので[BE:00:ページ切り替え（行送り）]
+がんばって　ください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0104_receipt_02_03">
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">なお　とちゅうで　ちょうせんを
+ちゅうだん　したい　ばあいは[BE:00:ページ切り替え（行送り）]
+しっかりと　レポートを　かいて[BE:00:ページ切り替え（行送り）]
+おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
+むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
+ちゅうい　してください！</language>
+		<language name="JPN_KANJI" width="256">なお　とちゅうで　ちょうせんを
+ちゅうだん　したい　ばあいは[BE:00:ページ切り替え（行送り）]
+しっかりと　レポートを　かいて[BE:00:ページ切り替え（行送り）]
+おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
+むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
+ちゅうい　してください！</language>
 	</row>
 
 	<row id="msg_c04r0104_receipt_03">
 		<comment>連勝中のメッセージ</comment>
-		<language name="JPN" width="256">げんざい　れんしょうちゅうです</language>
+		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
+[2:02:３桁:1]れんしょうちゅう　です</language>
 		<language name="JPN_KANJI" width="256">げんざい　れんしょうちゅうです</language>
 	</row>
 
@@ -342,8 +385,29 @@
 	</row>
 
 	<row id="msg_c04r0104_receipt_08">
-		<language name="JPN" width="256">さんかできる　ポケモンが　いない</language>
-		<language name="JPN_KANJI" width="256">さんかできる　ポケモンが　いない</language>
+		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+さんかできる　ポケモンが
+３ひき　いません[BE:01:ページ切り替え（クリア）]
+さんかするには　しゅるいが　ちがう
+ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ちがう　どうぐに　してください</language>
+		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+さんかできる　ポケモンが
+３ひき　いません[BE:01:ページ切り替え（クリア）]
+さんかするには　しゅるいが　ちがう
+ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ちがう　どうぐに　してください</language>
+	</row>
+
+	<row id="msg_c04r0104_receipt_08_02">
+		<language name="JPN" width="256">なお　タマゴ　ポケモンめいは
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
+じゅんびが　できましたら
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">なお　タマゴ　ポケモンめいは
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
+じゅんびが　できましたら
+また　おこし　ください</language>
 	</row>
 
 	<row id="msg_c04r0104_receipt_09">
@@ -380,8 +444,16 @@
 	</row>
 
 	<row id="msg_c04r0104_receipt_14">
-		<language name="JPN" width="256">おきゃくさま　せーぶせずおえた</language>
-		<language name="JPN_KANJI" width="256">おきゃくさま　せーぶせずおえた</language>
+		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ぜんかい　ちゃんと　レポートを　かいて
+しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
+もうしわけ　ありませんが　そのばあい
+ちょうせんは　むこうと　なります</language>
+		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ぜんかい　ちゃんと　レポートを　かいて
+しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
+もうしわけ　ありませんが　そのばあい
+ちょうせんは　むこうと　なります</language>
 	</row>
 
 	<row id="msg_c04r0104_receipt_15">
@@ -421,6 +493,11 @@
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこんでいます
 しばらく　おまちください</language>
+	</row>
+
+	<row id="msg_c04r0104_receipt_23">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
 	</row>
 
 	<flowchart-group-list>

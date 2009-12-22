@@ -169,11 +169,9 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     }
     #endif
   }
-
-#if 0  
-  bsw_scr->renshou = BSUBWAY_SCOREDATA_SetRenshou(
-      bsw_scr->scoreData, BSWAY_SETMODE_get );
-#endif
+  
+  bsw_scr->renshou = BSUBWAY_SCOREDATA_GetRenshouCount(
+      bsw_scr->scoreData, bsw_scr->play_mode );
 
   bsw_scr->my_sex = MyStatus_GetMySex( mystatus );
   
@@ -286,7 +284,7 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   buf8[0] = bsw_scr->now_round;
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_round, buf8 );
-
+  
   //選んだポケモンNo
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
@@ -331,6 +329,83 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   #endif
 }
 
+//--------------------------------------------------------------
+/**
+ * BSUBWAY_SCRWORK ゲームクリア時に現在のプレイ状況をセーブに書き出す
+ * @param bsw_scr BSUBWAY_SCRWORK*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
+{
+  u16  i;
+  u8  buf8[4];
+
+  //プレイモード書き出し
+  buf8[0] = bsw_scr->play_mode;
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_playmode, buf8 );
+
+  //ラウンド数は１でクリア
+  buf8[0] = 1;
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_round, buf8 );
+  
+  //選んだポケモンNo
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
+  
+  //バトル成績書き出し
+  BSUBWAY_PLAYDATA_AddWifiRecord( bsw_scr->playData,
+    bsw_scr->rec_down, bsw_scr->rec_turn, bsw_scr->rec_damage );
+  
+  //プレイランダムシード保存
+  #if 0 //wb null
+  TowerPlayData_Put(wk->playSave,BSWAY_PSD_rnd_seed,&(wk->play_rnd_seed));
+  OS_Printf("TowerRestRndSeed = %d\n",wk->play_rnd_seed);
+  #endif
+  
+  //セーブフラグを有効状態にリセット
+  BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
+  
+  if( bsw_scr->play_mode != BSWAY_MODE_MULTI ){
+    return;
+  }
+  
+  //AIマルチモードならパートナーを覚えておく
+  buf8[0] = bsw_scr->partner;
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, buf8 );
+  
+  //パートナーのポケモンパラメータを憶えておく
+  #if 0 //wb null
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_pare_poke,
+      &(bsw_scr->five_poke[bsw_scr->partner]) );
+  #endif
+
+  //アイテムが固定だったかどうか憶えておく
+  #if 0 //wb null
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_pare_itemfix,
+      &(bsw_scr->five_item[bsw_scr->partner]) );
+  #endif
+  
+  //連勝記録書き出し
+  {
+    u32 renshou = BSUBWAY_SCOREDATA_GetRenshouCount(
+        bsw_scr->scoreData, bsw_scr->play_mode );
+    
+    if( renshou + bsw_scr->now_win > 0xffff ){
+      renshou = 0xffff;
+    }else{
+      renshou += bsw_scr->now_win;
+    }
+    
+    BSUBWAY_SCOREDATA_SetRenshouCount(
+          bsw_scr->scoreData, bsw_scr->play_mode, renshou );
+  }
+}
+
 u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
 {
   int id;
@@ -361,6 +436,9 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   BSUBWAY_SCOREDATA_SetStage( scoreData,
     play_mode, BSWAY_SETMODE_reset );
   
+  BSUBWAY_SCOREDATA_SetRenshouCount( //連勝記録クリア
+      scoreData, play_mode, 0 );
+
   #if 0 //wb null
   if( play_mode != BSWAY_MODE_WIFI ){
     //プレイランダムシードをひとつ強制で進める
@@ -394,7 +472,10 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   id = bsw_scr->play_mode * 2 + RECID_RENSHOU_SINGLE;
   
   bsw_scr->renshou = 0;
-
+  
+  BSUBWAY_SCOREDATA_SetRenshouCount( //連勝記録クリア
+      bsw_scr->scoreData, bsw_scr->play_mode, bsw_scr->renshou );
+  
 #if 0
   BSUBWAY_SCOREDATA_SetRenshou(
      bsw_scr->scoreData, BSWAY_SETMODE_reset );
@@ -1060,6 +1141,21 @@ void BSUBWAY_SCRWORK_SetClearScore(
   buf8 = wk->now_round;
 	BSUBWAY_PLAYDATA_SetData( wk->playData,
       BSWAY_PLAYDATA_ID_round, &buf8 );
+  
+  //連勝記録書き出し
+  {
+    u32 renshou = BSUBWAY_SCOREDATA_GetRenshouCount(
+        wk->scoreData, wk->play_mode );
+    
+    if( renshou + wk->now_win > 0xffff ){
+      renshou = 0xffff;
+    }else{
+      renshou += wk->now_win;
+    }
+    
+    BSUBWAY_SCOREDATA_SetRenshouCount(
+          wk->scoreData, wk->play_mode, renshou );
+  }
 }
 
 /**

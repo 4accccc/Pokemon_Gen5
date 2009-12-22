@@ -233,11 +233,13 @@ ev_train_rooms_sbtl_01:
   
 ev_train_rooms_sbtl_02:
   //ただいま？連勝…対戦を続けますか
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_NOW_ROUND,BSWAY_NULL,SCWK_TEMP0 )
-  _NUMBER( 0, SCWK_TEMP0, 0 )
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _NUMBER( 0, SCWK_ANSWER, 3 )
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_NEXT_CARNUM,BSWAY_NULL,SCWK_ANSWER )
+  _NUMBER( 1, SCWK_ANSWER, 1 )
   _SYSWIN_MSG_DOWN( msg_c04r0110_01 )
   
-  _BMPMENU_INIT_EX( 21,11,0,0,SCWK_ANSWER ) //Bキャンセル無効
+  _BMPMENU_INIT_EX( 21,8,0,0,SCWK_ANSWER ) //Bキャンセル無効
   _BMPMENU_MAKE_LIST( msg_c04r0110_02,0 )   //つづける
   _BMPMENU_MAKE_LIST( msg_c04r0110_03,1 )   //きろくする
   _BMPMENU_MAKE_LIST( msg_c04r0110_04,2 )   //やすむ
@@ -252,7 +254,7 @@ ev_train_rooms_sbtl_02:
   _END
 
 ev_train_rooms_save_battle:
-  _SYSWIN_MSG_DOWN( msg_c04r0110_08 )
+  _SYSWIN_MSG_DOWN( msg_c04r0110_09 )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   _JUMP ev_train_rooms_sbtl_02
@@ -309,23 +311,14 @@ ev_train_rooms_common_sbtl_call:
 //  _CALL ev_train_rooms_comanm_enein
   
   //対戦前台詞
-//  _TALKMSG_BTOWER_APPEAR  0
   _BSUBWAY_TOOL( BSWAY_SUB_TRAINER_BEFORE_MSG, 0, BSWAY_NULL )
-//  _SYSWIN_MSG_DOWN( msg_c04r0110_test00 )
-//  _AB_KEYWAIT()
-//  _SYSWIN_CLOSE()
-
+  
   //互いに近づく
   _CALL ev_train_anime_battle_start
   
   //バトル呼び出し
   _BSUBWAY_TOOL( BSWAY_SUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  /*
-  _BLACK_OUT()
-  _BLACK_IN()
-  _LDVAL( SCWK_ANSWER, 1 )
-  */
   
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _RET
@@ -346,8 +339,19 @@ ev_train_rooms_common_lose:
 ev_train_rooms_common_clear_ret:
   _TEMOTI_POKEMON_KAIFUKU()
   _CALL ev_train_anime_player_clear
+
+  //シングルならラウンドチェック
+  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_train_rooms_common_clear_ret1
+  _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_common_clear_ret1
+  _JUMP ev_train_rooms_common_clear_ret2
+
+  //リーダークリア
+ev_train_rooms_common_clear_ret1:
+  _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 1, BSWAY_NULL )
   
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 3 )
+ev_train_rooms_common_clear_ret2:
+  _LDVAL( WK_OTHER_SCENE_C04R0111, 1 )
   //クリアパラメータセット
   _BSUBWAY_TOOL( BSWAY_SUB_SET_CLEAR_SCORE,BSWAY_NULL,BSWAY_NULL )
   _JUMP ev_train_rooms_clear_exit
@@ -364,7 +368,7 @@ ev_train_rooms_common_rest:
   _BSUBWAY_WORK_RELEASE()
   
   //レポート
-  _SYSWIN_MSG_DOWN( msg_c04r0110_07 )
+  _SYSWIN_MSG_DOWN( msg_c04r0110_08 )
 /* 
   _ADD_WAITICON
   _REPORT_SAVE  SCWK_ANSWER
@@ -376,7 +380,8 @@ ev_train_rooms_common_rest:
   
   _BLACK_OUT()
   _DISP_FADE_END_CHECK()
-  
+  _SYSWIN_CLOSE()
+
 //_VANISH_DUMMY_OBJ_DEL
   //リセットコマンド
   _BSUBWAY_TOOL( BSWAY_TOOL_SYSTEM_RESET, BSWAY_NULL, BSWAY_NULL )
@@ -548,7 +553,7 @@ ev_train_rooms_clear_exit:
   //ウェイト
   _TIME_WAIT( 30 )
   _CALL ev_c04r0110_init_map_change_work
-  _MAP_CHANGE( ZONE_ID_C04R0111,12,14,DIR_UP )
+  _MAP_CHANGE( ZONE_ID_C04R0111,13,12,DIR_DOWN )
   _END
 
 //======================================================================

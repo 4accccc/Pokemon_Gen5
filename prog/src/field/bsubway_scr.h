@@ -31,6 +31,7 @@ extern BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     GAMESYS_WORK *gsys, u16 init, u16 playmode );
 extern void BSUBWAY_SCRWORK_ReleaseWork( GAMESYS_WORK *gsys, BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr );
 extern u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys );
 extern void BSUBWAY_SCRWORK_SetLoseScore(
     GAMESYS_WORK *gsys, BSUBWAY_SCRWORK *bsw_scr );

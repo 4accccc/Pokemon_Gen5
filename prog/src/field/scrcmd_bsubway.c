@@ -148,7 +148,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWAY_TOOL_CHK_ENTRY_POKE_NUM:
     if( param == 0 ){
       GF_ASSERT( bsw_scr != NULL );
-      *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
+  *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
     }else{
       *ret_wk = bsway_CheckEntryPokeNum( param, gsys, 1 );
     }
@@ -294,16 +294,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     #endif
     break;
   case BSWAY_TOOL_GET_RENSHOU_CNT:
-    *ret_wk = BSUBWAY_PLAYDATA_GetData(
-        playData, BSWAY_PLAYDATA_ID_round, NULL );
-    
-    (*ret_wk) -= 1;
+    *ret_wk = BSUBWAY_SCOREDATA_GetRenshouCount( scoreData, param );
     
     if( (s16)(*ret_wk) < 0 ){
       *ret_wk = 0;
     }
     
-    KAGAYA_Printf( "PLAYDATA ラウンド = %d\n", (*ret_wk) );
+    KAGAYA_Printf( "PLAYDATA 連勝数 = %d\n", (*ret_wk) );
     break;
   case BSWAY_SUB_GET_RENSHOU_CNT:
     if( (u32)bsw_scr->renshou+bsw_scr->now_win > 0xFFFF ){
@@ -449,12 +446,27 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     return( VMCMD_RESULT_SUSPEND );
   case BSWAY_TOOL_CHK_REGULATION:
     *ret_wk = 0; //ok
-
+    
     if( bsway_CheckRegulation(param,gsys) == FALSE ){
       *ret_wk = 1;
     }
     #ifdef DEBUG_ONLY_FOR_Kagaya
 //    *ret_wk = 1;
+    #endif
+    break;
+  case BSWAY_TOOL_GET_PLAY_MODE:
+    *ret_wk = BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+    break;
+  //車両数
+  case BSWAY_SUB_GET_NEXT_CARNUM:
+    *ret_wk = bsw_scr->now_round % 8;
+    break;
+  case BSWAY_SUB_SAVE_GAMECLEAR:
+    #if 0
+    TowerScr_SaveRestPlayData(bsw_scr);
+    #else
+    BSUBWAY_SCRWORK_SaveGameClearPlayData( bsw_scr );
     #endif
     break;
   //エラー

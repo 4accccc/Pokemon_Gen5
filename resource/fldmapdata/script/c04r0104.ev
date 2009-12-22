@@ -1,7 +1,7 @@
 //======================================================================
 //                c04r0104.ev
 //  スクリプトファイル：c04r0104用
-//  ギアステーションホーム　バトルサブウェイ　ダブルトレイン受付
+//  ギアステーションホーム　バトルサブウェイ　ダブルルトレイン受付
 //======================================================================
 
   .text
@@ -11,7 +11,7 @@
   .include  "c04r0104.h"
   
   .include "../../../prog/src/field/bsubway_scr_def.h"
- 
+
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
@@ -228,15 +228,17 @@ ev_c04r0104_receipt_talk:
   //ようこそ
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_01 ) 
   _AB_KEYWAIT()
-
+  
   //連勝中チェック
-  _BSUBWAY_TOOL( BSWAY_TOOL_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWAY_TOOL_GET_RENSHOU_CNT, BSWAY_MODE_DOUBLE, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0104_receipt_talk_02
   
   //連勝中です
+  _PLAYER_NAME( 0 )
+  _NUMBER( 1, SCWK_ANSWER, 3 )
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_03 )
   _AB_KEYWAIT()
- 
+
 ev_c04r0104_receipt_talk_02:
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_13 )
   
@@ -260,10 +262,11 @@ ev_c04r0104_receipt_talk03:
   
   _BSUBWAY_TOOL( BSWAY_TOOL_CHK_REGULATION, BSWAY_MODE_DOUBLE, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_receipt_select_poke
-
+  
 _receipt_talk03_error:
   //手持ちポケモンが足りない
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08 )
+  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08_02 )
   _AB_KEYWAIT()
   _JUMP ev_bsubway_seq_exit
   _END
@@ -273,6 +276,8 @@ _receipt_talk03_error:
 //--------------------------------------------------------------
 ev_bsubway_receipt_explain:
   _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02 )
+  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02_02 )
+  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02_03 )
   _AB_KEYWAIT()
   _JUMP ev_c04r0104_receipt_talk_02
   _END
@@ -371,6 +376,7 @@ ev_c04r0104_game_continue:
   //やめます
   _SYSWIN_CLOSE()
   _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
   _LDVAL( WK_OTHER_SCENE_C04R0104, 1 )
   _BSUBWAY_TOOL( BSWAY_TOOL_SYSTEM_RESET, BSWAY_NULL, BSWAY_NULL )
   _END
