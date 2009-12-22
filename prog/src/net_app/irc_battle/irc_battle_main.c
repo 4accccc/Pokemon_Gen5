@@ -408,6 +408,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     {
       work->state = IBS_BATTLE_WAIT;
       IRC_BATTLE_InitBattleProc( work );
+      PMSND_PlayBGM( work->battleParam.musicDefault );
       GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, &work->battleParam );
     }
     break;
@@ -419,6 +420,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     break;
 
   case IBS_BATTLE_FADEIN:
+    PMSND_StopBGM();
     WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     work->state = IBS_BATTLE_FADEIN_WAIT;
