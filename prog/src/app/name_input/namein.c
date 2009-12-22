@@ -42,6 +42,9 @@
 //	savedata
 #include "savedata/misc.h"
 
+//  se
+#include "sound/sound_manager.h"
+
 //	mine
 #include "namein_snd.h"			//サウンド定義
 #include "namein_graphic.h"	//グラフィック設定
@@ -558,6 +561,8 @@ typedef struct
 	//共通で使う単語
 	WORDSET				*p_word;
 
+  SOUNDMAN_PRESET_HANDLE* p_snd_preset;
+
 	//引数
 	NAMEIN_PARAM	*p_param;
 } NAMEIN_WORK;
@@ -716,6 +721,7 @@ static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_SaveEnd( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //=============================================================================
 /**
  *					外部参照
@@ -959,6 +965,24 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 												NARC_message_namein_dat, HEAPID_NAME_INPUT );
 	p_wk->p_word	= WORDSET_Create( HEAPID_NAME_INPUT );
 
+
+  if( p_wk->p_param->p_intr_sv )
+  { 
+    //p_wk->p_intr_sv = IntrSave_Init(HEAPID_NAME_INPUT, SaveControl_GetPointer());
+    { 
+      static const u32 sc_sound_idx_tbl[]  =
+      { 
+        NAMEIN_SE_MOVE_CURSOR,
+        NAMEIN_SE_DELETE_STR,
+        NAMEIN_SE_DECIDE_STR,
+        NAMEIN_SE_CHANGE_MODE,
+        NAMEIN_SE_DECIDE,
+      };
+      p_wk->p_snd_preset    = SOUNDMAN_PresetSoundTbl( sc_sound_idx_tbl, NELEMS(sc_sound_idx_tbl) );
+    }
+  }
+
+
 	//グラフィック設定
 	p_wk->p_graphic	= NAMEIN_GRAPHIC_Init( 0, HEAPID_NAME_INPUT );
 
@@ -996,6 +1020,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 		MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode );
 	}
 
+
+  if( p_wk->p_param->p_intr_sv )
+  { 
+    IntrSave_Resume( p_wk->p_param->p_intr_sv );
+  }
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -1027,6 +1057,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 	OBJ_Exit( &p_wk->obj );
 	BG_Exit( &p_wk->bg );
 	NAMEIN_GRAPHIC_Exit( p_wk->p_graphic );
+
+
+  if( p_wk->p_snd_preset )
+  { 
+    SOUNDMAN_ReleasePresetData( p_wk->p_snd_preset );
+  }
 
 	//共通モジュールの破棄
 	WORDSET_Delete( p_wk->p_word );
@@ -1066,6 +1102,13 @@ static GFL_PROC_RESULT NAMEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 
 	//プリント
 	PRINTSYS_QUE_Main( p_wk->p_que );
+
+  //セーブ
+  if( p_wk->p_param->p_intr_sv )
+  { 
+    //外部でよんでいる
+    //IntrSave_Main( p_wk->p_intr_sv );
+  }
 
 	//終了
 	if( SEQ_IsEnd( &p_wk->seq ) )
@@ -5241,5 +5284,48 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	}
 
 	//終了
-	SEQ_End( p_seqwk );
+  if( p_wk->p_param->p_intr_sv )
+  { 
+    SEQ_SetNext( p_seqwk, SEQFUNC_SaveEnd );
+  }
+  else
+  { 
+    SEQ_End( p_seqwk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セーブ終了待ち
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_param				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_SaveEnd( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{ 
+  enum
+  { 
+    SEQ_SAVE_SUSPEND,
+    SEQ_SAVE_WAIT,
+  };
+
+	NAMEIN_WORK	*p_wk = p_param;
+
+  switch( *p_seq )
+  { 
+  case SEQ_SAVE_SUSPEND:
+    IntrSave_ReqSuspend( p_wk->p_param->p_intr_sv );
+    *p_seq  = SEQ_SAVE_WAIT;
+    break;
+
+  case SEQ_SAVE_WAIT:
+    if( IntrSave_CheckAllSaveEnd( p_wk->p_param->p_intr_sv ) )
+    { 
+      SEQ_End( p_seqwk );
+    }
+    break;
+  } 
 }

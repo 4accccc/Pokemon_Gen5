@@ -12,6 +12,7 @@
 
 #include "savedata\config.h"
 #include "savedata\box_savedata.h"
+#include "savedata/save_control_intr.h"
 
 //=============================================================================
 /**
@@ -108,6 +109,8 @@ typedef struct
 									// 名前入力が終わったらここからコピーする
 									// もう１つは、名前入力に行くときにここに文字列を格納しておくと,
 									// 名前入力画面はその文字列を表示しながら開始する。引数としても機能する
+
+  INTR_SAVE_CONTROL *p_intr_sv;  // [in]内部で、セーブしながら名前入力する(イントロ画面用)
 
 } NAMEIN_PARAM;
 
