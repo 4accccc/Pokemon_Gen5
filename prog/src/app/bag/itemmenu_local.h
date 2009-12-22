@@ -312,6 +312,9 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _WINNUM_SCR_INITX (16)
 #define _WINNUM_SCR_INITY (12)
 
+#define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
+#define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン
+
 enum
 { 
   BUTTONID_ITEM_AREA_NUM = 6,   ///< アイテムエリアの項目数

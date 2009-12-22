@@ -30,6 +30,7 @@
 #include "font/font.naix" //NARC_font_large_gftr
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "ui/touchbar.h"
 
 #include "itemmenu.h"
 #include "itemmenu_local.h"
@@ -73,8 +74,8 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   { 21*_1CHAR,  24*_1CHAR,  19*_1CHAR, 22*_1CHAR },  //ソート
   { 21*_1CHAR,  24*_1CHAR,  22*_1CHAR, 24*_1CHAR },  //チェックボタン
 
-  { 21*_1CHAR,  24*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
-  { 21*_1CHAR,  24*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
+  { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_EXIT, _BAR_CELL_CURSOR_EXIT+TOUCHBAR_ICON_WIDTH-1 },  //x
+  { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_RETURN, _BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1 },  //リターン
 
   { 1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア1
   { 4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア2

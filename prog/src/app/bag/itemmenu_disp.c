@@ -91,8 +91,6 @@ enum
 
 #define ITEM_LIST_NUM (8)
 
-#define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
-#define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン
 
 typedef enum{
   _CLACT_PLT,
@@ -713,10 +711,10 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 
  if(pWork->cellicon!=NULL){
   GFL_CLACT_WK_Remove( pWork->cellicon );
- }
-
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
+ }
+
   GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
 
   for( i=0; i < ITEM_LIST_NUM; i++ ){
@@ -1467,6 +1465,7 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   }
+	pWork->appitem[i-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
