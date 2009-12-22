@@ -139,7 +139,7 @@ VMCMD_RESULT EvCmdBgmSpecialSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static BOOL EvWaitBgmFade( VMHANDLE *core, void *wk )
 {
-  if( PMSND_CheckFadeOnBGM() ){
+  if( !PMSND_CheckFadeOnBGM() ){
     return( TRUE );
   }
   return FALSE;
