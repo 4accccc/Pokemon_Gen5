@@ -775,7 +775,6 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     // 通常のカメラターゲット
     // カメラターゲット補正
     VEC_Add( &camera->target_write, &camera->target_offset, &cameraTarget );
-    
 
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
 	  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->campos_write );
@@ -2266,10 +2265,10 @@ static void updateTraceData(CAMERA_TRACE * trace,
     return;
   }
 
-  cam_ofs = trace->CamPoint;
-  tgt_ofs = trace->TargetPoint;
+  cam_ofs = trace->CamPoint;    // 参照位置
+  tgt_ofs = trace->TargetPoint; // 格納位置
 
-  if (trace->UpdateFlg && (!trace->StopReq)){
+  if (trace->UpdateFlg){
     //履歴データから座標取得
     *outTarget = trace->targetBuffer[cam_ofs];
     *outCamPos = trace->camPosBuffer[cam_ofs];
@@ -2289,12 +2288,15 @@ static void updateTraceData(CAMERA_TRACE * trace,
     //ターゲットに追いつくまで参照位置更新
     if (cam_ofs!=tgt_ofs){
       cam_ofs = (cam_ofs+1) % trace->bufsize;
-    }
-    else    //追いついた
-    {
-      //トレースをストップする
-      trace->StopReq = FALSE;
-      trace->Valid = FALSE;
+
+      //追いついた
+      if( cam_ofs == tgt_ofs )
+      {
+        //トレースをストップする
+        trace->StopReq = FALSE;
+        trace->Valid = FALSE;
+        trace->UpdateFlg = FALSE;
+      }
     }
   }
   else
@@ -2308,8 +2310,8 @@ static void updateTraceData(CAMERA_TRACE * trace,
     tgt_ofs = (tgt_ofs+1) % trace->bufsize;
   }
 
-  trace->CamPoint = cam_ofs;
-  trace->TargetPoint = tgt_ofs;
+  trace->CamPoint = cam_ofs;    // 参照位置
+  trace->TargetPoint = tgt_ofs; // 格納位置
 
   //トレースデータの無効座標軸は、そのまま現在座標を採用
   if (!trace->ValidX){	//ｘ無効判定
