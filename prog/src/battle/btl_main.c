@@ -899,6 +899,7 @@ static BOOL setup_comm_double( int* seq, void* work )
     }
     wk->myClientID = wk->setupParam->commPos;
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
+    OS_TPrintf("[BTL] MyClientID=%d,  MyOrgPos=%d\n", wk->myClientID, wk->myOrgPos);
     (*seq)++;
     return FALSE;
   }
@@ -2282,7 +2283,10 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
       { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C  },
     };
     u8 posIdx = btlPos_to_sidePosIdx( pos );
-    return vpos[ isPlayerSide ][ posIdx ];
+    u8 result = vpos[ isPlayerSide ][ posIdx ];
+
+    OS_TPrintf("[BTL] BtlPos=%d, posIdx=%d, Vpos=%d\n", pos, posIdx, result);
+    return result;
   }
   else
   {
@@ -2491,7 +2495,7 @@ BTL_POKEPARAM* BTL_POKECON_GetFrontPokeData( BTL_POKE_CONTAINER* wk, BtlPokePos 
  * @param   wk    メインモジュールのハンドラ
  * @param   pos   立ち位置
  *
- * @retval  const BTL_POKEPARAM*
+ * @retval  const BTL_POKEPARAM*（パーティのメンバーが足りない場合はNULL）
  */
 //=============================================================================================
 const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER* wk, BtlPokePos pos )
@@ -2503,10 +2507,13 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
 
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
-
-  BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
-
-  return BTL_PARTY_GetMemberDataConst( party, posIdx );
+  if( posIdx < BTL_PARTY_GetMemberCount(party) ){
+    BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
+    return BTL_PARTY_GetMemberDataConst( party, posIdx );
+  }else{
+    BTL_PrintfSimple("存在しないポケモンデータを参照した\n");
+    return NULL;
+  }
 }
 //=============================================================================================
 /**
@@ -2719,12 +2726,18 @@ u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
 
 BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx )
 {
-  return party->member[ idx ];
+  if( idx < party->memberCount ){
+    return party->member[ idx ];
+  }
+  return NULL;
 }
 
 const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 idx )
 {
-  return party->member[ idx ];
+  if( idx < party->memberCount ){
+    return party->member[ idx ];
+  }
+  return NULL;
 }
 
 void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )

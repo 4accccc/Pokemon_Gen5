@@ -8627,7 +8627,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     BtlPokePos pos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, damagedPokeID );
     BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, pos );
     u8  targetPokeID[ BTL_POSIDX_MAX ];

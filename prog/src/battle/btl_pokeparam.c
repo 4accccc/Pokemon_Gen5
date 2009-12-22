@@ -1376,12 +1376,6 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
     bpp->sickCont[ WAZASICK_DOKU ] = contParam;
     bpp->wazaSickCounter[ WAZASICK_DOKU ] = 0;
   }
-
-  if( (sick == WAZASICK_ENCORE)
-  ||  (sick == WAZASICK_WAZALOCK)
-  ){
-    BTL_Printf("ŠY“–ˆÙí‚É‚È‚Á‚½ pokeID=%d, sickID=%d\n", bpp->coreParam.myID, sick );
-  }
 }
 
 

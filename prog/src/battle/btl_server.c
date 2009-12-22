@@ -9,6 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 #include "waza_tool\wazadata.h"
+#include "gamesystem\game_beacon.h"
 #include "sound\pm_sndsys.h"
 
 #include "btl_common.h"
@@ -38,6 +39,7 @@
 enum {
   SERVER_CMD_SIZE_MAX = 1024,
   CLIENT_DISABLE_ID = 0xff,
+  SERVER_STRBUF_SIZE = 32,
 };
 
 enum {
@@ -73,7 +75,7 @@ struct _BTL_SERVER {
   BtlBagMode            bagMode;
   GFL_STD_RandContext   randContext;
   BTL_RECTOOL           recTool;
-
+  STRBUF*               strbuf;
 
   u8          numClient;
   u8          quitStep;
@@ -148,6 +150,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
   sv->randContext = *randContext;
+  sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
 
 
   {
@@ -269,6 +272,8 @@ void BTL_SERVER_Startup( BTL_SERVER* server )
 void BTL_SERVER_Delete( BTL_SERVER* wk )
 {
   int i;
+
+  GFL_STR_DeleteBuffer( wk->strbuf );
 
   BTL_SVFLOW_QuitSystem( wk->flowWork );
 
@@ -1055,6 +1060,20 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
 
 
 //----------------------------------------------
+void BTL_SERVER_NotifyPokemonLevelUp( BTL_SERVER* server, const BTL_POKEPARAM* bpp )
+{
+  const POKEMON_PARAM* pp;
+  pp = BPP_GetSrcData( bpp );
+  PP_Get( pp, ID_PARA_nickname, server->strbuf );
+  GAMEBEACON_Set_PokemonLevelUp( server->strbuf );
+}
+void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* bpp )
+{
+  const POKEMON_PARAM* pp;
+  pp = BPP_GetSrcData( bpp );
+  PP_Get( pp, ID_PARA_nickname, server->strbuf );
+  GAMEBEACON_Set_PokemonGet( server->strbuf );
+}
 
 void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
 {
