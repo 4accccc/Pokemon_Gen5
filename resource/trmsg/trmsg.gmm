@@ -1533,14 +1533,14 @@
 アナタに　しびれさせられたのね</language>
 	</row>
 
-	<row id="TRID_PRINCE_01_TRMSG_FIGHT_LOSE">
+	<row id="TRID_PRINCE_02_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけたとしても
 あわてず　さわがず……　さ</language>
 		<language name="JPN_KANJI" width="216">負けたとしても
 あわてず　さわがず……　さ</language>
 	</row>
 
-	<row id="TRID_PRINCE_02_TRMSG_FIGHT_START">
+	<row id="TRID_PRINCE_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ウェルカム！
 チャレンジャー！▼
 この　おぼっちゃま　である
@@ -1551,14 +1551,14 @@
 ボクが　お相手　しよう！▼</language>
 	</row>
 
-	<row id="TRID_PRINCE_02_TRMSG_FIGHT_LOSE">
+	<row id="TRID_PRINCE_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ジェジェジェジェジェジェッ！
 ジェット　コースター！</language>
 		<language name="JPN_KANJI" width="216">ジェジェジェジェジェジェッ！
 ジェット　コースター！</language>
 	</row>
 
-	<row id="TRID_PRINCE_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PRINCE_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">コースターのように　スピードあふれる
 たたかいかたを　めざしたが……▼
 だって　そうだろ？
@@ -1571,28 +1571,28 @@
 ダメージを受けずに　勝てるかも　だ！</language>
 	</row>
 
-	<row id="TRID_PRINCESS_01_TRMSG_FIGHT_LOSE">
+	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけたけれど　かんがえれば
 あたくし　まだ　つよくなれるのね……</language>
 		<language name="JPN_KANJI" width="216">負けたけれど　考えれば
 あたくし　まだ　強くなれるのね……</language>
 	</row>
 
-	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_START">
+	<row id="TRID_PRINCESS_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">きみの　ファッション……
 どことなく　カノコタウンっぽいね▼</language>
 		<language name="JPN_KANJI" width="216">きみの　ファッション……
 どことなく　カノコタウンっぽいね▼</language>
 	</row>
 
-	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_LOSE">
+	<row id="TRID_PRINCESS_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ファッションでは
 まさっていたはず　なのに……！？</language>
 		<language name="JPN_KANJI" width="216">ファッションでは
 勝っていたはず　なのに……！？</language>
 	</row>
 
-	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PRINCESS_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">きらびやかな　ライモンの
 きらびやかな　ジムを　たばねる▽
 きらびやかすぎる　カミツレさん▽
