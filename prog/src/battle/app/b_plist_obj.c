@@ -208,12 +208,22 @@ static const u32 ObjParamEz[][5] =
 
   { BPLIST_CHRRES_POKETYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // ポケモンタイプアイコン１
   { BPLIST_CHRRES_POKETYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // ポケモンタイプアイコン２
+  { BPLIST_CHRRES_POKETYPE3, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // ポケモンタイプアイコン３
+  { BPLIST_CHRRES_POKETYPE4, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // ポケモンタイプアイコン４
+
   { BPLIST_CHRRES_WAZATYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン１
   { BPLIST_CHRRES_WAZATYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン２
   { BPLIST_CHRRES_WAZATYPE3, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン３
   { BPLIST_CHRRES_WAZATYPE4, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン４
-  { BPLIST_CHRRES_WAZATYPE5, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン４
-  { BPLIST_CHRRES_BUNRUI, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },     // 分類アイコン
+  { BPLIST_CHRRES_WAZATYPE5, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン５
+  { BPLIST_CHRRES_WAZATYPE6, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン６
+  { BPLIST_CHRRES_WAZATYPE7, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン７
+  { BPLIST_CHRRES_WAZATYPE8, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン８
+  { BPLIST_CHRRES_WAZATYPE9, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン９
+  { BPLIST_CHRRES_WAZATYPE10, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },    // 技タイプアイコン１０
+
+  { BPLIST_CHRRES_BUNRUI, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },			 // 分類アイコン
+  { BPLIST_CHRRES_BUNRUI2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },     // 分類アイコン２
 };
 
 // ページ１のポケモンアイコンの座標
@@ -487,7 +497,7 @@ static void BPL_ClactTypeLoad( BPLIST_WORK * wk )
                                       NARC_app_menu_common_p_st_type_32k_NANR,
                                       wk->dat->heap );
   // タイプアイコンキャラ
-  for( i=BPLIST_CHRRES_POKETYPE1; i<=BPLIST_CHRRES_WAZATYPE5; i++ ){
+  for( i=BPLIST_CHRRES_POKETYPE1; i<=BPLIST_CHRRES_WAZATYPE10; i++ ){
     wk->chrRes[i] = GFL_CLGRP_CGR_Register(
                       ah, APP_COMMON_GetPokeTypeCharArcIdx(0),
                       FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
@@ -497,6 +507,9 @@ static void BPL_ClactTypeLoad( BPLIST_WORK * wk )
   wk->chrRes[BPLIST_CHRRES_BUNRUI] = GFL_CLGRP_CGR_Register(
                                       ah, APP_COMMON_GetWazaKindCharArcIdx(0),
                                       FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+  wk->chrRes[BPLIST_CHRRES_BUNRUI2] = GFL_CLGRP_CGR_Register(
+	                                      ah, APP_COMMON_GetWazaKindCharArcIdx(0),
+		                                    FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
 }
@@ -838,17 +851,6 @@ static void BPL_TypeIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID,
 
   GFL_CLACT_WK_SetPlttOffs(
     clwk, APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
-
-//  CATS_SYS_PTR  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-/*
-  CATS_ChangeResourceCharArc(
-    csp, wk->crp, WazaTypeIcon_ArcIDGet(),
-    WazaTypeIcon_CgrIDGet(type), WAZATYPEICON_COMP_CHAR, res_id );
-
-  CATS_ObjectPaletteSetCap( cap, WazaTypeIcon_PlttOffsetGet(type)+4 );
-*/
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -862,11 +864,14 @@ static void BPL_TypeIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID,
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void BPL_KindIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID, u32 kind )
+static void BPL_KindIconChange( BPLIST_WORK * wk, u32 objID, u32 chrResID, u32 kind )
 {
   NNSG2dCharacterData * dat;
   void * buf;
   ARCHANDLE * ah;
+
+	objID += wk->waza_kind_swap;
+	chrResID += wk->waza_kind_swap;
 
   ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
 
@@ -878,16 +883,9 @@ static void BPL_KindIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID,
   GFL_ARC_CloseDataHandle( ah );
 
   GFL_CLACT_WK_SetPlttOffs(
-    clwk, APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
-/*
-  CATS_SYS_PTR  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
+    wk->clwk[objID], APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
-  CATS_ChangeResourceCharArc(
-    csp, wk->crp, WazaKindIcon_ArcIDGet(),
-    WazaKindIcon_CgrIDGet(kind), WAZAKINDICON_COMP_CHAR, CHR_ID_BUNRUI );
-
-  CATS_ObjectPaletteSetCap( cap, WazaKindIcon_PlttOffsetGet(kind)+4 );
-*/
+	wk->waza_kind_swap ^= 1;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -923,20 +921,23 @@ static void BPL_StIconPut( u16 st, GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 //--------------------------------------------------------------------------------------------
 static void BPL_PokeTypeIconPut( BPLIST_WORK * wk, BPL_POKEDATA * pd, const GFL_CLACTPOS * pos )
 {
-  BPL_TypeIconChange( wk, wk->clwk[BPL_CA_POKETYPE1], BPLIST_CHRRES_POKETYPE1, pd->type1 );
-  BPL_ClactOn( wk->clwk[BPL_CA_POKETYPE1], &pos[0] );
+	u16	objID, chrRes;
+
+	if( wk->poke_type_swap == 0 ){
+		objID  = BPL_CA_POKETYPE1;
+		chrRes = BPLIST_CHRRES_POKETYPE1;
+	}else{
+		objID  = BPL_CA_POKETYPE3;
+		chrRes = BPLIST_CHRRES_POKETYPE3;
+	}
+  BPL_TypeIconChange( wk, wk->clwk[objID], chrRes, pd->type1 );
+  BPL_ClactOn( wk->clwk[objID], &pos[0] );
   if( pd->type1 != pd->type2 ){
-    BPL_TypeIconChange( wk, wk->clwk[BPL_CA_POKETYPE2], BPLIST_CHRRES_POKETYPE2, pd->type2 );
-    BPL_ClactOn( wk->clwk[BPL_CA_POKETYPE2], &pos[1] );
+    BPL_TypeIconChange( wk, wk->clwk[objID+1], chrRes+1, pd->type2 );
+    BPL_ClactOn( wk->clwk[objID+1], &pos[1] );
   }
-/*
-  BPL_TypeIconChange( wk, wk->cap[BPL_CA_POKETYPE1], CHR_ID_POKETYPE1, pd->type1 );
-  BPL_ClactOn( wk->cap[BPL_CA_POKETYPE1], pos[0], pos[1] );
-  if( pd->type1 != pd->type2 ){
-    BPL_TypeIconChange( wk, wk->cap[BPL_CA_POKETYPE2], CHR_ID_POKETYPE2, pd->type2 );
-    BPL_ClactOn( wk->cap[BPL_CA_POKETYPE2], pos[2], pos[3] );
-  }
-*/
+
+	wk->poke_type_swap ^= 1;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1184,30 +1185,6 @@ static void BPL_StMainPageObjSet( BPLIST_WORK * wk )
 
   // ＨＰゲージ
   BPL_ClactOn( wk->clwk[BPL_CA_HPGAUGE1], &P2_HPGaugePos );
-
-/*
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P2_PokePos[0], P2_PokePos[1] );
-  // ステータス異常
-  BPL_StIconPut(
-    pd->st, wk->cap[BPL_CA_STATUS1+wk->dat->sel_poke], P2_StatusPos[0], P2_StatusPos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P2_PokeTypePos[0][0] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P2_PokePos[0]+8, P2_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P2_PokePos[0]+16, P2_PokePos[1]+8 );
-
-  // アイテムアイコン（アイテム名の横の）
-  BPL_ItemIconPut( pd->item, wk->cap[BPL_CA_ITEM7], P_STMAIN_ITEM_PX, P_STMAIN_ITEM_PY );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1242,47 +1219,7 @@ static void BPL_StWazaSelPageObjSet( BPLIST_WORK * wk )
   pos.y += 8;
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
   // 技タイプ
-/*
-  for( i=0; i<4; i++ ){
-    if( pd->waza[i].id == 0 ){ continue; }
-
-    BPL_TypeIconChange(
-      wk, wk->clwk[BPL_CA_WAZATYPE1+i], BPLIST_CHRRES_WAZATYPE1+i, pd->waza[i].type );
-    BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+i], &P3_WazaTypePos[i] );
-  }
-*/
   BattlePokelist_WazaTypeSet( wk );
-
-
-/*
-  BPL_POKEDATA * pd;
-  u32 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P3_PokePos[0], P3_PokePos[1] );
-  // ステータス異常
-  BPL_StIconPut(
-    pd->st, wk->cap[BPL_CA_STATUS1+wk->dat->sel_poke], P3_StatusPos[0], P3_StatusPos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P3_PokeTypePos[0][0] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P3_PokePos[0]+8, P3_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P3_PokePos[0]+16, P3_PokePos[1]+8 );
-
-  // 技タイプ
-  for( i=0; i<4; i++ ){
-    if( pd->waza[i].id == 0 ){ continue; }
-
-    BPL_TypeIconChange(
-      wk, wk->cap[BPL_CA_WAZATYPE1+i], CHR_ID_WAZATYPE1+i, pd->waza[i].type );
-    BPL_ClactOn( wk->cap[BPL_CA_WAZATYPE1+i], P3_WazaTypePos[i][0], P3_WazaTypePos[i][1] );
-  }
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1296,34 +1233,6 @@ static void BPL_StWazaSelPageObjSet( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BPL_Page4ObjSet( BPLIST_WORK * wk )
 {
-/*
-  BPL_POKEDATA * pd;
-  GFL_CLACTPOS  pos;
-  u32 i;
-
-  pd  = &wk->poke[wk->dat->sel_poke];
-  pos = P3_PokePos;
-
-  // ポケモンアイコン
-  BPL_ClactOn( wk->clwk[BPL_CA_POKE1+wk->dat->sel_poke], &pos );
-  // 状態異常アイコン
-  BPL_StIconPut(
-    pd->st, wk->clwk[BPL_CA_STATUS1+wk->dat->sel_poke], &P3_StatusPos );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, P3_PokeTypePos );
-  // アイテムアイコン
-  pos.x += 8;
-  pos.y += 8;
-  BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+wk->dat->sel_poke], &pos );
-  // 技タイプ
-  for( i=0; i<4; i++ ){
-    if( pd->waza[i].id == 0 ){ continue; }
-
-    BPL_TypeIconChange(
-      wk, wk->clwk[BPL_CA_WAZATYPE1+i], BPLIST_CHRRES_WAZATYPE1+i, pd->waza[i].type );
-    BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+i], &P3_WazaTypePos[i] );
-  }
-*/
   BPL_POKEDATA * pd;
   GFL_CLACTPOS  pos;
 	u32	row;
@@ -1344,37 +1253,19 @@ static void BPL_Page4ObjSet( BPLIST_WORK * wk )
   pos.x += 8;
   pos.y += 8;
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
-  // 技タイプアイコン
-  BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+wk->dat->sel_wp], &P4_WazaTypePos );
+	// 技タイプアイコン
+	if( wk->waza_type_swap == 0 ){
+		BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE6+wk->dat->sel_wp], &P4_WazaTypePos );
+	}else{
+		BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+wk->dat->sel_wp], &P4_WazaTypePos );
+	}
   // 分類アイコン
-  BPL_KindIconChange(
-    wk, wk->clwk[BPL_CA_BUNRUI], BPLIST_CHRRES_BUNRUI, pd->waza[wk->dat->sel_wp].kind );
-  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI], &P4_WazaKindPos );
-
-/*
-  BPL_POKEDATA * pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P4_PokePos[0], P4_PokePos[1] );
-  // ステータス異常
-  BPL_StIconPut(
-    pd->st, wk->cap[BPL_CA_STATUS1+wk->dat->sel_poke], P4_StatusPos[0], P4_StatusPos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P4_PokeTypePos[0][0] );
-  // 技タイプ
-  BPL_ClactOn(
-    wk->cap[BPL_CA_WAZATYPE1+wk->dat->sel_wp], P4_WazaTypePos[0], P4_WazaTypePos[1] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P4_PokePos[0]+8, P4_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P4_PokePos[0]+16, P4_PokePos[1]+8 );
-  // 分類アイコン
-  BPL_KindIconChange(
-    wk, wk->cap[BPL_CA_BUNRUI], pd->waza[wk->dat->sel_wp].kind );
-  BPL_ClactOn( wk->cap[BPL_CA_BUNRUI], P4_WazaKindPos[0], P4_WazaKindPos[1] );
-*/
+	if( wk->waza_kind_swap == 0 ){
+	  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI], &P4_WazaKindPos );
+	}else{
+	  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI2], &P4_WazaKindPos );
+	}
+	BPL_KindIconChange( wk, BPL_CA_BUNRUI, BPLIST_CHRRES_BUNRUI, pd->waza[wk->dat->sel_wp].kind );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1409,27 +1300,6 @@ static void BPL_Page5ObjSet( BPLIST_WORK * wk )
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
   // 技タイプアイコン
   BattlePokelist_WazaTypeSet( wk );
-
-/*
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P5_PokePos[0], P5_PokePos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P5_PokeTypePos[0][0] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P5_PokePos[0]+8, P5_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P5_PokePos[0]+16, P5_PokePos[1]+8 );
-
-  // 技タイプ
-  BattlePokelist_WazaTypeSet( wk );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1464,44 +1334,23 @@ static void BPL_Page6ObjSet( BPLIST_WORK * wk )
   pos.y += 8;
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
   // 技タイプアイコン
-  BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+wk->dat->sel_wp], &P6_WazaTypePos );
+	if( wk->waza_type_swap == 0 ){
+	  BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE6+wk->dat->sel_wp], &P6_WazaTypePos );
+	}else{
+	  BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+wk->dat->sel_wp], &P6_WazaTypePos );
+	}
   // 分類アイコン
+	if( wk->waza_kind_swap == 0 ){
+	  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI], &P6_WazaKindPos );
+	}else{
+	  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI2], &P6_WazaKindPos );
+	}
   if( wk->dat->sel_wp < 4 ){
-    BPL_KindIconChange(
-      wk, wk->clwk[BPL_CA_BUNRUI], BPLIST_CHRRES_BUNRUI, pd->waza[wk->dat->sel_wp].kind );
+    BPL_KindIconChange( wk, BPL_CA_BUNRUI, BPLIST_CHRRES_BUNRUI, pd->waza[wk->dat->sel_wp].kind );
   }else{
     BPL_KindIconChange(
-      wk, wk->clwk[BPL_CA_BUNRUI], BPLIST_CHRRES_BUNRUI,
-      WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_DAMAGE_TYPE) );
+      wk, BPL_CA_BUNRUI, BPLIST_CHRRES_BUNRUI, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_DAMAGE_TYPE) );
   }
-  BPL_ClactOn( wk->clwk[BPL_CA_BUNRUI], &P6_WazaKindPos );
-
-/*
-  BPL_POKEDATA * pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P6_PokePos[0], P6_PokePos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P6_PokeTypePos[0][0] );
-  // 技タイプ
-  BPL_ClactOn(
-    wk->cap[BPL_CA_WAZATYPE1+wk->dat->sel_wp], P6_WazaTypePos[0], P6_WazaTypePos[1] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P6_PokePos[0]+8, P6_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P6_PokePos[0]+16, P6_PokePos[1]+8 );
-  // 分類アイコン
-  if( wk->dat->sel_wp < 4 ){
-    BPL_KindIconChange(
-      wk, wk->cap[BPL_CA_BUNRUI], pd->waza[wk->dat->sel_wp].kind );
-  }else{
-    BPL_KindIconChange(
-      wk, wk->cap[BPL_CA_BUNRUI], WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_DAMAGE_TYPE) );
-  }
-  BPL_ClactOn( wk->cap[BPL_CA_BUNRUI], P6_WazaKindPos[0], P6_WazaKindPos[1] );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1536,27 +1385,6 @@ static void BPL_Page7ObjSet( BPLIST_WORK * wk )
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
   // 技タイプアイコン
   BattlePokelist_WazaTypeSet( wk );
-
-/*
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // ポケアイコン
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P5_PokePos[0], P5_PokePos[1] );
-  // タイプ
-  BPL_PokeTypeIconPut( wk, pd, &P5_PokeTypePos[0][0] );
-  // アイテムアイコン
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P5_PokePos[0]+8, P5_PokePos[1]+8 );
-  // カスタムボールアイコン
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P5_PokePos[0]+16, P5_PokePos[1]+8 );
-
-  // 技タイプ
-  BattlePokelist_WazaTypeSet( wk );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1640,48 +1468,34 @@ void BattlePokelist_WazaTypeSet( BPLIST_WORK * wk )
 {
   BPL_POKEDATA * pd;
   u32 i;
+	u16	objID, chrRes;
 
   pd = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ];
+
+	if( wk->waza_type_swap == 0 ){
+		objID  = BPL_CA_WAZATYPE1;
+		chrRes = BPLIST_CHRRES_WAZATYPE1;
+	}else{
+		objID  = BPL_CA_WAZATYPE6;
+		chrRes = BPLIST_CHRRES_WAZATYPE6;
+	}
 
   // 技タイプ
   for( i=0; i<4; i++ ){
     if( pd->waza[i].id == 0 ){ continue; }
 
-    BPL_TypeIconChange(
-      wk, wk->clwk[BPL_CA_WAZATYPE1+i], BPLIST_CHRRES_WAZATYPE1+i, pd->waza[i].type );
-    BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+i], &P5_WazaTypePos[i] );
+    BPL_TypeIconChange( wk, wk->clwk[objID+i], chrRes+i, pd->waza[i].type );
+    BPL_ClactOn( wk->clwk[objID+i], &P5_WazaTypePos[i] );
   }
 
   if( wk->dat->chg_waza != 0 && wk->dat->mode == BPL_MODE_WAZASET ){
       BPL_TypeIconChange(
-        wk, wk->clwk[BPL_CA_WAZATYPE5],
-        BPLIST_CHRRES_WAZATYPE5,
+        wk, wk->clwk[objID+i], chrRes+i,
         WAZADATA_GetParam( wk->dat->chg_waza, WAZAPARAM_TYPE ) );
-      BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE5], &P5_WazaTypePos[i] );
+      BPL_ClactOn( wk->clwk[objID+i], &P5_WazaTypePos[i] );
   }
 
-/*
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // 技タイプ
-  for( i=0; i<4; i++ ){
-    if( pd->waza[i].id == 0 ){ continue; }
-
-    BPL_TypeIconChange(
-      wk, wk->cap[BPL_CA_WAZATYPE1+i], CHR_ID_WAZATYPE1+i, pd->waza[i].type );
-    BPL_ClactOn( wk->cap[BPL_CA_WAZATYPE1+i], P5_WazaTypePos[i][0], P5_WazaTypePos[i][1] );
-  }
-
-  if( wk->dat->chg_waza != 0 ){
-    BPL_TypeIconChange(
-      wk, wk->cap[BPL_CA_WAZATYPE5], CHR_ID_WAZATYPE5,
-      WAZADATA_GetParam( wk->dat->chg_waza, WAZAPARAM_TYPE ) );
-    BPL_ClactOn( wk->cap[BPL_CA_WAZATYPE5], P5_WazaTypePos[4][0], P5_WazaTypePos[4][1] );
-  }
-*/
+	wk->waza_type_swap ^= 1;
 }
 
 

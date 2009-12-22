@@ -222,14 +222,22 @@ enum {
 
 	BPL_CA_POKETYPE1,
 	BPL_CA_POKETYPE2,
+	BPL_CA_POKETYPE3,
+	BPL_CA_POKETYPE4,
 
 	BPL_CA_WAZATYPE1,
 	BPL_CA_WAZATYPE2,
 	BPL_CA_WAZATYPE3,
 	BPL_CA_WAZATYPE4,
 	BPL_CA_WAZATYPE5,
+	BPL_CA_WAZATYPE6,
+	BPL_CA_WAZATYPE7,
+	BPL_CA_WAZATYPE8,
+	BPL_CA_WAZATYPE9,
+	BPL_CA_WAZATYPE10,
 
 	BPL_CA_BUNRUI,
+	BPL_CA_BUNRUI2,
 
 	BPL_CA_MAX
 };
@@ -247,12 +255,20 @@ enum {
 	BPLIST_CHRRES_ITEM,					// アイテムアイコン
 	BPLIST_CHRRES_POKETYPE1,		// ポケモンタイプアイコン１
 	BPLIST_CHRRES_POKETYPE2,		// ポケモンタイプアイコン２
+	BPLIST_CHRRES_POKETYPE3,		// ポケモンタイプアイコン
+	BPLIST_CHRRES_POKETYPE4,		// ポケモンタイプアイコン
 	BPLIST_CHRRES_WAZATYPE1,		// 技タイプアイコン１
 	BPLIST_CHRRES_WAZATYPE2,		// 技タイプアイコン２
 	BPLIST_CHRRES_WAZATYPE3,		// 技タイプアイコン３
 	BPLIST_CHRRES_WAZATYPE4,		// 技タイプアイコン４
 	BPLIST_CHRRES_WAZATYPE5,		// 技タイプアイコン５
+	BPLIST_CHRRES_WAZATYPE6,		// 技タイプアイコン
+	BPLIST_CHRRES_WAZATYPE7,		// 技タイプアイコン
+	BPLIST_CHRRES_WAZATYPE8,		// 技タイプアイコン
+	BPLIST_CHRRES_WAZATYPE9,		// 技タイプアイコン
+	BPLIST_CHRRES_WAZATYPE10,		// 技タイプアイコン
 	BPLIST_CHRRES_BUNRUI,				// 分類アイコン
+	BPLIST_CHRRES_BUNRUI2,			// 分類アイコン
 	BPLIST_CHRRES_CURSOR,				// カーソル
 	BPLIST_CHRRES_HPGAUGE,			// ＨＰゲージ
 	BPLIST_CHRRES_MAX,
@@ -417,7 +433,11 @@ typedef struct {
 	PRINT_UTIL	add_win[64];	// BMPウィンドウデータ（追加）
 	GFL_BMPWIN * dmy_win;			// BMPウィンドウデータ（ダミー）
 	u8	bmp_add_max;					// 追加したBMPの数
-	u8	bmp_swap;							// スワップ描画フラグ
+
+	u8	bmp_swap:5;							// スワップ描画フラグ
+	u8	poke_type_swap:1;				// ポケモンタイプアイコンスワップ描画フラグ
+	u8	waza_type_swap:1;				// 技タイプアイコンスワップ描画フラグ
+	u8	waza_kind_swap:1;				// 分類アイコンスワップ描画フラグ
 
 	u8	init_poke;		// 入れ替え対象のポケモン位置
 
