@@ -520,7 +520,6 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 	    
 	    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	   	
-	   	IF FLAG_OFF( FE_C02GYM_TRBTL1) THEN
 
 		    //プレイヤーが通る2グリッド分を用意
 		   	SWITCH $POSX
@@ -582,15 +581,7 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 		   	ENDSWITCH
 		   		 
 		    _FLAG_SET(FE_C02GYM_TRBTL1)
-		    
-	    ELSE
-			_BALLOONWIN_OBJMSG(msg_c02gym0101_assitantw_03,C02GYM0201_ASSITANTW_01)
-			_LAST_KEYWAIT()
-		    _BALLOONWIN_CLOSE()
-	    	
-	    ENDIF
-	    
-	    $WK_SCENE_C02GYM0201 = 4	    
+	    	$WK_SCENE_C02GYM0201 = 4	    
 
 EVENT_END
 
@@ -825,7 +816,11 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
-			$WK_SCENE_C02GYM0201 = 3
+			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
+				$WK_SCENE_C02GYM0201 = 4
+			ELSE
+				$WK_SCENE_C02GYM0201 = 3
+			ENDIF
 			
 		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
 			
@@ -867,7 +862,11 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
-			$WK_SCENE_C02GYM0201 = 3
+			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
+				$WK_SCENE_C02GYM0201 = 4
+			ELSE
+				$WK_SCENE_C02GYM0201 = 3
+			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
 			
