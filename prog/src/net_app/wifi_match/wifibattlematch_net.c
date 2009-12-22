@@ -386,12 +386,12 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_
   }
   GFL_NET_DebugPrintOn();
 
-
   if(!GFL_NET_IsInit())
   {
     GF_ASSERT(0);
   }
 
+  GFL_NET_SetWifiBothNet(FALSE);
   GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, WIFIBATTLEMATCH_NETCMD_MAX, p_wk );
 
 
