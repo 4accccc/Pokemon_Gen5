@@ -255,6 +255,8 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   GBS_TARGET_INFO *target;
   
+  GAMEBEACON_SendBeaconUpdate();
+  
   target = GameBeacon_UpdateBeacon(gbs);
 #ifdef PM_DEBUG
   if(target != NULL && GameCommSys_GetCommGameNo(gcsp) != GAME_COMM_NO_DEBUG_SCANONLY){

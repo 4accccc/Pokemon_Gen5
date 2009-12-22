@@ -48,6 +48,7 @@ extern void GAMEBEACON_Exit(void);
 extern void GAMEBEACON_Update(void);
 extern void GAMEBEACON_Setting(GAMEDATA *gamedata);
 extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);
+extern void GAMEBEACON_SendBeaconUpdate(void);
 
 extern BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info);
 extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);

@@ -48,7 +48,8 @@ typedef struct{
 typedef struct{
   GAMEBEACON_INFO info;               ///<送信ビーコン
   s16 life;                           ///<送信寿命
-  u16 padding;
+  u8 beacon_update;                   ///<TRUE:送信ビーコン更新
+  u8 padding;
 }GAMEBEACON_SEND_MANAGER;
 
 ///ゲームビーコン管理システムのポインタ
@@ -154,6 +155,23 @@ void GAMEBEACON_Setting(GAMEDATA *gamedata)
 void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info)
 {
   GFL_STD_MemCopy(&GameBeaconSys->send, info, sizeof(GAMEBEACON_INFO));
+}
+
+//==================================================================
+/**
+ * 送信ビーコンに変更があった場合、ネットシステムにリクエストをかける
+ *
+ * @param   info		
+ *
+ * 通信がオーバーレイされている時に呼び出すこと
+ */
+//==================================================================
+void GAMEBEACON_SendBeaconUpdate(void)
+{
+  if(GameBeaconSys->send.beacon_update == TRUE){
+    GFI_NET_BeaconSetInfo();
+    GameBeaconSys->send.beacon_update = FALSE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -366,7 +384,7 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
   send->info.send_counter++;
   send->life = 0;
-  GFI_NET_BeaconSetInfo();
+  send->beacon_update = TRUE;
 }
 
 //==================================================================
