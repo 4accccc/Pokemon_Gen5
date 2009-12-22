@@ -1221,7 +1221,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                                         biw->heapID );
     biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl,
                                                     APP_COMMON_GetPokeTypePltArcIdx(), CLSYS_DRAW_SUB,
-                                                    0x20 * 3, biw->heapID );
+                                                    0x20 * 8, biw->heapID );
     PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
     for( i = 0; i < PTL_WAZA_MAX ; i++ ){
@@ -2924,7 +2924,7 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
 {
-  BtlWeather  btl_weather = BTL_CLIENT_GetWeather(biw->clientWork);
+  BtlWeather  btl_weather = BTL_FIELD_GetWeather();
   int pal[] = { 0, 1, 3, 2, 1 };
   int ofs_x[] = {   5, 0,  1,  1,   1 };
   int ofs_y[] = { -12, 0, -8, -8, -12 };
@@ -2941,7 +2941,7 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
   weather.y = BTLV_INPUT_WEATHER_Y + ofs_y[ btl_weather - 1 ];
   GFL_CLACT_WK_SetPos( biw->weather_wk[ 0 ], &weather, CLSYS_DEFREND_SUB );
   GFL_CLACT_WK_SetAutoAnmFlag( biw->weather_wk[ 0 ], TRUE );
-  GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 0 ], BTLV_INPUT_WEATHER_BASE + btl_weather);
+  GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 0 ], BTLV_INPUT_WEATHER_BASE + btl_weather );
 
   biw->weather_wk[ 1 ] = GFL_CLACT_WK_Create( biw->weather_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
                                               &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
@@ -2951,6 +2951,8 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
   GFL_CLACT_WK_SetAutoAnmFlag( biw->weather_wk[ 1 ], TRUE );
   GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 1 ], BTLV_INPUT_WEATHER_BASE );
   GFL_CLACT_WK_SetPlttOffs( biw->weather_wk[ 1 ], pal[ btl_weather - 1 ], CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+  //GFL_CLACT_WK_SetDrawEnable( biw->weather_wk[ 1 ], FALSE );
 
   {
     TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WEATHER_ICON_MOVE ) );
