@@ -1721,7 +1721,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
   wk->next_type = EVENT_PROCLINK_CALL_BAG;
   //オーバーレイ開放！！！
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
-  return RETURNFUNC_RESULT_RETURN;
+  return RETURNFUNC_RESULT_NEXT;
 }
 
 //-------------------------------------
