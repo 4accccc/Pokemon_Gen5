@@ -989,7 +989,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
 
-      if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
+      if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
       }
@@ -1633,6 +1633,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
@@ -1642,7 +1643,6 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     if( ttw->biw->tcb_execute_count == 0 )
     {
       SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
-      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
       ttw->seq_no++;
@@ -1655,8 +1655,6 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y0 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
       ttw->biw->tcb_execute_flag = 0;
