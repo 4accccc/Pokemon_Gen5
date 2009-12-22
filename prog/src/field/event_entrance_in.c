@@ -340,19 +340,33 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *se
       }
     }
     break;
-  case 2: 
-    { // カメラ主人公追尾OFF
+  case 2:
+    // カメラのトレース処理停止リクエスト発行
+    {
       FIELD_CAMERA* camera;
       camera = FIELDMAP_GetFieldCamera( fieldmap );
-      FIELD_CAMERA_FreeTarget( camera );
+      FIELD_CAMERA_StopTraceRequest( camera );
     }
-    ++ *seq;
+    ++ *seq; 
     break;
-  case 3:
+  case 3: 
+    // カメラのトレース処理終了待ち
+    { 
+      FIELD_CAMERA* camera;
+      camera = FIELDMAP_GetFieldCamera( fieldmap );
+      // トレースが終了したら, 自機の追従をOFF
+      if( FIELD_CAMERA_CheckTrace( camera ) == FALSE )
+      {
+        FIELD_CAMERA_FreeTarget( camera );
+        ++ *seq;
+      }
+    }
+    break;
+  case 4:
     GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
     ++ *seq;
     break;
-  case 4:
+  case 5:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
