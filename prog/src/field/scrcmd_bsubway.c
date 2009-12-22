@@ -37,6 +37,8 @@
 
 #include "fldmmdl.h"
 
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -182,6 +184,29 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
     }
     break;
+  case BSWAY_SUB_SET_PLAY_MODE_LOCATION:
+    {
+      VecFx32 pos;
+      LOCATION loc;
+      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+
+
+      switch( bsw_scr->play_mode ){
+      case BSWAY_MODE_SINGLE:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 13, 0, 13 );
+        break;
+      case BSWAY_MODE_DOUBLE:
+      default:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0104, DIR_RIGHT, 13, 0, 13 );
+        break;
+      }
+      
+      GAMEDATA_SetSpecialLocation( gdata, &loc );
+      EVENTWORK_SetEventFlag(
+          GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
+    }
   //記録したロケーションに戻す。
   case BSWAY_TOOL_POP_NOW_LOCATION:
     EVENTWORK_ResetEventFlag(

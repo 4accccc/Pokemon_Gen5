@@ -366,13 +366,16 @@ ev_hiden_takinobori_ng:
 
 //‘ê“o‚è”­“®
 ev_hiden_takinobori_02:
+  _CALL sub_curin_player_form_set
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
+  _CALL sub_cutin_player_player_form_return
 	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
 	_TEMOTI_NICK_NAME( 0,SCWK_ANSWER )
   
 	_SYSWIN_MSG_DOWN( msg_taki_02 )
 	_SYSWIN_CLOSE()
-
+  
+  
 	_CALL_POKE_CUTIN(SCWK_TEMP0)
 	_TAKINOBORI( SCWK_TEMP0 )
   
