@@ -1189,6 +1189,7 @@ SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_POKE_STATUS
 SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 # TVトランシーバー(非通信)
