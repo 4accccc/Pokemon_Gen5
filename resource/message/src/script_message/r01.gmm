@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T21:12:34"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T12:05:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,24 +308,24 @@
 ※今回はメッセージのみ</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
-		<language name="JPN" width="256">アララギ『それでは　しょくん
+		<language name="JPN" width="256">アララギ『それでは
 せつめいを　はじめますね！[BE:01:ページ切り替え（クリア）]
 ポケモンと　であうことで
 ポケモンずかんの　ページが[BE:00:ページ切り替え（行送り）]
 じどうてきに　うまっていきます！[BE:01:ページ切り替え（クリア）]
 そして！　ポケモンを　つかまえることで
 さらに　くわしい　じょうほうが[BE:00:ページ切り替え（行送り）]
-えられるように　なっているのです！[BE:01:ページ切り替え（クリア）]
+えられるように　なっているの！[BE:01:ページ切り替え（クリア）]
 ということで　わたしが　じっさいに
 ポケモンを　つかまえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『それでは　諸君
+		<language name="JPN_KANJI" width="256">アララギ『それでは
 説明を　始めますね！[BE:01:ページ切り替え（クリア）]
 ポケモンと　出会うことで
 ポケモン図鑑の　ページが[BE:00:ページ切り替え（行送り）]
 自動的に　うまっていきます！[BE:01:ページ切り替え（クリア）]
 そして！　ポケモンを　捕まえることで
 さらに　詳しい　情報が[BE:00:ページ切り替え（行送り）]
-得られるように　なっているのです！[BE:01:ページ切り替え（クリア）]
+得られるように　なっているの！[BE:01:ページ切り替え（クリア）]
 ということで　わたしが　実際に
 ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -448,7 +448,8 @@
 	<row id="msg_r01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『きゃっか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『さあ　いこうか
+はかせも　まっているだろうし[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『さあ　行こうか
 博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -456,7 +457,8 @@
 	<row id="msg_r01_white_03">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『どーしてよお　もう！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『ちゃんと　きいてよ
+なんなのよお　もう！？[BE:01:ページ切り替え（クリア）]
 この　１ばんどうろで
 どれだけ　ポケモンを　つかまえたか[BE:00:ページ切り替え（行送り）]
 みんなで　きょうそう　しよう？[BE:01:ページ切り替え（クリア）]
