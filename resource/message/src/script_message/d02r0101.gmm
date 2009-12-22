@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T12:10:31"/>
+	<create user="matsumiya" host="W00207" date="2009-12-22T13:42:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -472,7 +472,7 @@
 		<comment>♂
 ・続けて
 　msg_d02r0101_leader3_05</comment>
-		<attribute name="キャラ指定">敵組織</attribute>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
 		<language name="JPN" width="256">プラズマだん『おまえら　シッポウジムに
 ヒウンジムの　リーダーだな！？[BE:00:ページ切り替え（行送り）]
 なぜ　われわれの　ジャマをする？[BE:01:ページ切り替え（クリア）]</language>
@@ -493,7 +493,7 @@
 	<row id="msg_d02r0101_hakaim1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ジムリーダー2人の間を走り去る</comment>
-		<attribute name="キャラ指定">敵組織</attribute>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
 		<language name="JPN" width="256">したっぱ『……おまえらは
 ポケモンを　くるしめているくせに！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">したっぱ『……おまえらは
