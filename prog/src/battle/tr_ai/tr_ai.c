@@ -1168,7 +1168,7 @@ static	VMCMD_RESULT	AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
 
     tr_ai_work->calc_work = COMP_POWER_TOP;
 
-		for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+		for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
     {
       int pow = WAZADATA_GetPower( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) );
 			int src_pow = WAZADATA_GetPower( BPP_WAZA_GetID( tr_ai_work->atk_bpp, tr_ai_work->waza_pos ) );
@@ -1508,7 +1508,7 @@ static  void  ai_if_have_waza( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond
 
 	switch( side ){
 	case CHECK_ATTACK:
-		for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+		for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
     {
 			WazaID have_waza = BPP_WAZA_GetID( tr_ai_work->atk_bpp, i );
 			if( have_waza == waza )
@@ -1519,19 +1519,22 @@ static  void  ai_if_have_waza( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond
 		}
 		break;
 	case CHECK_ATTACK_FRIEND:
-    if( BPP_IsDead( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) ) ) )
     { 
-			break;
-    }
-		for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-    {
-			WazaID have_waza = BPP_WAZA_GetID( get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) ), i );
-			if( have_waza == waza )
+			const BTL_POKEPARAM* bpp = get_bpp( tr_ai_work, get_poke_pos( tr_ai_work, CHECK_ATTACK_FRIEND ) );
+      if( BPP_IsDead( bpp ) )
+      { 
+			  break;
+      }
+		  for( i = 0 ; i < BPP_WAZA_GetCount( bpp ) ; i++ )
       {
-        ret = TRUE;
-				break;
-			}
-		}
+			  WazaID have_waza = BPP_WAZA_GetID( bpp, i );
+			  if( have_waza == waza )
+        {
+          ret = TRUE;
+				  break;
+			  }
+		  }
+    }
 		break;
 	case CHECK_DEFENCE:
 		for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
