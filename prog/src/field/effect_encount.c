@@ -208,9 +208,9 @@ void EFFECT_ENC_CheckObjHit( FIELD_ENCOUNT* enc )
 /**
  *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
  */
-void EFFECT_ENC_MapChangeUpdate( FIELD_ENCOUNT* enc )
+void EFFECT_ENC_MapChangeUpdate( GAMEDATA* gdata )
 {
-  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(gdata);
 
   effenc_WalkCtClear( ewk ); 
 }
