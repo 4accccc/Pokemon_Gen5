@@ -263,7 +263,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
 #endif
     switch(target->gsid){
     case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
-    case WB_NET_FIELDMOVE_SERVICEID:
+//    case WB_NET_FIELDMOVE_SERVICEID:
       {
         FIELD_INVALID_PARENT_WORK *invalid_parent;
         int i;
@@ -281,6 +281,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
       break;
     default:
       OS_TPrintf("フィールドから繋ぐgsidでは無い為、無視 gsid = %d\n", target->gsid);
+      target->gsid = 0;
       break;
     }
   }
@@ -367,7 +368,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	{
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
-    		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+    		OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
     		if(target_index == -1){
           target_index = i;
         }
@@ -453,9 +454,9 @@ int GameBeacon_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-//  OS_TPrintf("ServiceID1 = %d, ID2 = %d\n", GameServiceID1, GameServiceID2);
-  if((GameServiceID1 == WB_NET_FIELDMOVE_SERVICEID || GameServiceID1 == WB_NET_PALACE_SERVICEID)
-      && (GameServiceID2==WB_NET_FIELDMOVE_SERVICEID || GameServiceID2==WB_NET_PALACE_SERVICEID)){
+  OS_TPrintf("ServiceID1 = %d, ID2 = %d\n", GameServiceID1, GameServiceID2);
+  if((GameServiceID1 == WB_NET_FIELDMOVE_SERVICEID && GameServiceID2 == WB_NET_PALACE_SERVICEID)
+      || (GameServiceID2==WB_NET_FIELDMOVE_SERVICEID && GameServiceID1==WB_NET_PALACE_SERVICEID)){
     return TRUE;
   }
   return FALSE;

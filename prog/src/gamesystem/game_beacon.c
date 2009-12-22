@@ -11,6 +11,7 @@
 #include "gamesystem/game_beacon.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
+#include "net/net_whpipe.h"
 
 
 //==============================================================================
@@ -365,6 +366,7 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
   send->info.send_counter++;
   send->life = 0;
+  GFI_NET_BeaconSetInfo();
 }
 
 //==================================================================
