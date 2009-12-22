@@ -514,6 +514,24 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       talkWork->subState = CTSS_GO_DRAW;
     }
   }
+  
+  {
+    static const GFL_UI_TP_HITTBL hitTbl[2] = 
+    {
+      {
+        CTVT_TALK_BAR_ICON_Y-12 , CTVT_TALK_BAR_ICON_Y+12 ,
+        CTVT_TALK_RETURN_X , CTVT_TALK_RETURN_X+24 ,
+      },
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    if( ret == 0 )
+    {
+      talkWork->subState = CTSS_GO_END;
+      talkWork->state = CTS_FADEOUT_BOTH;
+      COMM_TVT_SetSusspend( work , TRUE );
+    }
+  }
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {

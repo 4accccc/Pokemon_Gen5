@@ -55,6 +55,9 @@
 #define CTVT_STRBMP_WIDTH (22)
 #define CTVT_STRBMP_HEIGHT (32)
 
+#define CTVT_CALL_RETURN_X (224)
+
+
 //======================================================================
 //	enum
 //======================================================================
@@ -117,6 +120,8 @@ struct _CTVT_CALL_WORK
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
+
+  GFL_CLWK *clwkReturn;
 };
 
 //======================================================================
@@ -160,7 +165,6 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   
   {
     u8 i;
-    //スライダー
     GFL_CLWK_DATA cellInitData;
     cellInitData.bgpri = 3;
     
@@ -188,6 +192,20 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       GFL_CLACT_WK_SetDrawEnable( callWork->barWork[i].clwkCheck , FALSE );
       
     }
+
+    //戻るボタン
+    cellInitData.pos_x = CTVT_CALL_RETURN_X;
+    cellInitData.pos_y = 192-24;
+    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    
+    callWork->clwkReturn = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( callWork->clwkReturn , TRUE );
   }
   {
     u8 i;
@@ -231,6 +249,7 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   u8 i;
   
+  GFL_CLACT_WK_Remove( callWork->clwkReturn );
   for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
   {
     GFL_BMPWIN_Delete( callWork->barWork[i].strWin );
@@ -244,6 +263,8 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+
+  GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
 }
 
 //--------------------------------------------------------------
@@ -291,42 +312,53 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     
   case CCS_MAIN:
     CTVT_CALL_UpdateTP( work , callWork );
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      callWork->state = CCS_FADEOUT;
-      CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
-      //ビーコンのセット
+      static const GFL_UI_TP_HITTBL hitTbl[2] = 
       {
-        u8 i;
-        CTVT_COMM_BEACON *beacon = CTVT_COMM_GetCtvtBeaconData( work , commWork );
-        for( i=0;i<3;i++ )
         {
-          u8 j;
-          if( callWork->checkIdx[i] == CTVT_CALL_INVALID_NO )
+          168 , 192 ,
+          CTVT_CALL_RETURN_X , CTVT_CALL_RETURN_X+24 ,
+        },
+        {GFL_UI_TP_HIT_END,0,0,0}
+      };
+      const int ret = GFL_UI_TP_HitTrg( hitTbl );
+      if( ret == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+        callWork->state = CCS_FADEOUT;
+        CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
+        //ビーコンのセット
+        {
+          u8 i;
+          CTVT_COMM_BEACON *beacon = CTVT_COMM_GetCtvtBeaconData( work , commWork );
+          for( i=0;i<3;i++ )
           {
-            for( j=0;j<6;j++ )
+            u8 j;
+            if( callWork->checkIdx[i] == CTVT_CALL_INVALID_NO )
             {
-              beacon->callTarget[i][j] = 0xFF;
+              for( j=0;j<6;j++ )
+              {
+                beacon->callTarget[i][j] = 0xFF;
+              }
+            }
+            else
+            {
+              for( j=0;j<6;j++ )
+              {
+                beacon->callTarget[i][j] = callWork->memberData[ callWork->checkIdx[i] ].macAddress[j];
+              }
             }
           }
-          else
+          for( i=0;i<3;i++ )
           {
+            u8 j;
+            OS_TFPrintf(3,"[%d][",callWork->checkIdx[i]);
             for( j=0;j<6;j++ )
             {
-              beacon->callTarget[i][j] = callWork->memberData[ callWork->checkIdx[i] ].macAddress[j];
+              OS_TFPrintf(3,"%02x",beacon->callTarget[i][j]);
             }
+            OS_TFPrintf(3,"]\n");
           }
-        }
-        for( i=0;i<3;i++ )
-        {
-          u8 j;
-          OS_TFPrintf(3,"[%d][",callWork->checkIdx[i]);
-          for( j=0;j<6;j++ )
-          {
-            OS_TFPrintf(3,"%02x",beacon->callTarget[i][j]);
-          }
-          OS_TFPrintf(3,"]\n");
         }
       }
     }

@@ -692,11 +692,18 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
       pWork->dbw->aTVT.gameData = pWork->gamedata;
       num = pIn->maxBeaconNum;
 
+      OS_GetMacAddress( selfMacAdr );
+
       for( i = 0; i < num; i++ ){
         if(WB_NET_COMM_TVT == GFL_NET_WLGetUserGameServiceId( i )){
-          if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , pWork->dbw->aTVT.macAddress )){
-            pWork->dbw->aTVT.gameData = pWork->gamedata;
+          if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
+            u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
+            u8 ii;
             pWork->dbw->aTVT.mode = CTM_CHILD;
+            for( ii=0;ii<6;ii++ )
+            {
+              pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
+            }
             OS_TPrintf("Žq‹@‚É‚È‚Á‚½\n");
             break;
           }

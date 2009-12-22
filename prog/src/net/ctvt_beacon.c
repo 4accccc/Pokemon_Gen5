@@ -41,16 +41,17 @@ const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr )
   for( i=0;i<3;i++ )
   {
     BOOL isSame = TRUE;
-    for( j=0;j<3;j++ )
+    for( j=0;j<6;j++ )
     {
       if( beacon->callTarget[i][j] != selfMacAdr[j] )
       {
         isSame = FALSE;
+        break;
       }
-      if( isSame == TRUE )
-      {
-        return TRUE;
-      }
+    }
+    if( isSame == TRUE )
+    {
+      return TRUE;
     }
   }
   return FALSE;

@@ -396,7 +396,8 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
     else
     {
-      if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+      //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+      GFL_NET_Exit(NULL);
       {
         if( commWork->isLowerDataInit == TRUE )
         {
@@ -815,14 +816,18 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
     {
       if( commWork->member[i].isEnable == TRUE )
       {
-        GFL_NET_LDATA_DeletePostBuffer( i );
+        commWork->member[i].isEnable = FALSE;
+        if( commWork->member[i].isSelf == FALSE )
+        {
+          GFL_NET_LDATA_DeletePostBuffer( i );
         //バッファのクリア？
         //commWork->member[i].bufferNo
-        commWork->PhotobufUseBit -= 1<<commWork->member[i].bufferNo;
-        CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
+          commWork->PhotobufUseBit -= 1<<commWork->member[i].bufferNo;
+        }
+        isUpdateState = TRUE;
         commWork->reqCheckBit -= (1<<i);
         CTVT_TPrintf("Leave user[%d]\n",i);
-        isUpdateState = TRUE;
+        CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
       }
     }
   }
