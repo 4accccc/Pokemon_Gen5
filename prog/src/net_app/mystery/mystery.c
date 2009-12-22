@@ -418,7 +418,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     { 
       MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data );
     }
-    
+#if 0
     { 
       int i;
       const u8  *cp_data = (const u8*)&p_wk->data;
@@ -432,6 +432,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       NAGI_Printf( "\n" );
       NAGI_Printf( "!!!!!!!!!!!!-- binary end --!!!!!!!!!!!!!!!\n\n" );
     }
+#endif
   }
 #endif 
 

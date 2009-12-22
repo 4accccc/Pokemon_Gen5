@@ -325,6 +325,11 @@ void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state
       p_wk->wifi_download_data.cancel_req = TRUE;
     }
     break;
+
+  case MYSTERY_NET_STATE_LOGOUT_WIFI :
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_LogoutWifi );
+    break;
+
   }
 }
 
@@ -458,6 +463,7 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_END:
+    OS_TFPrintf( 3, "ビーコン初期化\n" );
     SEQ_SetNext( p_seqwk, SEQFUNC_MainBeaconScan );
     break;
   }
@@ -511,6 +517,7 @@ static void SEQFUNC_ExitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_END:
+    OS_TFPrintf( 3, "ビーコン開放\n" );
     SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
     break;
   }
@@ -878,6 +885,8 @@ static void SEQFUNC_LogoutWifi( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
   switch( *p_seq )
   { 
+#if 0
+
   case SEQ_EXIT:
     if( GFL_NET_Exit( NETCALLBACK_ExitCallback ) )
     { 
@@ -896,8 +905,28 @@ static void SEQFUNC_LogoutWifi( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       *p_seq = SEQ_END;
     } 
     break;
+#endif
+  case SEQ_EXIT:
+    if( GFL_NET_Exit( NULL ) )
+    { 
+      *p_seq  = SEQ_EXIT_WAIT;
+    }
+    else
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_EXIT_WAIT:
+    if( !GFL_NET_IsInit() )
+		{
+      p_wk->is_exit = FALSE;
+      *p_seq = SEQ_END;
+    } 
+    break;
 
   case SEQ_END:
+    OS_TFPrintf( 3, "WIFI終了\n" );
     SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
     break;
   }
