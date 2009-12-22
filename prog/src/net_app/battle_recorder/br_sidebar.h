@@ -45,6 +45,8 @@ extern void BR_SIDEBAR_StartBoot( BR_SIDEBAR_WORK *p_wk );
 extern void BR_SIDEBAR_StartShake( BR_SIDEBAR_WORK *p_wk );
 extern void BR_SIDEBAR_StartClose( BR_SIDEBAR_WORK *p_wk );
 
+extern void BR_SIDEBAR_SetShakePos(BR_SIDEBAR_WORK *p_wk  );
+
 extern BOOL BR_SIDEBAR_IsMoveEnd( const BR_SIDEBAR_WORK *cp_wk );
 
 //br_musicallook_proc.cÇ…è„âÊñ îjä¸ÅEì«Ç›çûÇ›óp

@@ -434,7 +434,7 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
     {
       4,
       21,
-      24,
+      25,
       2,
       msg_12,
     },
@@ -695,6 +695,7 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
     { 
       if( p_wk->p_icon[i] )
       { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], FALSE );
         GFL_CLACT_WK_Remove( p_wk->p_icon[i] );
         p_wk->p_icon[i] = NULL;
       }

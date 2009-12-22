@@ -56,7 +56,7 @@
 ///	サブプロック移動
 //=====================================
 typedef void *(*SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
-typedef void (*SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
+typedef BOOL (*SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
 typedef struct 
 {
 	FSOverlayID							ov_id;
@@ -100,6 +100,7 @@ typedef struct
   //バトル用に選んだパーティ
   POKEPARTY                 *p_btl_party;
 
+  u32 sub_seq;
 } WIFIBATTLEMATCH_SYS;
 
 //=============================================================================
@@ -130,13 +131,13 @@ static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 //=====================================
 //バトルマッチ
 static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs );
-static void WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //リスト
 static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs );
-static void POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //バトル
 static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs );
-static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 
 //-------------------------------------
 ///	データバッファ作成
@@ -439,6 +440,7 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 		SEQ_ALLOC_PARAM,
 		SEQ_MAIN,
 		SEQ_FREE_PARAM,
+    SEQ_NEXT,
 		SEQ_END,
 	};
 
@@ -483,10 +485,19 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 		//プロセス引数破棄関数呼び出し
 		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
 		{	
-			p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs );
-			p_wk->p_proc_param	= NULL;
+			if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
+      { 
+        p_wk->p_proc_param	= NULL;
+				p_wk->seq	= SEQ_NEXT;
+      }
 		}
+    else
+    { 
+				p_wk->seq	= SEQ_NEXT;
+    }
+    break;
 
+  case SEQ_NEXT:
 		//もし次のプロセスがあれば呼び出し
 		//なければ終了
 		if( p_wk->now_procID	!= p_wk->next_procID )
@@ -577,7 +588,7 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static void WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 {	
   WIFIBATTLEMATCH_SYS         *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
@@ -591,6 +602,8 @@ static void WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   }
 
 	GFL_HEAP_FreeMemory( p_param );
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -670,16 +683,30 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static void POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_SUBPROC_PARAM       *p_param  = p_param_adrs;
 
+  switch( p_wk->sub_seq )
   { 
-    GFL_HEAP_FreeMemory( p_param->regulation );
+  case 0:
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17);
+    p_wk->sub_seq++;
+    break;
+
+  case 1:
+    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),17) )
+    { 
+      GFL_HEAP_FreeMemory( p_param->regulation );
+      SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );
+      GFL_HEAP_FreeMemory( p_param );
+      p_wk->sub_seq = 0;
+      return TRUE;
+    }
   }
-  SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );
-	GFL_HEAP_FreeMemory( p_param );
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -739,7 +766,7 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
@@ -760,6 +787,8 @@ static void BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------

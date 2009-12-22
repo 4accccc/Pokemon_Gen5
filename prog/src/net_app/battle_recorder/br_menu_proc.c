@@ -110,44 +110,25 @@ static GFL_PROC_RESULT BR_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
 
 	//グラフィック初期化
-
+  BR_RES_UnLoadCommon( p_param->p_res, CLSYS_DRAW_MAIN );
+  BR_RES_UnLoadCommon( p_param->p_res, CLSYS_DRAW_SUB );
+  BR_RES_LoadCommon( p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+  BR_RES_LoadCommon( p_param->p_res, CLSYS_DRAW_SUB, p_wk->heapID );
 
 	//モジュール初期化
-	{	
+  { 
     int i;
-    LOAD_RESULT result;
-    SAVE_CONTROL_WORK *p_sv;
-    GDS_PROFILE_PTR p_profile;
-		BR_BTN_DATA_SETUP	setup;
-    GFL_STD_MemClear( &setup, sizeof(BR_BTN_DATA_SETUP) );
-    
-    p_sv = GAMEDATA_GetSaveControlWork( p_param->p_gamedata );
-
-    //設定構造体作成
-    for( i = 0; i < BR_RECORD_NUM; i++ )
-    {
-      BattleRec_Load( p_sv, GFL_HEAP_LOWID( p_wk->heapID ), &result, i ); 
-      if( result == LOAD_RESULT_OK )
-      { 
-        NAGI_Printf( "戦闘録画読み込み %d\n", i );
-        p_profile = BattleRec_GDSProfilePtrGet();
-        setup.is_valid[i] = TRUE;
-        setup.p_name[i]   = GDS_Profile_CreateNameString( p_profile, GFL_HEAP_LOWID( p_wk->heapID ) );
-        setup.sex[i]      = GDS_Profile_GetSex( p_profile );
-      }
-    }
-
-		p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, &setup, p_wk->heapID );
-
-    //設定構造体破棄
+    BR_BTN_DATA_SETUP setup;
     for( i = 0; i < BR_RECORD_NUM; i++ )
     { 
-      if( setup.is_valid[i] )
-      { 
-        GFL_STR_DeleteBuffer( setup.p_name[i] );
-      }
+      setup.is_valid[i] = p_param->cp_btlrec->is_valid[i];
+      setup.p_name[i]   = p_param->cp_btlrec->p_name[i];
+      setup.sex[i]      = p_param->cp_btlrec->sex[i];
     }
-	}
+    p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, &setup, p_wk->heapID );
+  }
+
+  BR_FADE_ALPHA_SetAlpha( p_param->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
 
 	NAGI_Printf( "MENU: Init!\n" );
 

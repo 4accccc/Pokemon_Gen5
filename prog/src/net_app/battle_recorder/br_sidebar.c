@@ -117,6 +117,7 @@ static void BR_SIDEBAR_ONE_Exit( BR_SIDEBAR_ONE *p_wk );
 static void BR_SIDEBAR_ONE_Main( BR_SIDEBAR_ONE *p_wk );
 static BOOL BR_SIDEBAR_ONE_IsExist( const BR_SIDEBAR_ONE *cp_wk );
 static void BR_SIDEBAR_ONE_SetMoveMode( BR_SIDEBAR_ONE *p_wk, BR_SIDEBAR_ONE_MOVE_MODE mode );
+static void BR_SIDEBAR_ONE_SetShakePos( BR_SIDEBAR_ONE *p_wk );
 static BOOL BR_SIDEBAR_ONE_IsMoveNone( const BR_SIDEBAR_ONE *cp_wk );
 static void Br_SideBar_One_Move_Boot( BR_SIDEBAR_ONE *p_wk );
 static void Br_SideBar_One_Move_Shake( BR_SIDEBAR_ONE *p_wk );
@@ -431,6 +432,26 @@ void BR_SIDEBAR_StartClose( BR_SIDEBAR_WORK *p_wk )
     }
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  横揺れモードに位置を設定
+ *
+ *	@param	*p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_SIDEBAR_SetShakePos(BR_SIDEBAR_WORK *p_wk )
+{ 
+  { 
+    int i;
+    for( i = 0; i < BR_SIDEBAR_MAX; i++ )
+    {
+      if( BR_SIDEBAR_ONE_IsExist( &p_wk->sidebar[i]) )
+      { 
+        BR_SIDEBAR_ONE_SetShakePos( &p_wk->sidebar[i] );
+      }
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -564,6 +585,7 @@ static void BR_SIDEBAR_ONE_Init( BR_SIDEBAR_ONE *p_wk, GFL_CLUNIT *p_clunit, con
 
       GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk, CLSYS_AFFINETYPE_DOUBLE );
       GFL_CLACT_WK_SetTypeScale( p_wk->p_clwk, p_wk->scale, CLSYS_MAT_X );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_clwk, GX_OAM_MODE_NORMAL );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
     }
 
@@ -655,6 +677,19 @@ static void BR_SIDEBAR_ONE_SetMoveMode( BR_SIDEBAR_ONE *p_wk, BR_SIDEBAR_ONE_MOV
 
   p_wk->state = 0;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  横揺れ座標に設定
+ *
+ *	@param	BR_SIDEBAR_ONE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_SIDEBAR_ONE_SetShakePos( BR_SIDEBAR_ONE *p_wk )
+{ 
+  GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, p_wk->data.boot_end_x, p_wk->data.draw_type, CLSYS_MAT_X );
+  GFL_CLACT_WK_SetTypeScale( p_wk->p_clwk, FX32_CONST(0.1f), CLSYS_MAT_X );
+}
+
 //-------------------------------------
 ///	移動関数
 //=====================================
@@ -793,7 +828,6 @@ static void Br_SideBar_One_Move_Shake( BR_SIDEBAR_ONE *p_wk )
   case SEQ_INIT:
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
     GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, p_wk->data.boot_end_x, p_wk->data.draw_type, CLSYS_MAT_X );
-    //GFL_CLACT_WK_SetTypeScale( p_wk->p_clwk, FX32_CONST(0.1f), CLSYS_MAT_X );
     p_wk->init_x  = FX32_CONST( p_wk->data.boot_end_x );
     p_wk->deg     = p_wk->data.shake_init_deg;
     p_wk->state   = SEQ_MAIN;

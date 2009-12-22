@@ -87,3 +87,5 @@ extern void BR_FADE_PALETTE_Copy( BR_FADE_WORK *p_wk );
 extern void BR_FADE_PALETTE_SetColor( BR_FADE_WORK *p_wk, GXRgb rgb );
 extern void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display );
 
+extern void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev );
+

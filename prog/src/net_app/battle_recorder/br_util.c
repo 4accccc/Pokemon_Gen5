@@ -1025,7 +1025,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
     {
       4,
       11,
-      11,
+      12,
       2,
       msg_16,
     },

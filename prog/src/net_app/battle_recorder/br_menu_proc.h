@@ -49,6 +49,18 @@ typedef enum
  *					構造体
 */
 //=============================================================================
+#define BR_BTLREC_DATA_NUM  4
+//-------------------------------------
+///	メニューで使用する録画データ
+//=====================================
+typedef struct 
+{
+  BOOL    is_valid[BR_BTLREC_DATA_NUM];
+  STRBUF  *p_name[BR_BTLREC_DATA_NUM];
+  u32     sex[BR_BTLREC_DATA_NUM];
+} BR_MENU_BTLREC_DATA;
+
+
 //-------------------------------------
 ///	メニュープロセス引数
 //=====================================
@@ -62,7 +74,7 @@ typedef struct
 	GFL_CLUNIT			*p_unit;			//[in]ユニット
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
-  GAMEDATA        *p_gamedata;  //[in]ゲームデータ
+  const BR_MENU_BTLREC_DATA *cp_btlrec; //[in]録画データ
 } BR_MENU_PROC_PARAM;
 
 

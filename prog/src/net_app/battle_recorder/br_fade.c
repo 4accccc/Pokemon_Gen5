@@ -25,9 +25,9 @@
 #define BR_FADE_DEFAULT_EV1   (16)
 #define BR_FADE_DEFAULT_EV2   (16)
 
-#define BR_FADE_ALPHA_PLANEMASK_M_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ)
+#define BR_FADE_ALPHA_PLANEMASK_M_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 )
 #define BR_FADE_ALPHA_PLANEMASK_M_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3)
-#define BR_FADE_ALPHA_PLANEMASK_S_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ)
+#define BR_FADE_ALPHA_PLANEMASK_S_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 )
 #define BR_FADE_ALPHA_PLANEMASK_S_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2)
 
 //=============================================================================
@@ -239,6 +239,53 @@ void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
 
   PaletteTransSwitch( p_wk->p_pfd, TRUE );
   PaletteFadeTrans( p_wk->p_pfd );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファ設定
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param	ev                  アルファ値
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev )
+{ 
+  //上画面
+  if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+  { 
+    G2_SetBlendAlpha(
+        BR_FADE_ALPHA_PLANEMASK_M_01,
+        BR_FADE_ALPHA_PLANEMASK_M_02,
+        ev,
+        16-ev
+        );
+    if( ev == 0 )
+    { 
+      GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , FALSE );
+    }
+    else
+    { 
+      GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , TRUE );
+    }
+  }
+  //下画面
+  if( p_wk->display & BR_FADE_DISPLAY_SUB )
+  { 
+    G2S_SetBlendAlpha(
+        BR_FADE_ALPHA_PLANEMASK_S_01,
+        BR_FADE_ALPHA_PLANEMASK_S_02,
+        ev,
+        16-ev
+        );
+    if( ev == 0 )
+    { 
+      GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , FALSE );
+    }
+    else
+    { 
+      GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , TRUE );
+    }
+  }
 }
 //=============================================================================
 /**

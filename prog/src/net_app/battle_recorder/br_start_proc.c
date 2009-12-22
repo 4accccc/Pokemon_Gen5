@@ -53,6 +53,9 @@ typedef struct
   //ヒープID
 	HEAPID          heapID;
 
+  //汎用カウンタ
+  u32             cnt;
+
   //引数
   BR_START_PROC_PARAM *p_param;
 } BR_START_WORK;
@@ -331,6 +334,8 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   enum
   { 
     SEQ_INIT,
+    SEQ_FADE_IN,
+    SEQ_FADE_WAIT,
     SEQ_TOUCH,
     SEQ_FADESTART,
     SEQ_FADEWAIT,
@@ -342,7 +347,19 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   switch( *p_seq )
   { 
   case SEQ_INIT:
-    (*p_seq)  = SEQ_TOUCH;
+    (*p_seq)  = SEQ_FADE_IN;
+    break;
+
+  case SEQ_FADE_IN:
+     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    (*p_seq)  = SEQ_FADE_WAIT;
+    break;
+
+  case SEQ_FADE_WAIT:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      (*p_seq)  = SEQ_TOUCH;
+    }
     break;
 
   case SEQ_TOUCH:
@@ -353,7 +370,7 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
 
   case SEQ_FADESTART:
-    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN, 24 );
+    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN, 96 );
     BR_SIDEBAR_StartBoot( p_wk->p_param->p_sidebar );
     (*p_seq)  = SEQ_FADEWAIT;
     break;
@@ -392,6 +409,7 @@ static void SEQFUNC_Close( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   enum
   { 
     SEQ_INIT,
+    SEQ_SIDEBAR_START,
     SEQ_FADESTART,
     SEQ_FADEWAIT,
     SEQ_END,
@@ -402,13 +420,21 @@ static void SEQFUNC_Close( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    (*p_seq)  = SEQ_SIDEBAR_START;
+    break;
+
+  case SEQ_SIDEBAR_START:
+    BR_SIDEBAR_StartClose( p_wk->p_param->p_sidebar );
     (*p_seq)  = SEQ_FADESTART;
     break;
 
   case SEQ_FADESTART:
-    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 30 );
-    BR_SIDEBAR_StartClose( p_wk->p_param->p_sidebar );
-    (*p_seq)  = SEQ_FADEWAIT;
+    if( p_wk->cnt++ > 6 )
+    { 
+      p_wk->cnt = 0;
+      BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 30 );
+      (*p_seq)  = SEQ_FADEWAIT;
+    }
     break;
 
   case SEQ_FADEWAIT:
@@ -443,6 +469,9 @@ static void SEQFUNC_Close( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 static void SEQFUNC_None( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   BR_START_WORK  *p_wk     = p_wk_adrs;
+
+  BR_SIDEBAR_SetShakePos( p_wk->p_param->p_sidebar );
+  BR_SIDEBAR_StartShake( p_wk->p_param->p_sidebar );
 
   BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_MENU );
   SEQ_SetNext( p_seqwk, SEQFUNC_End );

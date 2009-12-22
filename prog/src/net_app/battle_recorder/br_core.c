@@ -77,6 +77,7 @@ typedef struct
 	//引数
 	BR_CORE_PARAM		*p_param;
 
+  BR_MENU_BTLREC_DATA  btlrec_data;
 } BR_CORE_WORK;
 
 //=============================================================================
@@ -277,12 +278,39 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   p_wk->p_fade  = BR_FADE_Init( HEAPID_BATTLE_RECORDER_CORE );
   BR_FADE_PALETTE_Copy( p_wk->p_fade );  //BR_RES_Initでよんでいるので
   BR_FADE_PALETTE_SetColor( p_wk->p_fade, BR_FADE_COLOR_BLUE );
-  BR_FADE_PALETTE_TransColor( p_wk->p_fade, BR_FADE_DISPLAY_BOTH );
+  if( p_wk->p_param->mode == BR_CORE_MODE_INIT )
+  { 
+    BR_FADE_PALETTE_TransColor( p_wk->p_fade, BR_FADE_DISPLAY_BOTH );
+  }
 
   //サイドバー作成
   {
     GFL_CLUNIT  *p_clunit = BR_GRAPHIC_GetClunit( p_wk->p_graphic );
     p_wk->p_sidebar = BR_SIDEBAR_Init( p_clunit, p_wk->p_fade, p_wk->p_res, HEAPID_BATTLE_RECORDER_CORE );
+  }
+
+  //メニューで使用する録画データ
+  {	
+    int i;
+    LOAD_RESULT result;
+    SAVE_CONTROL_WORK *p_sv;
+    GDS_PROFILE_PTR p_profile;
+    
+    p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata ); 
+
+    //設定構造体作成
+    for( i = 0; i < BR_BTLREC_DATA_NUM; i++ )
+    {
+      BattleRec_Load( p_sv, GFL_HEAP_LOWID( HEAPID_BATTLE_RECORDER_CORE ), &result, i ); 
+      if( result == LOAD_RESULT_OK )
+      { 
+        NAGI_Printf( "戦闘録画読み込み %d\n", i );
+        p_profile = BattleRec_GDSProfilePtrGet();
+        p_wk->btlrec_data.is_valid[i] = TRUE;
+        p_wk->btlrec_data.p_name[i]   = GDS_Profile_CreateNameString( p_profile, HEAPID_BATTLE_RECORDER_CORE );
+        p_wk->btlrec_data.sex[i]      = GDS_Profile_GetSex( p_profile );
+      }
+    }
   }
 
 	return GFL_PROC_RES_FINISH;
@@ -302,6 +330,19 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  { 
+    int i;
+    //設定構造体破棄
+    for( i = 0; i < BR_BTLREC_DATA_NUM; i++ )
+    { 
+      if( p_wk->btlrec_data.is_valid[i] )
+      { 
+        GFL_STR_DeleteBuffer( p_wk->btlrec_data.p_name[i] );
+      }
+    }
+	}
+
 
   //サイドバー破棄
   BR_SIDEBAR_Exit( p_wk->p_sidebar, p_wk->p_res );
@@ -502,55 +543,78 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 	BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
 	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
-  //戻ってくるとき
-	switch( preID )
-  {	
-  case BR_PROCID_RECORD:
-    { 
-      const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
-      if( cp_record_param->mode == BR_RECODE_PROC_MY )
-      {	
-        p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
-      }
-      else
-      {
-        p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
-      }
-    }
-    break;
-
-  case BR_PROCID_BV_RANK:
-    p_param->menuID = BR_BTLVIDEO_MENUID_RANK;
-    break;
-
-  case BR_PROCID_BV_SEARCH:
-    /* fallthrough */
-  case BR_PROCID_CODEIN:
-    p_param->menuID = BR_BTLVIDEO_MENUID_LOOK;
-    break;
-
-  default:
+  //バトルから戻ってきたとき
+  if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
+  {
     //初期
     switch( p_wk->p_param->p_param->mode )
     { 
     case BR_MODE_BROWSE:
-      p_param->menuID			= BR_BROWSE_MENUID_TOP;
+      p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
       break;
 
     case BR_MODE_GLOBAL_BV:
-      p_param->menuID			= BR_BTLVIDEO_MENUID_TOP;
+      p_param->menuID			= BR_BTLVIDEO_MENUID_RANK;
       break;
 
     case BR_MODE_GLOBAL_MUSICAL:
+      //こない
       p_param->menuID			= BR_MUSICAL_MENUID_TOP;
       break;
     }
-	}
+  }
+  else
+  { 
+    //各プロセスから戻ってくるとき
+    switch( preID )
+    {	
+    case BR_PROCID_RECORD:
+      { 
+        const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
+        if( cp_record_param->mode == BR_RECODE_PROC_MY )
+        {	
+          p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
+        }
+        else
+        {
+          p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
+        }
+      }
+      break;
+
+    case BR_PROCID_BV_RANK:
+      p_param->menuID = BR_BTLVIDEO_MENUID_RANK;
+      break;
+
+    case BR_PROCID_BV_SEARCH:
+      /* fallthrough */
+    case BR_PROCID_CODEIN:
+      p_param->menuID = BR_BTLVIDEO_MENUID_LOOK;
+      break;
+
+    default:
+      //初期
+      switch( p_wk->p_param->p_param->mode )
+      { 
+      case BR_MODE_BROWSE:
+        p_param->menuID			= BR_BROWSE_MENUID_TOP;
+        break;
+
+      case BR_MODE_GLOBAL_BV:
+        p_param->menuID			= BR_BTLVIDEO_MENUID_TOP;
+        break;
+
+      case BR_MODE_GLOBAL_MUSICAL:
+        p_param->menuID			= BR_MUSICAL_MENUID_TOP;
+        break;
+      }
+    }
+  }
 	p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+  p_param->cp_btlrec  = &p_wk->btlrec_data;
 }
 //----------------------------------------------------------------------------
 /**

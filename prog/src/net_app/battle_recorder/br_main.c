@@ -281,12 +281,12 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
     break;
 
   case BR_SYS_SEQ_FADEIN:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+ //   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
     *p_seq  = BR_SYS_SEQ_FADEIN_WAIT;
     break;
 
   case BR_SYS_SEQ_FADEIN_WAIT:
-    if( !GFL_FADE_CheckFade() )
+   // if( !GFL_FADE_CheckFade() )
     {
       *p_seq  = BR_SYS_SEQ_MAIN;
     }
@@ -305,12 +305,12 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
     break;
 
   case BR_SYS_SEQ_FADEOUT:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+   // GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
     *p_seq  = BR_SYS_SEQ_FADEOUT_WAIT;
     break;
 
   case BR_SYS_SEQ_FADEOUT_WAIT:
-    if( !GFL_FADE_CheckFade() )
+ //   if( !GFL_FADE_CheckFade() )
     {
       *p_seq  = BR_SYS_SEQ_EXIT;
     }

@@ -672,9 +672,9 @@ static BOOL Br_BvSearch_Seq_Place_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
     { 
       NULL,
       0,
-      7,
+      5,
       3,
-      18,
+      22,
       12,
       PLT_BG_S_FONT,
       BG_FRAME_S_FONT,
