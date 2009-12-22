@@ -1464,6 +1464,31 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
       }
       TR_AI_Exit( vmh );
+      // シングルでなければ、対象をランダムで決定する処理
+      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
+      {
+        enum {
+          CHECK_MAX = 2,
+        };
+        const BTL_POKEPARAM* targetPoke;
+        u8 j, p, aliveCnt;
+        u8 alivePokePos[ CHECK_MAX ];
+        aliveCnt = 0;
+        for(j=0; j<CHECK_MAX; ++j)
+        {
+          p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
+          targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
+          if( !BPP_IsDead(targetPoke) )
+          {
+            alivePokePos[ aliveCnt++ ] = p;
+          }
+        }
+        if( aliveCnt )
+        {
+          u8 rndIdx = GFL_STD_MtRand(aliveCnt);
+          targetPos = alivePokePos[ rndIdx ];
+        }
+      }
 #endif
 
       {
