@@ -501,15 +501,15 @@ void  BTLV_EFFECT_DelTrainer( int position )
  * @param[in] position  セットするゲージ位置
  */
 //============================================================================================
-void  BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int position )
+void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position )
 {
   if( bew->rule == BTL_RULE_TRIPLE )
   {
-    BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_3vs3, position );
+    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_3vs3, position );
   }
   else
   {
-    BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_1vs1, position );
+    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_1vs1, position );
   }
 }
 

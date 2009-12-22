@@ -138,7 +138,7 @@ extern  void              BTLV_EFFECT_DelPokemon( int position );
 extern  BOOL              BTLV_EFFECT_CheckExist( int position );
 extern  void              BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, int pos_z );
 extern  void              BTLV_EFFECT_DelTrainer( int position );
-extern  void              BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int position );
+extern  void              BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position );
 extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );

@@ -13,6 +13,7 @@
 #include "print/gf_font.h"
 
 #include "../btl_common.h"
+#include "../btl_main.h"
 #include "../btl_pokeparam.h"
 
 
@@ -30,7 +31,8 @@ typedef struct _BTLV_GAUGE_CLWK BTLV_GAUGE_CLWK;
 extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw );
-extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
+extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
+                                          BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int pos_y );
 extern  void              BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int damage );

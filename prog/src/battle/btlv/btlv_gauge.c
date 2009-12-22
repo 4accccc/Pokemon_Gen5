@@ -133,6 +133,7 @@ enum
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
   BTLV_GAUGE_LV_CHARSTART = 0x2b,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
+  BTLV_GAUGE_BALL_CHARSTART = 0x0a,
 
   BTLV_GAUGE_TYPE_3vs3_YOFFSET_E = -16,   //3vs3時のゲージY方向オフセット（相手側）
   BTLV_GAUGE_TYPE_3vs3_YOFFSET_M = -24,   //3vs3時のゲージY方向オフセット（自分側）
@@ -243,6 +244,7 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req );
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
+static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
@@ -378,7 +380,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
  *  @param[in] pos  立ち位置
  */
 //============================================================================================
-void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
+void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
   u32 arcdatid_char;
   u32 arcdatid_cell;
@@ -501,7 +503,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     bgw->bgcl[ pos ].exp_add  = 0;
 
     bgw->bgcl[ pos ].status   = 0;
-    bgw->bgcl[ pos ].getball  = 0;
+    bgw->bgcl[ pos ].getball  = BTL_MAIN_IsZukanRegistered( wk, bpp );
 
     {
       u16 mons_no = BPP_GetMonsNo( bpp );
@@ -526,6 +528,10 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
     PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
     PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
+    if( bgw->bgcl[ pos ].gauge_dir )
+    { 
+      PutBallOBJ( bgw, &bgw->bgcl[ pos ] );
+    }
   }
 
   bgw->bgcl[ pos ].gauge_enable = 1;
@@ -1391,6 +1397,33 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
   GFL_STR_DeleteBuffer( num );
   GFL_BMP_Delete( bmp );
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  捕獲ボール描画
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param bgcl  ゲージワークへのポインタ
+ */
+//--------------------------------------------------------------
+static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
+{
+  void *obj_vram;
+  NNSG2dImageProxy image;
+
+  if( bgcl->getball == 0 )
+  {
+    return;
+  }
+
+  obj_vram = G2_GetOBJCharPtr();
+  GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
+
+  MI_CpuCopy16( &bgw->parts_address[ GP_BALL ],
+                (void*)( (u32)obj_vram + BTLV_GAUGE_BALL_CHARSTART * 0x20 +
+                image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                0x20 );
 }
 
 //--------------------------------------------------------------

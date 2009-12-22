@@ -2299,7 +2299,7 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       BTLV_EFFECT_SetPokemon( pp, wk->vpos );
-      BTLV_EFFECT_SetGauge( bpp, wk->vpos );
+      BTLV_EFFECT_SetGauge( wk->parentWork->mainModule, bpp, wk->vpos );
       wk->seq++;
     }
   case 2:
@@ -2464,7 +2464,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
     if( !BPP_IsDead(stwin->bpp) )
     {
       BTL_Printf("‚±‚±‚Åƒ|ƒPID=%d, HP=%d pos=%d\n", BPP_GetID(stwin->bpp), BPP_GetValue(stwin->bpp,BPP_HP), stwin->pokePos);
-      BTLV_EFFECT_SetGauge( stwin->bpp, stwin->vpos );
+      BTLV_EFFECT_SetGauge( stwin->parentWk->mainModule, stwin->bpp, stwin->vpos );
       stwin->dispFlag = TRUE;
     }
   }
