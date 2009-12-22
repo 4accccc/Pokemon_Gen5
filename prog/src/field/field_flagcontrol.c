@@ -62,8 +62,8 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
 	}
   
   { //イベントフラグ
-    EVENTWORK *event_flag = GAMEDATA_GetEventWork( gdata );
-    EVENTWORK_ResetEventFlag( event_flag, SYS_FLAG_KAIRIKI );
+    EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
+    EVENTWORK_ResetEventFlag( eventwork, SYS_FLAG_KAIRIKI );
   }
   
 /* PLATUNUM
