@@ -237,7 +237,7 @@ static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 //------------------------------------------------------------------
 PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
-	PMSIV_EDIT*  wk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_EDIT) );
+	PMSIV_EDIT*  wk = GFL_HEAP_AllocClearMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_EDIT) );
 
 	wk->vwk = vwk;
 	wk->mwk = mwk;
@@ -682,15 +682,18 @@ void PMSIV_EDIT_UpdateEditArea( PMSIV_EDIT* wk )
 
 	update_editarea_palette( wk );
 
-	for(i = 0;i < PMSIV_LCD_MAX;i++){
+	for(i = 0;i < PMSIV_LCD_MAX;i++)
+  {
 
-    // 一端デコメ表示をクリア(OBJ初期化前にこの関数を使う必要があるため、NULLを弾く)
-    if( wk->deco_actor[0][0] != NULL )
     {
       int w;
       for( w=0; w<PMS_WORD_MAX; w++ )
       {
-         GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[w][i], FALSE );
+        // 一端デコメ表示をクリア(OBJ初期化前にこの関数を使う必要があるため、NULLを弾く)
+        if( wk->deco_actor[w][i] )
+        {
+          GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[w][i], FALSE );
+        }
       }
     }
 
