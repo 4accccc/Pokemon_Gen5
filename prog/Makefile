@@ -14,7 +14,8 @@ MAKE_MAIN = makefile_main
 
 
 do-build:
-	$(MAKE) -f $(MAKE_OVERLAY)
+	$(MAKE) -f $(MAKE_OVERLAY) lcf_def.txt
+	$(MAKE) -f $(MAKE_OVERLAY) overlay/main.lsf
 	$(MAKE) -f $(MAKE_MAIN)
 
 
