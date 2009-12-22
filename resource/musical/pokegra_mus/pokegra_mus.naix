@@ -110,7 +110,27 @@ enum {
 	NARC_pokegra_mus_pbwb_513_NMAR = 96,
 	NARC_pokegra_mus_pbwb_513_NCEC = 97,
 	NARC_pokegra_mus_pmwb_513_n_NCLR = 98,
-	NARC_pokegra_mus_pmwb_513_r_NCLR = 99
+	NARC_pokegra_mus_pmwb_513_r_NCLR = 99,
+	NARC_pokegra_mus_pfwb_533_m_NCGR = 100,
+	NARC_pokegra_mus_pfwb_533_f_NCGR = 101,
+	NARC_pokegra_mus_pfwb_533c_m_NCBR = 102,
+	NARC_pokegra_mus_pfwb_533c_f_NCBR = 103,
+	NARC_pokegra_mus_pfwb_533_NCER = 104,
+	NARC_pokegra_mus_pfwb_533_NANR = 105,
+	NARC_pokegra_mus_pfwb_533_NMCR = 106,
+	NARC_pokegra_mus_pfwb_533_NMAR = 107,
+	NARC_pokegra_mus_pfwb_533_NCEC = 108,
+	NARC_pokegra_mus_pbwb_533_m_NCGR = 109,
+	NARC_pokegra_mus_pbwb_533_f_NCGR = 110,
+	NARC_pokegra_mus_pbwb_533c_m_NCBR = 111,
+	NARC_pokegra_mus_pbwb_533c_f_NCBR = 112,
+	NARC_pokegra_mus_pbwb_533_NCER = 113,
+	NARC_pokegra_mus_pbwb_533_NANR = 114,
+	NARC_pokegra_mus_pbwb_533_NMCR = 115,
+	NARC_pokegra_mus_pbwb_533_NMAR = 116,
+	NARC_pokegra_mus_pbwb_533_NCEC = 117,
+	NARC_pokegra_mus_pmwb_533_n_NCLR = 118,
+	NARC_pokegra_mus_pmwb_533_r_NCLR = 119
 };
 
 /* NARC_POKEGRA_MUS_NAIX_ */

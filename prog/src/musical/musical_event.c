@@ -168,7 +168,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
   evWork->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
   //FIXME ‰¼¶¬ˆ—
   evWork->pokePara = PP_Create(
-      MONSNO_PIKUSII , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
+      MONSNO_MUNNA , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
 
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;

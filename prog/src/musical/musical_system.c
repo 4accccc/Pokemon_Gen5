@@ -121,7 +121,7 @@ static const u16 musPokeArr[]=
   MONSNO_WARUBIARU,
   MONSNO_ONOKKUSU,
   MONSNO_PURUNSU,
-  
+  MONSNO_MUNNA,  
   0xFFFF,
 };
 //ミュージカルの参加資格があるか調べる(仮)
