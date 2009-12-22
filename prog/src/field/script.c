@@ -1208,7 +1208,7 @@ BOOL SCRIPT_CheckTrainer2vs2Type( u16 tr_id )
 {
   u32 rule = TT_TrainerDataParaGet( tr_id, ID_TD_fight_type );
   
-  OS_Printf( "check 2v2 TRID=%d, type = %d\n", tr_id, rule );
+  //OS_Printf( "check 2v2 TRID=%d, type = %d\n", tr_id, rule );
 
   switch( rule ){
   case BTL_RULE_SINGLE:
@@ -1460,6 +1460,19 @@ GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID )
 
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline u16 GETU16( const u8 * p )
+{
+  return p[0] + ( p[1] << 8 );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline u32 GETU32( const u8 * p )
+{
+  return p[0] + ( p[1] << 8 ) + ( p[2] << 16 ) + ( p[3] << 24 );
+}
+//------------------------------------------------------------------
 /**
  * @brief	ヘッダーデータから指定タイプのものを検索
  * @param	key			特殊スクリプトID
@@ -1478,7 +1491,7 @@ static u16 searchSpecialScript( const u8 * p, u8 key )
     if (*p == key)
     {
       p+= 2; //特殊スクリプトID分足す
-      return ( *p + ( *(p+1)<<8) );		//スクリプトIDを返す
+      return GETU16( p );		//スクリプトIDを返す
     }
     p += (2 + 2 + 2);						//特殊スクリプトID+スクリプトID+ダミー分足す
   }
@@ -1502,14 +1515,14 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 
 	while( TRUE ){
 		//終了記述チェック(SP_EVENT_DATA_END)
-		if( *p == SP_SCRID_NONE ){
+		if( GETU16( p ) == SP_SCRID_NONE ){
 			return SCRIPT_NOT_EXIST_ID;
 		}
 
 		//指定タイプの特殊スクリプト検索
-		if( (*p) == key ){
+		if( GETU16( p ) == key ){
 			p += 2;			//特殊スクリプトID分足す
-			pos = ( *p + ( *(p+1)<<8 ) + ( *(p+2)<<16 ) + ( *(p+3)<<24 ) );
+			pos = GETU32( p );
 			p += 4;			//アドレス分足す
 			break;
 		}
@@ -1528,27 +1541,27 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 	ev = GAMEDATA_GetEventWork( gamedata );
 	while ( TRUE ) {
 		//終了記述チェック(SP_SCRIPT_END)
-		if( *p == 0 ){
+		if( GETU16( p ) == 0 ){
 			return SCRIPT_NOT_EXIST_ID;
 		}
 
 		//比較するワーク取得
-		work1 = ( *p + ( *(p+1)<<8 ) );
+		work1 = GETU16( p );
 		if( work1 == 0 ){
 			return SCRIPT_NOT_EXIST_ID;
 		};
 		p += 2;									//ワーク分足す
-		//OS_Printf( "work1 = %d\n", work1 );
+		//OS_Printf( "work1 = %04x\n", work1 );
 
 		//比較する値(ワーク可)取得
-		work2 = ( *p + ( *(p+1)<<8 ) );
+		work2 = GETU16( p );
 		p += 2;									//比較する値分足す(ワーク可)
 		//OS_Printf( "work2 = %d\n", work2 );
 
 		//条件チェック
 		//if( EVENTWORK_GetEventWorkAdrs(ev,work1) == EVENTWORK_GetEventWorkAdrs(ev,work2) ){
 		if( *(EVENTWORK_GetEventWorkAdrs(ev,work1)) == work2 ){
-			return ( *p + ( *(p+1)<<8 ) );
+			return GETU16( p );
 		}
 
 		p += 2;									//スクリプトID分足す
