@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-21T18:03:57"/>
+	<create user="ohmori" host="W00185" date="2009-12-22T17:11:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,8 +303,10 @@
 
 	<row id="msg_palace01_in_000">
 		<comment>通常の姿でパレスに入った</comment>
-		<language name="JPN" width="256">パレスの　ちからで　すがたが　へんかした！</language>
-		<language name="JPN_KANJI" width="256">パレスの　ちからで　すがたが　へんかした！</language>
+		<language name="JPN" width="256">パレスの　ちからで
+すがたが　へんかした！</language>
+		<language name="JPN_KANJI" width="256">パレスの　ちからで
+すがたが　へんかした！</language>
 	</row>
 
 	<flowchart-group-list>
