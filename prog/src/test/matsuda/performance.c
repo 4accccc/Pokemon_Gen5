@@ -265,6 +265,9 @@ void DEBUG_PerformanceMain(void)
 {
 	int debugButtonTrg = GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT);
 	
+#if DEBUG_ONLY_FOR_none
+  return;
+#endif
 	if(debugButtonTrg){
 		pfm_sys.on_off ^= TRUE;
 	}
