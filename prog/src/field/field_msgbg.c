@@ -4044,9 +4044,6 @@ static void setBGResource( FLDMSGBG *fmb )
 		};
 		
 		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
 		
 		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
@@ -4086,6 +4083,9 @@ static void setBGResource( FLDMSGBG *fmb )
   { //SYSWIN
     syswin_InitGraphic( fmb->heapID );
   }
+
+  GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
+  GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
   
   fmb->deriveWin_plttNo = PANO_FONT;
 }
