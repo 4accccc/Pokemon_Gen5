@@ -802,12 +802,12 @@ static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
     };
 
     // 博士表示
-    INTRO_MCSS_Add( wk->mcss, param[2], param[3], FX32_ONE, &add, param[0] );
+    INTRO_MCSS_Add( wk->mcss, param[2], param[3], 0, &add, param[0] );
   }
   else
   {
     // ポケモン表示
-    INTRO_MCSS_AddPoke( wk->mcss, param[2], param[3], 0, param[1], param[0] );
+    INTRO_MCSS_AddPoke( wk->mcss, param[2], param[3], FX32_ONE, param[1], param[0] );
   }
 
   return TRUE;
