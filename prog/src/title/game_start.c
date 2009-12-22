@@ -188,6 +188,8 @@ typedef struct
   INTR_SAVE_CONTROL* intr_save;
 }GAMESTART_FIRST_WORK;
 
+// #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
+
 //--------------------------------------------------------------
 /**
  * @brief   
@@ -204,7 +206,9 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   SaveControl_ClearData( SaveControl_GetPointer() );
 
   // セーブシステム作成
+#ifdef USE_INTRSAVE
   work->intr_save = IntrSave_Init( GFL_HEAPID_APP, SaveControl_GetPointer() );
+#endif
 
   // イントロデモのパラメータ初期化
   work->introParam.save_ctrl  = SaveControl_GetPointer();
@@ -242,7 +246,9 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 	
   GAMESTART_FIRST_WORK *work = mywk;
 
+#ifdef USE_INTRSAVE
   IntrSave_Main( work->intr_save );
+#endif
 
 	switch(*seq){
 	case SEQ_INIT:
@@ -310,7 +316,9 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	VecFx32 pos = {0,0,0};
   
   // セーブシステム削除
+#ifdef USE_INTRSAVE
   IntrSave_Exit( work->intr_save );
+#endif
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 

@@ -34,17 +34,17 @@
 //データ
 #include "intro_cmd_data.h"
 
-#include "intro_msg.h" // for INTRO_MSG_WORK
-#include "intro_mcss.h" // for INTRO_MCSS_WORK
-#include "intro_g3d.h" // for INTRO_G3D_WORK
-#include "intro_particle.h" // for INTRO_PARTICLE_WORK
+#include "intro_msg.h"        // for INTRO_MSG_WORK
+#include "intro_mcss.h"       // for INTRO_MCSS_WORK
+#include "intro_g3d.h"        // for INTRO_G3D_WORK
+#include "intro_particle.h"   // for INTRO_PARTICLE_WORK
 
-#include "intro_cmd.h" // for extern宣言
+#include "intro_cmd.h"        // for extern宣言
 
-#include "sound/pm_sndsys.h" // for SEQ_SE_XXX
-#include "sound/pm_voice.h" // for 
+#include "sound/pm_sndsys.h"  // for SEQ_SE_XXX
+#include "sound/pm_voice.h"   // for 
 
-#include "savedata/save_control.h" // for
+#include "savedata/save_control.h"      // for
 #include "savedata/save_control_intr.h" // for
 
 //=============================================================================
@@ -293,6 +293,50 @@ static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  BMPLISTをストア
+ *
+ *	@param	INTRO_CMD_WORK* wk
+ *	@param	select_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void store_bmplist( INTRO_CMD_WORK* wk, int select_id )
+{
+  const INTRO_CMD_DATA* data;
+
+  data = Intro_DATA_GetCmdData( wk->scene_id );
+  data += wk->cmd_idx;
+
+  HOSAKA_Printf( "select_id=%d \n", select_id );
+
+  // リスト開放
+  INTRO_MSG_LIST_Finish( wk->wk_msg );
+
+  if( select_id == 0 )
+  {
+    if( data != NULL )
+    {
+      // 上が選択された場合は直後のコマンドをストア
+      cmd_store( wk, data );
+    }
+  }
+  else
+  {
+    data++;
+    if( data != NULL )
+    {
+      cmd_store( wk, data );
+    }
+  }
+   
+  // 結果コマンドの次をシーク
+  wk->cmd_idx += 2;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  YESNO選択
  *
  *	@param	param 
@@ -327,39 +371,20 @@ static BOOL CMD_YESNO( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
     INTRO_MSG_LIST_Main( wk->wk_msg );
 
     {
+      INTRO_LIST_SELECT select;
       u32 select_id;
+      
+      select = INTRO_MSG_LIST_IsDecide( wk->wk_msg, &select_id );
 
-      if( INTRO_MSG_LIST_IsDecide( wk->wk_msg, &select_id ) == INTRO_LIST_SELECT_DECIDE )
+      if( select == INTRO_LIST_SELECT_DECIDE )
       {
-        const INTRO_CMD_DATA* data;
+        store_bmplist( wk, FALSE );
 
-        data = Intro_DATA_GetCmdData( wk->scene_id );
-        data += wk->cmd_idx;
-
-        HOSAKA_Printf( "select_id=%d\n" ,select_id );
-
-        // リスト開放
-        INTRO_MSG_LIST_Finish( wk->wk_msg );
-
-        if( select_id == 0 )
-        {
-          if( data != NULL )
-          {
-            // 上が選択された場合は直後のコマンドをストア
-            cmd_store( wk, data );
-          }
-        }
-        else
-        {
-          data++;
-          if( data != NULL )
-          {
-            cmd_store( wk, data );
-          }
-        }
-         
-        // 結果コマンドの次をシーク
-        wk->cmd_idx += 2;
+        return TRUE;
+      }
+      else if( select == INTRO_LIST_SELECT_CANCEL )
+      {
+        store_bmplist( wk, select_id );
 
         return TRUE;
       }
@@ -928,8 +953,6 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
   return FALSE;
 }
 
-
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  ひらがな／漢字モードを決定
@@ -1267,6 +1290,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
   wk->g3d   = g3d;
   wk->ptc   = ptc;
 
+  // セーブモジュール受け取り
   wk->intr_save = wk->init_param->intr_save;
 
   // 文字操作モジュール初期化

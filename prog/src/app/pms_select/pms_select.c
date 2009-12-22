@@ -722,8 +722,6 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 	GFL_ARC_CloseDataHandle( handle );
 
   // メニューのBGにもバーをロードしておく
-  
-
 }
 
 //-----------------------------------------------------------------------------
