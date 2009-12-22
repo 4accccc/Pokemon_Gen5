@@ -37,8 +37,8 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバルＭＳＧ：おばさん　それでは失礼します
-	_BALLOONWIN_OBJMSG( msg_t01r0101_black_01 , T01R0101_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_MSG_DOWN( msg_t01r0101_black_01 )
+	_MSGWIN_CLOSE()
 
 	//ライバル：去る
 	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_goaway_01 )
@@ -46,8 +46,8 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_move_01 )
 
 	//サポート：おじゃましました！
-	_BALLOONWIN_OBJMSG( msg_t01r0101_white_01 , T01R0101_SUPPORT_01 )
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_MSG_DOWN( msg_t01r0101_white_01 )
+	_MSGWIN_CLOSE()
 
 	_OBJ_ANIME_WAIT()
 

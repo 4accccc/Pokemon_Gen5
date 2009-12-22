@@ -72,8 +72,8 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME_WAIT()
 
 	//サポート会話：ごめんね　遅くなっちゃった
-	_BALLOONWIN_OBJMSG( msg_t01r0102_white_01 , T01R0102_SUPPORT_01 )
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_MSG_UP( msg_t01r0102_white_01 )
+	_MSGWIN_CLOSE()
 
 	//主人公・ライバル：サポートを見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gamestart_player_look_01 )
@@ -342,7 +342,7 @@ t01r0102_poke_get_yes:
 	_ME_WAIT()
 
 	//ポケモン追加　【仮】追加ポケモンのラベルが仮。アプリ完成後このラベル自体が削除予定。
-	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, 0, 5, 0 )
+	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, TOKUSYU_NULL, 5, 0 )
 
 	_SYSWIN_CLOSE()
 
