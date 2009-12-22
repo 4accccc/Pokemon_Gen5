@@ -475,7 +475,6 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
     // SCENE
 	  wk->cntScene = UI_SCENE_CNT_Create( wk->heapID, c_scene_func_tbl, PMSS_SCENE_ID_MAX, first_scene, wk );
   }
-  
 
   return GFL_PROC_RES_FINISH;
 }
@@ -518,7 +517,7 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
   GFL_HEAP_DeleteHeap( wk->heapID );
 	
   //オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -555,7 +554,7 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
   if( wk->bProcChange )
   {
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
-    HOSAKA_Printf("call! \n");
+    HOSAKA_Printf("call!\n");
     return GFL_PROC_RES_CONTINUE;
   }
 
@@ -794,10 +793,10 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
 #define PLATE_PLTT_ANIME_VALUE (0x400)
 
 #define PLATE_PLTT_ANIME_S_R (0)
-#define PLATE_PLTT_ANIME_S_G (30)
-#define PLATE_PLTT_ANIME_S_B (29)
+#define PLATE_PLTT_ANIME_S_G (16)
+#define PLATE_PLTT_ANIME_S_B (16)
 
-#define PLATE_PLTT_ANIME_E_R (24)
+#define PLATE_PLTT_ANIME_E_R (31)
 #define PLATE_PLTT_ANIME_E_G (31)
 #define PLATE_PLTT_ANIME_E_B (31)
 
@@ -1821,7 +1820,6 @@ static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
 
   wk->menu = PMSSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 
-  
   SetBrightness( BG_MENU_BRIGHT, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
 
   return TRUE;
