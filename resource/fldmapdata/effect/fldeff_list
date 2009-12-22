@@ -27,7 +27,6 @@ G3D_FE_ANMITP = hero_kemu.itp \
   lgrass_sm.itp \
   lgrass_at.itp \
   lgrass_wt.itp \
-  lgrass_sn.itp \
   ripple.itp \
   shibuki.itp \
   taki_loop_s.itp \
@@ -36,7 +35,16 @@ G3D_FE_ANMITP = hero_kemu.itp \
   taki_start_s.itp \
   iwakudaki.itp \
   $(EFF_D06DENKI)d6_yuka_biri01.itp \
-  fishing_lure.itp
+  fishing_lure.itp \
+  kusaeff_sp2.itp \
+  kusaeff_sm2.itp \
+  kusaeff_at2.itp \
+  kusaeff_wt2.itp \
+  kusaeff_sn2.itp \
+  lgrass_sp2.itp \
+  lgrass_sm2.itp \
+  lgrass_at2.itp \
+  lgrass_wt2.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -171,8 +179,16 @@ G3D_FE_MDL = kage.imd \
   sc_mark_dl.imd \
   sc_mark_dr.imd \
   fishing_lure.imd \
-  lgrass_sn.imd
-
+  kusaeff_sp2.imd \
+  kusaeff_sm2.imd \
+  kusaeff_at2.imd \
+  kusaeff_wt2.imd \
+  kusaeff_sn2.imd \
+  lgrass_sp2.imd \
+  lgrass_sm2.imd \
+  lgrass_at2.imd \
+  lgrass_wt2.imd
+  
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
 #---------------------------------------------------------------
