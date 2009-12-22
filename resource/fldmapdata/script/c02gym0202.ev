@@ -166,22 +166,10 @@ ev_c02gym_tounan:
 	_OBJ_ANIME_WAIT()
 	
    	//主人公、びっくりして、横に飛び退く
-    //プレイヤーが通る3グリッド分を用意
-    SWITCH $POSX
-    CASE 4THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_a )
-	_OBJ_ANIME_WAIT()
-	
-    CASE 5 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_b )
-	_OBJ_ANIME_WAIT()
-	
-    CASE 6 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_c )
-	_OBJ_ANIME_WAIT()
-	
-    DEFAULT
-    ENDSWITCH
+	IF $POSX == 5 && $POSZ == 11 THEN 
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_b )
+		_OBJ_ANIME_WAIT()
+	ENDIF
 
 	//ジムリーダー夫：たいへんだよ！
 	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
