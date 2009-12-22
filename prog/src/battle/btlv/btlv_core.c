@@ -378,7 +378,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
       4, 124,
       4, 124,
       0,
-      48,48,48,48,
+//      48,48,48,48,
+      56,48,48,48,
       16, 16,
     };
     GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
