@@ -198,7 +198,7 @@ GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
   //—V——‘Dƒ[ƒN‰ğ•ú
   {
     PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
-    //PL_BOAT_End(ptr);
+    PL_BOAT_End(ptr);
   }
   return event;
 }
