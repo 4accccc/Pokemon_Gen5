@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="ohno" host="W00141" date="2009-12-22T12:05:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -366,7 +366,7 @@
 ぼしゅうちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_141" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_141" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>料理相手募集中の友達を
 選択したときのメッセージ
 プラチナで追加</comment>
@@ -376,7 +376,7 @@
 ぼしゅうちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_137" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_137" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルフロンティア募集中の友達を
 選択したときのメッセージ
 プラチナで追加</comment>
@@ -388,15 +388,15 @@
 ぼしゅうちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_144" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_144" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲーム募集中の友達を
 選択したときのメッセージ
 プラチナで追加</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは
-[1:40:広場ミニゲーム:1]の　さんかを▽
+[1:00:トレーナー名:1]の　さんかを▽
 ぼしゅうちゅう　です</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは
-[1:40:広場ミニゲーム:1]の　さんかを▽
+[1:00:トレーナー名:1]の　さんかを▽
 ぼしゅうちゅう　です</language>
 	</row>
 
@@ -524,357 +524,357 @@
 
 	<row id="msg_wifilobby_018">
 		<comment>Wi-Fiコネクションに接続するときのタイトル</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+		<language name="JPN" font=" 1:small" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
 	</row>
 
 	<row id="msg_wifilobby_019">
 		<comment>接続後のタイトル</comment>
-		<language name="JPN" font=" 1:font_system" width="216">せつぞくちゅうの　ともだち</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">せつぞくちゅうの　ともだち</language>
+		<language name="JPN" font=" 1:small" width="216">せつぞくちゅうの　ともだち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せつぞくちゅうの　ともだち</language>
 	</row>
 
 	<row id="msg_wifilobby_020">
 		<comment>はい・いいえの選択項目</comment>
-		<language name="JPN" font=" 1:font_system" width="216">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
 	<row id="msg_wifilobby_021">
 		<comment>はい・いいえの選択項目</comment>
-		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
 	<row id="msg_wifilobby_022">
 		<comment>Lv.50で対戦するときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．５０たいせん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．５０たいせん</language>
+		<language name="JPN" font=" 1:small" width="216">Ｌｖ．５０たいせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Ｌｖ．５０たいせん</language>
 	</row>
 
 	<row id="msg_wifilobby_023">
 		<comment>Lv.100で対戦するときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">Ｌｖ．１００たいせん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">Ｌｖ．１００たいせん</language>
+		<language name="JPN" font=" 1:small" width="216">Ｌｖ．１００たいせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Ｌｖ．１００たいせん</language>
 	</row>
 
 	<row id="msg_wifilobby_024">
 		<comment>対戦中の状態表示項目</comment>
-		<language name="JPN" font=" 1:font_system" width="216">たいせんちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">たいせんちゅう</language>
+		<language name="JPN" font=" 1:small" width="216">たいせんちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいせんちゅう</language>
 	</row>
 
 	<row id="msg_wifilobby_025">
 		<comment>こうかんするときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">こうかん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">こうかん</language>
+		<language name="JPN" font=" 1:small" width="216">こうかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">こうかん</language>
 	</row>
 
 	<row id="msg_wifilobby_026">
 		<comment>交換中の状態表示項目</comment>
-		<language name="JPN" font=" 1:font_system" width="216">こうかんちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">こうかんちゅう</language>
+		<language name="JPN" font=" 1:small" width="216">こうかんちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">こうかんちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_100" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_100" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ポフィン料理するときの項目名
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">りょうり</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">りょうり</language>
+		<language name="JPN" font=" 1:small" width="216">りょうり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">りょうり</language>
 	</row>
 
-	<row id="msg_wifilobby_101" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_101" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ポフィン料理中の状態表示項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">りょうりちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">りょうりちゅう</language>
+		<language name="JPN" font=" 1:small" width="216">りょうりちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">りょうりちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_138" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_138" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルフロンティアするときの項目名
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルフロンティア</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルフロンティア</language>
+		<language name="JPN" font=" 1:small" width="216">バトルフロンティア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルフロンティア</language>
 	</row>
 
-	<row id="msg_wifilobby_139" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_139" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルフロンティア中の状態表示項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ちょうせんちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ちょうせんちゅう</language>
+		<language name="JPN" font=" 1:small" width="216">ちょうせんちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ちょうせんちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_147" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_147" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲームをするときの項目名
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ひろばゲーム</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ひろばゲーム</language>
+		<language name="JPN" font=" 1:small" width="216">ひろばゲーム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ひろばゲーム</language>
 	</row>
 
-	<row id="msg_wifilobby_148" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_148" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲーム中の状態表示項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ひろばゲームちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ひろばゲームちゅう</language>
+		<language name="JPN" font=" 1:small" width="216">ひろばゲームちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ひろばゲームちゅう</language>
 	</row>
 
 	<row id="msg_wifilobby_027">
 		<comment>ボイスチャットの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ボイスチャット</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ボイスチャット</language>
+		<language name="JPN" font=" 1:small" width="216">ボイスチャット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボイスチャット</language>
 	</row>
 
 	<row id="msg_wifilobby_028">
 		<comment>なんらかの相手を募集するときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">あいてを　ぼしゅうする</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">あいてを　ぼしゅうする</language>
+		<language name="JPN" font=" 1:small" width="216">あいてを　ぼしゅうする</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あいてを　ぼしゅうする</language>
 	</row>
 
 	<row id="msg_wifilobby_029">
 		<comment>Wi-Fi接続を切断するための項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ＷｉーＦｉせつぞくを　やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＷｉーＦｉせつぞくを　やめる</language>
+		<language name="JPN" font=" 1:small" width="216">ＷｉーＦｉせつぞくを　やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＷｉーＦｉせつぞくを　やめる</language>
 	</row>
 
 	<row id="msg_wifilobby_030">
 		<comment>募集中の友達に申し込むときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">もうしこむ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">もうしこむ</language>
+		<language name="JPN" font=" 1:small" width="216">もうしこむ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">もうしこむ</language>
 	</row>
 
 	<row id="msg_wifilobby_031">
 		<comment>友達の記録を見るときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">きろくを　みる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">きろくを　みる</language>
+		<language name="JPN" font=" 1:small" width="216">きろくを　みる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくを　みる</language>
 	</row>
 
 	<row id="msg_wifilobby_032">
 		<comment>項目選択をキャンセルするときの項目名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN" font=" 1:small" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">やめる</language>
 	</row>
 
 	<row id="msg_wifilobby_033">
 		<comment>記録をみるときの友達名表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_wifilobby_034">
 		<comment>記録を見るときの所属グループ表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">グループ　[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">グループ　[1:00:トレーナー名:0]</language>
+		<language name="JPN" font=" 1:small" width="216">グループ　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">グループ　[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_wifilobby_035">
 		<comment>記録を見るときの対戦成績項目表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">たいせんせいせき</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">たいせんせいせき</language>
+		<language name="JPN" font=" 1:small" width="216">たいせんせいせき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいせんせいせき</language>
 	</row>
 
 	<row id="msg_wifilobby_036">
 		<comment>記録を見るときの対戦成績（勝ち数）表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">かち[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">かち[2:03:４桁:0]</language>
+		<language name="JPN" font=" 1:small" width="216">かち[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">かち[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_wifilobby_037">
 		<comment>記録を見るときの対戦成績（負け数）表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">まけ[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">まけ[2:03:４桁:0]</language>
+		<language name="JPN" font=" 1:small" width="216">まけ[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">まけ[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_wifilobby_038">
 		<comment>記録を見るときのポケモン交換項目表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ポケモンこうかん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンこうかん</language>
+		<language name="JPN" font=" 1:small" width="216">ポケモンこうかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンこうかん</language>
 	</row>
 
 	<row id="msg_wifilobby_039">
 		<comment>記録を見るときの交換回数表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
 	</row>
 
 	<row id="msg_wifilobby_102">
 		<comment>記録を見るときの料理回数項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">りょうりかいすう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">りょうりかいすう</language>
+		<language name="JPN" font=" 1:small" width="216">りょうりかいすう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">りょうりかいすう</language>
 	</row>
 
 	<row id="msg_wifilobby_103">
 		<comment>記録を見るときの料理回数表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
 	</row>
 
 	<row id="msg_wifilobby_040">
 		<comment>記録を見るときの
 最後に遊んだ日付項目名表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">さいごにあそんだひづけ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">さいごにあそんだひづけ</language>
+		<language name="JPN" font=" 1:small" width="216">さいごにあそんだひづけ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">さいごにあそんだひづけ</language>
 	</row>
 
-	<row id="msg_wifilobby_bf01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのバトルタワーの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルタワー</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルタワー</language>
+		<language name="JPN" font=" 1:small" width="216">バトルタワー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルタワー</language>
 	</row>
 
-	<row id="msg_wifilobby_bf02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのバトルファクトリーの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルファクトリー</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルファクトリー</language>
+		<language name="JPN" font=" 1:small" width="216">バトルファクトリー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルファクトリー</language>
 	</row>
 
-	<row id="msg_wifilobby_bf03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのバトルキャッスルの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルキャッスル</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルキャッスル</language>
+		<language name="JPN" font=" 1:small" width="216">バトルキャッスル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル</language>
 	</row>
 
-	<row id="msg_wifilobby_bf04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのバトルステージの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルステージ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルステージ</language>
+		<language name="JPN" font=" 1:small" width="216">バトルステージ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ</language>
 	</row>
 
-	<row id="msg_wifilobby_bf05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのバトルルーレットの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">バトルルーレット</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルルーレット</language>
+		<language name="JPN" font=" 1:small" width="216">バトルルーレット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット</language>
 	</row>
 
-	<row id="msg_wifilobby_bf06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>「ぜんかい」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ぜんかい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ぜんかい</language>
+		<language name="JPN" font=" 1:small" width="216">ぜんかい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ぜんかい</language>
 	</row>
 
-	<row id="msg_wifilobby_bf18" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf18" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>「げんざい」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">げんざい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">げんざい</language>
+		<language name="JPN" font=" 1:small" width="216">げんざい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">げんざい</language>
 	</row>
 
-	<row id="msg_wifilobby_bf07" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf07" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>「さいこう」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">さいこう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">さいこう</language>
+		<language name="JPN" font=" 1:small" width="216">さいこう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">さいこう</language>
 	</row>
 
-	<row id="msg_wifilobby_bf08" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf08" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルファクトリーの「レベル５０」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">レベル５０</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">レベル５０</language>
+		<language name="JPN" font=" 1:small" width="216">レベル５０</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">レベル５０</language>
 	</row>
 
-	<row id="msg_wifilobby_bf09" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf09" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルファクトリーの「オープンレベル」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">オープンレベル</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">オープンレベル</language>
+		<language name="JPN" font=" 1:small" width="216">オープンレベル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">オープンレベル</language>
 	</row>
 
-	<row id="msg_wifilobby_bf10" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf10" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルファクトリーの「レンタル／こうかん」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">レンタル／こうかん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">レンタル／こうかん</language>
+		<language name="JPN" font=" 1:small" width="216">レンタル／こうかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">レンタル／こうかん</language>
 	</row>
 
-	<row id="msg_wifilobby_bf11" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf11" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルキャッスルの「キャッスルポイント」の項目
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">キャッスルポイント</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">キャッスルポイント</language>
+		<language name="JPN" font=" 1:small" width="216">キャッスルポイント</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">キャッスルポイント</language>
 	</row>
 
-	<row id="msg_wifilobby_bf12" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf12" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルステージの最後に挑戦したポケモン名
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN" font=" 1:small" width="216">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:01:ポケモン種族名:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_bf13" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf13" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>連勝数（タワー、ファクトリー、ステージ）
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 	</row>
 
-	<row id="msg_wifilobby_bf14" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf14" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>レンタル、交換回数
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
 	</row>
 
-	<row id="msg_wifilobby_bf15" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf15" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>キャッスルポイント数
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]ＣＰ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]ＣＰ</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]ＣＰ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]ＣＰ</language>
 	</row>
 
-	<row id="msg_wifilobby_bf16" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf16" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>キャッスルの部屋クリア数
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 	</row>
 
-	<row id="msg_wifilobby_bf17" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_bf17" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ルーレットのゲームクリア数
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]ゲーム　クリア</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]ゲーム　クリア</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]ゲーム　クリア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]ゲーム　クリア</language>
 	</row>
 
-	<row id="msg_wifilobby_mg01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_mg01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>記録を見るときのミニゲームの項目表示
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ひろばゲームのかいすう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ひろばゲームのかいすう</language>
+		<language name="JPN" font=" 1:small" width="216">ひろばゲームのかいすう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ひろばゲームのかいすう</language>
 	</row>
 
-	<row id="msg_wifilobby_mg02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_mg02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲーム１〜３のタイトル名
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
+		<language name="JPN" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]</language>
 	</row>
 
-	<row id="msg_wifilobby_mg05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_mg05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲームのプレイ回数
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
 	</row>
 
 	<row id="msg_wifilobby_143">
 		<comment>記録画面を閉じるときの「とじる」ボタンフォント。</comment>
-		<language name="JPN" font=" 2:font_button" width="216">とじる</language>
-		<language name="JPN_KANJI" font=" 2:font_button" width="216">とじる</language>
+		<language name="JPN" width="216">とじる</language>
+		<language name="JPN_KANJI" width="216">とじる</language>
 	</row>
 
 	<row id="msg_wifilobby_041">
 		<comment>記録を見るときの
 最後に遊んだ日付表示</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
 	</row>
 
 	<row id="msg_wifilobby_042">
@@ -932,14 +932,14 @@
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは　こうかんちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_104" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_104" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>料理中の友達を選択したときのメッセージ
 プラチナで追加</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは　りょうりちゅう　です</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは　りょうりちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_140" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_140" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>バトルフロンティア中の友達を
 選択したときのメッセージ
 プラチナで追加</comment>
@@ -951,7 +951,7 @@
 ちょうせんちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_149" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_149" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲームに挑戦中の友達を
 選択したときのメッセージ
 プラチナで追加</comment>
@@ -1082,21 +1082,21 @@
 ダブルバトルを　あそべません！</language>
 	</row>
 
-	<row id="msg_wifilobby_105" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_105" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>木の実が１つもない場合。
 プラチナで追加</comment>
 		<language name="JPN" width="216">きのみが　ありません！</language>
 		<language name="JPN_KANJI" width="216">きのみが　ありません！</language>
 	</row>
 
-	<row id="msg_wifilobby_106" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_106" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ポフィンが手持ちに一杯の場合。
 プラチナで追加</comment>
 		<language name="JPN" width="216">ポフィンが　いっぱいです！</language>
 		<language name="JPN_KANJI" width="216">ポフィンが　いっぱいです！</language>
 	</row>
 
-	<row id="msg_wifilobby_121" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_121" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ポフィンケースがない場合。
 プラチナで追加</comment>
 		<language name="JPN" width="216">ポフィンケースが　ないと
@@ -1105,7 +1105,7 @@
 きのみを　りょうり　できません！</language>
 	</row>
 
-	<row id="msg_wifilobby_107" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_107" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>募集した人
 Ａボタン
 メンバーの最終確認　　msg_wifilobby_111へ　
@@ -1119,7 +1119,7 @@
 Ａボタン…すすむ　Ｂボタン…やめる</language>
 	</row>
 
-	<row id="msg_wifilobby_108" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_108" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加応募が来た時のコメント「はい／いいえ」選択。
 プラチナで追加</comment>
 		<language name="JPN" width="216">さんかおうぼが　きました
@@ -1128,45 +1128,45 @@
 メンバーに　くわえますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_109" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_109" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加者をメンバーに追加します。
 参加者が４人になった場合　　msg_wifilobby_111へ
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
-	<row id="msg_wifilobby_110" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_110" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加者をメンバーに加えません。
 リストから参加希望者の名前とＩＤを消します。
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
-	<row id="msg_wifilobby_111" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_111" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>このメンバーでゲームをするかの最終確認。
 プラチナで追加</comment>
 		<language name="JPN" width="216">この　メンバーで　よろしいですか？</language>
 		<language name="JPN_KANJI" width="216">この　メンバーで　よろしいですか？</language>
 	</row>
 
-	<row id="msg_wifilobby_112" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_112" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>メンバー決定　　　ポフィン料理ゲームへ
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
-	<row id="msg_wifilobby_113" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_113" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>募集枠に余裕がある場合は、参加者募集のリスト画面へ
 募集人数がいっぱいの場合　　　msg_wifilobby_111へ
 プラチナで追加</comment>
-		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
-	<row id="msg_wifilobby_118" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_118" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーからの返事待ち。
 ０：リーダーの名前。
 プラチナで追加</comment>
@@ -1176,7 +1176,7 @@
 へんじを　まっています</language>
 	</row>
 
-	<row id="msg_wifilobby_129" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_129" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーからメンバー参加ＯＫの返事。
 ０：リーダーの名前。
 プラチナで追加。</comment>
@@ -1186,7 +1186,7 @@
 ＯＫとの　へんじが　きました！</language>
 	</row>
 
-	<row id="msg_wifilobby_130" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_130" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーからメンバー参加ＮＧの返事。
 ０：リーダーの名前。
 プラチナで追加。</comment>
@@ -1196,7 +1196,7 @@
 へんじが　きてしまいました……▼</language>
 	</row>
 
-	<row id="msg_wifilobby_119" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_119" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーから参加オッケーの返事がきた後、
 左記メッセージを表示して待機。
 プラチナで追加</comment>
@@ -1204,7 +1204,7 @@
 		<language name="JPN_KANJI" width="216">ほかの　メンバーを　まっています</language>
 	</row>
 
-	<row id="msg_wifilobby_120" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_120" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーから参加付加の返事を受けた場合や、
 開催自体が中止になった場合のコメント。
 プラチナで追加。</comment>
@@ -1218,21 +1218,21 @@
 てつづきを　やりなおして　ください▼</language>
 	</row>
 
-	<row id="msg_wifilobby_122" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_122" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ゲームを始めるするのに人数が足りない場合。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">メンバーが　たりません▼</language>
 		<language name="JPN_KANJI" width="216">メンバーが　たりません▼</language>
 	</row>
 
-	<row id="msg_wifilobby_123" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_123" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>募集をやめる場合。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">ぼしゅうを　ちゅうし　しますか？</language>
 		<language name="JPN_KANJI" width="216">ぼしゅうを　ちゅうし　しますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_124" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_124" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>リーダーが開催を中止するときの確認メッセージ。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">リーダーが　やめると　かいさんに
@@ -1241,7 +1241,7 @@
 なりますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_wifilobby_125" text-color="#0000ff,,,#0000ff,,,,,,,,">
+	<row id="msg_wifilobby_125" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
 		<comment>募集の中止メッセージ。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">それでは　ぼしゅうを
@@ -1250,14 +1250,14 @@
 ちゅうし　します</language>
 	</row>
 
-	<row id="msg_wifilobby_126" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_126" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>子機が親に許可されて待機しているときのメッセージ。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">ほかの　メンバーを　まっています</language>
 		<language name="JPN_KANJI" width="216">ほかの　メンバーを　まっています</language>
 	</row>
 
-	<row id="msg_wifilobby_127" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_127" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ボイスチャットオンの確認メッセージ。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">ボイスチャットが　ＯＮに
@@ -1266,7 +1266,7 @@
 なりますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_wifilobby_128" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_128" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ボイスチャットオフの確認メッセージ。
 プラチナで追加。</comment>
 		<language name="JPN" width="216">ボイスチャットが　ＯＦＦに
@@ -1275,59 +1275,59 @@
 なりますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_wifilobby_131" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_131" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>料理募集中のタイトル。画面上に表示。
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">りょうり　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">りょうり　ぼしゅうちゅう！</language>
+		<language name="JPN" font=" 1:small" width="216">りょうり　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">りょうり　ぼしゅうちゅう！</language>
 	</row>
 
-	<row id="msg_wifilobby_150" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_150" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ミニゲーム１〜３募集中のタイトル。画面上に表示。
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]　ぼしゅうちゅう！</language>
+		<language name="JPN" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]　ぼしゅうちゅう！</language>
 	</row>
 
-	<row id="msg_wifilobby_132" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_132" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>ボイスチャットＯＮ、ＯＦＦの切り替えボタンの説明文
 会話ウィンドウの上に表示。
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ボイスチャットＯＮ／ＯＦＦ　Ｘボタン</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ボイスチャットＯＮ／ＯＦＦ　Ｘボタン</language>
+		<language name="JPN" font=" 1:small" width="216">ボイスチャットＯＮ／ＯＦＦ　Ｘボタン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボイスチャットＯＮ／ＯＦＦ　Ｘボタン</language>
 	</row>
 
-	<row id="msg_wifilobby_133" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_133" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加メンバーの名前
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_134" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_134" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加メンバーのＩＤ
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ＩＤ[2:04:５桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ＩＤ[2:04:５桁:0]</language>
+		<language name="JPN" font=" 1:small" width="216">ＩＤ[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＩＤ[2:04:５桁:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_135" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,">
+	<row id="msg_wifilobby_135" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,">
 		<comment>参加メンバーの名前とＩＤ
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]
 ＩＤ[2:04:５桁:1]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]
 ＩＤ[2:04:５桁:1]</language>
 	</row>
 
-	<row id="msg_wifilobby_136" text-color="#0000ff,,,#0000ff,,,,,,,,">
+	<row id="msg_wifilobby_136" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
 		<comment>リーダーが、他の相手に返答中のときのメッセージ。
 プラチナで追加。
 「はい」で再度、登録を試みます。
 「いいえ」でマッチング画面へ戻ります。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">リーダーが　いそがしい　ようです
+		<language name="JPN" font=" 1:small" width="216">リーダーが　いそがしい　ようです
 もういちど　もうしこんで　ください▼</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">リーダーが　いそがしい　ようです
+		<language name="JPN_KANJI" font=" 1:small" width="216">リーダーが　いそがしい　ようです
 もういちど　もうしこんで　ください▼</language>
 	</row>
 
@@ -1400,7 +1400,7 @@
 ＢＧＭを　ＯＮに　しました▼</language>
 	</row>
 
-	<row id="msg_wifilobby_test_001" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_test_001" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">つうしんエラーが　はっせいしました
 [2:04:５桁:0]</language>
@@ -1408,53 +1408,58 @@
 [2:04:５桁:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_test_002" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_test_002" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">ちえんONになります▼</language>
 		<language name="JPN_KANJI" width="216">ちえんONになります▼</language>
 	</row>
 
-	<row id="msg_wifilobby_test_003" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_test_003" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">ちえんOFF＝つうじょうになります▼</language>
 		<language name="JPN_KANJI" width="216">ちえんOFF＝つうじょうになります▼</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_00" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_00" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用
 プラチナで追加</comment>
 		<language name="JPN" width="216">あるきまわり</language>
 		<language name="JPN_KANJI" width="216">あるきまわり</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_01" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_01" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用
 プラチナで追加</comment>
 		<language name="JPN" width="216">マルチバトル</language>
 		<language name="JPN_KANJI" width="216">マルチバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_02" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_02" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">２ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">２ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_03" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_03" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">３ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">３ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_04" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_04" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">４ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">４ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_05" back-color=",,,,,,#808080,#808080,,#808080,#808080,">
+	<row id="msg_wifilobby_debug_05" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
 		<language name="JPN" width="216">バケット</language>
 		<language name="JPN_KANJI" width="216">バケット</language>
+	</row>
+
+	<row id="msg_wifilobby_076" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">TVトランシーバー</language>
+		<language name="JPN_KANJI" width="216">TVトランシーバー</language>
 	</row>
 
 	<flowchart-group-list>

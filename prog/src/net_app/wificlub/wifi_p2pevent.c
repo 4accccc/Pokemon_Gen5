@@ -27,6 +27,8 @@
 
 #include "field/event_wificlub.h"
 
+#include "net_app/comm_tvt_sys.h"  //TVトランシーバ
+
 //#include "net_app/balloon.h"
 
 //==============================================================================
@@ -58,6 +60,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 
 typedef struct{
+  COMM_TVT_INIT_WORK aTVT;
   WIFIP2PMATCH_PROC_PARAM* pMatchParam;
   POKEMONTRADE_PARAM aPokeTr;
   GAMEDATA* pGameData;
@@ -82,6 +85,8 @@ enum{
   P2P_BATTLE_END,
   P2P_TRADE,
   P2P_TRADE_END,
+  P2P_TVT,
+  P2P_TVT_END,
   P2P_UTIL,
   P2P_EXIT,
   P2P_FREE,
@@ -125,6 +130,7 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
   {100,WIFI_BATTLEFLAG_DOUBLE, P2P_BATTLE}, //WIFI_P2PMATCH_DBATTLE100:   // 通信対戦呼び出し
   {0,WIFI_BATTLEFLAG_DOUBLE, P2P_BATTLE}, //WIFI_P2PMATCH_DBATTLE_FREE:   // 通信対戦呼び出し
   {0,0, P2P_TRADE}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
+  {0,0, P2P_TVT}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
   {0,0, P2P_EXIT},   // 通信切断してます。終了します。
   {0,0, P2P_UTIL},   ////WIFIUTILへ飛びます
   {0,0, P2P_SETEND}, //WIFI_P2PMATCH_DPW_END:  //DPWへいく場合
@@ -213,6 +219,28 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_TRADE_END:
     ep2p->seq = P2P_MATCH_BOARD;
     break;
+/*
+お疲れ様です、有泉です。
+
+通信TVTの呼び出しです。
+ヘッダファイル include/net_app/comm_tvt_sys.h
+extern GFL_PROC_DATA COMM_TVT_ProcData;
+
+COMM_TVT_INIT_WORK の mode に CTM_WIFI を渡して起動してください。
+よろしくお願いいたします。
+*/
+
+
+  case P2P_TVT:
+    ep2p->aTVT.gameData = GAMESYSTEM_GetGameData(ep2p->gsys);
+    ep2p->aTVT.mode = CTM_WIFI;
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
+    ep2p->seq++;
+    break;
+  case P2P_TVT_END:
+    ep2p->seq = P2P_MATCH_BOARD;
+    break;
+
   case P2P_UTIL:
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
     break;

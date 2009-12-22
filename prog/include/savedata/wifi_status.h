@@ -24,6 +24,7 @@ typedef enum{
   WIFI_STATUS_DBATTLE100,      // ダブル対戦中
   WIFI_STATUS_DBATTLE_FREE,      // ダブル対戦中
   WIFI_STATUS_TRADE,          // 交換中
+  WIFI_STATUS_TVT,          // TVトランシーバ
   WIFI_STATUS_SBATTLE50_WAIT,   // シングルLv50対戦募集中
   WIFI_STATUS_SBATTLE100_WAIT,   // シングルLv100対戦募集中
   WIFI_STATUS_SBATTLE_FREE_WAIT,   // シングルFree対戦募集中
@@ -31,6 +32,7 @@ typedef enum{
   WIFI_STATUS_DBATTLE100_WAIT,   // ダブルLv100対戦募集中
   WIFI_STATUS_DBATTLE_FREE_WAIT,   // ダブルFree対戦募集中
   WIFI_STATUS_TRADE_WAIT,    // 交換募集中
+  WIFI_STATUS_TVT_WAIT,    // 交換募集中
   WIFI_STATUS_LOGIN_WAIT,    // 待機中　ログイン直後はこれ
   
   WIFI_STATUS_DP_UNK,        // DPのUNKNOWN

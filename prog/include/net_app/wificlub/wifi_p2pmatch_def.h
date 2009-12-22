@@ -37,17 +37,10 @@ typedef enum {
   WIFI_P2PMATCH_DBATTLE100,        // 通信対戦呼び出し
   WIFI_P2PMATCH_DBATTLE_FREE,      // 通信対戦呼び出し
   WIFI_P2PMATCH_TRADE,         // ポケモントレード呼び出し
+  WIFI_P2PMATCH_TVT,      // トランシーバ
   WIFI_P2PMATCH_END,           // 通信切断してます。終了します。
   WIFI_P2PMATCH_UTIL,          // 接続設定を呼び出します。戻れません
   WIFI_P2PMATCH_DPW_END,       // 世界対戦用設定終了
-  WIFI_P2PMATCH_FRONTIER,      // フロンティア呼び出し
-  WIFI_P2PMATCH_BUCKET,	   // バケットゲーム呼び出し
-  WIFI_P2PMATCH_BALANCEBALL,	   // 玉乗りゲーム呼び出し
-  WIFI_P2PMATCH_BALLOON,	  // ばるーんゲーム呼び出し
-#ifdef WFP2P_DEBUG_EXON	// 
-  WIFI_P2PMATCH_BATTLEROOM,	   // バトルルーム呼び出し
-  WIFI_P2PMATCH_MBATTLE_FREE,  // 通信対戦マルチバトル呼び出し
-#endif	// WFP2P_DEBUG_EXON
 } WIFI_P2PMATCH_KINDENUM;
 
   

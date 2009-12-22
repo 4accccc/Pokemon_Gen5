@@ -1241,7 +1241,7 @@ static BOOL _modeWait(int status)
   }
   switch(status){
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
-  case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
+  case WIFI_STATUS_TVT_WAIT:    // 交換募集中
     return TRUE;
   }
   return FALSE;
@@ -1272,6 +1272,7 @@ static BOOL _modeActive(int status)
   }
   switch(status){
   case WIFI_STATUS_TRADE:    // 交換中
+  case WIFI_STATUS_TVT:    // 交換中
   case WIFI_STATUS_FRONTIER:    // フロンティア中
   case WIFI_STATUS_VCT:    // 交換中
     return TRUE;
@@ -1286,6 +1287,7 @@ static BOOL _is2pokeMode(int status)
 {
   switch(status){
   case WIFI_STATUS_TRADE_WAIT:
+  case WIFI_STATUS_TVT_WAIT:
   case WIFI_STATUS_DBATTLE50_WAIT:
   case WIFI_STATUS_DBATTLE100_WAIT:
   case WIFI_STATUS_DBATTLE_FREE_WAIT:
@@ -1299,8 +1301,8 @@ static int _convertState(int state)
   int ret = WIFI_STATUS_UNKNOWN;
 
   switch(state){
-  case WIFI_STATUS_FRONTIER_WAIT:
-    ret = WIFI_STATUS_FRONTIER;
+  case WIFI_STATUS_TVT_WAIT:
+    ret = WIFI_STATUS_TVT;
     break;
   case WIFI_STATUS_TRADE_WAIT:
     ret = WIFI_STATUS_TRADE;
@@ -1326,8 +1328,8 @@ static int _convertState(int state)
   case WIFI_STATUS_LOGIN_WAIT:
     ret = WIFI_STATUS_VCT;
     break;
-  case WIFI_STATUS_FRONTIER:
-    ret = WIFI_STATUS_FRONTIER_WAIT;
+  case WIFI_STATUS_TVT:
+    ret = WIFI_STATUS_TVT_WAIT;
     break;
   case WIFI_STATUS_TRADE:
     ret = WIFI_STATUS_TRADE_WAIT;
@@ -1483,8 +1485,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
       case WIFI_P2PMATCH_DBATTLE50:
       case WIFI_P2PMATCH_DBATTLE100:
       case WIFI_P2PMATCH_DBATTLE_FREE:
-      case WIFI_P2PMATCH_FRONTIER:
       case WIFI_P2PMATCH_TRADE:
+      case WIFI_P2PMATCH_TVT:
+        
         // バトルから戻ってきたなら拡張ヒープ作成
         GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
         break;
@@ -1783,8 +1786,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   case WIFI_P2PMATCH_DBATTLE50:
   case WIFI_P2PMATCH_DBATTLE100:
   case WIFI_P2PMATCH_DBATTLE_FREE:
-  case WIFI_P2PMATCH_FRONTIER:
   case WIFI_P2PMATCH_TRADE:
+  case WIFI_P2PMATCH_TVT:
 
     GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCHEX );
     break;
@@ -2212,29 +2215,20 @@ static void WifiP2PMatchFriendListStIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 f
   case WIFI_STATUS_DBATTLE50:      // ダブル対戦中
   case WIFI_STATUS_DBATTLE100:      // ダブル対戦中
   case WIFI_STATUS_DBATTLE_FREE:      // ダブル対戦中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_MBATTLE_FREE:     // マルチバトル中
-#endif
     scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
     break;
 
 
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM_WAIT:// バトルルーム募集中
-#endif
     col = 1;
   case WIFI_STATUS_TRADE:          // 交換中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM:     // バトルルーム中
-#endif
     scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE;
     break;
 
 
-  case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
+  case WIFI_STATUS_TVT_WAIT:    // 募集中
     col = 1;
-  case WIFI_STATUS_FRONTIER:          // フロンティア中
+  case WIFI_STATUS_TVT:          // 中
     scrn_idx = PLAYER_DISP_ICON_IDX_FRONTIER;
     break;
 
@@ -2381,28 +2375,19 @@ static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATC
   case WIFI_STATUS_DBATTLE50:      // ダブル対戦中
   case WIFI_STATUS_DBATTLE100:      // ダブル対戦中
   case WIFI_STATUS_DBATTLE_FREE:      // ダブル対戦中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_MBATTLE_FREE:     // マルチバトル中
-#endif
     scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
     break;
 
 
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM_WAIT:// バトルルーム募集中
-#endif
     col = 1;
   case WIFI_STATUS_TRADE:          // 交換中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM:     // バトルルーム中
-#endif
     scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE;
     break;
 
-  case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
+  case WIFI_STATUS_TVT_WAIT:    // フロンティア募集中
     col = 1;
-  case WIFI_STATUS_FRONTIER:          // フロンティア中
+  case WIFI_STATUS_TVT:          // フロンティア中
     scrn_idx = PLAYER_DISP_ICON_IDX_FRONTIER;
     break;
 
@@ -2924,7 +2909,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     status = _WifiMyStatusGet( wk, wk->pMatch );
 
     if( (status == WIFI_STATUS_TRADE) ||
-        (status == WIFI_STATUS_FRONTIER)
+        (status == WIFI_STATUS_TVT)
         )
     { // 交換中orポフィンなら
 
@@ -4071,7 +4056,7 @@ static void _lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
     gmmNo = msg_wifilobby_025;
     break;
-  case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
+  case WIFI_STATUS_TVT_WAIT:    // フロンティア募集中
     gmmNo = msg_wifilobby_138;
     break;
 #ifdef WFP2P_DEBUG_EXON
@@ -4157,22 +4142,13 @@ static void _iconDisp(WIFIP2PMATCH_WORK * wk, int status, int vctIcon, int x,int
   case WIFI_STATUS_DBATTLE50:      // 対戦中
   case WIFI_STATUS_DBATTLE100:      // 対戦中
   case WIFI_STATUS_DBATTLE_FREE:      // 対戦中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_MBATTLE_FREE:      // 対戦中
-#endif
     pData = btl;
     break;
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
-  case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM_WAIT:// 交換募集中
-#endif
+  case WIFI_STATUS_TVT_WAIT:    // フロンティア募集中
     col = 0x1000;
   case WIFI_STATUS_TRADE:          // 交換中
-  case WIFI_STATUS_FRONTIER:          // フロンティア中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM:     // 交換中
-#endif
+  case WIFI_STATUS_TVT:          // フロンティア中
     pData = chg;
     break;
   case WIFI_STATUS_LOGIN_WAIT:    // 待機中　ログイン直後はこれ
@@ -4392,11 +4368,6 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
   else if((mySt == WIFI_STATUS_DBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE_FREE)){
     return TRUE;
   }
-#ifdef WFP2P_DEBUG_EXON
-  else if((mySt == WIFI_STATUS_MBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_MBATTLE_FREE)){
-    return TRUE;
-  }
-#endif
   else if((mySt == WIFI_STATUS_SBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_SBATTLE50)){
     return TRUE;
   }
@@ -4409,14 +4380,9 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
   else if((mySt == WIFI_STATUS_TRADE_WAIT)&&(targetSt == WIFI_STATUS_TRADE)){
     return TRUE;
   }
-  else if((mySt == WIFI_STATUS_FRONTIER_WAIT)&&(targetSt == WIFI_STATUS_FRONTIER)){
+  else if((mySt == WIFI_STATUS_TVT_WAIT)&&(targetSt == WIFI_STATUS_TVT)){
     return TRUE;
   }
-#ifdef WFP2P_DEBUG_EXON
-  else if((mySt == WIFI_STATUS_BATTLEROOM_WAIT)&&(targetSt == WIFI_STATUS_BATTLEROOM)){
-    return TRUE;
-  }
-#endif
   else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)){
     return TRUE;
   }
@@ -5640,26 +5606,17 @@ typedef struct {
 #ifdef WFP2P_DEBUG_EXON
 #define WIFI_PARENTINFO_MENULIST_COMMON   ( 5 ) // 変動しない部分の数
 #else
-#define WIFI_PARENTINFO_MENULIST_COMMON   ( 3 ) // 変動しない部分の数
+#define WIFI_PARENTINFO_MENULIST_COMMON   ( 4 ) // 変動しない部分の数
 #endif
 _infoMenu _parentInfoMenuList[ WIFI_PARENTINFO_MENULIST_MAX ] = {
   // 変動しない部分
   { msg_wifilobby_057, (u32)WIFI_STSET_SINGLEBATTLE },
   { msg_wifilobby_058, (u32)WIFI_STSET_DOUBLEBATTLE },
   { msg_wifilobby_025, (u32)WIFI_STATUS_TRADE_WAIT },
-#ifdef WFP2P_DEBUG_EXON
-  { msg_wifilobby_debug_00, (u32)WIFI_STATUS_BATTLEROOM_WAIT },
-  { msg_wifilobby_debug_01, (u32)WIFI_STATUS_MBATTLE_FREE_WAIT },
-#endif
+  { msg_wifilobby_076, (u32)WIFI_STATUS_TVT_WAIT },
+  
 };
 
-// 追加リストデータ
-static _infoMenu _minigameMenu = {
-  msg_wifilobby_147, (u32)WIFI_STSET_MINIGAME
-  };
-static _infoMenu _frontierMenu = {
-  msg_wifilobby_138, (u32)WIFI_STATUS_FRONTIER_WAIT
-  };
 static _infoMenu _endMenu = {
   msg_wifilobby_032, (u32)BMPMENULIST_CANCEL
   };
@@ -5752,24 +5709,6 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   p_menu = _parentInfoMenuList;
 
 
-  // フロンティアの有無
-  if( _frontierInCheck( wk ) == TRUE ){
-    length ++;      //  項目数追加
-    list_h.count ++;  // リスト最大項目数追加
-    list_h.line ++;   // リスト表示最大数追加
-
-    p_menu[ length-1 ] = _frontierMenu;
-  }
-
-  // ミニゲームの有無
-  if( _miniGameInCheck( wk ) == TRUE ){
-    length ++;      //  項目数追加
-    list_h.count ++;  // リスト最大項目数追加
-    list_h.line ++;   // リスト表示最大数追加
-
-    p_menu[ length-1 ] =_minigameMenu;
-  }
-
   // 終了の追加
   {
     length ++;      //  項目数追加
@@ -5860,6 +5799,10 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     Snd_SePlay(_SE_DESIDE);
     // 交換チェック
     if((ret == WIFI_STATUS_TRADE_WAIT) && (2 > num )){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_053, FALSE);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+    }
+    else if((ret == WIFI_STATUS_TVT_WAIT) && (2 > num )){
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_053, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
     }
@@ -6199,20 +6142,12 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(status == WIFI_STATUS_TRADE_WAIT){
     gmmno = msg_wifilobby_004;
   }
-  else if(status == WIFI_STATUS_FRONTIER_WAIT){
+  else if(status == WIFI_STATUS_TVT_WAIT){
     gmmno = msg_wifilobby_137;
   }
-  else if(status == WIFI_STATUS_FRONTIER){
+  else if(status == WIFI_STATUS_TVT){
     gmmno = msg_wifilobby_140;
   }
-#ifdef WFP2P_DEBUG_EXON
-  else if(status == WIFI_STATUS_BATTLEROOM_WAIT){
-    gmmno = msg_wifilobby_debug_00;
-  }
-  else if(status == WIFI_STATUS_BATTLEROOM){
-    gmmno = msg_wifilobby_debug_00;
-  }
-#endif
   else if(_modeBattleWait(status)){
     gmmno = msg_wifilobby_003;
   }
@@ -6617,7 +6552,8 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         // もしくはランダムマッチなので相互に親子が分かれる
         fst = WifiDwc_getFriendStatus(friendNo - 1);
 
-        if(( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE!=status))
+        if(( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) &&
+           (WIFI_STATUS_TRADE!=status) && (WIFI_STATUS_TVT!=status))
         {
           NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
             status = WIFI_STATUS_LOGIN_WAIT;
@@ -6649,7 +6585,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
           }
 
         }
-        else if( ( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE==status) ){
+        else if( ( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && ((WIFI_STATUS_TRADE==status)||(WIFI_STATUS_TVT==status)) ){
           if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1, status ) ){
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
             _commStateChange(wk,status);
@@ -6903,11 +6839,6 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   else if((mySt == WIFI_STATUS_DBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE_FREE)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
-#ifdef WFP2P_DEBUG_EXON
-  else if((mySt == WIFI_STATUS_MBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_MBATTLE_FREE)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-  }
-#endif
   else if((mySt == WIFI_STATUS_SBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_SBATTLE50)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
@@ -6920,14 +6851,12 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   else if((mySt == WIFI_STATUS_TRADE_WAIT)&&(targetSt == WIFI_STATUS_TRADE)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
+  else if((mySt == WIFI_STATUS_TVT_WAIT)&&(targetSt == WIFI_STATUS_TVT)){
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
+  }
   else if((mySt == WIFI_STATUS_FRONTIER_WAIT)&&(targetSt == WIFI_STATUS_FRONTIER)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
-#ifdef WFP2P_DEBUG_EXON
-  else if((mySt == WIFI_STATUS_BATTLEROOM_WAIT)&&(targetSt == WIFI_STATUS_BATTLEROOM)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-  }
-#endif
   else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)&&(myvchat > 0)){  // 080703 tomoya VCHATがONであることを条件に追加
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_INIT);
     return seq;
@@ -7213,16 +7142,10 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       status = WIFI_STATUS_TRADE;
       wk->endSeq = WIFI_P2PMATCH_TRADE;
     }
-    else if((status == WIFI_STATUS_FRONTIER_WAIT) || (status == WIFI_STATUS_FRONTIER)){
-      status = WIFI_STATUS_FRONTIER;
-      wk->endSeq = WIFI_P2PMATCH_FRONTIER;
+    if((status == WIFI_STATUS_TVT_WAIT) || (status == WIFI_STATUS_TVT)){
+      status = WIFI_STATUS_TVT;
+      wk->endSeq = WIFI_P2PMATCH_TVT;
     }
-#ifdef WFP2P_DEBUG_EXON
-    else if((status == WIFI_STATUS_BATTLEROOM_WAIT) || (status == WIFI_STATUS_BATTLEROOM)){
-      status = WIFI_STATUS_BATTLEROOM;
-      wk->endSeq = WIFI_P2PMATCH_BATTLEROOM;
-    }
-#endif
     else if((status == WIFI_STATUS_SBATTLE50_WAIT) || (status == WIFI_STATUS_SBATTLE50)){
       status = WIFI_STATUS_SBATTLE50;
       wk->endSeq = WIFI_P2PMATCH_SBATTLE50;
@@ -7986,11 +7909,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
 
     WIFI_STATUS_SetWifiMode(wk->pMatch,status);
     //    wk->pMatch->myMatchStatus.status = status;
-    if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_FRONTIER)
-#ifdef WFP2P_DEBUG_EXON
-       ||(status == WIFI_STATUS_BATTLEROOM)
-#endif
-       ){
+    if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_TVT)|| (status == WIFI_STATUS_FRONTIER) ){
       //     Snd_BgmFadeOut( 24, BGM_FADE_VCHAT_TIME);
     }
     else if(status == WIFI_STATUS_VCT){
@@ -9489,9 +9408,6 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
   case WIFI_STATUS_DBATTLE50:      // 対戦中
   case WIFI_STATUS_DBATTLE100:      // 対戦中
   case WIFI_STATUS_DBATTLE_FREE:      // 対戦中
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_MBATTLE_FREE:      // 対戦中
-#endif
     msg_id = msg_wifilobby_024;
     //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
@@ -9514,11 +9430,6 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
   case WIFI_STATUS_DBATTLE_FREE_WAIT:   // 対戦募集中
     msg_id = msg_wifilobby_062;
     break;
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_MBATTLE_FREE_WAIT:   // 対戦募集中
-    msg_id = msg_wifilobby_062;
-    break;
-#endif
   case WIFI_STATUS_TRADE:          // 交換中
     msg_id = msg_wifilobby_026;
     //    *col = _COL_N_GRAY;
@@ -9527,24 +9438,13 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
     msg_id = msg_wifilobby_025;
     break;
-  case WIFI_STATUS_FRONTIER:          // フロンティア中
-    msg_id = msg_wifilobby_139;
-    //    *col = _COL_N_GRAY;
+  case WIFI_STATUS_TVT_WAIT:          // TVT
+    msg_id = msg_wifilobby_076;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
     msg_id = msg_wifilobby_138;
     break;
-#ifdef WFP2P_DEBUG_EXON
-  case WIFI_STATUS_BATTLEROOM:          // バトルルーム中
-    msg_id = msg_wifilobby_debug_00;
-    //    *col = _COL_N_GRAY;
-    _COL_N_GRAY;
-    break;
-  case WIFI_STATUS_BATTLEROOM_WAIT:    // バトルルーム募集中
-    msg_id = msg_wifilobby_debug_00;
-    break;
-#endif
   case WIFI_STATUS_LOGIN_WAIT:    // 待機中　ログイン直後はこれ
     msg_id = msg_wifilobby_046;
     break;

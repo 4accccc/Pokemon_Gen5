@@ -153,9 +153,9 @@ static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc state, int line)
 
 static void _createAccount8(PDWACC_WORK* pWork)
 {
-  if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
+//  if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+//    return;
+//  }
   if(GFL_UI_KEY_GetTrg()){
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(NULL);
@@ -363,11 +363,13 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
 
       s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
-      
-      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0", proid);
 
-      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,GFL_STD_StrLen(pWork->tempbuffer));
-      NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap), pWork->tempbuffer, GFL_STD_StrLen(pWork->tempbuffer) );
+      GFL_STD_MemClear(pWork->tempbuffer, sizeof(pWork->tempbuffer));
+      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d", proid);
+
+      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d\n",proid,STD_StrLen(pWork->tempbuffer));
+      NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
+                            pWork->tempbuffer, STD_StrLen(pWork->tempbuffer) );
 
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_ghttpInfoWait1);

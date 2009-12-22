@@ -19,6 +19,7 @@
 #include "savedata/dreamworld_data.h"
 #include "net_app/wifi_login.h"
 #include "system/main.h"      //GFL_HEAPID_APP参照
+#include "title/title.h"
 
 #include "net_app/pdwacc.h"
 
@@ -123,6 +124,10 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
   GFL_PROC_FreeWork(proc);
 
   GFL_HEAP_DeleteHeap(HEAPID_PDWACC);
+
+  //タイトルに戻る
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+
   return GFL_PROC_RES_FINISH;
 }
 
