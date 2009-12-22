@@ -1080,6 +1080,14 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
   BTLV_MCSS_TCB_WORK  *pmtw = ( BTLV_MCSS_TCB_WORK * )work;
   BTLV_MCSS_WORK *bmw = pmtw->bmw;
 
+  //立ち位置にポケモンが存在しなかったらフリーする
+  if( !BTLV_MCSS_CheckExist( bmw, pmtw->position ) ) 
+  { 
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+    return;
+  }
+
   if( pmtw->emw.wait == 0 ){
     pmtw->emw.wait = pmtw->emw.wait_tmp;
     BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_FLIP );
