@@ -3067,6 +3067,7 @@ s16 MMDL_GetHeightGrid( const MMDL * mmdl )
 {
 	fx32 y = MMDL_GetVectorPosY( mmdl );
 	s16 gy = SIZE_GRID_FX32( y );
+  GF_ASSERT( 0 );
 	return( gy );
 }
 

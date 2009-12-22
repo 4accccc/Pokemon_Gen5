@@ -1343,7 +1343,7 @@ u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir )
 {
   s16 x,y,z;
   x = MMDL_GetGridPosX( mmdl ) + MMDL_TOOL_GetDirAddValueGridX( dir );
-  y = MMDL_GetHeightGrid( mmdl );
+  y = MMDL_GetGridPosY( mmdl );
   z = MMDL_GetGridPosZ( mmdl ) + MMDL_TOOL_GetDirAddValueGridZ( dir );
   return( MMDL_HitCheckMoveCurrent(mmdl,x,y,z,dir) );
 }
@@ -1379,7 +1379,7 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
             debug = TRUE;
           }
           if( hx == x && hz == z ){
-            int hy = MMDL_GetHeightGrid( cmmdl );
+            int hy = MMDL_GetGridPosY( cmmdl );
             int sy = hy - y;
             if( sy < 0 ){ sy = -sy; }
             #ifdef DEBUG_ONLY_FOR_kagaya
@@ -1398,7 +1398,7 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
           hz = MMDL_GetOldGridPosZ( cmmdl );
         
           if( hx == x && hz == z ){
-            int hy = MMDL_GetHeightGrid( cmmdl );
+            int hy = MMDL_GetGridPosY( cmmdl );
             int sy = hy - y;
             if( sy < 0 ){ sy = -sy; }
             if( sy < H_GRID_FELLOW_SIZE ){
@@ -1773,7 +1773,7 @@ BOOL MMDL_GetMapPosHeight(
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 方向で現在座標を更新。高さは更新されない。
+ * 方向で現在座標を更新。×高さは更新されない。<-するようにした
  * @param  mmdl    MMDL * 
  * @param  dir      移動方向
  * @retval  nothing
@@ -1786,8 +1786,17 @@ void MMDL_UpdateGridPosDir( MMDL * mmdl, u16 dir )
   MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
   
   MMDL_AddGridPosX( mmdl, MMDL_TOOL_GetDirAddValueGridX(dir) );
-  MMDL_AddGridPosY( mmdl, 0 );
   MMDL_AddGridPosZ( mmdl, MMDL_TOOL_GetDirAddValueGridZ(dir) );
+  
+  {
+    VecFx32 pos;
+    fx32 height = 0;
+    MMDL_TOOL_GetCenterGridPos(
+        MMDL_GetGridPosX(mmdl), MMDL_GetGridPosZ(mmdl), &pos );
+    pos.y = MMDL_GetVectorPosY( mmdl );
+    MMDL_GetMapPosHeight( mmdl, &pos, &height );
+    MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(height) );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1800,7 +1809,7 @@ void MMDL_UpdateGridPosDir( MMDL * mmdl, u16 dir )
 void MMDL_UpdateGridPosCurrent( MMDL * mmdl )
 {
   MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
-  MMDL_SetOldGridPosY( mmdl, MMDL_GetHeightGrid(mmdl) );
+  MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
   MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
 }
 

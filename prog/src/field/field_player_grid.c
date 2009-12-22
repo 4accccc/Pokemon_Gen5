@@ -2803,7 +2803,7 @@ static u32 gjiki_HitCheckMove(
   u32 hit;
   VecFx32 pos;
   s16 gx = MMDL_GetGridPosX( mmdl );
-  s16 gy = MMDL_GetHeightGrid( mmdl );
+  s16 gy = MMDL_GetGridPosY( mmdl );
   s16 gz = MMDL_GetGridPosZ( mmdl );
   JIKI_MOVEHITBIT ret = MMDL_MOVEHITBIT_NON;
   
