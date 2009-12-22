@@ -1412,7 +1412,8 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_S
   GFL_CLWK *act;
   
   my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  level = my_occupy->intrude_level;
+//  level = my_occupy->intrude_level;
+  level = MISSION_GetMissionTimer(&intcomm->mission);
   
   for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
     act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];

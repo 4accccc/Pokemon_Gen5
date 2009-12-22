@@ -29,6 +29,7 @@ static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid);
 static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_Update_AchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_ClearTargetInfo(MISSION_TARGET_INFO *target);
+static s32 _GetMissionTime(MISSION_SYSTEM *mission);
 
 
 
@@ -91,11 +92,7 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   if(GFL_NET_IsParentMachine() == TRUE 
       && MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    u32 timer = GFL_RTC_GetTimeBySecond();
-    if(timer < mission->start_timer){ //start_timerより小さくなっている場合は回り込みが発生
-      timer += GFL_RTC_TIME_SECOND_MAX + 1;
-    }
-    if(timer - mission->start_timer > mission->data.cdata.time){
+    if(_GetMissionTime(mission) > mission->data.cdata.time){
       GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
       MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
     }
@@ -105,6 +102,50 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   MISSION_SendUpdate(intcomm, mission);
   MISSION_Update_EntryAnswer(intcomm, mission);
   MISSION_Update_AchieveAnswer(intcomm, mission);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション経過時間を取得
+ *
+ * @param   mission		
+ *
+ * @retval  s32		経過時間
+ */
+//--------------------------------------------------------------
+static s32 _GetMissionTime(MISSION_SYSTEM *mission)
+{
+  u32 timer = GFL_RTC_GetTimeBySecond();
+  
+  if(timer < mission->start_timer){ //start_timerより小さくなっている場合は回り込みが発生
+    timer += GFL_RTC_TIME_SECOND_MAX + 1;
+  }
+  return timer - mission->start_timer;
+}
+
+//==================================================================
+/**
+ * ミッション残り時間を取得
+ *
+ * @param   mission		
+ *
+ * @retval  s32		残り時間
+ */
+//==================================================================
+s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission)
+{
+  s32 timer, ret_timer;
+  
+  if(MISSION_RecvCheck(mission) == TRUE 
+      && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
+    ret_timer = mission->data.cdata.time;
+    ret_timer -= _GetMissionTime(mission);
+    if(ret_timer < 0){
+      return 0;
+    }
+    return ret_timer;
+  }
+  return 0;
 }
 
 //==================================================================

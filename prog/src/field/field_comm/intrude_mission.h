@@ -48,4 +48,5 @@ extern void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list);
 extern BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id);
 extern void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata, WORDSET *wordset, HEAPID temp_heap_id);
+extern s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission);
 
