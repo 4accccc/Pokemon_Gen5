@@ -12,7 +12,7 @@
 #pragma once
 
 #include "comm_tvt_local_def.h"
-#include "buflen.h"
+#include "net/ctvt_beacon.h"
 //======================================================================
 //	define
 //======================================================================
@@ -22,7 +22,6 @@
 //ビーコン収集数
 #define CTVT_COMM_BEACON_NUM (16)
 
-#define CTVT_COMM_NAME_LEN (SAVELEN_PLAYER_NAME+EOM_SIZE)
 
 //======================================================================
 //	enum
@@ -67,17 +66,6 @@ typedef struct
   u8  dataNo;
   u8  pad[2];
 }CTVT_COMM_WAVE_HEADER;
-
-//ビーコンデータ
-typedef struct
-{
-  STRCODE name[CTVT_COMM_NAME_LEN];
-  u16     id;
-  u8      connectNum;
-  u8      pad;
-  //呼び出しターゲット
-  u8      callTarget[3][6];
-}CTVT_COMM_BEACON;
 
 //======================================================================
 //	proto

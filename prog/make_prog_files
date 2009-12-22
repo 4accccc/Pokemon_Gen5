@@ -244,7 +244,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_pl_boat_init.c \
         gamesystem/comm_player_support.c \
         gamesystem/pm_season.c \
-        field/scrcmd_sodateya.c
+        field/scrcmd_sodateya.c \
+		net/ctvt_beacon.c
 
 
 #================================================
