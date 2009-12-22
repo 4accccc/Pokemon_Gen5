@@ -454,7 +454,6 @@ int GameBeacon_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-  OS_TPrintf("ServiceID1 = %d, ID2 = %d\n", GameServiceID1, GameServiceID2);
   if((GameServiceID1 == WB_NET_FIELDMOVE_SERVICEID && GameServiceID2 == WB_NET_PALACE_SERVICEID)
       || (GameServiceID2==WB_NET_FIELDMOVE_SERVICEID && GameServiceID1==WB_NET_PALACE_SERVICEID)
       || (GameServiceID1==WB_NET_FIELDMOVE_SERVICEID&&GameServiceID2==WB_NET_COMM_TVT)){
