@@ -883,40 +883,41 @@ void GFI_NET_BeaconSetInfo( void )
   if(!GFL_NET_IsInit()){
     return;
   }
+  {
+    //    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    GFL_NETWL* pNetWL = _pNetWL;
+    GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 
-  //    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-	GFL_NETWL* pNetWL = _pNetWL;
-	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
-
-	if(pInit->beaconGetSizeFunc==NULL){
-		NET_PRINT("beaconGetSizeFunc none");
-		return;
-	}
-	{
-		NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
-		size = func(pNetWL->pUserWork);
-	}
-	if((WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX) <= size){
-		OS_TPanic("size over");
-		return;
-	}
-	pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
-	pGF->serviceNo = pInit->gsid;    // ƒQ[ƒ€‚Ì”Ô†
-	pGF->GGID = pInit->ggid;
+    if(pInit->beaconGetSizeFunc==NULL){
+      NET_PRINT("beaconGetSizeFunc none");
+      return;
+    }
+    {
+      NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
+      size = func(pNetWL->pUserWork);
+    }
+    if((WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX) <= size){
+      OS_TPanic("size over");
+      return;
+    }
+    pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
+    pGF->serviceNo = pInit->gsid;    // ƒQ[ƒ€‚Ì”Ô†
+    pGF->GGID = pInit->ggid;
 #if PM_DEBUG
-	pGF->debugAloneTest = _DEBUG_ALONETEST;
+    pGF->debugAloneTest = _DEBUG_ALONETEST;
 #else
-	pGF->debugAloneTest = 0;
+    pGF->debugAloneTest = 0;
 #endif
-	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
-	GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);
+    GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+    GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);
 
-	pGF->pause = pNetWL->bPauseConnect;
-	GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
-	_setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
+    pGF->pause = pNetWL->bPauseConnect;
+    GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
+    _setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
 
 	//    DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
 	//  WH_SetUserGameInfo((u16*)pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
+  }
 }
 
 
