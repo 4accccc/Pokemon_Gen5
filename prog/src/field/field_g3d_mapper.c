@@ -707,6 +707,9 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
       GFL_G3D_MAP_ReleaseGlobalTexResource( g3Dmapper->blockWk[i].g3Dmap );
       GFL_G3D_MAP_ReleaseArc( g3Dmapper->blockWk[i].g3Dmap );
 
+      // BuildModel の破棄
+      FIELD_BMODEL_MAN_ReleaseAllMapObjects( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
+
       GFL_G3D_MAP_Delete( g3Dmapper->blockWk[i].g3Dmap );
 
       // 拡張ワークの破棄
@@ -1140,6 +1143,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 			delFlag = FALSE;
       now_blockIdx = BLOCKINFO_GetBlockIdx( &g3Dmapper->blockWk[i].blockInfo );
       
+      
       // カレントブロックと同じリクエストを除外
 			for( j=0; j<g3Dmapper->blockNum; j++ )
       {
@@ -1164,6 +1168,10 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
         FIELD_BMODEL_MAN_ReleaseAllMapObjects( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
 				// 拡張ワークの情報もクリア
 				FLD_G3D_MAP_ExWork_ClearBlockData( &g3Dmapper->blockWk[i].g3DmapExWork );
+
+        // 読み込み停止
+        GFL_G3D_MAP_ResetLoadData( g3Dmapper->blockWk[i].g3Dmap );
+        
 				delProcFlag = TRUE;
 			}
 		}
