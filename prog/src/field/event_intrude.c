@@ -208,7 +208,8 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
  *
  * @param   iedw		
  * @param   fieldWork		
- * @param   disguise_code		変装するOBJCODE (0の場合は元の姿に戻る)
+ * @param   disguise_code		変装するOBJCODE
+ *                  (DISGUISE_NO_NULLの場合は通常の姿、DISGUISE_NO_NORMALの場合はパレス時の標準姿)
  */
 //==================================================================
 void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code)

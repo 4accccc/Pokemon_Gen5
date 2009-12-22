@@ -23,6 +23,8 @@ extern VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk );
 //  fieldmapオーバーレイに配置
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetDisguiseCode( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPalaceInDisguise( VMHANDLE *core, void *wk );
 
 
 #endif	/* __ASM_NO_DEF_ */

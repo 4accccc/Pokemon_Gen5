@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_palace01
 _EVENT_DATA    ev_init_palace01
 _EVENT_DATA    ev_recover_palace01
+_EVENT_DATA    ev_scene_change_palace01
 _EVENT_DATA    ev_palace01_monolith
 _EVENT_DATA_END
 
@@ -38,6 +39,9 @@ _EVENT_DATA_END
 INIT_EVENT_START	ev_init_palace01
   //連結マップセッティング
   _INTRUDE_CONNECT_MAP_SETTING()
+  
+  //パレスIN時の強制変装イベント
+  _GET_DISGUISE_CODE( LOCALWORK0 )
 INIT_EVENT_END
 
 /**************************************************************/
@@ -47,6 +51,16 @@ INIT_EVENT_START	ev_recover_palace01
   //連結マップセッティング
 //  _INTRUDE_CONNECT_MAP_SETTING()
 INIT_EVENT_END
+
+/**************************************************************/
+/*            _SCENE_CHANGE_LABEL                            */
+/**************************************************************/
+EVENT_START	ev_scene_change_palace01
+  //パレスIN時の強制変装イベント
+  _EASY_MSG( msg_palace01_in_000 )
+  _PALACE_IN_DISGUISE()
+  $LOCALWORK0 = 1
+EVENT_END
 
 /**************************************************************/
 /*                                                            */

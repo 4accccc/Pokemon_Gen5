@@ -6055,6 +6055,31 @@
   .short  EV_SEQ_SYMBOL_POKE_SET
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  侵入時の現在の変装状況取得
+ *  @param ret_wk タイプ格納先ワーク
+ */
+//--------------------------------------------------------------
+#define _GET_DISGUISE_CODE( ret_wk ) \
+  _ASM_GET_DISGUISE_CODE  ret_wk
+
+  .macro  _ASM_GET_DISGUISE_CODE  ret_wk
+  .short  EV_SEQ_GET_DISGUISE_CODE
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　パレスIN時の変装イベント
+ */
+//--------------------------------------------------------------
+#define _PALACE_IN_DISGUISE() _ASM_PALACE_IN_DISGUISE
+
+  .macro  _ASM_PALACE_IN_DISGUISE
+  .short  EV_SEQ_PALACE_IN_DISGUISE
+  .endm
+
 //======================================================================
 //
 //

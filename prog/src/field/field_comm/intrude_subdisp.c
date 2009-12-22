@@ -176,6 +176,22 @@ enum{
   TOWN_UPDATE_REQ_UPDATE,         ///<街アイコンの更新＋変化があれば占拠エフェクト
 };
 
+enum{
+  _TOWN_NO_FREE = 0xfe,       ///<街でもパレスでもない
+  _TOWN_NO_PALACE = 0xff,     ///<パレス
+};
+
+enum{
+  NO_TOWN_CURSOR_POS_SPACE_X = 24,
+  NO_TOWN_CURSOR_POS_X = 128 - NO_TOWN_CURSOR_POS_SPACE_X * 2,
+  NO_TOWN_CURSOR_POS_Y = 0xe*8,
+};
+
+enum{
+  TOUCH_RANGE_PLAYER_ICON_X = 8,    ///<相手プレイヤーアイコンのタッチ範囲X(半径)
+  TOUCH_RANGE_PLAYER_ICON_Y = 8,    ///<相手プレイヤーアイコンのタッチ範囲Y(半径)
+};
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -266,7 +282,7 @@ static void _IntSub_ActorUpdate_PointNum(
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
-static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
+static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
@@ -1254,14 +1270,15 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
     }
     
     if(ist->palace_area == my_area){  //このプレイヤーがいる街を指す
-      town_no = _IntSub_TownPosGet(ist->zone_id, &pos);
-//※check      GF_ASSERT(town_no != 0xff);
-      if(town_no == 0xff){
+      town_no = _IntSub_TownPosGet(ist->zone_id, &pos, net_id);
+      if(town_no == _TOWN_NO_PALACE){
         town_no = 0;
       }
-      pos.x += TownWearOffset[town_num[town_no]];
+      if(town_no != _TOWN_NO_FREE){
+        pos.x += TownWearOffset[town_num[town_no]];
+        town_num[town_no]++;
+      }
       GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
-      town_num[town_no]++;
     }
     else{ //このプレイヤーがいるパレスエリアを指す
       if(intcomm->recv_profile & (1 << ist->palace_area)){
@@ -1297,10 +1314,13 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
 //--------------------------------------------------------------
 static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
 {
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GFL_CLWK *act;
   GFL_CLACTPOS pos;
+  int my_net_id;
   
-  _IntSub_TownPosGet(intcomm->intrude_status_mine.zone_id, &pos);
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
+  _IntSub_TownPosGet(intcomm->intrude_status_mine.zone_id, &pos, my_net_id);
   act = intsub->act[INTSUB_ACTOR_CUR_L];
   GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
@@ -1519,11 +1539,12 @@ static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm)
  *
  * @param   zone_id		
  * @param   dest_pos		
+ * @param   net_id
  * 
- * @retval  街No(パレスエリアの場合は0xff)
+ * @retval  街No(パレスエリアの場合は_TOWN_NO_PALACE, どこにも属さない場合は_TOWN_NO_FREE)
  */
 //--------------------------------------------------------------
-static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
+static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id)
 {
   int i;
   
@@ -1535,9 +1556,17 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
       return i;
     }
   }
-  dest_pos->x = PALACE_CURSOR_POS_X;
-  dest_pos->y = PALACE_CURSOR_POS_Y;
-  return 0xff;
+  
+  if(ZONEDATA_IsPalace(zone_id) == TRUE){
+    dest_pos->x = PALACE_CURSOR_POS_X;
+    dest_pos->y = PALACE_CURSOR_POS_Y;
+    return _TOWN_NO_PALACE;
+  }
+  else{
+    dest_pos->x = NO_TOWN_CURSOR_POS_X + NO_TOWN_CURSOR_POS_SPACE_X * net_id;
+    dest_pos->y = NO_TOWN_CURSOR_POS_Y;
+    return _TOWN_NO_FREE;
+  }
 }
 
 //==============================================================================
@@ -1593,15 +1622,35 @@ static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect)
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
 {
   u32 x, y;
-  int i;
+  int i, my_net_id, net_id;
   GFL_RECT rect;
+  GFL_CLACTPOS pos;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
   FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
-  
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  GFL_CLWK *act;
+
   if(intsub->wfbc_go == TRUE || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
       || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
     return;
+  }
+  
+  //プレイヤーアイコンタッチ判定
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(net_id != my_net_id && (intcomm->recv_profile & (1 << net_id))){
+      act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
+      if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
+        GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
+        if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
+            && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
+          Intrude_SetWarpPlayerNetID(game_comm, net_id);
+          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP);
+          return;
+        }
+      }
+    }
   }
   
   //街タッチ判定
@@ -1751,11 +1800,20 @@ static void _IntSub_TownActBitChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
 //--------------------------------------------------------------
 static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
 {
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   int bg_pal;
   
   bg_pal = intcomm->intrude_status_mine.palace_area;
   if(bg_pal == intsub->now_bg_pal){
     return;
+  }
+  
+  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    GameCommInfo_MessageEntry_MyPalace(game_comm, intcomm->intrude_status_mine.palace_area);
+  }
+  else{
+    GameCommInfo_MessageEntry_IntrudePalace(game_comm, bg_pal);
   }
   
   GFL_BG_ChangeScreenPalette(

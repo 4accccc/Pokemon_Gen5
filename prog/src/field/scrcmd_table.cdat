@@ -614,8 +614,8 @@
   
   DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
   DEF_CMD( EvCmdSymbolPokeSet, EV_SEQ_SYMBOL_POKE_SET )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPalaceInDisguise, EV_SEQ_PALACE_IN_DISGUISE )
+  DEF_CMD( EvCmdGetDisguiseCode, EV_SEQ_GET_DISGUISE_CODE )
 
   //É|ÉPÉÇÉìêÌä÷òA
   DEF_CMD( EvCmdWildBattleSet, EV_SEQ_WILD_BTL_SET )

@@ -65,6 +65,44 @@ void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION act
 
 //==================================================================
 /**
+ * ワープするプレイヤー相手を設定
+ *
+ * @param   game_comm		
+ * @param   town_tblno		
+ */
+//==================================================================
+void Intrude_SetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm, int net_id)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  
+  if(intcomm == NULL){
+    return;
+  }
+  
+  intcomm->warp_player_netid = net_id;
+}
+
+//==================================================================
+/**
+ * ワープ先のプレイヤー相手を取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  int		街番号(PALACE_TOWN_DATA_NULLの場合は無効)
+ */
+//==================================================================
+int Intrude_GetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  
+  if(intcomm == NULL){
+    return GAMEDATA_GetIntrudeMyID( GameCommSys_GetGameData(game_comm) );
+  }
+  return intcomm->warp_player_netid;
+}
+
+//==================================================================
+/**
  * ワープする街番号を設定
  *
  * @param   game_comm		

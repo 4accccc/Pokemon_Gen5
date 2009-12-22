@@ -827,7 +827,8 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
  *
  * @param   intcomm		
  * @param   gsys		
- * @param   disguise_code      •Ï‘•Œã‚ÌOBJCODE (0‚Ìê‡‚Í’Êí‚ÌŽp)
+ * @param   disguise_code      •Ï‘•Œã‚ÌOBJCODE 
+ *                  (DISGUISE_NO_NULL‚Ìê‡‚Í’Êí‚ÌŽpADISGUISE_NO_NORMAL‚Ìê‡‚ÍƒpƒŒƒXŽž‚Ì•W€Žp)
  */
 //==================================================================
 void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys, u32 disguise_code)
@@ -849,7 +850,7 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 
     GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys)));
   FIELD_PLAYER_ChangeOBJCode( fld_player, obj_code );
-  if(disguise_code == 0){
+  if(disguise_code == DISGUISE_NO_NULL){
     FIELD_PLAYER_ClearOBJCodeFix( fld_player );
   }
 }

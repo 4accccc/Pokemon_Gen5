@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-10-29T21:44:26"/>
+	<create user="matsuda" host="W00142" date="2009-12-21T18:03:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="229"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -299,6 +299,12 @@
 つぎの　ROMを　おたのしみに！</language>
 		<language name="JPN_KANJI" width="256">モノリスは　開発中です！
 次の　ROMを　お楽しみに！</language>
+	</row>
+
+	<row id="msg_palace01_in_000">
+		<comment>通常の姿でパレスに入った</comment>
+		<language name="JPN" width="256">パレスの　ちからで　すがたが　へんかした！</language>
+		<language name="JPN_KANJI" width="256">パレスの　ちからで　すがたが　へんかした！</language>
 	</row>
 
 	<flowchart-group-list>

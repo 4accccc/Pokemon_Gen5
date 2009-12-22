@@ -938,6 +938,41 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
 
 //==================================================================
 /**
+ * 侵入時のノーマル変装時のOBJCODEを取得
+ *
+ * @param   myst
+ *
+ * @retval  u16		OBJCODE
+ */
+//==================================================================
+u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst)
+{
+  static const u16 NormalDisguise_Male[] = {
+    BOY1,
+    BOY2,
+    BOY3,
+    BOY4,
+  };
+  static const u16 NormalDisguise_Female[] = {
+    GIRL1,
+    GIRL2,
+    GIRL3,
+    GIRL4,
+  };
+  int tbl_no;
+  u32 trainer_id, sex;
+  
+  trainer_id = MyStatus_GetID(myst);
+  sex = MyStatus_GetMySex(myst);
+  tbl_no = ((trainer_id >> 16) + (trainer_id & 0xffff)) % NELEMS(NormalDisguise_Male);
+  if(sex == PM_MALE){
+    return NormalDisguise_Male[tbl_no];
+  }
+  return NormalDisguise_Female[tbl_no];
+}
+
+//==================================================================
+/**
  * 侵入ステータスから表示するOBJコードを取得
  *
  * @param   sta		
@@ -953,9 +988,12 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 #if 0
   if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
 #else //※check　OBJCODE最大数チェックを入れる
-  if(sta->disguise_no == 0){
+  if(sta->disguise_no == DISGUISE_NO_NULL){
 #endif
     obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
+  }
+  else if(sta->disguise_no == DISGUISE_NO_NORMAL){
+    obj_code = Intrude_GetNormalDisguiseObjCode(myst);
   }
   else{
     obj_code = sta->disguise_no;

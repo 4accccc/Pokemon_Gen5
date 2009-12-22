@@ -2076,6 +2076,12 @@ static GMEVENT * checkSubScreenEvent(
       event = EVENT_IntrudeTownWarp(gsys, fieldWork, Intrude_GetWarpTown(game_comm));
     }
     break;
+  case FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP:
+    {
+      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      event = EVENT_IntrudePlayerWarp(gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
+    }
+    break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT:
     event = EVENT_IntrudeMissionPut(gsys, fieldWork, FIELDMAP_GetHeapID(fieldWork));
     break;

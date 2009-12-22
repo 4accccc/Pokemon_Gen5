@@ -950,7 +950,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
 
   case SEQ_DISGUISE_START:  //•Ï‘•–ß‚·
-    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, 0);
+    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, DISGUISE_NO_NORMAL);
     (*seq)++;
     break;
   case SEQ_DISGUISE_MAIN:

@@ -42,6 +42,11 @@ enum{
 ///パレスの裏フィールドへワープする時のワープ先座標のパターン数
 #define PALACE_WARP_POS_PATERN    (4)
 
+enum{
+  DISGUISE_NO_NULL = 0,         ///<変装無し
+  DISGUISE_NO_NORMAL = 0xffff,  ///<パレス標準の変装姿
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -93,6 +98,7 @@ extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
 extern int Intrude_GetPalaceTownZoneID(int town_tblno);
 extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec);
 extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
+extern u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst);
 extern u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst);
 extern BOOL Intrude_OtherPlayerExistence(void);
 extern BOOL Intrude_ObjPauseCheck(GAMESYS_WORK *gsys);

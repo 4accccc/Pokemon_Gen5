@@ -705,3 +705,29 @@ void GameCommInfo_MessageEntry_Mission(GAME_COMM_SYS_PTR gcsp, int accept_netid)
 {
   GameCommInfo_SetQue(gcsp, accept_netid, msg_invasion_mission_000);
 }
+
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：「xxxx」のパレスにいます
+ *
+ * @param   gcsp		
+ * @param   intrude_netid		侵入先のNetID
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_MyPalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid)
+{
+  GameCommInfo_SetQue(gcsp, intrude_netid, msg_invasion_test08_00);
+}
+
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：「xxxx」のパレスに入りました！
+ *
+ * @param   gcsp		
+ * @param   intrude_netid		侵入先のNetID
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid)
+{
+  GameCommInfo_SetQue(gcsp, intrude_netid, msg_invasion_intrude_001);
+}

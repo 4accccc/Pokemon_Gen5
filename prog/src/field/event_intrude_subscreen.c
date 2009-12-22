@@ -63,6 +63,36 @@ GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, in
   return event;
 }
 
+//==================================================================
+/**
+ * 侵入によるサブスクリーン切り替えイベント起動
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudePlayerWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, int player_netid)
+{
+  GMEVENT * event;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  ZONEID warp_zone_id;
+  VecFx32 pos;
+	INTRUDE_COMM_SYS_PTR intcomm;
+
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm == NULL || (intcomm->recv_profile & (1 << player_netid)) == 0){
+    return NULL;
+  }
+  
+  warp_zone_id = intcomm->intrude_status[player_netid].zone_id;
+  pos = intcomm->intrude_status[player_netid].player_pack.pos;
+  pos.z += 32 << FX32_SHIFT;
+  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP);
+  return event;
+}
 
 
 //==============================================================================
