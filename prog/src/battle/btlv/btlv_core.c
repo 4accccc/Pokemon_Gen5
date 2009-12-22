@@ -1096,12 +1096,12 @@ BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
  * @param   pos
  */
 //=============================================================================================
-void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos pos, u16 effectNo )
+void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
 {
   BTL_Printf("vpos=%d にエフェクト発動\n", vpos);
   BTLV_EFFECT_AddByPos( vpos, effectNo );
 }
-BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos pos )
+BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
   if( !BTLV_EFFECT_CheckExecute() ){
     return TRUE;
