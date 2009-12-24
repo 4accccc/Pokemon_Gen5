@@ -2854,7 +2854,7 @@ $(DIR_TEMP)/c03_g00_01.nsbmd: $(DIR_RES)/c03_g00_01.imd
 #wf_00_00
 $(DIR_OUTPUT)/wf_00_00.3dppack: $(DIR_TEMP)/wf_00_00.nsbmd $(DIR_RES)/wf_00_00.bin $(DIR_RES)/wf_00_00.3dmd
 	@echo create 3dppack wf_00_00
-	@$(BINLINKER) $(DIR_TEMP)/wf_00_00.nsbmd $(DIR_RES)/wf_00_00.bin $(DIR_RES)/wf_00_00.3dmd $(DIR_OUTPUT)/wf_00_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/wf_00_00.nsbmd $(DIR_RES)/wf_00_00.bin $(DIR_RES)/wf_00_00.3dmd $(DIR_OUTPUT)/wf_00_00.3dppack RD
 
 $(DIR_TEMP)/wf_00_00.nsbmd: $(DIR_RES)/wf_00_00.imd
 	@echo create_nsbmd wf_00_00
@@ -2863,7 +2863,7 @@ $(DIR_TEMP)/wf_00_00.nsbmd: $(DIR_RES)/wf_00_00.imd
 #wf_01_00
 $(DIR_OUTPUT)/wf_01_00.3dppack: $(DIR_TEMP)/wf_01_00.nsbmd $(DIR_RES)/wf_01_00.bin $(DIR_RES)/wf_01_00.3dmd
 	@echo create 3dppack wf_01_00
-	@$(BINLINKER) $(DIR_TEMP)/wf_01_00.nsbmd $(DIR_RES)/wf_01_00.bin $(DIR_RES)/wf_01_00.3dmd $(DIR_OUTPUT)/wf_01_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/wf_01_00.nsbmd $(DIR_RES)/wf_01_00.bin $(DIR_RES)/wf_01_00.3dmd $(DIR_OUTPUT)/wf_01_00.3dppack RD
 
 $(DIR_TEMP)/wf_01_00.nsbmd: $(DIR_RES)/wf_01_00.imd
 	@echo create_nsbmd wf_01_00
@@ -2872,7 +2872,7 @@ $(DIR_TEMP)/wf_01_00.nsbmd: $(DIR_RES)/wf_01_00.imd
 #wf_00_01
 $(DIR_OUTPUT)/wf_00_01.3dppack: $(DIR_TEMP)/wf_00_01.nsbmd $(DIR_RES)/wf_00_01.bin $(DIR_RES)/wf_00_01.3dmd
 	@echo create 3dppack wf_00_01
-	@$(BINLINKER) $(DIR_TEMP)/wf_00_01.nsbmd $(DIR_RES)/wf_00_01.bin $(DIR_RES)/wf_00_01.3dmd $(DIR_OUTPUT)/wf_00_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/wf_00_01.nsbmd $(DIR_RES)/wf_00_01.bin $(DIR_RES)/wf_00_01.3dmd $(DIR_OUTPUT)/wf_00_01.3dppack RD
 
 $(DIR_TEMP)/wf_00_01.nsbmd: $(DIR_RES)/wf_00_01.imd
 	@echo create_nsbmd wf_00_01
@@ -2890,7 +2890,7 @@ $(DIR_TEMP)/wf_01_01.nsbmd: $(DIR_RES)/wf_01_01.imd
 #bc_00_00
 $(DIR_OUTPUT)/bc_00_00.3dppack: $(DIR_TEMP)/bc_00_00.nsbmd $(DIR_RES)/bc_00_00.bin $(DIR_RES)/bc_00_00.3dmd
 	@echo create 3dppack bc_00_00
-	@$(BINLINKER) $(DIR_TEMP)/bc_00_00.nsbmd $(DIR_RES)/bc_00_00.bin $(DIR_RES)/bc_00_00.3dmd $(DIR_OUTPUT)/bc_00_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/bc_00_00.nsbmd $(DIR_RES)/bc_00_00.bin $(DIR_RES)/bc_00_00.3dmd $(DIR_OUTPUT)/bc_00_00.3dppack RD
 
 $(DIR_TEMP)/bc_00_00.nsbmd: $(DIR_RES)/bc_00_00.imd
 	@echo create_nsbmd bc_00_00
@@ -2899,7 +2899,7 @@ $(DIR_TEMP)/bc_00_00.nsbmd: $(DIR_RES)/bc_00_00.imd
 #bc_01_00
 $(DIR_OUTPUT)/bc_01_00.3dppack: $(DIR_TEMP)/bc_01_00.nsbmd $(DIR_RES)/bc_01_00.bin $(DIR_RES)/bc_01_00.3dmd
 	@echo create 3dppack bc_01_00
-	@$(BINLINKER) $(DIR_TEMP)/bc_01_00.nsbmd $(DIR_RES)/bc_01_00.bin $(DIR_RES)/bc_01_00.3dmd $(DIR_OUTPUT)/bc_01_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/bc_01_00.nsbmd $(DIR_RES)/bc_01_00.bin $(DIR_RES)/bc_01_00.3dmd $(DIR_OUTPUT)/bc_01_00.3dppack RD
 
 $(DIR_TEMP)/bc_01_00.nsbmd: $(DIR_RES)/bc_01_00.imd
 	@echo create_nsbmd bc_01_00
@@ -2908,7 +2908,7 @@ $(DIR_TEMP)/bc_01_00.nsbmd: $(DIR_RES)/bc_01_00.imd
 #bc_00_01
 $(DIR_OUTPUT)/bc_00_01.3dppack: $(DIR_TEMP)/bc_00_01.nsbmd $(DIR_RES)/bc_00_01.bin $(DIR_RES)/bc_00_01.3dmd
 	@echo create 3dppack bc_00_01
-	@$(BINLINKER) $(DIR_TEMP)/bc_00_01.nsbmd $(DIR_RES)/bc_00_01.bin $(DIR_RES)/bc_00_01.3dmd $(DIR_OUTPUT)/bc_00_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/bc_00_01.nsbmd $(DIR_RES)/bc_00_01.bin $(DIR_RES)/bc_00_01.3dmd $(DIR_OUTPUT)/bc_00_01.3dppack RD
 
 $(DIR_TEMP)/bc_00_01.nsbmd: $(DIR_RES)/bc_00_01.imd
 	@echo create_nsbmd bc_00_01
@@ -2917,7 +2917,7 @@ $(DIR_TEMP)/bc_00_01.nsbmd: $(DIR_RES)/bc_00_01.imd
 #bc_01_01
 $(DIR_OUTPUT)/bc_01_01.3dppack: $(DIR_TEMP)/bc_01_01.nsbmd $(DIR_RES)/bc_01_01.bin $(DIR_RES)/bc_01_01.3dmd
 	@echo create 3dppack bc_01_01
-	@$(BINLINKER) $(DIR_TEMP)/bc_01_01.nsbmd $(DIR_RES)/bc_01_01.bin $(DIR_RES)/bc_01_01.3dmd $(DIR_OUTPUT)/bc_01_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/bc_01_01.nsbmd $(DIR_RES)/bc_01_01.bin $(DIR_RES)/bc_01_01.3dmd $(DIR_OUTPUT)/bc_01_01.3dppack RD
 
 $(DIR_TEMP)/bc_01_01.nsbmd: $(DIR_RES)/bc_01_01.imd
 	@echo create_nsbmd bc_01_01

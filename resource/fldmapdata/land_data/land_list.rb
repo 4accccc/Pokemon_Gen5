@@ -48,6 +48,7 @@ FNAME_DMYFILE_NOGRID_H_IMD = "dummy_h_ng.imd"
 MAPTYPESTR_GRID = "MAPTYPE_GRID"
 MAPTYPESTR_CROSS = "MAPTYPE_CROSS"
 MAPTYPESTR_NOGRID = "MAPTYPE_NOGRID"
+MAPTYPESTR_RANDOM = "MAPTYPE_RANDOM"
 
 #4byte補正rubyファイル名
 RUBYNAME_PAD4BYTE = "pad4byte.rb"
@@ -86,7 +87,7 @@ end
 # マップタイプ　グリッド用一覧、出力ルール書き込み
 #=======================================================================
 def file_write_grid( name,
-  file_output_list, file_temp_list, file_depend_list, file_make_depend )
+  file_output_list, file_temp_list, file_depend_list, file_make_depend, binary_type )
   #land_output_list
 	file_output_list.printf( "\"%s/%s.3dppack\"\n", DIR_OUTPUT, name )
   
@@ -109,7 +110,7 @@ def file_write_grid( name,
   file_make_depend.printf( "\t@echo create 3dppack %s\n", name )
   
   file_make_depend.printf(
-    "\t@%s %s/%s.nsbmd %s/%s.bin %s/%s.3dmd %s/%s.3dppack WB\n\n",
+    "\t@%s %s/%s.nsbmd %s/%s.bin %s/%s.3dmd %s/%s.3dppack #{binary_type}\n\n",
     STR_BINLINKER,
     DIRSTR_TEMP, name,
     DIRSTR_RES, name,
@@ -345,7 +346,7 @@ while file_name = ARGV.shift
     if( type == MAPTYPESTR_GRID )
       file_write_grid( name,
         file_output_list, file_temp_list,
-        file_depend_list, file_make_depend )
+        file_depend_list, file_make_depend, "WB" )
     elsif( type == MAPTYPESTR_CROSS )
       file_write_cross( name,
         file_output_list, file_temp_list,
@@ -354,6 +355,10 @@ while file_name = ARGV.shift
       file_write_nogrid( name,
         file_output_list, file_temp_list,
         file_depend_list, file_make_depend )
+    elsif( type == MAPTYPESTR_RANDOM )
+      file_write_grid( name,
+        file_output_list, file_temp_list,
+        file_depend_list, file_make_depend, "RD" )
     else
       printf( "%s:land_list.rb ERROR UNKNOWN MAPTYPE(%s)\n", file_name, type )
       printf( "%s\n", line )

@@ -184,14 +184,7 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
   { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
-	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
-};
-
-static const GFL_G3D_MAP_FILE_FUNC randommapFileFuncTbl[] = {
-	{ WBGRIDPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
-	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
-  { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
-	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
+	{ WBRANDOMPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
 };
 
@@ -644,12 +637,6 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.externalWork = NULL;
       setup.mapLoadSize = 0x2000;
 		}
-		
-		if( resistData->g3DmapFileType == FLDMAPPER_FILETYPE_RANDOM )
-		{
-      OS_TPrintf("C8!!!\n");
-			setup.mapFileFunc = randommapFileFuncTbl;
-    }
 
 
 		//ブロック制御ハンドル作成

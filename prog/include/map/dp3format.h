@@ -13,6 +13,7 @@
 #define DP3PACK_HEADER (0x4433)   //"3D"をひっくり返した
 #define WBGRIDPACK_HEADER 'BW'  //"WB"の逆 標準グリッドマップ用
 #define WBGCROSSPACK_HEADER 'CG' //"GC" GridCrossの逆 グリッド立体交差マップ用
+#define WBRANDOMPACK_HEADER 'DR'  //"RD"の逆 randomマップ用
 
 /// 高さデータ取得用
 typedef struct {
