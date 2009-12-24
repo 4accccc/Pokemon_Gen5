@@ -82,6 +82,10 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 #define DEBUG_NAMEIN_Print(x,len) /*  */
 #endif //DEBUG_PRINT_ON
 
+
+#define NAMEIN_KEY_TOUCH  //キーとタッチの操作わけ処理ON
+
+
 //-------------------------------------
 /// マクロ
 //=====================================
@@ -3837,6 +3841,7 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
   { 
     GFL_RECT rect;
 
+#ifdef NAMEIN_KEY_TOUCH
     //以前がタッチ状態ならば、動かず、キー状態へ切り替わる
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
     {
@@ -3847,6 +3852,7 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
       }
     }
     else
+#endif
     { 
       //以前がキー状態ならば、移動アニメ
       KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
@@ -3905,6 +3911,7 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     ret = TRUE;
   }
 
+#ifdef NAMEIN_KEY_TOUCH
   if( ret && GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
   {
     GFL_RECT rect;
@@ -3915,6 +3922,7 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
       return FALSE;
     }
   }
+#endif
 
   return ret;
 }
@@ -4087,6 +4095,7 @@ static BOOL Keyboard_Move_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
       )
     { 
 
+#ifdef NAMEIN_KEY_TOUCH
       //以前がタッチ状態ならば、動かず、キー状態へ切り替わる
       if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
       {
@@ -4098,6 +4107,7 @@ static BOOL Keyboard_Move_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
         }
       }
       else
+#endif
       { 
         KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
         //移動アニメ
@@ -4149,6 +4159,7 @@ static BOOL Keyboard_Move_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
       ret = TRUE;
     }
 
+#ifdef NAMEIN_KEY_TOUCH
     if( ret && GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
     {
       GFL_RECT  rect;
@@ -4159,6 +4170,7 @@ static BOOL Keyboard_Move_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
         return FALSE;
       }
     }
+#endif
   }
 
   return ret;
