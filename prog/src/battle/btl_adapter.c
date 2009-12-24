@@ -16,6 +16,10 @@
 #include "btl_action.h"
 #include "btl_adapter.h"
 
+enum {
+  PRINT_FLG = FALSE,
+};
+
 
 enum {
   DATA_BUFFER_SIZE = BTL_SERVER_CMD_QUE_SIZE + 4,
@@ -200,7 +204,7 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
   wk->returnDataSize = 0;
   wk->returnDataPreparedFlag = FALSE;
 
-  BTL_Printf(" %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
+  BU_Printf(PRINT_FLG, " Adapter-%d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
 }
 
 
@@ -227,6 +231,7 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
     {
       break;
     }
+    BU_Printf(PRINT_FLG, " [Adapter] Received from All Clients\n");
     wk->myState = AS_DONE;
     /*fallthru*/;
   case AS_DONE:
@@ -314,7 +319,7 @@ static BOOL _ReceptionClient( BTL_ADAPTER* wk )
     {
       wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
       wk->returnDataPreparedFlag = TRUE;
-      BTL_Printf("クライアント(%d)からの返信データを取得\n", wk->myID );
+      BU_Printf(PRINT_FLG, " [Adapter] Received from AdapterID=%d\n", wk->myID );
       return TRUE;
     }
     return FALSE;

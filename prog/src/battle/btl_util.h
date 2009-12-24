@@ -494,3 +494,6 @@ extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size
 
 
 
+
+#define BU_Printf( flg, ... ) if( flg ){ OS_TPrintf( __VA_ARGS__ ); }
+

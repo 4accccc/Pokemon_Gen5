@@ -902,7 +902,11 @@ static BOOL setup_comm_double( int* seq, void* work )
     }
     wk->myClientID = wk->setupParam->commPos;
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
-    OS_TPrintf("[BTL] MyClientID=%d,  MyOrgPos=%d\n", wk->myClientID, wk->myOrgPos);
+    {
+      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk, wk->myOrgPos );
+      OS_TPrintf("[BTL] Multi=%d, MyClientID=%d,  MyOrgPos=%d vpos=%d\n",
+        sp->multiMode, wk->myClientID, wk->myOrgPos, vpos);
+    }
     (*seq)++;
     return FALSE;
   }
@@ -1013,25 +1017,30 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
 {
   switch( *seq ){
   case 0:
+    if( BTL_NET_DetermineServer(wk->myClientID) ){
+      (*seq)++;
+    }
+    break;
+  case 1:
     if( BTL_NET_IsServerDetermained() )
     {
       wk->sendClientID = 0;
-      wk->ImServer = BTL_NET_IsServer();
+      wk->ImServer = BTL_NET_ImServer();
 
-      if( BTL_NET_IsServer() )
+      if( BTL_NET_ImServer() )
       {
         BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
-        (*seq) = 1;
+        (*seq) = 2;
       }
       else
       {
         BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
-        (*seq) = 2;
+        (*seq) = 3;
       }
     }
     break;
 
-  case 1:
+  case 2:
     // サーバマシンは各クライアントにデバッグパラメータを通知する
     wk->serverNotifyParam.randomContext = wk->randomContext;
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
@@ -1040,7 +1049,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
 
-  case 2:
+  case 3:
     // デバッグパラメータ受信完了
     if( BTL_NET_IsServerParamReceived(&wk->serverNotifyParam) )
     {
@@ -2767,7 +2776,7 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
     party->member[ idx1 ] = party->member[ idx2 ];
     party->member[ idx2 ] = tmp;
 
-    BTL_Printf("パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
+    BU_Printf(TRUE, "パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
 
     #if 0
     if( party->srcParty ){
@@ -3189,7 +3198,7 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
   POKEPARTY* srcParty = srcParty_Get( wk, clientID );
   BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
   u32 memberCount = PokeParty_GetPokeCount( srcParty );
-  const POKEMON_PARAM* pp;
+  POKEMON_PARAM* pp;
   BTL_POKEPARAM* bpp;
   u32 i;
 
@@ -3199,16 +3208,24 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
   {
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
     BPP_ReflectToPP( bpp );
-    pp = BPP_GetSrcData( bpp );
+    pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
     PokeParty_Add( wk->tmpParty, pp );
   }
 
   PokeParty_Copy( wk->tmpParty, srcParty );
 
-  for(i=0; i<memberCount; ++i)
+  // SrcPP ポインタをサーバ用、クライアント用パーティデータに再設定
   {
-    bpp = BTL_PARTY_GetMemberData( btlParty, i );
-    BPP_SetSrcPP( bpp, PokeParty_GetMemberPointer(srcParty, i) );
+    BTL_PARTY* btlParty_sv = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
+    for(i=0; i<memberCount; ++i)
+    {
+      pp = PokeParty_GetMemberPointer( srcParty, i );
+
+      bpp = BTL_PARTY_GetMemberData( btlParty, i );
+      BPP_SetSrcPP( bpp,  pp );
+      bpp = BTL_PARTY_GetMemberData( btlParty_sv, i );
+      BPP_SetSrcPP( bpp,  pp );
+    }
   }
 }
 // バトルパーティの内容を、バトル開始時の順に並べ直した上でオリジナルパーティデータに反映させる

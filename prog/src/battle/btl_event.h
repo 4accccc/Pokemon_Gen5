@@ -254,8 +254,12 @@ typedef enum {
 * イベント変数スタック
 */
 //--------------------------------------------------------------
-extern void BTL_EVENTVAR_Push( void );
-extern void BTL_EVENTVAR_Pop( void );
+extern void BTL_EVENTVAR_PopInpl( u32 line );
+extern void BTL_EVENTVAR_PushInpl( u32 line );
+#define BTL_EVENTVAR_Pop()  BTL_EVENTVAR_PopInpl( __LINE__ )
+#define BTL_EVENTVAR_Push() BTL_EVENTVAR_PushInpl( __LINE__ )
+
+extern void BTL_EVENTVAR_CheckStackCleared( void );
 extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value );
 extern void BTL_EVENTVAR_SetConstValue( BtlEvVarLabel label, int value );
 extern void BTL_EVENTVAR_SetRewriteOnceValue( BtlEvVarLabel label, int value );
