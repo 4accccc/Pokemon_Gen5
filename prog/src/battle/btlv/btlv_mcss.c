@@ -1083,6 +1083,7 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
   //立ち位置にポケモンが存在しなかったらフリーする
   if( !BTLV_MCSS_CheckExist( bmw, pmtw->position ) ) 
   { 
+    bmw->mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
     return;
