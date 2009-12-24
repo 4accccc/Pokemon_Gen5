@@ -202,6 +202,27 @@ void FIELD_SOUND_PushPlayJingleBGM( FIELD_SOUND *fsnd, u32 bgmno )
   FIELD_SOUND_PlayBGM( bgmno );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief BGMを再生できるかどうかを判定する
+ *
+ * @param fsnd フィールドサウンド
+ *
+ * @return 再生できる場合 TRUE
+ *         そうでなければ FALSE
+ */
+//--------------------------------------------------------------
+BOOL FIELD_SOUND_CanPlayBGM( const FIELD_SOUND *fsnd )
+{
+  BOOL loading;
+  BOOL can;
+  // ロード中かどうか
+  loading = PMSND_IsLoading();
+  // BGMを再生できるかどうか
+  can     = !(loading);
+  return can;
+}
+
 //======================================================================
 //  フィールドBGM 退避、復帰
 //======================================================================

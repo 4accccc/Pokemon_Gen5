@@ -57,6 +57,7 @@ extern void FIELD_SOUND_ChangePlayZoneBGM(
     FIELD_SOUND* fsnd, GAMEDATA* gdata, PLAYER_MOVE_FORM form, u32 zone_id );
 extern void FIELD_SOUND_PushPlayEventBGM( FIELD_SOUND *fsnd, u32 bgmno );
 extern void FIELD_SOUND_PushPlayJingleBGM( FIELD_SOUND *fsnd, u32 bgmno );
+extern BOOL FIELD_SOUND_CanPlayBGM( const FIELD_SOUND *fsnd );
 
 // フィールドBGM フェード管理
 extern void FIELD_SOUND_UpdateBGM( FIELD_SOUND* fsnd );
