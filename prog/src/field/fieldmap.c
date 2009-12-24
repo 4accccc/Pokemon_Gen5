@@ -2121,6 +2121,8 @@ static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
   }
   G3X_EdgeMarking(TRUE);
   GFL_ARC_LoadData((void *)edgeTable, ARCID_FIELD_EDGEMARK, edgemark_type);
+  //プログラム用エッジカラー設定（インデックス7番を使用します）
+  edgeTable[7] = GX_RGB(16,16,16);
   G3X_SetEdgeColorTable( edgeTable );
 }
 
