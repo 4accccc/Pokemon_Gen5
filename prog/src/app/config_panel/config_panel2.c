@@ -55,6 +55,10 @@ FS_EXTERN_OVERLAY(ui_common);
 #define GAMESYS_NONE_MOVE //ゲームシステムがなくても動く
 #endif //PM_DEBUG
 
+//-------------------------------------
+/// 切り替えマクロ
+//=====================================
+#define CONFIG_KEY_TOUCH  //キーとタッチの読み替えON
 
 //-------------------------------------
 /// パレット
@@ -588,6 +592,7 @@ static void UI_Exit( UI_WORK *p_wk );
 static void UI_Main( UI_WORK *p_wk );
 static UI_INPUT UI_GetInput( const UI_WORK *cp_wk );
 static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *p_data );
+static BOOL UI_IsKey( UI_INPUT input );
 //-------------------------------------
 /// MSGWND
 //=====================================
@@ -2284,6 +2289,42 @@ static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *
     }
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力かチェック
+ *
+ *	@param	UI_INPUT input  入力情報
+ *
+ *	@return キー入力ならTRUE　さもなくばFALSE
+ */
+//-----------------------------------------------------------------------------
+static BOOL UI_IsKey( UI_INPUT input )
+{ 
+  switch(input )
+  { 
+  case UI_INPUT_NONE:      //入力なし
+    return FALSE;
+
+  case UI_INPUT_SLIDE:     //タッチスライド
+  case UI_INPUT_FLICK:     //タッチはじき
+  case UI_INPUT_TOUCH:     //タッチトリガー
+    return FALSE;
+
+  case UI_INPUT_TRG_UP:    //キー上
+  case UI_INPUT_TRG_DOWN:  //キー下
+  case UI_INPUT_TRG_RIGHT: //キー右
+  case UI_INPUT_TRG_LEFT:  //キー左
+  case UI_INPUT_TRG_DECIDE://キー決定
+  case UI_INPUT_TRG_CANCEL://キーキャンセル
+  case UI_INPUT_CONT_UP:   //キー上
+  case UI_INPUT_CONT_DOWN: //キー下
+  case UI_INPUT_TRG_Y: //キーY
+  case UI_INPUT_TRG_X: //キーX
+    return TRUE;
+  }
+
+  return FALSE;
+}
 //=============================================================================
 /**
  *          MSGWND
@@ -2768,6 +2809,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   int y, bar_top;
   BOOL is_info_update = FALSE;
   BOOL is_bmpprint_decide;
+  BOOL  is_decide = TRUE;
 
   //入力取得
   input = UI_GetInput( cp_ui );
@@ -2776,6 +2818,37 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   y = GFL_BG_GetScrollY( p_wk->back_frm );
   bar_top = (y-SCROLL_START)/SCROLL_WINDOW_H_DOT;
 
+  //入力がキーかタッチかチェック
+#ifdef CONFIG_KEY_TOUCH
+  if( input != UI_INPUT_NONE )
+  { 
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+    {
+      if( UI_IsKey( input ) )
+      { 
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        Scroll_ChangePlt( p_wk, TRUE );
+        return;
+      }
+      else
+      { 
+        is_decide = FALSE;
+      }
+    }
+    else
+    { 
+      if( !UI_IsKey( input ) )
+      { 
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        is_decide = FALSE;
+      }
+      else
+      { 
+        is_decide = TRUE;
+      }
+   }
+  }
+#endif
 
   //入力による操作
   switch( input )
@@ -2792,7 +2865,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       //上下に移動させすぎるとちかちかしてしまうので、チェック
       if( Scroll_ChangePlt_Safe_IsOk(p_wk) )
       {
-        Scroll_ChangePlt( p_wk, TRUE );
+        Scroll_ChangePlt( p_wk, is_decide );
         GRAPHIC_StartPalleteFade( p_graphic );
       }
     }
@@ -2822,7 +2895,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
-    Scroll_ChangePlt( p_wk, TRUE );
+    Scroll_ChangePlt( p_wk, is_decide );
     GRAPHIC_StartPalleteFade( p_graphic );
     break;
 
@@ -2850,7 +2923,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
-    Scroll_ChangePlt( p_wk, TRUE );
+    Scroll_ChangePlt( p_wk, is_decide );
     GRAPHIC_StartPalleteFade( p_graphic );
     break;
 
@@ -2865,10 +2938,10 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       p_wk->select  = Scroll_PosToList( p_wk, &trg_pos );
       //項目のタッチ
       Scroll_TouchItem( p_wk, &trg_pos );
-      Scroll_ChangePlt( p_wk, TRUE );
+      Scroll_ChangePlt( p_wk, is_decide );
       GRAPHIC_StartPalleteFade( p_graphic );
       is_info_update  = TRUE;
-      is_bmpprint_decide  = TRUE;
+      is_bmpprint_decide  = is_decide;
     }
     break;
 
@@ -2877,9 +2950,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     {
       PMSND_PlaySE( CONFIG_SE_MOVE );
       Scroll_SelectItem( p_wk, 1 );
-      Scroll_ChangePlt( p_wk, TRUE );
+      Scroll_ChangePlt( p_wk, is_decide );
       GRAPHIC_StartPalleteFade( p_graphic );
-      is_bmpprint_decide  = TRUE;
+      is_bmpprint_decide  = is_decide;
     }
     else
     {
@@ -2894,9 +2967,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     {
       PMSND_PlaySE( CONFIG_SE_MOVE );
       Scroll_SelectItem( p_wk, -1 );
-      Scroll_ChangePlt( p_wk, TRUE );
+      Scroll_ChangePlt( p_wk, is_decide );
       GRAPHIC_StartPalleteFade( p_graphic );
-      is_bmpprint_decide  = TRUE;
+      is_bmpprint_decide  = is_decide;
     }
     else if( p_wk->select == CONFIG_LIST_CANCEL )
     {
