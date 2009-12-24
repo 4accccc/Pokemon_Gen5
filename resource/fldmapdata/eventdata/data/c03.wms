@@ -9,10 +9,10 @@
 #block z offset
 0
 #3dp file names
-C:\home\wb_data3d\field\out05\c03_00_00.3dp
-C:\home\wb_data3d\field\out05\c03_00_01.3dp
-C:\home\wb_data3d\field\out05\c03_01_00.3dp
-C:\home\wb_data3d\field\out05\c03_01_01.3dp
+C:\home\wb_data3d\field\out05\C3_00_00.3dp
+C:\home\wb_data3d\field\out05\C3_00_01.3dp
+C:\home\wb_data3d\field\out05\C3_01_00.3dp
+C:\home\wb_data3d\field\out05\C3_01_01.3dp
 #block size
 32 32
 #End of WorldMap SaveData
