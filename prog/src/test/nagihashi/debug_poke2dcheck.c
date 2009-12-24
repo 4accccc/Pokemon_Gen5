@@ -1232,20 +1232,20 @@ static void DEBUGPRINT_Update( DEBUGPRINT_WORK *p_wk, const int *cp_cursor, cons
 
   DEBUGPRINT_Clear( p_wk );
 
-  DEBUGPRINT_PrintV( p_wk, START_X, START_Y+*cp_cursor*16, "→" );
-  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y, "図鑑番号：%d/%d" , cp_now->mons_no,
+  DEBUGPRINT_PrintV( p_wk, START_X, START_Y+*cp_cursor*16, "ー" );
+  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y, "モンスターナンバー %d.%d" , cp_now->mons_no,
       cp_max->mons_no );
-  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+16, "フォルム：%d/%d" , cp_now->form_no,
+  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+16, "フォルム %d.%d" , cp_now->form_no,
       cp_max->form_no );
-  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+32, "せいべつ：%d/%d" , cp_now->sex,
+  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+32, "せいべつ %d.%d" , cp_now->sex,
       cp_max->sex );
-  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+48, "レア：%d/%d" , cp_now->rare,
+  DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+48, "レア %d.%d" , cp_now->rare,
         cp_max->rare );
 
-  DEBUGPRINT_Print( p_wk, START_X+32, 112, "上下で選択" );
-  DEBUGPRINT_Print( p_wk, START_X+32, 128, "左右で変更" );
-  DEBUGPRINT_Print( p_wk, START_X+32, 144, "LRで10ずつ変更" );
-  DEBUGPRINT_Print( p_wk, START_X+32, 160, "SELECTで終了" );
+  DEBUGPRINT_Print( p_wk, START_X+32, 112, "うえ したで せんたく" );
+  DEBUGPRINT_Print( p_wk, START_X+32, 128, "ひだり みぎで へんこう" );
+  DEBUGPRINT_Print( p_wk, START_X+32, 144, "LRで10ずつ へんこう" );
+  DEBUGPRINT_Print( p_wk, START_X+32, 160, "SELECTで しゅうりょう" );
 }
 //=============================================================================
 /**
@@ -1478,27 +1478,27 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
     is_update = UPDATE_CUSOR;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT
-    || GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT
+    || GFL_UI_KEY_GetRepeat() & PAD_BUTTON_B )
   {
     p_wk->now.a[ p_wk->cursor ]--;
     p_wk->now.a[ p_wk->cursor ] = MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
     is_update = UPDATE_CHANGE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT
-    || GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT
+    || GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
   {
     p_wk->now.a[ p_wk->cursor ]++;
     p_wk->now.a[ p_wk->cursor ] = MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
     is_update = UPDATE_CHANGE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
   {
     p_wk->now.a[ p_wk->cursor ]-=10;
     p_wk->now.a[ p_wk->cursor ] = MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
     is_update = UPDATE_CHANGE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
   {
     p_wk->now.a[ p_wk->cursor ]+=10;
     p_wk->now.a[ p_wk->cursor ] = MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
