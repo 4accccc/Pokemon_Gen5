@@ -42,18 +42,18 @@ BIN_SPNEWS_DATA     = $(SETTING_BIN)/spnews_data
 ELBOARD_ZONE_DATA   = $(BIN_ZONE_DATA)/*.bin 
 ELBOARD_SPNEWS_DATA = $(BIN_SPNEWS_DATA)/*.bin
 
-CONVERTDATA_GATE = $(GRAPHIC_BIN)/gelboard01.nsbmd \
-							$(GRAPHIC_BIN)/gelboard01.nsbtx \
-							$(GRAPHIC_BIN)/gelboard01_1.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_2.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_3.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_4.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_5.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_6.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_7.nsbta \
-							$(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
-							$(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
-							$(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
+CONVERTDATA_GATE   = $(GRAPHIC_BIN)/gelboard01.nsbmd \
+							       $(GRAPHIC_BIN)/gelboard01.nsbtx \
+							       $(GRAPHIC_BIN)/gelboard01_1.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_2.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_3.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_4.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_5.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_6.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_7.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
 CONVERTDATA_ZONE   = $(ELBOARD_ZONE_DATA)
 CONVERTDATA_SPNEWS = $(ELBOARD_SPNEWS_DATA)
 
@@ -86,16 +86,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv01.itp -o $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv02.itp -o $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv03.itp -o $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
-
-$(ELBOARD_ZONE_DATA): $(SETTING_SOURCE)/elboard_zone_data.txt
-	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $< $(BIN_ZONE_DATA)
-
+# タブ区切り
 $(SETTING_SOURCE)/elboard_zone_data.txt: $(SETTING_SOURCE)/elboard_zone_data.xls
-	ruby $(XLSCONV) $< > $@
-
-$(ELBOARD_SPNEWS_DATA): $(SETTING_SOURCE)/elboard_spnews_data.txt
-	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $< $(BIN_SPNEWS_DATA)
-
+	ruby $(XLSCONV) $< > $@ 
 $(SETTING_SOURCE)/elboard_spnews_data.txt: $(SETTING_SOURCE)/elboard_spnews_data.xls
 	ruby $(XLSCONV) $< > $@
 
@@ -121,12 +114,16 @@ $(targetname_gate).narc: $(CONVERTDATA_GATE)
 	nnsarc -r -l -n -i $(targetname_gate) $^
 	$(NAIXCUT) $(targetname_gate).naix
 
-$(targetname_zone).narc: $(CONVERTDATA_GATE)
-	nnsarc -r -l -n -i $(targetname_zone) $^
+$(targetname_zone).narc: $(SETTING_SOURCE)/elboard_zone_data.txt
+	rm -f $(CONVERTDATA_ZONE)
+	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $< $(BIN_ZONE_DATA) 
+	nnsarc -r -l -n -i $(targetname_zone) $(CONVERTDATA_ZONE)
 	$(NAIXCUT) $(targetname_zone).naix
 
-$(targetname_spnews).narc: $(CONVERTDATA_SPNEWS)
-	nnsarc -r -l -n -i $(targetname_spnews) $^
+$(targetname_spnews).narc: $(SETTING_SOURCE)/elboard_spnews_data.txt
+	rm -f $(CONVERTDATA_SPNEWS)
+	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $< $(BIN_SPNEWS_DATA)
+	nnsarc -r -l -n -i $(targetname_spnews) $(CONVERTDATA_SPNEWS)
 	$(NAIXCUT) $(targetname_spnews).naix
 
 endif
@@ -141,6 +138,7 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA_GATE)
+	rm -f $(CONVERTDATA_ZONE)
 	rm -f $(CONVERTDATA_SPNEWS)
 	rm -f $(targetname_gate).narc
 	rm -f $(targetname_gate).naix

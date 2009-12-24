@@ -11,18 +11,19 @@
 #define NARC_ZONE_NAIX_
 
 enum {
-	NARC_zone_gelboard01_nsbmd = 0,
-	NARC_zone_gelboard01_nsbtx = 1,
-	NARC_zone_gelboard01_1_nsbta = 2,
-	NARC_zone_gelboard01_2_nsbta = 3,
-	NARC_zone_gelboard01_3_nsbta = 4,
-	NARC_zone_gelboard01_4_nsbta = 5,
-	NARC_zone_gelboard01_5_nsbta = 6,
-	NARC_zone_gelboard01_6_nsbta = 7,
-	NARC_zone_gelboard01_7_nsbta = 8,
-	NARC_zone_gelboard01_tv01_nsbtp = 9,
-	NARC_zone_gelboard01_tv02_nsbtp = 10,
-	NARC_zone_gelboard01_tv03_nsbtp = 11
+	NARC_zone_elboard_zone_data_c02r0701_bin = 0,
+	NARC_zone_elboard_zone_data_c03r0601_bin = 1,
+	NARC_zone_elboard_zone_data_c04r0601_bin = 2,
+	NARC_zone_elboard_zone_data_c04r0701_bin = 3,
+	NARC_zone_elboard_zone_data_c04r0801_bin = 4,
+	NARC_zone_elboard_zone_data_c08r0501_bin = 5,
+	NARC_zone_elboard_zone_data_c08r0601_bin = 6,
+	NARC_zone_elboard_zone_data_c08r0701_bin = 7,
+	NARC_zone_elboard_zone_data_h01r0101_bin = 8,
+	NARC_zone_elboard_zone_data_h01r0201_bin = 9,
+	NARC_zone_elboard_zone_data_r02r0101_bin = 10,
+	NARC_zone_elboard_zone_data_r13r0201_bin = 11,
+	NARC_zone_elboard_zone_data_r14r0101_bin = 12
 };
 
 /* NARC_ZONE_NAIX_ */
