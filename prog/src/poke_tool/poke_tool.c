@@ -69,7 +69,7 @@ static POKEMON_PERSONAL_DATA* Personal_Load( u16 monsno, u16 formno );
 static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
 static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
-static  PokeType	get_type_from_item( u16 item );
+static  PokeType  get_type_from_item( u16 item );
 
 
 //============================================================================================
@@ -363,11 +363,6 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   {
     rnd = id;
   }
-  else if( rnd == PTL_SETUP_RND_NOT_RARE )
-  {
-    rnd = (u32)(id+1);
-    while( POKETOOL_CheckRare( id, rnd ) ){ rnd = (rnd+1)&0xffffffff; }
-  }
   PPP_Put( ppp, ID_PARA_personal_rnd, (u32)rnd );
 
 
@@ -491,7 +486,7 @@ void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
       change_monsno_sub_sex( ppp, next_monsno, old_monsno );
       //デフォルト名のままなら、ニックネームも書き換える
       if( chg_nickname == FALSE )
-      { 
+      {
         GFL_MSG_GetStringRaw( GlobalMsg_PokeName, next_monsno, StrBuffer, NELEMS(StrBuffer) );
         PPP_Put( ppp, ID_PARA_nickname_raw, (u32)StrBuffer );
       }
@@ -516,7 +511,7 @@ BOOL PP_ChangeFormNo( POKEMON_PARAM* pp, u16 formno )
   {
     ret = PPP_ChangeFormNo( &pp->ppp, formno );
     if( ret == TRUE )
-    { 
+    {
       PP_Renew( pp );
     }
   }
@@ -1629,7 +1624,7 @@ u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp )
  */
 //=============================================================================================
 BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no )
-{ 
+{
   return PPP_CheckWazaMachine( &pp->ppp, machine_no );
 }
 
@@ -1644,7 +1639,7 @@ BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no )
  */
 //=============================================================================================
 BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no )
-{ 
+{
   u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, NULL );
   u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
 
@@ -1663,19 +1658,19 @@ BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no )
  */
 //=============================================================================================
 BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no )
-{ 
-	PokePersonalParamID	perID;
-	u32	machine_bit;
+{
+  PokePersonalParamID perID;
+  u32 machine_bit;
 
-	if( mons_no == MONSNO_TAMAGO )
+  if( mons_no == MONSNO_TAMAGO )
   {
-		return FALSE;
-	}
+    return FALSE;
+  }
 
-	machine_bit = ( 1 << ( machine_no % 32 ) );
-	perID = POKEPER_ID_machine1 + ( machine_no / 32 );
+  machine_bit = ( 1 << ( machine_no % 32 ) );
+  perID = POKEPER_ID_machine1 + ( machine_no / 32 );
 
-	return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & machine_bit ) != 0 );
+  return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & machine_bit ) != 0 );
 }
 
 //=============================================================================================
@@ -1689,7 +1684,7 @@ BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no )
  */
 //=============================================================================================
 PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste )
-{ 
+{
   return PPP_CheckDesiredTaste( &pp->ppp, taste );
 }
 
@@ -1704,7 +1699,7 @@ PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste )
  */
 //=============================================================================================
 PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlTaste taste )
-{ 
+{
   u8 seikaku = PPP_Get( ppp, ID_PARA_seikaku, NULL );
 
   return POKETOOL_CheckDesiredTaste( seikaku, taste );
@@ -1722,7 +1717,7 @@ PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlTaste tas
 //=============================================================================================
 #include "taste.cdat"
 PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste )
-{ 
+{
   return desired_taste_tbl[ seikaku ][ taste ];
 }
 
@@ -3224,64 +3219,64 @@ static  u32 get_growtbl_param( int para, int level )
  * @retval  PokeType
  */
 //=============================================================================================
-static  PokeType	get_type_from_item( u16 item )
+static  PokeType  get_type_from_item( u16 item )
 {
-	PokeType  type;
+  PokeType  type;
 
-	switch( item ){
-	case ITEM_HINOTAMAPUREETO:
-		type = POKETYPE_HONOO;
-		break;
+  switch( item ){
+  case ITEM_HINOTAMAPUREETO:
+    type = POKETYPE_HONOO;
+    break;
   case ITEM_SIZUKUPUREETO:
-		type = POKETYPE_MIZU;
-		break;
-	case ITEM_IKAZUTIPUREETO:
-		type = POKETYPE_DENKI;
-		break;
-	case ITEM_MIDORINOPUREETO:
-		type = POKETYPE_KUSA;
-		break;
-	case ITEM_TURARANOPUREETO:
-		type = POKETYPE_KOORI;
-		break;
-	case ITEM_KOBUSINOPUREETO:
-		type = POKETYPE_KAKUTOU;
-		break;
-	case ITEM_MOUDOKUPUREETO:
-		type = POKETYPE_DOKU;
-		break;
-	case ITEM_DAITINOPUREETO:
-		type = POKETYPE_JIMEN;
-		break;
-	case ITEM_AOZORAPUREETO:
-		type = POKETYPE_HIKOU;
-		break;
-	case ITEM_HUSIGINOPUREETO:
-		type = POKETYPE_ESPER;
-		break;
-	case ITEM_TAMAMUSIPUREETO:
-		type = POKETYPE_MUSHI;
-		break;
-	case ITEM_GANSEKIPUREETO:
-		type = POKETYPE_IWA;
-		break;
-	case ITEM_MONONOKEPUREETO:	
-		type = POKETYPE_GHOST;
-		break;
-	case ITEM_RYUUNOPUREETO:	
-		type = POKETYPE_DRAGON;
-		break;
-	case ITEM_KOWAMOTEPUREETO:	
-		type = POKETYPE_AKU;
-		break;
-	case ITEM_KOUTETUPUREETO:	
-		type = POKETYPE_HAGANE;
-		break;
-	default:
-		type = POKETYPE_NORMAL;
-		break;
-	}
-	return type;
+    type = POKETYPE_MIZU;
+    break;
+  case ITEM_IKAZUTIPUREETO:
+    type = POKETYPE_DENKI;
+    break;
+  case ITEM_MIDORINOPUREETO:
+    type = POKETYPE_KUSA;
+    break;
+  case ITEM_TURARANOPUREETO:
+    type = POKETYPE_KOORI;
+    break;
+  case ITEM_KOBUSINOPUREETO:
+    type = POKETYPE_KAKUTOU;
+    break;
+  case ITEM_MOUDOKUPUREETO:
+    type = POKETYPE_DOKU;
+    break;
+  case ITEM_DAITINOPUREETO:
+    type = POKETYPE_JIMEN;
+    break;
+  case ITEM_AOZORAPUREETO:
+    type = POKETYPE_HIKOU;
+    break;
+  case ITEM_HUSIGINOPUREETO:
+    type = POKETYPE_ESPER;
+    break;
+  case ITEM_TAMAMUSIPUREETO:
+    type = POKETYPE_MUSHI;
+    break;
+  case ITEM_GANSEKIPUREETO:
+    type = POKETYPE_IWA;
+    break;
+  case ITEM_MONONOKEPUREETO:
+    type = POKETYPE_GHOST;
+    break;
+  case ITEM_RYUUNOPUREETO:
+    type = POKETYPE_DRAGON;
+    break;
+  case ITEM_KOWAMOTEPUREETO:
+    type = POKETYPE_AKU;
+    break;
+  case ITEM_KOUTETUPUREETO:
+    type = POKETYPE_HAGANE;
+    break;
+  default:
+    type = POKETYPE_NORMAL;
+    break;
+  }
+  return type;
 }
 
 
@@ -3425,18 +3420,18 @@ u32 POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID par
 /**
  * 指定したレベルにポケモンパラメータを補正します
  *
- * @param   pp		  対象のポケモンへのポインタ
- * @param   level		レベル
+ * @param   pp      対象のポケモンへのポインタ
+ * @param   level   レベル
  */
 //==================================================================
 void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level)
 {
   u32 level_exp;
   u32 monsno, form_no;
-  
+
   monsno = PP_Get(pp, ID_PARA_monsno, NULL);
   form_no = PP_Get(pp, ID_PARA_form_no, NULL);
-  
+
   level_exp = POKETOOL_GetMinExp( monsno, form_no, level );
   PP_Put(pp, ID_PARA_exp, level_exp);
   PP_Renew( pp );
@@ -3451,7 +3446,7 @@ void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level)
  */
 //==================================================================
 void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
-{ 
+{
   GF_ASSERT( pp_src != NULL );
   GF_ASSERT( pp_dst != NULL );
   *pp_dst = *pp_src;

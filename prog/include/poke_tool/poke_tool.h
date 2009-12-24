@@ -547,7 +547,7 @@ enum{
 };
 
 typedef enum
-{ 
+{
   PTL_TASTE_KARAI = 0,
   PTL_TASTE_SIBUI,
   PTL_TASTE_AMAI,
@@ -605,7 +605,6 @@ static inline u8 PTL_SETUP_POW_UNPACK( u32 powrnd, u8 abilityType )
 
 #define PTL_SETUP_RND_AUTO    (0xffffffff00000000)  ///< 個性乱数を完全にランダムで決定
 #define PTL_SETUP_RND_RARE    (0xffffffff00000001)  ///< 必ずレアカラーになるように調整
-#define PTL_SETUP_RND_NOT_RARE  (0xffffffff00000002)  ///< 必ずノーマルカラーになるように調整
 
 
 
