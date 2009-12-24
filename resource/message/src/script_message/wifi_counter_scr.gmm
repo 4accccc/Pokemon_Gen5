@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-12-22T18:28:12"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-12-24T19:39:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -412,12 +412,8 @@ C-Gear入手前</comment>
 		<comment>エラーメッセージ
 フィールド通信接続終了処理エラー時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]
-もういちど　さいしょから
-やりなおして　ください</language>
-		<language name="JPN_KANJI" width="256">通信エラーが　発生しました[BE:01:ページ切り替え（クリア）]
-もう一度　最初から
-やり直して　ください</language>
+		<language name="JPN" width="256">つうしんエラーが　はっせいしました</language>
+		<language name="JPN_KANJI" width="256">通信エラーが　発生しました</language>
 	</row>
 
 	<row id="msg_wifi_counter_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
