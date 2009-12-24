@@ -32,6 +32,8 @@
 #include "field_camera.h"
 #include "fieldmap_func.h"
 
+#include "field_fk_sound_anime.h"
+
 
 #ifdef PM_DEBUG
 
@@ -85,7 +87,6 @@ enum
 
 // アニメーションスピード
 #define EV_CAMERA_ANIME_SPEED (FX32_ONE)
-#define EV_SE_ANIME_SPEED (FX32_ONE)
 
 // 自機デモ後出現位置
 #define EV_HERO_WALK_END_GRID_X (15)
@@ -124,12 +125,67 @@ static const BOOL EV_DEMO_SE_ANIME[ FIELD_EVENT_FOURKINGS_MAX ] =
   FALSE,
   FALSE,
 };
-static const u32 EV_DEMO_SE_ANIME_PLAY_SE[ FIELD_EVENT_FOURKINGS_MAX ] = 
+static const FIELD_FK_SOUND_ANIME_DATA EV_DEMO_SE_DATA[ FIELD_EVENT_FOURKINGS_MAX ] = 
 {
-  0,
-  SEQ_SE_DECIDE1,
-  0,
-  0,
+  // 
+  {
+    {
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+    },
+  },
+
+  // 
+  {
+    {
+      SEQ_SE_DECIDE1,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+    },
+  },
+  
+  // 
+  {
+    {
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+    },
+  },
+
+  // 
+  {
+    {
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+      FIELD_FK_SOUND_ANIME_SE_NONE,
+    },
+  },
 };
 
 // SEアニメーションの起動ナンバー
@@ -184,9 +240,7 @@ typedef struct {
 ///	SE動作
 //=====================================
 typedef struct {
-  ICA_ANIME* p_anime;
-  u32 play_se;
-  fx32 frame;
+  FIELD_FK_SOUND_ANIME* p_anime;
 } EV_CIRCLEWALK_SE;
 
 
@@ -501,11 +555,11 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       result1 = EV_CAMERA_Update( &p_work->camera );
       result2 = EV_HERO_Update( &p_work->hero );
       result4 = EV_SE_ANIME_Update( &p_work->se );
-      GF_ASSERT( (result1 == result2) && (result4==result1) );
+      GF_ASSERT( (result1 == result2) );
 
       result3 = EV_BMODEL_IsEnd( &p_work->bmodel );
 
-      if( result1 && result3 )
+      if( result1 && result3 && result4 )
       {
         (*p_seq) ++;
       }
@@ -1084,14 +1138,8 @@ static void EV_SE_ANIME_Init( EV_CIRCLEWALK_SE* p_wk, u32 fourkings_no, HEAPID h
 {
   if( EV_DEMO_SE_ANIME[fourkings_no] )
   {
-    //情報の読み込み
-    p_wk->frame = 0;
-
-    // 再生Se
-    p_wk->play_se = EV_DEMO_SE_ANIME_PLAY_SE[fourkings_no];
-  
     // アニメーション読み込み
-    p_wk->p_anime = ICA_ANIME_CreateStreamingAlloc( heapID, ARCID_FOURKINGS_SCENE, EV_SE_ANIME_GETDATA_ID(fourkings_no), EV_SE_ANIME_STREAMING_INTERVAL );
+    p_wk->p_anime = FIELD_FK_SOUND_ANIME_Create( &EV_DEMO_SE_DATA[ fourkings_no ],ARCID_FOURKINGS_SCENE, EV_SE_ANIME_GETDATA_ID(fourkings_no), EV_SE_ANIME_STREAMING_INTERVAL, heapID );
   }
   else
   {
@@ -1110,7 +1158,7 @@ static void EV_SE_ANIME_Exit( EV_CIRCLEWALK_SE* p_wk )
 {
   if( p_wk->p_anime )
   {
-    ICA_ANIME_Delete( p_wk->p_anime );
+    FIELD_FK_SOUND_ANIME_Delete( p_wk->p_anime );
   }
   GFL_STD_MemClear( p_wk, sizeof(EV_CIRCLEWALK_SE) );
 }
@@ -1128,73 +1176,12 @@ static void EV_SE_ANIME_Exit( EV_CIRCLEWALK_SE* p_wk )
 static BOOL EV_SE_ANIME_Update( EV_CIRCLEWALK_SE* p_wk )
 {
   BOOL result;
-  fx32 max_frame;
 
-  max_frame = ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT;
-
-#ifndef DEBUG_FRAME_CONTROL
-  // すでに完了していないか？
-  if( max_frame <= (p_wk->frame + EV_SE_ANIME_SPEED) )
+  result = TRUE;
+  if( p_wk->p_anime )
   {
-    result = TRUE;
-    p_wk->frame = max_frame - FX32_ONE;
+    result = FIELD_FK_SOUND_ANIME_Update( p_wk->p_anime );  
   }
-  else
-  {
-    result = FALSE;
-    p_wk->frame += EV_SE_ANIME_SPEED;
-  }
-#else
-
-  if( s_DEBUG_FRAME_CONTROL_FLAG == FALSE )
-  {
-    // すでに完了していないか？
-    if( max_frame <= (p_wk->frame + EV_SE_ANIME_SPEED) )
-    {
-      result = TRUE;
-      p_wk->frame = max_frame - FX32_ONE;
-    }
-    else
-    {
-      result = FALSE;
-      p_wk->frame += EV_SE_ANIME_SPEED;
-    }
-  }
-  else
-  {
-    result = FALSE;
-    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
-    {
-      if( (p_wk->frame - EV_SE_ANIME_SPEED) >= 0 )
-      {
-        p_wk->frame -= EV_SE_ANIME_SPEED;
-      }
-    }
-    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
-    {
-      if( (p_wk->frame + EV_SE_ANIME_SPEED) < max_frame )
-      {
-        p_wk->frame += EV_SE_ANIME_SPEED;
-      }
-    }
-  }
-#endif
-
-
-  // アニメーションを進め、カメラ座標を設定
-  ICA_ANIME_SetAnimeFrame( p_wk->p_anime, p_wk->frame );
-
-  {
-    VecFx32 trans;
-
-    ICA_ANIME_GetTranslate( p_wk->p_anime, &trans );
-
-    if( trans.x == EV_DEMO_SE_ANIME_CHECK_NUM )
-    {
-      PMSND_PlaySE( p_wk->play_se );
-    }
-  }
-  
   return result;
 }
 
