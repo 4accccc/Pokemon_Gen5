@@ -618,6 +618,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	//吹き出しエフェクトパラメータ計算
 	tmsgwin->tailData.tailPat = TAIL_SETPAT_NONE;
 
+#if 0
 	//描画位置算出（センタリング）
 	{
 		u32 width = PRINTSYS_GetStrWidth(msg, tmsgwinSys->setup.fontHandle, 0);
@@ -643,6 +644,10 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 #endif
 		}
 	}
+#else
+	tmsgwin->writex = 2;
+	tmsgwin->writey = 2;
+#endif
   
 	tmsgwin->seq = WINSEQ_IDLING;
 }
