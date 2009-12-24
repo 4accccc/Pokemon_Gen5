@@ -27,14 +27,10 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-ICACONV = ..\..\..\..\tools\ica\ica_converter.rb
-XLSCONV = ../../../tools/exceltool/xls2xml/tab_out.rb
-BIN = ./bin
-
-# バイナリデータリストのマクロ定義をインクルード
-include ./bin/iss_zone_data.list
-
-CONVERTDATA = $(ISS_Z_DATA)
+ICACONV     = ..\..\..\..\tools\ica\ica_converter.rb
+XLSCONV     = ../../../tools/exceltool/xls2xml/tab_out.rb
+BIN         = ./bin
+CONVERTDATA = $(BIN)/*.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -53,15 +49,11 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-$(ISS_Z_DATA): zone.txt
-	ruby zone.rb zone.txt $(BIN)
-
+$(CONVERTDATA): zone.txt
+	ruby zone.rb $< $(BIN)
+# タブ区切り
 zone.txt: zone.xls
-	ruby $(XLSCONV) zone.xls > zone.txt
-
-$(BIN)/iss_zone_data.list: zone.xls
-	ruby $(XLSCONV) zone.xls > zone.txt
-
+	ruby $(XLSCONV) $< > $@
 endif
 
 
