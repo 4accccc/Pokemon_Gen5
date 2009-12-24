@@ -193,14 +193,3 @@ ROW_DATAHEAD.upto(file_data.size - 1) do |row_idx|
   # バイナリ出力
   news.BinaryOut(ARGV[1])
 end 
-
-# 出力バイナリリストを作成
-str = "ELBOARD_SPNEWS_DATA = "
-news_array.each do |news|
-  str += "\\"
-  str += "\n"
-  str += ARGV[1] + "/" + news.GetFilename() + ".bin"
-end
-file = File::open(ARGV[1] + "/elboard_spnews_data.list", "w")
-file.write(str)
-file.close

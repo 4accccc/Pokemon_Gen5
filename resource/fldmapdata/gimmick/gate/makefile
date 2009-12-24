@@ -30,16 +30,16 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-ICACONV        = ..\..\..\..\tools\ica\ica_converter.rb
-XLSCONV        = ../../../../tools/exceltool/xls2xml/tab_out.rb
-GRAPHIC_SOURCE = ./graphic
-GRAPHIC_BIN    = ./graphic/bin
-SETTING_SOURCE = ./setting
-SETTING_BIN    = ./setting/bin
-
-# 電光掲示板バイナリデータリストのマクロ定義をインクルード
-include ./setting/bin/elboard_zone_data.list
-include ./setting/bin/elboard_spnews_data.list
+ICACONV             = ..\..\..\..\tools\ica\ica_converter.rb
+XLSCONV             = ../../../../tools/exceltool/xls2xml/tab_out.rb
+GRAPHIC_SOURCE      = ./graphic
+GRAPHIC_BIN         = ./graphic/bin
+SETTING_SOURCE      = ./setting
+SETTING_BIN         = ./setting/bin
+BIN_ZONE_DATA       = $(SETTING_BIN)/zone_data
+BIN_SPNEWS_DATA     = $(SETTING_BIN)/spnews_data
+ELBOARD_ZONE_DATA   = $(BIN_ZONE_DATA)/*.bin 
+ELBOARD_SPNEWS_DATA = $(BIN_SPNEWS_DATA)/*.bin
 
 CONVERTDATA_GATE = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							$(GRAPHIC_BIN)/gelboard01.nsbtx \
@@ -87,16 +87,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv03.itp -o $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
 
 $(ELBOARD_ZONE_DATA): $(SETTING_SOURCE)/elboard_zone_data.txt
-	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $(SETTING_SOURCE)/elboard_zone_data.txt $(SETTING_BIN)
+	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $< $(BIN_ZONE_DATA)
 
 $(SETTING_SOURCE)/elboard_zone_data.txt: $(SETTING_SOURCE)/elboard_zone_data.xls
-	ruby $(XLSCONV) $(SETTING_SOURCE)/elboard_zone_data.xls > $(SETTING_SOURCE)/elboard_zone_data.txt
+	ruby $(XLSCONV) $< > $@
 
 $(ELBOARD_SPNEWS_DATA): $(SETTING_SOURCE)/elboard_spnews_data.txt
-	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $(SETTING_SOURCE)/elboard_spnews_data.txt $(SETTING_BIN)
+	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $< $(BIN_SPNEWS_DATA)
 
 $(SETTING_SOURCE)/elboard_spnews_data.txt: $(SETTING_SOURCE)/elboard_spnews_data.xls
-	ruby $(XLSCONV) $(SETTING_SOURCE)/elboard_spnews_data.xls > $(SETTING_SOURCE)/elboard_spnews_data.txt
+	ruby $(XLSCONV) $< > $@
 
 endif
 
