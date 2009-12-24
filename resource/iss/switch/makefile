@@ -27,14 +27,10 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-ICACONV = ..\..\..\..\tools\ica\ica_converter.rb
-XLSCONV = ../../../tools/exceltool/xls2xml/tab_out.rb
-BIN = ./bin
-
-# バイナリデータリストのマクロ定義をインクルード
-include ./bin/iss_switch_data.list
-
-CONVERTDATA = $(ISS_S_DATA)
+ICACONV     = ..\..\..\..\tools\ica\ica_converter.rb
+XLSCONV     = ../../../tools/exceltool/xls2xml/tab_out.rb
+BIN         = ./bin
+CONVERTDATA = $(BIN)/*.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -53,15 +49,11 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-$(ISS_S_DATA): switch.txt
-	ruby switch.rb switch.txt $(BIN)
-
+$(CONVERTDATA): switch.txt
+	ruby switch.rb $< $(BIN) 
+# タブ区切り
 switch.txt: switch.xls
-	ruby $(XLSCONV) switch.xls > switch.txt
-
-$(BIN)/iss_switch_data.list: switch.xls
-	ruby $(XLSCONV) switch.xls > switch.txt
-
+	ruby $(XLSCONV) $< > $@
 endif
 
 
