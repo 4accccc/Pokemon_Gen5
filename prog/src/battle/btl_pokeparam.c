@@ -572,6 +572,10 @@ void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value )
   BTL_Printf("ポケ[%d]の能力(%d)を%dに書き換えた\n", bpp->coreParam.myID, vid, value);
 }
 
+void BPP_DebugPrintTokuseiAdrs( const BTL_POKEPARAM* bpp )
+{
+  OS_TPrintf("Bpp = %p,  tok=%p\n", bpp, (void*)(&(bpp->tokusei)));
+}
 //=============================================================================================
 /**
  * 各種パラメータ取得

@@ -720,7 +720,6 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
       }
     }
   }
-  OS_TPrintf("After PokeIn\n");
 
   scproc_AfterMemberIn( wk );
 
@@ -762,6 +761,9 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   u8 i;
 
   SCQUE_Init( wk->que );
+
+  BTL_EVENTVAR_CheckStackCleared();
+
   relivePokeRec_Init( wk );
   BTL_DEADREC_StartTurn( &wk->deadRec );
   wk->numActOrder = 0;
@@ -791,7 +793,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
       wk->numEndActOrder = i+1;
       break;
     }
-    OS_TPrintf("[* SVF *] Que WritePtr=%d\n", wk->que->writePtr );
+//    OS_TPrintf("[* SVF *] Que WritePtr=%d\n", wk->que->writePtr );
   }
 
   // 全アクション処理し終えた
@@ -2038,6 +2040,8 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
+  OS_TPrintf(" INPoke = (%d - %p), tokusei=%d\n", pokeID, bpp, BPP_GetValue(bpp, BPP_TOKUSEI) );
+  BPP_DebugPrintTokuseiAdrs( bpp );
 
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
@@ -2712,6 +2716,8 @@ static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
 
   BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(outPoke) );
   scproc_ClearPokeDependEffect( wk, outPoke );
+
+  OS_TPrintf("OutPoke = (%d - %p), tokusei=%d\n", BPP_GetID(outPoke), outPoke, BPP_GetValue(outPoke, BPP_TOKUSEI) );
 
   return TRUE;
 }
@@ -7896,7 +7902,7 @@ static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, intrPokeID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MENBERCHANGE_INTR );
     intrPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-  BTL_EVENTVAR_Push();
+  BTL_EVENTVAR_Pop();
 
   // 未処理ポケモンの全ワザハンドラを削除
   for(i=0; i<wk->numActOrder; ++i)

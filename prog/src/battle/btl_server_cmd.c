@@ -619,6 +619,7 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     }
     va_end( list );
 
+    #if 0
     #ifdef BTL_PRINT_SYSTEM_ENABLE
     OS_TPrintf("[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
     for(i=0; i<arg_cnt; ++i)
@@ -626,6 +627,7 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
       OS_TPrintf("%d,", ArgBuffer[i]);
     }
     OS_TPrintf("\n");
+    #endif
     #endif
 
     put_core( que, cmd, fmt, ArgBuffer );
@@ -669,7 +671,7 @@ u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
 
     que->writePtr = pos + reserve_size;
 
-    OS_TPrintf("[QUE]reserved pos=%d, wp=%d\n", pos, que->writePtr);
+//    OS_TPrintf("[QUE]reserved pos=%d, wp=%d\n", pos, que->writePtr);
 
     return pos;
   }
@@ -695,6 +697,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
     }
     va_end( list );
 
+  /*
     OS_TPrintf("[QUE]Write Reserved Pos ... pos=%d, cmd=%d", pos, cmd );
     if( arg_cnt ){
       OS_TPrintf(" args = ");
@@ -703,6 +706,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
       }
     }
     OS_TPrintf("\n");
+  */
 
     {
       u16 default_read_pos = que->readPtr;
@@ -746,6 +750,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     {
       read_core( que, fmt, args );
 
+      #if 0
       #ifdef BTL_PRINT_SYSTEM_ENABLE
       {
         u8 arg_cnt = SC_ARGFMT_GetArgCount( fmt );
@@ -757,6 +762,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
         }
         OS_TPrintf("\n");
       }
+      #endif
       #endif
     }
     else
@@ -806,23 +812,23 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     va_start( list, scType );
     strID = va_arg( list, int );
 
-    OS_TPrintf( "[QUE] PUT MSG SC=%d, StrID=%d", scType, strID );
+//    OS_TPrintf( "[QUE] PUT MSG SC=%d, StrID=%d", scType, strID );
 
     scque_put2byte( que, scType );
     scque_put2byte( que, strID );
     if( scType == SC_ARGFMT_MSG_SE ){
       u16 seID = va_arg( list, int );
       scque_put2byte( que, seID );
-      OS_TPrintf( "SE_ID=%d", seID);
+//      OS_TPrintf( "SE_ID=%d", seID);
     }
-    OS_TPrintf( "\n  args=");
+//    OS_TPrintf( "\n  args=");
 
     do {
       arg = va_arg( list, int );
-      OS_TPrintf("%d ", arg);
+//      OS_TPrintf("%d ", arg);
       scque_put2byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
-    OS_TPrintf("\n");
+//    OS_TPrintf("\n");
 
     va_end( list );
   }
@@ -833,19 +839,19 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
   int idx_begin = 1;
 
   args[0] = scque_read2byte( que );
-  OS_TPrintf("[QUE] READ MSG strID=%d\n", args[0]);
+//  OS_TPrintf("[QUE] READ MSG strID=%d\n", args[0]);
 
   if( scType == SC_ARGFMT_MSG_SE ){
     args[1] = scque_read2byte( que );
     ++idx_begin;
-    OS_TPrintf(" setSE=%d\n", args[1]);
+//    OS_TPrintf(" setSE=%d\n", args[1]);
   }
 
   {
     int i = idx_begin;
     for(i=idx_begin; i<BTL_SERVERCMD_ARG_MAX; ++i){
       args[i] = scque_read2byte( que );
-      OS_TPrintf(" msg arg[%d] = %d\n", i-idx_begin, args[i]);
+//      OS_TPrintf(" msg arg[%d] = %d\n", i-idx_begin, args[i]);
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }

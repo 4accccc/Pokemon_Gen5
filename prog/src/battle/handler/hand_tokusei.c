@@ -563,7 +563,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
         handlerTable = funcTbl[i].func( &numHandlers );
 
-        BTL_Printf("ポケモン[%d]の とくせい(%d)ハンドラを追加\n", pokeID, tokusei);
+        OS_TPrintf("ポケモン[%d-%p]の とくせい(%d)ハンドラを追加\n", pokeID, pp, tokusei);
         return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei, agi, pokeID, handlerTable, numHandlers );
       }
     }
@@ -585,11 +585,15 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
   BTL_EVENT_FACTOR* factor;
   u8 pokeID = BPP_GetID( pp );
 
+  OS_TPrintf("ポケモン[%d]の とくせいハンドラを除去したい…\n", pokeID);
+
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
-    BTL_Printf("ポケモン[%d]の とくせいハンドラを除去\n", pokeID);
+    u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
+    OS_TPrintf("  とくせい (%d) ハンドラが見つかった\n", tokuseiID);
     BTL_EVENT_FACTOR_Remove( factor );
   }
+  OS_TPrintf("-----\n");
 }
 
 

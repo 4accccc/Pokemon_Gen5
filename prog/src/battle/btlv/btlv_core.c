@@ -620,7 +620,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
-  BTL_Printf("交換リスト画面モード=%d\n", wk->plistData.mode);
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
   wk->plistData.chg_waza = 0;
@@ -629,6 +628,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
+  OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
 
   {
     u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
@@ -666,8 +666,6 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      BTL_Printf("ポケ選択おわった\n");
-
       if( wk->plistData.sel_poke != BPL_SEL_EXIT )
       {
         if( wk->plistData.mode == BPL_MODE_NORMAL ){
@@ -740,6 +738,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
     wk->plistData.pfd = BTLV_EFFECT_GetPfd();
+    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
 
     wk->selectItemSeq = 1;
   }
@@ -1790,6 +1789,7 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
+  OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
 
   wk->selectItemSeq = 0;
 }

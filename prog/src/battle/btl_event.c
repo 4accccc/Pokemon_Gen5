@@ -261,6 +261,10 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 //=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
+  if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI ){
+    OS_TPrintf("ポケ[%d]のとくせい(%d)ハンドラ除去確定\n", factor->dependID, factor->subID);
+  }
+
   if( factor == FirstFactorPtr )
   {
     FirstFactorPtr = factor->next;
@@ -524,6 +528,11 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 depend
 
   for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
   {
+    /*
+    if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI ){
+      OS_TPrintf("seek dependID=%d, subID=%d\n", factor->dependID, factor->subID);
+    }
+    */
     if( (factor->factorType == factorType) && (factor->dependID == dependID) )
     {
       return factor;
@@ -625,7 +634,18 @@ static void varStack_Init( void )
   }
 }
 
-void BTL_EVENTVAR_Push( void )
+void BTL_EVENTVAR_CheckStackCleared( void )
+{
+  VAR_STACK* stack = &VarStack;
+
+  if( stack->sp ){
+    GF_ASSERT_MSG(0, "sp=%d", stack->sp);
+    varStack_Init();
+  }
+}
+
+
+void BTL_EVENTVAR_PushInpl( u32 line )
 {
   VAR_STACK* stack = &VarStack;
 
@@ -646,6 +666,7 @@ void BTL_EVENTVAR_Push( void )
       GF_ASSERT_MSG(0, "Event StackPointer =%d 危険水域です！！", stack->sp);
     }
     #endif
+//    OS_TPrintf("PUSH [%5d] SP=%d\n", line, stack->sp);
   }
   else
   {
@@ -653,7 +674,7 @@ void BTL_EVENTVAR_Push( void )
   }
 }
 
-void BTL_EVENTVAR_Pop( void )
+void BTL_EVENTVAR_PopInpl( u32 line )
 {
   VAR_STACK* stack = &VarStack;
 
@@ -681,6 +702,8 @@ void BTL_EVENTVAR_Pop( void )
         }
       }
     }
+//    OS_TPrintf("Pop! [%5d] SP=%d\n", line, stack->sp);
+
     BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] POP  sp:%d\n", stack->sp);
   }
   else
