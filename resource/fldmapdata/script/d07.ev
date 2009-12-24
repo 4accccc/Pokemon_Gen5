@@ -33,5 +33,5 @@ _EVENT_DATA_END
 /*ŠÅ”Â01                                                      */
 /**************************************************************/
 EVENT_START  ev_bg_d07_board_01
-	_EASY_MSG( msg_d07_sign1_01 )
+	_EASY_BGWIN_MSG(msg_d07_sign1_01 , TYPE_POST)
 EVENT_END

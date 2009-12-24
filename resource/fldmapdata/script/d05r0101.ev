@@ -169,7 +169,7 @@ ev_d05r0101_rival_02:
 	//======================================//
 	
 	//ÅyâºÅzÉVÅ[ÉìêÿÇËë÷Ç¶
-	_MAP_CHANGE( ZONE_ID_D05, 164, 474, DIR_DOWN )
+	_MAP_CHANGE( ZONE_ID_D05, 164, 474, DIR_LEFT )
 	
 _RET
 

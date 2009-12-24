@@ -25,6 +25,7 @@ _EVENT_DATA    ev_d01r0101_support_02
 _EVENT_DATA    ev_pos_d01r0101_support_03
 _EVENT_DATA    ev_pos_d01r0101_support_04
 _EVENT_DATA    ev_d01r0101_item_01
+_EVENT_DATA    ev_init_d01r0101
 _EVENT_DATA_END
 
 
@@ -33,6 +34,32 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_d01r0101_flag_change:
 //  _END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d01r0101
+	
+
+	//夢ポケモンイベントの値によってサポートの初期位置を変更する
+	IF $WK_SCENE_D01R0101_POKE == 1 THEN
+		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 23, 0, 22, DIR_DOWN )
+	
+	ELSIF $WK_SCENE_D01R0101_POKE == 2 THEN
+		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 24, 0, 22, DIR_RIGHT )
+	
+	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
+		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 27, 0, 15, DIR_UP )
+	
+	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
+		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 27, 0, 12, DIR_DOWN )
+
+	ELSE
+	
+	ENDIF
+
+INIT_EVENT_END
+
 
 /**************************************************************/
 /*   D01R0101　ジムリーダー対策ポケモンくれるガール            */
@@ -390,8 +417,6 @@ EVENT_START   ev_pos_d01r0101_support_04
 	//夢ポケモン鳴いて退場
 	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_01,D01R0101_POKE_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
-	_OBJ_ANIME_WAIT()
 	
 	//======================================//
 	//だいじなもの出現
@@ -399,6 +424,9 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ADD(D01R0101_ITEM_01)
 	
 	//======================================//
+	
+	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
+	_OBJ_ANIME_WAIT()
 	
 	//夢ポケモン非表示
 	_OBJ_DEL(D01R0101_POKE_01)
@@ -456,8 +484,7 @@ EVENT_END
 //	R01　夢イベント用：いあい切り後にサポート来る  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_01
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -527,7 +554,7 @@ _ANIME_LABEL	anm_d01r0101_pokemon_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　夢イベント用：アイテムを取得後サポートが隣接 
+//	R01　夢イベント用：アイテムを発見して　サポートが隣接 
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_04
 	_ANIME_DATA	AC_WALK_R_8F,3
