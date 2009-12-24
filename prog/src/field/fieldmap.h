@@ -135,5 +135,7 @@ extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fiel
 extern void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq );
 extern BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork );
 
+extern BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork );
+
 extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );

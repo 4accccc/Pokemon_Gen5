@@ -175,6 +175,9 @@ struct _WEATHER_TASK {
 	// ライト情報
 	FIELD_LIGHT* p_light;
 
+	// サウンド情報
+	const FIELD_SOUND* cp_sound;
+
 	// ゾーン用フォグ、ライト情報
 	const FIELD_ZONEFOGLIGHT*	cp_zonefog;
 	
@@ -299,12 +302,13 @@ static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist
  *	@param	p_fog			フィールドフォグ
  *	@param	p_zonefog		ゾーン用フォグライト除法
  *	@param	p_3dbg			3DBGシステム
+ *	@param  cp_sound    サウンドシステム
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, u32 heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, const FIELD_SOUND* cp_sound, u32 heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -317,6 +321,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->p_light		= p_light;
 	p_wk->cp_zonefog	= cp_zonefog;
 	p_wk->p_3dbg		= p_3dbg;
+	p_wk->cp_sound	= cp_sound;
 
 	return p_wk;
 }
@@ -395,6 +400,13 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数  フェードイン	呼び出し
 	case WEATHER_TASK_SEQ_CALL_FADEIN:
+
+    // BGM 読み込み中は、この処理を行わない
+    if( FIELD_SOUND_CanPlayBGM( p_wk->cp_sound ) == FALSE )
+    {
+      TOMOYA_Printf( "Weather BGM wait...\n" );
+      break;
+    }
     
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
@@ -404,6 +416,14 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数	 フェードなし	呼び出し
 	case WEATHER_TASK_SEQ_CALL_NOFADE:		
+
+    // BGM 読み込み中は、この処理を行わない
+    if( FIELD_SOUND_CanPlayBGM( p_wk->cp_sound ) == FALSE )
+    {
+      TOMOYA_Printf( "Weather BGM wait...\n" );
+      break;
+    }
+    
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_nofade, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
@@ -1533,6 +1553,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	FIELD_LIGHT* p_light;
 	FIELD_3DBG* p_3dbg;
 	const FIELD_CAMERA* cp_camera;
+	const FIELD_SOUND* cp_sound;
 
 	// 一時退避
 	p_unit		= p_wk->p_unit;
@@ -1541,6 +1562,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_light		= p_wk->p_light;
 	cp_camera	= p_wk->cp_camera;
 	p_3dbg		= p_wk->p_3dbg;
+	cp_sound  = p_wk->cp_sound;
 
 	// クリア
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_TASK) );
@@ -1552,7 +1574,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->cp_camera	= cp_camera;
 	p_wk->p_3dbg	= p_3dbg;
 	p_wk->cp_zonefog = cp_zonefog;
-
+	p_wk->cp_sound = cp_sound;
 }
 
 //----------------------------------------------------------------------------

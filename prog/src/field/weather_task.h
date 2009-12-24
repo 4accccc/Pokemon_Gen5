@@ -207,7 +207,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, u32 heapID );
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, const FIELD_SOUND* cp_sound, u32 heapID );
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 

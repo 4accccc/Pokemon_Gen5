@@ -696,12 +696,18 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   }
 
   // 天気システム生成
-  fieldWork->weather_sys = FIELD_WEATHER_Init(
-      fieldWork->camera_control,
-      fieldWork->light,
-      fieldWork->fog,
-			fieldWork->zonefog, 
-      fieldWork->heapID );
+  {
+    const FIELD_SOUND* fsnd;
+    fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
+    
+    fieldWork->weather_sys = FIELD_WEATHER_Init(
+        fieldWork->camera_control,
+        fieldWork->light,
+        fieldWork->fog,
+  			fieldWork->zonefog, 
+        fsnd,
+        fieldWork->heapID );
+  }
   
   // 天気晴れ
   FIELD_WEATHER_Set(
@@ -3134,3 +3140,28 @@ BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork  )
 {
   return fieldWork->MapFadeReq;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SOUND、BGMの読み込み中チェック   BGMの再生やSEの再生が出来ません。
+ *
+ *	@param	fieldWork 
+ *
+ *	@retval TRUE    読み込み中
+ *	@retval FALSE   読み込んでない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork )
+{
+  const FIELD_SOUND* fsnd;
+
+  GF_ASSERT( fieldWork );
+  fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
+
+  return FIELD_SOUND_CanPlayBGM( fsnd );
+}
+
+
+
