@@ -49,9 +49,6 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# コンバート
-$(CONVERTDATA): dungeon.txt
-	ruby dungeon.rb $< $(BIN)
 # タブ区切り
 dungeon.txt: dungeon.xls
 	ruby $(XLSCONV) $< > $@
@@ -65,8 +62,10 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(CONVERTDATA)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: dungeon.txt
+	rm -f $(CONVERTDATA)
+	ruby dungeon.rb $< $(BIN)
+	nnsarc -r -l -n -i $(targetname) $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 endif
