@@ -30,6 +30,7 @@
 #include "field/field_msgbg.h"
 #include "field_encount.h"
 #include "effect_encount.h"
+#include "move_pokemon.h"
 
 #include "weather.h"
 #include "field_fog.h"
@@ -704,7 +705,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   // 天気晴れ
   FIELD_WEATHER_Set(
-			fieldWork->weather_sys, ZONEDATA_GetWeatherID(fieldWork->map_id), fieldWork->heapID );
+			fieldWork->weather_sys, FIELDMAP_GetZoneWeatherID( fieldWork, fieldWork->map_id), fieldWork->heapID );
 
   //フィールドギミックセットアップ
   FLDGMK_SetUpFieldGimmick(fieldWork);
@@ -1364,6 +1365,24 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->weather_sys;
 }
+
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK 指定ゾーンの現在の天候を返す
+ * @param	fieldWork	FIELDMAP_WORK
+ * @retval FIELD_WEATHER*
+ */
+//--------------------------------------------------------------
+u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
+{
+  u16 weather = MP_CheckMovePokeWeather( fieldWork->gamedata, zone_id );
+
+  if(weather != WEATHER_NO_NONE){
+    return weather;
+  }
+	return ZONEDATA_GetWeatherID( zone_id );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -2487,9 +2506,9 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 //--------------------------------------------------------------
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-	u32 w_no = ZONEDATA_GetWeatherID( zone_id );
+	u16 w_no =  FIELDMAP_GetZoneWeatherID( fieldWork, zone_id );
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
-	
+
 	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
 		FIELD_WEATHER_Change( we, w_no );
 	}

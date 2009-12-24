@@ -20,6 +20,7 @@
 #include "battle/battle.h"
 #include "gamesystem/btl_setup.h"
 
+#include "field/weather_no.h"
 #include "move_pokemon_def.h"
 #include "move_pokemon.h"
 
@@ -219,15 +220,15 @@ void MP_MovePokemonNeighboring(ENC_SV_PTR inEncData)
 /**
  * 移動ポケモンゾーン取得
  *
- * @param	inIndex		ゾーンテーブルインデックス
+ * @param	  inTarget  移動ポケモンID
  *
  * @retval  MVPOKE_ZONE_NULL  隠れているので無効
  * @retval  それ以外　移動ポケモンがいるゾーンID
  */
 //--------------------------------------------------------------------------------------------
-u16 MP_GetMovePokeZone(const u8 inIndex)
+u16 MP_GetMovePokeZoneID( ENC_SV_PTR inEncData, const u8 inTarget)
 {
-	return GetZoneID( inIndex );
+	return GetZoneID( EncDataSave_GetMovePokeZoneIdx( inEncData, inTarget) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -282,14 +283,14 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 {
 	POKEMON_PARAM *poke_param;
 	MPD_PTR	 mpd;
-	ENC_SV_PTR data;
+	ENC_SV_PTR enc;
 	MYSTATUS * my_st;
 
 	int monsno;
 	u8 lv,move_type;
 	
-	data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
-	mpd = EncDataSave_GetMovePokeDataPtr(data, inTargetPoke);
+	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	mpd = EncDataSave_GetMovePokeDataPtr(enc, inTargetPoke);
 	
 	switch(inTargetPoke){
 	case MOVE_POKE_RAIKAMI:
@@ -333,7 +334,7 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 	GFL_HEAP_FreeMemory(poke_param);
 
 	//初回移動ポケモン出現場所決定
-  MP_JumpMovePokemon( data, inTargetPoke);
+  MP_JumpMovePokemon( enc, inTargetPoke);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -438,6 +439,33 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 移動ポケモンゾーン天候変化チェック
+ *
+ * @param	  zone_id		現在のゾーンID
+ *
+ * @retval  MVPOKE_ZONE_NULL  隠れているので無効
+ * @retval  それ以外　移動ポケモンがいるゾーンID
+ */
+//--------------------------------------------------------------------------------------------
+u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
+{
+	ENC_SV_PTR enc;
+	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	
+  if ( EncDataSave_IsMovePokeValid( enc, MOVE_POKE_RAIKAMI) ){
+    if( zone_id == MP_GetMovePokeZoneID(enc,MOVE_POKE_RAIKAMI)){
+      return WEATHER_NO_SPARK;
+    }
+	}
+  if( EncDataSave_IsMovePokeValid( enc, MOVE_POKE_KAZAKAMI) ){
+    if( zone_id == MP_GetMovePokeZoneID(enc,MOVE_POKE_KAZAKAMI)){
+      return WEATHER_NO_SNOWSTORM;
+    }
+  }
+  return WEATHER_NO_NONE; //変更なし 
+}
 
 /////////////////////////////////////////////////////////////////////
 //ローカル

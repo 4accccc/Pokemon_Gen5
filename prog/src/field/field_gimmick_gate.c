@@ -1437,7 +1437,7 @@ static void AddNews_WEATHER( GATEWORK* work )
       }
       // 天気を取得
       {
-        int weather = ZONEDATA_GetWeatherID( zone_id[i] );
+        int weather = FIELDMAP_GetZoneWeatherID( work->fieldmap, zone_id[i] );
         strbuf_weather = GFL_MSG_CreateString( msg_gate, str_id_weather[weather] );
       }
       // 地名＋天気のセットを作成
