@@ -13,7 +13,6 @@
 #include "arc/arc_def.h"
 #include "gamesystem/pm_season.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
-#include "../../../resource/iss/dungeon/entry_table.cdat"
 
 
 //==========================================================================================
@@ -103,46 +102,46 @@ typedef struct
 //-----------------------------------------------------------------------------------------
 static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 {
-	int i;
+	int dat_id;
 	BGM_PARAMSET* paramset;
 
 	// 本体を作成
 	paramset = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAMSET) );
 
 	// データ数を取得
-	paramset->dataNum = NELEMS(entry_table);
+	paramset->dataNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_DUNGEON );
 
 	// バッファ確保
 	paramset->param = GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAM) * paramset->dataNum );
 
 	// 各データを取得
-	for( i=0; i<paramset->dataNum; i++ )
+	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
 	{
-    GFL_ARC_LoadDataOfs( &paramset->param[i], 
-        ARCID_ISS_DUNGEON, entry_table[i].datID, 0, sizeof(BGM_PARAM) );
+    GFL_ARC_LoadDataOfs( &paramset->param[dat_id], 
+        ARCID_ISS_DUNGEON, dat_id, 0, sizeof(BGM_PARAM) );
 	} 
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Load BGM parameters\n" );
 	OBATA_Printf( "- dataNum = %d\n", paramset->dataNum );
-	for( i=0; i<paramset->dataNum; i++ )
+	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
 	{ 
-		OBATA_Printf( "- data[%d].zoneID = %d\n", i, paramset->param[i].zoneID ); 
-		OBATA_Printf( "- data[%d].pitch  = %d, %d, %d, %d\n", i, 
-        paramset->param[i].pitch[PMSEASON_SPRING], 
-        paramset->param[i].pitch[PMSEASON_SUMMER], 
-        paramset->param[i].pitch[PMSEASON_AUTUMN], 
-        paramset->param[i].pitch[PMSEASON_WINTER] );
-		OBATA_Printf( "- data[%d].tempo  = %d, %d, %d, %d\n", i,
-        paramset->param[i].tempo[PMSEASON_SPRING], 
-        paramset->param[i].tempo[PMSEASON_SUMMER], 
-        paramset->param[i].tempo[PMSEASON_AUTUMN], 
-        paramset->param[i].tempo[PMSEASON_WINTER] );
-		OBATA_Printf( "- data[%d].reverb = %d, %d, %d, %d\n", i,
-        paramset->param[i].reverb[PMSEASON_SPRING], 
-        paramset->param[i].reverb[PMSEASON_SUMMER], 
-        paramset->param[i].reverb[PMSEASON_AUTUMN], 
-        paramset->param[i].reverb[PMSEASON_WINTER] );
+		OBATA_Printf( "- data[%d].zoneID = %d\n", dat_id, paramset->param[dat_id].zoneID ); 
+		OBATA_Printf( "- data[%d].pitch  = %d, %d, %d, %d\n", dat_id, 
+        paramset->param[dat_id].pitch[PMSEASON_SPRING], 
+        paramset->param[dat_id].pitch[PMSEASON_SUMMER], 
+        paramset->param[dat_id].pitch[PMSEASON_AUTUMN], 
+        paramset->param[dat_id].pitch[PMSEASON_WINTER] );
+		OBATA_Printf( "- data[%d].tempo  = %d, %d, %d, %d\n", dat_id,
+        paramset->param[dat_id].tempo[PMSEASON_SPRING], 
+        paramset->param[dat_id].tempo[PMSEASON_SUMMER], 
+        paramset->param[dat_id].tempo[PMSEASON_AUTUMN], 
+        paramset->param[dat_id].tempo[PMSEASON_WINTER] );
+		OBATA_Printf( "- data[%d].reverb = %d, %d, %d, %d\n", dat_id,
+        paramset->param[dat_id].reverb[PMSEASON_SPRING], 
+        paramset->param[dat_id].reverb[PMSEASON_SUMMER], 
+        paramset->param[dat_id].reverb[PMSEASON_AUTUMN], 
+        paramset->param[dat_id].reverb[PMSEASON_WINTER] );
 	}
 
 	// 読み込んだデータを返す
