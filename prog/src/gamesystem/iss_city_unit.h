@@ -24,10 +24,10 @@ typedef struct _ISS_C_UNIT ISS_C_UNIT;
  * @breif ユニットを作成する
  *
  * @param heap_id 使用するヒープID
- * @param zone_id 読み込むユニットデータをゾーンIDで指定
+ * @param dat_id  読み込むユニットデータのアーカイブ内インデックス
  */
 //-----------------------------------------------------------------------------------------
-extern ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 zone_id );
+extern ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 dat_id );
 
 //-----------------------------------------------------------------------------------------
 /**

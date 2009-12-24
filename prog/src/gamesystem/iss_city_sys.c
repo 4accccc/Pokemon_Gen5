@@ -14,7 +14,6 @@
 #include "field/field_const.h"
 #include "iss_city_unit.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
-#include "../../../resource/iss/city/entry_table.cdat"
 
 
 //===========================================================================================
@@ -48,7 +47,7 @@ struct _ISS_CITY_SYS
 	u8   activeUnitNo;	// 動作中のユニット番号
   int  volume;        // 音量
 
-	// ISSユニット情報
+	// ユニット情報
 	u8        unitNum;		// ユニット数
 	ISS_C_UNIT** unit;		// ユニット配列
 };
@@ -238,18 +237,19 @@ BOOL ISS_CITY_SYS_IsOn( const ISS_CITY_SYS* sys )
 //-------------------------------------------------------------------------------------------
 static void LoadUnitData( ISS_CITY_SYS* sys )
 {
-  int i;
+  int datid;
 
   // 登録されているユニットの数を取得
-  sys->unitNum = NELEMS(entry_table);
+  sys->unitNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_CITY );
 
   // 各ユニットを作成
   sys->unit = GFL_HEAP_AllocMemory( sys->heapID, sys->unitNum * sizeof(ISS_C_UNIT*) );
-  for( i=0; i<sys->unitNum; i++ )
-  {
-    sys->unit[i] = ISS_C_UNIT_Create( sys->heapID, entry_table[i].zoneID );
-  }
 
+  // 各ユニットデータを読み込む
+  for( datid=0; datid<sys->unitNum; datid++ )
+  {
+    sys->unit[datid] = ISS_C_UNIT_Create( sys->heapID, datid );
+  } 
 }
 
 //-------------------------------------------------------------------------------------------

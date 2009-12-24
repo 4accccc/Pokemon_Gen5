@@ -11,7 +11,6 @@
 #include "field/field_const.h" // for FX32_TO_GRID
 #include "arc_def.h"  // for ARCID_ISS_CITY
 #include "../../../resource/fldmapdata/zonetable/zone_id.h" 
-#include "../../../resource/iss/city/entry_table.cdat"
 
 
 //===========================================================================================
@@ -93,35 +92,20 @@ static BOOL IsCover( const ISS_C_UNIT* unit, int index, int cx, int cy, int cz, 
  * @breif ユニットを作成する
  *
  * @param heap_id 使用するヒープID
- * @param zone_id 読み込むユニットデータをゾーンIDで指定
+ * @param dat_id  読み込むユニットデータのアーカイブ内インデックス
  */
 //-----------------------------------------------------------------------------------------
-ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 zone_id )
+ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 dat_id )
 {
-  int i;
   ISS_C_UNIT* unit = NULL;
 
-  // 登録テーブルから指定されたゾーンを検索
-  for( i=0; i<NELEMS(entry_table); i++ )
-  {
-    // 発見
-    if( entry_table[i].zoneID == zone_id )
-    {
-      // 読み込み
-      unit = GFL_ARC_LoadDataAllocOfs( 
-          ARCID_ISS_CITY, entry_table[i].datID, heap_id, 0, sizeof(ISS_C_UNIT) );
-      // DEBUG:
-      OBATA_Printf( "ISS-C-UNIT: Create\n" );
-      ISS_C_UNIT_DebugPrint( unit );
-      return unit;
-    }
-  }
+  // 読み込み
+  unit = GFL_ARC_LoadDataAllocOfs( ARCID_ISS_CITY, dat_id, heap_id, 0, sizeof(ISS_C_UNIT) );
 
-  // 指定ゾーンは未登録
-  OBATA_Printf( "==========================================\n" );
-  OBATA_Printf( "ISS-C-UNIT: 指定されたゾーンは未登録です。\n" );
-  OBATA_Printf( "==========================================\n" );
-  return NULL;
+  // DEBUG:
+  OBATA_Printf( "ISS-C-UNIT: Create\n" );
+  ISS_C_UNIT_DebugPrint( unit );
+  return unit; 
 }
 
 //-----------------------------------------------------------------------------------------
