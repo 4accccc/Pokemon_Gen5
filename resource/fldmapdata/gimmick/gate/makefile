@@ -13,6 +13,7 @@ USERS	= obata_toshihiro murakami_naoto
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname_gate   = gate
+targetname_zone   = zone
 targetname_spnews = spnews
 
 #------------------------------------------------------------------------------
@@ -52,8 +53,8 @@ CONVERTDATA_GATE = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							$(GRAPHIC_BIN)/gelboard01_7.nsbta \
 							$(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
 							$(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
-							$(GRAPHIC_BIN)/gelboard01_tv03.nsbtp \
-							$(ELBOARD_ZONE_DATA)
+							$(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
+CONVERTDATA_ZONE   = $(ELBOARD_ZONE_DATA)
 CONVERTDATA_SPNEWS = $(ELBOARD_SPNEWS_DATA)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -66,7 +67,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname_gate).narc $(TARGETDIR)/$(targetname_spnews).narc
+do-build:	subdir $(TARGETDIR)/$(targetname_gate).narc $(TARGETDIR)/$(targetname_zone).narc $(TARGETDIR)/$(targetname_spnews).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -106,6 +107,10 @@ $(TARGETDIR)/$(targetname_gate).narc: $(targetname_gate).narc
 	$(COPY) $(targetname_gate).narc $(TARGETDIR)
 	$(COPY) $(targetname_gate).naix $(TARGETDIR) 
 
+$(TARGETDIR)/$(targetname_zone).narc: $(targetname_zone).narc
+	$(COPY) $(targetname_zone).narc $(TARGETDIR)
+	$(COPY) $(targetname_zone).naix $(TARGETDIR) 
+
 $(TARGETDIR)/$(targetname_spnews).narc: $(targetname_spnews).narc
 	$(COPY) $(targetname_spnews).narc $(TARGETDIR)
 	$(COPY) $(targetname_spnews).naix $(TARGETDIR) 
@@ -115,6 +120,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname_gate).narc: $(CONVERTDATA_GATE)
 	nnsarc -r -l -n -i $(targetname_gate) $^
 	$(NAIXCUT) $(targetname_gate).naix
+
+$(targetname_zone).narc: $(CONVERTDATA_GATE)
+	nnsarc -r -l -n -i $(targetname_zone) $^
+	$(NAIXCUT) $(targetname_zone).naix
 
 $(targetname_spnews).narc: $(CONVERTDATA_SPNEWS)
 	nnsarc -r -l -n -i $(targetname_spnews) $^
@@ -135,12 +144,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA_SPNEWS)
 	rm -f $(targetname_gate).narc
 	rm -f $(targetname_gate).naix
+	rm -f $(targetname_zone).narc
+	rm -f $(targetname_zone).naix
 	rm -f $(targetname_spnews).narc
 	rm -f $(targetname_spnews).naix
 endif
-	rm -f $(TARGETDIR)/$(targetname_gate).narc
-	rm -f $(TARGETDIR)/$(targetname_gate).naix
-	rm -f $(TARGETDIR)/$(targetname_spnews).narc
-	rm -f $(TARGETDIR)/$(targetname_spnews).naix
+	rm -f $(TARGETDIR)$(targetname_gate).narc
+	rm -f $(TARGETDIR)$(targetname_gate).naix
+	rm -f $(TARGETDIR)$(targetname_zone).narc
+	rm -f $(TARGETDIR)$(targetname_zone).naix
+	rm -f $(TARGETDIR)$(targetname_spnews).narc
+	rm -f $(TARGETDIR)$(targetname_spnews).naix
 
 

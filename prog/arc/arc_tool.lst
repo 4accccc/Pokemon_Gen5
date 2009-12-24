@@ -251,3 +251,4 @@
   ARCID_TR_AI "tr_ai_seq.narc" #トレーナーAI
   ARCID_COMM_TVT_GRA "comm_tvt.narc" #通信トランシーバー
   ARCID_BEACON_STATUS "beacon_status.narc" #すれ違い参照画面
+  ARCID_ELBOARD_ZONE "spnews.narc"  # 電光掲示板 ゾーン依存データ

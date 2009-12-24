@@ -22,20 +22,7 @@ enum {
 	NARC_gate_gelboard01_7_nsbta = 8,
 	NARC_gate_gelboard01_tv01_nsbtp = 9,
 	NARC_gate_gelboard01_tv02_nsbtp = 10,
-	NARC_gate_gelboard01_tv03_nsbtp = 11,
-	NARC_gate_elboard_zone_data_c02r0701_bin = 12,
-	NARC_gate_elboard_zone_data_c03r0601_bin = 13,
-	NARC_gate_elboard_zone_data_c04r0601_bin = 14,
-	NARC_gate_elboard_zone_data_c04r0701_bin = 15,
-	NARC_gate_elboard_zone_data_c04r0801_bin = 16,
-	NARC_gate_elboard_zone_data_c08r0501_bin = 17,
-	NARC_gate_elboard_zone_data_c08r0601_bin = 18,
-	NARC_gate_elboard_zone_data_c08r0701_bin = 19,
-	NARC_gate_elboard_zone_data_h01r0101_bin = 20,
-	NARC_gate_elboard_zone_data_h01r0201_bin = 21,
-	NARC_gate_elboard_zone_data_r02r0101_bin = 22,
-	NARC_gate_elboard_zone_data_r13r0201_bin = 23,
-	NARC_gate_elboard_zone_data_r14r0101_bin = 24
+	NARC_gate_gelboard01_tv03_nsbtp = 11
 };
 
 /* NARC_GATE_NAIX_ */

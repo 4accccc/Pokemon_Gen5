@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: zone.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ZONE_NAIX_
+#define NARC_ZONE_NAIX_
+
+enum {
+	NARC_zone_gelboard01_nsbmd = 0,
+	NARC_zone_gelboard01_nsbtx = 1,
+	NARC_zone_gelboard01_1_nsbta = 2,
+	NARC_zone_gelboard01_2_nsbta = 3,
+	NARC_zone_gelboard01_3_nsbta = 4,
+	NARC_zone_gelboard01_4_nsbta = 5,
+	NARC_zone_gelboard01_5_nsbta = 6,
+	NARC_zone_gelboard01_6_nsbta = 7,
+	NARC_zone_gelboard01_7_nsbta = 8,
+	NARC_zone_gelboard01_tv01_nsbtp = 9,
+	NARC_zone_gelboard01_tv02_nsbtp = 10,
+	NARC_zone_gelboard01_tv03_nsbtp = 11
+};
+
+/* NARC_ZONE_NAIX_ */
+#endif
