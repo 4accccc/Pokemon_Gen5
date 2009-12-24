@@ -84,9 +84,6 @@ ROW_REVERB_WINTER = 12  # リバーブ(冬)
 # 出力ファイル名のリスト
 bin_file_list = Array.new
 
-# ユニット登録データ
-entry_data = Array.new
-
 # ファイルデータを読み込み
 file = File.open( ARGV[0], "r" )
 file_lines = file.readlines
@@ -95,9 +92,10 @@ file.close
 # 3行目以降の全ラインをコンバート
 2.upto( file_lines.size - 1 ) do |i|
   # コンバート対象のデータを取得
-  line = file_lines[i]
+  line    = file_lines[i]
   in_data = line.split(/\s/)
-  if in_data[0]==nil then break end # 空データを発見==>終了
+  # 空データを発見==>終了
+  if in_data[0]==nil then break end 
   # 出力データを作成
   out_data = Array.new
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_ZONE])  # ゾーンID
@@ -118,41 +116,9 @@ file.close
   file.close
   # 出力ファイル名を記憶
   bin_file_list << filename
-  # ユニット登録データを記憶
-  entry_data << "ZONE_ID_"+in_data[ROW_ZONE]
 end
 
 # 出力したバイナリファイル名を表示
 bin_file_list.each do |filename|
   puts "-output: #{filename}"
-end
-
-# 出力したバイナリファイルリストを作成
-str = "ISS_D_DATA = "
-bin_file_list.each do |filename|
-  str += "\\"
-  str += "\n"
-  str += "#{filename} "
-end
-file = File.open( ARGV[1] + "/iss_dungeon_data.list", "w" )
-file.write( str )
-file.close
-
-# ユニット登録テーブルを出力
-filename = "entry_table.cdat"
-file = File.open( filename, "w")
-file.puts("typedef struct")
-file.puts("{")
-file.puts("  u16 zoneID;")
-file.puts("  ARCDATID datID;")
-file.puts("} ENTRY_DATA;")
-file.puts
-file.puts("static const ENTRY_DATA entry_table[] =") 
-file.puts("{")
-0.upto(entry_data.size-1) do |i|
-  zone_id = entry_data[i]
-  dat_id = i
-  file.puts("  { #{zone_id}, #{dat_id} },")
-end
-file.puts("};")
-file.close
+end 

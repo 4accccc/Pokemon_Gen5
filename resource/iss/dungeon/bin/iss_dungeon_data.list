@@ -1,8 +1,0 @@
-ISS_D_DATA = \
-./bin/iss_dungeon_data_d01r0101.bin \
-./bin/iss_dungeon_data_d01r0201.bin \
-./bin/iss_dungeon_data_d06r0101.bin \
-./bin/iss_dungeon_data_d06r0201.bin \
-./bin/iss_dungeon_data_d06r0301.bin \
-./bin/iss_dungeon_data_r03r0301.bin \
-./bin/iss_dungeon_data_r03r0302.bin 

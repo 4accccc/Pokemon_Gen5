@@ -104,15 +104,4 @@ end
 # 出力したバイナリファイル名を表示
 bin_file_list.each do |filename|
   puts "-output: #{filename}"
-end
-
-# 出力したバイナリファイルリストを作成
-str = "ISS_C_UNIT_DATA = "
-bin_file_list.each do |filename|
-  str += "\\"
-  str += "\n"
-  str += "#{filename} "
-end
-file = File.open( ARGV[1] + "/iss_city_unit.list", "w" )
-file.write( str )
-file.close 
+end 
