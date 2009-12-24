@@ -52,11 +52,6 @@ extern void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc );
  */
 extern void EFFECT_ENC_CheckObjHit( FIELD_ENCOUNT* enc );
 
-/**
- *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
- */
-extern void EFFECT_ENC_MapChangeUpdate( GAMEDATA* gdata );
-
 /*
  *  @brief  エフェクトエンカウント　座標チェック
  */

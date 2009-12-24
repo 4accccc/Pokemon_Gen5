@@ -182,7 +182,7 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  EFFECT_ENC_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_MapChangeUpdate( gdata );
   
 /*  PLATINUM
 	//サファリフラグクリア
@@ -200,7 +200,7 @@ void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  EFFECT_ENC_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_MapChangeUpdate( gdata );
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -218,7 +218,7 @@ void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  EFFECT_ENC_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_MapChangeUpdate( gdata );
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -236,7 +236,7 @@ void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  EFFECT_ENC_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_MapChangeUpdate( gdata );
 /*  PLATINUM
 	EVENTWORK* ev = SaveData_GetEventWork( fsys->savedata );
 

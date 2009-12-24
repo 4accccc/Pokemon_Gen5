@@ -58,11 +58,13 @@ void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp )
 }
 
 /**
- *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
+ *  @brief  マップチェンジ時の状態クリア
  */
-void EFFECT_ENC_MapChangeUpdate( GAMEDATA* gdata )
+void ENCOUNT_WORK_MapChangeUpdate( GAMEDATA* gdata )
 {
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(gdata);
+
+  //エフェクトエンカウト　歩数クリア
   ewk->effect_encount.walk_ct = 0;
 }
 
