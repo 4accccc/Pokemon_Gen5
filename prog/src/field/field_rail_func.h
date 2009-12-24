@@ -186,7 +186,8 @@ typedef struct
 	u32 pitch;
 	fx32  len;
 } RAIL_CAMERAFUNC_FIXANGLE_LINEWAY;
-extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XZ( const FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XYZ( const FIELD_RAIL_MAN * man );
 
 
 #ifdef _cplusplus

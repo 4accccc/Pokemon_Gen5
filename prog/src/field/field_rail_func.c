@@ -1176,13 +1176,13 @@ void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man 
 //------------------------------------------------------------------
 //  進行方向に対するアングルを固定
 //------------------------------------------------------------------
-void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man )
+void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XZ( const FIELD_RAIL_MAN * man )
 {
 	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
   const RAIL_CAMERA_SET * cline;
   FIELD_CAMERA* p_camera;
 	const RAIL_CAMERAFUNC_FIXANGLE_LINEWAY* cp_work;
-  VecFx16 way;
+  VecFx16 way, xz_way;
   u16 front_rot;
 
 //	TOMOYA_Printf( "target x[0x%x] y[0x%x] z[0x%x]\n", cp_target->x, cp_target->y, cp_target->z );
@@ -1211,6 +1211,53 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay( const FIELD_RAIL_MAN * man )
   //*/
   
   FIELD_CAMERA_SetAnglePitch( p_camera, cp_work->pitch );
+  FIELD_CAMERA_SetAngleLen( p_camera, cp_work->len );
+	FIELD_CAMERA_SetAngleYaw( p_camera, front_rot + cp_work->yaw );
+}
+
+void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XYZ( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_CAMERA_SET * cline;
+  FIELD_CAMERA* p_camera;
+	const RAIL_CAMERAFUNC_FIXANGLE_LINEWAY* cp_work;
+  VecFx16 way, xz_way;
+  u16 front_rot;
+  u16 front_rot_pitch;
+  fx32 xz_dist;
+
+//	TOMOYA_Printf( "target x[0x%x] y[0x%x] z[0x%x]\n", cp_target->x, cp_target->y, cp_target->z );
+
+	cline = FIELD_RAIL_GetCameraSet( work );
+
+	cp_work = (const RAIL_CAMERAFUNC_FIXANGLE_LINEWAY*)cline->work;
+
+  p_camera = FIELD_RAIL_MAN_GetCamera( man );
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
+  
+	
+  // ラインの進行方向を取得
+  FIELD_RAIL_WORK_GetFrontWay( work, &way );
+  front_rot = FX_Atan2Idx( -way.x, -way.z );
+
+  xz_way.x = way.x;
+  xz_way.z = way.z;
+  xz_way.y = 0;
+  xz_dist = VEC_Fx16Mag( &xz_way );
+  front_rot_pitch = FX_Atan2Idx( -way.y, xz_dist );
+
+  /*
+  TOMOYA_Printf( "yaw 0x%x\n", front_rot + cp_work->yaw );
+  TOMOYA_Printf( "pitch 0x%x\n", cp_work->pitch );
+  TOMOYA_Printf( "len 0x%x\n", cp_work->len );
+  //*/
+  
+  FIELD_CAMERA_SetAnglePitch( p_camera, front_rot_pitch + cp_work->pitch );
   FIELD_CAMERA_SetAngleLen( p_camera, cp_work->len );
 	FIELD_CAMERA_SetAngleYaw( p_camera, front_rot + cp_work->yaw );
 }

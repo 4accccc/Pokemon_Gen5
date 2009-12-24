@@ -1191,7 +1191,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   
   setLineData( work, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
 
-
+  
 #ifdef PM_DEBUG
   
 #if 0
@@ -2669,10 +2669,14 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         }
       }
     }
-    // 移る場所がないなら、そのまま
-    if (work->width_ofs <= work->width_ofs_max)
-    {//範囲内の場合、終了
-			return updateLine( work, nLine, nLine_ofs_max, key );
+    // -の間は自由に動ける
+    if(work->width_ofs > 0)
+    {
+      // 移る場所がないなら、そのまま
+      if (work->width_ofs <= work->width_ofs_max)
+      {//範囲内の場合、終了
+        return updateLine( work, nLine, nLine_ofs_max, key );
+      }
     }
 
     // ライン外ですが、予測座標で計算する
@@ -2773,10 +2777,14 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         }
       }
     }
-    // 移る場所がないならそのまま
-    if (MATH_ABS(work->width_ofs) <= work->width_ofs_max)
-    {//範囲内の場合、終了
-			return updateLine( work, nLine, nLine_ofs_max, key );
+    // +の間は自由に動ける
+    if(work->width_ofs < 0)
+    {
+      // 移る場所がないならそのまま
+      if (MATH_ABS(work->width_ofs) <= work->width_ofs_max)
+      {//範囲内の場合、終了
+        return updateLine( work, nLine, nLine_ofs_max, key );
+      }
     }
 
     // ライン外ですが、予測座標で計算する
