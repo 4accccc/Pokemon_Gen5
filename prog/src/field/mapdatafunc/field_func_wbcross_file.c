@@ -212,7 +212,7 @@ static void fgr_WBCrossFileCore( GFL_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, c
 	NormalVtxSt*	nvs;
 
   if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
-    OS_Printf("GetAttr idx%d = y=%08x\n",idx,posInBlock->y);
+    //OS_Printf("GetAttr idx%d = y=%08x\n",idx,posInBlock->y);
   }
 
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
