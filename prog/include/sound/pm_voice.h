@@ -87,18 +87,30 @@ extern u32	PMVOICE_Play
 				BOOL	reverse,		// 逆再生フラグ
 				u32		userParam		// ユーザーパラメーター	
 			);		
+
+extern u32	PMVOICE_LoadOnly
+			(	u32		pokeNo,			// ポケモンナンバー
+				u32		pokeFormNo,		// ポケモンフォームナンバー
+				u8		pan,			// 定位(L:0 - 64 - 127:R)
+				BOOL	chorus,			// コーラス使用フラグ
+				int		chorusVolOfs,	// コーラスボリューム差
+				int		chorusSpOfs,	// 再生速度差
+				BOOL	reverse,		// 逆再生フラグ
+				u32		userParam		// ユーザーパラメーター	
+			);		
+extern BOOL	PMVOICE_PlayOnly(u32 voicePlayerIdx);
 //------------------------------------------------------------------
 /**
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
-extern void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan);
-extern void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volOfs);
-extern void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int spdOfs);
+extern void	PMVOICE_SetPan(u32 voicePlayerIdx, u8 pan);
+extern void	PMVOICE_SetVolume(u32 voicePlayerIdx, s8 volOfs);
+extern void	PMVOICE_SetSpeed(u32 voicePlayerIdx, int spdOfs);
 
-extern u8		PMVOICE_GetPan( u32 voicePlayerIdx);
-extern s8		PMVOICE_GetVolume( u32 voicePlayerIdx);
-extern int	PMVOICE_GetSpeed( u32 voicePlayerIdx);
+extern u8		PMVOICE_GetPan(u32 voicePlayerIdx);
+extern s8		PMVOICE_GetVolume(u32 voicePlayerIdx);
+extern int	PMVOICE_GetSpeed(u32 voicePlayerIdx);
 
 //------------------------------------------------------------------
 /**

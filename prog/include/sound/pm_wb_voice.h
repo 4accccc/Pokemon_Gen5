@@ -214,29 +214,44 @@ inline u32 PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan,
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
-inline void	PMV_SetPan( u32 voicePlayerIdx, u8 pan)
+inline void	PMV_SetPan(u32 voicePlayerIdx, u8 pan)
 {
 	PMVOICE_SetPan(voicePlayerIdx, pan);
 }
-inline void	PMV_SetVolume( u32 voicePlayerIdx, s8 volume)
+inline void	PMV_SetVolume(u32 voicePlayerIdx, s8 volume)
 {
 	PMVOICE_SetVolume(voicePlayerIdx, volume);
 }
-inline void	PMV_SetSpeed( u32 voicePlayerIdx, int speed)
+inline void	PMV_SetSpeed(u32 voicePlayerIdx, int speed)
 {
 	PMVOICE_SetSpeed(voicePlayerIdx, speed);
 }
-inline u8	PMV_GetPan( u32 voicePlayerIdx)
+inline u8	PMV_GetPan(u32 voicePlayerIdx)
 {
 	return PMVOICE_GetPan(voicePlayerIdx);
 }
-inline s8	PMV_GetVolume( u32 voicePlayerIdx)
+inline s8	PMV_GetVolume(u32 voicePlayerIdx)
 {
 	return PMVOICE_GetVolume(voicePlayerIdx);
 }
-inline int	PMV_GetSpeed( u32 voicePlayerIdx)
+inline int	PMV_GetSpeed(u32 voicePlayerIdx)
 {
 	return PMVOICE_GetSpeed(voicePlayerIdx);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	デモ分割再生用
+ */
+//--------------------------------------------------------------------------------------------
+inline u32 PMV_LoadVoiceDemo( u32 pokeNo, u32 formNo )
+{
+	return PMVOICE_LoadOnly(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, 0);
+}
+
+inline BOOL PMV_PlayVoiceDemo( u32 voicePlayerIdx)
+{
+	return PMVOICE_PlayOnly(voicePlayerIdx);
 }
 
 #endif
