@@ -36,6 +36,7 @@ NSCFILE = $(wildcard *.nsc)
 IMDFILE = $(wildcard *.imd)
 ICAFILE = c09_01_mf.ica c09_02_mf.ica c09_03_mf.ica c09_04_mf.ica
 CAMERAICAFILE = c09_01_camera.ica c09_02_camera.ica c09_03_camera.ica c09_04_camera.ica
+SEFILE = c09_01_se.ica c09_02_se.ica c09_03_se.ica c09_04_se.ica
 IVAFILE = $(wildcard *.iva)
 IMAFILE = $(wildcard *.ima)
 ITPFILE = $(wildcard *.itp)
@@ -62,6 +63,8 @@ NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
 BINFILE = $(CAMERAICAFILE:.ica=.bin)
 
+SEBIN_FILE = $(SEFILE:.ica=.se)
+
 #DAT
 DATFILE = $(XLSFILE:.xls=.dat)
 
@@ -69,7 +72,7 @@ LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
 			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
-			  $(DATFILE) $(BINFILE)
+			  $(DATFILE) $(BINFILE) $(SEBIN_FILE)
 
 
 
@@ -80,7 +83,7 @@ OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta .xls .dat .bin
+.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta .xls .dat .bin .se
 
 #コンバート環境
 #2d
@@ -113,6 +116,9 @@ ifeq	($(CONVERTUSER),true)
 	g3dcvtr $<
 
 .ica.bin:
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -srt $< $@
+
+.ica.se:
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -srt $< $@
 
 
@@ -150,6 +156,7 @@ $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
 	-ls *.N*R >> $(LIST_FILE)
 	-ls *.nsb* >> $(LIST_FILE)
 	-ls *.bin >> $(LIST_FILE)
+	-ls *.se >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -171,6 +178,7 @@ ifeq	($(CONVERTUSER),true)
 	rm -f *.nsb*
 	rm -f *.dat
 	rm -f *.bin
+	rm -f *.se
 	rm -f *.csv
 	rm -f *.narc
 	rm -f *.naix

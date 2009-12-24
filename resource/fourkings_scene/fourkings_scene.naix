@@ -38,7 +38,11 @@ enum {
 	NARC_fourkings_scene_c09_01_camera_bin = 24,
 	NARC_fourkings_scene_c09_02_camera_bin = 25,
 	NARC_fourkings_scene_c09_03_camera_bin = 26,
-	NARC_fourkings_scene_c09_04_camera_bin = 27
+	NARC_fourkings_scene_c09_04_camera_bin = 27,
+	NARC_fourkings_scene_c09_01_se_se = 28,
+	NARC_fourkings_scene_c09_02_se_se = 29,
+	NARC_fourkings_scene_c09_03_se_se = 30,
+	NARC_fourkings_scene_c09_04_se_se = 31
 };
 
 /* NARC_FOURKINGS_SCENE_NAIX_ */

@@ -16,6 +16,8 @@
 #include "system/ica_anime.h"
 #include "system/ica_camera.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "savedata/mystatus.h"
 
 #include "arc/arc_def.h"
@@ -70,6 +72,7 @@ enum
 
 // ストリーミング再生
 #define EV_CAMERA_ANIME_STREAMING_INTERVAL  ( 10 )
+#define EV_SE_ANIME_STREAMING_INTERVAL  ( 10 )
 
 // 各リソースＩＤ取得マクロ
 #define EV_CAMERA_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_camera_bin + ((x)) )
@@ -78,9 +81,11 @@ enum
 #define EV_HERO_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_mf_nsbca + ((x) * 6) )
 #define EV_HERO_M_ITPANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_m_nsbtp + ((x) * 6) )
 #define EV_HERO_F_ITPANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_f_nsbtp + ((x) * 6) )
+#define EV_SE_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_se_se + ((x)) )
 
 // アニメーションスピード
 #define EV_CAMERA_ANIME_SPEED (FX32_ONE)
+#define EV_SE_ANIME_SPEED (FX32_ONE)
 
 // 自機デモ後出現位置
 #define EV_HERO_WALK_END_GRID_X (15)
@@ -109,6 +114,26 @@ static const VecFx32 EV_DEMO_HAICHI_ANIME_POS[ FIELD_EVENT_FOURKINGS_MAX ] =
   {GRID_TO_FX32(15), 0, GRID_TO_FX32(15)},
   {0,0,0},
 };
+
+
+// SEアニメーションの有無
+static const BOOL EV_DEMO_SE_ANIME[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  FALSE,
+  TRUE,
+  FALSE,
+  FALSE,
+};
+static const u32 EV_DEMO_SE_ANIME_PLAY_SE[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  0,
+  SEQ_SE_DECIDE1,
+  0,
+  0,
+};
+
+// SEアニメーションの起動ナンバー
+#define EV_DEMO_SE_ANIME_CHECK_NUM  (FX32_ONE)
 
 //-----------------------------------------------------------------------------
 /**
@@ -155,6 +180,16 @@ typedef struct {
   int frame;
 } EV_CIRCLEWALK_HERO;
 
+//-------------------------------------
+///	SE動作
+//=====================================
+typedef struct {
+  ICA_ANIME* p_anime;
+  u32 play_se;
+  fx32 frame;
+} EV_CIRCLEWALK_SE;
+
+
 
 //-------------------------------------
 ///	配置アニメーションワーク
@@ -196,6 +231,9 @@ typedef struct
 
   // モデルアニメーション
   EV_BMODEL_ANIME bmodel;
+
+  // SE
+  EV_CIRCLEWALK_SE  se;
 
   // 描画タスク
   FLDMAPFUNC_WORK* p_drawtask;
@@ -264,6 +302,14 @@ static void EV_BMODEL_Init( EV_BMODEL_ANIME* p_wk, FIELD_BMODEL_MAN * bmodel_man
 static void EV_BMODEL_Exit( EV_BMODEL_ANIME* p_wk );
 static void EV_BMODEL_Start( EV_BMODEL_ANIME* p_wk );
 static BOOL EV_BMODEL_IsEnd( const EV_BMODEL_ANIME* cp_wk );
+
+
+//-------------------------------------
+/// SEアニメーション
+//=====================================
+static void EV_SE_ANIME_Init( EV_CIRCLEWALK_SE* p_wk, u32 fourkings_no, HEAPID heapID );
+static void EV_SE_ANIME_Exit( EV_CIRCLEWALK_SE* p_wk );
+static BOOL EV_SE_ANIME_Update( EV_CIRCLEWALK_SE* p_wk );
 
 
 //----------------------------------------------------------------------------
@@ -406,6 +452,12 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       EV_CAMERA_Init( &p_work->camera, p_camera, heapID, p_work->fourkings_no );
       
     }
+
+    // SE
+    {
+      EV_SE_ANIME_Init( &p_work->se, p_work->fourkings_no, heapID );
+    }
+    
     // 配置モデル
     {
       FLDMAPPER* p_mapper = FIELDMAP_GetFieldG3Dmapper( p_work->p_fieldmap );
@@ -437,6 +489,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       BOOL result1;
       BOOL result2;
       BOOL result3;
+      BOOL result4;
 
 #ifdef DEBUG_FRAME_CONTROL
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -447,7 +500,8 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 
       result1 = EV_CAMERA_Update( &p_work->camera );
       result2 = EV_HERO_Update( &p_work->hero );
-      GF_ASSERT( result1 == result2 );
+      result4 = EV_SE_ANIME_Update( &p_work->se );
+      GF_ASSERT( (result1 == result2) && (result4==result1) );
 
       result3 = EV_BMODEL_IsEnd( &p_work->bmodel );
 
@@ -470,6 +524,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     
     // 各デモ破棄
     EV_HERO_Exit( &p_work->hero );
+    EV_SE_ANIME_Exit( &p_work->se );
     EV_CAMERA_Exit( &p_work->camera );
     EV_BMODEL_Exit( &p_work->bmodel );
     return GMEVENT_RES_FINISH;
@@ -1012,6 +1067,135 @@ static void DRAW_Update( FLDMAPFUNC_WORK* p_taskwork, FIELDMAP_WORK* p_fieldmap 
   EV_CIRCLEWALK_DRAWWK* p_wk = p_work; 
 
   EV_HERO_Draw( p_wk->p_hero );
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SE再生アニメーションの初期化
+ *
+ *	@param	p_wk            ワーク
+ *	@param	fourkings_no    四天王ID
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void EV_SE_ANIME_Init( EV_CIRCLEWALK_SE* p_wk, u32 fourkings_no, HEAPID heapID )
+{
+  if( EV_DEMO_SE_ANIME[fourkings_no] )
+  {
+    //情報の読み込み
+    p_wk->frame = 0;
+
+    // 再生Se
+    p_wk->play_se = EV_DEMO_SE_ANIME_PLAY_SE[fourkings_no];
+  
+    // アニメーション読み込み
+    p_wk->p_anime = ICA_ANIME_CreateStreamingAlloc( heapID, ARCID_FOURKINGS_SCENE, EV_SE_ANIME_GETDATA_ID(fourkings_no), EV_SE_ANIME_STREAMING_INTERVAL );
+  }
+  else
+  {
+    GFL_STD_MemClear( p_wk, sizeof(EV_CIRCLEWALK_SE) );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SE再生アニメーションの破棄
+ *
+ *	@param	p_wk        ワーク
+ */ 
+//-----------------------------------------------------------------------------
+static void EV_SE_ANIME_Exit( EV_CIRCLEWALK_SE* p_wk )
+{
+  if( p_wk->p_anime )
+  {
+    ICA_ANIME_Delete( p_wk->p_anime );
+  }
+  GFL_STD_MemClear( p_wk, sizeof(EV_CIRCLEWALK_SE) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SE再生アニメーションのアップデート
+ *
+ *	@param	p_wk  ワーク
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 再生中
+ */
+//-----------------------------------------------------------------------------
+static BOOL EV_SE_ANIME_Update( EV_CIRCLEWALK_SE* p_wk )
+{
+  BOOL result;
+  fx32 max_frame;
+
+  max_frame = ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT;
+
+#ifndef DEBUG_FRAME_CONTROL
+  // すでに完了していないか？
+  if( max_frame <= (p_wk->frame + EV_SE_ANIME_SPEED) )
+  {
+    result = TRUE;
+    p_wk->frame = max_frame - FX32_ONE;
+  }
+  else
+  {
+    result = FALSE;
+    p_wk->frame += EV_SE_ANIME_SPEED;
+  }
+#else
+
+  if( s_DEBUG_FRAME_CONTROL_FLAG == FALSE )
+  {
+    // すでに完了していないか？
+    if( max_frame <= (p_wk->frame + EV_SE_ANIME_SPEED) )
+    {
+      result = TRUE;
+      p_wk->frame = max_frame - FX32_ONE;
+    }
+    else
+    {
+      result = FALSE;
+      p_wk->frame += EV_SE_ANIME_SPEED;
+    }
+  }
+  else
+  {
+    result = FALSE;
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
+    {
+      if( (p_wk->frame - EV_SE_ANIME_SPEED) >= 0 )
+      {
+        p_wk->frame -= EV_SE_ANIME_SPEED;
+      }
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
+    {
+      if( (p_wk->frame + EV_SE_ANIME_SPEED) < max_frame )
+      {
+        p_wk->frame += EV_SE_ANIME_SPEED;
+      }
+    }
+  }
+#endif
+
+
+  // アニメーションを進め、カメラ座標を設定
+  ICA_ANIME_SetAnimeFrame( p_wk->p_anime, p_wk->frame );
+
+  {
+    VecFx32 trans;
+
+    ICA_ANIME_GetTranslate( p_wk->p_anime, &trans );
+
+    if( trans.x == EV_DEMO_SE_ANIME_CHECK_NUM )
+    {
+      PMSND_PlaySE( p_wk->play_se );
+    }
+  }
+  
+  return result;
 }
 
 
