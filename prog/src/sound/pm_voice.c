@@ -484,6 +484,7 @@ u32		PMVOICE_Play
 			u32			userParam		// ユーザーパラメーター	
 		)		
 {
+#if 0
 	PMVOICE_PLAYER* voicePlayer;
 	u16		voicePlayerIdx;
 	u32		waveIdx;
@@ -531,6 +532,81 @@ u32		PMVOICE_Play
 	
 	//OS_Printf("voicePlayerIdx = %x\n",voicePlayerIdx);
 	return voicePlayerIdx;
+#else
+	u16		voicePlayerIdx = PMVOICE_LoadOnly
+		(pokeNo, pokeFormNo, pan, chorus, chorusVolOfs, chorusSpOfs, reverse, userParam);
+	PMVOICE_PlayOnly(voicePlayerIdx);
+
+	return voicePlayerIdx;
+#endif
+}
+
+u32		PMVOICE_LoadOnly
+		(	u32			pokeNo,			// ポケモンナンバー
+			u32			pokeFormNo,		// ポケモンフォームナンバー
+			u8			pan,			// 定位(L:0 - 64 - 127:R)
+			BOOL		chorus,			// コーラス使用フラグ
+			int			chorusVolOfs,	// コーラスボリューム差
+			int			chorusSpOfs,	// 再生速度差
+			BOOL		reverse,		// 逆再生フラグ
+			u32			userParam		// ユーザーパラメーター	
+		)		
+{
+	PMVOICE_PLAYER* voicePlayer;
+	u16		voicePlayerIdx;
+	u32		waveIdx;
+	BOOL	waveLoadFlag;
+
+	GF_ASSERT(pmvSys.CallBackGetWaveIdx);
+	GF_ASSERT(pmvSys.CallBackCustomWave);
+
+	// 波形IDX取得
+	pmvSys.CallBackGetWaveIdx(pokeNo, pokeFormNo, &waveIdx);
+
+	// 再生プレーヤー取得
+	voicePlayerIdx = getPlayerIdx();
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+
+	if(voicePlayer->active == TRUE){ stopWave(voicePlayer); };
+#if 0
+	// 波形データバッファ確保
+	if( voicePlayer->heapReserveFlag == FALSE ){
+		// 常に最大値で確保（種別によって異なると潜在バグを生む可能性があるため）
+		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, PMVOICE_WAVESIZE_MAX);
+	}
+#endif	
+	// 波形データカスタマイズ(TRUE: コールバック内で生成された)
+	waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo, userParam,
+													&voicePlayer->waveData, 
+													&voicePlayer->waveSize, 
+													&voicePlayer->waveRate, 
+													&voicePlayer->speed);
+	// コールバック内で生成されなかった場合、波形データ取得
+	if( waveLoadFlag == FALSE ){ loadWave(voicePlayer, waveIdx); }
+
+	// 逆再生用データ加工
+	if( reverse ){ reverseBuf(voicePlayer->waveData, voicePlayer->waveSize); }
+
+	// 各種設定
+	voicePlayer->volume = VOICE_VOLUME;
+	voicePlayer->pan = pan;
+	voicePlayer->subWaveUse = chorus;
+	voicePlayer->volumeSubDiff = chorusVolOfs;
+	voicePlayer->speedSubDiff = chorusSpOfs;
+
+	return voicePlayerIdx;
+}
+
+BOOL		PMVOICE_PlayOnly( u32 voicePlayerIdx)
+{
+	PMVOICE_PLAYER* voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+
+	// 波形再生
+	if( playWave(voicePlayer) == FALSE ){
+		stopWave(voicePlayer);
+		return FALSE;
+	};
+	return TRUE;
 }
 
 //------------------------------------------------------------------
