@@ -2523,6 +2523,7 @@
   .short  EV_SEQ_BGM_NOW_MAP_RECOVER
   .endm
 
+
 //--------------------------------------------------------------
 /**
  * @def _START_EVENT_BGM
@@ -5449,16 +5450,18 @@
 //--------------------------------------------------------------
 /**
  *  @brief ボックスプロセスを呼び出す
- *  @param mode ボックス呼び出しモード( BOX_MODE_xxxx )
+ *  @param ret_end_mode ボックス終了モードを受け取るワーク
+ *  @param mode         ボックス呼び出しモード( BOX_MODE_xxxx )
  *
  *  ※呼び出しモード prog/include/app/box_mode.h
  */
 //--------------------------------------------------------------
-#define _CALL_BOX_PROC( mode ) \
-    _ASM_CALL_BOX_PROC mode
+#define _CALL_BOX_PROC( ret_end_mode, mode ) \
+    _ASM_CALL_BOX_PROC ret_end_mode, mode
 
-  .macro  _ASM_CALL_BOX_PROC mode
+  .macro  _ASM_CALL_BOX_PROC ret_end_mode, mode
   .short  EV_SEQ_CALL_BOX_PROC
+  .short  \ret_end_mode
   .short  \mode
   .endm
 

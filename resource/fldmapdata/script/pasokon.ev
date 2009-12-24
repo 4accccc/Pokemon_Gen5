@@ -21,6 +21,12 @@ _EVENT_DATA ev_pc
 _EVENT_DATA_END
 
 
+//--------------------------------------------------------------
+//               スクリプト内スコープ変数
+//--------------------------------------------------------------
+// パソコン終了フラグ
+DEFINE_LOCAL log_out 
+
 /**************************************************************/
 /*                                                            */
 /*                                                            */
@@ -30,13 +36,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_pc
 { 
-  DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL f_pcname
   DEFINE_LOCAL f_zukan_get
 
   // ローカル変数の初期化
-  $exit = FALSE
+  $log_out = FALSE
   _FLAG_CHECK( SYS_FLAG_PCNAME, f_pcname )
   _FLAG_CHECK( SYS_FLAG_ZUKAN_GET, f_zukan_get )
 
@@ -48,7 +53,7 @@ EVENT_START ev_pc
   _SYSWIN_MSG_DOWN( msg_pc_on_01 )
   _SYSWIN_CLOSE()
 
-  WHILE $exit == FALSE 
+  WHILE $log_out == FALSE 
     // 「どこの パソコンに せつぞく …」
     _SYSWIN_MSG_DOWN( msg_pc_on_02 )
     _AB_KEYWAIT()
@@ -76,8 +81,8 @@ EVENT_START ev_pc
     CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
     CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
     CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
-    CASE msg_pc_window_06 THEN $exit = TRUE
-    CASE EV_WIN_B_CANCEL  THEN $exit = TRUE
+    CASE msg_pc_window_06 THEN $log_out = TRUE
+    CASE EV_WIN_B_CANCEL  THEN $log_out = TRUE
     ENDSWITCH
   ENDWHILE
 
@@ -94,6 +99,7 @@ pc_box:
 {
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos
+  DEFINE_LOCAL box_end_mode
 
   // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
@@ -125,16 +131,22 @@ pc_box:
     _MAP_FADE_BLACK_OUT() // フェードアウト
     _MAP_FADE_END_CHECK() //
     SWITCH $select_pos
-    CASE msg_pc_box_window_01 THEN _CALL_BOX_PROC( BOX_MODE_AZUKERU )
-    CASE msg_pc_box_window_02 THEN _CALL_BOX_PROC( BOX_MODE_TURETEIKU )
-    CASE msg_pc_box_window_03 THEN _CALL_BOX_PROC( BOX_MODE_SEIRI )
-    CASE msg_pc_box_window_06 THEN _CALL_BOX_PROC( BOX_MODE_BATTLE )
-    CASE msg_pc_box_window_04 THEN _CALL_BOX_PROC( BOX_MODE_ITEM )
+    CASE msg_pc_box_window_01 THEN _CALL_BOX_PROC( box_end_mode, BOX_MODE_AZUKERU )
+    CASE msg_pc_box_window_02 THEN _CALL_BOX_PROC( box_end_mode, BOX_MODE_TURETEIKU )
+    CASE msg_pc_box_window_03 THEN _CALL_BOX_PROC( box_end_mode, BOX_MODE_SEIRI )
+    CASE msg_pc_box_window_06 THEN _CALL_BOX_PROC( box_end_mode, BOX_MODE_BATTLE )
+    CASE msg_pc_box_window_04 THEN _CALL_BOX_PROC( box_end_mode, BOX_MODE_ITEM )
     ENDSWITCH 
+    // 画面復帰
     _POKECEN_PC_RUN()           // パソコンアニメ再生
     _MAP_FADE_BLACK_IN()        // フェードイン
-    _MAP_FADE_END_CHECK()       //
-    _SE_PLAY( SEQ_SE_PC_LOGIN ) // SE
+    _MAP_FADE_END_CHECK()       // フェードイン終了待ち
+    // ボックス終了モードをチェック
+    IF $box_end_mode == SCR_BOX_END_MODE_MENU THEN
+      _SE_PLAY( SEQ_SE_PC_LOGIN ) // SE
+    ELSE
+      $log_out = TRUE             // パソコンを切る
+    ENDIF
   ENDWHILE
 }
 _RET
