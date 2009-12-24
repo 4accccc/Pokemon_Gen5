@@ -58,9 +58,6 @@ ROW_RANGE_Z_4 = 19  # z距離4
 # 出力ファイル名のリスト
 bin_file_list = Array.new
 
-# ユニット登録データ
-entry_data = Array.new
-
 # ファイルデータを読み込み
 file = File.open( ARGV[0], "r" )
 file_lines = file.readlines
@@ -102,8 +99,6 @@ file.close
   file.close
   # 出力ファイル名を記憶
   bin_file_list << filename
-  # ユニット登録データを記憶
-  entry_data << "ZONE_ID_"+in_data[ROW_ZONE]
 end
 
 # 出力したバイナリファイル名を表示
@@ -120,23 +115,4 @@ bin_file_list.each do |filename|
 end
 file = File.open( ARGV[1] + "/iss_city_unit.list", "w" )
 file.write( str )
-file.close
-
-# ユニット登録テーブルを出力
-filename = "entry_table.cdat"
-file = File.open( filename, "w")
-file.puts("typedef struct")
-file.puts("{")
-file.puts("  u16 zoneID;")
-file.puts("  ARCDATID datID;")
-file.puts("} ENTRY_DATA;")
-file.puts
-file.puts("static const ENTRY_DATA entry_table[] =") 
-file.puts("{")
-0.upto(entry_data.size-1) do |i|
-  zone_id = entry_data[i]
-  dat_id = i
-  file.puts("  { #{zone_id}, #{dat_id} },")
-end
-file.puts("};")
-file.close
+file.close 

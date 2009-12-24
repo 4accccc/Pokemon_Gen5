@@ -27,14 +27,10 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-ICACONV = ..\..\..\..\tools\ica\ica_converter.rb
-XLSCONV = ../../../tools/exceltool/xls2xml/tab_out.rb
-BIN = ./bin
-
-# バイナリデータリストのマクロ定義をインクルード
-include ./bin/iss_city_unit.list
-
-CONVERTDATA = $(ISS_C_UNIT_DATA)
+ICACONV     = ..\..\..\..\tools\ica\ica_converter.rb
+XLSCONV     = ../../../tools/exceltool/xls2xml/tab_out.rb
+BIN         = ./bin
+CONVERTDATA = $(BIN)/*.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -46,22 +42,18 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc 
+do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-$(ISS_C_UNIT_DATA): city.txt
-	ruby city.rb city.txt $(BIN)
-
-$city.txt: city.xls
-	ruby $(XLSCONV) city.xls > city.txt
-
-$(BIN)/iss_city_unit.list: city.xls
-	ruby $(XLSCONV) city.xls > city.txt
-
+$(CONVERTDATA): city.txt
+	ruby city.rb $< $(BIN)
+# タブ区切り
+city.txt: city.xls
+	ruby $(XLSCONV) $< > $@
 endif
 
 
@@ -92,6 +84,4 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
-
-
+	rm -f $(TARGETDIR)/$(targetname).naix 
