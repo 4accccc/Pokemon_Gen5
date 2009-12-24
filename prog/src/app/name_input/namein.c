@@ -3836,13 +3836,25 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
   if( is_move )
   { 
     GFL_RECT rect;
-    KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
-    //移動アニメ
-    if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+
+    //以前がタッチ状態ならば、動かず、キー状態へ切り替わる
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+    {
+      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+      { 
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+      }
+    }
+    else
     { 
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
-      KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+      //以前がキー状態ならば、移動アニメ
+      KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
+      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
+        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+      }
     }
   }
 
@@ -3864,7 +3876,6 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
   { 
     p_req->anm_pos  = p_wk->cursor;
     p_req->is_push    = TRUE;
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 
     ret = TRUE;
   }
@@ -3875,7 +3886,6 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     KEYMAP_GetCursorByKeyType( &p_wk->keymap, KEYMAP_KEYTYPE_DELETE, &p_req->anm_pos );
     //バックスペースになる
     p_req->type = KEYMAP_KEYTYPE_DELETE;
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     ret = TRUE;
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -3892,9 +3902,18 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     KEYMAP_GetCursorByKeyType( &p_wk->keymap, p_req->type, &p_wk->cursor );
     p_req->anm_pos  = p_wk->cursor;
     //キー入力を決定
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-
     ret = TRUE;
+  }
+
+  if( ret && GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+  {
+    GFL_RECT rect;
+    if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+    { 
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+      return FALSE;
+    }
   }
 
   return ret;
@@ -4067,13 +4086,26 @@ static BOOL Keyboard_Move_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
         || type == KEYMAP_KEYTYPE_QWERTY
       )
     { 
-      KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
-      //移動アニメ
-      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+
+      //以前がタッチ状態ならば、動かず、キー状態へ切り替わる
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+      {
+        if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+        { 
+          //移動アニメ
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+          KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+        }
+      }
+      else
       { 
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
-        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+        KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
+        //移動アニメ
+        if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
+          KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+        }
       }
     }
   }
@@ -4098,14 +4130,12 @@ static BOOL Keyboard_Move_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
     { 
       p_req->anm_pos  = p_wk->cursor;
       p_req->is_push    = TRUE;
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 
       ret = TRUE;
     }
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
     { 
       GFL_POINT pos;
-      GFL_RECT  rect;
       //モードを循環移動
       p_req->type = KEYMAP_KEYTYPE_KANA + p_wk->mode + 1;
       if( p_req->type > KEYMAP_KEYTYPE_QWERTY )
@@ -4115,10 +4145,19 @@ static BOOL Keyboard_Move_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
       //アニメ
       KEYMAP_GetCursorByKeyType( &p_wk->keymap, p_req->type, &p_wk->cursor );
       p_req->anm_pos  = p_wk->cursor;
-      //キー入力を決定
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 
       ret = TRUE;
+    }
+
+    if( ret && GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+    {
+      GFL_RECT  rect;
+      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+      { 
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );  
+        return FALSE;
+      }
     }
   }
 
