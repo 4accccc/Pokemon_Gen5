@@ -48,14 +48,10 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# コンバート
-$(CONVERTDATA): city.txt
-	ruby city.rb $< $(BIN)
 # タブ区切り
 city.txt: city.xls
 	ruby $(XLSCONV) $< > $@
 endif
-
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
@@ -64,8 +60,10 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(CONVERTDATA)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: city.txt
+	rm -f $(CONVERTDATA)
+	ruby city.rb $< $(BIN)
+	nnsarc -r -l -n -i $(targetname) $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 endif
