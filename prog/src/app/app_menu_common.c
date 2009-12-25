@@ -277,6 +277,24 @@ u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp )
 	}else{
 		u32	prm = PP_Get( pp, ID_PARA_condition, NULL );
 
+		// Ç‹Ç–
+		if( prm == POKESICK_MAHI ){
+			return APP_COMMON_ST_ICON_MAHI;
+    // ÇÀÇﬁÇË
+		}else if( prm == POKESICK_NEMURI ){
+			return APP_COMMON_ST_ICON_NEMURI;
+		// Ç±Ç®ÇË
+		}else if( prm == POKESICK_KOORI ){
+			return APP_COMMON_ST_ICON_KOORI;
+		// Ç‚ÇØÇ«
+		}else if( prm == POKESICK_YAKEDO ){
+			return APP_COMMON_ST_ICON_YAKEDO;
+		// Ç«Ç≠
+		}else if( prm == POKESICK_DOKU ){
+			return APP_COMMON_ST_ICON_DOKU;
+		}
+
+/*	prm = PokeSickÇ»ÇÃÇ≈èCê≥ 2009/12/25 by nakahiro
 		// ì≈
 		if( ( prm & (PTL_CONDITION_DOKU|PTL_CONDITION_DOKUDOKU) ) != 0 ){
 			return APP_COMMON_ST_ICON_DOKU;
@@ -293,6 +311,7 @@ u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp )
 		}else if( ( prm & PTL_CONDITION_MAHI ) != 0 ){
 			return APP_COMMON_ST_ICON_MAHI;
 		}
+*/
 		// Ç»Çµ
 		return APP_COMMON_ST_ICON_NONE;
 	}
