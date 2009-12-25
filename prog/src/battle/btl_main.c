@@ -164,7 +164,7 @@ static inline u8 GetFriendCrientID( u8 clientID );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
-static inline u8 PokeID_to_ClientID( u8 pokeID );
+static u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Clear( BTL_POKE_CONTAINER* pokeCon );
 static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
 static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon );
@@ -2281,7 +2281,7 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos )
   return pos / 2;
 }
 // ポケモンID -> クライアントID変換
-static inline u8 PokeID_to_ClientID( u8 pokeID )
+static u8 PokeID_to_ClientID( u8 pokeID )
 {
   u8 i, min, max;
   for(i=0; i<NELEMS(ClientBasePokeID); ++i)

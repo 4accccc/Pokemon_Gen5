@@ -1746,6 +1746,9 @@ static void handler_NayamiNoTane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     param->pokeID = targetPokeID;
     param->tokuseiID = POKETOKUSEI_FUMIN;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
+    HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+    HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
   }
 }
 
@@ -4219,7 +4222,7 @@ static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_MagicCoat },           // 未分類ワザ処理
     { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob },  // ワザ乗っ取り判定
-    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect },   // ワザ乗っ取り判定
+    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect },   // ワザ乗っ取り確定
     { BTL_EVENT_TURNCHECK_BEGIN,              handler_MagicCoat_TurnCheck }, // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
@@ -4244,6 +4247,7 @@ static void handler_MagicCoat_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     u8 i;
     for( i=0; i<targetCnt; ++i)
     {
+      // 自分がターゲット＆マジックコート対象ワザだったら跳ね返す
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID )
       {
         WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -4251,7 +4255,12 @@ static void handler_MagicCoat_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         {
           if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
           {
-            BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+            // 相手全体ワザ以外はターゲットを固定に
+            if( WAZADATA_GetParam(waza, WAZAPARAM_TARGET) != WAZA_TARGET_ENEMY_ALL ){
+              BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+            }
+            // 跳ね返しフラグ
+            BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
             work[ 0 ] = 1;
             break;
           }
@@ -7447,19 +7456,6 @@ static void handler_YubiWoFuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     WazaID     waza = BTL_CALC_RandWaza( ReqWazaExcludeTbl, NELEMS(ReqWazaExcludeTbl) );
     BtlPokePos pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
-
-    #if 0
-    #ifdef PM_DEBUG
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-      waza = WAZANO_MAHHAPANTI;
-      pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
-    }
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-      waza = WAZANO_MAMORU;
-      pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
-    }
-    #endif
-    #endif
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );

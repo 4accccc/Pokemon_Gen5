@@ -563,7 +563,6 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
         handlerTable = funcTbl[i].func( &numHandlers );
 
-        OS_TPrintf("ポケモン[%d-%p]の とくせい(%d)ハンドラを追加\n", pokeID, pp, tokusei);
         return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei, agi, pokeID, handlerTable, numHandlers );
       }
     }
@@ -585,15 +584,11 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
   BTL_EVENT_FACTOR* factor;
   u8 pokeID = BPP_GetID( pp );
 
-  OS_TPrintf("ポケモン[%d]の とくせいハンドラを除去したい…\n", pokeID);
-
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
     u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
-    OS_TPrintf("  とくせい (%d) ハンドラが見つかった\n", tokuseiID);
     BTL_EVENT_FACTOR_Remove( factor );
   }
-  OS_TPrintf("-----\n");
 }
 
 
@@ -5396,8 +5391,13 @@ static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
+      {
+        // 相手全体ワザ以外はターゲットを固定に
+        if( WAZADATA_GetParam(waza, WAZAPARAM_TARGET) != WAZA_TARGET_ENEMY_ALL ){
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+        }
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
         work[0] = 1;
       }
     }
