@@ -15,10 +15,10 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
-#define TRACK_NUM    (16)      // トラック数
-#define TRACKBIT_ALL (0xffff)  // 全トラック指定
-#define MAX_VOLUME   (127)     // ボリューム最大値
-#define INVALID_DATA_INDEX (0xff)  // 参照データの無効インデックス
+#define TRACK_NUM          (16)      // トラック数
+#define TRACKBIT_ALL       (0xffff)  // 全トラック指定
+#define MAX_VOLUME         (127)     // ボリューム最大値
+#define INVALID_DATA_INDEX (0xff)    // 参照データの無効インデックス
 
 // スイッチの状態
 typedef enum{
@@ -132,6 +132,9 @@ void ISS_SWITCH_SYS_Delete( ISS_SWITCH_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* sys )
 {
+  // 起動してない
+  if( !sys->boot ){ return; }
+
   // 全てのスイッチ状態を更新する
   AllSwitchUpdate( sys );
 }
@@ -337,7 +340,7 @@ static void UpdateSwitchDataIdx( ISS_SWITCH_SYS* sys )
 static void BootSystem( ISS_SWITCH_SYS* sys )
 {
   // すでに起動している
-  if( sys->boot ) return;
+  if( sys->boot ){ return; }
 
   // 起動
   sys->boot = TRUE;
@@ -363,7 +366,7 @@ static void BootSystem( ISS_SWITCH_SYS* sys )
 static void StopSystem( ISS_SWITCH_SYS* sys )
 {
   // すでに停止している
-  if( !sys->boot ) return;
+  if( !sys->boot ){ return; }
 
   // 停止
   sys->boot = FALSE;
@@ -383,9 +386,9 @@ static void StopSystem( ISS_SWITCH_SYS* sys )
 static void SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 {
   // 起動していない
-  if( !sys->boot ) return; 
+  if( !sys->boot ){ return; }
   // スイッチが押せる状態じゃない
-  if( sys->switchState[idx] != SWITCH_STATE_OFF ) return;
+  if( sys->switchState[idx] != SWITCH_STATE_OFF ){ return; }
 
   // スイッチON(フェードイン開始)
   sys->switchState[idx] = SWITCH_STATE_FADE_IN;
@@ -406,9 +409,9 @@ static void SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 static void SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 {
   // 起動していない
-  if( !sys->boot ) return; 
+  if( !sys->boot ){ return; }
   // スイッチが離せる状態じゃない
-  if( sys->switchState[idx] != SWITCH_STATE_ON ) return;
+  if( sys->switchState[idx] != SWITCH_STATE_ON ){ return; }
 
   // スイッチOFF(フェードアウト開始)
   sys->switchState[idx] = SWITCH_STATE_FADE_OUT;
@@ -441,7 +444,7 @@ static void SwitchUpdate( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
     OBATA_Printf( "==================\n" );
     OBATA_Printf( "ISS-S: state error\n" ); 
     OBATA_Printf( "==================\n" );
-    break;
+    GF_ASSERT(0);
   }
 }
 
@@ -521,7 +524,7 @@ static void AllSwitchUpdate( ISS_SWITCH_SYS* sys )
   int swt_idx;
 
   // 参照データが存在しない
-  if( sys->switchDataNum <= sys->switchDataIdx ) return;
+  if( sys->switchDataNum <= sys->switchDataIdx ){ return; }
 
   // 全てのスイッチ状態を更新
   for( swt_idx=0; swt_idx<SWITCH_NUM; swt_idx++ )

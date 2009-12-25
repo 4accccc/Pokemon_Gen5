@@ -15,11 +15,9 @@
 
 //===========================================================================================
 // ■定数
-//===========================================================================================
-
+//=========================================================================================== 
 // 1つの街ISSユニットが持つ音量空間の数
-#define VOLUME_SPACE_NUM (4)
-
+#define VOLUME_SPACE_NUM (4) 
 
 
 //===========================================================================================
@@ -38,9 +36,9 @@ struct _ISS_C_UNIT
 
 	// 音量空間
   u8 volume[VOLUME_SPACE_NUM];
-  u8 x_range[VOLUME_SPACE_NUM];
-  u8 y_range[VOLUME_SPACE_NUM];
-  u8 z_range[VOLUME_SPACE_NUM];
+  u8 xRange[VOLUME_SPACE_NUM];
+  u8 yRange[VOLUME_SPACE_NUM];
+  u8 zRange[VOLUME_SPACE_NUM];
 };
 
 //-------------------------------------------------------------------------------------------
@@ -49,9 +47,6 @@ struct _ISS_C_UNIT
  *
  * @param unit  判定対象のユニット
  * @param index 判定対象の音量空間を指定
- * @param cx	  音量空間中心部のx座標
- * @param cy	  音量空間中心部のy座標
- * @param cz	  音量空間中心部のz座標
  * @param x		  主人公のx座標
  * @param y		  主人公のy座標
  * @param z		  主人公のz座標
@@ -59,23 +54,23 @@ struct _ISS_C_UNIT
  * @return (x, y, z) が 指定した空間の内部にある場合 TRUE
  */
 //-------------------------------------------------------------------------------------------
-static BOOL IsCover( const ISS_C_UNIT* unit, int index, int cx, int cy, int cz, int x, int y, int z )
+static BOOL IsCover( const ISS_C_UNIT* unit, int index, int x, int y, int z )
 {
 	int min_x, min_y, min_z;
 	int max_x, max_y, max_z;
 
 	// 空間の最小値・最大値を求める
-	min_x = cx - unit->x_range[index];
-	min_y = cy - unit->y_range[index];
-	min_z = cz - unit->z_range[index]; 
-	max_x = cx + unit->x_range[index];
-	max_y = cy + unit->y_range[index];
-	max_z = cz + unit->z_range[index];
+	min_x = unit->x - unit->xRange[index];
+	min_y = unit->y - unit->yRange[index];
+	min_z = unit->z - unit->zRange[index]; 
+	max_x = unit->x + unit->xRange[index];
+	max_y = unit->y + unit->yRange[index];
+	max_z = unit->z + unit->zRange[index];
 
 	// 判定
-	if( ( x < min_x ) | ( max_x < x ) |
-		  ( y < min_y ) | ( max_y < y ) |
-		  ( z < min_z ) | ( max_z < z ) )
+	if( ( x < min_x ) || ( max_x < x ) ||
+		  ( y < min_y ) || ( max_y < y ) ||
+		  ( z < min_z ) || ( max_z < z ) )
   {
     return FALSE;
   } 
@@ -103,7 +98,7 @@ ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 dat_id )
   unit = GFL_ARC_LoadDataAllocOfs( ARCID_ISS_CITY, dat_id, heap_id, 0, sizeof(ISS_C_UNIT) );
 
   // DEBUG:
-  OBATA_Printf( "ISS-C-UNIT: Create\n" );
+  OBATA_Printf( "ISS-C-UNIT: create\n" );
   ISS_C_UNIT_DebugPrint( unit );
   return unit; 
 }
@@ -118,6 +113,8 @@ ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 dat_id )
 void ISS_C_UNIT_Delete( ISS_C_UNIT* unit )
 {
   GFL_HEAP_FreeMemory( unit );
+  // DEBUG:
+  OBATA_Printf( "ISS-C-UNIT: delete\n" );
 }
 
 
@@ -163,11 +160,10 @@ int ISS_C_UNIT_GetVolume( const ISS_C_UNIT* unit, const VecFx32* pos )
 	// 大きな空間から判定し, 属さない空間を見つけたら, 検索終了
 	for( i=0; i<VOLUME_SPACE_NUM; i++ )
 	{
-		if( IsCover( unit, i, unit->x, unit->y, unit->z, x, y, z ) != TRUE )
+		if( IsCover( unit, i, x, y, z ) != TRUE )
 		{
 			break;
-		}
-
+		} 
 		// 主人公が属する, 最も小さい空間に設定された音量を取得する
 		volume = unit->volume[i];
 	} 
@@ -194,6 +190,6 @@ void ISS_C_UNIT_DebugPrint( const ISS_C_UNIT* unit )
   for( i=0; i<VOLUME_SPACE_NUM; i++ )
   {
     OBATA_Printf( "- volume, range = %d, (%d, %d, %d)\n",
-        unit->volume[i], unit->x_range[i], unit->y_range[i], unit->z_range[i] );
+        unit->volume[i], unit->xRange[i], unit->yRange[i], unit->zRange[i] );
   }
 }

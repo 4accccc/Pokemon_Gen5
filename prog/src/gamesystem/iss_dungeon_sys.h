@@ -1,87 +1,90 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 /**
  * @file   iss_dungeon_sys.h
  * @brief  ダンジョンISSシステム
  * @author obata_toshihiro
  * @date   2009.07.16
  */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include <gflib.h>
 #include "gamesystem/playerwork.h"
 
 
-// ダンジョンISSシステム構造体の不完全型の宣言
+//============================================================================
+// ■ダンジョンISSシステムの不完全型
+//============================================================================
 typedef struct _ISS_DUNGEON_SYS ISS_DUNGEON_SYS;
 
 
-//-----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを作成する
  *
  * @param  gdata    ゲームデータ
- * @param  p_player 監視対象のプレイヤー
+ * @param  player   監視対象のプレイヤー
  * @param  heap_id  使用するヒープID
  * 
  * @return ダンジョンISSシステム
  */
-//-----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 extern ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata, 
-                                         PLAYER_WORK* p_player, HEAPID heap_id );
+                                                PLAYER_WORK* player, 
+                                                HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを破棄する
  *
- * @param p_sys 破棄するダンジョンISSシステム 
+ * @param sys 破棄するダンジョンISSシステム 
  */
 //----------------------------------------------------------------------------
-extern void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* p_sys );
+extern void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_sys 操作対象のシステム
+ * @param sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys );
+extern void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_sys       通知対象のダンジョンISSシステム
+ * @param sys       通知対象のダンジョンISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //----------------------------------------------------------------------------
-extern void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id );
+extern void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id );
 
 //----------------------------------------------------------------------------
 /**
  * @brief システムを起動する
  *
- * @param p_sys 起動するシステム
+ * @param sys 起動するシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys );
+extern void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief システムを停止させる
  *
- * @param p_sys 停止させるシステム
+ * @param sys 停止させるシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys );
+extern void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @breif 動作状態を取得する
  *
- * @param p_sys 状態を調べるISSシステム
+ * @param sys 状態を調べるISSシステム
  * 
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-extern BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* p_sys );
+extern BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* sys );

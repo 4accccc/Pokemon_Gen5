@@ -129,7 +129,7 @@ void ISS_ZONE_SYS_Delete( ISS_ZONE_SYS* sys )
 void ISS_ZONE_SYS_Update( ISS_ZONE_SYS* sys )
 {
   // 起動していない
-  if( !sys->boot ) return;
+  if( !sys->boot ){ return; }
 
   // フェード状態を更新
   UpdateFade( sys );
@@ -258,13 +258,13 @@ static void BootSystem( ISS_ZONE_SYS* sys, u16 zone_id )
   u8 idx;
 
   // すでに起動している
-  if( sys->boot ) return;
+  if( sys->boot ){ return; }
 
   // ゾーンデータを検索
   idx = SearchZoneData( sys, zone_id );
 
   // 指定ゾーンのデータを持っていない
-  if( idx == INVALID_DATA_INDEX ) return;
+  if( idx == INVALID_DATA_INDEX ){ return; }
 
   // 初期状態を設定
   sys->boot            = TRUE;
@@ -288,7 +288,7 @@ static void BootSystem( ISS_ZONE_SYS* sys, u16 zone_id )
 static void StopSystem( ISS_ZONE_SYS* sys )
 {
   // すでに停止している
-  if( !sys->boot ) return;
+  if( !sys->boot ){ return; }
 
   // 停止
   sys->boot = FALSE;
@@ -317,7 +317,7 @@ static void ChangeZoneData( ISS_ZONE_SYS* sys, u16 zone_id )
   data = sys->zoneData;
 
   // 新たに参照するデータが存在しない
-  if( next == INVALID_DATA_INDEX ) return;
+  if( next == INVALID_DATA_INDEX ){ return; }
 
   // フェード状態を更新
   sys->fadeInTrackBit  = data[now].closeTrackBit & data[next].openTrackBit;
@@ -375,7 +375,7 @@ static void UpdateFade( ISS_ZONE_SYS* sys )
   int vol;
 
   // すでに完了している
-  if( sys->fadeFrame <= sys->fadeCount ) return;
+  if( sys->fadeFrame <= sys->fadeCount ){ return; }
 
   // カウンタ更新
   sys->fadeCount++;

@@ -56,9 +56,11 @@ struct _ISS_CITY_SYS
 //===========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //===========================================================================================
+static void BootSystem( ISS_CITY_SYS* sys );
+static void StopSystem( ISS_CITY_SYS* sys );
 static void LoadUnitData( ISS_CITY_SYS* sys );
 static void UpdateVolume( ISS_CITY_SYS* sys );
-static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id );
+static void ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id );
 
 
 //===========================================================================================
@@ -95,7 +97,7 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 	LoadUnitData( sys );
 
   // DEBUG:
-  OBATA_Printf( "ISS-C: Create\n" );
+  OBATA_Printf( "ISS-C: create\n" );
 	
 	// 作成した街ISSシステムを返す
 	return sys;
@@ -123,7 +125,7 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* sys )
 	GFL_HEAP_FreeMemory( sys );
 
   // DEBUG:
-  OBATA_Printf( "ISS-C: Delete\n" );
+  OBATA_Printf( "ISS-C: delete\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -135,10 +137,8 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_Update( ISS_CITY_SYS* sys )
 {
-	const VecFx32* p_pos = NULL;
-
-	// 起動していなければ, 何もしない
-	if( sys->isActive != TRUE ) return;
+  // 停止中
+	if( sys->isActive != TRUE ){ return; }
 
   // 音量を調整する
   UpdateVolume( sys );
@@ -154,8 +154,8 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 { 
-  // 停止中なら, 何もしない
-  if( sys->isActive != TRUE ) return;
+  // 停止中
+  if( sys->isActive != TRUE ){ return; }
 
   // ユニットを切り替える
   ChangeUnit( sys, next_zone_id );
@@ -173,23 +173,7 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
 { 
-  u16 zone_id;
-
-  // すでに起動しているなら, 何もしない
-  if( sys->isActive == TRUE ) return;
-
-  // ゾーンIDを取得
-  zone_id = PLAYERWORK_getZoneID( sys->pPlayer );
-
-  // システム起動
-  sys->isActive = TRUE;
-  sys->volume   = INVALID_VOLUME;
-
-  // ユニットを切り替える
-  ChangeUnit( sys, zone_id );
-
-  // DEBUG:
-  OBATA_Printf( "ISS-C: On\n" );
+  BootSystem( sys );
 }
 
 //------------------------------------------------------------------------------------------
@@ -201,12 +185,7 @@ void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
 {
-	sys->isActive     = FALSE;
-  sys->activeUnitNo = INVALID_UNIT_NO;
-  PMSND_ChangeBGMVolume( TRACKBIT, 127 );
-
-  // DEBUG:
-  OBATA_Printf( "ISS-C: Off\n" );
+  StopSystem( sys );
 }
 
 //------------------------------------------------------------------------------------------
@@ -227,6 +206,54 @@ BOOL ISS_CITY_SYS_IsOn( const ISS_CITY_SYS* sys )
 //===========================================================================================
 // ■非公開関数の実装
 //===========================================================================================
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief システムを起動する
+ *
+ * @param sys 街ISSシステム
+ */
+//-------------------------------------------------------------------------------------------
+static void BootSystem( ISS_CITY_SYS* sys )
+{
+  // 起動中
+  if( sys->isActive ){ return; }
+
+  // システム起動
+  sys->isActive = TRUE;
+  sys->volume   = INVALID_VOLUME;
+  // DEBUG:
+  OBATA_Printf( "ISS-C: boot\n" );
+
+  // ユニット検索
+  {
+    u16 zone_id;
+    zone_id = PLAYERWORK_getZoneID( sys->pPlayer );
+    ChangeUnit( sys, zone_id ); 
+  } 
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief システムを停止する
+ *
+ * @param sys 街ISSシステム
+ */
+//-------------------------------------------------------------------------------------------
+static void StopSystem( ISS_CITY_SYS* sys )
+{
+  // 停止中
+  if( !sys->isActive ){ return; }
+
+  // 停止
+	sys->isActive     = FALSE;
+  sys->activeUnitNo = INVALID_UNIT_NO;
+  // 操作していたトラックを元に戻す
+  //PMSND_ChangeBGMVolume( TRACKBIT, 127 ); 
+
+  // DEBUG:
+  OBATA_Printf( "ISS-C: stop\n" );
+}
 
 //-------------------------------------------------------------------------------------------
 /**
@@ -264,12 +291,15 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
   int new_volume = 0;
   const VecFx32* pos;
 
+  // 起動していない
+  GF_ASSERT( sys->isActive );  
+
+  // ユニットが配置されていない
+  if( sys->activeUnitNo == INVALID_UNIT_NO ){ return; }
+
   // ユニットと自機の位置からボリュームを算出
-	if( sys->activeUnitNo < sys->unitNum )
-  { 
-    pos = PLAYERWORK_getPosition( sys->pPlayer );
-    new_volume = ISS_C_UNIT_GetVolume( sys->unit[sys->activeUnitNo], pos );
-  }
+  pos        = PLAYERWORK_getPosition( sys->pPlayer );
+  new_volume = ISS_C_UNIT_GetVolume( sys->unit[sys->activeUnitNo], pos );
 
   // 音量が変化した場合
   if( sys->volume != new_volume )
@@ -278,7 +308,7 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
     sys->volume = new_volume;
     PMSND_ChangeBGMVolume( TRACKBIT, new_volume );
     // DEBUG:
-    OBATA_Printf( "ISS-C: Update volume = %d\n", new_volume );
+    OBATA_Printf( "ISS-C: update volume ==> %d\n", new_volume );
   }
 }
 
@@ -288,16 +318,14 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
  *
  * @param sys     ユニットを切り替えるシステム
  * @param zone_id 切り替え先のゾーンID
- *
- * @return 指定したゾーンにユニットが配置されている場合, TRUE
  */
 //-------------------------------------------------------------------------------------------
-static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
+static void ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
 {
 	int unit_idx;
 
-  // 配置されていなかったら INVALID_UNIT_NO になる
-  sys->activeUnitNo = INVALID_UNIT_NO; 
+  // 起動していない
+  GF_ASSERT( sys->isActive );
 
   // 検索
 	for( unit_idx=0; unit_idx<sys->unitNum; unit_idx++ )
@@ -308,9 +336,10 @@ static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
 			sys->activeUnitNo = unit_idx;
       // DEBUG:
       OBATA_Printf( "ISS-C: change unit index ==> %d\n", sys->activeUnitNo );
-      break;
+      return;
 		}
 	}
 
-  return (sys->activeUnitNo != INVALID_UNIT_NO);
+  // 配置されていない
+  sys->activeUnitNo = INVALID_UNIT_NO;
 }

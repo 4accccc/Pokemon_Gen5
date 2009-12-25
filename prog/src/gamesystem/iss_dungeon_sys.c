@@ -15,9 +15,9 @@
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
 
-//==========================================================================================
+//=========================================================================================
 // ■定数・マクロ
-//========================================================================================== 
+//=========================================================================================
 // 無効なゾーンID
 #define INVALID_ZONE_ID (0xffff)
 
@@ -30,9 +30,9 @@
 #define REVERB_STOP_FRAME  (0)		  // 停止までのフレーム数
 
 
-//========================================================================================== 
+//=========================================================================================
 // ■BGMパラメータ
-//========================================================================================== 
+//=========================================================================================
 typedef struct
 {
 	u16 zoneID;	                // ゾーンID
@@ -51,10 +51,10 @@ typedef struct
  * @param season 季節を指定
  */
 //------------------------------------------------------------------------------------------
-static void SetBGMStatus( const BGM_PARAM* param, u8 season )
+static void SetBGMParam( const BGM_PARAM* param, u8 season )
 {
-	if( !param ) return;
-  if( PMSEASON_TOTAL <= season ) return;
+  GF_ASSERT( param );
+  GF_ASSERT( season < PMSEASON_TOTAL );
 
   // テンポ
 	PMSND_SetStatusBGM( param->tempo[season], PMSND_NOEFFECT, 0 ); 
@@ -73,20 +73,20 @@ static void SetBGMStatus( const BGM_PARAM* param, u8 season )
   }
 
 	// DEBUG:
-	OBATA_Printf( "ISS-D: Set BGM status\n" );
+	OBATA_Printf( "ISS-D: set BGM param\n" );
 	OBATA_Printf( "- pitch  = %d\n", param->pitch[season] );
 	OBATA_Printf( "- tempo  = %d\n", param->tempo[season] );
 	OBATA_Printf( "- reverb = %d\n", param->reverb[season] );
 }
 
 
-//========================================================================================== 
-// ■ダンジョンISSデータ
-//========================================================================================== 
+//=========================================================================================
+// ■ダンジョンISSデータセット
+//=========================================================================================
 typedef struct
 {
-	u8         dataNum;	// 保持情報数
-	BGM_PARAM* param;	  // パラメータ配列
+	u8         dataNum;	 // データ数
+	BGM_PARAM*   param;	 // パラメータ配列
 
 } BGM_PARAMSET;
 
@@ -106,23 +106,19 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 	BGM_PARAMSET* paramset;
 
 	// 本体を作成
-	paramset = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAMSET) );
+	paramset          = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAMSET) ); 
+	paramset->dataNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_DUNGEON ); 
+	paramset->param   = GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAM) * paramset->dataNum );
 
-	// データ数を取得
-	paramset->dataNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_DUNGEON );
-
-	// バッファ確保
-	paramset->param = GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAM) * paramset->dataNum );
-
-	// 各データを取得
+	// 全データを取得
 	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
 	{
     GFL_ARC_LoadDataOfs( &paramset->param[dat_id], 
-        ARCID_ISS_DUNGEON, dat_id, 0, sizeof(BGM_PARAM) );
+                         ARCID_ISS_DUNGEON, dat_id, 0, sizeof(BGM_PARAM) );
 	} 
 
 	// DEBUG:
-	OBATA_Printf( "ISS-D: Load BGM parameters\n" );
+	OBATA_Printf( "ISS-D: load BGM parameters\n" );
 	OBATA_Printf( "- dataNum = %d\n", paramset->dataNum );
 	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
 	{ 
@@ -194,24 +190,24 @@ static const BGM_PARAM* GetBGMParam( const BGM_PARAMSET* paramset, u16 zone_id )
 }
 
 
-//========================================================================================== 
+//=========================================================================================
 // ■ダンジョンISSシステム管理ワーク
-//========================================================================================== 
+//=========================================================================================
 struct _ISS_DUNGEON_SYS
 {
 	// 使用するヒープID
 	HEAPID heapID;
 
 	// 監視対象
-	PLAYER_WORK* player; // プレイヤー
-  GAMEDATA* gdata;  // ゲームデータ
+	PLAYER_WORK* player;  // プレイヤー
+  GAMEDATA*     gdata;  // ゲームデータ
 
 	// 起動状態
 	BOOL isActive; 
 
 	// ゾーンID
 	u16 currentZoneID;
-	u16 nextZoneID;
+	u16    nextZoneID;
 
 	// データ
 	BGM_PARAMSET* paramset;
@@ -224,9 +220,18 @@ struct _ISS_DUNGEON_SYS
 };
 
 
-//========================================================================================== 
+//=========================================================================================
+// ■非公開関数のプロトタイプ宣言
+//=========================================================================================
+static void SetupDefaultParam( ISS_DUNGEON_SYS* sys );
+static void BootSystem( ISS_DUNGEON_SYS* sys );
+static void StopSystem( ISS_DUNGEON_SYS* sys );
+static void UpdateBGMParam( ISS_DUNGEON_SYS* sys );
+
+
+//=========================================================================================
 // ■公開関数
-//========================================================================================== 
+//========================================================================================= 
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -256,20 +261,12 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata,
 	sys->nextZoneID    = INVALID_ZONE_ID;
 	sys->paramset      = LoadParamset( heap_id );
 	sys->pActiveParam  = NULL;
+
   // デフォルトパラメータ設定
-  {
-    int i;
-    sys->defaultParam.zoneID = INVALID_ZONE_ID;
-    for( i=0; i<PMSEASON_TOTAL; i++ )
-    {
-      sys->defaultParam.pitch[i]  = 0;
-      sys->defaultParam.tempo[i]  = 256;
-      sys->defaultParam.reverb[i] = 0;
-    }
-  }
+  SetupDefaultParam( sys );
 
 	// DEBUG:
-	OBATA_Printf( "ISS-D: Create\n" );
+	OBATA_Printf( "ISS-D: create\n" );
 
 	// 作成したダンジョンISSシステムを返す
 	return sys;
@@ -294,7 +291,7 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 	GFL_HEAP_FreeMemory( sys );
 
 	// DEBUG:
-	OBATA_Printf( "ISS-D: Delete\n" );
+	OBATA_Printf( "ISS-D: delete\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -306,47 +303,28 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 //----------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* sys )
 {
-	// 起動していなければ, 何もしない
-	if( sys->isActive != TRUE ) return; 
+  // 起動してない
+  if( !sys->isActive ){ return; }
 
-	// ゾーン切り替えが通知された場合
-	if( sys->currentZoneID != sys->nextZoneID )
-	{
-		// 更新
-		sys->currentZoneID = sys->nextZoneID;
-
-		// 新ゾーンIDのBGMパラメータを検索
-		sys->pActiveParam = GetBGMParam( sys->paramset, sys->nextZoneID );
-
-    // BGMパラメータが設定されていない場合 ==> システム停止
-    if( sys->pActiveParam == NULL )
-    {
-      ISS_DUNGEON_SYS_Off( sys );
-      return;
-    }
-
-		// BGMの設定を反映させる
-    {
-      u8 season = GAMEDATA_GetSeasonID( sys->gdata );
-      SetBGMStatus( sys->pActiveParam, season ); 
-    }
-	} 
+  // 更新
+  UpdateBGMParam( sys );
 } 
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param sys        通知対象のダンジョンISSシステム
+ * @param sys          通知対象のダンジョンISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
 { 
+  // ゾーン更新
 	sys->nextZoneID = next_zone_id; 
 
   // DEBUG:
-  OBATA_Printf( "ISS-D: ZoneChange\n" );
+  OBATA_Printf( "ISS-D: zone change\n" );
   OBATA_Printf( "- next zone id = %d\n", next_zone_id );
 }
 
@@ -359,22 +337,7 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
 //-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
 {
-  // 起動済み
-  if( sys->isActive ){ return; }
-
-  // 起動
-	sys->isActive = TRUE;
-
-#if 0
-  // パラメータ設定
-  {
-    u8 season = GAMEDATA_GetSeasonID( sys->gdata );
-    SetBGMStatus( sys->pActiveParam, season ); 
-  }
-#endif
-
-  // DEBUG:
-  OBATA_Printf( "ISS-D: On\n" );
+  BootSystem( sys );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -386,20 +349,10 @@ void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
 //-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys )
 {
-  // 停止済み
-  if( !sys->isActive ){ return; }
-
-	// 停止
-	sys->isActive = FALSE;
-
-  // デフォルト・パラメータに戻す
-  SetBGMStatus( &sys->defaultParam, 0 );
-
-  // DEBUG:
-  OBATA_Printf( "ISS-D: Off\n" );
+  StopSystem( sys );
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @breif 動作状態を取得する
  *
@@ -407,8 +360,105 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys )
  * 
  * @return 動作中かどうか
  */
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* sys )
 {
 	return sys->isActive; 
 }
+
+
+//=========================================================================================
+// ■非公開関数
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief デフォルトパラメータを設定する
+ *
+ * @param sys ダンジョンISSシステム
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupDefaultParam( ISS_DUNGEON_SYS* sys )
+{
+  int i;
+  sys->defaultParam.zoneID = INVALID_ZONE_ID;
+  for( i=0; i<PMSEASON_TOTAL; i++ )
+  {
+    sys->defaultParam.pitch[i]  = 0;
+    sys->defaultParam.tempo[i]  = 256;
+    sys->defaultParam.reverb[i] = 0;
+  }
+} 
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief システムを起動する
+ *
+ * @param sys ダンジョンISSシステム
+ */
+//-----------------------------------------------------------------------------------------
+static void BootSystem( ISS_DUNGEON_SYS* sys )
+{
+  // 起動済み
+  if( sys->isActive ){ return; }
+
+  // 起動
+	sys->isActive = TRUE;
+
+  // DEBUG:
+  OBATA_Printf( "ISS-D: boot\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief システムを停止する
+ *
+ * @param sys ダンジョンISSシステム
+ */
+//-----------------------------------------------------------------------------------------
+static void StopSystem( ISS_DUNGEON_SYS* sys )
+{
+  // 停止済み
+  if( !sys->isActive ){ return; }
+
+	// 停止
+	sys->isActive = FALSE;
+
+  // デフォルト・パラメータに戻す
+  //SetBGMParam( &sys->defaultParam, 0 );
+
+  // DEBUG:
+  OBATA_Printf( "ISS-D: stop\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BGMパラメータを更新する
+ *
+ * @param sys ダンジョンISSシステム
+ */
+//-----------------------------------------------------------------------------------------
+static void UpdateBGMParam( ISS_DUNGEON_SYS* sys )
+{
+	// 起動していない
+  GF_ASSERT( sys->isActive );
+
+	// ゾーン切り替えが通知された場合
+	if( sys->currentZoneID != sys->nextZoneID )
+	{
+		// 更新
+		sys->currentZoneID = sys->nextZoneID;
+
+		// 新ゾーンIDのBGMパラメータを検索
+		sys->pActiveParam = GetBGMParam( sys->paramset, sys->nextZoneID );
+
+    // BGMパラメータが設定されていない
+    if( sys->pActiveParam == NULL ){ return; }
+
+		// BGMの設定を反映させる
+    {
+      u8 season = GAMEDATA_GetSeasonID( sys->gdata );
+      SetBGMParam( sys->pActiveParam, season ); 
+    }
+	} 
+} 

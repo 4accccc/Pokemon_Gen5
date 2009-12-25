@@ -24,7 +24,7 @@
 // ■定数
 //=========================================================================================
 #define ISS_ON                   // ISS動作スイッチ
-#define INVALID_BGM_NO (0xffff)  // 再生中BGM番号の無効値
+#define INVALID_BGM_NO (0xffff)  // 監視BGM番号の無効値
 
 
 //=========================================================================================
@@ -32,11 +32,11 @@
 //=========================================================================================
 struct _ISS_SYS
 {
-	// 使用するヒープID
-	HEAPID heapID;
-
-	// 監視対象
+	HEAPID   heapID;  // 使用するヒープID 
 	GAMEDATA* gdata;  // ゲームデータ
+
+	u16       bgmNo;  // 監視中のBGM番号
+	u32       frame;  // フレームカウンタ
 
 	// 各ISSシステム
 	ISS_CITY_SYS*    issC;	// 街
@@ -44,12 +44,6 @@ struct _ISS_SYS
 	ISS_DUNGEON_SYS* issD;	// ダンジョン 
   ISS_ZONE_SYS*    issZ;  // ゾーン
   ISS_SWITCH_SYS*  issS;  // スイッチ
-
-	// 再生中のBGM番号
-	u16 bgmNo; 
-
-	// フレームカウンタ
-	u32 frame;
 };
 
 
@@ -78,10 +72,11 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* gdata, HEAPID heap_id )
 	ISS_SYS* sys;
 	PLAYER_WORK* player;
 
-	// 監視対象の主人公を取得
+  GF_ASSERT( gdata );
+
 	player = GAMEDATA_GetMyPlayerWork( gdata );
 
-	// メモリ確保
+	// システムワークを確保
 	sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
@@ -107,6 +102,8 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* gdata, HEAPID heap_id )
 //-----------------------------------------------------------------------------------------
 void ISS_SYS_Delete( ISS_SYS* sys )
 {
+  GF_ASSERT( sys );
+
 	// 各ISSシステムを破棄
 	ISS_CITY_SYS_Delete( sys->issC );
 	ISS_ROAD_SYS_Delete( sys->issR );
@@ -137,11 +134,11 @@ void ISS_SYS_Update( ISS_SYS* sys )
 	BGMChangeCheck( sys );
 
   // 各ISSの更新
-	ISS_CITY_SYS_Update( sys->issC );    // 街ISS 
 	if( sys->frame++ % 2 == 0 )
   {
     ISS_ROAD_SYS_Update( sys->issR );  // 道路ISS(30フレームで動作)
   }
+	ISS_CITY_SYS_Update( sys->issC );    // 街ISS 
 	ISS_DUNGEON_SYS_Update( sys->issD ); // ダンジョンISS 
   ISS_ZONE_SYS_Update( sys->issZ );    // ゾーンISS 
   ISS_SWITCH_SYS_Update( sys->issS );  // スイッチISS
