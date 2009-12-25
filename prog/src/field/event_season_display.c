@@ -180,7 +180,7 @@ GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
   work->gsys          = gsys;
   work->fieldmap      = fieldmap;
   work->currentSeason = end;
-  work->dispSeason    = (start + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
+  work->dispSeason    = PMSEASON_GetPrevSeasonID( start );
   SetSeq( work, seq, SEQ_INIT );
   return event;
 }
@@ -204,7 +204,7 @@ u32 GetSeasonDispEventFrame( GAMESYS_WORK* gsys )
   // 表示する季節の数を求める
   gdata   = GAMESYSTEM_GetGameData( gsys );
   fstatus = GAMEDATA_GetFieldStatus( gdata );
-  last    =  FIELD_STATUS_GetSeasonDispLast( fstatus );
+  last    = FIELD_STATUS_GetSeasonDispLast( fstatus );
   now     = GAMEDATA_GetSeasonID( gdata );
   num     = (now - last + PMSEASON_TOTAL) % PMSEASON_TOTAL;
 
@@ -360,14 +360,14 @@ static void UpdateAlpha( const EVENT_WORK* work, int seq )
         GXS_SetMasterBrightness( bright );
       }
     }
-  }
-  else
-  { // スキップ時は輝度
-    int bright;
-    float rate;
-    rate = (float)work->count / (float)work->maxCount;
-    bright = BRIGHT_MAX - (BRIGHT_MAX - BRIGHT_MIN) * rate;
-    G2_SetBlendBrightness( ALPHA_MASK_SEASON, bright );
+    else
+    { // スキップ時は輝度
+      int bright;
+      float rate;
+      rate = (float)work->count / (float)work->maxCount;
+      bright = BRIGHT_MAX - (BRIGHT_MAX - BRIGHT_MIN) * rate;
+      G2_SetBlendBrightness( ALPHA_MASK_SEASON, bright );
+    }
   }
 }
 
@@ -447,7 +447,7 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
   // 表示準備
   case SEQ_PREPARE:
     // 表示する季節を決定
-    work->dispSeason = (work->dispSeason + 1) % PMSEASON_TOTAL;
+    work->dispSeason = PMSEASON_GetNextSeasonID( work->dispSeason );
     // グラフィックデータ読み込み
     {
       HEAPID heap_id = FIELDMAP_GetHeapID( work->fieldmap );

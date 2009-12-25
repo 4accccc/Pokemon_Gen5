@@ -25,30 +25,37 @@ extern "C" {
 #define	PMSEASON_TOTAL		(4)			/**!< “–‚½‚è‘O‚¾‚ªŽl‹G‚Í‚S‚Â */
 
 
-#ifndef __ASM_NO_DEF_
-
+#ifndef __ASM_NO_DEF_ 
 //--------------------------------------------------------------------------------------------
 /**
  * @brief Œ»ÝŽž‚Ì‹Gß‚ðŒvŽZ‚·‚é
  *
- * @param start_date ƒQ[ƒ€ŠJŽn“úŽž[ŒŽ/“ú]
- * 
  * @return Œ»ÝŽž‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
  */
 //--------------------------------------------------------------------------------------------
-u8 PMSEASON_CalcSeasonID_byDate( const RTCDate* start_date );
+extern u8 PMSEASON_GetCurrentSeasonID(); 
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief Œ»ÝŽž‚Ì‹Gß‚ðŒvŽZ‚·‚é
+ * @brief ŽŸ‚Ì‹Gß‚ð‹‚ß‚é
  *
- * @param start_sec ƒQ[ƒ€ŠJŽnŽž[sec]
- * 
- * @return Œ»ÝŽž‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ * @param now Œ»Ý‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ *
+ * @return ŽŸ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
  */
 //--------------------------------------------------------------------------------------------
-u8 PMSEASON_CalcSeasonID_bySec( s64 start_sec );
+extern u8 PMSEASON_GetNextSeasonID( u8 now );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief ‘O‚Ì‹Gß‚ð‹‚ß‚é
+ *
+ * @param now Œ»Ý‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ *
+ * @return ‘O‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ */
+//--------------------------------------------------------------------------------------------
+extern u8 PMSEASON_GetPrevSeasonID( u8 now );
 #endif  // __ASM_NO_DEF_
 
 

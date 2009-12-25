@@ -15,38 +15,50 @@
 /**
  * @brief Œ»İ‚Ì‹Gß‚ğŒvZ‚·‚é
  *
- * @param start_date ƒQ[ƒ€ŠJn“ú[Œ/“ú]
- * 
  * @return Œ»İ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
  */
 //--------------------------------------------------------------------------------------------
-u8 PMSEASON_CalcSeasonID_byDate( const RTCDate* start_date )
+u8 PMSEASON_GetCurrentSeasonID()
 {
-  RTCDate now_date;
-  u8 season; 
+  RTCDate date;
+  u8 season;
 
-  GFL_RTC_GetDate( &now_date );
-  season = (now_date.month + 12 - start_date->month) % PMSEASON_TOTAL;
+  // Œ»İ‚ğæ“¾
+  GFL_RTC_GetDate( &date );
+
+  // ‹Gß‚ğŒvZ
+  season = (date.month - 1) % PMSEASON_TOTAL;
   return season;
+} 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief Ÿ‚Ì‹Gß‚ğ‹‚ß‚é
+ *
+ * @param now Œ»İ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ *
+ * @return Ÿ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ */
+//--------------------------------------------------------------------------------------------
+extern u8 PMSEASON_GetNextSeasonID( u8 now )
+{
+  u8 next;
+  next = (now + 1) % PMSEASON_TOTAL;
+  return next;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief Œ»İ‚Ì‹Gß‚ğŒvZ‚·‚é
+ * @brief ‘O‚Ì‹Gß‚ğ‹‚ß‚é
  *
- * @param start_sec ƒQ[ƒ€ŠJn[sec]
- * 
- * @return Œ»İ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ * @param now Œ»İ‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
+ *
+ * @return ‘O‚Ì‹Gß( PMSEASON_SPRING ‚È‚Ç )
  */
 //--------------------------------------------------------------------------------------------
-u8 PMSEASON_CalcSeasonID_bySec( s64 start_sec )
+extern u8 PMSEASON_GetPrevSeasonID( u8 now )
 {
-  RTCDate start_date;
-  RTCTime start_time;
-
-  // ŠJn[sec]‚ğ “ú, ŠÔ‚É•ÏŠ·
-  RTC_ConvertSecondToDateTime( &start_date, &start_time, start_sec );
-
-  // ‹Gß‚ğŒvZ
-  return PMSEASON_CalcSeasonID_byDate( &start_date );
-} 
+  u8 prev;
+  prev = (now + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
+  return prev;
+}

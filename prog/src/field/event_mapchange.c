@@ -195,14 +195,14 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         SAVE_CONTROL_WORK* scw;
         scw    = GAMEDATA_GetSaveControlWork( gamedata );
         gmtime = SaveData_GetGameTime( scw );
-        season = PMSEASON_CalcSeasonID_bySec( gmtime->start_sec );
-        season = (season + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
+        season = PMSEASON_GetCurrentSeasonID();
+        season = PMSEASON_GetPrevSeasonID( season );
         FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE  );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
       else
       { // それ以外 ==> セーブした時点の季節を表示
-        season = (season + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
+        season = PMSEASON_GetPrevSeasonID( season );
         FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
@@ -397,18 +397,12 @@ typedef enum{
 //------------------------------------------------------------------
 static void CheckSeasonChange( MAPCHANGE_WORK* work )
 {
-  RTCDate date_start, date_now;
-  RTCTime time_start;
-  GMTIME* gmtime;
-  SAVE_CONTROL_WORK* scw;
   BOOL outdoor;
   u8 last_season;
   FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( work->gamedata );
 
   // 現在時刻から季節を求める
-  scw    = GAMEDATA_GetSaveControlWork( work->gamedata );
-  gmtime = SaveData_GetGameTime( scw );
-  work->next_season = PMSEASON_CalcSeasonID_bySec( gmtime->start_sec );
+  work->next_season = PMSEASON_GetCurrentSeasonID();
   // 最後に表示した季節を取得
   last_season = FIELD_STATUS_GetSeasonDispLast( fstatus );
   // 遷移先が屋内か屋外かを判定
