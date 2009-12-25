@@ -479,7 +479,7 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 	// ƒ}ƒ‹ƒ`
 	wk->dat->multi_pp = wk->dat->pp;
 	wk->dat->multiMode = TRUE;
-	wk->dat->multiPos = 1;
+	wk->dat->multiPos = 0;
 */
 
 /**************/
@@ -2270,37 +2270,25 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 			}
 		}
 	}else{
-		POKEPARTY * pp1;
-		POKEPARTY * pp2;
-
-		if( wk->dat->multiPos == 0 ){
-			pp1 = wk->dat->pp;
-			pp2 = wk->dat->multi_pp;
-		}else{
-			pp1 = wk->dat->multi_pp;
-			pp2 = wk->dat->pp;
-		}
-
 	  for( i=0; i<TEMOTI_POKEMAX/2; i++ ){
-			if( i < PokeParty_GetPokeCount(pp1) ){
-				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(pp1,i), &wk->poke[i] );
+			if( i < PokeParty_GetPokeCount(wk->dat->pp) ){
+				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(wk->dat->pp,i), &wk->poke[i] );
 			}else{
 				PokeDataMakeCore( wk, NULL, &wk->poke[i] );
 			}
-			if( i < PokeParty_GetPokeCount(pp2) ){
-				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(pp2,i), &wk->poke[i+3] );
+			if( i < PokeParty_GetPokeCount(wk->dat->multi_pp) ){
+				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(wk->dat->multi_pp,i), &wk->poke[i+3] );
 			}else{
 				PokeDataMakeCore( wk, NULL, &wk->poke[i+3] );
 			}
 		}
 	}
 
-/*
-	wk->poke[0].hp = 0;
+
+//	wk->poke[0].hp = 0;
 //  wk->poke[1].hp = 0;
-  wk->poke[2].hp = 0;
-  wk->poke[3].hp = 0;
-*/
+//  wk->poke[2].hp = 0;
+//  wk->poke[3].hp = 0;
 }
 
 //--------------------------------------------------------------------------------------------
