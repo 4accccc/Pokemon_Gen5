@@ -486,6 +486,7 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)VM_GetContext( vmh );
   BOOL  ret = FALSE;
 
+#if 0 //@todo ƒ_ƒuƒ‹–¢ì¬
 	if( tr_ai_work->rule == BTL_RULE_SINGLE )
   {
     tr_ai_work->def_btl_poke_pos = tr_ai_work->atk_btl_poke_pos ^ 1;
@@ -495,6 +496,10 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   {
 		ret = waza_ai_double( vmh, tr_ai_work );
 	}
+#else
+  tr_ai_work->def_btl_poke_pos = tr_ai_work->atk_btl_poke_pos ^ 1;
+	ret = waza_ai_single( vmh, tr_ai_work );
+#endif
 
   return ret;
 }
