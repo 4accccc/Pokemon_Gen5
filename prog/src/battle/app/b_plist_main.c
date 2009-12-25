@@ -3835,6 +3835,11 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
 	u8	max;
 	u8	i;
 
+	// マルチバトル時
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		return FALSE;
+	}
+
 	if( wk->dat->rule == BTL_RULE_SINGLE ){
 		return FALSE;
 	}else if( wk->dat->rule == BTL_RULE_DOUBLE ){
@@ -3875,6 +3880,11 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
 {
 	u8	max;
 	u8	i;
+
+	// マルチバトル時
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		return FALSE;
+	}
 
 	if( wk->dat->rule == BTL_RULE_SINGLE ){
 		return FALSE;

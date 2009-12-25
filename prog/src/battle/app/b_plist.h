@@ -47,7 +47,7 @@ typedef struct {
 
 	HEAPID	heap;			// ヒープID
 
-	BtlRule	rule;			// シングル／ダブル／トリプル
+	BtlRule	rule;			// シングル／ダブル／トリプル　※マルチバトル時のルールはダブル！
 
 	BOOL	multiMode;		// マルチバトルかどうか TRUE = マルチ, FALSE = それ以外
 	u8	multiPos;				// マルチの立ち位置
