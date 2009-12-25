@@ -41,6 +41,7 @@
 
 // local includes ---------------------
 #include "msg\msg_debug_fight.h"
+#include "debug_fight_comm.h"
 
 // archive includes -------------------
 #include "arc_def.h"
@@ -1542,6 +1543,7 @@ FS_EXTERN_OVERLAY(battle);
 
   // 通信開始
   case SEQ_COMM_START_1:
+#if 0
     {
       const GFLNetInitializeStruct* initParam;
       if( btltype_IsMulti( wk->saveData.btlType ) ){
@@ -1553,17 +1555,45 @@ FS_EXTERN_OVERLAY(battle);
         initParam = &NetInitParamNormal;
         wk->NeedConnectMembers = 2;
       }
-      GFL_NET_Init( initParam, comm_dummy_callback, (void*)wk );
+      GFL_NET_Init( initParam, NULL, (void*)wk);
       (*seq) = SEQ_COMM_START_2;
     }
+#else  //親子別接続
+    {
+      const GFLNetInitializeStruct* initParam;
+      BOOL bParent = FALSE;
+      if( btltype_IsMulti( wk->saveData.btlType ) ){
+        TAYA_Printf("マルチモードで通信開始\n");
+        initParam = &NetInitParamMulti;
+        wk->NeedConnectMembers = 4;
+      }else{
+        TAYA_Printf("通常モードで通信開始\n");
+        initParam = &NetInitParamNormal;
+        wk->NeedConnectMembers = 2;
+      }
+      if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){  //臨時でXボタンで親選択
+        bParent=TRUE;
+      }
+      DFC_NET_Init( initParam, NULL, (void*)wk , bParent, wk->NeedConnectMembers);
+      (*seq) = SEQ_COMM_START_2;
+    }
+#endif
     break;
   case SEQ_COMM_START_2:
+#if 0
     if( GFL_NET_IsInit() )
     {
       wk->fNetConnect = FALSE;
       GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
       (*seq) = SEQ_COMM_START_3;
     }
+#else  //親子別接続
+    if( DFC_NET_Process() )  //この関数で通信終了を待っている
+    {
+      wk->fNetConnect = TRUE;
+      (*seq) = SEQ_COMM_START_3;
+    }
+#endif
     break;
   case SEQ_COMM_START_3:
     if( wk->fNetConnect ){
