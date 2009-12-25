@@ -80,7 +80,7 @@ typedef struct _SVCL_WORK         SVCL_WORK;
 // server -> server_flow
 extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
-  BTL_SERVER_CMD_QUE* que, u32 numClient, BtlBagMode bagMode, HEAPID heapID );
+  BTL_SERVER_CMD_QUE* que, BtlBagMode bagMode, HEAPID heapID );
 
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
@@ -98,6 +98,7 @@ extern BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk );
 // server_flow -> server
 extern SVCL_WORK* BTL_SERVER_GetClientWork( BTL_SERVER* server, u8 clientID );
 extern SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID );
+extern BOOL BTL_SERVER_IsClientEnable( const BTL_SERVER* server, u8 clientID );
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );
 
@@ -124,7 +125,7 @@ extern u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, 
 extern BtlBgType BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk );
 extern const BTL_PARTY* BTL_SVFTOOL_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFTOOL_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern BtlPokePos BTL_SVFTOOL_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
+extern BtlExPos BTL_SVFTOOL_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 extern u8 BTL_SVFTOOL_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos );
 extern BOOL BTL_SVFTOOL_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst );
 extern u16 BTL_SVFTOOL_GetThisTurnAgility( BTL_SVFLOW_WORK* work, u8 pokeID );

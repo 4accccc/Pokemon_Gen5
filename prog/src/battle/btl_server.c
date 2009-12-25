@@ -77,7 +77,6 @@ struct _BTL_SERVER {
   BTL_RECTOOL           recTool;
   STRBUF*               strbuf;
 
-  u8          numClient;
   u8          quitStep;
   u32         escapeClientID;
   u32         exitTimer;
@@ -97,7 +96,6 @@ struct _BTL_SERVER {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
@@ -116,6 +114,10 @@ static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static BOOL WaitAdapterCmd( BTL_SERVER* server );
 static void ResetAdapterCmd( BTL_SERVER* server );
+static void Svcl_Clear( SVCL_WORK* clwk );
+static BOOL Svcl_IsEnable( const SVCL_WORK* clwk );
+static void Svcl_Setup( SVCL_WORK* clwk, u8 clientID, BTL_ADAPTER* adapter, BOOL fLocalClient );
+static void Svcl_SetParty( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
 
 
 
@@ -141,7 +143,6 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
 
   sv->mainModule = mainModule;
   sv->pokeCon = pokeCon;
-  sv->numClient = 0;
   sv->heapID = heapID;
   sv->que = &sv->queBody;
   sv->quitStep = QUITSTEP_NONE;
@@ -155,9 +156,8 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
 
   {
     int i;
-    for(i=0; i<BTL_CLIENT_MAX; ++i)
-    {
-      sv->client[i].myID = CLIENT_DISABLE_ID;
+    for(i=0; i<BTL_CLIENT_MAX; ++i){
+      Svcl_Clear( &sv->client[i] );
     }
   }
 
@@ -165,6 +165,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
 
   return sv;
 }
+
 //--------------------------------------------------------------------------------------
 /**
  * サーバと同一マシン上にあるクライアントとのアダプタを接続する
@@ -185,17 +186,12 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, u8 
     SVCL_WORK* client;
     BTL_PARTY* party;
 
-    client = &server->client[ clientID ];
     party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
+    client = &server->client[ clientID ];
 
-    client->adapter = adapter;
-    client->myID = clientID;
-    client->isLocalClient = TRUE;
-
-    setup_client_members( client, party, numCoverPos );
+    Svcl_Setup( client, clientID, adapter, TRUE );
+    Svcl_SetParty( client, party, numCoverPos );
   }
-
-  server->numClient++;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -217,35 +213,15 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
   {
     SVCL_WORK* client;
     BTL_PARTY* party;
+    BTL_ADAPTER* adapter;
+
+    party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
+    adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
 
     client = &server->client[ clientID ];
-    party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
-
-    client->adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
-    client->myID = clientID;
-    client->isLocalClient = FALSE;
-
-    setup_client_members( client, party, numCoverPos );
+    Svcl_Setup( client, clientID, adapter, FALSE );
+    Svcl_SetParty( client, party, numCoverPos );
   }
-
-  server->numClient++;
-}
-//--------------------------------------------------------------------------
-/**
- * クライアントワークのメンバーデータ部分初期化
- *
- * @param   client        クライアントワーク
- * @param   party         パーティデータ
- * @param   numCoverPos   クライアントが受け持つ戦闘中ポケモン数
- */
-//--------------------------------------------------------------------------
-static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos )
-{
-  u16 i;
-
-  client->party = party;
-  client->memberCount = BTL_PARTY_GetMemberCount( party );
-  client->numCoverPos = numCoverPos;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -259,7 +235,7 @@ void BTL_SERVER_Startup( BTL_SERVER* server )
 {
   GF_ASSERT(server->flowWork==NULL);
   server->flowWork = BTL_SVFLOW_InitSystem( server, server->mainModule, server->pokeCon,
-        &server->queBody, server->numClient, server->bagMode, server->heapID );
+        &server->queBody, server->bagMode, server->heapID );
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -425,10 +401,12 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
 
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
-      for(i=0; i<server->numClient; ++i)
+      for(i=0; i<BTL_CLIENT_MAX; ++i)
       {
-        dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
-        BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, *dir );
+        if( Svcl_IsEnable(&server->client[i]) ){
+          dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
+          BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, *dir );
+        }
       }
 
       if( SendRotateRecord(server) ){
@@ -963,9 +941,11 @@ static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* 
 
   BTL_ADAPTERSYS_BeginSetCmd();
 
-  for(i=0; i<server->numClient; i++)
+  for(i=0; i<BTL_CLIENT_MAX; i++)
   {
-    BTL_ADAPTER_SetCmd( server->client[i].adapter, cmd, sendData, dataSize );
+    if( Svcl_IsEnable(&server->client[i]) ){
+      BTL_ADAPTER_SetCmd( server->client[i].adapter, cmd, sendData, dataSize );
+    }
   }
 
   BTL_ADAPTERSYS_EndSetCmd();
@@ -975,11 +955,13 @@ static BOOL WaitAdapterCmd( BTL_SERVER* server )
 {
   int i;
   BOOL ret = TRUE;
-  for(i=0; i<server->numClient; i++)
+  for(i=0; i<BTL_CLIENT_MAX; i++)
   {
-    if( !BTL_ADAPTER_WaitCmd( server->client[i].adapter ) )
+    if( Svcl_IsEnable(&server->client[i]) )
     {
-      ret = FALSE;
+      if( !BTL_ADAPTER_WaitCmd( server->client[i].adapter ) ){
+        ret = FALSE;
+      }
     }
   }
   return ret;
@@ -988,10 +970,67 @@ static BOOL WaitAdapterCmd( BTL_SERVER* server )
 static void ResetAdapterCmd( BTL_SERVER* server )
 {
   int i;
-  for(i=0; i<server->numClient; i++)
+  for(i=0; i<BTL_CLIENT_MAX; i++)
   {
-    BTL_ADAPTER_ResetCmd( server->client[i].adapter );
+    if( Svcl_IsEnable(&server->client[i]) ){
+      BTL_ADAPTER_ResetCmd( server->client[i].adapter );
+    }
   }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * サーバ保持用クライアントワーク：初期化
+ *
+ * @param   clwk
+ */
+//----------------------------------------------------------------------------------
+static void Svcl_Clear( SVCL_WORK* clwk )
+{
+  clwk->myID = CLIENT_DISABLE_ID;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サーバ保持用クライアントワーク：有効判定
+ *
+ * @param   clwk
+ */
+//----------------------------------------------------------------------------------
+static BOOL Svcl_IsEnable( const SVCL_WORK* clwk )
+{
+  return clwk->myID != CLIENT_DISABLE_ID;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サーバ保持用クライアントワーク：基本設定
+ *
+ * @param   clwk
+ * @param   adapter
+ * @param   fLocalClient
+ */
+//----------------------------------------------------------------------------------
+static void Svcl_Setup( SVCL_WORK* clwk, u8 clientID, BTL_ADAPTER* adapter, BOOL fLocalClient )
+{
+  clwk->myID = clientID;
+  clwk->adapter = adapter;
+  clwk->isLocalClient = fLocalClient;
+}
+//--------------------------------------------------------------------------
+/**
+ * サーバ保持用クライアントワーク：パーティ設定
+ *
+ * @param   client        クライアントワーク
+ * @param   party         パーティデータ
+ * @param   numCoverPos   クライアントが受け持つ戦闘中ポケモン数
+ */
+//--------------------------------------------------------------------------
+static void Svcl_SetParty( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos )
+{
+  u16 i;
+
+  client->party = party;
+  client->memberCount = BTL_PARTY_GetMemberCount( party );
+  client->numCoverPos = numCoverPos;
 }
 
 //--------------------------------------------------------------------------------------
@@ -1030,6 +1069,23 @@ SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID )
     return &(server->client[clientID]);
   }
   return NULL;
+}
+//--------------------------------------------------------------------------------------
+/**
+ * 指定IDのクライアントが存在するか判定
+ *
+ * @param   server
+ * @param   clientID
+ *
+ * @retval  BOOL    存在すればTRUE
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SERVER_IsClientEnable( const BTL_SERVER* server, u8 clientID )
+{
+  if( clientID < BTL_CLIENT_MAX ){
+    return Svcl_IsEnable( &server->client[ clientID ] );
+  }
+  return FALSE;
 }
 
 
