@@ -659,13 +659,13 @@ void BTL_EVENTVAR_PushInpl( u32 line )
 
   if( stack->sp < (NELEMS(stack->label)-1) )
   {
-    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] PUSH sp:%d\n", stack->sp );
     stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
     #ifdef PM_DEBUG
     if( stack->sp >= (NELEMS(stack->label)/8*7) ){
       GF_ASSERT_MSG(0, "Event StackPointer =%d ŠëŒ¯…ˆæ‚Å‚·II", stack->sp);
     }
     #endif
+    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] PUSH sp:%d\n", stack->sp );
 //    OS_TPrintf("PUSH [%5d] SP=%d\n", line, stack->sp);
   }
   else

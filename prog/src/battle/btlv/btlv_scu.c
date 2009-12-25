@@ -28,6 +28,9 @@
 
 #include "btlv_scu.h"
 
+enum {
+  PRINT_FLG = FALSE,
+};
 
 
 /*--------------------------------------------------------------------------*/
@@ -2517,6 +2520,7 @@ static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPok
 void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+  BU_Printf( PRINT_FLG, "[SCU] TOKWIN DISP ... pos=%d, side=%d\n", pos, side);
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
 BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
@@ -2535,12 +2539,13 @@ BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
 {
-  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+  BU_Printf( PRINT_FLG, "[SCU] TOKWIN HIDE ... pos=%d, side=%d\n", pos, side);
   tokwin_hide_first( &wk->tokWin[side] );
 }
 BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos )
 {
-  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
   return tokwin_hide_progress( &wk->tokWin[side] );
 }
 //=============================================================================================
