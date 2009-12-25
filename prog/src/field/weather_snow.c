@@ -125,7 +125,7 @@
 //-----------------------
 // 北海道雪
 //=======================
-#define	WEATHER_SNOW_S_TIMING_MIN		(1)							// 雪を出すタイミング最小
+#define	WEATHER_SNOW_S_TIMING_MIN		(2)							// 雪を出すタイミング最小
 #define WEATHER_SNOW_S_TIMING_MAX		(3)						// 雪を出すタイミング最大
 #define WEATHER_SNOW_S_TIMING_ADD		(2)							// タイミングを減らす数
 #define WEATHER_SNOW_S_ADD_START		(1)							// 最初の同時に雪を登録する数
@@ -196,14 +196,14 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define WEATHER_ARARE_SPEED_X		(-4)						// 横に進むスピード
 #define WEATHER_ARARE_SPEED_Y		(10)						// たてに進むスピードベース
 #define WEATHER_ARARE_ADDSPEED_X	(2)						// 横に進むスピードに足すあたい
-#define WEATHER_ARARE_ADDSPEED_Y	(2)						// たてに進むスピードに足すあたい
+#define WEATHER_ARARE_ADDSPEED_Y	(3)						// たてに進むスピードに足すあたい
 #define	WEATHER_ARARE_END_MIN		(1)							// 終了カウンタ最小
 #define WEATHER_ARARE_END_MAX		(3)							// 終了カウンタ最大
 #define	WEATHER_ARARE_START_X_BASE	(0)							// ベースになるX開始座標
 #define	WEATHER_ARARE_MUL_X			(15)						// ベースに雨の種類分足す値
 #define	WEATHER_ARARE_START_X_MAX	(270)						// X開始座標乱数の最大値
 #define	WEATHER_ARARE_START_Y		(0)						// Y開始座標
-#define	WEATHER_ARARE_SPEED_ERR		(20)						// スピード補正値
+#define	WEATHER_ARARE_SPEED_ERR		(23)						// スピード補正値
 
 #define WEATHER_ARARE_GROUND_SPEED_X		(-2)					// 着地後の横に進むスピード
 #define WEATHER_ARARE_GROUND_SPEED_Y		(2)						// 着地後の横に進むスピード
@@ -1338,7 +1338,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Init( WEATHER_TASK* p_wk, WEATHER
 	p_local_wk->work[1] = 0;					// オブジェ数カウンタ
 	p_local_wk->work[2] = 0;					// BGカウンタ
 
-
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
@@ -1656,7 +1655,6 @@ static void WEATHER_SNOW_S_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 	}
 	tbl_num = (sys_w->work[1] / WEATHER_SNOW_S_ADD_SP_CHG_TMG );
 
-	
 	// num分オブジェクトを登録
 	for(i=0;i<num;i++){
 

@@ -42,7 +42,7 @@
 //-------------------------------------
 //	砂嵐管理関数定数
 //=====================================
-#define	WEATHER_STORM_TIMING_MIN		(1)							// 砂を出すタイミング最小
+#define	WEATHER_STORM_TIMING_MIN		(2)							// 砂を出すタイミング最小
 #define WEATHER_STORM_TIMING_MAX		(15)						// 砂を出すタイミング最大
 #define WEATHER_STORM_TIMING_ADD		(2)							// タイミングを減らす数
 #define WEATHER_STORM_TIMING_ADD_END	(1)							// タイミングを減らす数
