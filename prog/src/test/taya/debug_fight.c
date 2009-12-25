@@ -41,6 +41,7 @@
 
 // local includes ---------------------
 #include "msg\msg_debug_fight.h"
+#include "debug_fight_comm.h"
 
 // archive includes -------------------
 #include "arc_def.h"
@@ -368,21 +369,22 @@ static const struct {
 static const struct {
   u8  commFlag     : 1;
   u8  wildFlag     : 1;
-  u8  enemyPokeReg : 6;   // 敵ポケ規定数（0なら自由）
+  u8  multiFlag    : 1;
+  u8  enemyPokeReg : 5;   // 敵ポケ規定数（0なら自由）
   u8  rule;
 }BtlTypeParams[] = {
-  { 0, 1, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
-  { 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
-  { 1, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
-  { 0, 1, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
-  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
-  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
-  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
-  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_DOUBLE
-  { 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
-  { 1, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
-  { 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
-  { 1, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
+  { 0, 1, 0, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, 0, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
+  { 1, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_MULTI
+  { 0, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
+  { 0, 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
 };
 
 /*--------------------------------------------------------------------------*/
@@ -1064,7 +1066,7 @@ static BOOL btltype_IsComm( BtlType type )
 //----------------------------------------------------------------------------------
 static BOOL btltype_IsMulti( BtlType type )
 {
-  return ( type == BTLTYPE_DOUBLE_COMM_MULTI );
+  return BtlTypeParams[ type ].multiFlag;
 }
 static BOOL btltype_IsWild( BtlType type )
 {
@@ -1542,6 +1544,7 @@ FS_EXTERN_OVERLAY(battle);
 
   // 通信開始
   case SEQ_COMM_START_1:
+#if 0
     {
       const GFLNetInitializeStruct* initParam;
       if( btltype_IsMulti( wk->saveData.btlType ) ){
@@ -1553,17 +1556,45 @@ FS_EXTERN_OVERLAY(battle);
         initParam = &NetInitParamNormal;
         wk->NeedConnectMembers = 2;
       }
-      GFL_NET_Init( initParam, comm_dummy_callback, (void*)wk );
+      GFL_NET_Init( initParam, NULL, (void*)wk);
       (*seq) = SEQ_COMM_START_2;
     }
+#else  //親子別接続
+    {
+      const GFLNetInitializeStruct* initParam;
+      BOOL bParent = FALSE;
+      if( btltype_IsMulti( wk->saveData.btlType ) ){
+        TAYA_Printf("マルチモードで通信開始\n");
+        initParam = &NetInitParamMulti;
+        wk->NeedConnectMembers = 4;
+      }else{
+        TAYA_Printf("通常モードで通信開始\n");
+        initParam = &NetInitParamNormal;
+        wk->NeedConnectMembers = 2;
+      }
+      if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){  //臨時でXボタンで親選択
+        bParent=TRUE;
+      }
+      DFC_NET_Init( initParam, NULL, (void*)wk , bParent, wk->NeedConnectMembers);
+      (*seq) = SEQ_COMM_START_2;
+    }
+#endif
     break;
   case SEQ_COMM_START_2:
+#if 0
     if( GFL_NET_IsInit() )
     {
       wk->fNetConnect = FALSE;
       GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
       (*seq) = SEQ_COMM_START_3;
     }
+#else  //親子別接続
+    if( DFC_NET_Process() )  //この関数で通信終了を待っている
+    {
+      wk->fNetConnect = TRUE;
+      (*seq) = SEQ_COMM_START_3;
+    }
+#endif
     break;
   case SEQ_COMM_START_3:
     if( wk->fNetConnect ){
@@ -1625,8 +1656,10 @@ FS_EXTERN_OVERLAY(battle);
         if( !btltype_IsMulti(wk->saveData.btlType) ){
           BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         }else{
+          // 意図的にnetIDと立ち位置をバラバラにしてみる
+          u8 commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
           BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
-            GFL_NET_GetNetID(netHandle), HEAPID_BTL_DEBUG_SYS );
+            commPos, HEAPID_BTL_DEBUG_SYS );
         }
         break;
       case BTL_RULE_TRIPLE:
@@ -1642,7 +1675,7 @@ FS_EXTERN_OVERLAY(battle);
     {
       BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-      TrainerID  trID = 1 + GFL_STD_MtRand( 50 ); // てきとーにランダムで
+      TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
       BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
@@ -1652,9 +1685,17 @@ FS_EXTERN_OVERLAY(battle);
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_DOUBLE:
-        BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
-          &sit, trID, HEAPID_BTL_DEBUG_SYS );
-        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        if( !btltype_IsMulti(wk->saveData.btlType) ){
+          BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
+            &sit, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        }else{
+          TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+
+          BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &sit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+        }
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData,
