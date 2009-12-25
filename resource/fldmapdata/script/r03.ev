@@ -57,6 +57,11 @@ EVENT_START   ev_pos_r03_rival_01
 	
 	//オブジェクト駆け寄る
 	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_00)
 	_OBJ_ANIME_WAIT()
 	
@@ -68,12 +73,12 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//自機座標取得
-	DEFINE_LOCAL  POSX
-    DEFINE_LOCAL  POSZ
-    _PLAYER_POS_GET( POSX,POSZ ) 
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
     
     //プレイヤーが通る4グリッド分を用意
-    SWITCH $POSZ
+    SWITCH $LCW_POSZ
 	CASE 561 THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_00_z561 )
 	_OBJ_ANIME_WAIT()
@@ -147,15 +152,15 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団駆け抜けてゆく
-	_BALLOONWIN_OBJMSG( msg_r03_hakaim_01 , R03_HAKAIM_01 )
+	_PLAINWIN_MSG_DOWN( msg_r03_hakaim_01 )
 	_OBJ_ANIME( R03_HAKAIM_01 , anm_hakai_dash_01 )
 	_OBJ_ANIME( R03_HAKAIM_02, anm_hakai_dash_01 )
+	_MSGWIN_CLOSE()
 	
 	//主人公よける
 	_OBJ_ANIME( R03_RIVAL_01 , anm_hakai_bikkuri_rival )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_bikkuri_player )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団OBJ消去
 	_OBJ_DEL(R03_HAKAIM_01)
@@ -169,16 +174,17 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//右を見てサポートに気づく
-	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_05 )
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_rival_01_05 )
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_stop_right )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_rival_01_stop_right )
 	_BALLOONWIN_OBJMSG( msg_r03_black_04 , R03_RIVAL_01 )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//サポート到着
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_01 )
 	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_01 )
 	_OBJ_ANIME_WAIT()
+	
+	//サポート到着
 	_BALLOONWIN_OBJMSG( msg_r03_white_01 , R03_SUPPORT_01  )
 	_BALLOONWIN_CLOSE()
 	
@@ -192,9 +198,13 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG( msg_r03_black_06 , R03_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//サポートとBABYGIRL
+	//なんて逃げ足が早いの！サポート足踏み
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_01_step )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03_white_02 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//サポートとBABYGIRL向き合って会話
 	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_02 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03_babygirl1_01 , R03_BABYGIRL_02 )
@@ -289,12 +299,12 @@ EVENT_START   ev_pos_r03_support_03
 	//主人公下を向く
 	
 	//自機座標取得
-	DEFINE_LOCAL  POSX02
-    DEFINE_LOCAL  POSZ02
-    _PLAYER_POS_GET( POSX02,POSZ02 ) 
+	DEFINE_LOCAL  LCW_POSX02
+    DEFINE_LOCAL  LCW_POSZ02
+    _PLAYER_POS_GET( LCW_POSX02,LCW_POSZ02 ) 
     
     //プレイヤーが通る3グリッド分を用意
-    SWITCH $POSX02
+    SWITCH $LCW_POSX02
 	CASE 715 THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_goodbye_x715 )
 	_OBJ_ANIME_WAIT()
@@ -343,8 +353,11 @@ EVENT_START   ev_pos_r03_support_03
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( R03_BABYGIRL_03 ,  anm_support_goodbye02 )
 	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye02 )
+	_OBJ_ANIME( R03_BABYGIRL_03 , anm_babygirl_goodbye01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( R03_BABYGIRL_03 ,  anm_support_goodbye03 )
+	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye03 )
 	_OBJ_ANIME_WAIT()
 
 	//======================================//
@@ -370,6 +383,29 @@ EVENT_START   ev_pos_r03_rival_02
 	//草むらからライバル登場
 	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_01 )
 	_OBJ_ANIME_WAIT()
+	
+		//自機座標取得
+	DEFINE_LOCAL  LCW_POSX03
+    DEFINE_LOCAL  LCW_POSZ03
+    _PLAYER_POS_GET( LCW_POSX03,LCW_POSZ03 ) 
+    
+    //プレイヤーが通る3グリッド分を用意
+    SWITCH $LCW_POSZ03
+	CASE 581 THEN
+	_OBJ_ANIME( R03_RIVAL_02, anm_kusa_rival_02_01z581 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 582 THEN //デフォルト処理
+	
+	CASE 583 THEN
+	_OBJ_ANIME( R03_RIVAL_02, anm_kusa_rival_02_01z583 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+
+	
+    ENDSWITCH
+	
 	_BALLOONWIN_OBJMSG(msg_r03_black_09 , R03_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
@@ -416,6 +452,7 @@ _ANIME_LABEL	anm_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_player_00
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -477,6 +514,7 @@ _ANIME_LABEL	anm_rival_01_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_hakai_bikkuri_rival
+	_ANIME_DATA	AC_WAIT_15F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_D_8F,2
@@ -488,6 +526,7 @@ _ANIME_LABEL	anm_hakai_bikkuri_rival
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_hakai_bikkuri_player
+	_ANIME_DATA	AC_WAIT_15F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_U_8F,1
@@ -523,6 +562,14 @@ _ANIME_LABEL	 anm_player_return
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
+//  ポケモン誘拐イベント：ライバル・主人公右方向を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_stop_right
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	ポケモン誘拐イベント：R03サポート追いつく
 //--------------------------------------------------------------
 
@@ -551,6 +598,15 @@ _ANIME_LABEL	anm_rival_01_04
 _ANIME_LABEL	anm_rival_01_05
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03サポート追いつく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_01_step
+		_ANIME_DATA	AC_STAY_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //  ポケモン誘拐イベント：BABYGIRLサポートの方を向く
@@ -670,12 +726,29 @@ _ANIME_LABEL	 anm_support_goodbye01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（二人とも歩いていく）
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（サポート先導）
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_support_goodbye02
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（BABYGIRL後ろにつく）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl_goodbye01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（二人とも歩いていく）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_goodbye03
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -683,7 +756,26 @@ _ANIME_LABEL	 anm_support_goodbye02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_01
-	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	長い草イベント：ライバル登場z581
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_kusa_rival_02_01z581
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	長い草イベント：ライバル登場z583
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_kusa_rival_02_01z583
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -707,7 +799,7 @@ _ANIME_LABEL	 anm_kusa_rival_02_03
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_04
-		_ANIME_DATA	AC_WALK_D_8F,10
+		_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 

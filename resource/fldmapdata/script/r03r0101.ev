@@ -44,7 +44,9 @@ EVENT_END
 /*  R03R0101 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_woman3
-	//カウント勝負質問
+	_TALK_OBJ_START()
+	
+	//ダブルバトル質問
 	_BALLOONWIN_OBJMSG(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
