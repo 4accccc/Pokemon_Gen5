@@ -76,6 +76,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "app/p_status.h"
 #include "app/local_tvt_sys.h"
 #include "test/ariizumi/musical_editor.h"
+#include "test/ariizumi/debug_ariizumi.h"
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_capture_sys.h"
@@ -85,6 +86,7 @@ FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(wifinote);
 FS_EXTERN_OVERLAY(comm_tvt);
+FS_EXTERN_OVERLAY(ariizumi_debug);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebCodeIn( TESTMODE_WORK *work , const int idx );
@@ -95,6 +97,7 @@ static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int i
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
 
+static BOOL TESTMODE_ITEM_SelectDebDebugAriizumi( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
@@ -110,6 +113,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 #if USE_MUSICAL_EDIT
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
 #endif //USE_MUSICAL_EDIT
+	{L"テスト"	        ,TESTMODE_ITEM_SelectDebDebugAriizumi },
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"数値入力"			  ,TESTMODE_ITEM_SelectDebCodeIn },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
@@ -163,6 +167,12 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 	return TRUE;
 }
 #endif //USE_MUSICAL_EDIT
+
+static BOOL TESTMODE_ITEM_SelectDebDebugAriizumi( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ariizumi_debug), &DebugAriizumiMainProcData, NULL);
+	return TRUE;
+}
 
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx )
 {

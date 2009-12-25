@@ -10,6 +10,7 @@
 #ifndef DEBUG_ARIIZUMI_H__
 #define DEBUG_ARIIZUMI_H__
 
+extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 
 
 

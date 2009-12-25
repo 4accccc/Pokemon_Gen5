@@ -32,6 +32,11 @@ REM ####################################################
 SET TWLSDK_PLATFORM=NITRO
 SET TARGET_PLATFORM=NITRO
 
+REM ####################################################
+REM SDカードにデバッグログを出力する機能をONにします。ハイブリッドでDSiのみ動きます
+REM ####################################################
+REM SET PM_DEBUG_SD_PRINT=yes
+
 SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET TWLWIFI_ROOT=%WBLIBDIR%\TwlWiFi

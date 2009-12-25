@@ -153,6 +153,9 @@ typedef struct
 
 typedef struct
 {
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
+  u16 pad2;
   u32 bgNo   :5;  //背景番号
   u32 spotBit:4;  //スポットライト対象(bit)
   u32 year   :7;  //年
@@ -160,8 +163,6 @@ typedef struct
   u32 day    :6;  //日
   u32 pad    :5;
   
-  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本32・海外64＋EOM
-  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
 }MUSICAL_SHOT_DATA;
 
 

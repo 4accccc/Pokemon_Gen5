@@ -73,7 +73,6 @@ static GFL_USE_WORK * gfl_work = NULL;
 static int        GFL_USE_VintrCounter;
 
 static void GFUser_PublicRandInit(void);
-static void gfluse_AssertFinish( void );
 
 #ifdef PM_DEBUG
 FS_EXTERN_OVERLAY(mcs_lib);
@@ -150,7 +149,7 @@ void GFLUser_Init(void)
     GFL_ASSERT_SetLCDMode();
   }else{
     // NITROデバッガ用（コールスタック表示＆可能なら処理続行のため）
-    GFL_ASSERT_SetDisplayFunc( NULL, NULL, gfluse_AssertFinish );
+    GFL_ASSERT_SetDisplayFunc( NULL, NULL, GFUser_AssertFinish );
   }
 
   //OVERLAYシステム初期化
@@ -438,7 +437,7 @@ const char * GFUser_GetFileNameByArcID(ARCID arcID)
  *
  */
 //--------------------------------------------------------------------------
-static void gfluse_AssertFinish( void )
+void GFUser_AssertFinish( void )
 {
   int key_cont;
 

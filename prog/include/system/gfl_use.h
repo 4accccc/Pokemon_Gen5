@@ -57,4 +57,6 @@ extern u32 GFUser_GetPublicRand0(u32 range);
 //	アーカイブIDでファイル名を取得
 extern const char * GFUser_GetFileNameByArcID(ARCID arcID);
 
+//アサートの終了処理関数(DEBUG_SD_PRINTで使うため定義を出す
+extern void GFUser_AssertFinish( void );
 

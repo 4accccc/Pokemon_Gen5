@@ -32,6 +32,7 @@
 #include "sound\pm_voice.h"
 #include "sound\pm_wb_voice.h"
 #ifdef PM_DEBUG
+#include "debug/debug_sd_print.h"
 #include "test/performance.h"
 #include "test/debug_pause.h"
 #include "debug/debugwin_sys.h"
@@ -86,6 +87,7 @@ void NitroMain(void)
 	GameInit();
 
 #ifdef PM_DEBUG
+  DEB_SD_PRINT_InitSystem( GFL_HEAPID_APP );
 	DEBUG_PerformanceInit();
 	DEBUG_PAUSE_Init();
 	{
@@ -123,6 +125,7 @@ void NitroMain(void)
 #ifdef PM_DEBUG
 		//DEBUG_PerformanceDisp();
 		DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
+		DEB_SD_PRINT_UpdateSystem();
 #endif //PM_DEBUG
 
 		// VBLANK‘Ò‚¿
