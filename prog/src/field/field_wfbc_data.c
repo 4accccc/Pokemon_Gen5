@@ -1186,6 +1186,12 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
     return NULL;
   }
 
+  // タイプがWF？
+  if( type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    return NULL;
+  }
+
   heapID = GFL_HEAP_LOWID( heapID );
 
   // 総数を求める
@@ -1214,7 +1220,6 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
       MMDLHEADER_SetGridPos( &p_buff[item_index], cp_itempos->gx, cp_itempos->gz, 0 );
 
       item_index ++;
-
     }
   }
 
