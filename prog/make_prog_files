@@ -612,6 +612,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/ui_easy_clwk.c \
                          ui/touchbar.c \
@@ -626,6 +627,7 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 # アイテム画面
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 												app/bag/itemmenu_disp.c \
 												app/bag/itemuse.c
@@ -694,6 +696,7 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -1101,6 +1104,7 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 
 #ポケモンステータス
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
         app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \
