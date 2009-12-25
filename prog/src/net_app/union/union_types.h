@@ -335,7 +335,7 @@ typedef struct{
   UNION_PARTY party;          ///<一緒に遊んでいる相手のパラメータ
   u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
   u8 intrude;                 ///<TRUE:乱入参加
-  u8 padding;
+  u8 mystatus_recv_bit;       ///<MYSTATUS受信結果(bit管理)
 }UNION_MY_COMM;
 
 ///メニューでの選択レギュレーション項目

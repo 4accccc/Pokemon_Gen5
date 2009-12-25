@@ -1919,7 +1919,17 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 
     (*seq)++;
     break;
-  case 1:
+  case 1: //MYSTATUS交換
+    if(UnionSend_Mystatus(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
+      (*seq)++;
+    }
+    break;
+  case 3:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       GFL_NET_HANDLE_TimingSyncStart(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE);
@@ -1927,14 +1937,14 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 2:
+  case 4:
 		if(GFL_NET_HANDLE_IsTimingSync(
 		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE) == TRUE){
       OS_TPrintf("ポケモン交換前の同期取り成功\n");
       (*seq)++;
     }
     break;
-  case 3:
+  case 5:
     {
       POKEMONTRADE_PARAM* eibw;
 
@@ -1948,7 +1958,7 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 4:
+  case 6:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       GFL_HEAP_FreeMemory(unisys->parent_work);
       unisys->parent_work = NULL;
@@ -1956,14 +1966,14 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 5:
+  case 7:
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
     GFL_NET_HANDLE_TimingSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER);
     OS_TPrintf("ポケモン交換画面終了後の同期取り開始\n");
     (*seq)++;
     break;
-  case 6:
+  case 8:
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }

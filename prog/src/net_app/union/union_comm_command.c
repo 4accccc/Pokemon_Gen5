@@ -28,6 +28,7 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _UnionRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_Mystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_TrainerCardParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_ColosseumEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -42,7 +43,8 @@ const NetRecvFuncTable Union_CommPacketTbl[] = {
   {_UnionRecv_Shutdown, NULL},                //UNION_CMD_SHUTDOWN
   {_UnionRecv_MainMenuListResult, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT
   {_UnionRecv_MainMenuListResultAnswer, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT_ANSWER
-  {_UnionRecv_TrainerCardParam, _RecvHugeBuffer},        //UNION_CMD_TRAINERCARD_PARAM
+  {_UnionRecv_Mystatus, NULL},                          //UNION_CMD_MYSTATUS
+  {_UnionRecv_TrainerCardParam, _RecvHugeBuffer},       //UNION_CMD_TRAINERCARD_PARAM
   {_UnionRecv_ColosseumEntryStatus, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY
   {_UnionRecv_ColosseumEntryAnswer, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY_ANSWER
   {_UnionRecv_ColosseumEntryAllReady, NULL},            //UNION_CMD_COLOSSEUM_ENTRY_ALL_READY
@@ -167,6 +169,48 @@ static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size,
 BOOL UnionSend_MainMenuListResultAnswer(BOOL yes_no)
 {
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), UNION_CMD_MAINMENU_LIST_RESULT_ANSWER, sizeof(BOOL), &yes_no);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：MYSTATUS
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_Mystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  const MYSTATUS *pMyst = pData;
+  MYSTATUS *dest_myst;
+  
+  OS_TPrintf("MYSTATUS受信 netID = %d\n", netID);
+  dest_myst = GAMEDATA_GetMyStatusPlayer(unisys->uniparent->game_data, netID);
+  MyStatus_Copy(pMyst, dest_myst);
+  situ->mycomm.mystatus_recv_bit |= 1 << netID;
+}
+
+//==================================================================
+/**
+ * データ送信：MYSTATUS
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_Mystatus(UNION_SYSTEM_PTR unisys)
+{
+  OS_TPrintf("SEND MYSTATUS\n");
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    UNION_CMD_MYSTATUS, MyStatus_GetWorkSize(), 
+    GAMEDATA_GetMyStatus(unisys->uniparent->game_data));
 }
 
 //==============================================================================
