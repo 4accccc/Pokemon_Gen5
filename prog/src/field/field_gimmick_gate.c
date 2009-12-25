@@ -1022,10 +1022,10 @@ static void DeleteGateWork( GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static void LoadGateData( GATEWORK* work )
 {
-  int i;
+  int dat_id;
   u16 zone_id;
   u32 data_num;
-  ELBOARD_ZONE_DATA* data_array;
+  ELBOARD_ZONE_DATA data;
 
   GF_ASSERT( work );
   GF_ASSERT( work->fieldmap );
@@ -1039,15 +1039,16 @@ static void LoadGateData( GATEWORK* work )
   // ワークを確保
   work->gateData = GFL_HEAP_AllocMemory( work->heapID, sizeof(ELBOARD_ZONE_DATA) );
   data_num       = GFL_ARC_GetDataFileCnt( ARCID_ELBOARD_ZONE );
-  data_array     = GFL_HEAP_AllocMemory( work->heapID, sizeof(ELBOARD_ZONE_DATA) * data_num );
 
   // 電光掲示板データ配列から, 該当するデータを検索
-  for( i=0; i<data_num; i++ )
+  for( dat_id=0; dat_id<data_num; dat_id++ )
   {
+    // 読み込み
+    ELBOARD_ZONE_DATA_Load( &data, ARCID_ELBOARD_ZONE, dat_id ); 
     // 発見
-    if( data_array[i].zone_id == zone_id )
+    if( data.zone_id == zone_id )
     {
-      *(work->gateData) = data_array[i];
+      *(work->gateData) = data;
       return;
     }
   } 

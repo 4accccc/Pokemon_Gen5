@@ -90,8 +90,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(SETTING_SOURCE)/elboard_zone_data.txt: $(SETTING_SOURCE)/elboard_zone_data.xls
 	ruby $(XLSCONV) $< > $@ 
 $(SETTING_SOURCE)/elboard_spnews_data.txt: $(SETTING_SOURCE)/elboard_spnews_data.xls
-	ruby $(XLSCONV) $< > $@
-
+	ruby $(XLSCONV) $< > $@ 
 endif
 
 
