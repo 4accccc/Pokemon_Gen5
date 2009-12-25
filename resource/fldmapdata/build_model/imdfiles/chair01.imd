@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-27T14:46:39" source="chair01.mb"/>
+	<create user="fuchino" host="W00152" date="2009-12-25T22:31:11" source="chair01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-04-27T14:46:39" source="chair01.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-12-25T22:31:11" source="chair01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="1"
+	pos_scale="0"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,38 +27,37 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-3.000000 0.000000 -3.000000" whd="6.000000 4.000000 6.000000"/>
+<box_test pos_scale="1" xyz="-3.000000 1.000000 -3.000000" whd="6.000000 0.000000 6.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="idr_chair01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="idr_chari01"
+		palette_name="idr_chair01_pl"
 		path="C:/home/wb_data3d/build_model/indoor/chair01/tex/idr_chair01.tga"
 	>
 		<bitmap size="64">
-			8000 8888 8888 0008 9800 7777 7777 0089
-			7980 7777 7777 0897 7980 7777 7777 0897
-			7980 8977 7798 0897 7980 9977 7799 0897
-			7980 7777 7777 0897 9980 7777 7777 0899
-			9880 9999 9999 0889 6600 8888 8888 0066
-			6000 6666 6666 0006 2000 0222 2220 0002
-			2000 0222 2220 0002 5000 0255 5520 0005
-			5000 0233 3320 0005 0000 0022 2200 0000
+			4000 4444 4444 0004 3400 2266 6622 0043
+			6340 2222 2222 0436 2647 2222 2222 7462
+			2657 2222 2222 7562 2657 6222 2226 7562
+			2657 3622 2263 7562 2657 6222 2226 7562
+			1657 2222 2222 7561 1657 2222 2222 7561
+			1657 2221 1222 7561 6457 1111 1111 7546
+			4557 6664 4666 7554 5570 5555 5555 0755
+			7700 5555 5555 0077 7000 7777 7777 0007
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="idr_chari01" color_size="16">
-		7fff 294a 2949 420f 2d6b 318c 252e 35b6
-		2d71 35b4 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="0" name="idr_chair01_pl" color_size="8">
+		7c1f 39d8 35b6 3193 2d71 252e 35b4 318c
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="lambert2"
+	<material index="0" name="idr_chair01_lm1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -76,7 +75,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -90,36 +89,28 @@
 
 <polygon_array size="1">
 	<polygon index="0" name="polygon0"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-3.000000 0.000000 -3.000000"
-		volume_max="3.000000 4.000000 3.000000"
-		volume_r="5.831055"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-6.000000 2.000000 -6.000000"
+		volume_max="6.000000 2.000000 6.000000"
+		volume_r="8.717773"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="8">
+				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 -5.000000"/>
-					<clr rgb="31 31 31"/>
-					<pos_s xyz="-3.000000 4.000000 3.000000"/>
-					<tex st="16.000000 -5.000000"/>
-					<pos_xy xy="3.000000 4.000000"/>
-					<tex st="16.000000 -16.000000"/>
-					<pos_xz xz="3.000000 -3.000000"/>
-					<tex st="0.000000 -16.000000"/>
-					<pos_xy xy="-3.000000 4.000000"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_yz yz="0.000000 1.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-6.000000 2.000000 6.000000"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="3.000000 0.000000"/>
-					<tex st="16.000000 11.000000"/>
-					<pos_xy xy="3.000000 3.000000"/>
-					<tex st="0.000000 11.000000"/>
-					<pos_xy xy="-3.000000 3.000000"/>
+					<pos_xy xy="6.000000 2.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="6.000000 -6.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-6.000000 2.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -139,18 +130,18 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-3.000000 0.000000 -3.000000"
-		volume_max="3.000000 4.000000 3.000000"
-		volume_r="5.831055"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-6.000000 2.000000 -6.000000"
+		volume_max="6.000000 2.000000 6.000000"
+		volume_r="8.717773"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="8" polygon_size="2"
-	triangle_size="0" quad_size="2"/>
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
 
 </body>
 
