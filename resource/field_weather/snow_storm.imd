@@ -108,7 +108,7 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="storm64_pl" color_size="4">
-		0000 7fff 4e73 7fff
+		0000 7fff 6f5a 7fff
 	</tex_palette>
 </tex_palette_array>
 
