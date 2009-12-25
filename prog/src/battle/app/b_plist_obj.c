@@ -1571,16 +1571,19 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 void BPL_PokeIconAnime( BPLIST_WORK * wk )
 {
   u16 i;
-  u16 anm;
+  u8	anm;
+	u8	pos;
 
-  for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
+//  for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
+  for( i=0; i<TEMOTI_POKEMAX; i++ ){
+		pos = BPLISTMAIN_GetListRow( wk, i );
 
-    if( wk->poke[ BPLISTMAIN_GetListRow(wk,i) ].mons == 0 ){ continue; }
+    if( wk->poke[pos].mons == 0 ){ continue; }
 
-    anm = BPL_PokeIconAnmCheck( &wk->poke[ BPLISTMAIN_GetListRow(wk,i) ] );
+    anm = BPL_PokeIconAnmCheck( &wk->poke[pos] );
 
-    BPL_PokeIconAnmChg( wk->clwk[BPL_CA_POKE1+i], anm );
-    GFL_CLACT_WK_AddAnmFrame( wk->clwk[BPL_CA_POKE1+i], FX32_ONE );
+    BPL_PokeIconAnmChg( wk->clwk[BPL_CA_POKE1+pos], anm );
+    GFL_CLACT_WK_AddAnmFrame( wk->clwk[BPL_CA_POKE1+pos], FX32_ONE );
 //    GFL_CLACT_WK_AddAnmFrameNumCap( wk->cap[BPL_CA_POKE1+i], FX32_ONE );
   }
 }
