@@ -2024,6 +2024,8 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   BTL_POKEPARAM* bpp;
   u8 pokeID;
 
+  OS_TPrintf(" MemberIn : ClientID=%d, posIdx=%d, nextPokeIdx=%d\n", clientID, posIdx, nextPokeIdx);
+
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
@@ -6569,7 +6571,7 @@ static u32 scEvent_SickDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick
     BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_SICK_DAMAGE );
     damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-  BTL_EVENTVAR_Push();
+  BTL_EVENTVAR_Pop();
   return damage;
 }
 
