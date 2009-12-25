@@ -135,7 +135,7 @@ DoubleEnemyAI_Amagoi:
 	JUMP	DoubleEnemyAI_Amagoi_Friend
 
 DoubleEnemyAI_Amagoi_Mine1:
-	IFN_COND	CHECK_ATTACK,0x000000ff,DoubleEnemyAI_Amagoi_Friend
+	IFN_POKESICK	CHECK_ATTACK,DoubleEnemyAI_Amagoi_Friend
 
 DoubleEnemyAI_Amagoi_Mine2:
 	INCDEC	2
@@ -152,7 +152,7 @@ DoubleEnemyAI_Amagoi_Friend:
 	JUMP	DoubleEnemyAI_Amagoi_End
 
 DoubleEnemyAI_Amagoi_Friend1:
-	IFN_COND	CHECK_ATTACK_FRIEND,0x000000ff,DoubleEnemyAI_Amagoi_End
+	IFN_POKESICK	CHECK_ATTACK_FRIEND,DoubleEnemyAI_Amagoi_End
 
 DoubleEnemyAI_Amagoi_Friend2:
 	INCDEC	2
@@ -172,7 +172,7 @@ DoubleEnemyAI_Nihonbare:
 	JUMP	DoubleEnemyAI_Nihonbare_Friend
 
 DoubleEnemyAI_Nihonbare_Mine1:
-	IF_COND	CHECK_ATTACK,0x000000ff,DoubleEnemyAI_Nihonbare_Friend
+	IF_POKESICK	CHECK_ATTACK,DoubleEnemyAI_Nihonbare_Friend
 	IF_HP_UNDER	CHECK_ATTACK,30,DoubleEnemyAI_Nihonbare_Friend
 
 DoubleEnemyAI_Nihonbare_Mine2:
@@ -211,7 +211,7 @@ DoubleEnemyAI_Nihonbare_Friend:
 	JUMP	DoubleEnemyAI_Nihonbare_End
 
 DoubleEnemyAI_Nihonbare_Friend1:
-	IF_COND	CHECK_ATTACK_FRIEND,0x000000ff,DoubleEnemyAI_Nihonbare_End
+	IF_POKESICK	CHECK_ATTACK_FRIEND,DoubleEnemyAI_Nihonbare_End
 	IF_HP_UNDER	CHECK_ATTACK_FRIEND,30,DoubleEnemyAI_Nihonbare_End
 
 DoubleEnemyAI_Nihonbare_Friend2:
@@ -303,14 +303,14 @@ DoubleEnemyAI_Sunaarasi_End:
 
 //じゅうりょく
 DoubleEnemyAI_Zyuuryoku:
-	FIELD_CONDITION_CHECK	FIELD_CONDITION_JUURYOKU,DoubleMineAI_end	//じゅうりょく中はやらない	
+	FLDEFF_CHECK	BTL_FLDEFF_JURYOKU,DoubleMineAI_end	//じゅうりょく中はやらない	
 
 DoubleEnemyAI_Zyuuryoku_mine://自分が浮遊＆飛行
 	CHECK_HAVE_TOKUSEI	CHECK_ATTACK,TOKUSYU_HUYUU
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_mine_ng
 	CHECK_HAVE_TYPE		CHECK_ATTACK,POKETYPE_HIKOU
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_mine_ng
-	IF_WAZAKOUKA	CHECK_ATTACK,WAZAKOUKA_DENZIHUYUU,DoubleEnemyAI_Zyuuryoku_mine_ng
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_FLYING,DoubleEnemyAI_Zyuuryoku_mine_ng
 	JUMP	DoubleEnemyAI_Zyuuryoku_mine_friend
 
 DoubleEnemyAI_Zyuuryoku_mine_ng:
@@ -322,7 +322,7 @@ DoubleEnemyAI_Zyuuryoku_mine_friend://パートナーが浮遊＆飛行
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_mine_friend_ng
 	CHECK_HAVE_TYPE		CHECK_ATTACK_FRIEND,POKETYPE_HIKOU
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_mine_friend_ng
-	IF_WAZAKOUKA	CHECK_ATTACK_FRIEND,WAZAKOUKA_DENZIHUYUU,DoubleEnemyAI_Zyuuryoku_mine_friend_ng
+	IF_WAZASICK	CHECK_ATTACK_FRIEND,WAZASICK_FLYING,DoubleEnemyAI_Zyuuryoku_mine_friend_ng
 	JUMP	DoubleEnemyAI_Zyuuryoku_enemy
 
 DoubleEnemyAI_Zyuuryoku_mine_friend_ng:
@@ -334,7 +334,7 @@ DoubleEnemyAI_Zyuuryoku_enemy://敵が浮遊＆飛行
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_enemy_ok
 	CHECK_HAVE_TYPE		CHECK_DEFENCE,POKETYPE_HIKOU
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_enemy_ok
-	IF_WAZAKOUKA	CHECK_DEFENCE,WAZAKOUKA_DENZIHUYUU,DoubleEnemyAI_Zyuuryoku_enemy_ok
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_FLYING,DoubleEnemyAI_Zyuuryoku_enemy_ok
 	JUMP	DoubleEnemyAI_Zyuuryoku_enemy_friend
 
 DoubleEnemyAI_Zyuuryoku_enemy_ok:
@@ -347,7 +347,7 @@ DoubleEnemyAI_Zyuuryoku_enemy_friend://敵パートナーが浮遊＆飛行
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_enemy_friend_ok
 	CHECK_HAVE_TYPE		CHECK_DEFENCE_FRIEND,POKETYPE_HIKOU
 	IF_EQUAL	HAVE_YES,	DoubleEnemyAI_Zyuuryoku_enemy_friend_ok
-	IF_WAZAKOUKA	CHECK_DEFENCE_FRIEND,WAZAKOUKA_DENZIHUYUU,DoubleEnemyAI_Zyuuryoku_enemy_friend_ok
+	IF_WAZASICK	CHECK_DEFENCE_FRIEND,WAZASICK_FLYING,DoubleEnemyAI_Zyuuryoku_enemy_friend_ok
 	JUMP	DoubleEnemyAI_Zyuuryoku_End
 
 DoubleEnemyAI_Zyuuryoku_enemy_friend_ok:
@@ -481,7 +481,7 @@ DoubleEnemyAI_Tedasuke_End:
 
 // 自分が「こんじょう」
 DoubleEnemyAI_Konzyou:
-	IF_COND	CHECK_ATTACK,0x000000ff,DoubleEnemyAI_Konzyou1
+	IF_POKESICK	CHECK_ATTACK,DoubleEnemyAI_Konzyou1
 	AIEND
 DoubleEnemyAI_Konzyou1:
 	COMP_POWER	LOSS_CALC_OFF
@@ -494,7 +494,7 @@ DoubleEnemyAI_Konzyou1:
 // 地震・ﾏｸﾞﾆﾁｭｰﾄﾞok
 DoubleEnemyAI_Zisin:
 	//味方がでんじふうをしているかどうか？2006.6.14
-	IF_WAZAKOUKA	CHECK_ATTACK_FRIEND,WAZAKOUKA_DENZIHUYUU,AI_INC2	// でんじふゆう中
+	IF_WAZASICK	CHECK_ATTACK_FRIEND,WAZASICK_FLYING,AI_INC2	// でんじふゆう中
 	
 	CHECK_HAVE_TOKUSEI	CHECK_ATTACK_FRIEND,TOKUSYU_HUYUU
 	IF_EQUAL	HAVE_YES,	AI_INC2
@@ -876,7 +876,7 @@ DoubleMineAI_Onibi:
 	//CHECK_TOKUSEI	CHECK_DEFENCE
 	//IF_EQUAL	TOKUSYU_MORAIBI,DoubleMineAI_FireType	//ダメージ０でスルーされるのでここで
 	//IFN_EQUAL	TOKUSYU_KONZYOU, DoubleMineAI_end
-	IF_COND	CHECK_ATTACK_FRIEND,0x000000ff,DoubleMineAI_end
+	IF_POKESICK	CHECK_ATTACK_FRIEND,DoubleMineAI_end
 	
 	CHECK_TYPE	CHECK_DEFENCE_TYPE1
 	IF_EQUAL	POKETYPE_HONOO, DoubleMineAI_end			// ほのおタイプ
@@ -916,7 +916,7 @@ DoubleMineAI_Doku:
 	//IFN_EQUAL	HAVE_YES, DoubleMineAI_Onibi//リスクが高いので入れない
 	IFN_EQUAL	HAVE_YES, DoubleMineAI_end//リスクが高いので入れない
 	
-	IF_COND	CHECK_DEFENCE,0x000000ff,DoubleMineAI_end
+	IF_POKESICK	CHECK_DEFENCE,DoubleMineAI_end
 	IF_HAVE_ITEM	CHECK_ATTACK_FRIEND, ITEM_DOKUDOKUDAMA, DoubleMineAI_end
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,91,DoubleMineAI_end
 	JUMP AI_INC5
@@ -956,7 +956,7 @@ DoubleMineAI_Torikku:
 	AIEND
 
 DoubleMineAI_Ieki:
-	IF_WAZAKOUKA	CHECK_ATTACK_FRIEND,WAZAKOUKA_IEKI,DoubleMineAI_end		// いえき中
+	IF_WAZASICK	CHECK_ATTACK_FRIEND,WAZASICK_IEKI,DoubleMineAI_end		// いえき中
 	//CHECK_TOKUSEI	CHECK_ATTACK_FRIEND
 	//IF_EQUAL	TOKUSYU_NAMAKE,DoubleMineAI_Ieki_ok				// なまけ
 	//IF_EQUAL	TOKUSYU_SUROOSUTAATO,DoubleMineAI_Ieki_ok		// スロースタート
@@ -1062,136 +1062,4 @@ AI_INC5:
 AI_INC10:
 	INCDEC		10	
 	AIEND
-
-//========================================================
-//	HPで判断
-//========================================================
-
-HpCheckAISeq:
-	IF_MIKATA_ATTACK	DoubleAI_MineSeq			//対象が味方なら終了
-
-	IF_HP_OVER	CHECK_ATTACK,70,HpCheckAI_my70
-	IF_HP_OVER	CHECK_ATTACK,30,HpCheckAI_my30
-
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_my00_ng_tbl,HpCheckAI_my_ng
-	JUMP		HpCheckAI_ene
-
-HpCheckAI_my70:
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_my70_ng_tbl,HpCheckAI_my_ng
-	JUMP		HpCheckAI_ene
-
-HpCheckAI_my30:
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_my30_ng_tbl,HpCheckAI_my_ng
-	JUMP		HpCheckAI_ene
-
-HpCheckAI_my_ng:
-	IF_RND_UNDER	50,HpCheckAI_ene
-	INCDEC		-2
-
-HpCheckAI_ene:
-	IF_HP_OVER	CHECK_DEFENCE,70,HpCheckAI_ene70
-	IF_HP_OVER	CHECK_DEFENCE,30,HpCheckAI_ene30
-
-	//30未満
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_ene00_ng_tbl,HpCheckAI_ene_ng
-	JUMP		HpCheckAI_end
-
-HpCheckAI_ene70://70以上
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_ene70_ng_tbl,HpCheckAI_ene_ng
-	JUMP		HpCheckAI_end
-
-HpCheckAI_ene30://30以上
-	CHECK_WAZASEQNO
-	IF_TABLE_JUMP	HpCheckAI_ene30_ng_tbl,HpCheckAI_ene_ng
-	JUMP		HpCheckAI_end
-
-HpCheckAI_ene_ng:
-	IF_RND_UNDER	50,HpCheckAI_end
-	INCDEC		-2
-
-
-HpCheckAI_end:
-	AIEND
-
-
-
-HpCheckAI_my70_ng_tbl://71以上あるときに
-	.long	7,32,37,98,99,116,132
-	.long	168,194
-	.long	214,220,270
-	.long	0xffffffff
-//------------------------------------
-//テーブル調整2006.6.16
-//133,134,157未使用なので削除
-//204使用しても問題ないので削除
-//214,220,270ＤＰより追加
-//------------------------------------
-
-
-HpCheckAI_my30_ng_tbl://31以上70未満
-	.long	7,10,11,12,13,14,15,16,18,19
-	.long	20,21,22,23,24,26,30,35,46,47
-	.long	50,51,52,53,54,55,56,58,59,60
-	.long	61,62,63,64,93,124,142,205,206,208
-	.long	211,212
-	.long	240,243,244,265
-	.long	0xffffffff
-//------------------------------------
-//テーブル調整2006.6.16
-//240,243,244,265ＤＰより追加
-//------------------------------------
-
-
-HpCheckAI_my00_ng_tbl://30以下
-	.long	10,11,12,13,14,15,16,18,19,20
-	.long	21,22,23,24,26,30,35,46,47,50
-	.long	51,52,53,54,55,56,58,59,60,61
-	.long	62,63,64,81,93,94,124,142,143,144
-	.long	190,205,206,208,211,212
-	.long	201,210			//追加2006.6.16
-	.long	226,227,265		//追加2006.6.16
-	.long	0xffffffff
-
-//------------------------------------
-//テーブル調整2006.6.16
-//151ソーラービーム使用しても問題ないので削除
-//201,210		追加2006.6.16
-//226,227,265	DP追加2006.6.16
-//------------------------------------
-
-HpCheckAI_ene70_ng_tbl://71以上
-	.long	0xffffffff
-
-HpCheckAI_ene30_ng_tbl://31以上71未満
-	.long	10,11,12,13,14,15,16,18,19,20
-	.long	21,22,23,24,46,47,50,51,52,53
-	.long	54,55,56,58,59,60,61,62,63,64
-	.long	66,91,114,124,205,206,208,211,212
-	.long	226,237,265	
-	.long	0xffffffff
-//------------------------------------
-//テーブル調整2006.6.16
-//226,227,265	DP追加2006.6.16
-//------------------------------------
-
-
-HpCheckAI_ene00_ng_tbl://31未満
-	.long	1,7,10,11,12,13,14,15,16,18
-	.long	19,20,21,22,23,24,26,30,33,35
-	.long	38,40,40,46,47,49,50,51,52,53
-	.long	54,55,56,58,59,60,61,62,63,64
-	.long	66,67,91,93,94,100,114,118,119,120
-	.long	124,143,144,167,205,206,208,211,212
-	.long	226,237,265	
-	.long	0xffffffff
-
-//------------------------------------
-//テーブル調整2006.6.16
-//226,227,265	DP追加2006.6.16
-//------------------------------------
 

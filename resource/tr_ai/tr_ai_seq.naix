@@ -4,14 +4,27 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-12-21T15:09:45
+	Update:2009-12-25T16:46:35
  *****************************************************************************/
 
 #ifndef NARC_TR_AI_SEQ_NAIX_
 #define NARC_TR_AI_SEQ_NAIX_
 
 enum {
-	NARC_tr_ai_seq_tr_ai_basic_bin = 0
+	NARC_tr_ai_seq_tr_ai_basic_bin = 0,
+	NARC_tr_ai_seq_tr_ai_strong_bin = 1,
+	NARC_tr_ai_seq_tr_ai_expert_bin = 2,
+	NARC_tr_ai_seq_tr_ai_hojo_bin = 3,
+	NARC_tr_ai_seq_tr_ai_gamble_bin = 4,
+	NARC_tr_ai_seq_tr_ai_damage_bin = 5,
+	NARC_tr_ai_seq_tr_ai_relay_bin = 6,
+	NARC_tr_ai_seq_tr_ai_double_bin = 7,
+	NARC_tr_ai_seq_tr_ai_hp_check_bin = 8,
+	NARC_tr_ai_seq_tr_ai_weather_bin = 9,
+	NARC_tr_ai_seq_tr_ai_harassing_bin = 10,
+	NARC_tr_ai_seq_tr_ai_move_bin = 11,
+	NARC_tr_ai_seq_tr_ai_safari_bin = 12,
+	NARC_tr_ai_seq_tr_ai_guide_bin = 13
 };
 
 /* NARC_TR_AI_SEQ_NAIX_ */

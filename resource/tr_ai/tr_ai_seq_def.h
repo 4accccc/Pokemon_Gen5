@@ -23,9 +23,6 @@
   .include  "poketype_def.h"
   .include  "wazadata_def.h"
 
-  //MAKEを通すための暫定ヘッダ
-	.include	"tr_ai_zantei.h"
-
 //勝手にパディングをいれられないようにする
   .option alignment off
 
@@ -226,6 +223,9 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //相方がもらいびパワーアップ状態かチェックして分岐
 	DEF_CMD		AI_IF_ALREADY_MORAIBI
 
+//アイテムを持っているかチェックして分岐
+	DEF_CMD		AI_IF_HAVE_ITEM
+
 //FLDEFFチェック
 	DEF_CMD		AI_FLDEFF_CHECK
 
@@ -301,26 +301,26 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_RND_UNDER		value,adrs
-	.short		AI_IF_RND_UNDER
+	.macro	IF_RND_UNDER		value,adrs
+	.short	AI_IF_RND_UNDER
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_RND_OVER			value,adrs
-	.short		AI_IF_RND_OVER
+	.macro	IF_RND_OVER			value,adrs
+	.short	AI_IF_RND_OVER
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_RND_EQUAL		value,adrs
-	.short		AI_IF_RND_EQUAL
+	.macro	IF_RND_EQUAL		value,adrs
+	.short	AI_IF_RND_EQUAL
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_RND_EQUAL		value,adrs
-	.short		AI_IFN_RND_EQUAL
+	.macro	IFN_RND_EQUAL		value,adrs
+	.short	AI_IFN_RND_EQUAL
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
@@ -333,8 +333,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		INCDEC				value
-	.short		AI_INCDEC
+	.macro	INCDEC				value
+	.short	AI_INCDEC
 	.long		\value
 	.endm
 
@@ -348,29 +348,29 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_HP_UNDER			side,value,adrs
-	.short		AI_IF_HP_UNDER
+	.macro	IF_HP_UNDER			side,value,adrs
+	.short	AI_IF_HP_UNDER
 	.long		\side
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_HP_OVER			side,value,adrs
-	.short		AI_IF_HP_OVER
+	.macro	IF_HP_OVER			side,value,adrs
+	.short	AI_IF_HP_OVER
 	.long		\side
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_HP_EQUAL			side,value,adrs
-	.short		AI_IF_HP_EQUAL
+	.macro	IF_HP_EQUAL			side,value,adrs
+	.short	AI_IF_HP_EQUAL
 	.long		\side
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_HP_EQUAL			side,value,adrs
-	.short		AI_IFN_HP_EQUAL
+	.macro	IFN_HP_EQUAL			side,value,adrs
+	.short	AI_IFN_HP_EQUAL
 	.long		\side
 	.long		\value
 	.long		(\adrs-.)-4
@@ -387,58 +387,58 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 
 //CONDITION_～系のチェック
-	.macro		IF_POKESICK				side,adrs
-	.short		AI_IF_POKESICK
+	.macro	IF_POKESICK				side,adrs
+	.short	AI_IF_POKESICK
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_POKESICK			side,adrs
-	.short		AI_IFN_POKESICK
+	.macro	IFN_POKESICK			side,adrs
+	.short	AI_IFN_POKESICK
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
 //WAZASICK_～系のチェック
-	.macro		IF_WAZASICK   side,condition,adrs
-	.short		AI_IF_WAZASICK
+	.macro	IF_WAZASICK   side,condition,adrs
+	.short	AI_IF_WAZASICK
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_WAZASICK	side,condition,adrs
-	.short		AI_IFN_WAZASICK
+	.macro	IFN_WAZASICK	side,condition,adrs
+	.short	AI_IFN_WAZASICK
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
 	.endm
 
 //CONTFLG～系のチェック
-	.macro		IF_CONTFLG   side,condition,adrs
-	.short		AI_IF_CONTFLG
+	.macro	IF_CONTFLG   side,condition,adrs
+	.short	AI_IF_CONTFLG
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_CONTFLG	side,condition,adrs
-	.short		AI_IFN_CONTFLG
+	.macro	IFN_CONTFLG	side,condition,adrs
+	.short	AI_IFN_CONTFLG
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
 	.endm
 
 //SIDEEFF_～系のチェック
-	.macro		IF_SIDEEFF	side,condition,adrs
-	.short		AI_IF_SIDEEFF
+	.macro	IF_SIDEEFF	side,condition,adrs
+	.short	AI_IF_SIDEEFF
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_SIDEEFF	side,condition,adrs
-	.short		AI_IFN_SIDEEFF
+	.macro	IFN_SIDEEFF	side,condition,adrs
+	.short	AI_IFN_SIDEEFF
 	.long		\side
 	.long		\condition
 	.long		(\adrs-.)-4
@@ -453,38 +453,38 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_UNDER			value,adrs
-	.short		AI_IF_UNDER
+	.macro	IF_UNDER			value,adrs
+	.short	AI_IF_UNDER
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_OVER				value,adrs
-	.short		AI_IF_OVER
+	.macro	IF_OVER				value,adrs
+	.short	AI_IF_OVER
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_EQUAL			value,adrs
-	.short		AI_IF_EQUAL
+	.macro	IF_EQUAL			value,adrs
+	.short	AI_IF_EQUAL
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_EQUAL			value,adrs
-	.short		AI_IFN_EQUAL
+	.macro	IFN_EQUAL			value,adrs
+	.short	AI_IFN_EQUAL
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_BIT				value,adrs
-	.short		AI_IF_BIT
+	.macro	IF_BIT				value,adrs
+	.short	AI_IF_BIT
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_BIT				value,adrs
-	.short		AI_IFN_BIT
+	.macro	IFN_BIT				value,adrs
+	.short	AI_IFN_BIT
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
@@ -493,14 +493,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	技ナンバーをチェックして分岐
 //------------------------------------------------------------
 
-	.macro		IF_WAZANO		wazano,adrs
-	.short		AI_IF_WAZANO
+	.macro	IF_WAZANO		wazano,adrs
+	.short	AI_IF_WAZANO
 	.long		\wazano
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_WAZANO		wazano,adrs
-	.short		AI_IF_WAZANO
+	.macro	IFN_WAZANO		wazano,adrs
+	.short	AI_IF_WAZANO
 	.long		\wazano
 	.long		(\adrs-.)-4
 	.endm
@@ -516,14 +516,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_TABLE_JUMP		tableadrs,jumpadrs	
-	.short		AI_IF_TABLE_JUMP
+	.macro	IF_TABLE_JUMP		tableadrs,jumpadrs	
+	.short	AI_IF_TABLE_JUMP
 	.long		\tableadrs
 	.long		(\jumpadrs-.)-4
 	.endm
 
-	.macro		IFN_TABLE_JUMP		tableadrs,jumpadrs
-	.short		AI_IFN_TABLE_JUMP
+	.macro	IFN_TABLE_JUMP		tableadrs,jumpadrs
+	.short	AI_IFN_TABLE_JUMP
 	.long		\tableadrs
 	.long		(\jumpadrs-.)-4
 	.endm
@@ -536,13 +536,13 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_HAVE_DAMAGE_WAZA		adrs
-	.short		AI_IF_HAVE_DAMAGE_WAZA
+	.macro	IF_HAVE_DAMAGE_WAZA		adrs
+	.short	AI_IF_HAVE_DAMAGE_WAZA
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_HAVE_DAMAGE_WAZA	adrs
-	.short		AI_IFN_HAVE_DAMAGE_WAZA
+	.macro	IFN_HAVE_DAMAGE_WAZA	adrs
+	.short	AI_IFN_HAVE_DAMAGE_WAZA
 	.long		(\adrs-.)-4
 	.endm
 
@@ -550,8 +550,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	ターンのチェック（今何ターン目かをワークに入れる）
 //------------------------------------------------------------
 
-	.macro		CHECK_TURN
-	.short		AI_CHECK_TURN
+	.macro	CHECK_TURN
+	.short	AI_CHECK_TURN
 	.endm
 
 //------------------------------------------------------------
@@ -562,8 +562,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_TYPE			side
-	.short		AI_CHECK_TYPE
+	.macro	CHECK_TYPE			side
+	.short	AI_CHECK_TYPE
 	.long		\side
 	.endm
 
@@ -571,8 +571,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	攻撃技かどうかのチェック（技の威力をワークに入れる)
 //------------------------------------------------------------
 
-	.macro		CHECK_IRYOKU
-	.short		AI_CHECK_IRYOKU
+	.macro	CHECK_IRYOKU
+	.short	AI_CHECK_IRYOKU
 	.endm
 
 //------------------------------------------------------------
@@ -581,8 +581,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param		flag	ダメージロス計算のぶれありなしフラグ
 //
 //------------------------------------------------------------
-	.macro		COMP_POWER		flag
-	.short		AI_COMP_POWER
+	.macro	COMP_POWER		flag
+	.short	AI_COMP_POWER
 	.long		\flag
 	.endm
 
@@ -593,8 +593,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	side:チェックする側を指定（tr_ai_def.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_LAST_WAZA		side
-	.short		AI_CHECK_LAST_WAZA
+	.macro	CHECK_LAST_WAZA		side
+	.short	AI_CHECK_LAST_WAZA
 	.long		\side
 	.endm
 
@@ -606,14 +606,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	adrs:飛び先
 //
 //------------------------------------------------------------
-	.macro		IF_WAZA_TYPE		type,adrs
-	.short		AI_IF_WAZA_TYPE
+	.macro	IF_WAZA_TYPE		type,adrs
+	.short	AI_IF_WAZA_TYPE
 	.long		\type
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_WAZA_TYPE		type,adrs
-	.short		AI_IFN_WAZA_TYPE
+	.macro	IFN_WAZA_TYPE		type,adrs
+	.short	AI_IFN_WAZA_TYPE
 	.long		\type
 	.long		(\adrs-.)-4
 	.endm
@@ -627,8 +627,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_FIRST			side,adrs
-	.short		AI_IF_FIRST
+	.macro	IF_FIRST			side,adrs
+	.short	AI_IF_FIRST
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -641,8 +641,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_BENCH_COUNT			side
-	.short		AI_CHECK_BENCH_COUNT
+	.macro	CHECK_BENCH_COUNT			side
+	.short	AI_CHECK_BENCH_COUNT
 	.long		\side
 	.endm
 
@@ -650,16 +650,16 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	現在の技ナンバーのチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_WAZANO
-	.short		AI_CHECK_WAZANO
+	.macro	CHECK_WAZANO
+	.short	AI_CHECK_WAZANO
 	.endm
 
 //------------------------------------------------------------
 //	現在の技ナンバーのシーケンスナンバーのチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_WAZASEQNO
-	.short		AI_CHECK_WAZASEQNO
+	.macro	CHECK_WAZASEQNO
+	.short	AI_CHECK_WAZASEQNO
 	.endm
 
 //------------------------------------------------------------
@@ -670,8 +670,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_TOKUSEI		side
-	.short		AI_CHECK_TOKUSEI
+	.macro	CHECK_TOKUSEI		side
+	.short	AI_CHECK_TOKUSEI
 	.long		\side
 	.endm
 
@@ -681,8 +681,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_AISYOU
-	.short		AI_CHECK_AISYOU
+	.macro	CHECK_AISYOU
+	.short	AI_CHECK_AISYOU
 	.endm
 
 //------------------------------------------------------------
@@ -694,8 +694,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_WAZA_AISYOU		aisyou,adrs
-	.short		AI_CHECK_WAZA_AISYOU
+	.macro	CHECK_WAZA_AISYOU		aisyou,adrs
+	.short	AI_CHECK_WAZA_AISYOU
 	.long		\aisyou
 	.long		(\adrs-.)-4
 	.endm
@@ -706,14 +706,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_BENCH_COND		side,adrs
-	.short		AI_IF_BENCH_COND
+	.macro	IF_BENCH_COND		side,adrs
+	.short	AI_IF_BENCH_COND
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_BENCH_COND		side,adrs
-	.short		AI_IFN_BENCH_COND
+	.macro	IFN_BENCH_COND		side,adrs
+	.short	AI_IFN_BENCH_COND
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -725,8 +725,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_WEATHER
-	.short		AI_CHECK_WEATHER
+	.macro	CHECK_WEATHER
+	.short	AI_CHECK_WEATHER
 	.endm
 
 //------------------------------------------------------------
@@ -738,14 +738,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_WAZA_SEQNO_JUMP		seqno,adrs
-	.short		AI_IF_WAZA_SEQNO_JUMP
+	.macro	IF_WAZA_SEQNO_JUMP		seqno,adrs
+	.short	AI_IF_WAZA_SEQNO_JUMP
 	.long		\seqno
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_WAZA_SEQNO_JUMP		seqno,adrs
-	.short		AI_IFN_WAZA_SEQNO_JUMP
+	.macro	IFN_WAZA_SEQNO_JUMP		seqno,adrs
+	.short	AI_IFN_WAZA_SEQNO_JUMP
 	.long		\seqno
 	.long		(\adrs-.)-4
 	.endm
@@ -761,32 +761,32 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_PARA_UNDER		side,para,value,adrs
-	.short		AI_IF_PARA_UNDER
+	.macro	IF_PARA_UNDER		side,para,value,adrs
+	.short	AI_IF_PARA_UNDER
 	.long		\side
 	.long		\para
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_PARA_OVER		side,para,value,adrs
-	.short		AI_IF_PARA_OVER
+	.macro	IF_PARA_OVER		side,para,value,adrs
+	.short	AI_IF_PARA_OVER
 	.long		\side
 	.long		\para
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IF_PARA_EQUAL		side,para,value,adrs
-	.short		AI_IF_PARA_EQUAL
+	.macro	IF_PARA_EQUAL		side,para,value,adrs
+	.short	AI_IF_PARA_EQUAL
 	.long		\side
 	.long		\para
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_PARA_EQUAL		side,para,value,adrs
-	.short		AI_IFN_PARA_EQUAL
+	.macro	IFN_PARA_EQUAL		side,para,value,adrs
+	.short	AI_IFN_PARA_EQUAL
 	.long		\side
 	.long		\para
 	.long		\value
@@ -802,14 +802,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_WAZA_HINSHI		flag,adrs
-	.short		AI_IF_WAZA_HINSHI
+	.macro	IF_WAZA_HINSHI		flag,adrs
+	.short	AI_IF_WAZA_HINSHI
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_WAZA_HINSHI		flag,adrs
-	.short		AI_IFN_WAZA_HINSHI
+	.macro	IFN_WAZA_HINSHI		flag,adrs
+	.short	AI_IFN_WAZA_HINSHI
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
@@ -824,15 +824,15 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_HAVE_WAZA		side,wazano,adrs
-	.short		AI_IF_HAVE_WAZA
+	.macro	IF_HAVE_WAZA		side,wazano,adrs
+	.short	AI_IF_HAVE_WAZA
 	.long		\side
 	.long		\wazano
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_HAVE_WAZA		side,wazano,adrs
-	.short		AI_IFN_HAVE_WAZA
+	.macro	IFN_HAVE_WAZA		side,wazano,adrs
+	.short	AI_IFN_HAVE_WAZA
 	.long		\side
 	.long		\wazano
 	.long		(\adrs-.)-4
@@ -848,15 +848,15 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_HAVE_WAZA_SEQNO		side,seqno,adrs
-	.short		AI_IF_HAVE_WAZA_SEQNO
+	.macro	IF_HAVE_WAZA_SEQNO		side,seqno,adrs
+	.short	AI_IF_HAVE_WAZA_SEQNO
 	.long		\side
 	.long		\seqno
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_HAVE_WAZA_SEQNO		side,seqno,adrs
-	.short		AI_IFN_HAVE_WAZA_SEQNO
+	.macro	IFN_HAVE_WAZA_SEQNO		side,seqno,adrs
+	.short	AI_IFN_HAVE_WAZA_SEQNO
 	.long		\side
 	.long		\seqno
 	.long		(\adrs-.)-4
@@ -872,8 +872,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_POKE_CHECK_STATE		side,id,adrs
-	.short		AI_IF_POKE_CHECK_STATE
+	.macro	IF_POKE_CHECK_STATE		side,id,adrs
+	.short	AI_IF_POKE_CHECK_STATE
 	.long		\side
 	.long		\id
 	.long		(\adrs-.)-4
@@ -888,8 +888,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		IF_WAZA_CHECK_STATE		id,adrs
-	.short		AI_IF_WAZA_CHECK_STATE
+	.macro	IF_WAZA_CHECK_STATE		id,adrs
+	.short	AI_IF_WAZA_CHECK_STATE
 	.long		\id
 	.long		(\adrs-.)-4
 	.endm
@@ -898,16 +898,16 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	にげるをせんたく
 //------------------------------------------------------------
 
-	.macro		ESCAPE
-	.short		AI_ESCAPE
+	.macro	ESCAPE
+	.short	AI_ESCAPE
 	.endm
 
 //------------------------------------------------------------
 //	サファリゾーンでの逃げる確率を計算して逃げるときのアドレスを指定
 //------------------------------------------------------------
 
-	.macro		SAFARI_ESCAPE_JUMP		adrs
-	.short		AI_SAFARI_ESCAPE_JUMP
+	.macro	SAFARI_ESCAPE_JUMP		adrs
+	.short	AI_SAFARI_ESCAPE_JUMP
 	.long		(\adrs-.)-4
 	.endm
 
@@ -915,8 +915,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	サファリゾーンでの特殊アクションを選択
 //------------------------------------------------------------
 
-	.macro		SAFARI
-	.short		AI_SAFARI
+	.macro	SAFARI
+	.short	AI_SAFARI
 	.endm
 
 
@@ -927,8 +927,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	side:チェックする側を指定（tr_ai_def.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_SOUBI_ITEM		side
-	.short		AI_CHECK_SOUBI_ITEM
+	.macro	CHECK_SOUBI_ITEM		side
+	.short	AI_CHECK_SOUBI_ITEM
 	.long		\side
 	.endm
 
@@ -940,8 +940,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_SOUBI_EQUIP		side
-	.short		AI_CHECK_SOUBI_EQUIP
+	.macro	CHECK_SOUBI_EQUIP		side
+	.short	AI_CHECK_SOUBI_EQUIP
 	.long		\side
 	.endm
 
@@ -953,8 +953,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_POKESEX		side
-	.short		AI_CHECK_POKESEX
+	.macro	CHECK_POKESEX		side
+	.short	AI_CHECK_POKESEX
 	.long		\side
 	.endm
 
@@ -966,8 +966,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_NEKODAMASI	side
-	.short		AI_CHECK_NEKODAMASI
+	.macro	CHECK_NEKODAMASI	side
+	.short	AI_CHECK_NEKODAMASI
 	.long		\side
 	.endm
 
@@ -979,8 +979,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_TAKUWAERU		side
-	.short		AI_CHECK_TAKUWAERU
+	.macro	CHECK_TAKUWAERU		side
+	.short	AI_CHECK_TAKUWAERU
 	.long		\side
 	.endm
 
@@ -988,16 +988,16 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //		対戦ルールのチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_BTL_RULE
-	.short		AI_CHECK_BTL_RULE
+	.macro	CHECK_BTL_RULE
+	.short	AI_CHECK_BTL_RULE
 	.endm
 
 //------------------------------------------------------------
 //		対戦相手のチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_BTL_COMPETITOR
-	.short		AI_CHECK_BTL_COMPETITOR
+	.macro	CHECK_BTL_COMPETITOR
+	.short	AI_CHECK_BTL_COMPETITOR
 	.endm
 
 //------------------------------------------------------------
@@ -1008,8 +1008,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 
-	.macro		CHECK_RECYCLE_ITEM	side
-	.short		AI_CHECK_RECYCLE_ITEM
+	.macro	CHECK_RECYCLE_ITEM	side
+	.short	AI_CHECK_RECYCLE_ITEM
 	.long		\side
 	.endm
 
@@ -1017,32 +1017,32 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	ワークに入っている技ナンバーのタイプをチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_WORKWAZA_TYPE
-	.short		AI_CHECK_WORKWAZA_TYPE
+	.macro	CHECK_WORKWAZA_TYPE
+	.short	AI_CHECK_WORKWAZA_TYPE
 	.endm
 
 //------------------------------------------------------------
 //	ワークに入っている技ナンバーの威力をチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_WORKWAZA_POW
-	.short		AI_CHECK_WORKWAZA_POW
+	.macro	CHECK_WORKWAZA_POW
+	.short	AI_CHECK_WORKWAZA_POW
 	.endm
 
 //------------------------------------------------------------
 //	ワークに入っている技ナンバーのシーケンスナンバーをチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_WORKWAZA_SEQNO
-	.short		AI_CHECK_WORKWAZA_SEQNO
+	.macro	CHECK_WORKWAZA_SEQNO
+	.short	AI_CHECK_WORKWAZA_SEQNO
 	.endm
 
 //------------------------------------------------------------
 //	まもるカウンタをチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_MAMORU_COUNT		side
-	.short		AI_CHECK_MAMORU_COUNT
+	.macro	CHECK_MAMORU_COUNT		side
+	.short	AI_CHECK_MAMORU_COUNT
 	.long		\side
 	.endm
 
@@ -1051,21 +1051,21 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 
 //汎用的な命令
-	.macro		JUMP		adrs
-	.short		AI_JUMP
+	.macro	JUMP		adrs
+	.short	AI_JUMP
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		AIEND
-	.short		AI_AIEND
+	.macro	AIEND
+	.short	AI_AIEND
 	.endm
 
 //------------------------------------------------------------
 //	お互いのレベルをチェックして分岐
 //------------------------------------------------------------
 
-	.macro		IF_LEVEL		value,adrs
-	.short		AI_IF_LEVEL
+	.macro	IF_LEVEL		value,adrs
+	.short	AI_IF_LEVEL
 	.long		\value
 	.long		(\adrs-.)-4
 	.endm
@@ -1074,13 +1074,13 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	挑発状態かチェックして分岐
 //------------------------------------------------------------
 
-	.macro		IF_CHOUHATSU	adrs
-	.short		AI_IF_CHOUHATSU
+	.macro	IF_CHOUHATSU	adrs
+	.short	AI_IF_CHOUHATSU
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_CHOUHATSU	adrs
-	.short		AI_IFN_CHOUHATSU
+	.macro	IFN_CHOUHATSU	adrs
+	.short	AI_IFN_CHOUHATSU
 	.long		(\adrs-.)-4
 	.endm
 
@@ -1088,8 +1088,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	攻撃対象が味方がどうかチェックして分岐
 //------------------------------------------------------------
 
-	.macro		IF_MIKATA_ATTACK	adrs
-	.short		AI_IF_MIKATA_ATTACK
+	.macro	IF_MIKATA_ATTACK	adrs
+	.short	AI_IF_MIKATA_ATTACK
 	.long		(\adrs-.)-4
 	.endm
 
@@ -1097,8 +1097,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	指定されたタイプを持っているかチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_HAVE_TYPE			side, type
-	.short		AI_CHECK_HAVE_TYPE
+	.macro	CHECK_HAVE_TYPE			side, type
+	.short	AI_CHECK_HAVE_TYPE
 	.long		\side
 	.long		\type
 	.endm
@@ -1107,8 +1107,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	指定されたとくせいを持っているかチェック
 //------------------------------------------------------------
 
-	.macro		CHECK_HAVE_TOKUSEI		side, abi
-	.short		AI_CHECK_HAVE_TOKUSEI
+	.macro	CHECK_HAVE_TOKUSEI		side, abi
+	.short	AI_CHECK_HAVE_TOKUSEI
 	.long		\side
 	.long		\abi
 	.endm
@@ -1117,9 +1117,20 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	相方がもらいびパワーアップ状態かチェックして分岐
 //------------------------------------------------------------
 
-	.macro		IF_ALREADY_MORAIBI		side, adrs
-	.short		AI_IF_ALREADY_MORAIBI
+	.macro	IF_ALREADY_MORAIBI		side, adrs
+	.short	AI_IF_ALREADY_MORAIBI
 	.long		\side
+	.long		(\adrs-.)-4
+	.endm
+
+//------------------------------------------------------------
+//	アイテムを持っているかチェックして分岐
+//------------------------------------------------------------
+
+	.macro	IF_HAVE_ITEM		side, item, adrs
+	.long		AI_IF_HAVE_ITEM
+	.long		\side
+	.long		\item
 	.long		(\adrs-.)-4
 	.endm
 
@@ -1130,8 +1141,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	チェックしたフィールドコンディション中だった時のとび先
 //
 //------------------------------------------------------------
-	.macro		FLDEFF_CHECK	flag,adrs
-	.short		AI_FLDEFF_CHECK
+	.macro	FLDEFF_CHECK	flag,adrs
+	.short	AI_FLDEFF_CHECK
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
@@ -1143,8 +1154,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	flag	チェックするフィールドコンディション（battle_server.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_SIDEEFF_COUNT	side,flag
-	.short		AI_CHECK_SIDEEFF_COUNT
+	.macro	CHECK_SIDEEFF_COUNT	side,flag
+	.short	AI_CHECK_SIDEEFF_COUNT
 	.long		\side
 	.long		\flag
 	.endm
@@ -1156,8 +1167,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	HP減少したポケモンがいた時のとび先
 //
 //------------------------------------------------------------
-	.macro		IF_BENCH_HPDEC		side,adrs
-	.short		AI_IF_BENCH_HPDEC
+	.macro	IF_BENCH_HPDEC		side,adrs
+	.short	AI_IF_BENCH_HPDEC
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -1169,8 +1180,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	PP減少したポケモンがいた時のとび先
 //
 //------------------------------------------------------------
-	.macro		IF_BENCH_PPDEC		side,adrs
-	.short		AI_IF_BENCH_PPDEC
+	.macro	IF_BENCH_PPDEC		side,adrs
+	.short	AI_IF_BENCH_PPDEC
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -1181,16 +1192,16 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	side	取得する側を指定（tr_ai_def.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_NAGETSUKERU_IRYOKU	side
-	.short		AI_CHECK_NAGETSUKERU_IRYOKU
+	.macro	CHECK_NAGETSUKERU_IRYOKU	side
+	.short	AI_CHECK_NAGETSUKERU_IRYOKU
 	.long		\side
 	.endm
 
 //------------------------------------------------------------
 //	現在チェック中の技の残りPPを取得
 //------------------------------------------------------------
-	.macro		CHECK_PP_REMAIN
-	.short		AI_CHECK_PP_REMAIN
+	.macro	CHECK_PP_REMAIN
+	.short	AI_CHECK_PP_REMAIN
 	.endm
 
 //------------------------------------------------------------
@@ -1201,8 +1212,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	とっておきを出せる時のとび先
 //
 //------------------------------------------------------------
-	.macro		IF_TOTTEOKI		side,adrs
-	.short		AI_IF_TOTTEOKI
+	.macro	IF_TOTTEOKI		side,adrs
+	.short	AI_IF_TOTTEOKI
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -1210,15 +1221,15 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 //	技の分類チェック
 //------------------------------------------------------------
-	.macro		CHECK_WAZA_KIND
-	.short		AI_CHECK_WAZA_KIND
+	.macro	CHECK_WAZA_KIND
+	.short	AI_CHECK_WAZA_KIND
 	.endm
 
 //------------------------------------------------------------
 //	相手が最後に出した技の分類チェック
 //------------------------------------------------------------
-	.macro		CHECK_LAST_WAZA_KIND
-	.short		AI_CHECK_LAST_WAZA_KIND
+	.macro	CHECK_LAST_WAZA_KIND
+	.short	AI_CHECK_LAST_WAZA_KIND
 	.endm
 
 //------------------------------------------------------------
@@ -1228,8 +1239,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	side	チェックする側を指定（tr_ai_def.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_AGI_RANK		side
-	.short		AI_CHECK_AGI_RANK
+	.macro	CHECK_AGI_RANK		side
+	.short	AI_CHECK_AGI_RANK
 	.long		\side
 	.endm
 
@@ -1240,8 +1251,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	side	チェックする側を指定（tr_ai_def.hに定義）
 //
 //------------------------------------------------------------
-	.macro		CHECK_SLOWSTART_TURN	side
-	.short		AI_CHECK_SLOWSTART_TURN
+	.macro	CHECK_SLOWSTART_TURN	side
+	.short	AI_CHECK_SLOWSTART_TURN
 	.long		\side
 	.endm
 
@@ -1253,8 +1264,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	与える場合のとび先
 //
 //------------------------------------------------------------
-	.macro		IF_BENCH_DAMAGE_MAX		flag,adrs
-	.short		AI_IF_BENCH_DAMAGE_MAX
+	.macro	IF_BENCH_DAMAGE_MAX		flag,adrs
+	.short	AI_IF_BENCH_DAMAGE_MAX
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
@@ -1266,8 +1277,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	持っていたときのとび先
 //
 //------------------------------------------------------------
-	.macro		IF_HAVE_BATSUGUN		adrs
-	.short		AI_IF_HAVE_BATSUGUN
+	.macro	IF_HAVE_BATSUGUN		adrs
+	.short	AI_IF_HAVE_BATSUGUN
 	.long		(\adrs-.)-4
 	.endm
 
@@ -1280,8 +1291,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	adrs	チェックした側の方がダメージが大きい時のとび先
 //
 //------------------------------------------------------------
-	.macro		IF_LAST_WAZA_DAMAGE_CHECK	side,flag,adrs
-	.short		AI_IF_LAST_WAZA_DAMAGE_CHECK
+	.macro	IF_LAST_WAZA_DAMAGE_CHECK	side,flag,adrs
+	.short	AI_IF_LAST_WAZA_DAMAGE_CHECK
 	.long		\side
 	.long		\flag
 	.long		(\adrs-.)-4
@@ -1294,8 +1305,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param	side	チェックする側
 //
 //------------------------------------------------------------
-	.macro		CHECK_STATUS_UP		side
-	.short		AI_CHECK_STATUS_UP
+	.macro	CHECK_STATUS_UP		side
+	.short	AI_CHECK_STATUS_UP
 	.long		\side
 	.endm
 
@@ -1311,8 +1322,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //					COND_SPEDEF:特防
 //
 //------------------------------------------------------------
-	.macro		CHECK_STATUS_DIFF		side,flag
-	.short		AI_CHECK_STATUS_DIFF
+	.macro	CHECK_STATUS_DIFF		side,flag
+	.short	AI_CHECK_STATUS_DIFF
 	.long		\side
 	.long		\flag
 	.endm
@@ -1332,24 +1343,24 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //------------------------------------------------------------
 //自分が下
-	.macro		IF_CHECK_STATUS_UNDER		side,flag,adrs
-	.short		AI_IF_CHECK_STATUS_UNDER
+	.macro	IF_CHECK_STATUS_UNDER		side,flag,adrs
+	.short	AI_IF_CHECK_STATUS_UNDER
 	.long		\side
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
 
 //自分が上
-	.macro		IF_CHECK_STATUS_OVER		side,flag,adrs
-	.short		AI_IF_CHECK_STATUS_OVER
+	.macro	IF_CHECK_STATUS_OVER		side,flag,adrs
+	.short	AI_IF_CHECK_STATUS_OVER
 	.long		\side
 	.long		\flag
 	.long		(\adrs-.)-4
 	.endm
 
 //同じ値
-	.macro		IF_CHECK_STATUS_EQUAL		side,flag,adrs
-	.short		AI_IF_CHECK_STATUS_EQUAL
+	.macro	IF_CHECK_STATUS_EQUAL		side,flag,adrs
+	.short	AI_IF_CHECK_STATUS_EQUAL
 	.long		\side
 	.long		\flag
 	.long		(\adrs-.)-4
@@ -1362,8 +1373,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param		flag	ダメージロス計算のぶれありなしフラグ
 //
 //------------------------------------------------------------
-	.macro		COMP_POWER_WITH_PARTNER		flag
-	.short		AI_COMP_POWER_WITH_PARTNER
+	.macro	COMP_POWER_WITH_PARTNER		flag
+	.short	AI_COMP_POWER_WITH_PARTNER
 	.long		\flag
 	.endm
 
@@ -1375,14 +1386,14 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param		adrs	チェック結果での分岐先（IF_HINSHI：瀕死だった時 IFN_HINSHI：瀕死じゃなかったとき）
 //
 //------------------------------------------------------------
-	.macro		IF_HINSHI		side,adrs
-	.short		AI_IF_HINSHI
+	.macro	IF_HINSHI		side,adrs
+	.short	AI_IF_HINSHI
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
-	.macro		IFN_HINSHI		side,adrs
-	.short		AI_IFN_HINSHI
+	.macro	IFN_HINSHI		side,adrs
+	.short	AI_IFN_HINSHI
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -1394,8 +1405,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param		side	取得する相手
 //
 //------------------------------------------------------------
-	.macro		GET_TOKUSEI	side
-	.short		AI_GET_TOKUSEI
+	.macro	GET_TOKUSEI	side
+	.short	AI_GET_TOKUSEI
 	.long		\side
 	.endm
 
@@ -1407,8 +1418,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //	@param		adrs	分岐先
 //
 //------------------------------------------------------------
-	.macro		IF_MIGAWARI side,adrs
-	.short		AI_IF_MIGAWARI
+	.macro	IF_MIGAWARI side,adrs
+	.short	AI_IF_MIGAWARI
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
@@ -1416,7 +1427,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 //アドレスをオフセットに変換
 //------------------------------------------------------------
-	.macro		ADRS		dest,src
+	.macro	ADRS		dest,src
 	.long		(\dest-\src)-4
 	.endm
 

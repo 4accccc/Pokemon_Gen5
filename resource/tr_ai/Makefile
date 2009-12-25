@@ -39,21 +39,24 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = $(TARGETDIR)$(NARCNAME)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.o *.elf *.bin $(NARCNAME)
+LDIRT_CLEAN += *.o *.elf *.bin $(NARCNAME) btl_calc_def.h btl_field_def.h btl_sideeff_def.h btl_pokeparam_def.h battle_def.h wazadata_def.h poketype_def.h
 endif
 
 #コンバート対象のファイルツリーを生成
-SRC	=	tr_ai_basic.s
-#		tr_ai_damage.s \
-#		tr_ai_double.s \
-#		tr_ai_expert.s \
-#		tr_ai_first.s \
-#		tr_ai_gamble.s \
-#		tr_ai_harassing.s \
-#		tr_ai_other.s \
-#		tr_ai_relay.s \
-#		tr_ai_strong.s \
-#		tr_ai_weather.s 
+SRC	=	tr_ai_basic.s \
+		tr_ai_damage.s \
+		tr_ai_double.s \
+		tr_ai_expert.s \
+		tr_ai_gamble.s \
+		tr_ai_guide.s \
+		tr_ai_harassing.s \
+		tr_ai_hojo.s \
+		tr_ai_hp_check.s \
+		tr_ai_move.s \
+		tr_ai_relay.s \
+		tr_ai_safari.s \
+		tr_ai_strong.s \
+		tr_ai_weather.s 
 
 ELF2BINDIR = ../../tools/
 
@@ -63,15 +66,36 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .SUFFIXES: .s .bin
 
-do-build: tr_ai_seq.narc
-tr_ai_seq.narc: $(SRC:.s=.bin)
-	nnsarc -c -l -n -i tr_ai_seq.narc -S tr_ai_seq.scr
+do-build: btl_calc_def.h btl_field_def.h btl_sideeff_def.h btl_pokeparam_def.h battle_def.h wazadata_def.h poketype_def.h $(SRC:.s=.bin) tr_ai_seq.narc
 
-do-build: $(SRC:.s=.bin)
+btl_calc_def.h: ../../prog/src/battle/btl_calc.h
+	ruby enum2def.rb ../../prog/src/battle/btl_calc.h
+
+btl_field_def.h: ../../prog/src/battle/btl_field.h
+	ruby enum2def.rb ../../prog/src/battle/btl_field.h
+
+btl_sideeff_def.h: ../../prog/src/battle/btl_sideeff.h
+	ruby enum2def.rb ../../prog/src/battle/btl_sideeff.h
+
+btl_pokeparam_def.h: ../../prog/src/battle/btl_pokeparam.h
+	ruby enum2def.rb ../../prog/src/battle/btl_pokeparam.h
+
+battle_def.h: ../../prog/include/battle/battle.h
+	ruby enum2def.rb ../../prog/include/battle/battle.h
+
+wazadata_def.h: ../../prog/include/waza_tool/wazadata.h
+	ruby enum2def.rb ../../prog/include/waza_tool/wazadata.h
+
+poketype_def.h: ../../prog/include/poke_tool/poketype.h
+	ruby enum2def.rb ../../prog/include/poke_tool/poketype.h
+
 %.bin: %.s *.h
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
 	$(ELF2BINDIR)elf2bin $*.elf
+
+tr_ai_seq.narc: $(SRC:.s=.bin)
+	nnsarc -c -l -n -i tr_ai_seq.narc -S tr_ai_seq.scr
 
 endif
 
