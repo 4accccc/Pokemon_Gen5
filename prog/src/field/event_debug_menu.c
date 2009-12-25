@@ -90,7 +90,7 @@
 #define DEBUG_MENU_PANO (14)
 #define DEBUG_FONT_PANO (15)
 
-#define D_MENU_CHARSIZE_X (12)    //メニュー横幅
+#define D_MENU_CHARSIZE_X (18)    //メニュー横幅
 #define D_MENU_CHARSIZE_Y (16)    //メニュー縦幅
 
 #define LINER_CAM_KEY_WAIT    (30)
@@ -131,6 +131,8 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
+
+static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
@@ -200,6 +202,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
   { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
+  { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },
   { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
@@ -3933,3 +3936,37 @@ static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK* wk )
   return TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 強制セーブ
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GMEVENT *event;
+  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+  GFL_MSGDATA *msgdata;
+  FLDMSGWIN *fldmsgwin;
+  
+  msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_field_dat, heapID );
+  
+  fldmsgwin = FLDMSGWIN_Add(msgBG, msgdata, 1, 19, 30, 4);
+
+  FLDMSGWIN_Print( fldmsgwin, 0, 0, DEBUG_FIELD_STR60_message );
+  FLDMSGBG_AllPrint(msgBG);
+  
+  //セーブ
+  GAMEDATA_Save(GAMESYSTEM_GetGameData(gsys));
+  
+  FLDMSGWIN_Delete(fldmsgwin);
+  GFL_MSG_Delete(msgdata);
+  
+  return( FALSE );
+}
