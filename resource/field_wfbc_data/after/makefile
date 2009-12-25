@@ -72,6 +72,7 @@ MONSNO_HEADER = ../../personal/monsno_def.h
 MESSAGE_HEADER = ../../message/dst/script/msg_bcwftest.h
 SCRIPT_BC_HEADER = ../../fldmapdata/script/bc10_def.h
 SCRIPT_WF_HEADER = ../../fldmapdata/script/wc10_def.h
+SCRIPT_ITEM_HEADER = ../../fldmapdata/script/fld_item_def.h
 ITEM_HEADER = ../../itemconv/itemsort_abc_def.h
 TRDATA_HEADER = ../../trdata/trno_def.h
 
@@ -114,7 +115,7 @@ $(COPY_DIR)$(OUTPUT_HEADER): $(OUTPUT_HEADER)
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER) $(EVENT_BC_HEADER) $(EVENT_WF_HEADER)
+$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER) $(EVENT_BC_HEADER) $(EVENT_WF_HEADER) $(SCRIPT_ITEM_HEADER)
 	
 	#エクセルデータをタブ区切りにする。
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 1 -s tab $(XLSFILE)
@@ -127,7 +128,7 @@ $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADE
 
 
 	#コンバート
-	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(TRDATA_HEADER) $(OUTPUT_HEADER)
+	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_BC_HEADER) $(SCRIPT_WF_HEADER) $(ITEM_HEADER) $(SCRIPT_ITEM_HEADER) $(TRDATA_HEADER) $(OUTPUT_HEADER)
 
 	perl wfbc_block_conv.pl $(BLOCK_WF_FILE) $(LAND_DATA_PATCH)  $(BLOCK_WF_BIN)
 	perl wfbc_block_conv.pl $(BLOCK_BC_FILE) $(LAND_DATA_PATCH)  $(BLOCK_BC_BIN)

@@ -81,6 +81,7 @@ typedef enum
 #define FIELD_WFBC_INIT_PEOPLE_NUM ( 10 ) // 初期化での人の数を変更
 
 
+
 //-------------------------------------
 /// 機嫌
 //=====================================
@@ -92,6 +93,13 @@ typedef enum
 #define FIELD_WFBC_MOOD_TAKES       (20) // 連れていってほしいという値
 
 #define FIELD_WFBC_MOOD_SUB_DAY_MAX ( FIELD_WFBC_MOOD_MAX / MATH_ABS(FIELD_WFBC_MOOD_SUB) + 1 ) // 引く日にちの最大値 + 1は割り切れないときの予備
+
+
+
+//-------------------------------------
+///	配置アイテム　不定値
+//=====================================
+#define FIELD_WFBC_ITEM_NONE  (0xffff)
 
 //-----------------------------------------------------------------------------
 /**
@@ -147,6 +155,10 @@ extern FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_
 extern void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_CORE* cp_core );
 extern void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata );
 
+
+// 1日の切り替え管理
+extern void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID heapID );
+
 //----------------------------------------------------------
 //  ZONEDATAの操作
 //----------------------------------------------------------
@@ -173,8 +185,6 @@ extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmo
 // 機嫌値でソートする
 // ソートに使用するテンポラリワークを生成するためのheapIDです。
 extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
-// 1日の切り替え管理
-extern void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk, s32 diff_day );
 // 街に入った！計算
 extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ
@@ -349,9 +359,53 @@ extern void FIELD_WFBC_PEOPLE_POS_Delete( FIELD_WFBC_CORE_PEOPLE_POS* p_wk );
 
 extern const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexData( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index );
 
+extern const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index );
 
 
+//-----------------------------------------------------------------------------
+/**
+ *					WFBCアイテム配置情報
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	WFBCアイテム配置情報
+//=====================================
+typedef struct {
+  u16 scr_item[ FIELD_WFBC_PEOPLE_MAX ];  // idx位置のアイテムスクリプトID
+} FIELD_WFBC_CORE_ITEM;
 
+//-------------------------------------
+///	GAMEDATAから取得
+//=====================================
+extern FIELD_WFBC_CORE_ITEM* GAMEDATA_GetWFBCItemData( GAMEDATA * gamedata );
+
+
+//-------------------------------------
+///	全体クリア
+//=====================================
+extern void WFBC_CORE_ITEM_ClaerAll( FIELD_WFBC_CORE_ITEM* p_wk );
+
+//-------------------------------------
+///	アイテム数
+//=====================================
+extern u32 WFBC_CORE_ITEM_GetNum( const FIELD_WFBC_CORE_ITEM* cp_wk );
+
+//-------------------------------------
+///	アイテム配置情報を設定
+//=====================================
+extern BOOL FIELD_WFBC_CORE_ITEM_SetItemData( FIELD_WFBC_CORE_ITEM* p_wk, u16 scr_item, u32 idx );
+extern void FIELD_WFBC_CORE_ITEM_ClearItemData( FIELD_WFBC_CORE_ITEM* p_wk, u32 idx );
+
+//-------------------------------------
+///	アイテム配置情報を取得
+//=====================================
+extern u16 FIELD_WFBC_CORE_ITEM_GetItemData( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 idx );
+extern BOOL FIELD_WFBC_CORE_ITEM_IsInItemData( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 idx );
+
+//-------------------------------------
+///	データから、MMDLヘッダーを生成
+//=====================================
+extern MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID );
 
 #ifdef _cplusplus
 }	// extern "C"{

@@ -70,11 +70,11 @@ foreach $one ( @EXCEL_FILE )
 }
 
 
-#0～19の位置をチェック
+#0～9,a～jの位置をチェック
 #X0,Z0, X1,Z1, ...
 @PEOPLE_POS = (0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0 );
 
-$PEOPLE_NUM = 20;
+$PEOPLE_NUM = 10;
 
 $PEOPLE_POS_X_IDX = 0;
 $PEOPLE_POS_Z_IDX = 1;
@@ -94,6 +94,35 @@ for( $i=0; $i<$POS_DATA_MAX; $i++ )
       $PEOPLE_POS[ ($input * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_X_IDX ] = $j-1;
       $PEOPLE_POS[ ($input * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_Z_IDX ] = $i;
     }
+    elsif ( $POS_DATA[ $index ] =~ /[a-j]/ )
+    {
+      $input =$POS_DATA[ $index ];
+      if( "".$input eq "a" ){
+        $input = 0;
+      }elsif( "".$input eq "b" ){
+        $input = 1;
+      }elsif( "".$input eq "c" ){
+        $input = 2;
+      }elsif( "".$input eq "d" ){
+        $input = 3;
+      }elsif( "".$input eq "e" ){
+        $input = 4;
+      }elsif( "".$input eq "f" ){
+        $input = 5;
+      }elsif( "".$input eq "g" ){
+        $input = 6;
+      }elsif( "".$input eq "h" ){
+        $input = 7;
+      }elsif( "".$input eq "i" ){
+        $input = 8;
+      }elsif( "".$input eq "j" ){
+        $input = 9;
+      }
+
+      $input += $PEOPLE_NUM;
+      $PEOPLE_POS[ ($input * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_X_IDX ] = $j-1;
+      $PEOPLE_POS[ ($input * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_Z_IDX ] = $i;
+    }
   }
 }
 
@@ -102,7 +131,7 @@ for( $i=0; $i<$POS_DATA_MAX; $i++ )
 #出力
 open( FILEOUT, ">".$ARGV[1] );
 binmode( FILEOUT );
-for( $i=0; $i<$PEOPLE_NUM; $i++ )
+for( $i=0; $i<$PEOPLE_NUM*2; $i++ )
 {
   #print( "people $i x=".$PEOPLE_POS[ ($i * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_X_IDX ]." z=".$PEOPLE_POS[ ($i * $PEOPLE_POS_IDX_NUM) + $PEOPLE_POS_Z_IDX ]."\n" );
   

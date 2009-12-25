@@ -48,6 +48,25 @@ static const MMDL_HEADER sc_DEFAULT_HEADER =
 	0,		///<Z方向移動制限
 };
 
+//-------------------------------------
+///	アイテム基本情報
+//=====================================
+static const MMDL_HEADER sc_DEFAULT_ITEM_HEADER = 
+{
+	0,		///<識別ID
+	MONSTERBALL,	  ///<表示するOBJコード
+	MV_DMY,	  ///<動作コード
+	EV_TYPE_NORMAL,	  ///<イベントタイプ
+	0,	  ///<イベントフラグ
+	0,	  ///<イベントID
+	DIR_DOWN,		///<指定方向
+	0,		///<指定パラメタ 0
+	0,		///<指定パラメタ 1
+	0,		///<指定パラメタ 2
+	0,		///<X方向移動制限
+	0,		///<Z方向移動制限
+};
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -382,12 +401,22 @@ void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID )
  *
  *	@param	p_wk      ワーク
  *	@param  diff_day  経過日数
+ *	@param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk, s32 diff_day )
+void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID heapID )
 {
   int i;
   BOOL result;
+  FIELD_WFBC_CORE* p_wk;
+  FIELD_WFBC_CORE_ITEM* p_item;
+  u16 random;
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+
+  p_wk = GAMEDATA_GetMyWFBCCoreData( gamedata );
+  p_item = GAMEDATA_GetWFBCItemData( gamedata );
+  
 
   // 日にちがおかしくないかチェック
   if( diff_day <= 0 )
@@ -421,10 +450,40 @@ void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk, s32 diff_day )
       }
     }
   }
-  
-  
+
   // 空いているワークをつめる
   WFBC_CORE_PackPeopleArray( p_wk->people );
+
+  // 今いる人の情報を使用して、アイテムを追加
+  WFBC_CORE_ITEM_ClaerAll( p_item );
+
+
+  // 追加登録準備
+  p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID( heapID ) );
+
+  // 新規アイテムを登録する。
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
+    {
+      // その人の情報を読み込み
+      FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
+      cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+      
+      // 配置抽選
+      random = GFUser_GetPublicRand(100);
+      if( random < cp_people_data->goods_wf_percent )
+      {
+        // 配置場所を抽選
+        random = GFUser_GetPublicRand(FIELD_WFBC_PEOPLE_MAX);
+
+        // そこにアイテムを追加
+        FIELD_WFBC_CORE_ITEM_SetItemData( p_item, cp_people_data->goods_wf, random );
+      }
+    }
+  }
+
+  FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
 }
 
 //----------------------------------------------------------------------------
@@ -962,8 +1021,205 @@ const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexData( const FIEL
   return &cp_wk[index];
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムのインデックスの位置情報を返す
+ *
+ *	@param	cp_wk   ワーク
+ *	@param	index   インデックス
+ *
+ *	@return 位置情報
+ */
+//-----------------------------------------------------------------------------
+const FIELD_WFBC_CORE_PEOPLE_POS* FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( const FIELD_WFBC_CORE_PEOPLE_POS* cp_wk, u32 index )
+{
+  GF_ASSERT( cp_wk );
+  GF_ASSERT( index < FIELD_WFBC_PEOPLE_MAX );
+
+  return &cp_wk[index + FIELD_WFBC_PEOPLE_MAX];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム配置情報すべてくりあ　
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+void WFBC_CORE_ITEM_ClaerAll( FIELD_WFBC_CORE_ITEM* p_wk )
+{
+  int i;
+  
+  // アイテムなし
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    p_wk->scr_item[i] = FIELD_WFBC_ITEM_NONE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置アイテム数を数える
+ *
+ *	@param	p_wk  ワーク
+ *
+ *	@return アイテム数
+ */
+//-----------------------------------------------------------------------------
+u32 WFBC_CORE_ITEM_GetNum( const FIELD_WFBC_CORE_ITEM* cp_wk )
+{
+  int i;
+  int count = 0;
+  
+  // アイテムなし
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( cp_wk->scr_item[i] != FIELD_WFBC_ITEM_NONE )
+    {
+      count ++;
+    }
+  }
+  return count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ITEM情報を設定
+ *
+ *	@param	p_wk      ワーク
+ *	@param	scr_item  アイテムゲットスクリプトナンバー
+ *	@param	idx       配置インデックス
+ *
+  *	@retval TRUE  設定した
+  *	@retval FALSE 設定しなかった（すでにアイテムが配置されている）
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_ITEM_SetItemData( FIELD_WFBC_CORE_ITEM* p_wk, u16 scr_item, u32 idx )
+{
+  GF_ASSERT( idx < FIELD_WFBC_PEOPLE_MAX );
+  if( p_wk->scr_item[idx] == FIELD_WFBC_ITEM_NONE )
+  {
+    p_wk->scr_item[idx] = scr_item;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ITEM情報をクリア
+ *
+ *	@param	p_wk    ワーク
+ *	@param	idx   インデックス
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_ITEM_ClearItemData( FIELD_WFBC_CORE_ITEM* p_wk, u32 idx )
+{
+  GF_ASSERT( idx < FIELD_WFBC_PEOPLE_MAX );
+  p_wk->scr_item[idx] = FIELD_WFBC_ITEM_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置されているアイテム情報を取得する
+ *
+ *	@param	cp_wk      ワーク
+ *	@param	idx     インデックス
+ *
+ *	@retval アイテムのスクリプトID
+ *	@retval FIELD_WFBC_ITEM_NONE 配置されていない
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_WFBC_CORE_ITEM_GetItemData( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 idx )
+{
+  GF_ASSERT( idx < FIELD_WFBC_PEOPLE_MAX );
+  return cp_wk->scr_item[idx];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  idx位置にアイテムがあるのかチェック
+ *
+ *	@param	cp_wk    ワーク
+ *	@param	idx   インデックス
+ *
+ *	@retval TRUE    ある
+ *	@retval FALSE   ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_ITEM_IsInItemData( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 idx )
+{
+  GF_ASSERT( idx < FIELD_WFBC_PEOPLE_MAX );
+  if( cp_wk->scr_item[idx] == FIELD_WFBC_ITEM_NONE )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ITEM配置情報からMMDLヘッダーを生成
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	mapmode   マップモード
+ *	@param	heapID    ヒープID
+ *
+ *	@retval NULL  なし
+ *	@retval その他　ITEMのMMDLヘッダー　設定後Freeしてください
+ */
+//-----------------------------------------------------------------------------
+MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID )
+{
+  int i;
+  int item_num;
+  int item_index;
+  MMDL_HEADER* p_buff;
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+  FIELD_WFBC_CORE_PEOPLE_POS* p_pos;
+  const FIELD_WFBC_CORE_PEOPLE_POS* cp_itempos;
+
+  // 自分の世界でしか表示しない
+  if( mapmode != MAPMODE_NORMAL )
+  {
+    return NULL;
+  }
+
+  heapID = GFL_HEAP_LOWID( heapID );
+
+  // 総数を求める
+  item_num = WFBC_CORE_ITEM_GetNum( cp_wk );
+  item_index = 0;
+
+  // バッファを生成
+  p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(MMDL_HEADER) * item_num );
+
+  // ローダー生成
+  p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, heapID );
+
+  // 位置情報を読み込み
+  p_pos = FIELD_WFBC_PEOPLE_POS_Create( p_people_loader, type, heapID );
+
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    
+    if( FIELD_WFBC_CORE_ITEM_IsInItemData(cp_wk, i) )
+    {
+      // 位置取得
+      cp_itempos = FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( p_pos, i );
+      
+      p_buff[item_index] = sc_DEFAULT_ITEM_HEADER;
+      p_buff[item_index].event_id = FIELD_WFBC_CORE_ITEM_GetItemData( cp_wk, i );
+      MMDLHEADER_SetGridPos( &p_buff[item_index], cp_itempos->gx, cp_itempos->gz, 0 );
+
+      item_index ++;
+
+    }
+  }
+
+  return p_buff;
+}
 
 
 //-----------------------------------------------------------------------------

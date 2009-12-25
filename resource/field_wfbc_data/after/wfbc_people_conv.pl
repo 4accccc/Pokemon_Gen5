@@ -3,7 +3,7 @@
 #
 #   WFBC  人物情報のコンバート
 #
-#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def trdata_def output_header
+#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def script_item_h trdata_def output_header
 #
 #
 #
@@ -11,9 +11,9 @@
 
 
 #引数　チェック
-if( @ARGV < 9 )
+if( @ARGV < 10 )
 {
-  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def trdata_def output_header\n" );
+  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def script_item_h trdata_def output_header\n" );
   exit(1);
 }
 
@@ -23,6 +23,7 @@ if( @ARGV < 9 )
 @MONSNO_DEF = undef;
 @SCRIPT_BC = undef;
 @SCRIPT_WF = undef;
+@SCRIPT_ITEM = undef;
 @ITEM_DEF = undef;
 @TRDATA_DEF = undef;
 
@@ -53,6 +54,9 @@ open( FILEIN, $ARGV[6] );
 @ITEM_DEF = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[7] );
+@SCRIPT_ITEM = <FILEIN>;
+close( FILEIN );
+open( FILEIN, $ARGV[8] );
 @TRDATA_DEF = <FILEIN>;
 close( FILEIN );
 
@@ -134,7 +138,7 @@ foreach $one ( @EXCEL )
 #情報の出力
 
 #まずヘッダー
-open( FILEOUT, ">".$ARGV[8] );
+open( FILEOUT, ">".$ARGV[9] );
 
 print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
 print( FILEOUT "#pragma once\n" );
@@ -208,7 +212,7 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   $outnum = &SCRIPT_BC_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_BC_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
   #道具 WF
-  $outnum = &ITEMDEF_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_ITEM_WF ] );
+  $outnum = &ITEMSCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_ITEM_WF ] );
   print( FILEOUT pack( "S", $outnum ) );
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_ITEM_PERCENT_WF ];
   print( FILEOUT pack( "S", $outnum ) );
@@ -402,6 +406,31 @@ sub ITEMDEF_GetIdx
   }
 
   print( "item $name がみつかりません\n" );
+  exit(1);
+}
+
+sub ITEMSCRIPT_GetIdx
+{
+  my( $name ) = @_;
+  my( $code, @codeline );
+
+  #大文字化
+  $name = uc( $name );
+
+  foreach $code (@SCRIPT_ITEM)
+  {
+    $code =~ s/ +/ /g;
+    $code =~ s/\t+/ /g;
+    @codeline = split( /\s/, $code );
+    if( "".$codeline[1] eq "".$name )
+    {
+      $codeline[2] =~ s/\(//;
+      $codeline[2] =~ s/\)//;
+      return $codeline[2];
+    }
+  }
+
+  print( "item script $name がみつかりません\n" );
   exit(1);
 }
 

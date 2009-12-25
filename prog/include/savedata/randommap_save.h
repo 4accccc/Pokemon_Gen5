@@ -15,6 +15,11 @@
 
 #include "field/field_wfbc_data.h"
 
+
+//======================================================================
+//	define
+//======================================================================
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -48,5 +53,9 @@ extern void RANDOMMAP_SAVE_SetCoreWork( RANDOMMAP_SAVE* sv, const FIELD_WFBC_COR
 extern void RANDOMMAP_SAVE_GetCoreWork( const RANDOMMAP_SAVE* sv, FIELD_WFBC_CORE* p_buff );
 
 
+//----------------------------------------------------------
+// äXÇÃÉAÉCÉeÉÄèÓïÒÇê›íË
+//----------------------------------------------------------
+extern FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv );
 
 

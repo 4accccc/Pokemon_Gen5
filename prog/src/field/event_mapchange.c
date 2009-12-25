@@ -1366,14 +1366,13 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
 {
   if( ZONEDATA_IsWfbc( loc->zone_id ) )
   {
-    const FIELD_WFBC_CORE* cp_wfbc;
     const FIELD_STATUS* cp_fs = GAMEDATA_GetFieldStatus( gamedata );
     MAPMODE mapmode = FIELD_STATUS_GetMapMode( cp_fs );
     MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
-    MMDL_HEADER*p_header;
-    u32  count;
     EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
-
+    MMDL_HEADER*p_header;
+    const FIELD_WFBC_CORE* cp_wfbc;
+    u32  count;
 
     if( mapmode == MAPMODE_NORMAL )
     {
@@ -1384,17 +1383,42 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
       // 通信相手のデータに変更
       cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
     }
-    p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
 
-    count = FIELD_WFBC_CORE_GetPeopleNum( cp_wfbc, mapmode );
-
-
-    // 
-    if( p_header && (count > 0) )
+    // 人物
     {
-      TOMOYA_Printf( "WFBC MMDL SetUp\n" );
-      MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
-      GFL_HEAP_FreeMemory( p_header );
+      p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
+
+      count = FIELD_WFBC_CORE_GetPeopleNum( cp_wfbc, mapmode );
+
+
+      // 
+      if( p_header && (count > 0) )
+      {
+        TOMOYA_Printf( "WFBC MMDL SetUp\n" );
+        MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
+        GFL_HEAP_FreeMemory( p_header );
+      }
+    }
+
+    // アイテム
+    {
+      const FIELD_WFBC_CORE_ITEM* cp_item;
+
+      cp_item = GAMEDATA_GetWFBCItemData( gamedata );
+
+      // アイテム数取得
+      count = WFBC_CORE_ITEM_GetNum( cp_item );
+
+      // 配置モデル作成
+      p_header = FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( cp_item, mapmode, cp_wfbc->type, GFL_HEAPID_APP );
+      
+      // 
+      if( p_header && (count > 0) )
+      {
+        TOMOYA_Printf( "WFBC ITEM SetUp\n" );
+        MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
+        GFL_HEAP_FreeMemory( p_header );
+      }
     }
   }
 }
