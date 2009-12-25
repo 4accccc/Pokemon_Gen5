@@ -71,6 +71,7 @@ struct _BTL_POKE_CONTAINER {
   BTL_MAIN_MODULE*  mainModule;
   BTL_PARTY         party[ BTL_CLIENT_MAX ];
   BTL_POKEPARAM*    pokeParam[ BTL_COMMITMENT_POKE_MAX ];
+  u32               fForServer;
 };
 
 typedef struct {
@@ -163,7 +164,10 @@ static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPo
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static inline u8 PokeID_to_ClientID( u8 pokeID );
-static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
+static void PokeCon_Clear( BTL_POKE_CONTAINER* pokeCon );
+static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
+static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon );
+static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer );
 static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
@@ -537,11 +541,11 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
-  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
-  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
@@ -651,11 +655,11 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
-  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
-  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
@@ -719,11 +723,11 @@ static BOOL setup_alone_triple( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
-  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
-  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
@@ -786,11 +790,11 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
 
-  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
 
-  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
@@ -1100,7 +1104,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 
       BTL_Printf("パーティデータ相互受信できました。\n");
 
-      PokeCon_Init( &wk->pokeconForClient, wk );
+      PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
 
       // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
       //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
@@ -1117,7 +1121,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     if( wk->ImServer )
     {
       u32 i;
-      PokeCon_Init( &wk->pokeconForServer, wk );
+      PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
       // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
       //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
       for(i=0; i<wk->numClients; ++i){
@@ -2400,11 +2404,37 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
 // BTL_POKE_CONTAINER
 //=======================================================================================================
 
-static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule )
+static void PokeCon_Clear( BTL_POKE_CONTAINER* pokeCon )
+{
+  int i;
+
+  pokeCon->mainModule = NULL;
+
+  for(i=0; i<NELEMS(pokeCon->party); ++i){
+    BTL_PARTY_Initialize( &pokeCon->party[ i ] );
+  }
+
+  for(i=0; i<NELEMS(pokeCon->pokeParam); ++i){
+    pokeCon->pokeParam[ i ] = NULL;
+  }
+}
+
+static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon )
+{
+  return (pokeCon->mainModule != NULL);
+}
+
+static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon )
+{
+  return pokeCon->fForServer;
+}
+
+static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer )
 {
   int i;
 
   pokecon->mainModule = mainModule;
+  pokecon->fForServer = fForServer;
 
   for(i=0; i<NELEMS(pokecon->party); ++i){
     BTL_PARTY_Initialize( &pokecon->party[i] );
@@ -2413,6 +2443,7 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
     pokecon->pokeParam[i] = NULL;
   }
 }
+
 static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID )
 {
   GF_ASSERT(clientID < BTL_CLIENT_MAX);
@@ -3216,15 +3247,20 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
 
   // SrcPP ポインタをサーバ用、クライアント用パーティデータに再設定
   {
-    BTL_PARTY* btlParty_sv = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
+    BTL_PARTY* btlParty_sv = NULL;
+    if( PokeCon_IsInitialized(&wk->pokeconForServer) ){
+      btlParty_sv = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
+    }
     for(i=0; i<memberCount; ++i)
     {
       pp = PokeParty_GetMemberPointer( srcParty, i );
 
       bpp = BTL_PARTY_GetMemberData( btlParty, i );
       BPP_SetSrcPP( bpp,  pp );
-      bpp = BTL_PARTY_GetMemberData( btlParty_sv, i );
-      BPP_SetSrcPP( bpp,  pp );
+      if( btlParty_sv ){
+        bpp = BTL_PARTY_GetMemberData( btlParty_sv, i );
+        BPP_SetSrcPP( bpp,  pp );
+      }
     }
   }
 }
