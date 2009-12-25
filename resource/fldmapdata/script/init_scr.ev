@@ -66,8 +66,8 @@ init_flags:
 	_FLAG_SET( FV_C01_LEADER1_01 )
 	_FLAG_SET( FV_C01_INVENTOR_01 )
 	
-	//D05R011:コンテナworkmanを戦闘後まで非表示に設定
-	_FLAG_SET( FV_D05R0101_WORKMAN_01 )
+	//D05R0201:コンテナworkmanを戦闘後まで非表示に設定
+	_FLAG_SET( FV_D05R0201_WORKMAN_01 )
 	
 	//D05:コンテナworkmanを戦闘後まで非表示に設定
 	//_FLAG_SET( FV_D05R0101_WORKMAN_01 )

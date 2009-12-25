@@ -567,7 +567,7 @@
 #define FV_C04_HAKAI_01                    543 /* 0x021f ライモンシティ：プラズマ団POSイベントのしたっぱ２人と育て屋じいさん */
 #define FV_D05R0101_RIVAL_01               544 /* 0x0220 D05R0101：初回入室時イベントライバル01 */
 #define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
-#define FV_D05R0101_WORKMAN_01             546 /* 0x0222 D05R0101：戦闘後表示WORKMAN */
+#define FV_D05R0201_WORKMAN_01             546 /* 0x0222 D05R0201：戦闘後表示WORKMAN */
 #define FV_C02GYM0101_FRIENDS              547 /* 0x0223 C02博物館：サポート＆ライバル */
 #define FV_D02_LEADER3                     548 /* 0x0224 Ｄ02（フィールド）：誘導イベントのジムリーダー（アーティ） */
 #define FV_D02_HAKAI                       549 /* 0x0225 Ｄ02（フィールド）：ストッパーイベントのプラズマ団 */
@@ -647,7 +647,7 @@
 #define FV_MUSEUM_STONE                    623 /* 0x026f C02GYM0101博物館：パッケージポケモン関連の&#xff5e;&#xff5e;ストーン */
 #define FV_D08R0101_NONDRAW_01             624 /* 0x0270 リュウラセンの塔入り口：バッジ入手まで接続をブロックするための透明OBJ */
 #define FV_R03_SODATEYA_01                 625 /* 0x0271 ３番道路の育て屋じいさん */
-		/* not used   626(0x0272) */
+#define FV_D05R0201_PLASMA                 626 /* 0x0272 れいとうコンテナ：プラズマ団とライバル */
 		/* not used   627(0x0273) */
 		/* not used   628(0x0274) */
 		/* not used   629(0x0275) */

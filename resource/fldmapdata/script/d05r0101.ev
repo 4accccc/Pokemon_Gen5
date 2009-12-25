@@ -60,7 +60,7 @@ EVENT_START   ev_scene_d05r0101_01
 	_FLAG_SET(FV_D05R0101_RIVAL_01)
 
 	//フラグ操作
-	$WK_SCENE_D05R0101 = 1
+	$WK_SCENE_D05_PLASMA = 1
 	//==================================//
 
 EVENT_END
@@ -133,7 +133,7 @@ ev_d05r0101_rival_02:
 	ENDIF
 	
 	//復帰、workman配置
-	_FLAG_RESET(FV_D05R0101_WORKMAN_01)
+	_FLAG_RESET(FV_D05R0201_WORKMAN_01)
 	_OBJ_ADD(D05R0101_WORKMAN_01)
 	
 	
@@ -154,7 +154,7 @@ ev_d05r0101_rival_02:
 	//===========フラグワーク操作===========//
 	
 	//***フラグ操作:全てのイベントをオフに***
-	$WK_SCENE_D05R0101 = 2
+	$WK_SCENE_D05_PLASMA = 2
 	//***D05のWORKを操作する***
 	$WK_SCENE_D05 = 2
 	
@@ -164,7 +164,7 @@ ev_d05r0101_rival_02:
 	
 	//D05R0101のイベントキャラクターを全て非表示にする
 	_FLAG_SET(FV_D05R0101_RIVAL_02)
-	_FLAG_SET(FV_D05R0101_WORKMAN_01)
+	_FLAG_SET(FV_D05R0201_WORKMAN_01)
 	
 	//======================================//
 	

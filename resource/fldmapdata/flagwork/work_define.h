@@ -132,7 +132,7 @@
 #define WK_SCENE_C01                     16520 /* 0x4088 C01フィールド：イベント用ワーク */
 #define WK_SCENE_C04                     16521 /* 0x4089 ライモンシティフィールド：イベント用ワーク */
 #define WK_SCENE_C02GYM0201              16522 /* 0x408a C02ノーマルジム：イベント用ワーク */
-#define WK_SCENE_D05R0101                16523 /* 0x408b D05冷凍コンテナ：イベント用ワーク */
+#define WK_SCENE_D05_PLASMA              16523 /* 0x408b D05冷凍コンテナ：イベント用ワーク */
 #define WK_SCENE_D02                     16524 /* 0x408c ヤグルマの森（フィールド）：イベント用ワーク */
 #define WK_SCENE_D02R0101                16525 /* 0x408d ヤグルマの森：イベント用ワーク */
 #define WK_SCENE_C04P01                  16526 /* 0x408e ライモンシティ遊園地：イベント用ワーク */

@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 17:02:36
+#save date:2009/12/25 17:08:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -177,7 +177,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D05R0101_WORKMAN_01
+FV_D05R0201_WORKMAN_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -348,7 +348,7 @@ SCRID_POS_D05R0101_RIVAL_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D05R0101
+WK_SCENE_D05_PLASMA
 #Event Trigger Work Value
 1
 #Pos Type
