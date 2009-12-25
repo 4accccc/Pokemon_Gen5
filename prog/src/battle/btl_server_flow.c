@@ -654,14 +654,13 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
-  BTL_SERVER_CMD_QUE* que, u32 numClient, BtlBagMode bagMode, HEAPID heapID )
+  BTL_SERVER_CMD_QUE* que, BtlBagMode bagMode, HEAPID heapID )
 {
   BTL_SVFLOW_WORK* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SVFLOW_WORK) );
 
   wk->server = server;
   wk->pokeCon = pokeCon;
   wk->mainModule = mainModule;
-  wk->numClient = numClient;
   wk->numActOrder = 0;
   wk->turnCount = 0;
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
@@ -6463,8 +6462,11 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
   if( wk->bagMode == BBAG_MODE_SHOOTER )
   {
     u32 i;
-    for(i=0; i<wk->numClient; ++i)
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
+      if( !BTL_SERVER_IsClientEnable(wk->server, i) ){
+        continue;
+      }
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
         SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
       }else{

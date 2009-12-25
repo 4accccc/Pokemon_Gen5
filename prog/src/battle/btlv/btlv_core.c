@@ -628,7 +628,11 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
-  OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
+  {
+    const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
+    u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno );
+  }
 
   {
     u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
@@ -738,7 +742,11 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
     wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
+    {
+      const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
+      u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+      OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno);
+    }
 
     wk->selectItemSeq = 1;
   }
@@ -1789,7 +1797,11 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-  OS_TPrintf("リストマルチモード=%d, 立ち位置=%d\n", wk->plistData.multiMode, wk->plistData.multiPos);
+  {
+    const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
+    u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno);
+  }
 
   wk->selectItemSeq = 0;
 }

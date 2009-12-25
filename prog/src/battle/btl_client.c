@@ -273,6 +273,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
   int i;
 
+  OS_TPrintf("Create Client ID=%d...\n", clientID);
+
   wk->myID = clientID;
   wk->heapID = heapID;
   wk->myType = clientType;
