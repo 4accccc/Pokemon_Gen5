@@ -176,8 +176,8 @@ EVENT_START   ev_pos_r03_rival_01
 	//右を見てサポートに気づく
 	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_stop_right )
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_rival_01_stop_right )
-	_BALLOONWIN_OBJMSG( msg_r03_black_04 , R03_RIVAL_01 )
 	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_r03_black_04 , R03_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_01 )
