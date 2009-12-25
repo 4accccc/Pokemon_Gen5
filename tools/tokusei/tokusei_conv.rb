@@ -66,7 +66,7 @@ end
   tokuname_gmm.make_row_index( "TOKUSEI_", 0, "ー" )
   tokuinfo_gmm = GMM::new
   tokuinfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokuseiinfo.gmm" )
-  tokuinfo_gmm.make_row_index( "TOKUSEIINFO_", 0, "ー\rー" )
+  tokuinfo_gmm.make_row_index_kanji( "TOKUSEIINFO_", 0, "ー\rー", "ー\rー" )
 
   cnt = 1
 

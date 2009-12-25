@@ -126,7 +126,7 @@ end
   wazaname_gmm.make_row_index( "WAZANAME_", 0, "ーーーーー" )
   wazainfo_gmm = GMM::new
   wazainfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazainfo.gmm" )
-  wazainfo_gmm.make_row_index( "WAZAINFO_", 0, "ー\rー\rー\rー" )
+  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "ー\rー\rー\rー\rー", "ー\rー\rー\rー\rー" )
   atkmsg_gmm = GMM::new
   atkmsg_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "btl_attack.gmm" )
   atkmsg_gmm.make_row_index( "ATKMSG_M_", 0, "！" )

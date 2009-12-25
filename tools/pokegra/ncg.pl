@@ -40,11 +40,12 @@ use constant NCG_Y	=>	12;
 
 	if( $size ){
 		&NCGRMake;
-		$file_name = basename( @ARGV[0], '.ncg' );
-		if( $file_name =~ m/_m$/ ){
-			$file_name =~ s/_m$/_f/g;
-			$file_name = @ARGV[1] . $file_name . ".NCGR";
+		$file_name = basename( @ARGV[0], 'ncg' );
+		if( $file_name =~ m/_m\./ ){
+			$file_name =~ s/_m\./_f\./g;
+			$file_name = @ARGV[1] . $file_name . "NCGR";
 			$size = -s $file_name;
+      print $file_name . "\n";
 			if( $size eq "" ){
 				open( DUMMY, "> " . $file_name );
 				close( DUMMY );

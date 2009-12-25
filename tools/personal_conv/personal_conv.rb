@@ -442,6 +442,14 @@ end
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成中\n"
   fp_monsno = open( "monsno_def.h", "w" )
   fp_gra = open( "pokegra_wb.scr", "w" )
+  fp_wave = open( "wb_sound_pv_wav.lst", "w" )
+  fp_bank = open( "wb_sound_pv_bnk.lst", "w" )
+  fp_lst = open( "pokegra_wb.lst", "w" )
+  fp_num = open( "zukan2grano.txt", "w" )
+  gmm = GMM::new
+  gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
+
+  fp_monsno.print( "//============================================================================================\n" )
   fp_lst = open( "pokegra_wb.lst", "w" )
   fp_num = open( "zukan2grano.txt", "w" )
   gmm = GMM::new
@@ -518,6 +526,13 @@ end
 	    fp_gra.printf( "\"pbwb_%03d%s.NCEC\"\n",     gra_no, form_name )
 	    fp_gra.printf( "\"pmwb_%03d%s_n.NCLR\"\n",   gra_no, form_name )
 	    fp_gra.printf( "\"pmwb_%03d%s_r.NCLR\"\n",   gra_no, form_name )
+
+      #SARC出力
+      #WAVE&BANK
+      if gra_no >= 501
+	      fp_wave.printf( "WAVE_ARC_PMWB_%03d		: AUTO, \"PMWB_%03d.swls\"\n",   gra_no, gra_no )
+	      fp_bank.printf( "BANK_PMWB_%03d		: TEXT, \"PMWB_%03d.bnk\",	WAVE_ARC_PMWB_%03d\n",   gra_no, gra_no, gra_no )
+      end
 
       fp_num.printf( "%s\n", split_data[ PARA::GRA_NO ] )
 
@@ -639,7 +654,7 @@ end
   fp_gra.print( "\"pfwb_egg_normal_m.NCGR\"\n" )
   fp_gra.print( "\"pfwb_egg_normal_f.NCGR\"\n" )
 	fp_gra.print( "\"pfwb_eggc_normal_m.NCBR\"\n" )
-	fp_gra.print( "\"pfwb_eggc_normal_m.NCBR\"\n" )
+	fp_gra.print( "\"pfwb_eggc_normal_f.NCBR\"\n" )
 	fp_gra.print( "\"pfwb_egg_normal.NCER\"\n" )
 	fp_gra.print( "\"pfwb_egg_normal.NANR\"\n" )
 	fp_gra.print( "\"pfwb_egg_normal.NMCR\"\n" )
@@ -648,7 +663,7 @@ end
   fp_gra.print( "\"pbwb_egg_normal_m.NCGR\"\n" )
   fp_gra.print( "\"pbwb_egg_normal_f.NCGR\"\n" )
 	fp_gra.print( "\"pbwb_eggc_normal_m.NCBR\"\n" )
-	fp_gra.print( "\"pbwb_eggc_normal_m.NCBR\"\n" )
+	fp_gra.print( "\"pbwb_eggc_normal_f.NCBR\"\n" )
 	fp_gra.print( "\"pbwb_egg_normal.NCER\"\n" )
 	fp_gra.print( "\"pbwb_egg_normal.NANR\"\n" )
 	fp_gra.print( "\"pbwb_egg_normal.NMCR\"\n" )
@@ -660,7 +675,7 @@ end
   fp_gra.print( "\"pfwb_egg_manafi_m.NCGR\"\n" )
   fp_gra.print( "\"pfwb_egg_manafi_f.NCGR\"\n" )
 	fp_gra.print( "\"pfwb_eggc_manafi_m.NCBR\"\n" )
-	fp_gra.print( "\"pfwb_eggc_manafi_m.NCBR\"\n" )
+	fp_gra.print( "\"pfwb_eggc_manafi_f.NCBR\"\n" )
 	fp_gra.print( "\"pfwb_egg_manafi.NCER\"\n" )
 	fp_gra.print( "\"pfwb_egg_manafi.NANR\"\n" )
 	fp_gra.print( "\"pfwb_egg_manafi.NMCR\"\n" )
@@ -669,7 +684,7 @@ end
   fp_gra.print( "\"pbwb_egg_manafi_m.NCGR\"\n" )
   fp_gra.print( "\"pbwb_egg_manafi_f.NCGR\"\n" )
 	fp_gra.print( "\"pbwb_eggc_manafi_m.NCBR\"\n" )
-	fp_gra.print( "\"pbwb_eggc_manafi_m.NCBR\"\n" )
+	fp_gra.print( "\"pbwb_eggc_manafi_f.NCBR\"\n" )
 	fp_gra.print( "\"pbwb_egg_manafi.NCER\"\n" )
 	fp_gra.print( "\"pbwb_egg_manafi.NANR\"\n" )
 	fp_gra.print( "\"pbwb_egg_manafi.NMCR\"\n" )
