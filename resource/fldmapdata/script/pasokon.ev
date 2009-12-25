@@ -145,7 +145,8 @@ pc_box:
     IF $box_end_mode == SCR_BOX_END_MODE_MENU THEN
       _SE_PLAY( SEQ_SE_PC_LOGIN ) // SE
     ELSE
-      $log_out = TRUE             // パソコンを切る
+      $exit    = TRUE             // パソコンを切る
+      $log_out = TRUE             //
     ENDIF
   ENDWHILE
 }
