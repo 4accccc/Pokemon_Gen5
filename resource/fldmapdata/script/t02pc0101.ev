@@ -33,7 +33,7 @@ _EVENT_DATA_END
 INIT_EVENT_START	ev_init_t02pc0101
 
 	//演説イベントが終わっていない場合
-	IF $WK_SCENE_T02 <= 1 THEN
+	IF $WK_SCENE_T02 <= 2 THEN
 		//イベント状況によりOBJの表示位置変更
 		IF $WK_SCENE_T02PC0101 == 3 THEN
 			//博士の案内イベント後

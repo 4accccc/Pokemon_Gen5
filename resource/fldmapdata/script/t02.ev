@@ -30,7 +30,23 @@ _EVENT_DATA		ev_bg_t02_sign1_01
 _EVENT_DATA		ev_bg_t02_sign2_01
 _EVENT_DATA		ev_scene_t02_speech_01
 _EVENT_DATA		ev_pos_t02_rival_speech2
+_EVENT_DATA		ev_init_t02
 _EVENT_DATA_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_t02
+
+	//演説イベント前で群集イベント終了後の場合
+	IF $WK_SCENE_T02 == 2 THEN
+
+		_OBJ_POS_CHANGE( T02_BOODLE_01, 785, 0, 657, DIR_LEFT )
+		_OBJ_POS_CHANGE( T02_BOODLE_02, 785, 0, 655, DIR_LEFT )
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  BABYGIRL1_1	じゃんけん少女								  */
@@ -458,7 +474,7 @@ EVENT_START		ev_scene_t02_speech_01
 	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_go )
 	_OBJ_ANIME_WAIT()
 
-	//他のNPCも所定の場所へ移動
+	//群集ワープ
 	_OBJ_POS_CHANGE( T02_BOODLE_01, 785, 0, 657, DIR_LEFT )
 	_OBJ_POS_CHANGE( T02_BOODLE_02, 785, 0, 655, DIR_LEFT )
 
