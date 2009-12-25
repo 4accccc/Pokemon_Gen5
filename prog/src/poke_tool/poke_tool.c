@@ -1539,7 +1539,7 @@ const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
 //============================================================================================
 u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
 {
-  u32 rnd = 1;
+  u32 rnd = 8;  // ID == 0 ‚Ì‚ÉƒŒƒA‚É‚È‚ç‚È‚¢‚æ‚¤‰Šú’l‚ğ8‚É‚µ‚Ä‚¨‚­
 
   // «•Ê : ‰ºˆÊ 1byte ‚ğ’²®
   {
