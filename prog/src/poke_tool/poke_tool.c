@@ -1539,19 +1539,19 @@ const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
 //============================================================================================
 u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
 {
-  u32 rnd;
+  u32 rnd = 1;
 
   // ê´ï  : â∫à  1byte Çí≤êÆ
   {
-    u8 byte = 0;
-    if( sex == PTL_SEX_MALE ){
-      POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
-      u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
-      if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX){
-        byte = sex_param+1; // ÉIÉXÇ…ÇµÇΩÇ¢èÍçáÇÃÇ›í≤êÆ
+    POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+    u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+    if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX){
+      if( sex == PTL_SEX_MALE ){
+        rnd = sex_param+1;
+      }else{
+        rnd = sex_param;
       }
     }
-    rnd = byte;
   }
 
   return rnd;
