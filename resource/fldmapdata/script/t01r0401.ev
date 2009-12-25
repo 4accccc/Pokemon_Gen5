@@ -17,6 +17,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_scene_t01r0401_zukanget_01		//図鑑入手イベント
 _EVENT_DATA		ev_t01r0401_hakase2_01
+_EVENT_DATA		ev_bg_t01r0401_picture_01
 _EVENT_DATA_END
 
 
@@ -32,6 +33,12 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_friends_walk_01 )
 	_OBJ_ANIME_WAIT()
 
+	//カメラ操作======================================
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,294912,0,335872, 30)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//おーきたきた！
 	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
@@ -41,6 +48,8 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_CLOSE()
 
 	//まあまあ！今日は記念となる日だからね
+	_OBJ_ANIME( T01R0401_HAKASE2_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_02,T01R0401_HAKASE2_01 ) //博士
 	_BALLOONWIN_CLOSE()
 
@@ -57,8 +66,13 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	IF $SCWK_ANSWER == SCR_YES THEN
 		//はいの処理
 
+		//【仮】ニックネーム処理にいった場合はカメラリセットされるので後のカメラ終了処理をスキップする
+		DEFINE_LOCAL	LWK_CAMERA_OFF
+		$LWK_CAMERA_OFF = 1
+
 		//ニックネーム入力処理
 		_CALL		ev_name_input
+
 	ELSE
 		//いいえの処理
 
@@ -75,15 +89,23 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_OBJMSG( msg_t01r0401_black_03,T01R0401_RIVAL_01 )  //ライバル
 	_BALLOONWIN_CLOSE()
 
+	//サポート：ライバルを見る【仮】？マークを出す予定
+	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_zukan_support_look_01 )
 	//ずかん？
 	_BALLOONWIN_OBJMSG( msg_t01r0401_white_02,T01R0401_SUPPORT_01 ) //サポート
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
 
 	//さすがだね！
 	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01 )  //博士
+	//サポート：博士を見る
+	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 
-	//【仮】演出予定：その場で一回転など
+	//博士：あらためる
+	_OBJ_ANIME( T01R0401_HAKASE2_01, anm_zukan_doc_move_01 )
+	_OBJ_ANIME_WAIT()
 
 	//ポケモン図鑑とは！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
@@ -112,8 +134,11 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 		$ans_yes = SCR_NO
 
 		WHILE $ans_yes == SCR_NO
-			//そんな言葉は聞きたくない　旅にでかけるよな？
+			//そんな言葉は聞きたくない 旅にでかけるよな？
+			//博士：その場歩き（足踏みする感じ）
+			_OBJ_ANIME( T01R0401_HAKASE2_01, anm_stay_walk_d )
 			_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_11 , T01R0401_HAKASE2_01 )
+			_OBJ_ANIME_WAIT()
 			_YES_NO_WIN( ans_yes )
 			_BALLOONWIN_CLOSE()
 			
@@ -134,14 +159,12 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_SYSWIN_MSG_DOWN( msg_t01r0401_hakase2_13 )
+	_SYSWIN_MSG_UP( msg_t01r0401_hakase2_13 )
 
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )
 	_ME_WAIT()
 
-	//【保留】ここに▼なしウェイトいれる？
-	_AB_KEYWAIT()
 	_SYSWIN_CLOSE()
 
 //***********************************************************//
@@ -150,11 +173,23 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_14,T01R0401_HAKASE2_01 ) 	//博士
 	_BALLOONWIN_CLOSE()
 
+	//カメラを主人公位置に戻す
+	_CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+
 	//博士：退室へ（主人公＆ライバル道を開ける）
 	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_player_move_01 )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_zukan_player_move_01 )
 	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_01 )
 	_OBJ_ANIME_WAIT()
+
+	//【仮】ニックネーム処理をよんでなければカメラ復帰
+	IF $LWK_CAMERA_OFF != 1 THEN
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_BIND()		//カメラバインド
+		_CAMERA_END()		//カメラ操作終了
+	ENDIF
+
+	//カメラ操作ここまで===================================
 
 	//博士：退室
 	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_02 )
@@ -244,6 +279,16 @@ ev_name_input:
 	_RET
 
 
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //３人：博士の手前まで移動
@@ -273,10 +318,28 @@ _ANIME_LABEL	anm_zukan_doc_look_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//博士：室外へ（まず一歩下に）
+//サポート：ライバルを見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_support_look_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：あらためる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_doc_move_01
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：室外へ（まず主人公前まで）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_doc_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -328,10 +391,31 @@ _ANIME_LABEL	anm_zukan_support_goaway_01
 /*						アララギ博士						*/
 /************************************************************/
 EVENT_START   ev_t01r0401_hakase2_01
-
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_20 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
+/************************************************************/
+/*						アララギ博士						*/
+/************************************************************/
+EVENT_START   ev_bg_t01r0401_picture_01
+	_TALK_START_SE_PLAY()
+	
+	//イベント進行で分岐【仮】専用のフラグを用意すべき
+	IF $WK_SCENE_C06 == 0 THEN
+		//C06で博士父と出会っていないなら
+		_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_01 )
+	ELSE
+		//出会った後なら
+		_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_02 )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 
 

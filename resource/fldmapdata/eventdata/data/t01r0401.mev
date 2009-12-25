@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/29 23:18:38
+#save date:2009/12/25 18:07:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/29 23:18:38
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 168
 #event number: 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -200 0 104
 #event number: 2
@@ -95,23 +99,38 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/29 23:18:38
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+BG_T01R0401_PICTURE_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_T01R0401_PICTURE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 184
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/29 23:18:38
+#save date:
 2
 #hold event type:
 1
@@ -121,7 +140,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/29 23:18:38
+#save date:
 2
 #hold event type:
 1
@@ -138,8 +157,12 @@ DOOR_ID_T01_EXIT04
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -200 0 72
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_T01R0401_EXIT02
@@ -151,8 +174,12 @@ DOOR_ID_T01_EXIT04
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 72
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_T01R0401_EXIT03
@@ -164,7 +191,11 @@ DOOR_ID_T01_EXIT04
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 72
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

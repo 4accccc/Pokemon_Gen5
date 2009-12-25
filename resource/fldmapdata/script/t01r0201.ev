@@ -37,8 +37,10 @@ EVENT_START	ev_scene_t01r0201_support_01
 	//カメラ操作
 	_CAMERA_MOVE( 9688,0,970752,425984,0,233472,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-    
-	//サポート：その場歩き（視線誘導）
+
+	_TIME_WAIT( 16 )
+
+	//サポート：一歩前へ
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_move_01 )
 	_OBJ_ANIME_WAIT()
 
@@ -46,9 +48,16 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_BALLOONWIN_OBJMSG( msg_t01r0201_white_01 , T01R0201_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
+	//自機にカメラを戻す
+   	_CAMERA_RECV_MOVE( 30 )
+
 	//サポート：外に出ようとする
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_01 )
 	_OBJ_ANIME_WAIT()
+
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 
 	//あっ　～～くん！
 	_BALLOONWIN_OBJMSG( msg_t01r0201_white_02 , T01R0201_SUPPORT_01 )
@@ -68,11 +77,6 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
-	//自機にカメラを戻す
-   	_CAMERA_RECV_MOVE( 30 )
-    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
 
 //================フラグ操作==================//
 

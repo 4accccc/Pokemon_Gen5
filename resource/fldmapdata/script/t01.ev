@@ -84,6 +84,13 @@ EVENT_START	ev_t01_rival_01
 	IF $WK_SCENE_T01R0201 >= 1 THEN
 		//イベント後なら研究所案内イベント
 
+		//ライバル：サポートを見てから再度主人公を見る
+		_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_l )
+		_OBJ_ANIME_WAIT()
+
+		_TIME_WAIT( 8 )
+		_TURN_HERO_SITE()	//主人公の方を向く
+
 		//ん…何かあった？
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01_black_03 )
 		_BALLOONWIN_CLOSE()
@@ -159,6 +166,10 @@ _ANIME_LABEL	anm_stay_walk_u
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //ライバル＆サポート：研究所内へ
 //--------------------------------------------------------------------
@@ -201,11 +212,20 @@ EVENT_END
 /*				ライバルpos：１番道路側ストッパー			*/
 /************************************************************/
 EVENT_START ev_pos_t01_stopper_01
-	//【保留】待てーい！的なメッセージ必要かも
 
 	//主人公：一歩下がる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stopper_player_move_01 )
 	_OBJ_ANIME_WAIT()
+
+	DEFINE_LOCAL	LWK_PLY_X
+	DEFINE_LOCAL	LWK_PLY_Z
+
+	//主人公位置の座標取得
+	_PLAYER_POS_GET( LWK_PLY_X, LWK_PLY_Z )
+
+	//主人公座標から-8グリッドの位置にライバルを移動
+	$LWK_PLY_X -= 8
+	_OBJ_POS_CHANGE( T01_RIVAL_01, LWK_PLY_X, 0, 741, DIR_RIGHT )
 
 	//ライバル：走ってくる
 	_OBJ_ANIME( T01_RIVAL_01, anm_stopper_rival_come_01 )
@@ -219,6 +239,9 @@ EVENT_START ev_pos_t01_stopper_01
 	//ライバル：走って去る
 	_OBJ_ANIME( T01_RIVAL_01, anm_stopper_rival_goaway_01 )
 	_OBJ_ANIME_WAIT()
+
+	//ライバル初期位置に戻す
+	_OBJ_POS_CHANGE( T01_RIVAL_01, 777, 0, 741, DIR_DOWN )
 
 EVENT_END
 
@@ -235,17 +258,14 @@ _ANIME_LABEL	anm_stopper_player_move_01
 //ライバル：走ってくる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_stopper_rival_come_01
-	_ANIME_DATA	AC_WALK_R_2F,3
-	_ANIME_DATA	AC_WALK_R_4F,4
+	_ANIME_DATA	AC_WALK_R_4F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ライバル：走って去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_stopper_rival_goaway_01
-	_ANIME_DATA	AC_WALK_L_4F,4
-	_ANIME_DATA	AC_WALK_L_2F,3
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_L_4F,6
 	_ANIME_DATA	ACMD_END,0
 
 

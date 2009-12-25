@@ -57,6 +57,8 @@ EVENT_START	ev_pos_r05_rival_01
 	_FLAG_RESET( FV_R05_RIVAL )
 	_OBJ_ADD( R05_RIVAL_01 )
 
+	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+
 	//ライバル：主人公横へ
 	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
 	_OBJ_ANIME_WAIT()
@@ -85,6 +87,7 @@ EVENT_START	ev_pos_r05_rival_01
 	//敗戦処理
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
 		_TRAINER_WIN()
 	ELSE
 		_TRAINER_LOSE()
@@ -206,6 +209,8 @@ EVENT_START	ev_pos_r05_rival_01
 		//ライバル戦闘posイベントを無効、橋デモposイベントを有効
 		$WK_SCENE_R05 = 2
 	//========================================//
+
+	_END_EVENT_BGM()
 
 EVENT_END
 

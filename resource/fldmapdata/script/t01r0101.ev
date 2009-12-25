@@ -29,11 +29,22 @@ _EVENT_DATA_END
 /*				自宅１階：初めて下りたとき					*/
 /************************************************************/
 EVENT_START ev_scene_t01r0101_first_01
-	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE1 )
+	
+	//カメラ操作====================================
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	
+	_CAMERA_MOVE(9688,0,970752,229376,0,409600, 30)		//カメラ移動開始
+	
+	//主人公：下を見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	
 	//ライバル：その場歩き
-	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_walk_01 )
+	_OBJ_ANIME( T01R0101_RIVAL_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 
 	//ライバルＭＳＧ：おばさん　それでは失礼します
@@ -62,12 +73,23 @@ EVENT_START ev_scene_t01r0101_first_01
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
-	//主人公：ママの前へ
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_home_player_move_01 )
+	//カメラを主人公位置に戻す
+	_CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+	//カメラ操作ここまで==============================
+
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE1 )
+
+	//ママ：主人公の前へ
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_home_mama_walk_01 )
 	_OBJ_ANIME_WAIT()
 
-	//ママ：その場歩き（視線誘導）
-	_OBJ_ANIME( T01R0101_MAMA_01, anm_home_mama_walk_01 )
+	//主人公：ママを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 
 	//ママ：何があったの？
@@ -101,14 +123,14 @@ EVENT_START ev_scene_t01r0101_first_01
 	//ＴＶトランシーバーよ
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
-	
-	//イベント曲終了
-	_END_EVENT_BGM()
-	
+
 	//いってらっしゃい
 	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04_01, T01R0101_MAMA_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+
+	//イベント曲終了
+	_END_EVENT_BGM()
 
 //===============フラグワーク操作====================//
 
@@ -123,10 +145,14 @@ EVENT_START ev_scene_t01r0101_first_01
 EVENT_END
 
 //--------------------------------------------------------------------
-//ライバル：その場歩き
+//その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_home_rival_walk_01
+_ANIME_LABEL	anm_stay_walk_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -157,17 +183,14 @@ _ANIME_LABEL	anm_home_support_goaway_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：ママの前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_home_player_move_01
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ママ：その場歩き
+//ママ：主人公の前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_home_mama_walk_01
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
