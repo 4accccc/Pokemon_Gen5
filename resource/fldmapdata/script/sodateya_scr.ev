@@ -126,11 +126,11 @@ EVENT_START ev_sodateya_grandpa
 { 
   // ローカルワーク宣言
   DEFINE_LOCAL egg_get      // タマゴを受け取るかどうか
+  $egg_get = FALSE
 
   // 現在状態を取得
   _CALL get_sodateya_state    // 育て屋の状態
   _CALL get_party_state       // 手持ちの状態
-  $egg_get = FALSE
 
   //-------------------
   // タマゴがある場合
