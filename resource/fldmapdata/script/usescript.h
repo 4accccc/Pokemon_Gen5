@@ -245,6 +245,7 @@
 
 //メニュー用戻り値
 #define EV_WIN_B_CANCEL (0xfffe)
+#define EV_WIN_X_BREAK  (0xfffd)
 
 //フェード共通速度
 #define DISP_FADE_SPEED (2)

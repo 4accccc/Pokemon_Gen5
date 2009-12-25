@@ -326,7 +326,7 @@
   DEF_CMD( EvCmdBmpMenuMakeList, EV_SEQ_BMPMENU_MAKE_LIST )
   DEF_CMD( EvCmdBmpMenuStart, EV_SEQ_BMPMENU_START )
 
-  NO_CMD()
+  DEF_CMD( EvCmdBmpMenuStart_Breakable, EV_SEQ_BMPMENU_START_BREAKABLE )
   NO_CMD()
   NO_CMD()
   NO_CMD()

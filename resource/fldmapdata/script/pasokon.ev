@@ -72,7 +72,7 @@ EVENT_START ev_pc
     // @todo 殿堂入りしていなければ表示しない
     _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
-    _BMPMENU_START()
+    _BMPMENU_START_BREAKABLE()
     _SYSWIN_CLOSE()
     // 選択に応じた処理
     SWITCH $select_pos
@@ -83,6 +83,7 @@ EVENT_START ev_pc
     CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
     CASE msg_pc_window_06 THEN $log_out = TRUE
     CASE EV_WIN_B_CANCEL  THEN $log_out = TRUE
+    CASE EV_WIN_X_BREAK   THEN $log_out = TRUE
     ENDSWITCH
   ENDWHILE
 
@@ -120,12 +121,14 @@ pc_box:
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_06, msg_pc_box_07, msg_pc_box_window_06 )  // バトルボックス
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_04, msg_pc_box_05, msg_pc_box_window_04 )  // もちもの
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_05, msg_pc_box_06, msg_pc_box_window_05 )  // さようなら
-    _BMPMENU_START() 
+    _BMPMENU_START_BREAKABLE() 
     _SYSWIN_CLOSE()
     //「さようなら」選択
     SWITCH $select_pos
     CASE msg_pc_box_window_05 THEN _RET
     CASE EV_WIN_B_CANCEL      THEN _RET
+    CASE EV_WIN_X_BREAK       THEN $log_out = TRUE
+                                   _RET
     ENDSWITCH
     // ボックス呼び出し
     _MAP_FADE_BLACK_OUT() // フェードアウト
@@ -177,12 +180,14 @@ pc_mail_box:
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_01, msg_pc_mail_02, msg_pc_mail_window_01 )  // メールボックス
     _BMPMENU_MAKE_LIST_EX( msg_pc_mail_window_02, msg_pc_mail_03, msg_pc_mail_window_02 )  // せつぞくを きる
-    _BMPMENU_START()
+    _BMPMENU_START_BREAKABLE()
     _SYSWIN_CLOSE()
     //「せつぞくを きる」選択
     SWITCH $select_pos
     CASE msg_pc_mail_window_02 THEN _RET
     CASE EV_WIN_B_CANCEL       THEN _RET
+    CASE EV_WIN_X_BREAK        THEN $log_out = TRUE
+                                    _RET
     ENDSWITCH
     // メールボックス呼び出し
     _MAP_FADE_BLACK_OUT()        // フェードアウト

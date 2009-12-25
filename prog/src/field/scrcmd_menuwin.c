@@ -228,6 +228,7 @@ static BOOL EvSelWinWait( VMHANDLE *core, void *wk )
   return( FALSE );
 }
 
+
 //--------------------------------------------------------------
 /**
  * BMPメニュー	開始
@@ -240,6 +241,37 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRCMD_WORK_StartMenu( work );
 	VMCMD_SetWait( core, EvSelWinWait );
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPメニュー	ウェイト部分(xボタンによる中断あり)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvSelWinWait_Breakable( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  if( SCRCMD_WORK_ProcMenu_Breakable(work) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPメニュー	開始(xボタンによる中断あり)
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBmpMenuStart_Breakable( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRCMD_WORK_StartMenu( work );
+	VMCMD_SetWait( core, EvSelWinWait_Breakable );
 	return VMCMD_RESULT_SUSPEND;
 }
 

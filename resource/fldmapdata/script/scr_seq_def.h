@@ -2805,6 +2805,18 @@
   .short  EV_SEQ_BMPMENU_START
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _BMPMENU_START BMPメニュー　開始(xボタンによる中断あり)
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _BMPMENU_START_BREAKABLE() _ASM_BMPMENU_START_BREAKABLE
+
+  .macro  _ASM_BMPMENU_START_BREAKABLE
+  .short  EV_SEQ_BMPMENU_START_BREAKABLE
+  .endm
+
 //======================================================================
 //  画面フェード
 //======================================================================

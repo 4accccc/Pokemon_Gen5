@@ -103,3 +103,4 @@ extern void SCRCMD_WORK_AddMenuList(
     STRBUF *msgbuf, STRBUF *tmpbuf );
 extern void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work );
+extern BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work );

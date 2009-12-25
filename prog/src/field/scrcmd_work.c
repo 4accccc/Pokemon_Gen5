@@ -22,6 +22,7 @@
 
 #define SCRCMD_MENU_LIST_MAX (16)
 #define EV_WIN_B_CANCEL (0xfffe)
+#define EV_WIN_X_BREAK  (0xfffd)
 
 //======================================================================
 //	struct
@@ -513,22 +514,12 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK メニュー　メニュー処理
+ * @brief メニュー　消去
  * @param
- * @retval
  */
 //--------------------------------------------------------------
-BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
+static void CleanUpMenuWork( SCRCMD_MENU_WORK* menuWork )
 {
-  u32 ret;
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
-  
-  ret = FLDMENUFUNC_ProcMenu( menuWork->menuFunc );
-
-	if( ret == FLDMENUFUNC_NULL ){	//操作無し
-    return( FALSE );
-  }
-  
   FLDMENUFUNC_DeleteMenu( menuWork->menuFunc );
   
   if( menuWork->free_msg == TRUE ){
@@ -544,7 +535,28 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
       }
     }
   }
+}
 
+//--------------------------------------------------------------
+/**
+ * SCRCMD_WORK メニュー　メニュー処理
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
+{
+  u32 ret;
+  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  
+  ret = FLDMENUFUNC_ProcMenu( menuWork->menuFunc );
+
+	if( ret == FLDMENUFUNC_NULL ){	//操作無し
+    return( FALSE );
+  }
+
+  CleanUpMenuWork( menuWork );
+  
   if( ret != FLDMENUFUNC_CANCEL ){	//決定
     *(menuWork->ret) = ret;
   }else{
@@ -557,6 +569,34 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
   }
   
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * SCRCMD_WORK メニュー　メニュー処理(xボタンによる中断あり)
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work )
+{
+  u32 ret;
+  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+
+  // 通常のメニュー処理
+  ret = SCRCMD_WORK_ProcMenu( work );
+
+  // 選択されなかった場合 ==> xボタン判定
+  if( ret == FALSE )
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      CleanUpMenuWork( menuWork );
+      *(menuWork->ret) = EV_WIN_X_BREAK;
+      ret = TRUE;
+    }
+  }
+  return ret;
 }
 
 /*
