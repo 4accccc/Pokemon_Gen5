@@ -1440,7 +1440,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER )
       {
-        ai_bit = 1; //@todo とりあえずBASICだけ
+        ai_bit = 0x07; //@todo とりあえずBASIC,STRONG,EXPERT
       }
       //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
       vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, mypos, wk->heapID );
