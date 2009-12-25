@@ -3272,6 +3272,7 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
   switch( *seq ){
   case 0:
+    BU_Printf( PRINT_FLG, "[CLIENT] TokWin IN : pokeID=%d, pos=%d\n", args[0], pos);
     BTLV_TokWin_DispStart( wk->viewCore, pos, TRUE );
     (*seq)++;
     break;
@@ -3295,6 +3296,7 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+  BU_Printf( PRINT_FLG, "[CLIENT] TokWin OUT : pokeID=%d, pos=%d\n", args[0], pos);
   BTLV_QuitTokWin( wk->viewCore, pos );
   return TRUE;
 }
