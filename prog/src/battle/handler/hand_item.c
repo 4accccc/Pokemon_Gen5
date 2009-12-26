@@ -3212,14 +3212,17 @@ static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_IsHPFull(bpp) )
+    {
+      BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
 
-    param->pokeID = pokeID;
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      param->pokeID = pokeID;
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    }
   }
 }
 //------------------------------------------------------------------------------

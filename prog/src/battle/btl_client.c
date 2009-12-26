@@ -417,9 +417,14 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_SELECT_ROTATION,
       { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation, SubProc_REC_SelectRotation } },
 
+#if 1
     { BTL_ACMD_SELECT_ACTION,
-       { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
-
+     { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+#else
+// AIにテスト駆動させる
+    { BTL_ACMD_SELECT_ACTION,
+       { SubProc_AI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+#endif
     { BTL_ACMD_SELECT_CHANGE_OR_ESCAPE,
        { SubProc_UI_SelectChangeOrEscape, NULL,  NULL  }
     },
@@ -1224,12 +1229,13 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // ワザロック効果（前回と同じワザしか出せない）
   if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
   {
-    if( waza != BPP_GetPrevWazaID(bpp) ){
+    WazaID prevWaza = BPP_GetPrevWazaID( bpp );
+    if( waza != prevWaza ){
       if( strParam != NULL )
       {
         BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WazaLock );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
-        BTLV_STRPARAM_AddArg( strParam, waza );
+        BTLV_STRPARAM_AddArg( strParam, prevWaza );
       }
       return TRUE;
     }
@@ -1466,6 +1472,9 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           TR_AI_Main( vmh );
           wazaIdx = TR_AI_GetSelectWazaPos( vmh );
           targetPos = TR_AI_GetSelectWazaDir( vmh );
+
+        // テスト用にAI無視してランダム
+          wazaIdx = BTL_CALC_GetRand( cnt );
         }else{
           setWaruagakiAction( &wk->actionParam[i], wk, pp );
           continue;
@@ -1491,6 +1500,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
             alivePokePos[ aliveCnt++ ] = p;
           }
         }
+
         if( aliveCnt )
         {
           u8 rndIdx = GFL_STD_MtRand(aliveCnt);
@@ -1499,7 +1509,13 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       }
 #endif
 
+
+      if( BTL_CALC_GetRand(100) < 15 )
       {
+        // ダブル時 一定確率で入れ替え
+        BTL_ACTION_SetChangeParam( &wk->actionParam[i], i, 2 );
+      }
+      else{
         WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
         BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
       }

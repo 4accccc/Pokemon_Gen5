@@ -404,6 +404,7 @@ static inline void SCQUE_PUT_OP_SetFakeSrcMember( BTL_SERVER_CMD_QUE* que, u8 cl
 //---------------------------------------------
 static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
 {
+//  OS_TPrintf("[CMD] WazaEffect atkPoke=%d, defPoke=%d\n", atPokeID, defPokeID);
   SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokeID, defPokeID, waza );
 }
 static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza, u8 arg )
