@@ -1472,9 +1472,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           TR_AI_Main( vmh );
           wazaIdx = TR_AI_GetSelectWazaPos( vmh );
           targetPos = TR_AI_GetSelectWazaDir( vmh );
-
-        // テスト用にAI無視してランダム
-          wazaIdx = BTL_CALC_GetRand( cnt );
         }else{
           setWaruagakiAction( &wk->actionParam[i], wk, pp );
           continue;
@@ -1510,12 +1507,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 #endif
 
 
-      if( BTL_CALC_GetRand(100) < 15 )
       {
-        // ダブル時 一定確率で入れ替え
-        BTL_ACTION_SetChangeParam( &wk->actionParam[i], i, 2 );
-      }
-      else{
         WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
         BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
       }
