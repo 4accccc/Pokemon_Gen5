@@ -417,9 +417,14 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_SELECT_ROTATION,
       { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation, SubProc_REC_SelectRotation } },
 
+#if 1
     { BTL_ACMD_SELECT_ACTION,
-       { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
-
+     { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+#else
+// AIにテスト駆動させる
+    { BTL_ACMD_SELECT_ACTION,
+       { SubProc_AI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+#endif
     { BTL_ACMD_SELECT_CHANGE_OR_ESCAPE,
        { SubProc_UI_SelectChangeOrEscape, NULL,  NULL  }
     },
@@ -1224,12 +1229,13 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // ワザロック効果（前回と同じワザしか出せない）
   if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
   {
-    if( waza != BPP_GetPrevWazaID(bpp) ){
+    WazaID prevWaza = BPP_GetPrevWazaID( bpp );
+    if( waza != prevWaza ){
       if( strParam != NULL )
       {
         BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WazaLock );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
-        BTLV_STRPARAM_AddArg( strParam, waza );
+        BTLV_STRPARAM_AddArg( strParam, prevWaza );
       }
       return TRUE;
     }
@@ -1440,7 +1446,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER )
       {
-        ai_bit = 1; //@todo とりあえずBASICだけ
+        ai_bit = 0x07; //@todo とりあえずBASIC,STRONG,EXPERT
       }
       //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
       vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, mypos, wk->heapID );
@@ -1491,6 +1497,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
             alivePokePos[ aliveCnt++ ] = p;
           }
         }
+
         if( aliveCnt )
         {
           u8 rndIdx = GFL_STD_MtRand(aliveCnt);
@@ -1498,6 +1505,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
       }
 #endif
+
 
       {
         WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
