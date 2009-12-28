@@ -125,6 +125,29 @@ void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave , const u8 itemNo )
   }
 }
 
+const int MUSICAL_SAVE_GetItemNum( MUSICAL_SAVE *musSave )
+{
+  int num = 0;
+  int i;
+  for( i=0;i<MUS_SAVE_ITEM_MAX;i++ )
+  {
+    if( MUSICAL_SAVE_ChackHaveItem( musSave , i ) == TRUE )
+    {
+      num++;
+    }
+  }
+  return num;
+}
+
+const BOOL MUSICAL_SAVE_IsCompleteItem( MUSICAL_SAVE *musSave )
+{
+  const int num = MUSICAL_SAVE_GetItemNum(musSave);
+  if( num == MUSICAL_ITEM_MAX_REAL )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------
 //	ƒtƒ@ƒ“ŠÖŒW
 //----------------------------------------------------------

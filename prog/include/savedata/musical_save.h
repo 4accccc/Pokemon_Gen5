@@ -74,6 +74,9 @@ extern const BOOL MUSICAL_SAVE_ChackHaveItem( MUSICAL_SAVE *musSave , const u8 i
 extern const BOOL MUSICAL_SAVE_ChackNewItem( MUSICAL_SAVE *musSave , const u8 itemNo );
 extern void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo );
 extern void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave , const u8 itemNo );
+extern const int MUSICAL_SAVE_GetItemNum( MUSICAL_SAVE *musSave );
+extern const BOOL MUSICAL_SAVE_IsCompleteItem( MUSICAL_SAVE *musSave );
+
 extern MUSICAL_FAN_STATE* MUSICAL_SAVE_GetFanState( MUSICAL_SAVE *musSave , const u8 idx );
 
 extern const u16 MUSICAL_SAVE_GetEntryNum( const MUSICAL_SAVE *musSave );

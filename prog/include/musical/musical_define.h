@@ -16,6 +16,7 @@
 //======================================================================
 //ミュージカルの装備アイテムの最大個数(最大255で考えておく
 #define MUSICAL_ITEM_MAX (250)
+#define MUSICAL_ITEM_MAX_REAL (100) //実装数
 #define MUSICAL_ITEM_INVALID (255)
 //ミュージカルに参加可能な人数
 #define MUSICAL_POKE_MAX (4)
