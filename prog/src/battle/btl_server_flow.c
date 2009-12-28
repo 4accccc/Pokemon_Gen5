@@ -5752,7 +5752,7 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
     if( scproc_WazaRankEffect_Common(wk, wazaParam, attacker, target, TRUE) ){
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
     }
-    if( scproc_Fight_WazaSickCore(wk, attacker, target, wazaParam->wazaID, sick, sickCont, TRUE) ){
+    if( scproc_Fight_WazaSickCore(wk, attacker, target, wazaParam->wazaID, sick, sickCont, FALSE) ){
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
     }
   }
