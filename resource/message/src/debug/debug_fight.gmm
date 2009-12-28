@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-09T21:02:52"/>
+	<create user="taya" host="W00146" date="2009-12-28T11:08:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,6 +349,10 @@
 		<language name="JPN" width="256">タイプ</language>
 	</row>
 
+	<row id="DBGF_LABEL_COMM">
+		<language name="JPN" width="256">つうしん</language>
+	</row>
+
 	<row id="DBGF_LABEL_WEATHER">
 		<language name="JPN" width="256">てんこう</language>
 	</row>
@@ -479,6 +483,14 @@
 
 	<row id="DBGF_ITEM_WAZAEFF_OFF">
 		<language name="JPN" width="256">みない</language>
+	</row>
+
+	<row id="DBGF_ITEM_COMM_CHILD">
+		<language name="JPN" width="256">こ</language>
+	</row>
+
+	<row id="DBGF_ITEM_COMM_PARENT">
+		<language name="JPN" width="256">おや</language>
 	</row>
 
 	<row id="DBGF_ITEM_SUBWAY_OFF">
