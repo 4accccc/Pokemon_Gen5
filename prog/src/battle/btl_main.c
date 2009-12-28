@@ -227,7 +227,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
 
       wk->heapID = HEAPID_BTL_SYSTEM;
-      wk->msgSpeed = MSGSPEED_GetWait();
+      wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
@@ -1189,8 +1189,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     // サーバマシンは各クライアントにサーバパラメータを通知する
     wk->serverNotifyParam.randomContext = wk->randomContext;
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
-    wk->serverNotifyParam.msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
-    OS_TPrintf("サーバマシンが送るMsgSpeed = %d\n", wk->serverNotifyParam.msgSpeed );
+    wk->serverNotifyParam.msgSpeed = wk->msgSpeed;
     wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
@@ -1209,7 +1208,6 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       wk->randomContext     = wk->serverNotifyParam.randomContext;
       wk->fWazaEffectEnable = wk->serverNotifyParam.fWazaEffectEnable;
       wk->msgSpeed          = wk->serverNotifyParam.msgSpeed;
-      OS_TPrintf("実行 MsgSpeed = %d\n", wk->serverNotifyParam.msgSpeed );
 
       return TRUE;
     }
