@@ -38,6 +38,7 @@
 //	プロトタイプ宣言
 //============================================================================================
 static void VBlankTask( GFL_TCB * tcb, void * work );
+static void HBlankTask( GFL_TCB * tcb, void * work );
 static void ListCallBack( void * work, s16 nowPos, s16 nowScroll, s16 oldPos, s16 oldScroll, u32 mv );
 
 
@@ -120,6 +121,37 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
+
+void ZKNLISTMAIN_InitHBlank( ZKNLISTMAIN_WORK * wk )
+{
+	wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
+}
+
+void ZKNLISTMAIN_ExitHBlank( ZKNLISTMAIN_WORK * wk )
+{
+	GFL_TCB_DeleteTask( wk->htask );
+}
+
+static void HBlankTask( GFL_TCB * tcb, void * work )
+{
+	s32	vcount = GX_GetVCount();
+
+	if( vcount >= 168 ){
+		G2S_ChangeBlendAlpha( 11, 5 );
+	}else if( vcount >= 144 ){
+		G2S_ChangeBlendAlpha( 10, 6 );
+	}else if( vcount >= 120 ){
+		G2S_ChangeBlendAlpha( 9, 7 );
+	}else if( vcount >= 96 ){
+		G2S_ChangeBlendAlpha( 8, 8 );
+	}else if( vcount >= 72 ){
+		G2S_ChangeBlendAlpha( 6, 10 );
+	}else{
+		G2S_ChangeBlendAlpha( 4, 12 );
+	}
+}
+
+
 
 void ZKNLISTMAIN_InitVram(void)
 {

@@ -56,6 +56,7 @@ typedef struct {
 	ZUKANLIST_DATA * dat;
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
+	GFL_TCB * htask;		// TCB ( HBLANK )
 
 //	int	key_repeat_speed;
 //	int	key_repeat_wait;
@@ -154,6 +155,10 @@ extern void ZKNLISTMAIN_InitVBlank( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_ExitVBlank( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTMAIN_InitHBlank( ZKNLISTMAIN_WORK * wk );
+extern void ZKNLISTMAIN_ExitHBlank( ZKNLISTMAIN_WORK * wk );
+
 
 extern void ZKNLISTMAIN_InitVram(void);
 extern const GFL_DISP_VRAM * ZKNLISTMAIN_GetVramBankData(void);

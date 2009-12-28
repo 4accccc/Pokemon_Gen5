@@ -158,12 +158,14 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTMAIN_SetBlendAlpha();
 
 	ZKNLISTMAIN_InitVBlank( wk );
+	ZKNLISTMAIN_InitHBlank( wk );
 
 	return SetFadeIn( wk, MAINSEQ_MAIN );
 }
 
 static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 {
+	ZKNLISTMAIN_ExitHBlank( wk );
 	ZKNLISTMAIN_ExitVBlank( wk );
 
 	ZKNLISTMAIN_FreeList( wk );
