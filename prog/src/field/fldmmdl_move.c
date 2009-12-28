@@ -1070,43 +1070,43 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
   
   if( MMDL_CheckStatusBitReflect(mmdl) == FALSE )
   {
+    MAPATTR attr = MAPATTR_ERROR;
     MAPATTR_FLAG flag = MAPATTR_FLAGBIT_NONE;
-    MAPATTR hit_attr = MAPATTR_ERROR;
     
     #ifdef DEBUG_REFLECT_CHECK
     now = MAPATTR_FLAGBIT_REFLECT << 16;
     #endif
     
-    if( data->attr_now != MAPATTR_ERROR )
+    if( (data->attr_flag_now & MAPATTR_FLAGBIT_REFLECT) )
     {
-      if( (data->attr_flag_now & MAPATTR_FLAGBIT_REFLECT) )
-      {
-        hit_attr = data->attr_now;
-        #ifdef DEBUG_REFLECT_CHECK
-        hit_attr = 0;
-        #endif
-      }
-      else
-      {
-        MAPATTR next = MMDL_GetMapDirAttr( mmdl, DIR_DOWN );
-        flag = MAPATTR_GetAttrFlag( next );
+      attr = data->attr_now;
+      #ifdef DEBUG_REFLECT_CHECK
+      attr = 0;
+      #endif
+    }
+    else
+    {
+      MAPATTR next = MMDL_GetMapDirAttr( mmdl, DIR_DOWN );
+      flag = MAPATTR_GetAttrFlag( next );
       
-        if( (flag & MAPATTR_FLAGBIT_REFLECT) )
-        {
-          hit_attr = next;
-        }
-      }
-      
-      if( hit_attr != MAPATTR_ERROR )
+      if( (flag & MAPATTR_FLAGBIT_REFLECT) )
       {
-        REFLECT_TYPE type;
-        MMDLSYS *mmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
+        attr = next;
+      }
+    }
+      
+    if( attr != MAPATTR_ERROR )
+    {
+      REFLECT_TYPE type = REFLECT_TYPE_POND;
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      MMDLSYS *mmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
         
-        MMDL_SetStatusBitReflect( mmdl, TRUE );
-         
-        type = REFLECT_TYPE_POND; //本来はアトリビュート識別してタイプ決定
-        FLDEFF_REFLECT_SetMMdl( mmdlsys, mmdl, data->fectrl, type );
+      if( MAPATTR_VALUE_CheckMirrorFloor(val) == TRUE ){
+        type = REFLECT_TYPE_MIRROR;
       }
+      
+      FLDEFF_REFLECT_SetMMdl( mmdlsys, mmdl, data->fectrl, type );
+      MMDL_SetStatusBitReflect( mmdl, TRUE );
     }
   }
 }
@@ -1253,7 +1253,7 @@ u32 MMDL_PosHitCheck( const MMDLSYS *fos, int x, int z )
  * @param  mmdl  MMDL *
  * @param  vec    現在実座標
  * @param  x    移動先X座標  グリッド
- * @param  y    移動先Y座標
+ * @param  y    移動先Y座標　グリッド
  * @param  z    移動先Z座標  グリッド
  * @param  dir    移動方向 DIR_UP等
  * @retval  u32    ヒットビット。MMDL_MOVEHITBIT_LIM等

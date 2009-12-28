@@ -851,3 +851,15 @@ BOOL MAPATTR_VALUE_CheckSnowGrassHigh( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_SNOW_GRASS_HIGH );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　鏡床
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckMirrorFloor( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_MIRROR_01 );
+}
