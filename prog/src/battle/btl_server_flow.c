@@ -782,7 +782,6 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
     if( scproc_CheckShowdown(wk) ){
-      OS_TPrintf("決着ついた\n");
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
       return wk->flowResult;
     }
@@ -791,7 +790,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
       wk->numEndActOrder = i+1;
       break;
     }
-//    OS_TPrintf("[* SVF *] Que WritePtr=%d\n", wk->que->writePtr );
+    OS_TPrintf("[* SVF *]         Que WritePtr=%d\n", wk->que->writePtr );
   }
 
   // 全アクション処理し終えた
@@ -3790,6 +3789,8 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 //----------------------------------------------------------------------------------
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos )
 {
+//  OS_TPrintf("[SVF] ReservedWazaEffCmd ... atkPos=%d, targetPos=%d\n",
+//      effCtrl->attackerPos, effCtrl->targetPos );
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT,
           effCtrl->attackerPos, effCtrl->targetPos, waza );
 }
