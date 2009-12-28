@@ -127,7 +127,7 @@ typedef struct
 //----------------------------------------------------------
 //	ミュージカルショット系
 //----------------------------------------------------------
-//装備グッズデータ
+//装備グッズデータ  8byte
 typedef struct
 {
   u16 itemNo;   //グッズ番号
@@ -137,7 +137,7 @@ typedef struct
 }
 MUSICAL_SHOT_POKE_EQUIP;
 
-//ポケモン１体のデータ
+//ポケモン１体のデータ  76byte
 typedef struct
 {
   u16 monsno; //ポケモン番号
@@ -151,17 +151,20 @@ typedef struct
   
 }MUSICAL_SHOT_POKE;
 
+//ミュージカルショットのデータ  384byte
 typedef struct
 {
-  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
-  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
-  u16 pad2;
   u32 bgNo   :5;  //背景番号
-  u32 spotBit:4;  //スポットライト対象(bit)
+  u32 spotBit:4;  //スポットライト対象(bit)(トップだったポケモン
   u32 year   :7;  //年
   u32 month  :5;  //月  これが０だったら無効データとみなす
   u32 day    :6;  //日
-  u32 pad    :5;
+  u32 player :2;  //自分の番号
+  u32 pad    :3;
+
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
+  u16 pad2;
   
 }MUSICAL_SHOT_DATA;
 
