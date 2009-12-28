@@ -1189,7 +1189,8 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     // サーバマシンは各クライアントにサーバパラメータを通知する
     wk->serverNotifyParam.randomContext = wk->randomContext;
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
-    wk->serverNotifyParam.msgSpeed = MSGSPEED_GetWait();
+    wk->serverNotifyParam.msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
+    OS_TPrintf("サーバマシンが送るMsgSpeed = %d\n", wk->serverNotifyParam.msgSpeed );
     wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
@@ -1208,6 +1209,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       wk->randomContext     = wk->serverNotifyParam.randomContext;
       wk->fWazaEffectEnable = wk->serverNotifyParam.fWazaEffectEnable;
       wk->msgSpeed          = wk->serverNotifyParam.msgSpeed;
+      OS_TPrintf("実行 MsgSpeed = %d\n", wk->serverNotifyParam.msgSpeed );
 
       return TRUE;
     }
@@ -1616,7 +1618,7 @@ BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk )
 {
-  return wk->msgSpeed;
+  return MSGSPEED_GetWaitByConfigParam( wk->msgSpeed );
 }
 //=============================================================================================
 /**
