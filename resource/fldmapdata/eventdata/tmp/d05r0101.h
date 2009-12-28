@@ -12,13 +12,9 @@
 
 #define D05R0101_RIVAL_01                  0
 #define D05R0101_RIVAL_02                  1
-#define D05R0101_HAKAI_01                  2
-#define D05R0101_SAGE_01                   3
-#define D05R0101_HAKAI_02                  4
-#define D05R0101_WORKMAN_01                5
-#define TR_WORKER1_04                      6
-#define TR_WORKER1_01                      7
-#define TR_WORKER1_02                      8
-#define TR_WORKER1_03                      9
+#define TR_WORKER1_04                      2
+#define TR_WORKER1_01                      3
+#define TR_WORKER1_02                      4
+#define TR_WORKER1_03                      5
 
 #endif //ZONE_D05R0101_EVC_H

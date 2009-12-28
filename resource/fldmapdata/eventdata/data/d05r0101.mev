@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/25 17:08:47
+#save date:2009/12/28 15:24:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #hold event type:
 1
 #hold event number:
-10
+6
 #event number: 0
 #type
 1
@@ -71,132 +71,8 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 72
+-168 0 104
 #event number: 2
-#type
-1
-#ID name
-D05R0101_HAKAI_01
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D05R0101_RIVAL_02
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 48 152
-#event number: 3
-#type
-1
-#ID name
-D05R0101_SAGE_01
-#OBJ CODE Number
-SAGE2
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D05R0101_RIVAL_02
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 48 136
-#event number: 4
-#type
-1
-#ID name
-D05R0101_HAKAI_02
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D05R0101_RIVAL_02
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 48 120
-#event number: 5
-#type
-1
-#ID name
-D05R0101_WORKMAN_01
-#OBJ CODE Number
-WORKMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D05R0201_WORKMAN_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 48 136
-#event number: 6
 #type
 1
 #ID name
@@ -227,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 280 0 -440
-#event number: 7
+#event number: 3
 #type
 1
 #ID name
@@ -258,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 232 0 -440
-#event number: 8
+#event number: 4
 #type
 1
 #ID name
@@ -289,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 248 0 -440
-#event number: 9
+#event number: 5
 #type
 1
 #ID name
@@ -354,9 +230,9 @@ WK_SCENE_D05_PLASMA
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 2 40
+-152 0 120
 #size
-2 1
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

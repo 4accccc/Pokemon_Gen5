@@ -9,5 +9,10 @@
 #ifndef ZONE_D05R0201_EVC_H
 #define ZONE_D05R0201_EVC_H
 
+#define D05R0201_HAKAIM_01                 0
+#define D05R0201_HAKAIM_02                 1
+#define D05R0201_SAGE_01                   2
+#define D05R0201_RIVAL_01                  3
+#define D05R0201_WORKMAN_01                4
 
 #endif //ZONE_D05R0201_EVC_H
