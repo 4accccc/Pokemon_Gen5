@@ -86,7 +86,7 @@
 #define WEATHER_STRAIN_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
 #define WEATHER_STRAIN_ADD			(1)						// 登録する数を増やす数
 #define WEATHER_STRAIN_ADD_END		(-1)					// 登録する数を増やす数
-#define	WEATHER_STRAIN_ADD_MAIN		(2)					// メインシーケンスでの登録する数
+#define	WEATHER_STRAIN_ADD_MAIN		(1)					// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_STRAIN_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
