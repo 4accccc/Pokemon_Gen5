@@ -268,7 +268,7 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
     pos.z = 0x200000;
     GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
-    // ブレンド指定
+    // ブレンドモード、対象面指定
     G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
     wk->start_seq++;
     break;

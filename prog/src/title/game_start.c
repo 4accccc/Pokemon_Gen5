@@ -33,6 +33,8 @@
 //BGMメモリにおく
 #include "sound/sound_manager.h"
 
+#include "sound/pm_voice.h"   // for 
+
 //==============================================================================
 //  
 //==============================================================================
@@ -191,6 +193,7 @@ typedef struct
   INTR_SAVE_CONTROL* intr_save;
   GFL_PROCSYS* procsys_up;
   SOUNDMAN_PRESET_HANDLE* bgm_handle;
+  u32 voice_load_id;
 }GAMESTART_FIRST_WORK;
 
 #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
@@ -215,11 +218,6 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->intr_save = IntrSave_Init( GFL_HEAPID_APP, SaveControl_GetPointer() );
 #endif
 
-  // イントロデモのパラメータ初期化
-  work->introParam.save_ctrl  = SaveControl_GetPointer();
-  work->introParam.scene_id   = INTRO_SCENE_ID_00;
-  work->introParam.intr_save  = work->intr_save;
-
   // SELMODE 初期化
   work->selModeParam.type       = SMT_START_GAME;
   work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
@@ -233,9 +231,9 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
 
   //BGMハンドル
-  //イントロの中でならすものだが、
+  //イントロデモ中に鳴らすものだが、
   //ここでメモリ上においておく、さもないと、
-  //名前入力中にならない
+  //イントロデモ中のアプリ終了時にメモリが開放されてしまい、名前入力中にBGMがならない
   { 
     u32 se_tbl[30]; //適当
     u32 namein_se_num;
@@ -259,7 +257,15 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(intro) );
 
     work->bgm_handle  = SOUNDMAN_PresetSoundTbl( se_tbl, namein_se_num + intro_se_num );
+
+    work->voice_load_id = PMVOICE_LoadOnly( MONSNO_TIRAAMHI , 0, 0, FALSE, 0, 0, FALSE, NULL );
   }
+
+  // イントロデモのパラメータ初期化
+  work->introParam.save_ctrl  = SaveControl_GetPointer();
+  work->introParam.scene_id   = INTRO_SCENE_ID_00;
+  work->introParam.intr_save  = work->intr_save;
+  work->introParam.voice_load_id = work->voice_load_id;
 
   return GFL_PROC_RES_FINISH;
 }

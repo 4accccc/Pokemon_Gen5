@@ -63,6 +63,7 @@ extern void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_
 // stream
 extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id );
 extern BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk );
+extern PRINTSTREAM_STATE INTRO_MSG_GetPrintState( INTRO_MSG_WORK* wk );
 
 // list
 extern void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u32 tbl_max, BOOL is_cansel );

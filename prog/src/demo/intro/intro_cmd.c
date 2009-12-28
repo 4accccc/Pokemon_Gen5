@@ -82,15 +82,18 @@ struct _INTRO_CMD_WORK {
   INTRO_PARAM* init_param;
   INTRO_MCSS_WORK* mcss;
   INTRO_G3D_WORK* g3d;
+  INTRO_PARTICLE_WORK* ptc;
   // [PRIVATE]
+  
+  // @TODO コマンドエンジンにぶら下げるべきではない > intro.cに下げるべき
+  INTRO_MSG_WORK* wk_msg;
+
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
   // @TODO 時間があったらリファクタ
   // INTRO_STORE_DATAをINTRO_STORE_DATAに内包する形式の方がスッキリする。
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
-  INTRO_MSG_WORK* wk_msg;
-  INTRO_PARTICLE_WORK* ptc;
   INTR_SAVE_CONTROL* intr_save;
 };
 
@@ -133,6 +136,7 @@ static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_TALK_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
 // イントロ用コマンド
 static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -145,6 +149,7 @@ static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
 static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
+// セーブコマンド
 static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SAVE_SASUPEND( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SAVE_RESUME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -191,6 +196,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_MCSS_SET_VISIBLE,
   CMD_MCSS_SET_ANIME,
   CMD_MCSS_FADE_REQ,
+  CMD_MCSS_TALK_MSG,
 
   //-----------------------------------------
   // ◆ イントロデモ用コマンド ◆
@@ -454,7 +460,12 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
   ARCHANDLE *handle;
 
   heap_id = wk->heap_id;
-  // @TODO 汎用性
+
+  // @TODO このコマンド全体に現状、汎用性がない
+  // パラメータ化するには要素が多すぎる。
+  // 案A:コマンドを複数に分ける。◎有力
+  // 案B:イントロデモ専用コマンドにしてしまう。
+  
   handle  = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
@@ -758,7 +769,6 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
   {
     case 0:
       INTRO_MSG_SetPrint( wk->wk_msg, param[0] );
-
       sdat->seq++;
       break;
 
@@ -850,16 +860,14 @@ static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 /**
  *  @brief  MCSS フェードリクエスト
  *
- *  @param  INTRO_CMD_WORK* wk
- *  @param  sdat
- *  @param  param 
+ *  @param  param[0]  ID
+ *  @param  param[1]  TRUE:フェードイン , FALSE:フェードアウト
  *
  *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  // @TODO 上手くいかない。モザイクみたいになる。
   switch( sdat->seq )
   {
   case 0 :
@@ -870,11 +878,12 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
     sdat->cnt--;
     if( sdat->cnt <= 0 )
     {
+      INTRO_MCSS_SetVisible( wk->mcss, param[1], param[0] );
       return TRUE;
     }
     else
     {
-      HOSAKA_Printf("mode=%d alpha=%d\n",param[0], sdat->cnt);
+      HOSAKA_Printf( "id=%d mode=%d cnt=%d \n", param[0], param[1], sdat->cnt);
       if( param[1] == TRUE )
       {
         INTRO_MCSS_SetAlpha( wk->mcss, param[0], 31-sdat->cnt );
@@ -895,6 +904,78 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
   return FALSE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定MCSSにプリント中メパチをさせる
+ *
+ *	@param	param[0] メッセージID
+ *	@param	param[1] MCSS_ID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_MCSS_TALK_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  int str_id        = param[0]; 
+  int mcss_id       = param[1]; 
+
+  // 指定フレーム毎にアニメチェンジ
+  int mepachi_sync  = 6; //param[2]; 
+  
+  switch( sdat->seq )
+  {
+    case 0:
+      INTRO_MSG_SetPrint( wk->wk_msg, str_id );
+      sdat->seq++;
+      break;
+    
+    case 1:
+      if( INTRO_MSG_PrintProc( wk->wk_msg ) )
+      {
+        // 口を閉じる
+        INTRO_MCSS_SetMepachi( wk->mcss, mcss_id, TRUE );
+        // 終了
+        return TRUE;
+      }
+      else
+      {
+        // 口パク操作
+        PRINTSTREAM_STATE state   = INTRO_MSG_GetPrintState( wk->wk_msg );
+        
+        switch( state )
+        {
+        case PRINTSTREAM_STATE_DONE:
+          // 処理なし
+          break;
+
+        case PRINTSTREAM_STATE_PAUSE:
+          // 口を閉じる
+          INTRO_MCSS_SetMepachi( wk->mcss, mcss_id, TRUE );
+          sdat->cnt = 0;
+          break;
+
+        case PRINTSTREAM_STATE_RUNNING:
+          {
+            // 口をパクパク
+            BOOL is_mepachi_flag = FALSE;
+
+            is_mepachi_flag = ( sdat->cnt % (mepachi_sync*2) ) < mepachi_sync;
+            INTRO_MCSS_SetMepachi( wk->mcss, mcss_id, is_mepachi_flag );
+            sdat->cnt++;
+          }
+          break;
+
+        default : GF_ASSERT(0);
+        };
+  
+      }
+      break;
+
+    default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
 
 //=============================================================================
 /**
@@ -1050,10 +1131,10 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 //-----------------------------------------------------------------------------
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  //@TODO
-
-  // 鳴き声
-  PMVOICE_Play( param[0], 0, 0, FALSE, 0, 0, FALSE, NULL );
+  //@TODO モジュール外部で設定されたパラメータをロードしている > 汎用性・セキュリティ性に欠ける。
+  
+  // ロードしておいた鳴き声を再生
+  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
 
   return TRUE;
 }
@@ -1297,7 +1378,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief  3Dデモコマンドコントローラー 初期化
+ *  @brief  イントロデモ コマンドコントローラー 初期化
  *
  *  @param  init_param
  *  @param  heap_id 
@@ -1333,7 +1414,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief  3Dデモコマンドコントローラー 破棄
+ *  @brief  イントロデモコマンドコントローラー 破棄
  *
  *  @param  INTRO_CMD_WORK* wk 
  *
@@ -1351,7 +1432,7 @@ void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief  3Dデモコマンドコントローラー 主処理
+ *  @brief  イントロデモコマンドコントローラー 主処理
  *
  *  @param  INTRO_CMD_WORK* wk 
  *
@@ -1524,6 +1605,6 @@ static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id )
   wk->store_data[id].seq = 0; 
   wk->store_data[id].cnt = 0;
 
-  HOSAKA_Printf("store [%d] is clear \n", id );
+  HOSAKA_Printf("clear [%d] \n", id );
 }
 

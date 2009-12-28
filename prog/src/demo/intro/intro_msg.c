@@ -410,6 +410,30 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  イントロデモ プリントストリーム状態取得
+ *
+ *	@param	INTRO_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+PRINTSTREAM_STATE INTRO_MSG_GetPrintState( INTRO_MSG_WORK* wk )
+{
+  GF_ASSERT( wk );
+ 
+  if( wk->print_stream == NULL )
+  {
+    // NULL状態でも値を返してしまうのはセキュリティ上好ましくないが、
+    // intro_cmd.cのCMD_MCSS_SET_PEPACHI_WITH_PRINTで、
+    // プリントコマンド終了後にこの関数から戻り値を受け取りたいので、やむを得ず。
+    return PRINTSTREAM_STATE_DONE;
+  }
+
+  return PRINTSYS_PrintStreamGetState( wk->print_stream );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  メッセージプリント 終了待ち
  *
  *	@param	INTRO_MSG_WORK* wk 

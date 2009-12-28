@@ -10,7 +10,7 @@
 //============================================================================
 #pragma once
 
-//	lib
+//lib
 #include <gflib.h>
 
 //system
@@ -70,6 +70,7 @@ typedef struct {
   SAVE_CONTROL_WORK*  save_ctrl;
   INTRO_SCENE_ID      scene_id;
   INTR_SAVE_CONTROL*  intr_save;
+  u32                 voice_load_id;
   // [OUT]
   INTRO_RETCODE       retcode;
 } INTRO_PARAM;

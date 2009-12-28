@@ -283,8 +283,43 @@ void INTRO_MCSS_SetAlpha( INTRO_MCSS_WORK* wk, u8 id, u8 alpha )
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
   GF_ASSERT( wk->mcss_work[id] );
+    
+  // ブレンドモード、対象面指定
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
+
+  // 値の制限
+  alpha = MATH_CLAMP( alpha, 0, 31 );
+
+  HOSAKA_Printf("alpha=%d \n", alpha );
 
   MCSS_SetAlpha( wk->mcss_work[id], alpha );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メパチフラグ
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	is_mepachi_flag 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_SetMepachi( INTRO_MCSS_WORK* wk, u8 id, BOOL is_mepachi_flag )
+{
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] );
+
+  if( is_mepachi_flag )
+  {
+    MCSS_SetMepachiFlag( wk->mcss_work[id] );
+  }
+  else
+  {
+    MCSS_ResetMepachiFlag( wk->mcss_work[id] );
+  }
+
+}
 
