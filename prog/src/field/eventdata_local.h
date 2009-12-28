@@ -45,6 +45,7 @@ typedef struct {
   s16 side_grid;        ///<サイドレールグリッド座標
   u16 front_grid_size;  ///<前方範囲グリッドサイズ
   u16 side_grid_size;   ///<サイド範囲グリッドサイズ
+  u16 rail_way;         ///<レールキー方向
 } CONNECT_DATA_RPOS;
 
 // ポジションバッファサイズ

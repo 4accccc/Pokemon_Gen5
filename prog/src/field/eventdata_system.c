@@ -1524,12 +1524,13 @@ void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_
  *	@brief  飛び先と飛び元のサイズから、飛び先での、オフセットを求める
  *
  *	@param	exit_ofs    飛び元出口オフセット
+ *	@param  exit_way    出口座標系
  *	@param	size        飛び先サイズ
  *
  *	@return オフセット
  */
 //-----------------------------------------------------------------------------
-static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 size)
+static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 exit_way, u16 size)
 {
   if (exit_ofs == LOCATION_DEFAULT_EXIT_OFS) return 0;
   {
@@ -1539,6 +1540,13 @@ static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 size)
     s32 size_diff;
     u32 enter_size_half;
     u32 size_half;
+
+
+    // ExitOfsは-ZがUPの空間の値なので、レールの空間のオフセット値に変換する
+    if( (exit_way == DIR_LEFT) || (exit_way == DIR_DOWN) )
+    {
+      enter_ofs = (enter_size-1)-enter_ofs;
+    }
 
     // 差、中心を求める
     size_diff = size - enter_size;
@@ -1640,14 +1648,25 @@ static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
 static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const RAIL_LOCATION * cp_location )
 {
   const CONNECT_DATA_RPOS * cp_rpos;
+  BOOL ofs_return = FALSE;
   
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
 
   cp_rpos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
+
+  // レール方向がUP、RIGHT以外なら、方向を反転する必要がある。
+  if( (cp_rpos->rail_way == DIR_DOWN) || (cp_rpos->rail_way == DIR_LEFT) ){
+    ofs_return = TRUE;
+  }
+  
   if (cp_rpos->side_grid_size > 1 )
   {
     s32 ofs = cp_location->width_grid - cp_rpos->side_grid;
+    if( ofs_return )
+    {
+      ofs = (cp_rpos->side_grid_size-1) - ofs;
+    }
     GF_ASSERT( ofs >= 0 );
     GF_ASSERT( ofs < cp_rpos->side_grid_size );
     TOMOYA_Printf( "side grid size %d   ofs %d\n", cp_rpos->side_grid_size, ofs );
@@ -1656,6 +1675,10 @@ static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
   else if (cp_rpos->front_grid_size > 1 )
   {
     s32 ofs = cp_location->line_grid - cp_rpos->front_grid;
+    if( ofs_return )
+    {
+      ofs = (cp_rpos->front_grid_size-1) - ofs;
+    }
     GF_ASSERT( ofs >= 0 );
     GF_ASSERT( ofs < cp_rpos->front_grid_size );
     TOMOYA_Printf( "front grid size %d   ofs %d\n", cp_rpos->front_grid_size, ofs );
@@ -1694,14 +1717,14 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS e
   //exit_ofsを加えた座標を返す
   if (cp_pos->sizex > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->sizex );
+    u16 ret_ofs = convertOfs( exit_ofs, DIR_UP, cp_pos->sizex );
     OS_Printf("p_pos->x:%d cp_gpos->x:%d ofs:%d\n", FX_Whole(p_pos->x), cp_pos->x, ret_ofs);
     OS_Printf("add x ofs %d\n", ret_ofs );
     p_pos->x += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
   }
   else if (cp_pos->sizez > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->sizez );
+    u16 ret_ofs = convertOfs( exit_ofs, DIR_UP, cp_pos->sizez );
     OS_Printf("p_pos->z:%d cp_gpos->z:%d ofs:%d\n", FX_Whole(p_pos->z), cp_pos->z, ret_ofs);
     OS_Printf("add z ofs %d\n", ret_ofs );
     p_pos->z += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
@@ -1767,6 +1790,7 @@ static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_
 {
   const CONNECT_DATA_RPOS * cp_pos;
   u16 dir;
+  u16 exit_dir;
   
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
@@ -1803,15 +1827,19 @@ static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_
   p_location->width_grid  = cp_pos->side_grid;
   p_location->line_grid   = cp_pos->front_grid;
 
+  // レール方向から、
+  // 座標系の方向を設定
+  exit_dir = cp_pos->rail_way;
+
   //exit_ofsを加えた座標を返す
   if (cp_pos->side_grid_size > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->side_grid_size );
+    u16 ret_ofs = convertOfs( exit_ofs, exit_dir, cp_pos->side_grid_size );
     p_location->width_grid += ret_ofs;
   }
   else if (cp_pos->front_grid_size > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->front_grid_size );
+    u16 ret_ofs = convertOfs( exit_ofs, exit_dir, cp_pos->front_grid_size );
     p_location->line_grid += ret_ofs;
   }
 }
