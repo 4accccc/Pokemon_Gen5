@@ -37,7 +37,7 @@ require "#{ENV["PROJECT_ROOT"]}tools/headerdata.rb"
 #============================================================================
 class EventHeader
 
-  attr_reader :blockSizeX, :blockSizeY
+  attr_reader :blockSizeX, :blockSizeY, :wmsFile
 
   def initialize stream
     @blockSizeX   =   BLOCK_SIZE
@@ -50,11 +50,12 @@ class EventHeader
     line = stream.gets
     raise DataFormatError unless line =~/# linked worldmap file name/
     line = stream.gets.chomp!  #*.wmsファイル名
+    @wmsFile = line
     if FileTest.exist? line then
     else
       raise ReadWMSError, "#{line}がみつかりません"
     end
-    File.open(line){|file|
+    File.open(@wmsFile){|file|
       readWMS file
     }
   end
@@ -108,6 +109,14 @@ class EventHeader
 
   def calcZgridOfs z
     return (- z) / GRID_SIZE + (@blockSizeY / 2 + @z_ofs * @blockSizeY)
+  end
+
+
+  def writeMevHeader output
+    output.printf( "#event data\r\n" )
+    output.printf( "#save date:2000/01/01 00:00:00\r\n" )
+    output.printf( "# linked worldmap file name\r\n" )
+    output.printf( "#{@wmsFile}\r\n" )
   end
 
 end
@@ -241,6 +250,22 @@ class EventData
     end
   end
 
+  def writeHeader output
+    output.printf( "#SECTION START:#{section_name}\r\n" )
+    output.printf( "#Map Event List data\r\n" )
+    output.printf( "#save date:\r\n" )
+    output.printf( "#{version}\r\n" )
+    output.printf( "#hold event type:\r\n" )
+    output.printf( "#{type}\n" )
+    output.printf( "#hold event number:\r\n" )
+    output.printf( "#{num}\r\n" )
+  end
+
+  def writeFooter output
+    output.printf( "#Map Event List Data End\r\n" )
+    output.printf( "#SECTION End:#{section_name}\r\n" )
+  end
+
 end   # end of class EventData
 
 #============================================================================
@@ -301,6 +326,25 @@ class AllEvent
     end
     return false;
   end
+
+  def write output, param_tag, param
+    output.printf( "#{param_tag}\r\n" )
+    output.printf( "#{param}\r\n" )
+  end
+
+  def writeEventNumber output, num
+    output.printf( "#event number: #{num}\r\n" )
+  end
+
+  def writePositon output, x, y, z
+    output.printf( "#position\r\n" )
+    output.printf( "#{x} #{y} #{z}\r\n" )
+  end
+
+  def writeSize output, x, z
+    output.printf( "#size\r\n" )
+    output.printf( "#{x} #{z}\r\n" )
+  end
 end
 
 #============================================================================
@@ -327,6 +371,7 @@ class DoorEvent < AllEvent
   attr :rail_side
   attr :rail_front_size
   attr :rail_side_size
+  attr :rail_way
 
 
   def initialize lines, header, zonename
@@ -352,6 +397,12 @@ class DoorEvent < AllEvent
       else
         @rail_index, @rail_front, @rail_side = readPosition(lines)
         @rail_front_size, @rail_side_size = readSize(lines)
+
+        if lines[0] =~ /#rail way/
+          @rail_way = read(lines, /#rail way/)
+        else
+          @rail_way = "DIR_UP"
+        end
       end
     end
   end
@@ -384,7 +435,7 @@ class DoorEvent < AllEvent
       output += [headerArray.search( @rail_side, @door_id )].pack("s")     #side grid
       output += [headerArray.search( @rail_front_size, @door_id )].pack("S")     #front_siz
       output += [headerArray.search( @rail_side_size, @door_id )].pack("S")     #side_siz
-      output += [0].pack("S")
+      output += [headerArray.search( @rail_way, @door_id )].pack("S")     #rail_way
     end
     return output
   end
@@ -408,9 +459,30 @@ class DoorEvent < AllEvent
     else
       raise DoorIDError, "#{@next_door_id} is incorrect"
     end
+
+    #field_dir
+    header.push( "../../../../prog/include/field/field_dir.h " )
   
     #eventdata_type.h
     header.push( "../../../../prog/include/field/eventdata_type.h " )
+  end
+
+  def RewriteMev output
+    writeEventNumber( output, @number )
+    write( output, "#Door Event Label", @door_id )
+    write( output, "#Next Zone ID Name", @next_zone_id )
+    write( output, "#Next Door ID Name", @next_door_id )
+    write( output, "#Door Direction", @door_dir )
+    write( output, "#Door Type", @door_type )
+    write( output, "#Pos Type", @pos_type )
+    if @pos_type == EVENTDATA_POS_TYPE_GRID
+      writePositon( output, @x, @y, @z );
+      writeSize( output, @sizex, @sizez );
+    else
+      writePositon( output, @rail_index, @rail_front, @rail_side );
+      writeSize( output, @rail_front_size, @rail_side_size );
+      write( output, "#rail way", @rail_way )
+    end
   end
 end
 
@@ -531,6 +603,30 @@ class ObjEvent < AllEvent
     #script
     header.push( "../../script/#{@zonename}_def.h " )
   end
+
+  def RewriteMev output
+    writeEventNumber( output, @number )
+    write( output, "#type", @type )
+    write( output, "#ID name", @id )
+    write( output, "#OBJ CODE Number", @obj_code )
+    write( output, "#MOVE CODE Number", @move_code )
+    write( output, "#EVENT TYPE Number", @event_type )
+    write( output, "#Flag Name", @event_flag )
+    write( output, "#Event Script Name", @event_id )
+    write( output, "#Direction Type Number", @dir )
+    write( output, "#Parameter 0 Number", @param0 )
+    write( output, "#Parameter 1 Number", @param1 )
+    write( output, "#Parameter 2 Number", @param2 )
+    write( output, "#Move Limit X Number", @move_limit_x )
+    write( output, "#Move Limit Z Number", @move_limit_z )
+    write( output, "#Pos Type", @pos_type )
+
+    if @pos_type == EVENTDATA_POS_TYPE_GRID
+      writePositon( output, @gx, @y, @gz );
+    else
+      writePositon( output, @rail_index, @rail_front, @rail_side );
+    end
+  end
 end
 
 #============================================================================
@@ -635,6 +731,24 @@ class PosEvent < AllEvent
     #script
     header.push( "../../script/#{@zonename}_def.h " )
   end
+
+  def RewriteMev output
+    writeEventNumber( output, @number )
+    write( output, "#Pos Event Label", @pos_id )
+    write( output, "#Pos Script Name", @event_id )
+    write( output, "#Pos Check Type", @check_type )
+    write( output, "#Event Trigger Work Name", @workname )
+    write( output, "#Event Trigger Work Value", @workvalue )
+    write( output, "#Pos Type", @pos_type )
+    
+    if @pos_type == EVENTDATA_POS_TYPE_GRID
+      writePositon( output, @x, @y, @z );
+      writeSize( output, @sizex, @sizez );
+    else
+      writePositon( output, @rail_index, @rail_front, @rail_side );
+      writeSize( output, @rail_front_size, @rail_side_size );
+    end
+  end
 end
 
 #============================================================================
@@ -719,6 +833,21 @@ class BgEvent < AllEvent
     #script
     header.push( "../../script/#{@zonename}_def.h " )
   end
+
+  def RewriteMev output
+    writeEventNumber( output, @number )
+    write( output, "#Bg Event Label",  @bg_id);
+    write( output, "#Bg Event Type",  @bg_type);
+    write( output, "#Bg Event Reaction Direction ID",  @bg_dir);
+    write( output, "#Bg Script Name",  @event_id);
+    write( output, "#Pos Type",  @pos_type);
+
+    if @pos_type == EVENTDATA_POS_TYPE_GRID
+      writePositon( output, @x, @y, @z );
+    else
+      writePositon( output, @rail_index, @rail_front, @rail_side );
+    end
+  end
 end
 
 #============================================================================
@@ -765,6 +894,12 @@ class DoorEventData < EventData
     @doors.each{|door| door.getIncludeHeader( header ) }
   end
 
+  def RewriteMev output
+    writeHeader( output )
+    @doors.each{|item| item.RewriteMev( output ) }
+    writeFooter( output )
+  end
+
 end
 
 
@@ -805,6 +940,12 @@ class ObjEventData < EventData
     @objs.each{|obj| obj.getIncludeHeader( header ) }
   end
 
+  def RewriteMev output
+    writeHeader( output )
+    @objs.each{|item| item.RewriteMev( output ) }
+    writeFooter( output )
+  end
+
 end
 
 #------------------------------------------------------------------------------
@@ -836,6 +977,12 @@ class BgEventData < EventData
     end
     @bgs.each{|bg| bg.getIncludeHeader( header ) }
   end
+
+  def RewriteMev output
+    writeHeader( output )
+    @bgs.each{|item| item.RewriteMev( output ) }
+    writeFooter( output )
+  end
 end
 
 #------------------------------------------------------------------------------
@@ -866,6 +1013,12 @@ class PosEventData < EventData
       return
     end
     @poss.each{|pos| pos.getIncludeHeader( header ) }
+  end
+
+  def RewriteMev output
+    writeHeader( output )
+    @poss.each{|item| item.RewriteMev( output ) }
+    writeFooter( output )
   end
 end
 
@@ -991,4 +1144,43 @@ def make_binary( filename, allHeader )
   end
 end
 
+#------------------------------------------------------------------------------
+# 最新形式の構成で出力
+#------------------------------------------------------------------------------
+def format_tune( filename )
+  begin
+   
+    ofilename = filename
+    
+    File.open( filename ){|file|
+      #ヘッダ部分読み込み
+      header = EventHeader.new(file)
+
+      #データ本体読み込み
+      obj_events = ObjEventData.new(file, "OBJ_EVENT", header)
+      bg_events = BgEventData.new(file, "BG_EVENT", header)
+      pos_events = PosEventData.new(file, "POS_EVENT", header)
+      door_events = DoorEventData.new(file, "DOOR_EVENT", header)
+
+      EventHeader
+
+      File.open(ofilename, "w"){|file|
+        header.writeMevHeader( file )
+        obj_events.RewriteMev( file )
+        bg_events.RewriteMev( file )
+        pos_events.RewriteMev( file )
+        door_events.RewriteMev( file )
+      }
+    }
+
+  rescue => errors
+    p errors
+    #例外時
+    if ofilename != "" && File.exist?( ofilename )
+      File.delete( ofilename );
+    end
+    raise errors
+  else
+  end
+end
 
