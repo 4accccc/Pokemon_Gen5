@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ohno
+USERS	=	ohno kageyama_shota ichinose satou
 
 
 #------------------------------------------------------------------------------
@@ -103,13 +103,13 @@ $(TDIR1)/$(TFILE1): $(TFILE1)
 	cp ./$(TFILE1) $(TDIR1)
 
 $(TDIR2)/$(TFILE2): $(TFILE2)
-	cp ./wb_sound_palpark.sdat $(TDIR2)
+	cp ./$(TFILE2) $(TDIR2)
 
 $(TDIR3)/$(TFILE3): $(TFILE3)
-	cp ./wb_sound_palpark_game.sadl $(TDIR3)
+	cp ./$(TFILE3) $(TDIR3)
 
 $(TDIR4)/$(TFILE4): $(TFILE4)
-	cp ./wb_sound_palpark_game.sdat $(TDIR4)
+	cp ./$(TFILE4) $(TDIR4)
 
 
 
