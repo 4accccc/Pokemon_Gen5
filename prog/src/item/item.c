@@ -22,8 +22,9 @@
 //============================================================================================
 //  定数定義
 //============================================================================================
-#define NORMAL_WAZAMACHINE_MAX  ( 92 )    // 通常の技マシン数
-#define HIDENWAZA_MAX     ( 8 )   // 秘伝技数
+#define NORMAL_WAZAMACHINE_MAX  ( 101 )   // 通常の技マシン数
+#define HIDENWAZA_MAX						( 8 )			// 秘伝技数
+#define HIDENWAZA_START_POS			( 92 )		// 秘伝マシン開始位置
 
 
 //==============================================================================
@@ -476,10 +477,11 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 //--------------------------------------------------------------------------------------------
 BOOL ITEM_CheckWazaMachine( u16 item )
 {
-  if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
-    return FALSE;
-  }
-	return TRUE;
+	if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN08 ) ||
+			( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN101 ) ){
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -496,7 +498,12 @@ const u16 ITEM_GetWazaNo( u16 item )
 	if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return WAZANO_NULL;
   }
-  item -= ITEM_WAZAMASIN01;
+
+	if( item >= ITEM_WAZAMASIN93 ){
+		item = item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS + HIDENWAZA_MAX;
+	}else{
+		item -= ITEM_WAZAMASIN01;
+	}
   return MachineNo[ item ];
 }
 
@@ -510,13 +517,12 @@ const u16 ITEM_GetWazaNo( u16 item )
  * @retval  "FALSE = 交換に適する技(秘伝技以外"
  */
 //--------------------------------------------------------------------------------------------
-
 BOOL ITEM_CheckHidenWaza( u16 waza )
 {
   u8  i;
 
   for( i=0; i<HIDENWAZA_MAX; i++ ){
-    if( MachineNo[NORMAL_WAZAMACHINE_MAX+i] == waza ){
+    if( MachineNo[HIDENWAZA_START_POS+i] == waza ){
       return TRUE;
     }
   }
@@ -530,6 +536,8 @@ BOOL ITEM_CheckHidenWaza( u16 waza )
  * @param item  アイテム番号
  *
  * @return  技マシン番号
+ *
+ * @li	秘伝マシンは通常の技マシンの後にカウントされる
  */
 //--------------------------------------------------------------------------------------------
 u8 ITEM_GetWazaMashineNo( u16 item )
@@ -537,9 +545,31 @@ u8 ITEM_GetWazaMashineNo( u16 item )
 	if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return 0;
   }
+
+	if( item >= ITEM_WAZAMASIN93 ){
+		return ( item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS );
+	}else if( item >= ITEM_HIDENMASIN01 ){
+		return ( item - ITEM_HIDENMASIN01 + NORMAL_WAZAMACHINE_MAX );
+	}
   return ( item - ITEM_WAZAMASIN01 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 秘伝マシン番号取得
+ *
+ * @param item  アイテム番号
+ *
+ * @return  秘伝マシン番号
+ */
+//--------------------------------------------------------------------------------------------
+u8 ITEM_GetHidenMashineNo( u16 item )
+{
+	if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN08 ){
+		return ( item - ITEM_HIDENMASIN01 );
+	}
+  return 0xff;
+}
 
 //============================================================================================
 //  メールチェック
