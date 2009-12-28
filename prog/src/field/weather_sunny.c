@@ -120,7 +120,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 //-----------------------------------------------------------------------------
 static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
-	u32 fogoffset, fogslope, light;
+	u32 fogoffset, fogslope;
 	SUNNY_WORK* p_sunnywork;
 
 	// ローカルワーク取得
@@ -133,14 +133,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Init( WEATHER_TASK* p_wk, WEATHER_
 		fogoffset = WEATHER_TASK_GetZoneFogOffset( p_wk );
 		fogslope	= WEATHER_TASK_GetZoneFogSlope( p_wk );
 		WEATHER_TASK_FogSet( p_wk, fogslope, FOG_START_OFFSET, fog_cont );
-	}
-
-
-	// ライト変更
-	if( WEATHER_TASK_IsZoneLight( p_wk ) )
-	{
-		light = WEATHER_TASK_GetZoneLight( p_wk );
-		WEATHER_TASK_LIGHT_Change( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
 	}
 	
 
@@ -173,6 +165,15 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeIn( WEATHER_TASK* p_wk, WEATHE
 			FOG_FADE_SYNC,
 			fog_cont );
 		}
+
+    // ライト変更
+    if( WEATHER_TASK_IsZoneLight( p_wk ) )
+    {
+      s32 light;
+      light = WEATHER_TASK_GetZoneLight( p_wk );
+      WEATHER_TASK_LIGHT_Change( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
+    }
+
 		p_sunnywork->fade_init = TRUE;
 	}
 
@@ -203,6 +204,14 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_NoFade( WEATHER_TASK* p_wk, WEATHE
 		// フォグの設定
 		WEATHER_TASK_FogSet( p_wk, fogslope, fogoffset, fog_cont );
 	}
+
+  // ライト変更
+  if( WEATHER_TASK_IsZoneLight( p_wk ) )
+  {
+    s32 light;
+    light = WEATHER_TASK_GetZoneLight( p_wk );
+    WEATHER_TASK_LIGHT_Set( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
+  }
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

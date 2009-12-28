@@ -429,8 +429,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_T
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -462,6 +460,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIN_FOG_OFS, 
 			WEATHER_RAIN_FOG_TIMING,
 			fog_cont );
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
       // 音
       WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
@@ -520,6 +521,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_NoFade( WEATHER_TASK* p_wk, WEATHER
 
   // 音
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -811,8 +815,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Init( WEATHER_TASK* p_wk, WEAT
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -852,6 +854,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STRAIN_FOG_OFS, 
 			WEATHER_STRAIN_FOG_TIMING,
 			fog_cont );
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
 		}
 	}else{
@@ -912,6 +917,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_NoFade( WEATHER_TASK* p_wk, WE
 
   // 音
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

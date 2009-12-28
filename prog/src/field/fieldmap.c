@@ -2388,6 +2388,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK();
 #endif
 
+
   //エフェクトエンカウント破棄
   EFFECT_ENC_EffectDelete( fieldWork->encount );
 
@@ -2395,8 +2396,11 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
 			mat, lc_pos.x, lc_pos.z );
+
 	
 	GF_ASSERT( new_zone_id != MAP_MATRIX_ZONE_ID_NON );
+
+  TOMOYA_Printf( "zone change start %d\n", new_zone_id );
 	
 	//旧ゾーン配置動作モデル削除
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
@@ -2517,7 +2521,8 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	u16 w_no =  FIELDMAP_GetZoneWeatherID( fieldWork, zone_id );
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 
-	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
+	//if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
+	if( w_no != WEATHER_NO_NUM ){ // 天気Noが一致していても、フェードアウトのタイミングの可能性もあるので、正しい天気ナンバーなら関数に渡す。
 		FIELD_WEATHER_Change( we, w_no );
 	}
 }

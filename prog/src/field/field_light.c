@@ -69,12 +69,6 @@ enum {
   FIELD_LIGHT_SEQ_COLORFADE,  // カラーフェード（外部指定データ）
 } ;
 
-
-//-------------------------------------
-/// ライトフェード
-//=====================================
-#define LIGHT_FADE_COUNT_MAX  ( 60 )
-
 //-------------------------------------
 /// ライトテーブル最大数
 //=====================================
@@ -533,11 +527,12 @@ void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
  *  @brief  フィールドライト  ライト情報の変更　外部情報
  *
  *  @param  arcid     アークID
- *  @param  dataid      データID
- *  @param  heapID      ヒープID
+ *  @param  dataid    データID
+ *  @param  sync      フェードシンク数（１以上）
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID )
+void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, s32 sync, u32 heapID )
 {
   // ライト情報を再読み込み
   FIELD_LIGHT_ReleaseData( p_sys );
@@ -547,7 +542,7 @@ void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID
   p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
 
   // フェード開始
-  LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
+  LIGHT_FADE_InitEx( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ], sync );
 }
 
 //----------------------------------------------------------------------------

@@ -606,7 +606,22 @@ void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID )
 {
-	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, heapID );
+	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, LIGHT_FADE_COUNT_MAX, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気用ライト反映その場で変わります。
+ *
+ *	@param	p_wk
+ *	@param	arcid
+ *	@param	dataid
+ *	@param	heapID 
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID )
+{
+	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, 1, heapID );
 }
 
 //----------------------------------------------------------------------------

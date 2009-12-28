@@ -434,6 +434,7 @@ void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
 	// 実行中のリクエストがあるかチェック
 	if( p_sys->seq != 0 ){
 		p_sys->booking_weather = weather_no;
+    //TOMOYA_Printf( "booking_weather %d\n", weather_no );
 		return ;
 	}
 
@@ -446,6 +447,7 @@ void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
 
 	// 次の天気を設定
 	p_sys->next_weather = weather_no;
+  //TOMOYA_Printf( "change_weather %d\n", weather_no );
 	
 	// フェードアウト＋フェードイン
 	p_sys->change_type	= FIELD_WEATHER_CHANGETYPE_NORMAL;
@@ -578,6 +580,8 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID )
 		// 次への情報を消去
 		p_sys->now_weather	= p_sys->next_weather;
 		p_sys->next_weather	= FIELD_WEATHER_NO_NONE;
+
+    //TOMOYA_Printf( "start_weather %d\n", p_sys->now_weather );
 
 		p_sys->seq = FIELD_WEATHER_NORMAL_SEQ_NONE;
 		break;

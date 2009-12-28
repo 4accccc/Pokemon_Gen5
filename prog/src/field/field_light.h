@@ -29,6 +29,14 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 
+
+
+//-------------------------------------
+/// ライトフェード
+//=====================================
+#define LIGHT_FADE_COUNT_MAX  ( 60 )
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -62,7 +70,7 @@ extern void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys, BOOL force );
 ///	ライト情報の変更
 //=====================================
 extern void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID );
-extern void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
+extern void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, s32 sync, u32 heapID );
 
 // FIELD_LIGHT_Create or FIELD_LIGHT_Changeで設定したlight_noのライト情報に戻す
 extern void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID );

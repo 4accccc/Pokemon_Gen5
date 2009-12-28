@@ -514,9 +514,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_T
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
-
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -548,6 +545,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER
 					WEATHER_FOG_SLOPE_DEFAULT, 
 					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, 
 					WEATHER_SNOW_FOG_TIMING, fog_cont );
+
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 		}
 	}else{
 		
@@ -601,6 +602,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, WEATHER
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_SNOW_OBJ_Add, WEATHER_SNOW_NOFADE_OBJ_START_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -930,8 +933,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Init( WEATHER_TASK* p_wk, WEATHER_
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
   // SE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_SNOWSTORM );
@@ -965,6 +966,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_FadeIn( WEATHER_TASK* p_wk, WEATHE
 					WEATHER_FOG_SLOPE_DEFAULT, 
 					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS,
 					WEATHER_SSNOW_FOG_TIMING, fog_cont );
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 		}
 	}else{
 		
@@ -1024,6 +1027,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_NoFade( WEATHER_TASK* p_wk, WEATHE
 	// BGON
 	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1341,8 +1346,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Init( WEATHER_TASK* p_wk, WEATHER
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
   // SE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_SNOWSTORM );
@@ -1376,6 +1379,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_FadeIn( WEATHER_TASK* p_wk, WEATH
 					WEATHER_FOG_SLOPE_DEFAULT, 
 					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS,
 					WEATHER_SNOW_S_FOG_TIMING, fog_cont );
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 		}
 	}else{
 		
@@ -1435,6 +1441,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_NoFade( WEATHER_TASK* p_wk, WEATH
 	// BGON
 	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1755,9 +1763,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Init( WEATHER_TASK* p_wk, WEATHER_
 
   // SE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_ARARE );
-
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -1789,6 +1794,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_FadeIn( WEATHER_TASK* p_wk, WEATHE
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_ARARE_FOG_OFS, 
 			WEATHER_ARARE_FOG_TIMING,
 			fog_cont );
+
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 		}
 	}else{
 		
@@ -1841,6 +1850,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_ARARE_OBJ_Add, WEATHER_ARARE_NOFADE_OBJ_START_NUM, WEATHER_ARARE_NOFADE_OBJ_START_DUST_NUM, WEATHER_ARARE_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

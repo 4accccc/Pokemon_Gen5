@@ -138,6 +138,7 @@ FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID )
 
   p_wk->blendmode = FIELD_FOG_BLEND_COLOR_ALPHA;
   p_wk->alpha   = 31;
+  p_wk->offset  = 0x7fff;
 
   FIELD_FOG_TBL_SetUpDefault( p_wk );
 

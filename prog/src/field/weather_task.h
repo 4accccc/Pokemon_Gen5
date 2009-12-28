@@ -224,6 +224,7 @@ extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 //	Back	基本のライトに変更
 //=====================================
 extern void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID );
+extern void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID );
 extern void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID );
 
 extern void WEATHER_TASK_LIGHT_StartColorFade( WEATHER_TASK* p_wk, GXRgb color, u16 insync, u16 outsync );

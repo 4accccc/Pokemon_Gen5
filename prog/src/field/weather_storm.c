@@ -210,9 +210,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
 
-	// ライト変更
-	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
-
   // SE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_STORM );
 	
@@ -246,6 +243,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STORM_FOG_OFS, 
 			WEATHER_STORM_FOG_TIMING,
 			fog_cont );
+
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
 		}
 	}else{
 		
@@ -303,6 +304,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
 	// BGON
 	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
