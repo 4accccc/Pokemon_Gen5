@@ -5,56 +5,26 @@
 #	2008.09.02	ohno_katsumi@gamefreak.co.jp
 #------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------
-#※コンバート作業が必要なユーザーの名前を記述する
-#------------------------------------------------------------------------------
-USERS	=	ohno kageyama_shota yasumoto_shingo sato_hitomi ichinose
+SOUNDPLAYERDIR = ../../../pokemon_wb_doc/wb_sound_player
+DIFFCOPY = ../../tools/diffcopy
 
-
-#------------------------------------------------------------------------------
-#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
-#------------------------------------------------------------------------------
-TARGETDIR	= ../message/src
-TARGETFILENAME  = snd_test_name.gmm
-
-#共通ルールファイルのインクルード
-include $(PROJECT_RSCDIR)\macro_define
-
-
-#------------------------------------------------------------------------------
-#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
-#------------------------------------------------------------------------------
-SUBDIRS	= bgm_info
-
-.PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(TARGETFILENAME)
-
-subdir:
-	@$(MAKE_SUBDIR)
-
-$(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
-	$(COPY) $(TARGETFILENAME) $(TARGETDIR)
+do-build: ./bgm_info/bgm_info.xls
+	$(MAKE) -f makefile_gmm
+	$(MAKE) -f makefile_sarc
 
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-
-$(TARGETFILENAME) : wb_sound_data.sadl gmm_make.rb
-	ruby gmm_make.rb ../message/template.gmm wb_sound_data.sadl $(TARGETFILENAME)
-
-endif
-
+./bgm_info/bgm_info.xls : $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls
+	cp $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls ./bgm_info/bgm_info.xls
 
 #------------------------------------------------------------------------------
 #	make cleanルール
 #------------------------------------------------------------------------------
 
 clean:
-	rm -f $(TARGETDIR)/$(TARGETFILENAME)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f $(TARGETFILENAME)
-endif
+	$(MAKE) -f makefile_gmm clean
+	$(MAKE) -f makefile_sarc clean
 

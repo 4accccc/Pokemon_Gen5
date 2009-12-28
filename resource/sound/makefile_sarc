@@ -1,0 +1,125 @@
+#------------------------------------------------------------------------------
+#
+#	サンプルマップコンバート用Makefile
+#
+#	2008.09.02	ohno_katsumi@gamefreak.co.jp
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	ohno
+
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR	= ../../prog/filetree
+TARGETFILENAME  = wb_sound_data.sdat
+
+
+MDIR1 = ../../prog/include/sound
+MFILE1 = wb_sound_data.sadl
+
+MDIR2 = ../../prog/filetree
+MFILE2 = wb_sound_data.sdat
+
+MDIR3 = ../../prog/include/sound
+MFILE3 = sound_data.h
+
+
+
+
+TDIR1	= ../../prog/include/multiboot
+TFILE1  = wb_sound_palpark.sadl
+
+TDIR2	= ../../resource/multiboot/child
+TFILE2  = wb_sound_palpark.sdat
+
+TDIR3	= ../../prog/include/multiboot
+TFILE3  = wb_sound_palpark_game.sadl
+
+TDIR4	= ../../resource/multiboot/capture
+TFILE4  = wb_sound_palpark_game.sdat
+
+
+
+
+SOUNDPLAYERDIR = ../../../pokemon_wb_doc/wb_sound_player
+
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
+
+
+.PHONY:	do-build clean 
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+do-build:	$(TARGETDIR)/$(TARGETFILENAME) $(TDIR1)/$(TFILE1)  $(TDIR2)/$(TFILE2)  $(TDIR3)/$(TFILE3) $(TDIR4)/$(TFILE4)  $(MDIR1)/$(MFILE1)  $(MDIR2)/$(MFILE2) $(MDIR3)/$(MFILE3)
+
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+
+#ここにあるsdatより wb_sound_playerの方が新しい場合に実行
+$(TARGETDIR)/$(TARGETFILENAME): ../../../pokemon_wb_doc/wb_sound_player/wb_sound_data.sdat
+	cp ../personal/wb_sound_pv_bnk.lst $(SOUNDPLAYERDIR)/tools
+	cp ../personal/wb_sound_pv_wav.lst $(SOUNDPLAYERDIR)/tools
+	$(MAKE) -C $(SOUNDPLAYERDIR) -f Makefile
+	cp $(SOUNDPLAYERDIR)/$(MFILE1) ./
+	cp $(SOUNDPLAYERDIR)/$(MFILE2) ./
+	cp $(SOUNDPLAYERDIR)/$(MFILE3) ./
+
+
+$(TFILE1): $(SOUNDPLAYERDIR)/$(TFILE1)
+	cp $(SOUNDPLAYERDIR)/wb_sound_palpark.sadl ./
+
+$(TFILE2): $(SOUNDPLAYERDIR)/$(TFILE1)
+	cp $(SOUNDPLAYERDIR)/wb_sound_palpark.sdat ./
+
+$(TFILE3): $(SOUNDPLAYERDIR)/$(TFILE1)
+	cp $(SOUNDPLAYERDIR)/wb_sound_palpark_game.sadl ./
+
+$(TFILE4): $(SOUNDPLAYERDIR)/$(TFILE1)
+	cp $(SOUNDPLAYERDIR)/wb_sound_palpark_game.sdat ./
+
+
+endif
+
+
+$(MDIR1)/$(MFILE1): $(MFILE1)
+	cp ./$(MFILE1) $(MDIR1)
+
+$(MDIR2)/$(MFILE2): $(MFILE2)
+	cp ./$(MFILE2) $(MDIR2)
+
+$(MDIR3)/$(MFILE3): $(MFILE3)
+	cp ./$(MFILE3) $(MDIR3)
+
+
+$(TDIR1)/$(TFILE1): $(TFILE1)
+	cp ./$(TFILE1) $(TDIR1)
+
+$(TDIR2)/$(TFILE2): $(TFILE2)
+	cp ./wb_sound_palpark.sdat $(TDIR2)
+
+$(TDIR3)/$(TFILE3): $(TFILE3)
+	cp ./wb_sound_palpark_game.sadl $(TDIR3)
+
+$(TDIR4)/$(TFILE4): $(TFILE4)
+	cp ./wb_sound_palpark_game.sdat $(TDIR4)
+
+
+
+#------------------------------------------------------------------------------
+#	make cleanルール
+#------------------------------------------------------------------------------
+
+clean:
+	rm -f $(TARGETDIR)/$(TARGETFILENAME)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f $(TARGETFILENAME)
+endif
+
