@@ -3079,12 +3079,12 @@
 	</row>
 
 	<row id="ITEMINFO_328">
-		<language name="JPN" width="256">せいしんを　たかめて　こうげきする。
-わざを　だすまえに　こうげきを
-うけると　しっぱいする。</language>
-		<language name="JPN_KANJI" width="256">せいしんを　たかめて　こうげきする。
-わざを　だすまえに　こうげきを
-うけると　しっぱいする。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_329">
@@ -3097,12 +3097,12 @@
 	</row>
 
 	<row id="ITEMINFO_330">
-		<language name="JPN" width="256">みずの　しんどうを　あたえて
-こうげきする。　あいてを　こんらんの
-じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">みずの　しんどうを　あたえて
-こうげきする。　あいてを　こんらんの
-じょうたいに　することが　ある。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_331">
@@ -3151,11 +3151,11 @@
 	</row>
 
 	<row id="ITEMINFO_336">
-		<language name="JPN" width="256">タネを　いきおいよく　２ー５かい
-はっしゃして　こうげきする。
+		<language name="JPN" width="256">かりメッセージ１
+
 </language>
-		<language name="JPN_KANJI" width="256">タネを　いきおいよく　２ー５かい
-はっしゃして　こうげきする。
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
 </language>
 	</row>
 
@@ -3241,12 +3241,12 @@
 	</row>
 
 	<row id="ITEMINFO_346">
-		<language name="JPN" width="256">ようぶんを　すいとり　こうげきする。
-あたえた　ダメージの　はんぶんの
-ＨＰを　かいふく　できる。</language>
-		<language name="JPN_KANJI" width="256">ようぶんを　すいとり　こうげきする。
-あたえた　ダメージの　はんぶんの
-ＨＰを　かいふく　できる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_347">
@@ -3277,12 +3277,12 @@
 	</row>
 
 	<row id="ITEMINFO_350">
-		<language name="JPN" width="256">かたいシッポで　こうげきする。
-ダメージを　あたえた　あいての
-ぼうぎょを　さげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">かたいシッポで　こうげきする。
-ダメージを　あたえた　あいての
-ぼうぎょを　さげることが　ある。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_351">
@@ -3376,12 +3376,12 @@
 	</row>
 
 	<row id="ITEMINFO_361">
-		<language name="JPN" width="256">でんげきを　すばやく　あびせて
-こうげきする。　こうげきは　かならず
-めいちゅうする。</language>
-		<language name="JPN_KANJI" width="256">でんげきを　すばやく　あびせて
-こうげきする。　こうげきは　かならず
-めいちゅうする。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_362">
@@ -3457,12 +3457,12 @@
 	</row>
 
 	<row id="ITEMINFO_370">
-		<language name="JPN" width="256">くさむらや　みずべ　どうくつ　など
-たたかう　ばしょによって　あたえる
-ついかこうかが　かわる。</language>
-		<language name="JPN_KANJI" width="256">くさむらや　みずべ　どうくつ　など
-たたかう　ばしょによって　あたえる
-ついかこうかが　かわる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_371">
@@ -3493,30 +3493,30 @@
 	</row>
 
 	<row id="ITEMINFO_374">
-		<language name="JPN" width="256">かたい　つばさを　おおきく　ひろげて
-たいあたりする。　じぶんの
-ぼうぎょを　あげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">かたい　つばさを　おおきく　ひろげて
-たいあたりする。　じぶんの
-ぼうぎょを　あげることが　ある。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_375">
-		<language name="JPN" width="256">ちょうのうりょくで　じぶんの
-とくせいと　あいての　とくせいを
-いれかえる。</language>
-		<language name="JPN_KANJI" width="256">ちょうのうりょくで　じぶんの
-とくせいと　あいての　とくせいを
-いれかえる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_376">
-		<language name="JPN" width="256">あいてが　つかおうとする　かいふくや
-のうりょく　へんかの　わざを
-よこどりして　じぶんに　つかう。</language>
-		<language name="JPN_KANJI" width="256">あいてが　つかおうとする　かいふくや
-のうりょく　へんかの　わざを
-よこどりして　じぶんに　つかう。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_377">
@@ -3529,12 +3529,12 @@
 	</row>
 
 	<row id="ITEMINFO_378">
-		<language name="JPN" width="256">じめんにおりて　からだを　やすめる。
-さいだいＨＰの　はんぶんだけ
-ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">じめんにおりて　からだを　やすめる。
-さいだいＨＰの　はんぶんだけ
-ＨＰを　かいふくする。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_379">
@@ -3565,12 +3565,12 @@
 	</row>
 
 	<row id="ITEMINFO_382">
-		<language name="JPN" width="256">あいての　ＨＰが　さいだいＨＰの
-はんぶんも　ないときに　つかうと
-わざの　いりょくは　２ばいに　なる。</language>
-		<language name="JPN_KANJI" width="256">あいての　ＨＰが　さいだいＨＰの
-はんぶんも　ないときに　つかうと
-わざの　いりょくは　２ばいに　なる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_383">
@@ -3592,30 +3592,30 @@
 	</row>
 
 	<row id="ITEMINFO_385">
-		<language name="JPN" width="256">こうげきを　うけても　ＨＰを　１だけ
-のこして　たえる。　れんぞくで
-だすと　しっぱい　しやすくなる。</language>
-		<language name="JPN_KANJI" width="256">こうげきを　うけても　ＨＰを　１だけ
-のこして　たえる。　れんぞくで
-だすと　しっぱい　しやすくなる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_386">
-		<language name="JPN" width="256">おおきな　くちから　しょうげきはを
-はなって　こうげきする。
+		<language name="JPN" width="256">かりメッセージ１
+
 </language>
-		<language name="JPN_KANJI" width="256">おおきな　くちから　しょうげきはを
-はなって　こうげきする。
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
 </language>
 	</row>
 
 	<row id="ITEMINFO_387">
-		<language name="JPN" width="256">こぶしから　あいての　ＨＰを　
-すいとり　あたえた　ダメージの
-はんぶん　ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">こぶしから　あいての　ＨＰを　
-すいとり　あたえた　ダメージの
-はんぶん　ＨＰを　かいふくする。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_388">
@@ -3628,12 +3628,12 @@
 	</row>
 
 	<row id="ITEMINFO_389">
-		<language name="JPN" width="256">かぜに　りんぷんを　のせて
-こうげきする。　じぶんの　すべての
-のうりょくを　あげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">かぜに　りんぷんを　のせて
-こうげきする。　じぶんの　すべての
-のうりょくを　あげることが　ある。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_390">
@@ -3673,12 +3673,12 @@
 	</row>
 
 	<row id="ITEMINFO_394">
-		<language name="JPN" width="256">せんとうちゅうに　つかって
-なくなった　じぶんの　もちものを
-もういちど　つかえるように　する。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうに　つかって
-なくなった　じぶんの　もちものを
-もういちど　つかえるように　する。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_395">
@@ -3718,12 +3718,12 @@
 	</row>
 
 	<row id="ITEMINFO_399">
-		<language name="JPN" width="256">わざを　だすまえに　こうげきを
-うけていたとき　その　あいてには
-いりょくが　２ばいに　なる。</language>
-		<language name="JPN_KANJI" width="256">わざを　だすまえに　こうげきを
-うけていたとき　その　あいてには
-いりょくが　２ばいに　なる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_400">
@@ -3754,12 +3754,12 @@
 	</row>
 
 	<row id="ITEMINFO_403">
-		<language name="JPN" width="256">あいての　まわりに　とがった　いわを
-うかべて　こうたいで　でてきた
-ポケモンに　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256">あいての　まわりに　とがった　いわを
-うかべて　こうたいで　でてきた
-ポケモンに　ダメージを　あたえる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_404">
@@ -3772,21 +3772,21 @@
 	</row>
 
 	<row id="ITEMINFO_405">
-		<language name="JPN" width="256">♂なら♀を　♀なら♂を　ゆうわくして
-とくこうを　がくっと　さげる。
+		<language name="JPN" width="256">かりメッセージ１
+
 </language>
-		<language name="JPN_KANJI" width="256">♂なら♀を　♀なら♂を　ゆうわくして
-とくこうを　がくっと　さげる。
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
 </language>
 	</row>
 
 	<row id="ITEMINFO_406">
-		<language name="JPN" width="256">あくいに　みちた　おそろしい
-オーラを　はっして　こうげきする。
-あいてを　ひるませることが　ある。</language>
-		<language name="JPN_KANJI" width="256">あくいに　みちた　おそろしい
-オーラを　はっして　こうげきする。
-あいてを　ひるませることが　ある。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_407">
@@ -3808,21 +3808,21 @@
 	</row>
 
 	<row id="ITEMINFO_409">
-		<language name="JPN" width="256">おぼえている　わざのうち　どれか
-１つを　くりだす。　じぶんが
-ねむっている　ときだけ　つかえる。</language>
-		<language name="JPN_KANJI" width="256">おぼえている　わざのうち　どれか
-１つを　くりだす。　じぶんが
-ねむっている　ときだけ　つかえる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_410">
-		<language name="JPN" width="256">きのみから　ちからを　もらい
-こうげきする。　もたせた　きのみで
-いりょくと　タイプは　かわる。</language>
-		<language name="JPN_KANJI" width="256">きのみから　ちからを　もらい
-こうげきする。　もたせた　きのみで
-いりょくと　タイプは　かわる。</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_411">
@@ -5524,6 +5524,96 @@
 		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
 
 </language>
+	</row>
+
+	<row id="ITEMINFO_600">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_601">
+		<language name="JPN" width="256">カマや　ツメなどの　するどいもので
+きりつけて　こうげきする。
+ほそいきを　きることも　できる。</language>
+		<language name="JPN_KANJI" width="256">カマや　ツメなどの　するどいもので
+きりつけて　こうげきする。
+ほそいきを　きることも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_602">
+		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
+おもいいわを　おすことも　できる。
+</language>
+		<language name="JPN_KANJI" width="256">こんしんの　ちからで　こうげきする。
+おもいいわを　おすことも　できる。
+</language>
+	</row>
+
+	<row id="ITEMINFO_603">
+		<language name="JPN" width="256">おおきな　なみを　おこして
+すべての　ポケモンを　こうげきする。
+みずのうえを　すすむことも　できる。</language>
+		<language name="JPN_KANJI" width="256">おおきな　なみを　おこして
+すべての　ポケモンを　こうげきする。
+みずのうえを　すすむことも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_604">
+		<language name="JPN" width="256">１ターンめで　そらへ　とびあがって
+２ターンめで　こうげきする。
+しっているまちに　いどうも　できる。</language>
+		<language name="JPN_KANJI" width="256">１ターンめで　そらへ　とびあがって
+２ターンめで　こうげきする。
+しっているまちに　いどうも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_605">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_606">
+		<language name="JPN" width="256">たきを　さかのぼるような　すさまじい
+いきおいで　とっしん　こうげきする。
+たきを　のぼることも　できる。</language>
+		<language name="JPN_KANJI" width="256">たきを　さかのぼるような　すさまじい
+いきおいで　とっしん　こうげきする。
+たきを　のぼることも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_607">
+		<language name="JPN" width="256">いわを　くだくような　パンチで
+こうげきする。　ひびわれた　いわを
+こわすことも　できる。</language>
+		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
+こうげきする。　ひびわれた　いわを
+こわすことも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_608">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_609">
+		<language name="JPN" width="256">このよの　ものとは　おもえない
+ねいろが　なりひびく　ふえ。　いつ
+だれが　つくったのか　わからない。</language>
+		<language name="JPN_KANJI" width="256">このよの　ものとは　おもえない
+ねいろが　なりひびく　ふえ。　いつ
+だれが　つくったのか　わからない。</language>
 	</row>
 
 

@@ -586,8 +586,18 @@
 #define ITEM_TORINOKASEKI		( 597 )		// とりのカセキ
 #define ITEM_RAITOSUTOON		( 598 )		// ライトストーン
 #define ITEM_DAAKUSUTOON		( 599 )		// ダークストーン
+#define ITEM_WAZAMASIN93		( 600 )		// わざマシン９３
+#define ITEM_WAZAMASIN94		( 601 )		// わざマシン９４
+#define ITEM_WAZAMASIN95		( 602 )		// わざマシン９５
+#define ITEM_WAZAMASIN96		( 603 )		// わざマシン９６
+#define ITEM_WAZAMASIN97		( 604 )		// わざマシン９７
+#define ITEM_WAZAMASIN98		( 605 )		// わざマシン９８
+#define ITEM_WAZAMASIN99		( 606 )		// わざマシン９９
+#define ITEM_WAZAMASIN100		( 607 )		// わざマシン１００
+#define ITEM_WAZAMASIN101		( 608 )		// わざマシン１０１
+#define ITEM_TORANSIIBAA		( 609 )		// トランシーバー
 
-#define ITEM_DATA_MAX		( 599 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 609 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
