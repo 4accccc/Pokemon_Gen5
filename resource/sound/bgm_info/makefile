@@ -20,6 +20,8 @@ targetname = bgm_info
 TARGETDIR = $(PROJECT_ARCDIR)
 
 
+SOUNDPLAYERDIR = ../../../../pokemon_wb_doc/wb_sound_player
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -59,6 +61,8 @@ $(targetname).narc: $(CONVERTDATA)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 
+./bgm_info.xls : $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls
+	cp $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls ./bgm_info.xls
 
 bgm_info.txt: bgm_info.xls
 	$(PROJECT_ROOT)tools/exceltool/exceltabconv bgm_info.xls
