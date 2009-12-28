@@ -305,6 +305,9 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//主人公が左を向く
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_04)
 	_OBJ_ANIME_WAIT()
+
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
 	//Nがやってくる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_kuru_01)
@@ -337,9 +340,15 @@ EVENT_START    ev_pos_d06r0101_denki_03
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//Nとの戦闘
 	_CALL		ev_boss_btl
+
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
 	//Nが喋る
 	//Ｎ『……ふしぎだな　なぜ　キミのような　にんげんが
@@ -399,6 +408,9 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//Nが画面外に移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_saru_01)
 	_OBJ_ANIME_WAIT()
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//博士2がNの方を向く
 	//ホワイトがNの方を向く

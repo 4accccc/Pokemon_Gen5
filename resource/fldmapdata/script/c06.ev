@@ -403,7 +403,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign1_01
 
-  _EASY_MSG(msg_c06_sign1_01) 
+  _BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN) 
+  _LAST_KEYWAIT()
+  _BGWIN_CLOSE()
 
 EVENT_END
 

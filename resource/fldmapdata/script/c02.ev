@@ -211,6 +211,9 @@ EVENT_START   ev_pos_c02_boss_01
 	//プレイヤーがNにきづく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_kiduku)
 	_OBJ_ANIME_WAIT()
+
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
 	//Nがやってくる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
@@ -242,9 +245,15 @@ EVENT_START   ev_pos_c02_boss_01
     	_BALLOONWIN_CLOSE()
     	
 	ENDIF
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//Nとの戦闘
 	_CALL		ev_boss_btl
+
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
@@ -267,6 +276,9 @@ EVENT_START   ev_pos_c02_boss_01
 	//Nが画面外に移動する
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_03 )
 	_OBJ_ANIME_WAIT()
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//Nを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )

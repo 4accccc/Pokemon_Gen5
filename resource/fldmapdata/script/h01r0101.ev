@@ -35,6 +35,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_bg_h01r0101_board_01
 
-	_LOOK_ELBOARD( 90 )
+	_LOOK_ELBOARD( 45 )
 
 EVENT_END

@@ -19,11 +19,12 @@ enum {
 	NARC_zone_elboard_zone_data_c08r0501_bin = 5,
 	NARC_zone_elboard_zone_data_c08r0601_bin = 6,
 	NARC_zone_elboard_zone_data_c08r0701_bin = 7,
-	NARC_zone_elboard_zone_data_h01r0101_bin = 8,
-	NARC_zone_elboard_zone_data_h01r0201_bin = 9,
-	NARC_zone_elboard_zone_data_r02r0101_bin = 10,
-	NARC_zone_elboard_zone_data_r13r0201_bin = 11,
-	NARC_zone_elboard_zone_data_r14r0101_bin = 12
+	NARC_zone_elboard_zone_data_d03r0201_bin = 8,
+	NARC_zone_elboard_zone_data_h01r0101_bin = 9,
+	NARC_zone_elboard_zone_data_h01r0201_bin = 10,
+	NARC_zone_elboard_zone_data_r02r0101_bin = 11,
+	NARC_zone_elboard_zone_data_r13r0201_bin = 12,
+	NARC_zone_elboard_zone_data_r14r0101_bin = 13
 };
 
 /* NARC_ZONE_NAIX_ */
