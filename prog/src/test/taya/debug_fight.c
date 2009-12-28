@@ -84,6 +84,14 @@ typedef enum {
 }BtlType;
 
 typedef enum {
+
+  COMM_MODE_CHILD,
+  COMM_MODE_PARENT,
+
+
+}CommMode;
+
+typedef enum {
   POKEIDX_SELF_1,
   POKEIDX_SELF_2,
   POKEIDX_SELF_3,
@@ -145,6 +153,7 @@ typedef enum {
   SELITEM_POKE_ENEMY2_6,
 
   SELITEM_BTL_TYPE,
+  SELITEM_COMM_MODE,
   SELITEM_SAVE,
   SELITEM_LOAD,
   SELITEM_MSGSPEED,
@@ -194,6 +203,7 @@ enum {
   LAYOUT_PARAM_LINE_Y4 = 128 + LAYOUT_PARAM_LINE_HEIGHT*3,
 
   LAYOUT_LABEL_BTLTYPE_X  = 8,
+  LAYOUT_LABEL_COMM_X = 8,
   LAYOUT_LABEL_MSGSPEED_X = 144,
   LAYOUT_LABEL_WAZAEFF_X  = 144,
 
@@ -255,13 +265,14 @@ static const LABEL_LAYOUT LabelLayout_Page1[] = {
   { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X,    LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X,    LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1      },
+  { DBGF_LABEL_COMM,    LAYOUT_LABEL_COMM_X,     LAYOUT_PARAM_LINE_Y2,     },
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1      },
   { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2      },
   { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y     },
   { DBGF_LABEL_RECORD,  LAYOUT_LABEL_REC_X,      LAYOUT_LABEL_REC_Y        },
 
-  { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
-  { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
+//  { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
+//  { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
 };
 //------------------------------------------------------
 /*
@@ -323,6 +334,7 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
   { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
 
   { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,  0, BTLTYPE_MAX-1     },
+  { SELITEM_COMM_MODE,      LAYOUT_LABEL_COMM_X     +40, LAYOUT_PARAM_LINE_Y2,  0, 1                 },
   { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,  0, MSGSPEED_FAST_EX  },
   { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,  0, 1                 },
   { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y, 0, 1                 },
@@ -369,21 +381,22 @@ static const struct {
 static const struct {
   u8  commFlag     : 1;
   u8  wildFlag     : 1;
-  u8  enemyPokeReg : 6;   // 敵ポケ規定数（0なら自由）
+  u8  multiFlag    : 1;
+  u8  enemyPokeReg : 5;   // 敵ポケ規定数（0なら自由）
   u8  rule;
 }BtlTypeParams[] = {
-  { 0, 1, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
-  { 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
-  { 1, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
-  { 0, 1, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
-  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
-  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
-  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
-  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_DOUBLE
-  { 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
-  { 1, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
-  { 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
-  { 1, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
+  { 0, 1, 0, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, 0, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
+  { 1, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_MULTI
+  { 0, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
+  { 0, 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
+  { 1, 0, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
 };
 
 /*--------------------------------------------------------------------------*/
@@ -401,6 +414,7 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
  */
 typedef struct {
   u32  btlType  : 5;
+  u32  commMode : 1;
   u32  weather  : 3;
   u32  msgSpeed : 3;
   u32  fWazaEff : 1;
@@ -415,7 +429,7 @@ typedef struct {
   u32  fHPConst      : 1;
   u32  fPPConst      : 1;
 
-  u32  dmy      : 7;
+  u32  dmy      : 8;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -491,6 +505,7 @@ static BtlRule btltype_GetRule( BtlType type );
 static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_CommMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
@@ -855,6 +870,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   GFL_STD_MemClear( saveData, sizeof(DEBUG_BTL_SAVEDATA) );
 
   saveData->btlType  = BTLTYPE_SINGLE_WILD;
+  saveData->commMode = COMM_MODE_CHILD;
   saveData->weather  = BTL_WEATHER_NONE;
   saveData->msgSpeed = MSGSPEED_FAST;
   saveData->fWazaEff = 0;
@@ -973,6 +989,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->btlType = loopValue( save->btlType+incValue, 0, BTLTYPE_MAX-1 );
     break;
 
+  case SELITEM_COMM_MODE:
+    save->commMode ^= 1;
+    break;
+
   case SELITEM_MSGSPEED:
     save->msgSpeed = loopValue( save->msgSpeed+incValue, 0, MSGSPEED_FAST_EX );
     break;
@@ -1065,7 +1085,7 @@ static BOOL btltype_IsComm( BtlType type )
 //----------------------------------------------------------------------------------
 static BOOL btltype_IsMulti( BtlType type )
 {
-  return ( type == BTLTYPE_DOUBLE_COMM_MULTI );
+  return BtlTypeParams[ type ].multiFlag;
 }
 static BOOL btltype_IsWild( BtlType type )
 {
@@ -1115,6 +1135,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
       }else{
         switch( itemID ){
         case SELITEM_BTL_TYPE:    printItem_BtlType( wk, wk->strbuf ); break;
+        case SELITEM_COMM_MODE:   printItem_CommMode( wk, wk->strbuf ); break;
         case SELITEM_MSGSPEED:    printItem_MsgSpeed( wk, wk->strbuf ); break;
         case SELITEM_WAZAEFF:     printItem_WazaEff( wk, wk->strbuf ); break;
         case SELITEM_SUBWAYMODE:  printItem_SubwayMode( wk, wk->strbuf ); break;
@@ -1154,6 +1175,10 @@ static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf )
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_TYPE01+wk->saveData.btlType, buf );
+}
+static void printItem_CommMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_COMM_CHILD+wk->saveData.commMode, buf );
 }
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
@@ -1304,14 +1329,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_SELF_4,   SELITEM_POKE_FRIEND_4 },
       { SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5,   SELITEM_POKE_FRIEND_5 },
       { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6,   SELITEM_POKE_FRIEND_6 },
-      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_SAVE,          SELITEM_MSGSPEED,      SELITEM_MSGSPEED,     },
+      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_COMM_MODE,     SELITEM_MSGSPEED,      SELITEM_MSGSPEED,     },
+      { SELITEM_COMM_MODE,     SELITEM_BTL_TYPE,      SELITEM_SAVE,          SELITEM_WAZAEFF,       SELITEM_WAZAEFF       },
       { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_WAZAEFF,       SELITEM_BTL_TYPE,      SELITEM_BTL_TYPE      },
       { SELITEM_WAZAEFF,       SELITEM_MSGSPEED,      SELITEM_SUBWAYMODE,    SELITEM_BTL_TYPE,      SELITEM_BTL_TYPE      },
       { SELITEM_SUBWAYMODE,    SELITEM_WAZAEFF,       SELITEM_REC_MODE,      SELITEM_LOAD,          SELITEM_SAVE          },
       { SELITEM_REC_MODE,      SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_REC_BUF,       SELITEM_SAVE          },
       { SELITEM_REC_BUF,       SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_LOAD,          SELITEM_REC_MODE      },
-      { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
-      { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
+      { SELITEM_SAVE,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
+      { SELITEM_LOAD,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
       { SELITEM_MUST_TUIKA,    SELITEM_PP_CONST,      SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_NULL,          SELITEM_NULL          },
@@ -1561,7 +1587,6 @@ FS_EXTERN_OVERLAY(battle);
 #else  //親子別接続
     {
       const GFLNetInitializeStruct* initParam;
-      BOOL bParent = FALSE;
       if( btltype_IsMulti( wk->saveData.btlType ) ){
         TAYA_Printf("マルチモードで通信開始\n");
         initParam = &NetInitParamMulti;
@@ -1571,10 +1596,7 @@ FS_EXTERN_OVERLAY(battle);
         initParam = &NetInitParamNormal;
         wk->NeedConnectMembers = 2;
       }
-      if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){  //臨時でXボタンで親選択
-        bParent=TRUE;
-      }
-      DFC_NET_Init( initParam, NULL, (void*)wk , bParent, wk->NeedConnectMembers);
+      DFC_NET_Init( initParam, NULL, (void*)wk , (wk->saveData.commMode==COMM_MODE_PARENT), wk->NeedConnectMembers);
       (*seq) = SEQ_COMM_START_2;
     }
 #endif
@@ -1655,8 +1677,10 @@ FS_EXTERN_OVERLAY(battle);
         if( !btltype_IsMulti(wk->saveData.btlType) ){
           BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         }else{
+          // 意図的にnetIDと立ち位置をバラバラにしてみる
+          u8 commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
           BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
-            GFL_NET_GetNetID(netHandle), HEAPID_BTL_DEBUG_SYS );
+            commPos, HEAPID_BTL_DEBUG_SYS );
         }
         break;
       case BTL_RULE_TRIPLE:
@@ -1672,7 +1696,7 @@ FS_EXTERN_OVERLAY(battle);
     {
       BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-      TrainerID  trID = 1 + GFL_STD_MtRand( 50 ); // てきとーにランダムで
+      TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
       BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
@@ -1682,9 +1706,17 @@ FS_EXTERN_OVERLAY(battle);
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_DOUBLE:
-        BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
-          &sit, trID, HEAPID_BTL_DEBUG_SYS );
-        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        if( !btltype_IsMulti(wk->saveData.btlType) ){
+          BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
+            &sit, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        }else{
+          TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+
+          BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &sit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+        }
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData,
