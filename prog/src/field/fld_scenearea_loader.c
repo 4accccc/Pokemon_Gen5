@@ -496,9 +496,9 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 
-  TOMOYA_Printf( "param\n" );
-  TOMOYA_Printf( "start angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->start_pitch, cp_param->start_yaw, cp_param->start_length );
-  TOMOYA_Printf( "end angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->end_pitch, cp_param->end_yaw, cp_param->end_length );
+  //TOMOYA_Printf( "param\n" );
+  //TOMOYA_Printf( "start angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->start_pitch, cp_param->start_yaw, cp_param->start_length );
+  //TOMOYA_Printf( "end angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->end_pitch, cp_param->end_yaw, cp_param->end_length );
 
   // 入り口からの奥への距離から、カメラを動かす
   dist = GRID_TO_FX32( cp_param->grid_depth );
@@ -529,8 +529,8 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   length = FX_Div( FX_Mul(length, sub_num), dist );
   length += cp_param->start_length;
 
-  TOMOYA_Printf( "set angle\n" );
-  TOMOYA_Printf( "pitch 0x%x yaw 0x%x len 0x%x\n", (u16)pitch, (u16)yaw, length );
+  //TOMOYA_Printf( "set angle\n" );
+  //TOMOYA_Printf( "pitch 0x%x yaw 0x%x len 0x%x\n", (u16)pitch, (u16)yaw, length );
 
   // アングルを設定
   FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
@@ -548,9 +548,11 @@ static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, con
   FIELD_CAMERA* p_camera;
 
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-  FIELD_CAMERA_StopTraceRequest( p_camera );
+  FIELD_CAMERA_StopTraceNow( p_camera );
 
   SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
+
+  //TOMOYA_Printf( "GridAngle Start\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -562,7 +564,12 @@ static void SCENEAREA_UpdateGridAngleChange_OUT( const FLD_SCENEAREA* cp_sys, co
 {
   FIELD_CAMERA* p_camera;
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+  SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
+
   FIELD_CAMERA_RestartTrace( p_camera );
+
+  //TOMOYA_Printf( "GridAngle End\n" );
 }
 
 

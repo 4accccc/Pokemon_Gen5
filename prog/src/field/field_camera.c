@@ -2488,6 +2488,64 @@ void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  今すぐにトレース処理を停止するリクエスト
+ *
+ *	@param	camera_ptr  カメラポインタ
+ *	@return none
+ *
+ *	トレース座標が違う場合に使用すると、カメラが急に飛ぶような動作を行います。
+ *	注意して使用してください。
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_StopTraceNow(FIELD_CAMERA * camera_ptr)
+{
+  CAMERA_TRACE *trace;
+  trace = camera_ptr->Trace;
+  if (trace == NULL){
+    return;
+  }
+
+#ifdef PM_DEBUG
+  // Y座標に差が出ないかチェック
+  {
+    int i;
+    s32 check_idx, last_check_idx;
+
+    last_check_idx = trace->TargetPoint-1;
+    if( last_check_idx < 0 )
+    {
+      last_check_idx += trace->bufsize;
+    }
+    for( i=0; i<trace->bufsize; i++ )
+    {
+      // 参照ポジションから格納ポジションまでのY座標が一緒かチェック
+      check_idx = (trace->CamPoint + i) % trace->bufsize;
+
+      // 終了条件
+      if( check_idx == last_check_idx )
+      {
+        break;
+      }
+
+      if( (trace->camPosBuffer[check_idx].y != trace->camPosBuffer[last_check_idx].y) ||
+          (trace->targetBuffer[check_idx].y != trace->targetBuffer[last_check_idx].y) )
+      {
+        OS_TPrintf( "FIELD_CAMERA_StopTraceNow err トレース情報に中身が入っています\n" );
+        GF_ASSERT( (trace->camPosBuffer[check_idx].y == trace->camPosBuffer[last_check_idx].y) &&
+           (trace->targetBuffer[check_idx].y == trace->targetBuffer[last_check_idx].y) );
+      }
+    }
+  }
+#endif
+
+  //トレースをストップする
+  trace->StopReq = FALSE;
+  trace->Valid = FALSE;
+  trace->UpdateFlg = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  トレース処理が動いているかのチェック
  *
  *	@param	camera_ptr  カメラポインタ

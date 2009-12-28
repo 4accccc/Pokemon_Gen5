@@ -182,20 +182,21 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   // ŒÄ‚Ô‚©ŒÄ‚Î‚È‚¢‚©‘I‚×‚é‚æ‚¤‚É‚·‚é‚±‚Æ‚àl‚¦‚Ä‚¢‚Ü‚·B
   if( now_active != p_sys->active_area )
   {
-    if( now_active != FLD_SCENEAREA_ACTIVE_NONE ){
-
-			FUNC_CallUpdateFunc( p_sys->cp_func, 
-					p_sys->cp_data[now_active].inside_func, 
-					p_sys, &p_sys->cp_data[now_active], cp_pos );
-			p_sys->call_funcID = p_sys->cp_data[now_active].inside_func;
-    }
-
     if( p_sys->active_area != FLD_SCENEAREA_ACTIVE_NONE ){
 
 			FUNC_CallUpdateFunc( p_sys->cp_func, 
 					p_sys->cp_data[p_sys->active_area].outside_func, 
 					p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
 			p_sys->call_funcID = p_sys->cp_data[p_sys->active_area].outside_func;
+    }
+
+    
+    if( now_active != FLD_SCENEAREA_ACTIVE_NONE ){
+
+			FUNC_CallUpdateFunc( p_sys->cp_func, 
+					p_sys->cp_data[now_active].inside_func, 
+					p_sys, &p_sys->cp_data[now_active], cp_pos );
+			p_sys->call_funcID = p_sys->cp_data[now_active].inside_func;
     }
 
     p_sys->active_area = now_active;

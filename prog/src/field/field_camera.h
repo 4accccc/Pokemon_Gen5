@@ -387,6 +387,12 @@ extern void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr);
 extern BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr);
 extern BOOL FIELD_CAMERA_CheckTraceSys(FIELD_CAMERA * camera_ptr);
 
+// ↓使用に注意が必要
+ /*	トレース座標が違う場合に使用すると、カメラが急に飛ぶような動作を行います。
+ *	注意して使用してください。
+ */
+extern void FIELD_CAMERA_StopTraceNow(FIELD_CAMERA * camera_ptr);  
+
 #ifdef  PM_DEBUG
 typedef enum{
   FIELD_CAMERA_DEBUG_BIND_NONE,
