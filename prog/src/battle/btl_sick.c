@@ -237,10 +237,15 @@ static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp,
 
 }
 
+// ‚³‚µ‚¨‚³‚¦‰ñ•œŽž
 static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 {
-  BTL_HANDLER_ITEM_Add( bpp );
+//  BTL_HANDLER_ITEM_Add( bpp );
+  u8 pokeID = BPP_GetID( bpp );
+  BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+  param->pokeID = BPP_GetID( bpp );
 }
+
 static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SICK_CONT oldCont )
 {
   u8 pokeID = BPP_GetID( bpp );
@@ -352,7 +357,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     s16       strID_useItem;
   }dispatchTbl[] = {
     { WAZASICK_DOKU,          BTL_STRID_SET_DokuCure,         BTL_STRID_SET_UseItem_CureDoku    },
-    { POKESICK_YAKEDO,        BTL_STRID_SET_YakedoCure   ,    BTL_STRID_SET_UseItem_CureYakedo  },
+    { POKESICK_YAKEDO,        BTL_STRID_SET_YakedoCure,       BTL_STRID_SET_UseItem_CureYakedo  },
     { WAZASICK_NEMURI,        BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
     { WAZASICK_KOORI,         BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
     { WAZASICK_MAHI,          BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },

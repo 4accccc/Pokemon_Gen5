@@ -5271,9 +5271,14 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+    WazaID  prevWaza;
+
+    prevWaza = BPP_GetPrevWazaID( target );
+    OS_TPrintf("ターゲットの直前ワザ=%d\n", prevWaza);
 
     if( !BPP_CheckSick(target, WAZASICK_ENCORE)
-    &&  (BPP_GetPrevWazaID(target) != WAZANO_NULL)
+    &&  (prevWaza != WAZANO_NULL)
+    &&  (BPP_WAZA_IsUsable(target, prevWaza))
     ){
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 //      u8 turns = BTL_CALC_RandRange( 3, 7 );

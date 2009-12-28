@@ -449,12 +449,12 @@ typedef struct {
  */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u16  attack;
+ u16  defence;
+ u16  sp_attack;
+ u16  sp_defence;
+ u16  agility;
  u8  pokeID;        ///< 対象ポケモンID
- u8  attack;
- u8  defence;
- u8  sp_attack;
- u8  sp_defence;
- u8  agility;
  u8  fAttackEnable    : 1;
  u8  fDefenceEnable   : 1;
  u8  fSpAttackEnable  : 1;

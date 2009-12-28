@@ -4349,7 +4349,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   fPluralHit = scEvent_CheckPluralHit( wk, attacker, wazaParam->wazaID, &hit_count );
   if( fPluralHit ){
-    BTL_Printf("複数回ヒットワザ ... 回数=%d\n", hit_count);
+    OS_TPrintf("複数回ヒットワザ ... 回数=%d\n", hit_count);
   }
 
   wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
@@ -6522,17 +6522,19 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
   BTL_POKEPARAM* bpp;
-  u32 hem_state;
 
   BTL_POKESET_SeekStart( pokeSet );
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
-    hem_state = Hem_PushState( &wk->HEManager );
+    if( !BPP_IsDead(bpp) )
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
 
-    BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
-    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
+      BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
+      SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
   }
 }
 //--------------------------------------------------------------------------------
@@ -6633,8 +6635,8 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
 {
   int strID = -1;
   switch( effect ){
-  case BTL_FLDEFF_TRICKROOM:   strID = BTL_STRID_STD_TrickRoomOff; break; ///< トリックルーム
-  case BTL_FLDEFF_JURYOKU:     strID = BTL_STRID_STD_JyuryokuOff; break;  ///< じゅうりょく
+  case BTL_FLDEFF_TRICKROOM:   strID = BTL_STRID_STD_TrickRoomOff; break;   ///< トリックルーム
+  case BTL_FLDEFF_JURYOKU:     strID = BTL_STRID_STD_JyuryokuOff; break;    ///< じゅうりょく
   case BTL_FLDEFF_WONDERROOM:  strID = BTL_STRID_STD_WonderRoom_End; break;
   case BTL_FLDEFF_MAGICROOM:   strID = BTL_STRID_STD_MagicRoom_End; break;
   }
@@ -6644,6 +6646,19 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
     SCQUE_PUT_MSG_STD( wk->que, strID );
   }
   SCQUE_PUT_OP_RemoveFieldEffect( wk->que, effect );
+
+  // マジックルーム終了でアイテム使用チェック
+  if( effect  == BTL_FLDEFF_MAGICROOM )
+  {
+    FRONT_POKE_SEEK_WORK  fps;
+    BTL_POKEPARAM* bpp;
+
+    FRONT_POKE_SEEK_InitWork( &fps, wk );
+    while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+    {
+      scproc_CheckItemReaction( wk, bpp );
+    }
+  }
 }
 
 //------------------------------------------------------------------
@@ -9057,7 +9072,7 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 {
   u8 max = WAZADATA_GetParam( waza, WAZAPARAM_HITCOUNT_MAX );
 
-  BTL_Printf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
+  OS_TPrintf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
 
   if( max > 1 ){
     *hitCount = BTL_CALC_HitCountMax( max );
@@ -9074,6 +9089,7 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
   BTL_EVENTVAR_Pop();
 
   if( (max>1) || (*hitCount) >1 ){
+    OS_TPrintf("複数回ヒットするワザだ\n");
     return TRUE;
   }
 
