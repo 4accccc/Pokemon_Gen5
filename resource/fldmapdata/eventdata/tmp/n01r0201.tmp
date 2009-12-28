@@ -1,5 +1,5 @@
 #../data/n01r0201.mev
-../tmp/n01r0201.bin:../data/n01r0201.mev $(UNIQ_SCRIPTHEADER) ../tmp/n01r0201.h ../../zonetable/zone_id.h ../tmp/n01r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/n01r0301.h ../tmp/n01r0202.h ../tmp/n01r0203.h ../tmp/n01r0204.h ../../flagwork/work_define.h ../../script/N01R0201_def.h 
+../tmp/n01r0201.bin:../data/n01r0201.mev $(UNIQ_SCRIPTHEADER) ../tmp/n01r0201.h ../../zonetable/zone_id.h ../tmp/n01r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/n01r0301.h ../tmp/n01r0202.h ../tmp/n01r0203.h ../tmp/n01r0204.h ../../flagwork/work_define.h ../../script/N01R0201_def.h 
 	@echo ../data/n01r0201.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/n01r0201.h ../../zonetable/zone_id.h ../tmp/n01r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/n01r0301.h ../tmp/n01r0202.h ../tmp/n01r0203.h ../tmp/n01r0204.h ../../flagwork/work_define.h ../../script/N01R0201_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/n01r0201.h ../../zonetable/zone_id.h ../tmp/n01r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/n01r0301.h ../tmp/n01r0202.h ../tmp/n01r0203.h ../tmp/n01r0204.h ../../flagwork/work_define.h ../../script/N01R0201_def.h 
 

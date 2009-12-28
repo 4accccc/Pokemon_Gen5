@@ -1,5 +1,5 @@
 #../data/c02r0701.mev
-../tmp/c02r0701.bin:../data/c02r0701.mev $(UNIQ_SCRIPTHEADER) ../tmp/c02r0701.h ../../zonetable/zone_id.h ../tmp/r03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c02.h ../../script/C02R0701_def.h 
+../tmp/c02r0701.bin:../data/c02r0701.mev $(UNIQ_SCRIPTHEADER) ../tmp/c02r0701.h ../../zonetable/zone_id.h ../tmp/r03.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/c02.h ../../script/C02R0701_def.h 
 	@echo ../data/c02r0701.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c02r0701.h ../../zonetable/zone_id.h ../tmp/r03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c02.h ../../script/C02R0701_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c02r0701.h ../../zonetable/zone_id.h ../tmp/r03.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/c02.h ../../script/C02R0701_def.h 
 

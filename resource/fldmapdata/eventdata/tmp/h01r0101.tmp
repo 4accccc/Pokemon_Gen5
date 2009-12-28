@@ -1,5 +1,5 @@
 #../data/h01r0101.mev
-../tmp/h01r0101.bin:../data/h01r0101.mev $(UNIQ_SCRIPTHEADER) ../tmp/h01r0101.h ../../zonetable/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h ../../script/H01R0101_def.h 
+../tmp/h01r0101.bin:../data/h01r0101.mev $(UNIQ_SCRIPTHEADER) ../tmp/h01r0101.h ../../zonetable/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h ../../script/H01R0101_def.h 
 	@echo ../data/h01r0101.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/h01r0101.h ../../zonetable/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h ../../script/H01R0101_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/h01r0101.h ../../zonetable/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h ../../script/H01R0101_def.h 
 

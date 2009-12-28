@@ -1,5 +1,5 @@
 #../data/bc10.mev
-../tmp/bc10.bin:../data/bc10.mev $(UNIQ_SCRIPTHEADER) ../tmp/bc10.h ../../zonetable/zone_id.h ../tmp/r15r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10pcr0101.h ../tmp/r14r0101.h ../tmp/bc10r0101.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
+../tmp/bc10.bin:../data/bc10.mev $(UNIQ_SCRIPTHEADER) ../tmp/bc10.h ../../zonetable/zone_id.h ../tmp/r15r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10pcr0101.h ../tmp/r14r0101.h ../tmp/bc10r0101.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
 	@echo ../data/bc10.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/bc10.h ../../zonetable/zone_id.h ../tmp/r15r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10pcr0101.h ../tmp/r14r0101.h ../tmp/bc10r0101.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/bc10.h ../../zonetable/zone_id.h ../tmp/r15r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/bc10pcr0101.h ../tmp/r14r0101.h ../tmp/bc10r0101.h ../tmp/bc10r0401.h ../tmp/bc10r0201.h ../tmp/bc10r0301.h 
 
