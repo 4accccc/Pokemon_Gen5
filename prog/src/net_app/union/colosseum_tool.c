@@ -196,32 +196,6 @@ void ColosseumTool_Clear_ReceiveStandingPos(COLOSSEUM_SYSTEM_PTR clsys)
 
 //==================================================================
 /**
- * ポケモンリスト選択完了人数を取得する
- *
- * @param   clsys		
- *
- * @retval  u8		  選択完了人数(自分含む)
- */
-//==================================================================
-u8 ColosseumTool_ReceiveCheck_PokeListSeletedNum(COLOSSEUM_SYSTEM_PTR clsys)
-{
-  return clsys->recvbuf.pokelist_selected_num;
-}
-
-//==================================================================
-/**
- * 受信バッファのクリア：ポケモンリスト選択完了人数
- *
- * @param   clsys		
- */
-//==================================================================
-void ColosseumTool_Clear_ReceivePokeListSelected(COLOSSEUM_SYSTEM_PTR clsys)
-{
-  clsys->recvbuf.pokelist_selected_num = 0;
-}
-
-//==================================================================
-/**
  * 立ち位置座標にいるかチェック
  *
  * @param   fieldWork		

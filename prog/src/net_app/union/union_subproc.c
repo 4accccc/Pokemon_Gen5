@@ -268,7 +268,7 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
         (void*)SubProc_PlayCategoryTbl[subproc->id].play_category);
     }
     OS_TPrintf("play_category = %d\n", situ->play_category);
-
+    
     (*seq)++;
     //break through
     
@@ -553,7 +553,6 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
       if(unisys->colosseum_sys != NULL){
         plist->comm_selected_num 
           = ColosseumTool_ReceiveCheck_PokeListSeletedNum(unisys->colosseum_sys);
-        OS_TPrintf("selected_num = %d\n", plist->comm_selected_num);
       }
       break;
     }

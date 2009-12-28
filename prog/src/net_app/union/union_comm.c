@@ -137,6 +137,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   unisys->alloc.regulation = Regulation_AllocWork(HEAPID_UNION);
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
+  unisys->overlay_load = TRUE;
   
   return unisys;
 }

@@ -307,3 +307,29 @@ BOOL Colosseum_GetCommPlayerPos(COLOSSEUM_SYSTEM_PTR clsys, int net_id, COMM_PLA
   clsys->recvbuf.comm_player_pack_update[net_id] = FALSE;
   return update_flag;
 }
+
+//==================================================================
+/**
+ * ポケモンリスト選択完了人数を取得する
+ *
+ * @param   clsys		
+ *
+ * @retval  u8		  選択完了人数(自分含む)
+ */
+//==================================================================
+u8 ColosseumTool_ReceiveCheck_PokeListSeletedNum(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  return clsys->recvbuf.pokelist_selected_num;
+}
+
+//==================================================================
+/**
+ * 受信バッファのクリア：ポケモンリスト選択完了人数
+ *
+ * @param   clsys		
+ */
+//==================================================================
+void ColosseumTool_Clear_ReceivePokeListSelected(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  clsys->recvbuf.pokelist_selected_num = 0;
+}

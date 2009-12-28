@@ -465,6 +465,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
         net_app/union/union_subdisp.c \
+        net_app/union/union_chat.c \
         field/field_comm/intrude_subdisp.c \
         field/field_comm/intrude_message.c \
         field/field_comm/beacon_view.c \
@@ -586,7 +587,6 @@ SRCS_OVERLAY_FIELD_GYM_INIT = field/gym_init.c
 #===> SRCS_OVERLAY_FIELD_WEATHER_STORM
 SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_receive.c \
-                          net_app/union/union_chat.c \
                           net_app/union/union_event_check.c \
                           net_app/union/union_oneself.c \
                           net_app/union/union_msg.c \

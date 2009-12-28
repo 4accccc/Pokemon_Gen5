@@ -23,6 +23,13 @@
 #include "gamesystem/game_beacon.h"
 
 
+//--------------------------------------------------------------
+//  オーバーレイ定義
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(union_room);
+
+
+
 //==================================================================
 /**
  * ユニオン通信を起動する
@@ -115,9 +122,11 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
 //==================================================================
 BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys)
 {
-  if(GAMESYSTEM_CheckFieldMapWork(unisys->uniparent->gsys) == TRUE){
-    if(FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(unisys->uniparent->gsys)) == TRUE){
-      return TRUE;
+  if(unisys->overlay_load == TRUE){
+    if(GAMESYSTEM_CheckFieldMapWork(unisys->uniparent->gsys) == TRUE){
+      if(FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(unisys->uniparent->gsys)) == TRUE){
+        return TRUE;
+      }
     }
   }
   return FALSE;
@@ -135,6 +144,12 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fi
   UNION_PARENT_WORK *uniparent = pwk;
   UNION_SYSTEM_PTR unisys = app_work;
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  
+  if(unisys->overlay_load == FALSE){
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
+    unisys->overlay_load = TRUE;
+    OS_TPrintf("オーバーレイLoad : union_room\n");
+  }
   
   if(unisys->player_pause == TRUE){
     FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
@@ -168,6 +183,12 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fi
         CommPlayer_Push(clsys->cps);
       }
     }
+  }
+
+  if(unisys->overlay_load == TRUE){
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
+    unisys->overlay_load = FALSE;
+    OS_TPrintf("オーバーレイUnload : union_room\n");
   }
 }
 
