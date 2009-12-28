@@ -32,6 +32,45 @@ extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_MoveTest(FIELDMAP_WORK *fieldWork);
 
+FS_EXTERN_OVERLAY(field_gym_insect);
+FS_EXTERN_OVERLAY(field_gym_elec);
+FS_EXTERN_OVERLAY(field_gym_normal);
+FS_EXTERN_OVERLAY(field_gym_fly);
+FS_EXTERN_OVERLAY(field_gym_anti);
+
+const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
+	NULL,					//0:無し
+  NULL,
+  NULL,//H01_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gym_elec),
+  FS_OVERLAY_ID(field_gym_normal),
+  FS_OVERLAY_ID(field_gym_anti),
+  FS_OVERLAY_ID(field_gym_fly),
+  FS_OVERLAY_ID(field_gym_insect),
+  NULL,//GYM_GROUND_Setup,
+  NULL,//GYM_GROUND_ENT_Setup,
+  NULL,//GYM_ICE_Setup,
+  NULL,//GYM_DRAGON_Setup,
+  NULL,//H03_GIMMICK_Setup,
+  NULL,//GATE_GIMMICK_Setup,  // C04R0601
+  NULL,//GATE_GIMMICK_Setup,  // C08R0601
+  NULL,//GATE_GIMMICK_Setup,  // R13R0201
+  NULL,//GATE_GIMMICK_Setup,  // R02R0101
+  NULL,//GATE_GIMMICK_Setup,  // C04R0701
+  NULL,//GATE_GIMMICK_Setup,  // C04R0801
+  NULL,//GATE_GIMMICK_Setup,  // C02R0701
+  NULL,//GATE_GIMMICK_Setup,  // R14R0101
+  NULL,//GATE_GIMMICK_Setup,  // C08R0501
+  NULL,//GATE_GIMMICK_Setup,  // C08R0701
+  NULL,//GATE_GIMMICK_Setup,  // H01R0101
+  NULL,//GATE_GIMMICK_Setup,  // H01R0201
+  NULL,//GATE_GIMMICK_Setup,  // C03R0601
+  NULL,//D06_GIMMICK_Setup,
+  NULL,//D06_GIMMICK_Setup,
+  NULL,//D06_GIMMICK_Setup,
+  NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
+  NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
+};
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
@@ -177,6 +216,12 @@ void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork)
 	if (id == GIMMICK_NO_ASSIGN){
 		return;					//ギミック無し
 	}
+
+  //オーバーレイロード
+  if ( FldGimmickOverlay[id] != NULL )
+  {
+    GFL_OVERLAY_Load( FldGimmickOverlay[id] );
+  }
 	//ギミックセットアップ
 	FldGimmickSetupFunc[id](fieldWork);
 }
@@ -206,10 +251,16 @@ void FLDGMK_EndFieldGimmick(FIELDMAP_WORK *fieldWork)
 	if (id == GIMMICK_NO_ASSIGN){
 		return;					//ギミック無し
 	}
+
 	//ギミック終了
 	if (FldGimmickEndFunc[id] != NULL){
 		FldGimmickEndFunc[id](fieldWork);
 	}
+  //オーバーレイアンロード
+  if ( FldGimmickOverlay[id] != NULL )
+  {
+    GFL_OVERLAY_Unload( FldGimmickOverlay[id] );
+  }
 }
 
 //---------------------------------------------------------------------------

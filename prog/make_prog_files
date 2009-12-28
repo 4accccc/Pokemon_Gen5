@@ -488,14 +488,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_disappear.c \
         field/height_ex.c \
         field/event_comm_error.c \
-        field/gym_elec.c \
         field/event_pc_recovery.c \
-        field/gym_normal.c \
         field/field_player_grid_event.c \
         field/fld_particle.c \
         field/fld3d_ci.c \
-        field/gym_anti.c \
-        field/gym_fly.c \
         field/sodateya.c \
         field/scrcmd_hiden.c \
         field/event_rail_slipdown.c \
@@ -511,7 +507,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gimmick_obj_elboard.c \
         field/elboard_zone_data.c \
         field/scrcmd_gate.c \
-        field/gym_insect.c \
         field/gym_ground.c \
         field/gym_ground_ent.c \
 				field/event_debug_beacon.c \
@@ -561,7 +556,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_palpark.c \
         field/scrcmd_wfbc.c \
         field/party_select_list.c \
-        field/field_fk_sound_anime.c
+        field/field_fk_sound_anime.c \
+        field/test_effect.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -578,9 +574,6 @@ SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
 #===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_GYM_INIT = field/gym_init.c
-
-#===> SRCS_OVERLAY_FIELDMAP
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
 #===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
@@ -593,6 +586,26 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_tool.c \
                           net_app/union/colosseum_tool.c \
                           net_app/comm_entry_menu.c
+
+# ジム
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_INIT = field/gym_init.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_INSECT = field/gym_insect.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_ELEC = field/gym_elec.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_NORMAL = field/gym_normal.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_FLY = field/gym_fly.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GYM_ANTI = field/gym_anti.c
+
 
 # マッパーサンプル
 #===> main
