@@ -17,6 +17,7 @@
 #include "system\main.h"
 #include "sound\snd_strm.h"
 #include "savedata/save_control.h"
+#include "net/wih_dwc.h"
 #include "print/printsys.h"
 #include "print/global_font.h"
 #include "print/global_msg.h"
@@ -213,7 +214,11 @@ static	void	GameInit(void)
 #endif  //PM_DEBUG
 	// 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
 	GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
-	/* 起動プロセスの設定 */
+  // AP情報の取得
+  WIH_DWC_CreateCFG(HEAPID_NETWORK_FIX);
+  WIH_DWC_ReloadCFG();
+
+  /* 起動プロセスの設定 */
 #if 0
 	TestModeSet();	//←サンプルデバッグモード
 #else
@@ -284,7 +289,9 @@ static	void	GameExit(void)
 	//デバッグシステム
 	DEBUGWIN_ExitSystem();
 #endif PM_DEBUG
+
   GAMEBEACON_Exit();
+  WIH_DWC_DeleteCFG();
 	SND_STRM_Exit();
 	PMVOICE_Exit();
 	PMSND_Exit();

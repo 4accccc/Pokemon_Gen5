@@ -41,3 +41,8 @@ extern void WIH_DWC_Restart(void);
 
 extern const BOOL WIH_DWC_IsEnableBeaconData( const u8 idx );
 extern const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx );
+
+//   APèÓïÒ
+extern void WIH_DWC_CreateCFG(HEAPID id);
+extern void WIH_DWC_DeleteCFG(void);
+extern void WIH_DWC_ReloadCFG(void);

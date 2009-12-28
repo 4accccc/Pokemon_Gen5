@@ -38,7 +38,10 @@ struct _WIH_DWC_WORK {
 
 
 static void _SetScanBeaconData(WMBssDesc* pBss);
-static WIH_DWC_WORK* _localWork=NULL;
+//通信の基底にかかわる部分なのでローカルにおき何処からでも参照できる形にしてある
+static WIH_DWC_WORK* _localWork=NULL;  
+static NCFGConfigEx* _localcfg=NULL;
+
 FS_EXTERN_OVERLAY(dev_irc);
 
 
@@ -63,9 +66,7 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   WHSetWIHDWCBeaconGetFunc(_SetScanBeaconData);
   _localWork=pWork;
 
-  pWork->cfg =GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
-
-  //NCFG_ReadConfig(&_localWork->cfg->compat, NULL);  //@todo 吉原さんにバグ報告済み
+  pWork->cfg = _localcfg;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 
@@ -89,7 +90,6 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
   WHSetWIHDWCBeaconGetFunc(NULL);
 
   IRC_Shutdown();
-  GFL_NET_Align32Free(pWork->cfg);
   GFL_NET_Align32Free(pWork->ScanMemory);
   GFL_NET_Align32Free(pWork);
   _localWork=NULL;
@@ -406,3 +406,45 @@ const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx )
 {
   return &_localWork->aBeaconCatch[idx].sBssDesc;
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   AP情報を得る
+ * @retval  GAME_COMM_STATUS
+ */
+//------------------------------------------------------------------------------
+void WIH_DWC_CreateCFG(HEAPID id)
+{
+  GF_ASSERT(_localcfg==NULL);
+  _localcfg = GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
+}
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   AP情報開放
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void WIH_DWC_DeleteCFG(void)
+{
+  GF_ASSERT(_localcfg);
+  GFL_NET_Align32Free(_localcfg);
+  _localcfg = NULL;
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief   AP情報再読み込み
+ * @retval  void
+ */
+//------------------------------------------------------------------------------
+void WIH_DWC_ReloadCFG(void)
+{
+  GF_ASSERT(_localcfg);
+  NCFG_ReadConfig(&_localcfg->compat, NULL);
+}
+
+

@@ -1,8 +1,8 @@
 //=============================================================================
 /**
  * @file	dwc_raputility.c
- * @bfief	WIFI設定画面呼び出し用
- * @author	k.ohnop
+ * @brief	WIFI設定画面呼び出し用
+ * @author	k.ohno
  * @date	09/01/15
  */
 //=============================================================================
@@ -12,10 +12,11 @@
 #include "net/network_define.h"
 #include "system/main.h"
 #include "net/dwc_raputil.h"
+#include "net/wih_dwc.h"
 
 //==============================================================================
 /**
- * WiFi接続ユーティリティを呼び出す
+ * @brief WiFi接続ユーティリティを呼び出す
  * @param   none
  * @retval  none
  */
@@ -25,11 +26,7 @@ static void mydwc_callWifiUtil( HEAPID HeapID )
 	OSIntrMode old;
 	void *work;
 
-	// アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
-//	OS_InitTick();
-//	OS_InitAlarm();
-
-  //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
+	// ※アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
 
 	// 割り込み処理を一旦禁止へ
 	old = OS_DisableInterrupts();
@@ -77,6 +74,7 @@ static GFL_PROC_RESULT WifiUtil2MainProcEnd(GFL_PROC * proc, int * seq, void * p
 {
   NET_DeviceUnload(GFL_NET_TYPE_WIFI);
   GFL_HEAP_DeleteHeap( HEAPID_WIFI );
+  WIH_DWC_ReloadCFG();
   return GFL_PROC_RES_FINISH;
 }
 
