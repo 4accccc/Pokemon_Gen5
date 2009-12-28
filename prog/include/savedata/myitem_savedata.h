@@ -25,7 +25,7 @@ typedef	struct {
 }ITEM_ST;
 
 #define	BAG_EVENT_ITEM_MAX		( 50 )		// 大切な物ポケット最大数
-#define	BAG_WAZA_ITEM_MAX		( 100 )		// 技マシンポケット最大数
+#define	BAG_WAZA_ITEM_MAX		( 101 )		// 技マシンポケット最大数
 #define	BAG_DRUG_ITEM_MAX		( 40 )		// 薬ポケット最大数
 #define	BAG_NUTS_ITEM_MAX		( 64 )		// 木の実ポケット最大数
 #define	BAG_NORMAL_ITEM_MAX		( 165+30+15+12 )		// 道具ポケット最大数
