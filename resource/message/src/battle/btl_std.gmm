@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-21T20:34:09"/>
+	<create user="taya" host="W00146" date="2009-12-25T21:32:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -775,12 +775,6 @@
 	<row id="BTL_STRID_STD_SnowAttack">
 		<language name="JPN" width="216">あられが　ふきすさぶ！</language>
 		<language name="JPN_KANJI" width="216">あられが　ふきすさぶ！</language>
-	</row>
-
-	<row id="BTL_STRID_STD_WeatherLocked">
-		<comment>天候が変化できない場合のメッセージ</comment>
-		<language name="JPN" width="216">てんきは　かわらなかった！</language>
-		<language name="JPN_KANJI" width="216">天気は　変わらなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Ichigeki">
