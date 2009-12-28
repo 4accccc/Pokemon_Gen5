@@ -47,8 +47,15 @@ class LabelMake
         if moji == split_dic[ DIC_SRC ]
           case split_dic[ DIC_DST ][ 0 ].chr
           when "@"
-            mini_flag = ( split_dic[ DIC_DST ][ 1 ].chr ).to_i
-            label_str << split_dic[ DIC_DST ][ 2 .. split_dic[ DIC_DST ].size - 1 ]
+            if tu_flag == 0
+              mini_flag = ( split_dic[ DIC_DST ][ 1 ].chr ).to_i
+              label_str << split_dic[ DIC_DST ][ 2 .. split_dic[ DIC_DST ].size - 1 ]
+            else
+              tu_flag = 0
+              mini_flag = ( split_dic[ DIC_DST ][ 1 ].chr ).to_i
+              label_str << split_dic[ DIC_DST ][ 2 ].chr
+              label_str << split_dic[ DIC_DST ][ 2 .. split_dic[ DIC_DST ].size - 1 ]
+            end
           when "-"
             label_str << bou_str
           when "/"
