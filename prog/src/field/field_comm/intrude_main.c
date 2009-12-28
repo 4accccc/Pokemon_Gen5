@@ -897,12 +897,13 @@ int Intrude_GetPalaceTownZoneID(int town_tblno)
  * @param   vec		
  */
 //==================================================================
-void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec)
+void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec, int palace_area)
 {
   int rand_no;
   
   if(town_tblno == PALACE_TOWN_DATA_PALACE){
     *vec = PalaceWarpPos;
+//    vec->x += palace_area * PALACE_MAP_LEN;
     return;
   }
   rand_no = GFUser_GetPublicRand0(PALACE_WARP_POS_PATERN);

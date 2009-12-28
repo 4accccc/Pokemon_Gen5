@@ -1655,9 +1655,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   }
   
   //街タッチ判定
-  if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsWfbc(intcomm->intrude_status_mine.zone_id) == TRUE){
+  if(intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){
     for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
       _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
         TOWN_ICON_HITRANGE_HALF, TOWN_ICON_HITRANGE_HALF, &rect);
@@ -1686,9 +1684,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   }
   
   //ミッションアイコンタッチ判定
-  if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE
-      || ZONEDATA_IsWfbc(intcomm->intrude_status_mine.zone_id) == TRUE){
+  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
     _SetRect(MISSION_ICON_POS_X, MISSION_ICON_POS_Y, 
       POWER_ICON_HITRANGE_HALF_X, POWER_ICON_HITRANGE_HALF_Y, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){

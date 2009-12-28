@@ -99,9 +99,9 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   }
   
   //送信リクエストがあれば送信
-  MISSION_SendUpdate(intcomm, mission);
   MISSION_Update_EntryAnswer(intcomm, mission);
   MISSION_Update_AchieveAnswer(intcomm, mission);
+  MISSION_SendUpdate(intcomm, mission);
 }
 
 //--------------------------------------------------------------

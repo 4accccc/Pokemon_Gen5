@@ -92,7 +92,7 @@ void MINIMONO_AddPosRand(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldWork)
     return;
   }
   
-  Intrude_GetPalaceTownRandPos(town_tblno, &vec);
+  Intrude_GetPalaceTownRandPos(town_tblno, &vec, 0);  //※check 第3引数が適当になっている
   vec.z -= GRID_TO_FX32( 1 );  //自機のワープ場所と被らないように1grid上にする
   MINIMONO_AddMMdl(fieldWork, FX32_TO_GRID( vec.x ), FX32_TO_GRID( vec.z ), vec.y);
 }

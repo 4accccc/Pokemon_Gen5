@@ -51,13 +51,22 @@ GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, in
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   ZONEID warp_zone_id;
   VecFx32 pos;
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  int palace_area;
   
   if(town_tblno == PALACE_TOWN_DATA_NULL){
     return NULL;
   }
   
+  if(intcomm == NULL){
+    palace_area = GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(gsys));
+  }
+  else{
+    palace_area = intcomm->intrude_status_mine.palace_area;
+  }
+  
   warp_zone_id = Intrude_GetPalaceTownZoneID(town_tblno);
-  Intrude_GetPalaceTownRandPos(town_tblno, &pos);
+  Intrude_GetPalaceTownRandPos(town_tblno, &pos, palace_area);
   
   event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP);
   return event;

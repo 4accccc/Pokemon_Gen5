@@ -895,7 +895,7 @@ static void _IntrudeRecv_MissionEntryAnswer(const int netID, const int size, con
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_ENTRY_ANSWER *entry_answer = pData;
   
-  OS_TPrintf("受信：「ミッション受注します」の結果 net_id=%d\n", netID);
+  OS_TPrintf("Recv：「ミッション受注します」の結果 net_id=%d\n", netID);
   MISSION_SetRecvEntryAnswer(&intcomm->mission, entry_answer);
 }
 
@@ -919,6 +919,7 @@ BOOL IntrudeSend_MissionEntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_
     return TRUE;  //相手がいない場合は送信済みにしてしまう
   }
   
+  OS_TPrintf("SEND：「ミッション受注します」の返事\n");
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_netid, 
     INTRUDE_CMD_MISSION_ENTRY_ANSWER, sizeof(MISSION_ENTRY_ANSWER), entry_answer, 
     FALSE, FALSE, FALSE);
