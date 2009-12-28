@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-28T11:08:00"/>
+	<create user="taya" host="W00146" date="2009-12-28T13:03:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,12 +353,24 @@
 		<language name="JPN" width="256">つうしん</language>
 	</row>
 
-	<row id="DBGF_LABEL_WEATHER">
-		<language name="JPN" width="256">てんこう</language>
+	<row id="DBGF_LABEL_BACKGROUND">
+		<language name="JPN" width="256">はいけい</language>
 	</row>
 
 	<row id="DBGF_LABEL_LAND">
 		<language name="JPN" width="256">じめん</language>
+	</row>
+
+	<row id="DBGF_LABEL_TIMEZONE">
+		<language name="JPN" width="256">じかんたい</language>
+	</row>
+
+	<row id="DBGF_LABEL_SEASON">
+		<language name="JPN" width="256">きせつ</language>
+	</row>
+
+	<row id="DBGF_LABEL_WEATHER">
+		<language name="JPN" width="256">てんこう</language>
 	</row>
 
 	<row id="DBGF_LABEL_MSGSPD">
@@ -534,7 +546,7 @@
 	</row>
 
 	<row id="DBGF_BG_01">
-		<language name="JPN" width="256">うみ</language>
+		<language name="JPN" width="256">くさむら（しきあり）</language>
 	</row>
 
 	<row id="DBGF_BG_02">
@@ -542,27 +554,143 @@
 	</row>
 
 	<row id="DBGF_BG_03">
-		<language name="JPN" width="256">もり</language>
+		<language name="JPN" width="256">まち（しきあり）</language>
 	</row>
 
 	<row id="DBGF_BG_04">
-		<language name="JPN" width="256">すなち</language>
+		<language name="JPN" width="256">どうくつＡ</language>
 	</row>
 
 	<row id="DBGF_BG_05">
-		<language name="JPN" width="256">せつげん</language>
+		<language name="JPN" width="256">どうくつＢ</language>
 	</row>
 
 	<row id="DBGF_BG_06">
-		<language name="JPN" width="256">どうくつ</language>
+		<language name="JPN" width="256">もり</language>
 	</row>
 
 	<row id="DBGF_BG_07">
-		<language name="JPN" width="256">いわば</language>
+		<language name="JPN" width="256">やま</language>
 	</row>
 
 	<row id="DBGF_BG_08">
-		<language name="JPN" width="256">へや</language>
+		<language name="JPN" width="256">うみ</language>
+	</row>
+
+	<row id="DBGF_BG_09">
+		<language name="JPN" width="256">しつない</language>
+	</row>
+
+	<row id="DBGF_BG_10">
+		<language name="JPN" width="256">さばく</language>
+	</row>
+
+	<row id="DBGF_LAND_00">
+		<language name="JPN" width="256">しばふ</language>
+	</row>
+
+	<row id="DBGF_LAND_01">
+		<language name="JPN" width="256">じめん</language>
+	</row>
+
+	<row id="DBGF_LAND_02">
+		<language name="JPN" width="256">じめん１</language>
+	</row>
+
+	<row id="DBGF_LAND_03">
+		<language name="JPN" width="256">じめん２</language>
+	</row>
+
+	<row id="DBGF_LAND_04">
+		<language name="JPN" width="256">くさ</language>
+	</row>
+
+	<row id="DBGF_LAND_05">
+		<language name="JPN" width="256">すいじょう</language>
+	</row>
+
+	<row id="DBGF_LAND_06">
+		<language name="JPN" width="256">せつげん</language>
+	</row>
+
+	<row id="DBGF_LAND_07">
+		<language name="JPN" width="256">すなち</language>
+	</row>
+
+	<row id="DBGF_LAND_08">
+		<language name="JPN" width="256">あさいしつげん</language>
+	</row>
+
+	<row id="DBGF_LAND_09">
+		<language name="JPN" width="256">どうくつ</language>
+	</row>
+
+	<row id="DBGF_LAND_10">
+		<language name="JPN" width="256">みずたまり</language>
+	</row>
+
+	<row id="DBGF_LAND_11">
+		<language name="JPN" width="256">あさせ</language>
+	</row>
+
+	<row id="DBGF_LAND_12">
+		<language name="JPN" width="256">ひょうじょう</language>
+	</row>
+
+	<row id="DBGF_SEASON_0">
+		<language name="JPN" width="256">はる</language>
+	</row>
+
+	<row id="DBGF_SEASON_1">
+		<language name="JPN" width="256">なつ</language>
+	</row>
+
+	<row id="DBGF_SEASON_2">
+		<language name="JPN" width="256">あき</language>
+	</row>
+
+	<row id="DBGF_SEASON_3">
+		<language name="JPN" width="256">ふゆ</language>
+	</row>
+
+	<row id="DBGF_TIMEZONE_0">
+		<language name="JPN" width="256">あさ</language>
+	</row>
+
+	<row id="DBGF_TIMEZONE_1">
+		<language name="JPN" width="256">ひる</language>
+	</row>
+
+	<row id="DBGF_TIMEZONE_2">
+		<language name="JPN" width="256">ゆうがた</language>
+	</row>
+
+	<row id="DBGF_TIMEZONE_3">
+		<language name="JPN" width="256">よる</language>
+	</row>
+
+	<row id="DBGF_TIMEZONE_4">
+		<language name="JPN" width="256">しんや</language>
+	</row>
+
+	<row id="DBGF_WEATHER_0">
+		<language name="JPN" width="256">なし</language>
+	</row>
+
+	<row id="DBGF_WEATHER_1">
+		<language name="JPN" width="256">はれ</language>
+	</row>
+
+	<row id="DBGF_WEATHER_2">
+		<language name="JPN" width="256">あめ</language>
+	</row>
+
+	<row id="DBGF_WEATHER_3">
+		<language name="JPN" width="256">あられ</language>
+	</row>
+
+	<row id="DBGF_WEATHER_4">
+		<language name="JPN" width="256">すなあらし</language>
 	</row>
 
 	<flowchart-group-list>
