@@ -311,8 +311,6 @@ BOOL BTL_NET_NotifyServerParam( const BTLNET_SERVER_NOTIFY_PARAM* sendParam )
   BOOL result;
   u8 i;
 
-  BU_Printf( PRINT_FLG, "全マシンにサーバパラメータを送信\n");
-
   result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_SERVER_PARAM,
         sizeof( *sendParam ),
         sendParam,

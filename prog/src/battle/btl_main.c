@@ -12,6 +12,8 @@
 #include "system/main.h"
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
+#include "gamesystem/msgspeed.h"
+
 #include "gamesystem/btl_setup.h"
 #include "battle/battle.h"
 
@@ -103,6 +105,7 @@ struct _BTL_MAIN_MODULE {
 
   u8        posCoverClientID[ BTL_POS_MAX ];
   u32       bonusMoney;
+  int       msgSpeed;
 
 
   BTL_PROC    subProc;
@@ -117,7 +120,7 @@ struct _BTL_MAIN_MODULE {
   u8        myClientID;
   u8        myOrgPos;
   u8        ImServer;
-  u8        fWazaEffEnable;
+  u8        fWazaEffectEnable;
   u8        changeMode;
 
 };
@@ -224,6 +227,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
 
       wk->heapID = HEAPID_BTL_SYSTEM;
+      wk->msgSpeed = MSGSPEED_GetWait();
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
@@ -238,7 +242,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_CALC_InitRandSys( &wk->randomContext );
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
-      wk->fWazaEffEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
+      wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
       wk->changeMode = (CONFIG_GetBattleRule(setup_param->configData) == BATTLERULE_IREKAE)?
           BTL_CHANGEMODE_IREKAE : BTL_CHANGEMODE_KATINUKI;
 
@@ -1182,9 +1186,11 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     break;
 
   case 2:
-    // サーバマシンは各クライアントにデバッグパラメータを通知する
+    // サーバマシンは各クライアントにサーバパラメータを通知する
     wk->serverNotifyParam.randomContext = wk->randomContext;
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
+    wk->serverNotifyParam.msgSpeed = MSGSPEED_GetWait();
+    wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
     }
@@ -1195,9 +1201,14 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     if( BTL_NET_IsServerParamReceived(&wk->serverNotifyParam) )
     {
       BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
       sp->DebugFlagBit = wk->serverNotifyParam.debugFlagBit;
       sp->recRandContext = wk->serverNotifyParam.randomContext;
-      wk->randomContext  = wk->serverNotifyParam.randomContext;
+
+      wk->randomContext     = wk->serverNotifyParam.randomContext;
+      wk->fWazaEffectEnable = wk->serverNotifyParam.fWazaEffectEnable;
+      wk->msgSpeed          = wk->serverNotifyParam.msgSpeed;
+
       return TRUE;
     }
     break;
@@ -1592,7 +1603,20 @@ BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk )
 {
-  return wk->fWazaEffEnable;
+  return wk->fWazaEffectEnable;
+}
+//=============================================================================================
+/**
+ * 文字出力のwait値を返す
+ *
+ * @param   wk
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk )
+{
+  return wk->msgSpeed;
 }
 //=============================================================================================
 /**
@@ -1630,6 +1654,7 @@ COMM_PLAYER_SUPPORT* BTL_MAIN_GetCommSupportHandle( const BTL_MAIN_MODULE* wk )
   }
   return NULL;
 }
+
 
 //=============================================================================================
 /**

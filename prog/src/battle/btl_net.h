@@ -37,6 +37,8 @@ typedef struct {
 
   GFL_STD_RandContext  randomContext;
   u16                  debugFlagBit;
+  u8                   msgSpeed;
+  u8                   fWazaEffectEnable;
 
 }BTLNET_SERVER_NOTIFY_PARAM;
 

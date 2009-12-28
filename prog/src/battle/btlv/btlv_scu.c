@@ -12,7 +12,6 @@
 #include "sound\pm_sndsys.h"
 #include "poke_tool/monsno_def.h"
 #include "print/printsys.h"
-#include "gamesystem/msgspeed.h"
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
@@ -1751,7 +1750,7 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
   GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
 
   wk->printStream = PRINTSYS_PrintStream(
-        wk->win, 0, 0, str, wk->defaultFont, MSGSPEED_GetWait(), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
+        wk->win, 0, 0, str, wk->defaultFont, BTL_MAIN_GetPrintWait(wk->mainModule), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
         wk->heapID, COLIDX_MSGWIN_CLEAR
   );
   PRINTSYS_PrintStreamStop( wk->printStream );
