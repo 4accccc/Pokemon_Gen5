@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 20:19:27
+#save date:2009/12/28 16:27:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 48 56
+-56 48 88
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 48 56
+-40 48 88
 #event number: 2
 #type
 1
@@ -492,23 +492,6 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Door Event Label
-DOOR_ID_C07_C07R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_C07R0101
-#Next Door ID Name
-DOOR_ID_C07R0101_C07_EXIT02
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-552 0 -664
-#size
-1 1
-#event number: 2
-#Door Event Label
 DOOR_ID_C07_C07PC0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C07PC0101
@@ -524,13 +507,13 @@ EVENTDATA_POSTYPE_GRID
 136 48 -312
 #size
 1 1
-#event number: 3
+#event number: 2
 #Door Event Label
-DOOR_ID_C07_C07R0301_EXIT01
+DOOR_ID_C07_C07R0101_EXIT01
 #Next Zone ID Name
-ZONE_ID_C07R0301
+ZONE_ID_C07R0101
 #Next Door ID Name
-DOOR_ID_C07R0301_C07_EXIT02
+DOOR_ID_C07R0101_C07_EXIT02
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -541,7 +524,7 @@ EVENTDATA_POSTYPE_GRID
 152 48 -88
 #size
 1 1
-#event number: 4
+#event number: 3
 #Door Event Label
 DOOR_ID_C07_C07GYM0101_EXIT01
 #Next Zone ID Name
@@ -558,7 +541,7 @@ EVENTDATA_POSTYPE_GRID
 -56 48 120
 #size
 1 1
-#event number: 5
+#event number: 4
 #Door Event Label
 DOOR_ID_C07_D07R0401_EXIT01
 #Next Zone ID Name
@@ -575,7 +558,7 @@ EVENTDATA_POSTYPE_GRID
 -72 0 -520
 #size
 1 1
-#event number: 6
+#event number: 5
 #Door Event Label
 DOOR_ID_C07_C07R0401_EXIT01
 #Next Zone ID Name
@@ -590,6 +573,23 @@ EXIT_TYPE_DOOR
 EVENTDATA_POSTYPE_GRID
 #position
 -104 48 -88
+#size
+1 1
+#event number: 6
+#Door Event Label
+DOOR_ID_C07_C07R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_C07R0301
+#Next Door ID Name
+DOOR_ID_C07R0301_C07_EXIT02
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -664
 #size
 1 1
 #Map Event List Data End

@@ -200,6 +200,9 @@ EVENT_START   ev_pos_c08_champions_01
 	//演説イベントOBJ非表示
 	_FLAG_SET( FV_C08_SAGE1_01 )
 	
+	//D07R0101のヤーコンを消す
+	_FLAG_SET( FV_D07R0101_GYMLEADER05_01 )
+	
 	//C08演説イベントPOSを無効に
 	$WK_SCENE_C08 = 1
 	

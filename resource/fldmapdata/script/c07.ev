@@ -171,6 +171,8 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_CLOSE()
 	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( C07_RIVAL_01 , anm_rival_staystep )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_c07_black_03 , C07_RIVAL_01 , WIN_UP )
 	_BALLOONWIN_CLOSE()
 
@@ -336,7 +338,7 @@ _ANIME_LABEL	anm_c07_hakase1_goodbye
 //	C07　リュウラセンイベント開始：ハチク外に出てくる
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c07_leader_exit
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -365,4 +367,11 @@ _ANIME_LABEL	anm_c07_rival_koutai
 _ANIME_LABEL	anm_c07_leader_goodbye
 	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// C07　リュウラセンイベント開始：ライバルその場歩きで興奮を表現
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_staystep
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
