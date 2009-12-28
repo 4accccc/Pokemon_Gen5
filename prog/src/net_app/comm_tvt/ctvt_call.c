@@ -618,13 +618,17 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         if( callWork->barWork[j+1].memberWorkNo != CTVT_CALL_INVALID_NO )
         {
           callWork->barWork[j].memberWorkNo = callWork->barWork[j+1].memberWorkNo;
+          callWork->memberData[callWork->barWork[j].memberWorkNo].barWorkNo = j;
           callWork->barWork[j].isUpdate = TRUE;
         }
         else
         {
+          callWork->barWork[j].memberWorkNo = CTVT_CALL_INVALID_NO;
+          callWork->barWork[j].isUpdate = TRUE;
           break;
         }
       }
+      callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
       for( j=0;j<3;j++ )
       {
         if( callWork->checkIdx[j] == i )
@@ -641,13 +645,14 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   
   if( isUpdate == TRUE )
   {
-    /*
+    //*
     u8 i;
     OS_TFPrintf(3,"--------------------------------\n");
-    for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
+    for( i=0;i<5;i++ )
     {
-      OS_TFPrintf(3,"[%d][%x:%x:%x:%x:%x:%x]\n",
+      OS_TFPrintf(3,"[%d][%3d][%x:%x:%x:%x:%x:%x]\n",
         callWork->memberData[i].isEnable ,
+        callWork->memberData[i].barWorkNo ,
         callWork->memberData[i].macAddress[0] ,
         callWork->memberData[i].macAddress[1] ,
         callWork->memberData[i].macAddress[2] ,
@@ -656,6 +661,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         callWork->memberData[i].macAddress[5] 
         );
     }
+    OS_TFPrintf(3,"--------------------------------\n");
+    for( i=0;i<5;i++ )
+    {
+      OS_TFPrintf(3,"[%d]",callWork->barWork[i].memberWorkNo);
+    }
+    OS_TFPrintf(3,"\n");
     //*/
     CTVT_TPrintf("UpdateBar\n");
     CTVT_CALL_UpdateBar( work , callWork );
@@ -680,7 +691,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
 {
   if( barWork->isUpdate == TRUE )
   {
-    if( barWork->memberWorkNo != CTVT_CALL_INVALID_NO )
+    if( barWork->memberWorkNo!= CTVT_CALL_INVALID_NO )
     {
       const HEAPID heapId = COMM_TVT_GetHeapId( work );
       GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
