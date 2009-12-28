@@ -483,6 +483,7 @@ typedef struct
   u32 dir_bit;
   int pre_y;
   CONFIG_PARAM  now;
+  BOOL is_info_update;
 } SCROLL_WORK;
 //-------------------------------------
 /// コンフィグメインワーク
@@ -2771,11 +2772,13 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, const GRAP
   {
     p_wk->select    = CONFIG_LIST_INIT;
     Scroll_ChangePlt( p_wk, FALSE );
+    p_wk->is_info_update = FALSE;
   }
   else
   {
     p_wk->select    = CONFIG_LIST_MSGSPEED;
     Scroll_ChangePlt( p_wk, TRUE );
+    p_wk->is_info_update = TRUE;
   }
 
 }
@@ -2807,7 +2810,6 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   GFL_POINT slide_pos;
   GFL_POINT slide_now;
   int y, bar_top;
-  BOOL is_info_update = FALSE;
   BOOL is_bmpprint_decide;
   BOOL  is_decide = TRUE;
 
@@ -2828,6 +2830,12 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       { 
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         Scroll_ChangePlt( p_wk, TRUE );
+        if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
+        { 
+          int speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+          GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
+          MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
+        }
         return;
       }
       else
@@ -2881,7 +2889,6 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     /* fallthrough */
 
   case UI_INPUT_TRG_UP:
-    GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
     p_wk->cont_sync = 0;
     p_wk->select--;
     p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
@@ -2892,7 +2899,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     }
     if( p_wk->select < CONFIG_LIST_MAX )
     {
-      is_info_update  = TRUE;
+      p_wk->is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
     Scroll_ChangePlt( p_wk, is_decide );
@@ -2909,7 +2916,6 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     /* fallthrough */
 
   case UI_INPUT_TRG_DOWN:
-    GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
     p_wk->cont_sync = 0;
     p_wk->select++;
     p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
@@ -2920,7 +2926,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     }
     if( p_wk->select < CONFIG_LIST_MAX )
     {
-      is_info_update  = TRUE;
+      p_wk->is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
     Scroll_ChangePlt( p_wk, is_decide );
@@ -2931,16 +2937,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
     if( SCROLL_TOP_BAR_Y < trg_pos.y && trg_pos.y < SCROLL_APP_BAR_Y )
     {
-
-      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
-
       //座標から選択への変換
       p_wk->select  = Scroll_PosToList( p_wk, &trg_pos );
       //項目のタッチ
       Scroll_TouchItem( p_wk, &trg_pos );
       Scroll_ChangePlt( p_wk, is_decide );
       GRAPHIC_StartPalleteFade( p_graphic );
-      is_info_update  = TRUE;
+      p_wk->is_info_update  = TRUE;
       is_bmpprint_decide  = is_decide;
     }
     break;
@@ -2995,25 +2998,27 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       GRAPHIC_PrintBmpwin( p_graphic );
       APPBAR_ReWrite( p_appbar, HEAPID_CONFIG );
       Scroll_ChangePlt( p_wk, is_bmpprint_decide );
-      is_info_update  = TRUE;
+      p_wk->is_info_update  = TRUE;
       break;
     case CONFIG_ITEM_MSG_SLOW:
     case CONFIG_ITEM_MSG_NORMAL:
     case CONFIG_ITEM_MSG_FAST:
       //メッセージ速度を変更したときは分かりやすいように
       //上画面更新
-      is_info_update  = TRUE;
+      p_wk->is_info_update  = TRUE;
       break;
     }
   }
 
   //上画面メッセージ更新
-  if( is_info_update )
+  if( p_wk->is_info_update )
   {
-    if( p_wk->select < CONFIG_LIST_MAX )
+    if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
     {
       int speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
       MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
+      p_wk->is_info_update  = FALSE;
     }
   }
 
