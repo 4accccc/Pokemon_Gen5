@@ -173,7 +173,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/actor_tool.c \
         system/bmp_oam.c \
         system/el_scoreboard.c \
-        system/talkmsgwin.c \
         net_app/wifi_earth/wifi_country.c \
         field/script.c \
         field/script_hideitem.c \
@@ -380,6 +379,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_intrude.c \
 				field/event_intrude_subscreen.c \
 				field/event_subscreen.c \
+        system/talkmsgwin.c \
 				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
 				field/c_gear/no_gear.c \
