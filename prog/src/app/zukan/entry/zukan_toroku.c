@@ -573,7 +573,7 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_TOROKU : BGƒLƒƒƒ‰—Ìˆæ‚ª‘«‚è‚Ü‚¹‚ñ‚Å‚µ‚½B\n" );
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_name_bgu_NSCR,
                                      GFL_BG_FRAME0_M,
-                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),i
+                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
                                      32*24*GFL_BG_1SCRDATASIZ,
                                      FALSE, work->heap_id );
     GFL_ARC_CloseDataHandle( handle );
