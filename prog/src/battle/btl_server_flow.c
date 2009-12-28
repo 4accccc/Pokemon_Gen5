@@ -9226,6 +9226,8 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
       guard = BPP_GetValue( defender, vid );
     }
   }
+  OS_TPrintf("変化前防御力=%d\n", guard);
+
   // てんこう「すなあらし」の時、いわタイプのとくぼう1.5倍
   if( (scEvent_GetWeather(wk) == BTL_WEATHER_SAND)
   &&  (BPP_IsMatchType(defender, POKETYPE_IWA))

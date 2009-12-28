@@ -71,11 +71,11 @@ typedef struct {
   u16 monsno;       ///< ポケモンナンバー
   u16 hpMax;        ///< 最大HP
 
-  u8  attack;       ///< こうげき
-  u8  defence;      ///< ぼうぎょ
-  u8  sp_attack;    ///< とくこう
-  u8  sp_defence;   ///< とくぼう
-  u8  agility;      ///< すばやさ
+  u16 attack;       ///< こうげき
+  u16 defence;      ///< ぼうぎょ
+  u16 sp_attack;    ///< とくこう
+  u16 sp_defence;   ///< とくぼう
+  u16 agility;      ///< すばやさ
 
   u8  level;        ///< レベル
   u8  type1;        ///< タイプ１
