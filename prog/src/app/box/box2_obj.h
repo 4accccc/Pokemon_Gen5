@@ -476,26 +476,11 @@ extern void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv );
  * 手持ちのポケモンアイコンスクロール処理
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	mx		移動量Ｘ
- * @param	my		移動量Ｙ
- *
- * @return	none
- *
- *	※使用しているところ無し
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PartyPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mx, s8 my );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちのポケモンアイコンスクロール処理
- *
- * @param	syswk	ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PartyPokeIconScroll2( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_PartyPokeIconScroll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -750,7 +735,7 @@ extern void BOX2OBJ_ItemIconCursorMove( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_ItemIconPutSub( BOX2_APP_WORK * appwk );
+//extern void BOX2OBJ_ItemIconPutSub( BOX2_APP_WORK * appwk );
 
 
 //============================================================================================
@@ -878,17 +863,6 @@ extern void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * 壁紙変更：カーソルセット
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_WallPaperCursorSet( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
  * 壁紙変更：名前セット
  *
  * @param	syswk	ボックス画面システムワーク
@@ -937,7 +911,7 @@ extern void BOX2OBJ_InitBoxMoveCursorPos( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -948,7 +922,7 @@ extern void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1023,33 +997,6 @@ extern void BOX2OBJ_InitTrayCursorScroll( BOX2_SYS_WORK * syswk, s32 mv );
 extern void BOX2OBJ_EndTrayCursorScroll( BOX2_SYS_WORK * syswk );
 extern void BOX2OBJ_SetTrayNamePos( BOX2_SYS_WORK * syswk, u32 pos );
 extern void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg );
-
-
-//============================================================================================
-//	ポケモンを預けるボックス選択関連
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * 預ける：ＯＢＪ初期化（全体）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PokeOutBoxObjInit( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 預ける：関連ＯＢＪを非表示へ
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PokeOutBoxObjVanish( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================

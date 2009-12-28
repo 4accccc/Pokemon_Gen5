@@ -43,7 +43,7 @@ typedef struct {
 // ボタンタイプ
 enum {
 	BOX2BMP_BUTTON_TYPE_WHITE = 0,	// 白
-	BOX2BMP_BUTTON_TYPE_RED,		// 赤
+//	BOX2BMP_BUTTON_TYPE_RED,				// 赤
 };
 
 // 逃がすメッセージ表示ID
@@ -221,17 +221,6 @@ extern void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		「てもちポケモン」ボタン作成
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		「ポケモンいどう」ボタン作成（持ち物整理モードの場合は「もちものせいり」）
  *
  * @param		syswk		ボックス画面システムワーク
@@ -316,7 +305,7 @@ extern void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk );
  * @return	表示したBMPWINのID
  */
 //--------------------------------------------------------------------------------------------
-extern u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item );
+//extern u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -370,27 +359,7 @@ extern void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos );
 
 extern void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
 
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更処理の名前表示
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_WallPaperNameWrite( BOX2_SYS_WORK * syswk );
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「てもちポケモン」ボタン作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
 
 
 
@@ -411,18 +380,6 @@ extern void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LI
 
 //--------------------------------------------------------------------------------------------
 /**
- * 道具整理メニュー作成
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	item	アイテム番号
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ItemArrangeMenuStrPrint( BOX2_SYS_WORK * syswk, u16 item );
-
-//--------------------------------------------------------------------------------------------
-/**
  * メニュー非表示
  *
  * @param	syswk	ボックス画面システムワーク
@@ -432,61 +389,6 @@ extern void BOX2BMP_ItemArrangeMenuStrPrint( BOX2_SYS_WORK * syswk, u16 item );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_MenuVanish( BOX2_SYS_WORK * syswk, u32 max );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ボックスをきりかえる」ボタン作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BoxMoveButtonPrint( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ボックスをきりかえる」作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BoxMoveMenuPrint( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * ボックステーマメニュー作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BoxThemaMenuPrint( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙メニュー作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_WallPaperChgMenuPrint( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンを預ける」メニュー作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_PartyOutMenuPrint( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -515,16 +417,6 @@ extern void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk );
 
 
 
-//--------------------------------------------------------------------------------------------
-/**
- * Ｙステータスボタン作成
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutYStatus( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
@@ -553,7 +445,7 @@ extern void BOX2BMP_SysWinVanish( BOX2_APP_WORK * appwk, u32 winID );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_SysWinVanishEz( BOX2_APP_WORK * appwk, u32 winID );
+//extern void BOX2BMP_SysWinVanishEz( BOX2_APP_WORK * appwk, u32 winID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -733,7 +625,7 @@ extern void BOX2BMP_ItemArrangeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 win
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID );
+//extern void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -745,7 +637,7 @@ extern void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID );
+//extern void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID );
 
 extern void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID );
 

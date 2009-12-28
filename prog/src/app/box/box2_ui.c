@@ -55,13 +55,14 @@ static void CursorMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Off( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
+static void CursorMoveCallBack_Dummy( void * work, int now_pos, int old_pos );
 
 static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos );
-static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos );
-static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos );
+//static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos );
+//static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos );
+//static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos );
 
 static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyInMainCallBack_Touch( void * work, int now_pos, int old_pos );
@@ -159,10 +160,16 @@ static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyOutBoxSelCallBack = {
+	CursorMoveCallBack_Dummy,
+	CursorMoveCallBack_Off,
+	CursorMoveCallBack_Dummy,
+	CursorMoveCallBack_Dummy,
+/*
 	PartyOutBoxSelCallBack_On,
 	CursorMoveCallBack_Off,
 	PartyOutBoxSelCallBack_Move,
 	PartyOutBoxSelCallBack_Touch,
+*/
 };
 
 // マーキング
@@ -1041,6 +1048,11 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
 	CursorObjMove( syswk, now_pos );
 }
 
+static void CursorMoveCallBack_Dummy( void * work, int now_pos, int old_pos )
+{
+}
+
+
 
 //============================================================================================
 //============================================================================================
@@ -1160,9 +1172,9 @@ static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 {
-/*
 	BOX2_SYS_WORK * syswk;
 	const CURSORMOVE_DATA * pw;
 	u8	x, y;
@@ -1188,8 +1200,8 @@ static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 	}else{
 		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
 	}
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1202,9 +1214,9 @@ static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 {
-/*
 	BOX2_SYS_WORK * syswk = work;
 
 	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
@@ -1268,8 +1280,8 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1282,9 +1294,9 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos )
 {
-/*
 	BOX2_SYS_WORK * syswk = work;
 
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
@@ -1292,8 +1304,8 @@ static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos 
 	if( now_pos != BOX2UI_PTOUT_BOXSEL_LEFT && now_pos != BOX2UI_PTOUT_BOXSEL_RIGHT ){
 		CursorObjMove( syswk, now_pos );
 	}
-*/
 }
+*/
 
 void BOX2UI_PartyOutBoxSelCursorMoveSet( BOX2_SYS_WORK * syswk, u32 pos )
 {
@@ -1613,29 +1625,6 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
 //============================================================================================
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「ボックスをせいりする」ポケモン移動操作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	動作結果
- */
-//--------------------------------------------------------------------------------------------
-u32 BOX2UI_BoxArrangePokeMove( BOX2_SYS_WORK * syswk )
-{
-	u32	ret;
-	
-	if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == FALSE ){
-		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_CHANGE );
-	}
-
-	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
-
-	CURSORMOVE_MoveTableInit( syswk->app->cmwk );
-
-	return ret;
-}
 
 // ポケモン取得時のタッチバーボタン設定
 static void SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos, u32 max )
@@ -2295,11 +2284,6 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
 
 	syswk->app->old_cur_pos = now_pos;
 }
-
-
-
-
-
 
 
 //============================================================================================
@@ -3392,37 +3376,6 @@ static void SleepMainCallBack_Touch( void * work, int now_pos, int old_pos )
 //============================================================================================
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「もちものをせいりする」持ち物整理時にアイコンを掴んでいるときの操作
- *
- * @param	syswk		ボックス画面システムワーク
- *
- * @return	動作結果
- *
- *	※ボックス整理・ポケモン移動のワークを使用
- */
-//--------------------------------------------------------------------------------------------
-u32 BOX2UI_BoxItemArrangeMoveHand( BOX2_SYS_WORK * syswk )
-{
-	u32	ret;
-
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_LEFT );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_RIGHT );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_CHANGE );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY1 );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY2 );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY3 );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY4 );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY5 );
-	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_TRAY6 );
-
-	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
-
-	CURSORMOVE_MoveTableInit( syswk->app->cmwk );
-
-	return ret;
-}
 
 
 //============================================================================================

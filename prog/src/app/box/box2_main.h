@@ -39,21 +39,15 @@
 #define	BOX2MAIN_BG_PAL_SELWIN		( 12 )		// 選択ボタン（２本）
 #define	BOX2MAIN_BG_PAL_WALL1			( 14 )		// 壁紙１
 #define	BOX2MAIN_BG_PAL_WALL2			( 15 )		// 壁紙２
-//↑使用確定-----------------------------------------------------------
 
-#define	BOX2MAIN_BG_PAL_SYSFNT_S	( 15 )
+#define	BOX2MAIN_BG_PAL_SYSFNT_S	( 15 )		// サブ画面フォントパレット
 
-
-// システムウィンドウ定義
-//#define	BOX2MAIN_SYSWIN_CGX_SIZ	( TALK_WIN_CGX_SIZ )
-//#define	BOX2MAIN_SYSWIN_CGX_POS	( 8 )			// 適当（タッチバーのキャラの後に入れる）
 // 選択ウィンドウ定義
 #define	BOX2MAIN_SELWIN_CGX_SIZ	( 3 * 4 )
 #define	BOX2MAIN_SELWIN_CGX_POS	( 1024 - BOX2MAIN_SELWIN_CGX_SIZ * 2 )
 #define	BOX2MAIN_SELWIN_CGX_OFF	( BOX2MAIN_SELWIN_CGX_POS )
-//#define	BOX2MAIN_SELWIN_CGX_ON	( BOX2MAIN_SELWIN_CGX_OFF + BOX2MAIN_SELWIN_CGX_SIZ )
 // はい・いいえウィンドウ定義
-#define	BOX2MAIN_YNWIN_CGX_SIZ	( 9 )//( TOUCH_SW_USE_CHAR_NUM )
+#define	BOX2MAIN_YNWIN_CGX_SIZ	( 9 )
 #define	BOX2MAIN_YNWIN_CGX_POS	( BOX2MAIN_SELWIN_CGX_POS - BOX2MAIN_YNWIN_CGX_SIZ )
 
 // タッチバー定義
@@ -77,7 +71,6 @@
 #define	BOX2OBJ_PI_OUTLINE_MAX		( 8 )
 
 #define	BOX2OBJ_TRAYICON_MAX		( 6 )
-#define	BOX2OBJ_WPICON_MAX			( 4 )
 
 // ポケモンアイコンのキャラサイズ
 #define	BOX2OBJ_POKEICON_CGX_SIZE	( 0x20 * 4 * 4 )
@@ -86,7 +79,7 @@
 
 #define	BOX2MAIN_PPP_GET_MINE		( 0xff )	// BOX2MAIN_PPPGet()で手持ちを取得するときのトレイ定義
 
-#define	BOX2MAIN_BOXMOVE_FLG		( 0x80 )	// 他のトレイに投げるときのフラグ
+//#define	BOX2MAIN_BOXMOVE_FLG		( 0x80 )	// 他のトレイに投げるときのフラグ
 
 #define	BOX2MAIN_TRAY_SCROLL_SPD		( 8 )		// トレイスクロール速度
 #define	BOX2MAIN_TRAY_SCROLL_CNT		( 23 )	// トレイスクロールカウント
@@ -211,13 +204,11 @@ enum {
 	BOX2BMPWIN_ID_TOKUSEI_STR,	//「とくせい」
 	BOX2BMPWIN_ID_ITEM_STR,			//「もちもの」
 
-	BOX2BMPWIN_ID_ITEMLABEL,	// アイテム名（説明ウィンドウのタブ部分）
-	BOX2BMPWIN_ID_ITEMINFO,		// アイテム説明
-	BOX2BMPWIN_ID_ITEMLABEL2,	// アイテム名（説明ウィンドウのタブ部分）（スワップ用）
-	BOX2BMPWIN_ID_ITEMINFO2,	// アイテム説明（スワップ用）
+//	BOX2BMPWIN_ID_ITEMLABEL,	// アイテム名（説明ウィンドウのタブ部分）
+//	BOX2BMPWIN_ID_ITEMINFO,		// アイテム説明
+//	BOX2BMPWIN_ID_ITEMLABEL2,	// アイテム名（説明ウィンドウのタブ部分）（スワップ用）
+//	BOX2BMPWIN_ID_ITEMINFO2,	// アイテム説明（スワップ用）
 
-
-// ↓使用確定-----------------------------------------------------
 	// 下画面
 	BOX2BMPWIN_ID_MENU1,		// メニュー１
 	BOX2BMPWIN_ID_MENU2,		// メニュー２
@@ -236,16 +227,6 @@ enum {
 	BOX2BMPWIN_ID_MSG2,			// メッセージ２
 	BOX2BMPWIN_ID_MSG3,			// メッセージ３
 	BOX2BMPWIN_ID_MSG4,			// メッセージ４
-// ↑使用確定-----------------------------------------------------
-
-
-
-	BOX2BMPWIN_ID_BOXMV_MENU,	// ボックス移動のメニュー
-
-	BOX2BMPWIN_ID_BOXMV_BTN,	//「ボックスをきりかえる」
-//	BOX2BMPWIN_ID_Y_STATUS,		// Ｙボタンステータス
-
-//	BOX2BMPWIN_ID_TRAY_NAME,	// トレイ名
 
 	BOX2BMPWIN_ID_MAX
 };
@@ -268,16 +249,10 @@ enum {
 	BOX2MAIN_WINFRM_POKE_BTN,			//「てもちポケモン」ボタン
 	BOX2MAIN_WINFRM_BOXLIST_BTN,	//「ボックスリスト」ボタン
 
-// ↑使用確定------------------------------------------------
-
-
-
-
-
 //	BOX2MAIN_WINFRM_RET_BTN,	//「もどる」ボタン
 //	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
-	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
-	BOX2MAIN_WINFRM_BOXMV_BTN,	// ボックス移動時のボタン
+//	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
+//	BOX2MAIN_WINFRM_BOXMV_BTN,	// ボックス移動時のボタン
 //	BOX2MAIN_WINFRM_Y_ST_BTN,	// Ｙボタンステータス
 
 //	BOX2MAIN_WINFRM_SUBDISP,	// 上画面用（技・持ち物）
@@ -408,7 +383,7 @@ typedef struct {
 
 	u16	pokegra_swap;		// 上画面ポケモングラフィック切替フラグ
 
-	BOOL cancel_flg;		// ポケモン取得キャンセルフラグ
+//	BOOL cancel_flg;		// ポケモン取得キャンセルフラグ
 
 	u32	old_cur_pos;		// 前回のカーソル位置（外部で必要なため）
 
@@ -425,7 +400,7 @@ typedef struct {
 	u8	msg_put;				// メッセージを表示するか
 	u8	mv_err_code;		// ポケモン移動エラーコード
 
-	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
+//	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
 
 	u32	pokeMark;			// マーキング変更ワーク
 
@@ -474,7 +449,7 @@ typedef struct {
 	u8	tray;										// 現在のトレイ
 	u8	trayMax;								// 開放されているトレイ数
 
-	POKEMON_PARAM * getPP;			// 取得したポケモンをコピーしておく領域
+//	POKEMON_PARAM * getPP;			// 取得したポケモンをコピーしておく領域
 
 	u8	get_pos;								// 取得位置
 	u8	get_tray;								// 取得トレイ
@@ -485,17 +460,17 @@ typedef struct {
 
 	u8	move_mode;			// ポケモン移動モード
 
-	u8	quick_mode;			//「ポケモンいどう」のモード ( 0 = 通常, 1 = トレイポケモン, 2 = 手持ちポケモン )
-	u8	quick_get;			//「ポケモンいどう」メニューでの取得位置
+//	u8	quick_mode;			//「ポケモンいどう」のモード ( 0 = 通常, 1 = トレイポケモン, 2 = 手持ちポケモン )
+//	u8	quick_get;			//「ポケモンいどう」メニューでの取得位置
 
-	u8	y_status_flg;		// Ｙボタンでステータスを開いたかどうか
-	u8	y_status_hand;		// Ｙステータス時に掴んでいるか
-	u8	y_status_pos;		// Ｙステータス時に掴んでいたときの戻り位置	←WBでも使う！（そのうちリネームする）
+//	u8	y_status_flg;		// Ｙボタンでステータスを開いたかどうか
+//	u8	y_status_hand;		// Ｙステータス時に掴んでいるか
+	u8	tb_status_pos;		// 掴んでいるときのステータス画面からの戻り位置
 
 	u8	pokechg_mode;		// 入れ替えモード
 
-	u8	party_sel_flg;		// 手持ち選択フラグ
-	u8	box_mv_flg;			// ボックス移動フラグ
+//	u8	party_sel_flg;		// 手持ち選択フラグ
+//	u8	box_mv_flg;			// ボックス移動フラグ
 
 	u8	tb_ret_btn;			// タッチバーに表示している戻るボタンの表示状況
 	u8	tb_exit_btn;		// タッチバーに表示している終了ボタンの表示状況
@@ -821,10 +796,10 @@ extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, u32 tray, int 
 extern POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 // ポケモンデータ取得
-extern void BOX2MAIN_GetPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+//extern void BOX2MAIN_GetPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 // 取得したポケモンデータを配置
-extern void BOX2MAIN_PutPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+//extern void BOX2MAIN_PutPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 
 //--------------------------------------------------------------------------------------------
@@ -2144,18 +2119,6 @@ extern int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : 取得ポケモン移動（トレイ）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-//extern int BOX2MAIN_VFuncGetPokeMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
  * VBLANK FUNC : 取得ポケモン移動（パーティ）
  *
  * @param	syswk	ボックス画面システムワーク
@@ -2201,18 +2164,6 @@ extern int BOX2MAIN_VFuncPartyPokeFreeSort( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncPartyInPokeMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : ポケモンを預ける動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPartyOutPokeMove( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2336,150 +2287,6 @@ extern int BOX2MAIN_VFuncBoxMoveFrmOut( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : やめるフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncExitButtonMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncBoxMoveMenuIn( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncBoxMoveMenuOut( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : ボックステーマ変更メニューイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncBoxThemaMenuMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 壁紙変更フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-//extern int BOX2MAIN_VFuncWallPaperFrmIn( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 壁紙変更フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncWallPaperFrmOut( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : あずけるボックス選択フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPokeOutBoxFrmIn( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : あずけるボックス選択フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPokeOutBoxFrmOut( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」ボタンフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncBoxMoveButtonMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」ボタンＹステータスボタン動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : Ｙステータスボタンフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncYStatusButtonMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「あずける」「やめる」フレーム動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncPartyOutButtonMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
  * VBLANK FUNC : 取得ポケモン移動（ポケモンをあずける）
  *
  * @param	syswk	ボックス画面システムワーク
@@ -2525,18 +2332,6 @@ extern int BOX2MAIN_VFuncCursorMove( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncMenuMove( BOX2_SYS_WORK * syswk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 戻るを消してメニューを出す（ボックス整理）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-//extern int BOX2MAIN_VFuncMenuOpenKeyArrange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2633,7 +2428,7 @@ extern int BOX2MAIN_VFuncItemArrangeMenuClose( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2721,7 +2516,7 @@ extern int BOX2MAIN_VFuncItemIconPartyChange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : ポケモンアイコンを手で取得した状態にする
+ *ポケモンアイコンを手で取得した状態にする
  *
  * @param	syswk	ボックス画面システムワーク
  *

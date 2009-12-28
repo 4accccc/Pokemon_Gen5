@@ -996,7 +996,7 @@ void BOX2MAIN_InitBoxMoveFrameScroll( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_BoxMoveObjInit( syswk );
 //	BOX2OBJ_BoxMoveCursorSet( syswk );
 	BOX2OBJ_InitBoxMoveCursorPos( syswk->app );
-	BOX2OBJ_BoxMoveNameSet( syswk );
+//	BOX2OBJ_BoxMoveNameSet( syswk );
 	BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 	BOX2BGWFRM_BoxMoveFrmInSet( syswk->app->wfrm );
 }
@@ -1121,6 +1121,7 @@ POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 }
 
 // ポケモンデータ取得
+/*
 void BOX2MAIN_GetPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 {
 	// トレイ
@@ -1136,8 +1137,10 @@ void BOX2MAIN_GetPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 		PokeParty_Delete( syswk->dat->pokeparty, pos );
 	}
 }
+*/
 
 // 取得したポケモンデータを配置
+/*
 void BOX2MAIN_PutPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 {
 	POKEMON_PARAM * pp;
@@ -1178,7 +1181,7 @@ void BOX2MAIN_PutPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 		GFL_HEAP_FreeMemory( syswk->getPP );
 	}
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2186,33 +2189,6 @@ static void PokeIconMoveParamMake( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA
 	}
 }
 
-static void PokeIconMoveParamMake2( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * dat )
-{
-	u32	mvID;
-	s16	px, py;
-
-	mvID = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS];
-
-	BOX2OBJ_GetPos( syswk->app, mvID, &dat->dx, &dat->dy, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_PokeIconDefaultPosGet( dat->mv_pos, &px, &py, syswk->move_mode );
-
-	if( dat->dx <= px ){
-		dat->vx = 1;
-		dat->mx = ( ( px - dat->dx ) << 16 ) / POKEICON_MOVE_CNT;
-	}else{
-		dat->vx = -1;
-		dat->mx = ( ( dat->dx - px ) << 16 ) / POKEICON_MOVE_CNT;
-	}
-	if( dat->dy <= py ){
-		dat->vy = 1;
-		dat->my = ( ( py - dat->dy ) << 16 ) / POKEICON_MOVE_CNT;
-	}else{
-		dat->vy = -1;
-		dat->my = ( ( dat->dy - py ) << 16 ) / POKEICON_MOVE_CNT;
-	}
-}
-
-
 //--------------------------------------------------------------------------------------------
 /**
  * ポケモンアイコン入れ替えパラメータ作成（ドロップ）
@@ -2304,7 +2280,7 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
 	work = syswk->app->vfunk.work;
 	dat  = work->dat;
 
-	syswk->app->poke_mv_cur_flg = TRUE;
+//	syswk->app->poke_mv_cur_flg = TRUE;
 
 	// 初期化
 	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
@@ -2516,7 +2492,7 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
 	work = syswk->app->vfunk.work;
 	dat  = work->dat;
 
-	syswk->app->poke_mv_cur_flg = TRUE;
+//	syswk->app->poke_mv_cur_flg = TRUE;
 
 	// 初期化
 	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
@@ -2571,7 +2547,7 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
 		dat[ppcnt].flg    = 1;
 		PokeIconDropParamMake( syswk, &dat[ppcnt] );
 
-		syswk->app->poke_mv_cur_flg = FALSE;
+//		syswk->app->poke_mv_cur_flg = FALSE;
 	}
 
 
@@ -2680,7 +2656,7 @@ static void PokeIconPartyDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 p
 	work = syswk->app->vfunk.work;
 	dat  = work->dat;
 
-	syswk->app->poke_mv_cur_flg = TRUE;
+//	syswk->app->poke_mv_cur_flg = TRUE;
 
 	// 初期化
 	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
@@ -3570,9 +3546,10 @@ static void PokeInfoPutModeNormal( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * i
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PokeInfoPutModeItem( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 {
-/*
+#if 0
 	if( info->item != ITEM_DUMMY_DATA ){
 		u32 winID = BOX2BMP_PokeItemInfoWrite( syswk, info->item );
 		BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP, syswk->app->win[winID].win );
@@ -3580,7 +3557,7 @@ static void PokeInfoPutModeItem( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * inf
 		BOX2OBJ_ItemIconChangeSub( syswk->app, info->item );
 	}
 	BOX2BGWFRM_SubDispItemFrmOutPosSet( syswk->app->wfrm );
-*/
+#endif
 
 	BOX2OBJ_PokeGraChange( syswk, info, BOX2OBJ_ID_POKEGRA );
 //	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
@@ -3592,6 +3569,7 @@ static void PokeInfoPutModeItem( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * inf
 	BOX2MAIN_SubDispMarkingChange( syswk, info->mark );
 	PutSubDispPokeMark( syswk->app, info );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3617,11 +3595,14 @@ BOOL BOX2MAIN_PokeInfoPut( BOX2_SYS_WORK * syswk, u32 pos )
 		info = PokeInfoDataMake( ppp );
 
 		if( info != NULL ){
+/*
 			if( syswk->dat->callMode == BOX_MODE_ITEM ){
 				PokeInfoPutModeItem( syswk, info );
 			}else{
 				PokeInfoPutModeNormal( syswk, info );
 			}
+*/
+			PokeInfoPutModeNormal( syswk, info );
 			PokeInfoDataFree( info );
 			PPP_FastModeOff( ppp, fast );
 		}else{
@@ -3703,12 +3684,14 @@ void BOX2MAIN_PokeInfoOff( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKERUS, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKERUS_ICON, FALSE );
 
+/*
 	// ウィンフレームオフ
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
 		BOX2BGWFRM_SubDispItemFrmOutPosSet( syswk->app->wfrm );
 	}else{
 		BOX2BGWFRM_SubDispWazaFrmOutPosSet( syswk->app->wfrm );
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3925,51 +3908,6 @@ static u32 BoxMovePutAreaCheck( BOX2_SYS_WORK * syswk, s16 x, s16 y )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 {
-/*
-	PSTATUS_DATA * pst;
-	
-	syswk->subProcWork = GFL_HEAP_AllocMemory( HEAPID_BOX_SYS, sizeof(PSTATUS_DATA) );
-//↑[GS_CONVERT_TAG]
-
-	pst = syswk->subProcWork;
-
-	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-		pst->ppd = BOX2MAIN_PPPGet( syswk, syswk->tray, 0 );
-		pst->ppt = PST_PP_TYPE_POKEPASO;
-		pst->max = BOX2OBJ_POKEICON_TRAY_MAX;
-		pst->pos = syswk->get_pos;
-	}else{
-		pst->ppd = syswk->dat->pokeparty;
-		pst->ppt = PST_PP_TYPE_POKEPARTY;
-		pst->max = PokeParty_GetPokeCount( syswk->dat->pokeparty );
-		pst->pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-	}
-
-	pst->cfg = syswk->config;
-
-	PokeStatus_PlayerSet( pst, SaveData_GetMyStatus(syswk->dat->savedata) );
-
-	pst->mode = PST_MODE_NORMAL;
-
-	PokeStatus_PageSet( pst, PokeStatusPageTbl );
-
-	pst->ret_sel = 0;
-	pst->ret_mode = 0;
-	pst->waza = 0;
-
-	pst->zukan_mode = PMNumber_GetMode( syswk->dat->savedata );
-	pst->ribbon = SaveData_GetSpRibbon( syswk->dat->savedata );
-	pst->poruto = NULL;
-	pst->perap  = NULL;		// サウンドの初期化時にサウンドのワークにセーブデータが保持されるため、NULLでも再生される
-
-	pst->ev_contest = PokeStatus_ContestFlagGet( syswk->dat->savedata );
-	pst->pokethlon  = PokeStatus_PerformanceFlagGet( syswk->dat->savedata );
-	pst->kt_status  = syswk->dat->kt_status;
-
-	syswk->subProcFunc = GFL_PROC_Create( &PokeStatusProcData, pst, HEAPID_BOX_SYS );
-//↑[GS_CONVERT_TAG]
-*/
-
 	FS_EXTERN_OVERLAY(poke_status);
 
 	PSTATUS_DATA * pst = GFL_HEAP_AllocMemory( HEAPID_BOX_SYS, sizeof(PSTATUS_DATA) );
@@ -3991,20 +3929,6 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 	pst->zukan_mode = syswk->dat->zknMode;
 	pst->mode       = PST_MODE_NORMAL;
 
-/*
-
-  const STRCODE * player_name;  // 見ている人の名前
-  u32 player_id;          // 見ている人のID
-  u8  player_sex;         // 見ている人の性別
-
-
-  u8  page_flg; // ページフラグ
-  u8  ret_sel;  // 選択された技位置
-  u8  ret_mode;
-  u16 waza;
-*/
-
-
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pst );
 
 	syswk->subProcWork = pst;
@@ -4023,26 +3947,6 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_PokeStatusExit( BOX2_SYS_WORK * syswk )
 {
-/*
-	PSTATUS_DATA * pst = syswk->subProcWork;
-
-	if( syswk->y_status_hand == 0 ){
-		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-			syswk->get_pos = pst->pos;
-		}else{
-			syswk->get_pos = pst->pos + BOX2OBJ_POKEICON_TRAY_MAX;
-		}
-	}
-
-	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && pst->waza_chg == TRUE ){
-		BOXDAT_SetTrayUseBit( syswk->dat->sv_box, syswk->tray );
-	}
-
-	GFL_HEAP_FreeMemory( syswk->subProcWork );
-//↑[GS_CONVERT_TAG]
-*/
-//	FS_EXTERN_OVERLAY(poke_status);
-
 	PSTATUS_DATA * pst = syswk->subProcWork;
 
 	if( syswk->poke_get_key == 0 ){
@@ -4053,13 +3957,6 @@ int BOX2MAIN_PokeStatusExit( BOX2_SYS_WORK * syswk )
 		}
 	}
 
-/*
-	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && pst->waza_chg == TRUE ){
-		BOXDAT_SetTrayUseBit( syswk->dat->sv_box, syswk->tray );
-	}
-*/
-
-//	GFL_OVERLAY_Unload( FS_OVERLAY_ID(poke_status) );
 	GFL_HEAP_FreeMemory( syswk->subProcWork );
 
 	return 0;
@@ -4076,52 +3973,7 @@ int BOX2MAIN_PokeStatusExit( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk )
 {
-/*
-	FS_EXTERN_OVERLAY(fld_bag);
-
-	MYITEM * myitem;
-
-	myitem = SaveData_GetMyItem( syswk->dat->savedata );
-	syswk->subProcWork = MyItem_MakeBagData( myitem, BagPocketList, HEAPID_BOX_SYS );
-	BAG_SysDataSet( syswk->subProcWork, syswk->dat->savedata, BAG_MODE_ITEMSET, NULL, syswk->dat->kt_status );
-
-	Overlay_Load( FS_OVERLAY_ID(fld_bag), OVERLAY_LOAD_NOT_SYNCHRONIZE );
-	syswk->subProcFunc = GFL_PROC_Create( &BagProcData, syswk->subProcWork, HEAPID_BOX_SYS );
-//↑[GS_CONVERT_TAG]
-*/
-//	FS_EXTERN_OVERLAY(bag);
-
 	BAG_PARAM * wk = BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST, HEAPID_BOX_SYS );
-
-/*
-	wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BAG_PARAM) );
-
-	wk->p_config    = syswk->dat->cfg;
-	wk->p_mystatus  = syswk->dat->mystatus;
-  wk->p_bagcursor = MYITEM_BagCursorAlloc( HEAPID_BOX_SYS );
-	wk->p_myitem    = syswk->dat->myitem;
-//	wk->icwk      = NULL;
-	wk->mode        = BAG_MODE_POKELIST;
-  wk->cycle_flg   = FALSE;						   // 自転車はどっちでもいいハズ
-*/
-
-/*
-	wk->gsys     = syswk->dat->gsyswk;
-	wk->fieldmap = GAMESYSTEM_GetFieldMapWork( wk->gsys );
-	wk->mystatus = syswk->dat->mystatus;
-	wk->mode     = BAG_MODE_POKELIST;
-*/
-/*
-typedef struct {
-  CONFIG            * p_config;    
-  MYSTATUS          * p_mystatus;
-  BAG_CURSOR        * p_bagcursor;
-  MYITEM_PTR          p_myitem;
-  ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー。「つかう」が出ない状態であれば不必要
-  BAG_MODE            mode;         ///< バッグ呼び出しモード
-  BOOL                cycle_flg;    ///< 自転車かどうか？
-} BAG_PARAM;
-*/
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(bag), &ItemMenuProcData, wk );
 
@@ -4141,23 +3993,10 @@ typedef struct {
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_BagExit( BOX2_SYS_WORK * syswk )
 {
-/*
-	FS_EXTERN_OVERLAY(fld_bag);
-
-	Overlay_UnloadID( FS_OVERLAY_ID(fld_bag) );
-
-	syswk->subRet = BagSysReturnItemGet( syswk->subProcWork );
-	GFL_HEAP_FreeMemory( syswk->subProcWork );
-//↑[GS_CONVERT_TAG]
-*/
-//	FS_EXTERN_OVERLAY(bag);
-
 	BAG_PARAM * wk = syswk->subProcWork;
 
 	syswk->subRet = wk->ret_item;
 
-//	GFL_OVERLAY_Unload( FS_OVERLAY_ID(bag) );
-//	GFL_HEAP_FreeMemory( wk->p_bagcursor );
 	GFL_HEAP_FreeMemory( syswk->subProcWork );
 
 	return 0;
@@ -4174,19 +4013,6 @@ int BOX2MAIN_BagExit( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 {
-/*
-	NAMEIN_PARAM * namein;
-
-	syswk->subProcWork = NameIn_ParamAllocMake(
-							HEAPID_BOX_SYS, NAMEIN_BOX, 0,
-							BOX_TRAYNAME_MAXLEN, syswk->config, syswk->dat->kt_status );
-
-	namein = syswk->subProcWork;
-
-	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, namein->strbuf );
-	syswk->subProcFunc = GFL_PROC_Create( &NameInProcData, syswk->subProcWork, HEAPID_BOX_SYS );
-//↑[GS_CONVERT_TAG]
-*/
 	BOX_NAMEIN_WORK * wk;
 
 	wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BOX_NAMEIN_WORK) );
@@ -4216,13 +4042,6 @@ int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
 {
-/*
-	NAMEIN_PARAM * namein = syswk->subProcWork;
-
-	BOXDAT_SetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, namein->strbuf );
-	syswk->subRet = namein->cancel;
-	NameIn_ParamDelete( syswk->subProcWork );
-*/
 	BOX_NAMEIN_WORK * wk = syswk->subProcWork;
 
 	if( wk->prm->cancel == FALSE ){
@@ -4244,16 +4063,6 @@ int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
 //	VBLANK FUNC
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 取得ポケモン移動（トレイ）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
 static void MoveGetPokeIcon( BOX2_SYS_WORK * syswk, u32 x, u32 y )
 {
 	BOX2OBJ_SetPos(
@@ -4262,94 +4071,6 @@ static void MoveGetPokeIcon( BOX2_SYS_WORK * syswk, u32 x, u32 y )
 	syswk->app->tpx = x;
 	syswk->app->tpy = y;
 }
-
-/*
-int BOX2MAIN_VFuncGetPokeMove( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf;
-	u32	tpx, tpy;
-	u32	put_pos;
-	BOOL	menu_mv;
-
-	vf = &syswk->app->vfunk;
-
-	menu_mv = BOX2BGWFRM_PokeMenuMoveMain( syswk->app->wfrm );
-
-	switch( vf->seq ){
-	case SEIRI_SEQ_ICON_GET:		// アイコン取得中
-
-		if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == FALSE ){
-
-			put_pos = BOX2MAIN_GETPOS_NONE;
-			if( syswk->box_mv_flg != 0 ){
-				put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
-			}
-			if( put_pos == BOX2MAIN_GETPOS_NONE ){
-				put_pos = TrayPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy );
-			}
-			PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
-			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
-			if( ( put_pos & BOX2MAIN_BOXMOVE_FLG ) == 0 ){
-				syswk->get_pos = PokeIconMoveAfterPosGet( syswk, syswk->get_pos );
-			}
-
-			BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
-
-			BOX2BGWFRM_SubDispWazaFrmInSet( syswk->app );
-
-			vf->seq = SEIRI_SEQ_ICON_PUT;
-
-		}else{
-			u32	hit = BOX2UI_HitCheckContTrayArrow();
-			if( hit == 0 ){
-				BOX2MAIN_InitTrayScroll( syswk, BOX2MAIN_TRAY_SCROLL_L );
-				vf->seq = SEIRI_SEQ_SCROLL_L;
-			}else if( hit == 1 ){
-				BOX2MAIN_InitTrayScroll( syswk, BOX2MAIN_TRAY_SCROLL_R );
-				vf->seq = SEIRI_SEQ_SCROLL_R;
-			}
-			MoveGetPokeIcon( syswk, tpx, tpy );
-		}
-		break;
-
-	case SEIRI_SEQ_ICON_PUT:	// アイコン配置
-		if( PokeIconObjMove( syswk ) == FALSE && menu_mv == FALSE ){
-			vf->seq = SEIRI_SEQ_END;
-		}
-		break;
-
-	case SEIRI_SEQ_SCROLL_L:	// トレイスクロール（左）
-		if( BOX2MAIN_VFuncTrayScrollLeft( syswk ) == 0 ){
-			vf->seq = SEIRI_SEQ_ICON_GET;
-		}
-		if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
-			MoveGetPokeIcon( syswk, tpx, tpy );
-		}
-		break;
-
-	case SEIRI_SEQ_SCROLL_R:	// トレイスクロール（右）
-		if( BOX2MAIN_VFuncTrayScrollRight( syswk ) == 0 ){
-			vf->seq = SEIRI_SEQ_ICON_GET;
-		}
-		if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
-			MoveGetPokeIcon( syswk, tpx, tpy );
-		}
-		break;
-
-	case SEIRI_SEQ_END:				// 終了
-		{
-			BOX2MAIN_POKEMOVE_WORK * work = vf->work;
-			PokeIconBufPosChange( syswk, work->dat );
-		}
-		BOX2OBJ_PokeCursorMove( syswk->app, syswk->get_pos );
-		BOX2OBJ_PokeCursorVanish( syswk, syswk->app->poke_mv_cur_flg );
-		vf->seq = 0;
-		return 0;
-	}
-
-	return 1;
-}
-*/
 
 
 //--------------------------------------------------------------------------------------------
@@ -4804,48 +4525,6 @@ int BOX2MAIN_VFuncPartyInPokeMove( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : ポケモンを預ける動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncPartyOutPokeMove( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf;
-	int	put_pos;
-	int	tray;
-
-	vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		tray = syswk->tray;
-		put_pos = 0;
-		BOXDAT_GetEmptyTrayNumberAndPos( syswk->dat->sv_box, &tray, &put_pos );
-		PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
-		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
-		syswk->get_pos = BOX2MAIN_GETPOS_NONE;
-		vf->seq++;
-		break;
-
-	case 1:
-		if( PokeIconObjMove( syswk ) == FALSE ){
-			BOX2MAIN_POKEMOVE_WORK * work = vf->work;
-			BOX2OBJ_PokeIconBlendSet( syswk->app, work->get_pos, TRUE );
-			PokeIconBufPosChange( syswk, work->dat );
-			vf->seq = 0;
-			return 0;
-		}
-	}
-	return 1;
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
  * VBLANK FUNC : トレイをスクロール（左ボタンが押されたとき）
  *
  * @param	syswk	ボックス画面システムワーク
@@ -5134,407 +4813,6 @@ int BOX2MAIN_VFuncBoxMoveFrmOut( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : やめるフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncExitButtonMove( BOX2_SYS_WORK * syswk )
-{
-//	return BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-	return 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncBoxMoveMenuIn( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		if( BOX2MAIN_VFuncPokeMenuMove( syswk ) == 0 ){
-			vf->seq++;
-		}
-		break;
-
-	case 1:
-		if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU ) == 0 ){
-			vf->seq = 0;
-			return 0;
-		}
-	}
-
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncBoxMoveMenuOut( BOX2_SYS_WORK * syswk )
-{
-	return BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : ボックステーマ変更メニューイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncBoxThemaMenuMove( BOX2_SYS_WORK * syswk )
-{
-	u32	ret[3];
-
-	ret[0] = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU );
-	ret[1] = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MENU4 );
-	ret[2] = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MENU5 );
-
-	if( ret[0] == 0 && ret[1] == 0 && ret[2] == 0 ){
-		return 0;
-	}
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 壁紙変更フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-/*
-int BOX2MAIN_VFuncWallPaperFrmIn( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf;
-
-	vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		if( BOX2MAIN_VFuncBoxThemaMenuMove( syswk ) == 0 ){
-			vf->seq++;
-		}
-		break;
-
-	case 1:
-		BOX2OBJ_WallPaperChgFrmScroll( syswk->app, 8 );
-		vf->seq = 0;
-		return 0;
-	}
-
-	return 1;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 壁紙変更フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncWallPaperFrmOut( BOX2_SYS_WORK * syswk )
-{
-	return 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : あずけるボックス選択フレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncPokeOutBoxFrmIn( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf;
-	u16 * scr;
-	
-	vf  = &syswk->app->vfunk;
-	scr = BGWINFRM_FrameBufGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MOVE );
-
-	switch( vf->seq ){
-	case 0:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+3,
-			32, 1,
-			scr,
-			0, 3,
-			32, 7 );
-		break;
-
-	case 1:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+2,
-			32, 1,
-			scr,
-			0, 0,
-			32, 7 );
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+4,
-			32, 1,
-			scr,
-			0, 6,
-			32, 7 );
-		break;
-
-	case 2:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+1,
-			32, 2,
-			scr,
-			0, 0,
-			32, 7 );
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+4,
-			32, 2,
-			scr,
-			0, 5,
-			32, 7 );
-		break;
-
-	case 10:
-		GFL_BG_FillScreen(
-			GFL_BG_FRAME0_M,
-			0,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY-2, 32, 7+4, GFL_BG_SCRWRT_PALNL );
-//↑[GS_CONVERT_TAG]
-	case 3:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY,
-			32, 7,
-			scr,
-			0, 0,
-			32, 7 );
-		break;
-
-	case 4:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY-1,
-			32, 2,
-			scr,
-			0, 0,
-			32, 7 );
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+6,
-			32, 2,
-			scr,
-			0, 5,
-			32, 7 );
-		break;
-
-	case 5:
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY-2,
-			32, 2,
-			scr,
-			0, 0,
-			32, 7 );
-		GFL_BG_WriteScreenExpand(
-			GFL_BG_FRAME0_M,
-			WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+7,
-			32, 2,
-			scr,
-			0, 5,
-			32, 7 );
-		break;
-	}
-
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
-
-	if( vf->seq == 10 ){
-		vf->seq = 0;
-		return 0;
-	}
-	vf->seq++;
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : あずけるボックス選択フレームアウト
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncPokeOutBoxFrmOut( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf = &syswk->app->vfunk;
-
-	GFL_BG_FillScreen(
-		GFL_BG_FRAME0_M,
-		0,
-		WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+vf->seq, 32, 1, GFL_BG_SCRWRT_PALNL );
-//↑[GS_CONVERT_TAG]
-	GFL_BG_FillScreen(
-		GFL_BG_FRAME0_M,
-		0,
-		WINFRM_PARTYOUT_PX, WINFRM_PARTYOUT_PY+6-vf->seq, 32, 1, GFL_BG_SCRWRT_PALNL );
-//↑[GS_CONVERT_TAG]
-
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
-
-	if( vf->seq == 3 ){
-		vf->seq = 0;
-		return 0;
-	}
-	vf->seq++;
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」ボタンフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncBoxMoveButtonMove( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-//		if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN ) == 0 ){
-			BOX2BGWFRM_BoxMoveButtonInSet( syswk->app->wfrm );
-			vf->seq++;
-//		}
-		break;
-	case 1:
-		if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_BTN ) == 0 ){
-			vf->seq = 0;
-			return 0;
-		}
-	}
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「ボックスをきりかえる」ボタンＹステータスボタン動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncBoxMoveButtonYStatusButtonMove( BOX2_SYS_WORK * syswk )
-{
-/*
-	if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN ) == 0 &&
-		BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_BTN ) == 0 ){
-		return 0;
-	}
-	return 1;
-*/
-	return 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : Ｙステータスボタンフレームイン
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncYStatusButtonMove( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_BTN ) == 0 ){
-			BOX2BGWFRM_YStatusButtonInSet( syswk->app->wfrm );
-			vf->seq++;
-		}
-		break;
-	case 1:
-//		if( BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN ) == 0 ){
-			vf->seq = 0;
-			return 0;
-//		}
-	}
-	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * VBLANK FUNC : 「あずける」「やめる」フレーム動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-int BOX2MAIN_VFuncPartyOutButtonMove( BOX2_SYS_WORK * syswk )
-{
-	u32	ret[2];
-
-//	ret[1] = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-	ret[0] = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU );
-	ret[1] = 0;
-
-	if( ret[0] == 0 && ret[1] == 0 ){
-		return 0;
-	}
-	return 1;
-}
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -5892,53 +5170,6 @@ int BOX2MAIN_VFuncMenuMove( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : 戻るを消してメニューを出す（ボックス整理）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"1 = 処理中"
- * @retval	"0 = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-/*
-int BOX2MAIN_VFuncMenuOpenKeyArrange( BOX2_SYS_WORK * syswk )
-{
-	BOX2_IRQWK * vf;
-
-	vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		{
-//			int	r1 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
-//			int	r2 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
-//			int	r3 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-			int	r1 = 0;
-			int	r2 = 0;
-			int	r3 = 0;
-			if( r1 == 0 && r2 == 0 && r3 == 0 ){
-				vf->seq++;
-			}
-		}
-		break;
-
-	case 1:
-		{
-			int		cur  = BOX2MAIN_VFuncCursorMove( syswk );
-			BOOL	menu = BOX2BGWFRM_PokeMenuMoveMain( syswk->app->wfrm );
-			if( cur == 0 && menu == FALSE ){
-				vf->seq = 0;
-				return 0;
-			}
-		}
-	}
-
-	return 1;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
  * VBLANK FUNC : メニューを消して戻るを出す
  *
  * @param	syswk	ボックス画面システムワーク
@@ -6026,7 +5257,7 @@ int BOX2MAIN_VFuncMenuCloseKeyArrange( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * VBLANK FUNC : ポケモンアイコンを手で取得した状態にする
+ * ポケモンアイコンを手で取得した状態にする
  *
  * @param	syswk	ボックス画面システムワーク
  *
@@ -6186,123 +5417,6 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
 	}
 
 	return 1;
-
-
-/*
-	BOX2_IRQWK * vf;
-	s16	x, y;
-
-	vf = &syswk->app->vfunk;
-
-	switch( vf->seq ){
-	case 0:
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_OPEN );
-//		PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, syswk->app->poke_put_key );
-		vf->seq++;
-	case 1:
-		if( vf->cnt == HANDCURSOR_MOVE_CNT ){
-			vf->cnt = 0;
-			if( syswk->app->poke_put_key < BOX2OBJ_POKEICON_PUT_MAX ){
-				BOX2OBJ_GetPokeIcon( syswk->app, syswk->app->poke_put_key );
-//				BOX2OBJ_PokeIconPriChg( syswk->app, BOX2OBJ_POKEICON_GET_POS, BOX2OBJ_POKEICON_PRI_CHG_GET );
-				if( BOX2MAIN_PokeParaGet( syswk, syswk->app->poke_put_key, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-					BOX2OBJ_PokeIconPriChg( syswk->app, BOX2OBJ_POKEICON_GET_POS, BOX2OBJ_POKEICON_PRI_CHG_GET );
-					vf->seq = 2;
-				}else{
-					BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
-					syswk->poke_get_key = 0;
-					vf->seq = 5;
-				}
-			}else{
-				BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
-				BOX2OBJ_Vanish( syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], FALSE );
-				BOX2OBJ_PokeIconPriChg( syswk->app, BOX2OBJ_POKEICON_GET_POS, BOX2OBJ_POKEICON_PRI_CHG_PUT );
-				syswk->poke_get_key = 0;
-				vf->seq = 5;
-			}
-			BOX2OBJ_PokeIconPriChg( syswk->app, syswk->app->poke_put_key, BOX2OBJ_POKEICON_PRI_CHG_PUT );
-		}else{
-			u8	icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ];
-			BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_SetPos( syswk->app, icon, x, y+HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-			vf->cnt++;
-		}
-		break;
-
-	case 2:		// 手カーソルを下へ
-		if( vf->cnt == HANDCURSOR_MOVE_CNT ){
-			vf->cnt = 0;
-			vf->seq++;
-			break;
-		}else{
-			BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y+HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-			vf->cnt++;
-		}
-		break;
-
-	case 3:		// 手カーソル閉じる
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_CLOSE );
-		vf->seq++;
-	case 4:		// 手カーソルを上へ
-		if( vf->cnt == HANDCURSOR_MOVE_CNT ){
-			vf->cnt = 0;
-			vf->seq = 5;
-		}else{
-			u8	icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ];
-			BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-			vf->cnt++;
-		}
-		break;
-
-	case 5:
-		vf->seq = 0;
-		return 0;
-	}
-*/
-
-
-/*
-	switch( vf->seq ){
-	case 0:		// 手カーソルを開く
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_OPEN );
-		vf->seq++;
-	case 1:		// 手カーソルを下へ
-		if( vf->cnt == HANDCURSOR_MOVE_CNT ){
-			vf->cnt = 0;
-			vf->seq++;
-			break;
-		}
-		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
-		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y+HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-		vf->cnt++;
-		break;
-
-	case 2:		// 手カーソル閉じる
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_CLOSE );
-		vf->seq++;
-	case 3:		// 手カーソルを上へ
-		if( vf->cnt == HANDCURSOR_MOVE_CNT ){
-			vf->cnt = 0;
-			vf->seq = 0;
-			return 0;
-		}
-		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
-		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-		{
-			u8	icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ];
-			BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
-			BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-		}
-		vf->cnt++;
-	}
-*/
-
-
-	return 1;
 }
 
 int BOX2MAIN_VFuncPokeMovePutKey2( BOX2_SYS_WORK * syswk )
@@ -6327,20 +5441,6 @@ int BOX2MAIN_VFuncPokeMovePutKey2( BOX2_SYS_WORK * syswk )
 			return 0;
 		}
 	}
-
-
-/*
-	case AZUKERU_SEQ_MOVE_ENTER1:	// 移動実行１
-			PokeIconDropDataMake( syswk, syswk->get_pos, put_pos );
-		if( PokeIconObjDrop( syswk ) == FALSE ){
-			BOX2MAIN_POKEMOVE_WORK * work = vf->work;
-			PokeIconBufPosChange( syswk, work->dat );
-			BOX2MAIN_PokeInfoOff( syswk );
-			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-			syswk->get_pos = BOX2MAIN_GETPOS_NONE;
-			vf->seq = AZUKERU_SEQ_MOVE_ENTER2;
-		}
-*/
 
 	return 1;
 }
@@ -6373,20 +5473,6 @@ int BOX2MAIN_VFuncItemArrangeGetKey( BOX2_SYS_WORK * syswk )
 		vf->seq++;
 
 	case 1:
-		{
-//			int	r1 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
-//			int	r2 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
-//			int	r3 = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
-			int	r1 = 0;
-			int	r2 = 0;
-			int	r3 = 0;
-			if( r1 == 0 && r2 == 0 && r3 == 0 ){
-				vf->seq++;
-			}
-		}
-		break;
-
-	case 2:
 		{
 			int		cur  = BOX2MAIN_VFuncCursorMove( syswk );
 			BOOL	menu = BOX2BGWFRM_PokeMenuMoveMain( syswk->app->wfrm );
@@ -6531,7 +5617,7 @@ int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk )
 					BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 					syswk->app->msg_put = 0;
 					syswk->app->old_cur_pos = syswk->get_pos;
-					syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_POKEADD;
+					syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ITEM_BOXPARTY_ICONMOVE_POKEADD;
 				}
 			}
 			// トレイスクロール矢印ヒットチェック
@@ -6680,6 +5766,7 @@ int BOX2MAIN_VFuncItemArrangeMenuClose( BOX2_SYS_WORK * syswk )
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
+/*
 int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk )
 {
 	BOX2_IRQWK * vf;
@@ -6716,6 +5803,7 @@ int BOX2MAIN_VFuncItemIconChange( BOX2_SYS_WORK * syswk )
 
 	return 1;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -7197,23 +6285,6 @@ int BOX2MAIN_VFuncItemIconPutKeyCancel( BOX2_SYS_WORK * syswk )
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-/*
-enum {
-	ITEMGET_SEQ_INIT = 0,					// 初期設定
-	ITEMGET_SEQ_GETANM,						// アイテムアイコン取得アニメ
-	ITEMGET_SEQ_MAIN,							// メイン
-	ITEMGET_SEQ_SCROLL_L,					// トレイスクロール（左）
-	ITEMGET_SEQ_SCROLL_R,					// トレイスクロール（右）
-	ITEMGET_SEQ_CANCEL_SCROLL_L,	// トレイキャンセルスクロール（左）
-	ITEMGET_SEQ_CANCEL_SCROLL_R,	// トレイキャンセルスクロール（右）
-	ITEMGET_SEQ_PUT_MOVE,					// アイテムアイコン配置移動
-	ITEMGET_SEQ_MOVE,							// アイテムアイコン移動
-	ITEMGET_SEQ_PUTANM,						// 縮小アニメセット
-	ITEMGET_SEQ_PUTANM_WAIT,			// 縮小アニメ待ち
-	ITEMGET_SEQ_END,							// 終了
-};
-*/
-
 int BOX2MAIN_VFuncItemPartyGetTouch( BOX2_SYS_WORK * syswk )
 {
 	BOX2_IRQWK * vf;
@@ -7341,7 +6412,7 @@ int BOX2MAIN_VFuncItemPartyGetTouch( BOX2_SYS_WORK * syswk )
 					BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 //					syswk->app->msg_put = 0;
 					syswk->app->old_cur_pos = syswk->get_pos;
-					syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ITEMARRANGE_BOXPARTY_ICONMOVE_POKEADD;
+					syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ITEM_BOXPARTY_ICONMOVE_POKEADD;
 /*
 			if( menu_mv == FALSE && syswk->app->party_frm == 0 ){
 				if( tpx <  ( BOX2BGWFRM_PARTYPOKE_LX * 8 ) ||
@@ -7753,145 +6824,3 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#if 0
-//↑[GS_CONVERT_TAG]
-
-#include "gflib/touchpanel.h"
-#include "savedata/sp_ribbon.h"
-//#include "system/arc_tool.h"
-//↑[GS_CONVERT_TAG]
-//#include "system/arc_util.h"
-//↑[GS_CONVERT_TAG]
-#include "system/pm_overlay.h"
-#include "system/fontproc.h"
-#include "system/snd_tool.h"
-#include "poketool/poke_number.h"
-#include "poketool/calc_humor.h"	//for humor
-#include "battle/wazano_def.h"
-#include "itemtool/item.h"
-#include "msgdata/msg.naix"
-#include "msgdata/msg_boxmenu.h"
-
-#include "box2_main.h"
-#include "box2_bmp.h"
-#include "box2_obj.h"
-#include "box2_key.h"
-#include "box2_snd_def.h"
-#include "box_gra.naix"
-
-#include "application/p_status.h"
-#include "application/bag.h"
-#include "application/namein.h"
-
-
-//============================================================================================
-//	定数定義
-//============================================================================================
-
-
-
-
-//============================================================================================
-//	プロトタイプ宣言
-//============================================================================================
-static void FrameArcLoad2( BGWINFRM_WORK * wk, u32 index, u32 dataIdx );
-
-static void PokeMenuInitPosSet( BGWINFRM_WORK * wk );
-static void BoxMoveButtonInitPut( BGWINFRM_WORK * wk );
-static void YStatusButtonInitPut( BGWINFRM_WORK * wk );
-
-static void SubDispWinFrmMove( BOX2_SYS_WORK * syswk );
-
-static u32 MoveBoxGet( BOX2_SYS_WORK * syswk, u32 pos );
-
-
-//============================================================================================
-//	グローバル変数
-//============================================================================================
-
-
-
-// 逃がすときにチェックする技
-static const u16 PokeFreeCheckWazaTable[] = {
-	WAZANO_NAMINORI,
-	WAZANO_ROKKUKURAIMU,
-	WAZANO_TAKINOBORI,
-	WAZANO_SORAWOTOBU,
-};
-
-// ステータス画面ページ設定テーブル
-static const u8	PokeStatusPageTbl[] = {
-	PST_PAGE_INFO_MEMO,		// 「ポケモンじょうほう」「トレーナーメモ」
-	PST_PAGE_PARAM_B_SKILL,	// 「ポケモンのうりょく」「わざ説明」
-	PST_PAGE_RIBBON,		// 「きねんリボン」
-	PST_PAGE_RET,			// 「もどる」
-	PST_PAGE_MAX
-};
-
-// バッグ画面ポケット設定テーブル
-static const u8	BagPocketList[] = {
-	BAG_POKE_NORMAL, BAG_POKE_DRUG, BAG_POKE_BALL, BAG_POKE_WAZA,
-	BAG_POKE_NUTS, BAG_POKE_BATTLE, BAG_POKE_EVENT, 0xff
-};
-
-
-
-
-//============================================================================================
-//	システム関連
-//============================================================================================
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * キータッチステータスセット
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none 
- */
-//--------------------------------------------------------------------------------------------
-void BOX2MAIN_KeyTouchStatusSet( BOX2_SYS_WORK * syswk )
-{
-	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
-		KeyTouchStatus_SetTouchOrKey( syswk->dat->kt_status, GFL_APP_END_KEY );
-//↑[GS_CONVERT_TAG]
-	}else{
-		KeyTouchStatus_SetTouchOrKey( syswk->dat->kt_status, GFL_APP_END_TOUCH );
-//↑[GS_CONVERT_TAG]
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-#endif

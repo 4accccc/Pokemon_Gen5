@@ -74,8 +74,8 @@ enum {
 };
 */
 
-#define	BOX_SUB_ACTOR_DISTANCE	( 512*FX32_ONE )	// サブ画面のOBJ表示Y座標オフセット
-#define	BOX_SUB_ACTOR_DEF_PY	( 320 )				// サブ画面のOBJ表示Y座標オフセット
+//#define	BOX_SUB_ACTOR_DISTANCE	( 512*FX32_ONE )	// サブ画面のOBJ表示Y座標オフセット
+//#define	BOX_SUB_ACTOR_DEF_PY	( 320 )				// サブ画面のOBJ表示Y座標オフセット
 
 /*
 // ポケモン一枚絵データ
@@ -96,7 +96,7 @@ enum {
 
 #define	WP_IMAGE_COLOR_START	( 16 )		// 壁紙のイメージカラー開始番号
 
-#define	WP_ICON_CHG_COL			( 0x1e )	// グラフィックデータの壁紙のデフォルトカラー
+//#define	WP_ICON_CHG_COL			( 0x1e )	// グラフィックデータの壁紙のデフォルトカラー
 
 #define	BOX2OBJ_TRAYICON_SY		( 34 )	// トレイアイコンのＹ座標配置間隔
 #define	BOX2OBJ_TRAYICON_PX		( 300 )	// トレイアイコンのデフォルトＸ座標
@@ -112,8 +112,8 @@ enum {
 #define	BOX2OBJ_BOXNAME_LPX		( BOX2OBJ_BOXNAME_DPX-BOX2MAIN_TRAY_SCROLL_CNT*BOX2MAIN_TRAY_SCROLL_SPD )	// ボックス名の左配置Ｘ座標
 
 
-#define	BOX2OBJ_WPICON_SX		( 46 )	// 壁紙アイコンのＸ座標配置間隔
-#define	BOX2OBJ_WPICON_PX		( 59 )	// 壁紙アイコンのデフォルトＸ座標
+//#define	BOX2OBJ_WPICON_SX		( 46 )	// 壁紙アイコンのＸ座標配置間隔
+//#define	BOX2OBJ_WPICON_PX		( 59 )	// 壁紙アイコンのデフォルトＸ座標
 
 #define	BOXNAME_OBJ_PX	( 212-6 )		// トレイ名のOAMフォントのデフォルト表示Ｘ座標
 #define	BOXNAME_OBJ_PY	( 18 )		// トレイ名のOAMフォントのデフォルト表示Ｙ座標
@@ -136,16 +136,16 @@ enum {
 #define	POKEICON_FREE_CY					( 8 )		// 拡縮中心Ｙオフセット
 
 // ボックス移動関連
-#define	BOXMV_LA_PX				( 12 )						// 左矢印表示Ｘ座標
-#define	BOXMV_LA_PY				( 27-48 )					// 左矢印表示Ｙ座標
-#define	BOXMV_RA_PX				( 244 )						// 右矢印表示Ｘ座標
-#define	BOXMV_RA_PY				( 27-48 )					// 右矢印表示Ｘ座標
-#define	BOXMV_TRAY_CUR_PX		(0)//( BOX2OBJ_TRAYICON_PX )		// カーソル表示Ｘ座標
-#define	BOXMV_TRAY_CUR_PY		( 27-48 )					// カーソル表示Ｙ座標
-#define	BOXMV_TRAY_NAME_PX		( 128 )						// トレイ名背景表示Ｘ座標
-#define	BOXMV_TRAY_NAME_PY		( 8-48 )					// トレイ名背景表示Ｘ座標
-#define	BOXMV_TRAY_ARROW_PX		( 128 )						// カーソル矢印表示Ｘ座標
-#define	BOXMV_TRAY_ARROW_PY		( 20-48 )					// カーソル矢印表示Ｙ座標
+//#define	BOXMV_LA_PX				( 12 )						// 左矢印表示Ｘ座標
+//#define	BOXMV_LA_PY				( 27-48 )					// 左矢印表示Ｙ座標
+//#define	BOXMV_RA_PX				( 244 )						// 右矢印表示Ｘ座標
+//#define	BOXMV_RA_PY				( 27-48 )					// 右矢印表示Ｘ座標
+//#define	BOXMV_TRAY_CUR_PX		(0)//( BOX2OBJ_TRAYICON_PX )		// カーソル表示Ｘ座標
+//#define	BOXMV_TRAY_CUR_PY		( 27-48 )					// カーソル表示Ｙ座標
+//#define	BOXMV_TRAY_NAME_PX		( 128 )						// トレイ名背景表示Ｘ座標
+//#define	BOXMV_TRAY_NAME_PY		( 8-48 )					// トレイ名背景表示Ｘ座標
+//#define	BOXMV_TRAY_ARROW_PX		( 128 )						// カーソル矢印表示Ｘ座標
+//#define	BOXMV_TRAY_ARROW_PY		( 20-48 )					// カーソル矢印表示Ｙ座標
 
 #define	TRAY_ICON_CGX_SIZ		( 32 * 32 )		// トレイアイコンキャラサイズ
 #define	TRAY_ICON_CHG_COL		( 8 )			// トレイアイコン壁紙デフォルトカラー
@@ -169,7 +169,7 @@ enum {
 #define	WPCHG_TRAY_ARROW_PY		( 20-48 )				// カーソル矢印表示Ｙ座標
 */
 
-#define	WP_ICON_CGX_SIZ		( 24 * 24 )		// 壁紙アイコンキャラサイズ
+//#define	WP_ICON_CGX_SIZ		( 24 * 24 )		// 壁紙アイコンキャラサイズ
 
 // ポケモンを預けるボックス選択関連
 #define	PTOUT_TRAY_ICON_PY		( 84 )						// トレイアイコン表示Ｙ座標
@@ -1654,39 +1654,11 @@ void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv )
  * 手持ちのポケモンアイコンスクロール処理
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	mx		移動量Ｘ
- * @param	my		移動量Ｙ
- *
- * @return	none
- *
- *	※使用しているところ無し
- */
-//--------------------------------------------------------------------------------------------
-void BOX2OBJ_PartyPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mx, s8 my )
-{
-	s16	x, y;
-	u16	id;
-	u16	i;
-
-	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX; i++ ){
-		id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_TRAY_MAX+i];
-		BOX2OBJ_GetPos( syswk->app, id, &x, &y, CLSYS_DEFREND_MAIN );
-		x += mx;
-		y += my;
-		BOX2OBJ_SetPos( syswk->app, id, x, y, CLSYS_DEFREND_MAIN );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちのポケモンアイコンスクロール処理
- *
- * @param	syswk	ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2OBJ_PartyPokeIconScroll2( BOX2_SYS_WORK * syswk )
+void BOX2OBJ_PartyPokeIconScroll( BOX2_SYS_WORK * syswk )
 {
 	u16	id;
 	u16	i;
@@ -2013,108 +1985,6 @@ static void PokeGraDummyResLoad( BOX2_APP_WORK * appwk )
 	appwk->chrRes[BOX2MAIN_CHRRES_POKEGRA2] = RES_LOAD_NONE;
 	appwk->palRes[BOX2MAIN_PALRES_POKEGRA2] = RES_LOAD_NONE;
 	appwk->celRes[BOX2MAIN_CELRES_POKEGRA2] = RES_LOAD_NONE;
-
-/*
-	CATS_LoadResourceCharArc(
-		appwk->csp, appwk->crp,
-		ARC_BATT_OBJ, POKE_OAM_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_POKEGRA );
-	CATS_LoadResourceCharArc(
-		appwk->csp, appwk->crp,
-		ARC_BATT_OBJ, POKE_OAM_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_POKEGRA2 );
-
-	CATS_LoadResourcePlttArc(
-		appwk->csp, appwk->crp,
-		ARC_BATT_OBJ, POKE_OAM_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_POKEGRA );
-	CATS_LoadResourcePlttArc(
-		appwk->csp, appwk->crp,
-		ARC_BATT_OBJ, POKE_OAM_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_POKEGRA2 );
-
-	CATS_LoadResourceCellArc(
-		appwk->csp, appwk->crp, ARC_BATT_OBJ, POKE_OAM_NCER, 0, CEL_ID_POKEGRA );
-	CATS_LoadResourceCellAnmArc(
-		appwk->csp, appwk->crp, ARC_BATT_OBJ, POKE_OAM_NANR, 0, ANM_ID_POKEGRA );
-*/
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモングラフィックOBJ追加
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PokeGraObjAdd( BOX2_SYS_WORK * syswk )
-{
-	BOX2_APP_WORK * appwk = syswk->app;
-
-	appwk->cap[BOX2OBJ_ID_POKEGRA]  = CATS_ObjectAdd_S_SubDistance(
-										appwk->csp, appwk->crp,
-										&ClactParamTbl[BOX2OBJ_ID_POKEGRA],
-										BOX_SUB_ACTOR_DISTANCE );
-	appwk->cap[BOX2OBJ_ID_POKEGRA2] = CATS_ObjectAdd_S_SubDistance(
-										appwk->csp, appwk->crp,
-										&ClactParamTbl[BOX2OBJ_ID_POKEGRA2],
-										BOX_SUB_ACTOR_DISTANCE );
-
-	GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_POKEGRA], ACT_OFF );
-	GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_POKEGRA2], ACT_OFF );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモングラフィック切り替え
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	id		OBJ ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void PokeGraChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 id )
-{
-/*
-	SOFT_SPRITE_ARC  ssa;
-	void * buf;
-	NNSG2dImageProxy * ipc;
-	NNSG2dImagePaletteProxy * ipp;
-	u32	cgx;
-	u32	pal;
-	CHANGES_INTO_DATA_RECT rect = { POKE_TEX_X, POKE_TEX_Y, POKE_TEX_W, POKE_TEX_H, };
-
-	buf = GFL_HEAP_AllocMemoryLo( HEAPID_BOX_APP, POKEGRA_TEX_SIZE );
-
-	PokeGraArcDataGetPPP( &ssa, info->ppp, PARA_FRONT, FALSE );
-
-	Ex_ChangesInto_OAM_from_PokeTex_RC(
-		ssa.arc_no,
-		ssa.index_chr,
-		HEAPID_BOX_APP,
-		&rect,
-		buf,
-		info->rand,
-		FALSE,
-		PARA_FRONT,
-		info->mons );
-
-	ipc = CLACT_ImageProxyGet( appwk->cap[id]->act );
-	cgx = NNS_G2dGetImageLocation( ipc, NNS_G2D_VRAM_TYPE_2DSUB );
-
-	DC_FlushRange( buf, POKEGRA_TEX_SIZE );
-	GXS_LoadOBJ( buf, cgx, POKEGRA_TEX_SIZE );
-
-	ipp = GFL_CLACT_WK_GetPlttProxy( appwk->cap[id]->act );
-	pal = NNS_G2dGetImagePaletteLocation( ipp, NNS_G2D_VRAM_TYPE_2DSUB );
-
-	GFL_ARC_UTIL_TransVramPalette(
-		ssa.arc_no, ssa.index_pal, PALTYPE_SUB_OBJ, pal, POKEGRA_PAL_SIZE, HEAPID_BOX_APP );
-
-	GFL_HEAP_FreeMemory( buf );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2130,72 +2000,6 @@ static void PokeGraChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_PokeGraChange( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32 id )
 {
-/*
-	id += syswk->app->pokegra_swap;
-
-	PokeGraChange( syswk->app, info, id );
-	GFL_CLACT_UNIT_SetDrawEnableCap( syswk->app->cap[id], ACT_ON );
-
-	syswk->app->pokegra_swap ^= 1;
-*/
-
-
-/*
-//ポケグラのアークハンドル
-//モンスター番号等から読む場合
-extern u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID );
-extern u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, HEAPID heapID );
-extern u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare, int dir, APP_COMMON_MAPPING mapping, CLSYS_DRAW_TYPE vramType, HEAPID heapID );
-*/
-
-/*
-	ARCHANDLE * ah;
-	u32 * chrRes;
-	u32 * palRes;
-	u32 * celRes;
-	u16	pal;
-
-	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA] != NULL ){
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA, FALSE );
-	}
-	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA2] != NULL ){
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );
-	}
-
-	if( syswk->app->pokegra_swap == 0 ){
-		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA];
-		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA];
-		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA];
-		pal = PALNUM_POKEGRA1_S * 0x20;
-	}else{
-		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA2];
-		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA2];
-		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA2];
-		pal = PALNUM_POKEGRA2_S * 0x20;
-		id += 1;
-	}
-
-	if( syswk->app->clwk[id] != NULL ){
-		GFL_CLACT_WK_Remove( syswk->app->clwk[id] );
-		GFL_CLGRP_CGR_Release( *chrRes );
-    GFL_CLGRP_PLTT_Release( *palRes );
-    GFL_CLGRP_CELLANIM_Release( *celRes );
-	}
-
-	ah = POKE2DGRA_OpenHandle( HEAPID_BOX_APP );
-
-	// フォルムとレアが必要！
-	*chrRes = POKE2DGRA_OBJ_CGR_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
-	*palRes = POKE2DGRA_OBJ_PLTT_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
-	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
-
-  GFL_ARC_CloseDataHandle( ah );
-
-	syswk->app->clwk[id] = ClactWorkCreate( syswk->app, &ClactParamTbl[id] );
-	BOX2OBJ_Vanish( syswk->app, id, TRUE );
-
-	syswk->app->pokegra_swap ^= 1;
-*/
 	ARCHANDLE * ah;
 	u32 * chrRes;
 	u32 * palRes;
@@ -2812,9 +2616,9 @@ void BOX2OBJ_ItemIconCursorMove( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_ItemIconPutSub( BOX2_APP_WORK * appwk )
 {
-/*
 	s16	objy;
 	s8	wfmx, wfmy;
 
@@ -2822,9 +2626,8 @@ void BOX2OBJ_ItemIconPutSub( BOX2_APP_WORK * appwk )
 	objy = (s16)wfmy * 8 + BOX_SUB_ACTOR_DEF_PY + SUBDISP_ITEMICON_PY;
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_ITEMICON_SUB, SUBDISP_ITEMICON_PX, objy, CLSYS_DEFREND_SUB );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_ITEMICON_SUB, TRUE );
-*/
 }
-
+*/
 
 //============================================================================================
 //	その他
@@ -3306,9 +3109,9 @@ void BOX2OBJ_InitBoxMoveCursorPos( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk )
 {
-/*
 	u32	pos;
 	s16	x, y;
 
@@ -3324,8 +3127,8 @@ void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_SetPos(
 		syswk->app, BOX2OBJ_ID_TRAY_CUR,
 		BOX2OBJ_TRAYICON_PX+BOX2OBJ_TRAYICON_SX*pos, y, CLSYS_DEFREND_MAIN );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3336,9 +3139,9 @@ void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk )
 {
-/*
 	s16	x, y, px;
 	u16	pos;
 
@@ -3353,8 +3156,8 @@ void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk )
 //	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, px, y, CLSYS_DEFREND_MAIN );
 
 //	BoxMoveFntOamPos( syswk->app );
-*/
 }
+*/
 
 // トレイアイコンを初期座標へ移動
 void BOX2OBJ_InitTrayIconScroll( BOX2_SYS_WORK * syswk )
@@ -3748,19 +3551,6 @@ void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg )
 //	壁紙変更関連
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更：壁紙名のＯＡＭフォントを移動
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void WallPaperChgFntOamPos( BOX2_APP_WORK * appwk )
-{
-//	FONTOAM_SetMat( appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, -48, -8 );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3814,37 +3604,6 @@ void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv )
 	}
 }
 */
-
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更：カーソルセット
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2OBJ_WallPaperCursorSet( BOX2_SYS_WORK * syswk )
-{
-	u32	wp;
-	u32	pos;
-	s16	x, y;
-
-	wp = BOX2MAIN_GetWallPaperNumber( syswk, syswk->box_mv_pos );
-
-	if( (syswk->app->wallpaper_pos/BOX2OBJ_WPICON_MAX) == (wp/BOX2OBJ_WPICON_MAX) ){
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_CUR, TRUE );
-	}else{
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_CUR, FALSE );
-	}
-
-	pos = wp % BOX2OBJ_WPICON_MAX;
-
-	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_CUR, &x, &y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_SetPos(
-		syswk->app, BOX2OBJ_ID_TRAY_CUR,
-		BOX2OBJ_WPICON_PX+BOX2OBJ_WPICON_SX*pos, y, CLSYS_DEFREND_MAIN );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3950,95 +3709,7 @@ static void WallPaperBufferFill( BOX2_SYS_WORK * syswk, u8 * buf, u32 wp, u32 ch
 }
 
 
-//============================================================================================
-//	ポケモンを預けるボックス選択関連
-//============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * 預ける：ＯＢＪ初期化
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	id		OBJ ID
- * @param	x		表示Ｘ座標
- * @param	y		表示Ｙ座標
- * @param	flg		表示フラグ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void PokeOutBoxObjSet( BOX2_APP_WORK * appwk, u32 id, s16 x, s16 y, BOOL flg )
-{
-	BOX2OBJ_SetPos( appwk, id, x, y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_Vanish( appwk, id, flg );
-	BOX2OBJ_BgPriChange( appwk, id, 0 );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 預ける：ＯＢＪ初期化（全体）
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2OBJ_PokeOutBoxObjInit( BOX2_SYS_WORK * syswk )
-{
-	u32	i;
-	s16	x, y;
-
-//	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, PTOUT_LA_PX, PTOUT_LA_PY, TRUE );
-//	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, PTOUT_RA_PX, PTOUT_RA_PY, TRUE );
-	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_CUR, PTOUT_TRAY_CUR_PX, PTOUT_TRAY_CUR_PY, TRUE );
-	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_NAME, PTOUT_TRAY_NAME_PX, PTOUT_TRAY_NAME_PY, TRUE );
-//	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_ARROW, PTOUT_TRAY_ARROW_PX, PTOUT_TRAY_ARROW_PY, TRUE );
-
-	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
-		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, &x, &y, CLSYS_DEFREND_MAIN );
-		PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAYICON+i, x, PTOUT_TRAY_ICON_PY, TRUE );
-	}
-
-	BOX2OBJ_TrayIconChange( syswk );
-
-	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_TRAY_NAME, BOX2OBJ_ANM_TRAY_NAME );
-
-//	BoxMoveFntOamPos( syswk->app );
-/*
-	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, TRUE );
-	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, TRUE );
-	FONTOAM_SetBGPriority( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, 0 );
-	FONTOAM_SetBGPriority( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, 0 );
-*/
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 預ける：関連ＯＢＪを非表示へ
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2OBJ_PokeOutBoxObjVanish( BOX2_SYS_WORK * syswk )
-{
-	u32	i;
-
-//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_BOXMV_LA, FALSE );
-//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_BOXMV_RA, FALSE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_CUR, FALSE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_NAME, FALSE );
-//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_ARROW, FALSE );
-
-	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
-		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAYICON+i, FALSE );
-	}
-/*
-	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, FALSE );
-	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, FALSE );
-*/
-}
 
 void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status )
 {

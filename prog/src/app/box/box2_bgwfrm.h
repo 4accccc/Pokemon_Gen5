@@ -77,28 +77,22 @@ extern void BOX2BGWFRM_BoxListButtonOn( BOX2_APP_WORK * appwk );
 
 
 
-extern void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_PokeMenuMoveMain( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk );
 
-//extern BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk );
 
 extern BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk );
 extern BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk );
-
-extern BOOL BOX2BGWFRM_BoxMoveButtonCheck( BGWINFRM_WORK * wk );
-
-extern void BOX2BGWFRM_BoxMoveButtonOutSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_PokeMenuOutSet( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_PokeMenuPutCheck( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
 extern BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk );
@@ -119,42 +113,26 @@ extern void BOX2BGWFRM_PokeMenuInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_PokeMenuOff( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
-
-extern void BOX2BGWFRM_BoxMoveMenuInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_BoxMoveMenuOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxMoveFrmInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_BoxThemaMenuOutSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_BoxThemaMenuInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
+//extern void BOX2BGWFRM_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
 extern void BOX2BGWFRM_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
-extern BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_YStatusButtonInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_YStatusButtonOutSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk );
-extern void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk );
-extern void BOX2BGWFRM_BoxThemaFrmPut( BOX2_SYS_WORK * syswk );
+//extern void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
 extern void BOX2BGWFRM_MarkingFrameInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_MarkingFramePut( BOX2_SYS_WORK * syswk );
 extern void BOX2BGWFRM_BoxListButtonOff( BOX2_APP_WORK * appwk );
 extern void BOX2BGWFRM_TemochiButtonOff( BOX2_APP_WORK * appwk );
-extern void BOX2BGWFRM_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
 extern void BOX2BGWFRM_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
+//extern void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
 extern void BOX2BGWFRM_PartyPokeFramePut( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
-extern void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
 
-extern void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk );
+//extern void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk );
 
 extern void BOX2BGWFRM_PutTouchBar( BGWINFRM_WORK * wk );
