@@ -227,10 +227,10 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
 
       wk->heapID = HEAPID_BTL_SYSTEM;
-      wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
+      wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
 
