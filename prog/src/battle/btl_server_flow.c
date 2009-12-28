@@ -9113,7 +9113,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   power = BTL_CALC_MulRatio( power, ratio );
-  BTL_Printf("ÉèÉUà–óÕÇÕ%d\n", power);
+  BTL_Printf("ÉèÉUà–óÕÇÕ%d  (ratio=%08x)\n", power, ratio);
   return power;
 }
 //--------------------------------------------------------------------------
@@ -9173,10 +9173,10 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       {
         if( criticalFlag ){
           power = BPP_GetValue_Critical( calc_attacker, vid );
-          BTL_Printf("ÉNÉäÉeÉBÉJÉãÇ≈çUåÇ=%d\n", power);
+//          OS_TPrintf("ÉNÉäÉeÉBÉJÉãÇ≈çUåÇ=%d\n", power);
         }else{
           power = BPP_GetValue( calc_attacker, vid );
-          BTL_Printf("í èÌÉqÉbÉgÇ≈çUåÇ=%d\n", power);
+//          OS_TPrintf("í èÌÉqÉbÉgÇ≈çUåÇ=%d\n", power);
         }
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
@@ -9187,6 +9187,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       power = BTL_CALC_MulRatio( power, ratio );
+      OS_TPrintf("çUåÇóÕ=%d  (Critical=%d, ratio=%08x\n", power, criticalFlag, ratio);
     BTL_EVENTVAR_Pop();
     return power;
   }
@@ -9246,6 +9247,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   guard = BTL_CALC_MulRatio( guard, ratio );
+  OS_TPrintf("ñhå‰óÕ=%d  (Critical=%d, ratio=%08x\n", guard, criticalFlag, ratio);
   return guard;
 }
 //--------------------------------------------------------------------------
