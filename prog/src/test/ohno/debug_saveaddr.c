@@ -166,7 +166,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
-
+/*
     for(i=0;i<26;i++){
       REGULATION* pData = GFL_ARC_UTIL_Load(ARCID_REGULATION, i, FALSE, HEAPID_PROC );
 
@@ -175,7 +175,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("LOHI %d %d\n",Regulation_GetParam(pData, REGULATION_NUM_LO), Regulation_GetParam(pData, REGULATION_NUM_HI));
       GFL_HEAP_FreeMemory(pData);
     }
-
+*/
     {//ミステリー関連 
       MYSTERY_DATA *pMystery = SaveData_GetMysteryData(pWork->pSaveData); 
       GIFT_PACK_DATA  *pGift  = MYSTERYDATA_GetCardData( pMystery, 0 );
@@ -208,7 +208,9 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     {//レコード
       long* rec = (long*)SaveData_GetRecord(pWork->pSaveData);
-      
+
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORDTOP_ADDR", (u32)&rec[0]-(u32)topAddr, 4);
+
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_CAPTURE_POKE", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
     }

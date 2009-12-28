@@ -1950,7 +1950,7 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 
       eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(POKEMONTRADE_PARAM));
       
-      eibw->gsys = unisys->uniparent->gsys;
+      eibw->gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
       eibw->type = POKEMONTRADE_UNION;
       
       unisys->parent_work = eibw;

@@ -47,6 +47,8 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 //static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void _netConnectFunc(void* pWork,int hardID);    ///< ハードで接続した時に呼ばれる
 static void _netNegotiationFunc(void* pWork,int hardID);    ///< ネゴシエーション完了時にコール
+static BOOL _NetTestChild(void* pCtl);
+static BOOL _NetTestParent(void* pCtl);
 
 static void _endCallBack(void* pWork);
 static u8* _recvMemory(int netID, void* pWork, int size);
@@ -104,7 +106,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
   GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
   4,                            // 最大接続人数
-  24,                  //最大送信バイト数
+  88,                  //最大送信バイト数
   _BCON_GET_NUM,    // 最大ビーコン収集数
   TRUE,     // CRC計算
   FALSE,     // MP通信＝親子型通信モードかどうか
@@ -286,23 +288,53 @@ static BOOL NetTestAutoConnect(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
-  GFL_NET_ChangeoverConnect(NULL); // 自動接続
-  _CHANGE_STATE( NetTestSendTiming );
+  if(pDOC->bParent){
+    GFL_NET_InitServer();
+    _CHANGE_STATE( _NetTestParent );
+  }
+  else{
+    u8 mac[]={0xff,0xff,0xff,0xff,0xff,0xff};
+    GFL_NET_InitClientAndConnectToParent(mac);
+
+    //    GFL_NET_ChangeoverConnect(NULL);
+    _CHANGE_STATE( _NetTestChild );
+  }
 
   return FALSE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   自動接続
+ * @brief   自動接続親機側
  * @param   pCtl    デバッグワーク
  * @retval  PROC終了時にはTRUE
  */
 //--------------------------------------------------------------
-static BOOL NetTestSendTiming(void* pCtl)
+static BOOL _NetTestParent(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
+  if(GFL_NET_GetConnectNum()==4){
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+    _CHANGE_STATE( NetTestRecvTiming );
+  }
+  return FALSE;
+}
+
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   自動接続子機側
+ * @param   pCtl    デバッグワーク
+ * @retval  PROC終了時にはTRUE
+ */
+//--------------------------------------------------------------
+
+static BOOL _NetTestChild2(void* pCtl)
+{
+   DEBUG_OHNO_CONTROL* pDOC = pCtl;
+ 
   if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
     int id = 1 - GFL_NET_HANDLE_GetNetHandleID( GFL_NET_HANDLE_GetCurrentHandle());
     if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(id) ) ){
@@ -312,6 +344,19 @@ static BOOL NetTestSendTiming(void* pCtl)
   }
   return FALSE;
 }
+
+static BOOL _NetTestChild(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+
+  
+  if(GFL_NET_HANDLE_RequestNegotiation()){
+    _CHANGE_STATE( _NetTestChild2 );
+  }
+  return FALSE;
+}
+
+
 
 //--------------------------------------------------------------
 /**
@@ -496,7 +541,7 @@ static BOOL NetTestEnd(void* pCtl)
 //  デバッグ用初期化関数
 //------------------------------------------------------------------
 
-static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk,BOOL bParent)
 {
 
   DEBUG_OHNO_CONTROL * pDOC;
@@ -507,7 +552,8 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * 
   pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
   GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
   pDOC->debug_heap_id = heapID;
-
+  pDOC->bParent=bParent;
+  
   _CHANGE_STATE( netinit );
 
   return GFL_PROC_RES_FINISH;
@@ -542,10 +588,16 @@ static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * p
 }
 
 
+static GFL_PROC_RESULT NetFourAutoProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  return DebugOhnoMainProcInit(proc, seq, pwk, mywk,FALSE);
+}
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const GFL_PROC_DATA DebugOhnoMainProcData = {
-  DebugOhnoMainProcInit,
+  NetFourAutoProc_Init,
   DebugOhnoMainProcMain,
   DebugOhnoMainProcEnd,
 };
@@ -581,3 +633,39 @@ void _netNegotiationFunc(void* pWork,int NetID)
   NET_PRINT("_netNegotiationFunc %d\n", NetID);
 
 }
+
+
+
+static GFL_PROC_RESULT NetFourParentProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  return DebugOhnoMainProcInit(proc, seq, pwk, mywk,TRUE);
+}
+
+static GFL_PROC_RESULT NetFourChildProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  return DebugOhnoMainProcInit(proc, seq, pwk, mywk,FALSE);
+}
+
+
+
+
+
+
+// プロセス定義データ
+const GFL_PROC_DATA NetFourParentProcData = {
+  NetFourParentProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+// プロセス定義データ
+const GFL_PROC_DATA NetFourChildProcData = {
+  NetFourChildProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+
+
+
+

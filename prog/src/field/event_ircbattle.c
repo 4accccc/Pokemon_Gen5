@@ -255,7 +255,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
   case _CALL_TRADE:  //  ƒ|ƒPƒ‚ƒ“ŒðŠ·
-    dbw->aPokeTr.gsys=dbw->gsys;
+    dbw->aPokeTr.gamedata=dbw->gamedata;
     dbw->aPokeTr.type=POKEMONTRADE_IRC;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, &dbw->aPokeTr);
     (*seq)++;

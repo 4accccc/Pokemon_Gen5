@@ -95,6 +95,7 @@ typedef struct{
 //==============================================================================
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk);
+static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -118,6 +119,12 @@ extern const GFL_PROC_DATA PokemonTradeIrcProcData;
 extern const GFL_PROC_DATA DebugSaveAddrProcData;
 
 
+
+extern const GFL_PROC_DATA NetFourParentProcData;
+extern const GFL_PROC_DATA NetFourChildProcData;
+
+
+
 //==============================================================================
 //	ƒf[ƒ^
 //==============================================================================
@@ -126,7 +133,7 @@ static const D_MENULIST DebugMenuList[] = {
 	{//
 		DEBUG_OHNO_MSG0017, 
 		&PokemonTradeWiFiProcData,	
-		NULL,
+		_PokeTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 	{//
@@ -174,6 +181,18 @@ static const D_MENULIST DebugMenuList[] = {
 	{//
 		DEBUG_OHNO_MSG0014, 
 		&VTRProcData,
+		NULL,
+		FS_OVERLAY_ID(ohno_debugapp)
+	},
+	{//
+		DEBUG_OHNO_MSG0020, 
+		&NetFourParentProcData,
+		NULL,
+		FS_OVERLAY_ID(ohno_debugapp)
+	},
+	{//
+		DEBUG_OHNO_MSG0021, 
+		&NetFourChildProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
@@ -510,6 +529,30 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
   
   return pWork;
 }
+
+
+static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
+{
+	EVENT_GTSNEGO_WORK *pWork;
+
+  
+	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
+
+  pWork->aUser[0].selectType=0;
+  pWork->aUser[1].selectType=0;
+  pWork->aUser[0].selectLV=0;
+  pWork->aUser[1].selectLV=0;
+    
+  pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  
+  
+  return pWork;
+}
+
+
+
 
 
 

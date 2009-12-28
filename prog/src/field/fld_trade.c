@@ -716,7 +716,7 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
       POKEPARTY*     my_party = GAMEDATA_GetMyPokemon( gdata );
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
-      work->demoParam.gsys     = work->gsys; 
+      work->demoParam.gamedata     = gdata; 
       work->demoParam.pMy      = GAMEDATA_GetMyStatus( gdata );
       work->demoParam.pMyPoke  = PokeParty_GetMemberPointer( my_party, work->partyPos );
       work->demoParam.pNPC     = work->tradeWork->p_myste;

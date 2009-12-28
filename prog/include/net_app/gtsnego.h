@@ -21,10 +21,9 @@ typedef struct {
 } EVENT_GTSNEGO_USER_DATA;
 
 typedef struct {
-  GAMESYS_WORK * gsys;
+  GAMEDATA * gamedata;
   EVENT_GTSNEGO_USER_DATA aUser[2];
   MYSTATUS* pStatus[2];
-  SAVE_CONTROL_WORK* ctrl;
 } EVENT_GTSNEGO_WORK;
 
 typedef struct _GTSNEGO_WORK  GTSNEGO_WORK;

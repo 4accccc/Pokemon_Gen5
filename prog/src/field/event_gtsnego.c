@@ -77,6 +77,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 {
   EVENT_GTSNEGO_LINK_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
+  GAMEDATA* gamedata=GAMESYSTEM_GetGameData(gsys);
 
 
   switch (*seq) {
@@ -116,7 +117,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_TRADE:
-    dbw->aPokeTr.gsys=gsys;
+    dbw->aPokeTr.gamedata=gamedata;
     dbw->aPokeTr.type = POKEMONTRADE_GTSNEGO;
     dbw->aPokeTr.pNego = &dbw->gts;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, &dbw->aPokeTr);
@@ -167,8 +168,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   //GTSNEGOˆø”‚ÌÝ’è
   {
     GFL_STD_MemClear( &dbw->gts, sizeof(EVENT_GTSNEGO_WORK) );
-    dbw->gts.gsys = gsys;
-    dbw->gts.ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+    dbw->gts.gamedata = GAMESYSTEM_GetGameData(gsys);
     dbw->gts.pStatus[0] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
     dbw->gts.pStatus[1] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
     {

@@ -332,6 +332,7 @@ struct _POKEMON_TRADE_WORK{
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
+  GFL_BMPWIN* GTSInfoWindow;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   StateFunc* state;      ///< ハンドルのプログラム状態
   HEAPID heapID;
@@ -661,6 +662,7 @@ typedef enum {
   _NETCMD_THREE_SELECT2,
   _NETCMD_THREE_SELECT3,
   _NETCMD_THREE_SELECT_END,
+  _NETCMD_THREE_SELECT_CANCEL,
   _NETCMD_SCROLLBAR,
 } _POKEMON_TRADE_SENDCMD;
 
@@ -668,9 +670,12 @@ typedef enum {
 extern BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno);
 extern void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub);
 extern void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected);
+extern void POKE_GTS_SelectStatusMessageDelete(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
+extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
 
 
 
@@ -699,16 +704,18 @@ extern void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side,
 
 //ポケモンプロセス ir union wifi用
 extern void POKETRADE_PROC_PokemonStatusStart(POKEMON_TRADE_WORK* pWork);
-
+extern void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork);
 
 //ポケモンネゴシエーション用
 extern void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork);
-extern BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height);
+extern int POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height);
 
 extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_SixStateDelete(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON_PARAM* pp);
+extern void POKE_GTS_DeletePokemonDirect(POKEMON_TRADE_WORK* pWork,int side,int index);
 extern void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork);
 

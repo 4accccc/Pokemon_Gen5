@@ -22,6 +22,7 @@ typedef struct {
   GFL_PROCSYS * psys;
   NetTestFunc funcNet;
   int bMoveRecv;
+  BOOL bParent;
 }DEBUG_OHNO_CONTROL;
 
 

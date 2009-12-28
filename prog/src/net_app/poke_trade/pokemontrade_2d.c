@@ -2177,6 +2177,7 @@ void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, in
 
 void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no)
 {
+  OS_TPrintf("%d %d\n",side,no);
   if(pWork->pokeIconGTS[side][no]){
     GFL_CLACT_WK_Remove( pWork->pokeIconGTS[side][no]);
     pWork->pokeIconGTS[side][no]=NULL;
@@ -2186,7 +2187,7 @@ void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモンステータスウインドウ用のパレットを合成する
+ * @brief   GTSエントリーにポケモンアイコンをエントリーする
  * @param   POKEMON_TRADE_WORK
  * @param   palno      パレットを送る番号
  * @param   palType   パレット転送タイプ MAINかSUB

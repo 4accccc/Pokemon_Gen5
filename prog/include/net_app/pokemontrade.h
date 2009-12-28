@@ -11,7 +11,7 @@
 #pragma once
 
 #include "poke_tool/poke_tool.h"
-#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_data.h"
 
 /// ポケモン交換のタイプ
 typedef enum{
@@ -32,7 +32,7 @@ typedef struct _POKEMONTRADE_DEMO_WORK POKEMONTRADE_DEMO_WORK;
 ///ポケモン交換呼び出し用パラメータ
 typedef struct{
   POKEMONTRADE_TYPE type;
-  GAMESYS_WORK* gsys;
+  GAMEDATA* gamedata;
   void* pNego;
 } POKEMONTRADE_PARAM;
 
@@ -43,7 +43,7 @@ typedef struct{
   POKEMON_PARAM* pNPCPoke;  ///< NPCのポケモン
   MYSTATUS* pMy;    ///<自分のMYSTATUS
   MYSTATUS* pNPC;   ///<NPCのMYSTATUS
-  GAMESYS_WORK* gsys;
+  GAMEDATA* gamedata;
 } POKEMONTRADE_DEMO_PARAM;
 
 

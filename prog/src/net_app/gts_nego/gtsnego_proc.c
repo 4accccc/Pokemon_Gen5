@@ -848,11 +848,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->dbw = pEv;
   pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
   pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_gtsnego_dat);
-  pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
-  pWork->pList = GAMEDATA_GetWiFiList(
-    (
-      GAMESYSTEM_GetGameData(
-        ((pEv->gsys))) ));
+  pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
+  pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
   pWork->profileID = SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSave) );
   
