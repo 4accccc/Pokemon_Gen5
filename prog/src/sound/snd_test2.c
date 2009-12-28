@@ -1225,7 +1225,7 @@ static void setSelectName(SOUNDTEST_WORK* sw)
   msgIdx = (sw->setNo[NOIDX_SENO]-initNoData[NOIDX_SENO]) + NAMEMSG_STARTIDX_SE;
   GFL_MSG_GetString(sw->msgman, msgIdx, sw->setName[NAMEIDX_SE]);
   // VOICE
-  msgIdx = (sw->setNo[NOIDX_VOICENO]-initNoData[NOIDX_VOICENO]) + NAMEMSG_STARTIDX_VOICE;
+  msgIdx = (sw->setNo[NOIDX_VOICENO]-initNoData[NOIDX_VOICENO]) + NAMEMSG_STARTIDX_VOICE - 1;
   GFL_MSG_GetString(sw->monsmsgman, msgIdx, sw->setName[NAMEIDX_VOICE]);
 
 }
