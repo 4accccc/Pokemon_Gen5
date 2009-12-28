@@ -12,13 +12,13 @@ DIFFCOPY = ../../tools/diffcopy
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build: ./bgm_info/bgm_info.xls
+do-build:
 	$(MAKE) -f makefile_gmm
 	$(MAKE) -f makefile_sarc
 
 
-./bgm_info/bgm_info.xls : $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls
-	cp $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls ./bgm_info/bgm_info.xls
+#./bgm_info/bgm_info.xls : $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls
+#	cp $(SOUNDPLAYERDIR)/Pokemon_WB_BGMList.xls ./bgm_info/bgm_info.xls
 
 #------------------------------------------------------------------------------
 #	make cleanÉãÅ[Éã
