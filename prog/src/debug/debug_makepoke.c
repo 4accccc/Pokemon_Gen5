@@ -939,6 +939,8 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
     case SEQ_DRAW_BOX:
       {
         int i;
+
+        PP_Renew( wk->dst );
         for(i=0; i<NELEMS(InputBoxParams); ++i){
           box_setup( wk, i, wk->dst );
         }
@@ -1136,6 +1138,7 @@ static void update_dst( DMP_MAINWORK* wk )
   {
     u8  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
     PP_Put( wk->dst, ID_PARA_seikaku, seikaku );
+    OS_TPrintf("«Ši‘‚«‚±‚Ý : %d\n", seikaku);
   }
 }
 
@@ -1195,6 +1198,7 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
   switch( p->paraID ){
   case ID_PARA_SEIKAKU:
     value = PP_GetSeikaku( pp );
+    OS_TPrintf("«Ši‚æ‚Ý‚±‚Ý : %d\n", value);
     break;
   case ID_PARA_pp_count1:
   case ID_PARA_pp_count2:
@@ -1413,6 +1417,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     break;
   case INPUTBOX_ID_SEIKAKU:
     {
+      PP_Renew( wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
       box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
