@@ -5,8 +5,6 @@
  *  @author Koji Kawada
  *  @data   2009.12.03
  *  @note   infowin.c, touchbar.c, ui_template.cを参考にして作成しました。
- *          コピペした箇所とか実験箇所とか定数直書きとか直します
- *          
  *
  *  モジュール名：ZUKAN_INFO
  */
@@ -16,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+// インクルード
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/global_msg.h"
@@ -50,34 +49,68 @@
  *  定数定義
  */
 //=============================================================================
-#define ZUKAN_INFO_BG_PAL_LINE_SIZE        (0x20)
-#define ZUKAN_INFO_BG_PAL_LINE_COLOR_NUM   (0x10)  // 1本の色数
-#define ZUKAN_INFO_BG_COLOR_SIZE           (2)    // 1色のデータサイズは2バイト
-#define ZUKAN_INFO_BG_PAL_NUM              (3)
-#define ZUKAN_INFO_BACK_BG_PAL_NO          (0)
-#define ZUKAN_INFO_FORE_BG_PAL_NO_D        (1)
-#define ZUKAN_INFO_FORE_BG_PAL_NO_L        (2)
-#define ZUKAN_INFO_BG_CHARA_SIZE           ( 32 * 4 * GFL_BG_1CHRDATASIZ )
-#define ZUKAN_INFO_BG_SCREEN_W             (32)
-#define ZUKAN_INFO_BG_SCREEN_H             (24)
-#define ZUKAN_INFO_BG_SCREEN_SIZE          ( ZUKAN_INFO_BG_SCREEN_W * ZUKAN_INFO_BG_SCREEN_H * GFL_BG_1SCRDATASIZ )
-#define ZUKAN_INFO_BAR_SCREEN_X            (0)
-#define ZUKAN_INFO_BAR_SCREEN_Y            (0)
-#define ZUKAN_INFO_BAR_SCREEN_W            (32)
-#define ZUKAN_INFO_BAR_SCREEN_H            (3)
+// BGフレーム
+#define ZUKAN_INFO_BG_FRAME_M_MSG    (GFL_BG_FRAME3_M)
+#define ZUKAN_INFO_BG_FRAME_M_FORE   (GFL_BG_FRAME2_M)
+#define ZUKAN_INFO_BG_FRAME_M_BACK   (GFL_BG_FRAME1_M)
 
-#define ZUKAN_INFO_FPS (60)
-#define ZUKAN_INFO_BAR_BLINK_COUNT_MAX ( ZUKAN_INFO_FPS / 2 )
-#define ZUKAN_INFO_BACK_BG_SCREEN_SCROLL_X_VALUE (1)
-#define ZUKAN_INFO_VBLANK_TCB_PRI (1)
+#define ZUKAN_INFO_BG_FRAME_S_MSG    (GFL_BG_FRAME3_S)
+#define ZUKAN_INFO_BG_FRAME_S_FORE   (GFL_BG_FRAME2_S)
+#define ZUKAN_INFO_BG_FRAME_S_BACK   (GFL_BG_FRAME1_S)
 
+// BGパレット
+// 本数
+enum
+{
+  ZUKAN_INFO_BG_PAL_NUM_FORE_BACK    =  3,
+  ZUKAN_INFO_BG_PAL_NUM_MSG          =  1,
+};
+// 位置
+enum
+{
+  ZUKAN_INFO_BG_PAL_POS_FORE_BACK    = 0,
+  ZUKAN_INFO_BG_PAL_POS_MSG          = ZUKAN_INFO_BG_PAL_POS_FORE_BACK   + ZUKAN_INFO_BG_PAL_NUM_FORE_BACK   ,  // 3
+  ZUKAN_INFO_BG_PAL_POS_MAX          = ZUKAN_INFO_BG_PAL_POS_MSG         + ZUKAN_INFO_BG_PAL_NUM_MSG         ,  // 4  // ここから空き
+};
+
+// OBJパレット
+// 本数
+enum
+{
+  ZUKAN_INFO_OBJ_PAL_NUM_POKE2D    =  1,
+  ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON  =  3,
+  ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT  =  1,
+};
+// 位置
+enum
+{
+  ZUKAN_INFO_OBJ_PAL_POS_POKE2D    = 0,
+  ZUKAN_INFO_OBJ_PAL_POS_TYPEICON  = ZUKAN_INFO_OBJ_PAL_POS_POKE2D   + ZUKAN_INFO_OBJ_PAL_NUM_POKE2D   ,  // 1
+  ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT  = ZUKAN_INFO_OBJ_PAL_POS_TYPEICON + ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON ,  // 4
+  ZUKAN_INFO_OBJ_PAL_POS_MAX       = ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT + ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT ,  // 5  // ここから空き
+};
+
+// 色について
+#define ZUKAN_INFO_COLOR_SIZE           (2)         // 1色のサイズは2バイト
+#define ZUKAN_INFO_PAL_LINE_COLOR_NUM   (0x10)      // 1本の色数
+#define ZUKAN_INFO_PAL_LINE_SIZE        ( ZUKAN_INFO_COLOR_SIZE * ZUKAN_INFO_PAL_LINE_COLOR_NUM )  // 1本のサイズ(32バイト)
+
+// BGについて
+#define ZUKAN_INFO_BG_CHARA_SIZE           ( 32 * 4 * GFL_BG_1CHRDATASIZ )  // バイト
+#define ZUKAN_INFO_BG_SCREEN_W             (32)  // キャラ
+#define ZUKAN_INFO_BG_SCREEN_H             (24)  // キャラ
+#define ZUKAN_INFO_BG_SCREEN_SIZE          ( ZUKAN_INFO_BG_SCREEN_W * ZUKAN_INFO_BG_SCREEN_H * GFL_BG_1SCRDATASIZ )  // バイト
+
+// BGのスクロール
+#define ZUKAN_INFO_BACK_BG_SCROLL_X_VALUE (1)
+#define ZUKAN_INFO_BACK_BG_SCROLL_WAIT    (4)  // 4フレームに1回動く  // 4より大きいと動きがカクカクしてしまう
+
+// TCBと更新
+#define ZUKAN_INFO_VBLANK_TCB_PRI               (1)
 #define ZUKAN_INFO_BG_UPDATE_BIT_RESET          (0)
-#define ZUKAN_INFO_FORE_BG_UPDATE_BIT_BAR_BLINK (1<<0)
 #define ZUKAN_INFO_BACK_BG_UPDATE_BIT_SCROLL    (1<<0)
 
-
-
-#define PSTATUS_BG_PLT_FONT (4)
+// MSGについて
 enum
 {
   ZUKAN_INFO_MSG_TOROKU,
@@ -88,58 +121,6 @@ enum
   ZUKAN_INFO_MSG_MAX,
 };
 
-#define PLTID_OBJ_TYPEICON_M (3)  // 3本使用
-#define PLTID_OBJ_POKE_M (12)
-#define PLTID_OBJ_POKEFOOT_M (13)
-
-
-#define ZUKAN_INFO_BG_FRAME_M_MSG (GFL_BG_FRAME3_M)
-#define ZUKAN_INFO_BG_FRAME_M_FORE (GFL_BG_FRAME2_M)
-#define ZUKAN_INFO_BG_FRAME_M_BACK (GFL_BG_FRAME1_M)
-
-#define ZUKAN_INFO_BG_FRAME_S_MSG (GFL_BG_FRAME3_S)
-#define ZUKAN_INFO_BG_FRAME_S_FORE (GFL_BG_FRAME2_S)
-#define ZUKAN_INFO_BG_FRAME_S_BACK (GFL_BG_FRAME1_S)
-
-#define ZUKAN_INFO_BG_PAL_NO (0)
-
-typedef enum
-{
-  ZUKAN_INFO_STEP_COLOR_WAIT,
-  ZUKAN_INFO_STEP_COLOR_WHILE,
-  ZUKAN_INFO_STEP_COLOR,
-  ZUKAN_INFO_STEP_MOVE_WAIT,
-  ZUKAN_INFO_STEP_MOVE,  // TOROKU
-  ZUKAN_INFO_STEP_CENTER,  // NICKNAME
-  ZUKAN_INFO_STEP_CENTER_STILL,  // TOROKU or NICKNAME
-}
-ZUKAN_INFO_STEP;
-
-#define ZUKAN_INFO_START_POKEMON_POS_X (8*6+2)//(8*6)  // ポケモン2Dは12chara x 12chara  // 左上のピクセル座標が(0, 24)もしくは(2,24)になるように。
-#define ZUKAN_INFO_START_POKEMON_POS_Y (8*(3+6))
-
-#define ZUKAN_INFO_CENTER_POKEMON_POS_X (8*16)
-#define ZUKAN_INFO_CENTER_POKEMON_POS_Y (8*(3+6))
-
-#define ZUKAN_INFO_WND_DOWN_Y_START (8*17)
-#define ZUKAN_INFO_WND_DOWN_Y_GOAL (8*2)
-#define ZUKAN_INFO_WND_UP_Y (8*1)
-#define ZUKAN_INFO_WND_LEFT_X (0)
-#define ZUKAN_INFO_WND_RIGHT_X (100)
-
-#define ZUKAN_INFO_COLOR_WHILE (15)
-#define ZUKAN_INFO_BACK_BG_SCROLL_WAIT (4)  // 4より大きいと動きがカクカクしてしまう
-
-// パレットアニメーション
-#define ZUKAN_INFO_PALETTE_ANIME_LINE          (0x1)        // 16本中のどれをパレットアニメーションするか
-#define ZUKAN_INFO_PALETTE_ANIME_LINE_S        (0x1)        // 16本中のどれがパレットアニメーションのスタート色のあるラインか
-#define ZUKAN_INFO_PALETTE_ANIME_LINE_E        (0x2)        // 16本中のどれがパレットアニメーションのエンド色のあるラインか
-#define ZUKAN_INFO_PALETTE_ANIME_NO            (0x1)        // 16色中のどこからパレットアニメーションの対象として開始するか
-#define ZUKAN_INFO_PALETTE_ANIME_NUM           (5)          // パレットアニメーションの対象として何色あるか
-#define ZUKAN_INFO_PALETTE_ANIME_VALUE         (0x400)      // cos使うので0～0xFFFFのループ
-#define ZUKAN_INFO_PALETTE_ANIME_VALUE_MAX     (0x10000)
-
-// Message
 typedef enum
 {
   ZUKAN_INFO_ALIGN_LEFT,
@@ -150,6 +131,48 @@ ZUKAN_INFO_ALIGN;
 
 #define ZUKAN_INFO_STRBUF_LEN (128)  // この文字数で足りるかbuflen.hで要確認
 
+// ステップ
+typedef enum
+{
+  ZUKAN_INFO_STEP_COLOR_WAIT,    // TOROKU
+  ZUKAN_INFO_STEP_COLOR_WHILE,   // TOROKU
+  ZUKAN_INFO_STEP_COLOR,         // TOROKU
+  ZUKAN_INFO_STEP_MOVE_WAIT,     // TOROKU
+  ZUKAN_INFO_STEP_MOVE,          // TOROKU
+  ZUKAN_INFO_STEP_CENTER,        // NICKNAME
+  ZUKAN_INFO_STEP_CENTER_STILL,  // TOROKU or NICKNAME
+  ZUKAN_INFO_STEP_START_STILL,   // LIST
+}
+ZUKAN_INFO_STEP;
+
+// ポケモン2Dについて
+#define ZUKAN_INFO_START_POKEMON_POS_X   (8*6+2)//(8*6)  // ポケモン2Dは12chara x 12chara
+                                                       // 左上のピクセル座標が(0, 24)もしくは(2,24)になるように。
+#define ZUKAN_INFO_START_POKEMON_POS_Y   (8*(3+6))
+
+#define ZUKAN_INFO_CENTER_POKEMON_POS_X  (8*16)
+#define ZUKAN_INFO_CENTER_POKEMON_POS_Y  (8*(3+6))
+
+// ポケモン2Dに乗るWND
+#define ZUKAN_INFO_WND_DOWN_Y_START    (8*17)
+#define ZUKAN_INFO_WND_DOWN_Y_GOAL     (8*2)
+#define ZUKAN_INFO_WND_UP_Y            (8*1)
+#define ZUKAN_INFO_WND_LEFT_X          (0)
+#define ZUKAN_INFO_WND_RIGHT_X         (100)
+
+#define ZUKAN_INFO_COLOR_WHILE         (15)  // ポケモン2Dに乗るWNDが動き出すまでの待ちフレーム数
+
+// パレットアニメーション
+#define ZUKAN_INFO_PALETTE_ANIME_LINE          (0x1)        // 16本中のどれをパレットアニメーションするか
+#define ZUKAN_INFO_PALETTE_ANIME_LINE_S        (0x1)        // 16本中のどれがパレットアニメーションのスタート色のあるラインか
+#define ZUKAN_INFO_PALETTE_ANIME_LINE_E        (0x2)        // 16本中のどれがパレットアニメーションのエンド色のあるラインか
+#define ZUKAN_INFO_PALETTE_ANIME_NO            (0x1)        // 16色中のどこからパレットアニメーションの対象として開始するか
+#define ZUKAN_INFO_PALETTE_ANIME_NUM           (5)          // パレットアニメーションの対象として何色あるか
+#define ZUKAN_INFO_PALETTE_ANIME_VALUE         (0x400)      // cos使うので0～0xFFFFのループ
+#define ZUKAN_INFO_PALETTE_ANIME_VALUE_MAX     (0x10000)
+
+// Yオフセット
+#define ZUKAN_INFO_Y_OFFSET      (-8*3)      // 図鑑の説明画面として下のディスプレイ(メイン)に表示するとき
 
 //=============================================================================
 /**
@@ -158,45 +181,54 @@ ZUKAN_INFO_ALIGN;
 //=============================================================================
 struct _ZUKAN_INFO_WORK
 {
+  // 引数
+  HEAPID                  heap_id;         // 他のところのを覚えているだけで生成や破棄はしない。
+  BOOL                    get_flag;
+  const POKEMON_PARAM*    pp;              // 他のところのを覚えているだけで生成や破棄はしない。
+  ZUKAN_INFO_LAUNCH       launch;
+  ZUKAN_INFO_DISP         disp;
+  u8                      bg_priority;
+  GFL_CLUNIT*             clunit;          // 他のところのを覚えているだけで生成や破棄はしない。
+  GFL_FONT*               font;            // 他のところのを覚えているだけで生成や破棄はしない。
+  PRINT_QUE*              print_que;       // 他のところのを覚えているだけで生成や破棄はしない。
+
+  // BG
   // fore = setumei, back = base
-  GFL_ARCUTIL_TRANSINFO fore_bg_chara_info;  ///< foreのBGキャラ領域
-  GFL_ARCUTIL_TRANSINFO back_bg_chara_info;  ///< backのBGキャラ領域
-  u8                    fore_bg_update;  ///< foreのBG更新ビットフラグ
-  u8                    back_bg_update;  ///< backのBG更新ビットフラグ
+  GFL_ARCUTIL_TRANSINFO     fore_bg_chara_info;    ///< foreのBGキャラ領域
+  GFL_ARCUTIL_TRANSINFO     back_bg_chara_info;    ///< backのBGキャラ領域
+  u8                        fore_bg_update;        ///< foreのBG更新ビットフラグ
+  u8                        back_bg_update;        ///< backのBG更新ビットフラグ
  
-  GFL_TCB* vblank_tcb;  ///< VBlank中のTCB
+  PALTYPE    bg_paltype;
+  u8         msg_bg_frame;
+  u8         fore_bg_frame;
+  u8         back_bg_frame;
 
-  u32 bar_blink_pal_no;  ///< バーのパレット番号
-  u8  bar_blink_count;   ///< バーの点滅カウント
+  // TCB
+  GFL_TCB*     vblank_tcb;      ///< VBlank中のTCB
 
-  HEAPID heap_id;  // 他のところのを覚えているだけで生成や破棄はしない。
-  POKEMON_PARAM* pp;  // 他のところのを覚えているだけで生成や破棄はしない。
-  ZUKAN_INFO_DISP disp;
-  u8 bg_priority;
-  GFL_CLUNIT* clunit;  // 他のところのを覚えているだけで生成や破棄はしない。
-  GFL_FONT* font;  // 他のところのを覚えているだけで生成や破棄はしない。
-  PRINT_QUE* print_que;  // 他のところのを覚えているだけで生成や破棄はしない。
+  // ステップやタイミング
+  ZUKAN_INFO_STEP      step;
+  BOOL                 move_flag;
+  BOOL                 cry_flag;
+  u32                  color_while_count;
+  u32                  back_bg_scroll_wait_count;
 
-  PALTYPE bg_paltype;
-  u8 msg_bg_frame;
-  u8 fore_bg_frame;
-  u8 back_bg_frame;
-
-  u32 monsno;
-  u32 monsno_msg;
-
-  ZUKAN_INFO_LAUNCH launch;
-  ZUKAN_INFO_STEP step;
-  BOOL move_flag;
-  BOOL cry_flag;
-
+  // WND
   int wnd_down_y;  // ウィンドウの右下Y座標
 
-  u32 color_while_count;
-  u32 back_bg_scroll_wait_count;
+  // ポケモン
+  u32     monsno;
+  u32     monsno_msg;    // データの揃っていないポケモンのときは、こちらのポケモンで代用する
 
   //MSG系
   GFL_BMPWIN*  bmpwin[ZUKAN_INFO_MSG_MAX];
+
+  // ポケモン2D
+  u32          ncg_poke2d;
+  u32          ncl_poke2d;
+  u32          nce_poke2d;
+  GFL_CLWK*    clwk_poke2d;
 
   // タイプアイコン
   u32       typeicon_cg_idx[2];
@@ -204,21 +236,18 @@ struct _ZUKAN_INFO_WORK
   u32       typeicon_cean_idx;
   GFL_CLWK* typeicon_clwk[2];
 
-  // ポケモン2D
-	u32												ncg_poke2d;
-	u32												ncl_poke2d;
-	u32												nce_poke2d;
-	GFL_CLWK									*clwk_poke2d;
-
   // ポケモンの足跡
   UI_EASY_CLWK_RES clres_pokefoot;
   GFL_CLWK* clwk_pokefoot;
 
   // パレットアニメーション
   u16 anm_cnt;
-  u16 trans_buf[ZUKAN_INFO_PALETTE_ANIME_NUM];  // 型のサイズはZUKAN_INFO_BG_COLOR_SIZE
+  u16 trans_buf[ZUKAN_INFO_PALETTE_ANIME_NUM];  // 型のサイズはZUKAN_INFO_COLOR_SIZE
   u16 palette_anime_s[ZUKAN_INFO_PALETTE_ANIME_NUM];
   u16 palette_anime_e[ZUKAN_INFO_PALETTE_ANIME_NUM];
+
+  // Yオフセット
+  s32 y_offset;
 };
 
 //=============================================================================
@@ -227,7 +256,6 @@ struct _ZUKAN_INFO_WORK
 */
 //=============================================================================
 static void Zukan_Info_VBlankFunc( GFL_TCB* tcb, void* wk );
-static void Zukan_Info_ChangeBarPal( ZUKAN_INFO_WORK* work );
 
 // Message
 static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA* msgdata, PRINT_QUE* print_que, GFL_FONT* font,
@@ -235,22 +263,24 @@ static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA*
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work );
 
+//ポケモン2D
+static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y );
+static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work );
+
 // タイプアイコン
-static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, GFL_CLUNIT* clunit, HEAPID heap_id );
+static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 );
 static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work );
 
-//ポケモン2D
-static void Zukan_Info_Poke2dLoadResourceOBJ( ZUKAN_INFO_WORK *wk, HEAPID heapID );
-static void Zukan_Info_Poke2dUnLoadResourceOBJ( ZUKAN_INFO_WORK *wk );
-static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID, u16 pos_x, u16 pos_y );
-static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK *wk );
-
 // ポケモンの足跡
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, GFL_CLUNIT* unit, HEAPID heap_id );
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno );
 static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work );
 
+// ポケモン2D以外をまとめて
 static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work );
 
+// パレットアニメーション
 static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work );
 
 //=============================================================================
@@ -264,22 +294,25 @@ static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work );
  *
  *  @param[in] a_heap_id     ヒープID
  *  @param[in] a_pp          ポケモンパラメータ
+ *  @param[in] a_get_flag    ゲットしていたらTRUE
  *  @param[in] a_launch      起動方法
  *  @param[in] a_disp        表示面
- *  @param[in] a_bg_priority 0か1
- *  @param[in] a_clunit
- *  @param[in] a_font
- *  @param[in] a_print_que
+ *  @param[in] a_bg_priority 0か1(0のときは012,1のときは123というプライオリティになる)
+ *  @param[in] a_clunit      セルアクターユニット
+ *  @param[in] a_font        フォント
+ *  @param[in] a_print_que   プリントキュー
  *
  *  @retval    生成したワーク
  */
 //-----------------------------------------------------------------------------
-ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
-                                         ZUKAN_INFO_LAUNCH a_launch,
-                                         ZUKAN_INFO_DISP a_disp, u8 a_bg_priority,
-                                         GFL_CLUNIT* a_clunit,
-                                         GFL_FONT* a_font,
-                                         PRINT_QUE* a_print_que )
+ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
+                                  const POKEMON_PARAM* a_pp,
+                                  BOOL a_get_flag,
+                                  ZUKAN_INFO_LAUNCH a_launch,
+                                  ZUKAN_INFO_DISP a_disp, u8 a_bg_priority,
+                                  GFL_CLUNIT* a_clunit,
+                                  GFL_FONT* a_font,
+                                  PRINT_QUE* a_print_que )
 {
   ZUKAN_INFO_WORK* work;
 
@@ -289,9 +322,12 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     work = GFL_HEAP_AllocMemory( a_heap_id, size );
     GFL_STD_MemClear( work, size );
   }
+
+  // 引数
   {
     work->heap_id = a_heap_id;
     work->pp = a_pp;
+    work->get_flag = a_get_flag;
     work->launch = a_launch;
     work->disp = a_disp;
     work->bg_priority = a_bg_priority;
@@ -302,17 +338,18 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
 
   // 初期化
   {
+    // BG
     if( work->disp == ZUKAN_INFO_DISP_M )
     {
-      work->bg_paltype = PALTYPE_MAIN_BG;
-      work->msg_bg_frame = ZUKAN_INFO_BG_FRAME_M_MSG; 
+      work->bg_paltype    = PALTYPE_MAIN_BG;
+      work->msg_bg_frame  = ZUKAN_INFO_BG_FRAME_M_MSG; 
       work->fore_bg_frame = ZUKAN_INFO_BG_FRAME_M_FORE; 
       work->back_bg_frame = ZUKAN_INFO_BG_FRAME_M_BACK; 
     }
     else
     {
-      work->bg_paltype = PALTYPE_SUB_BG;
-      work->msg_bg_frame = ZUKAN_INFO_BG_FRAME_S_MSG; 
+      work->bg_paltype    = PALTYPE_SUB_BG;
+      work->msg_bg_frame  = ZUKAN_INFO_BG_FRAME_S_MSG; 
       work->fore_bg_frame = ZUKAN_INFO_BG_FRAME_S_FORE; 
       work->back_bg_frame = ZUKAN_INFO_BG_FRAME_S_BACK; 
     }
@@ -320,6 +357,10 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     GFL_BG_SetPriority( work->fore_bg_frame, work->bg_priority +1 );
     GFL_BG_SetPriority( work->back_bg_frame, work->bg_priority +2 );
 
+    work->fore_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
+    work->back_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
+ 
+    // ポケモン
     work->monsno = PP_Get( work->pp, ID_PARA_monsno, NULL );
     if( work->monsno > 493 )
     {
@@ -330,6 +371,8 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
       work->monsno_msg = work->monsno;
     }
 
+    // ステップやタイミング
+    // 起動方法
     switch( work->launch )
     {
     case ZUKAN_INFO_LAUNCH_TOROKU:
@@ -342,51 +385,59 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
         work->step = ZUKAN_INFO_STEP_CENTER;
       }
       break;
+    case ZUKAN_INFO_LAUNCH_LIST:
+      {
+        work->step = ZUKAN_INFO_STEP_START_STILL;
+      }
+      break;
     }
-    work->move_flag = FALSE;
-    work->cry_flag = FALSE;
-    work->color_while_count = 0;
+    work->move_flag                 = FALSE;
+    work->cry_flag                  = FALSE;
+    work->color_while_count         = 0;
     work->back_bg_scroll_wait_count = 0;
 
     // パレットアニメーション
     work->anm_cnt = 0;
-  }
-  {
-    work->bar_blink_count = ZUKAN_INFO_BAR_BLINK_COUNT_MAX;
-    work->bar_blink_pal_no = ZUKAN_INFO_FORE_BG_PAL_NO_D;
-
-    work->fore_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
-    work->back_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
+        
+    // Yオフセット
+    if( work->launch == ZUKAN_INFO_LAUNCH_LIST && work->disp == ZUKAN_INFO_DISP_M )
+    {
+      work->y_offset = ZUKAN_INFO_Y_OFFSET;
+    }
+    else
+    {
+      work->y_offset = 0;
+    }
   }
 
   // リソース読み込み
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
     GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_zukan_gra_info_zukan_bgu_NCLR, work->bg_paltype,
-                                      ZUKAN_INFO_BG_PAL_NO * ZUKAN_INFO_BG_PAL_LINE_SIZE, ZUKAN_INFO_BG_PAL_NUM * ZUKAN_INFO_BG_PAL_LINE_SIZE,
+                                      ZUKAN_INFO_BG_PAL_POS_FORE_BACK * ZUKAN_INFO_PAL_LINE_SIZE,
+                                      ZUKAN_INFO_BG_PAL_NUM_FORE_BACK * ZUKAN_INFO_PAL_LINE_SIZE,
                                       work->heap_id );
 
     // fore
-    work->fore_bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_zukan_gra_info_zukan_bgu_NCGR, work->fore_bg_frame,
-                                                                            ZUKAN_INFO_BG_CHARA_SIZE, FALSE, work->heap_id );
+    work->fore_bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_zukan_gra_info_zukan_bgu_NCGR,
+                                                                            work->fore_bg_frame,
+                                                                            ZUKAN_INFO_BG_CHARA_SIZE, FALSE,
+                                                                            work->heap_id );
     GF_ASSERT_MSG( work->fore_bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_INFO : BGキャラ領域が足りませんでした。\n" );
     
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_setumei_bgu_NSCR, work->fore_bg_frame,
-                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->fore_bg_chara_info ), ZUKAN_INFO_BG_SCREEN_SIZE, FALSE, work->heap_id );
-    //GFL_BG_ChangeScreenPalette( work->fore_bg_frame, 0, 0, ZUKAN_INFO_BG_SCREEN_W, ZUKAN_INFO_BG_SCREEN_H,
-    //                            work->bg_pal_no + ZUKAN_INFO_FORE_BG_PAL_NO_D );
-
-    //Zukan_Info_ChangeBarPal( work );
+                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->fore_bg_chara_info ),
+                                     ZUKAN_INFO_BG_SCREEN_SIZE, FALSE, work->heap_id );
 
     // back
-    work->back_bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_zukan_gra_info_zukan_bgu_NCGR, work->back_bg_frame,
+    work->back_bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_zukan_gra_info_zukan_bgu_NCGR,
+                                                                            work->back_bg_frame,
                                                                             ZUKAN_INFO_BG_CHARA_SIZE, FALSE, work->heap_id );
     GF_ASSERT_MSG( work->back_bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_INFO : BGキャラ領域が足りませんでした。\n" );
         
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_base_bgu_NSCR, work->back_bg_frame,
-                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->back_bg_chara_info ), ZUKAN_INFO_BG_SCREEN_SIZE, FALSE, work->heap_id );
-    //GFL_BG_ChangeScreenPalette( work->back_bg_frame, 0, 0, ZUKAN_INFO_BG_SCREEN_W, ZUKAN_INFO_BG_SCREEN_H,
-    //                            work->bg_pal_no + ZUKAN_INFO_BACK_BG_PAL_NO );
+                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->back_bg_chara_info ),
+                                     ZUKAN_INFO_BG_SCREEN_SIZE, FALSE, work->heap_id );
     
     GFL_ARC_CloseDataHandle( handle );
   }
@@ -405,8 +456,8 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
       u8 i;
       for( i=0; i<ZUKAN_INFO_PALETTE_ANIME_NUM; i++ )
       {
-        work->palette_anime_s[i] = pal_raw[ ZUKAN_INFO_BG_PAL_LINE_COLOR_NUM*ZUKAN_INFO_PALETTE_ANIME_LINE_S + ZUKAN_INFO_PALETTE_ANIME_NO + i];
-        work->palette_anime_e[i] = pal_raw[ ZUKAN_INFO_BG_PAL_LINE_COLOR_NUM*ZUKAN_INFO_PALETTE_ANIME_LINE_E + ZUKAN_INFO_PALETTE_ANIME_NO + i];
+        work->palette_anime_s[i] = pal_raw[ ZUKAN_INFO_PAL_LINE_COLOR_NUM*ZUKAN_INFO_PALETTE_ANIME_LINE_S + ZUKAN_INFO_PALETTE_ANIME_NO + i];
+        work->palette_anime_e[i] = pal_raw[ ZUKAN_INFO_PAL_LINE_COLOR_NUM*ZUKAN_INFO_PALETTE_ANIME_LINE_E + ZUKAN_INFO_PALETTE_ANIME_NO + i];
       }
     }
     GFL_HEAP_FreeMemory( pal_src );
@@ -414,6 +465,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
   }
 
   // モンスターボールのマークを付ける
+  if( work->get_flag )
   {
     GFL_BMP_DATA* bmp_data = GFL_BMP_LoadCharacter( ARCID_ZUKAN_GRA, NARC_zukan_gra_info_zukan_bgu_NCGR, 0, work->heap_id );
     GFL_BMPWIN* bmpwin = GFL_BMPWIN_Create( work->fore_bg_frame, 12, 4, 4, 3, 0x0, GFL_BMP_CHRAREA_GET_F );
@@ -423,20 +475,23 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     GFL_BMP_Delete( bmp_data );
   }
 
+  // TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Info_VBlankFunc, work, ZUKAN_INFO_VBLANK_TCB_PRI );
 
-  GFL_BG_LoadScreenReq( work->fore_bg_frame );
-  GFL_BG_LoadScreenReq( work->back_bg_frame );
+  // ポケモン2D以外
+  if(    work->launch == ZUKAN_INFO_LAUNCH_TOROKU
+      || work->launch == ZUKAN_INFO_LAUNCH_LIST )
+  {
+    Zukan_Info_CreateOthers( work );
+  }
 
-  Zukan_Info_CreateOthers( work );
-
-
-	//ポケモン2D
-	{
+  //ポケモン2D
+  {
     u16 pos_x, pos_y;
     switch(work->launch)
     {
     case ZUKAN_INFO_LAUNCH_TOROKU:
+    case ZUKAN_INFO_LAUNCH_LIST:
       {
         pos_x = ZUKAN_INFO_START_POKEMON_POS_X;
         pos_y = ZUKAN_INFO_START_POKEMON_POS_Y;
@@ -449,22 +504,32 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
       }
       break;
     }
-		Zukan_Info_Poke2dLoadResourceOBJ( work, work->heap_id );
-		Zukan_Info_Poke2dCreateCLWK( work, work->clunit, work->heap_id, pos_x, pos_y );
-	}
+    Zukan_Info_Poke2dLoadResourceObj( work );
+    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ) );
+  }
 
-
+  // WND
   if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
   {
     work->wnd_down_y = ZUKAN_INFO_WND_DOWN_Y_START;
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
     G2_SetWnd0Position( ZUKAN_INFO_WND_LEFT_X, ZUKAN_INFO_WND_UP_Y, ZUKAN_INFO_WND_RIGHT_X, work->wnd_down_y );
-    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,  TRUE );
-    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, FALSE );
+    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+                           TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+                           FALSE );
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ,
                            -16 );
   }
 
+  // BGのYオフセット
+  GFL_BG_SetScroll( work->fore_bg_frame, GFL_BG_SCROLL_Y_SET, - work->y_offset );
+  GFL_BG_SetScroll( work->back_bg_frame, GFL_BG_SCROLL_Y_SET, - work->y_offset );
+  GFL_BG_SetScroll( work->msg_bg_frame, GFL_BG_SCROLL_Y_SET, - work->y_offset );
+
+  // BG
+  GFL_BG_LoadScreenReq( work->fore_bg_frame );
+  GFL_BG_LoadScreenReq( work->back_bg_frame );
 
   return work;
 }
@@ -481,14 +546,16 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
 void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
 {
   // ポケモン2D
-	Zukan_Info_Poke2dDeleteCLWK( work );
-	Zukan_Info_Poke2dUnLoadResourceOBJ( work );
+  Zukan_Info_Poke2dDeleteCLWK( work );
+  Zukan_Info_Poke2dUnloadResourceObj( work );
 
-  if( work->launch != ZUKAN_INFO_LAUNCH_TOROKU )
+  // ポケモン2D以外
+  if( work->launch == ZUKAN_INFO_LAUNCH_LIST )  // TOROKUの場合は既に破棄されている
   {
     ZUKAN_INFO_DeleteOthers( work );
   }
 
+  // TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
   // 読み込んだリソースの破棄
@@ -519,20 +586,10 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
 //-----------------------------------------------------------------------------
 void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
 {
-  {
-    work->bar_blink_count--;
-    if( work->bar_blink_count == 0 )
-    {
-      work->bar_blink_pal_no = ( work->bar_blink_pal_no == ZUKAN_INFO_FORE_BG_PAL_NO_D ) ?
-                               ZUKAN_INFO_FORE_BG_PAL_NO_L : ZUKAN_INFO_FORE_BG_PAL_NO_D;
-      work->bar_blink_count = ZUKAN_INFO_BAR_BLINK_COUNT_MAX;
-    
-      work->fore_bg_update |= ZUKAN_INFO_FORE_BG_UPDATE_BIT_BAR_BLINK; 
-    }
-  }
-
+  // パレットアニメーション
   Zukan_Info_UpdatePaletteAnime( work );
 
+  // BGスクロール
   {
     work->back_bg_scroll_wait_count++;
     if( work->back_bg_scroll_wait_count == ZUKAN_INFO_BACK_BG_SCROLL_WAIT )
@@ -542,6 +599,7 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
     }
   }
 
+  // ステップ
   switch(work->step)
   {
   case ZUKAN_INFO_STEP_COLOR_WAIT:
@@ -581,6 +639,8 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
     break;
   case ZUKAN_INFO_STEP_MOVE:
     {
+      // work->y_offsetを使用するときは、ここには来ない
+
       BOOL goal_x = FALSE;
       BOOL goal_y = FALSE;
 
@@ -620,6 +680,10 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
     {
     }
     break;
+  case ZUKAN_INFO_STEP_START_STILL:
+    {
+    }
+    break;
   }
 
 }
@@ -636,23 +700,11 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
 void ZUKAN_INFO_DeleteOthers( ZUKAN_INFO_WORK* work )
 {
   // ポケモンの足跡
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
-  {
-    Zukan_Info_DeletePokefoot( work );
-  }
-
+  Zukan_Info_DeletePokefoot( work );
   // タイプアイコン
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
-  {
-        Zukan_Info_DeleteTypeicon( work ); 
-  }
-
+  Zukan_Info_DeleteTypeicon( work ); 
   // Message
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
-  {
-    Zukan_Info_DeleteMessage( work );
-  }
-
+  Zukan_Info_DeleteMessage( work );
 }
 
 //-----------------------------------------------------------------------------
@@ -745,22 +797,10 @@ void ZUKAN_INFO_Start( ZUKAN_INFO_WORK* work )
 static void Zukan_Info_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_INFO_WORK* work = (ZUKAN_INFO_WORK*)wk;
-  BOOL fore_bg_load = FALSE;
-
-  if( work->fore_bg_update & ZUKAN_INFO_FORE_BG_UPDATE_BIT_BAR_BLINK )
-  {
-    //Zukan_Info_ChangeBarPal( work );
-    fore_bg_load = TRUE;
-  }
-
-  if( fore_bg_load )
-  {
-    GFL_BG_LoadScreenReq( work->fore_bg_frame );
-  }
 
   if( work->back_bg_update & ZUKAN_INFO_BACK_BG_UPDATE_BIT_SCROLL )
   {
-    GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_X_INC, ZUKAN_INFO_BACK_BG_SCREEN_SCROLL_X_VALUE );
+    GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_X_INC, ZUKAN_INFO_BACK_BG_SCROLL_X_VALUE );
   }
 
   work->fore_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
@@ -768,17 +808,7 @@ static void Zukan_Info_VBlankFunc( GFL_TCB* tcb, void* wk )
 }
 
 //-------------------------------------
-///	ポケモン図鑑登録完了バーのパレットを変更する
-//=====================================
-static void Zukan_Info_ChangeBarPal( ZUKAN_INFO_WORK* work )
-{
-  GFL_BG_ChangeScreenPalette( work->fore_bg_frame,
-                              ZUKAN_INFO_BAR_SCREEN_X, ZUKAN_INFO_BAR_SCREEN_X, ZUKAN_INFO_BAR_SCREEN_W, ZUKAN_INFO_BAR_SCREEN_H,
-                              ZUKAN_INFO_BG_PAL_NO + work->bar_blink_pal_no );
-}
-
-//-------------------------------------
-///	文字を書く
+/// 文字を書く
 //=====================================
 static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA* msgdata, PRINT_QUE* print_que, GFL_FONT* font,
                                 u32 str_id, u16 x, u16 y, u16 color, ZUKAN_INFO_ALIGN align, WORDSET* wordset )
@@ -834,7 +864,7 @@ static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA*
 }
 
 //-------------------------------------
-///	BGに文字を書く
+/// BGに文字を書く
 //=====================================
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 {
@@ -853,7 +883,9 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
   msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_comment_00_dat, work->heap_id );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, paltype,
-                                 PSTATUS_BG_PLT_FONT * ZUKAN_INFO_BG_PAL_LINE_SIZE, 1 * ZUKAN_INFO_BG_PAL_LINE_SIZE, work->heap_id );
+                                 ZUKAN_INFO_BG_PAL_POS_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
+                                 ZUKAN_INFO_BG_PAL_NUM_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
+                                 work->heap_id );
 
   {
     s32 i;
@@ -872,37 +904,56 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
       // bmpwinのビットマップを透明色で塗り潰しておいたほうがいい？
       work->bmpwin[i] = GFL_BMPWIN_Create( work->msg_bg_frame,
                                            pos_siz[i][0], pos_siz[i][1], pos_siz[i][2], pos_siz[i][3],
-                                           PSTATUS_BG_PLT_FONT, GFL_BMP_CHRAREA_GET_B );
+                                           ZUKAN_INFO_BG_PAL_POS_MSG, GFL_BMP_CHRAREA_GET_B );
     }
 
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common, work->print_que, work->font,
-                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );  // ポケモンずかん　とうろく　かんりょう！
+    // ポケモンずかん　とうろく　かんりょう！
+    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common,
+                        work->print_que, work->font,
+                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );
+
+    // 025(ポケモンの番号)
     {
-      WORDSET* wordset = WORDSET_Create( work->heap_id );  // WORDSET_RegisterPokeMonsName, WORDSET_RegisterPokeMonsNamePPP  // PPP_Get( ppp, ID_PARA_monno, NULL );  // POKEMON_PASO_PARAM* ppp
+      WORDSET* wordset = WORDSET_Create( work->heap_id );
       WORDSET_RegisterNumber( wordset, 0, work->monsno, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common, work->print_que, work->font,
-                          ZNK_POKELIST_17, 8, 7, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );  // 025
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
+                          work->print_que, work->font,
+                          ZNK_POKELIST_17, 8, 7, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );
       WORDSET_Delete( wordset );
     }
+    
+    // 例：ピカチュウ
     {
       STRBUF* strbuf;
       strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, work->monsno );
       PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp( work->bmpwin[ZUKAN_INFO_MSG_NAME] ),
-                              48, 7, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );  // ピカチュウ
+                              48, 7, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );  
       GFL_STR_DeleteBuffer( strbuf );
     }
+
+    // 例：ねずみポケモン
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                        ZKN_TYPE_000 + work->monsno_msg, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );  // ねずみポケモン
+                        ZKN_TYPE_000 + work->monsno_msg, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+    
+    // たかさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
-                        ZNK_POKELIST_19, 0, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );  // たかさ
+                        ZNK_POKELIST_19, 0, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+    
+    // おもさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
-                        ZNK_POKELIST_20, 0, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );  // おもさ
+                        ZNK_POKELIST_20, 0, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+    
+    // ？？？.？m  // 左上指定なら(40, 4)  // mとkgで小数点が揃うように
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
-                        ZKN_HEIGHT_000 + work->monsno_msg, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );  // ？？？.？m  // 左上指定なら(40, 4)  // mとkgで小数点が揃うように
+                        ZKN_HEIGHT_000 + work->monsno_msg, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    
+    // ？？？.？kg  // 左上指定なら(40,20)
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
-                        ZKN_GRAM_000 + work->monsno_msg, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );  // ？？？.？kg  // 左上指定なら(40,20)
+                        ZKN_GRAM_000 + work->monsno_msg, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    
+    // 例：かたい　きのみも　でんげきで
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
-                        ZKN_COMMENT_00_000 + work->monsno_msg, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );  // かたい　きのみも　でんげきで
+                        ZKN_COMMENT_00_000 + work->monsno_msg, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
@@ -918,7 +969,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-///	BGに書いた文字を破棄する
+/// BGに書いた文字を破棄する
 //=====================================
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work )
 {
@@ -930,17 +981,80 @@ static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-///	タイプアイコンOBJを生成する
+/// ポケモン2Dのリソースを読み込む
 //=====================================
-static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, GFL_CLUNIT* clunit, HEAPID heap_id )
+static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work )
+{
+  POKEMON_PASO_PARAM*   ppp;
+  ARCHANDLE*            handle;
+
+  CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+
+  // PPP作成
+  ppp = (POKEMON_PASO_PARAM*)PP_Create( (u16)work->monsno, 0, 0, work->heap_id );
+
+  // ハンドル
+  handle = POKE2DGRA_OpenHandle( work->heap_id );
+  // リソース読みこみ
+  work->ncg_poke2d = POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type, work->heap_id );
+  work->ncl_poke2d = POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,draw_type,
+                                                     ZUKAN_INFO_OBJ_PAL_POS_POKE2D * ZUKAN_INFO_PAL_LINE_SIZE,  work->heap_id );
+  work->nce_poke2d = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, draw_type, work->heap_id );
+  GFL_ARC_CloseDataHandle( handle );
+
+  // PP破棄
+  GFL_HEAP_FreeMemory( ppp );
+}
+
+//-------------------------------------
+/// ポケモン2Dのリソース破棄
+//=====================================
+static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work )
+{
+  //リソース破棄
+  GFL_CLGRP_PLTT_Release( work->ncl_poke2d );
+  GFL_CLGRP_CGR_Release( work->ncg_poke2d );
+  GFL_CLGRP_CELLANIM_Release( work->nce_poke2d );
+}
+
+//-------------------------------------
+/// ポケモン2DのOBJを生成する
+//=====================================
+static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y )
+{
+  GFL_CLWK_DATA cldata;
+
+  CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
+
+  GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+  cldata.pos_x = pos_x;
+  cldata.pos_y = pos_y;
+  work->clwk_poke2d = GFL_CLACT_WK_Create( work->clunit, 
+                                           work->ncg_poke2d,
+                                           work->ncl_poke2d,
+                                           work->nce_poke2d,
+                                           &cldata, 
+                                           defrend_type, work->heap_id );
+  
+  GFL_CLACT_WK_SetSoftPri( work->clwk_poke2d, 0 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+}
+
+//-------------------------------------
+/// ポケモン2DのOBJを破棄する
+//=====================================
+static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work )
+{
+  GFL_CLACT_WK_Remove( work->clwk_poke2d );
+}
+
+//-------------------------------------
+/// タイプアイコンOBJを生成する
+//=====================================
+static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 )
 {
   s32 i;
   PokeType type[2];
-  GFL_CLWK_DATA data[2] =
-  {
-    { 8*21, 8*11 -4, 0, 0, 0 },
-    { 8*26, 8*11 -4, 0, 0, 0 },
-  };
+  GFL_CLWK_DATA data[2] = { 0 };
   
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
   CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
@@ -948,9 +1062,14 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
   type[0] = type1;
   type[1] = type2;
 
+  data[0].pos_x = 8*21;
+  data[0].pos_y = 8*11 -4 + work->y_offset;
+  data[1].pos_x = 8*26;
+  data[1].pos_y = 8*11 -4 + work->y_offset;
+  
   // リソース読み込み
   {
-    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heap_id );
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), work->heap_id );
 
     for( i=0; i<2; i++ )
     {
@@ -961,19 +1080,19 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
       }
       work->typeicon_cg_idx[i] = GFL_CLGRP_CGR_Register( handle,
                                                          APP_COMMON_GetPokeTypeCharArcIdx(type[i]),
-                                                         FALSE, draw_type, heap_id );
+                                                         FALSE, draw_type, work->heap_id );
     }
 
     work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
                                                        APP_COMMON_GetPokeTypePltArcIdx(),
                                                        draw_type,
-                                                       PLTID_OBJ_TYPEICON_M * 0x20,
-                                                       0, 3, heap_id );
+                                                       ZUKAN_INFO_OBJ_PAL_POS_TYPEICON * ZUKAN_INFO_PAL_LINE_SIZE,
+                                                       0, ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON, work->heap_id );
 
     work->typeicon_cean_idx = GFL_CLGRP_CELLANIM_Register( handle,
                                                            APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K ),
                                                            APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ),
-                                                           heap_id );
+                                                           work->heap_id );
   
     GFL_ARC_CloseDataHandle( handle );
   }
@@ -986,12 +1105,12 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
       {
         continue;
       }
-      work->typeicon_clwk[i] = GFL_CLACT_WK_Create( clunit,
+      work->typeicon_clwk[i] = GFL_CLACT_WK_Create( work->clunit,
                                                     work->typeicon_cg_idx[i],
                                                     work->typeicon_cl_idx,
                                                     work->typeicon_cean_idx,
                                                     &(data[i]),
-                                                    defrend_type, heap_id );
+                                                    defrend_type, work->heap_id );
       GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[i], APP_COMMON_GetPokeTypePltOffset(type[i]),
                                 CLWK_PLTTOFFS_MODE_PLTT_TOP );
       GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
@@ -1001,7 +1120,7 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
 }
 
 //-------------------------------------
-///	タイプアイコンOBJを破棄する
+/// タイプアイコンOBJを破棄する
 //=====================================
 static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work )
 {
@@ -1031,126 +1150,51 @@ static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-/// ポケモン2Dのリソースを読み込む
+/// ポケモンの足跡OBJを生成する
 //=====================================
-static void Zukan_Info_Poke2dLoadResourceOBJ( ZUKAN_INFO_WORK *wk, HEAPID heapID )
-{	
-	POKEMON_PASO_PARAM	*ppp;
-	ARCHANDLE						*handle;
-
-  CLSYS_DRAW_TYPE draw_type = (wk->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
-
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( (u16)wk->monsno, 0, 0, heapID );
-
-	//ハンドル
-	handle	= POKE2DGRA_OpenHandle( heapID );
-	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,draw_type,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, draw_type, heapID );
-	GFL_ARC_CloseDataHandle( handle );
-
-	//PP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-
-//-------------------------------------
-///	ポケモン2Dのリソース破棄
-//=====================================
-static void Zukan_Info_Poke2dUnLoadResourceOBJ( ZUKAN_INFO_WORK *wk )
-{	
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
-	GFL_CLGRP_CGR_Release( wk->ncg_poke2d );
-	GFL_CLGRP_CELLANIM_Release( wk->nce_poke2d );
-
-}
-
-//-------------------------------------
-///	ポケモン2DのOBJを生成する
-//=====================================
-static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID, u16 pos_x, u16 pos_y )
-{	
-	GFL_CLWK_DATA	cldata;
-
-  CLSYS_DEFREND_TYPE defrend_type = (wk->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
-
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= pos_x;
-		cldata.pos_y	= pos_y;
-		wk->clwk_poke2d	= GFL_CLACT_WK_Create( clunit, 
-				wk->ncg_poke2d,
-				wk->ncl_poke2d,
-				wk->nce_poke2d,
-				&cldata, 
-				defrend_type, heapID );
-  
-  GFL_CLACT_WK_SetSoftPri( wk->clwk_poke2d, 0 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥  // clunitの優先順位は生成時に0にしてあったので、BGで最前面のものより手前になる？
-}
-
-//-------------------------------------
-///	ポケモン2DのOBJを破棄する
-//=====================================
-static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK *wk )
-{	
-	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
-}
-
-//-------------------------------------
-///	ポケモンの足跡OBJを生成する
-//=====================================
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, GFL_CLUNIT* unit, HEAPID heap_id )
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno )
 {
   UI_EASY_CLWK_RES_PARAM prm;
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
 
   prm.draw_type = draw_type;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCGR;  // NCLR非圧縮、NCGR圧縮、NCER圧縮、NANR圧縮なので、NCGRの圧縮にしか対応していないこのフラグではうまくいかない → NCLR非圧縮、NCGR圧縮、NCER非圧縮、NANR日圧縮に変更した
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCGR;  // NCLR非圧縮、NCGR圧縮、NCER非圧縮、NANR非圧縮
   prm.arc_id    = PokeFootArcFileGet();
   prm.pltt_id   = PokeFootPlttDataIdxGet();
   prm.ncg_id    = PokeFootCharDataIdxGet((int)monsno);
   prm.cell_id   = PokeFootCellDataIdxGet();
   prm.anm_id    = PokeFootCellAnmDataIdxGet();
-  prm.pltt_line = PLTID_OBJ_POKEFOOT_M;
+  prm.pltt_line = ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT;
   prm.pltt_src_ofs = 0;
-  prm.pltt_src_num = 1;
+  prm.pltt_src_num = ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT;
   
-  UI_EASY_CLWK_LoadResource( &work->clres_pokefoot, &prm, unit, heap_id );
+  UI_EASY_CLWK_LoadResource( &work->clres_pokefoot, &prm, work->clunit, work->heap_id );
 
-  work->clwk_pokefoot = UI_EASY_CLWK_CreateCLWK( &work->clres_pokefoot, unit, 8*15, 8*11, 0, heap_id );
-  
+  work->clwk_pokefoot = UI_EASY_CLWK_CreateCLWK( &work->clres_pokefoot, work->clunit, 8*15, (u8)( 8*11 + work->y_offset ), 0, work->heap_id );
   GFL_CLACT_WK_SetSoftPri( work->clwk_pokefoot, 1 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
-  
   GFL_CLACT_WK_SetObjMode( work->clwk_pokefoot, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
 }
 
 //-------------------------------------
-///	ポケモンの足跡OBJを破棄する
+/// ポケモンの足跡OBJを破棄する
 //=====================================
 static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work )
-{	
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( work->clwk_pokefoot );
-	//リソース破棄
+{
+  //CLWK破棄
+  GFL_CLACT_WK_Remove( work->clwk_pokefoot );
+  //リソース破棄
   UI_EASY_CLWK_UnLoadResource( &work->clres_pokefoot );
 }
 
 //-------------------------------------
-///	ポケモン2D以外のものを生成する
+/// ポケモン2D以外のものを生成する
 //=====================================
 static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 {
-
   // Message
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
-  {
-    Zukan_Info_CreateMessage( work );
-  }
-
+  Zukan_Info_CreateMessage( work );
 
   // タイプアイコン
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
   {
     PokeType type1 = (PokeType)( PP_Get( work->pp, ID_PARA_type1, NULL ) );
     PokeType type2 = (PokeType)( PP_Get( work->pp, ID_PARA_type2, NULL ) );
@@ -1158,16 +1202,13 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
     {
       type2 = POKETYPE_NULL;
     }
-    Zukan_Info_CreateTypeicon( work, type1, type2, work->clunit, work->heap_id );
+    Zukan_Info_CreateTypeicon( work, type1, type2 );
   }
-
 
   // ポケモンの足跡
-  if( work->launch == ZUKAN_INFO_LAUNCH_TOROKU )
   {
-    Zukan_Info_CreatePokefoot( work, work->monsno_msg, work->clunit, work->heap_id );
+    Zukan_Info_CreatePokefoot( work, work->monsno_msg );
   }
-
 }
 
 //-------------------------------------
@@ -1211,8 +1252,8 @@ static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work )
     {
       NNS_GFD_DST_TYPE dst_type =(work->disp==ZUKAN_INFO_DISP_M)?(NNS_GFD_DST_2D_BG_PLTT_MAIN):(NNS_GFD_DST_2D_BG_PLTT_SUB); 
       NNS_GfdRegisterNewVramTransferTask( dst_type,
-          ZUKAN_INFO_PALETTE_ANIME_LINE * ZUKAN_INFO_BG_PAL_LINE_SIZE + ZUKAN_INFO_PALETTE_ANIME_NO * ZUKAN_INFO_BG_COLOR_SIZE,
-          work->trans_buf, ZUKAN_INFO_BG_COLOR_SIZE * ZUKAN_INFO_PALETTE_ANIME_NUM );
+          ZUKAN_INFO_PALETTE_ANIME_LINE * ZUKAN_INFO_PAL_LINE_SIZE + ZUKAN_INFO_PALETTE_ANIME_NO * ZUKAN_INFO_COLOR_SIZE,
+          work->trans_buf, ZUKAN_INFO_COLOR_SIZE * ZUKAN_INFO_PALETTE_ANIME_NUM );
     }
 
 #undef ZUKAN_INFO_GET_R

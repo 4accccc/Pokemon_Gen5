@@ -27,8 +27,8 @@
 //=====================================
 typedef enum
 {
-  ZUKAN_INFO_DISP_M,
-  ZUKAN_INFO_DISP_S,
+  ZUKAN_INFO_DISP_M,     ///< メイン
+  ZUKAN_INFO_DISP_S,     ///< サブ
 }
 ZUKAN_INFO_DISP;
 
@@ -37,9 +37,9 @@ ZUKAN_INFO_DISP;
 //=====================================
 typedef enum
 {
-  ZUKAN_INFO_LAUNCH_TOROKU,
-  ZUKAN_INFO_LAUNCH_NICKNAME,
-  ZUKAN_INFO_LAUNCH_LIST,
+  ZUKAN_INFO_LAUNCH_TOROKU,       ///< 図鑑登録
+  ZUKAN_INFO_LAUNCH_NICKNAME,     ///< ニックネーム命名確認
+  ZUKAN_INFO_LAUNCH_LIST,         ///< 図鑑のリストから
 }
 ZUKAN_INFO_LAUNCH;
 
@@ -61,7 +61,9 @@ typedef struct _ZUKAN_INFO_WORK ZUKAN_INFO_WORK;
 //-------------------------------------
 /// 初期化処理
 //=====================================
-extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
+extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
+                                         const POKEMON_PARAM* a_pp,
+                                         BOOL a_get_flag,
                                          ZUKAN_INFO_LAUNCH a_launch,
                                          ZUKAN_INFO_DISP a_disp, u8 a_bg_priority,
                                          GFL_CLUNIT* a_clunit,

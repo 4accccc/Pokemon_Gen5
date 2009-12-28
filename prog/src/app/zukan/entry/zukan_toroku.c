@@ -20,15 +20,18 @@
 
 #include "print/printsys.h"
 
+// zukan
 #include "../info/zukan_info.h"
 #include "zukan_nickname.h"
 
 #include "zukan_toroku_graphic.h"
-#include "app/zukan_toroku.h"
 
 // アーカイブ
 #include "arc_def.h"
 #include "zukan_gra.naix"
+
+// zukan_toroku
+#include "app/zukan_toroku.h"
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(ui_common);
@@ -95,23 +98,23 @@ ZUKAN_TOROKU_NICKNAME_STEP;
 //=====================================
 typedef struct
 {
-  HEAPID heap_id;
-  ZUKAN_TOROKU_GRAPHIC_WORK* graphic;
-  GFL_FONT* font;
-  PRINT_QUE* print_que;
+  HEAPID                          heap_id;
+  ZUKAN_TOROKU_GRAPHIC_WORK*      graphic;
+  GFL_FONT*                       font;
+  PRINT_QUE*                      print_que;
 
-  ZUKAN_TOROKU_STATE state;
-  s32 step;
-  s32 brightness;
-  s32 brightness_wait;
+  ZUKAN_TOROKU_STATE              state;
+  s32                             step;
+  s32                             brightness;
+  s32                             brightness_wait;
 
-  ZUKAN_INFO_WORK* zukan_info_work;
-  ZUKAN_NICKNAME_WORK* zukan_nickname_work;
+  ZUKAN_INFO_WORK*                zukan_info_work;
+  ZUKAN_NICKNAME_WORK*            zukan_nickname_work;
   
-  GFL_TCB* vblank_tcb;  ///< VBlank中のTCB
-  BOOL bg_visible_off;
+  GFL_TCB*                        vblank_tcb;  ///< VBlank中のTCB
+  BOOL                            bg_visible_off;
   
-  GFL_ARCUTIL_TRANSINFO bg_chara_info;  ///< BGキャラ領域
+  GFL_ARCUTIL_TRANSINFO           bg_chara_info;  ///< BGキャラ領域
 }
 ZUKAN_TOROKU_WORK;
 
@@ -214,11 +217,11 @@ void ZUKAN_TOROKU_SetParam( ZUKAN_TOROKU_PARAM* param,
                             const BOX_MANAGER*  box_manager,
                             u32 box_tray )
 {
-  param->launch   = launch;
-  param->pp       = pp;
-  param->box_strbuf = box_strbuf;
-  param->box_manager = box_manager;
-  param->box_tray = box_tray;
+  param->launch          = launch;
+  param->pp              = pp;
+  param->box_strbuf      = box_strbuf;
+  param->box_manager     = box_manager;
+  param->box_tray        = box_tray;
 }
 
 //-----------------------------------------------------------------------------
@@ -281,7 +284,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
   }
 
   // 上画面
-  work->zukan_info_work = ZUKAN_INFO_Init( work->heap_id, param->pp,
+  work->zukan_info_work = ZUKAN_INFO_Init( work->heap_id, param->pp, TRUE,
                                            (param->launch==ZUKAN_TOROKU_LAUNCH_TOROKU)?(ZUKAN_INFO_LAUNCH_TOROKU):(ZUKAN_INFO_LAUNCH_NICKNAME),
                                            ZUKAN_INFO_DISP_M, 0,
                                            ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic),
@@ -289,8 +292,11 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                            work->print_que );
 
   // 上画面＆下画面
-  work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp, param->box_strbuf, param->box_manager, param->box_tray,
-                                                   ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic), work->font, work->print_que );
+  work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp,
+                                                   param->box_strbuf, param->box_manager, param->box_tray,
+                                                   ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic),
+                                                   work->font,
+                                                   work->print_que );
 
   // 上画面
   if( work->state == ZUKAN_TOROKU_STATE_NICKNAME )
@@ -353,8 +359,9 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
   ZUKAN_TOROKU_PARAM* param = (ZUKAN_TOROKU_PARAM*)pwk;
   ZUKAN_TOROKU_WORK* work = (ZUKAN_TOROKU_WORK*)mywk;
 
-  ZUKAN_NICKNAME_RESULT zukan_nickname_result;
   GFL_PROC_RESULT proc_res = GFL_PROC_RES_CONTINUE;
+  
+  ZUKAN_NICKNAME_RESULT zukan_nickname_result;
 
   ZUKAN_INFO_Main( work->zukan_info_work );
   zukan_nickname_result = ZUKAN_NICKNAME_Main( work->zukan_nickname_work );
@@ -545,7 +552,8 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
   {
     work->bg_visible_off = TRUE;
 
-    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
+    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );  // GFL_BG_FRAME0_Mはこれから使用する。
+                                            // GFL_BG_FRAME1_M, GFL_BG_FRAME2_MについてはZukan_Toroku_VBlankFuncで。
 
     GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );  // 最背面
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );  // 最前面
@@ -557,11 +565,17 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
     GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_zukan_gra_info_name_bgu_NCLR, PALTYPE_MAIN_BG,
                                       0*0x20, 1*0x20,  // その後、本数が増えたらここを修正
                                       work->heap_id );
-    work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_zukan_gra_info_name_bgu_NCGR, GFL_BG_FRAME0_M,
-                                                                       32*1*GFL_BG_1CHRDATASIZ, FALSE, work->heap_id );  // その後、必要なキャラ領域が増えたらここを修正
+    work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
+                                                                       NARC_zukan_gra_info_name_bgu_NCGR,
+                                                                       GFL_BG_FRAME0_M,
+                                                                       32*1*GFL_BG_1CHRDATASIZ,  // その後、必要なキャラ領域が増えたらここを修正
+                                                                       FALSE, work->heap_id );
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_TOROKU : BGキャラ領域が足りませんでした。\n" );
-    GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_name_bgu_NSCR, GFL_BG_FRAME0_M,
-                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ), 32*24*GFL_BG_1SCRDATASIZ, FALSE, work->heap_id );
+    GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_name_bgu_NSCR,
+                                     GFL_BG_FRAME0_M,
+                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),i
+                                     32*24*GFL_BG_1SCRDATASIZ,
+                                     FALSE, work->heap_id );
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -575,7 +589,8 @@ static void Zukan_Toroku_DeleteBG( ZUKAN_TOROKU_WORK* work )
 {
   // 読み込んだリソースの破棄
   {
-    GFL_BG_FreeCharacterArea( GFL_BG_FRAME0_M, GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
+    GFL_BG_FreeCharacterArea( GFL_BG_FRAME0_M,
+                              GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_chara_info ) );
   }
 }

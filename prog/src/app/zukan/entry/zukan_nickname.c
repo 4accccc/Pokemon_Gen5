@@ -40,6 +40,7 @@
 #include "msg/msg_zkn.h"
 #include "msg/msg_yesnomenu.h"
 
+// zukan_nickname
 #include "zukan_nickname.h"
 
 //=============================================================================
@@ -78,12 +79,16 @@ typedef enum
 }
 ZUKAN_NICKNAME_STEP;
 
-#define ZUKAN_NICKNAME_BG_FRAME_MSG (GFL_BG_FRAME3_M)
-#define ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN (8)  // メッセージウィンドウの枠用パレット  // 1本
-#define ZUKAN_NICKNAME_BG_PAL_NO_MSG (9)  // メッセージウィンドウに表示する文字用のパレット  // 1本
+// 上画面
+#define ZUKAN_NICKNAME_BG_FRAME_MSG        (GFL_BG_FRAME3_M)
+#define ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN    (8)  // メッセージウィンドウの枠用パレット  // 1本
+#define ZUKAN_NICKNAME_BG_PAL_NO_MSG       (9)  // メッセージウィンドウに表示する文字用のパレット  // 1本
+#define ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR  (15)
 
-#define ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC (GFL_BG_FRAME0_S)
-#define ZUKAN_NICKNAME_BG_FRAME_INPUT_MSG (GFL_BG_FRAME1_S)
+// 下画面
+#define ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC  (GFL_BG_FRAME0_S)
+#define ZUKAN_NICKNAME_BG_FRAME_INPUT_MSG  (GFL_BG_FRAME1_S)
+#define ZUKAN_NICKNAME_OBJ_PAL_NO_CURSOR   (5)  // カーソル用のパレット  // 2本
 
 //=============================================================================
 /**
@@ -92,38 +97,39 @@ ZUKAN_NICKNAME_STEP;
 //=============================================================================
 typedef struct
 {
-  GFL_CLWK* clwk[ZUKAN_NICKNAME_CURSOR_NUM];
-  UI_EASY_CLWK_RES res;
-  ZUKAN_NICKNAME_CURSOR_ORIGIN origin;
+  GFL_CLWK*                      clwk[ZUKAN_NICKNAME_CURSOR_NUM];
+  UI_EASY_CLWK_RES               res;
+  ZUKAN_NICKNAME_CURSOR_ORIGIN   origin;
 }
 ZUKAN_NICKNAME_CURSOR;
 
 struct _ZUKAN_NICKNAME_WORK
 {
-  HEAPID heap_id;  ///< ヒープ  // 他のところのを覚えているだけで生成や破棄はしない。
-  POKEMON_PARAM* pp;  // 他のところのを覚えているだけで生成や破棄はしない。
-  const STRBUF* box_strbuf;  // 他のところのを覚えているだけで生成や破棄はしない。
-  const BOX_MANAGER* box_manager;
-  u32 box_tray;
-  GFL_CLUNIT* clunit;  ///< セルアクターユニット  // 他のところのを覚えているだけで生成や破棄はしない。
-  GFL_FONT* font;  ///< フォント  // 他のところのを覚えているだけで生成や破棄はしない。
-  PRINT_QUE* print_que;  ///< 文字キュー  // 他のところのを覚えているだけで生成や破棄はしない。
+  HEAPID                     heap_id;    ///< ヒープ                // 他のところのを覚えているだけで生成や破棄はしない。
+  POKEMON_PARAM*             pp;                                    // 他のところのを覚えているだけで生成や破棄はしない。
+  const STRBUF*              box_strbuf;                            // 他のところのを覚えているだけで生成や破棄はしない。
+  const BOX_MANAGER*         box_manager;
+  u32                        box_tray;
+  GFL_CLUNIT*                clunit;     ///< セルアクターユニット  // 他のところのを覚えているだけで生成や破棄はしない。
+  GFL_FONT*                  font;       ///< フォント              // 他のところのを覚えているだけで生成や破棄はしない。
+  PRINT_QUE*                 print_que;  ///< 文字キュー            // 他のところのを覚えているだけで生成や破棄はしない。
 
-  GFL_ARCUTIL_TRANSINFO bg_chara_info;  ///< BGキャラ領域
-  ZUKAN_NICKNAME_CURSOR cursor;  ///< カーソル
-  GFL_BMPWIN* yesno_bmpwin;  ///< Yes/No文字
-  GFL_BMPWIN* dummy_bmpwin;  ///< 0番のキャラクターを1x1でつくっておく
+  // 下画面
+  GFL_ARCUTIL_TRANSINFO      bg_chara_info;     ///< BGキャラ領域
+  GFL_BMPWIN*                yesno_bmpwin;      ///< Yes/No文字
+  ZUKAN_NICKNAME_CURSOR      cursor;            ///< カーソル
 
-  ZUKAN_NICKNAME_STEP step;
-  ZUKAN_NICKNAME_SELECT select;
+  // 上画面
+  GFL_BMPWIN*                msg_bmpwin;
+  PRINT_STREAM*              msg_stream;
+  STRBUF*                    msg_strbuf;
+  GFL_ARCUTIL_TRANSINFO      msg_chara;
+  GFL_TCBLSYS*               msg_tcblsys;
+  GFL_BMPWIN*                dummy_bmpwin;      ///< 0番のキャラクターを1x1でつくっておく
 
-  GFL_BMPWIN* msg_bmpwin;
-  PRINT_STREAM* msg_stream;
-  STRBUF* msg_strbuf;
-  GFL_ARCUTIL_TRANSINFO msg_chara;
-  GFL_TCBLSYS* msg_tcblsys;
-
-  u32 last_wait_count;
+  ZUKAN_NICKNAME_STEP        step;
+  ZUKAN_NICKNAME_SELECT      select;
+  u32                        last_wait_count;
 };
 
 //=============================================================================
@@ -142,9 +148,16 @@ static u8 Zukan_Nickname_GetCursorPos( ZUKAN_NICKNAME_CURSOR_ORIGIN origin, u8 i
 /**
  *  @brief     初期化処理
  *
- *  @param[in]
+ *  @param[in] a_heap_id      ヒープ
+ *  @param[in] a_pp           ポケモンパラメータ
+ *  @param[in] a_box_strbuf   ボックス転送メッセージ
+ *  @param[in] a_box_manager  ボックスマネージャ
+ *  @param[in] a_box_tray     ボックスのトレイナンバー
+ *  @param[in] a_clunit       セルアクターユニット
+ *  @param[in] a_font         フォント
+ *  @param[in] a_print_que    プリントキュー
  *
- *  @retval
+ *  @retval    ワーク
  */
 //-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
@@ -153,44 +166,56 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
 {
   ZUKAN_NICKNAME_WORK* work;
 
+  // ワーク
   {
     u32 size = sizeof(ZUKAN_NICKNAME_WORK);
     work = GFL_HEAP_AllocMemory( a_heap_id, size );
     GFL_STD_MemClear( work, size );
   }
 
+  // 引数
   {
-    work->heap_id = a_heap_id;
-    work->pp = a_pp;
-    work->box_strbuf = a_box_strbuf;
-    work->box_manager = a_box_manager;
-    work->box_tray = a_box_tray;
-    work->clunit = a_clunit;
-    work->font = a_font;
-    work->print_que = a_print_que;
+    work->heap_id       = a_heap_id;
+    work->pp            = a_pp;
+    work->box_strbuf    = a_box_strbuf;
+    work->box_manager   = a_box_manager;
+    work->box_tray      = a_box_tray;
+    work->clunit        = a_clunit;
+    work->font          = a_font;
+    work->print_que     = a_print_que;
   }
 
+  // 初期化
   {
-    work->cursor.origin = ZUKAN_NICKNAME_CURSOR_ORIGIN_UP;
-    work->step = ZUKAN_NICKNAME_STEP_WAIT;
-    work->select = ZUKAN_NICKNAME_SELECT_SELECT;
-    work->last_wait_count = 0;
+    work->cursor.origin     = ZUKAN_NICKNAME_CURSOR_ORIGIN_UP;
+    work->step              = ZUKAN_NICKNAME_STEP_WAIT;
+    work->select            = ZUKAN_NICKNAME_SELECT_SELECT;
+    work->last_wait_count   = 0;
   }
 
+  // 下画面
   {
     GFL_BG_SetPriority( ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC, 1 );
     GFL_BG_SetPriority( ZUKAN_NICKNAME_BG_FRAME_INPUT_MSG, 0 );  // 最前面
   }
 
+  // 下画面
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, work->heap_id );
+
     GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_battgra_wb_battle_w_bg_NCLR, PALTYPE_SUB_BG,
                                       0*0x20, 0, work->heap_id );
-    work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_battgra_wb_battle_w_bg_NCGR,
-                                                                       ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC, 32*14*GFL_BG_1CHRDATASIZ, FALSE, work->heap_id );
+    work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
+                                                                       NARC_battgra_wb_battle_w_bg_NCGR,
+                                                                       ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC,
+                                                                       32*14*GFL_BG_1CHRDATASIZ,
+                                                                       FALSE, work->heap_id );
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_NICKNAME : BGキャラ領域が足りませんでした。\n" );
-    GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_battgra_wb_battle_w_bg1d_NSCR, ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC,
-                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ), 64*64*GFL_BG_1SCRDATASIZ/*32*24*GFL_BG_1SCRDATASIZ*/, FALSE, work->heap_id );
+    GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
+                                     ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC,
+                                     GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
+                                     64*64*GFL_BG_1SCRDATASIZ/*32*24*GFL_BG_1SCRDATASIZ*/,
+                                     FALSE, work->heap_id );
     
     GFL_BG_SetScroll( ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC, GFL_BG_SCROLL_X_SET, 0 );
     GFL_BG_SetScroll( ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC, GFL_BG_SCROLL_Y_SET, 192 );
@@ -200,20 +225,21 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     GFL_BG_LoadScreenReq( ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC );
   }
 
+  // カーソルOBJ
   {
     u8 i;
     UI_EASY_CLWK_RES_PARAM param;
     
-    param.draw_type = CLSYS_DRAW_SUB;
-    param.comp_flg = UI_EASY_CLWK_RES_COMP_NONE;
-    param.arc_id = ARCID_BATTGRA;
-    param.pltt_id = NARC_battgra_wb_battle_w_obj_NCLR;
-    param.ncg_id = NARC_battgra_wb_battle_w_cursor_NCGR;
-    param.cell_id = NARC_battgra_wb_battle_w_cursor_NCER;
-    param.anm_id = NARC_battgra_wb_battle_w_cursor_NANR;
-    param.pltt_line = 5;//適当な位置
-    param.pltt_src_ofs = 0;  // 空いているところはパレット番号0で描かれており、カーソルはパレット番号1で描かれているので、
-    param.pltt_src_num = 2;  // パレットは2本必要でなる。
+    param.draw_type       = CLSYS_DRAW_SUB;
+    param.comp_flg        = UI_EASY_CLWK_RES_COMP_NONE;
+    param.arc_id          = ARCID_BATTGRA;
+    param.pltt_id         = NARC_battgra_wb_battle_w_obj_NCLR;
+    param.ncg_id          = NARC_battgra_wb_battle_w_cursor_NCGR;
+    param.cell_id         = NARC_battgra_wb_battle_w_cursor_NCER;
+    param.anm_id          = NARC_battgra_wb_battle_w_cursor_NANR;
+    param.pltt_line       = ZUKAN_NICKNAME_OBJ_PAL_NO_CURSOR;
+    param.pltt_src_ofs    = 0;  // 空いているところはパレット番号0で描かれており、カーソルはパレット番号1で描かれているので、
+    param.pltt_src_num    = 2;  // パレットは2本必要でなる。
   
     UI_EASY_CLWK_LoadResource( &(work->cursor.res), &param, work->clunit, work->heap_id );
 
@@ -229,12 +255,13 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     }
   }
 
+  // 下画面文字
   {
-    const u8 font_plt_no_sub = 7;
-    PRINTSYS_LSB font_lsb = PRINTSYS_LSB_Make(8,0xA,0);
+    const u8            font_plt_no_sub  = 7;                           // フォント専用のパレットは読み込まないで、
+    PRINTSYS_LSB        font_lsb         = PRINTSYS_LSB_Make(8,0xA,0);  // 既に読み込み済みのパレットを流用する。
 
-    const u8 bmpwin_chara_width = 16;
-    const u32 bmpwin_width = 8 * bmpwin_chara_width;
+    const u8    bmpwin_chara_width   = 16;                      // 単位：キャラクター
+    const u32   bmpwin_width         = 8 * bmpwin_chara_width;  // 単位：ドット
 
     GFL_MSGDATA* msg_handle;
     STRBUF* yes_strbuf;
@@ -246,8 +273,8 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     //                               font_plt_no_sub * 0x20, 1 * 0x20, work->heap_id );   // 既に読み込み済みのパレットを流用する。
     
     work->yesno_bmpwin = GFL_BMPWIN_Create( ZUKAN_NICKNAME_BG_FRAME_INPUT_MSG,
-                                      8, 4, bmpwin_chara_width, 12,
-                                      font_plt_no_sub, GFL_BMP_CHRAREA_GET_B );
+                                            8, 4, bmpwin_chara_width, 12,
+                                            font_plt_no_sub, GFL_BMP_CHRAREA_GET_B );
     
     msg_handle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_yesnomenu_dat, work->heap_id );
 
@@ -268,9 +295,8 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     GFL_MSG_Delete( msg_handle );
   }
 
+  // 上画面文字
   {
-    const u8 clear_color = 15;
-
     GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                    ZUKAN_NICKNAME_BG_PAL_NO_MSG * 0x20, 1 * 0x20, work->heap_id );
 
@@ -293,25 +319,28 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
       WORDSET_Delete( wordset );
     }
 
+    // 上画面文字のBGフレームのスクリーンの空いている箇所に何も表示がされないようにしておく
     {
       work->dummy_bmpwin = GFL_BMPWIN_Create( ZUKAN_NICKNAME_BG_FRAME_MSG, 0, 0, 1, 1,
                                               ZUKAN_NICKNAME_BG_PAL_NO_MSG, GFL_BMP_CHRAREA_GET_F );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->dummy_bmpwin), 0 );
       GFL_BMPWIN_TransVramCharacter(work->dummy_bmpwin);
-	    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->dummy_bmpwin) );
+      GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->dummy_bmpwin) );
     }
 
     work->msg_tcblsys = GFL_TCBL_Init( work->heap_id, work->heap_id, 1, 0 );
 
     work->msg_bmpwin = GFL_BMPWIN_Create( ZUKAN_NICKNAME_BG_FRAME_MSG, 1, 19, 30, 4,
                                           ZUKAN_NICKNAME_BG_PAL_NO_MSG, GFL_BMP_CHRAREA_GET_B );
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msg_bmpwin), clear_color );
-    GFL_FONTSYS_SetColor( 1, 2, clear_color );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msg_bmpwin), ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR );
+    GFL_FONTSYS_SetColor( 1, 2, ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR );
 
     work->msg_stream = PRINTSYS_PrintStream( work->msg_bmpwin, 0, 0, work->msg_strbuf, work->font,
-                                             MSGSPEED_GetWait(), work->msg_tcblsys, 2, work->heap_id, clear_color );
+                                             MSGSPEED_GetWait(), work->msg_tcblsys, 2, work->heap_id, ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR );
 
-    work->msg_chara = BmpWinFrame_GraphicSetAreaMan( ZUKAN_NICKNAME_BG_FRAME_MSG, ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN, MENU_TYPE_SYSTEM, work->heap_id );
+    work->msg_chara = BmpWinFrame_GraphicSetAreaMan( ZUKAN_NICKNAME_BG_FRAME_MSG,
+                                                     ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN,
+                                                     MENU_TYPE_SYSTEM, work->heap_id );
   }
 
   return work;
@@ -321,28 +350,33 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
 /**
  *  @brief     終了処理
  *
- *  @param[in]
+ *  @param[in] work  ZUKAN_NICKNAME_Initで生成したワーク
  *
- *  @retval
+ *  @retval    なし
  */
 //-----------------------------------------------------------------------------
 void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work )
 {
+  // 上画面文字
   {
     PRINTSYS_PrintStreamDelete( work->msg_stream );
     GFL_BG_FreeCharacterArea( ZUKAN_NICKNAME_BG_FRAME_MSG, GFL_ARCUTIL_TRANSINFO_GetPos( work->msg_chara ),
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->msg_chara ) );
     GFL_BMPWIN_Delete( work->msg_bmpwin );
-  	GFL_STR_DeleteBuffer( work->msg_strbuf );
+    GFL_STR_DeleteBuffer( work->msg_strbuf );
 
     GFL_TCBL_Exit( work->msg_tcblsys );
+    {
+      GFL_BMPWIN_Delete( work->dummy_bmpwin );
+    }
   }
-  {
-    GFL_BMPWIN_Delete( work->dummy_bmpwin );
-  }
+
+  // 下画面文字
   {
     GFL_BMPWIN_Delete( work->yesno_bmpwin );
   }
+
+  // カーソルOBJ
   {
     u8 i;
     for( i=0; i<ZUKAN_NICKNAME_CURSOR_NUM; i++ )
@@ -352,11 +386,13 @@ void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work )
     UI_EASY_CLWK_UnLoadResource( &(work->cursor.res) );
   }
 
+  // 下画面
   {
     GFL_BG_FreeCharacterArea( ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC, GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_chara_info ) );
   }
 
+  // ワーク
   {
     GFL_HEAP_FreeMemory( work );
   }
@@ -366,15 +402,16 @@ void ZUKAN_NICKNAME_Exit( ZUKAN_NICKNAME_WORK* work )
 /**
  *  @brief     主処理
  *
- *  @param[in]
+ *  @param[in] work  ZUKAN_NICKNAME_Initで生成したワーク
  *
- *  @retval
+ *  @retval    継続か終了か
  */
 //-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
 {
   ZUKAN_NICKNAME_RESULT res = ZUKAN_NICKNAME_RES_CONTINUE;
 
+  // ステップ
   switch( work->step )
   {
   case ZUKAN_NICKNAME_STEP_WAIT:
@@ -506,12 +543,12 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
           else
           {
             // ボックスへ転送
-            const u8 clear_color = 15;  // 先に出てきたのと統一して
             // 一旦消去
-            GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msg_bmpwin), clear_color );
-  	        // 前のを消す
+            GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msg_bmpwin), ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR );
+            // 前のを消す
             PRINTSYS_PrintStreamDelete( work->msg_stream );  // この関数でタスクも削除してくれるので、同時に動くタスクは1つで済む
             GFL_STR_DeleteBuffer( work->msg_strbuf );
+
             // 文字列作成
             {
               const u32 buf_id_nickname = 0;
@@ -520,16 +557,18 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
 
               wordset = WORDSET_Create( work->heap_id );
               
-              WORDSET_RegisterPokeNickName( wordset, buf_id_nickname, work->pp );  // デフォルトでニックネームは入っている？→入っているっぽい
+              WORDSET_RegisterPokeNickName( wordset, buf_id_nickname, work->pp );
               WORDSET_RegisterBoxName( wordset, buf_id_box, work->box_manager, work->box_tray );
               work->msg_strbuf = GFL_STR_CreateBuffer( 64, work->heap_id );  // buflen.h
               WORDSET_ExpandStr( wordset, work->msg_strbuf, work->box_strbuf );
 
               WORDSET_Delete( wordset );
             }
+
             // ストリーム開始
             work->msg_stream = PRINTSYS_PrintStream( work->msg_bmpwin, 0, 0, work->msg_strbuf, work->font,
-                                                     MSGSPEED_GetWait(), work->msg_tcblsys, 2, work->heap_id, clear_color );
+                                                     MSGSPEED_GetWait(), work->msg_tcblsys, 2, work->heap_id,
+                                                     ZUKAN_NICKNAME_MSGWIN_CLEAR_COLOR );
             
             work->step = ZUKAN_NICKNAME_STEP_BOX;
           }
@@ -577,16 +616,18 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
 /**
  *  @brief     処理を開始する
  *
- *  @param[in]
+ *  @param[in] work  ZUKAN_NICKNAME_Initで生成したワーク
  *
- *  @retval
+ *  @retval    なし
  */
 //-----------------------------------------------------------------------------
 void ZUKAN_NICKNAME_Start( ZUKAN_NICKNAME_WORK* work )
 {
   if( work->step == ZUKAN_NICKNAME_STEP_WAIT )
   {
-    BmpWinFrame_Write( work->msg_bmpwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(work->msg_chara), ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN );
+    BmpWinFrame_Write( work->msg_bmpwin, WINDOW_TRANS_ON_V,
+                       GFL_ARCUTIL_TRANSINFO_GetPos(work->msg_chara),
+                       ZUKAN_NICKNAME_BG_PAL_NO_MSGWIN );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->msg_bmpwin );
     work->step = ZUKAN_NICKNAME_STEP_QUESTION;
   }
@@ -596,9 +637,9 @@ void ZUKAN_NICKNAME_Start( ZUKAN_NICKNAME_WORK* work )
 /**
  *  @brief     選択結果を得る
  *
- *  @param[in]
+ *  @param[in] work  ZUKAN_NICKNAME_Initで生成したワーク
  *
- *  @retval
+ *  @retval    選択結果
  */
 //-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_SELECT ZUKAN_NICKNAME_GetSelect( ZUKAN_NICKNAME_WORK* work )
