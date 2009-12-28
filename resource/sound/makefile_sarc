@@ -64,7 +64,7 @@ do-build:	$(TARGETDIR)/$(TARGETFILENAME) $(TDIR1)/$(TFILE1)  $(TDIR2)/$(TFILE2) 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
 #ここにあるsdatより wb_sound_playerの方が新しい場合に実行
-$(TARGETDIR)/$(TARGETFILENAME): ../../../pokemon_wb_doc/wb_sound_player/wb_sound_data.sdat
+$(TARGETFILENAME): ../../../pokemon_wb_doc/wb_sound_player/wb_sound_data.sdat
 	cp ../personal/wb_sound_pv_bnk.lst $(SOUNDPLAYERDIR)/tools
 	cp ../personal/wb_sound_pv_wav.lst $(SOUNDPLAYERDIR)/tools
 	$(MAKE) -C $(SOUNDPLAYERDIR) -f Makefile
