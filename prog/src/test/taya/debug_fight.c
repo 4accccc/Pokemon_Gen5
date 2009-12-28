@@ -57,8 +57,6 @@ enum {
   POKEPARA_SIZE = 228,  // ポケモンパラメータ想定サイズ
   POKEPARA_SAVEAREA_SIZE = POKEPARA_SIZE * POKEPARA_MAX,
 
-  PAGE_MAX = 2,
-
   SAVEAREA_SIZE = 0x2000,
 
 };
@@ -66,6 +64,14 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Enums                                                                    */
 /*--------------------------------------------------------------------------*/
+
+typedef enum {
+  PAGE_DEFAULT,     ///< デフォルトページ
+  PAGE_DEBUG_FLAG,  ///< デバッグ便利フラグページ
+  PAGE_GRAPHICS,    ///< 背景・地面などグラフィック要素の設定ページ
+  PAGE_MAX,
+}PageNumber;
+
 typedef enum {
   BTLTYPE_SINGLE_WILD,
   BTLTYPE_SINGLE_TRAINER,
@@ -169,10 +175,23 @@ typedef enum {
   SELITEM_HP_CONST,
   SELITEM_PP_CONST,
 
+  SELITEM_BACKGROUND,
+  SELITEM_LAND,
+  SELITEM_TIMEZONE,
+  SELITEM_SEASON,
+  SELITEM_WEATHER,
+
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
 
 }SelectItem;
+
+typedef enum {
+  SEASON_SPRING = 0,
+  SEASON_SUMMER,
+  SEASON_AUTUMN,
+  SEASON_WINTER,
+}BtlSeason;
 
 /*--------------------------------------------------------------------------*/
 /* Layout                                                                   */
@@ -226,7 +245,7 @@ enum {
   LAYOUT_SAVEMARK_WIDTH = 12,
   LAYOUT_SAVEMARK_HEIGHT = 12,
 
-
+  // --- PAGE 2
   LAYOUT_LABEL_MUST_TUIKA_X     = 4,
   LAYOUT_LABEL_MUST_TOKU_X      = 4,
   LAYOUT_LABEL_MUST_ITEM_X      = 4,
@@ -240,6 +259,21 @@ enum {
   LAYOUT_LABEL_MUST_CRITICAL_Y  = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
   LAYOUT_LABEL_HP_CONST_Y       = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
   LAYOUT_LABEL_PP_CONST_Y       = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
+
+
+  // --- PAGE 3
+  LAYOUT_LABEL_PAGE3_X = 4,
+  LAYOUT_LABEL_BACKGROUND_X    = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_LAND_X          = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_TIMEZONE_X      = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_SEASON_X        = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_WEATHER_X       = LAYOUT_LABEL_PAGE3_X,
+
+  LAYOUT_LABEL_BACKGROUND_Y    = 8,
+  LAYOUT_LABEL_LAND_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
+  LAYOUT_LABEL_TIMEZONE_Y      = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
+  LAYOUT_LABEL_SEASON_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
+  LAYOUT_LABEL_WEATHER_Y       = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
 
 };
 
@@ -287,6 +321,19 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_HP_CONST,      LAYOUT_LABEL_HP_CONST_X,      LAYOUT_LABEL_HP_CONST_Y      },
   { DBGF_LABEL_PP_CONST,      LAYOUT_LABEL_PP_CONST_X,      LAYOUT_LABEL_PP_CONST_Y      },
 };
+//------------------------------------------------------
+/*
+ *  ラベルレイアウト（３ページ目）
+ */
+//------------------------------------------------------
+static const LABEL_LAYOUT LabelLayout_Page3[] = {
+  { DBGF_LABEL_BACKGROUND, LAYOUT_LABEL_BACKGROUND_X,   LAYOUT_LABEL_BACKGROUND_Y },
+  { DBGF_LABEL_LAND,       LAYOUT_LABEL_LAND_X,         LAYOUT_LABEL_LAND_Y       },
+  { DBGF_LABEL_TIMEZONE,   LAYOUT_LABEL_TIMEZONE_X,     LAYOUT_LABEL_TIMEZONE_Y   },
+  { DBGF_LABEL_SEASON,     LAYOUT_LABEL_SEASON_X,       LAYOUT_LABEL_SEASON_Y     },
+  { DBGF_LABEL_WEATHER,    LAYOUT_LABEL_WEATHER_X,      LAYOUT_LABEL_WEATHER_Y    },
+};
+
 
 //======================================================================
 /*
@@ -297,49 +344,47 @@ typedef struct {
   u16  itemID;
   u8   x;
   u8   y;
-  int  min;
-  int  max;
 }ITEM_LAYOUT;
 
 /**
  *  アイテムレイアウト（１ページ目）
  */
 static const ITEM_LAYOUT ItemLayout_Page1[] = {
-  { SELITEM_POKE_SELF_1,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
-  { SELITEM_POKE_SELF_2,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
-  { SELITEM_POKE_SELF_3,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
-  { SELITEM_POKE_SELF_4,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
-  { SELITEM_POKE_SELF_5,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
-  { SELITEM_POKE_SELF_6,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
+  { SELITEM_POKE_SELF_1,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y1,   },
+  { SELITEM_POKE_SELF_2,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y2,   },
+  { SELITEM_POKE_SELF_3,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y3,   },
+  { SELITEM_POKE_SELF_4,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y4,   },
+  { SELITEM_POKE_SELF_5,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y5,   },
+  { SELITEM_POKE_SELF_6,    LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y6,   },
 
-  { SELITEM_POKE_ENEMY1_1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
-  { SELITEM_POKE_ENEMY1_2,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
-  { SELITEM_POKE_ENEMY1_3,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
-  { SELITEM_POKE_ENEMY1_4,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
-  { SELITEM_POKE_ENEMY1_5,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
-  { SELITEM_POKE_ENEMY1_6,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
+  { SELITEM_POKE_ENEMY1_1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y1,   },
+  { SELITEM_POKE_ENEMY1_2,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y2,   },
+  { SELITEM_POKE_ENEMY1_3,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y3,   },
+  { SELITEM_POKE_ENEMY1_4,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y4,   },
+  { SELITEM_POKE_ENEMY1_5,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y5,   },
+  { SELITEM_POKE_ENEMY1_6,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y6,   },
 
-  { SELITEM_POKE_FRIEND_1,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
-  { SELITEM_POKE_FRIEND_2,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
-  { SELITEM_POKE_FRIEND_3,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
-  { SELITEM_POKE_FRIEND_4,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
-  { SELITEM_POKE_FRIEND_5,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
-  { SELITEM_POKE_FRIEND_6,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
+  { SELITEM_POKE_FRIEND_1,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y1,   },
+  { SELITEM_POKE_FRIEND_2,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y2,   },
+  { SELITEM_POKE_FRIEND_3,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y3,   },
+  { SELITEM_POKE_FRIEND_4,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y4,   },
+  { SELITEM_POKE_FRIEND_5,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y5,   },
+  { SELITEM_POKE_FRIEND_6,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y6,   },
 
-  { SELITEM_POKE_ENEMY2_1,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y1,  0,0,   },
-  { SELITEM_POKE_ENEMY2_2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y2,  0,0,   },
-  { SELITEM_POKE_ENEMY2_3,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y3,  0,0,   },
-  { SELITEM_POKE_ENEMY2_4,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y4,  0,0,   },
-  { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5,  0,0,   },
-  { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6,  0,0,   },
+  { SELITEM_POKE_ENEMY2_1,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y1,   },
+  { SELITEM_POKE_ENEMY2_2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y2,   },
+  { SELITEM_POKE_ENEMY2_3,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y3,   },
+  { SELITEM_POKE_ENEMY2_4,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y4,   },
+  { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5,   },
+  { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6,   },
 
-  { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,  0, BTLTYPE_MAX-1     },
-  { SELITEM_COMM_MODE,      LAYOUT_LABEL_COMM_X     +40, LAYOUT_PARAM_LINE_Y2,  0, 1                 },
-  { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,  0, MSGSPEED_FAST_EX  },
-  { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,  0, 1                 },
-  { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y, 0, 1                 },
-  { SELITEM_REC_MODE,       LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y,    0, DBF_RECMODE_MAX-1 },
-  { SELITEM_REC_BUF,        LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y,    0, 3                 },
+  { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,   },
+  { SELITEM_COMM_MODE,      LAYOUT_LABEL_COMM_X     +40, LAYOUT_PARAM_LINE_Y2,   },
+  { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,   },
+  { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,   },
+  { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y,  },
+  { SELITEM_REC_MODE,       LAYOUT_LABEL_REC_X      +32, LAYOUT_LABEL_REC_Y,     },
+  { SELITEM_REC_BUF,        LAYOUT_LABEL_REC_X      +64, LAYOUT_LABEL_REC_Y,     },
 
   { SELITEM_LOAD,       LAYOUT_LOAD_X, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       LAYOUT_SAVE_X, LAYOUT_PARAM_LINE_Y4 },
@@ -349,14 +394,25 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
  *  アイテムレイアウト（２ページ目）
  */
 static const ITEM_LAYOUT ItemLayout_Page2[] = {
-  { SELITEM_MUST_TUIKA,     LAYOUT_LABEL_MUST_TUIKA_X    +68, LAYOUT_LABEL_MUST_TUIKA_Y,    0, 1 },
-  { SELITEM_MUST_TOKU,      LAYOUT_LABEL_MUST_TOKU_X     +68, LAYOUT_LABEL_MUST_TOKU_Y,     0, 1 },
-  { SELITEM_MUST_ITEM,      LAYOUT_LABEL_MUST_ITEM_X     +68, LAYOUT_LABEL_MUST_ITEM_Y,     0, 1 },
-  { SELITEM_MUST_CRITICAL,  LAYOUT_LABEL_MUST_CRITICAL_X +68, LAYOUT_LABEL_MUST_CRITICAL_Y, 0, 1 },
-  { SELITEM_HP_CONST,       LAYOUT_LABEL_HP_CONST_X      +68, LAYOUT_LABEL_HP_CONST_Y,      0, 1 },
-  { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +68, LAYOUT_LABEL_PP_CONST_Y,      0, 1 },
-
+  { SELITEM_MUST_TUIKA,     LAYOUT_LABEL_MUST_TUIKA_X    +68, LAYOUT_LABEL_MUST_TUIKA_Y     },
+  { SELITEM_MUST_TOKU,      LAYOUT_LABEL_MUST_TOKU_X     +68, LAYOUT_LABEL_MUST_TOKU_Y      },
+  { SELITEM_MUST_ITEM,      LAYOUT_LABEL_MUST_ITEM_X     +68, LAYOUT_LABEL_MUST_ITEM_Y      },
+  { SELITEM_MUST_CRITICAL,  LAYOUT_LABEL_MUST_CRITICAL_X +68, LAYOUT_LABEL_MUST_CRITICAL_Y  },
+  { SELITEM_HP_CONST,       LAYOUT_LABEL_HP_CONST_X      +68, LAYOUT_LABEL_HP_CONST_Y       },
+  { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +68, LAYOUT_LABEL_PP_CONST_Y       },
 };
+
+/**
+ *  アイテムレイアウト（３ページ目）
+ */
+static const ITEM_LAYOUT ItemLayout_Page3[] = {
+  { SELITEM_BACKGROUND,  LAYOUT_LABEL_BACKGROUND_X  +56,   LAYOUT_LABEL_BACKGROUND_Y },
+  { SELITEM_LAND,        LAYOUT_LABEL_LAND_X        +56,   LAYOUT_LABEL_LAND_Y       },
+  { SELITEM_TIMEZONE,    LAYOUT_LABEL_TIMEZONE_X    +56,   LAYOUT_LABEL_TIMEZONE_Y   },
+  { SELITEM_SEASON,      LAYOUT_LABEL_SEASON_X      +56,   LAYOUT_LABEL_SEASON_Y     },
+  { SELITEM_WEATHER,     LAYOUT_LABEL_WEATHER_X     +56,   LAYOUT_LABEL_WEATHER_Y    },
+};
+
 
 //----------------------------------------------------------------------
 /*
@@ -372,6 +428,7 @@ static const struct {
 }LayoutTable[] = {
   { LabelLayout_Page1, ItemLayout_Page1,  NELEMS(LabelLayout_Page1), NELEMS(ItemLayout_Page1) },
   { LabelLayout_Page2, ItemLayout_Page2,  NELEMS(LabelLayout_Page2), NELEMS(ItemLayout_Page2) },
+  { LabelLayout_Page3, ItemLayout_Page3,  NELEMS(LabelLayout_Page3), NELEMS(ItemLayout_Page3) },
 };
 
 
@@ -413,14 +470,21 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
  *  SaveData
  */
 typedef struct {
+  u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
+
   u32  btlType  : 5;
   u32  commMode : 1;
-  u32  weather  : 3;
   u32  msgSpeed : 3;
   u32  fWazaEff : 1;
   u32  fSubway  : 1;
   u32  recMode  : 2;
   u32  recBufID : 2;
+
+  u32  backGround      : 4;
+  u32  landForm        : 4;
+  u32  timeZone        : 3;
+  u32  season          : 2;
+  u32  weather         : 3;
 
   u32  fMustTuika    : 1;
   u32  fMustToku     : 1;
@@ -429,9 +493,6 @@ typedef struct {
   u32  fHPConst      : 1;
   u32  fPPConst      : 1;
 
-  u32  dmy      : 8;
-
-  u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
 }DEBUG_BTL_SAVEDATA;
 
@@ -511,6 +572,11 @@ static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_BackGround( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_TimeZone( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
@@ -528,6 +594,7 @@ static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setup
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
 static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
 static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* setup );
+static void clearDebugParams( DEBUG_BTL_SAVEDATA* save );
 static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
 static void* testBeaconGetFunc( void* pWork );
@@ -876,6 +943,13 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fWazaEff = 0;
   saveData->fSubway = 0;
 
+  saveData->backGround = 0;
+  saveData->landForm = 0;
+  saveData->timeZone = TIMEZONE_MORNING;
+  saveData->season =  SEASON_SPRING,
+  saveData->weather = BTL_WEATHER_NONE;
+
+
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
     PP_Clear( pp );
@@ -1013,6 +1087,22 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->recBufID = loopValue( save->recBufID+incValue, 0, 3 );
     break;
 
+  case SELITEM_BACKGROUND:
+    save->backGround = loopValue( save->backGround + incValue, 0, BATTLE_BG_TYPE_MAX-1 );
+    break;
+  case SELITEM_LAND:
+    save->landForm = loopValue( save->landForm + incValue, 0, BATTLE_BG_ATTR_MAX-1 );
+    break;
+  case SELITEM_TIMEZONE:
+    save->timeZone = loopValue( save->timeZone + incValue, 0, TIMEZONE_MAX-1 );
+    break;
+  case SELITEM_SEASON:
+    save->timeZone = loopValue( save->season + incValue, SEASON_SPRING, SEASON_WINTER );
+    break;
+  case SELITEM_WEATHER:
+    save->weather = loopValue( save->weather + incValue, BTL_WEATHER_NONE, BTL_WEATHER_MAX-1 );
+    break;
+
   case SELITEM_MUST_TUIKA:
     save->fMustTuika ^= 1;
     break;
@@ -1144,6 +1234,12 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SAVE:        printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
         case SELITEM_LOAD:        printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
 
+        case SELITEM_BACKGROUND:  printItem_BackGround( wk, wk->strbuf ); break;
+        case SELITEM_LAND:        printItem_LandForm( wk, wk->strbuf ); break;
+        case SELITEM_TIMEZONE:    printItem_TimeZone( wk, wk->strbuf ); break;
+        case SELITEM_SEASON:      printItem_Season( wk, wk->strbuf ); break;
+        case SELITEM_WEATHER:     printItem_Weather( wk, wk->strbuf ); break;
+
         case SELITEM_MUST_TUIKA:    printItem_Flag( wk, wk->saveData.fMustTuika,    wk->strbuf ); break;
         case SELITEM_MUST_TOKU:     printItem_Flag( wk, wk->saveData.fMustToku,     wk->strbuf ); break;
         case SELITEM_MUST_ITEM:     printItem_Flag( wk, wk->saveData.fMustItem,     wk->strbuf ); break;
@@ -1199,6 +1295,27 @@ static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_RECBUF_0+wk->saveData.recBufID, buf );
+}
+
+static void printItem_BackGround( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_BG_00+wk->saveData.backGround, buf );
+}
+static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_LAND_00+wk->saveData.landForm, buf );
+}
+static void printItem_TimeZone( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_TIMEZONE_0+wk->saveData.timeZone, buf );
+}
+static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_SEASON_0+wk->saveData.season, buf );
+}
+static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_WEATHER_0+wk->saveData.weather, buf );
 }
 
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
@@ -1346,6 +1463,13 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_HP_CONST,      SELITEM_MUST_CRITICAL, SELITEM_PP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_PP_CONST,      SELITEM_HP_CONST,      SELITEM_MUST_TUIKA,    SELITEM_NULL,          SELITEM_NULL          },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
+      { SELITEM_BACKGROUND,    SELITEM_WEATHER,       SELITEM_LAND,          SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_LAND,          SELITEM_BACKGROUND,    SELITEM_TIMEZONE,      SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_TIMEZONE,      SELITEM_LAND,          SELITEM_SEASON,        SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_SEASON,        SELITEM_TIMEZONE,      SELITEM_WEATHER,       SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_WEATHER,       SELITEM_SEASON,        SELITEM_BACKGROUND,    SELITEM_NULL,          SELITEM_NULL          },
+
+  /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
     };
 
     u32 nextItem = SELITEM_NULL, i;
@@ -1427,14 +1551,24 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
   }
   else if( key & PAD_BUTTON_B )
   {
-    if( !selItem_IsPoke(wk->selectItem) ){
+    if( !selItem_IsPoke(wk->selectItem) )
+    {
       selItem_Increment( wk, wk->selectItem, -1 );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
   }
-  else if( key & PAD_BUTTON_SELECT ){
-    setMainProc( wk, mainProc_Load );
+  else if( key & PAD_BUTTON_SELECT )
+  {
+    switch( wk->pageNum ){
+    case PAGE_DEFAULT:
+      setMainProc( wk, mainProc_Load );
+      break;
+    case PAGE_DEBUG_FLAG:
+      clearDebugParams( &wk->saveData );
+      setMainProc( wk, mainProc_ChangePage );
+      break;
+    }
   }
   else if( key & PAD_BUTTON_START )
   {
@@ -1443,6 +1577,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
 
   return FALSE;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * メインプロセス：ポケパラ作成
@@ -1892,6 +2027,18 @@ static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* 
   if( save->fMustCritical ) { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_MUST_CRITICAL ); }
   if( save->fHPConst )      { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_HP_CONST );      }
   if( save->fPPConst )      { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_PP_CONST );      }
+}
+/**
+ *  デバッグフラグの全オフ
+ */
+static void clearDebugParams( DEBUG_BTL_SAVEDATA* save )
+{
+  save->fMustTuika = 0;
+  save->fMustToku = 0;
+  save->fMustItem = 0;
+  save->fMustCritical = 0;
+  save->fHPConst = 0;
+  save->fPPConst = 0;
 }
 
 /**
