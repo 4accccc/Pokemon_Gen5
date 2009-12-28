@@ -4770,7 +4770,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, u16* dstDamage )
 {
   enum {
-    PRINT_FLG = FALSE
+    PRINT_FLG = TRUE,
   };
   WazaDamageType dmgType = WAZADATA_GetDamageType( wazaParam->wazaID );
   u32  rawDamage = 0;
