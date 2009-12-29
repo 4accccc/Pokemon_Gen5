@@ -649,6 +649,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -10107,6 +10108,19 @@ const BTL_WAZAREC* BTL_SVFTOOL_GetWazaRecord( BTL_SVFLOW_WORK* wk )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] Que領域予約
+ *
+ * @param   wk
+ *
+ * @retval  const BTL_WAZAREC*
+ */
+//--------------------------------------------------------------------------------------
+u16 BTL_SVFTOOL_ReserveQuePos( BTL_SVFLOW_WORK* wk, ServerCmd cmd )
+{
+  return SCQUE_RESERVE_Pos( wk->que, cmd );
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 死亡ポケレコードのポインタを取得
  *
  * @param   wk
@@ -10408,7 +10422,8 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SWAP_POKE,        sizeof(BTL_HANDEX_PARAM_SWAP_POKE)       },
     { BTL_HANDEX_HENSIN,           sizeof(BTL_HANDEX_PARAM_HENSIN)          },
     { BTL_HANDEX_FAKE_BREAK,       sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)      },
-    { BTL_HANDEX_JURYOKU_CHECK,    sizeof(BTL_HANDEX_JURYOKU_CHECK)         },
+    { BTL_HANDEX_JURYOKU_CHECK,    sizeof(BTL_HANDEX_PARAM_HEADER)          },
+    { BTL_HANDEX_EFFECT_BY_POS,    sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)   },
   };
   u32 size, i;
 
@@ -10589,6 +10604,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_HENSIN:           fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
     case BTL_HANDEX_FAKE_BREAK:       fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     case BTL_HANDEX_JURYOKU_CHECK:    fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
+    case BTL_HANDEX_EFFECT_BY_POS:    fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -11788,6 +11804,35 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 
     if( fFall ){
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuFall, pokeID[i] );
+    }
+  }
+
+  return 1;
+}
+/**
+ * 指定位置にエフェクト発動
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_EFFECT_BY_POS* param = (BTL_HANDEX_PARAM_EFFECT_BY_POS*)param_header;
+
+  if( param->fQueReserve == FALSE )
+  {
+    if( param->pos_to == BTL_POS_NULL ){
+      SCQUE_PUT_ACT_EffectByPos( wk->que, param->pos_from, param->effectNo );
+    }else{
+      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
+    }
+  }
+  else
+  {
+    if( param->pos_to == BTL_POS_NULL ){
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYPOS,
+            param->pos_from, param->effectNo );
+    }else{
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
+            param->pos_from, param->pos_to, param->effectNo );
     }
   }
 

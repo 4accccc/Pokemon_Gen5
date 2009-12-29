@@ -120,6 +120,7 @@ extern u8 BTL_SVFTOOL_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePok
 extern u16 BTL_SVFTOOL_GetTurnCount( BTL_SVFLOW_WORK* wk );
 extern u8 BTL_SVFTOOL_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern const BTL_WAZAREC* BTL_SVFTOOL_GetWazaRecord( BTL_SVFLOW_WORK* wk );
+extern u16 BTL_SVFTOOL_ReserveQuePos( BTL_SVFLOW_WORK* wk, ServerCmd cmd );
 extern const BTL_DEADREC* BTL_SVFTOOL_GetDeadRecord( BTL_SVFLOW_WORK* wk );
 extern u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
 extern BtlBgType BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk );
@@ -253,6 +254,7 @@ typedef enum {
   BTL_HANDEX_HENSIN,            ///< へんしんする
   BTL_HANDEX_FAKE_BREAK,        ///< イリュージョン解除
   BTL_HANDEX_JURYOKU_CHECK,     ///< じゅうりょく発動時のチェック処理
+  BTL_HANDEX_EFFECT_BY_POS,     ///< 位置指定してエフェクト発動
 
   BTL_HANDEX_MAX,
 
@@ -752,6 +754,18 @@ typedef struct {
   u8   pokeID;                       ///< 対象ポケID
   BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_FAKE_BREAK;
+
+/**
+ * 位置指定エフェクト
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u16  effectNo;                      ///< エフェクトナンバー
+  u8   pos_from;                      ///< エフェクト発動位置
+  u8   pos_to;                        ///< エフェクト終点位置（不要ならBTL_POS_NULL）
+  u16  reservedQuePos;                ///< Que予約領域
+  u8   fQueReserve;                   ///< Que予約フラグ
+}BTL_HANDEX_PARAM_EFFECT_BY_POS;
 
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

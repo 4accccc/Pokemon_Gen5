@@ -1115,7 +1115,27 @@ BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
   }
   return FALSE;
 }
-
+//=============================================================================================
+/**
+ * 始点＆終点を指定してエフェクト開始
+ *
+ * @param   wk
+ * @param   vpos_from
+ * @param   vpos_to
+ * @param   effectNo
+ */
+//=============================================================================================
+void BTLV_AddEffectByVector( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo )
+{
+  BTLV_EFFECT_AddByDir( vpos_from, vpos_to, effectNo );
+}
+BOOL BTLV_WaitEffectAll( BTLV_CORE* wk )
+{
+  if( !BTLV_EFFECT_CheckExecute() ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //=============================================================================================

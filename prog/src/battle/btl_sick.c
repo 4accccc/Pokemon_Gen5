@@ -3,6 +3,7 @@
 #include "btl_pokeparam.h"
 #include "btl_server_flow.h"
 #include "btl_event.h"
+#include "btlv\btlv_effect.h"
 #include "handler\hand_item.h"
 
 #include "btl_sick.h"
@@ -118,6 +119,9 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 {
   BTL_HANDEX_PARAM_DAMAGE* dmg_param;
   u16 damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+  BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
+  BtlPokePos  pos_to = BPP_SICKCONT_GetParam( cont );
+  u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
 
   dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
   dmg_param->pokeID = pokeID;
@@ -125,16 +129,26 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
   HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
 
+  // ダメージが成功したらエフェクト
   {
-    BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
-    BtlPokePos  pos = BPP_SICKCONT_GetParam( cont );
-    u8 userPokeID[BTL_POS_MAX];
-    if( BTL_SVFTOOL_ExpandPokeID(flowWk, pos, userPokeID) )
+    BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+    eff_param->header.failSkipFlag = TRUE;
+    eff_param->effectNo = BTLEFF_YADORIGI;
+    eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+    eff_param->pos_to = pos_to;
+    eff_param->reservedQuePos = que_reserve_pos;
+    eff_param->fQueReserve = TRUE;
+  }
+
+  // 続けて回復
+  {
+    u8 recoverPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pos_to );
+    if( recoverPokeID != BTL_POKEID_NULL )
     {
       BTL_HANDEX_PARAM_DRAIN* drain_param;
       drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
       drain_param->header.failSkipFlag = TRUE;
-      drain_param->recoverPokeID = userPokeID[0];
+      drain_param->recoverPokeID = recoverPokeID;
       drain_param->damagedPokeID = pokeID;
       drain_param->recoverHP = damage;
     }

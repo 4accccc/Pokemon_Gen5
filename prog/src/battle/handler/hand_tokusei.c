@@ -2704,6 +2704,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
+        param->header.tokwin_flag = TRUE;
         param->sickID = sick;
         param->sickCont = sickCont;
         param->fAlmost = FALSE;
@@ -4342,9 +4343,12 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
 //------------------------------------------------------------------------------
 /**
- *  とくせい「わるいてぐせ」
+ * とくせい「わるいてぐせ」
+ *
+ * 物理攻撃を受けた際、道具に空きがあれば相手の持ち物を奪い取る。
  */
 //------------------------------------------------------------------------------
+// ダメージ反応ハンドラ
 static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
@@ -4374,7 +4378,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「のろわれボディ」
+ * とくせい「のろわれボディ」
  */
 //------------------------------------------------------------------------------
 static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
