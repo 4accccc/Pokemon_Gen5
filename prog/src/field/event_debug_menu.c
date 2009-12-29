@@ -138,6 +138,7 @@ static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -211,6 +212,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
   { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
   { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
+  { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },
   { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
   { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
   { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
@@ -3970,3 +3972,192 @@ static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
   
   return( FALSE );
 }
+
+//======================================================================
+//  デバッグメニュー　キャプチャ
+//======================================================================
+//--------------------------------------------------------------
+/// DEBUG_CAPTURELIST_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+  int select_mode;
+}DEBUG_CAPTURELIST_EVENT_WORK;
+
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuCaptureListEvent(
+    GMEVENT *event, int *seq, void *work );
+
+enum{
+  CAPTURE_MODE_NORMAL,
+  CAPTURE_MODE_PLAYER_OFF,
+  CAPTURE_MODE_NPC_OFF,
+};
+
+///テストカメラリスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_CaptureList =
+{
+  1,    //リスト項目数
+  3,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+///てんきメニューリスト
+static const FLDMENUFUNC_LIST DATA_CaptureMenuList[] =
+{
+  { DEBUG_FIELD_STR61_000, (void*)CAPTURE_MODE_NORMAL },
+  { DEBUG_FIELD_STR61_001, (void*)CAPTURE_MODE_PLAYER_OFF },
+  { DEBUG_FIELD_STR61_002, (void*)CAPTURE_MODE_NPC_OFF },
+};
+
+static const DEBUG_MENU_INITIALIZER DebugCaptureMenuListData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_CaptureMenuList),
+  DATA_CaptureMenuList,
+  &DATA_DebugMenuList_CaptureList,
+  1, 1, 12, 11,
+  NULL,
+  NULL
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　天気リスト
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_CAPTURELIST_EVENT_WORK *work;
+  
+  GMEVENT_Change( event,
+    debugMenuCaptureListEvent, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
+  
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：てんきリスト
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuCaptureListEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_CAPTURELIST_EVENT_WORK *work = wk;
+  MMDL *fmmdl;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugCaptureMenuListData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_CANCEL ){  //決定
+        return GMEVENT_RES_FINISH;
+      }
+      
+      work->select_mode = ret;
+      (*seq)++;
+    }
+    break;
+  case 2:
+    switch(work->select_mode){
+    case CAPTURE_MODE_NORMAL:
+      break;
+    case CAPTURE_MODE_PLAYER_OFF:
+      {
+        FIELD_PLAYER *player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+        fmmdl = FIELD_PLAYER_GetMMdl( player );
+        MMDL_SetStatusBitVanish( fmmdl, TRUE );
+      }
+      break;
+    case CAPTURE_MODE_NPC_OFF:
+      {
+        u32 no = 0;
+        BOOL ret;
+        MMDLSYS *fos = FIELDMAP_GetMMdlSys( work->fieldWork );
+        
+        do{
+          ret = MMDLSYS_SearchUseMMdl(fos, &fmmdl, &no );
+          if(ret == TRUE){
+            MMDL_SetStatusBitVanish( fmmdl, TRUE );
+          }
+        }while(ret == TRUE);
+      }
+      break;
+    }
+    (*seq)++;
+    break;
+  case 3:
+		MI_CpuClearFast( (void*)HW_LCDC_VRAM_D, HW_VRAM_D_SIZE );
+		GX_SetCapture(
+				GX_CAPTURE_SIZE_256x192,			// キャプチャサイズ
+				GX_CAPTURE_MODE_A,			// キャプチャモード
+				GX_CAPTURE_SRCA_3D,				// キャプチャブレンドA
+				GX_CAPTURE_SRCB_VRAM_0x00000,				// キャプチャブレンドB
+				GX_CAPTURE_DEST_VRAM_D_0x00000,			// 転送Vram
+				0,						// ブレンド係数A
+				0);						// ブレンド係数B
+
+		//LCDCにメモリマッピング
+		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+	//	GX_SetGraphicsMode(GX_DISPMODE_VRAM_C, GX_BGMODE_0, GX_BG0_AS_3D);
+    
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
