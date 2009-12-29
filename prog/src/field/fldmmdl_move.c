@@ -644,29 +644,6 @@ static void MMdl_MapAttrGrassProc_12( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-#if 1 //12rom ‰¼‚ ‚í‚¹
-  if( MAPATTR_VALUE_CheckSeasonGround2(data->attr_val_old) )
-  {
-    FOOTMARK_TYPE type = FOOTMARK_TYPE_MAX;
-
-    if( data->season == PMSEASON_SPRING ||
-        data->season == PMSEASON_WINTER )
-    {
-      type = FOOTMARK_TYPE_HUMAN_SNOW;
-   
-      if( data->objcode_prm->footmark_type == MMDL_FOOTMARK_CYCLE )
-      {
-        type = FOOTMARK_TYPE_CYCLE_SNOW;
-      }
-    }
-    
-    if( type != FOOTMARK_TYPE_MAX ){
-      FLDEFF_FOOTMARK_SetMMdl( mmdl, data->fectrl, type );
-    }
-    return;
-  }
-#endif
-
   if( (data->attr_flag_old & MAPATTR_FLAGBIT_FOOTMARK) )
   {
     FOOTMARK_TYPE type = FOOTMARK_TYPE_MAX;
