@@ -438,6 +438,9 @@ typedef struct
   STRBUF*           p_strbuf;
   u16               clear_chr;
   u16               heapID;
+  PRINT_UTIL        util;
+  PRINT_QUE         *p_que;
+  u32               print_update;
 } MSGWND_WORK;
 //-------------------------------------
 /// 最終確認画面 CONFIRM
@@ -597,10 +600,10 @@ static BOOL UI_IsKey( UI_INPUT input );
 //-------------------------------------
 /// MSGWND
 //=====================================
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, HEAPID heapID );
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, PRINT_QUE *p_que, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
-static BOOL MSGWND_IsEndMsg( const MSGWND_WORK* cp_wk );
+static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk );
 //-------------------------------------
 /// APPBAR
 //=====================================
@@ -1284,6 +1287,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
         p_wk->p_font,
         p_wk->p_msg,
         p_wk->p_tcbl,
+        p_wk->p_que,
         HEAPID_CONFIG );
     CONFIRM_Init( &p_wk->confirm,
         GRAPHIC_GetBmpwin( &p_wk->graphic, BMPWINID_CONFIRM ),
@@ -2331,6 +2335,16 @@ static BOOL UI_IsKey( UI_INPUT input )
  *          MSGWND
  */
 //=============================================================================
+//-------------------------------------
+///	
+//=====================================
+typedef enum
+{
+  MSGWND_PRINT_TYPE_NONE,
+  MSGWND_PRINT_TYPE_STREAM, //プリントストリーム
+  MSGWND_PRINT_TYPE_FILL,   //一括プリント
+} MSGWND_PRINT_TYPE;
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  メッセージウィンドウ  初期化
@@ -2345,7 +2359,7 @@ static BOOL UI_IsKey( UI_INPUT input )
  *  @param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, HEAPID heapID )
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, PRINT_QUE *p_que, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
   p_wk->clear_chr = 0x4;
@@ -2357,12 +2371,16 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_fo
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
   p_wk->p_tcbl    = p_tcbl;
   p_wk->p_stream  = NULL;
+  p_wk->p_que     = p_que;
+  p_wk->print_update  = MSGWND_PRINT_TYPE_NONE;
 
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF,1, GFL_BMPWIN_GetPalette(p_bmpwin) );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 
   GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2396,29 +2414,53 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
   //文字列作成
   GFL_MSG_GetString( p_wk->p_msg, strID, p_wk->p_strbuf );
 
-  //ストリーム作成
+  //ストリーム破棄
   if( p_wk->p_stream )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
   }
 
-  //ストリーム開始
-  p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
-      p_wk->p_font, wait, p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+  //文字描画が違う
+  if( wait == 0 )
+  { 
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+
+    p_wk->print_update  = MSGWND_PRINT_TYPE_FILL;
+  }
+  else
+  { 
+
+    //ストリーム開始
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
+        p_wk->p_font, wait, p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+
+    p_wk->print_update  = MSGWND_PRINT_TYPE_STREAM;
+  }
 
 }
 //----------------------------------------------------------------------------
 /**
  *  @brief  メッセージウィンドウストリーム終了待ち
  *
- *  @param  const MSGWND_WORK* cp_wk  ワーク
+ *  @param  const MSGWND_WORK* p_wk  ワーク
  *
  *  @return TRUEでストリーム終了  FALSEえ処理中
  */
 //-----------------------------------------------------------------------------
-static BOOL MSGWND_IsEndMsg( const MSGWND_WORK* cp_wk )
+static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk )
 {
-  return PRINTSTREAM_STATE_DONE == PRINTSYS_PrintStreamGetState( cp_wk->p_stream );
+  switch( p_wk->print_update )
+  { 
+  default:
+  case MSGWND_PRINT_TYPE_NONE:
+    return TRUE;
+
+  case MSGWND_PRINT_TYPE_FILL:
+    return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+
+  case MSGWND_PRINT_TYPE_STREAM:
+    return PRINTSTREAM_STATE_DONE == PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+  }
 }
 //=============================================================================
 /**
@@ -2832,7 +2874,15 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
         Scroll_ChangePlt( p_wk, TRUE );
         if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
         { 
-          int speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+          int speed;
+          if( p_wk->select == CONFIG_LIST_MSGSPEED )
+          { 
+            speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+          }
+          else
+          { 
+            speed = 0;
+          }
           GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
           MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
         }
@@ -3015,12 +3065,23 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   {
     if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
     {
-      int speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+      int speed;
+      if( p_wk->select == CONFIG_LIST_MSGSPEED )
+      { 
+        speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
+      }
+      else
+      { 
+        speed = 0;
+      }
       GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
       MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
       p_wk->is_info_update  = FALSE;
     }
   }
+
+
+  MSGWND_IsEndMsg( p_msg );
 
   //パレット切り替えによるちかちか防止メイン
   Scroll_ChangePlt_Safe_Main( p_wk );
@@ -3457,6 +3518,7 @@ static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_
       p_font,
       p_msg,
       p_tcbl,
+      NULL,
       heapID );
 
   //はい、いいえウィンドウ作成
