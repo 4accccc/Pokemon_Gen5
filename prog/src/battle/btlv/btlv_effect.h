@@ -72,7 +72,7 @@ enum{
 //  BTLEFF_EAT,                 //
 //  BTLEFF_ANGRY,               //
   BTLEFF_NOROI,               //‚Ì‚ë‚¢
-//  BTLEFF_AKUMU,              //‚ ‚­‚Þ
+  BTLEFF_AKUMU,               //‚ ‚­‚Þ
   BTLEFF_YADORIGI,            //‚â‚Ç‚è‚¬
   BTLEFF_SIMETUKERU,          //‚µ‚ß‚Â‚¯‚é
   BTLEFF_MAKITUKU,            //‚Ü‚«‚Â‚­
