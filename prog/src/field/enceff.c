@@ -10,7 +10,9 @@
 
 #include "fieldmap.h"
 
+typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
+
 
 typedef struct ENCEFF_CNT_tag
 {
@@ -18,6 +20,16 @@ typedef struct ENCEFF_CNT_tag
   DRAW_FUNC DrawFunc;
   FIELDMAP_WORK *FieldMapWork;
 }ENCEFF_CNT;
+
+typedef struct {
+  CREATE_FUNC CreateFunc;
+  DRAW_FUNC DrawFunc;
+}ENCEFF_TBL;
+
+static const ENCEFF_TBL EncEffTbl[] = {
+  {ENCEFF_CreateEff1, ENCEFF_DrawEff1},
+  {ENCEFF_CreateEff2, ENCEFF_DrawEff2},
+};
 
 //--------------------------------------------------------------
 /**
@@ -61,13 +73,16 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
   FIELDMAP_WORK * fieldmap = ptr->FieldMapWork;
   GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( ptr->FieldMapWork );
 
-  call_event = ENCEFF_CreateEff1(gsys,fieldmap);
+  int no;
+  no = GFUser_GetPublicRand(2);
+
+  call_event = EncEffTbl[no].CreateFunc(gsys,fieldmap);
   //イベントコール
   GMEVENT_CallEvent( event, call_event );
   //ワークポインタセット
   ptr->Work = GMEVENT_GetEventWork( call_event );
   //描画関数セット
-  ptr->DrawFunc = ENCEFF_DrawEff1;
+  ptr->DrawFunc = EncEffTbl[no].DrawFunc;
 }
 
 //--------------------------------------------------------------
