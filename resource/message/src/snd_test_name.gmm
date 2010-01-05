@@ -7497,13 +7497,13 @@
 		<language name="JPN" width="256">W343-HOSHIGARI</language>
 		<language name="JPN_KANJI" width="256">W343-HOSHIGARI</language>
 	</row>
-	<row id="msg_seq_se_dmy_122">
-		<language name="JPN" width="256">DMY-122</language>
-		<language name="JPN_KANJI" width="256">DMY-122</language>
+	<row id="msg_seq_se_fld_96">
+		<language name="JPN" width="256">FLD-96</language>
+		<language name="JPN_KANJI" width="256">FLD-96</language>
 	</row>
-	<row id="msg_seq_se_dmy_123">
-		<language name="JPN" width="256">DMY-123</language>
-		<language name="JPN_KANJI" width="256">DMY-123</language>
+	<row id="msg_seq_se_fld_97">
+		<language name="JPN" width="256">FLD-97</language>
+		<language name="JPN_KANJI" width="256">FLD-97</language>
 	</row>
 	<row id="msg_seq_se_dmy_124">
 		<language name="JPN" width="256">DMY-124</language>
