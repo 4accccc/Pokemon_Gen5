@@ -21,8 +21,8 @@
 #include "../../../resource/fldmapdata/script/c08gym0101_def.h"  //for SCRID_Å`
 //#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_local_def.h"
 
-//#include "sound/pm_sndsys.h"
-//#include "gym_dragon_se_def.h"
+#include "sound/pm_sndsys.h"
+#include "gym_dragon_se_def.h"
 
 //#include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE
 //#include "fieldmap_ctrl_hybrid.h" //for FIELDMAP_CTRL_HYBRID
