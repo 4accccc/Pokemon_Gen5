@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2009-12-22T20:56:30"/>
+	<create user="mori" host="W00155" date="2009-12-28T13:20:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -531,11 +531,11 @@ msg_waza_omoi_10へ
 		<language name="JPN" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 \[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
 つかいかたを　きれいにわすれた！\[2:07:８桁:\]
-そして……！[2:07:８桁:]</language>
+そして……！\[2:07:８桁:\]</language>
 		<language name="JPN_KANJI" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
 \[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
 つかいかたを　きれいにわすれた！\[2:07:８桁:\]
-そして……！[2:07:８桁:]</language>
+そして……！\[2:07:８桁:\]</language>
 	</row>
 
 	<row id="msg_waza_omoi_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -688,6 +688,16 @@ msg_waza_omoi_01へ
 	<row id="msg_param_exp" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">おぼえている　わざ</language>
 		<language name="JPN_KANJI" width="216">おぼえている　わざ</language>
+	</row>
+
+	<row id="msg_wazaoshie_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI" width="216">はい</language>
+	</row>
+
+	<row id="msg_wazaoshie_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI" width="216">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
