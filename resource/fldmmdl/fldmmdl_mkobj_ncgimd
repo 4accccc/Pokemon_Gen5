@@ -261,7 +261,7 @@
 #ol.imd
 ./mmdl_res/ol.imd: ./mmdl_nchara/ol.ncg ./mmdl_nchara/ol.ncl
 	@echo convert ncg_imd ol
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ol.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ol.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #clown.imd
 ./mmdl_res/clown.imd: ./mmdl_nchara/clown.ncg ./mmdl_nchara/clown.ncl
@@ -271,7 +271,7 @@
 #dancer.imd
 ./mmdl_res/dancer.imd: ./mmdl_nchara/dancer.ncg ./mmdl_nchara/dancer.ncl
 	@echo convert ncg_imd dancer
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/dancer.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/dancer.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #baseballm.imd
 ./mmdl_res/baseballm.imd: ./mmdl_nchara/baseballm.ncg ./mmdl_nchara/baseballm.ncl
@@ -341,7 +341,7 @@
 #delivery.imd
 ./mmdl_res/delivery.imd: ./mmdl_nchara/delivery.ncg ./mmdl_nchara/delivery.ncl
 	@echo convert ncg_imd delivery
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/delivery.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/delivery.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #pilot.imd
 ./mmdl_res/pilot.imd: ./mmdl_nchara/pilot.ncg ./mmdl_nchara/pilot.ncl
@@ -426,7 +426,7 @@
 #leader8w.imd
 ./mmdl_res/leader8w.imd: ./mmdl_nchara/leader8w.ncg ./mmdl_nchara/leader8w.ncl
 	@echo convert ncg_imd leader8w
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8w.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8w.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #hakase2.imd
 ./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl
