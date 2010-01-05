@@ -10098,6 +10098,19 @@ const BTL_WAZAREC* BTL_SVFTOOL_GetWazaRecord( BTL_SVFLOW_WORK* wk )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] Que領域予約
+ *
+ * @param   wk
+ *
+ * @retval  const BTL_WAZAREC*
+ */
+//--------------------------------------------------------------------------------------
+u16 BTL_SVFTOOL_ReserveQuePos( BTL_SVFLOW_WORK* wk, ServerCmd cmd )
+{
+  return SCQUE_RESERVE_Pos( wk->que, cmd );
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 死亡ポケレコードのポインタを取得
  *
  * @param   wk
