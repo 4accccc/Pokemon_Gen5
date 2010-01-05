@@ -649,7 +649,6 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -4350,7 +4349,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   fPluralHit = scEvent_CheckPluralHit( wk, attacker, wazaParam->wazaID, &hit_count );
   if( fPluralHit ){
-    OS_TPrintf("複数回ヒットワザ ... 回数=%d\n", hit_count);
+    BTL_Printf("複数回ヒットワザ ... 回数=%d\n", hit_count);
   }
 
   wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
@@ -6325,17 +6324,24 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
       BTL_POKEPARAM* bpp;
-      u8 cnt, i;
-      cnt = BTL_POKESET_GetCount( targets );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
-      for(i=0; i<cnt; ++i){
+      u8 targetMax, targetCnt, i;
+
+      targetMax = BTL_POKESET_GetCountMax( targets );
+      targetCnt = BTL_POKESET_GetCount( targets );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, targetCnt );
+      OS_TPrintf("未分類ワザ 攻撃PokeID=%d, 対象ポケ数=%d/%d\n", BPP_GetID(attacker), targetCnt, targetMax);
+      for(i=0; i<targetCnt; ++i){
         bpp = BTL_POKESET_Get( targets, i );
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-      if( cnt ){
-        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA );
-      }else{
+      if( targetMax )
+      {
+        if( targetCnt ){
+          BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA );
+        }
+      }
+      else{
         BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET );
       }
     }
@@ -6523,19 +6529,17 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
   BTL_POKEPARAM* bpp;
+  u32 hem_state;
 
   BTL_POKESET_SeekStart( pokeSet );
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
-    if( !BPP_IsDead(bpp) )
-    {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
+    hem_state = Hem_PushState( &wk->HEManager );
 
-      BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
-      SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-    }
+    BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
+    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 //--------------------------------------------------------------------------------
@@ -6636,8 +6640,8 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
 {
   int strID = -1;
   switch( effect ){
-  case BTL_FLDEFF_TRICKROOM:   strID = BTL_STRID_STD_TrickRoomOff; break;   ///< トリックルーム
-  case BTL_FLDEFF_JURYOKU:     strID = BTL_STRID_STD_JyuryokuOff; break;    ///< じゅうりょく
+  case BTL_FLDEFF_TRICKROOM:   strID = BTL_STRID_STD_TrickRoomOff; break; ///< トリックルーム
+  case BTL_FLDEFF_JURYOKU:     strID = BTL_STRID_STD_JyuryokuOff; break;  ///< じゅうりょく
   case BTL_FLDEFF_WONDERROOM:  strID = BTL_STRID_STD_WonderRoom_End; break;
   case BTL_FLDEFF_MAGICROOM:   strID = BTL_STRID_STD_MagicRoom_End; break;
   }
@@ -6647,19 +6651,6 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
     SCQUE_PUT_MSG_STD( wk->que, strID );
   }
   SCQUE_PUT_OP_RemoveFieldEffect( wk->que, effect );
-
-  // マジックルーム終了でアイテム使用チェック
-  if( effect  == BTL_FLDEFF_MAGICROOM )
-  {
-    FRONT_POKE_SEEK_WORK  fps;
-    BTL_POKEPARAM* bpp;
-
-    FRONT_POKE_SEEK_InitWork( &fps, wk );
-    while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
-    {
-      scproc_CheckItemReaction( wk, bpp );
-    }
-  }
 }
 
 //------------------------------------------------------------------
@@ -9073,7 +9064,7 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 {
   u8 max = WAZADATA_GetParam( waza, WAZAPARAM_HITCOUNT_MAX );
 
-  OS_TPrintf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
+  BTL_Printf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
 
   if( max > 1 ){
     *hitCount = BTL_CALC_HitCountMax( max );
@@ -9090,7 +9081,6 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
   BTL_EVENTVAR_Pop();
 
   if( (max>1) || (*hitCount) >1 ){
-    OS_TPrintf("複数回ヒットするワザだ\n");
     return TRUE;
   }
 
@@ -10422,8 +10412,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SWAP_POKE,        sizeof(BTL_HANDEX_PARAM_SWAP_POKE)       },
     { BTL_HANDEX_HENSIN,           sizeof(BTL_HANDEX_PARAM_HENSIN)          },
     { BTL_HANDEX_FAKE_BREAK,       sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)      },
-    { BTL_HANDEX_JURYOKU_CHECK,    sizeof(BTL_HANDEX_PARAM_HEADER)          },
-    { BTL_HANDEX_EFFECT_BY_POS,    sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)   },
+    { BTL_HANDEX_JURYOKU_CHECK,    sizeof(BTL_HANDEX_JURYOKU_CHECK)         },
   };
   u32 size, i;
 
@@ -10604,7 +10593,6 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_HENSIN:           fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
     case BTL_HANDEX_FAKE_BREAK:       fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     case BTL_HANDEX_JURYOKU_CHECK:    fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
-    case BTL_HANDEX_EFFECT_BY_POS:    fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -11804,35 +11792,6 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 
     if( fFall ){
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuFall, pokeID[i] );
-    }
-  }
-
-  return 1;
-}
-/**
- * 指定位置にエフェクト発動
- * @return 成功時 1 / 失敗時 0
- */
-static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BTL_HANDEX_PARAM_EFFECT_BY_POS* param = (BTL_HANDEX_PARAM_EFFECT_BY_POS*)param_header;
-
-  if( param->fQueReserve == FALSE )
-  {
-    if( param->pos_to == BTL_POS_NULL ){
-      SCQUE_PUT_ACT_EffectByPos( wk->que, param->pos_from, param->effectNo );
-    }else{
-      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
-    }
-  }
-  else
-  {
-    if( param->pos_to == BTL_POS_NULL ){
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYPOS,
-            param->pos_from, param->effectNo );
-    }else{
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
-            param->pos_from, param->pos_to, param->effectNo );
     }
   }
 

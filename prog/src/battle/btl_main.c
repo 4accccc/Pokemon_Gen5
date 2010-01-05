@@ -2661,6 +2661,18 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
     }
   }
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * 指定ポケモンのパーティ内位置を返す
+ *
+ * @param   pokecon
+ * @param   clientID
+ * @param   pokeID
+ *
+ * @retval  int
+ */
+//----------------------------------------------------------------------------------
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp;
@@ -2766,7 +2778,6 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
 
   return wk->pokeParam[ pokeID ];
 }
-
 //=============================================================================================
 /**
  * 存在するクライアントIDか判定
@@ -2807,6 +2818,7 @@ BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pok
   }
   return FALSE;
 }
+
 //=============================================================================================
 /**
  * クライアントの管理位置数を返す
@@ -2944,6 +2956,14 @@ u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
   return cnt;
 }
 
+/**
+ * メンバーIndex からメンバーデータポインタ取得
+ *
+ * @param   party
+ * @param   idx
+ *
+ * @retval  BTL_POKEPARAM*
+ */
 BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx )
 {
   if( idx < party->memberCount ){
@@ -2951,7 +2971,14 @@ BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx )
   }
   return NULL;
 }
-
+/**
+ * メンバーIndex からメンバーデータポインタ取得（const版）
+ *
+ * @param   party
+ * @param   idx
+ *
+ * @retval  BTL_POKEPARAM*
+ */
 const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 idx )
 {
   if( idx < party->memberCount ){
@@ -2959,7 +2986,13 @@ const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 id
   }
   return NULL;
 }
-
+/**
+ * メンバー入れ替え
+ *
+ * @param   party
+ * @param   idx1
+ * @param   idx2
+ */
 void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 {
   GF_ASSERT(idx1<party->memberCount);
@@ -2970,16 +3003,16 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
     party->member[ idx2 ] = tmp;
 
     BU_Printf(TRUE, "パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
-
-    #if 0
-    if( party->srcParty ){
-      BTL_Printf("オリジナルパーティも入れ替え %d <-> %d\n", idx1, idx2);
-      PokeParty_ExchangePosition( party->srcParty, idx1, idx2, HEAPID_BTL_SYSTEM );
-    }
-    #endif
   }
 }
-
+/**
+ * メンバーローテーション
+ *
+ * @param   party
+ * @param   dir
+ * @param   outPoke
+ * @param   inPoke
+ */
 void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM** outPoke, BTL_POKEPARAM** inPoke )
 {
   GF_ASSERT(party->memberCount>=3);
@@ -3014,7 +3047,7 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM*
   }
 }
 
-s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
+int BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 {
   int i;
   for(i=0; i<party->memberCount; ++i)
@@ -3026,6 +3059,26 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
   }
   return -1;
 }
+/**
+ * pokeID -> メンバーIndex
+ *
+ * @param   party
+ * @param   pokeID
+ *
+ * @retval  int   パーティ内Index（パーティに指定IDのポケモンが存在しない場合 -1）
+ */
+int BTL_PARTY_FindMemberByPokeID( const BTL_PARTY* party, u8 pokeID )
+{
+  int i;
+  for(i=0; i<party->memberCount; i++)
+  {
+    if( BPP_GetID(party->member[i]) == pokeID ){
+      return i;
+    }
+  }
+  return -1;
+}
+
 //----------------------------------------------------------------------
 /**
  * とくせい「イリュージョン」を持つメンバーの参照ポケデータ更新

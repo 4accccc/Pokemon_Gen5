@@ -312,7 +312,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
   };
   int i;
 
-  BTL_Printf(" STD:strID=%d\n", strID);
+  OS_TPrintf(" STD:strID=%d\n", strID);
 
   // ‘ÎÛw‰c‚É‚æ‚é•â³F‘ÎÛw‰cIDiBtlSidej‚Í args[0] ‚É“ü‚ê‚Ä‚¨‚­‚±‚Æ
   for(i=0; i<NELEMS(sideConvStrID); ++i)
@@ -321,12 +321,11 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     {
       if( !BTL_MAIN_IsPlayerSide(SysWork.mainModule, args[0]) ){
         ++strID;
-        BTL_Printf("  ->=%d\n", strID);
+        OS_TPrintf("  ->=%d\n", strID);
       }
       break;
     }
   }
-
 
   ms_std_simple( buf, strID, args );
 }

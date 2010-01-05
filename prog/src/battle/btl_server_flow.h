@@ -188,8 +188,10 @@ typedef enum {
 typedef enum {
 
   BTL_ADDSICK_FAIL_NULL = 0,
-  BTL_ADDSICK_FAIL_ALREADY,
-  BTL_ADDSICK_FAIL_OTHER,
+  BTL_ADDSICK_FAIL_ALREADY,     ///< ‚·‚Å‚É“¯‚¶ó‘Ô‚É‚È‚Á‚Ä‚¢‚é
+  BTL_ADDSICK_FAIL_NO_EFFECT,   ///< Œø‰Ê‚Ì–³‚¢‘ŠŽè
+  BTL_ADDSICK_FAIL_OTHER,       ///< ‚»‚Ì‘¼
+
 
 }BtlAddSickFailCode;
 
