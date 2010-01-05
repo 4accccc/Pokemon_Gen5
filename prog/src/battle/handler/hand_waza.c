@@ -1040,8 +1040,6 @@ void BTL_HANDLER_Waza_RemoveForceAll( const BTL_POKEPARAM* pp )
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
-//static +BTL_EVENT_FACTOR\* +ADD_.*\)$
-//static +BTL_EVENT_FACTOR\* +ADD_.*\(.*\)$
 
 //----------------------------------------------------------------------------------
 /**
@@ -5448,7 +5446,7 @@ static void handler_Fuuin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static const BtlEventHandlerTable*  ADD_Alomatherapy( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Alomatherapy   },  // ワザ威力決定
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_Alomatherapy   }, // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
