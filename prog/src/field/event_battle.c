@@ -266,8 +266,11 @@ static GMEVENT_RESULT fieldBattleEvent(
     bew->bgm_pushed_flag = TRUE;
     PMSND_PlayBGM( bew->battle_param->musicDefault );
     //エンカウントエフェクト
+/**
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,fieldmap) );
+*/
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, 0);
     (*seq)++;
     break;
   case 1:

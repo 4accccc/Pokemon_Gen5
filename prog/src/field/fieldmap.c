@@ -115,7 +115,6 @@
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
 
-
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -325,6 +324,8 @@ struct _FIELDMAP_WORK
   FIELD_TASK_MAN* taskManager;  // タスクマネージャ
 
   BOOL MapFadeReq;     //マップ遷移用フェードリクエスト
+
+  ENCEFF_CNT_PTR EncEffCntPtr;
 };
 
 //--------------------------------------------------------------
@@ -415,6 +416,7 @@ static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork );
 static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
 static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
+static void DrawEncEff(FIELDMAP_WORK * fieldWork);
 
 typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 
@@ -736,6 +738,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールド3Dカットイン
   fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
 
+  //エンカウントエフェクト
+  fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
+
   // 育て屋
   {
     SAVE_CONTROL_WORK* scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
@@ -952,8 +957,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  //エンカウントエフェクトコントローラ破棄
+  ENCEFF_DeleteCntPtr(fieldWork->EncEffCntPtr);
   //フィールド3Ｄカットインコントローラ破棄
   FLD3D_CI_End(fieldWork->Fld3dCiPtr);
+
   //フィールドパーティクル破棄
   FLD_PRTCL_End(fieldWork->FldPrtclSys);
 
@@ -2013,7 +2021,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
     static const DRAW3DMODE_FUNC func[] = {
       Draw3DNormalMode,
       Draw3DCutinMode,
-      Draw3DScrnTexMode
+      Draw3DScrnTexMode,
+      DrawEncEff,
     };
 
     func[ fieldWork->Draw3DMode ](fieldWork);
@@ -2984,8 +2993,8 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
-    if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
-      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+//      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
 //      FLD3D_CI_CallPokeCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
@@ -3022,6 +3031,7 @@ static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork)
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+
 }
 
 //==================================================================
@@ -3040,6 +3050,23 @@ static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork)
 
 	ENCEFF_Draw3D();
 }
+
+//==================================================================
+/**
+ * エンカウントエフェクト描画
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return none
+ */
+//==================================================================
+static void DrawEncEff(FIELDMAP_WORK * fieldWork)
+{
+  G3X_SetClearColor(GX_RGB(31,31,31),31,0x7fff,0,FALSE);
+
+	ENCEFF_Draw(fieldWork->EncEffCntPtr);
+}
+
 
 //==================================================================
 /**
@@ -3082,6 +3109,20 @@ void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode)
 FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork)
 {
   return fieldWork->Fld3dCiPtr;
+}
+
+//==================================================================
+/**
+ * エンカウントエフェクト管理ポインタ取得
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return  ENCEFF_CNT_PTR    エンカウントエフェクト管理ポインタ
+ */
+//==================================================================
+ENCEFF_CNT_PTR FIELDMAP_GetEncEffCntPtr(FIELDMAP_WORK *fieldWork)
+{
+  return fieldWork->EncEffCntPtr;
 }
 
 //----------------------------------------------------------------------------

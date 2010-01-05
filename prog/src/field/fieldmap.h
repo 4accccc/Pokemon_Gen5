@@ -42,6 +42,7 @@
 #include "field/areadata.h"
 
 #include "fld3d_ci.h"
+#include "enceff.h"
 
 #include "field_task.h"
 #include "field_task_manager.h"
@@ -60,6 +61,7 @@ typedef enum{
   DRAW3DMODE_NORMAL,          ///<通常3Ｄ描画
   DRAW3DMODE_CUTIN,           ///<3Ｄカットイン時描画
   DRAW3DMODE_SCRNTEX,         ///<スクリーンキャプチャテクスチャ描画
+  DRAW3DMODE_ENCEFF,         ///<エンカウントエフェクト描画
   DRAW3DMODE_MAX,
 }DRAW3DMODE;
 
@@ -130,6 +132,7 @@ extern DRAW3DMODE FIELDMAP_GetDraw3DMode(FIELDMAP_WORK *fieldWork);
 extern void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode);
 
 extern FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork);
+extern ENCEFF_CNT_PTR FIELDMAP_GetEncEffCntPtr(FIELDMAP_WORK *fieldWork);
 extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork );
 
 extern void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq );

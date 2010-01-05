@@ -196,4 +196,3 @@ void ENCEFF_Draw3D(void)
 {
 	GFL_SCRNTEX_DrawDefault(encEffwork->g3DobjEff);
 }
-

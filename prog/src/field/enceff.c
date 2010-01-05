@@ -61,13 +61,13 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
   FIELDMAP_WORK * fieldmap = ptr->FieldMapWork;
   GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( ptr->FieldMapWork );
 
-  call_event = ENCEFF_CreateEff2(gsys,fieldmap);
+  call_event = ENCEFF_CreateEff1(gsys,fieldmap);
   //イベントコール
   GMEVENT_CallEvent( event, call_event );
   //ワークポインタセット
   ptr->Work = GMEVENT_GetEventWork( call_event );
   //描画関数セット
-  ptr->DrawFunc = ENCEFF_DrawEff2;
+  ptr->DrawFunc = ENCEFF_DrawEff1;
 }
 
 //--------------------------------------------------------------
