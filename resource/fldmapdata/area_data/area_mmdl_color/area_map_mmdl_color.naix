@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: area_map_mmdl_color.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_AREA_MAP_MMDL_COLOR_NAIX_
+#define NARC_AREA_MAP_MMDL_COLOR_NAIX_
+
+enum {
+	NARC_area_map_mmdl_color_cl_h01_dat = 0,
+	NARC_area_map_mmdl_color_cl_normal_dat = 1
+};
+
+/* NARC_AREA_MAP_MMDL_COLOR_NAIX_ */
+#endif
