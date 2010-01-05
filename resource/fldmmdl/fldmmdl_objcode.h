@@ -767,10 +767,14 @@
 //モデル
 #define OBJCODESTART_MDL (0x2000)
 #define TESTMODEL (0x2000) //8192(0,total 751) テスト
-#define OBJCODEEND_MDL (0x2001) //8193(total 752) モデルコード終端
-#define OBJCODECOUNT_MDL (0x1) //1 モデルコード数
+#define BLACKMONO (0x2001) //8193(1,total 752) モノリス（黒）
+#define WHITEMONO (0x2002) //8194(2,total 753) モノリス（白）
+#define BIGROCK (0x2003) //8195(3,total 754) かいりきの岩
+#define JUNK (0x2004) //8196(4,total 755) 機械
+#define OBJCODEEND_MDL (0x2005) //8197(total 756) モデルコード終端
+#define OBJCODECOUNT_MDL (0x5) //5 モデルコード数
 
-#define OBJCODETOTAL (0x2f0) //752 コード総数
+#define OBJCODETOTAL (0x2f4) //756 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
