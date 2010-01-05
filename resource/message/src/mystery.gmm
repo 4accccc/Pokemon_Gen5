@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-01-05T16:58:28"/>
+	<create user="shimoyamada" host="W00184" date="2010-01-05T18:34:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,7 +469,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="675"/>
 		<band id="3" index="3" style="0000" width="675"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1444,6 +1444,12 @@
 		<language name="JPN_KANJI">やめる</language>
 	</row>
 
+	<row id="syachi_mystery_menu_015" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
+		<comment>ガイド選択肢</comment>
+		<language name="JPN" width="216">せつめいを　きく</language>
+		<language name="JPN_KANJI">せつめいを　きく</language>
+	</row>
+
 	<row id="syachi_mystery_01_023" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ガイドメッセージ：
 ふしぎなおくりもの　について</comment>
@@ -1457,7 +1463,7 @@
 ホームページで[BE:00:ページ切り替え（行送り）]
 かくにん　してください[BE:01:ページ切り替え（クリア）]
 ぶじ　おくりものを　うけとれたら
-ポケモンセンターに　いる
+ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
 はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">ふしぎな　おくりものでは
 つうしんを　つかって[BE:01:ページ切り替え（クリア）]
@@ -1469,7 +1475,7 @@
 ホームページで[BE:00:ページ切り替え（行送り）]
 かくにん　してください[BE:01:ページ切り替え（クリア）]
 ぶじ　おくりものを　うけとれたら
-ポケモンセンターに　いる
+ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
 はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
