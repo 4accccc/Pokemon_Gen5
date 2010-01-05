@@ -15,6 +15,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
+#include "sound/pm_sndsys.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokerus.h"
@@ -33,6 +34,7 @@
 #include "box2_seq.h"
 #include "box2_ui.h"
 #include "box2_bgwfrm.h"
+#include "box2_snd_def.h"
 #include "box_gra.naix"
 
 
@@ -5965,7 +5967,7 @@ int BOX2MAIN_VFuncItemMoveTouch( BOX2_SYS_WORK * syswk )
 	case ITEMMOVE_SEQ_ICON_PUT:					// アイコン配置
 		if( ItemIconMoveMain( syswk ) == FALSE ){
 			if( vf->seq == ITEMMOVE_SEQ_ICON_PUT ){
-//				Snd_SePlay( SE_BOX2_POKE_PUT );
+				PMSND_PlaySE( SE_BOX2_POKE_PUT );
 				vf->seq = ITEMMOVE_SEQ_ICONANM_END_SET;
 			}
 		}
@@ -6043,7 +6045,7 @@ int BOX2MAIN_VFuncItemIconChgTouch( BOX2_SYS_WORK * syswk )
 
 	case 3:
 		if( ItemIconMoveMain( syswk ) == FALSE ){
-//			Snd_SePlay( SE_BOX2_POKE_PUT );
+			PMSND_PlaySE( SE_BOX2_POKE_PUT );
 			vf->seq = 4;
 		}
 		break;
