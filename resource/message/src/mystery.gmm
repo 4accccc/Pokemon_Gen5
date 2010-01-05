@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-01-05T12:56:46"/>
+	<create user="shimoyamada" host="W00184" date="2010-01-05T16:58:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -452,7 +452,7 @@
 			<line position="7" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="2" width="235"/>
+			<message position="2" width="289"/>
 			<font default="" position="8" width="100">
 			</font>
 			<size position="9" width="100"/>
@@ -732,7 +732,7 @@
 つうしんが　せつだん　されました</language>
 	</row>
 
-	<row id="mystery_test_001" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_test_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">ポケモンレンジャーと
@@ -741,14 +741,14 @@
 せつぞく　しています</language>
 	</row>
 
-	<row id="mystery_test_002" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_test_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">Ａボタンを　おして　ください</language>
 		<language name="JPN_KANJI">Ａボタンを　おして　ください</language>
 	</row>
 
-	<row id="mystery_test_003" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_test_003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">レポートを　かいています
@@ -757,14 +757,14 @@
 しばらく　おまち　ください</language>
 	</row>
 
-	<row id="mystery_test_004" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_test_004" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">タマゴを　てんそうちゅう　です</language>
 		<language name="JPN_KANJI">タマゴを　てんそうちゅう　です</language>
 	</row>
 
-	<row id="mystery_test_005" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_test_005" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">タマゴの　じゅしんに
@@ -1007,7 +1007,7 @@
 		<language name="JPN_KANJI">[FF:00:色:3][1:03:ポケモンタイプ:0][FF:00:色:2]　[FF:00:色:0]ＩＤＮｏ．[1:36:数字５桁:1]</language>
 	</row>
 
-	<row id="mystery_ranger_002" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_ranger_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>ポケモンレンジャーと接続時、自分のトレーナーID表示</comment>
 		<language name="JPN" width="216">ＩＤＮｏ．[1:36:数字５桁:1]</language>
 		<language name="JPN_KANJI">ＩＤＮｏ．[1:36:数字５桁:1]</language>
@@ -1066,14 +1066,14 @@
 せつだん　されました</language>
 	</row>
 
-	<row id="mystery_ranger_010" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_ranger_010" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<language name="JPN" width="216">フィオレちほう　から　おくられてきた
 マナフィのタマゴ　だ！</language>
 		<language name="JPN_KANJI">フィオレちほう　から　おくられてきた
 マナフィのタマゴ　だ！</language>
 	</row>
 
-	<row id="mystery_ranger_011" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="mystery_ranger_011" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<language name="JPN" width="216">マナフィのタマゴ</language>
 		<language name="JPN_KANJI">マナフィのタマゴ</language>
 	</row>
@@ -1092,31 +1092,31 @@
 せつぞく　しますか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,#ff78ff,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>不思議な贈り物トップ画面メッセージ</comment>
 		<language name="JPN" width="216">ふしぎな　おくりもの　へ　ようこそ！</language>
 		<language name="JPN_KANJI">ふしぎな　おくりもの　へ　ようこそ！</language>
 	</row>
 
-	<row id="syachi_mystery_menu_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_001" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：おくりものを受け取る</comment>
 		<language name="JPN" width="216">おくりものを　うけとる</language>
 		<language name="JPN_KANJI">おくりものを　うけとる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_002" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：アルバム画面</comment>
 		<language name="JPN" width="216">カードアルバムを　みる</language>
 		<language name="JPN_KANJI">カードアルバムを　みる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_003" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：やめる</comment>
 		<language name="JPN" width="216">やめる</language>
 		<language name="JPN_KANJI">やめる</language>
 	</row>
 
-	<row id="syachi_mystery_01_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_002" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信開始確認</comment>
 		<language name="JPN" width="216">ふしぎなおくりものを　うけとるため
 つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
@@ -1126,19 +1126,19 @@
 よろしいですか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_002_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_002_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_002_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_002_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_003" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>通信選択メッセージ</comment>
 		<language name="JPN" width="216">おくりものの　うけとりかたを
 えらんで　ください</language>
@@ -1146,31 +1146,31 @@
 えらんで　ください</language>
 	</row>
 
-	<row id="syachi_mystery_menu_004" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_004" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：ビーコン</comment>
 		<language name="JPN" width="216">ワイヤレスで　うけとる</language>
 		<language name="JPN_KANJI">ワイヤレスで　うけとる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_005" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：ＷｉーＦｉ</comment>
 		<language name="JPN" width="216">ＷｉーＦｉで　うけとる</language>
 		<language name="JPN_KANJI">ＷｉーＦｉで　うけとる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_006" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：赤外線</comment>
 		<language name="JPN" width="216">せきがいせんで　うけとる</language>
 		<language name="JPN_KANJI">せきがいせんで　うけとる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_007" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：戻る</comment>
 		<language name="JPN" width="216">もどる</language>
 		<language name="JPN_KANJI">もどる</language>
 	</row>
 
-	<row id="syachi_mystery_01_004" back-color="#c0c0c0,,,,,#c0c0c0,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_004" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>未使用</comment>
 		<language name="JPN" width="216">おくりものの　うけとりかたを
 えらんで　ください</language>
@@ -1178,7 +1178,7 @@
 えらんで　ください</language>
 	</row>
 
-	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード１枚削除メッセージ</comment>
 		<language name="JPN" width="216">いらないカードを　１まい　えらんで
 すててください</language>
@@ -1186,7 +1186,7 @@
 すててください</language>
 	</row>
 
-	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カードを削除しないで出ようとしたときのメッセージ</comment>
 		<language name="JPN" width="216">カードを　すてないと
 おくりものを　もらえません[BE:00:ページ切り替え（行送り）]
@@ -1196,19 +1196,19 @@
 よろしいですか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_006_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_006_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_006_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_006_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_007" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立：ビーコン</comment>
 		<language name="JPN" width="216">ＤＳワイヤレスつうしん　を
 かいし　します</language>
@@ -1216,19 +1216,19 @@
 かいし　します</language>
 	</row>
 
-	<row id="syachi_mystery_01_007_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_007_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_007_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_007_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_008" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立：ＷｉーＦｉ</comment>
 		<language name="JPN" width="216">ＷｉーＦｉコネクション　に
 せつぞく　しますか？</language>
@@ -1236,19 +1236,19 @@
 せつぞく　しますか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_008_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_008_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_008_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_008_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_009" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立：赤外線</comment>
 		<language name="JPN" width="216">せきがいせん　つういんを
 かいし　します</language>
@@ -1256,19 +1256,19 @@
 かいし　します</language>
 	</row>
 
-	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_009_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_009_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_010" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_010" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立後、贈り物探索時のメッセージ</comment>
 		<language name="JPN" width="216">おくりもの　を　さがしています
 しばらく　おまち　ください……</language>
@@ -1276,7 +1276,7 @@
 しばらく　おまち　ください……</language>
 	</row>
 
-	<row id="syachi_mystery_01_011" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_011" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>贈り物受信成功</comment>
 		<language name="JPN" width="216">うけとる　おくりものを
 えらんで　ください</language>
@@ -1284,7 +1284,7 @@
 えらんで　ください</language>
 	</row>
 
-	<row id="syachi_mystery_01_012" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_012" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物のダウンロードを中止するか確認</comment>
 		<language name="JPN" width="216">おくりものの　うけとりを
 やめますか？</language>
@@ -1292,19 +1292,19 @@
 やめますか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_012_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_012_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_012_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_012_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_013" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_013" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物をダウンロードするか確認</comment>
 		<language name="JPN" width="216">この　おくりもの　を
 じゅしん　しますか？</language>
@@ -1312,19 +1312,19 @@
 じゅしん　しますか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_013_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_013_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_013_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_013_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_014" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_014" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物データを書き込み中</comment>
 		<language name="JPN" width="216">おくりもの　を　じゅしんちゅう　です
 でんげんを　きらないで　ください……</language>
@@ -1332,7 +1332,7 @@
 でんげんを　きらないで　ください……</language>
 	</row>
 
-	<row id="syachi_mystery_01_015" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_015" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物データを書き込み完了</comment>
 		<language name="JPN" width="216">おくりものを　うけとりました！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
@@ -1342,7 +1342,7 @@
 はいたついん　から　うけとってね！</language>
 	</row>
 
-	<row id="syachi_mystery_01_016" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_016" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カードアルバムの整理完了後、セーブ処理</comment>
 		<language name="JPN" width="216">アルバムを　ほぞん　しています……
 でんげんを　きらないで　ください</language>
@@ -1350,31 +1350,31 @@
 でんげんを　きらないで　ください</language>
 	</row>
 
-	<row id="syachi_mystery_01_017" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_017" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>カード整理の確認</comment>
 		<language name="JPN" width="216">ふしぎカードを　どうしますか？</language>
 		<language name="JPN_KANJI">ふしぎカードを　どうしますか？</language>
 	</row>
 
-	<row id="syachi_mystery_menu_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_008" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：入れ替え</comment>
 		<language name="JPN" width="216">いれかえる</language>
 		<language name="JPN_KANJI">いれかえる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_009" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：削除</comment>
 		<language name="JPN" width="216">すてる</language>
 		<language name="JPN_KANJI">すてる</language>
 	</row>
 
-	<row id="syachi_mystery_menu_010" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_010" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：戻る</comment>
 		<language name="JPN" width="216">もどる</language>
 		<language name="JPN_KANJI">もどる</language>
 	</row>
 
-	<row id="syachi_mystery_01_018" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_018" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除失敗</comment>
 		<language name="JPN" width="216">おくりものを　もらっていないので
 すてることは　できません！</language>
@@ -1382,19 +1382,19 @@
 すてることは　できません！</language>
 	</row>
 
-	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除成功</comment>
 		<language name="JPN" width="216">カードを　すてました</language>
 		<language name="JPN_KANJI">カードを　すてました</language>
 	</row>
 
-	<row id="syachi_mystery_01_020" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_020" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>カード選択</comment>
 		<language name="JPN" width="216">いれかえるカードを　えらんでください</language>
 		<language name="JPN_KANJI">いれかえるカードを　えらんでください</language>
 	</row>
 
-	<row id="syachi_mystery_01_021" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_021" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除最終確認</comment>
 		<language name="JPN" width="216">この カードを　すてても
 よろしいですか？</language>
@@ -1402,49 +1402,49 @@
 よろしいですか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_021_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_021_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：はい</comment>
 		<language name="JPN" width="216">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="syachi_mystery_01_021_no" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_021_no" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_022" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_022" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ガイド説明文の選択肢</comment>
 		<language name="JPN" width="216">どの　せつめいを　ききますか？</language>
 		<language name="JPN_KANJI">どの　せつめいを　ききますか？</language>
 	</row>
 
-	<row id="syachi_mystery_menu_011" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_011" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">ふしぎなおくりもの　について</language>
 		<language name="JPN_KANJI">ふしぎなおくりもの　について</language>
 	</row>
 
-	<row id="syachi_mystery_menu_012" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_012" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">ふしぎカードアルバム　について</language>
 		<language name="JPN_KANJI">ふしぎカードアルバム　について</language>
 	</row>
 
-	<row id="syachi_mystery_menu_013" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_013" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">おくりものが　いっぱいのとき</language>
 		<language name="JPN_KANJI">おくりものが　いっぱいのとき</language>
 	</row>
 
-	<row id="syachi_mystery_menu_014" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_menu_014" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">やめる</language>
 		<language name="JPN_KANJI">やめる</language>
 	</row>
 
-	<row id="syachi_mystery_01_023" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_023" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ガイドメッセージ：
 ふしぎなおくりもの　について</comment>
 		<language name="JPN" width="216">ふしぎな　おくりものでは
@@ -1473,7 +1473,7 @@
 はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="syachi_mystery_01_024" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_024" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ガイドメッセージ：
 ふしぎカードアルバム　について</comment>
 		<language name="JPN" width="216">カードアルバムには
@@ -1507,7 +1507,7 @@
 カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="syachi_mystery_01_025" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_025" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ガイドメッセージ：
 おくりものが　いっぱいのとき</comment>
 		<language name="JPN" width="216">おくりものが　うけとれないときは
@@ -1538,7 +1538,7 @@
 カードを　せいりして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ＮＧメッセージ
 配達員の贈り物が一杯</comment>
 		<language name="JPN" width="216">はいたついんが　もっている
@@ -1555,7 +1555,7 @@
 レポートを　かいてから　きてください</language>
 	</row>
 
-	<row id="syachi_mystery_err_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_002" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ＮＧメッセージ
 一度受信済みで再受信ＮＧのもの</comment>
 		<language name="JPN" width="216">この　おくりもの　は
@@ -1566,7 +1566,7 @@
 うけとる　ことが　できません！</language>
 	</row>
 
-	<row id="syachi_mystery_err_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_003" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ＮＧメッセージ
 タイムオーバー
 Ｂキャンセル</comment>
@@ -1576,12 +1576,12 @@
 みつかりません　でした</language>
 	</row>
 
-	<row id="syachi_mystery_err_004" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_004" back-color="#ff00ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="216">もうしこみ　が　きょひ　されました</language>
 		<language name="JPN_KANJI">もうしこみ　が　きょひ　されました</language>
 	</row>
 
-	<row id="syachi_mystery_err_005" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_005" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ＮＧメッセージ
 不思議カードが一杯</comment>
 		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
@@ -1608,7 +1608,7 @@
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_err_006" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_006" back-color="#ff00ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="216">おくりものを　うけとるのに
 しっぱい　しました[BE:01:ページ切り替え（クリア）]
 Ａボタンを　おすと
@@ -1619,7 +1619,7 @@
 タイトルに　もどります</language>
 	</row>
 
-	<row id="syachi_mystery_err_007" back-color="#ff00ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_err_007" back-color="#ff00ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="216">おくりものを　みつけましたが
 このバージョンでは[BE:00:ページ切り替え（行送り）]
 うけとることが　できません[BE:00:ページ切り替え（行送り）]
