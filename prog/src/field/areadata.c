@@ -27,7 +27,7 @@ struct AREADATA{
 	u8  inner_outer;			//金銀追加：配置モデル種類指定（屋内・屋外）
 	u8 light_type;				//ライト指定
   u8 edgemark_type;      ///<エッジマーキング指定
-  u8 padding;
+  u8 bbd_color;        ///< ビルボードモデルの色指定
 };
 
 //------------------------------------------------------------------
@@ -70,6 +70,7 @@ static void dumpAreaData(const AREADATA * areadata)
 	OS_Printf("inner_outer=%02x ",areadata->inner_outer);			//金銀追加：配置モデル種類指定（屋内・屋外）
 	OS_Printf("light_type=%02x ",areadata->light_type);				//ライト指定
   OS_Printf("edgemark_type=%02x\n",areadata->edgemark_type);      ///<エッジマーキング指定
+  OS_Printf("bbd_color=%02x\n",areadata->bbd_color);      ///<ビルボードモデル色指定
 }
 
 //============================================================================================
@@ -166,6 +167,17 @@ u8 AREADATA_GetEdgeMarkingType(const AREADATA * areadata)
 {
   return areadata->edgemark_type;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビルボードモデルカラー
+ */
+//-----------------------------------------------------------------------------
+u8 AREADATA_GetBBDColor(const AREADATA * areadata)
+{
+  return areadata->bbd_color;
+}
+
 //------------------------------------------------------------------
 //四季のある/なし
 //------------------------------------------------------------------

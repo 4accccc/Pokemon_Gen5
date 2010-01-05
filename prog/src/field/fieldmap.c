@@ -110,6 +110,7 @@
 #include "field_task.h"  
 #include "field_task_manager.h"
 #include "ev_time.h"  //EVTIME_Update
+#include "field_bbd_color.h"
 
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
@@ -368,6 +369,7 @@ static void	fldmap_G3D_VBlank( GFL_TCB* tcb, void* work );
 static void	fldmap_G3D_BBDTrans(
 		GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 static void FIELD_EDGEMARK_Setup(const AREADATA * areadata);
+static void fieldmap_G3D_BBDSetColorParam( FIELDMAP_WORK * fieldWork );
 
 //fldmmdl
 static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork );
@@ -1947,6 +1949,8 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
     GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys);
     GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
   }
+  fieldmap_G3D_BBDSetColorParam( fieldWork ); // 色設定
+
   
   //G3dObj作成
   fieldWork->fieldG3dObjCtrl = FLD_G3DOBJ_CTRL_Create(
@@ -2115,6 +2119,27 @@ static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
   //プログラム用エッジカラー設定（インデックス7番を使用します）
   edgeTable[7] = GX_RGB(16,16,16);
   G3X_SetEdgeColorTable( edgeTable );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BBDにカラーパラメータを設定する。
+ *
+ *	@param	fieldWork   フィールドワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void fieldmap_G3D_BBDSetColorParam( FIELDMAP_WORK * fieldWork )
+{
+  FLD_BBD_COLOR* p_color;
+  HEAPID heapID = GFL_HEAP_LOWID(fieldWork->heapID);
+  u32 bbd_color_idx = AREADATA_GetBBDColor( fieldWork->areadata );
+
+  // ビルボードカラーの設定
+  p_color = FLD_BBD_COLOR_Create( heapID );
+  FLD_BBD_COLOR_Load( p_color, bbd_color_idx );
+  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys) );
+  FLD_BBD_COLOR_Delete( p_color );
 }
 
 //======================================================================

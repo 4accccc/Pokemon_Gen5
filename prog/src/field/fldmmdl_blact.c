@@ -277,14 +277,6 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
       u8 id = 0;
       GFL_BBD_SetPolID( bbdSys, &id );
     }
-
-    { // Normal åªèÛ50ìx
-      VecFx16 normal = { 0,FX16_CONST(1.19175f),FX16_CONST(1.0f) };
-      
-      VEC_Fx16Normalize( &normal, &normal );
-      
-      GFL_BBD_SetUseCustomVecN( bbdSys, &normal );
-    }
   }
 }
 

@@ -159,6 +159,7 @@ begin
   light_enum = NAIXReader.read("../../field_light/field_light.naix")
 
   edge_enum = NAIXReader.read("edgemarking/edgemarking.naix")
+  mmdl_color_enum = NAIXReader.read("area_mmdl_color/area_map_mmdl_color.naix")
 
   area_tbl_file = File.open(ARGV[0],"r")
   id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
@@ -203,10 +204,13 @@ begin
     edge_idx = edge_enum_search( edge_enum, column[COL_EDGEMARK] ) #エッジマーキング
     bin_out += [edge_idx].pack("C")
 
-    total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d EDGE:%d\n",
-                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx, edge_idx);
+    mmdl_idx = enum_search( mmdl_color_enum, column[COL_MMDL_COLOR] )
+    bin_out += [mmdl_idx].pack("C")
 
-    bin_out += '0'    #padding
+    total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d EDGE:%d MDLCOL:%d\n",
+                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx, edge_idx, mmdl_idx);
+
+    #bin_out += '0'    #padding
     #bin_out +=  [0xaa].pack("C") * (roundup(bin_out.length, 4) - bin_out.length)
     bin_out_total += bin_out
     area_count += 1

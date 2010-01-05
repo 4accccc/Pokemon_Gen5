@@ -252,3 +252,5 @@
   ARCID_COMM_TVT_GRA "comm_tvt.narc" #通信トランシーバー
   ARCID_BEACON_STATUS "beacon_status.narc" #すれ違い参照画面
   ARCID_ELBOARD_ZONE "zone.narc"  # 電光掲示板 ゾーン依存データ
+  ARCID_FLD_BBD_COLOR "fieldmap/area_map_mmdl_color.narc"  # フィールドビルボードモデルカラー
+

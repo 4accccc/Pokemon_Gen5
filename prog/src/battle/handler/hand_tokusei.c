@@ -1116,6 +1116,7 @@ static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     // こうかバツグンの時
     BtlTypeAff  aff = BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF);
     BtlTypeAffAbout affAbout = BTL_CALC_TypeAffAbout( aff );
+    BTL_Printf("Aff=%d, About=%d\n", aff, affAbout);
     if( affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
     {
       // ダメージ75％
@@ -3653,9 +3654,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fuyuu( u32* numElems )
 static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分が防御側で
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
-  ){
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
     // ヌケニンなら
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_NUKENIN )
@@ -3664,7 +3664,8 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       PokeType waza_type = WAZADATA_GetType( waza );
       PokeTypePair myType = BPP_GetPokeType( bpp );
-      BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
+      BtlTypeAff aff = BTL_CALC_TypeAff( waza_type, myType );
+      OS_TPrintf("wazaType=%d, myType=%04x, aff=%d\n", waza_type, myType, aff);
       if( aff <= BTL_TYPEAFF_100 )
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )

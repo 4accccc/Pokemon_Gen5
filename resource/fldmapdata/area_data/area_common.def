@@ -59,6 +59,7 @@ COL_ITP_NAME  = 7 #ITPアニメID指定
 COL_INOUT		=	8	#内外指定（配置モデルデータテーブル切り替え用）
 COL_LIGHTTYPE	=	9	#ライト指定
 COL_EDGEMARK  = 10  #エッジマーキング指定
+COL_MMDL_COLOR  = 11  #ビルボードオブジェの色指定
 
 #area_tableの読み飛ばす行数
 READTHROUGH_LINES	=	1

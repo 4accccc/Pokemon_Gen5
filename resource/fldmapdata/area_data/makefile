@@ -54,7 +54,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS		=	edgemarking area_map_tex area_map_ita area_map_itp
+SUBDIRS		=	edgemarking area_map_tex area_map_ita area_map_itp area_mmdl_color
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
