@@ -494,10 +494,10 @@ static void DrawMesh(ENCEFF_CNT_PTR ptr)
 
   G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
 
-
+  G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
   // ポリゴンアトリビュート設定
 	G3_PolygonAttr(
-				   GX_LIGHTMASK_0123,			  // ライトを反映しない
+				   GX_LIGHTMASK_0,			  // ライトを反映
 				   GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
 				   //GX_CULL_BACK,             // カリング
 				   GX_CULL_NONE,             // カリング
