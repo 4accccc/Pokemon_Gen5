@@ -1391,7 +1391,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
-	ret = BOX2UI_HitTrayPokeTrg();
+	ret = BOX2UI_HitCheckTrgTrayPoke();
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -1691,7 +1691,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 
 	// ポケモンドラッグチェック
 	if( syswk->poke_get_key == 0 ){
-		ret = BOX2UI_HitTrayPokeTrg();
+		ret = BOX2UI_HitCheckTrgTrayPoke();
 		if( ret != GFL_UI_TP_HIT_NONE ){
 			BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 			if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
@@ -2477,7 +2477,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	// ポケモンドラッグチェック
 	if( syswk->poke_get_key == 0 ){
 		// トレイのポケモン
-		ret = BOX2UI_HitTrayPokeTrg();
+		ret = BOX2UI_HitCheckTrgTrayPoke();
 		if( ret != GFL_UI_TP_HIT_NONE ){
 			if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //				Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -2768,7 +2768,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
-	ret = BOX2UI_HitTrayPokeTrg();
+	ret = BOX2UI_HitCheckTrgTrayPoke();
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -3257,7 +3257,7 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
-	ret = BOX2UI_HitTrayPokeTrg();
+	ret = BOX2UI_HitCheckTrgTrayPoke();
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -4069,7 +4069,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
 
-	ret = BOX2UI_HitTrayPokeTrg();
+	ret = BOX2UI_HitCheckTrgTrayPoke();
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 //			Snd_SePlay( SE_BOX2_POKE_CATCH );
@@ -4403,7 +4403,7 @@ static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
 			}
 		}
 		// ボックス
-		ret = BOX2UI_HitTrayPokeTrg();
+		ret = BOX2UI_HitCheckTrgTrayPoke();
 		if( ret != GFL_UI_TP_HIT_NONE ){
 			if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 				BOX2MAIN_PokeInfoPut( syswk, ret );
@@ -8875,7 +8875,7 @@ static int MainSeq_ArrangeBoxPartyChgMain( BOX2_SYS_WORK * syswk )
 	}
 
 	// ボックス
-	ret = BOX2UI_HitTrayPokeTrg();
+	ret = BOX2UI_HitCheckTrgTrayPoke();
 	if( ret != GFL_UI_TP_HIT_NONE ){
 //↑[GS_CONVERT_TAG]
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){

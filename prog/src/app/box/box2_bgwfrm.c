@@ -181,11 +181,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
 	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
 
-
-
-
-
-
 	// ボックス移動フレーム
 //	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
 /*
@@ -197,8 +192,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
 	}
 */
-
-
 /*	上画面　技・アイテムフレーム
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
 		BGWINFRM_Add(
@@ -241,11 +234,11 @@ void BOX2BGWFRM_Exit( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＧフレームにアーカイブのグラフィックを設定
+ * @brief		ＢＧフレームにアーカイブのグラフィックを設定
  *
- * @param	wk				ＢＧウィンドウフレームワーク
- * @param	ah				アーカイブハンドル
- * @param	dataIdx		データインデックス
+ * @param		wk				ＢＧウィンドウフレームワーク
+ * @param		ah				アーカイブハンドル
+ * @param		dataIdx		データインデックス
  *
  * @return	none
  */
@@ -262,9 +255,9 @@ static void FrameArcLoad( BGWINFRM_WORK * wk, u32 index, u32 dataIdx )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム表示
+ * @brief		手持ちポケモンフレーム表示
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -276,9 +269,9 @@ void BOX2BGWFRM_PartyPokeFramePut( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム表示（右）
+ * @brief		手持ちポケモンフレーム表示（右）
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -290,28 +283,9 @@ void BOX2BGWFRM_PartyPokeFramePutRight( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム非表示
+ * @brief		手持ちポケモンフレーム初期位置設定（左）
  *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk )
-{
-	GFL_BG_FillScreen(
-		GFL_BG_FRAME1_M, 0,
-		PARTYPOKE_FRM_PX, PARTYPOKE_FRM_PY,
-		PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY, GFL_BG_SCRWRT_PALNL );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンフレーム初期位置設定（左）
- *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -323,9 +297,9 @@ void BOX2BGWFRM_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム初期位置設定（右）
+ * @brief		手持ちポケモンフレーム初期位置設定（右）
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -337,9 +311,9 @@ void BOX2BGWFRM_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレームインセット
+ * @brief		手持ちポケモンフレームインセット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -357,9 +331,9 @@ void BOX2BGWFRM_PartyPokeFrameInSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレームアウトセット
+ * @brief		手持ちポケモンフレームアウトセット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -377,9 +351,9 @@ void BOX2BGWFRM_PartyPokeFrameOutSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム右移動セット
+ * @brief		手持ちポケモンフレーム右移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -391,9 +365,9 @@ void BOX2BGWFRM_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム左移動セット
+ * @brief		手持ちポケモンフレーム左移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -401,20 +375,13 @@ void BOX2BGWFRM_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, -1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
-/*
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_RET_BTN,
-		WINFRM_PARTYPOKE_RET_PX+BOX2MAIN_PARTYPOKE_FRM_H_CNT,
-		WINFRM_PARTYPOKE_PY+WINFRM_PARTYPOKE_RET_PY );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, -1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手持ちポケモンフレーム移動
+ * @brief		手持ちポケモンフレーム移動
  *
- * @param	syswk	ボックス画面システムワーク
+ * @param		syswk		ボックス画面システムワーク
  *
  * @retval	"TRUE = 移動中"
  * @retval	"FALSE = それ以外"
@@ -442,7 +409,16 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 	return TRUE;
 }
 
-// 手持ちポケモンフレームが右にあるか
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームが右にあるか
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @retval	"TRUE = あり"
+ * @retval	"FALSE = なし"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk )
 {
 	s8	x, y;
@@ -454,7 +430,16 @@ BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk )
 	return FALSE;
 }
 
-// 手持ちポケモンフレームが左にあるか
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームが左にあるか
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @retval	"TRUE = あり"
+ * @retval	"FALSE = なし"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk )
 {
 	s8	x, y;
@@ -487,14 +472,13 @@ static void PokeMenuInitPosSet( BGWINFRM_WORK * wk )
 	for( i=0; i<6; i++ ){
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_INIT_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニューボタンを画面内に配置
+ * @brief		手持ちポケモンフレームが左にあるかポケモンメニューボタンを画面内に配置
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -506,14 +490,13 @@ void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk )
 	for( i=0; i<6; i++ ){
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニューボタン非表示
+ * @brief		ポケモンメニューボタン非表示
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -526,15 +509,13 @@ void BOX2BGWFRM_PokeMenuOff( BGWINFRM_WORK * wk )
 		BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_MENU1+i );
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_INIT_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-//	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_CLOSE_BTN );
-//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニューボタン画面内への移動セット
+ * @brief		ポケモンメニューボタン画面内への移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -550,16 +531,13 @@ void BOX2BGWFRM_PokeMenuInSet( BGWINFRM_WORK * wk )
 	for( i=0; i<6; i++ ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MENU1+i, -1, 0, px-WINFRM_MENU_PX );
 	}
-
-//	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, -1, py-WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニューボタン画面外への移動セット
+ * @brief		ポケモンメニューボタン画面外への移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -575,16 +553,13 @@ void BOX2BGWFRM_PokeMenuOutSet( BGWINFRM_WORK * wk )
 	for( i=0; i<6; i++ ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MENU1+i, 1, 0, WINFRM_MENU_INIT_PX-px );
 	}
-
-//	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, 1, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT-py );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニュー移動チェック
+ * @brief		ポケモンメニュー移動チェック
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @retval	"TRUE = 移動中"
  * @retval	"FLASE = それ以外"
@@ -602,20 +577,15 @@ BOOL BOX2BGWFRM_PokeMenuMoveMain( BGWINFRM_WORK * wk )
 			ret = TRUE;
 		}
 	}
-/*
-	if( BGWINFRM_MoveOne( wk, BOX2MAIN_WINFRM_CLOSE_BTN ) == 1 ){
-		ret = TRUE;
-	}
-*/
 
 	return ret;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンメニュー配置チェック
+ * @brief		ポケモンメニュー配置チェック
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @retval	"TRUE = 配置済み"
  * @retval	"FLASE = それ以外"
@@ -631,9 +601,6 @@ BOOL BOX2BGWFRM_PokeMenuPutCheck( BGWINFRM_WORK * wk )
 	}
 	return TRUE;
 }
-
-
-
 
 
 //============================================================================================
@@ -664,7 +631,7 @@ static void InitTouchBar( BOX2_SYS_WORK * syswk )
 /**
  * @brief		タッチバー配置
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -683,7 +650,7 @@ void BOX2BGWFRM_PutTouchBar( BGWINFRM_WORK * wk )
 /**
  * @brief		「てもちポケモン」ボタン配置
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
  */
@@ -695,9 +662,9 @@ void BOX2BGWFRM_TemochiButtonOn( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「てもちポケモン」ボタン非表示
+ * @brief		「てもちポケモン」ボタン非表示
  *
- * @param	syswk	ボックス画面システムワーク
+ * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
  */
@@ -711,7 +678,7 @@ void BOX2BGWFRM_TemochiButtonOff( BOX2_APP_WORK * appwk )
 /**
  * @brief		「ボックスリスト」ボタン配置
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
  */
@@ -723,9 +690,9 @@ void BOX2BGWFRM_BoxListButtonOn( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「ポケモンいどう」ボタンを画面外に配置
+ * @brief		「ボックスリスト」ボタン非表示
  *
- * @param	syswk	ボックス画面システムワーク
+ * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
  */
@@ -742,9 +709,9 @@ void BOX2BGWFRM_BoxListButtonOff( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * マーキングフレームインセット
+ * @brief		マーキングフレームインセット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -757,9 +724,9 @@ void BOX2BGWFRM_MarkingFrameInSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * マーキングフレームアウトセット
+ * @brief		マーキングフレームアウトセット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -771,9 +738,9 @@ void BOX2BGWFRM_MarkingFrameOutSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * マーキングフレーム移動
+ * @brief		マーキングフレーム移動
  *
- * @param	syswk	ボックス画面システムワーク
+ * @param		syswk		ボックス画面システムワーク
  *
  * @retval	"TRUE = 移動中"
  * @retval	"FALSE = それ以外"
@@ -804,9 +771,9 @@ int BOX2BGWFRM_MarkingFrameMove( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * トレイ選択フレーム画面内への移動セット
+ * @brief		トレイ選択フレーム画面内への移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -819,9 +786,9 @@ void BOX2BGWFRM_BoxMoveFrmInSet( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * トレイ選択フレーム画面外への移動セット
+ * @brief		トレイ選択フレーム画面外への移動セット
  *
- * @param	wk		ＢＧウィンドウフレームワーク
+ * @param		wk		ＢＧウィンドウフレームワーク
  *
  * @return	none
  */
@@ -831,7 +798,16 @@ void BOX2BGWFRM_BoxMoveFrmOutSet( BGWINFRM_WORK * wk )
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MOVE, 1, 0, BOXMOVE_FRM_SX );
 }
 
-// トレイ選択フレームが表示されているか
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		トレイ選択フレームが表示されているか
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @retval	"TRUE = 表示されている"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk )
 {
 	s8	x, y;
@@ -843,6 +819,42 @@ BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk )
 	return FALSE;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//	旧処理
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 手持ちポケモンフレーム非表示
+ *
+ * @param	syswk	ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+/*
+void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk )
+{
+	GFL_BG_FillScreen(
+		GFL_BG_FRAME1_M, 0,
+		PARTYPOKE_FRM_PX, PARTYPOKE_FRM_PY,
+		PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY, GFL_BG_SCRWRT_PALNL );
+}
+*/
 
 
 //============================================================================================

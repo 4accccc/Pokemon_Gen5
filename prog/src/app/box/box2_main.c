@@ -4332,7 +4332,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 			if( ret1 == 0 && ret2 == 0 &&
 					BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE &&
 					BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
-				if( BOX2UI_HitCheckTrayPoke( tpx, tpy ) != syswk->get_pos ){
+				if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
 					syswk->box_mv_pos = syswk->tray;	// 現在参照しているボックス
 					BOX2MAIN_InitBoxMoveFrameScroll( syswk );
 					// 戻り先のシーケンスを「つかむ」の処理にする
@@ -5031,7 +5031,7 @@ int BOX2MAIN_GetTrayPokeMoveDrop( BOX2_SYS_WORK * syswk )
 		}else{
 			if( menu_mv == FALSE && party_mv == FALSE &&
 					BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
-				if( BOX2UI_HitCheckTrayPoke( tpx, tpy ) != syswk->get_pos ){
+				if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
 					BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 					BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
 					BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
@@ -5604,7 +5604,7 @@ int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk )
 			// 手持ちフレーム表示チェック
 			if( menu == FALSE && party == FALSE &&
 					BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
-				if( BOX2UI_HitCheckTrayPoke( tpx, tpy ) != syswk->get_pos ){
+				if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
 					BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 					BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
 					BOX2OBJ_PartyPokeIconFrmInSet( syswk );
@@ -5903,7 +5903,7 @@ int BOX2MAIN_VFuncItemMoveTouch( BOX2_SYS_WORK * syswk )
 			if( ret1 == 0 && ret2 == 0 &&
 					BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE &&
 					BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
-				if( BOX2UI_HitCheckTrayPoke( tpx, tpy ) != syswk->get_pos ){
+				if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
 					syswk->box_mv_pos = syswk->tray;	// 現在参照しているボックス
 					BOX2MAIN_InitBoxMoveFrameScroll( syswk );
 					// 戻り先のシーケンスを「つかむ」の処理にする
@@ -6737,7 +6737,7 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
 			// パーティフレーム表示チェック
 			if( ret1 == 0 && ret2 == 0 &&
 					BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
-				if( BOX2UI_HitCheckTrayPoke( tpx, tpy ) != syswk->get_pos ){
+				if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
 					syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
 					BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 					BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
