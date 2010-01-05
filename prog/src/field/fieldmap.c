@@ -137,7 +137,6 @@
 //======================================================================
 //	define
 //======================================================================
-#define CROSSFADE_MODE
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ
@@ -558,9 +557,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
   fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
-#ifndef CROSSFADE_MODE
-	FLDMSGBG_SetupResource( fieldWork->fldMsgBG );
-#endif
   fieldWork->goldMsgWin = NULL;
 
   // 地名表示システム作成
@@ -733,19 +729,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	// フィールドマップ用制御タスクシステム
 	fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
 
-#ifndef CROSSFADE_MODE
-  //フィールドデバッグ初期化
-  fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
-
-#if USE_DEBUGWIN_SYSTEM
-	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
-	DEBUGWIN_ChangeLetterColor( 31,31,31 );
-	FIELD_FUNC_RANDOM_GENERATE_InitDebug
-		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
-#endif  //USE_DEBUGWIN_SYSTEM
-#else
   fieldWork->debugWork = NULL;
-#endif
 
   //フィールドパーティクル
   fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
@@ -1830,14 +1814,6 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
   GFL_BG_LoadPalette( GFL_BG_FRAME0_M, (void*)fldmapdata_bgColorTable, 16*2, 0 );
 	//サブ画面の背景色
   GFL_BG_LoadPalette( GFL_BG_FRAME0_S, (void*)fldmapdata_bgColorTable, 16*2, 0 );
-#ifndef CROSSFADE_MODE
-	//ＢＧモード設定
-	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
-	//ＢＧコントロール設定
-	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
-
-	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
-#endif
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
