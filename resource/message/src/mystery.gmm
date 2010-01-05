@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-16T22:56:50"/>
+	<create user="shimoyamada" host="W00184" date="2010-01-05T12:56:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,12 +464,12 @@
 
 	<dialog left="159" top="132" right="842" bottom="692" maximized="no" rayout="Vertical2">
 		<comment-input left="783" top="637" right="1130" bottom="789" visible="yes"/>
-		<tag-palette left="574" top="159" right="1066" bottom="571" visible="no"/>
+		<tag-palette left="779" top="179" right="1271" bottom="591" visible="yes"/>
 		<band id="0" index="0" style="0000" width="508"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="675"/>
 		<band id="3" index="3" style="0000" width="675"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1092,7 +1092,7 @@
 せつぞく　しますか？</language>
 	</row>
 
-	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,#ff78ff,,,,,,,,,,,,">
 		<comment>不思議な贈り物トップ画面メッセージ</comment>
 		<language name="JPN" width="216">ふしぎな　おくりもの　へ　ようこそ！</language>
 		<language name="JPN_KANJI">ふしぎな　おくりもの　へ　ようこそ！</language>
@@ -1412,6 +1412,130 @@
 		<comment>選択項目：いいえ</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="syachi_mystery_01_022" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイド説明文の選択肢</comment>
+		<language name="JPN" width="216">どの　せつめいを　ききますか？</language>
+		<language name="JPN_KANJI">どの　せつめいを　ききますか？</language>
+	</row>
+
+	<row id="syachi_mystery_menu_011" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイド選択肢</comment>
+		<language name="JPN" width="216">ふしぎなおくりもの　について</language>
+		<language name="JPN_KANJI">ふしぎなおくりもの　について</language>
+	</row>
+
+	<row id="syachi_mystery_menu_012" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイド選択肢</comment>
+		<language name="JPN" width="216">ふしぎカードアルバム　について</language>
+		<language name="JPN_KANJI">ふしぎカードアルバム　について</language>
+	</row>
+
+	<row id="syachi_mystery_menu_013" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイド選択肢</comment>
+		<language name="JPN" width="216">おくりものが　いっぱいのとき</language>
+		<language name="JPN_KANJI">おくりものが　いっぱいのとき</language>
+	</row>
+
+	<row id="syachi_mystery_menu_014" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイド選択肢</comment>
+		<language name="JPN" width="216">やめる</language>
+		<language name="JPN_KANJI">やめる</language>
+	</row>
+
+	<row id="syachi_mystery_01_023" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイドメッセージ：
+ふしぎなおくりもの　について</comment>
+		<language name="JPN" width="216">ふしぎな　おくりものでは
+つうしんを　つかって[BE:01:ページ切り替え（クリア）]
+すてきな　おくりものを
+うけとることが　できます[BE:01:ページ切り替え（クリア）]
+ふしぎな　おくりものが
+くばられているのか　しりたいときは[BE:01:ページ切り替え（クリア）]
+ポケモンだいすきクラブ
+ホームページで[BE:00:ページ切り替え（行送り）]
+かくにん　してください[BE:01:ページ切り替え（クリア）]
+ぶじ　おくりものを　うけとれたら
+ポケモンセンターに　いる
+はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">ふしぎな　おくりものでは
+つうしんを　つかって[BE:01:ページ切り替え（クリア）]
+すてきな　おくりものを
+うけとることが　できます[BE:01:ページ切り替え（クリア）]
+ふしぎな　おくりものが
+くばられているのか　しりたいときは[BE:01:ページ切り替え（クリア）]
+ポケモンだいすきクラブ
+ホームページで[BE:00:ページ切り替え（行送り）]
+かくにん　してください[BE:01:ページ切り替え（クリア）]
+ぶじ　おくりものを　うけとれたら
+ポケモンセンターに　いる
+はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="syachi_mystery_01_024" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイドメッセージ：
+ふしぎカードアルバム　について</comment>
+		<language name="JPN" width="216">カードアルバムには
+ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
+きねんの　しるしに[BE:00:ページ切り替え（行送り）]
+ふしぎカードが　かざられていきます[BE:01:ページ切り替え（クリア）]
+はいたついんから
+おくりものを　もらった[BE:00:ページ切り替え（行送り）]
+カードには　スタンプが　おされます[BE:01:ページ切り替え（クリア）]
+スタンプが　おされていないものは
+うけとりに　いきましょう[BE:01:ページ切り替え（クリア）]
+アルバムに　ほぞん　できるカードは
+さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
+１２まい　いっぱいに　なると
+おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
+カードを　せいり　してください[BE:01:ページ切り替え（クリア）]
+</language>
+		<language name="JPN_KANJI">カードアルバムには
+ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
+きねんの　しるしに[BE:00:ページ切り替え（行送り）]
+ふしぎカードが　かざられていきます[BE:01:ページ切り替え（クリア）]
+はいたついんから
+おくりものを　もらった[BE:00:ページ切り替え（行送り）]
+カードには　スタンプが　おされます[BE:01:ページ切り替え（クリア）]
+スタンプが　おされていないものは
+うけとりに　いきましょう[BE:01:ページ切り替え（クリア）]
+アルバムに　ほぞん　できるカードは
+さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
+１２まい　いっぱいに　なると
+おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
+カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="syachi_mystery_01_025" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ガイドメッセージ：
+おくりものが　いっぱいのとき</comment>
+		<language name="JPN" width="216">おくりものが　うけとれないときは
+カードアルバムを　みてください[BE:01:ページ切り替え（クリア）]
+アルバムが　１２まいの　カードで
+いっぱいのときは[BE:01:ページ切り替え（クリア）]
+スタンプの　おされている
+カードを　えらんで　Ａボタンを[BE:00:ページ切り替え（行送り）]
+おして　せいり　してください[BE:01:ページ切り替え（クリア）]
+アルバムの　カード　１２まい
+すべてに　スタンプが[BE:00:ページ切り替え（行送り）]
+おされていないときは[BE:00:ページ切り替え（行送り）]
+ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
+はいたついんから　うけとったあと
+カードを　せいりして　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">おくりものが　うけとれないときは
+カードアルバムを　みてください[BE:01:ページ切り替え（クリア）]
+アルバムが　１２まいの　カードで
+いっぱいのときは[BE:01:ページ切り替え（クリア）]
+スタンプの　おされている
+カードを　えらんで　Ａボタンを[BE:00:ページ切り替え（行送り）]
+おして　せいり　してください[BE:01:ページ切り替え（クリア）]
+アルバムの　カード　１２まい
+すべてに　スタンプが[BE:00:ページ切り替え（行送り）]
+おされていないときは[BE:00:ページ切り替え（行送り）]
+ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
+はいたついんから　うけとったあと
+カードを　せいりして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
