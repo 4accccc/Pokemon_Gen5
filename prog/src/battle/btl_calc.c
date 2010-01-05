@@ -203,6 +203,29 @@ BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType )
   GF_ASSERT(0);
   return BTL_TYPEAFF_0;
 }
+//--------------------------------------------------------------
+/**
+ *  タイプ相性計算（ポケモンタイプそのまま使用可能）
+ */
+//--------------------------------------------------------------
+BtlTypeAff BTL_CALC_TypeAffPair( PokeType wazaType, PokeTypePair pokeType )
+{
+  PokeType type1, type2;
+
+  PokeTypePair_Split( pokeType, &type1, &type2 );
+
+  if( PokeTypePair_IsPure(pokeType) )
+  {
+    return BTL_CALC_TypeAff( wazaType, type1 );
+  }
+  else
+  {
+    BtlTypeAff  aff1, aff2;
+    aff1 = BTL_CALC_TypeAff( wazaType, type1 );
+    aff2 = BTL_CALC_TypeAff( wazaType, type2 );
+    return BTL_CALC_TypeAffMul( aff1, aff2 );
+  }
+}
 //=============================================================================================
 /**
  * 相性値の掛け合わせ（２タイプあるポケモン対応）

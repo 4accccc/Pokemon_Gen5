@@ -327,7 +327,6 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     }
   }
 
-
   ms_std_simple( buf, strID, args );
 }
 
