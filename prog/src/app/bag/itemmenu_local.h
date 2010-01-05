@@ -231,13 +231,13 @@ struct _FIELD_ITEMMENU_PARAM {
   u32 NowAttr;
   u32 FrontAttr;
 	u32 bgchar;
-  BOOL bChange;
+  BOOL bChange;   ///< CELL更新フラグ
 
   enum BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
-  int ret_item;  //選んだアイテム
+  int ret_item;       ///< 選んだアイテム
   
-  BOOL sort_mode; ///< ソートモード
+  BOOL sort_mode;     ///< ソートモード
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置

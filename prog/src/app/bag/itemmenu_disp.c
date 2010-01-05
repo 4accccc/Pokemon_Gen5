@@ -1139,15 +1139,33 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 
 //  u32 dest = GFL_CLGRP_CGR_GetAddr( pWork->listRes[0], CLSYS_DRAW_MAIN);
 
+  // リストカーソルの表示計算
   {
+    enum {
+      CUR_OFFSET_Y = 24,
+      CUR_START_Y = 24,
+    };
+
     GFL_CLACTPOS pos;
+    int length;
+    BOOL is_cur_draw;
 
     GFL_CLACT_WK_GetPos( pWork->clwkCur , &pos, CLWK_SETSF_NONE );
-    pos.y = 24 * pWork->curpos + 24;
+    pos.y = CUR_OFFSET_Y * pWork->curpos + CUR_START_Y;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
 
     GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
+
+    // ポケット内のアイテムが0個の時は非表示
+    length      = ITEMMENU_GetItemPocketNumber( pWork );
+    is_cur_draw = (length!=0);
+
+    HOSAKA_Printf("length=%d \n", length);
+
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
   }
+
+  // リストOAM生成＆描画
   for(i = 0; i< ITEM_LIST_NUM ; i++){
     {
       u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
@@ -1172,7 +1190,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 
       if(pWork->nListEnable[i])
       {
-        // 「たいせつなもの」のみ表示
+        // 「たいせつなもの」のみマーカーを表示
         if(pWork->pocketno == BAG_POKE_EVENT)
         {
           GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );

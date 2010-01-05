@@ -136,6 +136,7 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
+static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
@@ -270,6 +271,7 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
+
 /*
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
 
@@ -286,6 +288,7 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
 	}
 */
+
   ITEMDISP_upMessageRewrite(pWork);
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
@@ -527,12 +530,16 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
   u32 x,y,i;
 
-  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
+  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE)
+  {
     // 範囲判定
-    if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y)){
+    if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y))
+    {
       return FALSE;
     }
-    if((x >= (32*8)) || (x <= (28*8)) ){
+
+    if((x >= (32*8)) || (x <= (28*8)) )
+    {
       return FALSE;
     }
 
@@ -786,8 +793,8 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       // スプレー処理
       EncDataSave_SetSprayCnt( encsv, count );
 
-      // 手持ちからひとつ削除
-      MYITEM_SubItem( pWork->pMyItem, pWork->ret_item, 1, pWork->heapID );
+      // アイテムを減らす
+      ITEM_Sub( pWork, 1 );
 
       // つかった
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_066, pWork->pStrBuf );
@@ -1250,8 +1257,6 @@ static void _itemTrashYesWait(FIELD_ITEMMENU_WORK* pWork)
   _windowRewrite(pWork);
   _CHANGE_STATE(pWork,_itemTrashEndWait);
 
-
-
 }
 
 //------------------------------------------------------------------------------
@@ -1272,11 +1277,11 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
 
     if(selectno==0){
-      // 手持ちからアイテム削除
-      MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, pWork->InputNum, pWork->heapID );
-
       // 捨てる音
       GFL_SOUND_PlaySE( SE_BAG_TRASH );
+
+      // アイテムを減らす
+      ITEM_Sub( pWork, pWork->InputNum );
 
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_055, pWork->pStrBuf );
       WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
@@ -1563,8 +1568,8 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           // 売値を取得
           val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
 
-          // 手持ちからアイテム削除
-          MYITEM_SubItem( pWork->pMyItem, pWork->ret_item, pWork->InputNum, pWork->heapID );
+          // アイテムを減らす
+          ITEM_Sub( pWork, pWork->InputNum );
 
           // 所持金増加
           Mystatus_AddGold( pWork->mystatus, val );
@@ -1581,8 +1586,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           // 「○○○を　わたして XXXXXX円 うけとった」
           GFL_MSG_GetString( pWork->MsgManager, mes_shop_096, pWork->pStrBuf );
           WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
-          WORDSET_RegisterNumber(pWork->WordSet, 1, val,
-                                   6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+          WORDSET_RegisterNumber(pWork->WordSet, 1, val, 6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
           WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
           ITEMDISP_ItemInfoWindowDisp( pWork );
 
@@ -1643,6 +1647,21 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  捨てる処理  アイテムを削除
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num )
+{
+  // 手持ちからアイテム削除
+  MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, sub_num, pWork->heapID );
+
+  // カーソルが指す座標を下げる
+  pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+}    
 
 //-----------------------------------------------------------------------------
 /**
