@@ -3663,7 +3663,9 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       // 効果バツグン以外は無効
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       PokeType waza_type = WAZADATA_GetType( waza );
-      BtlTypeAff aff = BTL_CALC_TypeAff( waza_type, BPP_GetPokeType(bpp) );
+      PokeTypePair myType = BPP_GetPokeType( bpp );
+      BtlTypeAff aff = BTL_CALC_TypeAff( waza_type, myType );
+      OS_TPrintf("wazaType=%d, myType=%04x, aff=%d\n", waza_type, myType, aff);
       if( aff <= BTL_TYPEAFF_100 )
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
