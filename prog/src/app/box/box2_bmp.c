@@ -302,7 +302,8 @@
 //#define	FCOL_FRMBUTTN_OFF	( PRINTSYS_LSB_Make(10,15,FRMBUTTON_BG_COL) )	// フォントカラー：フレーム内ボタン
 //#define	FCOL_SUB_WIN			( PRINTSYS_LSB_Make(1,2,0) )				// フォントカラー：上画面ウィンドウ用
 
-#define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(1,2,0) )		// フォントカラー：黒抜
+#define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(1,2,0) )		// フォントカラー：ＯＡＭフォント黒抜
+#define	FCOL_FNTOAM_RED		( PRINTSYS_LSB_Make(5,4,0) )		// フォントカラー：ＯＡＭフォント赤抜
 
 
 /*
@@ -719,10 +720,12 @@ void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk )
 		appwk, BOX2BMPWIN_ID_ITEM_STR, appwk->mman,
 		mes_box_subst_01_08, 0, 0, appwk->font, FCOL_N_BLACK );
 
+/*
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_WAZA_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_SEIKAKU_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_TOKUSEI_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_ITEM_STR] );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1019,6 +1022,11 @@ void BOX2BMP_PokeDataPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 	PokeTokuseiPut( syswk->app, info, BOX2BMPWIN_ID_TOKUSEI );
 	PokeItemPut( syswk->app, info, BOX2BMPWIN_ID_ITEM );
 	PokeWazaPut( syswk->app, info, BOX2BMPWIN_ID_WAZA );
+
+	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_WAZA_STR] );
+	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_SEIKAKU_STR] );
+	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_TOKUSEI_STR] );
+	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_ITEM_STR] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1041,6 +1049,11 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_TOKUSEI] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ITEM] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA] );
+
+	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA_STR] );
+	ClearScreen( &appwk->win[BOX2BMPWIN_ID_SEIKAKU_STR] );
+	ClearScreen( &appwk->win[BOX2BMPWIN_ID_TOKUSEI_STR] );
+	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ITEM_STR] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1461,17 +1474,22 @@ void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
 void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
 {
 	STRBUF * str;
+	u32	num;
 
 	str = GFL_MSG_CreateString( syswk->app->mman, mes_boxmenu_02_20 );
+	num = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray );
 
-	WORDSET_RegisterNumber(
-		syswk->app->wset, 0,
-		BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ),
-		2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( syswk->app->wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( syswk->app->wset, syswk->app->exp, str );
 
 	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
-	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
+	if( num == BOX_MAX_POS ){
+		PRINTSYS_PrintColor(
+			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM_RED );
+	}else{
+		PRINTSYS_PrintColor(
+			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
+	}
 
 	GFL_STR_DeleteBuffer( str );
 

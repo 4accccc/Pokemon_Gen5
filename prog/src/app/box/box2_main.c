@@ -252,6 +252,7 @@ typedef struct {
 static void VBlankTask( GFL_TCB * tcb, void * work );
 static u32 MoveBoxGet( BOX2_SYS_WORK * syswk, u32 pos );
 static void PutSubDispPokeMark( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info );
+static void SubDispMarkingOff( BOX2_APP_WORK * appwk );
 
 static void MoveGetItemIcon( BOX2_APP_WORK * appwk, u32 x, u32 y );
 
@@ -552,8 +553,8 @@ void BOX2MAIN_BgInit( BOX2_SYS_WORK * syswk )
 	}
 	{	// サブ画面：背景
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
+			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
@@ -561,7 +562,7 @@ void BOX2MAIN_BgInit( BOX2_SYS_WORK * syswk )
 	{	// サブ画面：ウィンドウ（技・アイテム）
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x18000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &cnth, GFL_BG_MODE_TEXT );
@@ -3536,6 +3537,8 @@ static void PokeInfoPutModeNormal( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * i
 
 	BOX2MAIN_SubDispMarkingChange( syswk, info->mark );
 	PutSubDispPokeMark( syswk->app, info );
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, 0 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3679,12 +3682,14 @@ void BOX2MAIN_PokeInfoOff( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_Vanish( syswk->app, i, FALSE );
 	}
 
-	BOX2BMP_PokeDataOff( syswk->app );							// 文字列オフ
+	BOX2BMP_PokeDataOff( syswk->app );			// 文字列オフ
+	SubDispMarkingOff( syswk->app );				// マークオフ
 
-	BOX2MAIN_SubDispMarkingChange( syswk, 0 );					// マークオフ
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_RARE, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKERUS, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKERUS_ICON, FALSE );
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, 192 );
 
 /*
 	// ウィンフレームオフ
@@ -3730,6 +3735,7 @@ static void MarkingChange( BOX2_SYS_WORK * syswk, u32 id, u32 mark )
 			anm = APP_COMMON_POKE_MARK_CIRCLE_WHITE + i*2;
 		}
 		BOX2OBJ_AnmSet( syswk->app, id+i, anm );
+		BOX2OBJ_Vanish( syswk->app, id+i, TRUE );
 	}
 }
 
@@ -3751,6 +3757,15 @@ void BOX2MAIN_MainDispMarkingChange( BOX2_SYS_WORK * syswk, u32 mark )
 void BOX2MAIN_SubDispMarkingChange( BOX2_SYS_WORK * syswk, u32 mark )
 {
 	MarkingChange( syswk, BOX2OBJ_ID_MARK1_S, mark );
+}
+
+static void SubDispMarkingOff( BOX2_APP_WORK * appwk )
+{
+	u32	i;
+
+	for( i=0; i<6; i++ ){
+		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_MARK1_S+i, FALSE );
+	}
 }
 
 // レア・ポケルスマーク表示
