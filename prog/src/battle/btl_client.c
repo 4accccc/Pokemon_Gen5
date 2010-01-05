@@ -2945,8 +2945,10 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       {
         if( result == BTL_YESNO_YES )
         {
-          u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-          BTLV_WAZAWASURE_Start( wk->viewCore, pos, wk->wazaoboe_no );
+          const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
+          int index = BTL_PARTY_FindMemberByPokeID( party, args[0] );
+          OS_TPrintf("ƒƒU–Y‚ê:ƒƒ“ƒo[index=%d\n", index);
+          BTLV_WAZAWASURE_Start( wk->viewCore, index, wk->wazaoboe_no );
           (*seq) = 10;
         }
         else
