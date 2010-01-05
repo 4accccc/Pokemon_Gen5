@@ -494,6 +494,7 @@ static void DrawMesh(ENCEFF_CNT_PTR ptr)
 
   G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
 
+  //ライトカラー
   G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
   // ポリゴンアトリビュート設定
 	G3_PolygonAttr(
