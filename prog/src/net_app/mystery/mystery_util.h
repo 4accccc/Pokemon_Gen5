@@ -40,22 +40,36 @@ extern BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					テキスト描画構造体
- *					  ・ふしぎなおくりものはストリームしない
- *					  ・実はBMPWIN構造体と同じ
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
+///	描画方式
+//=====================================
+typedef enum
+{
+  MYSTERY_TEXT_TYPE_QUE,     //プリントキューを使う
+  MYSTERY_TEXT_TYPE_STREAM,  //ストリームを使う
+
+  MYSTERY_TEXT_TYPE_MAX,    //c内部にて使用
+} MYSTERY_TEXT_TYPE;
+
+//-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
-typedef struct _MYSTERY_MSGWIN_WORK MYSTERY_TEXT_WORK;
+typedef struct _MYSTERY_TEXT_WORK MYSTERY_TEXT_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, u8 frm_plt, u16 frm_chr, PRINT_QUE *p_que, HEAPID heapID );
-extern MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, u8 frm_plt, u16 frm_chr, PRINT_QUE *p_que, HEAPID heapID );
+extern MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
+extern MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
 extern void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk );
-extern void MYSTERY_TEXT_Print( MYSTERY_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
-extern BOOL MYSTERY_TEXT_PrintMain( MYSTERY_TEXT_WORK* p_wk );
+extern void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk );
+
+extern void MYSTERY_TEXT_Print( MYSTERY_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, MYSTERY_TEXT_TYPE type );
+extern void MYSTERY_TEXT_PrintBuf( MYSTERY_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, MYSTERY_TEXT_TYPE type );
+extern BOOL MYSTERY_TEXT_IsEndPrint( const MYSTERY_TEXT_WORK *cp_wk );
+
+extern void MYSTERY_TEXT_WriteWindowFrame( MYSTERY_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -173,3 +187,31 @@ extern void MYSTERY_MENU_Exit( MYSTERY_MENU_WORK *p_wk );
 extern u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk );
 
 extern void MYSTERY_MENU_BlinkMain( MYSTERY_MENU_WORK *p_wk, u32 list_num );
+
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  シーケンス管理
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+typedef struct _MYSTERY_SEQ_WORK MYSTERY_SEQ_WORK;
+
+//-------------------------------------
+///	シーケンス関数
+//=====================================
+typedef void (*MYSTERY_SEQ_FUNCTION)( MYSTERY_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+
+//-------------------------------------
+///	パブリック
+//=====================================
+extern MYSTERY_SEQ_WORK *MYSTERY_SEQ_Init( void *p_wk_adrs, MYSTERY_SEQ_FUNCTION seq_function, HEAPID heapID );
+extern void MYSTERY_SEQ_Exit( MYSTERY_SEQ_WORK *p_wk );
+extern void MYSTERY_SEQ_Main( MYSTERY_SEQ_WORK *p_wk );
+extern BOOL MYSTERY_SEQ_IsEnd( const MYSTERY_SEQ_WORK *cp_wk );
+extern void MYSTERY_SEQ_SetNext( MYSTERY_SEQ_WORK *p_wk, MYSTERY_SEQ_FUNCTION seq_function );
+extern void MYSTERY_SEQ_End( MYSTERY_SEQ_WORK *p_wk );
+extern void MYSTERY_SEQ_SetReservSeq( MYSTERY_SEQ_WORK *p_wk, int seq );
+extern void MYSTERY_SEQ_NextReservSeq( MYSTERY_SEQ_WORK *p_wk );

@@ -110,19 +110,6 @@ typedef struct
 } MYSTERY_CARD_DATA;
 
 //-------------------------------------
-///	シーケンス管理
-//=====================================
-typedef struct _SEQ_WORK SEQ_WORK;	//関数型作るため前方宣言
-typedef void (*SEQ_FUNCTION)( SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-struct _SEQ_WORK
-{
-	SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
-	BOOL is_end;									//シーケンスシステム終了フラグ
-	int seq;											//実行中のシーケンス関数の中のシーケンス
-	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
-};
-
-//-------------------------------------
 ///	アルバム構造体
 //=====================================
 struct _MYSTERY_ALBUM_WORK
@@ -143,7 +130,7 @@ struct _MYSTERY_ALBUM_WORK
   //選択肢
   MYSTERY_LIST_WORK         *p_list;
 
-  SEQ_WORK            seq;        //シーケンス管理
+  MYSTERY_SEQ_WORK    *p_seq;        //シーケンス管理
   s32                 now_page;   //現在のページ
   MYSTERY_CURSOR_POS  cursor;     //カーソル
   BOOL                is_left;    //ページ書き込み場所
@@ -212,23 +199,13 @@ static u32 MYSTERY_CARD_DATA_GetType( const MYSTERY_CARD_DATA *cp_wk );
 static GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DATA *cp_wk );
 
 //-------------------------------------
-///	SEQ
-//=====================================
-static void SEQ_Init( SEQ_WORK *p_wk, void *p_wk_adrs, SEQ_FUNCTION seq_function );
-static void SEQ_Exit( SEQ_WORK *p_wk );
-static void SEQ_Main( SEQ_WORK *p_wk );
-static BOOL SEQ_IsEnd( const SEQ_WORK *cp_wk );
-static void SEQ_SetNext( SEQ_WORK *p_wk, SEQ_FUNCTION seq_function );
-static void SEQ_End( SEQ_WORK *p_wk );
-
-//-------------------------------------
 ///	SEQFUNC
 //=====================================
-static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_SwapCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -340,7 +317,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
     }   
   }
 
-  SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_MoveCursor );
+  p_wk->p_seq = MYSTERY_SEQ_Init( p_wk, SEQFUNC_MoveCursor, heapID );
 
   Mystery_Album_InitDisplay( p_wk, heapID );
   Mystery_Album_CreateDisplay( p_wk, TRUE, 0, p_wk->now_page, heapID );
@@ -452,7 +429,7 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
     }   
   }
 
-  SEQ_Exit( &p_wk->seq );
+  MYSTERY_SEQ_Exit( p_wk->p_seq );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -464,7 +441,7 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
 { 
-  SEQ_Main( &p_wk->seq );
+  MYSTERY_SEQ_Main( p_wk->p_seq );
   MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
   if( p_wk->p_page_win[0] )
   { 
@@ -534,7 +511,7 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL MYSTERY_ALBUM_IsEnd( const MYSTERY_ALBUM_WORK *cp_wk )
 { 
-  return SEQ_IsEnd( &cp_wk->seq );
+  return MYSTERY_SEQ_IsEnd( cp_wk->p_seq );
 }
 //=============================================================================
 /**
@@ -1461,98 +1438,6 @@ static GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DAT
 { 
   return cp_wk->p_data;
 }
-//=============================================================================
-/**
- *						SEQ
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	初期化
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *	@param	*p_param				パラメータ
- *	@param	seq_function		シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Init( SEQ_WORK *p_wk, void *p_wk_adrs, SEQ_FUNCTION seq_function )
-{	
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(SEQ_WORK) );
-
-	//初期化
-	p_wk->p_wk_adrs	= p_wk_adrs;
-
-	//セット
-	SEQ_SetNext( p_wk, seq_function );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	破棄
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Exit( SEQ_WORK *p_wk )
-{	
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(SEQ_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	メイン処理
- *
- *	@param	SEQ_WORK *p_wk ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Main( SEQ_WORK *p_wk )
-{	
-	if( !p_wk->is_end )
-	{	
-		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	終了取得
- *
- *	@param	const SEQ_WORK *cp_wk		ワーク
- *
- *	@return	TRUEならば終了	FALSEならば処理中
- */	
-//-----------------------------------------------------------------------------
-static BOOL SEQ_IsEnd( const SEQ_WORK *cp_wk )
-{	
-	return cp_wk->is_end;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	次のシーケンスを設定
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *	@param	seq_function		シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_SetNext( SEQ_WORK *p_wk, SEQ_FUNCTION seq_function )
-{	
-	p_wk->seq_function	= seq_function;
-	p_wk->seq	= 0;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	終了
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_End( SEQ_WORK *p_wk )
-{	
-	p_wk->is_end	= TRUE;
-}
 
 //=============================================================================
 /**
@@ -1563,12 +1448,12 @@ static void SEQ_End( SEQ_WORK *p_wk )
 /**
  *	@brief  カーソル移動
  *
- *	@param	SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
  *	@param	*p_seq              シーケンス
  *	@param	*p_wk_adrs          ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1732,7 +1617,7 @@ static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         { 
           if( !p_wk->is_swap )
           { 
-            SEQ_SetNext( p_seqwk, SEQFUNC_End );
+            MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
           }
         }
         else
@@ -1744,11 +1629,11 @@ static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
             //スワップモードならば入れ替えへ
             if( p_wk->is_swap )
             { 
-              SEQ_SetNext( p_seqwk, SEQFUNC_SwapCard );
+              MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_SwapCard );
             }
             else
             { 
-              SEQ_SetNext( p_seqwk, SEQFUNC_SelectList );
+              MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_SelectList );
             }
           }
         }
@@ -1769,7 +1654,7 @@ static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         }
         else
         { 
-          SEQ_SetNext( p_seqwk, SEQFUNC_End );
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
         }
       }
 
@@ -1813,16 +1698,17 @@ static void SEQFUNC_MoveCursor( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief  リスト選択
  *
- *	@param	SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
  *	@param	*p_seq              シーケンス
  *	@param	*p_wk_adrs          ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   {   
     SEQ_INIT,
+    SEQ_SELECT_INIT,
     SEQ_SELECT_WAIT,
     SEQ_NEXT_MOVE,
     SEQ_SWAPMSG_WAIT,
@@ -1836,10 +1722,16 @@ static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_INIT:
     if( p_wk->p_text == NULL )
     { 
-      p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, MYSTERY_ALBUM_BG_FRM_S_PLT, 1, p_wk->setup.p_que, p_wk->heapID );
+      p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+      MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
     }
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_017, p_wk->setup.p_font );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_017, MYSTERY_TEXT_TYPE_STREAM );
 
+    *p_seq  = SEQ_SELECT_INIT;
+    break;
+
+  case SEQ_SELECT_INIT:
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
     { 
       MYSTERY_LIST_SETUP setup;
       GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
@@ -1855,9 +1747,8 @@ static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       setup.frm_plt = MYSTERY_ALBUM_BG_FRM_S_PLT;
       setup.frm_chr = 1;
       p_wk->p_list  = MYSTERY_LIST_Init( &setup, p_wk->heapID ); 
+      *p_seq  = SEQ_SELECT_WAIT;
     }
-
-    *p_seq  = SEQ_SELECT_WAIT;
     break;
 
   case SEQ_SELECT_WAIT:
@@ -1896,9 +1787,10 @@ static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
           if( p_wk->p_text == NULL )
           { 
-            p_wk->p_text  = MYSTERY_TEXT_InitOneLine( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, MYSTERY_ALBUM_BG_FRM_S_PLT, 1, p_wk->setup.p_que, p_wk->heapID );
+            p_wk->p_text  = MYSTERY_TEXT_InitOneLine( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+            MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
           }
-          MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_020, p_wk->setup.p_font );
+          MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_020, MYSTERY_TEXT_TYPE_STREAM );
           *p_seq        = SEQ_NEXT_SWAP;
         }
         else if( ret == 1 )
@@ -1923,11 +1815,14 @@ static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     }
     MYSTERY_LIST_Exit( p_wk->p_list );
     p_wk->p_list  = NULL;
-    SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
     break;
 
   case SEQ_NEXT_SWAP:
-    SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
+    { 
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    }
     break;
 
   case SEQ_NEXT_DELETE:
@@ -1938,28 +1833,29 @@ static void SEQFUNC_SelectList( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     }
     MYSTERY_LIST_Exit( p_wk->p_list );
     p_wk->p_list  = NULL;
-    SEQ_SetNext( p_seqwk, SEQFUNC_DeleteCard );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DeleteCard );
     break;
   }
 
   if( p_wk->p_text )
   { 
-    MYSTERY_TEXT_PrintMain( p_wk->p_text );
+    MYSTERY_TEXT_Main( p_wk->p_text );
   }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  カード消去
  *
- *	@param	SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
  *	@param	*p_seq              シーケンス
  *	@param	*p_wk_adrs          ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
+    SEQ_YESNO_MSG,
     SEQ_YESNO_INIT,
     SEQ_YESNO_MAIN,
     SEQ_INIT,
@@ -1975,7 +1871,19 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
   switch( *p_seq )
   { 
+  case SEQ_YESNO_MSG:
+    if( p_wk->p_text == NULL )
+    { 
+      p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+      MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
+    }
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_021, MYSTERY_TEXT_TYPE_STREAM ); 
+
+    *p_seq  = SEQ_YESNO_INIT;
+    break;
+
   case SEQ_YESNO_INIT:
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
     { 
       MYSTERY_LIST_SETUP setup;
       GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
@@ -1991,14 +1899,8 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       setup.frm_chr = 1;
       p_wk->p_list  = MYSTERY_LIST_Init( &setup, p_wk->heapID ); 
 
-      if( p_wk->p_text == NULL )
-      { 
-      p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, MYSTERY_ALBUM_BG_FRM_S_PLT, 1, p_wk->setup.p_que, p_wk->heapID );
-      }
-      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_021, p_wk->setup.p_font ); 
-
+      *p_seq  = SEQ_YESNO_MAIN;
     }
-    *p_seq  = SEQ_YESNO_MAIN;
     break;
 
   case SEQ_YESNO_MAIN:
@@ -2012,16 +1914,18 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
         if( ret == 0 )
         { 
+          //はい
           *p_seq  = SEQ_INIT;
         }
         else
         { 
+          //いいえ
           if( p_wk->p_text )
           { 
             MYSTERY_TEXT_Exit( p_wk->p_text );
             p_wk->p_text  = NULL;
           }
-          SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
         }
       }
     }
@@ -2048,7 +1952,7 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
 
   case SEQ_MSG_INIT:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_019, p_wk->setup.p_font );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_019, MYSTERY_TEXT_TYPE_STREAM );
     *p_seq  = SEQ_MSG_WAIT;
     break;
 
@@ -2065,14 +1969,14 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       MYSTERY_TEXT_Exit( p_wk->p_text );
       p_wk->p_text  = NULL;
     }
-    SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
     break;
   }
 
 
   if( p_wk->p_text )
   { 
-    MYSTERY_TEXT_PrintMain( p_wk->p_text );
+    MYSTERY_TEXT_Main( p_wk->p_text );
   }  
   
 }
@@ -2080,12 +1984,12 @@ static void SEQFUNC_DeleteCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief  カード入れ替え
  *
- *	@param	SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
  *	@param	*p_seq              シーケンス
  *	@param	*p_wk_adrs          ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_SwapCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -2112,7 +2016,7 @@ static void SEQFUNC_SwapCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       }
       p_wk->is_swap = FALSE;
 
-      SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
       return ;
     }
 
@@ -2144,7 +2048,7 @@ static void SEQFUNC_SwapCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       MYSTERY_TEXT_Exit( p_wk->p_text );
       p_wk->p_text  = NULL;
     }
-    SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
     break;
   }
 
@@ -2153,12 +2057,12 @@ static void SEQFUNC_SwapCard( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief  終了処理orセーブ
  *
- *	@param	SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
  *	@param	*p_seq              シーケンス
  *	@param	*p_wk_adrs          ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -2184,8 +2088,9 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
 
   case SEQ_INIT:
-    p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, MYSTERY_ALBUM_BG_FRM_S_PLT, 1, p_wk->setup.p_que, p_wk->heapID );
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, p_wk->setup.p_font );
+    p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, MYSTERY_TEXT_TYPE_STREAM );
     *p_seq  = SEQ_MAIN;
     break;
 
@@ -2202,13 +2107,13 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
 
   case SEQ_EXIT:
-    SEQ_End( p_seqwk );
+    MYSTERY_SEQ_End( p_seqwk );
     break;
   }
 
   if( p_wk->p_text )
   { 
-    MYSTERY_TEXT_PrintMain( p_wk->p_text );
+    MYSTERY_TEXT_Main( p_wk->p_text );
   }  
 }
 

@@ -187,11 +187,31 @@ BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk )
 //-------------------------------------
 ///	定数
 //=====================================
+#define MYSTERY_TEXT_TYPE_NONE  (MYSTERY_TEXT_TYPE_MAX)
 
 //-------------------------------------
-///	メッセージウィンドウ
+/// メッセージウィンドウ
 //=====================================
-//MYSTERY_MSGWIN_WORKと同じ
+struct _MYSTERY_TEXT_WORK
+{
+  GFL_MSGDATA       *p_msg;
+  GFL_FONT          *p_font;
+  PRINT_STREAM      *p_stream;
+  GFL_TCBLSYS       *p_tcbl;
+  GFL_BMPWIN*       p_bmpwin;
+  STRBUF*           p_strbuf;
+  u16               clear_chr;
+  u16               heapID;
+  PRINT_UTIL        util;
+  PRINT_QUE         *p_que;
+  u32               print_update;
+  BOOL              is_end_print;
+} ;
+
+//-------------------------------------
+///	プロトタイプ
+//=====================================
+static void MYSTERY_TEXT_PrintInner( MYSTERY_TEXT_WORK* p_wk, MYSTERY_TEXT_TYPE type );
 
 //-------------------------------------
 ///	パブリック
@@ -202,43 +222,79 @@ BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk )
  *
  *	@param	u16 frm       BG面
  *	@param	font_plt      フォントパレット
- *	@param  frm_plt       フレームパレット
- *	@param  frm_chr       フレームキャラ
- *	@param	heapID  ヒープID
+ *	@param  PRINT_QUE     プリントQ
+ *	@param  GFL_FONT      フォント
+ *	@param	heapID        ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, u8 frm_plt, u16 frm_chr, PRINT_QUE *p_que, HEAPID heapID )
+MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
 { 
-  MYSTERY_MSGWIN_WORK *p_wk;
+  MYSTERY_TEXT_WORK *p_wk;
 
-  p_wk  = MYSTERY_MSGWIN_Init( frm, 1, 19, 30, 4, font_plt, p_que, heapID );
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_TEXT_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_TEXT_WORK) );
   p_wk->clear_chr = 0xF;
-  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
+  p_wk->p_font    = p_font;
+  p_wk->p_que     = p_que;
+  p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
+
+  //バッファ作成
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+
+	//BMPWIN作成
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
+
+	//プリントキュー設定
+	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+
+	//転送
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+  p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
 
   return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト1行  初期化
+ *	@brief  テキスト  初期化  １行メッセージ
  *
  *	@param	u16 frm       BG面
  *	@param	font_plt      フォントパレット
- *	@param  frm_plt       フレームパレット
- *	@param  frm_chr       フレームキャラ
- *	@param	heapID  ヒープID
+ *	@param  PRINT_QUE     プリントQ
+ *	@param  GFL_FONT      フォント
+ *	@param	heapID        ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, u8 frm_plt, u16 frm_chr, PRINT_QUE *p_que, HEAPID heapID )
+MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
 { 
-  MYSTERY_MSGWIN_WORK *p_wk;
+  MYSTERY_TEXT_WORK *p_wk;
 
-  p_wk  = MYSTERY_MSGWIN_Init( frm, 1, 21, 30, 2, font_plt, p_que, heapID );
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_TEXT_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_TEXT_WORK) );
   p_wk->clear_chr = 0xF;
-  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
+  p_wk->p_font    = p_font;
+  p_wk->p_que     = p_que;
+  p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
+
+  //バッファ作成
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+
+	//BMPWIN作成
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 21, 30, 2, font_plt, GFL_BMP_CHRAREA_GET_B );
+
+	//プリントキュー設定
+	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+
+	//転送
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+  p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
 
   return p_wk;
 }
@@ -251,8 +307,76 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, u8 frm_plt, 
 //-----------------------------------------------------------------------------
 void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
 { 
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+
+  GFL_TCBL_Exit( p_wk->p_tcbl );
+
   BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
-  MYSTERY_MSGWIN_Exit( p_wk );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  描画処理
+ *
+ *	@param	MYSTERY_TEXT_WORK* p_wk   ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
+{ 
+  switch( p_wk->print_update )
+  { 
+  default:
+    /* fallthor */
+  case MYSTERY_TEXT_TYPE_NONE:
+    break;
+
+  case MYSTERY_TEXT_TYPE_QUE:
+    p_wk->is_end_print  = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+    break;
+
+  case MYSTERY_TEXT_TYPE_STREAM:
+    if( p_wk->p_stream )
+    { 
+      PRINTSTREAM_STATE state;
+      state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+
+      switch( state )
+      { 
+      case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
+
+        // メッセージスキップ
+        if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        {
+          PRINTSYS_PrintStreamShortWait( p_wk->p_stream, 0 );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_PAUSE:    ///< 一時停止中（ページ切り替え待ち等）
+
+        //改行
+        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        { 
+          PRINTSYS_PrintStreamReleasePause( p_wk->p_stream );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_DONE:     ///< 文字列終端まで表示完了
+        p_wk->is_end_print  = TRUE;
+        break;
+      }
+    }
+    break;
+  }
+
+  GFL_TCBL_Main( p_wk->p_tcbl );
 }
 //----------------------------------------------------------------------------
 /*
@@ -261,27 +385,102 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
  *	@param	MYSTERY_TEXT_WORK* p_wk ワーク
  *	@param	*p_msg            メッセージ
  *	@param	strID             メッセージID
- *	@param	*p_font           フォント
+ *	@param  type              描画タイプ
  */
 //-----------------------------------------------------------------------------
-void MYSTERY_TEXT_Print( MYSTERY_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
+void MYSTERY_TEXT_Print( MYSTERY_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, MYSTERY_TEXT_TYPE type )
 { 
-	MYSTERY_MSGWIN_Print( p_wk, p_msg, strID, p_font );
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+
+  //文字描画
+  MYSTERY_TEXT_PrintInner( p_wk, type );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  プリント待ち
+ *	@brief  テキスト  プリント開始  バッファ版
  *
- *	@param	MYSTERY_TEXT_WORK* p_wk   ワーク
+ *	@param	MYSTERY_TEXT_WORK* p_wk ワーク
+ *	@param	STRBUF *cp_strbuf       文字バッファ
+ *	@param	type                    描画タイプ
  *
- *	@return TRUEでプリントした  FALSEでプリント中
  */
 //-----------------------------------------------------------------------------
-BOOL MYSTERY_TEXT_PrintMain( MYSTERY_TEXT_WORK* p_wk )
+void MYSTERY_TEXT_PrintBuf( MYSTERY_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, MYSTERY_TEXT_TYPE type )
 { 
-  return MYSTERY_MSGWIN_PrintMain( p_wk );
+  //文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
+
+  //文字描画
+  MYSTERY_TEXT_PrintInner( p_wk, type );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト文字描画プライベート
+ *
+ *	@param	MYSTERY_TEXT_WORK* p_wk ワーク
+ *	@param	type              描画タイプ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_TEXT_PrintInner( MYSTERY_TEXT_WORK* p_wk, MYSTERY_TEXT_TYPE type )
+{ 
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+
+  //ストリーム破棄
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+
+  //タイプごとの文字描画
+  switch( type )
+  { 
+  case MYSTERY_TEXT_TYPE_QUE:     //プリントキューを使う
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    p_wk->print_update  = MYSTERY_TEXT_TYPE_QUE;
+    break;
+
+  case MYSTERY_TEXT_TYPE_STREAM:  //ストリームを使う
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
+        p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+    p_wk->print_update  = MYSTERY_TEXT_TYPE_STREAM;
+    break;
+  }
+
+  p_wk->is_end_print  = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  プリント終了待ち  （QUEの場合はQUE終了、STREAMのときは最後まで文字描画終了）
+ *
+ *	@param	const MYSTERY_TEXT_WORK *cp_wk ワーク
+ *
+ *	@return TRUEならば文字描画完了  FALSEならば最中。
+ */
+//-----------------------------------------------------------------------------
+BOOL MYSTERY_TEXT_IsEndPrint( const MYSTERY_TEXT_WORK *cp_wk )
+{ 
+  return cp_wk->is_end_print;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  枠を描画
+ *
+ *	@param	MYSTERY_TEXT_WORK *p_wk   ワーク
+ *	@param  フレームのキャラ
+ *	@param  フレームのパレット
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_TEXT_WriteWindowFrame( MYSTERY_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt )
+{ 
+  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
+}
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  リスト
@@ -813,4 +1012,139 @@ static void PalletFadeMain( u16 *p_buff, u16 *p_cnt, u8 plt_num, u8 plt_col, GXR
                                         p_buff, 2 );
   }
 
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  シーケンス管理
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+struct _MYSTERY_SEQ_WORK
+{
+	MYSTERY_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
+	BOOL is_end;									//シーケンスシステム終了フラグ
+	int seq;											//実行中のシーケンス関数の中のシーケンス
+	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  int reserv_seq;               //予約シーケンス
+};
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	初期化
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk	ワーク
+ *	@param	*p_param				パラメータ
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+MYSTERY_SEQ_WORK * MYSTERY_SEQ_Init( void *p_wk_adrs, MYSTERY_SEQ_FUNCTION seq_function, HEAPID heapID )
+{	
+  MYSTERY_SEQ_WORK *p_wk;
+
+	//作成
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_SEQ_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(MYSTERY_SEQ_WORK) );
+
+	//初期化
+	p_wk->p_wk_adrs	= p_wk_adrs;
+
+	//セット
+	MYSTERY_SEQ_SetNext( p_wk, seq_function );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	破棄
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_Exit( MYSTERY_SEQ_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	メイン処理
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_Main( MYSTERY_SEQ_WORK *p_wk )
+{	
+	if( !p_wk->is_end )
+	{	
+		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了取得
+ *
+ *	@param	const MYSTERY_SEQ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */	
+//-----------------------------------------------------------------------------
+BOOL MYSTERY_SEQ_IsEnd( const MYSTERY_SEQ_WORK *cp_wk )
+{	
+	return cp_wk->is_end;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	次のシーケンスを設定
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk	ワーク
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_SetNext( MYSTERY_SEQ_WORK *p_wk, MYSTERY_SEQ_FUNCTION seq_function )
+{	
+	p_wk->seq_function	= seq_function;
+	p_wk->seq	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_End( MYSTERY_SEQ_WORK *p_wk )
+{	
+	p_wk->is_end	= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 次のシーケンスを予約
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk  ワーク
+ *	@param	seq             次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_SetReservSeq( MYSTERY_SEQ_WORK *p_wk, int seq )
+{ 
+  p_wk->reserv_seq  = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_SEQ_NextReservSeq( MYSTERY_SEQ_WORK *p_wk )
+{ 
+  p_wk->seq = p_wk->reserv_seq;
 }
