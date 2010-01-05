@@ -72,7 +72,7 @@ enum{
   ZONE_IDX_HIDE = ZONE_IDX_MAX,
 };
 
-static const u16 DATA_ZoneTbl[LOCATION_MAX+1] = {
+static const u16 DATA_ZoneTbl[MVPOKE_LOCATION_MAX+1] = {
 	//
 	ZONE_ID_R01,		//0
 	ZONE_ID_R02,		//1
@@ -94,7 +94,7 @@ static const u16 DATA_ZoneTbl[LOCATION_MAX+1] = {
   MVPOKE_ZONE_NULL, //17
 };
 
-static const MP_LOC_DATA MovePokeLocationTbl[LOCATION_MAX] =
+static const MP_LOC_DATA MovePokeLocationTbl[MVPOKE_LOCATION_MAX] =
 {
 	{2,{1,15,0xffff,0xffff,0xffff,0xffff}},		//0
 	{2,{0,2,0xffff,0xffff,0xffff,0xffff}},		//1
@@ -229,6 +229,21 @@ void MP_MovePokemonNeighboring(ENC_SV_PTR inEncData)
 u16 MP_GetMovePokeZoneID( ENC_SV_PTR inEncData, const u8 inTarget)
 {
 	return GetZoneID( EncDataSave_GetMovePokeZoneIdx( inEncData, inTarget) );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 移動ポケモンゾーンIdxをゾーンIDに変換
+ *
+ * @param	  inZoneIdx  移動ポケモンゾーンindex
+ *
+ * @retval  MVPOKE_ZONE_NULL  隠れているので無効
+ * @retval  それ以外　移動ポケモンがいるゾーンID
+ */
+//--------------------------------------------------------------------------------------------
+u16 MP_MovePokeZoneIdx2ID( const u8 inZoneIdx )
+{
+	return GetZoneID( inZoneIdx );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -527,7 +542,7 @@ static void JumpMovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const i
 	move_poke_now_zone = GetZoneID( EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke));
 	
   while(1){
-    zone_idx =  GFUser_GetPublicRand0( LOCATION_MAX);
+    zone_idx =  GFUser_GetPublicRand0( MVPOKE_LOCATION_MAX );
 		zone = GetZoneID( zone_idx );
 		if ((zone != inPlayerOldZone)&&(zone != move_poke_now_zone)){
 			UpdateData(	data, inTargetPoke, zone_idx, zone);

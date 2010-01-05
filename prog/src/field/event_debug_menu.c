@@ -83,6 +83,9 @@
 
 #include "event_debug_wifimatch.h"
 #include "event_battlerecorder.h"
+#include "event_debug_mvpoke.h"
+
+FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
 //  define
@@ -180,6 +183,7 @@ static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -240,6 +244,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d }, 
+  { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon }, 
 };
 
 
@@ -4159,5 +4164,24 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
   }
   
   return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   移動ポケモンデバッグ
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event;
+  
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys, 
+    FS_OVERLAY_ID( d_iwasawa ), EVENT_DebugMovePoke, wk );
+  
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return( TRUE );
 }
 

@@ -11,6 +11,7 @@ REM ##################################################
 REM ツールパス系
 doskey vi=c:\tools\vi\gvim.exe $*
 doskey golib=cd c:\home\gflib\gflib\src\$*
+doskey godat=cd c:\home\wb_data3d$*
 
 doskey chp=cd %PROJECT_ROOT:/=\%prog\$*
 doskey chs=cd %PROJECT_ROOT:/=\%prog\src\$*

@@ -13,8 +13,8 @@
 #define MOVE_POKE_RAIKAMI	    (0)	//ライカミ
 #define MOVE_POKE_KAZAKAMI		(1)	//カザカミ
 
-#define	LOCATION_MAX	(17)	//移動場所数
-
+#define	MVPOKE_LOCATION_MAX	(17)	//移動場所数
+#define MVPOKE_ZONE_IDX_HIDE  (MVPOKE_LOCATION_MAX) //隠れている時のゾーンIdx
 #define MVPOKE_ZONE_NULL  (0xFFFF)  //無効ゾーンID(隠れている時のID)
 
 ///移動ポケモン移動制御タイプ

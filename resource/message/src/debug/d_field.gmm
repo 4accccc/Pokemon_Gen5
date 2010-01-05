@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -935,6 +935,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_08">
 		<language name="JPN" width="160">デモ8</language>
 		<language name="JPN_KANJI" width="160">デモ8</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MVPOKE">
+		<language name="JPN" width="160">いどうポケモン</language>
+		<language name="JPN_KANJI" width="160">移動ポケモン</language>
 	</row>
 
 	<flowchart-group-list>
