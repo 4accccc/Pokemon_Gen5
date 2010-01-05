@@ -1820,7 +1820,7 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   {
     const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
     u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno);
+    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d, selPos=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno, pos);
   }
 
   wk->selectItemSeq = 0;
