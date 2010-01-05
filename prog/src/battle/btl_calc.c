@@ -310,21 +310,23 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
 
   {
     static const u8 perTbl[ HIT_COUNT_RANGE ][ HIT_COUNT_RANGE ] = {
-/* 1 */     {  100, 100, 100, 100 },
-/* 2 */     {    0, 100, 100, 100 },
-/* 3 */     {    0,   0, 100, 100 },
-/* 4 */     {   35,  70, 100, 100 },
-/* 5 */     {   30,  60,  80, 100 },
+/* 1 */     {  100, 100, 100, 100, 100 },
+/* 2 */     {    0, 100, 100, 100, 100 },
+/* 3 */     {    0,   0, 100, 100, 100 },
+/* 4 */     {   35,  70, 100, 100, 100 },
+/* 5 */     {    0,  35,  70,  85, 100 },
     };
 
     u8  max, p, i;
 
     p = BTL_CALC_GetRand( 100 );
+    OS_TPrintf("HitCount P=%d\n", p);
     max = numHitMax - HIT_COUNT_MIN;
     for(i=0; i<HIT_COUNT_RANGE; i++)
     {
       if( p < perTbl[max][i] )
       {
+        OS_TPrintf("HitCount Break by [[%d]] - %d\n", max, i);
         break;
       }
     }

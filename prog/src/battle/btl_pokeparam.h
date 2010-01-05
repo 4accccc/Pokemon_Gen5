@@ -385,6 +385,7 @@ extern void BPP_Clear_ForIn( BTL_POKEPARAM* bpp );
 extern void BPP_SetItem( BTL_POKEPARAM* pp, u16 itemID );
 extern void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx );
 extern void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent );
+extern BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza );
 extern void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user );
 extern void BPP_ReflectToPP( BTL_POKEPARAM* bpp );
 extern void BPP_ReflectByPP( BTL_POKEPARAM* bpp );
@@ -395,7 +396,7 @@ extern void BPP_FakeDisable( BTL_POKEPARAM* bpp );
 
 extern u8 BPP_GetCriticalRank( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_AddCriticalRank( BTL_POKEPARAM* bpp, int value );
-extern void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value );
+extern void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u16 value );
 extern void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight );
 extern u16 BPP_GetWeight( const BTL_POKEPARAM* bpp );
 

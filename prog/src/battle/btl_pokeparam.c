@@ -553,7 +553,7 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
  * @param   value
  */
 //=============================================================================================
-void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value )
+void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u16 value )
 {
   vid = ConvertValueID( bpp, vid );
 
@@ -1303,6 +1303,27 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
   }
   pWaza->pp = pWaza->ppMax;
   BTL_Printf("ワザ上書き: ppMax指定=%d, 実地:%d\n", ppMax, pWaza->ppMax);
+}
+//=============================================================================================
+/**
+ * 指定ワザを覚えているかチェック
+ *
+ * @param   bpp
+ * @param   waza
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza )
+{
+  int i;
+  for(i=0; i<NELEMS(bpp->waza); ++i)
+  {
+    if( bpp->waza[i].number == waza ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 //=============================================================================================
 /**

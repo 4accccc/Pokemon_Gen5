@@ -6324,17 +6324,24 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
       BTL_POKEPARAM* bpp;
-      u8 cnt, i;
-      cnt = BTL_POKESET_GetCount( targets );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
-      for(i=0; i<cnt; ++i){
+      u8 targetMax, targetCnt, i;
+
+      targetMax = BTL_POKESET_GetCountMax( targets );
+      targetCnt = BTL_POKESET_GetCount( targets );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, targetCnt );
+      OS_TPrintf("–¢•ª—ÞƒƒU UŒ‚PokeID=%d, ‘ÎÛƒ|ƒP”=%d/%d\n", BPP_GetID(attacker), targetCnt, targetMax);
+      for(i=0; i<targetCnt; ++i){
         bpp = BTL_POKESET_Get( targets, i );
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-      if( cnt ){
-        BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA );
-      }else{
+      if( targetMax )
+      {
+        if( targetCnt ){
+          BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA );
+        }
+      }
+      else{
         BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET );
       }
     }
