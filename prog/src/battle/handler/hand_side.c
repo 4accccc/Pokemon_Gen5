@@ -430,7 +430,7 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BPP_GetPokeType(bpp) );
+    BtlTypeAff  affinity = BTL_CALC_TypeAffPair( POKETYPE_IWA, BPP_GetPokeType(bpp) );
     u8 denom = 8;
     switch( affinity ){
     case BTL_TYPEAFF_25:
