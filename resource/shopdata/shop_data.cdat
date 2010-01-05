@@ -123,357 +123,68 @@ static const u16 fs_stage6[] = {
 };
 #define FS_STAGE6_MAX	(NELEMS(fs_stage6))
 
-// ヨシノシティ
-static const u16 t21_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_HIIRUBOORU,
-		0xffff,
-};
-#define T21_FS_MAX	(NELEMS(t21_fs))
-
-// キキョウシティ
-static const u16 t22_fs[] = {
-		ITEM_TONNERUMEERU,
-		ITEM_HIIRUBOORU,
-		ITEM_NETTOBOORU,
-		0xffff,
-};
-#define T22_FS_MAX	(NELEMS(t22_fs))
-
-// ヒワダタウン
-static const u16 t23_fs[] = {
-		ITEM_BURUUMUMEERU,
-		ITEM_HIIRUBOORU,
-		ITEM_NETTOBOORU,
-		0xffff,
-};
-#define T23_FS_MAX	(NELEMS(t23_fs))
-
-// コガネシティ（百貨店２Ｆ下側）
-static const u16 T25_DEPT_01_01[] = {
-		ITEM_KIZUGUSURI,
-		ITEM_IIKIZUGUSURI,
-		ITEM_SUGOIKIZUGUSURI,
-		ITEM_MANTANNOKUSURI,
-		ITEM_GENKINOKAKERA,
-		ITEM_DOKUKESI,
-		ITEM_MAHINAOSI,
-		ITEM_YAKEDONAOSI,
-		ITEM_KOORINAOSI,
-		ITEM_NEMUKEZAMASI,
-		ITEM_NANDEMONAOSI,
-		0xffff,
-};
-#define T25_DEPT_01_01_MAX	(NELEMS(T25_DEPT_01_01))
-
-// コガネシティ（百貨店２Ｆ上側）
-static const u16 T25_DEPT_01_02[] = {
-		ITEM_MONSUTAABOORU,
-		ITEM_SUUPAABOORU,
-		ITEM_HAIPAABOORU,
-		ITEM_ANANUKENOHIMO,
-		ITEM_PIPPININGYOU,
-		ITEM_MUSIYOKESUPUREE,
-		ITEM_SIRUBAASUPUREE,
-		ITEM_GOORUDOSUPUREE,
-		ITEM_GURASUMEERU,
-		ITEM_HUREIMUMEERU,
-		ITEM_BURUUMEERU,
-		ITEM_SUPEESUMEERU,
-		0xffff,
-};
-#define T25_DEPT_01_02_MAX	(NELEMS(T25_DEPT_01_02))
-
-// コガネシティ（百貨店３Ｆ）
-static const u16 T25_DEPT_02_01[] = {
-		ITEM_SUPIIDAA,
-		ITEM_PURASUPAWAA,
-		ITEM_DHIFENDAA,
-		ITEM_EFEKUTOGAADO,
-		ITEM_KURITHIKATTAA,
-		ITEM_YOKUATAARU,
-		ITEM_SUPESYARUAPPU,
-		ITEM_SUPESYARUGAADO,
-		0xffff,
-};
-#define T25_DEPT_02_01_MAX	(NELEMS(T25_DEPT_02_01))
-
-// コガネシティ（百貨店４Ｆ）
-static const u16 T25_DEPT_03_01[] = {
-		ITEM_TAURIN,
-		ITEM_BUROMUHEKISIN,
-		ITEM_RIZOTIUMU,
-		ITEM_KITOSAN,
-		ITEM_INDOMETASIN,
-		ITEM_MAKKUSUAPPU,
-		0xffff,
-};
-#define T25_DEPT_03_01_MAX	(NELEMS(T25_DEPT_03_01))
-
-// コガネシティ（百貨店５Ｆ）
-static const u16 T25_DEPT_04_01[] = {
-		ITEM_WAZAMASIN70,
-		ITEM_WAZAMASIN17,
-		ITEM_WAZAMASIN54,
-		ITEM_WAZAMASIN83,
-		ITEM_WAZAMASIN16,
-		ITEM_WAZAMASIN33,
-		ITEM_WAZAMASIN22,
-		ITEM_WAZAMASIN52,
-		ITEM_WAZAMASIN38,
-		ITEM_WAZAMASIN25,
-		ITEM_WAZAMASIN14,
-		ITEM_WAZAMASIN15,
-		0xffff,
-};
-#define T25_DEPT_04_01_MAX	(NELEMS(T25_DEPT_04_01))
-
-// コガネシティ（地下通路・漢方屋）
-static const u16 d37r0102[] = {
-		ITEM_BANNOUGONA,
-		ITEM_TIKARANOKONA,
-		ITEM_TIKARANONEKKO,
-		ITEM_HUKKATUSOU,
-		0xffff,
-};
-#define D37R0102_MAX	(NELEMS(d37r0102))
-
-// エンジュシティ
-static const u16 t27_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_HIIRUBOORU,
-		ITEM_NETTOBOORU,
-		0xffff,
-};
-#define T27_FS_MAX	(NELEMS(t27_fs))
-
-// アサギシティ
-static const u16 t26_fs[] = {
-		ITEM_RABURABUMEERU,
-		ITEM_HIIRUBOORU,
-		ITEM_NETTOBOORU,
-		0xffff,
-};
-#define T26_FS_MAX	(NELEMS(t26_fs))
-
-// タンバシティ
-static const u16 t24_fs[] = {
-		ITEM_KIZUGUSURI,
-		ITEM_IIKIZUGUSURI,
-		ITEM_SUGOIKIZUGUSURI,
-		ITEM_NANDEMONAOSI,
-		ITEM_GENKINOKAKERA,
-		0xffff,
-};
-#define T24_FS_MAX	(NELEMS(t24_fs))
-
-// フスベシティ
-static const u16 t30_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_NETTOBOORU,
-		ITEM_DAAKUBOORU,
-		0xffff,
-};
-#define T30_FS_MAX	(NELEMS(t30_fs))
-
-// ポケモンリーグ
-static const u16 pk_fs[] = {
-		ITEM_HAIPAABOORU,
-		ITEM_GOORUDOSUPUREE,
-		ITEM_SUGOIKIZUGUSURI,
-		ITEM_MANTANNOKUSURI,
-		ITEM_KAIHUKUNOKUSURI,
-		ITEM_GENKINOKAKERA,
-		ITEM_NANDEMONAOSI,
-		0xffff,
-};
-#define PK_FS_MAX	(NELEMS(pk_fs))
-
-// クチバシティ
-static const u16 t06_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_NESUTOBOORU,
-		ITEM_DAAKUBOORU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T06_FS_MAX	(NELEMS(t06_fs))
-
-// ヤマブキシティ
-static const u16 t11_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_DAAKUBOORU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T11_FS_MAX	(NELEMS(t11_fs))
-
-// シオンタウン
-static const u16 t05_fs[] = {
-		ITEM_BURIZAADOMEERU,
-		ITEM_DAAKUBOORU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T05_FS_MAX	(NELEMS(t05_fs))
-
-// ハナダシティ
-static const u16 t04_fs[] = {
-		ITEM_EAMEERU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T04_FS_MAX	(NELEMS(t04_fs))
-
-// タマムシシティ（デパート２Ｆ）
-static const u16 t07_dept_01_01[] = {
-		ITEM_KIZUGUSURI,
-		ITEM_IIKIZUGUSURI,
-		ITEM_SUGOIKIZUGUSURI,
-		ITEM_MANTANNOKUSURI,
-		ITEM_GENKINOKAKERA,
-		ITEM_DOKUKESI,
-		ITEM_MAHINAOSI,
-		ITEM_YAKEDONAOSI,
-		ITEM_KOORINAOSI,
-		ITEM_NEMUKEZAMASI,
-		ITEM_NANDEMONAOSI,
-		0xffff,
-};
-#define T07_DEPT_01_01_MAX	(NELEMS(t07_dept_01_01))
-
-// タマムシシティ（デパート２Ｆ）
-static const u16 t07_dept_01_02[] = {
-		ITEM_MONSUTAABOORU,
-		ITEM_SUUPAABOORU,
-		ITEM_HAIPAABOORU,
-		ITEM_ANANUKENOHIMO,
-		ITEM_PIPPININGYOU,
-		ITEM_MUSIYOKESUPUREE,
-		ITEM_SIRUBAASUPUREE,
-		ITEM_GOORUDOSUPUREE,
-		ITEM_GURASUMEERU,
-		ITEM_HUREIMUMEERU,
-		ITEM_BURUUMEERU,
-		ITEM_SUPEESUMEERU,
-		0xffff,
-};
-#define T07_DEPT_01_02_MAX	(NELEMS(t07_dept_01_02))
-
-// タマムシシティ（デパート３Ｆ）
-static const u16 t07_dept_02_01[] = {
-		ITEM_WAZAMASIN21,
-		ITEM_WAZAMASIN27,
-		ITEM_WAZAMASIN87,
-		ITEM_WAZAMASIN78,
-		ITEM_WAZAMASIN12,
-		ITEM_WAZAMASIN41,
-		ITEM_WAZAMASIN20,
-		ITEM_WAZAMASIN28,
-		ITEM_WAZAMASIN76,
-		ITEM_WAZAMASIN55,
-		ITEM_WAZAMASIN72,
-		ITEM_WAZAMASIN79,
-		0xffff,
-};
-#define T07_DEPT_02_01_MAX	(NELEMS(t07_dept_02_01))
-
-// タマムシシティ（デパート４Ｆ）
-static const u16 t07_dept_03_01[] = {
-		ITEM_EAMEERU,
-		ITEM_TONNERUMEERU,
-		ITEM_BURUUMUMEERU,
-		0xffff,
-};
-#define T07_DEPT_03_01_MAX	(NELEMS(t07_dept_03_01))
-
-// タマムシシティ（デパート５Ｆ）
-static const u16 t07_dept_04_01[] = {
-		ITEM_SUPIIDAA,
-		ITEM_PURASUPAWAA,
-		ITEM_DHIFENDAA,
-		ITEM_EFEKUTOGAADO,
-		ITEM_KURITHIKATTAA,
-		ITEM_YOKUATAARU,
-		ITEM_SUPESYARUAPPU,
-		ITEM_SUPESYARUGAADO,
-		0xffff,
-};
-#define T07_DEPT_04_01_MAX	(NELEMS(t07_dept_04_01))
-
-// タマムシシティ（デパート５Ｆ）
-static const u16 t07_dept_04_02[] = {
-		ITEM_TAURIN,
-		ITEM_BUROMUHEKISIN,
-		ITEM_RIZOTIUMU,
-		ITEM_KITOSAN,
-		ITEM_INDOMETASIN,
-		ITEM_MAKKUSUAPPU,
-		0xffff,
-};
-#define T07_DEPT_04_02_MAX	(NELEMS(t07_dept_04_02))
-
-// セキチクシティ
-static const u16 t08_fs[] = {
-		ITEM_SUTIIRUMEERU,
-		ITEM_DAAKUBOORU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T08_FS_MAX	(NELEMS(t08_fs))
-
-// ニビシティ
-static const u16 t03_fs[] = {
-		ITEM_SUTIIRUMEERU,
-		ITEM_NESUTOBOORU,
-		ITEM_KUIKKUBOORU,
-		0xffff,
-};
-#define T03_FS_MAX	(NELEMS(t03_fs))
-
-// トキワシティ
+// タウン１
 static const u16 t02_fs[] = {
-		ITEM_SUTIIRUMEERU,
-		ITEM_NETTOBOORU,
-		ITEM_HIIRUBOORU,
+		ITEM_EAMEERU,
 		0xffff,
 };
 #define T02_FS_MAX	(NELEMS(t02_fs))
 
-// おつきみやま
-static const u16 d02_shop[] = {
-		ITEM_PIPPININGYOU,
-		ITEM_OISIIMIZU,
-		ITEM_SAIKOSOODA,
-		ITEM_MIKKUSUORE,
-		ITEM_MUSIYOKESUPUREE,
-		ITEM_RABURABUMEERU,
-		0xffff,
-};
-#define D02_SHOP_MAX	(NELEMS(d02_shop))
-
-// チョウジタウン・土産物屋（ロケット団）
-static const u16 d35r0101[] = {
-		ITEM_TIISANAKINOKO,
-		ITEM_MONSUTAABOORU,
-		ITEM_KIZUGUSURI,
-		0xffff,
-};
-#define D35R0101_MAX	(NELEMS(d35r0101))
-
-// チョウジタウン・土産物屋（おばあさん）
-static const u16 d35r0101_2[] = {
-		ITEM_SUUPAABOORU,
-		ITEM_IIKIZUGUSURI,
-		ITEM_SUGOIKIZUGUSURI,
-		ITEM_DOKUKESI,
-		ITEM_MAHINAOSI,
-		ITEM_SIRUBAASUPUREE,
-		ITEM_GENKINOKAKERA,
+// シティ１
+static const u16 c01_fs[] = {
 		ITEM_EAMEERU,
 		0xffff,
 };
-#define D35R0101_2_MAX	(NELEMS(d35r0101_2))
+#define C01_FS_MAX	(NELEMS(c01_fs))
+
+// シティ２
+static const u16 c02_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C02_FS_MAX	(NELEMS(c02_fs))
+
+// シティ３
+static const u16 c03_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C03_FS_MAX	(NELEMS(c03_fs))
+
+// シティ４
+static const u16 c04_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C04_FS_MAX	(NELEMS(c04_fs))
+
+// シティ５
+static const u16 c05_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C05_FS_MAX	(NELEMS(c05_fs))
+
+// シティ６
+static const u16 c06_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C06_FS_MAX	(NELEMS(c06_fs))
+
+// シティ７
+static const u16 c07_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C07_FS_MAX	(NELEMS(c07_fs))
+
+// シティ８
+static const u16 c08_fs[] = {
+		ITEM_EAMEERU,
+		0xffff,
+};
+#define C08_FS_MAX	(NELEMS(c08_fs))
 
 
 
@@ -485,36 +196,15 @@ static const u16 *shop_data_table[]={
 	fs_stage4,
 	fs_stage5,
 	fs_stage6,
-	t21_fs,
-	t22_fs,
-	t23_fs,
-	T25_DEPT_01_01,
-	T25_DEPT_01_02,
-	T25_DEPT_02_01,
-	T25_DEPT_03_01,
-	T25_DEPT_04_01,
-	d37r0102,
-	t27_fs,
-	t26_fs,
-	t24_fs,
-	t30_fs,
-	pk_fs,
-	t06_fs,
-	t11_fs,
-	t05_fs,
-	t04_fs,
-	t07_dept_01_01,
-	t07_dept_01_02,
-	t07_dept_02_01,
-	t07_dept_03_01,
-	t07_dept_04_01,
-	t07_dept_04_02,
-	t08_fs,
-	t03_fs,
 	t02_fs,
-	d02_shop,
-	d35r0101,
-	d35r0101_2,
+	c01_fs,
+	c02_fs,
+	c03_fs,
+	c04_fs,
+	c05_fs,
+	c06_fs,
+	c07_fs,
+	c08_fs,
 };
 
 
@@ -526,34 +216,13 @@ static const u8 shop_itemnum_table[]={
 	FS_STAGE4_MAX,
 	FS_STAGE5_MAX,
 	FS_STAGE6_MAX,
-	T21_FS_MAX,
-	T22_FS_MAX,
-	T23_FS_MAX,
-	T25_DEPT_01_01_MAX,
-	T25_DEPT_01_02_MAX,
-	T25_DEPT_02_01_MAX,
-	T25_DEPT_03_01_MAX,
-	T25_DEPT_04_01_MAX,
-	D37R0102_MAX,
-	T27_FS_MAX,
-	T26_FS_MAX,
-	T24_FS_MAX,
-	T30_FS_MAX,
-	PK_FS_MAX,
-	T06_FS_MAX,
-	T11_FS_MAX,
-	T05_FS_MAX,
-	T04_FS_MAX,
-	T07_DEPT_01_01_MAX,
-	T07_DEPT_01_02_MAX,
-	T07_DEPT_02_01_MAX,
-	T07_DEPT_03_01_MAX,
-	T07_DEPT_04_01_MAX,
-	T07_DEPT_04_02_MAX,
-	T08_FS_MAX,
-	T03_FS_MAX,
 	T02_FS_MAX,
-	D02_SHOP_MAX,
-	D35R0101_MAX,
-	D35R0101_2_MAX,
+	C01_FS_MAX,
+	C02_FS_MAX,
+	C03_FS_MAX,
+	C04_FS_MAX,
+	C05_FS_MAX,
+	C06_FS_MAX,
+	C07_FS_MAX,
+	C08_FS_MAX,
 };
