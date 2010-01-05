@@ -349,16 +349,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
               }
             }
           }
-          for( i=0;i<3;i++ )
-          {
-            u8 j;
-            OS_TFPrintf(3,"[%d][",callWork->checkIdx[i]);
-            for( j=0;j<6;j++ )
-            {
-              OS_TFPrintf(3,"%02x",beacon->callTarget[i][j]);
-            }
-            OS_TFPrintf(3,"]\n");
-          }
         }
       }
     }
@@ -435,7 +425,6 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     if( tpx > 8 && tpx < 256-(8*4) )
     {
       const s16 idx = (tpy+callWork->scrollOfs)/CTVT_CALL_BAR_HEIGHT;
-      OS_TFPrintf(3,"IDX[%d]\n",idx);
       if( idx >= 0 && idx < CTVT_CALL_BAR_NUM )
       {
         const u8 memIdx = callWork->barWork[idx].memberWorkNo;
@@ -629,6 +618,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         }
       }
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
+      callWork->memberData[i].isEnable = FALSE;
       for( j=0;j<3;j++ )
       {
         if( callWork->checkIdx[j] == i )
@@ -636,8 +626,6 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           callWork->checkIdx[j] = CTVT_CALL_INVALID_NO;
         }
       }
-      callWork->memberData[i].isEnable = FALSE;
-      callWork->barWork[j].memberWorkNo = CTVT_CALL_INVALID_NO;
       isUpdate = TRUE;
     }
   }
@@ -645,12 +633,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   
   if( isUpdate == TRUE )
   {
-    //*
+    /*
     u8 i;
     OS_TFPrintf(3,"--------------------------------\n");
-    for( i=0;i<5;i++ )
+    for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
     {
-      OS_TFPrintf(3,"[%d][%3d][%x:%x:%x:%x:%x:%x]\n",
+      OS_TFPrintf(3,"[%d][%3d][%2x:%2x:%2x:%2x:%2x:%2x]\n",
         callWork->memberData[i].isEnable ,
         callWork->memberData[i].barWorkNo ,
         callWork->memberData[i].macAddress[0] ,
@@ -662,7 +650,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         );
     }
     OS_TFPrintf(3,"--------------------------------\n");
-    for( i=0;i<5;i++ )
+    for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
     {
       OS_TFPrintf(3,"[%d]",callWork->barWork[i].memberWorkNo);
     }
