@@ -450,12 +450,18 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   { 
   case SEQ_INIT:
 		GFL_NET_Init( &sc_net_init, NULL, p_wk );
+
+
     *p_seq = SEQ_INIT_WAIT;
     break;
 
   case SEQ_INIT_WAIT:
     if( GFL_NET_IsInit() )
 		{
+      //通信アイコン
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
+      GFL_NET_ReloadIcon();
+
       p_wk->p_wih = WIH_DWC_AllBeaconStart(sc_net_init.maxBeaconNum, p_wk->heapID );
       GFL_NET_Changeover(NULL);
       *p_seq = SEQ_END;

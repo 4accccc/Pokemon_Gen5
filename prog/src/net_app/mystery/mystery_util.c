@@ -310,6 +310,7 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
   if( p_wk->p_stream )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
   }
 
   GFL_TCBL_Exit( p_wk->p_tcbl );
@@ -433,6 +434,7 @@ static void MYSTERY_TEXT_PrintInner( MYSTERY_TEXT_WORK* p_wk, MYSTERY_TEXT_TYPE 
   if( p_wk->p_stream )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
   }
 
   //ƒ^ƒCƒv‚²‚Æ‚Ì•¶Žš•`‰æ
@@ -802,7 +804,7 @@ static void PalletFadeMain( u16 *p_buff, u16 *p_cnt, u8 plt_num, u8 plt_col, GXR
  */
 //-----------------------------------------------------------------------------
 MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPID heapID )
-{ 
+{
   MYSTERY_MENU_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_MENU_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_MENU_WORK) );
@@ -908,10 +910,11 @@ void MYSTERY_MENU_Exit( MYSTERY_MENU_WORK *p_wk )
 u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
 { 
   int trg = GFL_UI_KEY_GetTrg(); 
+  int repeat  = GFL_UI_KEY_GetRepeat();
   BOOL is_update  = FALSE;
 
   //‘€ì
-  if( trg & PAD_KEY_UP )
+  if( repeat & PAD_KEY_UP )
   { 
     if( p_wk->select == 0 )
     { 
@@ -923,14 +926,19 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     }
     is_update  = TRUE;
   }
-  else if( trg & PAD_KEY_DOWN )
+  else if( repeat & PAD_KEY_DOWN )
   { 
     p_wk->select++;
     p_wk->select  %= p_wk->list_max;
     is_update  = TRUE;
   }
-  else if( trg & PAD_BUTTON_A )
+  else if( trg & PAD_BUTTON_DECIDE )
   { 
+    return p_wk->select;
+  }
+  else if( trg & PAD_BUTTON_CANCEL )
+  { 
+    p_wk->select  = p_wk->list_max-1;
     return p_wk->select;
   }
 

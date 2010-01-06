@@ -672,7 +672,6 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
 				heapID );
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWKID_CURSOR], FALSE );
 	}
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -743,7 +742,11 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Start( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
-  MYSTERY_WORK  *p_wk     = p_wk_adrs;
+  MYSTERY_WORK  *p_wk     = p_wk_adrs;  
+  
+  
+  MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
+  UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
 
 	MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 }
@@ -846,14 +849,12 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   enum
   { 
     SEQ_INIT,
-    SEQ_TOP_INIT,
     SEQ_TOP_SELECT,
     SEQ_YESNO_INIT,
     SEQ_YESNO_SELECT,
     SEQ_NET_INIT,
     SEQ_NET_WAIT,
     SEQ_NET_SELECT_MSG,
-    SEQ_NET_SELECT_INIT,
     SEQ_NET_SELECT_WAIT,
     SEQ_NET_YESNO_MSG,
     SEQ_NET_YESNO_INIT,
@@ -871,13 +872,11 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_INIT:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_STREAM );
-    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_TOP_INIT );
-    *p_seq  = SEQ_MSG_WAIT;
-    break;
-
-  case SEQ_TOP_INIT:
-    UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+    if( p_wk->p_menu == NULL )
+    {
+      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
+      UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+    }
     *p_seq  = SEQ_TOP_SELECT;
     break;
 
@@ -958,14 +957,8 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_NET_SELECT_MSG:
     UTIL_DeleteMenu( p_wk );
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_003, MYSTERY_TEXT_TYPE_STREAM );
-    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NET_SELECT_INIT );
-    *p_seq  = SEQ_MSG_WAIT;
-    break;
-
-  case SEQ_NET_SELECT_INIT:
-    //Ä\’z
     UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_NETMODE, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_003, MYSTERY_TEXT_TYPE_QUE );
     *p_seq  = SEQ_NET_SELECT_WAIT;
     break;
 
@@ -1143,12 +1136,7 @@ static void SEQFUNC_Infomation( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   { 
   case SEQ_INFO_SELECT_MSG:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_022, MYSTERY_TEXT_TYPE_STREAM );
-    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INFO_SELECT_INIT );
-    *p_seq  = SEQ_MSG_WAIT;
-    break;
-
-  case SEQ_INFO_SELECT_INIT:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_022, MYSTERY_TEXT_TYPE_QUE );
     UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_INFO, HEAPID_MYSTERYGIFT ); 
     *p_seq  = SEQ_INFO_SELECT_WAIT;
     break;
@@ -1174,7 +1162,7 @@ static void SEQFUNC_Infomation( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INFO_SELECT_MSG );
           *p_seq  = SEQ_MSG_WAIT;
         }
-        else if( ret == 2)
+        else if( ret == 2 )
         { 
           //‚¨‚­‚è‚à‚Ì‚ª‚¢‚Á‚Ï‚¢‚Ì‚Æ‚«
           MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_025, MYSTERY_TEXT_TYPE_STREAM );
@@ -1218,7 +1206,6 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_NO_GIFT_INIT,
     SEQ_NO_GIFT_WAIT,
     SEQ_SELECT_GIFT_MSG,
-    SEQ_SELECT_GIFT_INIT,
     SEQ_SELECT_GIFT_WAIT,
     SEQ_GIFT_YESNO_INIT,
     SEQ_GIFT_YESNO_WAIT,
@@ -1311,14 +1298,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_SELECT_GIFT_MSG:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_011, MYSTERY_TEXT_TYPE_STREAM );
-    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_SELECT_GIFT_INIT );
-    *p_seq  = SEQ_MSG_WAIT;
-    break;
-
-  case SEQ_SELECT_GIFT_INIT:
     UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_GIFT, HEAPID_MYSTERYGIFT );
     UTIL_CreateGuideText( p_wk, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_011, MYSTERY_TEXT_TYPE_QUE );
     *p_seq  = SEQ_SELECT_GIFT_WAIT;
     break;
 

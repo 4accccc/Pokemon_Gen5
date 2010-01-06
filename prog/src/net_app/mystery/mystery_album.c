@@ -140,6 +140,7 @@ struct _MYSTERY_ALBUM_WORK
   u8                  dummy2;
   u16                 swap_card_index;
   BOOL                is_swap;
+  BOOL                key_btn_save; //もどるボタンにきたときの前のボタンを記憶  TRUEなら左 FALSEなら右
 
   GFL_CLWK            *p_cursor;  //カーソル
   GFL_CLWK            *p_swap_cursor;  //カーソル(swap)
@@ -1461,74 +1462,112 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_SCROLL,
   };
 
+
   MYSTERY_ALBUM_WORK *p_wk  = p_wk_adrs;
 
   switch( *p_seq )
   { 
   case SEQ_MOVE:
     { 
-      const int key = GFL_UI_KEY_GetTrg();
+      const int key = GFL_UI_KEY_GetRepeat();
       BOOL is_update  = FALSE;
 
 
       //キー入力
       if( key & PAD_KEY_UP )
       { 
-        if( p_wk->cursor == MYSTERY_CURSOR_LEFT_UP || p_wk->cursor == MYSTERY_CURSOR_LEFT_DOWN )
+        switch( p_wk->cursor )
         { 
-          p_wk->cursor  +=2;
-          p_wk->cursor  = MATH_ROUND(p_wk->cursor,MYSTERY_CURSOR_LEFT_UP ,MYSTERY_CURSOR_LEFT_DOWN);
-        }else
-        { 
-          switch( p_wk->cursor )
-          { 
-          case MYSTERY_CURSOR_RIGHT_UP:
-            if( p_wk->is_swap )
-            { 
-              p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
-            }
-            else
-            { 
-              p_wk->cursor  = MYSTERY_CURSOR_RETURN;
-            }
-            break;
-          case MYSTERY_CURSOR_RIGHT_DOWN:
-            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
-            break;
-          case MYSTERY_CURSOR_RETURN:
-            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
-            break;
+        case MYSTERY_CURSOR_LEFT_UP:
+          if( p_wk->is_swap )
+          {
+            p_wk->cursor  = MYSTERY_CURSOR_LEFT_DOWN;
           }
+          else
+          { 
+            p_wk->key_btn_save  = TRUE;
+            p_wk->cursor  = MYSTERY_CURSOR_RETURN;
+          }
+          break;
+
+        case MYSTERY_CURSOR_RIGHT_UP:
+          if( p_wk->is_swap )
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
+          }
+          else
+          { 
+            p_wk->key_btn_save  = FALSE;
+            p_wk->cursor  = MYSTERY_CURSOR_RETURN;
+          }
+          break;
+
+        case MYSTERY_CURSOR_LEFT_DOWN:
+          p_wk->cursor  = MYSTERY_CURSOR_LEFT_UP;
+          break;
+
+        case MYSTERY_CURSOR_RIGHT_DOWN:
+          p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
+          break;
+            
+        case MYSTERY_CURSOR_RETURN:
+          if( p_wk->key_btn_save )
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_LEFT_DOWN;
+          }
+          else
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
+          }
+          break;
         }
         is_update     = TRUE;
       }
       else if( key & PAD_KEY_DOWN )
       { 
-        if( p_wk->cursor == MYSTERY_CURSOR_LEFT_UP || p_wk->cursor == MYSTERY_CURSOR_LEFT_DOWN )
+        switch( p_wk->cursor )
         { 
-          p_wk->cursor  -=2;
-          p_wk->cursor  = MATH_ROUND(p_wk->cursor,MYSTERY_CURSOR_LEFT_UP ,MYSTERY_CURSOR_LEFT_DOWN);
-        }else
-        { 
-          switch( p_wk->cursor )
+        case MYSTERY_CURSOR_LEFT_UP:
+          p_wk->cursor  = MYSTERY_CURSOR_LEFT_DOWN;
+          break;
+
+        case MYSTERY_CURSOR_RIGHT_UP:
+          p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
+          break;
+
+        case MYSTERY_CURSOR_LEFT_DOWN:
+          if( p_wk->is_swap )
           { 
-          case MYSTERY_CURSOR_RIGHT_UP:
-            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_DOWN;
-            break;
-          case MYSTERY_CURSOR_RIGHT_DOWN:
-            if( p_wk->is_swap )
-            { 
-              p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
-            }
-            else
-            { 
-              p_wk->cursor  = MYSTERY_CURSOR_RETURN;
-            }
-            break;
-          case MYSTERY_CURSOR_RETURN:
-            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
-            break;
+            p_wk->cursor  = MYSTERY_CURSOR_LEFT_UP;
           }
+          else
+          { 
+            p_wk->key_btn_save  = TRUE;
+            p_wk->cursor  = MYSTERY_CURSOR_RETURN;
+          }
+          break;
+        case MYSTERY_CURSOR_RIGHT_DOWN:
+          if( p_wk->is_swap )
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
+          }
+          else
+          { 
+            p_wk->key_btn_save  = FALSE;
+            p_wk->cursor  = MYSTERY_CURSOR_RETURN;
+          }
+          break;
+
+        case MYSTERY_CURSOR_RETURN:
+          if( p_wk->key_btn_save )
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_LEFT_UP;
+          }
+          else
+          { 
+            p_wk->cursor  = MYSTERY_CURSOR_RIGHT_UP;
+          }
+          break;
         }
         is_update     = TRUE;
       }
@@ -1725,13 +1764,12 @@ static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
     }
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_017, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_017, MYSTERY_TEXT_TYPE_QUE );
 
     *p_seq  = SEQ_SELECT_INIT;
     break;
 
   case SEQ_SELECT_INIT:
-    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
     { 
       MYSTERY_LIST_SETUP setup;
       GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
@@ -1790,7 +1828,7 @@ static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
             p_wk->p_text  = MYSTERY_TEXT_InitOneLine( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
             MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
           }
-          MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_020, MYSTERY_TEXT_TYPE_STREAM );
+          MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_020, MYSTERY_TEXT_TYPE_QUE );
           *p_seq        = SEQ_NEXT_SWAP;
         }
         else if( ret == 1 )
@@ -1819,10 +1857,7 @@ static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_NEXT_SWAP:
-    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
-    { 
-      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
-    }
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
     break;
 
   case SEQ_NEXT_DELETE:
