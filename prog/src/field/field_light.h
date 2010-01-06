@@ -98,7 +98,7 @@ extern BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys );
 
 #ifdef DEBUG_FIELD_LIGHT
 
-extern void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, u32 heapID );
+extern void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, HEAPID heapID );
 extern void FIELD_LIGHT_DEBUG_Exit( FIELD_LIGHT* p_sys );
 
 extern void FIELD_LIGHT_DEBUG_Control( FIELD_LIGHT* p_sys );

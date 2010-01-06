@@ -84,6 +84,7 @@
 #include "event_debug_wifimatch.h"
 #include "event_battlerecorder.h"
 #include "event_debug_mvpoke.h"
+#include "field_bbd_color.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -184,6 +185,7 @@ static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -245,6 +247,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d }, 
   { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon }, 
+  { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor }, 
 };
 
 
@@ -4188,3 +4191,141 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
   return( TRUE );
 }
 
+
+
+//-----------------------------------------------------------------------------
+// ビルボードカラー　の調整
+//-----------------------------------------------------------------------------
+
+//--------------------------------------------------------------
+/// DEBUG_CTLIGHT_WORK ライト操作ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  GMEVENT *event;
+  HEAPID heapID;
+  FIELDMAP_WORK *fieldWork;
+
+  GFL_BMPWIN* p_win;
+}DEBUG_BBDCOLOR_WORK;
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuControlBbdColor(
+    GMEVENT *event, int *seq, void *wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビルボードカラーを指定
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
+{
+  DEBUG_BBDCOLOR_WORK *work;
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  
+  GMEVENT_Change( event, debugMenuControlBbdColor, sizeof(DEBUG_BBDCOLOR_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BBDCOLOR_WORK) );
+  
+  work->gsys = gsys;
+  work->event = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  return( TRUE );
+}
+
+
+static GMEVENT_RESULT debugMenuControlBbdColor(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BBDCOLOR_WORK *work = wk;
+
+  switch( (*seq) ){
+  case 0:
+    {
+      HEAPID heapID = FIELDMAP_GetHeapID( work->fieldWork );
+      FLD_BBD_COLOR* p_color = FLD_BBD_COLOR_Create( heapID );
+      GFL_BBDACT_SYS* p_bbd_act = FIELDMAP_GetBbdActSys( work->fieldWork );
+      GFL_BBD_SYS* p_bbd_sys = GFL_BBDACT_GetBBDSystem( p_bbd_act );
+      AREADATA* p_areadata = FIELDMAP_GetAreaData( work->fieldWork );
+
+      FLD_BBD_COLOR_Load( p_color, AREADATA_GetBBDColor(p_areadata) );
+      
+      // モデル管理開始
+      FLD_BBD_COLOR_DEBUG_Init( p_bbd_sys, p_color, work->heapID );
+
+      FLD_BBD_COLOR_Delete( p_color );
+    }
+
+    // インフォーバーの非表示
+    FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(work->fieldWork));
+    GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
+
+    // ビットマップウィンドウ初期化
+    {
+      static const GFL_BG_BGCNT_HEADER header_sub3 = {
+        0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+        GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      };
+
+      GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+      GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+      GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+
+      // パレット情報を転送
+      GFL_ARC_UTIL_TransVramPalette(
+        ARCID_FONT, NARC_font_default_nclr,
+        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
+      
+      // ビットマップウィンドウを作成
+      work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
+        1, 1, 30, 22,
+        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
+      GFL_BMPWIN_MakeScreen( work->p_win );
+      GFL_BMPWIN_TransVramCharacter( work->p_win );
+      GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+
+      // ウィンドウ
+      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, work->heapID );
+      BmpWinFrame_Write( work->p_win, TRUE, 1, 15 );
+    }
+
+    FLD_BBD_COLOR_DEBUG_PrintData( work->p_win );
+
+    (*seq)++;
+  case 1:
+    // ライト管理メイン
+    FLD_BBD_COLOR_DEBUG_Control();
+    FLD_BBD_COLOR_DEBUG_PrintData( work->p_win );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    FLD_BBD_COLOR_DEBUG_Exit();
+
+    // ビットマップウィンドウ破棄
+    {
+      GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+      GFL_BMPWIN_Delete( work->p_win );
+    }
+
+    // インフォーバーの表示
+    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,
+        FIELD_SUBSCREEN_Init( work->heapID, work->fieldWork, FIELD_SUBSCREEN_NORMAL ));
+
+    return( GMEVENT_RES_FINISH );
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}

@@ -656,7 +656,7 @@ BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
  *  @param  heapID    ƒq[ƒv‚h‚c
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, u32 heapID )
+void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, HEAPID heapID )
 {
   GF_ASSERT( !p_sys->p_debug_wordset );
   GF_ASSERT( !p_sys->p_debug_msgdata );
@@ -1362,7 +1362,6 @@ static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p
     FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 
     G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,0,FALSE);
-
   }
 }
 

@@ -110,7 +110,8 @@
 #include "field_task.h"  
 #include "field_task_manager.h"
 #include "ev_time.h"  //EVTIME_Update
-#include "field_bbd_color.h"
+
+#include "field_bbd_color.h"  //
 
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_

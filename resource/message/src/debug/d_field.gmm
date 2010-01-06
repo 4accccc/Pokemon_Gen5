@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-28T19:16:35"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-01-05T19:08:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -860,6 +860,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_STR61_002">
 		<language name="JPN" width="160">NPC OFF</language>
 		<language name="JPN_KANJI" width="160">NPC OFF</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR62">
+		<language name="JPN" width="160">ビルボードいろ</language>
+		<language name="JPN_KANJI" width="160">ビルボード色</language>
 	</row>
 
 	<row id="DEBUG_FIELD_NUMINPUT">
