@@ -843,7 +843,7 @@ static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs )
 static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
-  WIFILOGIN_PARAM  *p_param     = p_wk_adrs;
+  WIFILOGIN_PARAM  *p_param     = p_param_adrs;
   WIFILOGIN_RESULT  result      = p_param->result;
 
   GFL_HEAP_FreeMemory( p_param );
@@ -851,6 +851,7 @@ static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   switch( result )
   { 
   case WIFILOGIN_RESULT_LOGIN:
+    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
     SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
     break;
 
