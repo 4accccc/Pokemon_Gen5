@@ -227,7 +227,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	NNSG2dImageProxy					*image_p;
 	NNSG2dImagePaletteProxy		*palette_p;
 	int												index;
-	int												node,cell;
+	int												i,node,cell;
 	fx32											pos_z_default;
 	NNSG2dAnimController			*anim_ctrl_mc;
 	NNSG2dAnimDataSRT					anim_SRT_mc;
@@ -390,7 +390,16 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							 GX_TEXFLIP_NONE,
 							 image_p->attr.plttUse,
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
-			for( node = 0 ; node < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; node++ ){
+			for( i = 0 ; i < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; i++ ){
+        //”¼“§–¾‚È‚ç‹t‚©‚ç•`‰æ‚·‚é‚æ‚¤‚É‚·‚é
+        if( mcss->alpha != 31 )
+        { 
+          node = ( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes - 1 ) - i;
+        }
+        else
+        { 
+          node = i;
+        }
 				cell = (mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].pHierDataArray[node].nodeAttr & 0xff00 ) >> 8;
 				anim_ctrl_c = NNS_G2dGetCellAnimAnimCtrl(&MC_Array->cellAnimArray[cell].cellAnim);
 				switch( anim_ctrl_c->pAnimSequence->animType & 0xffff ){
@@ -539,6 +548,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 *pos_z_default )
 {
 	VecFx32	pos;
+  int polyID = ( node > 63 ) ? 63 : node;
+
 	//‰e‚ÌƒAƒ‹ƒtƒ@’lŒvŽZ
   const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
 	if( mcss_ortho_mode ){
@@ -560,7 +571,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
                   GX_POLYGONMODE_MODULATE,	// modulation mode
                   GX_CULL_NONE,		    			// cull back
-                  0,        								// polygon ID(0 - 63)
+                  node,        								// polygon ID(0 - 63)
                   mcss->alpha,	       			// alpha(0 - 31)
                   GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
                 );
