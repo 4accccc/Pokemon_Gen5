@@ -12,7 +12,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 #現在のディレクトリ（cygwinのパスから変換する）
 NOWDIR	=	$(shell pwd|tr [A-Z] [a-z] |sed -e 's/\/cygdrive\///')/
 #環境変数が想定しているディレクトリから、：を取り除いたもの
-TGTDIR	= $(shell echo $(PROJECT_ROOT)|tr [A-Z] [a-z]|sed -e 's/://')
+TGTDIR	= $(shell echo $(PROJECT_RSCDIR)|tr [A-Z] [a-z]|sed -e 's/://')
 ifneq ($(NOWDIR),$(TGTDIR))
 $(warning コンパイル環境を確認してください)
 $(error $(NOWDIR) != $(TGTDIR) )
