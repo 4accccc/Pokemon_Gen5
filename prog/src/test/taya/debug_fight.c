@@ -1099,7 +1099,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->timeZone = loopValue( save->timeZone + incValue, 0, TIMEZONE_MAX-1 );
     break;
   case SELITEM_SEASON:
-    save->timeZone = loopValue( save->season + incValue, SEASON_SPRING, SEASON_WINTER );
+    save->season = loopValue( save->season + incValue, SEASON_SPRING, SEASON_WINTER );
     break;
   case SELITEM_WEATHER:
     save->weather = loopValue( save->weather + incValue, BTL_WEATHER_NONE, BTL_WEATHER_MAX-1 );
