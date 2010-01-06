@@ -49,7 +49,7 @@ struct _MB_CAP_OBJ
   
   //¯—p
   s8  moveDir;
-  u16 rad;
+  u16 rad[3];
   fx32 height;
 };
 
@@ -86,6 +86,7 @@ MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
   objWork->anmCnt = 0;
   objWork->objType = initWork->type;
   objWork->isEnable = TRUE;
+  objWork->height = 0;
   
   if( objWork->objType == MCOT_STAR )
   {
@@ -101,6 +102,9 @@ MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
     }
     objWork->pos.y = FX32_CONST( 64+GFUser_GetPublicRand0(64) );
     objWork->pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z ) + objWork->pos.y;
+    objWork->rad[0] = GFUser_GetPublicRand0(0x10000);
+    objWork->rad[1] = GFUser_GetPublicRand0(0x10000);
+    objWork->rad[2] = GFUser_GetPublicRand0(0x10000);
   }
   
   return objWork;
@@ -144,18 +148,46 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
   VecFx32 pos;
-  
-  objWork->pos.x += MB_CAP_OBJ_STAR_SPD*objWork->moveDir;
-  
-  pos = objWork->pos;
-
+  u8 i;
+  fx32 posY = 0;
+  /*
+  //ƒWƒƒƒ“ƒvˆÚ“®(‚‚³–¢”½‰f
   objWork->rad += MB_CAP_OBJ_STAR_ROT;
   if( objWork->rad >= 0x8000 )
   {
     objWork->rad -= 0x8000;
   }
+
+  objWork->pos.x += MB_CAP_OBJ_STAR_SPD*objWork->moveDir;
+  
+  pos = objWork->pos;
+
   //‚‚³ŒvŽZ
   pos.y -= FX_SinIdx( objWork->rad ) * MB_CAP_OBJ_STAR_HEIGHT;
+  */
+
+  static const u16 addRad[3] = {5*0x10000/360,3*0x10000/360,1*0x10000/360};
+  static const u16 lenRate[3] = {16,24,32};
+  objWork->height = FX32_CONST(8.0f);
+  objWork->pos.x += MB_CAP_OBJ_STAR_SPD*objWork->moveDir;
+  pos = objWork->pos;
+  
+  for( i=0;i<3;i++ )
+  {
+    if( objWork->rad[i] + addRad[i] < 0x10000 )
+    {
+      objWork->rad[i] += addRad[i];
+    }
+    else
+    {
+      objWork->rad[i] = objWork->rad[i] + addRad[i] - 0x10000;
+    }
+    posY += FX_SinIdx(objWork->rad[i])*lenRate[i];
+  }
+  
+  pos.y = FX32_CONST(96)+(posY);
+  
+  
   GFL_BBD_SetObjectTrans( bbdSys , objWork->objIdx , &pos );
 }
 
@@ -166,7 +198,7 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
 void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork )
 {
   hitWork->pos = &objWork->pos;
-  hitWork->height = 0;
+  hitWork->height = objWork->height;
   hitWork->size.x = FX32_CONST(MB_CAP_OBJ_HITSIZE_XY);
   hitWork->size.y = FX32_CONST(MB_CAP_OBJ_HITSIZE_XY);
   hitWork->size.z = FX32_CONST(MB_CAP_OBJ_HITSIZE_Z);

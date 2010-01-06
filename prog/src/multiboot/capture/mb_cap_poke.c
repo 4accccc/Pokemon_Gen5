@@ -297,6 +297,30 @@ void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 }
 
 //--------------------------------------------------------------
+//	ポケモンセット(眠り・ダウンとステート共通
+//--------------------------------------------------------------
+void MB_CAP_POKE_SetSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  if( pokeWork->state == MCPS_HIDE ||
+      pokeWork->state == MCPS_LOOK )
+  {
+    VecFx32 effPos = pokeWork->pos;
+    effPos.y -= MB_CAP_POKE_DOWN_EFF_OFS;
+    effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
+    pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_ZZZ );
+    MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
+    pokeWork->state = MCPS_SLEEP_WAIT_GRASS;
+  }
+  else
+  {
+    pokeWork->state = MCPS_SLEEP_FALL;
+  }
+  pokeWork->cnt = 0;
+  pokeWork->stateFunc = MB_CAP_POKE_StateDown;
+}
+
+//--------------------------------------------------------------
 //	ポケモンセット(逃げた
 //--------------------------------------------------------------
 static void MB_CAP_POKE_SetEscape( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
@@ -573,25 +597,35 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
 }
 
 //--------------------------------------------------------------
-//	ステート：ダウン！
+//	ステート：ダウン！(眠り
 //--------------------------------------------------------------
 static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
-  if( pokeWork->state == MCPS_DOWN_MOVE )
+  if( pokeWork->state == MCPS_DOWN_MOVE ||
+      pokeWork->state == MCPS_SLEEP_FALL )
   {
     VecFx32 pos;
     if( pokeWork->height <= MB_CAP_POKE_FALL_SPEED )
     {
       VecFx32 effPos = pokeWork->pos;
       effPos.y -= MB_CAP_POKE_DOWN_EFF_OFS;
-      effPos.z = MB_CAP_EFFECT_Z;
-      pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_DOWN );
-      MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
+      effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
 
       pokeWork->height = 0;
       pokeWork->cnt = 0;
-      pokeWork->state = MCPS_DOWN_WAIT;
+      if( pokeWork->state == MCPS_DOWN_MOVE )
+      {
+        pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_DOWN );
+        MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
+        pokeWork->state = MCPS_DOWN_WAIT;
+      }
+      else
+      {
+        pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_ZZZ );
+        MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
+        pokeWork->state = MCPS_SLEEP_WAIT;
+      }
     }
     else
     {
@@ -604,28 +638,43 @@ static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
   }
   else
   {
+    const u16 downTime = (pokeWork->state == MCPS_DOWN_WAIT ? MB_CAP_POKE_DOWN_TIME : MB_CAP_BONUSTIME );
     pokeWork->cnt++;
-    if( pokeWork->cnt > MB_CAP_POKE_DOWN_TIME )
+    if( pokeWork->cnt > downTime )
     {
-      //方向転換して移動
-      switch( pokeWork->dir )
+      if( pokeWork->state == MCPS_DOWN_WAIT )
       {
-      case MCPD_LEFT:
-        pokeWork->dir = MCPD_RIGHT;
-        break;
-      case MCPD_RIGHT:
-        pokeWork->dir = MCPD_LEFT;
-        break;
-      case MCPD_UP:
-        pokeWork->dir = MCPD_DOWN;
-        break;
-      case MCPD_DOWN:
-        pokeWork->dir = MCPD_UP;
-        break;
+        //ぶつかってダウンした時のみ
+        //方向転換して移動
+        switch( pokeWork->dir )
+        {
+        case MCPD_LEFT:
+          pokeWork->dir = MCPD_RIGHT;
+          break;
+        case MCPD_RIGHT:
+          pokeWork->dir = MCPD_LEFT;
+          break;
+        case MCPD_UP:
+          pokeWork->dir = MCPD_DOWN;
+          break;
+        case MCPD_DOWN:
+          pokeWork->dir = MCPD_UP;
+          break;
+        }
       }
-      pokeWork->startPos = pokeWork->pos;
-      pokeWork->cnt = 0;
-      pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+
+      if( pokeWork->state == MCPS_DOWN_WAIT ||
+          pokeWork->state == MCPS_SLEEP_WAIT )
+      {
+        //ダウンと移動中の睡眠のみ
+        pokeWork->startPos = pokeWork->pos;
+        pokeWork->cnt = 0;
+        pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+      }
+      else
+      {
+        MB_CAP_POKE_SetHide( capWork , pokeWork , pokeWork->posXidx , pokeWork->posYidx );
+      }
 
       MB_CAP_EFFECT_SetIsFinish( pokeWork->downEff , TRUE );
       pokeWork->downEff = NULL;
@@ -665,4 +714,21 @@ void MB_CAP_POKE_GetHitWork( MB_CAP_POKE *pokeWork , MB_CAP_HIT_WORK *hitWork )
   hitWork->size.x = FX32_CONST(MB_CAP_POKE_HITSIZE_X);
   hitWork->size.y = FX32_CONST(MB_CAP_POKE_HITSIZE_Y);
   hitWork->size.z = FX32_CONST(MB_CAP_POKE_HITSIZE_Z);
+}
+
+//--------------------------------------------------------------
+//  捕獲可能なステートか？
+//--------------------------------------------------------------
+const BOOL MB_CAP_POKE_CheckCanCapture( MB_CAP_POKE *pokeWork )
+{
+  if( pokeWork->state == MCPS_RUN_LOOK ||
+      pokeWork->state == MCPS_DOWN_MOVE ||
+      pokeWork->state == MCPS_DOWN_WAIT ||
+      pokeWork->state == MCPS_SLEEP_FALL ||
+      pokeWork->state == MCPS_SLEEP_WAIT ||
+      pokeWork->state == MCPS_SLEEP_WAIT_GRASS )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }

@@ -46,6 +46,10 @@
 #define MB_CAP_TIME_GAUGE_CHARA_Y (0x21 + 0x2000)
 #define MB_CAP_TIME_GAUGE_CHARA_R (0x41 + 0x2000)
 
+#define MB_CAP_BONUS_FOG_COLOR (0x7e5f)
+#define MB_CAP_BONUS_FOG_ALPHA_MIN (16)
+#define MB_CAP_BONUS_FOG_ALPHA_MAX (31)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -94,6 +98,9 @@ struct _MB_CAPTURE_WORK
   u16  randLen;  //照準ずれ用
   fx32 befPullLen;
   u16  befRotAngle;
+  
+  //Fog
+  u8  fogAlpha;
 
   u16 gameTime;
   u16 bonusTime;
@@ -185,6 +192,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->isShotBall = FALSE;
   work->targetAnmCnt = 0;
   work->targetAnmFrame = 0;
+  work->fogAlpha = 0;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     work->initWork->isCapture[i] = FALSE;
@@ -469,6 +477,10 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     G3X_AlphaBlend( TRUE );
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
+    
+    //3Dと2Dのブレンド
+    G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,TRUE);
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_BG3 , 31 , 31 );
   }
   {
     VecFx32 bbdScale = {FX32_CONST(16.0f),FX32_CONST(16.0f),FX32_CONST(16.0f)};
@@ -553,6 +565,8 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,
       NARC_mb_capture_gra_cap_obj_getefect_nsbtx ,
       NARC_mb_capture_gra_cap_obj_memai_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,  //ボーナス煙
+      NARC_mb_capture_gra_cap_obj_zzz_nsbtx ,
       };
     static const u32 resSizeArr[MCBR_MAX] = {
       GFL_BBD_TEXSIZDEF_32x32 ,
@@ -566,6 +580,8 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_64x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,  //ボーナス煙
       GFL_BBD_TEXSIZDEF_128x32 ,
       };
     u8 i;
@@ -780,7 +796,8 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
       ofs.x = -FX_Mul( ofs.y , sin );
       ofs.y = FX_Mul( ofs.y , cos );
     }
-
+    //誤差廃止
+    /*
     {
       //ランダム誤差調整
       fx32 lenSub = work->befPullLen - pullLen;
@@ -829,6 +846,7 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
       ofs.y += ofsY;
       
     }
+    */
     VEC_Subtract( &pos , &ofs , &work->targetPos );
     
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
@@ -996,22 +1014,58 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
   if( work->bonusTime > 0 )
   {
     work->bonusTime--;
+    
+    {
+      /*
+      //Fog揺らし(今市きれいに見えないので保留
+      const u16 rad = (work->bonusTime*0x200)%0x10000;
+      const fx16 cos = FX_CosIdx(rad);
+      const u8 alphaTarget = FX_FX32_TO_F32(cos*(MB_CAP_BONUS_FOG_ALPHA_MAX-MB_CAP_BONUS_FOG_ALPHA_MIN))+MB_CAP_BONUS_FOG_ALPHA_MIN;
+      */
+      const u8 alphaTarget = MB_CAP_BONUS_FOG_ALPHA_MAX;
+      if( work->fogAlpha < alphaTarget )
+      {
+        work->fogAlpha++;
+        G3X_SetFogColor( MB_CAP_BONUS_FOG_COLOR , work->fogAlpha );
+      }
+      else
+      if( work->fogAlpha > alphaTarget )
+      {
+        work->fogAlpha--;
+        G3X_SetFogColor( MB_CAP_BONUS_FOG_COLOR , work->fogAlpha );
+      }
+    }
+  }
+  else
+  {
+    if( work->fogAlpha > 0 )
+    {
+      work->fogAlpha--;
+      G3X_SetFogColor( MB_CAP_BONUS_FOG_COLOR , work->fogAlpha );
+      if( work->fogAlpha == 0 )
+      {
+        G3X_SetFog( FALSE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x0800 , 0 );
+      }
+    }
+  
   }
   if( work->bonusTime == 0 && befBonusTime != 0 )
   {
-    PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
+    //ボーナスタイム終了処理
     if( work->gameTime <= MB_CAP_RED_TIME )
     {
-      PMSND_SetStatusBGM( 285 , 85 , PMSND_NOEFFECT );
+      PMSND_SetStatusBGM( MB_CAP_HURRY_BGM_TEMPO , MB_CAP_HURRY_BGM_PITCH , PMSND_NOEFFECT );
+    }
+    else
+    {
+      PMSND_SetStatusBGM( 256 , 0 , PMSND_NOEFFECT );
     }
   }
   if( befGameTime > MB_CAP_RED_TIME &&
       work->gameTime <= MB_CAP_RED_TIME &&
       work->bonusTime == 0 )
   {
-    PMSND_StopBGM( );
-    PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
-    PMSND_SetStatusBGM( 285 , 85 , PMSND_NOEFFECT );
+    PMSND_SetStatusBGM( MB_CAP_HURRY_BGM_TEMPO , MB_CAP_HURRY_BGM_PITCH , PMSND_NOEFFECT );
   }
   
   //転送データの更新
@@ -1077,12 +1131,31 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
 {
+  u8 i;
   work->bonusTime = MB_CAP_BONUSTIME;
   MB_CAP_OBJ_SetEnable( work , starWork , FALSE );
   work->isUpdateStar = FALSE;
-    
-  PMSND_SetStatusBGM( 256 , 0 , PMSND_NOEFFECT );
-  PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
+  PMSND_SetStatusBGM( MB_CAP_BONUS_BGM_TEMPO , MB_CAP_BONUS_BGM_PITCH , PMSND_NOEFFECT );
+
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    const MB_CAP_POKE_STATE pokeState = MB_CAP_POKE_GetState( work->pokeWork[i] );
+    if( pokeState == MCPS_HIDE ||
+        pokeState == MCPS_LOOK ||
+        pokeState == MCPS_RUN_HIDE ||
+        pokeState == MCPS_RUN_LOOK )
+    {
+      MB_CAP_POKE_SetSleep( work , work->pokeWork[i] );
+    }
+  }
+  {
+    static const u32 fogTable[8] = {0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040};
+    G3X_SetFog( TRUE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x0800 , 0 );
+    G3X_SetFogTable( fogTable );
+  }
+
+//  PMSND_SetStatusBGM( 256 , 0 , PMSND_NOEFFECT );
+//  PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
 }
 
 

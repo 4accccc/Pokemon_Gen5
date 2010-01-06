@@ -76,7 +76,7 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
 static void MB_CAP_BALL_CheckHitObj_CheckSide( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork , 
                 const s8 idxX , const s8 idxY , const s8 ofsX , const s8 ofsY );
 static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
-static void MB_CAP_BALL_CheckHitStar_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
+static void MB_CAP_BALL_CheckHitBonus_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 
 static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
@@ -377,9 +377,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
     MB_CAP_POKE_GetHitWork( pokeWork , &pokeHit );
     isHit = MB_CAPTURE_CheckHit( &ballHit , &pokeHit );
     if( isHit == TRUE && 
-        ( pokeState == MCPS_RUN_LOOK || 
-          pokeState == MCPS_DOWN_WAIT || 
-          pokeState == MCPS_DOWN_MOVE ) )
+        MB_CAP_POKE_CheckCanCapture( pokeWork ) == TRUE )
     {
       const u16 cellIdx = 0;
       const u16 rot = 0;
@@ -406,7 +404,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
 //--------------------------------------------------------------
 //	スターとポケモンの当たり判定(飛んでる時
 //--------------------------------------------------------------
-static void MB_CAP_BALL_CheckHitStar_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
+static void MB_CAP_BALL_CheckHitBonus_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
   int i;
@@ -422,6 +420,9 @@ static void MB_CAP_BALL_CheckHitStar_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
     isHit = MB_CAPTURE_CheckHit( &ballHit , &starHit );
     if( isHit == TRUE )
     {
+      VecFx32 effPos = ballWork->pos;
+      effPos.z -= FX32_ONE;
+      MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_BONUS );
       MB_CAPTURE_HitStarFunc( capWork , starWork );
     }
   }
@@ -480,7 +481,7 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
   {
     //通常の当たり判定
     MB_CAP_BALL_CheckHitPoke_Shooting( capWork , ballWork );
-    MB_CAP_BALL_CheckHitStar_Shooting( capWork , ballWork );
+    MB_CAP_BALL_CheckHitBonus_Shooting( capWork , ballWork );
   }
 }
 

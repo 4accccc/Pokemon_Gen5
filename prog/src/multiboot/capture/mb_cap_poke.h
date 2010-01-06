@@ -36,6 +36,10 @@ typedef enum
   MCPS_DOWN_MOVE,
   MCPS_DOWN_WAIT,
 
+  MCPS_SLEEP_FALL,
+  MCPS_SLEEP_WAIT,
+  MCPS_SLEEP_WAIT_GRASS,
+
   MCPS_ESCAPE,  //ì¶Ç∞ÇΩ
 
   MCPS_MAX,
@@ -79,9 +83,10 @@ extern void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork
 extern void MB_CAP_POKE_SetRunChangeDir( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const MB_CAP_POKE_DIR dir );
 extern void MB_CAP_POKE_SetCapture( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 
 //éwíËç¿ïWÇ…Ç¢ÇÈÇ©ÅH
 extern const BOOL MB_CAP_POKE_CheckPos( const MB_CAP_POKE *pokeWork , const u8 idxX , const u8 idxY );
 extern const MB_CAP_POKE_STATE MB_CAP_POKE_GetState( const MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_GetHitWork( MB_CAP_POKE *pokeWork , MB_CAP_HIT_WORK *hitWork );
-
+extern const BOOL MB_CAP_POKE_CheckCanCapture( MB_CAP_POKE *pokeWork );
