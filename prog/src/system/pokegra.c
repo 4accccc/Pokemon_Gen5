@@ -329,7 +329,8 @@ ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, i
  *	@param	form_no		フォルムナンバー
  *	@param	sex				性別
  *	@param	rare			レアかどうか
- *	@param	dir		ポケモンの向き（POKEGRA_DIR_FRONT:正面、POKEGRA_DIR_BACK:背面）
+ *	@param	dir		    ポケモンの向き（POKEGRA_DIR_FRONT:正面、POKEGRA_DIR_BACK:背面）
+ *	@param  egg       タマゴかどうか
  *	@param	*p_mons_offset				ポケモン番号ファイルオフセット
  *	@param	*p_dir_offset			背面オフセット
  *	@param	*p_sex_offset				性別オフセット
@@ -342,18 +343,20 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 	u32 file_offset;
 	u32 mf_ratio;
 
-  //モンスターナンバーは１オリジン
-  //リソースは０オリジンのため、－１
-  mons_no	-= 1;
-
   file_start	= POKEGRA_FILE_MAX * mons_no;
   file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
   mf_ratio	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCBR: POKEGRA_BACK_M_NCBR;
 
-  //本来は別フォルム処理を入れる@todo
-#if defined(DEBUG_ONLY_FOR_sogabe) || defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#warning Another Form Nothing
-#endif
+  //別フォルム処理
+  if( form_no )
+  { 
+    int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
+    int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
+    if( form_no < form_max )
+    { 
+      file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
+    }
+  }
 
   //性別のチェック
   switch( sex ){
