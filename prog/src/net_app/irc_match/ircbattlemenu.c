@@ -821,6 +821,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     ret = TRUE;
     break;
   case _SELECTMODE_FRIENDCODE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
     _CHANGE_STATE(pWork,_modeButtonFlash);
     ret = TRUE;

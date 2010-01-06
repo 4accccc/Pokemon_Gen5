@@ -28,7 +28,7 @@ typedef struct {
 
 #define _IRMAIN_FRIEND_ST_X (0x02)
 #define _IRMAIN_FRIEND_ST_Y (0x14)
-#define _IRMAIN_FRIEND_WIDTH (22)
+#define _IRMAIN_FRIEND_WIDTH (16)
 #define _IRMAIN_FRIEND_HEIGHT (4)
 
 #define _IRMAIN_EXIT_ST_X (24-4)

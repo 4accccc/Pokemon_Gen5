@@ -1,0 +1,18 @@
+
+
+
+#define _IRMAIN_EXIT_ST_X (24-4)
+#define _IRMAIN_EXIT_ST_Y (32-10)
+#define _IRMAIN_EXIT_WIDTH (10)
+#define _IRMAIN_EXIT_HEIGHT (4)
+
+#define _X8(a)  (a)*8
+
+static const GFL_UI_TP_HITTBL btn_irmain[] = {
+  //上下左右
+	{ _X8(_IRMAIN_EXIT_ST_Y-1),_X8(_IRMAIN_EXIT_ST_Y+_IRMAIN_EXIT_HEIGHT+1),
+	  _X8(_IRMAIN_EXIT_ST_X-1),_X8(_IRMAIN_EXIT_ST_X+_IRMAIN_EXIT_WIDTH+1)},
+
+  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+};
+

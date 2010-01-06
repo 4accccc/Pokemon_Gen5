@@ -18,6 +18,7 @@
 #define _ALLBEACON_MAX (4)
 
 #define WCM_NETWORK_CAPABILITY_PRIVACY          0x0010
+#define _IRC_CATCH_LOOP (3)  //ÔŠOü‚ðE‚Á‚Ä‚©‚çA–³Œø‚É‚·‚é‚Ü‚Å‚Ì‰ñ”
 
 typedef struct{
 	WMBssDesc sBssDesc;
@@ -181,7 +182,7 @@ void WIH_DWC_MainLoopScanBeaconData(void)
     int size = IRCi_Read(_localWork->buff);
     if(size>0){
       _localWork->bIrc = TRUE;
-      _localWork->timer = 60;
+      _localWork->timer = _IRC_CATCH_LOOP;
     }
   }
   IRC_Move();

@@ -35,6 +35,13 @@
 #include "ir_ani_NANR_LBLDEFS.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
+#include "ircbattlematch.cdat"
+
+
+enum _IBMODE_SELECT {
+  _SELECTMODE_EXIT,
+};
+
 
 typedef enum
 {
@@ -132,6 +139,8 @@ static void _connectCallBack(void* pWork, int netID);
 static void _RecvModeCheckData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvResultData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _ircPreConnect(IRC_BATTLE_MATCH* pWork);
+static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
+static BOOL _cancelButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -197,6 +206,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 #define _SUBMENU_LISTMAX (2)
 
+typedef BOOL (TouchFunc)(int no, IRC_BATTLE_MATCH* pState);
+
 
 struct _IRC_BATTLE_MATCH {
   EVENT_IRCBATTLE_WORK* pBattleWork;
@@ -241,10 +252,15 @@ struct _IRC_BATTLE_MATCH {
   int ircCenterAnimCount;
   int yoffset;
 
+  GFL_BUTTON_MAN* pButton;
+  TouchFunc* touch;
+
+  
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
 	APP_TASKMENU_RES* pAppTaskRes;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+  APP_TASKMENU_WIN_WORK* pAppWin;
 
 };
 
@@ -757,6 +773,22 @@ static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
 }
 
 
+static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork)
+{
+  int i;
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
+  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+
+  
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+
+}
+
 
 
 //------------------------------------------------------------------------------
@@ -778,7 +810,7 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     frame,
-    ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
+    1, 1, _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
@@ -1002,7 +1034,8 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     }
     GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
   }
-
+  _ReturnButtonStart(pWork);
+  
   _CHANGE_STATE(pWork,_ircInitWait);
 }
 
@@ -1035,6 +1068,11 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_IsInit() == TRUE){	//初期化終了待ち
     GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback,_ircConnectEndCallback); // 専用の自動接続
+
+    pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+    pWork->touch = &_cancelButtonCallback;
+
+
     _CHANGE_STATE(pWork,_ircMatchWait);
   }
 }
@@ -1064,6 +1102,11 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
       int aMsgBuff[]={IRCBTL_STR_09};
       _buttonWindowDelete(pWork);
       _msgWindowCreate(aMsgBuff, pWork);
+
+      _ReturnButtonStart(pWork);
+      pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+      pWork->touch = &_cancelButtonCallback;
+
       _CHANGE_STATE(pWork,_ircMatchWait);
     }
   }
@@ -1103,6 +1146,94 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
   12, 512
   };
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンイベントコールバック
+ *
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
+{
+  IRC_BATTLE_MATCH *pWork = p_work;
+  u32 friendNo;
+
+  switch( event ){
+  case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
+    if(pWork->touch!=NULL){
+      if(pWork->touch(bttnid, pWork)){
+        return;
+      }
+    }
+    break;
+
+  default:
+    break;
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    int aMsgBuff[]={IRCBTL_STR_16};
+    _buttonWindowDelete(pWork);
+
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                  0x20*12, 0x20, pWork->heapID);
+    _msgWindowCreate(aMsgBuff, pWork);
+
+    _YesNoStart(pWork);
+
+    GFL_FONTSYS_SetDefaultColor();
+
+    if(pWork->pButton){
+      GFL_BMN_Delete(pWork->pButton);
+    }
+    pWork->pButton = NULL;
+
+    _CHANGE_STATE(pWork,_ircExitWait);
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンタッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
+{
+  BOOL ret = FALSE;
+
+//  pWork->bttnid = bttnid;
+  switch( bttnid ){
+  case _SELECTMODE_EXIT:
+		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
+    break;
+  default:
+    break;
+  }
+  return ret;
+}
 
 
 
@@ -1188,6 +1319,13 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       return;
     }
   }
+
+
+  GFL_BMN_Main( pWork->pButton );
+
+  
+
+/*
   if(GFL_UI_TP_GetTrg()){
     int aMsgBuff[]={IRCBTL_STR_16};
     _buttonWindowDelete(pWork);
@@ -1204,7 +1342,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
     GFL_FONTSYS_SetDefaultColor();
     _CHANGE_STATE(pWork,_ircExitWait);
   }
-
+*/
 
 }
 
@@ -1317,6 +1455,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+  }
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
   ConnectBGPalAnm_Main(&pWork->cbp);
@@ -1338,6 +1479,17 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 
     
 //  EVENT_IrcBattleSetType(pWork->pBattleWork, pWork->selectType);
+
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  }
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  }
+	if(pWork->pButton){
+		GFL_BMN_Delete(pWork->pButton);
+	}
+  pWork->pButton = NULL;
 
   _workEnd(pWork);
   GFL_TCB_DeleteTask( pWork->g3dVintr );

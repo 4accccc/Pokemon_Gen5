@@ -534,14 +534,14 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
 }
 
 
-static void _PaletteMake(C_GEAR_WORK* pWork,BOOL rmax,BOOL gmax,BOOL bmax)
+static void _PaletteMake(C_GEAR_WORK* pWork,BOOL rmax,BOOL gmax,BOOL bmax,int type)
 {
-  int y,x;
+  int y=type,x;
   u16 r,g,b;
   //BOOL rmax=FALSE,gmax=FALSE,bmax=TRUE;
 
 
-  for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
+//  for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
     for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
       r = pWork->palBase[y][x] & 0x001f;
       g = pWork->palBase[y][x] & 0x03e0;
@@ -557,7 +557,7 @@ static void _PaletteMake(C_GEAR_WORK* pWork,BOOL rmax,BOOL gmax,BOOL bmax)
       }
       pWork->palChange[y][x]=r+g+b;
     }
-  }
+//  }
 
 }
 
@@ -766,7 +766,9 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
         //				pWork->palChange[y][x] = loadPtr[20 +16*(_CGEAR_NET_CHANGEPAL_POSY+_CGEAR_NET_CHANGEPAL_MAX+y) + _CGEAR_NET_CHANGEPAL_POSX + x];
       }
     }
-    _PaletteMake(pWork,TRUE,TRUE,TRUE);
+    _PaletteMake(pWork,TRUE,TRUE,TRUE,0);
+    _PaletteMake(pWork,TRUE,TRUE,TRUE,1);
+    _PaletteMake(pWork,TRUE,TRUE,TRUE,2);
 
     GFL_HEAP_FreeMemory( loadPtr );
 
@@ -1632,6 +1634,7 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
   return ret;
 }
 
+
 //------------------------------------------------------------------------------
 /**
  * @brief   スタート
@@ -1692,7 +1695,7 @@ u8 PalleteONOFFTbl[][3]={
 void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
   StateFunc* state = pWork->state;
-
+  int st;
 
   if(pWork->bAction != bAction){
     pWork->bAction = bAction;
@@ -1700,11 +1703,10 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
   pWork->bAction = bAction;
 
-  if(state != NULL)
+  if(state != NULL && GFL_NET_IsInit())
   {
     GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
     {
-      GAME_COMM_STATUS st = GameCommSys_GetCommStatus(pGC);
 
       pWork->plt_counter++;
       if(pWork->plt_counter>=66)
@@ -1713,48 +1715,54 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         pWork->plt_counter=0;
       }
       if(!pWork->beacon_bit){
-        if(GAME_COMM_STATUS_NULL!=st){
-          GF_ASSERT( (sizeof(PalleteONOFFTbl)/3) >  st );
-          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2]);
-        }
-        switch(st){
-        case GAME_COMM_STATUS_WIRELESS:          ///<ワイヤレス通信 パレス
-        case GAME_COMM_STATUS_WIRELESS_TR:       ///<ワイヤレス通信 トランシーバー
-        case GAME_COMM_STATUS_WIRELESS_UN:      ///<ワイヤレス通信 ユニオン
-        case GAME_COMM_STATUS_WIRELESS_FU:       ///<ワイヤレス通信 不思議
-          pWork->beacon_bit = _CGEAR_NET_BIT_WIRELESS;
-          break;
-        case GAME_COMM_STATUS_WIFI:              ///<Wi-Fi通信 登録済み
-        case GAME_COMM_STATUS_WIFI_ZONE:              ///<Wi-Fi通信 任天堂ゾーン等任天堂公式
-        case GAME_COMM_STATUS_WIFI_FREE:             ///<Wi-Fi通信 鍵が無い
-        case GAME_COMM_STATUS_WIFI_LOCK:              ///<Wi-Fi通信 鍵がある
-          pWork->beacon_bit = _CGEAR_NET_BIT_WIFI;
-          break;
-        case GAME_COMM_STATUS_IRC:              ///<赤外線通信
-          pWork->beacon_bit = _CGEAR_NET_BIT_IR;
-          break;
-        }
-        {
-          const GFLNetInitializeStruct *aNetStruct;
-          if(GFL_NET_IsInit()){
-            aNetStruct = GFL_NET_GetNETInitStruct();
-
-          //  NET_PRINT("--%d \n",aNetStruct->bNetType);
-            {
-           // if(aNetStruct->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY){	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
-              u32 bit = WIH_DWC_GetAllBeaconTypeBit();
-              if(bit & GAME_COMM_SBIT_IRC_ALL){
-                pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
-              }
-              if(bit & GAME_COMM_SBIT_WIRELESS_ALL){
-                pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
-              }
-              if(bit & GAME_COMM_SBIT_WIFI_ALL){
-                pWork->beacon_bit |= _CGEAR_NET_BIT_WIFI;
-              }
-            }
+        u32 bit = WIH_DWC_GetAllBeaconTypeBit();
+          if(bit & GAME_COMM_SBIT_IRC_ALL){
+            pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
           }
+          if(bit & GAME_COMM_SBIT_WIRELESS_ALL){
+            pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
+          }
+          if(bit & GAME_COMM_SBIT_WIFI_ALL){
+            pWork->beacon_bit |= _CGEAR_NET_BIT_WIFI;
+          }
+        if(bit & GAME_COMM_STATUS_BIT_IRC){
+          st = GAME_COMM_STATUS_IRC;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 0);
         }
+        if(bit & GAME_COMM_STATUS_BIT_WIFI){
+          st = GAME_COMM_STATUS_WIFI;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIFI_ZONE){
+          st = GAME_COMM_STATUS_WIFI_ZONE;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIFI_FREE){
+          st = GAME_COMM_STATUS_WIFI_FREE;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIFI_LOCK){
+          st = GAME_COMM_STATUS_WIFI_LOCK;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
+        }
+        
+        if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
+          st = GAME_COMM_STATUS_WIRELESS_TR;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIRELESS){
+           st = GAME_COMM_STATUS_WIRELESS;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_UN){
+          st = GAME_COMM_STATUS_WIRELESS_UN;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+        else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_FU){
+          st = GAME_COMM_STATUS_WIRELESS_FU;
+          _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+
       }
     }
     state(pWork);

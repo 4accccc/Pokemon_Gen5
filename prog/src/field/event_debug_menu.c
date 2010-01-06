@@ -2498,10 +2498,13 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
   pp = PP_Create(100, 100, 123456, HEAPID_FIELDMAP);
 
   {
-    int i,j;
+    int i,j,k=1;
     BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
 
-    for(i=0;i < BOX_MAX_TRAY;i++){
+    if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
+      k=BOX_MAX_TRAY;
+    }
+    for(i=0;i < k;i++){
       for(j=0;j < 30;j++){
 //        int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
         int monsno = i+10;
