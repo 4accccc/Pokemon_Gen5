@@ -15,7 +15,7 @@
 
 
 #define MUL_VAL (16)
-
+#define Z_MUL_VAL (32)
 #define POLY_W_NUM  (32)
 #define POLY_H_NUM  (24)
 
@@ -25,7 +25,9 @@
 #define WAVE_WAIT (8)
 #define WAVE_COUNT (7)
 
-#define WAVE_AFTER_WAIT (8)
+#define WAVE_AFTER_WAIT (6)
+
+#define WAVE_HEIGHT (FX16_ONE/2.5)
 
 //--------------------------------------------------------------
 /// ENCEFF2_WORK
@@ -343,7 +345,7 @@ static BOOL WaveMain(ENCEFF2_WORK *evt_work)
   if (evt_work->WaveWait == 0)
   {
     //波をたてる
-    evt_work->Vtx[12*33+16].z = (FX16_ONE/4);
+    evt_work->Vtx[12*33+16].z = WAVE_HEIGHT;
     //ウェイトセット
     evt_work->WaveWait = WAVE_WAIT;
     evt_work->WaveCount--;
@@ -509,7 +511,7 @@ static void DrawMesh(ENCEFF_CNT_PTR ptr)
 
   {
     VecFx32 pos = {-FX32_ONE*16,FX32_ONE*12,0};
-    VecFx32 scale = {FX32_ONE*MUL_VAL, FX32_ONE*MUL_VAL, FX32_ONE*64};
+    VecFx32 scale = {FX32_ONE*MUL_VAL, FX32_ONE*MUL_VAL, FX32_ONE*Z_MUL_VAL};
     fx32  s0, t0, t1;
 
     // 位置設定
