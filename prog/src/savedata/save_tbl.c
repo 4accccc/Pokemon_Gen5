@@ -48,6 +48,7 @@
 #include "savedata/c_gear_picture.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/rndmatch_savedata.h"
+#include "savedata/radar_save.h"
 
 //==============================================================================
 //  定数定義
@@ -386,6 +387,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_RNDMATCH,
     (FUNC_GET_SIZE)RNDMATCH_GetWorkSize,
     (FUNC_INIT_WORK)RNDMATCH_Init,
+  },
+  { //調査レーダー
+    GMDATA_ID_RADAR,
+    (FUNC_GET_SIZE)RadarSave_GetWorkSize,
+    (FUNC_INIT_WORK)RadarSave_WorkInit,
   },
 };
 
