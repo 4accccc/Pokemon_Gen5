@@ -899,6 +899,7 @@ SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
         test/ohno/fatal_error.c \
         test/ohno/debug_saveaddr.c \
         test/ohno/debug_field.c \
+        test/ohno/debug_midi.c \
         test/ohno/test_layout.c
 
 # ŠÈˆÕ•¶“ü—Í

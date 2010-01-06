@@ -9,11 +9,19 @@
 
 #include <gflib.h>
 
+#include "arc_def.h"
+#include "system/main.h"
+#include "message.naix"
 #include "savedata/save_tbl.h"	//SAVEDATA参照のため
 #include "buflen.h"
 #include "savedata/save_control.h"
 #include "savedata/regulation.h"
 #include "poke_tool/monsno_def.h"
+
+#include "msg/msg_regulation_cup.h"
+#include "msg/msg_regulation_rule.h"
+
+#define HEAPID_SAVE_TEMP        (GFL_HEAPID_APP)
 
 //選手証
 struct _REGULATION_DATA {
@@ -141,10 +149,10 @@ void RegulationData_Init(REGULATION_DATA* pRegData)
  * @param	pCupBuf	カップ名が入ったバッファ
  */
 //----------------------------------------------------------
-void Regulation_SetCupName(REGULATION* pReg, const STRBUF *pCupBuf)
-{
-  GFL_STR_GetStringCode(pCupBuf, pReg->cupName, (REGULATION_CUPNAME_SIZE + EOM_SIZE));
-}
+//void Regulation_SetCupName(REGULATION* pReg, const STRBUF *pCupBuf)
+//{
+//  GFL_STR_GetStringCode(pCupBuf, pReg->cupName, (REGULATION_CUPNAME_SIZE + EOM_SIZE));
+//}
 
 //----------------------------------------------------------
 /**
@@ -156,7 +164,11 @@ void Regulation_SetCupName(REGULATION* pReg, const STRBUF *pCupBuf)
 //----------------------------------------------------------
 void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName)
 {
-  GFL_STR_SetStringCodeOrderLength(pReturnCupName, pReg->cupName, (REGULATION_CUPNAME_SIZE + EOM_SIZE));
+ // GFL_STR_SetStringCodeOrderLength(pReturnCupName, pReg->cupName, (REGULATION_CUPNAME_SIZE + EOM_SIZE));
+  GFL_MSGDATA* pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+                                          NARC_message_regulation_cup_dat, HEAPID_SAVE_TEMP );
+  GFL_MSG_GetString( pMsgData, pReg->cupNo, pReturnCupName );
+  GFL_MSG_Delete(pMsgData);
 }
 
 //----------------------------------------------------------
@@ -170,8 +182,10 @@ void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName)
 STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID)
 {
   STRBUF* tmpBuf = GFL_STR_CreateBuffer((REGULATION_CUPNAME_SIZE + EOM_SIZE)*GLOBAL_MSGLEN, heapID);
-  GFL_STR_SetStringCode( tmpBuf, pReg->cupName );
+  Regulation_GetCupName(pReg,tmpBuf);
+//  GFL_STR_SetStringCode( tmpBuf, pReg->cupName );
   return tmpBuf;
+
 }
 
 //----------------------------------------------------------
@@ -181,10 +195,10 @@ STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID)
  * @param	pCupBuf	カップ名が入ったバッファ
  */
 //----------------------------------------------------------
-void Regulation_SetRuleName(REGULATION* pReg, const STRBUF *pRuleBuf)
-{
-  GFL_STR_GetStringCode(pRuleBuf, pReg->ruleName, (REGULATION_RULENAME_SIZE + EOM_SIZE));
-}
+//void Regulation_SetRuleName(REGULATION* pReg, const STRBUF *pRuleBuf)
+//{
+//  GFL_STR_GetStringCode(pRuleBuf, pReg->ruleName, (REGULATION_RULENAME_SIZE + EOM_SIZE));
+//}
 
 //----------------------------------------------------------
 /**
@@ -196,7 +210,13 @@ void Regulation_SetRuleName(REGULATION* pReg, const STRBUF *pRuleBuf)
 //----------------------------------------------------------
 void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName)
 {
-  GFL_STR_SetStringCodeOrderLength(pReturnRuleName, pReg->ruleName, (REGULATION_RULENAME_SIZE + EOM_SIZE));
+//  GFL_STR_SetStringCodeOrderLength(pReturnRuleName, pReg->ruleName, (REGULATION_RULENAME_SIZE + EOM_SIZE));
+
+  GFL_MSGDATA* pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+                                          NARC_message_regulation_cup_dat, HEAPID_SAVE_TEMP );
+  GFL_MSG_GetString( pMsgData, pReg->ruleNo, pReturnRuleName );
+  GFL_MSG_Delete(pMsgData);
+
 }
 
 //----------------------------------------------------------
@@ -210,7 +230,9 @@ void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName)
 STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, HEAPID heapID)
 {
   STRBUF* tmpBuf = GFL_STR_CreateBuffer((REGULATION_RULENAME_SIZE + EOM_SIZE)*GLOBAL_MSGLEN, heapID);
-  GFL_STR_SetStringCode( tmpBuf, pReg->ruleName );
+  Regulation_GetRuleName(pReg,tmpBuf);
+
+  //  GFL_STR_SetStringCode( tmpBuf, pReg->ruleName );
   return tmpBuf;
 }
 
@@ -226,6 +248,12 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   int ret = 0;
 
   switch(type){
+  case REGULATION_CUPNUM:
+    ret = pReg->cupNo;
+    break;
+  case REGULATION_RULENUM:
+    ret = pReg->ruleNo;
+    break;
   case REGULATION_NUM_LO: //    #参加数下限
     ret = pReg->NUM_LO;
     break;
@@ -294,6 +322,22 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
 {
 
   switch(type){
+  case REGULATION_CUPNUM:
+    if(REGULATION_CUP_MAX > param){
+      pReg->cupNo = param;
+    }
+    else{
+      GF_ASSERT(0);
+    }
+    break;
+  case REGULATION_RULENUM:
+    if(REGULATION_RULE_MAX > param){
+      pReg->ruleNo = param;
+    }
+    else{
+      GF_ASSERT(0);
+    }
+    break;
   case REGULATION_NUM_LO: //    #参加数下限
     if(param >= 6){
       GF_ASSERT(0);

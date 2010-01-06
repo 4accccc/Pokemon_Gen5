@@ -16,7 +16,8 @@
 
 
 #define WIFI_PLAYER_TIX_CUPNAME_MOJINUM (72) //デジタル選手証大会名文字列文字数
-
+#define REGULATION_CUP_MAX (7)  //regulation.rbやregulation_cup.gmmと連動
+#define REGULATION_RULE_MAX (6) //regulation.rbやregulation_rule.gmmと連動
 
 //----------------------------------------------------------
 /**
@@ -39,6 +40,8 @@ typedef enum {
 } REGULATION_ETC_PARAM_TYPE;
 
 typedef enum  {
+  REGULATION_CUPNUM,   ///< カップ番号
+  REGULATION_RULENUM,  ///< ルール番号
   REGULATION_NUM_LO, ///<    #参加数下限
   REGULATION_NUM_HI, ///<    #参加数上限
   REGULATION_LEVEL,  ///<    #参加レベル
@@ -97,8 +100,10 @@ typedef enum {
 
 
 typedef struct{
-  STRCODE cupName[REGULATION_CUPNAME_SIZE + EOM_SIZE]; ///< カップ名  26
-  STRCODE ruleName[REGULATION_RULENAME_SIZE + EOM_SIZE];  ///< ルール名  52
+ // STRCODE cupName[REGULATION_CUPNAME_SIZE + EOM_SIZE]; ///< カップ名  26
+ // STRCODE ruleName[REGULATION_RULENAME_SIZE + EOM_SIZE];  ///< ルール名  52
+  u8 cupNo;  ///< 大会カップ番号
+  u8 ruleNo; ///< 大会ルール番号
   u8 NUM_LO; ///<    #参加数下限
   u8 NUM_HI; ///<    #参加数上限
   u8 LEVEL;  ///<    #参加レベル
@@ -139,12 +144,12 @@ extern void Regulation_Init(REGULATION * my);
 extern void RegulationData_Init(REGULATION_DATA * my);
 
 //カップ名
-extern void Regulation_SetCupName(REGULATION * pReg, const STRBUF* pCupName);
+//extern void Regulation_SetCupName(REGULATION * pReg, const STRBUF* pCupName);
 extern void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName);
 extern STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID);
 
 //ルール名
-extern void Regulation_SetRuleName(REGULATION * pReg, const STRBUF* pRuleName);
+//extern void Regulation_SetRuleName(REGULATION * pReg, const STRBUF* pRuleName);
 extern void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName);
 extern STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, HEAPID heapID);
 

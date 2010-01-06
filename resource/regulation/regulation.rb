@@ -1,6 +1,8 @@
 #!ruby -Ks
 #!/usr/bin/ruby
 #
+# カップ名＋対戦ルールは番号管理にした
+# 2010.01.06 k.ohno
 # レギュレーションをバイナリにするプログラム
 # 2009.06.04 k.ohno
 #
@@ -44,6 +46,10 @@ ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
 class RegulationBin
   
   def initialize
+    
+    @HashCupRange = {"シングルバトル"=>0 ,"ダブルバトル"=>1 ,"トリプルバトル"=>2,
+      "ローテーションバトル"=>3, "マルチバトル"=>4, "シューターバトル"=>5 , "デバッグバトル"=>6 }
+    @HashRuleRange = {"レベル５０"=>0 ,"せいげんなし"=>1 ,"スタンダード"=>2, "ランダムマッチ"=>3, "バトルサブウェイ"=>4, "フラット"=>5}
     @HashLevelRange = {"なし"=>0 ,"以上"=>1 ,"以下"=>2, "以上補正"=>3, "全補正"=>4, "以下補正"=>5}
     @HashOKNG = {"NG"=>0,"OK"=>1, "MANUAL"=>2}
     @HashONOFF = {"OFF"=>0,"ON"=>1, "MANUAL"=>2}
@@ -91,47 +97,53 @@ class RegulationBin
     case index
     when COL_NO    #No
     when COL_CUPNAME    #カップ名
-      msg = NKF.nkf('-m0 -S --utf16',value)
-      i = 0
-      mojibyte1 = 0
-      msg.each_byte{ | mojibyte |
-        if i % 2 == 0
-          mojibyte1 = mojibyte
-        else
-          outFH.putc( mojibyte )
-          outFH.putc( mojibyte1 )
-        end
-        i=i+1
-      }
-      outFH.putc(0xff)  ##終端
-      outFH.putc(0xff)
-      num = 24 - msg.length
-      k=0
-      while k < num
-        outFH.putc(0)
-        k=k+1
-      end
+      num = @HashCupRange[value]
+      outFH.write([num].pack("c"))
+#      msg = NKF.nkf('-m0 -S --utf16',value)
+#      i = 0
+#      mojibyte1 = 0
+#      msg.each_byte{ | mojibyte |
+#        if i % 2 == 0
+#          mojibyte1 = mojibyte
+#        else
+#          outFH.putc( mojibyte )
+#          outFH.putc( mojibyte1 )
+#        end
+#         i=i+1
+#       }
+#       outFH.putc(0xff)  ##終端
+#       outFH.putc(0xff)
+#       num = 24 - msg.length
+#       k=0
+#       while k < num
+#         outFH.putc(0)
+#         k=k+1
+#       end
     when COL_RULENAME    #対戦ルール
-      msg = NKF.nkf("-m0 -S --utf16",value)
-      i = 0
-      mojibyte1 = 0
-      msg.each_byte{ | mojibyte |
-        if i % 2 == 0
-          mojibyte1 = mojibyte
-        else
-          outFH.putc( mojibyte )
-          outFH.putc( mojibyte1 )
-        end
-        i=i+1
-      }
-      outFH.putc(0xff)  ##終端
-      outFH.putc(0xff)
-      num = 24 - msg.length
-      k=0
-      while k < num
-        outFH.putc(0)
-        k=k+1
-      end
+      
+      num = @HashRuleRange[value]
+      outFH.write([num].pack("c"))
+      
+#       msg = NKF.nkf("-m0 -S --utf16",value)
+#       i = 0
+#       mojibyte1 = 0
+#       msg.each_byte{ | mojibyte |
+#         if i % 2 == 0
+#           mojibyte1 = mojibyte
+#         else
+#           outFH.putc( mojibyte )
+#           outFH.putc( mojibyte1 )
+#         end
+#         i=i+1
+#       }
+#       outFH.putc(0xff)  ##終端
+#       outFH.putc(0xff)
+#       num = 24 - msg.length
+#       k=0
+#       while k < num
+#         outFH.putc(0)
+#         k=k+1
+#       end
     when COL_NUM_LO    #参加数下限
       num = value.to_i
       outFH.write([num].pack("c"))

@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mididl.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MIDIDL_NAIX_
+#define NARC_MIDIDL_NAIX_
+
+enum {
+	NARC_mididl_mus_wb_msl_field_sseq = 0,
+	NARC_mididl_mus_wb_msl_field_sbnk = 1
+};
+
+/* NARC_MIDIDL_NAIX_ */
+#endif
