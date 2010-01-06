@@ -3088,7 +3088,7 @@ static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork)
 //==================================================================
 static void DrawEncEff(FIELDMAP_WORK * fieldWork)
 {
-  G3X_SetClearColor(GX_RGB(31,31,31),31,0x7fff,0,FALSE);
+  G3X_SetClearColor(GX_RGB(16,16,16),31,0x7fff,0,FALSE);
 
 	ENCEFF_Draw(fieldWork->EncEffCntPtr);
 }

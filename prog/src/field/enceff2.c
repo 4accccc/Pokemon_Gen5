@@ -15,7 +15,7 @@
 
 
 #define MUL_VAL (16)
-#define Z_MUL_VAL (32)
+#define Z_MUL_VAL (64)
 #define POLY_W_NUM  (32)
 #define POLY_H_NUM  (24)
 
@@ -27,7 +27,7 @@
 
 #define WAVE_AFTER_WAIT (6)
 
-#define WAVE_HEIGHT (FX16_ONE/2.5)
+#define WAVE_HEIGHT (FX16_ONE/4)
 
 //--------------------------------------------------------------
 /// ENCEFF2_WORK
@@ -497,10 +497,10 @@ static void DrawMesh(ENCEFF_CNT_PTR ptr)
   G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
 
   //ライトカラー
-  G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
+//  G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
   // ポリゴンアトリビュート設定
 	G3_PolygonAttr(
-				   GX_LIGHTMASK_0,			  // ライトを反映
+				   GX_LIGHTMASK_0123,			  // ライトを反映
 				   GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
 				   //GX_CULL_BACK,             // カリング
 				   GX_CULL_NONE,             // カリング
