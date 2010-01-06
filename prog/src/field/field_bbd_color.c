@@ -328,6 +328,9 @@ void FLD_BBD_COLOR_DEBUG_Exit( void )
   p_DEBUG_BBD_COLOR_CONTROL_WK->p_strbuff_tmp = NULL;
 
   GFL_UI_KEY_SetRepeatSpeed( 8,15 );
+
+  GFL_HEAP_FreeMemory( p_DEBUG_BBD_COLOR_CONTROL_WK );
+  p_DEBUG_BBD_COLOR_CONTROL_WK = NULL;
 }
 
 
