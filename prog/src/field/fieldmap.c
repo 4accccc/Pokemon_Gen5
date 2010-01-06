@@ -2735,7 +2735,7 @@ GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm)
 {
-  if(NetErr_App_CheckError() == TRUE){
+  if(NetErr_App_CheckError()){
     return FIELDCOMM_EXIT_ERROR;
   }
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){

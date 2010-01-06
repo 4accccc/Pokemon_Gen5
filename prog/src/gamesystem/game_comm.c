@@ -285,7 +285,7 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     }
     //break;
   case GCSSEQ_FINISH:
-    if(NetErr_App_CheckError() == TRUE){
+    if(NetErr_App_CheckError()){
       return; //エラー発生による強制終了だった場合はエラー画面が表示されるまで待つ
     }
     gcsp->app_work = NULL;

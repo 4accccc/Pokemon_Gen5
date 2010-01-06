@@ -187,7 +187,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
 
   //通信エラーチェック
-  if(NetErr_App_CheckError() == TRUE){
+  if(NetErr_App_CheckError()){
     intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
     GameCommSys_ExitReq(intcomm->game_comm);
     return;
@@ -292,7 +292,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
 
-  if(NetErr_App_CheckError() == TRUE){
+  if(NetErr_App_CheckError()){
     return TRUE;
   }
 
@@ -360,13 +360,13 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 
   switch(*seq){
   case 0:
-    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError() == TRUE){
+    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError()){
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
       GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
       CommPlayer_Exit(intcomm->cps);
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
-      if(NetErr_App_CheckError() == TRUE){
+      if(NetErr_App_CheckError()){
         GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
       }
       return TRUE;

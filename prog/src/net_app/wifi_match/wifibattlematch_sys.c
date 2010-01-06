@@ -152,7 +152,7 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 //-------------------------------------
 ///	致命的なエラーをチェック
 //=====================================
-static void ERROR_CheckFatalMain( WIFIBATTLEMATCH_SYS *p_wk );
+static BOOL ERROR_CheckMain( WIFIBATTLEMATCH_SYS *p_wk );
 
 //=============================================================================
 /**
@@ -415,7 +415,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	}
 
   //エラー検知
-  ERROR_CheckFatalMain( p_wk );
+  if( ERROR_CheckMain( p_wk ) )
+  { 
+		return GFL_PROC_RES_FINISH;
+  }
+
+
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -899,11 +904,44 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
  *	@param	WIFIBATTLEMATCH_SYS *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void ERROR_CheckFatalMain( WIFIBATTLEMATCH_SYS *p_wk )
-{ 
-  BOOL is_check  = NetErr_App_CheckError();
-
-  if( is_check )
+static BOOL ERROR_CheckMain( WIFIBATTLEMATCH_SYS *p_wk )
+{
+  if( GFL_NET_IsInit() )
   { 
+
+    if( NetErr_App_CheckError() )
+    { 
+      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
+      switch( cp_error->errorType )
+      { 
+      case DWC_ETYPE_LIGHT:
+        /* fallthru */
+      case DWC_ETYPE_SHOW_ERROR:
+        //エラーコードorメッセージを表示するだけ
+        NetErr_DispCallPushPop();
+        GFL_NET_StateClearWifiError();
+        break;
+
+      case DWC_ETYPE_SHUTDOWN_FM:
+      case DWC_ETYPE_SHUTDOWN_GHTTP:
+      case DWC_ETYPE_SHUTDOWN_ND:
+        //シャットダウン
+        //NetErr_App_ReqErrorDisp();
+        return TRUE;
+
+      case DWC_ETYPE_DISCONNECT:
+        //切断
+        NetErr_App_ReqErrorDisp();
+        return TRUE;
+
+      case DWC_ETYPE_FATAL:
+        //Fatal
+        break;
+      }
+    }
+
   }
+
+  return FALSE;
 }

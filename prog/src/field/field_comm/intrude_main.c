@@ -859,7 +859,7 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
   #endif
   }
   else if(subscreen_mode == FIELD_SUBSCREEN_INTRUDE){
-    if(NetErr_App_CheckError() == TRUE){
+    if(NetErr_App_CheckError()){
       //エラー発生中はまだ戻さない (エラー画面が出てから戻るようにしている)
       return FIELD_SUBSCREEN_MODE_MAX;
     }
@@ -930,7 +930,7 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
 {
   INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
   
-  if(NetErr_App_CheckError() == TRUE || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION 
+  if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION 
       || GameCommSys_CheckSystemWaiting(game_comm) == TRUE || intcomm == NULL){
     return NULL;
   }
