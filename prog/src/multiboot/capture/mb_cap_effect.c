@@ -50,8 +50,24 @@ struct _MB_CAP_EFFECT
 //======================================================================
 #pragma mark [> proto
 
-static const u8 MB_CAP_EFFECT_ANIME_FRAME[MCET_MAX] = { 2,MB_CAP_EFFECT_SMOKE_FRAME,MB_CAP_EFFECT_TRANS_FRAME,4,MB_CAP_EFFECT_SMOKE_FRAME,MB_CAP_EFFECT_ZZZ_FRAME };
-static const u8 MB_CAP_EFFECT_ANIME_SPEED[MCET_MAX] = { 5,MB_CAP_EFFECT_SMOKE_SPEED,MB_CAP_EFFECT_TRANS_SPEED,6,MB_CAP_EFFECT_SMOKE_SPEED,MB_CAP_EFFECT_ZZZ_SPEED };
+static const u8 MB_CAP_EFFECT_ANIME_FRAME[MCET_MAX] = { 
+                          2,
+                          MB_CAP_EFFECT_SMOKE_FRAME,
+                          MB_CAP_EFFECT_SMOKE_FRAME,
+                          MB_CAP_EFFECT_SMOKE_FRAME,
+                          MB_CAP_EFFECT_TRANS_FRAME,
+                          4,
+                          MB_CAP_EFFECT_SMOKE_FRAME,
+                          MB_CAP_EFFECT_ZZZ_FRAME };
+static const u8 MB_CAP_EFFECT_ANIME_SPEED[MCET_MAX] = { 
+                          5,
+                          MB_CAP_EFFECT_SMOKE_SPEED,
+                          MB_CAP_EFFECT_SMOKE_SPEED,
+                          MB_CAP_EFFECT_SMOKE_SPEED,
+                          MB_CAP_EFFECT_TRANS_SPEED,
+                          6,
+                          MB_CAP_EFFECT_SMOKE_SPEED,
+                          MB_CAP_EFFECT_ZZZ_SPEED };
 
 //--------------------------------------------------------------
 //	エフェクト作成

@@ -568,9 +568,11 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_star_nsbtx ,
       NARC_mb_capture_gra_cap_obj_hit_nsbtx ,
       NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kemuri2_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kemuri3_nsbtx ,
       NARC_mb_capture_gra_cap_obj_getefect_nsbtx ,
       NARC_mb_capture_gra_cap_obj_memai_nsbtx ,
-      NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,  //ボーナス煙
+      NARC_mb_capture_gra_cap_obj_kemuri_bonus_nsbtx ,  //ボーナス煙
       NARC_mb_capture_gra_cap_obj_zzz_nsbtx ,
       };
     static const u32 resSizeArr[MCBR_MAX] = {
@@ -583,6 +585,8 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_32x32 ,
       GFL_BBD_TEXSIZDEF_32x32 ,
       GFL_BBD_TEXSIZDEF_64x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,

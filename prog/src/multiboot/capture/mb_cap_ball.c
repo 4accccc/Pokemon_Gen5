@@ -391,7 +391,6 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
       
       effPos.y -= ballWork->height;
       effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
-      MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE );
       ballWork->cnt = 0;
       ballWork->state = MCBS_CAPTURE_SMOKE;
       GFL_BBD_SetObjectSiz( bbdSys , ballWork->objIdx , &size , &size );
@@ -409,17 +408,20 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
         if( absX < 5 )
         {
           MB_CAPTURE_AddScore( capWork , 100 , TRUE );
+          MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE3 );
           MB_TPrintf("[100]\n");
         }
         else
         if( absX < 10 )
         {
           MB_CAPTURE_AddScore( capWork , 70 , TRUE );
+          MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE2 );
           MB_TPrintf("[ 70]\n");
         }
         else
         {
           MB_CAPTURE_AddScore( capWork , 50 , TRUE );
+          MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE );
           MB_TPrintf("[ 50]\n");
         }
       }

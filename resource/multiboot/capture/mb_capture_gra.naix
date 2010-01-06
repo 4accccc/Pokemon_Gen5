@@ -37,10 +37,13 @@ enum {
 	NARC_mb_capture_gra_cap_obj_target_nsbtx = 23,
 	NARC_mb_capture_gra_cap_obj_hit_nsbtx = 24,
 	NARC_mb_capture_gra_cap_obj_kemuri_nsbtx = 25,
-	NARC_mb_capture_gra_cap_obj_getefect_nsbtx = 26,
-	NARC_mb_capture_gra_cap_obj_memai_nsbtx = 27,
-	NARC_mb_capture_gra_cap_obj_zzz_nsbtx = 28,
-	NARC_mb_capture_gra_cap_poke_dummy_nsbtx = 29
+	NARC_mb_capture_gra_cap_obj_kemuri2_nsbtx = 26,
+	NARC_mb_capture_gra_cap_obj_kemuri3_nsbtx = 27,
+	NARC_mb_capture_gra_cap_obj_kemuri_bonus_nsbtx = 28,
+	NARC_mb_capture_gra_cap_obj_getefect_nsbtx = 29,
+	NARC_mb_capture_gra_cap_obj_memai_nsbtx = 30,
+	NARC_mb_capture_gra_cap_obj_zzz_nsbtx = 31,
+	NARC_mb_capture_gra_cap_poke_dummy_nsbtx = 32
 };
 
 /* NARC_MB_CAPTURE_GRA_NAIX_ */
