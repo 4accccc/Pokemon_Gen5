@@ -8,9 +8,10 @@
 //======================================================================
 #pragma once
 
-#define GYM_DRAGON_SE_SW  (SEQ_SE_FLD68)  //スイッチ
-#define GYM_DRAGON_SE_NECK_MOVE  (SEQ_SE_FLD_69)    //首動く
-#define GYM_DRAGON_SE_NECK_STOP  (SEQ_SE_FLD_74)     //首停止
+#define GYM_DRAGON_SE_SW  (SEQ_SE_FLD_68)  //スイッチ
+#define GYM_DRAGON_SE_HEAD_MOVE  (SEQ_SE_FLD_69)    //首動く
+#define GYM_DRAGON_SE_HEAD_STOP  (SEQ_SE_FLD_74)     //首停止
 #define GYM_DRAAGON_SE_JUMP  (SEQ_SE_DANSA)     //ジャンプ
 #define GYM_DRAGON_SE_ARM_MOVE  (SEQ_SE_FLD_96)     //腕動く
 #define GYM_DRAGON_SE_ARM_STOP  (SEQ_SE_FLD_97)     //腕停止
+#define NONE_SE (-1)

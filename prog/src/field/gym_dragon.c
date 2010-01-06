@@ -119,6 +119,7 @@ typedef struct ANM_PLAY_WORK_tag
   fx32 JumpDownX;
   fx32 JumpDownBaseY;
   int AnmOfs[ANM_PLAY_MAX];
+  int SeNo[2];
 }ANM_PLAY_WORK;
 
 //ジム内部中の一時ワーク
@@ -947,6 +948,8 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       tmp->AnmPlayWk.AnmNum = 1;
       tmp->AnmPlayWk.AnmOfs[0] = 0;
       tmp->AnmPlayWk.AllAnmNum = BTN_ANM_NUM;
+      tmp->AnmPlayWk.SeNo[0] = GYM_DRAGON_SE_SW;
+      tmp->AnmPlayWk.SeNo[1] = NONE_SE;
 
       call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
       //スイッチ押下アニメイベントコール
@@ -987,7 +990,9 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
       tmp->AnmPlayWk.AnmNum = 1;
       tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
       tmp->AnmPlayWk.AllAnmNum = ARM_ANM_NUM;
-
+      tmp->AnmPlayWk.SeNo[0] = GYM_DRAGON_SE_ARM_MOVE;
+      tmp->AnmPlayWk.SeNo[1] = GYM_DRAGON_SE_ARM_STOP;
+      
       call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
       //腕アニメイベントコール
       GMEVENT_CallEvent(event, call_event);
@@ -1049,6 +1054,8 @@ static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work )
       tmp->AnmPlayWk.AnmNum = 1;
       tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
       tmp->AnmPlayWk.AllAnmNum = DRAGON_ANM_NUM;
+      tmp->AnmPlayWk.SeNo[0] = GYM_DRAGON_SE_HEAD_MOVE;
+      tmp->AnmPlayWk.SeNo[1] = GYM_DRAGON_SE_HEAD_STOP;
 
 #ifdef PM_DEBUG
       {
@@ -1156,6 +1163,9 @@ static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work )
         //頭出し
         FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_DRAGON_UNIT_IDX, obj_idx, anm_ofs, 0 );
         OS_Printf("%dを再生\n",anm_ofs);
+
+        //ＳＥ再生
+        PMSND_PlaySE(play_work->SeNo[0]);
       }
     }
     (*seq)++;
@@ -1172,6 +1182,9 @@ static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work )
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
         OS_Printf("アニメ終了\n");
+        PMSND_StopSE();
+        if (play_work->SeNo[1] != NONE_SE) PMSND_PlaySE(play_work->SeNo[1]);
+
         return GMEVENT_RES_FINISH;
       }
     }
@@ -1205,6 +1218,11 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    //ジャンプSE再生
+    PMSND_PlaySE( GYM_DRAAGON_SE_JUMP );
+    (*seq)++;
+    break;
+  case 1:
     {
       VecFx32 pos;
       FIELD_PLAYER *fld_player;
@@ -1216,6 +1234,8 @@ static GMEVENT_RESULT JumpDownEvt( GMEVENT* event, int* seq, void* work )
       play_work->JumpCount++;
       if ( play_work->JumpCount >= JUMP_COUNT)
       {
+        //着地ＳＥ(スイッチＳＥ)
+        PMSND_PlaySE( GYM_DRAGON_SE_SW );
         //終了
         return GMEVENT_RES_FINISH;
       }
