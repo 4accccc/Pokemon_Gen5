@@ -49,6 +49,7 @@
 #include "savedata/bsubway_savedata.h"
 #include "savedata/rndmatch_savedata.h"
 #include "savedata/radar_save.h"
+#include "savedata/symbol_save.h"
 
 //==============================================================================
 //  定数定義
@@ -392,6 +393,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_RADAR,
     (FUNC_GET_SIZE)RadarSave_GetWorkSize,
     (FUNC_INIT_WORK)RadarSave_WorkInit,
+  },
+  { //シンボルエンカウント
+    GMDATA_ID_SYMBOL,
+    (FUNC_GET_SIZE)SymbolSave_GetWorkSize,
+    (FUNC_INIT_WORK)SymbolSave_WorkInit,
   },
 };
 

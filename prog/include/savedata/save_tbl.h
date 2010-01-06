@@ -93,6 +93,7 @@ enum{
   GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
   GMDATA_ID_RNDMATCH,         // ランダムマッチ
   GMDATA_ID_RADAR,            // 調査レーダー
+  GMDATA_ID_SYMBOL,           // シンボルエンカウント
 	GMDATA_ID_MAX,
 };
 
