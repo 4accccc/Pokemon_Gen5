@@ -30,6 +30,8 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
+//	LOCALWORK0 をギミックの制御に使用しています。					//
+//		0 = 階段を登るPOSイベント有効	1 = イベント後(頂上にいる)	//
 //	LOCALWORK10 をギミックの制御に使用しています。マップ内使用禁止	//
 //		555 = POSイベント有効										//
 //																	//
@@ -69,6 +71,14 @@ INIT_EVENT_START	ev_recover_c09r0201
 		_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID_RECV, 18, 8 )
 		
 	ENDIF
+
+	//頂上にいるならカメラ設定を変更
+	IF $LOCALWORK0 == 1 THEN
+		
+		_FOURKINGS_SET_TOP_CAMERA( 2 )
+		
+	ENDIF
+
 
 INIT_EVENT_END
 
@@ -263,6 +273,9 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID )
 	
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID )
+	
+	//頂上に移動した
+	$LOCALWORK0 = 1
 	
 	
 EVENT_END
