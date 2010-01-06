@@ -24,7 +24,7 @@ include $(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= bgm_info
+SUBDIRS	= bgm_info midi_download
 
 .PHONY:	do-build clean subdir
 
