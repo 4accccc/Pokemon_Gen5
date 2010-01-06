@@ -39,6 +39,8 @@
 
 #include "arc/fieldmap/debug_list.h"  //DEBUG_SCR_
 
+#include "effect_encount.h"
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -130,7 +132,11 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_scene_work = {
 static const DEBUG_NUMINPUT_INITIALIZER DATA_other_work = {
   D_NINPUT_DATA_BIN, NARC_debug_symbol_other_work_bin, &listPrototype_work, };
 
+static const DEBUG_NUMINPUT_INITIALIZER DATA_eff_enc = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, };
+
 static const DEBUG_NUMINPUT_INITIALIZER DATA_Initializer[D_NUMINPUT_MODE_MAX] = { 
+  { D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, },
   { D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, },
   { D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, },
 };
@@ -168,7 +174,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_sys_work, (void*)&DATA_sys_work },
   { dni_scene_work, (void*)&DATA_scene_work },
   { dni_other_work, (void*)&DATA_other_work },
-  { dni_top_effect_encount, (void*)NULL },
+  { dni_top_effect_encount, (void*)&DATA_eff_enc },
   { dni_top_scenario, (void*)NULL },
 };
 
@@ -367,7 +373,7 @@ static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
 
   GFL_MSG_GetString( wk->msgman, dni_number_string, strbuf );
   WORDSET_RegisterNumber(wk->wordset, 0, num,
-                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+                         10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( wk->wordset, expandBuf, strbuf );
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp( bmpwin ), WINCLR_COL(FBMP_COL_WHITE) );
@@ -421,7 +427,9 @@ static GMEVENT_RESULT DebugNumInputEvent( GMEVENT * event , int *seq, void * wor
     }
   case 1:
     {
-      int trg = GFL_UI_KEY_GetTrg();
+      int trg = GFL_UI_KEY_GetRepeat();
+      int cont = GFL_UI_KEY_GetCont();
+      int diff;
       u32 before, after;
       if ( trg & PAD_BUTTON_B ) { //キャンセル
         (*seq) ++;
@@ -433,11 +441,32 @@ static GMEVENT_RESULT DebugNumInputEvent( GMEVENT * event , int *seq, void * wor
         break;
       }
       after = before = dni_wk->value;
-      if (trg & PAD_KEY_UP && after < def->max ) {
-        after ++;
-      } else if (trg & PAD_KEY_DOWN && after > def->min) {
-        after --;
+      diff = 0;
+      if (trg & PAD_KEY_UP){
+        diff = 1;
+      } else if (trg & PAD_KEY_DOWN) {
+        diff = -1;
+      } else if (trg & PAD_KEY_LEFT){
+        diff = -10;
+      } else if (trg & PAD_KEY_RIGHT){
+        diff = 10;
       }
+      if( cont & PAD_BUTTON_R ){
+        diff *= 10;
+      }else if( cont & PAD_BUTTON_L ){
+        diff *= 100;
+      }
+      if(diff == 0){
+        break;
+      }
+      if( diff < 0 && ( (after-def->min) < (diff*-1))){
+        after = def->max;
+      }else if( diff > 0 && ((def->max-after) < diff)){
+        after = def->min;
+      }else{
+        after += diff;
+      }
+
       if (after != before ) {
         printNumWin( dni_wk, after );
         dni_wk->value = after;

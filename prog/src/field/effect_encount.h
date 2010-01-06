@@ -78,3 +78,23 @@ extern void EFFECT_ENC_EffectAnmPauseSet( FIELD_ENCOUNT* enc, BOOL pause_f );
  */
 extern u16 EFFECT_ENC_GetEffectEncountItem( FIELD_ENCOUNT* enc );
 
+
+/////////////////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+enum{
+  EFFENC_DNI_INTERVAL,
+  EFFENC_DNI_PROB,
+  EFFENC_DNI_OFSX,
+  EFFENC_DNI_OFSZ,
+};
+
+extern u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+extern void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
+
+#endif  //PM_DEBUG
+
+
+
+
+

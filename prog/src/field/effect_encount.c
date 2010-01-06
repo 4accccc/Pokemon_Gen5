@@ -688,3 +688,48 @@ static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno )
 }
 
 
+/////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+
+/**
+ *  @brief  デバッグ数値入力　
+ */
+u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param )
+{
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount( fieldmap ); 
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
+  EFFECT_ENCOUNT* eff_wk = encount->eff_enc;
+
+  switch( param ){
+  case EFFENC_DNI_INTERVAL: 
+    return eff_wk->walk_ct_interval;
+  case EFFENC_DNI_PROB: 
+    return eff_wk->prob;
+  }
+  return 0;
+}
+
+///値を設定するための関数
+void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value )
+{
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount( fieldmap ); 
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
+  EFFECT_ENCOUNT* eff_wk = encount->eff_enc;
+
+  switch( param ){
+  case EFFENC_DNI_INTERVAL: 
+    eff_wk->walk_ct_interval = value;
+    break;
+  case EFFENC_DNI_PROB: 
+    eff_wk->prob = value;
+    break;
+  }
+}
+
+#endif  //PM_DEBUG
+
+
+

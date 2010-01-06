@@ -6,19 +6,19 @@
 */
 
 static const DEBUG_NUMINPUT_PARAM interval_param = {
-  1, 0xFFFF, NULL, NULL,
+ 1, 0xFFFF, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
 static const DEBUG_NUMINPUT_PARAM prob_param = {
- 0, 100, NULL, NULL,
+ 0, 100, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
 static const DEBUG_NUMINPUT_PARAM ofs_param = {
- 0, 10, NULL, NULL,
+ 0, 10, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
 static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
   //gmm_id, param, dni_param
- { dni_effenc_interval, 0, &interval_param },
- { dni_effenc_prob,     0, &prob_param },
- { dni_effenc_pos_ofsx, 0, &ofs_param }, 
- { dni_effenc_pos_ofsz, 0, &ofs_param },
+ { dni_effenc_interval, EFFENC_DNI_INTERVAL, &interval_param },
+ { dni_effenc_prob,     EFFENC_DNI_PROB, &prob_param },
+ { dni_effenc_pos_ofsx, EFFENC_DNI_OFSX, &ofs_param }, 
+ { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &ofs_param },
 };
 
