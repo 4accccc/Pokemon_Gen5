@@ -2491,36 +2491,36 @@
 
 #define TMFLG_AREA_START                  2720 /* 0x0aa0  */
 
-#define TMFLG_D37R0102_CUT                2720 /* 0x0aa0 散髪屋 */
-#define TMFLG_STAGE_OUEN                  2721 /* 0x0aa1 応援 選出したか */
-#define TMFLG_BONGURI_BALL                2722 /* 0x0aa2 ボングリボールタイマー */
-#define TMFLG_AOI_PASSWORD_FINISH         2723 /* 0x0aa3 アオイの合言葉を回答済み */
-#define TMFLG_BACKGROUND_ITEMGET          2724 /* 0x0aa4 背景姉さん */
-#define TMFLG_KUJI_DAY                    2725 /* 0x0aa5 IDクジ引いた */
-#define TMFLG_KUJI_ITEMGET                2726 /* 0x0aa6 IDクジ今日のアイテムゲット済み */
-#define TMFLG_MUSHITORI                   2727 /* 0x0aa7 虫取り大会終わった */
-#define TMFLG_T01R0201_KEZUKUROI          2728 /* 0x0aa8 グリーン姉の毛づくろい */
-#define TMFLG_T10R0101_RIVAL              2729 /* 0x0aa9 セキエイに出現する再戦ライバル */
-#define TMFLG_TR_HOUSE_TRAINER00          2730 /* 0x0aaa トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER01          2731 /* 0x0aab トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER02          2732 /* 0x0aac トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER03          2733 /* 0x0aad トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER04          2734 /* 0x0aae トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER05          2735 /* 0x0aaf トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER06          2736 /* 0x0ab0 トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER07          2737 /* 0x0ab1 トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER08          2738 /* 0x0ab2 トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER09          2739 /* 0x0ab3 トレーナーハウスのトレーナー */
-#define TMFLG_TR_HOUSE_TRAINER10          2740 /* 0x0ab4 トレーナーハウスのトレーナー */
-#define TMFLG_PIPPI_EVENT                 2741 /* 0x0ab5 お月見山のピッピイベント */
-#define TMFLG_AOI_AIKOTOBA_CHECK          2742 /* 0x0ab6 ラジオでアオイのあいことばを聞いた */
-#define TMFLG_YAMI_SHOP                   2743 /* 0x0ab7 安売り道具購入済み */
-#define TMFLG_RAPURASU                    2744 /* 0x0ab8 つながりの洞窟 ラプラス出現 */
-#define TMFLG_T26R0501_SEAL_GET           2745 /* 0x0ab9 T25R0501 シールゲット */
-#define TMFLG_R16R0101_NANKAI             2746 /* 0x0aba なんかい言葉聞いた */
-#define TMFLG_PLATE_GET                   2747 /* 0x0abb プレート入手イベント */
-#define TMFLG_WEEKBROS_RIBBON             2748 /* 0x0abc 曜日兄弟リボン入手イベント */
-#define TMFLG_TUBOTUBO_RETURN             2749 /* 0x0abd ツボツボあずかりイベント */
+#define TMFLG_WC10_ITEM_01                2720 /* 0x0aa0 WC10のアイテム０１ */
+#define TMFLG_WC10_ITEM_02                2721 /* 0x0aa1 WC10のアイテム０２ */
+#define TMFLG_WC10_ITEM_03                2722 /* 0x0aa2 WC10のアイテム０３ */
+#define TMFLG_WC10_ITEM_04                2723 /* 0x0aa3 WC10のアイテム０４ */
+#define TMFLG_WC10_ITEM_05                2724 /* 0x0aa4 WC10のアイテム０５ */
+#define TMFLG_WC10_ITEM_06                2725 /* 0x0aa5 WC10のアイテム０６ */
+#define TMFLG_WC10_ITEM_07                2726 /* 0x0aa6 WC10のアイテム０７ */
+#define TMFLG_WC10_ITEM_08                2727 /* 0x0aa7 WC10のアイテム０８ */
+#define TMFLG_WC10_ITEM_09                2728 /* 0x0aa8 WC10のアイテム０９ */
+#define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
+		/* not used  2730(0x0aaa) */
+		/* not used  2731(0x0aab) */
+		/* not used  2732(0x0aac) */
+		/* not used  2733(0x0aad) */
+		/* not used  2734(0x0aae) */
+		/* not used  2735(0x0aaf) */
+		/* not used  2736(0x0ab0) */
+		/* not used  2737(0x0ab1) */
+		/* not used  2738(0x0ab2) */
+		/* not used  2739(0x0ab3) */
+		/* not used  2740(0x0ab4) */
+		/* not used  2741(0x0ab5) */
+		/* not used  2742(0x0ab6) */
+		/* not used  2743(0x0ab7) */
+		/* not used  2744(0x0ab8) */
+		/* not used  2745(0x0ab9) */
+		/* not used  2746(0x0aba) */
+		/* not used  2747(0x0abb) */
+		/* not used  2748(0x0abc) */
+		/* not used  2749(0x0abd) */
 		/* not used  2750(0x0abe) */
 		/* not used  2751(0x0abf) */
 		/* not used  2752(0x0ac0) */

@@ -23,6 +23,9 @@
 
 #include "field_status_local.h"
 
+#include "eventwork_def.h"
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -706,7 +709,12 @@ void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
 {
   GF_ASSERT( p_wk );
 
-  //
+  // npc_idが範囲内？
+
+  // 機嫌値が最大値以上？
+
+  // 親の名前に終端コードがある？
+
 }
 
 //----------------------------------------------------------------------------
@@ -1217,6 +1225,9 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
       
       p_buff[item_index] = sc_DEFAULT_ITEM_HEADER;
       p_buff[item_index].event_id = FIELD_WFBC_CORE_ITEM_GetItemData( cp_wk, i );
+      GF_ASSERT( i < 10 );
+      p_buff[item_index].event_flag = TMFLG_WC10_ITEM_01 + i;
+
       MMDLHEADER_SetGridPos( &p_buff[item_index], cp_itempos->gx, cp_itempos->gz, 0 );
 
       item_index ++;
