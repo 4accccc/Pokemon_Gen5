@@ -18,7 +18,6 @@
 #include "arc/fieldmap/gym_dragon.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "script.h"     //for SCRIPT_CallScript
-#include "../../../resource/fldmapdata/script/c08gym0101_def.h"  //for SCRID_Å`
 //#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_local_def.h"
 
 #include "sound/pm_sndsys.h"
