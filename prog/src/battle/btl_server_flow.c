@@ -4488,6 +4488,20 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
 }
 //----------------------------------------------------------------------------------
 /**
+ * 「こらえる」原因表示＆アイテム消費等の処理
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   cause
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause )
+{
+
+}
+
+//----------------------------------------------------------------------------------
+/**
  * ワザダメージレコードを追加
  *
  * @param   attacker

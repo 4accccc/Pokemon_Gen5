@@ -2947,7 +2947,6 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         {
           const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
           int index = BTL_PARTY_FindMemberByPokeID( party, args[0] );
-          OS_TPrintf("ƒƒU–Y‚ê:ƒƒ“ƒo[index=%d\n", index);
           BTLV_WAZAWASURE_Start( wk->viewCore, index, wk->wazaoboe_no );
           (*seq) = 10;
         }
