@@ -142,11 +142,15 @@ extern void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame );
 extern SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx );
 //ＳＥプレーヤーハンドル取得
 extern NNSSndHandle* PMSND_GetSE_SndHandle( SEPLAYER_ID sePlayerID );
+//ＳＥプレーヤーボリュームセット
+extern void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol );
 
 extern void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
 #define PMSND_PlaySystemSE( soundNum ) PMSND_PlaySE( soundNum )
 //ＳＥを再生
 extern void	PMSND_PlaySE( u32 soundIdx );
+//ＳＥをボリューム指定付きで再生(有効値 0-127)
+extern void	PMSND_PlaySEVolume( u32 soundIdx, u32 volume );
 //ＳＥをプレーヤーを指定して再生
 extern void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
 //全ＳＥを停止
