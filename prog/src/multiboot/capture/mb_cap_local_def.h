@@ -169,7 +169,7 @@ extern int MB_CAP_POKE_DOWN_TIME;
 #define MB_CAP_OBJ_HITSIZE_Z  (4)
 #define MB_CAP_POKE_HITSIZE_X (10)
 #define MB_CAP_POKE_HITSIZE_Y ( 6)
-#define MB_CAP_POKE_HITSIZE_Z ( 8)
+#define MB_CAP_POKE_HITSIZE_Z ( 6)
 
 //======================================================================
 //	enum

@@ -28,7 +28,7 @@
 #define MB_CAP_BALL_ANIM_SHOT_SPEED (6)
 #define MB_CAP_BALL_ANIM_SHOT_FRAME (6)
 
-#define MB_CAP_BALL_HEIGHT_MAX (32)
+#define MB_CAP_BALL_HEIGHT_MAX (48)
 #define MB_CAP_BALL_HEIGHT_SCALE_MAX FX32_CONST(1.5)
 
 #define MB_CAP_BALL_FALL_SPEED FX32_CONST(1.5)
@@ -450,6 +450,7 @@ static void MB_CAP_BALL_CheckHitBonus_Shooting( MB_CAPTURE_WORK *capWork , MB_CA
       effPos.z -= FX32_ONE;
       MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_BONUS );
       MB_CAPTURE_HitStarFunc( capWork , starWork );
+      ballWork->isFinish = TRUE;
     }
   }
 }

@@ -563,20 +563,21 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     }
     else
     {
+      //ŽžŒv‰ñ‚è‚É•ûŒü“]Š·
       pokeWork->cnt = 0;
       switch( pokeWork->dir )
       {
       case MCPD_LEFT:
-        pokeWork->dir = MCPD_RIGHT;
+        pokeWork->dir = MCPD_UP;
         break;
       case MCPD_RIGHT:
-        pokeWork->dir = MCPD_LEFT;
-        break;
-      case MCPD_UP:
         pokeWork->dir = MCPD_DOWN;
         break;
+      case MCPD_UP:
+        pokeWork->dir = MCPD_RIGHT;
+        break;
       case MCPD_DOWN:
-        pokeWork->dir = MCPD_UP;
+        pokeWork->dir = MCPD_LEFT;
         break;
       }
     }

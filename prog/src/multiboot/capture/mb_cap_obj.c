@@ -184,8 +184,8 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
     }
     posY += FX_SinIdx(objWork->rad[i])*lenRate[i];
   }
-  
-  pos.y = FX32_CONST(96)+(posY);
+  objWork->pos.y = FX32_CONST(96)+(posY);
+  pos.y = objWork->pos.y+objWork->height;
   
   
   GFL_BBD_SetObjectTrans( bbdSys , objWork->objIdx , &pos );
