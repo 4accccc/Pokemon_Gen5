@@ -1410,6 +1410,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_INIT,
     SEQ_RECV,
     SEQ_MSG_WAIT,
+    SEQ_MSG_DECIDE,
     SEQ_CARD_INIT,
     SEQ_CARD_WAIT,
     SEQ_END,
@@ -1431,7 +1432,8 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_RECV:
     MYSTERY_DEMO_Main( &p_wk->demo );
-    if( MYSTERY_DEMO_IsEnd(&p_wk->demo) )
+    if( MYSTERY_DEMO_IsEnd(&p_wk->demo)
+        && MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
     { 
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_015, MYSTERY_TEXT_TYPE_STREAM );
       *p_seq  = SEQ_MSG_WAIT;
@@ -1439,6 +1441,13 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_MSG_WAIT:
+    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
+    { 
+      *p_seq  = SEQ_MSG_DECIDE;
+    }
+    break;
+
+  case SEQ_MSG_DECIDE:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     { 
       *p_seq  = SEQ_CARD_INIT;
