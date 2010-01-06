@@ -60,11 +60,11 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority    : 16;  ///< ソートプライオリティ
+  u32       priority    : 20;  ///< ソートプライオリティ
   u32       numHandlers :  8;  ///< ハンドラテーブル要素数
   u32       callingFlag :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
   u32       sleepFlag   :  1;  ///< 休眠フラグ
-  u32       dmy         :  6;
+  u32       dmy         :  2;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -162,6 +162,30 @@ static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
   return FALSE;
 }
 
+static void printChain( void )
+{
+  #if 0
+  BTL_EVENT_FACTOR* fp;
+  u32 cnt = 0;
+
+  OS_TPrintf("***** [[EV Chain]] *****\n");
+  for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
+  {
+    OS_TPrintf("%p->", fp);
+    ++cnt;
+    if( cnt % 4 == 0 ){
+      OS_TPrintf("\n");
+    }
+  }
+  if( !cnt ){
+    OS_TPrintf(" empty...\n");
+  }else if( cnt % 4 ){
+    OS_TPrintf("\n");
+  }
+  OS_TPrintf("************************\n");
+  #endif
+}
+
 //=============================================================================================
 /**
  * イベント反応要素を追加
@@ -211,7 +235,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
       FirstFactorPtr = newFactor;
     }
     // 現在先頭より高プライオリティ
-    else if( newFactor->priority < FirstFactorPtr->priority )
+    else if( newFactor->priority > FirstFactorPtr->priority )
     {
       FirstFactorPtr->prev = newFactor;
       newFactor->next = FirstFactorPtr;
@@ -242,6 +266,8 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         newFactor->prev = last;
       }
     }
+//    OS_TPrintf("[[EVENT]] ADD Factor=%p Type=%d, Depend=%d Pri=%06x\n", newFactor, newFactor->factorType, newFactor->dependID, newFactor->priority);
+    printChain();
     return newFactor;
   }
   // スタックから見つからない
@@ -261,9 +287,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 //=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
-  if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI ){
-    OS_TPrintf("ポケ[%d]のとくせい(%d)ハンドラ除去確定\n", factor->dependID, factor->subID);
-  }
 
   if( factor == FirstFactorPtr )
   {
@@ -279,6 +302,9 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   {
     factor->next->prev = factor->prev;
   }
+
+//  OS_TPrintf("[[EVENT]] DEL Factor=%p Type=%d, Depend=%d\n", factor, factor->factorType, factor->dependID);
+  printChain();
 
   pushFactor( factor );
 }
