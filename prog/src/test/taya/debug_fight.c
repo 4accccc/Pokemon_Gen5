@@ -526,6 +526,7 @@ struct _DEBUG_BTL_WORK {
   u8              prevItemStrWidth[ SELITEM_MAX ];
   PROCPARAM_DEBUG_MAKEPOKE  makePokeParam;
   BATTLE_SETUP_PARAM  setupParam;
+  BTL_FIELD_SITUATION fieldSit;
   SAVE_CONTROL_WORK*  saveCtrl;
   u16                 saveSeq0;
   u16                 saveSeq1;
@@ -590,6 +591,7 @@ static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
+static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVEDATA* save );
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam );
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
 static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
@@ -1788,16 +1790,15 @@ FS_EXTERN_OVERLAY(battle);
       break;
     }
 
+    setupFieldSituation( &wk->fieldSit, &wk->saveData );
+
     // 野生
     if( btltype_IsWild(wk->saveData.btlType) )
     {
-      BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
       cutoff_wildParty( wk->partyEnemy1, rule );
-
-      BTL_FIELD_SITUATION_Init(&sit);
-      BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &sit, rule, HEAPID_BTL_DEBUG_SYS );
+      BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &wk->fieldSit, rule, HEAPID_BTL_DEBUG_SYS );
     }
     // 通信対戦
     else if( btltype_IsComm(wk->saveData.btlType) )
@@ -1829,38 +1830,36 @@ FS_EXTERN_OVERLAY(battle);
     // VSゲーム内トレーナー
     else
     {
-      BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
       TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
-      BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
       case BTL_RULE_SINGLE:
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData,
-          &sit, trID, HEAPID_BTL_DEBUG_SYS );
+          &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_DOUBLE:
         if( !btltype_IsMulti(wk->saveData.btlType) ){
           BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
-            &sit, trID, HEAPID_BTL_DEBUG_SYS );
+            &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
           BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         }else{
           TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
-          BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &sit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+          BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
           BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
           BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
         }
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData,
-          &sit, trID, HEAPID_BTL_DEBUG_SYS );
+          &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData,
-          &sit, trID, HEAPID_BTL_DEBUG_SYS );
+          &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       }
@@ -1941,6 +1940,20 @@ FS_EXTERN_OVERLAY(battle);
     break;
   }
   return FALSE;
+}
+
+/**
+ *  フィールドシチュエーションデータ初期化
+ */
+static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVEDATA* save )
+{
+  BTL_FIELD_SITUATION_Init( sit );
+
+  sit->bgType   = save->backGround;
+  sit->bgAttr   = save->landForm;
+  sit->timeZone = save->timeZone;
+  sit->season   = save->season;
+  sit->weather  = save->weather;
 }
 
 //static void Record_SaveParty_Start( DEBUG_BTL_WORK* wk,
