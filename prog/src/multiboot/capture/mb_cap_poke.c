@@ -31,7 +31,7 @@
 #define MB_CAP_POKE_OFS_Y (8)
 #define MB_CAP_POKE_MOVE_OFS_Y (4)
 
-#define MB_CAP_POKE_HIDE_LOOK_OFS (10)
+#define MB_CAP_POKE_HIDE_LOOK_OFS (5)
 
 #define MB_CAP_POKE_ANIM_SPEED (8)
 #define MB_CAP_POKE_ANIM_FRAME (2)

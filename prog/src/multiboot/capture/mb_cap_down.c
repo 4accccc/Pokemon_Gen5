@@ -42,12 +42,18 @@
 #define MB_CAP_DOWN_BOWBEND_SCALE_MAX (FX32_HALF)
 
 //タッチ判定半径
-#define MB_CAP_DOWN_BALL_TOUCH_LEN (8)
+#define MB_CAP_DOWN_BALL_TOUCH_LEN (16)
 
 //ボール速度
 #define MB_CAP_DOWN_BALL_SHOT_SPD (16)
 #define MB_CAP_DOWN_BALL_SUPPLY_SPD (12)
 #define MB_CAP_DOWN_BOW_SUPPLY_ROT (0x600)
+
+//スコア桁
+#define MB_CAP_DOWN_SCORE_DIGIT (3)
+#define MB_CAP_DOWN_SCORE_POS_X (256-24)
+#define MB_CAP_DOWN_SCORE_POS_Y (192-24)
+#define MB_CAP_DOWN_SCORE_POS_WIDTH (16)
 
 //======================================================================
 //	enum
@@ -92,6 +98,9 @@ struct _MB_CAP_DOWN
   u32 cellRes[MCDO_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBall;
+  GFL_CLWK    *clwkScore[MB_CAP_DOWN_SCORE_DIGIT];
+  
+  u16 dispScore;
   
   //ボール座標は精度確保のためFX32で
   fx32 ballPosX;
@@ -172,6 +181,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
   }
   {
     GFL_CLWK_DATA cellInitData;
+    u8 i;
     
     cellInitData.softpri = 10;
     cellInitData.bgpri = 0;
@@ -184,8 +194,23 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
               downWork->cellRes[MCDO_PLT],
               downWork->cellRes[MCDO_ANM],
               &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+
+    cellInitData.anmseq = MCDA_NUMBER;
+    cellInitData.pos_y = MB_CAP_DOWN_SCORE_POS_Y;
+    for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+    {
+      cellInitData.pos_x = MB_CAP_DOWN_SCORE_POS_X-MB_CAP_DOWN_SCORE_POS_WIDTH*i;
+      downWork->clwkScore[i] = GFL_CLACT_WK_Create( downWork->cellUnit ,
+                downWork->cellRes[MCDO_NCG],
+                downWork->cellRes[MCDO_PLT],
+                downWork->cellRes[MCDO_ANM],
+                &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+      GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
+    }
+
   }
   
+  downWork->dispScore = 65536;  //初回更新のため
   downWork->pullBow = 0;
   downWork->state = MCDS_NONE;
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
@@ -215,8 +240,13 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
 //--------------------------------------------------------------
 void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
+  u8 i;
   GFL_BMP_Delete( downWork->lineBmp );
   
+  for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+  {
+    GFL_CLACT_WK_Remove( downWork->clwkScore[i] );
+  }
   GFL_CLACT_WK_Remove( downWork->clwkBall );
   GFL_CLGRP_PLTT_Release( downWork->cellRes[MCDO_PLT] );
   GFL_CLGRP_CGR_Release( downWork->cellRes[MCDO_NCG] );
@@ -239,6 +269,29 @@ void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
   MB_CAP_DOWN_UpdateBall( capWork , downWork );
   MB_CAP_DOWN_UpdateBow( capWork , downWork );
   
+  //スコア更新
+  {
+    u8 i;
+    const u16 score = MB_CAPTURE_GetScore( capWork );
+    if( score != downWork->dispScore )
+    {
+      u16 tempScore = score;
+      for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , TRUE );
+        GFL_CLACT_WK_SetAnmIndex( downWork->clwkScore[i] , tempScore%10 );
+        tempScore /= 10;
+        if( tempScore == 0 )
+        {
+          break;
+        }
+      }
+      for( i=i+1;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -542,8 +595,8 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
   {
     if( downWork->state == MCDS_NONE )
     {
-      const u32 subX = F32_CONST(downWork->ballPosX) - tpx;
-      const u32 subY = F32_CONST(downWork->ballPosY) - tpy;
+      const s32 subX = F32_CONST(downWork->ballPosX) - tpx;
+      const s32 subY = F32_CONST(downWork->ballPosY) - tpy;
       const u32 ballLen = subX*subX + subY*subY;
       if( ballLen < MB_CAP_DOWN_BALL_TOUCH_LEN*MB_CAP_DOWN_BALL_TOUCH_LEN )
       {

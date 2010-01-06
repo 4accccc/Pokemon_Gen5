@@ -195,6 +195,9 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
     isHit = MB_CAPTURE_CheckHit( &ballHit , &objHit );
     if( isHit == TRUE )
     {
+      MB_CAP_OBJ_StartAnime( obj );
+      PMSND_PlaySE( MB_SND_GRASS_SHAKE );
+
       isHitAny = TRUE;
       if( i < MB_CAP_OBJ_MAIN_NUM )
       {
@@ -230,7 +233,6 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
           effPos.y -= ballWork->height;
           effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
           MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
-          PMSND_PlaySE( MB_SND_GRASS_SHAKE );
         }
         //周囲の方向チェック
         {
@@ -397,6 +399,30 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
       GFL_BBD_SetObjectRotate( bbdSys , ballWork->objIdx , &rot );
       MB_TPrintf("Hit!!\n");
       PMSND_PlaySE( MB_SND_POKE_CAPTURE );
+      {
+        //スコアの計算
+        const s16 subX = FX_FX32_TO_F32(ballHit.pos->x - pokeHit.pos->x);
+        const s16 subY = FX_FX32_TO_F32(ballHit.pos->y - pokeHit.pos->y);
+        const s16 subZ = FX_FX32_TO_F32(ballHit.height - pokeHit.height);
+        const u8 absX = MATH_ABS( subX );
+        MB_TPrintf("[%3d:%3d:%3d]",subX,subY,subZ);
+        if( absX < 5 )
+        {
+          MB_CAPTURE_AddScore( capWork , 100 , TRUE );
+          MB_TPrintf("[100]\n");
+        }
+        else
+        if( absX < 10 )
+        {
+          MB_CAPTURE_AddScore( capWork , 70 , TRUE );
+          MB_TPrintf("[ 70]\n");
+        }
+        else
+        {
+          MB_CAPTURE_AddScore( capWork , 50 , TRUE );
+          MB_TPrintf("[ 50]\n");
+        }
+      }
     }
   }
 }

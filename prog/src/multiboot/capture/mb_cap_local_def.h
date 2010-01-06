@@ -241,6 +241,8 @@ extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx )
 extern MB_CAP_OBJ* MB_CAPTURE_GetStarWork( MB_CAPTURE_WORK *work );
 extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
 extern const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work );
+extern const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work );
+extern void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime );
 extern void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );

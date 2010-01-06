@@ -81,6 +81,8 @@ struct _MB_CAPTURE_WORK
   GFL_BBD_SYS     *bbdSys;
   int             bbdRes[MCBR_MAX];
   
+  u16 score;
+  
   MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
   MB_CAP_OBJ  *starWork;
@@ -115,6 +117,7 @@ struct _MB_CAPTURE_WORK
 #if MB_CAP_DEB
   //今のところデバッグ以外ではフォント使わないので
   GFL_FONT *fontHandle;
+  BOOL isTimeFreeze;
 #endif
 };
 
@@ -193,6 +196,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->targetAnmCnt = 0;
   work->targetAnmFrame = 0;
   work->fogAlpha = 0;
+  work->score = 0;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     work->initWork->isCapture[i] = FALSE;
@@ -214,6 +218,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   GFL_NET_WirelessIconEasyXY( 256-16 , 0 , FALSE , work->heapId );
 
 #if MB_CAP_DEB
+  work->isTimeFreeze = FALSE;
   MB_CAPTURE_InitDebug( work );
 #endif
 }
@@ -1006,6 +1011,13 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
   const u16 befBonusTime = work->bonusTime;
   const u16 befGameTime = work->gameTime;
   
+#if MB_CAP_DEB
+  if( work->isTimeFreeze == TRUE )
+  {
+    work->gameTime++;
+  }
+#endif
+
   if( work->gameTime > 0 )
   {
     work->gameTime--;
@@ -1317,6 +1329,18 @@ const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work )
   }
   return FALSE;
 }
+const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work )
+{
+  return work->score;
+}
+void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime )
+{
+  work->score += addScore;
+  if( isAddTime == TRUE )
+  {
+    work->score += work->gameTime/(2*60);
+  }
+}
 //--------------------------------------------------------------
 //  ポケモン捕獲処理
 //--------------------------------------------------------------
@@ -1415,8 +1439,12 @@ static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val );
 static const BOOL MB_CAPTURE_Debug_UpdateValue_int( int *val );
 static void MCD_U_GameTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_GameTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_GameTimeFreeze( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_GameTimeFreeze( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_Score( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_Score( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
@@ -1454,7 +1482,9 @@ static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BGM  , "BGM" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_GameTime ,MCD_D_GameTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_GameTimeFreeze ,MCD_D_GameTimeFreeze , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_BonusTime ,MCD_D_BonusTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_Score ,MCD_D_Score , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroup( "ResetPoke" , MCD_U_ResetPoke , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_BallBaseY ,MCD_D_BallBaseY , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
@@ -1547,6 +1577,11 @@ static void MCD_U_GameTime( void* userWork , DEBUGWIN_ITEM* item )
   {
     DEBUGWIN_RefreshScreen();
   }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    work->gameTime = 60*60;
+    DEBUGWIN_RefreshScreen();
+  }
 }
 
 static void MCD_D_GameTime( void* userWork , DEBUGWIN_ITEM* item )
@@ -1554,6 +1589,29 @@ static void MCD_D_GameTime( void* userWork , DEBUGWIN_ITEM* item )
   MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
 
   DEBUGWIN_ITEM_SetNameV( item , "GameTime[%d]",work->gameTime );
+}
+
+static void MCD_U_GameTimeFreeze( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT|PAD_KEY_RIGHT) )
+  {
+    work->isTimeFreeze = !work->isTimeFreeze;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_GameTimeFreeze( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  if( work->isTimeFreeze == TRUE )
+  {
+    DEBUGWIN_ITEM_SetName( item , "TimeStop[ON]");
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "TimeStop[OFF]");
+  }
 }
 
 static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
@@ -1574,34 +1632,54 @@ static void MCD_D_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "BonusTime[%d]",work->bonusTime );
 }
 
+static void MCD_U_Score( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &work->score );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_Score( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Score[%d]",work->score );
+}
+
 static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item )
 {
   MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
   u8 i,j;
   //出現設定
-  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
-    BOOL isLoop = TRUE;
-    while( isLoop == TRUE )
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
-      const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
-      const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
-      isLoop = FALSE;
-      for( j=0;j<i;j++ )
+      BOOL isLoop = TRUE;
+      while( isLoop == TRUE )
       {
-        if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
+        const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
+        const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
+        isLoop = FALSE;
+        for( j=0;j<i;j++ )
         {
-          isLoop = TRUE;
-          break;
+          if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
+          {
+            isLoop = TRUE;
+            break;
+          }
+        }
+        if( isLoop == FALSE )
+        {
+          MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
+          MB_TPrintf("[%d][%d]\n",idxX,idxY);
         }
       }
-      if( isLoop == FALSE )
-      {
-        MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
-        MB_TPrintf("[%d][%d]\n",idxX,idxY);
-      }
-    }
-  }  
+    }  
+  }
 }
 
 static void MCD_U_BallBaseY( void* userWork , DEBUGWIN_ITEM* item )
