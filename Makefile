@@ -6,6 +6,25 @@
 # Copyright 2006 GameFreak.inc  All rights reserved.
 #----------------------------------------------------------------------------
 
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#	環境が違うところでMakeできないようにするためのおまじない
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#現在のディレクトリ（cygwinのパスから変換する）
+NOWDIR	=	$(shell pwd|tr [A-Z] [a-z] |sed -e 's/\/cygdrive\///')/
+#環境変数が想定しているディレクトリから、：を取り除いたもの
+TGTDIR	= $(shell echo $(PROJECT_ROOT)|tr [A-Z] [a-z]|sed -e 's/://')
+ifneq ($(NOWDIR),$(TGTDIR))
+$(warning コンパイル環境を確認してください)
+$(error $(NOWDIR) != $(TGTDIR) )
+endif
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
 MULTIBOOT_ARC_DIR = ./multiboot/arc/
 MULTIBOOT_DIR = ./multiboot/
 RESOURCE_DIR = ./resource/
@@ -40,7 +59,7 @@ force:
 # cleanした場合にすべて消えるように記述してください
 #--------------------------------------------------------------------
 clean:
-	$(MAKE) -C $(RESOURCE_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR) -j3 clean
 	$(MAKE) -C $(MULTIBOOT_ARC_DIR) clean
 	$(MAKE) -C $(MULTIBOOT_DIR) clean
 	$(MAKE) -C $(PROG_DIR) clean
@@ -98,4 +117,5 @@ eventdata:
 date:
 	$(MAKE)
 	date
+
 
