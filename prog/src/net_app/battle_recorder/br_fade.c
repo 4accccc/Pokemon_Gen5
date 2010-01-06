@@ -194,14 +194,10 @@ BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 void BR_FADE_PALETTE_Copy( BR_FADE_WORK *p_wk )
 {
-  int i;
-  for( i = 0; i < 0x10; i++ )
-  { 
-    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, i, FADE_PAL_ONE_SIZE );
-    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, i, FADE_PAL_ONE_SIZE );
-    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, i, FADE_PAL_ONE_SIZE );
-    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, i, FADE_PAL_ONE_SIZE );
-  }
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -228,13 +224,13 @@ void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
   //‰æ–Ê‚É‚æ‚éÝ’è
   if( display & BR_FADE_DISPLAY_MAIN )
   { 
-    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0xFFFF, 16, p_wk->pfd_color );	///< main	oam
-    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xFFFF, 16, p_wk->pfd_color );	///< main	bg
+    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, 16, p_wk->pfd_color );	///< main	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, 16, p_wk->pfd_color );	///< main	bg
   }
   if( display & BR_FADE_DISPLAY_SUB )
   { 
-    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, 16, p_wk->pfd_color );	///< main	oam
-    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xFFFF, 16, p_wk->pfd_color );	///< main	bg
+    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, 16, p_wk->pfd_color );	///< sub	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, 16, p_wk->pfd_color );	///< sub	bg
   }
 
   PaletteTransSwitch( p_wk->p_pfd, TRUE );
@@ -522,15 +518,24 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
       }
 
       //‰æ–Ê‚É‚æ‚éÝ’è
-      if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+      if( p_wk->display == BR_FADE_DISPLAY_TOUCH_HERE )
       { 
-        ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< main	oam
-        ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xFFFF, ev, p_wk->pfd_color );	///< main	bg
+        //TOUCH_HERE‚Ì‚Ý
+        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG, 0xF000, ev, 0xFFFF );
       }
-      if( p_wk->display & BR_FADE_DISPLAY_SUB )
+      else
       { 
-        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< main	oam
-        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xFFFF, ev, p_wk->pfd_color );	///< main	bg
+        //‰æ–Ê
+        if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+        { 
+          ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, ev, p_wk->pfd_color );	///< main	oam
+          ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, ev, p_wk->pfd_color );	///< main	bg
+        }
+        if( p_wk->display & BR_FADE_DISPLAY_SUB )
+        { 
+          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, ev, p_wk->pfd_color );	///< sub	oam
+          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, ev, p_wk->pfd_color );	///< sub	bg
+        }
       }
 
       PaletteFadeTrans( p_wk->p_pfd );

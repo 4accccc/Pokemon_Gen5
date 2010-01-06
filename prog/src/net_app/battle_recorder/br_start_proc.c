@@ -15,6 +15,13 @@
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
 
+//バトルレコーダー内モジュール
+#include "br_util.h"
+#include "br_inner.h"
+
+//アーカイブ
+#include "msg/msg_battle_rec.h"
+
 //外部参照
 #include "br_start_proc.h"
 
@@ -53,8 +60,15 @@ typedef struct
   //ヒープID
 	HEAPID          heapID;
 
+  //BMPWIN
+  BR_MSGWIN_WORK  *p_here;
+
+  //プリントキュー
+  PRINT_QUE       *p_que;
+
   //汎用カウンタ
   u32             cnt;
+
 
   //引数
   BR_START_PROC_PARAM *p_param;
@@ -146,6 +160,7 @@ static GFL_PROC_RESULT BR_START_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	//グラフィック初期化
 
   //モジュール作成
+  p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
   { 
     SEQ_FUNCTION  seq_function;
     if( p_param->mode == BR_START_PROC_MODE_OPEN )
@@ -183,6 +198,7 @@ static GFL_PROC_RESULT BR_START_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 	BR_START_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//モジュール破棄
+  PRINTSYS_QUE_Delete( p_wk->p_que );
   SEQ_Exit( &p_wk->seq );
 
   //グラフィック破棄
@@ -211,6 +227,9 @@ static GFL_PROC_RESULT BR_START_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
   //シーケンス
 	SEQ_Main( &p_wk->seq );
+
+  //文字描画
+  PRINTSYS_QUE_Main( p_wk->p_que );
 
 	//終了
 	if( SEQ_IsEnd( &p_wk->seq ) )
@@ -347,16 +366,29 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    p_wk->p_here  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 8, 16, 16, 2, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
+    { 
+      GFL_FONT *p_font;
+      GFL_MSGDATA *p_msg; 
+
+      p_font  = BR_RES_GetFont( p_wk->p_param->p_res );
+      p_msg   = BR_RES_GetMsgData( p_wk->p_param->p_res );
+      BR_MSGWIN_PrintColor( p_wk->p_here, p_msg, msg_10000, p_font, PRINTSYS_LSB_Make(1,2,0) );
+    }
+    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_TOUCH_HERE, BR_FADE_DIR_OUT, 4 );
     (*p_seq)  = SEQ_FADE_IN;
     break;
 
   case SEQ_FADE_IN:
-     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-    (*p_seq)  = SEQ_FADE_WAIT;
+    if( BR_FADE_IsEnd(p_wk->p_param->p_fade) )
+    { 
+      BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_TOUCH_HERE, BR_FADE_DIR_IN, 4 );
+      (*p_seq)  = SEQ_FADE_WAIT;
+    }
     break;
 
   case SEQ_FADE_WAIT:
-    if( !GFL_FADE_CheckFade() )
+    if( BR_FADE_IsEnd(p_wk->p_param->p_fade) )
     { 
       (*p_seq)  = SEQ_TOUCH;
     }
@@ -365,12 +397,16 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_TOUCH:
     if( GFL_UI_TP_GetTrg() )
     { 
+      BR_MSGWIN_Exit( p_wk->p_here );
+      p_wk->p_here  = NULL;
+      GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
+
       (*p_seq)  = SEQ_FADESTART;
     }
     break;
 
   case SEQ_FADESTART:
-    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN, 96 );
+    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN, 48 );
     BR_SIDEBAR_StartBoot( p_wk->p_param->p_sidebar );
     (*p_seq)  = SEQ_FADEWAIT;
     break;
@@ -394,6 +430,10 @@ static void SEQFUNC_Open( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
   }
   
+  if( p_wk->p_here != NULL )
+  { 
+    BR_MSGWIN_PrintMain( p_wk->p_here );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -429,10 +469,10 @@ static void SEQFUNC_Close( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
 
   case SEQ_FADESTART:
-    if( p_wk->cnt++ > 6 )
+    if( p_wk->cnt++ > 0 )
     { 
       p_wk->cnt = 0;
-      BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 30 );
+      BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_PALLETE, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 26 );
       (*p_seq)  = SEQ_FADEWAIT;
     }
     break;

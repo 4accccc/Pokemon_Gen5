@@ -397,16 +397,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
   switch( *p_seq )
 	{	
 	case SEQ_INIT:
-    //バトルから戻ってきた時だけ、フェード
- //   if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
-    if(1)
-    { 
-      *p_seq	= SEQ_FADEIN;
-    }
-    else
-    { 
-      *p_seq  = SEQ_MAIN;
-    }
+    *p_seq	= SEQ_FADEIN;
 		break;
 
 	case SEQ_FADEIN:
