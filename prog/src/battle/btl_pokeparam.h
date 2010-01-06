@@ -83,14 +83,14 @@ enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_TURNFLG_ACTION_DONE,  ///< 行動した
-  BPP_TURNFLG_DAMAGED,      ///< ダメージ喰らった
+  BPP_TURNFLG_ACTION_DONE,   ///< 行動した
+  BPP_TURNFLG_DAMAGED,       ///< ダメージ喰らった
   BPP_TURNFLG_WAZAPROC_DONE, ///< ワザ処理を修了した
-  BPP_TURNFLG_SHRINK,       ///< ひるまされた
-  BPP_TURNFLG_MUST_SHRINK,  ///< ダメージで必ずひるむ
-  BPP_TURNFLG_MAMORU,       ///< “まもる”発動
-  BPP_TURNFLG_FLYING,       ///< 宙に浮いてる
-  BPP_TURNFLG_ITEM_REMOVED, ///< アイテム（使用・どろぼうなどで）無くなった
+  BPP_TURNFLG_SHRINK,        ///< ひるまされた
+  BPP_TURNFLG_MUST_SHRINK,   ///< ダメージで必ずひるむ
+  BPP_TURNFLG_MAMORU,        ///< “まもる”発動
+  BPP_TURNFLG_FLYING,        ///< 宙に浮いてる
+  BPP_TURNFLG_ITEM_CONSUMED, ///< アイテムを使用して無くなった
 
   BPP_TURNFLG_MAX,
 
@@ -377,6 +377,7 @@ extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );
 extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
+extern void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp );
 extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
 
 extern void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );

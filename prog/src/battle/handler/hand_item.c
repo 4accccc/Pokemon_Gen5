@@ -4409,7 +4409,6 @@ static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
     work[0] = 1;
-//    BTL_SVFRET_RemoveItem( flowWk, pokeID );
   }
 }
 // ダメージ確定ハンドラ共通

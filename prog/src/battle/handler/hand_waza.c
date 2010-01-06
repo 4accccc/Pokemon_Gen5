@@ -4845,13 +4845,17 @@ static void handler_Recycle( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       if( itemID != ITEM_DUMMY_DATA )
       {
         BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+        BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM* clear_param;
+
 
         param->itemID = itemID;
         param->pokeID = pokeID;
-
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Recycle );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
         HANDEX_STR_AddArg( &param->exStr, itemID );
+
+        clear_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CLEAR_CONSUMED_ITEM, pokeID );
+        clear_param->pokeID = pokeID;
       }
     }
   }

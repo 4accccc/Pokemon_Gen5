@@ -139,7 +139,6 @@ extern u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
 extern BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag );
 
-extern void BTL_SVFRET_RemoveItem( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFRET_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
 
@@ -204,59 +203,60 @@ typedef enum {
   BTL_HANDEX_USE_ITEM,      ///< アイテム使用
 
   /*--- 以下、アイテム使用以外の効果に使う ---*/
-  BTL_HANDEX_TOKWIN_IN,         ///< とくせいウィンドウイン
-  BTL_HANDEX_TOKWIN_OUT,        ///< とくせいウィンドウアウト
-  BTL_HANDEX_ITEM_EFFECT,       ///< アイテム発動エフェクト
-  BTL_HANDEX_MESSAGE,           ///< メッセージ表示
-  BTL_HANDEX_RECOVER_HP,        ///< HP回復
-  BTL_HANDEX_DRAIN,             ///< HP回復（ドレイン系）
-  BTL_HANDEX_DAMAGE,            ///< ダメージを与える
-  BTL_HANDEX_SHIFT_HP,          ///< HPを変更（ダメージ・回復として扱わない）
-  BTL_HANDEX_RECOVER_PP,        ///< PP回復
-  BTL_HANDEX_DECREMENT_PP,      ///< PP減少
-  BTL_HANDEX_CURE_SICK,         ///< 状態異常を回復
-  BTL_HANDEX_ADD_SICK,          ///< 状態異常にする
-  BTL_HANDEX_RANK_EFFECT,       ///< ランク増減効果
-  BTL_HANDEX_SET_RANK,          ///< ランクを指定地に強制書き換え
-  BTL_HANDEX_RESET_RANK,        ///< ランク効果を全てフラットに
-  BTL_HANDEX_SET_STATUS,        ///< 能力値（攻撃、防御等）を強制書き換え
-  BTL_HANDEX_RECOVER_RANK,      ///< マイナスランク効果のみをフラットに
-  BTL_HANDEX_KILL,              ///< 瀕死にする
-  BTL_HANDEX_CHANGE_TYPE,       ///< ポケモンのタイプを変える
-  BTL_HANDEX_SET_TURNFLAG,      ///< ターンフラグセット
-  BTL_HANDEX_RESET_TURNFLAG,    ///< ターンフラグ強制リセット
-  BTL_HANDEX_SET_CONTFLAG,      ///< 継続フラグセット
-  BTL_HANDEX_RESET_CONTFLAG,    ///< 継続フラグリセット
-  BTL_HANDEX_SIDEEFF_ADD,       ///< サイドエフェクト追加
-  BTL_HANDEX_SIDEEFF_REMOVE,    ///< サイドエフェクト削除
-  BTL_HANDEX_ADD_FLDEFF,        ///< フィールドエフェクト追加
-  BTL_HANDEX_REMOVE_FLDEFF,     ///< フィールドエフェクト追加
-  BTL_HANDEX_CHANGE_WEATHER,    ///< 天候変化
-  BTL_HANDEX_POSEFF_ADD,        ///< 位置エフェクト追加
-  BTL_HANDEX_CHANGE_TOKUSEI,    ///< とくせい書き換え
-  BTL_HANDEX_SET_ITEM,          ///< アイテム書き換え
-  BTL_HANDEX_EQUIP_ITEM,        ///< アイテム装備効果発動チェック
-  BTL_HANDEX_ITEM_SP,           ///< アイテム効果発動
-  BTL_HANDEX_CONSUME_ITEM,      ///< 自分でアイテムを消費
-  BTL_HANDEX_SWAP_ITEM,         ///< アイテム入れ替え
-  BTL_HANDEX_UPDATE_WAZA,       ///< ワザ書き換え
-  BTL_HANDEX_COUNTER,           ///< ポケモンカウンタ値書き換え
-  BTL_HANDEX_DELAY_WAZADMG,     ///< 時間差ワザダメージ
-  BTL_HANDEX_QUIT_BATTLE,       ///< バトル離脱
-  BTL_HANDEX_CHANGE_MEMBER,     ///< メンバー交換
-  BTL_HANDEX_BATONTOUCH,        ///< バトンタッチ（ランク効果等の引き継ぎ）
-  BTL_HANDEX_ADD_SHRINK,        ///< ひるませる
-  BTL_HANDEX_RELIVE,            ///< 生き返らせる
-  BTL_HANDEX_SET_WEIGHT,        ///< 体重を設定
-  BTL_HANDEX_PUSHOUT,           ///< 場から吹き飛ばす
-  BTL_HANDEX_INTR_POKE,         ///< 指定ポケモンの割り込み行動を発生させる
-  BTL_HANDEX_INTR_WAZA,         ///< 指定ワザを使おうとしているポケモンの割り込み行動を発生させる
-  BTL_HANDEX_SEND_LAST,         ///< 指定ポケモンの行動を一番最後に回す
-  BTL_HANDEX_SWAP_POKE,         ///< 場に出ているポケモン同士を入れ替える
-  BTL_HANDEX_HENSIN,            ///< へんしんする
-  BTL_HANDEX_FAKE_BREAK,        ///< イリュージョン解除
-  BTL_HANDEX_JURYOKU_CHECK,     ///< じゅうりょく発動時のチェック処理
-  BTL_HANDEX_EFFECT_BY_POS,     ///< 位置指定してエフェクト発動
+  BTL_HANDEX_TOKWIN_IN,           ///< とくせいウィンドウイン
+  BTL_HANDEX_TOKWIN_OUT,          ///< とくせいウィンドウアウト
+  BTL_HANDEX_ITEM_EFFECT,         ///< アイテム発動エフェクト
+  BTL_HANDEX_MESSAGE,             ///< メッセージ表示
+  BTL_HANDEX_RECOVER_HP,          ///< HP回復
+  BTL_HANDEX_DRAIN,               ///< HP回復（ドレイン系）
+  BTL_HANDEX_DAMAGE,              ///< ダメージを与える
+  BTL_HANDEX_SHIFT_HP,            ///< HPを変更（ダメージ・回復として扱わない）
+  BTL_HANDEX_RECOVER_PP,          ///< PP回復
+  BTL_HANDEX_DECREMENT_PP,        ///< PP減少
+  BTL_HANDEX_CURE_SICK,           ///< 状態異常を回復
+  BTL_HANDEX_ADD_SICK,            ///< 状態異常にする
+  BTL_HANDEX_RANK_EFFECT,         ///< ランク増減効果
+  BTL_HANDEX_SET_RANK,            ///< ランクを指定地に強制書き換え
+  BTL_HANDEX_RESET_RANK,          ///< ランク効果を全てフラットに
+  BTL_HANDEX_SET_STATUS,          ///< 能力値（攻撃、防御等）を強制書き換え
+  BTL_HANDEX_RECOVER_RANK,        ///< マイナスランク効果のみをフラットに
+  BTL_HANDEX_KILL,                ///< 瀕死にする
+  BTL_HANDEX_CHANGE_TYPE,         ///< ポケモンのタイプを変える
+  BTL_HANDEX_SET_TURNFLAG,        ///< ターンフラグセット
+  BTL_HANDEX_RESET_TURNFLAG,      ///< ターンフラグ強制リセット
+  BTL_HANDEX_SET_CONTFLAG,        ///< 継続フラグセット
+  BTL_HANDEX_RESET_CONTFLAG,      ///< 継続フラグリセット
+  BTL_HANDEX_SIDEEFF_ADD,         ///< サイドエフェクト追加
+  BTL_HANDEX_SIDEEFF_REMOVE,      ///< サイドエフェクト削除
+  BTL_HANDEX_ADD_FLDEFF,          ///< フィールドエフェクト追加
+  BTL_HANDEX_REMOVE_FLDEFF,       ///< フィールドエフェクト追加
+  BTL_HANDEX_CHANGE_WEATHER,      ///< 天候変化
+  BTL_HANDEX_POSEFF_ADD,          ///< 位置エフェクト追加
+  BTL_HANDEX_CHANGE_TOKUSEI,      ///< とくせい書き換え
+  BTL_HANDEX_SET_ITEM,            ///< アイテム書き換え
+  BTL_HANDEX_EQUIP_ITEM,          ///< アイテム装備効果発動チェック
+  BTL_HANDEX_ITEM_SP,             ///< アイテム効果発動
+  BTL_HANDEX_CONSUME_ITEM,        ///< 自分でアイテムを消費
+  BTL_HANDEX_SWAP_ITEM,           ///< アイテム入れ替え
+  BTL_HANDEX_CLEAR_CONSUMED_ITEM, ///< アイテム消費情報のクリア
+  BTL_HANDEX_UPDATE_WAZA,         ///< ワザ書き換え
+  BTL_HANDEX_COUNTER,             ///< ポケモンカウンタ値書き換え
+  BTL_HANDEX_DELAY_WAZADMG,       ///< 時間差ワザダメージ
+  BTL_HANDEX_QUIT_BATTLE,         ///< バトル離脱
+  BTL_HANDEX_CHANGE_MEMBER,       ///< メンバー交換
+  BTL_HANDEX_BATONTOUCH,          ///< バトンタッチ（ランク効果等の引き継ぎ）
+  BTL_HANDEX_ADD_SHRINK,          ///< ひるませる
+  BTL_HANDEX_RELIVE,              ///< 生き返らせる
+  BTL_HANDEX_SET_WEIGHT,          ///< 体重を設定
+  BTL_HANDEX_PUSHOUT,             ///< 場から吹き飛ばす
+  BTL_HANDEX_INTR_POKE,           ///< 指定ポケモンの割り込み行動を発生させる
+  BTL_HANDEX_INTR_WAZA,           ///< 指定ワザを使おうとしているポケモンの割り込み行動を発生させる
+  BTL_HANDEX_SEND_LAST,           ///< 指定ポケモンの行動を一番最後に回す
+  BTL_HANDEX_SWAP_POKE,           ///< 場に出ているポケモン同士を入れ替える
+  BTL_HANDEX_HENSIN,              ///< へんしんする
+  BTL_HANDEX_FAKE_BREAK,          ///< イリュージョン解除
+  BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
+  BTL_HANDEX_EFFECT_BY_POS,       ///< 位置指定してエフェクト発動
 
   BTL_HANDEX_MAX,
 
@@ -622,6 +622,14 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CONSUME_ITEM;
+
+/**
+ *  アイテム消費情報のクリア
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8              pokeID;       ///< 対象ポケモンID
+}BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM;
 
 
 /**

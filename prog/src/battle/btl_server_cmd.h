@@ -70,6 +70,7 @@ typedef enum {
   SC_OP_MIGAWARI_DELETE,    ///< みがわり削除
   SC_OP_SHOOTER_CHARGE,     ///< シューターエネルギーチャージ
   SC_OP_SET_FAKESRC,        ///< イリュージョン用参照ポケモン変更
+  SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -398,6 +399,10 @@ static inline void SCQUE_PUT_OP_ShooterCharge( BTL_SERVER_CMD_QUE* que, u8 clien
 static inline void SCQUE_PUT_OP_SetFakeSrcMember( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
 {
   SCQUE_PUT_Common( que, SC_OP_SET_FAKESRC, clientID, memberIdx );
+}
+static inline void SCQUE_PUT_OP_ClearConsumedItem( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_CLEAR_CONSUMED_ITEM, pokeID );
 }
 
 

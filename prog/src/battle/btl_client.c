@@ -252,6 +252,7 @@ static BOOL scProc_OP_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
@@ -2014,6 +2015,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
     { SC_OP_SET_FAKESRC,        scProc_OP_SetFakeSrc      },
+    { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
@@ -3594,6 +3596,13 @@ static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_PARTY_SetFakeSrcMember( party, memberIdx );
   return TRUE;
 }
+static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_ClearConsumedItem( bpp );
+  return TRUE;
+}
+
 
 /*
  *  ”\—ÍŠî–{’l‘‚«Š·‚¦  [0]:pokeID, [1]:statusID [2]:value

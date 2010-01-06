@@ -297,8 +297,10 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicGuard( u32* numElems );
 static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Monohiroi( u32* numElems );
+static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems );
+static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NorowareBody( u32* numElems );
 static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -515,6 +517,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_PURESSYAA,        HAND_TOK_ADD_Pressure      },
     { POKETOKUSEI_MAJIKKUGAADO,     HAND_TOK_ADD_MagicGuard    },
     { POKETOKUSEI_NAITOMEA,         HAND_TOK_ADD_Nightmare     },
+    { POKETOKUSEI_MONOHIROI,        HAND_TOK_ADD_Monohiroi     },
 
     { POKETOKUSEI_WARUITEGUSE,      HAND_TOK_ADD_WaruiTeguse   },
     { POKETOKUSEI_TIKARAZUKU,       HAND_TOK_ADD_Tikarazuku    },
@@ -4407,6 +4410,93 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ * とくせい「ものひろい」
+ *
+ * 戦闘中、相手が使い切ったものをひろってくる。（ターンエンドに）
+ */
+//------------------------------------------------------------------------------
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Monohiroi( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_BEGIN,    handler_Monohiroi },  // ターンチェック開始ハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// ターンチェック開始ハンドラ
+static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bppMe = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetItem(bppMe) == ITEM_DUMMY_DATA )
+    {
+      typedef struct {
+        u8 pokeID[ BTL_POS_MAX ];
+        u8 fItemConsumed[ BTL_POS_MAX ];
+        u8 pokeCnt;
+        u8 consumedPokeCnt;
+      }MONOHIROI_WORK;
+
+      BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+      BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_OTHERS, myPos );
+
+      MONOHIROI_WORK* mwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(MONOHIROI_WORK) );
+      const BTL_POKEPARAM* bpp;
+      u8 i;
+
+      mwk->pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, mwk->pokeID );
+      mwk->consumedPokeCnt = 0;
+      for(i=0; i<mwk->pokeCnt; ++i)
+      {
+        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );
+        mwk->fItemConsumed[i] = BPP_TURNFLAG_Get( bpp, BPP_TURNFLG_ITEM_CONSUMED );
+        if( mwk->fItemConsumed[i] ){
+          mwk->consumedPokeCnt++;
+        }
+      }
+
+      OS_TPrintf("今ターンアイテムを消費したポケモン=%d\n", mwk->consumedPokeCnt);
+      // 今ターン、アイテムを消費したポケモンが１体以上いれば
+      if( mwk->consumedPokeCnt )
+      {
+        // その中から対象を１体、選ぶ
+        u16 itemID;
+        u8 rndIdx = BTL_CALC_GetRand( mwk->consumedPokeCnt );
+        for(i=0; i<mwk->pokeCnt; ++i)
+        {
+          if( mwk->fItemConsumed[i] )
+          {
+            if( !rndIdx ){ break; }
+            --rndIdx;
+          }
+        }
+
+        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );
+        itemID = BPP_GetConsumedItem( bpp );
+
+        if( itemID != ITEM_DUMMY_DATA )
+        {
+          BTL_HANDEX_PARAM_SET_ITEM* setParam;
+          BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM* clearParam;
+
+          setParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+          setParam->header.tokwin_flag = TRUE;
+          setParam->pokeID = pokeID;
+          setParam->itemID = itemID;
+          HANDEX_STR_Setup( &setParam->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Monohiroi );
+          HANDEX_STR_AddArg( &setParam->exStr, pokeID );
+          HANDEX_STR_AddArg( &setParam->exStr, itemID );
+
+          clearParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CLEAR_CONSUMED_ITEM, pokeID );
+          clearParam->pokeID = mwk->pokeID[i];
+        }
+      }
+    }
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -4416,6 +4506,14 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
  * 自分の道具に空きがあれば相手の持ち物を奪い取る。
  */
 //------------------------------------------------------------------------------
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_REACTION,    handler_WaruiTeguse },  // ダメージ反応ハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
 // ダメージ反応ハンドラ
 static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -4435,14 +4533,6 @@ static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(attacker) );
     }
   }
-}
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,    handler_WaruiTeguse },  // ダメージ反応ハンドラ
-  };
-  *numElems = NELEMS(HandlerTable);
-  return HandlerTable;
 }
 //------------------------------------------------------------------------------
 /**
@@ -5576,23 +5666,26 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_REMOVED) )
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_CONSUMED) )
     {
       u16 usedItem = BPP_GetConsumedItem( bpp );
-      if( ITEM_CheckNuts(usedItem) )
-      {
+      if( (usedItem != ITEM_DUMMY_DATA)
+      &&  ITEM_CheckNuts(usedItem)
+      ){
         BTL_HANDEX_PARAM_SET_ITEM* param;
-
-        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM* clear_param;
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+        param->header.tokwin_flag = TRUE;
         param->itemID = usedItem;
         param->pokeID = pokeID;
+
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Syuukaku );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
         HANDEX_STR_AddArg( &param->exStr, usedItem );
 
-        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+        clear_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CLEAR_CONSUMED_ITEM, pokeID );
+        clear_param->pokeID = pokeID;
       }
     }
   }
