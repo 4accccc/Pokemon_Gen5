@@ -596,8 +596,9 @@
 #define ITEM_WAZAMASIN100		( 607 )		// わざマシン１００
 #define ITEM_WAZAMASIN101		( 608 )		// わざマシン１０１
 #define ITEM_TORANSIIBAA		( 609 )		// トランシーバー
+#define ITEM_GODDOSUTOON		( 610 )		// ゴッドストーン
 
-#define ITEM_DATA_MAX		( 609 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 610 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

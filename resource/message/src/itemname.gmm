@@ -3180,6 +3180,11 @@
 		<language name="JPN_KANJI" width="256">トランシーバー</language>
 	</row>
 
+	<row id="ITEMNAME_610">
+		<language name="JPN" width="256">ゴッドストーン</language>
+		<language name="JPN_KANJI" width="256">ゴッドストーン</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
