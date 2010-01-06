@@ -65,14 +65,14 @@ enum {
 } ;
 
 // 汎用受信バッファ
-#define RE_TMP_BUFF_SIZE	( 0xC000 )
+#define RE_TMP_BUFF_SIZE	( 0x8000 )
 
 //-------------------------------------
 ///	レール、エリア受信バッファサイズ
 //=====================================
-#define RE_MCS_BUFF_RAIL_SIZE	( 0xC000 )
+#define RE_MCS_BUFF_RAIL_SIZE	( 0x8000 )
 #define RE_MCS_BUFF_AREA_SIZE	( 0x400 )
-#define RE_MCS_BUFF_ATTR_SIZE	( 0xC000 )
+#define RE_MCS_BUFF_ATTR_SIZE	( 0x8000 )
 
 
 //-------------------------------------
@@ -382,6 +382,11 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
       FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NOGEAR);
     }
 
+    // もでる動作をとめる
+    {
+      MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys(p_wk->p_fieldmap) );
+    }
+
 //		GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
 
 		// バッファのメモリ確保
@@ -519,6 +524,10 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
       }
     }
 		
+    // もでる動作を再生
+    {
+      MMDLSYS_ClearPauseMoveProc( FIELDMAP_GetMMdlSys(p_wk->p_fieldmap) );
+    }
 		return GMEVENT_RES_FINISH;
 
 	default:
