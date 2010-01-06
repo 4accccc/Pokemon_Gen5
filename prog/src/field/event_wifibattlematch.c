@@ -29,20 +29,6 @@
 //    定数
 //
 //============================================================================================
-//-------------------------------------
-///	シーケンス
-//=====================================
-enum{
-  _FIELD_COMM,
-  _FIELD_CLOSE,
-  _CALL_WIFILOGIN,
-  _WAIT_WIFILOGIN,
-  _CALL_WIFIBTLMATCH,
-  _WAIT_WIFIBTLMATCH,
-  _WAIT_NET_END,
-  _FIELD_OPEN,
-  _FIELD_END
-};
 
 //-------------------------------------
 ///	イベントワーク
@@ -76,6 +62,18 @@ typedef struct
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, void * work)
 {
+  enum{
+    _FIELD_COMM,
+    _FIELD_CLOSE,
+    //_CALL_WIFILOGIN,
+    //_WAIT_WIFILOGIN,
+    _CALL_WIFIBTLMATCH,
+    _WAIT_WIFIBTLMATCH,
+    _WAIT_NET_END,
+    _FIELD_OPEN,
+    _FIELD_END
+  };
+
   EVENT_WIFIBTLMATCH_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
 
@@ -91,12 +89,11 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
     break;
-  case _CALL_WIFILOGIN:
+/*  case _CALL_WIFILOGIN:
     { 
       WIFILOGIN_PARAM *p_param;
       dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(WIFILOGIN_PARAM));
       p_param = dbw->p_sub_wk;
-      p_param->gsys = gsys;
       p_param->gamedata = GAMESYSTEM_GetGameData(gsys);
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw->p_sub_wk);
     }
@@ -117,7 +114,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
       GFL_HEAP_FreeMemory( dbw->p_sub_wk );
     }
     break;
-  case _CALL_WIFIBTLMATCH:
+*/  case _CALL_WIFIBTLMATCH:
     { 
       WIFIBATTLEMATCH_PARAM *p_param;
       dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(WIFIBATTLEMATCH_PARAM));

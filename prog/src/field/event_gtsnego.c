@@ -179,7 +179,6 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   //WIFIˆø”‚ÌÝ’è
   { 
     GFL_STD_MemClear( &dbw->login, sizeof(WIFILOGIN_PARAM) );
-    dbw->login.gsys = gsys;
     dbw->login.gamedata = GAMESYSTEM_GetGameData(gsys);
   }
 }

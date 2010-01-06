@@ -1538,7 +1538,7 @@ int mydwc_HandleError(void)
     // 何らかのエラーが発生。
     MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
 
-    // DWC_GetLastErrorExの説明にのっとる  2008.5.23
+    // DWC_GetLastErrorExの説明にのっとる  2008.5.23 -> 2010.1.5 nagihashi update
     // 返すものは基本的にerrorCodeであるが
     // エラーコードが 0 の場合やエラー処理タイプが DWC_ETYPE_LIGHT の場合は、ゲーム固有の表示のみなので retを返す
     // heapエラーだったら後でさらに変更
@@ -1552,14 +1552,29 @@ int mydwc_HandleError(void)
       // ゲーム固有の表示のみで、エラーコード表示は必要ない。
       // DWC_ClearError()を呼び出せば、復帰可能。
       DWC_ClearError();
-
       break;
-    case DWC_ETYPE_SHOW_ERROR:  // エラー表示
+
+    case DWC_ETYPE_SHOW_ERROR:  // エラー表示が必要
       DWC_ClearError();
       break;
-    case DWC_ETYPE_SHUTDOWN_FM:
+
     case DWC_ETYPE_SHUTDOWN_GHTTP:
+      //以下の各ライブラリ解放関数を必要に応じて呼び出してください。
+      //DWC_RnkShutdown関数(汎用ランキングライブラリ)
+      //エラーコードを表示してください。
+      
+      //DWC_RnkShutdown(); //ランキングライブラリは現状使用しないはずなので、呼ばない
+      DWC_ClearError();
+      break;
+
     case DWC_ETYPE_SHUTDOWN_ND:
+      //DWC_NdCleanupAsync関数を呼び出して、ダウンロードライブラリを終了する必要があります。
+      //エラーコードを表示してください。 
+      DWC_NdCleanupAsync();
+      DWC_ClearError();
+      break;
+
+    case DWC_ETYPE_SHUTDOWN_FM:
       // DWC_ShutdownFriendsMatch()を呼び出して、FriendsMatch処理を終了する必要がある。
       // エラーコードの表示が必要。
       // この場合、とりあえずDWC_ETYPE_DISCONNECTと同じ処理をしておく。

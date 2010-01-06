@@ -88,7 +88,6 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
 
   switch (pWork->state) {
   case _WIFI_LOGIN:
-    pWork->login.gsys = NULL;
     pWork->login.gamedata = pWork->gameData;
     pWork->login.bDreamWorld = FALSE;
 

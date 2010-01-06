@@ -264,7 +264,6 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
-  dbw->aLoginWork.gsys=gsys;
   dbw->aLoginWork.gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->aLoginWork.bDreamWorld = TRUE;
   return event;
