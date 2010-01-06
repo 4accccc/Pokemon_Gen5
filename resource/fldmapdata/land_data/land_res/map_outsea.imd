@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="nakatsui" host="W00169" date="2009-11-26T18:52:35" source="map_outsea.mb"/>
+	<create user="nakatsui" host="W00169" date="2009-12-24T18:10:24" source="map_outsea"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="nakatsui" host="W00169" date="2009-11-26T18:52:35" source="map_outsea.mb"/>
+<original_create user="nakatsui" host="W00169" date="2009-12-24T18:10:24" source="map_outsea"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="1 1"
 	compress_material="off" material_size="2 2"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.125000 -2.000000" whd="4.000000 0.101563 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.187500 -2.000000" whd="4.000000 0.101563 4.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="sea_mizu1"
@@ -186,7 +186,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -16.000000 0.000000"
+		translate="0.000000 -24.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="8" polygon_size="2"

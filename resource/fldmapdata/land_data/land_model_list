@@ -325,6 +325,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/bc_00_01.nsbmd \
 	$(DIR_TEMP)/bc_01_01.nsbmd \
 	$(DIR_TEMP)/winter05_04.nsbmd \
+	$(DIR_TEMP)/c03_r00_00.nsbmd \
+	$(DIR_TEMP)/c03_s00_00.nsbmd \
+	$(DIR_TEMP)/c03_t00_00.nsbmd \
+	$(DIR_TEMP)/c03_u00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -525,6 +529,18 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun0809_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0809_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun0202_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1101_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1101_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun1101_00_02.nsbmd \
+	$(DIR_TEMP)/m_dun1101_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun1101_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun1101_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun1102_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1102_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun1102_00_02.nsbmd \
+	$(DIR_TEMP)/m_dun1102_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun1102_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun1102_01_02.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
@@ -686,6 +702,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_baseball01_01_00.nsbmd \
 	$(DIR_TEMP)/m_baseball01_01_01.nsbmd \
 	$(DIR_TEMP)/m_baseball01_00_01.nsbmd \
+	$(DIR_TEMP)/m_un02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
