@@ -53,7 +53,7 @@ Autoload DTCM
   Object		* (.dtcm)
 }
 
-Autoload MCS_EX
+Autoload EX_MEM_START
 {
   Address		0x02400000
 }
@@ -90,11 +90,11 @@ BOTTOM_LSFFILE2
 
 overlay_count        =  0
 overlay_table_num    =  0
-overlay_name		= ["main", "ITCM", "MCS_EX"]
-overlay_target		= ["main", "ITCM", "MCS_EX"]
+overlay_name		= ["main", "ITCM", "EX_MEM_START"]
+overlay_target		= ["main", "ITCM", "EX_MEM_START"]
 source_name          = Array.new
 lib_name          = Array.new
-overlay_hash		= { "main" => 1, "ITCM" => 1, "MCS_EX" => 1 }
+overlay_hash		= { "main" => 1, "ITCM" => 1, "EX_MEM_START" => 1 }
 overlay_flag        = 0
 
 line_get_flag     = 0
@@ -194,7 +194,7 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
         # ターゲットにする。ただし、予約語として「main,ITCM,DTCM」という文字列が定義されているので
         # これらは避けるようにする
         _targetname = overlay_target[overlay_table_num+2]
-        if _targetname != "main" && _targetname!="MCS_EX" && _targetname != "ITCM" then
+        if _targetname != "main" && _targetname!="EX_MEM_START" && _targetname != "ITCM" then
           _targetname = _targetname.downcase.sub(/srcs_overlay_/,"")
         end
         ##オーバーレイのリストを全部取っておく
