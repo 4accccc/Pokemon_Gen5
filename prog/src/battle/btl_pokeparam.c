@@ -1970,14 +1970,30 @@ void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
 {
   pp->formNo = formNo;
 }
+
+
+
+
 //=============================================================================================
 /**
- * 所有アイテム削除
+ * 所有アイテム削除（所有アイテムが無くなるだけ）
  *
  * @param   pp
  */
 //=============================================================================================
 void BPP_RemoveItem( BTL_POKEPARAM* bpp )
+{
+  bpp->coreParam.usedItem = bpp->coreParam.item;
+  bpp->coreParam.item = ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
+ * 所有アイテム消費（所有アイテムが無くなり、消費バッファに記憶する）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ConsumeItem( BTL_POKEPARAM* bpp )
 {
   bpp->coreParam.usedItem = bpp->coreParam.item;
   bpp->coreParam.item = ITEM_DUMMY_DATA;
@@ -1991,10 +2007,12 @@ void BPP_RemoveItem( BTL_POKEPARAM* bpp )
  * @retval  u16   消費したアイテムナンバー（消費していなければITEM_DUMMY_DATA）
  */
 //=============================================================================================
-u16 BPP_GetUsedItem( const BTL_POKEPARAM* bpp )
+u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
 {
   return bpp->coreParam.usedItem;
 }
+
+
 
 
 //=============================================================================================
@@ -2387,6 +2405,8 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
     PP_SetWazaPos( pp, bpp->waza[i].number, i );
     PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
   }
+
+  PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
 }
 //=============================================================================================
 /**

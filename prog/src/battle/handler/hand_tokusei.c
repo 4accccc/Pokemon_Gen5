@@ -563,7 +563,6 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
         handlerTable = funcTbl[i].func( &numHandlers );
 
-        BTL_Printf("ポケモン[%d]の とくせい(%d)ハンドラを追加\n", pokeID, tokusei);
         return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei, agi, pokeID, handlerTable, numHandlers );
       }
     }
@@ -587,7 +586,7 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
 
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
-    BTL_Printf("ポケモン[%d]の とくせいハンドラを除去\n", pokeID);
+    u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
@@ -1117,7 +1116,6 @@ static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     // こうかバツグンの時
     BtlTypeAff  aff = BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF);
     BtlTypeAffAbout affAbout = BTL_CALC_TypeAffAbout( aff );
-    BTL_Printf("Aff=%d, About=%d\n", aff, affAbout);
     if( affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
     {
       // ダメージ75％
@@ -2705,6 +2703,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
+        param->header.tokwin_flag = TRUE;
         param->sickID = sick;
         param->sickCont = sickCont;
         param->fAlmost = FALSE;
@@ -3654,8 +3653,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fuyuu( u32* numElems )
 static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分が防御側で
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
+  ){
     // ヌケニンなら
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_NUKENIN )
@@ -3663,7 +3663,8 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       // 効果バツグン以外は無効
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       PokeType waza_type = WAZADATA_GetType( waza );
-      BtlTypeAff aff = BTL_CALC_TypeAff( waza_type, BPP_GetPokeType(bpp) );
+      PokeTypePair myType = BPP_GetPokeType( bpp );
+      BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
       if( aff <= BTL_TYPEAFF_100 )
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
@@ -4343,9 +4344,13 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
 //------------------------------------------------------------------------------
 /**
- *  とくせい「わるいてぐせ」
+ * とくせい「わるいてぐせ」
+ *
+ * 打撃攻撃（接触フラグONのダメージワザ）を受けた際、
+ * 自分の道具に空きがあれば相手の持ち物を奪い取る。
  */
 //------------------------------------------------------------------------------
+// ダメージ反応ハンドラ
 static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
@@ -4375,9 +4380,12 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「のろわれボディ」
+ * とくせい「のろわれボディ」
+ *
+ * ３０％で受けた技をかなしばり状態にする。
  */
 //------------------------------------------------------------------------------
+// ダメージ反応ハンドラ
 static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
@@ -4400,7 +4408,6 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
           param->header.tokwin_flag = TRUE;
-          BTL_Printf("のろわれボディ発動\n");
         }
       }
     }
@@ -4417,6 +4424,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_NorowareBody( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「くだけるよろい」
+ *
+ * 物理攻撃を受けると防御が１段階下がり、素早さが１段階上がる。
  */
 //------------------------------------------------------------------------------
 static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4467,6 +4476,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_KudakeruYoroi( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ちからずく」
+ *
+ * 追加効果のある技の追加効果を出すことができないが、かわりに威力が1.3倍になる。
+ * 追加効果が自分自身の能力を下げるワザの場合には、このとくせい自体が無効
  */
 //------------------------------------------------------------------------------
 // 威力計算ハンドラ
@@ -4541,6 +4553,8 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「まけんき」
+ *
+ * 相手から能力を下げられる技や特性を受けた時、攻撃力が２段階上がる。
  */
 //------------------------------------------------------------------------------
 static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4572,8 +4586,11 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Makenki( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「よわき」
+ *
+ * ＨＰが半分以下になると、攻撃、特攻が半減する。
  */
 //------------------------------------------------------------------------------
+// 攻撃側能力の計算ハンドラ
 static void handler_Yowaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4598,8 +4615,11 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yowaki( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「マルチスケイル」
+ *
+ * ＨＰが満タンの時に受けるダメージを半減させる。
  */
 //------------------------------------------------------------------------------
+// ダメージ計算最終チェックハンドラ
 static void handler_MultiScale( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // HP満タンならダメージ半減
@@ -4622,9 +4642,13 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MultiScale( u32* numElems )
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「なかまいしき」
+ *  とくせい「フレンドガード」
+ *  （旧名 なかまいしき）
+ *
+ * 自分以外の見方へのダメージを1/2にする。
  */
 //------------------------------------------------------------------------------
+// ダメージ計算最終チェックハンドラ
 static void handler_NakamaIsiki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
@@ -4647,6 +4671,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_NakamaIsiki( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「モラテラピー」
+ *
+ * 自分以外の見方のポケモン系状態異常が毎ターン30％の確率で回復する。
  */
 //------------------------------------------------------------------------------
 // ターンチェックハンドラ
@@ -4692,6 +4718,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Moraterapi( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「どくぼうそう」
+ *
+ * 毒状態の時、物理攻撃の威力が倍になる。
  */
 //------------------------------------------------------------------------------
 // 威力計算ハンドラ
@@ -4719,6 +4747,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Dokubousou( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ねつぼうそう」
+ *
+ * やけど状態の時、特殊攻撃の威力が倍になる。
  */
 //------------------------------------------------------------------------------
 // 威力計算ハンドラ
@@ -4746,6 +4776,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Netubousou( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「あうんのいき」
+ *
+ *  味方の攻撃を受けない。
  */
 //------------------------------------------------------------------------------
 // 無効化チェックLv2ハンドラ
@@ -4782,6 +4814,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_AunNoIki( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「むらっけ」
+ *
+ * 毎ターンエンドにどれかひとつの能力が一段階上昇し、ひとつの能力が一段階下降する。
  */
 //------------------------------------------------------------------------------
 // ターンチェック最終ハンドラ
@@ -4895,6 +4929,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Murakke( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ぼうじん」
+ *
+ * 天候によるダメージを受けない。
  */
 //------------------------------------------------------------------------------
 // 天候ダメージ計算ハンドラ
@@ -4920,6 +4956,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Boujin( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「どくしゅ」
+ *
+ * 打撃技を相手に当てると３割の確率で相手を毒状態にする。
  */
 //------------------------------------------------------------------------------
 // ダメージ反応ハンドラ
@@ -4959,6 +4997,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Dokusyu( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「さいせいりょく」
+ *
+ * 控えに下げるとＨＰが1/3回復する。
  */
 //------------------------------------------------------------------------------
 // メンバー退場確定ハンドラ
@@ -4993,6 +5033,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_SaiseiRyoku( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「はとむね」
+ *
+ * 相手に防御力を下げられない。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hatomune( u32* numElems )
@@ -5017,6 +5059,8 @@ static void handler_Hatomune_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 //------------------------------------------------------------------------------
 /**
  *  とくせい「すなかき」
+ *
+ * 天候がすなあらし状態の時、素早さ２倍になる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunakaki( u32* numElems )
@@ -5042,6 +5086,8 @@ static void handler_Sunakaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ミラクルスキン」
+ *
+ * 非ダメージ技に対する回避率が高い。50％回避。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MilacreSkin( u32* numElems )
@@ -5071,6 +5117,8 @@ static void handler_MilacreSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 //------------------------------------------------------------------------------
 /**
  *  とくせい「しんうち」
+ *
+ * ターン中、一番最後に技を出すと技の威力が1.3倍になる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sinuti( u32* numElems )
@@ -5100,6 +5148,8 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 //------------------------------------------------------------------------------
 /**
  *  とくせい「すなのちから」
+ *
+ * 天候がすなあらしの時、地面、岩、鋼の威力が上がる。１．３倍。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems )
@@ -5126,6 +5176,8 @@ static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 //------------------------------------------------------------------------------
 /**
  *  とくせい「すりぬけ」
+ *
+ * リフレクター、ひかりのかべ、しんぴのまもりの効果を受けずに攻撃できる。
  */
 //------------------------------------------------------------------------------
 // 「すりぬけ」スキップチェックハンドラ
@@ -5172,6 +5224,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Surinuke( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「じしんかじょう」
+ *
+ * 相手を倒すと攻撃力が１段階上がる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_JisinKajou( u32* numElems )
@@ -5209,6 +5263,8 @@ static void handler_JisinKajou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 //------------------------------------------------------------------------------
 /**
  *  とくせい「せいぎのこころ」
+ *
+ * 悪タイプのダメージ技を受けると攻撃力が１段階上がる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SeiginoKokoro( u32* numElems )
@@ -5240,6 +5296,8 @@ static void handler_SeiginoKokoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 //------------------------------------------------------------------------------
 /**
  *  とくせい「びびり」
+ *
+ * ゴースト、悪、虫タイプの技を受けると素早さが１段階上がる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bibiri( u32* numElems )
@@ -5274,6 +5332,8 @@ static void handler_Bibiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ミイラ」
+ *
+ * 打撃技を受けた相手の特性を「ミイラ」にしてしまう。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Miira( u32* numElems )
@@ -5305,6 +5365,8 @@ static void handler_Miira( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 //------------------------------------------------------------------------------
 /**
  *  とくせい「そうしょく」
+ *
+ * 草タイプの技を受けるとダメージを受けずに特攻が１段階上がる。
  */
 //------------------------------------------------------------------------------
 // ダメージワザ回復化チェックハンドラ
@@ -5329,7 +5391,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Sousyoku_Check }, // ダメージワザ回復チェックハンドラ
-    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Sousyoku_Fix   },
+    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Sousyoku_Fix   }, // ダメージワザ回復化決定ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5337,6 +5399,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「いたずらごころ」
+ *
+ * 自分が非ダメージワザを出す際、ワザ先制プライオリティを+1できる。（同ワザ同士なら先制できる）
  */
 //------------------------------------------------------------------------------
 // ワザプライオリティ取得ハンドラ
@@ -5365,6 +5429,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_ItazuraGokoro( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「マジックミラー」
+ *
+ * ワザ“マジックコート”で跳ね返せる技を跳ね返す。
  */
 //------------------------------------------------------------------------------
 // わざ乗っ取りハンドラ
@@ -5392,14 +5458,19 @@ static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
+      {
+        // 相手全体ワザ以外はターゲットを固定に
+        if( WAZADATA_GetParam(waza, WAZAPARAM_TARGET) != WAZA_TARGET_ENEMY_ALL ){
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
+        }
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
         work[0] = 1;
       }
     }
   }
 }
-//
+// わざ跳ね返し確定ハンドラ
 static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
@@ -5429,6 +5500,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「しゅうかく」
+ *
+ * きのみを使ってもターンエンドに復活する。
  */
 //------------------------------------------------------------------------------
 // ターンチェック開始ハンドラ
@@ -5439,7 +5512,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_REMOVED) )
     {
-      u16 usedItem = BPP_GetUsedItem( bpp );
+      u16 usedItem = BPP_GetConsumedItem( bpp );
       if( ITEM_CheckNuts(usedItem) )
       {
         BTL_HANDEX_PARAM_SET_ITEM* param;
@@ -5469,11 +5542,15 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Syuukaku( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「あまのじゃく」
+ *
+ *  能力ランク効果が逆転して働く。（ex. "いかく"を受けると攻撃力が上がる）
+ *  ただしオーバーヒート系などの自分で能力を下げる技には効果がない。
  */
 //------------------------------------------------------------------------------
 // ランク増減値修正ハンドラ
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // @todo オバヒ系チェックしてなくね？
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
@@ -5496,11 +5573,14 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Amanojaku( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「きんちょうかん」
+ *
+ * 相手が緊張してきのみが食べられない。
  */
 //------------------------------------------------------------------------------
 // メンバー入場
 static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // 「きんちょうかん」持ちであることを告知
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_MESSAGE* param;
@@ -5596,6 +5676,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kinchoukan( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「へんしん」
+ *
+ * 場に出た時に正面の相手に変身する。目の前に対象がいない場合はへんしんしない。
  */
 //------------------------------------------------------------------------------
 // 入場ハンドラ
@@ -5632,6 +5714,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hensin( u32* numElems )
 //------------------------------------------------------------------------------
 /**
  *  とくせい「イリュージョン」
+ *
+ * リストの並び順で後ろのポケモンと同じ姿・名前で戦闘に出せる。ダメージを受けると元に戻る。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Illusion( u32* numElems )

@@ -616,6 +616,15 @@ typedef struct {
 }BTL_HANDEX_PARAM_ITEM_SP;
 
 /**
+ *  アイテム消費処理
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_CONSUME_ITEM;
+
+
+/**
  * ワザ書き換え処理
  */
 typedef struct {

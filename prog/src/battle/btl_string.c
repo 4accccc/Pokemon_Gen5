@@ -429,6 +429,8 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 
   int i;
 
+  OS_TPrintf("SET:StrID=%d\n", strID);
+
   for(i=0; i<NELEMS(funcTbl); i++)
   {
     if( funcTbl[i].strID == strID )
@@ -633,10 +635,10 @@ static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
 
   if( searchPokeTagCount(SysWork.tmpBuf) == 2 ){
     strID = get_setStrID_Poke2( args[0], args[1], strID );
-    BTL_Printf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+    OS_TPrintf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
   }else{
     strID = get_setStrID( args[0], strID );
-    BTL_Printf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+    OS_TPrintf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
   }
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );

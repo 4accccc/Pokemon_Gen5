@@ -232,7 +232,6 @@ extern void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src );
 extern u8 BPP_GetID( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetMonsNo( const BTL_POKEPARAM* pp );
 extern PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp );
-extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
 extern const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp );
 extern void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP );
@@ -373,8 +372,12 @@ extern void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
+
+extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );
-extern u16 BPP_GetUsedItem( const BTL_POKEPARAM* bpp );
+extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
+extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
+
 extern void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );
 extern void BPP_ResetWazaContConter( BTL_POKEPARAM* pp );
 extern void BPP_RankRecover( BTL_POKEPARAM* pp );
