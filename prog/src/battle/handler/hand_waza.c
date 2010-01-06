@@ -4570,7 +4570,7 @@ static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_KORAERU_CHECK,       handler_Koraeru },          // こらえるチェックハンドラ
+    { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru },          // こらえるチェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

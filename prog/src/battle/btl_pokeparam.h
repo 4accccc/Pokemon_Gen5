@@ -170,6 +170,7 @@ typedef enum {
   BPP_KORAE_WAZA_DEFENDER,  ///< 防御側のワザによる（「こらえる」を使用など）
   BPP_KORAE_WAZA_ATTACKER,  ///< 攻撃側のワザによる（「みねうち」を使用など）
   BPP_KORAE_ITEM,           ///< 防御側の装備アイテム効果（きあいのタスキなど）
+  BPP_KORAE_TOKUSEI_DEFENDER,  ///< 防御側のとくせいによる
 
 }BppKoraeruCause;
 

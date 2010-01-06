@@ -4555,12 +4555,14 @@ static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruC
     break;
 
   case BPP_KORAE_ITEM:
+  default:
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       scEvent_KoraeruExe( wk, bpp, cause );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
+    break;
   }
 }
 //----------------------------------------------------------------------------------
