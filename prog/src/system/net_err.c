@@ -200,6 +200,38 @@ BOOL NetErr_DispCall(void)
   return NetErr_DispMain();
 }
 
+//==================================================================
+/**
+ * Push,Pop有のエラー画面一発呼び出し　※軽度エラー専用。通信の終了処理は行いません
+ *
+ * エラー画面を表示した場合、ユーザーが特定の操作を行わない限り(Aを押す)
+ * この関数内で無限ループします。
+ */
+//==================================================================
+void NetErr_DispCallPushPop(void)
+{
+	if(Local_SystemOccCheck() == FALSE){
+		GF_ASSERT(0); //システムが作られていない
+		return;
+	}
+
+	//エラー画面描画
+	Local_ErrDispInit();
+	
+//		OS_SpinWait(10000);
+	
+	while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+		;	//ボタンを一度離すまで待つ
+	}
+	
+	while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+		;	//エラー画面終了ボタンが押されるまで待つ
+	}
+	
+	//エラー画面終了
+	Local_ErrDispExit();
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   エラーが発生したらこの関数を使用してエラー画面を呼び出す
@@ -292,7 +324,7 @@ static BOOL NetErr_DispMain(void)
 	}
 
 	if(nes->status == NET_ERR_STATUS_REQ){
-    //通信ライブラリ終了待ち
+    //通信ライブラリ終了待ち  ※check　軽度エラーの場合は終了処理を入れない
     GFL_NET_Exit(NULL);
     do{
       GFL_NET_Main();
