@@ -462,7 +462,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER
 			fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 
       // 音
       WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
@@ -523,7 +523,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_NoFade( WEATHER_TASK* p_wk, WEATHER
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -649,7 +649,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Exit( WEATHER_TASK* p_wk, WEATHER_T
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -856,7 +856,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 			fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 
 		}
 	}else{
@@ -919,7 +919,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_NoFade( WEATHER_TASK* p_wk, WE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1049,7 +1049,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Exit( WEATHER_TASK* p_wk, WEAT
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	// スパーク初期化
 	WEATHER_PARK_Exit( &p_local_wk->spark );

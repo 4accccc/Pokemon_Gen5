@@ -6138,15 +6138,29 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @def _CALL_SHOP_PROC_BUY
+ * @def _FOURKINGS_WALKEVENT
  * @brief 四天王　歩きアニメーションイベント呼び出し
- * @param fourking_id 0～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
+ * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
  */
 //--------------------------------------------------------------
 #define _FOURKINGS_WALKEVENT( fourking_id ) _ASM_FOURKINGS_WALKEVENT fourking_id
 
   .macro  _ASM_FOURKINGS_WALKEVENT fourking_id
   .short  EV_SEQ_FOURKINGS_WALKEVENT
+  .short  \fourking_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_SET_TOP_CAMERA
+ * @brief 四天王　頂上のカメラ指定
+ * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_SET_TOP_CAMERA( fourking_id ) _ASM_FOURKINGS_SET_TOP_CAMERA fourking_id
+
+  .macro  _ASM_FOURKINGS_SET_TOP_CAMERA fourking_id
+  .short  EV_SEQ_FOURKINGS_SET_TOP_CAMERA
   .short  \fourking_id
   .endm
 

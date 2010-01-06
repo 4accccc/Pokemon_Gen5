@@ -604,9 +604,9 @@ void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk )
  *	@param	heapID		ƒq[ƒvID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID )
+void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid )
 {
-	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, LIGHT_FADE_COUNT_MAX, heapID );
+	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, LIGHT_FADE_COUNT_MAX );
 }
 
 //----------------------------------------------------------------------------
@@ -619,9 +619,9 @@ void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 h
  *	@param	heapID 
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID )
+void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid )
 {
-	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, 1, heapID );
+	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, 1 );
 }
 
 //----------------------------------------------------------------------------
@@ -632,9 +632,9 @@ void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heap
  *	@param	heapID		ƒq[ƒvID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID )
+void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk )
 {
-	FIELD_LIGHT_ReLoadDefault( p_wk->p_light, heapID );
+	FIELD_LIGHT_ReLoadDefault( p_wk->p_light );
 }
 
 //----------------------------------------------------------------------------

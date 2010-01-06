@@ -660,7 +660,7 @@
 
   // Žl“V‰¤ŠÖ˜A
   DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
-  NO_CMD()
+  DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
   NO_CMD()
   NO_CMD()
 

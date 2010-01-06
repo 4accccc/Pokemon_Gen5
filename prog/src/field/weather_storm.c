@@ -246,7 +246,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat );
 		}
 	}else{
 		
@@ -306,7 +306,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -443,7 +443,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

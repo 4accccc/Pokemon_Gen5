@@ -292,8 +292,8 @@ struct _FIELD_LIGHT {
 //=====================================
 static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
-static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID );
-static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
+static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no );
+static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
 static s32  FIELD_LIGHT_SearchNowIndex( const FIELD_LIGHT* cp_sys, int rtc_second );
 
@@ -376,7 +376,7 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p
   rtc_second /= 2;
 
   // ライト情報読み込み
-  FIELD_LIGHT_LoadData( p_sys, light_no, heapID );
+  FIELD_LIGHT_LoadData( p_sys, light_no );
 
   // データ反映
   p_sys->reflect_flag = TRUE;
@@ -509,11 +509,11 @@ void FIELD_LIGHT_Reflect( FIELD_LIGHT* p_sys, BOOL force )
  *  @param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
+void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no )
 {
   // ライト情報を再読み込み
   FIELD_LIGHT_ReleaseData( p_sys );
-  FIELD_LIGHT_LoadData( p_sys, light_no, heapID );
+  FIELD_LIGHT_LoadData( p_sys, light_no );
 
   // 初期情報を設定
   p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
@@ -529,14 +529,13 @@ void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
  *  @param  arcid     アークID
  *  @param  dataid    データID
  *  @param  sync      フェードシンク数（１以上）
- *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, s32 sync, u32 heapID )
+void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, s32 sync )
 {
   // ライト情報を再読み込み
   FIELD_LIGHT_ReleaseData( p_sys );
-  FIELD_LIGHT_LoadDataEx( p_sys, arcid, dataid, heapID );
+  FIELD_LIGHT_LoadDataEx( p_sys, arcid, dataid );
 
   // 初期情報を設定
   p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
@@ -553,11 +552,11 @@ void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, s32 sync, 
  *  @param  heapID
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID )
+void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys )
 {
   // ライト情報を再読み込み
   FIELD_LIGHT_ReleaseData( p_sys );
-  FIELD_LIGHT_LoadData( p_sys, p_sys->default_lightno, heapID );
+  FIELD_LIGHT_LoadData( p_sys, p_sys->default_lightno );
 
   // 初期情報を設定
   p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
@@ -1408,15 +1407,14 @@ static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK*
  *
  *  @param  p_sys   システムワーク
  *  @param  light_no  ライトナンバー
- *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
+static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no )
 {
   // 基本季節・ライトナンバー設定
   p_sys->default_lightno  = light_no;
 
-  FIELD_LIGHT_LoadDataEx( p_sys, LIGHT_ARC_ID, light_no, heapID );
+  FIELD_LIGHT_LoadDataEx( p_sys, LIGHT_ARC_ID, light_no );
 
 
 }
@@ -1431,7 +1429,7 @@ static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
  *  @param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID )
+static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid )
 {
   u32 size;
   int i, j;

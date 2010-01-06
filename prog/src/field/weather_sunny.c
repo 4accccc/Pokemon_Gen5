@@ -171,7 +171,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_FadeIn( WEATHER_TASK* p_wk, WEATHE
     {
       s32 light;
       light = WEATHER_TASK_GetZoneLight( p_wk );
-      WEATHER_TASK_LIGHT_Change( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light );
     }
 
 		p_sunnywork->fade_init = TRUE;
@@ -210,7 +210,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_NoFade( WEATHER_TASK* p_wk, WEATHE
   {
     s32 light;
     light = WEATHER_TASK_GetZoneLight( p_wk );
-    WEATHER_TASK_LIGHT_Set( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light, heapID );
+    WEATHER_TASK_LIGHT_Set( p_wk, FIELD_ZONEFOGLIGHT_ARC_LIGHT, light );
   }
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -277,7 +277,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Exit( WEATHER_TASK* p_wk, WEATHER_
 	if( WEATHER_TASK_IsZoneLight( p_wk ) )
 	{
 		// ƒ‰ƒCƒgŒ³‚É
-		WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+		WEATHER_TASK_LIGHT_Back( p_wk );
 	}
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;

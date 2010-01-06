@@ -191,6 +191,16 @@ static const FIELD_FK_SOUND_ANIME_DATA EV_DEMO_SE_DATA[ FIELD_EVENT_FOURKINGS_MA
 // SEアニメーションの起動ナンバー
 #define EV_DEMO_SE_ANIME_CHECK_NUM  (FX32_ONE)
 
+
+// 頂上カメラID
+static const u32 sc_EV_DEMO_CAMERA_ID_TBL[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  28,
+  29,
+  30,
+  31
+};
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -210,6 +220,8 @@ typedef struct {
   VecFx32 camera_up_save;
 
   fx32 frame;
+
+  u32 camera_type;
 } EV_CIRCLEWALK_CAMERA;
 
 //-------------------------------------
@@ -382,6 +394,22 @@ GMEVENT* EVENT_FourKings_CircleWalk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fiel
   return EVENT_SetUp_CircleWalk(p_gsys, p_fieldmap, fourkins_no);
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四天王かく部屋の頂上カメラIDを取得
+ *
+ *	@param	fourkins_no   四天王ナンバー
+ *
+ *	@return カメラID
+ */
+//-----------------------------------------------------------------------------
+u32 EVENT_FourKings_GetCameraID( u32 fourkins_no )
+{
+  GF_ASSERT( fourkins_no < FIELD_EVENT_FOURKINGS_MAX );
+  return sc_EV_DEMO_CAMERA_ID_TBL[ fourkins_no ];
+}
 
 
 
@@ -718,6 +746,9 @@ static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, 
 
   // 初期パラメータ設定
   EV_CAMERA_SetUpParam( p_wk );
+
+  // 復帰カメラタイプ
+  p_wk->camera_type = sc_EV_DEMO_CAMERA_ID_TBL[ fourkings_no ];
 }
 
 //----------------------------------------------------------------------------
@@ -739,8 +770,8 @@ static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
   FIELD_CAMERA_SetCameraAreaActive( p_wk->p_camera, p_wk->camera_area_save );
   FIELD_CAMERA_SetCameraUp( p_wk->p_camera, &p_wk->camera_up_save );
 
-  // 最後にZONEの初期値に戻す
-  FIELD_CAMERA_SetDefaultParameter( p_wk->p_camera );
+  // 頂上カメラを指定
+  FIELD_CAMERA_SetCameraType( p_wk->p_camera, p_wk->camera_type );
 
   // トレース情報の初期化
   FIELD_CAMERA_RestartTrace( p_wk->p_camera );

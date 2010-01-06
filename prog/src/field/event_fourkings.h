@@ -44,6 +44,10 @@ extern "C"{
 extern GMEVENT* EVENT_FourKings_CircleWalk( 
      GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap, u32 fourkins_no );
 
+
+//  頂上カメラIDのテーブル
+extern u32 EVENT_FourKings_GetCameraID( u32 fourkins_no );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

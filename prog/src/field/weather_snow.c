@@ -548,7 +548,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER
 
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 		}
 	}else{
 		
@@ -603,7 +603,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, WEATHER
 	WEATHER_TASK_DustObj( p_wk, WEATHER_SNOW_OBJ_Add, WEATHER_SNOW_NOFADE_OBJ_START_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -730,7 +730,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, WEATHER_T
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -967,7 +967,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_FadeIn( WEATHER_TASK* p_wk, WEATHE
 					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS,
 					WEATHER_SSNOW_FOG_TIMING, fog_cont );
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 		}
 	}else{
 		
@@ -1028,7 +1028,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_NoFade( WEATHER_TASK* p_wk, WEATHE
 	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1160,7 +1160,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Exit( WEATHER_TASK* p_wk, WEATHER_
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1381,7 +1381,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_FadeIn( WEATHER_TASK* p_wk, WEATH
 					WEATHER_SNOW_S_FOG_TIMING, fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 		}
 	}else{
 		
@@ -1442,7 +1442,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_NoFade( WEATHER_TASK* p_wk, WEATH
 	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1585,7 +1585,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Exit( WEATHER_TASK* p_wk, WEATHER
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1797,7 +1797,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_FadeIn( WEATHER_TASK* p_wk, WEATHE
 
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 		}
 	}else{
 		
@@ -1852,7 +1852,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_NoFade( WEATHER_TASK* p_wk, WEATHE
 	WEATHER_TASK_DustObj( p_wk, WEATHER_ARARE_OBJ_Add, WEATHER_ARARE_NOFADE_OBJ_START_NUM, WEATHER_ARARE_NOFADE_OBJ_START_DUST_NUM, WEATHER_ARARE_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
   // ライト変更
-  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat, heapID );
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1978,7 +1978,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Exit( WEATHER_TASK* p_wk, WEATHER_
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
+	WEATHER_TASK_LIGHT_Back( p_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

@@ -76,3 +76,29 @@ VMCMD_RESULT EvCmdFourKings_WalkEvent( VMHANDLE *core, void *wk )
 }
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四天王頂上カメラの指定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( fieldWork );
+
+  GF_ASSERT( index > 0 );
+
+  // ZONE ID の IDでわたってくる（1オリジン）ので、-1する
+  index -= 1;
+
+
+  // カメラの状態を頂上にする
+  FIELD_CAMERA_SetCameraType( p_camera, EVENT_FourKings_GetCameraID( index ) );
+
+  return VMCMD_RESULT_CONTINUE;
+}
