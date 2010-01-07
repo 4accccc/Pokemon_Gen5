@@ -116,8 +116,12 @@ static inline SetStrFormat get_strFormat( u8 pokeID );
 static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
 static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
+static const STRCODE* seekNextTag( const STRCODE* sp, PrintSysTagGroup* tagGroup, u16* tagIndex, u8* argIndex );
+static u8 searchPokeTagCount( const STRBUF* buf );
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset );
+static void ms_set_auto( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_default( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_poke2( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup_item( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -425,6 +429,9 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
     { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_rankup_item      },
     { BTL_STRID_STD_UseItem_Self,         ms_set_useitem          },
+
+    { BTL_STRID_SET_Tedasuke,             ms_set_default          },  // てだすけはポケモン名２体入り文字列だが標準（３セット）
+    { BTL_STRID_SET_JikoAnji,             ms_set_default          },  // じこあんじも同様
   };
 
   int i;
@@ -441,7 +448,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
   }
 
 
-  ms_set_default( buf, strID, args );
+  ms_set_auto( buf, strID, args );
 }
 
 //--------------------------------------------------------------
@@ -626,23 +633,46 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 }
 //--------------------------------------------------------------
 /**
- *  標準処理（args[0] にポケモンID）
+ *  args[0]~[1] にポケモンIDが入っているのを自動判別
  */
 //--------------------------------------------------------------
-static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
+static void ms_set_auto( STRBUF* dst, u16 strID, const int* args )
 {
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 
   if( searchPokeTagCount(SysWork.tmpBuf) == 2 ){
-    strID = get_setStrID_Poke2( args[0], args[1], strID );
-    OS_TPrintf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+    ms_set_poke2( dst, strID, args );
   }else{
-    strID = get_setStrID( args[0], strID );
-    OS_TPrintf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+    ms_set_default( dst, strID, args );
   }
+}
+//--------------------------------------------------------------
+/**
+ *  標準処理（args[0] にポケモンIDが入っている）
+ */
+//--------------------------------------------------------------
+static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
+{
+  OS_TPrintf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+
+  strID = get_setStrID( args[0], strID );
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *  標準処理（args[0], args[1] にポケモンIDが入っている）
+ */
+//--------------------------------------------------------------
+static void ms_set_poke2( STRBUF* dst, u16 strID, const int* args )
+{
+  OS_TPrintf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
 
+  strID = get_setStrID_Poke2( args[0], args[1], strID );
+
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
