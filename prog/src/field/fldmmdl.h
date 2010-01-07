@@ -1054,6 +1054,7 @@ extern BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
     s16 x0, s16 y0, s16 z0, BOOL old_hit );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );
+extern BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x0, s16 z0, BOOL old_hit );
 extern int MMDL_HitCheckMoveLimit(
 	const MMDL * mmdl, s16 x, s16 z );
 extern BOOL MMDL_GetMapPosAttr(

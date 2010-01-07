@@ -3966,23 +3966,14 @@ static int MMDLSYS_SearchGridPosArray(
   MI_CpuClear8( array, sizeof(MMDL_PARRAY) );
   
 	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
-    if(array->count >= MMDL_POST_LAYER_MAX){
-      GF_ASSERT_MSG(0,"同一座標OBJ個数オーバー\n"); 
-      break;  //これ以上格納できない
-    }
-		if( old_hit ){
-			if( MMDL_GetOldGridPosX(mmdl) == x &&
-				  MMDL_GetOldGridPosZ(mmdl) == z ){
-				array->mmdl_parray[array->count++] = mmdl;
-        continue;
-			}
-		}
-		
-		if( MMDL_GetGridPosX(mmdl) == x &&
-		  	MMDL_GetGridPosZ(mmdl) == z ){
+    if( MMDL_HitCheckXZ(mmdl,x,z,old_hit) == TRUE ){
       array->mmdl_parray[array->count++] = mmdl;
-      continue;
-		}
+    
+      if( array->count >= MMDL_POST_LAYER_MAX ){
+        GF_ASSERT_MSG( 0, "同一座標OBJ個数オーバー\n" ); 
+        break;  //これ以上格納できない
+      }
+    }
 	}
 	
 	return array->count;
@@ -4009,7 +4000,7 @@ MMDL * MMDLSYS_SearchGridPos(
   if( num ){
     return array.mmdl_parray[0];
   }
-
+  
 	return( NULL );
 }
 
@@ -4031,10 +4022,10 @@ MMDL * MMDLSYS_SearchGridPosEx(
 {
 	u32 i = 0,num = 0;
 	MMDL_PARRAY array;
-
+  
   num = MMDLSYS_SearchGridPosArray(sys, x, z, old_hit , &array);
-
-  if(num == 0){
+  
+  if( num == 0 ){
     return NULL;
   }
   

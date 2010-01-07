@@ -1421,7 +1421,7 @@ BOOL MMDL_HitCheckRect( const MMDL_RECT *rect0, const MMDL_RECT *rect1 )
 BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
     s16 x0, s16 y0, s16 z0, BOOL old_hit )
 {
-  int x1,y1,z1,sy;
+  s16 x1,y1,z1,sy;
   MMDL_RECT rect0,rect1;
   
   MMDL_CreateHitCheckRect( mmdl0, x0, z0, &rect0 );
@@ -1559,11 +1559,33 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
  * @retval
  */
 //--------------------------------------------------------------
-#if 0
-BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x, s16 z, BOOL old_hit )
+BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x0, s16 z0, BOOL old_hit )
 {
+  MMDL_RECT rect;
+  s16 x1 = MMDL_GetGridPosX( mmdl );
+  s16 z1 = MMDL_GetGridPosZ( mmdl );
+  MMDL_CreateHitCheckRect( mmdl, x1, z1, &rect );
+  
+  if( rect.left <= x0 && rect.right >= x0 ){
+    if( rect.top <= z0 && rect.bottom >= z0 ){
+      return( TRUE );
+    }
+  }
+  
+  if( old_hit == TRUE ){
+    x1 = MMDL_GetGridPosX( mmdl );
+    z1 = MMDL_GetGridPosZ( mmdl );
+    MMDL_CreateHitCheckRect( mmdl, x1, z1, &rect );
+    
+    if( rect.left <= x0 && rect.right >= x0 ){
+      if( rect.top <= z0 && rect.bottom >= z0 ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
 }
-#endif
 
 //--------------------------------------------------------------
 /**
