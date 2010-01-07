@@ -762,10 +762,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_bg.c \
 			battle/tr_ai/tr_ai.c
 
-# バトル用プリントルーチン＆文字列リテラル
-#===> MCS_EX
-SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
-
 
 # バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE
@@ -1140,6 +1136,11 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 #LIB=>          libnnsmcs.$HYB.a
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c
+
+# バトル用プリントルーチン＆文字列リテラル
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
+
 
 #ITEMUSEライブラリ
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
