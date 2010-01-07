@@ -352,9 +352,6 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
         GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
       }
-      else
-      {
-      }
       break;
 
     case PRINTSTREAM_STATE_RUNNING :  // é¿çsíÜ
