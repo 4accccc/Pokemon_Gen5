@@ -24,7 +24,6 @@
  * @brief	バトルレギュレーションデータ型定義
  */
 //----------------------------------------------------------
-typedef struct _REGULATION_DATA REGULATION_DATA;
 
 
 typedef enum {
@@ -89,6 +88,25 @@ typedef enum {
   REGULATION_SHOOTER_MANUAL,    ///<マニュアル
 }REGULATION_SHOOTER_TYPE;
 
+
+
+typedef enum  {
+  REGULATION_CARD_CUPNAME,     ///< カップ名
+  REGULATION_CARD_ROMVER,      ///< カセットバージョン：
+  REGULATION_CARD_CUPNO,       ///< 大会No.
+  REGULATION_CARD_LANGCODE,    ///< 国コード：
+  REGULATION_CARD_START_YEAR,  ///< 開始年：00-99
+  REGULATION_CARD_START_MONTH, ///< 開始月：01-12
+  REGULATION_CARD_START_DAY,   ///< 開始日：01-31
+  REGULATION_CARD_END_YEAR,    ///< 終了年：00-99
+  REGULATION_CARD_END_MONTH,   ///< 終了月：01-12
+  REGULATION_CARD_END_DAY,     ///< 終了日：01-31
+  REGULATION_CARD_STATUS,      ///< 大会状態：０未開催／１開催中／２終了
+} REGULATION_CARD_PARAM_TYPE;
+
+
+
+
 //----------------------------------------------------------
 /**
  * @brief	バトルレギュレーションデータ型定義  fushigi_data.h参照の為外部公開に
@@ -100,8 +118,6 @@ typedef enum {
 
 
 typedef struct{
- // STRCODE cupName[REGULATION_CUPNAME_SIZE + EOM_SIZE]; ///< カップ名  26
- // STRCODE ruleName[REGULATION_RULENAME_SIZE + EOM_SIZE];  ///< ルール名  52
   u8 cupNo;  ///< 大会カップ番号
   u8 ruleNo; ///< 大会ルール番号
   u8 NUM_LO; ///<    #参加数下限
@@ -126,6 +142,29 @@ typedef struct{
   u8 BATTLE_TYPE;    ///< バトルタイプ  230
 } REGULATION;
 
+
+//選手証
+typedef struct {
+  REGULATION regulation_buff;
+  STRCODE cupname[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE];  //大会名（72文字＋EOM）
+  u32 ver;//カセットバージョン：
+  short no;//大会No.
+  char code;//国コード：
+  char start_year;//開始年：00-99
+  char start_month;//開始月：01-12
+  char start_day;//開始日：01-31
+  char end_year;//終了年：00-99
+  char end_month;//終了月：01-12
+  char end_day;//終了日：01-31
+  char status;  //大会状態：０未開催／１開催中／２終了
+  u16 crc;  //整合性検査
+ // short rating;//大会用レーティング
+//  short rd;//大会用RD
+} REGULATION_CARDDATA;
+
+
+
+
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
@@ -141,15 +180,12 @@ extern int Regulation_Cmp(const REGULATION* pCmp1,const REGULATION* pCmp2);
 //	REGULATION操作のための関数
 //----------------------------------------------------------
 extern void Regulation_Init(REGULATION * my);
-extern void RegulationData_Init(REGULATION_DATA * my);
 
 //カップ名
-//extern void Regulation_SetCupName(REGULATION * pReg, const STRBUF* pCupName);
 extern void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName);
 extern STRBUF* Regulation_CreateCupName(const REGULATION* pReg, HEAPID heapID);
 
 //ルール名
-//extern void Regulation_SetRuleName(REGULATION * pReg, const STRBUF* pRuleName);
 extern void Regulation_GetRuleName(const REGULATION* pReg,STRBUF* pReturnRuleName);
 extern STRBUF* Regulation_CreateRuleName(const REGULATION* pReg, HEAPID heapID);
 
@@ -158,11 +194,28 @@ extern void Regulation_SetParam(REGULATION * pReg, REGULATION_PARAM_TYPE type, i
 
 extern BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type, int no);
 
+
+//----------------------------------------------------------
+//	REGULATION_CARDDATA操作のための関数 デジタル選手証の事
+//----------------------------------------------------------
+extern void RegulationData_Init(REGULATION_CARDDATA * my);
+
+//カップ名
+extern void Regulation_GetCardCupName(const REGULATION_CARDDATA* pReg,STRBUF* pReturnCupName);
+extern STRBUF* Regulation_CreateCardCupName(const REGULATION_CARDDATA* pReg, HEAPID heapID);
+
+extern int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TYPE type);
+extern void Regulation_SetCardParam(REGULATION_CARDDATA * pReg, REGULATION_CARD_PARAM_TYPE type, int param);
+
+
+
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 extern REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave,int regNo);
 extern void SaveData_SetRegulation(SAVE_CONTROL_WORK* pSave, const REGULATION* pReg, const int regNo);
+
+extern REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pSave);
 
 
 

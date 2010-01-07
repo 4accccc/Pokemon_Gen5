@@ -128,6 +128,7 @@ SUBDIRS	=	wmi \
 			demo3d \
 			fld_trade \
 			intro \
+			regulation_card \
 			comm_tvt \
 			guru2 \
 			beacon_status \

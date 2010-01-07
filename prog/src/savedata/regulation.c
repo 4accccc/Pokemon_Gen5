@@ -23,24 +23,6 @@
 
 #define HEAPID_SAVE_TEMP        (GFL_HEAPID_APP)
 
-//選手証
-struct _REGULATION_DATA {
-  REGULATION regulation_buff;
-  STRCODE cupname[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + 1];  //大会名（72文字＋EOM）
-  short no;//大会No.
-  char code;//国コード：
-  char ver;//カセットバージョン：
-  char start_year;//開始年：00-99
-  char start_month;//開始月：01-12
-  char start_day;//開始日：01-31
-  char end_year;//終了年：00-99
-  char end_month;//終了月：01-12
-  char end_day;//終了日：01-31
-  char status;  //大会状態：０未開催／１開催中／２終了
-  short rating;//大会用レーティング
-  short rd;//大会用RD
-};
-
 
 //============================================================================================
 //============================================================================================
@@ -69,7 +51,7 @@ int Regulation_GetWorkSize(void)
 //----------------------------------------------------------
 int RegulationData_GetWorkSize(void)
 {
-  return sizeof(REGULATION_DATA);
+  return sizeof(REGULATION_CARDDATA);
 }
 
 //----------------------------------------------------------
@@ -133,13 +115,13 @@ void Regulation_Init(REGULATION* pReg)
 
 //----------------------------------------------------------
 /**
- * @brief	バトルレギュレーションデータの初期化
+ * @brief	デジタル選手証レギュレーションデータの初期化
  * @param	pReg		REGULATIONワークへのポインタ
  */
 //----------------------------------------------------------
-void RegulationData_Init(REGULATION_DATA* pRegData)
+void RegulationData_Init(REGULATION_CARDDATA* pRegData)
 {
-  GFL_STD_MemClear(pRegData, sizeof(REGULATION_DATA));
+  GFL_STD_MemClear(pRegData, sizeof(REGULATION_CARDDATA));
 }
 
 //----------------------------------------------------------
@@ -484,6 +466,128 @@ BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type
   return FALSE;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	カップ名取得
+ * @param	pReg		    REGULATION_CARDDATAワークポインタ
+ * @param	pReturnCupName	カップ名を入れるSTRBUFポインタ
+ * @return	none
+ */
+//----------------------------------------------------------
+
+void Regulation_GetCardCupName(const REGULATION_CARDDATA* pReg,STRBUF* pReturnCupName)
+{
+  GFL_STR_SetStringCodeOrderLength(pReturnCupName, pReg->cupname, (WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE));
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	カップ名前取得（STRBUFを生成）
+ * @param	pReg	REGULATION_CARDDATAワークへのポインタ
+ * @param	heapID	STRBUFを生成するヒープのID
+ * @return	STRBUF	名前を格納したSTRBUFへのポインタ
+ */
+//----------------------------------------------------------
+
+STRBUF* Regulation_CreateCardCupName(const REGULATION_CARDDATA* pReg, HEAPID heapID)
+{
+  STRBUF* tmpBuf = GFL_STR_CreateBuffer((WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE)*GLOBAL_MSGLEN, heapID);
+  GFL_STR_SetStringCode( tmpBuf, pReg->cupname );
+  return tmpBuf;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	デジタル選手証パラメーターを引き出す
+ * @param	pReg	REGULATION_CARDDATAワークポインタ
+ * @param	type	REGULATION_CARD_PARAM_TYPE enum のどれか
+ * @return  パラメータ
+ */
+//----------------------------------------------------------
+int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TYPE type)
+{
+  int ret;
+  
+  switch(type){
+  case REGULATION_CARD_ROMVER:
+    ret = pReg->ver;
+    break;
+  case REGULATION_CARD_CUPNO:
+    ret = pReg->no;
+    break;
+  case REGULATION_CARD_LANGCODE:
+    ret = pReg->code;
+    break;
+  case REGULATION_CARD_START_YEAR:  ///< 開始年：00-99
+    ret = pReg->start_year;
+    break;
+  case REGULATION_CARD_START_MONTH: ///< 開始月：01-12
+    ret = pReg->start_month;
+    break;
+  case REGULATION_CARD_START_DAY:   ///< 開始日：01-31
+    ret = pReg->start_day;
+    break;
+  case REGULATION_CARD_END_YEAR:    ///< 終了年：00-99
+    ret = pReg->end_year;
+    break;
+  case REGULATION_CARD_END_MONTH:   ///< 終了月：01-12
+    ret = pReg->end_month;
+    break;
+  case REGULATION_CARD_END_DAY:     ///< 終了日：01-31
+    ret = pReg->end_day;
+    break;
+  case REGULATION_CARD_STATUS:      ///< 大会状態：０未開催／１開催中／２終了
+    ret = pReg->status;
+    break;
+  }
+  return ret;
+}
+
+
+//----------------------------------------------------------
+/**
+ * @brief	パラメーターを書きこむ
+ * @param	pReg	REGULATION_CARDDATAワークポインタ
+ * @param	type	REGULATION_CARD_PARAM_TYPE enum のどれか
+ * @param	param	書きこむ値
+ * @return  none
+ */
+//----------------------------------------------------------
+void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TYPE type, int param)
+{
+  switch(type){
+  case REGULATION_CARD_ROMVER:
+    pReg->ver = param;
+    break;
+  case REGULATION_CARD_CUPNO:
+    pReg->no = param;
+    break;
+  case REGULATION_CARD_LANGCODE:
+    pReg->code = param;
+    break;
+  case REGULATION_CARD_START_YEAR:  ///< 開始年：00-99
+    pReg->start_year = param;
+    break;
+  case REGULATION_CARD_START_MONTH: ///< 開始月：01-12
+    pReg->start_month = param;
+    break;
+  case REGULATION_CARD_START_DAY:   ///< 開始日：01-31
+    pReg->start_day = param;
+    break;
+  case REGULATION_CARD_END_YEAR:    ///< 終了年：00-99
+    pReg->end_year = param;
+    break;
+  case REGULATION_CARD_END_MONTH:   ///< 終了月：01-12
+    pReg->end_month = param;
+    break;
+  case REGULATION_CARD_END_DAY:     ///< 終了日：01-31
+    pReg->end_day = param;
+    break;
+  case REGULATION_CARD_STATUS:      ///< 大会状態：０未開催／１開催中／２終了
+    pReg->status = param;
+    break;
+  }
+}
 
 //----------------------------------------------------------
 /**
@@ -495,7 +599,7 @@ BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type
 //----------------------------------------------------------
 REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave, int regNo)
 {
-  REGULATION_DATA* pRegData = NULL;
+  REGULATION_CARDDATA* pRegData = NULL;
 
   GF_ASSERT(regNo < REGULATION_MAX_NUM);
   if(regNo < REGULATION_MAX_NUM){
@@ -515,12 +619,25 @@ REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave, int regNo)
 //----------------------------------------------------------
 void SaveData_SetRegulation(SAVE_CONTROL_WORK* pSave, const REGULATION* pReg, const int regNo)
 {
-  REGULATION_DATA* pRegData = NULL;
+  REGULATION_CARDDATA* pRegData = NULL;
 
   pRegData = SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
   GF_ASSERT(regNo < REGULATION_MAX_NUM);
   if(regNo < REGULATION_MAX_NUM){
     Regulation_Copy(pReg, &pRegData->regulation_buff);
   }
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	レギュレーションデータへのポインタ取得
+ * @param	pSave    	セーブデータ保持ワークへのポインタ
+ * @param	何本目のレギュレーションデータか
+ * @return	REGULATION	ワークへのポインタ  無効データの場合NULL
+ */
+//----------------------------------------------------------
+REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pSave)
+{
+  return SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
 }
 

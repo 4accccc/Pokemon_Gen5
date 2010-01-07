@@ -81,7 +81,11 @@ typedef struct tag_EVENT_DATA
 static void _changeState(PDWACC_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc* state, int line);
 
+#if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
+#else
+#define _NET_DEBUG (0)
+#endif
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(state)  _changeStateDebug(pWork ,state, __LINE__)

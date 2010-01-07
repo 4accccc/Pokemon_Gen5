@@ -45,7 +45,11 @@
 #define _PALETTE_B(pal)  ((pal & 0x7c00) >> 10)
 
 
-#define _NET_DEBUG (1)  //デバッグ時は１
+#if DEBUG_ONLY_FOR_ohno
+#define _NET_DEBUG (1)
+#else
+#define _NET_DEBUG (0)
+#endif
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
 // サウンドが出来るまでの仮想

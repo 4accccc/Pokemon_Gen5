@@ -45,10 +45,10 @@
 #include "gtsnego_local.h"
 
 
-#if PM_DEBUG
-#define _NET_DEBUG (1)  //デバッグ時は１
+#if DEBUG_ONLY_FOR_ohno
+#define _NET_DEBUG (1)
 #else
-#define _NET_DEBUG (0)  //デバッグ時は１
+#define _NET_DEBUG (0)
 #endif
 
 #define _NO2   (2)
