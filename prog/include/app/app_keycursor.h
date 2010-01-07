@@ -3,7 +3,7 @@
  *
  *	@file		app_keycursor.h
  *	@brief  メッセージ、キーカーソル（メッセージ送りアイコン）
- *	@author	hosaka genya
+ *	@author	hosaka genya(kagayaさんのソースを参考に共通化)
  *	@data		2010.01.05
  *
  */
