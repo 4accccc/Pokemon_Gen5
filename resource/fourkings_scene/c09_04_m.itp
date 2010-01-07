@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-18T17:56:13" source="m_siten04_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-07T16:05:51" source="m_siten04_00_00.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -18,30 +18,30 @@
 />
 
 <tex_pattern_list_data image_size="12" palette_size="12">
-	<image_name index="0" name="hero.1"/>
-	<image_name index="1" name="hero.10"/>
-	<image_name index="2" name="hero.11"/>
-	<image_name index="3" name="hero.12"/>
-	<image_name index="4" name="hero.2"/>
-	<image_name index="5" name="hero.3"/>
-	<image_name index="6" name="hero.4"/>
-	<image_name index="7" name="hero.5"/>
-	<image_name index="8" name="hero.6"/>
-	<image_name index="9" name="hero.7"/>
-	<image_name index="10" name="hero.8"/>
-	<image_name index="11" name="hero.9"/>
-	<palette_name index="0" name="hero.10_pl"/>
-	<palette_name index="1" name="hero.11_pl"/>
-	<palette_name index="2" name="hero.12_pl"/>
-	<palette_name index="3" name="hero.1_pl"/>
-	<palette_name index="4" name="hero.2_pl"/>
-	<palette_name index="5" name="hero.3_pl"/>
-	<palette_name index="6" name="hero.4_pl"/>
-	<palette_name index="7" name="hero.5_pl"/>
-	<palette_name index="8" name="hero.6_pl"/>
-	<palette_name index="9" name="hero.7_pl"/>
-	<palette_name index="10" name="hero.8_pl"/>
-	<palette_name index="11" name="hero.9_pl"/>
+	<image_name index="0" name="hero04.1"/>
+	<image_name index="1" name="hero04.10"/>
+	<image_name index="2" name="hero04.11"/>
+	<image_name index="3" name="hero04.12"/>
+	<image_name index="4" name="hero04.2"/>
+	<image_name index="5" name="hero04.3"/>
+	<image_name index="6" name="hero04.4"/>
+	<image_name index="7" name="hero04.5"/>
+	<image_name index="8" name="hero04.6"/>
+	<image_name index="9" name="hero04.7"/>
+	<image_name index="10" name="hero04.8"/>
+	<image_name index="11" name="hero04.9"/>
+	<palette_name index="0" name="hero04.10_pl"/>
+	<palette_name index="1" name="hero04.11_pl"/>
+	<palette_name index="2" name="hero04.12_pl"/>
+	<palette_name index="3" name="hero04.1_pl"/>
+	<palette_name index="4" name="hero04.2_pl"/>
+	<palette_name index="5" name="hero04.3_pl"/>
+	<palette_name index="6" name="hero04.4_pl"/>
+	<palette_name index="7" name="hero04.5_pl"/>
+	<palette_name index="8" name="hero04.6_pl"/>
+	<palette_name index="9" name="hero04.7_pl"/>
+	<palette_name index="10" name="hero04.8_pl"/>
+	<palette_name index="11" name="hero04.9_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>

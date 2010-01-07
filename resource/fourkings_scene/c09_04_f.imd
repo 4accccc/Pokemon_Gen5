@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-18T17:56:13" source="m_siten04_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-07T16:05:51" source="m_siten04_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-12-18T17:56:13" source="m_siten04_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-07T16:05:51" source="m_siten04_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,12 +30,12 @@
 <box_test pos_scale="4" xyz="-1.187500 0.721436 4.421631" whd="2.000000 2.000000 0.000000"/>
 
 <tex_image_array size="12">
-	<tex_image index="0" name="hero.1"
+	<tex_image index="0" name="hero04.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.1_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.1.tga"
+		palette_name="hero04.1_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.1.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -72,12 +72,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="hero.10"
+	<tex_image index="1" name="hero04.10"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.10_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.10.tga"
+		palette_name="hero04.10_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.10.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -114,12 +114,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="hero.11"
+	<tex_image index="2" name="hero04.11"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.11_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.11.tga"
+		palette_name="hero04.11_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.11.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -156,12 +156,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="hero.12"
+	<tex_image index="3" name="hero04.12"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.12_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.12.tga"
+		palette_name="hero04.12_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.12.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -198,12 +198,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="hero.2"
+	<tex_image index="4" name="hero04.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.2_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.2.tga"
+		palette_name="hero04.2_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -240,12 +240,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="hero.3"
+	<tex_image index="5" name="hero04.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.3_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.3.tga"
+		palette_name="hero04.3_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.3.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -282,12 +282,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="hero.4"
+	<tex_image index="6" name="hero04.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.4_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.4.tga"
+		palette_name="hero04.4_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.4.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -324,12 +324,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="hero.5"
+	<tex_image index="7" name="hero04.5"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.5_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.5.tga"
+		palette_name="hero04.5_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.5.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -366,12 +366,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="hero.6"
+	<tex_image index="8" name="hero04.6"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.6_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.6.tga"
+		palette_name="hero04.6_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.6.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -408,12 +408,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="hero.7"
+	<tex_image index="9" name="hero04.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.7_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.7.tga"
+		palette_name="hero04.7_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.7.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -450,12 +450,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="hero.8"
+	<tex_image index="10" name="hero04.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.8_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.8.tga"
+		palette_name="hero04.8_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.8.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -492,12 +492,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="hero.9"
+	<tex_image index="11" name="hero04.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.9_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero.9.tga"
+		palette_name="hero04.9_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.9.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -537,51 +537,51 @@
 </tex_image_array>
 
 <tex_palette_array size="12">
-	<tex_palette index="0" name="hero.10_pl" color_size="16">
+	<tex_palette index="0" name="hero04.10_pl" color_size="16">
 		2e47 416b 28e7 1ca5 4d47 6af5 61e8 728e
 		7779 192d 3a7a 5f5f 35bd 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="1" name="hero.11_pl" color_size="16">
+	<tex_palette index="1" name="hero04.11_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="2" name="hero.12_pl" color_size="16">
+	<tex_palette index="2" name="hero04.12_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="3" name="hero.1_pl" color_size="16">
+	<tex_palette index="3" name="hero04.1_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="4" name="hero.2_pl" color_size="16">
+	<tex_palette index="4" name="hero04.2_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="5" name="hero.3_pl" color_size="16">
+	<tex_palette index="5" name="hero04.3_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="6" name="hero.4_pl" color_size="16">
+	<tex_palette index="6" name="hero04.4_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="7" name="hero.5_pl" color_size="16">
+	<tex_palette index="7" name="hero04.5_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="8" name="hero.6_pl" color_size="16">
+	<tex_palette index="8" name="hero04.6_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="9" name="hero.7_pl" color_size="16">
+	<tex_palette index="9" name="hero04.7_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="10" name="hero.8_pl" color_size="16">
+	<tex_palette index="10" name="hero04.8_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="11" name="hero.9_pl" color_size="16">
+	<tex_palette index="11" name="hero04.9_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
@@ -829,9 +829,9 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="on"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.002197 0.002197 0.000977"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -851,7 +851,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.002197 0.002197 0.000977"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -869,9 +869,9 @@
 		brother_prev="2"
 		draw_mtx="on"
 		billboard="on"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.002197 0.002197 0.000977"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -889,7 +889,7 @@
 		brother_prev="3"
 		draw_mtx="on"
 		billboard="on"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
