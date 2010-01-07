@@ -126,6 +126,16 @@ extern void GFL_NET_DWC_StopVChat(void);
 //==============================================================================
 extern void GFL_NET_StateSetWifiError(int code, int type, int ret);
 
+//==============================================================================
+/**
+ * WifiErrorのエラーをクリアする。軽度のエラーを解消するためのもの。
+ * 重度なエラーは切断やシャットダウン等をおこない解消すること！
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_StateClearWifiError( void );
+
 typedef struct{
   int errorCode;
   int errorType;
