@@ -10,12 +10,14 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //ライブラリ
 #include <gflib.h>
+
 //システム
 #include "system/gfl_use.h"
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
 #include "system/main.h"    //HEAPID
 #include "print/gf_font.h"  //GFL_FONT
+#include "app/app_keycursor.h"
 
 //文字表示
 #include "print/printsys.h"
@@ -206,6 +208,7 @@ struct _MYSTERY_TEXT_WORK
   PRINT_QUE         *p_que;
   u32               print_update;
   BOOL              is_end_print;
+  APP_KEYCURSOR_WORK* p_keycursor;
 } ;
 
 //-------------------------------------
@@ -239,6 +242,8 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, G
   p_wk->p_font    = p_font;
   p_wk->p_que     = p_que;
   p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
+
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( 0, heapID );
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -281,6 +286,8 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p
   p_wk->p_que     = p_que;
   p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
 
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, heapID );
+
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
@@ -320,6 +327,8 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
+  APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -348,6 +357,8 @@ void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
     { 
       PRINTSTREAM_STATE state;
       state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+
+      APP_KEYCURSOR_Proc( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
 
       switch( state )
       { 
@@ -378,6 +389,7 @@ void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
   }
 
   GFL_TCBL_Main( p_wk->p_tcbl );
+
 }
 //----------------------------------------------------------------------------
 /*
