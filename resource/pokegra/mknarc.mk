@@ -35,6 +35,7 @@ SUBDIRS	=
 
 #NARCに必要なscrファイル名
 SCRFILE = pokegra_wb.scr
+OTHERFILE = otherform_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./conv/
@@ -60,15 +61,14 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	ncg ncgc nce nmc ncl $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	nmc ncg ncgc nce ncl $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build:	$(TARGETDIR)/$(NARCNAME)
 endif
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME) $(NAIXNAME) pokemon_viewer_def.h
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME) $(NAIXNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
-	$(COPY) pokemon_viewer_def.h $(PROJECT_PROGDIR)src/test/soga/
 
 sub_dir:
 	@$(MAKE_SUBDIR)
@@ -96,8 +96,8 @@ ncl: $(notdir $(NCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
 	perl $(SCRIPT_DIR)ncl.pl $< $(CNV_DIR)
 
-$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE)
-	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE)
+$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE) $(OTHERFILE)
+	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE)
 	$(NAIXCUT) $(NAIXNAME)
 
 endif
@@ -115,5 +115,3 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 endif
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
-
-

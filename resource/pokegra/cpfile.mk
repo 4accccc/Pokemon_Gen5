@@ -38,8 +38,13 @@ SCRIPT_DIR = ../../tools/pokegra/
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-do-build:
+do-build: normal other
+
+normal:
 	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)pokegra_wb.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
+
+other:
+	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
 
 endif
 
