@@ -1822,7 +1822,7 @@ static void handler_Yuwaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static const BtlEventHandlerTable*  ADD_TriAttack( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK_TYPE, handler_TriAttack },    // 追加効果による状態異常チェックハンドラ
+    { BTL_EVENT_ADD_SICK, handler_TriAttack },    // 追加効果による状態異常チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
