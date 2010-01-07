@@ -562,8 +562,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_fk_sound_anime.c \
         field/field_bbd_color.c \
         field/enceff.c \
+        field/enceff_prg.c \
         field/enceff1.c \
-        field/enceff2.c
+        field/enceff2.c \
+        field/enceff3.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

@@ -29,6 +29,7 @@ typedef struct {
 static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CreateEff1, ENCEFF_DrawEff1},
   {ENCEFF_CreateEff2, ENCEFF_DrawEff2},
+  {ENCEFF_CreateEff3, ENCEFF_DrawEff3},
 };
 
 //--------------------------------------------------------------

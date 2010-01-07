@@ -5,10 +5,8 @@
  * @author saito
  */
 //======================================================================
-#include <gflib.h>
-
 #include "enceff.h"
-
+#include "enceff_prg.h"
 #include "fieldmap.h"
 
 #include "system/main.h"
@@ -34,28 +32,16 @@
 //--------------------------------------------------------------
 typedef struct
 {
-  int Count;
-  GXVRamTex						vTex;
-	BOOL								vTexRecover;
-	DRAW3DMODE					dMode;
-  BOOL CapEndFlg;
-
   VecFx16 Vtx[VTX_W_NUM*VTX_H_NUM];
   fx16 TmpZ[VTX_W_NUM*VTX_H_NUM];
-
-  GFL_G3D_CAMERA *g3Dcamera;
-  NNSGfdTexKey	texKey;
   int WaveWait;
   int WaveCount;
 }ENCEFF2_WORK;
 
-static void DrawMesh(ENCEFF_CNT_PTR ptr);
-static GMEVENT_RESULT EffEvt( GMEVENT* event, int* seq, void* work );
-
-static void ReqCapture(ENCEFF2_WORK *evt_work);
-static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
-static void SetVramKey(ENCEFF2_WORK *evt_work);
-static BOOL WaveMain(ENCEFF2_WORK *evt_work);
+static void DrawMesh(void *wk);
+static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work );
+static BOOL WaveMain(void *work);
+static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -70,45 +56,41 @@ static BOOL WaveMain(ENCEFF2_WORK *evt_work);
 GMEVENT *ENCEFF_CreateEff2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 {
   GMEVENT * event;
+  VecFx32 pos = {0, 0, FX32_ONE*(33)};
+  //オーバーレイロード
+  ;
+  event = ENCEFF_PRG_Create( gsys, &pos, CreateEffMainEvt, DrawMesh );
+  
+  return event;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * イベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
+{
+  GMEVENT * event;
   ENCEFF2_WORK *work;
   int size;
   int i;
   size = sizeof(ENCEFF2_WORK);
   //イベント作成
   {
-    event = GMEVENT_Create( gsys, NULL, EffEvt, size );
+    event = GMEVENT_Create( gsys, NULL, EffMainEvt, size );
 
     work = GMEVENT_GetEventWork(event);
     MI_CpuClear8( work, size );
-    {
-      VecFx32 pos = {0, 0, FX32_ONE*(256)};
-      VecFx32 target = {0,0,0};
-      //カメラ作成
-      work->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
-          &pos, &target, HEAPID_FLD3DCUTIN );   //カットインのヒープを使用
-    }
 
     //波の回数セット
     work->WaveCount = WAVE_COUNT;
     work->WaveWait = 0;
 
-
-/**
-    //パネル初期化
-    for (i=0;i<POLY_W_NUM*POLY_H_NUM;i++)
-    {
-      int x,y;
-      PANEL_WK* panel = &work->Panel[i];
-      x = i%POLY_W_NUM;
-      y = i/POLY_W_NUM;
-      panel->Pos.x = (x * 8 * FX32_ONE)-DISP_OFSET_W;
-      panel->Pos.y = -(y * 8 * FX32_ONE)+DISP_OFSET_H;
-      panel->Pos.z = 0;
-      panel->MoveOnFlg = FALSE;
-      panel->MoveEndFlg = FALSE;
-      panel->MoveFunc = _MoveFunc; //@todo
-    }
-*/
     //頂点初期化
     for (i=0;i<VTX_H_NUM*VTX_W_NUM;i++)
     {
@@ -133,7 +115,7 @@ GMEVENT *ENCEFF_CreateEff2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * @return	GMEVENT_RESULT    イベント結果
  */
 //--------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EffEvt( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
 {
   ENCEFF2_WORK *evt_work = work;
   GAMESYS_WORK * gsys;
@@ -144,70 +126,6 @@ static GMEVENT_RESULT EffEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
-    (*seq)++;
-  case 1:
-    if( GFL_FADE_CheckFade() == FALSE ){
-      GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
-      (*seq)++;
-    }
-    break;
-  case 2:
-    if( GFL_FADE_CheckFade() == FALSE ){
-      evt_work->Count++;
-      
-      if( evt_work->Count < 3 ){
-        GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
-        (*seq) = 1;
-      }else{
-				(*seq)++;
-      }
-    }
-    break;
-  case 3:
-    {
-      //キャプチャリクエスト
-      ReqCapture(evt_work);
-      (*seq)++;
-    }
-    break;
-  case 4:
-    //キャプチャ終了待ち
-    if (evt_work->CapEndFlg){
-      //キャプチャ終わったら、プライオリティ変更と表示変更
-      GFL_BG_SetPriority( 0, 0 );
-      GFL_BG_SetPriority( 2, 3 );
-
-      evt_work->dMode = FIELDMAP_GetDraw3DMode(fieldmap);
-
-      // VRAMバンクセットアップ(VRAM_Dをテクスチャとして使用)
-      evt_work->vTex = GX_GetBankForTex(); 
-      evt_work->vTexRecover = FALSE;
-      if(!(evt_work->vTex & GX_VRAM_D)){
-        evt_work->vTex |= GX_VRAM_D;
-        evt_work->vTexRecover = TRUE;
-      }
-      GX_DisableBankForLCDC();
-      GX_SetBankForTex(evt_work->vTex);
-      SetVramKey(evt_work);
-      
-      (*seq)++;
-    }
-    break;
-  case 5:
-    //セットアップ終了したので3Ｄ面もオン
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-    
-    //フィールド表示モード切替
-    FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_ENCEFF);
-
-    (*seq)++;
-    break;
-  case 6:
     {
       BOOL rc;
       rc = WaveMain(evt_work);
@@ -220,96 +138,18 @@ static GMEVENT_RESULT EffEvt( GMEVENT* event, int* seq, void* work )
       }
     }
     break;
-  case 7:
+  case 1:
     //ウェイト
     if ( evt_work->WaveWait != 0)
     {
       evt_work->WaveWait--;
       break;
     }
-
     //ホワイトアウト待ち
     if ( GFL_FADE_CheckFade() != FALSE ) break;
-
-    // VRAMバンク復帰
-		if(evt_work->vTexRecover == TRUE){
-			evt_work->vTex &= (GX_VRAM_D^0xffffffff);
-			GX_SetBankForTex(evt_work->vTex); 
-		}
-
-		FIELDMAP_SetDraw3DMode(fieldmap, evt_work->dMode);
-    //カメラ解放
-    GFL_G3D_CAMERA_Delete(evt_work->g3Dcamera);
     return( GMEVENT_RES_FINISH );
   }
-
   return GMEVENT_RES_CONTINUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	キャプチャリクエスト
- *
- *	@param	evt_work  ワークポインタ
- *
- *	@return none
- */
-//-----------------------------------------------------------------------------
-static void ReqCapture(ENCEFF2_WORK *evt_work)
-{
-  evt_work->CapEndFlg = FALSE;
-  GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-  GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, &evt_work->CapEndFlg, 0 );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	Vブランクタスク
- *
- *	@param	GFL_TCB *p_tcb
- *	@param	*p_work 
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
-{
-  BOOL *cap_end_flg = p_work;
-  
-	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
-                      GX_CAPTURE_MODE_A,			   // Capture mode
-                      GX_CAPTURE_SRCA_3D,						 // Blend src A
-                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
-                      GX_CAPTURE_DEST_VRAM_D_0x00000,   // Output VRAM
-                      16,             // Blend parameter for src A
-                      0);            // Blend parameter for src B
-
-  GFL_TCB_DeleteTask( p_tcb );
-  if (cap_end_flg != NULL){
-    *cap_end_flg = TRUE;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	VＲＡＭキーセット
- *
- *	@param	evt_work    イベントワークポインタ
- *
- *	@return none
- */
-//-----------------------------------------------------------------------------
-static void SetVramKey(ENCEFF2_WORK *evt_work)
-{
-  GXVRamTex			vTex = GX_GetBankForTex();
-  u32 VRAMoffs = 0x00000;
-  u32						texSize	= 256*256*2;
-
-  if(vTex |= GX_VRAM_C){ VRAMoffs += 0x20000; }
-  if(vTex |= GX_VRAM_B){ VRAMoffs += 0x20000; }
-  if(vTex |= GX_VRAM_A){ VRAMoffs += 0x20000; }
-
-  evt_work->texKey = NNS_GfdMakeTexKey(VRAMoffs, texSize, FALSE);
 }
 
 //----------------------------------------------------------------------------
@@ -322,12 +162,14 @@ static void SetVramKey(ENCEFF2_WORK *evt_work)
  *	@return BOOL TRUEで終了
  */
 //-----------------------------------------------------------------------------
-static BOOL WaveMain(ENCEFF2_WORK *evt_work)
+static BOOL WaveMain(void *work)
 {
+  ENCEFF2_WORK *evt_work;
   int i,max;
   fx16 vtx[VTX_W_NUM*VTX_H_NUM];
 
   max = VTX_W_NUM*VTX_H_NUM;
+  evt_work = (ENCEFF2_WORK *)work;
 
   //現在の頂点情報を保存
   for(i=0;i<max;i++)
@@ -425,12 +267,15 @@ static BOOL WaveMain(ENCEFF2_WORK *evt_work)
     }
   }
 
-  if (evt_work->WaveCount<=0) return TRUE;
+  if (evt_work->WaveCount<=0)
+  {
+    evt_work->WaveWait = WAVE_AFTER_WAIT;
+    return TRUE;
+  }
 
   return FALSE;
 
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -443,7 +288,11 @@ static BOOL WaveMain(ENCEFF2_WORK *evt_work)
 //--------------------------------------------------------------------------------------------
 void ENCEFF_DrawEff2( ENCEFF_CNT_PTR ptr )
 {
-  DrawMesh(ptr);
+  void *wk = ENCEFF_GetWork(ptr);
+  ENCEFF_PRG_PTR prg_ptr = (ENCEFF_PRG_PTR)wk;
+  ENCEFF_PRG_Draw(prg_ptr);
+
+//  DrawMesh(ptr);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -455,39 +304,13 @@ void ENCEFF_DrawEff2( ENCEFF_CNT_PTR ptr )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void DrawMesh(ENCEFF_CNT_PTR ptr)
+static void DrawMesh(void *wk)
 {
   int i,j;
-  void *wk = ENCEFF_GetWork(ptr);
-
+  
   ENCEFF2_WORK *work = (ENCEFF2_WORK*)wk;
 
-  {
-    VecFx32 camPos;
-    GFL_G3D_CAMERA_GetPos( work->g3Dcamera, &camPos );
-    camPos.z = 33*FX32_ONE;
-    GFL_G3D_CAMERA_SetPos( work->g3Dcamera, &camPos );
-  }
-
-  G3X_Reset();
-  {
-    VecFx32		camPos, camUp, target, vecNtmp;
-		MtxFx43		mtxCamera, mtxCameraInv;
-
-		GFL_G3D_CAMERA_GetPos( work->g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( work->g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( work->g3Dcamera, &target );
-
-		G3_LookAt( &camPos, &camUp, &target, &mtxCamera );	//mtxCameraには行列計算結果が返る
-  }
-
   G3_PushMtx();
-
-  G3_TexImageParam( GX_TEXFMT_DIRECT, GX_TEXGEN_TEXCOORD,
-                    GX_TEXSIZE_S256, GX_TEXSIZE_T256,
-                    GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-                    GX_TEXPLTTCOLOR0_USE, NNS_GfdGetTexKeyAddr(work->texKey) );
-
   G3_MaterialColorDiffAmb(
 							GX_RGB(31, 31, 31),
 							GX_RGB(31, 31, 31),

@@ -29,3 +29,5 @@ extern GMEVENT *ENCEFF_CreateEff1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_DrawEff1(ENCEFF_CNT_PTR ptr);
 extern GMEVENT *ENCEFF_CreateEff2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_DrawEff2(ENCEFF_CNT_PTR ptr);
+extern GMEVENT *ENCEFF_CreateEff3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
+extern void ENCEFF_DrawEff3(ENCEFF_CNT_PTR ptr);
