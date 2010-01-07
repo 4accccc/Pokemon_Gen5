@@ -448,45 +448,6 @@ end
   	"SHINKA_PLACE_ICE",
   ]
 
-  rank_table ={ 
-    "A"=>0,
-    "B"=>1,
-    "C"=>2,
-    "D"=>3,
-    "E"=>4,
-    "F"=>5,
-    "G"=>6,
-    "H"=>7,
-    "I"=>8,
-    "a"=>0,
-    "b"=>1,
-    "c"=>2,
-    "d"=>3,
-    "e"=>4,
-    "f"=>5,
-    "g"=>6,
-    "h"=>7,
-    "i"=>8,
-    "‚`"=>0,
-    "‚a"=>1,
-    "‚b"=>2,
-    "‚c"=>3,
-    "‚d"=>4,
-    "‚e"=>5,
-    "‚f"=>6,
-    "‚g"=>7,
-    "‚h"=>8,
-    "‚"=>0,
-    "‚‚"=>1,
-    "‚ƒ"=>2,
-    "‚„"=>3,
-    "‚…"=>4,
-    "‚†"=>5,
-    "‚‡"=>6,
-    "‚ˆ"=>7,
-    "‚‰"=>8,
-  }
-
 	if ARGV.size < 2
 		print "error: ruby personal_conv.rb read_file gmm_file\n"
 		print "read_file:“Ç‚Ýž‚Þƒtƒ@ƒCƒ‹\n"
@@ -915,7 +876,8 @@ end
       type2   = type_table[ split_data[ PARA::TYPE2 ] ]
 
       get     = split_data[ PARA::GET ].to_i
-      rank    = rank_table[ split_data[ PARA::RANK ] ]
+      #@todo ¡Œã‚ÍƒTƒEƒ“ƒh—p‚Ì’l‚É‚È‚é‚Í‚¸
+      rank    = split_data[ PARA::RANK ].to_i
       exp_value = ( split_data[ PARA::HP_EXP ].to_i     <<  0 ) |
                   ( split_data[ PARA::POW_EXP ].to_i    <<  2 ) |
                   ( split_data[ PARA::DEF_EXP ].to_i    <<  4 ) |
@@ -985,11 +947,6 @@ end
       end
       if split_data[ PARA::PLTT_ONLY ] == "œ"
         col_rev |= 0x80
-      end
-
-      if rank_table[ split_data[ PARA::RANK ] ] == nil
-        printf( "’è‹`‚³‚ê‚Ä‚¢‚È‚¢ƒ‰ƒ“ƒN‚Å‚·:%s\n", split_data[ PARA::RANK ] )
-        exit( 1 )
       end
 
       exp = split_data[ PARA::EXP ].to_i
