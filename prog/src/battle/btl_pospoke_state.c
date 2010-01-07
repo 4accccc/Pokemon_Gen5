@@ -249,7 +249,7 @@ u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* p
  * @param   wk
  * @param   pokeID
  *
- * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_MAX
+ * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_NULL
  */
 //=============================================================================================
 BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )

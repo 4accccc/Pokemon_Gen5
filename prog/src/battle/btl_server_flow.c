@@ -2212,9 +2212,10 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 
   {
     u8 targetPokeID = BPP_GetID( target );
-    if( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, targetPokeID) )
+    BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, targetPokeID );
+    if( targetPos != BTL_POS_NULL )
     {
-      BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, targetPokeID );
+      OS_TPrintf("PokeID=%d, Pos=%d, UseItemAct ON\n", targetPokeID, targetPos);
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
     }
   }
@@ -2546,7 +2547,7 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  if( (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_MAX)
+  if( (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_NULL )
   &&  !BPP_IsDead(bpp)
   ){
     if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
@@ -7674,7 +7675,7 @@ static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value, 
 
   // ê‚É‚¢‚È‚¢ƒ|ƒP‚à‰ñ•œ‚³‚¹‚é‚±‚Æ‚ª‚ ‚é‚½‚ß
   if( fEffectEnable
-  &&  (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_MAX)
+  &&  (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_NULL)
   ){
     SCQUE_PUT_ACT_SimpleHP( wk->que, pokeID );
   }
