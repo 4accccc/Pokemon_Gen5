@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-11-24T17:44:11"/>
+	<create user="iwasawa" host="W00157" date="2010-01-07T13:32:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="171"/>
+		<id position="0" width="227"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -341,188 +341,8 @@
 		<language name="JPN_KANJI" width="256">テスト文章です</language>
 	</row>
 
-	<row id="msg_common_pc_heal_01">
-		<comment>ポケセン回復時（夜　17：00：00～3：59：59）
-・はい／いいえの選択
-　はい　→msg_common_pc_heal_04
-　いいえ→msg_common_pc_heal_06</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-やすませて　あげますか？</language>
-		<language name="JPN_KANJI" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-体力回復を　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-休ませてあげますか？</language>
-	</row>
-
-	<row id="msg_common_pc_heal_02">
-		<comment>ポケセン回復時（朝　4：00：00～9：59：59）
-・はい／いいえの選択
-　はい　→msg_common_pc_heal_04
-　いいえ→msg_common_pc_heal_06</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">おはようございます！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-やすませて　あげますか？</language>
-		<language name="JPN_KANJI" width="256">おはようございます！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-体力回復を　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-休ませてあげますか？</language>
-	</row>
-
-	<row id="msg_common_pc_heal_03">
-		<comment>ポケセン回復時（昼　10：00：00～16：59：59）
-・はい／いいえの選択
-　はい　→msg_common_pc_heal_04
-　いいえ→msg_common_pc_heal_06</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">こんにちは！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-やすませて　あげますか？</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-体力回復を　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを
-休ませてあげますか？</language>
-	</row>
-
-	<row id="msg_common_pc_heal_04">
-		<comment>ポケセン回復時
-・はい選択
-・回復終了すると
-　msg_common_pc_heal_05に</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">それでは
-おあずかり　いたします！</language>
-		<language name="JPN_KANJI" width="256">それでは
-お預かりいたします！</language>
-	</row>
-
-	<row id="msg_common_pc_heal_05">
-		<comment>ポケセン回復時
-・お姉さん、お辞儀アニメ
-　続けてmsg_common_pc_heal_06に</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">おまちどおさま！[BE:01:ページ切り替え（クリア）]
-おあずかり　した　ポケモンは
-みんな　げんきに　なりましたよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おまちどおさま！[BE:01:ページ切り替え（クリア）]
-お預かりした　ポケモンは
-みんな　元気に　なりましたよ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_common_pc_heal_06">
-		<comment>ポケセン回復時</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">またの
-ごりようを　おまち　してます！</language>
-		<language name="JPN_KANJI" width="256">またの
-ご利用を　お待ちしてます！</language>
-	</row>
-
-	<row id="msg_common_pc_heal_07">
-		<comment>ポケセン回復時
-・ゴールドカードで初めて
-　来店したときの歓迎の挨拶
-・表示後、頭上に「！」表示
-　続けてmsg_common_pc_heal_08</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-たいりょく　かいふくを　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おつかれさまです！
-ポケモン　センター　です[BE:01:ページ切り替え（クリア）]
-ここでは　ポケモンの
-体力回復を　します[BE:01:ページ切り替え（クリア）]
-あなたの　ポケモンを……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_common_pc_heal_08">
-		<comment>ポケセン回復時
-・はい／いいえの選択
-　はい　→msg_common_pc_heal_04
-　いいえ→msg_common_pc_heal_06
-0＝主人公名</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">そ　その　カードは！？[BE:01:ページ切り替え（クリア）]
-その　いろ！！
-ほしの　かず！！[BE:01:ページ切り替え（クリア）]
-わたしも　これまでに
-シルバーカードの　トレーナーさんなら[BE:00:ページ切り替え（行送り）]
-なんにんか　みてきましたが[BE:01:ページ切り替え（クリア）]
-それより　すごい
-トレーナーカードを　おもちの　かたは[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]さんが　はじめて　です！[BE:01:ページ切り替え（クリア）]
-さあ　[1:00:トレーナー名:0]さんの
-ポケモンを　やすませて　あげましょう！</language>
-		<language name="JPN_KANJI" width="256">そ　その　カードは！？[BE:01:ページ切り替え（クリア）]
-その色！！
-星の数！！[BE:01:ページ切り替え（クリア）]
-わたしも　これまでに
-シルバーカードの　トレーナーさんなら[BE:00:ページ切り替え（行送り）]
-なんにんか　みてきましたが[BE:01:ページ切り替え（クリア）]
-それより　すごい
-トレーナーカードを　お持ちの　方は[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]さんが　初めてです！[BE:01:ページ切り替え（クリア）]
-さあ　[1:00:トレーナー名:0]さんの
-ポケモンを　休ませてあげましょう！</language>
-	</row>
-
-	<row id="msg_common_pc_heal_09">
-		<comment>ポケセン回復時
-ゴールドカードで２度目以降に
-来店したときの歓迎の挨拶
-
-・はい／いいえの選択
-　はい　→msg_common_pc_heal_04
-　いいえ→msg_common_pc_heal_06</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　おつかれさまです！
-いつもので　よろしい　ですね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　おつかれさまです！
-いつもので　よろしい　ですね！</language>
-	</row>
-
-	<row id="msg_common_pc_heal_10">
-		<comment>♀
-・ポケルス発生時</comment>
-		<attribute name="キャラ指定">ポケセン受付１</attribute>
-		<language name="JPN" width="256">おあずかりした　ポケモンに
-ポケルスが　ついて　いるようです[BE:01:ページ切り替え（クリア）]
-くわしいことは　わかって　いませんが
-ポケルスと　いうのは[BE:00:ページ切り替え（行送り）]
-ポケモンに　くっつく[BE:00:ページ切り替え（行送り）]
-ちいさな　せいめいたい　だそうです[BE:01:ページ切り替え（クリア）]
-これが　ついている　あいだ
-ポケモンが　よく　そだつ　みたいです</language>
-		<language name="JPN_KANJI" width="256">お預かりした　ポケモンに
-ポケルスが　ついて　いるようです[BE:01:ページ切り替え（クリア）]
-詳しいことは　わかって　いませんが
-ポケルスと　いうのは[BE:00:ページ切り替え（行送り）]
-ポケモンに　くっつく[BE:00:ページ切り替え（行送り）]
-小さな　生命体　だそうです[BE:01:ページ切り替え（クリア）]
-これが　ついている　あいだ
-ポケモンが　よく　育つみたいです</language>
-	</row>
-
-	<row id="msg_yen_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_yen_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>未使用</comment>
 		<language name="JPN">[2:05:６桁:2]円</language>
 		<language name="JPN_KANJI">[2:05:６桁:2]円</language>
 	</row>
@@ -678,6 +498,99 @@
 しばらく　おまちください</language>
 		<language name="JPN_KANJI">パレスから　切断します
 しばらく　お待ちください</language>
+	</row>
+
+	<row id="msg_common_gameover_myhome_01">
+		<comment>ゲームオーバー自宅復帰時</comment>
+		<language name="JPN">おかあさん『[1:00:トレーナー名:0]！
+おかえりなさい[BE:01:ページ切り替え（クリア）]
+たいへん　だったわね[BE:01:ページ切り替え（クリア）]
+すこし　やすんで　いったら
+どうかしら……？[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……</language>
+		<language name="JPN_KANJI">おかあさん『[1:00:トレーナー名:0]！
+おかえりなさい[BE:01:ページ切り替え（クリア）]
+たいへん　だったわね[BE:01:ページ切り替え（クリア）]
+すこし　やすんで　いったら
+どうかしら……？[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……</language>
+	</row>
+
+	<row id="msg_common_gameover_myhome_02">
+		<comment>ゲームオーバー自宅復帰時</comment>
+		<language name="JPN">おかあさん『あらあら！
+あなたも　ポケモンも[BE:00:ページ切り替え（行送り）]
+げんき　いっぱいね！[BE:01:ページ切り替え（クリア）]
+そうだ！　さっき
+はかせから　きいたんだけど……[BE:01:ページ切り替え（クリア）]
+ポケモンの　たいりょく
+えっと　ＨＰが　なくなってきたら[BE:01:ページ切り替え（クリア）]
+こまめに　ポケモンセンターで
+かいふく　させるか[BE:01:ページ切り替え（クリア）]
+とおくに　ぼうけん　するときは
+フレンドリィショップで[BE:00:ページ切り替え（行送り）]
+キズぐすりを　かっておくのが[BE:00:ページ切り替え（行送り）]
+きほん　らしいわよ[BE:01:ページ切り替え（クリア）]
+それじゃ　おうえん　しているわ！[BE:01:ページ切り替え（クリア）]
+きを　つけて！
+いってらっしゃい！</language>
+		<language name="JPN_KANJI">おかあさん『あらあら！
+あなたも　ポケモンも　元気いっぱいね！[BE:01:ページ切り替え（クリア）]
+そうだ！　さっき
+博士から　聞いたんだけど……[BE:01:ページ切り替え（クリア）]
+ポケモンの体力
+えっと　ＨＰが　なくなってきたら[BE:01:ページ切り替え（クリア）]
+こまめに　ポケモンセンターで
+回復させるか[BE:01:ページ切り替え（クリア）]
+遠くに　冒険するときは
+フレンドリィショップで[BE:00:ページ切り替え（行送り）]
+キズぐすりを　買っておくのが[BE:00:ページ切り替え（行送り）]
+基本らしいわよ[BE:01:ページ切り替え（クリア）]
+それじゃ　応援しているわ！[BE:01:ページ切り替え（クリア）]
+気をつけて！
+いってらっしゃい！</language>
+	</row>
+
+	<row id="msg_common_gameover_pc_01">
+		<comment>ゲームオーバーポケセン復帰時</comment>
+		<language name="JPN">まずは　ポケモンを
+かいふく　させましょう</language>
+		<language name="JPN_KANJI">まずは　ポケモンを
+回復　させましょう</language>
+	</row>
+
+	<row id="msg_common_gameover_pc_02_01">
+		<comment>ゲームオーバーポケセン復帰時
+　バッジ取得前</comment>
+		<language name="JPN">ポケモンの　たいりょく　ＨＰが
+なくなってきたら[BE:00:ページ切り替え（行送り）]
+こまめに　ここに　きてくださいね[BE:01:ページ切り替え（クリア）]
+すこしでも　とおいところへ
+おでかけに　なるときは[BE:01:ページ切り替え（クリア）]
+フレンドリィショップで
+キズぐすりを　かっておくのが[BE:00:ページ切り替え（行送り）]
+おすすめです[BE:01:ページ切り替え（クリア）]
+それでは　がんばってください！</language>
+		<language name="JPN_KANJI">ポケモンの　体力　ＨＰが
+なくなってきたら[BE:00:ページ切り替え（行送り）]
+こまめに　ここに　来てくださいね[BE:01:ページ切り替え（クリア）]
+少しでも　遠い所へ
+お出掛けに　なるときは[BE:01:ページ切り替え（クリア）]
+フレンドリィショップで
+キズぐすりを　買っておくのが[BE:00:ページ切り替え（行送り）]
+お勧めです[BE:01:ページ切り替え（クリア）]
+それでは　頑張ってください！</language>
+	</row>
+
+	<row id="msg_common_gameover_pc_02_02">
+		<comment>ゲームオーバーポケセン復帰時
+　バッジ取得後</comment>
+		<language name="JPN">みんな　げんきに　なりましたよ！[BE:01:ページ切り替え（クリア）]
+それでは　がんばってください！</language>
+		<language name="JPN_KANJI">みんな　元気に　なりましたよ！[BE:01:ページ切り替え（クリア）]
+それでは　頑張ってください！</language>
 	</row>
 
 	<flowchart-group-list>

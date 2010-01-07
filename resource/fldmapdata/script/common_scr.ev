@@ -34,10 +34,6 @@ EVENT_END
 //  ※pokecen_scr.evに移動しました。
 //====================================================================
 EVENT_START   ev_heal_p01_dummy
-  _TALK_START_SE_PLAY()
-  _BALLOONWIN_TALKOBJ_MSG( msg_common_pc_heal_01 )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //////////////////////////////////////////////////////////////////////
@@ -50,23 +46,62 @@ EVENT_START   ev_gameover_recover_home
 	_MAP_FADE_BLACK_IN_FORCE( )
 	_MAP_FADE_END_CHECK()
 
-  //_EASY_MSG( msg_common_pc_heal_01 )  //仮
-
-  //_BLACK_OUT()
-  //_DISP_FADE_END_CHECK()
-  //_ME_PLAY( SEQ_ME_ASA )
-  //_ME_WAIT()
-  //_BLACK_IN()
-  //_DISP_FADE_END_CHECK()
-
   _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
-
-  //_EASY_MSG( msg_common_pc_heal_02 )  //仮
 EVENT_END
+/*
+	//向き合う
+	_OBJ_ANIME		FLDOBJ_ID_PLAYER,player_recover_myhome_anm
+	_OBJ_ANIME		T20R0201_MAMA,mama_recover_myhome_anm //070419金銀への移行に伴い無効化
+															//090428再び有効
+	_OBJ_ANIME_WAIT	
+
+	_BLACK_IN		SCR_WIPE_DIV,SCR_WIPE_SYNC
+	_WIPE_FADE_END_CHECK
+
+	_PLAYER_NAME	0
+	_TALKMSG	msg_all_dead_11
+
+	_BLACK_OUT		SCR_WIPE_DIV,SCR_WIPE_SYNC
+	_WIPE_FADE_END_CHECK
+
+	_TALK_CLOSE
+	_ME_PLAY		SEQ_ME_ASA
+	_ME_WAIT
+
+	_PC_KAIFUKU
+	_BLACK_IN		SCR_WIPE_DIV,SCR_WIPE_SYNC
+	_WIPE_FADE_END_CHECK
+
+	//図鑑入手しているかでメッセージを分岐
+#if 0		//070515 金銀へ移行したため無効化
+	_IF_FLAGON_CALL		FE_ZUKAN_GET,ev_game_over_recover_myhome_zukan_on
+	_IF_FLAGOFF_CALL	FE_ZUKAN_GET,ev_game_over_recover_myhome_zukan_off
+#endif
+	_TALKMSG		msg_all_dead_12
+
+	_LAST_KEYWAIT
+	_TALK_CLOSE
+
+//--------------------------------------------------------------------
+//主人公　ママ　向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	player_recover_myhome_anm
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	mama_recover_myhome_anm
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+*/
 
 //====================================================================
 //====================================================================
 EVENT_START   ev_gameover_recover_pokecen
+{
+  DEFINE_LOCAL  i_px
+  DEFINE_LOCAL  i_pz
+  DEFINE_LOCAL  i_target_get
+
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
 
@@ -74,9 +109,94 @@ EVENT_START   ev_gameover_recover_pokecen
 	_MAP_FADE_BLACK_IN_FORCE( )
 	_MAP_FADE_END_CHECK()
 
-  _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
-  //_EASY_MSG( msg_common_pc_heal_01 )
+//預けるアニメ
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_POS_GET( i_px, i_pz )
+  $i_pz -= 2  //ポケセンのお姉さんは常に自機位置からZ-2グリッドに居るはず
+  _GET_OBJID( SCWK_TARGET_OBJID, i_target_get, i_px, 0, i_pz )
+
+  _TEMOTI_POKEMON_KAIFUKU()       //手持ちポケモン回復処理
+  IF $i_target_get == TRUE THEN
+    _BALLOONWIN_OBJMSG( msg_common_gameover_pc_01, SCWK_TARGET_OBJID ) //まずはポケモンを回復
+    _CALL sub_pc_kaifuku_anime      //回復アニメ呼び出し(SCWK_TARGET_OBJIDへの代入込み)
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+  //受け取るアニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
+  _OBJ_ANIME_WAIT()
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+
+  //おじぎ
+  IF $i_target_get == TRUE THEN
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_pcwoman_bow )
+    _OBJ_ANIME_WAIT()
+  
+    //メッセージ分岐
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
+    IF $SCWK_ANSWER == FALSE THEN
+      _BALLOONWIN_OBJMSG( msg_common_gameover_pc_02_01, SCWK_TARGET_OBJID )
+    ELSE
+      _BALLOONWIN_OBJMSG( msg_common_gameover_pc_02_02, SCWK_TARGET_OBJID )
+    ENDIF
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+//
+}
 EVENT_END
+
+//主人公預け
+_ANIME_LABEL  anm_hero_azuke
+  _ANIME_DATA AC_HERO_BANZAI,1
+  _ANIME_DATA ACMD_END,0
+
+//主人公受け取り
+_ANIME_LABEL  anm_hero_uketori
+  _ANIME_DATA AC_HERO_BANZAI_UKE,1
+  _ANIME_DATA ACMD_END,0
+
+//おじぎ
+_ANIME_LABEL  anm_pcwoman_bow
+  _ANIME_DATA  AC_PC_BOW,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
+
+
+//====================================================================
+//サブルーチン：回復アニメ
+//====================================================================
+sub_pc_kaifuku_anime:
+{
+  DEFINE_LOCAL  i_pokect
+
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_turn_up )
+  _OBJ_ANIME_WAIT()
+
+  _GET_PARTY_POKE_COUNT( i_pokect, POKECOUNT_MODE_TOTAL )
+  _POKECEN_RECOVER_ANIME( i_pokect )
+
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_turn_down )
+  _OBJ_ANIME_WAIT()
+_RET
+}
+
+//--------------------------------------------------------------------
+//  左を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_heal_p01_turn_up
+  _ANIME_DATA  AC_DIR_U,1
+  _ANIME_DATA  ACMD_END,0
+
+//--------------------------------------------------------------------
+//  下を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_heal_p01_turn_down
+  _ANIME_DATA  AC_DIR_D,1
+  _ANIME_DATA  ACMD_END,0
 
 //====================================================================
 //====================================================================
