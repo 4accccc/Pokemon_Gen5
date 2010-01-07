@@ -266,6 +266,10 @@ enum {
 	/* "." */		period_,
 	/* "/" */		sura_,
 	/* "_" */		uber_,
+	/* "<" */		lts_,
+	/* ">" */		gts_,
+	/* "^" */		caret_,
+	/* "~" */		tilde_,
 
 	STRCODE_END,
 };

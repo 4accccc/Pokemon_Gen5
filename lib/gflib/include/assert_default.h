@@ -22,6 +22,9 @@ extern "C" {
 //------------------------------------------------------------------
 #ifdef GF_ASSERT_ENABLE
 extern void GFL_ASSERT_SetLCDMode( void );
+extern void ASSERT_DEFAULT_dispInit( void );
+extern void ASSERT_DEFAULT_dispMain( const char* str );
+extern void ASSERT_DEFAULT_dispFinish( void );
 #else
 #define GFL_ASSERT_SetLCDMode()	/* */
 #endif
