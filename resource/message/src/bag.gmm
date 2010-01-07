@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-21T23:35:23"/>
+	<create user="genya_hosaka" host="W00159" date="2010-01-07T20:41:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="65" top="133" right="770" bottom="761" maximized="no" rayout="Vertical2">
+	<dialog left="-868" top="184" right="-163" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1039,8 +1039,8 @@ const u8 str_konanoryou[]
 
 	<row id="mes_bag_095">
 		<comment>わざマシンポケットでの表示項目</comment>
-		<language name="JPN" font=" 1:small">PP</language>
-		<language name="JPN_KANJI" font=" 1:small">PP</language>
+		<language name="JPN" font=" 1:small">ＰＰ</language>
+		<language name="JPN_KANJI" font=" 1:small">ＰＰ</language>
 	</row>
 
 	<row id="mes_bag_096">
