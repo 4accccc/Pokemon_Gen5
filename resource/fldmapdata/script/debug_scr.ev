@@ -127,42 +127,54 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_debug_masafumi
 	$SCWK_TEMP0 = 0
+	$SCWK_TEMP1 = 0
 	
 	WHILE $SCWK_TEMP0 != 555
 
 		//メニュー作成
-		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
-		_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
-		_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
-		_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
-		_BMPMENU_MAKE_LIST( msg_debug_01, 4 )	//テスト01
-		_BMPMENU_MAKE_LIST( msg_debug_02, 5 )	//テスト02
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_05, 0 )	//四天王部屋
+		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
+		_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
+		_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
 		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
-		IF $SCWK_ANSWER == 0 THEN
-			_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
-		ELSIF $SCWK_ANSWER == 1 THEN
-			_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
-		ELSIF $SCWK_ANSWER == 2 THEN
-			_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
-		ELSIF $SCWK_ANSWER == 3 THEN
-			_FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
-		ELSIF $SCWK_ANSWER == 4 THEN
+		IF $SCWK_TEMP1 == 0 THEN
+			_CALL	ev_bigfour_menu
 			$SCWK_TEMP0 = 555
-			_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
-		ELSIF $SCWK_ANSWER == 5 THEN
-			$LOCALWORK10 = 555
-			$WK_SCENE_R05 = 1
+		ELSIF $SCWK_TEMP1 == 1 THEN
+			
+			$SCWK_TEMP0 = 555
+			_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+			_BMPMENU_START()
+			
+			IF $SCWK_PARAM0 == 0 THEN
+				_MAP_CHANGE( ZONE_ID_C09R0101, 15, 28, DIR_DOWN )
+			ELSIF $SCWK_PARAM0 == 1 THEN
+				_MAP_CHANGE( ZONE_ID_C09R0201, 15, 28, DIR_DOWN )
+			ELSIF $SCWK_PARAM0 == 2 THEN
+				_MAP_CHANGE( ZONE_ID_C09R0301, 15, 28, DIR_DOWN )
+			ELSIF $SCWK_PARAM0 == 3 THEN
+				_MAP_CHANGE( ZONE_ID_C09R0401, 15, 28, DIR_DOWN )
+			ENDIF
+			
+		ELSIF $SCWK_TEMP1 == 2 THEN
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, TRUE )
 			$SCWK_TEMP0 = 555
+		ELSIF $SCWK_TEMP1 == 3 THEN
+			$SCWK_TEMP0 = 555
+			_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
 		ELSE
 			$SCWK_TEMP0 = 555
 		ENDIF
@@ -170,6 +182,69 @@ EVENT_START ev_debug_masafumi
 	ENDWHILE
 	
 EVENT_END
+
+//四天王部屋デバッグメニュー
+ev_bigfour_menu:
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_07, 0 )	//勝利フラグ
+	_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01（階段前にジャンプ（アニメチェック用）
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+
+	IF $SCWK_ANSWER == 0 THEN
+		
+		WHILE $SCWK_TEMP0 != 111
+		
+			_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+			_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+			_BMPMENU_START()
+			
+			IF $SCWK_PARAM0 == 0 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
+			ELSIF $SCWK_PARAM0 == 1 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
+			ELSIF $SCWK_PARAM0 == 2 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+			ELSIF $SCWK_PARAM0 == 3 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
+			ELSE
+				$SCWK_TEMP0 = 111
+			ENDIF
+		
+		ENDWHILE
+		
+	ELSIF $SCWK_ANSWER == 1 THEN
+		
+		
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+		_BMPMENU_START()
+		
+		IF $SCWK_PARAM0 == 0 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0101, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 1 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0201, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 2 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0301, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 3 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0401, 15, 28, DIR_DOWN )
+		ENDIF
+		
+		
+	ENDIF
+
+_RET
+
 
 
 /**************************************************************/
