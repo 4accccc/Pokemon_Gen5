@@ -15,14 +15,17 @@
 #include "arc_def.h"
 #include "net_err.naix"
 
+#include "print\wordset.h"
 #include "print\printsys.h"
 #include "print\gf_font.h"
 #include "message.naix"
 #include "font/font.naix"
-#include "msg\msg_d_matsu.h"
+#include "msg\msg_net_err.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include <dwc.h>
+#include "net/dwc_rap.h"
+#include "msg\msg_wifi_system.h"
 #endif //MULTI_BOOT_MAKE
 
 //==============================================================================
@@ -619,30 +622,97 @@ static void Local_ErrMessagePrint(void)
 	{
 		GFL_FONT		*fontHandle;
 		GFL_MSGDATA		*mm;
-		STRBUF *strbuf;
+		STRBUF  *strbuf;
+    STRBUF  *src;
+    WORDSET       *wordset;
+    int msgno;
 
-#ifndef MULTI_BOOT_MAKE
+    wordset = WORDSET_Create( HEAPID_NET_TEMP );
+
+
 		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_TEMP );
 		
-		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-			ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
-#else
-		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_TEMP );
-		
-		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-			ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
-#endif  //MULTI_BOOT_MAKE
-		strbuf = GFL_MSG_CreateString(mm, DM_MSG_ERR001);
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+    if( nes->net_type == GFL_NET_TYPE_WIFI 
+        || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY 
+        || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
+    { 
+      int type;
+      //WIFIの場合
+      
+      WORDSET_RegisterNumber( wordset, 0, nes->wifi_error.errorCode, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+      mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
+
+      //WIFIで表示するメッセージを取得
+      type    = GFL_NET_DWC_ErrorType( nes->wifi_error.errorCode, nes->wifi_error.errorType);
+      if(type == 11){
+        msgno = dwc_error_0015;
+        type = 11;
+      }
+      else if(nes->wifi_error.errorCode == ERRORCODE_HEAP)
+      {
+        msgno = dwc_error_0014;
+        type = 12;
+      }
+      else
+      {
+        if( type >= 0 )
+        {
+          msgno = dwc_error_0001 + type;
+        }
+        else
+        {
+          msgno = dwc_error_0012;
+        }
+      }
+      OS_TPrintf("エラーメッセージ %d \n",msgno);
+    }
+    else
+#endif
+    { 
+      //その他の場合
+      WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+      mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+          ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
+
+      switch( nes->error )
+      { 
+        //致命的ではないエラー
+      case WM_ERRCODE_NO_KEYSET:
+      //case WM_ERRCODE_NO_DATASET: //WM_ERRCODE_NO_KEYSETと同じ値
+      case WM_ERRCODE_NO_CHILD:
+      case WM_ERRCODE_TIMEOUT:
+      case WM_ERRCODE_SEND_QUEUE_FULL:
+      case WM_ERRCODE_INVALID_POLLBITMAP:
+      case WM_ERRCODE_SEND_FAILED:
+        msgno = 0;
+        break;
+
+      default:
+        msgno = 1;
+      }
+    }
+
+
+
+    src     = GFL_MSG_CreateString(mm, msgno);
+		strbuf  = GFL_MSG_CreateString(mm, msgno);
+    WORDSET_ExpandStr( wordset, strbuf, src );
 		PRINTSYS_Print(bmpdata, 0, 0, strbuf, fontHandle);
 
 		GFL_STR_DeleteBuffer(strbuf);
+		GFL_STR_DeleteBuffer(src);
 		GFL_MSG_Delete(mm);
 		
 		GFL_FONT_Delete(fontHandle);
+
+    WORDSET_Delete( wordset );
 	}
 	
 	GFL_BMP_Delete(bmpdata);
 }
-
