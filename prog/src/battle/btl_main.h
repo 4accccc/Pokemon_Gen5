@@ -32,6 +32,7 @@ extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag 
 /*------------------------------------------------------------------------------*/
 /* クライアントID，ポケモンID，位置IDなどの情報＆相互変換                       */
 /*------------------------------------------------------------------------------*/
+extern BOOL BTL_MAIN_IsExistClient( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
@@ -149,7 +150,6 @@ extern BTL_PARTY* BTL_POKECON_GetPartyData( BTL_POKE_CONTAINER* wk, u32 clientID
 extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u32 clientID );
 
 extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
-extern BOOL BTL_POKECON_IsExsitClient( const BTL_POKE_CONTAINER* wk, u8 clientID );
 extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
 

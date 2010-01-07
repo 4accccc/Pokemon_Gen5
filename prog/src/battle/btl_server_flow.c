@@ -840,7 +840,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
-    if( BTL_POKECON_IsExsitClient(wk->pokeCon, i) )
+    if( BTL_MAIN_IsExistClient(wk->mainModule, i) )
     {
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
       u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
