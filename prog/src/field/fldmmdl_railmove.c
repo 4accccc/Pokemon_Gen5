@@ -158,7 +158,7 @@ void MMDL_UpdateRailMove( MMDL * mmdl )
 	MMdl_GetAttrMoveBefore( mmdl );
 	MMdl_ProcMoveStartFirst( mmdl );
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_MOVEBIT_ACMD) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) ){
 		MMDL_ActionAcmd( mmdl );
 	}else if( MMDL_CheckMoveBitMoveProcPause(mmdl) == FALSE ){
 		if( MMdl_CheckMoveStart(mmdl) == TRUE ){
