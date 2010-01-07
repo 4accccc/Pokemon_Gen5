@@ -920,7 +920,7 @@ static BOOL ERROR_CheckMain( WIFIBATTLEMATCH_SYS *p_wk )
       case DWC_ETYPE_SHOW_ERROR:
         //エラーコードorメッセージを表示するだけ
         NetErr_DispCallPushPop();
-        GFL_NET_StateClearWifiError();
+//        GFL_NET_StateClearWifiError();  //一時コメント
         break;
 
       case DWC_ETYPE_SHUTDOWN_FM:
