@@ -3,6 +3,9 @@
   require File.dirname(__FILE__) + '/../label_make/label_make'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
+  require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
+  require File.dirname(__FILE__) + '/../hash/item_hash.rb'
+  require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
   require 'date'
 
 =begin
@@ -243,6 +246,86 @@ class FORM
   end
 end
 
+def write_lst_file( fp_lst, gra_no, form_name )
+  case gra_no
+  when 1..151
+   fp_lst.printf( "kanto/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "kanto/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  when 152..251
+   fp_lst.printf( "jyoto/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "jyoto/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  when 252..386
+   fp_lst.printf( "houen/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "houen/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  when 387..493
+   fp_lst.printf( "shinou/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "shinou/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  else
+   fp_lst.printf( "issyu/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "issyu/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  end
+end
+
 #データテーブル
   type_table = {
     "ノーマル"=>0,
@@ -441,16 +524,11 @@ end
   #ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル生成
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成中\n"
   fp_monsno = open( "monsno_def.h", "w" )
+  fp_monsnum = open( "monsnum_def.h", "w" )
   fp_gra = open( "pokegra_wb.scr", "w" )
+  fp_lst = open( "pokegra_wb.lst", "w" )
   fp_wave = open( "wb_sound_pv_wav.lst", "w" )
   fp_bank = open( "wb_sound_pv_bnk.lst", "w" )
-  fp_lst = open( "pokegra_wb.lst", "w" )
-  fp_num = open( "zukan2grano.txt", "w" )
-  gmm = GMM::new
-  gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
-
-  fp_monsno.print( "//============================================================================================\n" )
-  fp_lst = open( "pokegra_wb.lst", "w" )
   fp_num = open( "zukan2grano.txt", "w" )
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
@@ -463,7 +541,54 @@ end
   fp_monsno.print( " * パーソナルコンバータから生成されました\n" )
   fp_monsno.print( "*/\n")
   fp_monsno.print( "//============================================================================================\n" )
-  fp_monsno.print( "\n#pragma once\n\n" )
+  fp_monsno.print( "\n#pragma once\n" )
+  fp_monsno.print( "#include  \"monsnum_def.h\"\n\n" )
+
+  fp_monsnum.print( "//============================================================================================\n" )
+  fp_monsnum.print( "/**\n" )
+  fp_monsnum.print( " * @file	monsnum_def.h\n" )
+  fp_monsnum.print( " * @bfief	ポケモンNoのDefine定義ファイル（ラベル名はグラフィックナンバー）\n" )
+  fp_monsnum.print( " * @author	PersonalConverter\n" )
+  fp_monsnum.print( " * パーソナルコンバータから生成されました\n" )
+  fp_monsnum.print( "*/\n")
+  fp_monsnum.print( "//============================================================================================\n" )
+  fp_monsnum.print( "\n#pragma once\n\n" )
+
+	fp_gra.printf( "\"pfwb_000_m.NCGR\"\n" )
+	fp_gra.printf( "\"pfwb_000_f.NCGR\"\n" )
+	fp_gra.printf( "\"pfwb_000c_m.NCBR\"\n" )
+	fp_gra.printf( "\"pfwb_000c_f.NCBR\"\n" )
+	fp_gra.printf( "\"pfwb_000.NCER\"\n" )
+	fp_gra.printf( "\"pfwb_000.NANR\"\n" )
+	fp_gra.printf( "\"pfwb_000.NMCR\"\n" )
+	fp_gra.printf( "\"pfwb_000.NMAR\"\n" )
+	fp_gra.printf( "\"pfwb_000.NCEC\"\n" )
+	fp_gra.printf( "\"pbwb_000_m.NCGR\"\n" )
+	fp_gra.printf( "\"pbwb_000_f.NCGR\"\n" )
+	fp_gra.printf( "\"pbwb_000c_m.NCBR\"\n" )
+	fp_gra.printf( "\"pbwb_000c_f.NCBR\"\n" )
+	fp_gra.printf( "\"pbwb_000.NCER\"\n" )
+	fp_gra.printf( "\"pbwb_000.NANR\"\n" )
+	fp_gra.printf( "\"pbwb_000.NMCR\"\n" )
+	fp_gra.printf( "\"pbwb_000.NMAR\"\n" )
+	fp_gra.printf( "\"pbwb_000.NCEC\"\n" )
+	fp_gra.printf( "\"pmwb_000_n.NCLR\"\n" )
+	fp_gra.printf( "\"pmwb_000_r.NCLR\"\n" )
+
+  fp_lst.printf( "kanto/000/pfwb_000_m.ncg\n" )
+  fp_lst.printf( "kanto/000/pfwb_000_f.ncg\n" )
+  fp_lst.printf( "kanto/000/pfwb_000c_m.ncg\n" )
+  fp_lst.printf( "kanto/000/pfwb_000c_f.ncg\n" )
+  fp_lst.printf( "kanto/000/pfwb_000.nce\n" )
+  fp_lst.printf( "kanto/000/pfwb_000.nmc\n" )
+  fp_lst.printf( "kanto/000/pbwb_000_m.ncg\n" )
+  fp_lst.printf( "kanto/000/pbwb_000_f.ncg\n" )
+  fp_lst.printf( "kanto/000/pbwb_000c_m.ncg\n" )
+  fp_lst.printf( "kanto/000/pbwb_000c_f.ncg\n" )
+  fp_lst.printf( "kanto/000/pbwb_000.nce\n" )
+  fp_lst.printf( "kanto/000/pbwb_000.nmc\n" )
+  fp_lst.printf( "kanto/000/pmwb_000_n.ncl\n" )
+  fp_lst.printf( "kanto/000/pmwb_000_r.ncl\n" )
 
   gmm.make_row_index( "MONSNAME_", 0, "ーーーーー" )
 
@@ -496,6 +621,8 @@ end
         fp_monsno.print( "\t" )
       end
       fp_monsno.printf( "( %d )\n", cnt )
+
+      fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
 
       if split_data[ PARA::FORM_NAME ] == ""
         form_name = ""
@@ -536,83 +663,7 @@ end
 
       fp_num.printf( "%s\n", split_data[ PARA::GRA_NO ] )
 
-      case gra_no
-      when 1..151
-	      fp_lst.printf( "kanto/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "kanto/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-      when 152..251
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "jyoto/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-      when 252..386
-	      fp_lst.printf( "houen/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "houen/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-      when 387..493
-	      fp_lst.printf( "shinou/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "shinou/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-      else
-	      fp_lst.printf( "issyu/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
-	      fp_lst.printf( "issyu/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-      end
+      write_lst_file( fp_lst, gra_no, form_name )
 
       gmm.make_row_index( "MONSNAME_", cnt, split_data[ PARA::POKENAME ] )
     end
@@ -725,6 +776,7 @@ end
   fp_monsno.print( "\n" )
 
   fp_form = open( "otherform_wb.scr", "w" )
+  fp_lst = open( "otherform_wb.lst", "w" )
   fp_pltt = open( "otherpltt_wb.scr", "w" )
 
   fp_monsno.print( "//別フォルム定義\n" )
@@ -765,6 +817,10 @@ end
   	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
           end
+          form_name = "_"
+          form_name << form[ i ].get_form_name( j )
+
+          write_lst_file( fp_lst, split_data[ PARA::GRA_NO ].to_i, form_name )
         end
       }
       fp_monsno.print( "\n" )
@@ -772,6 +828,7 @@ end
   }
 
   fp_monsno.close
+  fp_monsnum.close
   fp_form.close
   fp_pltt.close
 
@@ -781,83 +838,45 @@ end
   wothash = Hash::new
 
   print "パーソナルデータ生成中\n"
-  #per_???.s生成
-  print "per_000.s 生成中\n"
-  fp_per = open( "per_000.s", "w" )
+  #per_???.bin生成
+  print "per_000.bin 生成中\n"
+  fp_per = open( "per_000.bin", "wb" )
 
-  fp_per.print( "\t.text\n\n" )
-  fp_per.print( "\t.include perdata.h\n\n" )
+  data = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ].pack( "C10 S4 C10 S2 C2 S3 L4" )
 
-  fp_per.print( "\t.byte\t\t0\t\t//基本ＨＰ\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//基本攻撃力\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//基本防御力\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//基本素早さ\n" )
-
-  fp_per.print( "\t.byte\t\t0\t\t//基本特殊攻撃力\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//基本特殊防御力\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//属性１\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//属性２\n" )
-
-  fp_per.print( "\t.byte\t\t0\t\t//捕獲率\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//贈与経験値\n" )
-  fp_per.print( "\t.short\t0\t\t//贈与努力値\n" )
-
-  fp_per.print( "\t.short\t0\t\t//アイテム１\n" )
-  fp_per.print( "\t.short\t0\t\t//アイテム２\n" )
-
-  fp_per.print( "\t.short\t0\t\t//アイテム３\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//性別ベクトル\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//タマゴの孵化歩数\n" )
-
-  fp_per.print( "\t.byte\t\t0\t\t//なつき度初期値\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//成長曲線識別\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//こづくりグループ1\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//こづくりグループ2\n" )
-
-  fp_per.print( "\t.byte\t\t0\t\t//特殊能力１\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//特殊能力２\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//特殊能力３\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//逃げる率\n" )
-
-  fp_per.print( "\t.short\t0\t\t//別フォルムパーソナルデータ開始位置\n" )
-  fp_per.print( "\t.short\t0\t\t//別フォルムグラフィックデータ開始位置\n" )
-
-  fp_per.print( "\t.byte\t\t0\t\t//別フォルムMAX\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//色（図鑑で使用）//反転フラグ\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//ポケモンランク\n" )
-  fp_per.print( "\t.byte\t\t0\t\t//パディング\n" )
-
-  fp_per.print( "\t.long\t\t0\t\t//技マシンフラグ１\n" )
-  fp_per.print( "\t.long\t\t0\t\t//技マシンフラグ２\n" )
-  fp_per.print( "\t.long\t\t0\t\t//技マシンフラグ３\n" )
-  fp_per.print( "\t.long\t\t0\t\t//技マシンフラグ４\n" )
+	data.size.times{ |c|
+		fp_per.printf("%c",data[ c ])
+	}
 
   fp_per.close
-  print "per_000.s 生成終了\n"
+  print "per_000.bin 生成終了\n"
 
-  #wot_???.s生成
-  print "wot_000.s 生成中\n"
-  fp_wot = open( "wot_000.s", "w" )
-  fp_wot.print( "\t.text\n\n" )
-  fp_wot.print( "\t.include perdata.h\n\n" )
-  fp_wot.print( "\t.short 0xffff\n" )
-  fp_wot.print( "\t.short 0xffff\n" )
+  #wot_???.bin生成
+  print "wot_000.bin 生成中\n"
+  fp_wot = open( "wot_000.bin", "wb" )
+
+  data = [ 0xffff, 0xffff ].pack( "S2" )
+
+	data.size.times{ |c|
+		fp_wot.printf("%c",data[ c ])
+	}
+
   fp_wot.close
-  print "wot_000.s 生成終了\n"
+  print "wot_000.bin 生成終了\n"
 
-  #evo_???.s生成
-  print "evo_000.s 生成中\n"
-  fp_evo = open( "evo_000.s", "w" )
-  fp_evo.print( "\t.text\n\n" )
-  fp_evo.print( "\t.include perdata.h\n\n" )
+  #evo_???.bin生成
+  print "evo_000.bin 生成中\n"
+  fp_evo = open( "evo_000.bin", "wb" )
 
   for evo_cnt in 1..EVO_MAX
-    fp_evo.print( "\t.short 0\n" )
-    fp_evo.print( "\t.short 0\n" )
-    fp_evo.print( "\t.short 0\n" )
+    data = [ 0,0,0 ].pack( "S3" )
+	  data.size.times{ |c|
+		  fp_evo.printf("%c",data[ c ])
+	  }
   end
+
   fp_evo.close
-  print "evo_000.s 生成終了\n"
+  print "evo_000.bin 生成終了\n"
 
   cnt = 1
   other_form = 0
@@ -874,89 +893,88 @@ end
     end
 
     if other_form == 0 || ( other_form == 1 && split_data[ PARA::OTHERFORM ] == "●" )
-      printf( "per_%03d.s 生成中\n", cnt )
-      str = sprintf( "per_%03d.s", cnt )
-      fp_per = open( str, "w" )
-      fp_per.print( "\t.text\n\n" )
-      fp_per.print( "\t.include perdata.h\n\n" )
+      printf( "per_%03d.bin 生成中\n", cnt )
+      str = sprintf( "per_%03d.bin", cnt )
+      fp_per = open( str, "wb" )
 
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本ＨＰ\n",                           split_data[ PARA::HP ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本攻撃力\n",                         split_data[ PARA::POW ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本防御力\n",                         split_data[ PARA::DEF ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本素早さ\n",                         split_data[ PARA::AGI ] )
-
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本特殊攻撃力\n",                     split_data[ PARA::SPEPOW ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//基本特殊防御力\n",                     split_data[ PARA::SPEDEF ] )
+      hp      = split_data[ PARA::HP ].to_i
+      pow     = split_data[ PARA::POW ].to_i
+      defe    = split_data[ PARA::DEF ].to_i
+      agi     = split_data[ PARA::AGI ].to_i
+      spepow  = split_data[ PARA::SPEPOW ].to_i
+      spedef  = split_data[ PARA::SPEDEF ].to_i
       if type_table[ split_data[ PARA::TYPE1 ] ] == nil
         printf( "定義されていないタイプです:%s\n", split_data[ PARA::TYPE1 ] )
         exit( 1 )
       end
-      fp_per.printf( "\t.byte\t\t%d\t\t//属性１\n",                             type_table[ split_data[ PARA::TYPE1 ] ] )
+      type1   = type_table[ split_data[ PARA::TYPE1 ] ]
       if type_table[ split_data[ PARA::TYPE2 ] ] == nil
         printf( "定義されていないタイプです:%s\n", split_data[ PARA::TYPE2 ] )
         exit( 1 )
       end
-      fp_per.printf( "\t.byte\t\t%d\t\t//属性２\n",                             type_table[ split_data[ PARA::TYPE2 ] ] )
+      type2   = type_table[ split_data[ PARA::TYPE2 ] ]
 
-      fp_per.printf( "\t.byte\t\t%s\t\t//捕獲率\n",                             split_data[ PARA::GET ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//ポケモンランク\n", rank_table[ split_data[ PARA::RANK ] ] )
+      get     = split_data[ PARA::GET ].to_i
+      rank    = rank_table[ split_data[ PARA::RANK ] ]
       exp_value = ( split_data[ PARA::HP_EXP ].to_i     <<  0 ) |
                   ( split_data[ PARA::POW_EXP ].to_i    <<  2 ) |
                   ( split_data[ PARA::DEF_EXP ].to_i    <<  4 ) |
                   ( split_data[ PARA::AGI_EXP ].to_i    <<  6 ) |
                   ( split_data[ PARA::SPEPOW_EXP ].to_i <<  8 ) |
                   ( split_data[ PARA::SPEDEF_EXP ].to_i << 10 )
-      fp_per.printf( "\t.short\t%d\t\t//贈与努力値\n",                          exp_value )
 
       if split_data[ PARA::ITEM1 ] == ""
-        fp_per.printf( "\t.short\t0\t\t//アイテム１\n" )
+        item1 = 0
       else
-        fp_per.printf( "\t.short\t%s\t\t//アイテム１\n", label.make_label( "ITEM_", split_data[ PARA::ITEM1 ] ) )
+        item1 = $item_hash[ split_data[ PARA::ITEM1 ] ]
       end
       if split_data[ PARA::ITEM2 ] == ""
-        fp_per.printf( "\t.short\t0\t\t//アイテム２\n" )
+        item2 = 0
       else
-        fp_per.printf( "\t.short\t%s\t\t//アイテム２\n", label.make_label( "ITEM_", split_data[ PARA::ITEM2 ] ) )
+        item2 = $item_hash[ split_data[ PARA::ITEM2 ] ]
       end
       if split_data[ PARA::ITEM3 ] == ""
-        fp_per.printf( "\t.short\t0\t\t//アイテム３\n" )
+        item3 = 0
       else
-        fp_per.printf( "\t.short\t%s\t\t//アイテム３\n", label.make_label( "ITEM_", split_data[ PARA::ITEM3 ] ) )
+        item3 = $item_hash[ split_data[ PARA::ITEM3 ] ]
       end
-      fp_per.printf( "\t.byte\t\t%s\t\t//性別ベクトル\n",                       split_data[ PARA::GENDER ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//タマゴの孵化歩数\n",                   split_data[ PARA::BIRTH_STEP ] )
 
-      fp_per.printf( "\t.byte\t\t%s\t\t//なつき度初期値\n",                     split_data[ PARA::FRIEND ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//成長曲線識別\n",                       split_data[ PARA::GROW ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//こづくりグループ1\n",                  split_data[ PARA::EGG_GROUP1 ] )
-      fp_per.printf( "\t.byte\t\t%s\t\t//こづくりグループ2\n",                  split_data[ PARA::EGG_GROUP2 ] )
+      gender  = split_data[ PARA::GENDER ].to_i
+      birth   = split_data[ PARA::BIRTH_STEP ].to_i
+      friend  = split_data[ PARA::FRIEND ].to_i
+      grow    = split_data[ PARA::GROW ].to_i
+      egg1    = split_data[ PARA::EGG_GROUP1 ].to_i
+      egg2    = split_data[ PARA::EGG_GROUP2 ].to_i
 
       if split_data[ PARA::SPEABI1 ] == ""
-        fp_per.printf( "\t.byte\t\t0\t\t//特殊能力１\n" )
+        speabi1 = 0
       else
-        fp_per.printf( "\t.byte\t\t%s\t\t//特殊能力１\n", label.make_label( "TOKUSYU_", split_data[ PARA::SPEABI1 ] ) )
+        speabi1 = $tokusei_hash[ split_data[ PARA::SPEABI1 ] ]
       end
       if split_data[ PARA::SPEABI2 ] == ""
-        fp_per.printf( "\t.byte\t\t0\t\t//特殊能力２\n" )
+        speabi2 = 0
       else
-        fp_per.printf( "\t.byte\t\t%s\t\t//特殊能力２\n", label.make_label( "TOKUSYU_", split_data[ PARA::SPEABI2 ] ) )
+        speabi2 = $tokusei_hash[ split_data[ PARA::SPEABI2 ] ]
       end
       if split_data[ PARA::SPEABI3 ] == ""
-        fp_per.printf( "\t.byte\t\t0\t\t//特殊能力３\n" )
+        speabi3 = 0
       else
-        fp_per.printf( "\t.byte\t\t%s\t\t//特殊能力３\n", label.make_label( "TOKUSYU_", split_data[ PARA::SPEABI3 ] ) )
+        speabi3 = $tokusei_hash[ split_data[ PARA::SPEABI3 ] ]
       end
-      fp_per.printf( "\t.byte\t\t%s\t\t//逃げる率\n",                           split_data[ PARA::ESCAPE ] )
 
-      fp_per.printf( "\t.short\t%d\t\t//別フォルムパーソナルデータ開始位置\n",    form[ cnt ].get_form_index )
+      escape  = split_data[ PARA::ESCAPE ].to_i
+      
+      form_per_start  = form[ cnt ].get_form_index
+
       if form[ cnt ].get_form_max == 0
-        fp_per.printf( "\t.short\t0\t\t//別フォルムグラフィックデータ開始位置\n" )
+        form_gra_start = 0
       else
-        fp_per.printf( "\t.short\t%d\t\t//別フォルムグラフィックデータ開始位置\n",  form_gra_index )
+        form_gra_start =  form_gra_index
         form_gra_index += ( form[ cnt ].get_form_max - 1 )
       end
 
-      fp_per.printf( "\t.byte\t\t%s\t\t//別フォルムMAX\n",                        form[ cnt ].get_form_max )
+      form_max  = form[ cnt ].get_form_max
+
       if color_table[ split_data[ PARA::COLOR ] ] ==nil
         printf( "定義されていないカラーです:%s\n", split_data[ PARA::COLOR ] )
         exit( 1 )
@@ -968,25 +986,24 @@ end
       if split_data[ PARA::PLTT_ONLY ] == "●"
         col_rev |= 0x80
       end
-      fp_per.printf( "\t.byte\t\t%s\t\t//色（図鑑で使用）、反転フラグ、別フォルム時パレットのみ変化\n",       col_rev.to_i )
 
       if rank_table[ split_data[ PARA::RANK ] ] == nil
         printf( "定義されていないランクです:%s\n", split_data[ PARA::RANK ] )
         exit( 1 )
       end
 
-      fp_per.printf( "\t.short\t\t%s\t\t//贈与経験値\n",                         split_data[ PARA::EXP ] )
+      exp = split_data[ PARA::EXP ].to_i
 
       if split_data[ PARA::HEIGHT ] == "" || split_data[ PARA::HEIGHT ] == nil
-        fp_per.printf( "\t.short\t\t10\t\t//高さ\n" )
+        height = 10
       else
-        fp_per.printf( "\t.short\t\t%s\t\t//高さ\n", split_data[ PARA::HEIGHT ] )
+        height = split_data[ PARA::HEIGHT ].to_i
       end
 
       if split_data[ PARA::WEIGHT ] == "" || split_data[ PARA::WEIGHT ] == nil
-        fp_per.printf( "\t.short\t\t10\t\t//重さ\n" )
+        weight = 10
       else
-        fp_per.printf( "\t.short\t\t%s\t\t//重さ\n", split_data[ PARA::WEIGHT ] )
+        weight = split_data[ PARA::WEIGHT ].to_i
       end
 
       waza_machine = split_data[ PARA::WAZA_MACHINE ].split(//)
@@ -1012,23 +1029,27 @@ end
         end
       }
 
-      fp_per.printf( "\t.long\t\t0x%08x\t\t//技マシンフラグ１\n", machine[ 0 ] )
-      fp_per.printf( "\t.long\t\t0x%08x\t\t//技マシンフラグ２\n", machine[ 1 ] )
-      fp_per.printf( "\t.long\t\t0x%08x\t\t//技マシンフラグ３\n", machine[ 2 ] )
-      fp_per.printf( "\t.long\t\t0x%08x\t\t//技マシンフラグ４\n", machine[ 3 ] )
+      data = [ hp,pow,defe,agi,spepow,spedef,type1,type2,get,rank,exp_value,item1,item2,item3,gender,birth,friend,grow,egg1,egg2,speabi1,speabi2,speabi3,escape,form_per_start,form_gra_start,form_max,col_rev,exp,height,weight,machine[0],machine[1],machine[2],machine[3] ].pack( "C10 S4 C10 S2 C2 S3 L4" )
+
+	    data.size.times{ |c|
+		    fp_per.printf("%c",data[ c ])
+	    }
 
       fp_per.close
-      printf( "per_%03d.s 生成終了\n", cnt )
+      printf( "per_%03d.bin 生成終了\n", cnt )
 
-      printf( "wot_%03d.s 生成中\n", cnt )
-      str = sprintf( "wot_%03d.s", cnt )
-      fp_wot = open( str, "w" )
-      fp_wot.print( "\t.text\n\n" )
-      fp_wot.print( "\t.include perdata.h\n\n" )
+      printf( "wot_%03d.bin 生成中\n", cnt )
+      str = sprintf( "wot_%03d.bin", cnt )
+      fp_wot = open( str, "wb" )
       waza_cnt = 0
       while split_data[ PARA::WAZA1 + waza_cnt ] != ""
-        fp_wot.printf( "\t.short\t%s\n", label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
-        fp_wot.printf( "\t.short\t%s\n", split_data[ PARA::WAZA_LV1 + waza_cnt ] )
+        waza_no = $wazano_hash[ split_data[ PARA::WAZA1 + waza_cnt ] ]
+        waza_lv = split_data[ PARA::WAZA_LV1 + waza_cnt ].to_i
+
+        data = [ waza_no, waza_lv ].pack("S2")
+	      data.size.times{ |c|
+		      fp_wot.printf("%c",data[ c ])
+	      }
         #技覚えハッシュテーブル生成
         wothash[ split_data[ PARA::POKENAME ] ] << split_data[ PARA::WAZA1 + waza_cnt ]
         waza_cnt += 1
@@ -1037,49 +1058,57 @@ end
         end
       end
 
-      fp_wot.print( "\t.short\t0xffff\n" )
-      fp_wot.print( "\t.short\t0xffff\n" )
-      fp_wot.close
-      printf( "wot_%03d.s 生成終了\n", cnt )
+      data = [ 0xffff, 0xffff ].pack( "S2" )
 
-      printf( "evo_%03d.s 生成中\n", cnt )
-      str = sprintf( "evo_%03d.s", cnt )
-      fp_evo = open( str, "w" )
-      fp_evo.print( "\t.text\n\n" )
-      fp_evo.print( "\t.include perdata.h\n\n" )
+	    data.size.times{ |c|
+		    fp_wot.printf("%c",data[ c ])
+	    }
+      fp_wot.close
+      printf( "wot_%03d.bin 生成終了\n", cnt )
+
+      printf( "evo_%03d.bin 生成中\n", cnt )
+      str = sprintf( "evo_%03d.bin", cnt )
+      fp_evo = open( str, "wb" )
       for evo_cnt in 0..EVO_MAX-1
         if split_data[ PARA::SHINKA_COND1 + evo_cnt ] == ""
-          fp_evo.printf( "\t.short\t0\n" )
+          data = [ 0,0,0 ].pack( "S3" )
+	        data.size.times{ |c|
+		        fp_evo.printf("%c",data[ c ])
+	        }
           next
         end
         if shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 0 ] == nil
           printf( "定義されていない進化条件です:%s\n", split_data[ PARA::SHINKA_COND1 + evo_cnt ] )
           exit( 1 )
         end
-        fp_evo.printf( "\t.short\t%s\t\t//進化%d条件\n", shinka_cond[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 0 ] ], evo_cnt + 1 )
+        evo_cond = shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 0 ]
         case shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 2 ]
         when SHINKA_PARAM::NONE
-          fp_evo.printf( "\t.short\t0\n" )
+          evo_param = 0
         when SHINKA_PARAM::LEVEL
-          fp_evo.printf( "\t.short\t%s\n", split_data[ PARA::SHINKA_LEVEL ] )
+          evo_param = split_data[ PARA::SHINKA_LEVEL ].to_i
         when SHINKA_PARAM::ITEM
-          fp_evo.printf( "\t.short\t%s\n", label.make_label( "ITEM_", shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ) )
+          evo_param = $item_hash[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
         when SHINKA_PARAM::WAZA
-          fp_evo.printf( "\t.short\t%s\n", label.make_label( "WAZANO_", shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ) )
+          evo_param = $wazano_hash[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
         when SHINKA_PARAM::POKEMON
-          fp_evo.printf( "\t.short\t%s\n", label.make_label( "MONSNO_", shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ) )
+          evo_param = monsno[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
         end
         if split_data[ PARA::SHINKA_POKE1 + evo_cnt ] == ""
-          fp_evo.printf( "\t.short\t0\t\t//進化%dポケモン\n", evo_cnt + 1 )
+          evo_mons = 0
         else
-          fp_evo.printf( "\t.short\t%s\t\t//進化%dポケモン\n", label.make_label( "MONSNO_", split_data[ PARA::SHINKA_POKE1 + evo_cnt ] ), evo_cnt + 1 )
+          evo_mons = monsno[ split_data[ PARA::SHINKA_POKE1 + evo_cnt ] ]
         end
         if split_data[ PARA::SHINKA_POKE1 + evo_cnt ] != ""
           seed[ monsno[ split_data[ PARA::SHINKA_POKE1 + evo_cnt ] ] ] = cnt
         end
+        data = [ evo_cond, evo_param, evo_mons ].pack( "S3" )
+        data.size.times{ |c|
+          fp_evo.printf("%c",data[ c ])
+        }
       end
       fp_evo.close
-      printf( "evo_%03d.s 生成終了\n", cnt )
+      printf( "evo_%03d.bin 生成終了\n", cnt )
     end
 
     if other_form == 0 || ( other_form == 1 && split_data[ PARA::OTHERFORM ] == "●" )
@@ -1109,8 +1138,14 @@ end
     str = sprintf( "pms_%03d.bin", i )
     fp_pms = open( str, "wb" )
     pms = i
+    pms_cnt = 0
     while seed[ pms ] != nil
       pms = seed[ pms ]
+      pms_cnt += 1
+      if pms_cnt > 7
+        print "進化データに異常があります\n"
+		    exit( 1 )
+      end
     end
     fp_pms.write( [ pms ].pack("s") )
     fp_pms.close
@@ -1120,4 +1155,5 @@ end
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
   fp_w.close
+
 
