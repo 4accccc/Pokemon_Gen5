@@ -6029,7 +6029,7 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       {
         SVCL_WORK* clwk;
         clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
-        if( BTL_PARTY_GetMemberCount(clwk->party) <= clwk->numCoverPos )
+        if( BTL_PARTY_GetAliveMemberCount(clwk->party) <= clwk->numCoverPos )
         {
           return FALSE;
         }
