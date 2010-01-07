@@ -45,7 +45,7 @@
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
         frame_adj = 1
-      elsif File::stat( read_file ).mtime < File::stat( read_data[ i ] ).mtime
+      elsif File::stat( read_file ).mtime.tv_sec < File::stat( read_data[ i ] ).mtime.tv_sec
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
         frame_adj = 1
