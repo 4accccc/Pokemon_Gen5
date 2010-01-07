@@ -284,7 +284,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
       {
         // âeÇè¡Ç∑
-        MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );     
+        MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );     
         // É^ÉXÉNìoò^
         { 
           VecFx32 vec;

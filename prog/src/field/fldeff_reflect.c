@@ -236,7 +236,7 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
   TASKWORK_REFLECT *work = wk;
   
   if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == FALSE ||
-    MMDL_CheckStatusBitReflect(work->head.mmdl) == FALSE ){
+    MMDL_CheckMoveBitReflect(work->head.mmdl) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
     return;
   }

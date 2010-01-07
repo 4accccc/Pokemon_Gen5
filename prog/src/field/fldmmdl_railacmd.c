@@ -162,14 +162,14 @@ typedef struct
 //--------------------------------------------------------------
 /**
  * AC系　コマンド終了
- * 常にMMDL_STABIT_ACMD_ENDをセット
+ * 常にMMDL_MOVEBIT_ACMD_ENDをセット
  * @param	mmdl	MMDL * 
  * @retval	int		FALSE
  */
 //--------------------------------------------------------------
 static int AC_RailEnd( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 	
 	return( FALSE );
 }
@@ -289,7 +289,7 @@ static void AcRailWalkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 	MMDL_Rail_UpdateGridPosDir( mmdl, dir );
   MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 	MMDL_IncAcmdSeq( mmdl );
 }
 
@@ -319,8 +319,8 @@ static int AC_RailWalk_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit(
-		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit(
+		mmdl, MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_ACMD_END );
 
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
@@ -656,7 +656,7 @@ static int AC_RailStayWalk_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
@@ -874,9 +874,9 @@ static void AcJumpWorkInitMain(
     GF_ASSERT( result );
 	}
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_START |
-			MMDL_STABIT_JUMP_START );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_START |
+			MMDL_MOVEBIT_JUMP_START );
 	
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
@@ -951,7 +951,7 @@ static int AC_Jump_1( MMDL * mmdl )
       result = MMDL_ReqRailMove( mmdl, work->dir, GRID_FRAME_8 );
       GF_ASSERT( result );
 			MMDL_Rail_UpdateGridPosDir( mmdl, work->dir );
-			MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+			MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
       TOMOYA_Printf( "Jump 2 Start dir %d\n", work->dir );
 		}
 			
@@ -994,10 +994,10 @@ static int AC_Jump_1( MMDL * mmdl )
 		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 	}
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_END |
-			MMDL_STABIT_JUMP_END |
-			MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_END |
+			MMDL_MOVEBIT_JUMP_END |
+			MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_UpdateGridPosCurrent( mmdl );
 

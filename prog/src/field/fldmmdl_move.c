@@ -39,7 +39,7 @@
 ///  ステータスビット
 //--------------------------------------------------------------
 ///移動動作を禁止するステータスビット
-#define STA_BIT_MOVE_ERROR (MMDL_STABIT_HEIGHT_GET_ERROR|MMDL_STABIT_ATTR_GET_ERROR)
+#define MOVEBIT_MOVE_ERROR (MMDL_MOVEBIT_HEIGHT_GET_ERROR|MMDL_MOVEBIT_ATTR_GET_ERROR)
 
 //--------------------------------------------------------------
 ///  アトリビュートオフセット
@@ -106,8 +106,7 @@ static void MMdl_MapAttrSplashProc_0( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrSplashProc_Jump1( MMDL *mmdl, ATTRDATA *data );
 
-static void MMdl_MapAttrShadowProc_0( MMDL *mmdl, ATTRDATA *data );
-static void MMdl_MapAttrShadowProc_1( MMDL *mmdl, ATTRDATA *data );
+static void MMdl_MapAttrShadowProc_01( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data );
@@ -141,9 +140,11 @@ static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR attr );
 static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR attr );
 #endif
 
+#if 0
 static BOOL MMdl_GetMapGridInfo(
   const MMDL *mmdl, const VecFx32 *pos,
   FLDMAPPER_GRIDINFO *pGridInfo );
+#endif
 
 //======================================================================
 //  フィールド動作モデル 動作
@@ -159,7 +160,7 @@ void MMDL_InitMoveProc( MMDL * mmdl )
 {
   MMDL_CallMoveInitProc( mmdl );
   MMDL_MoveSubProcInit( mmdl );
-  MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVEPROC_INIT );
+  MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVEPROC_INIT );
 }
 
 //--------------------------------------------------------------
@@ -180,14 +181,21 @@ void MMDL_UpdateMove( MMDL * mmdl )
   MMdl_GetAttrMoveBefore( mmdl );
   MMdl_ProcMoveStartFirst( mmdl );
   
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) ){
     MMDL_ActionAcmd( mmdl );
-  }else if( MMDL_CheckStatusBitMoveProcPause(mmdl) == FALSE ){
+  }else if( MMDL_CheckMoveBitMoveProcPause(mmdl) == FALSE ){
     if( MMdl_CheckMoveStart(mmdl) == TRUE ){
       if( MMDL_MoveSub(mmdl) == FALSE ){
         MMDL_CallMoveProc( mmdl );
       }
     }
+    #ifdef DEBUG_ONLY_FOR_KAGAYA
+    else
+    {
+      KAGAYA_Printf("ERROR MMDL Move Start ID=%xH GX=%xH,GZ=%xH\n",
+        MMDL_GetOBJID(mmdl),MMDL_GetGridPosX(mmdl),MMDL_GetGridPosZ(mmdl));
+    }
+    #endif
   }
   
   MMdl_ProcMoveStartSecond( mmdl );
@@ -203,33 +211,31 @@ void MMDL_UpdateMove( MMDL * mmdl )
 //--------------------------------------------------------------
 static int MMdl_CheckMoveStart( const MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBitMove(mmdl) == TRUE ){
-    return( TRUE );
-  }
-  
-  if( MMDL_CheckStatusBit(mmdl,STA_BIT_MOVE_ERROR) == 0 ){
-    return( TRUE );
-  }else if( MMDL_GetMoveCode(mmdl) == MV_TR_PAIR ){ //親の行動に従う
-    return( TRUE );
-  }
-  
-  #ifndef MMDL_PL_NULL
-  {  //移動禁止フラグ相殺チェック
-    u32 st = MMDL_GetStatusBit( mmdl );
-    
-    //高さ取得しない場合
-    if( (st&MMDL_STABIT_HEIGHT_GET_ERROR) &&
-      (st&MMDL_STABIT_HEIGHT_GET_OFF) == 0 ){
-      return( FALSE );
+  if( MMDL_CheckMoveBitMove(mmdl) == FALSE ){
+    if( MMDL_CheckMoveBit(mmdl,MOVEBIT_MOVE_ERROR) == 0 ){
+      return( TRUE );
     }
     
-    //アトリビュート取得しない場合
-    if( (st&MMDL_STABIT_ATTR_GET_ERROR) &&  
-      MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE ){
-      return( FALSE );
+    if( MMDL_GetMoveCode(mmdl) == MV_TR_PAIR ){ //親の行動に従う
+      return( TRUE );
+    }
+    
+    {  //移動禁止フラグ相殺チェック
+      u32 flag = MMDL_GetMoveBit( mmdl );
+    
+      //高さ取得しない場合
+      if( (flag & MMDL_MOVEBIT_HEIGHT_GET_ERROR) &&
+          MMDL_CheckStatusBitHeightGetOFF(mmdl) == FALSE ){
+        return( FALSE );
+      }
+    
+      //アトリビュート取得しない場合
+      if( (flag & MMDL_MOVEBIT_ATTR_GET_ERROR) &&  
+          MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
+        return( FALSE );
+      }
     }
   }
-  #endif
   
   return( TRUE );
 }
@@ -243,7 +249,7 @@ static int MMdl_CheckMoveStart( const MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_GetHeightMoveBefore( MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_HEIGHT_GET_ERROR) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_HEIGHT_GET_ERROR) ){
     MMDL_UpdateCurrentHeight( mmdl );
   }
 }
@@ -257,9 +263,9 @@ static void MMdl_GetHeightMoveBefore( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_GetAttrMoveBefore( MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ATTR_GET_ERROR) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) ){
     if( MMDL_UpdateCurrentMapAttr(mmdl) == TRUE ){
-      MMDL_OnStatusBitMoveStart( mmdl );
+      MMDL_OnMoveBitMoveStart( mmdl );
     }
   }
 }
@@ -273,12 +279,12 @@ static void MMdl_GetAttrMoveBefore( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_ProcMoveStartFirst( MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_START) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
     MMdl_MapAttrProc_MoveStartFirst( mmdl );
   }
   
-  MMDL_OffStatusBit( mmdl,
-    MMDL_STABIT_MOVE_START | MMDL_STABIT_JUMP_START );
+  MMDL_OffMoveBit( mmdl,
+    MMDL_MOVEBIT_MOVE_START | MMDL_MOVEBIT_JUMP_START );
 }
 
 //--------------------------------------------------------------
@@ -290,14 +296,14 @@ static void MMdl_ProcMoveStartFirst( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_ProcMoveStartSecond( MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_JUMP_START) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_JUMP_START) ){
     MMdl_MapAttrProc_MoveStartJumpSecond( mmdl );
-  }else if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_START) ){
+  }else if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
     MMdl_MapAttrProc_MoveStartSecond( mmdl );
   }
   
-  MMDL_OffStatusBit( mmdl,
-    MMDL_STABIT_MOVE_START | MMDL_STABIT_JUMP_START );
+  MMDL_OffMoveBit( mmdl,
+    MMDL_MOVEBIT_MOVE_START | MMDL_MOVEBIT_JUMP_START );
 }
 
 //--------------------------------------------------------------
@@ -309,14 +315,14 @@ static void MMdl_ProcMoveStartSecond( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_ProcMoveEnd( MMDL * mmdl )
 {
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_JUMP_END) ){
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_JUMP_END) ){
     MMdl_MapAttrProc_MoveEndJump( mmdl );
-  }else if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_END) ){
+  }else if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_END) ){
     MMdl_MapAttrProc_MoveEnd( mmdl );
   }
   
   MMDL_OffStatusBit( mmdl,
-    MMDL_STABIT_MOVE_END | MMDL_STABIT_JUMP_END );
+    MMDL_MOVEBIT_MOVE_END | MMDL_MOVEBIT_JUMP_END );
 }
 
 //======================================================================
@@ -376,7 +382,7 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
     MMdl_MapAttrBridgeProc_01( mmdl, &data );
     MMdl_MapAttrGrassProc_0( mmdl, &data );
     MMdl_MapAttrSplashProc_0( mmdl, &data );
-    MMdl_MapAttrShadowProc_0( mmdl, &data );
+    MMdl_MapAttrShadowProc_01( mmdl, &data );
     MMdl_MapAttrHeight_02( mmdl, &data );
     MMdl_MapAttrLGrassProc_0( mmdl, &data );
     MMdl_MapAttrNGrassProc_0( mmdl, &data );
@@ -403,7 +409,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
     MMdl_MapAttrGrassProc_12( mmdl, &data );
     MMdl_MapAttrFootMarkProc_1( mmdl, &data );
     MMdl_MapAttrSplashProc_12( mmdl, &data );
-    MMdl_MapAttrShadowProc_1( mmdl, &data );
+    MMdl_MapAttrShadowProc_01( mmdl, &data );
     MMdl_MapAttrLGrassProc_1( mmdl, &data );
     MMdl_MapAttrNGrassProc_1( mmdl, &data );
     MMdl_MapAttrPoolProc_1( mmdl, &data );
@@ -430,7 +436,7 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
     mmdl_InitAttrData( mmdl, &data );
     
     MMdl_MapAttrBridgeProc_01( mmdl, &data );
-    MMdl_MapAttrShadowProc_1( mmdl, &data );
+    MMdl_MapAttrShadowProc_01( mmdl, &data );
     MMdl_MapAttrReflect_01( mmdl, &data );
     MMdl_MapAttrSplashProc_Jump1( mmdl, &data );
 
@@ -718,12 +724,12 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrSplashProc_0( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckShoal(data->attr_val_now) == TRUE ){
-    if( MMDL_CheckStatusBitShoalEffect(mmdl) == FALSE ){
+    if( MMDL_CheckMoveBitShoalEffect(mmdl) == FALSE ){
       FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, TRUE );
-      MMDL_SetStatusBitShoalEffect( mmdl, TRUE );
+      MMDL_SetMoveBitShoalEffect( mmdl, TRUE );
     }
   }else{
-    MMDL_SetStatusBitShoalEffect( mmdl, FALSE );
+    MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
   }
 }
 
@@ -739,14 +745,14 @@ static void MMdl_MapAttrSplashProc_0( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckShoal(data->attr_val_now) == TRUE ){
-    if( MMDL_CheckStatusBitShoalEffect(mmdl) == FALSE ){
+    if( MMDL_CheckMoveBitShoalEffect(mmdl) == FALSE ){
       FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, TRUE );
-      MMDL_SetStatusBitShoalEffect( mmdl, TRUE );
+      MMDL_SetMoveBitShoalEffect( mmdl, TRUE );
     }
   }else if( MAPATTR_VALUE_CheckMarsh(data->attr_val_now) == TRUE ){
     FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, FALSE );
   }else{
-    MMDL_SetStatusBitShoalEffect( mmdl, FALSE );
+    MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
   }
 }
 
@@ -761,7 +767,7 @@ static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrSplashProc_Jump1( MMDL *mmdl, ATTRDATA *data )
 {
-  MMDL_SetStatusBitShoalEffect( mmdl, FALSE );
+  MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
 }
 
 //======================================================================
@@ -769,40 +775,26 @@ static void MMdl_MapAttrSplashProc_Jump1( MMDL *mmdl, ATTRDATA *data )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 影　動作開始 0
+ * 影　動作開始 0,1
  * @param  mmdl  MMDL *
  * @param  now    現在のアトリビュート
  * @param  old    過去のアトリビュート
  * @retval  nothing
+ * @note 影をセット。影セット済みの場合は何もしない。
  */
 //--------------------------------------------------------------
-static void MMdl_MapAttrShadowProc_0( MMDL *mmdl, ATTRDATA *data )
-{
-  MMdl_MapAttrShadowProc_1( mmdl, data );
-}
-
-//--------------------------------------------------------------
-/**
- * 影　動作開始 1
- * @param  mmdl  MMDL *
- * @param  now    現在のアトリビュート
- * @param  old    過去のアトリビュート
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void MMdl_MapAttrShadowProc_1( MMDL *mmdl, ATTRDATA *data )
+static void MMdl_MapAttrShadowProc_01( MMDL *mmdl, ATTRDATA *data )
 {
   const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
-    
-  if( MMDLSYS_CheckJoinShadow(fos) == FALSE ){
-    return;
-  }
-
-  if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) &&
-      data->objcode_prm->shadow_type == MMDL_SHADOW_ON ){
-    if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
-      FLDEFF_SHADOW_SetMMdl( mmdl, data->fectrl );
-      MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_SET );
+  
+  if( MMDLSYS_CheckJoinShadow(fos) == TRUE &&
+      data->objcode_prm->shadow_type != MMDL_SHADOW_NON &&
+      MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_SHADOW_SET) == 0 )
+  {
+    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) )
+    {
+        FLDEFF_SHADOW_SetMMdl( mmdl, data->fectrl );
+        MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_SET );
     }
   }
 }
@@ -814,24 +806,24 @@ static void MMdl_MapAttrShadowProc_1( MMDL *mmdl, ATTRDATA *data )
  * @param  now    現在のアトリビュート
  * @param  old    過去のアトリビュート
  * @retval  nothing
+ * @note 影セットは判定せず影非表示フラグのON,OFFのみ。
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
 {
   const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
     
-  if( MMDLSYS_CheckJoinShadow(fos) == FALSE ){
-    return;
-  }
-  
-  if( data->objcode_prm->shadow_type == MMDL_SHADOW_NON ){
-    return;
-  }
-  
-  if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 ){
-    MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
-  }else{
-    MMDL_OffStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+  if( MMDLSYS_CheckJoinShadow(fos) == TRUE &&
+      data->objcode_prm->shadow_type != MMDL_SHADOW_NON )
+  {
+    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 )
+    {
+      MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+    }
+    else
+    {
+      MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+    }
   }
 }
 
@@ -1045,7 +1037,7 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
     return;
   }
   
-  if( MMDL_CheckStatusBitReflect(mmdl) == FALSE )
+  if( MMDL_CheckMoveBitReflect(mmdl) == FALSE )
   {
     MAPATTR attr = MAPATTR_ERROR;
     MAPATTR_FLAG flag = MAPATTR_FLAGBIT_NONE;
@@ -1083,7 +1075,7 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
       }
       
       FLDEFF_REFLECT_SetMMdl( mmdlsys, mmdl, data->fectrl, type );
-      MMDL_SetStatusBitReflect( mmdl, TRUE );
+      MMDL_SetMoveBitReflect( mmdl, TRUE );
     }
   }
 }
@@ -1101,7 +1093,7 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrReflect_2( MMDL *mmdl, ATTRDATA *data )
 {
   if( data->objcode_prm->reflect_type == MMDL_REFLECT_NON ||
-    MMDL_CheckStatusBitReflect(mmdl) == FALSE ){
+    MMDL_CheckMoveBitReflect(mmdl) == FALSE ){
     return;
   }
   
@@ -1114,12 +1106,12 @@ static void MMdl_MapAttrReflect_2( MMDL *mmdl, ATTRDATA *data )
     #endif
     
     if( attr == MAPATTR_ERROR ){
-      MMDL_SetStatusBitReflect( mmdl, FALSE );
+      MMDL_SetMoveBitReflect( mmdl, FALSE );
     }else{
       flag = MAPATTR_GetAttrFlag( attr );
       
       if( (flag & MAPATTR_FLAGBIT_REFLECT) == 0 ){
-        MMDL_SetStatusBitReflect( mmdl, FALSE );
+        MMDL_SetMoveBitReflect( mmdl, FALSE );
       }
     }
   }
@@ -1443,7 +1435,7 @@ BOOL MMDL_HitCheckMoveLimit( const MMDL * mmdl, s16 x, s16 z )
 static BOOL MMdl_HitCheckMoveAttr(
   const MMDL * mmdl, const VecFx32 pos )
 {
-  if( MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE ){
+  if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
     MAPATTR attr;
     
     if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
@@ -1575,6 +1567,7 @@ static BOOL MMdl_CheckMapAttrKind_MostShallowSnow(
  * @retval  int    TRUE=水アトリビュート
  */
 //--------------------------------------------------------------
+#if 0 //wb null
 static BOOL MMdl_CheckMapAttrKind_Bridge( MMDL * mmdl, u32 attr )
 {
   if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
@@ -1587,6 +1580,7 @@ static BOOL MMdl_CheckMapAttrKind_Bridge( MMDL * mmdl, u32 attr )
   
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1596,6 +1590,7 @@ static BOOL MMdl_CheckMapAttrKind_Bridge( MMDL * mmdl, u32 attr )
  * @retval  int    TRUE=水アトリビュート
  */
 //--------------------------------------------------------------
+#if 0 //wb null
 static BOOL MMdl_CheckMapAttrKind_BridgeV( MMDL * mmdl, u32 attr )
 {
   if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
@@ -1608,6 +1603,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeV( MMDL * mmdl, u32 attr )
   
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1617,6 +1613,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeV( MMDL * mmdl, u32 attr )
  * @retval  int    TRUE=水アトリビュート
  */
 //--------------------------------------------------------------
+#if 0 //wb null
 static BOOL MMdl_CheckMapAttrKind_BridgeH( MMDL * mmdl, u32 attr )
 {
   if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
@@ -1629,6 +1626,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeH( MMDL * mmdl, u32 attr )
   
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1639,6 +1637,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeH( MMDL * mmdl, u32 attr )
  * @retval  BOOL FALSE=マップ情報が無い
  */
 //--------------------------------------------------------------
+#if 0
 static BOOL MMdl_GetMapGridInfo(
   const MMDL *mmdl, const VecFx32 *pos, FLDMAPPER_GRIDINFO *pGridInfo )
 {
@@ -1651,12 +1650,13 @@ static BOOL MMdl_GetMapGridInfo(
   
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
  * マップグリッド情報取得
  * @param  mmdl  MMDL
- * @param  pos       取得する座標(x,zに取得したい位置座標、yには現在のheightが格納されていること)
+ * @param  pos 取得する座標(x,zに取得したい位置座標、yには現在のheightが格納されていること)
  * @param  pGridData  グリッドアトリビュートデータ格納先
  * @retval  0未満 情報が取得できない
  *
@@ -1670,7 +1670,15 @@ static int MMdl_GetMapPosGridData(
   const FLDMAPPER *pG3DMapper =
     MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(mmdl) );
   
-  return FLDMAPPER_GetGridData(pG3DMapper,pos,pGridData);
+#if 0  //どうしたものか
+  if( FLDMAPPER_CheckTrans(pG3DMapper) == TRUE ){
+    return( FLDMAPPER_GetGridData(pG3DMapper,pos,pGridData) );
+  }
+#else
+  return( FLDMAPPER_GetGridData(pG3DMapper,pos,pGridData) );
+#endif
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -1679,7 +1687,7 @@ static int MMdl_GetMapPosGridData(
  * @param  mmdl  MMDL
  * @param  pos  取得する座標(x,zに取得したい位置座標、yには現在のheightが格納されていること)
  * @param  attr  アトリビュート格納先
- * @retval  BOOL  FALSE=アトリビュートが存在しない。
+ * @retval  BOOL  FALSE=アトリビュートが存在しない。またはロード中である。
  */
 //--------------------------------------------------------------
 BOOL MMDL_GetMapPosAttr(
@@ -1692,6 +1700,7 @@ BOOL MMDL_GetMapPosAttr(
     *attr = gridData.attr;
     return( TRUE );
   }
+  
   return( FALSE );
 }
 
@@ -1701,7 +1710,7 @@ BOOL MMDL_GetMapPosAttr(
  * @param  mmdl  MMDL
  * @param  pos  取得する座標
  * @param  height  高さ格納先
- * @retval  BOOL  FALSE=高さが存在しない。
+ * @retval  BOOL  FALSE=高さが存在しない。またはロード中である。
  */
 //--------------------------------------------------------------
 BOOL MMDL_GetMapPosHeight(
@@ -1711,10 +1720,13 @@ BOOL MMDL_GetMapPosHeight(
   FLDMAPPER_GRIDINFODATA gridData;
   
   *height = 0;
+  
   if( MMdl_GetMapPosGridData(mmdl,pos,&gridData) == TRUE ){
     *height = gridData.height;
     return( TRUE );
   }
+  
+  return( FALSE );
 #else
   FLDMAPPER_GRIDINFO GridInfo;
   *height = 0;
@@ -1741,8 +1753,9 @@ BOOL MMDL_GetMapPosHeight(
       return( TRUE );
     }
   }
-#endif
+
   return( FALSE );
+#endif
 }
 
 //======================================================================
@@ -1857,10 +1870,10 @@ void MMDL_AddVectorPosDir( MMDL *mmdl, u16 dir, fx32 val )
 //--------------------------------------------------------------
 /**
  * 現在座標から高さ取得し実座標に反映
- * MMDL_STABIT_HEIGHT_GET_ERRORのセットも併せて行う
+ * MMDL_MOVEBIT_HEIGHT_GET_ERRORのセットも併せて行う
  * @param  mmdl    MMDL * 
  * @retval  BOOL  TRUE=高さが取れた。FALSE=取れない。
- * MMDL_STABIT_HEIGHT_GET_ERRORで取得可能
+ * MMDL_MOVEBIT_HEIGHT_GET_ERRORで取得可能
  */
 //--------------------------------------------------------------
 BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
@@ -1871,7 +1884,7 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
   vec_pos_h = vec_pos;
   
   if( MMDL_CheckStatusBitHeightGetOFF(mmdl) == TRUE ){
-    MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
+    MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_HEIGHT_GET_ERROR );
     return( FALSE );
   }
   
@@ -1884,9 +1897,9 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
       MMDL_SetVectorPos( mmdl, &vec_pos );
       MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
       MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(height) );
-      MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
+      MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_HEIGHT_GET_ERROR );
     }else{
-      MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
+      MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_HEIGHT_GET_ERROR );
     }
     return( ret );
   }
@@ -1895,16 +1908,18 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
 //--------------------------------------------------------------
 /**
  * 現在座標でアトリビュート反映
- * MMDL_STABIT_ATTR_GET_ERRORのセットも併せて行う
+ * MMDL_MOVEBIT_ATTR_GET_ERRORのセットも併せて行う
  * @retval  BOOL TRUE=取得成功。FALSE=失敗。
  */
 //--------------------------------------------------------------
 BOOL MMDL_UpdateCurrentMapAttr( MMDL * mmdl )
 {
+  BOOL ret_o = FALSE;
+  BOOL ret_n = FALSE;
   MAPATTR old_attr = MAPATTR_ERROR;
   MAPATTR now_attr = old_attr;
   
-  if( MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE ){
+  if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
     VecFx32 pos;
     int gx = MMDL_GetOldGridPosX( mmdl );
     int gy = MMDL_GetOldGridPosY( mmdl );
@@ -1913,25 +1928,30 @@ BOOL MMDL_UpdateCurrentMapAttr( MMDL * mmdl )
     pos.x = GRID_SIZE_FX32( gx );
     pos.y = GRID_SIZE_FX32( gy );
     pos.z = GRID_SIZE_FX32( gz );
-    MMDL_GetMapPosAttr( mmdl, &pos, &old_attr );
+    ret_o = MMDL_GetMapPosAttr( mmdl, &pos, &old_attr );
     
     gx = MMDL_GetGridPosX( mmdl );
     gz = MMDL_GetGridPosZ( mmdl );
     MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
     pos.y = MMDL_GetVectorPosY( mmdl );
-    MMDL_GetMapPosAttr( mmdl, &pos, &now_attr );
+    ret_n = MMDL_GetMapPosAttr( mmdl, &pos, &now_attr );
   }
   
-  MMDL_SetMapAttrOld( mmdl, old_attr );
-  MMDL_SetMapAttr( mmdl, now_attr );
-  
-  if( now_attr == MAPATTR_ERROR ){
-    MMDL_OnStatusBit( mmdl, MMDL_STABIT_ATTR_GET_ERROR );
-    return( FALSE );
+  if( ret_o == TRUE ){
+    MMDL_SetMapAttrOld( mmdl, old_attr );
   }
   
-  MMDL_OffStatusBit( mmdl, MMDL_STABIT_ATTR_GET_ERROR );
-  return( TRUE );
+  if( ret_n == TRUE ){
+    MMDL_SetMapAttr( mmdl, now_attr );
+  }
+  
+  if( ret_n == TRUE ){ //正常取得
+    MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR );
+    return( TRUE );
+  }
+  
+  MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR ); //異常
+  return( FALSE );
 }
 
 //======================================================================

@@ -299,7 +299,7 @@ static int SubMoveKyoro_StartCheck( MMDL * fmmdl )
 		
 		work->check_seq_no++;
 	case 2:														//ˆÚ“®Š®—¹ŠÄ‹
-		if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+		if( MMDL_CheckMoveBitMove(fmmdl) == TRUE ){
 #ifdef DEBUG_IDO_ASSERT
 			GF_ASSERT( MoveSub_PosUpdateStartCheck(fmmdl) == TRUE &&
 					"SubMoveKyoro_StartCheck()ERROR" );
@@ -476,7 +476,7 @@ static int SubMoveSpinStop_StartCheck( MMDL * fmmdl )
 		
 		work->check_seq_no++;
 	case 2:														//ˆÚ“®Š®—¹ŠÄ‹
-		if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+		if( MMDL_CheckMoveBitMove(fmmdl) == TRUE ){
 #ifdef DEBUG_IDO_ASSERT
 			GF_ASSERT( MoveSub_PosUpdateStartCheck(fmmdl) == TRUE &&
 				"SubMoveKyoro_StartCheck()‘ÎÛ‚ÌˆÚ“®•û–@‚ªˆÙí" );

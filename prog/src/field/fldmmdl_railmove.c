@@ -138,7 +138,7 @@ void MMDL_InitRailMoveProc( MMDL * mmdl )
 #ifndef MMDL_RAIL_NULL 
 //	MMDL_MoveSubProcInit( mmdl );
 #endif
-	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVEPROC_INIT );
+	MMDL_OnMoveBit( mmdl, MMDL_STABIT_MOVEPROC_INIT );
 }
 
 //----------------------------------------------------------------------------
@@ -158,9 +158,9 @@ void MMDL_UpdateRailMove( MMDL * mmdl )
 	MMdl_GetAttrMoveBefore( mmdl );
 	MMdl_ProcMoveStartFirst( mmdl );
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) ){
+	if( MMDL_CheckStatusBit(mmdl,MMDL_MOVEBIT_ACMD) ){
 		MMDL_ActionAcmd( mmdl );
-	}else if( MMDL_CheckStatusBitMoveProcPause(mmdl) == FALSE ){
+	}else if( MMDL_CheckMoveBitMoveProcPause(mmdl) == FALSE ){
 		if( MMdl_CheckMoveStart(mmdl) == TRUE ){
 
 			MMDL_CallMoveProc( mmdl );
@@ -268,11 +268,11 @@ u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw )
 //-----------------------------------------------------------------------------
 static int MMdl_CheckMoveStart( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBitMove(mmdl) == TRUE ){
+	if( MMDL_CheckMoveBitMove(mmdl) == TRUE ){
 		return( TRUE );
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ATTR_GET_ERROR) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
 		return( TRUE );
 	}else if( MMDL_GetMoveCode(mmdl) == MV_TR_PAIR ){ //親の行動に従う
 		return( TRUE );
@@ -292,7 +292,7 @@ static int MMdl_CheckMoveStart( const MMDL * mmdl )
 		
 		//アトリビュート取得しない場合
 		if( (st&MMDL_STABIT_ATTR_GET_ERROR) &&	
-			MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE ){
+			MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
 			return( FALSE );
 		}
 	}
@@ -312,11 +312,11 @@ static int MMdl_CheckMoveStart( const MMDL * mmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_GetAttrMoveBefore( MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ATTR_GET_ERROR) )
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) )
   {
 		if( MMdl_UpdateCurrentRailAttr(mmdl) == TRUE )
     {
-			MMDL_OnStatusBitMoveStart( mmdl );
+			MMDL_OnMoveBitMoveStart( mmdl );
     }
   }
 }
@@ -329,12 +329,12 @@ static void MMdl_GetAttrMoveBefore( MMDL * mmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_ProcMoveStartFirst( MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_START) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
 		MMdl_MapAttrProc_MoveStartFirst( mmdl );
 	}
 	
-	MMDL_OffStatusBit( mmdl,
-		MMDL_STABIT_MOVE_START | MMDL_STABIT_JUMP_START );
+	MMDL_OffMoveBit( mmdl,
+		MMDL_MOVEBIT_MOVE_START | MMDL_MOVEBIT_JUMP_START );
 }
 
 //----------------------------------------------------------------------------
@@ -345,14 +345,14 @@ static void MMdl_ProcMoveStartFirst( MMDL * mmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_ProcMoveStartSecond( MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_JUMP_START) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_JUMP_START) ){
 		MMdl_MapAttrProc_MoveStartJumpSecond( mmdl );
-	}else if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_START) ){
+	}else if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
 		MMdl_MapAttrProc_MoveStartSecond( mmdl );
 	}
 	
-	MMDL_OffStatusBit( mmdl,
-		MMDL_STABIT_MOVE_START | MMDL_STABIT_JUMP_START );
+	MMDL_OffMoveBit( mmdl,
+		MMDL_MOVEBIT_MOVE_START | MMDL_MOVEBIT_JUMP_START );
 }
 
 //----------------------------------------------------------------------------
@@ -363,14 +363,14 @@ static void MMdl_ProcMoveStartSecond( MMDL * mmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_ProcMoveEnd( MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_JUMP_END) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_JUMP_END) ){
 		MMdl_MapAttrProc_MoveEndJump( mmdl );
-	}else if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_END) ){
+	}else if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_END) ){
 		MMdl_MapAttrProc_MoveEnd( mmdl );
 	}
 	
-	MMDL_OffStatusBit( mmdl,
-		MMDL_STABIT_MOVE_END | MMDL_STABIT_JUMP_END );
+	MMDL_OffMoveBit( mmdl,
+		MMDL_MOVEBIT_MOVE_END | MMDL_MOVEBIT_JUMP_END );
 }
 
 
@@ -392,7 +392,7 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl )
 	MAPATTR old_attr = MAPATTR_ERROR;
 	MAPATTR now_attr = old_attr;
 	
-  if( MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE ){
+  if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
     // レールから、今と前のLOCATIONが取れるようにする
     RAIL_LOCATION old;
     RAIL_LOCATION now;
@@ -410,11 +410,11 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl )
 	MMDL_SetMapAttr( mmdl, now_attr );
   
   if( now_attr == MAPATTR_ERROR ){
-		MMDL_OnStatusBit( mmdl, MMDL_STABIT_ATTR_GET_ERROR );
+		MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR );
 		return( FALSE );
   }
   
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ATTR_GET_ERROR );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR );
 	return( TRUE );
 }
 
@@ -821,7 +821,7 @@ static void MMdl_MapAttrSplashProc_Jump1(
 		MMDL * mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 #ifndef MMDL_RAIL_NULL 
-	MMDL_SetStatusBitShoalEffect( mmdl, FALSE );
+	MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
 #endif
 }
 
@@ -895,10 +895,10 @@ static void MMdl_MapAttrShadowProc_1(
 			return;
 		}
     
-		if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
+		if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_SHADOW_SET) == 0 ){
       FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( mmdl );
       FLDEFF_SHADOW_SetMMdl( mmdl, fectrl );
-			MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_SET );
+			MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_SET );
     }
   }
   #endif
@@ -1264,7 +1264,7 @@ static void MMdl_MapAttrReflect_01(
     return;
   }
   
-  if( MMDL_CheckStatusBitReflect(mmdl) == FALSE )
+  if( MMDL_CheckMoveBitReflect(mmdl) == FALSE )
   {
     MAPATTR_FLAG flag;
     MAPATTR hit_attr = MAPATTR_ERROR;
@@ -1300,7 +1300,7 @@ static void MMdl_MapAttrReflect_01(
         FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( mmdl );
         MMDLSYS *mmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
       
-        MMDL_SetStatusBitReflect( mmdl, TRUE );
+        MMDL_SetMoveBitReflect( mmdl, TRUE );
       
         type = REFLECT_TYPE_POND; //本来はアトリビュート識別してタイプ決定
         FLDEFF_REFLECT_SetMMdl( mmdlsys, mmdl, fectrl, type );
@@ -1343,7 +1343,7 @@ static void MMdl_MapAttrReflect_2(
 	#else //wb
   
 	if( prm->reflect_type == MMDL_REFLECT_NON ||
-		MMDL_CheckStatusBitReflect(mmdl) == FALSE ){
+		MMDL_CheckMoveBitReflect(mmdl) == FALSE ){
 		return;
   }
 
@@ -1356,12 +1356,12 @@ static void MMdl_MapAttrReflect_2(
     #endif
     
     if( attr == MAPATTR_ERROR ){
-		  MMDL_SetStatusBitReflect( mmdl, FALSE );
+		  MMDL_SetMoveBitReflect( mmdl, FALSE );
     }else{
       flag = MAPATTR_GetAttrFlag( attr );
 
       if( (flag&MAPATTR_FLAGBIT_REFLECT) == 0 ){
-		    MMDL_SetStatusBitReflect( mmdl, FALSE );
+		    MMDL_SetMoveBitReflect( mmdl, FALSE );
       }
     }
   }

@@ -460,8 +460,8 @@ GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
 //--------------------------------------------------------------
 static int eyeMeetMove_Init( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckStatusBitMove(work->mmdl) == TRUE ){ //動作中
-    MMDL_OffStatusBitMoveProcPause( work->mmdl ); //動作ポーズ解除
+  if( MMDL_CheckMoveBitMove(work->mmdl) == TRUE ){ //動作中
+    MMDL_OffMoveBitMoveProcPause( work->mmdl ); //動作ポーズ解除
   }
   
   work->seq_no = SEQNO_TRMOVE_OBJMOVE_WAIT;
@@ -477,12 +477,12 @@ static int eyeMeetMove_Init( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_OBJMoveWait( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckStatusBitMove(work->mmdl) == TRUE ){
+  if( MMDL_CheckMoveBitMove(work->mmdl) == TRUE ){
     return( FALSE ); //動作中
   }
   
   MMDL_SetDirDisp( work->mmdl, work->dir );
-  MMDL_OnStatusBitMoveProcPause( work->mmdl );
+  MMDL_OnMoveBitMoveProcPause( work->mmdl );
   
   work->seq_no = SEQNO_TRMOVE_JIKIMOVE_WAIT;
   return( TRUE );

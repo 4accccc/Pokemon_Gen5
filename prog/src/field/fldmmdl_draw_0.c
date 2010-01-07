@@ -80,7 +80,7 @@ static void blact_UpdatePauseVanish(
 static void MMdl_DrawNon_Init( MMDL * mmdl )
 {
   MMDL_SetStatusBitVanish( mmdl, TRUE );
-  MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+  MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
 }
 
 //--------------------------------------------------------------

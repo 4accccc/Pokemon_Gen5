@@ -114,10 +114,10 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 	switch( (*seq) ){
 	case 0:	//‘ÎÛMDL‚ÌˆÚ“®I—¹‘Ò‚¿
 		if( work->fmmdl_talk != NULL ){
-			if( MMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
+			if( MMDL_CheckMoveBitMove(work->fmmdl_talk) == TRUE ){
 				MMDL_UpdateMove( work->fmmdl_talk );
 				
-				if( MMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
+				if( MMDL_CheckMoveBitMove(work->fmmdl_talk) == TRUE ){
 					break;
 				}
 			}

@@ -108,7 +108,7 @@ struct _TAG_MMDL
 {
 	u32 status_bit;				///<ステータスビット
 	u32 move_bit;				///<動作ビット
-	
+  
 	u16 obj_id;					///<OBJ ID
 	u16 zone_id;				///<ゾーン ID
 	u16 obj_code;				///<OBJコード
@@ -175,8 +175,12 @@ typedef struct{
 typedef struct
 {
 	u32 status_bit;			///<ステータスビット
-	u32 move_bit;			///<動作ビット
-	
+#if 0 //wb フラグ整理 動作ビットはクリアされる様にした
+	u32 move_bit;				///<動作ビット
+#else //拡張性を考慮しデータ自体は取っておく。
+  u8 padding[4];
+#endif
+  
 	u8 obj_id;        ///<OBJ ID
 	u8 move_code;       ///<動作コード
 	s8 move_limit_x;		///<X方向移動制限
@@ -668,7 +672,7 @@ void MMDL_Delete( MMDL * mmdl )
 		MMDL_CallDrawDeleteProc( mmdl );
 	}
 	
-	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) ){
+	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
 		MMDL_CallMoveDeleteProc( mmdl );
 		MMdl_DeleteTCB( mmdl );
 	}
@@ -710,7 +714,7 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
       MMDL_CallDrawDeleteProc( mmdl );
     }
     
-    if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) ){
+    if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
       //MMDL_CallMoveDeleteProc( mmdl );
       //MMdl_DeleteTCB( mmdl );
     }
@@ -846,10 +850,10 @@ static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id )
 	mmdl->pMMdlSys = sys;
 	MMDL_SetZoneID( mmdl, zone_id );
   
-	MMDL_OnStatusBit( mmdl,
-		MMDL_STABIT_USE |				//使用中
-		MMDL_STABIT_HEIGHT_GET_ERROR |	//高さ取得が必要
-		MMDL_STABIT_ATTR_GET_ERROR );	//アトリビュート取得が必要
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+  MMDL_OnMoveBit( mmdl,
+    MMDL_MOVEBIT_HEIGHT_GET_ERROR |	//高さ取得が必要
+		MMDL_MOVEBIT_ATTR_GET_ERROR );	//アトリビュート取得が必要
 	
 	if( MMDL_CheckAliesEventID(mmdl) == TRUE ){
 		MMDL_SetStatusBitAlies( mmdl, TRUE );
@@ -895,10 +899,10 @@ static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 {
 	MMdl_InitCallMoveProcWork( mmdl );
 	MMdl_AddTCB( mmdl, fos );
-	MMDL_OnStatusBit( mmdl,
-      MMDL_STABIT_MOVE_START|
-      MMDL_STABIT_ATTR_GET_ERROR|
-      MMDL_STABIT_HEIGHT_GET_ERROR );
+	MMDL_OnMoveBit( mmdl,
+      MMDL_MOVEBIT_MOVE_START |
+      MMDL_MOVEBIT_ATTR_GET_ERROR |
+      MMDL_MOVEBIT_HEIGHT_GET_ERROR );
 }
 
 //----------------------------------------------------------------------------
@@ -910,7 +914,7 @@ static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
 {
-  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
+  if( !MMDL_CheckStatusBit(mmdl,MMDL_STABIT_RAIL_MOVE) )
   {
     MMDL_InitMoveProc( mmdl );
   }
@@ -954,8 +958,8 @@ static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos )
 	MMDL *mmdl;
 	
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
-		if( MMDL_CheckMoveBit(mmdl,	//初期化関数呼び出しまだ
-			MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+		if( MMDL_CheckStatusBit(mmdl,	//初期化関数呼び出しまだ
+			MMDL_STABIT_MOVEPROC_INIT) == 0 ){
 			MMdl_InitMoveProc( mmdl );
 		}
 	}
@@ -976,7 +980,7 @@ static void MMdlSys_CheckSetInitDrawWork( MMDLSYS *fos )
 	MMDL *mmdl;
 	
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
-		if( MMDL_CheckStatusBitCompletedDrawInit(mmdl) == FALSE ){
+		if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
 			MMdl_InitDrawWork( mmdl );
 		}
 	}
@@ -1005,15 +1009,13 @@ void MMDLSYS_Push( MMDLSYS *mmdlsys )
 	#endif
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-		{ //動作処理の退避
+		{
 			MMdl_DeleteTCB( mmdl );
-			MMDL_OnMoveBit( mmdl,
-				MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
-		}
-		
-		{ //描画処理の退避
 			MMDL_CallDrawPushProc( mmdl );
-			MMDL_OnStatusBit( mmdl, MMDL_STABIT_DRAW_PUSH );
+      
+			MMDL_OnMoveBit( mmdl,
+			  MMDL_MOVEBIT_DRAW_PUSH | //描画処理を退避した
+				MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER ); //復帰処理が必要
 		}
 	}
 }
@@ -1034,27 +1036,26 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 		{	//動作処理復帰
 			MMdl_InitMoveWork( mmdlsys, mmdl ); //ワーク初期化
 			
-			if( MMDL_CheckMoveBit(mmdl,	//初期化関数呼び出しまだ
-				MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+      //初期化関数呼び出しまだ
+			if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) == 0 ){
 				MMdl_InitMoveProc( mmdlsys, mmdl );
 			}
 			
-			if( MMDL_CheckMoveBit(mmdl, //復元関数呼び出しが必要
-				MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
+      //復元関数呼び出しが必要
+			if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
 				MMDL_CallMovePopProc( mmdl );
-				MMDL_OffMoveBit( mmdl,
-					MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+				MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
 			}
 		}
 		
 		{	//描画処理復帰
-			if( MMDL_CheckStatusBitCompletedDrawInit(mmdl) == FALSE ){
+			if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
 				MMdl_InitDrawWork( mmdl );
 			}
 			
-			if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_DRAW_PUSH) ){
+			if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_DRAW_PUSH) ){
 				MMDL_CallDrawPopProc( mmdl );
-				MMDL_OffStatusBit( mmdl, MMDL_STABIT_DRAW_PUSH );
+				MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_DRAW_PUSH );
 			}
 		}
 
@@ -1154,7 +1155,7 @@ static void MMdl_SaveData_SaveMMdl(
 	const MMDL *mmdl, MMDL_SAVEWORK *save )
 {
 	save->status_bit = MMDL_GetStatusBit( mmdl );
-	save->move_bit = MMDL_GetMoveBit( mmdl );
+//save->move_bit = MMDL_GetMoveBit( mmdl );
 	save->obj_id = MMDL_GetOBJID( mmdl );
 	save->zone_id = MMDL_GetZoneID( mmdl );
 	save->obj_code = MMDL_GetOBJCode( mmdl );
@@ -1198,7 +1199,7 @@ static void MMdl_SaveData_LoadMMdl(
 	MMdl_ClearWork( mmdl );
 
 	mmdl->status_bit = save->status_bit;
-	mmdl->move_bit = save->move_bit;
+//	mmdl->move_bit = save->move_bit;
 	MMDL_SetOBJID( mmdl, save->obj_id );
 	MMDL_SetZoneID( mmdl, save->zone_id );
 	MMDL_SetOBJCode( mmdl, save->obj_code ); 
@@ -1248,36 +1249,14 @@ static void MMdl_SaveData_LoadMMdl(
 	}
   
 	{ //ステータスビット復帰
-		MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_USE |
-//			MMDL_STABIT_HEIGHT_GET_NEED | //セーブ時の高さを信用する
-			MMDL_STABIT_MOVE_START );
-		
-		MMDL_OffStatusBit( mmdl,
-			MMDL_STABIT_PAUSE_MOVE |
-			MMDL_STABIT_VANISH |
-			MMDL_STABIT_DRAW_PROC_INIT_COMP |
-			MMDL_STABIT_JUMP_START |
-			MMDL_STABIT_JUMP_END |
-			MMDL_STABIT_MOVE_END |
-//			MMDL_STABIT_FELLOW_HIT_NON | //change wb
-			MMDL_STABIT_TALK_OFF |
-			MMDL_STABIT_DRAW_PUSH |
-			MMDL_STABIT_BLACT_ADD_PRAC );
-//			MMDL_STABIT_HEIGHT_GET_OFF ); //change wb
-		
-		MMDL_OffStatusBit( mmdl,
-			MMDL_STABIT_SHADOW_SET |
-			MMDL_STABIT_SHADOW_VANISH |
-			MMDL_STABIT_EFFSET_SHOAL	 |
-			MMDL_STABIT_REFLECT_SET );
-		
-		if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) ){
+		MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+		MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR ); //Attribute再取得
+    
+		if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
 			MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
 		}
 	}
 }
-
 
 //======================================================================
 //	MMDL 動作関数
@@ -1344,13 +1323,14 @@ BOOL MMDL_CheckPossibleAcmd( const MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE) ){
 		return( FALSE );
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) &&
-		MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD_END) == 0 ){
-		return( FALSE );
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) ){ //コマンド中
+		if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
+		  return( FALSE ); //コマンド終了していない
+    }
 	}
 	
 	return( TRUE );
@@ -1369,8 +1349,8 @@ void MMDL_SetAcmd( MMDL * mmdl, u16 code )
 	GF_ASSERT( code < ACMD_MAX );
 	MMDL_SetAcmdCode( mmdl, code );
 	MMDL_SetAcmdSeq( mmdl, 0 );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD );
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 }
 
 //--------------------------------------------------------------
@@ -1385,7 +1365,7 @@ void MMDL_SetLocalAcmd( MMDL * mmdl, u16 code )
 {
 	MMDL_SetAcmdCode( mmdl, code );
 	MMDL_SetAcmdSeq( mmdl, 0 );
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 }
 
 //--------------------------------------------------------------
@@ -1397,11 +1377,11 @@ void MMDL_SetLocalAcmd( MMDL * mmdl, u16 code )
 //--------------------------------------------------------------
 BOOL MMDL_CheckEndAcmd( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) == 0 ){
 		return( TRUE );
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD_END) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
@@ -1418,16 +1398,15 @@ BOOL MMDL_CheckEndAcmd( const MMDL * mmdl )
 //--------------------------------------------------------------
 BOOL MMDL_EndAcmd( MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) == 0 ){
 		return( TRUE );
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD_END) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	MMDL_OffStatusBit(
-		mmdl, MMDL_STABIT_ACMD|MMDL_STABIT_ACMD_END );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD|MMDL_MOVEBIT_ACMD_END );
 	
 	return( TRUE );
 }
@@ -1442,8 +1421,7 @@ BOOL MMDL_EndAcmd( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_FreeAcmd( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ACMD );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END ); //ローカルコマンドフラグ
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD|MMDL_MOVEBIT_ACMD_END );
 	MMDL_SetAcmdCode( mmdl, ACMD_NOT );
 	MMDL_SetAcmdSeq( mmdl, 0 );
 }
@@ -2019,15 +1997,6 @@ u32 MMDL_GetDirHeader( const MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_SetForceDirDisp( MMDL * mmdl, u16 dir )
 {
-#ifdef DEBUG_ONLY_FOR_kagaya
-  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
-    if( MMDL_GetMoveCode(mmdl) == MV_DMY ){
-      OS_Printf( "動作モデル　方向セット ID %d DIR %d\n",
-      MMDL_GetOBJID(mmdl), dir );
-    }
-  }
-#endif
-
 	mmdl->dir_disp_old = mmdl->dir_disp;
 	mmdl->dir_disp = dir;
 }
@@ -2042,15 +2011,6 @@ void MMDL_SetForceDirDisp( MMDL * mmdl, u16 dir )
 //--------------------------------------------------------------
 void MMDL_SetDirDisp( MMDL * mmdl, u16 dir )
 {
-#ifdef DEBUG_ONLY_FOR_kagaya
-  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
-    if( MMDL_GetMoveCode(mmdl) == MV_DMY ){
-      OS_Printf( "動作モデル　方向セット ID %d DIR %d\n",
-      MMDL_GetOBJID(mmdl), dir );
-    }
-  }
-#endif
-
 	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_PAUSE_DIR) == 0 ){
 		mmdl->dir_disp_old = mmdl->dir_disp;
 		mmdl->dir_disp = dir;
@@ -3208,7 +3168,7 @@ void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
 #endif
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-		MMDL_OnStatusBitMoveProcPause( mmdl );
+		MMDL_OnMoveBitMoveProcPause( mmdl );
 	}
   mmdlsys->all_pause_f = TRUE;
 }
@@ -3225,7 +3185,7 @@ void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys )
 	MMDL *mmdl;
 
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-		MMDL_OffStatusBitMoveProcPause( mmdl );
+		MMDL_OffMoveBitMoveProcPause( mmdl );
 	}
   mmdlsys->all_pause_f = FALSE;
 }
@@ -3280,9 +3240,9 @@ BOOL MMDL_CheckStatusBitUse( const MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OnStatusBitMove( MMDL *mmdl )
+void MMDL_OnMoveBitMove( MMDL *mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE );
 }
 
 //--------------------------------------------------------------
@@ -3292,9 +3252,9 @@ void MMDL_OnStatusBitMove( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OffStatusBitMove( MMDL * mmdl )
+void MMDL_OffMoveBitMove( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_MOVE );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_MOVE );
 }
 
 //--------------------------------------------------------------
@@ -3304,9 +3264,9 @@ void MMDL_OffStatusBitMove( MMDL * mmdl )
  * @retval	BOOL TRUE=動作中
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitMove( const MMDL *mmdl )
+BOOL MMDL_CheckMoveBitMove( const MMDL *mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3319,9 +3279,9 @@ BOOL MMDL_CheckStatusBitMove( const MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OnStatusBitMoveStart( MMDL * mmdl )
+void MMDL_OnMoveBitMoveStart( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 }
 
 //--------------------------------------------------------------
@@ -3331,9 +3291,9 @@ void MMDL_OnStatusBitMoveStart( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OffStatusBitMoveStart( MMDL * mmdl )
+void MMDL_OffMoveBitMoveStart( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 }
 
 //--------------------------------------------------------------
@@ -3343,9 +3303,9 @@ void MMDL_OffStatusBitMoveStart( MMDL * mmdl )
  * @retval	BOOL TRUE=移動動作開始
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitMoveStart( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitMoveStart( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_START) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3358,9 +3318,9 @@ BOOL MMDL_CheckStatusBitMoveStart( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OnStatusBitMoveEnd( MMDL * mmdl )
+void MMDL_OnMoveBitMoveEnd( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_END );
 }
 
 //--------------------------------------------------------------
@@ -3370,9 +3330,9 @@ void MMDL_OnStatusBitMoveEnd( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OffStatusBitMoveEnd( MMDL * mmdl )
+void MMDL_OffMoveBitMoveEnd( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_MOVE_END );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_MOVE_END );
 }
 
 //--------------------------------------------------------------
@@ -3382,9 +3342,9 @@ void MMDL_OffStatusBitMoveEnd( MMDL * mmdl )
  * @retval	BOOL TRUE=移動終了
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitMoveEnd( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitMoveEnd( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVE_END) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_END) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3397,9 +3357,9 @@ BOOL MMDL_CheckStatusBitMoveEnd( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OnStatusBitCompletedDrawInit( MMDL * mmdl )
+void MMDL_OnMoveBitCompletedDrawInit( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_DRAW_PROC_INIT_COMP );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_DRAW_PROC_INIT_COMP );
 }
 
 //--------------------------------------------------------------
@@ -3409,9 +3369,9 @@ void MMDL_OnStatusBitCompletedDrawInit( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OffStatusBitCompletedDrawInit( MMDL * mmdl )
+void MMDL_OffMoveBitCompletedDrawInit( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_DRAW_PROC_INIT_COMP );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_DRAW_PROC_INIT_COMP );
 }
 
 //--------------------------------------------------------------
@@ -3421,10 +3381,9 @@ void MMDL_OffStatusBitCompletedDrawInit( MMDL * mmdl )
  * @retval	BOOL TRUE=描画初期化完了
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitCompletedDrawInit( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitCompletedDrawInit( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(
-			mmdl,MMDL_STABIT_DRAW_PROC_INIT_COMP) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_DRAW_PROC_INIT_COMP) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3487,12 +3446,12 @@ void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_SetStatusBitMove( MMDL * mmdl, int flag )
+void MMDL_SetMoveBitMove( MMDL * mmdl, int flag )
 {
 	if( flag == TRUE ){
-		MMDL_OnStatusBitMove( mmdl );
+		MMDL_OnMoveBitMove( mmdl );
 	}else{
-		MMDL_OffStatusBitMove( mmdl );
+		MMDL_OffMoveBitMove( mmdl );
 	}
 }
 
@@ -3534,9 +3493,9 @@ void MMDL_SetStatusBitTalkOFF( MMDL * mmdl, BOOL flag )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OnStatusBitMoveProcPause( MMDL * mmdl )
+void MMDL_OnMoveBitMoveProcPause( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_MOVE );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_PAUSE_MOVE );
 }
 
 //--------------------------------------------------------------
@@ -3546,9 +3505,9 @@ void MMDL_OnStatusBitMoveProcPause( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_OffStatusBitMoveProcPause( MMDL * mmdl )
+void MMDL_OffMoveBitMoveProcPause( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_MOVE );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_PAUSE_MOVE );
 }
 
 //--------------------------------------------------------------
@@ -3558,9 +3517,9 @@ void MMDL_OffStatusBitMoveProcPause( MMDL * mmdl )
  * @retval	BOOL TRUE=動作ポーズ
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitMoveProcPause( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitMoveProcPause( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_PAUSE_MOVE) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_PAUSE_MOVE) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3583,7 +3542,7 @@ BOOL MMDL_CheckCompletedDrawInit( const MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	if( MMDL_CheckStatusBitCompletedDrawInit(mmdl) ){
+	if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) ){
 		return( TRUE );
 	}
 	
@@ -3679,12 +3638,12 @@ BOOL MMDL_CheckStatusBitAlies( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_SetStatusBitShoalEffect( MMDL * mmdl, BOOL flag )
+void MMDL_SetMoveBitShoalEffect( MMDL * mmdl, BOOL flag )
 {
 	if( flag == TRUE ){
-		MMDL_OnStatusBit( mmdl, MMDL_STABIT_EFFSET_SHOAL );
+		MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_EFFSET_SHOAL );
 	}else{
-		MMDL_OffStatusBit( mmdl, MMDL_STABIT_EFFSET_SHOAL );
+		MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_EFFSET_SHOAL );
 	}
 }
 
@@ -3695,9 +3654,9 @@ void MMDL_SetStatusBitShoalEffect( MMDL * mmdl, BOOL flag )
  * @retval	BOOL TRUE=セット　FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitShoalEffect( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitShoalEffect( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_EFFSET_SHOAL) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_EFFSET_SHOAL) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3743,6 +3702,7 @@ BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#ifndef MMDL_PL_NULL
 void MMDL_SetStatusBitBridge( MMDL * mmdl, BOOL flag )
 {
 	if( flag == TRUE ){
@@ -3766,6 +3726,7 @@ BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl )
 	}
 	return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -3775,12 +3736,12 @@ BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_SetStatusBitReflect( MMDL * mmdl, BOOL flag )
+void MMDL_SetMoveBitReflect( MMDL * mmdl, BOOL flag )
 {
 	if( flag == TRUE ){
-		MMDL_OnStatusBit( mmdl, MMDL_STABIT_REFLECT_SET );
+		MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_REFLECT_SET );
 	}else{
-		MMDL_OffStatusBit( mmdl, MMDL_STABIT_REFLECT_SET );
+		MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_REFLECT_SET );
 	}
 }
 
@@ -3791,9 +3752,9 @@ void MMDL_SetStatusBitReflect( MMDL * mmdl, BOOL flag )
  * @retval	BOOL TRUE=セット　FALSE=無し
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitReflect( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitReflect( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_REFLECT_SET) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_REFLECT_SET) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3806,9 +3767,9 @@ BOOL MMDL_CheckStatusBitReflect( const MMDL * mmdl )
  * @retval	BOOL TRUE=コマンドアリ　FALSE=無し
  */
 //--------------------------------------------------------------
-BOOL MMDL_CheckStatusBitAcmd( const MMDL * mmdl )
+BOOL MMDL_CheckMoveBitAcmd( const MMDL * mmdl )
 {
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -3822,6 +3783,7 @@ BOOL MMDL_CheckStatusBitAcmd( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#if 0 //wb null
 void MMDL_SetStatusBitHeightExpand( MMDL * mmdl, BOOL flag )
 {
 	if( flag == TRUE ){
@@ -3845,6 +3807,7 @@ BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl )
 	}
 	return( FALSE );
 }
+#endif
 
 //======================================================================
 //	MMDL 動作ビット関連
@@ -3857,12 +3820,12 @@ BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_SetMoveBitAttrGetOFF( MMDL * mmdl, BOOL flag )
+void MMDL_SetStatusBitAttrGetOFF( MMDL * mmdl, BOOL flag )
 {
 	if( flag == TRUE ){
-		MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_OFF );
+		MMDL_OnStatusBit( mmdl, MMDL_STABIT_ATTR_GET_OFF );
 	}else{
-		MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_OFF );
+		MMDL_OffStatusBit( mmdl, MMDL_STABIT_ATTR_GET_OFF );
 	}
 }
 
@@ -3873,9 +3836,9 @@ void MMDL_SetMoveBitAttrGetOFF( MMDL * mmdl, BOOL flag )
  * @retval	int	TRUE=停止
  */
 //--------------------------------------------------------------
-int MMDL_CheckMoveBitAttrGetOFF( const MMDL * mmdl )
+int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl )
 {
-	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_OFF) ){
+	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ATTR_GET_OFF) ){
 		return( TRUE );
 	}
 	return( FALSE );
@@ -4250,8 +4213,8 @@ void MMDL_InitPosition( MMDL * mmdl, const VecFx32 *vec, u16 dir )
 	MMDL_SetForceDirDisp( mmdl, dir );
 	
 	MMDL_FreeAcmd( mmdl );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_MOVE|MMDL_STABIT_MOVE_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_MOVE|MMDL_MOVEBIT_MOVE_END );
 }
 
 //--------------------------------------------------------------
@@ -4306,7 +4269,7 @@ static void MMdl_InitDrawWork( MMDL *mmdl )
 		return; //描画システム初期化完了していない
 	}
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_HEIGHT_GET_ERROR) ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_HEIGHT_GET_ERROR) ){
 		MMDL_UpdateCurrentHeight( mmdl );
 	}
 	
@@ -4315,10 +4278,10 @@ static void MMdl_InitDrawWork( MMDL *mmdl )
 	MMDL_BlActAddPracFlagSet( mmdl, FALSE );
 	#endif
 	
-	if( MMDL_CheckStatusBitCompletedDrawInit(mmdl) == FALSE ){
+	if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
 		MMdl_InitCallDrawProcWork( mmdl );
 		MMDL_CallDrawInitProc( mmdl );
-		MMDL_OnStatusBitCompletedDrawInit( mmdl );
+		MMDL_OnMoveBitCompletedDrawInit( mmdl );
 	}
 }
 
@@ -4348,11 +4311,11 @@ static void MMdl_InitCallDrawProcWork( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_InitDrawEffectFlag( MMDL * mmdl )
 {
-	MMDL_OffStatusBit( mmdl,
-		MMDL_STABIT_SHADOW_SET		|
-		MMDL_STABIT_SHADOW_VANISH	|
-		MMDL_STABIT_EFFSET_SHOAL		|
-		MMDL_STABIT_REFLECT_SET );
+	MMDL_OffMoveBit( mmdl,
+		MMDL_MOVEBIT_SHADOW_SET |
+		MMDL_MOVEBIT_SHADOW_VANISH |
+		MMDL_MOVEBIT_EFFSET_SHOAL |
+		MMDL_MOVEBIT_REFLECT_SET );
 }
 
 //--------------------------------------------------------------
@@ -4366,7 +4329,7 @@ static void MMdl_InitDrawEffectFlag( MMDL * mmdl )
 void MMDL_ChangeOBJID( MMDL * mmdl, u16 id )
 {
 	MMDL_SetOBJID( mmdl, id );
-	MMDL_OnStatusBitMoveStart( mmdl );
+	MMDL_OnMoveBitMoveStart( mmdl );
 	MMdl_InitDrawEffectFlag( mmdl );
 }
 
@@ -4466,7 +4429,7 @@ static MMDL * MMdl_SearchOBJIDZoneID(
 //--------------------------------------------------------------
 static void MMdl_InitDrawStatus( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 	MMdl_InitDrawEffectFlag( mmdl );
 }
 
@@ -5212,13 +5175,13 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
 	fos = MMDL_GetMMdlSys( mmdl );
   
 	if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
-    if( MMDL_CheckStatusBitCompletedDrawInit(mmdl) == TRUE ){
+    if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == TRUE ){
 		  MMDL_CallDrawDeleteProc( mmdl );
     }
   }
   
   MMDL_SetOBJCode( mmdl, code );
-  MMDL_OffStatusBitCompletedDrawInit( mmdl );
+  MMDL_OffMoveBitCompletedDrawInit( mmdl );
   MMdl_InitDrawStatus( mmdl );
   MMdl_InitDrawWork( mmdl );
 }
@@ -5264,13 +5227,13 @@ MMDL * MMDL_BUFFER_LoadMMdl(
 	
 	MMdl_InitWork( mmdl, fos );
 	
-	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) == 0 ){
 		MMdl_InitMoveWork( mmdl );
 	}else{
 		MMdl_InitCallMoveProcWork( mmdl );
 	}
 	
-	MMDL_OffStatusBitCompletedDrawInit( mmdl );
+	MMDL_OffMoveBitCompletedDrawInit( mmdl );
 	MMdl_InitDrawWork( mmdl );
 	
 	MMdlSys_AddMMdlTCB( fos, mmdl );

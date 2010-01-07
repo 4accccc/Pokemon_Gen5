@@ -774,13 +774,13 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
   
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
-  
-  if( fieldWork->fldMMdlSys != NULL ){
-    MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-  }
-  
+ 
   if( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
     return MAINSEQ_RESULT_CONTINUE;
+  }
+   
+  if( fieldWork->fldMMdlSys != NULL ){
+    MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
   
   { //フィールド初期化スクリプトの呼び出し

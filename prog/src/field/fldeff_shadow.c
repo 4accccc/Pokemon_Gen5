@@ -29,8 +29,6 @@
 #define SHADOW_SCALE_SPEED (0x0010)
 #define SHADOW_ALPHA_SPEED (0x0200)
 
-#define MMDL_CHECKBIT_SHADOW_VANISH (MMDL_STABIT_SHADOW_VANISH|MMDL_STABIT_VANISH)
-
 /*
 #define	TIMEZONE_MORNING	(0)
 #define	TIMEZONE_NOON		(1)
@@ -318,7 +316,8 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
     }
   }
   
-  if( MMDL_CheckStatusBit(work->fmmdl,MMDL_CHECKBIT_SHADOW_VANISH) ){
+  if( MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
+      MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
     work->vanish_flag = TRUE;
   }else{
     work->vanish_flag = FALSE;

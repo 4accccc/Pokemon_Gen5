@@ -565,11 +565,11 @@ BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
 {
 	MMDL_ActionAcmd( mmdl );
 	
-	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_ACMD_END) == 0 ){
+	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 	MMDL_SetAcmdCode( mmdl, ACMD_NOT );
 	MMDL_SetAcmdSeq( mmdl, 0 );
 	return( TRUE );
@@ -609,7 +609,7 @@ static int mmdl_AcmdAction( MMDL * mmdl, int code, int seq )
 //--------------------------------------------------------------
 static int AC_End( MMDL * mmdl )
 {
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 	return( FALSE );
 }
 
@@ -715,7 +715,7 @@ static void AcWalkWorkInit( MMDL * mmdl, int dir, fx32 val, s16 wait, u16 draw )
 	MMDL_UpdateGridPosDir( mmdl, dir );
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 	MMDL_IncAcmdSeq( mmdl );
 }
 
@@ -740,8 +740,8 @@ static int AC_Walk_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit(
-		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit(
+		mmdl, MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_ACMD_END );
 	MMDL_UpdateGridPosCurrent( mmdl );
 
 #if 0	//091030 進めない アニメ関数内部で処理
@@ -775,8 +775,8 @@ static int AC_Dash_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit(
-		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit(
+		mmdl, MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_ACMD_END );
 	MMDL_UpdateGridPosCurrent( mmdl );
 	
   MMDL_CallDrawProc( mmdl );						//1フレーム進める
@@ -1298,7 +1298,7 @@ static int AC_StayWalk_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
@@ -1624,9 +1624,9 @@ static void AcJumpWorkInitMain(
 		MMDL_UpdateGridPosDir( mmdl, dir );					//移動
 	}
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_START |
-			MMDL_STABIT_JUMP_START );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_START |
+			MMDL_MOVEBIT_JUMP_START );
 	
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
@@ -1682,7 +1682,7 @@ static int AC_Jump_1( MMDL * mmdl )
 		if( work->dest_val >= GRID_FX32 ){						//１グリッド移動
 			work->dest_val = 0;
 			MMDL_UpdateGridPosDir( mmdl, work->dir );
-			MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+			MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 		}
 			
 		{
@@ -1725,10 +1725,10 @@ static int AC_Jump_1( MMDL * mmdl )
 		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 	}
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_END |
-			MMDL_STABIT_JUMP_END |
-			MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_END |
+			MMDL_MOVEBIT_JUMP_END |
+			MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_UpdateGridPosCurrent( mmdl );
 
@@ -2649,7 +2649,7 @@ static void AcWalkOddWorkInit( MMDL * mmdl, int dir, s16 max_frame, u16 draw )
 	MMDL_UpdateGridPosDir( mmdl, dir );
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
 	MMDL_IncAcmdSeq( mmdl );
 }
 
@@ -2675,7 +2675,7 @@ static int AC_WalkOdd_Walk( MMDL * mmdl, const fx32 *tbl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_ACMD_END );
 	MMDL_UpdateGridPosCurrent( mmdl );
 #if 0	//091030 進めない アニメ関数内部で処理
 	MMDL_CallDrawProc( mmdl );						//1フレーム進める
@@ -2984,8 +2984,8 @@ static int AC_HidePullOFF_0( MMDL * mmdl )
 	FE_mmdlHKemuri_Add( mmdl );
 #endif
 
-	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START|MMDL_STABIT_JUMP_START );
-	MMDL_OffStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START|MMDL_MOVEBIT_JUMP_START );
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
 	
 	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
@@ -3016,8 +3016,8 @@ static int AC_HidePullOFF_1( MMDL * mmdl )
 	offs.y = 0;
 	MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_END | MMDL_STABIT_JUMP_END | MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_END | MMDL_MOVEBIT_JUMP_END | MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_MoveHidePullOffFlagSet( mmdl );
 	MMDL_IncAcmdSeq( mmdl );
@@ -3202,7 +3202,7 @@ static void AcWalkVecWorkInit( MMDL * mmdl,
 	MMDL_SetDirDisp( mmdl, d_dir );
 	MMDL_SetDirMove( mmdl, m_dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-	MMDL_OnStatusBitMoveStart( mmdl );
+	MMDL_OnMoveBitMoveStart( mmdl );
 	
 	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
 	MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
@@ -3237,8 +3237,8 @@ static int AC_WalkVec_1( MMDL * mmdl )
 		return( FALSE );
 	}
 	
-	MMDL_OnStatusBit(
-		mmdl, MMDL_STABIT_MOVE_END|MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit(
+		mmdl, MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_UpdateGridPosCurrent( mmdl );
 #if 0	//091030 進めない アニメ関数内部で処理
@@ -3764,7 +3764,7 @@ static void AcJumpVecWorkInit( MMDL * mmdl,
 	MMDL_SetDirDisp( mmdl, d_dir );
 	MMDL_SetDirMove( mmdl, m_dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-	MMDL_OnStatusBitMoveStart( mmdl );
+	MMDL_OnMoveBitMoveStart( mmdl );
 	
 	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
 	MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
@@ -3888,10 +3888,10 @@ static int AC_JumpVec_1( MMDL * mmdl )
 		MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	}
 	
-	MMDL_OnStatusBit( mmdl,
-			MMDL_STABIT_MOVE_END |
-			MMDL_STABIT_JUMP_END |
-			MMDL_STABIT_ACMD_END );
+	MMDL_OnMoveBit( mmdl,
+			MMDL_MOVEBIT_MOVE_END |
+			MMDL_MOVEBIT_JUMP_END |
+			MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_UpdateGridPosCurrent( mmdl );
 #if 0	//091030 進めない アニメ関数内部で処理

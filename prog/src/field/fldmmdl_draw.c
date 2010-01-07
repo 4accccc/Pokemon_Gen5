@@ -138,7 +138,7 @@ void MMDL_UpdateDraw( MMDL * fmmdl )
 		return; //システムで描画停止が発生している
 	}
 	
-	if( MMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
+	if( MMDL_CheckMoveBitCompletedDrawInit(fmmdl) == FALSE ){
 		return; //初期化が完了していない
 	}
   
@@ -149,7 +149,7 @@ void MMDL_UpdateDraw( MMDL * fmmdl )
    * 使い勝手が悪かった為これを廃止。
    * 描画処理は常に呼び出し、ポーズは各描画処理側で対応する。
    */
-	if( MMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+	if( MMDL_CheckMoveBitMoveProcPause(fmmdl) == FALSE ||
 		MMDL_CheckStatusBitAcmd(fmmdl) ){
 		MMDL_CallDrawProc( fmmdl );
 	}
@@ -209,8 +209,8 @@ const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *fmmdl )
 //--------------------------------------------------------------
 BOOL MMDL_CheckDrawPause( const MMDL * fmmdl )
 {
-  if( MMDL_CheckStatusBitMoveProcPause(fmmdl) ){
-		if( MMDL_CheckStatusBitAcmd(fmmdl) == FALSE ){
+  if( MMDL_CheckMoveBitMoveProcPause(fmmdl) ){
+		if( MMDL_CheckMoveBitAcmd(fmmdl) == FALSE ){
 			return( TRUE );
 		}
 	}

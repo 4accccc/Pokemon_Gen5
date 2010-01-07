@@ -15,10 +15,10 @@
 //	define
 //======================================================================
 ///トレーナーペア　親移動停止
-#define PAIR_TR_OYA_STA_BIT_STOP \
-	(MMDL_STABIT_ATTR_GET_ERROR		| \
-	 MMDL_STABIT_HEIGHT_GET_ERROR	| \
-	 MMDL_STABIT_PAUSE_MOVE)
+#define PAIR_TR_OYA_MOVEBIT_STOP \
+	(MMDL_MOVEBIT_ATTR_GET_ERROR		| \
+	 MMDL_MOVEBIT_HEIGHT_GET_ERROR	| \
+	 MMDL_MOVEBIT_PAUSE_MOVE)
 
 //--------------------------------------------------------------
 ///	コピー動作番号
@@ -153,7 +153,7 @@ void MMDL_MovePair_Init( MMDL * fmmdl )
 	MV_PAIR_WORK *work = MMDL_InitMoveProcWork( fmmdl, MV_PAIR_WORK_SIZE );
 	Pair_WorkSetJikiSearch( fmmdl, work );
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	MMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 }
 
@@ -201,14 +201,14 @@ void MMDL_MovePair_Delete( MMDL * fmmdl )
 //--------------------------------------------------------------
 static int PairMove_Init( MMDL * fmmdl, MV_PAIR_WORK *work )
 {
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 		
 	if( Pair_JikiPosUpdateCheck(fmmdl,work) == TRUE ){
 		Pair_JikiPosSet( fmmdl, work );
 		
 		if( Pair_JikiCheckAcmdSet(fmmdl) == TRUE ){
-			MMDL_OnStatusBitMove( fmmdl );
+			MMDL_OnMoveBitMove( fmmdl );
 			work->seq_no++;
 			return( TRUE );
 		}
@@ -228,7 +228,7 @@ static int PairMove_Init( MMDL * fmmdl, MV_PAIR_WORK *work )
 static int PairMove_Move( MMDL * fmmdl, MV_PAIR_WORK *work )
 {
 	if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		work->seq_no = 0;
 	}
 	
@@ -415,7 +415,7 @@ void MMDL_MovePairTr_Init( MMDL * fmmdl )
 	MV_TR_PAIR_WORK *work = MMDL_InitMoveProcWork( fmmdl, MV_TR_PAIR_WORK_SIZE );
 	PairTr_WorkSetOyaSearch( fmmdl, work );
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	
 //	MMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 	work->oya_init = FALSE;
@@ -478,13 +478,13 @@ void MMDL_MovePairTr_Return( MMDL * fmmdl )
 //--------------------------------------------------------------
 static int PairTrMove_Init( MMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 		
 	if( PairTr_OyaPosUpdateCheck(fmmdl,work) == TRUE ){
 		if( PairTr_OyaCheckAcmdSet(fmmdl,work) == TRUE ){
 //			PairTr_OyaPosSet( fmmdl, work );
-			MMDL_OnStatusBitMove( fmmdl );
+			MMDL_OnMoveBitMove( fmmdl );
 			work->seq_no++;
 			return( TRUE );
 		}
@@ -507,7 +507,7 @@ static int PairTrMove_Move( MMDL * fmmdl, MV_TR_PAIR_WORK *work )
 		return( FALSE );
 	}
 	
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	work->seq_no = 0;
 	return( FALSE );
 }
@@ -635,8 +635,8 @@ static int PairTr_OyaPosUpdateCheck( MMDL * fmmdl, MV_TR_PAIR_WORK *work )
 	int ngz = MMDL_GetOldGridPosZ( oyaobj );
 	
 	if( (gx != ngx || gz != ngz) &&
-		(MMDL_CheckStatusBitMove(oyaobj) == TRUE ||
-		MMDL_CheckStatusBit(oyaobj,PAIR_TR_OYA_STA_BIT_STOP) == 0) ){
+		(MMDL_CheckMoveBitMove(oyaobj) == TRUE ||
+		MMDL_CheckMoveBit(oyaobj,PAIR_TR_OYA_MOVEBIT_STOP) == 0) ){
 		return( TRUE );
 	}
 	
@@ -782,7 +782,7 @@ static void MMdl_MoveHide_Init( MMDL * fmmdl, HIDETYPE type )
 	MV_HIDE_WORK *work = MMDL_InitMoveProcWork( fmmdl, MV_HIDE_WORK_SIZE );
 	work->hide_type = type;
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
 	
 	{															//高さ落とす
@@ -920,8 +920,8 @@ static int HideMove_Init( MMDL * fmmdl, MV_HIDE_WORK *work )
 		MMDL_MoveHideEoaPtrSet( fmmdl, eoa );
 	}
 	
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 	
 	work->seq_no++;
 #endif
@@ -1157,8 +1157,8 @@ static int CopyMove_FirstInit( MMDL * fmmdl, MV_COPY_WORK *work )
 	int ret = MMDL_GetDirDisp( fmmdl );
 	ret = MMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
 	MMDL_SetLocalAcmd( fmmdl, ret );
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_FIRST_WAIT;
 	return( TRUE );
 }
@@ -1197,8 +1197,8 @@ static int CopyMove_Init( MMDL * fmmdl, MV_COPY_WORK *work )
 		work->dir_jiki = Player_DirGet( fsys->player );
 	}
 	
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_CMD_SET;
 #endif
 	return( TRUE );
@@ -1250,7 +1250,7 @@ static void CopyMove_MoveSet(
 		ac = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
 	}else{
 		ac = MMDL_ChangeDirAcmdCode( dir, ac );
-		MMDL_OnStatusBitMove( fmmdl );
+		MMDL_OnMoveBitMove( fmmdl );
 	}
 	
 	MMDL_SetLocalAcmd( fmmdl, ac );
@@ -1313,8 +1313,8 @@ static int CopyMove_MoveWait( MMDL * fmmdl, MV_COPY_WORK *work )
 		return( FALSE );
 	}
 	
-	MMDL_OffStatusBitMove( fmmdl );
-	MMDL_OffStatusBitMoveEnd( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
+	MMDL_OffMoveBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_INIT;
 	return( FALSE );
 }
@@ -1425,7 +1425,7 @@ void MMDL_AlongWall_Move( MMDL * fmmdl )
 //--------------------------------------------------------------
 static int AlongWallMove_Init( MMDL * fmmdl, MV_ALONGW_WORK *work )
 {
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	work->seq_no++;
 	return( TRUE );
 }
@@ -1707,7 +1707,7 @@ static int AlongWall_WallMove(
 	
 	if( ret == MMDL_MOVEHITBIT_NON ){		//移動可能
 		ac = MMDL_ChangeDirAcmdCode( dir_move, ac );
-		MMDL_OnStatusBitMove( fmmdl );
+		MMDL_OnMoveBitMove( fmmdl );
 		MMDL_SetLocalAcmd( fmmdl, ac );
 		return( TRUE );
 	}
@@ -1729,7 +1729,7 @@ static int AlongWall_WallMove(
 		
 		if( ret == MMDL_MOVEHITBIT_NON ){		//移動可能
 			ac = MMDL_ChangeDirAcmdCode( dir_move, ac );
-			MMDL_OnStatusBitMove( fmmdl );
+			MMDL_OnMoveBitMove( fmmdl );
 			MMDL_SetLocalAcmd( fmmdl, ac );
 			return( TRUE );
 		}
@@ -1750,7 +1750,7 @@ static int AlongWall_WallMove(
 		
 		if( ret == MMDL_MOVEHITBIT_NON ){		//移動可能
 			ac = MMDL_ChangeDirAcmdCode( dir_move, ac );
-			MMDL_OnStatusBitMove( fmmdl );
+			MMDL_OnMoveBitMove( fmmdl );
 			MMDL_SetLocalAcmd( fmmdl, ac );
 			return( TRUE );
 		}

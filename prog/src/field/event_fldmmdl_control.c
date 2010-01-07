@@ -102,13 +102,13 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       
       if( MMDL_CheckEndAcmd(player) == FALSE ){
         SetStepWatchBit(opaw, PLAYER_BIT);
-        MMDL_OffStatusBitMoveProcPause( player );
+        MMDL_OffMoveBitMoveProcPause( player );
       }
       
       if( fmmdl != NULL ){
-        if( MMDL_CheckStatusBitMove(fmmdl) == TRUE ){
+        if( MMDL_CheckMoveBitMove(fmmdl) == TRUE ){
           SetStepWatchBit(opaw, OTHER_BIT);
-          MMDL_OffStatusBitMoveProcPause( fmmdl );
+          MMDL_OffMoveBitMoveProcPause( fmmdl );
         }
       }
 
@@ -125,9 +125,9 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       }
       
       if( other_pair ){
-        if( MMDL_CheckStatusBitMove(other_pair) == TRUE ){
+        if( MMDL_CheckMoveBitMove(other_pair) == TRUE ){
           SetStepWatchBit(opaw, OTHER_PAIR_BIT);
-          MMDL_OffStatusBitMoveProcPause( other_pair );
+          MMDL_OffMoveBitMoveProcPause( other_pair );
         }
       }
       ++ *seq;
@@ -146,14 +146,14 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
      	//自機動作停止チェック
       if( CheckStepWatchBit(opaw, PLAYER_BIT) &&
         MMDL_CheckEndAcmd(player) == TRUE ){
-        MMDL_OnStatusBitMoveProcPause( player );
+        MMDL_OnMoveBitMoveProcPause( player );
         ResetStepWatchBit(opaw, PLAYER_BIT);
       }
       
       //話しかけ対象動作停止チェック
       if( CheckStepWatchBit(opaw, OTHER_BIT) &&
-        MMDL_CheckStatusBitMove(fmmdl) == FALSE ){
-        MMDL_OnStatusBitMoveProcPause( fmmdl );
+        MMDL_CheckMoveBitMove(fmmdl) == FALSE ){
+        MMDL_OnMoveBitMoveProcPause( fmmdl );
         ResetStepWatchBit(opaw, OTHER_BIT);
       }
       
@@ -161,8 +161,8 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       if( CheckStepWatchBit(opaw, PLAYER_PAIR_BIT) ){
         MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
         
-        if( MMDL_CheckStatusBitMove(player_pair) == FALSE ){
-          MMDL_OnStatusBitMoveProcPause( player_pair );
+        if( MMDL_CheckMoveBitMove(player_pair) == FALSE ){
+          MMDL_OnMoveBitMoveProcPause( player_pair );
           ResetStepWatchBit(opaw, PLAYER_PAIR_BIT);
         }
       }

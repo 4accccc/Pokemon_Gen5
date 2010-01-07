@@ -518,7 +518,7 @@ u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, 
   }
 
   // アトリビュートチェック
-	if( MMDL_CheckMoveBitAttrGetOFF(mmdl) == FALSE )
+	if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE )
   {
     MAPATTR attr;
     MAPATTR_FLAG attr_flag;
@@ -1477,7 +1477,7 @@ static void DirRndWorkInit( MMDL * fmmdl, int id )
   p_wk->tbl_id  = id;
 
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );					//描画ステータス　停止
-	MMDL_OffStatusBitMove( fmmdl );								//常に停止中
+	MMDL_OffMoveBitMove( fmmdl );								//常に停止中
 }
 
 //----------------------------------------------------------------------------
@@ -1546,7 +1546,7 @@ static void MvRndWorkInit( MMDL * fmmdl, int id )
   p_wk->init_width  = location.width_grid;
 
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 }
 
 //----------------------------------------------------------------------------
@@ -1563,8 +1563,8 @@ static void MvRndWorkMove( MMDL * fmmdl )
 	
 	switch( p_wk->seq_no ){
 	case MV_RND_MOVE_SEQ_ACT:
-		MMDL_OffStatusBitMove( fmmdl );
-		MMDL_OffStatusBitMoveEnd( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
+		MMDL_OffMoveBitMoveEnd( fmmdl );
 		
 		ret = MMDL_GetDirDisp( fmmdl );
 		ret = MMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
@@ -1629,14 +1629,14 @@ static void MvRndWorkMove( MMDL * fmmdl )
 		ret = MMDL_ChangeDirAcmdCode( ret, AC_WALK_U_8F );
 		MMDL_SetLocalAcmd( fmmdl, ret );
 			
-		MMDL_OnStatusBitMove( fmmdl );
+		MMDL_OnMoveBitMove( fmmdl );
 		p_wk->seq_no++;
 	case MV_RND_MOVE_SEQ_WALK_ACT_WAIT:
 		if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 			break;
 		}
 		
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		p_wk->seq_no = 0;
     break;
 
@@ -1691,7 +1691,7 @@ static void MvRoot2WorkInit( MMDL * fmmdl )
   p_wk->init_width  = location.width_grid;
 
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 }
 
 //----------------------------------------------------------------------------
@@ -1790,14 +1790,14 @@ static void MvRoot2WorkMove( MMDL * fmmdl )
         MMDL_SetLocalAcmd( fmmdl, acmd );
       }
 
-      MMDL_OnStatusBitMove( fmmdl );
+      MMDL_OnMoveBitMove( fmmdl );
       p_wk->seq_no = MV_RT2_MOVE_SEQ_ACT_WAIT;
     }
     break;
   ///<動作待ち
   case MV_RT2_MOVE_SEQ_ACT_WAIT:       
     if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-      MMDL_OffStatusBitMove( fmmdl );
+      MMDL_OffMoveBitMove( fmmdl );
       
       p_wk->seq_no = MV_RT2_MOVE_SEQ_CHECK_DIR;
     }

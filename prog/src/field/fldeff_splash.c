@@ -251,7 +251,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
   }
   
   if( work->head.joint == TRUE ){
-    if( MMDL_CheckStatusBitShoalEffect(work->head.mmdl) == FALSE ){
+    if( MMDL_CheckMoveBitShoalEffect(work->head.mmdl) == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;
     }

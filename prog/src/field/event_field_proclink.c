@@ -2024,7 +2024,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
             FIELD_PLAYER_GRID_UpdateRequest( gjiki );
   
             //ポーズを解除しアニメするように
-            MMDL_OffStatusBitMoveProcPause( mmdl );
+            MMDL_OffMoveBitMoveProcPause( mmdl );
             MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
           }
         }

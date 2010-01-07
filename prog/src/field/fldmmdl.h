@@ -168,55 +168,57 @@ typedef enum
 }MMDLSYS_STABIT;
 
 //--------------------------------------------------------------
-///	MMDL_STABIT MMDLステータスビット
+///	MMDL_STABIT MMDLステータスビット セーブされます
+// 後に隠蔽予定
 //--------------------------------------------------------------
 typedef enum
 {
 	MMDL_STABIT_NON=(0),///<ステータス無し
 	MMDL_STABIT_USE=(1<<0),///<使用中を表す
-	MMDL_STABIT_MOVE=(1<<1),///<移動中を表す
-	MMDL_STABIT_MOVE_START=(1<<2),///<移動開始を表す
-	MMDL_STABIT_MOVE_END=(1<<3),///<移動終了を表す
-	MMDL_STABIT_ACMD=(1<<4),///<アニメーションコマンド中
-	MMDL_STABIT_ACMD_END=(1<<5),///<アニメーションコマンド終了
-	MMDL_STABIT_PAUSE_MOVE=(1<<6),///<移動一時停止
-	MMDL_STABIT_PAUSE_DIR=(1<<7),///<表示方向一時停止
-	MMDL_STABIT_PAUSE_ANM=(1<<8),///<アニメ一時停止
-	MMDL_STABIT_VANISH=(1<<9),///<非表示
-	MMDL_STABIT_ZONE_DEL_NOT=(1<<10),///<ゾーン切り替えによる削除禁止
-	MMDL_STABIT_ATTR_GET_ERROR=(1<<11),///<アトリビュート取得失敗
-	MMDL_STABIT_HEIGHT_GET_ERROR=(1<<12),///<高さ取得失敗
-	MMDL_STABIT_HEIGHT_VANISH_OFF=(1<<13),///<高さ取得不可時の非表示をOFF
-	MMDL_STABIT_DRAW_PROC_INIT_COMP=(1<<14),///<描画初期化完了
-	MMDL_STABIT_SHADOW_SET=(1<<15),///<影セット済み
-	MMDL_STABIT_JUMP_START=(1<<16),///<ジャンプ開始
-	MMDL_STABIT_JUMP_END=(1<<17),///<ジャンプ終了
-	MMDL_STABIT_FELLOW_HIT_NON=(1<<18),///<OBJ同士の当たり判定無効
-	MMDL_STABIT_TALK_OFF=(1<<19),///<話しかけ無効
-	MMDL_STABIT_SHADOW_VANISH=(1<<20),///<影表示、非表示
-	MMDL_STABIT_DRAW_PUSH=(1<<21),///<描画処理を退避
-	MMDL_STABIT_BLACT_ADD_PRAC=(1<<22),///<ビルボードアクター追加中
-	MMDL_STABIT_HEIGHT_GET_OFF=(1<<23),///<高さ取得をしない
-	MMDL_STABIT_REFLECT_SET=(1<<24),///<映り込みをセットした
-	MMDL_STABIT_ALIES=(1<<25),///<エイリアスである
-	MMDL_STABIT_EFFSET_SHOAL=(1<<26),///<浅瀬エフェクトをセット
-	MMDL_STABIT_ATTR_OFFS_OFF=(1<<27),///<アトリビュートオフセット設定OFF
-	MMDL_STABIT_BRIDGE=(1<<28),///<橋移動中である
-	MMDL_STABIT_HEIGHT_EXPAND=(1<<29),///<拡張高さに反応する
-	MMDL_STABIT_RAIL_MOVE = (1<<30),///<レール動作
+	MMDL_STABIT_MOVEPROC_INIT=(1<<1),///<動作初期化を行った
+	MMDL_STABIT_VANISH=(1<<2),///<非表示
+	MMDL_STABIT_PAUSE_DIR=(1<<3),///<表示方向一時停止
+	MMDL_STABIT_PAUSE_ANM=(1<<4),///<アニメ一時停止
+	MMDL_STABIT_ZONE_DEL_NOT=(1<<5),///<ゾーン切り替えによる削除禁止
+	MMDL_STABIT_HEIGHT_VANISH_OFF=(1<<6),///<高さ取得不可時の非表示をOFF
+	MMDL_STABIT_FELLOW_HIT_NON=(1<<7),///<OBJ同士の当たり判定無効
+	MMDL_STABIT_TALK_OFF=(1<<8),///<話しかけ無効
+	MMDL_STABIT_HEIGHT_GET_OFF=(1<<9),///<高さ取得をしない
+  MMDL_STABIT_ATTR_GET_OFF=(1<<10),///<アトリビュート取得をしない
+	MMDL_STABIT_ALIES=(1<<11),///<エイリアスである
+	MMDL_STABIT_ATTR_OFFS_OFF=(1<<12),///<アトリビュートオフセット設定OFF
+	MMDL_STABIT_RAIL_MOVE = (1<<13),///<レール動作
 }MMDL_STABIT;
 
+//MMDL_STABIT_HEIGHT_EXPAND=(1<<13),///<拡張高さに反応する
+//MMDL_STABIT_BRIDGE=(1<<28),///<橋移動中である
+
 //--------------------------------------------------------------
-///	MMDL_MOVEBIT MMDL動作ビット
+///	MMDL_MOVEBIT MMDL動作ビット セーブされません
+//  後に隠蔽予定
 //--------------------------------------------------------------
 typedef enum
 {
 	MMDL_MOVEBIT_NON=(0),///<無し
-	MMDL_MOVEBIT_SHADOW_SET=(1<<0),///<影をセットした
-	MMDL_MOVEBIT_GRASS_SET=(1<<1),///<草をセットした
-	MMDL_MOVEBIT_ATTR_GET_OFF=(1<<2),///<アトリビュート取得を一切行わない
-	MMDL_MOVEBIT_MOVEPROC_INIT=(1<<3),///<動作初期化を行った
-	MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER=(1<<4),///<動作復帰関数を呼ぶ必要
+	MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER=(1<<0),///<動作復帰関数を呼ぶ必要
+	MMDL_MOVEBIT_DRAW_PROC_INIT_COMP=(1<<1),///<描画初期化完了
+	MMDL_MOVEBIT_DRAW_PUSH=(1<<2),///<描画処理を退避
+	MMDL_MOVEBIT_PAUSE_MOVE=(1<<3),///<移動一時停止
+  MMDL_MOVEBIT_MOVE=(1<<4),///<移動中を表す
+	MMDL_MOVEBIT_MOVE_START=(1<<5),///<移動開始を表す
+	MMDL_MOVEBIT_MOVE_END=(1<<6),///<移動終了を表す
+	MMDL_MOVEBIT_JUMP_START=(1<<7),///<ジャンプ開始
+	MMDL_MOVEBIT_JUMP_END=(1<<8),///<ジャンプ終了
+	MMDL_MOVEBIT_ACMD=(1<<9),///<アニメーションコマンド中
+	MMDL_MOVEBIT_ACMD_END=(1<<10),///<アニメーションコマンド終了
+	MMDL_MOVEBIT_ATTR_GET_ERROR=(1<<11),///<アトリビュート取得失敗
+	MMDL_MOVEBIT_HEIGHT_GET_ERROR=(1<<12),///<高さ取得失敗
+  MMDL_MOVEBIT_BLACT_ADD_PRAC=(1<<13),///<ビルボードアクター追加中
+	MMDL_MOVEBIT_SHADOW_SET=(1<<14),///<影をセットした
+	MMDL_MOVEBIT_SHADOW_VANISH=(1<<15),///<影表示、非表示
+	MMDL_MOVEBIT_GRASS_SET=(1<<16),///<草をセットした
+	MMDL_MOVEBIT_REFLECT_SET=(1<<17),///<映り込みをセットした
+	MMDL_MOVEBIT_EFFSET_SHOAL=(1<<18),///<浅瀬エフェクトをセット
 }MMDL_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -874,47 +876,51 @@ extern BOOL MMDLSYS_GetPauseMoveFlag( MMDLSYS* mmdlsys );
 extern u32 MMDL_CheckMMdlSysStatusBit(
 	const MMDL *mmdl, MMDLSYS_STABIT bit );
 extern BOOL MMDL_CheckStatusBitUse( const MMDL *mmdl );
-extern void MMDL_OnStatusBitMove( MMDL *mmdl );
-extern void MMDL_OffStatusBitMove( MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitMove( const MMDL *mmdl );
-extern void MMDL_OnStatusBitMoveStart( MMDL * mmdl );
-extern void MMDL_OffStatusBitMoveStart( MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitMoveStart( const MMDL * mmdl );
-extern void MMDL_OnStatusBitMoveEnd( MMDL * mmdl );
-extern void MMDL_OffStatusBitMoveEnd( MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitMoveEnd( const MMDL * mmdl );
-extern void MMDL_OnStatusBitCompletedDrawInit( MMDL * mmdl );
-extern void MMDL_OffStatusBitCompletedDrawInit( MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitCompletedDrawInit(const MMDL * mmdl);
+extern void MMDL_OnMoveBitMove( MMDL *mmdl );
+extern void MMDL_OffMoveBitMove( MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitMove( const MMDL *mmdl );
+extern void MMDL_OnMoveBitMoveStart( MMDL * mmdl );
+extern void MMDL_OffMoveBitMoveStart( MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitMoveStart( const MMDL * mmdl );
+extern void MMDL_OnMoveBitMoveEnd( MMDL * mmdl );
+extern void MMDL_OffMoveBitMoveEnd( MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitMoveEnd( const MMDL * mmdl );
+extern void MMDL_OnMoveBitCompletedDrawInit( MMDL * mmdl );
+extern void MMDL_OffMoveBitCompletedDrawInit( MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitCompletedDrawInit(const MMDL * mmdl);
 extern BOOL MMDL_CheckStatusBitVanish( const MMDL * mmdl );
 extern void MMDL_SetStatusBitVanish( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag );
-extern void MMDL_SetStatusBitMove( MMDL * mmdl, int flag );
+extern void MMDL_SetMoveBitMove( MMDL * mmdl, int flag );
 extern BOOL MMDL_CheckStatusBitTalk( MMDL * mmdl );
 extern void MMDL_SetStatusBitTalkOFF( MMDL * mmdl, BOOL flag );
-extern void MMDL_OnStatusBitMoveProcPause( MMDL * mmdl );
-extern void MMDL_OffStatusBitMoveProcPause( MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitMoveProcPause( const MMDL * mmdl );
+extern void MMDL_OnMoveBitMoveProcPause( MMDL * mmdl );
+extern void MMDL_OffMoveBitMoveProcPause( MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitMoveProcPause( const MMDL * mmdl );
 extern BOOL MMDL_CheckCompletedDrawInit( const MMDL * mmdl );
 extern void MMDL_SetStatusBitHeightGetOFF( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitHeightGetOFF( const MMDL * mmdl );
 extern void MMDL_SetStatusBitNotZoneDelete( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetStatusBitAlies( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitAlies( const MMDL * mmdl );
-extern void MMDL_SetStatusBitShoalEffect( MMDL * mmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitShoalEffect( const MMDL * mmdl );
+extern void MMDL_SetMoveBitShoalEffect( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckMoveBitShoalEffect( const MMDL * mmdl );
 extern void MMDL_SetStatusBitAttrOffsetOFF( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl );
+#ifndef MMDL_PL_NULL
 extern void MMDL_SetStatusBitBridge( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl );
-extern void MMDL_SetStatusBitReflect( MMDL * mmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitReflect( const MMDL * mmdl );
-extern BOOL MMDL_CheckStatusBitAcmd( const MMDL * mmdl );
+#endif
+extern void MMDL_SetMoveBitReflect( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckMoveBitReflect( const MMDL * mmdl );
+extern BOOL MMDL_CheckMoveBitAcmd( const MMDL * mmdl );
+#if 0 //wb null
 extern void MMDL_SetStatusBitHeightExpand( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl );
+#endif
 
-extern void MMDL_SetMoveBitAttrGetOFF( MMDL * mmdl, BOOL flag );
-extern int MMDL_CheckMoveBitAttrGetOFF( const MMDL * mmdl );
+extern void MMDL_SetStatusBitAttrGetOFF( MMDL * mmdl, BOOL flag );
+extern int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );

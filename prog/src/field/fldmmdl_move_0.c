@@ -395,7 +395,7 @@ static void DirRndWorkInit( MMDL * fmmdl, int id )
 	work->tbl_id = id;
 	
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );					//•`‰æƒXƒe[ƒ^ƒX@’â~
-	MMDL_OffStatusBitMove( fmmdl );								//í‚É’â~’†
+	MMDL_OffMoveBitMove( fmmdl );								//í‚É’â~’†
 }
 
 //--------------------------------------------------------------
@@ -657,7 +657,7 @@ static void MvRndWorkInit( MMDL * fmmdl, int ac, int tbl_id, int check )
 	work->tbl_id = tbl_id;
 	
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -676,8 +676,8 @@ void MMDL_MvRnd_Move( MMDL * fmmdl )
 	
 	switch( work->seq_no ){
 	case 0:
-		MMDL_OffStatusBitMove( fmmdl );
-		MMDL_OffStatusBitMoveEnd( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
+		MMDL_OffMoveBitMoveEnd( fmmdl );
 		
 		ret = MMDL_GetDirDisp( fmmdl );
 		ret = MMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
@@ -730,14 +730,14 @@ void MMDL_MvRnd_Move( MMDL * fmmdl )
 		ret = MMDL_ChangeDirAcmdCode( ret, work->acmd_code );
 		MMDL_SetLocalAcmd( fmmdl, ret );
 			
-		MMDL_OnStatusBitMove( fmmdl );
+		MMDL_OnMoveBitMove( fmmdl );
 		work->seq_no++;
 	case 4:
 		if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 			break;
 		}
 		
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		work->seq_no = 0;
 	}
 }
@@ -849,7 +849,7 @@ static void MvDirWorkInit( MMDL * fmmdl, int dir )
 	work->dir = dir;
 	
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	MMDL_UpdateGridPosCurrent( fmmdl );
 }
 
@@ -943,7 +943,7 @@ static void MvSpinDirWorkInit( MMDL * fmmdl, int dir )
 	work->spin_dir = dir;
 	
 	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
-	MMDL_OffStatusBitMove( fmmdl );
+	MMDL_OffMoveBitMove( fmmdl );
 	MMDL_UpdateGridPosCurrent( fmmdl );
 }
 
@@ -1382,7 +1382,7 @@ static int MvRt2_MoveSet( MMDL * fmmdl, MV_RT2_WORK *work )
 		}
 	}
 	
-	MMDL_OnStatusBitMove( fmmdl );
+	MMDL_OnMoveBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT2_MOVE;
 	return( TRUE );
 }
@@ -1398,7 +1398,7 @@ static int MvRt2_MoveSet( MMDL * fmmdl, MV_RT2_WORK *work )
 static int MvRt2_Move( MMDL * fmmdl, MV_RT2_WORK *work )
 {
 	if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
@@ -1736,7 +1736,7 @@ static int MvRt3Move_MoveDirSet( MMDL * fmmdl, MV_RT3_WORK *work )
 		}
 	}
 	
-	MMDL_OnStatusBitMove( fmmdl );
+	MMDL_OnMoveBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT3_MOVE;
 	return( TRUE );
 }
@@ -1752,7 +1752,7 @@ static int MvRt3Move_MoveDirSet( MMDL * fmmdl, MV_RT3_WORK *work )
 static int MvRt3Move_MoveDir( MMDL * fmmdl, MV_RT3_WORK *work )
 {
 	if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
@@ -1949,7 +1949,7 @@ static int MvRt4Move_JikiCheck( MMDL * fmmdl, MV_RT4_WORK *work )
 		if( ret != EYE_CHECK_NOHIT ){
 			int ac = MMDL_ChangeDirAcmdCode( eye_dir, AC_STAY_JUMP_U_8F );
 			MMDL_SetLocalAcmd( fmmdl, ret );
-			MMDL_OnStatusBitMove( fmmdl );
+			MMDL_OnMoveBitMove( fmmdl );
 			work->seq_no = SEQNO_MV_RT4_DISCOVERY_JUMP;
 			return( TRUE );
 		}
@@ -1970,7 +1970,7 @@ static int MvRt4Move_JikiCheck( MMDL * fmmdl, MV_RT4_WORK *work )
 static int MvRt4Move_DiscoveryJump( MMDL * fmmdl, MV_RT4_WORK *work )
 {
 	if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		work->seq_no = SEQNO_MV_RT4_MOVE_DIR_SET;
 	}
 	
@@ -2059,7 +2059,7 @@ static int MvRt4Move_MoveDirSet( MMDL * fmmdl, MV_RT4_WORK *work )
 		}
 	}
 	
-	MMDL_OnStatusBitMove( fmmdl );
+	MMDL_OnMoveBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT4_MOVE;
 	return( TRUE );
 }
@@ -2075,7 +2075,7 @@ static int MvRt4Move_MoveDirSet( MMDL * fmmdl, MV_RT4_WORK *work )
 static int MvRt4Move_MoveDir( MMDL * fmmdl, MV_RT4_WORK *work )
 {
 	if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
-		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffMoveBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
