@@ -43,6 +43,8 @@ typedef enum {
 
   REWRITE_FREE = 0,   ///< Ž©—R‚É‰Â”\
   REWRITE_ONCE,       ///< ‚P‰ñ‚¾‚¯‰Â”\
+  REWRITE_END,        ///< ‚P‰ñ‘‚«Š·‚¦‚½‚Ì‚Å‚à‚¤I—¹
+  REWRITE_MUL,        ///< æŽZ‚Ì‚Ý‰Â”\
   REWRITE_LOCK,       ///< •s‰Â
 
 }RewriteState;
@@ -829,7 +831,7 @@ void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32
     stack->value[p] = value;
     stack->mulMin[p] = mulMin;
     stack->mulMax[p] = mulMax;
-    stack->rewriteState[p] = REWRITE_FREE;
+    stack->rewriteState[p] = REWRITE_MUL;
   }
 }
 //=============================================================================================
@@ -852,16 +854,19 @@ BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
     int p = evar_getExistPoint( stack, label );
     if( p >= 0 )
     {
-      if( stack->rewriteState[p] != REWRITE_LOCK )
-      {
+      if( (stack->rewriteState[p] == REWRITE_FREE)
+      ||  (stack->rewriteState[p] == REWRITE_ONCE)
+      ){
         stack->label[p] = label;
         stack->value[p] = (int)value;
         if( stack->rewriteState[p] == REWRITE_ONCE ){
-          stack->rewriteState[p] = REWRITE_LOCK;
+          stack->rewriteState[p] = REWRITE_END;
         }
         return TRUE;
       }
-      else{
+      else if(  (stack->rewriteState[p] == REWRITE_LOCK)
+      ||        (stack->rewriteState[p] == REWRITE_MUL)
+      ){
         GF_ASSERT_MSG(0, "this label(%d) can't rewrite\n", label);
       }
     }
@@ -919,7 +924,7 @@ int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
       }
       ++p;
     }
-    GF_ASSERT_MSG(0,"label=%d",label);  // label not found
+    GF_ASSERT_MSG(0,"label-%d not found",label);  // label not found
     return 0;
   }
 }
