@@ -271,24 +271,6 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-
-/*
-  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-
-  if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
-	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
-	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
-	  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
-	  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
-	  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
-	  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
-		ITEMDISP_RemoveSubDispItemIcon( pWork );
-  }else{
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
-	}
-*/
-
   ITEMDISP_upMessageRewrite(pWork);
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
@@ -652,7 +634,7 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
     }
     {
       int length = ITEMMENU_GetItemPocketNumber( pWork);
-      BOOL bChange=FALSE;
+      BOOL bChange = FALSE;
       int num = (6 * (y-_SCROLL_TOP_Y)) / ymax;  //カーソルを移動させたい量
 
       if(pWork->curpos == num){
@@ -1233,10 +1215,14 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
 {
-  // @TODO タッチ
-  if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
+  if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg())
+  {
+    // 再描画
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+    _windowRewrite(pWork);
+
     InputNum_ButtonState( pWork, TRUE );
+
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1254,7 +1240,7 @@ static void _itemTrashYesWait(FIELD_ITEMMENU_WORK* pWork)
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
-  _windowRewrite(pWork);
+
   _CHANGE_STATE(pWork,_itemTrashEndWait);
 
 }
@@ -1288,9 +1274,8 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
       WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->InputNum,
                              3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      
       ITEMDISP_ItemInfoWindowDisp( pWork );
-
-      // 再描画---
 
       _CHANGE_STATE(pWork,_itemTrashYesWait);
     }
@@ -2052,7 +2037,7 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
   }
 #endif
 
-  // @TODO もしスタックを使い切ったらバッファ確保を考える
+  // ※もしスタックを使い切ったらバッファ確保で対処する
   MATH_QSort( (void*)item, length, sizeof(ITEM_ST), QSort_ABC, NULL );
 
 #ifdef PM_DEBUG
