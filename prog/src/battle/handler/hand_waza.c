@@ -5008,11 +5008,12 @@ static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_NOEFFECT_CHECK_L2,  handler_Feint_NoEffect },      // ワザ無効チェックLv2
     { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak },   // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END,       handler_Feint_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_DAMAGEPROC_END,     handler_Feint_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ無効チェックLv2
 static void handler_Feint_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -5024,31 +5025,36 @@ static void handler_Feint_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }
   }
 }
+// まもる無効化チェック
 static void handler_Feint_MamoruBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }
+// ダメージ処理後
 static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU) )
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_TARGET_POKECNT) )
     {
-      BTL_HANDEX_PARAM_TURNFLAG* flg_param;
-      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
-      flg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_TURNFLAG, pokeID );
-      flg_param->pokeID = target_pokeID;
-      flg_param->flag = BPP_TURNFLG_MAMORU;
+      if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU) )
+      {
+        BTL_HANDEX_PARAM_TURNFLAG* flg_param;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Feint );
-      HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
+        flg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_TURNFLAG, pokeID );
+        flg_param->pokeID = target_pokeID;
+        flg_param->flag = BPP_TURNFLG_MAMORU;
+
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Feint );
+        HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
+      }
     }
   }
 }
