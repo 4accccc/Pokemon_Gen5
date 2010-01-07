@@ -41,43 +41,26 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2)
+LDIRT_CLEAN += *.bin $(NARCNAME1) $(NARCNAME2)
 endif
 
 #コンバート対象のファイルツリーを生成
-DATAFILES:=$(wildcard trdata_*.s)
-POKEFILES:=$(wildcard trpoke_*.s)
-ELF2BINDIR = ../../tools/
+DATAFILES:=$(wildcard trdata_*.bin)
+POKEFILES:=$(wildcard trpoke_*.bin)
 
 .PHONY:	do-build
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-.SUFFIXES: .s .bin
+.SUFFIXES: .bin
 
 do-build: trdata.narc
-trdata.narc: $(DATAFILES:.s=.bin)
+trdata.narc: $(DATAFILES)
 	nnsarc -c -l -n -i trdata.narc trdata_*.bin
 
 do-build: trpoke.narc
-trpoke.narc: $(POKEFILES:.s=.bin)
+trpoke.narc: $(POKEFILES)
 	nnsarc -c -l -n -i trpoke.narc trpoke_*.bin
-
-do-build: $(DATAFILES:.s=.bin)
-%.bin:%.s
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
-	$(ELF2BINDIR)elf2bin $*.elf
-	rm $*.o
-	rm $*.elf
-
-do-build: $(POKEFILES:.s=.bin)
-%.bin:%.s
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
-	$(ELF2BINDIR)elf2bin $*.elf
-	rm $*.o
-	rm $*.elf
 
 endif
 
