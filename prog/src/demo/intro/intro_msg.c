@@ -73,8 +73,6 @@ struct _INTRO_MSG_WORK {
   GFL_MSGDATA*  msghandle;
   GFL_FONT*     font;
 
-  BOOL          push_flag;
-
   // ストリーム再生
   PRINT_STREAM* print_stream;
   GFL_TCBLSYS*  msg_tcblsys;
@@ -343,7 +341,6 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
     switch( state )
     {
     case PRINTSTREAM_STATE_DONE : // 終了
-//    wk->push_flag = FALSE;
       PRINTSYS_PrintStreamDelete( wk->print_stream );
       wk->print_stream = NULL;
       return TRUE;
@@ -352,22 +349,15 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       // キー入力待ち
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || (  GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
       {
-//      wk->push_flag = TRUE;
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
         GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
-//      APP_KEYCURSOR_Clear( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
       }
       else
       {
-        if( wk->push_flag == FALSE )
-        {
-//          APP_KEYCURSOR_Write( &wk->cursor_work, GFL_BMPWIN_GetBmp(wk->win_dispwin), 15 );
-        }
       }
       break;
 
     case PRINTSTREAM_STATE_RUNNING :  // 実行中
- //     wk->push_flag = FALSE;
       // メッセージスキップ
       if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetTrg() )
       {
