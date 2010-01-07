@@ -504,6 +504,8 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
   switch( *p_seq )
   {
   case SEQ_INIT00:
+    // メモリ残量の表示
+    OS_Printf( "init start heap free size 0x%x\n", GFI_HEAP_GetHeapFreeSize(heapID) );
     {
       GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_work->p_gsys );
       MYSTATUS* p_mystatus = GAMEDATA_GetMyStatus( p_gdata );
@@ -562,6 +564,9 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 
     // 配置アニメーション開始
     EV_BMODEL_Start( &p_work->bmodel ); 
+    
+    // メモリ残量の表示
+    OS_Printf( "init end heap free size 0x%x\n", GFI_HEAP_GetHeapFreeSize(heapID) );
     
     (*p_seq)++;
     break;

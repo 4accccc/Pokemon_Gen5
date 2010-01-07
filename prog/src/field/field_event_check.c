@@ -1579,22 +1579,6 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 				req->heapID, ZONEDATA_GetMapRscID(req->map_id));
 	}
 
-#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_fujiwara_maiko)
-	//今だけ実験
-	if( (req->key_cont & fourkingsCont) == fourkingsCont )
-  { 
-    u32 zoneid = FIELDMAP_GetZoneID( fieldWork );
-    if( (zoneid >= ZONE_ID_C09R0101) && (zoneid <= ZONE_ID_C09R0401) )
-    {
-      return EVENT_FourKings_CircleWalk( gsys, fieldWork, zoneid - ZONE_ID_C09R0101 );
-    }
-    else
-    {
-      return EVENT_FourKings_CircleWalk( gsys, fieldWork, 0 );
-    }
-  }
-#endif
-
 #if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_takahashi) | defined(DEBUG_ONLY_FOR_hozumi_yukiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa) | defined(DEBUG_ONLY_FOR_murakami_naoto) | defined(DEBUG_ONLY_FOR_nakamura_akira)
 	// レールエディタ起動
 	if( (req->key_cont & railCont) == railCont )
