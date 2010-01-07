@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 18:00:38
+#save date:2010/01/07 18:01:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-504 16 -72
+520 16 -88
 #event number: 1
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 16 -72
+-8 16 -104
 #event number: 5
 #type
 1
@@ -373,7 +373,7 @@ SCRID_BG_C04_BOARD_03
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 -56
+-72 16 -72
 #event number: 1
 #Bg Event Label
 BGID_C04_BOARD_02
@@ -386,7 +386,7 @@ SCRID_BG_C04_BOARD_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 16 -56
+216 16 -72
 #event number: 2
 #Bg Event Label
 BGID_C04_BOARD_05
@@ -399,7 +399,7 @@ SCRID_BG_C04_BOARD_05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 16 -56
+568 16 -72
 #event number: 3
 #Bg Event Label
 BGID_C04_BOARD_01
@@ -503,11 +503,11 @@ DOOR_ID_C04R0601_C04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 0 -728
+472 0 -760
 #size
 3 1
 #event number: 1
@@ -520,7 +520,7 @@ DOOR_ID_C04R0701_C04_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -537,7 +537,7 @@ DOOR_ID_C04R0801_C04_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -558,7 +558,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 16 -24
+184 16 -24
 #size
 1 1
 #event number: 4
@@ -575,7 +575,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 16 -456
+568 16 -456
 #size
 1 5
 #event number: 5
@@ -592,7 +592,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 16 -568
+88 16 -568
 #size
 1 1
 #event number: 6
@@ -609,7 +609,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 16 -24
+536 16 -24
 #size
 1 1
 #event number: 7
@@ -643,7 +643,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 16 -568
+-8 16 -568
 #size
 1 1
 #event number: 9
@@ -677,7 +677,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 16 -376
+104 16 -376
 #size
 1 1
 #event number: 11
@@ -694,7 +694,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 16 -376
+-8 16 -376
 #size
 1 1
 #Map Event List Data End
