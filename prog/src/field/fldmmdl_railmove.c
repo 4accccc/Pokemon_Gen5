@@ -138,7 +138,7 @@ void MMDL_InitRailMoveProc( MMDL * mmdl )
 #ifndef MMDL_RAIL_NULL 
 //	MMDL_MoveSubProcInit( mmdl );
 #endif
-	MMDL_OnMoveBit( mmdl, MMDL_STABIT_MOVEPROC_INIT );
+	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVEPROC_INIT );
 }
 
 //----------------------------------------------------------------------------
