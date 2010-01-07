@@ -254,4 +254,6 @@
   ARCID_ELBOARD_ZONE "zone.narc"  # 電光掲示板 ゾーン依存データ
   ARCID_FLD_BBD_COLOR "fieldmap/area_map_mmdl_color.narc"  # フィールドビルボードモデルカラー
   ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
+  ARCID_BMODEL_TEXSET_OUTDOOR  "fieldmap/bmodel_texset_outdoor.narc"  #配置モデルテクスチャセットデータ（屋外）
+  ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
 

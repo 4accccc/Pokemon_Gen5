@@ -86,12 +86,12 @@ do-build:	subdir bindata
 #	$(MAKE) bindata
 	$(MAKE) arc
 	$(MAKE) index
-#	$(MAKE) texset
+	$(MAKE) texset
 
 -include $(DEP_LIST_OUTDOOR)
 -include $(DEP_LIST_INDOOR)
-#-include $(TEXSET_DEP_OUTDOOR)
-#-include $(TEXSET_DEP_INDOOR)
+-include $(TEXSET_DEP_OUTDOOR)
+-include $(TEXSET_DEP_INDOOR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.nsbmd .nsbtx .imd
@@ -102,7 +102,7 @@ vpath %nsbtx $(TEXSETDIR)
 #imdデータからの生成ルール
 %.nsbmd:	../$(SRCDIR)/%.imd
 	@echo $<をコンバート
-	@g3dcvtr $< -o $@
+	@g3dcvtr $< -o $@ -emdl
 
 #テクスチャセットimdデータからの生成ルール
 %.nsbtx:	%.imd

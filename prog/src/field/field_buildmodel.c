@@ -37,7 +37,7 @@
 #include "sound/pm_sndsys.h"  //PMSND_
 #include "sound/wb_sound_data.sadl" //SE指定
 
-//#define BMODEL_TEXSET (1)
+#define BMODEL_TEXSET (1)
 
 //============================================================================================
 //  DEBUG リソースメモリ使用量の検査
