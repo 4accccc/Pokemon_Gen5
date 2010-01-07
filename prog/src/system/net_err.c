@@ -81,6 +81,14 @@ typedef struct{
 	
 	NET_ERR_STATUS status;		///<エラー画面システムの状況
 	s32 key_timer;				///<キー入力受付までのタイマー
+
+  //以下エラー情報保存
+  GFL_NETSTATE_DWCERROR   wifi_error; //WIFIのエラー
+  u8                      error;      //WIFI以外のエラー
+  u8                      net_type;   //ネットのタイプ
+  u8                      dummy[2];
+  NET_ERR_CHECK           err_important_type;  //エラーの重度軽度判別
+
 }NET_ERR_SYSTEM;
 
 
@@ -250,6 +258,42 @@ void NetErr_ErrorSet(void)
 		return;
 	}
 	nes->status = NET_ERR_STATUS_ERROR;
+
+  if( GFL_NET_IsExit() )
+  { 
+    GF_ASSERT_MSG( 0, "ネットが終了しているのに、エラーが検出されました\n" );
+  }
+  else
+  { 
+    const GFLNetInitializeStruct* net_init  = GFL_NET_GetNETInitStruct();
+    nes->net_type     = net_init->bNetType;
+    nes->wifi_error   = *GFL_NET_StateGetWifiError();
+    nes->error        = GFL_NET_StateGetError();
+    
+    if( nes->net_type == GFL_NET_TYPE_WIFI
+        || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY
+        || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
+    { 
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+      //WIFIならば、軽度と重度を判定
+      if( nes->wifi_error.errorType == DWC_ETYPE_LIGHT
+          || nes->wifi_error.errorType == DWC_ETYPE_SHOW_ERROR )
+      { 
+        nes->err_important_type  = NET_ERR_CHECK_LIGHT;
+      }
+      else
+#endif  //MULTI_BOOT_MAKE
+      { 
+        nes->err_important_type  = NET_ERR_CHECK_HEAVY;
+      }
+    }
+    else
+    {
+      //それ以外は重度しかない
+      nes->err_important_type  = NET_ERR_CHECK_HEAVY;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -288,33 +332,10 @@ void NetErr_DEBUG_ErrorSet(void)
 //--------------------------------------------------------------
 NET_ERR_CHECK NetErr_App_CheckError(void)
 {
-	if(NetErrSystem.status != NET_ERR_STATUS_NULL)
+  NET_ERR_SYSTEM *nes = &NetErrSystem;
+  if(nes->status != NET_ERR_STATUS_NULL)
   {
-    const GFLNetInitializeStruct* net_init  = GFL_NET_GetNETInitStruct();
-    if( net_init->bNetType == GFL_NET_TYPE_WIFI
-      || net_init->bNetType == GFL_NET_TYPE_WIFI_LOBBY
-      || net_init->bNetType == GFL_NET_TYPE_WIFI_GTS )
-    { 
-
-#ifndef MULTI_BOOT_MAKE  //通常時処理
-      //WIFIならば、軽度と重度を判定
-      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-      if( cp_error->errorType == DWC_ETYPE_LIGHT
-          || cp_error->errorType == DWC_ETYPE_SHOW_ERROR )
-      { 
-        return NET_ERR_CHECK_LIGHT;
-      }
-      else
-#endif  //MULTI_BOOT_MAKE
-      { 
-        return NET_ERR_CHECK_HEAVY;
-      }
-    }
-    else
-    {
-      //それ以外は重度しかない
-      return NET_ERR_CHECK_HEAVY;
-    }
+    return nes->err_important_type;
   }
   return NET_ERR_CHECK_NONE;
 }
@@ -383,6 +404,7 @@ static BOOL NetErr_DispMain(void)
 		//エラー画面終了
 		Local_ErrDispExit();
 		nes->status = NET_ERR_STATUS_NULL;
+    nes->err_important_type = NET_ERR_CHECK_NONE;
 		nes->key_timer = 0;
   	return TRUE;
 	}
