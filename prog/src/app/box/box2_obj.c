@@ -2708,21 +2708,6 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 手カーソル表示切替
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	flg		ON = 表示、OFF = 非表示
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg )
-{
-	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_CURSOR, flg );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * 手カーソル移動
  *
  * @param	appwk	ボックス画面アプリワーク
@@ -2733,12 +2718,33 @@ void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow )
 {
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_HAND_CURSOR, px, py, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_HAND_SHADOW, px, py+24, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_SHADOW, shadow );
 }
+*/
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手カーソルアニメセット
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		anm			アニメ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm )
+{
+	if( syswk->mv_cnv_mode != 0 ){
+		anm = anm - BOX2OBJ_ANM_HAND_NORMAL + BOX2OBJ_ANM_HAND2_NORMAL;
+	}
+	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, anm );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

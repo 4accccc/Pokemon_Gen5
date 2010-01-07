@@ -460,6 +460,9 @@ typedef struct {
 
 	u8	move_mode;			// ポケモン移動モード
 
+	u8	mv_cnv_mode:4;		// 便利モードフラグ 1 = yes, 0 = no
+	u8	mv_cnv_end:4;			// 掴む終了フラグ
+
 //	u8	quick_mode;			//「ポケモンいどう」のモード ( 0 = 通常, 1 = トレイポケモン, 2 = 手持ちポケモン )
 //	u8	quick_get;			//「ポケモンいどう」メニューでの取得位置
 

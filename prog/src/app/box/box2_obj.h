@@ -25,9 +25,9 @@ enum {
 	BOX2OBJ_ANM_HAND_OPEN,				// 手カーソル：開く
 	BOX2OBJ_ANM_HAND_CLOSE,				// 手カーソル：閉じる
 	BOX2OBJ_ANM_HAND_SHADOW,			// 手カーソル：影
-//	BOX2OBJ_ANM_TB_STATUS,				// タッチバーステータス
-//	BOX2OBJ_ANM_TB_STATUS_ON,			// タッチバーステータス・ON
-//	BOX2OBJ_ANM_TB_STATUS_OFF,		// タッチバーステータス・OFF
+	BOX2OBJ_ANM_HAND2_NORMAL,			// 便利モード手カーソル：通常
+	BOX2OBJ_ANM_HAND2_OPEN,				// 便利モード手カーソル：開く
+	BOX2OBJ_ANM_HAND2_CLOSE,			// 便利モード手カーソル：閉じる
 };
 
 #define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
@@ -759,17 +759,6 @@ extern void BOX2OBJ_TypeIconChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * 
 //	その他
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * 手カーソル表示切替
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	flg		ON = 表示、OFF = 非表示
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -783,7 +772,9 @@ extern void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow );
+//extern void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow );
+
+extern void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
