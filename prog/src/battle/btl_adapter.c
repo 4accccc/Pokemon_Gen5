@@ -204,7 +204,7 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
   wk->returnDataSize = 0;
   wk->returnDataPreparedFlag = FALSE;
 
-  BU_Printf(PRINT_FLG, " Adapter-%d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
+  BTL_N_PrintfEx(PRINT_FLG, DBGSTR_ADAPTER_SEND_START, wk->myID, wk->processingCmd );
 }
 
 
@@ -231,7 +231,7 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
     {
       break;
     }
-    BU_Printf(PRINT_FLG, " [Adapter] Received from All Clients\n");
+    BTL_N_PrintfEx(PRINT_FLG, DBGSTR_ADAPTER_RECV_DONE );
     wk->myState = AS_DONE;
     /*fallthru*/;
   case AS_DONE:
@@ -319,7 +319,7 @@ static BOOL _ReceptionClient( BTL_ADAPTER* wk )
     {
       wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
       wk->returnDataPreparedFlag = TRUE;
-      BU_Printf(PRINT_FLG, " [Adapter] Received from AdapterID=%d\n", wk->myID );
+      BTL_N_PrintfEx(PRINT_FLG, DBGSTR_ADAPTER_RECVED_A_CLIENT, wk->myID );
       return TRUE;
     }
     return FALSE;

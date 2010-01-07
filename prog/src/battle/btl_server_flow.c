@@ -4942,10 +4942,10 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       fxDamage = (wazaPower * atkPower * (atkLevel*2/5+2));
       fxDamage = fxDamage / defGuard / 50;
       fxDamage += 2;
-      BU_Printf(PRINT_FLG, "基礎ダメージ値 (%d)\n", fxDamage);
+      BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_BaseDamage, fxDamage);
     }
     fxDamage  = BTL_CALC_MulRatio( fxDamage, targetDmgRatio );
-    BU_Printf( PRINT_FLG, "対象数によるダメージ補正:%d\n", fxDamage);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RangeHosei, fxDamage);
     // 天候補正
     {
       fx32 weatherDmgRatio = BTL_FIELD_GetWeatherDmgRatio( wazaParam->wazaID );
@@ -4953,36 +4953,36 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       {
         u32 prevDmg = fxDamage;
         fxDamage = BTL_CALC_MulRatio( fxDamage, weatherDmgRatio );
-        BU_Printf( PRINT_FLG, "天候による補正が発生, 補正率=%08x, dmg=%d->%d\n", weatherDmgRatio, prevDmg, fxDamage);
+        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_WeatherHosei, weatherDmgRatio, prevDmg, fxDamage);
       }
     }
     // 素ダメージ値を確定
-    BU_Printf( PRINT_FLG, "威力:%d, Lv:%d, こうげき:%d, ぼうぎょ:%d,  ... 素ダメ:%d\n",
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RAW_DAMAGE,
         wazaPower, atkLevel, atkPower, defGuard, fxDamage );
 
     // クリティカルで２倍
     if( criticalFlag ){
       fxDamage *= 2;
-      BU_Printf( PRINT_FLG, "クリティカルだから素ダメ->%d\n", fxDamage);
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_Critical, fxDamage);
     }
     //ランダム補正(100～85％)
     {
       u16 ratio = 100 - BTL_CALC_GetRand( 16 );
 //      rawDamage = (rawDamage * ratio) / 100;
       fxDamage = (fxDamage * ratio) / 100;
-      BU_Printf( PRINT_FLG, "ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fxDamage);
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RandomHosei, ratio, fxDamage);
     }
     // タイプ一致補正
     {
       fx32 ratio = scEvent_CalcTypeMatchRatio( wk, attacker, wazaParam->wazaType );
       fxDamage = BTL_CALC_MulRatio( fxDamage, ratio );
       if( ratio != FX32_ONE ){
-        BU_Printf( PRINT_FLG, "タイプ一致補正:%d%%  -> 素ダメ=%d\n", (ratio*100>>FX32_SHIFT), fxDamage);
+        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_TypeMatchHosei, (ratio*100>>FX32_SHIFT), fxDamage);
       }
     }
     // タイプ相性計算
     fxDamage = BTL_CALC_AffDamage( fxDamage, typeAff );
-    BU_Printf( PRINT_FLG, "タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fxDamage);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_TypeAffInfo, typeAff, fxDamage);
     // やけど補正
     if( (dmgType == WAZADATA_DMG_PHYSIC)
     &&  (BPP_GetPokeSick(attacker) == POKESICK_YAKEDO)
@@ -5000,7 +5000,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
       rawDamage = BTL_CALC_MulRatio( rawDamage, ratio );
-      BU_Printf( PRINT_FLG, "ダメ受けポケモン=%d, ratio=%08x, Damage=%d -> %d\n",
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_DamageResult,
             BPP_GetID(defender), ratio, BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE ), rawDamage);
     }
   } /* if( rawDamage == 0 ) */
@@ -5008,7 +5008,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   // 最高で残りＨＰの範囲に収まるように最終補正
   if( rawDamage > BPP_GetValue(defender, BPP_HP) ){
     rawDamage = BPP_GetValue( defender, BPP_HP );
-    BU_Printf( PRINT_FLG, "ダメ受けポケモンのＨＰ値にまるめ->%d\n", rawDamage);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_DamageMarume, rawDamage);
   }
 
   BTL_EVENTVAR_Pop();

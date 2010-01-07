@@ -454,12 +454,7 @@ static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
 // ÉoÉgÉãópPrintfèàóù
 //===================================================================
 
-typedef enum {
-  BTL_PRINTTYPE_UNKNOWN,
-  BTL_PRINTTYPE_SERVER,
-  BTL_PRINTTYPE_CLIENT,
-  BTL_PRINTTYPE_STANDALONE,
-}BtlPrintType;
+#include "btl_debug_print.h"
 
 extern void BTL_UTIL_PRINTSYS_Init( void );
 extern void BTL_UTIL_PRINTSYS_Quit( void );
@@ -476,7 +471,7 @@ extern void BTL_UTIL_PRINTSYS_Quit( void );
 #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 extern void BTL_UTIL_SetPrintType( BtlPrintType type );
-extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
+extern void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... );
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
 
 #define BTL_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
@@ -495,8 +490,11 @@ extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size
 #endif  // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 
+extern void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... );
+#define BTL_N_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
+#define BTL_N_PrintfEx( flg, ... )  if( flg ){ BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ ); }
+#define BTL_N_PrintfSimple( ... ) OS_TPrintf( __VA_ARGS__ )
+#define BTL_N_PrintfSimpleEx( flg, ... ) if( flg ){ OS_TPrintf( __VA_ARGS__ ); }
 
 
-
-#define BU_Printf( flg, ... ) if( flg ){ OS_TPrintf( __VA_ARGS__ ); }
 

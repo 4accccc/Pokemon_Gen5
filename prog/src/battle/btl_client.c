@@ -391,7 +391,7 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
 
   case 1:
     if( wk->subProc(wk, &wk->subSeq) ){
-      BU_Printf( PRINT_FLG, "ID[%d], 返信開始へ\n", wk->myID );
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_START, wk->myID );
       wk->myState++;
     }
     break;
@@ -399,7 +399,7 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
   case 2:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = 0;
-      BU_Printf( PRINT_FLG, "ID[%d], 返信しました\n", wk->myID );
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
     }
     break;
   }
@@ -608,7 +608,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case 1:
     if( SelActProc_Call(wk) ){
-      BU_Printf( PRINT_FLG, "アクション選択終了\n");
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_SelectAction_Done );
       return TRUE;
     }
     break;
@@ -668,7 +668,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
     wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
-      BU_Printf( PRINT_FLG, "ACT選択(%d体目）スキップ\n", wk->procPokeIdx );
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       SelActProc_Set( wk, selact_CheckFinish );
     }else{
       (*seq)++;
@@ -1016,7 +1016,7 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
   wk->checkedPokeCnt++;
   if( wk->procPokeIdx >= wk->numCoverPos )
   {
-    BU_Printf( PRINT_FLG, "カバー位置数(%d)終了、アクション送信へ\n", wk->numCoverPos);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
     wk->returnDataPtr = &(wk->actionParam[0]);
     wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
     SelActProc_Set( wk, selact_Finish );
@@ -1058,7 +1058,7 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
 
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
-      BU_Printf( PRINT_FLG, "返信シーケンス終了\n");
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_ReturnSeqDone );
       (*seq)++;
       return TRUE;
     }
@@ -1134,7 +1134,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     BtlPokePos pos = BPP_GetPrevTargetPos( wk->procPoke );
     u8 waza_idx;
     waza_idx = BPP_WAZA_SearchIdx( wk->procPoke, waza );
-    BU_Printf( PRINT_FLG, "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n", wk->myID, waza, waza_idx, pos);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_WazaLockInfo, wk->myID, waza, waza_idx, pos);
     if( BPP_WAZA_GetPP(wk->procPoke, waza_idx) ){
       if( action ){
         BTL_ACTION_SetFightParam( action, waza, pos );
@@ -2813,7 +2813,6 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
 //      BPP_HpPlus( bpp, args[2] );
       if( vpos != BTLV_MCSS_POS_ERROR ){
-        BU_Printf( PRINT_FLG, "経験値ゲージ vpos=%d\n", vpos);
         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
         (*seq)++;
       }
@@ -2826,7 +2825,6 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
       BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
-      BU_Printf( PRINT_FLG, "レベルアップ vpos=%d\n", vpos);
       BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
       (*seq)++;
     }
@@ -2835,11 +2833,9 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     {
       BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
       if( vpos != BTLV_MCSS_POS_ERROR ){
-        BU_Printf( PRINT_FLG, "レベルアップエフェクト待ち vpos=%d\n", vpos);
         if( !BTLV_WaitEffectByPos(wk->viewCore, vpos) ){
           return FALSE;
         }
-        BU_Printf( PRINT_FLG, "エフェクト終わった\n");
       }
 
       {
@@ -3285,7 +3281,6 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
   switch( *seq ){
   case 0:
-    BU_Printf( PRINT_FLG, "[CLIENT] TokWin IN : pokeID=%d, pos=%d\n", args[0], pos);
     BTLV_TokWin_DispStart( wk->viewCore, pos, TRUE );
     (*seq)++;
     break;
@@ -3309,7 +3304,6 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-  BU_Printf( PRINT_FLG, "[CLIENT] TokWin OUT : pokeID=%d, pos=%d\n", args[0], pos);
   BTLV_QuitTokWin( wk->viewCore, pos );
   return TRUE;
 }
@@ -3456,8 +3450,6 @@ static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-//  BU_Printf( PRINT_FLG, "[CLI] UpdatePrevWaza : ID=%d, target=%d\n", args[2], args[1]);
-  BU_Printf( PRINT_FLG, "[CLI] Update Poke(%d) PrevWaza wazaID=%d, target=%d\n", args[0], args[2], args[1] );
 
   BPP_UpdatePrevWazaID( pp, args[2], args[1] );
   return TRUE;

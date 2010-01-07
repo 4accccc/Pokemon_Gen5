@@ -208,7 +208,6 @@ const GFL_PROC_DATA BtlProcData = {
   BTL_PROC_Quit,
 };
 
-FS_EXTERN_OVERLAY(battle_print);
 
 
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
@@ -225,6 +224,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       wk = GFL_PROC_AllocWork( proc, sizeof(BTL_MAIN_MODULE), HEAPID_BTL_SYSTEM );
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
+
+      BTL_UTIL_PRINTSYS_Init();
 
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
@@ -272,6 +273,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_Printf("セットアップ終了\n");
+        BTL_N_Printf( DBGSTR_SETUP_DONE );
         return GFL_PROC_RES_FINISH;
       }
    }
@@ -344,6 +346,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_SYSTEM );
     BTL_Printf("クリーンアッププロセス終了\n");
+    BTL_UTIL_PRINTSYS_Quit();
     return GFL_PROC_RES_FINISH;
   }
 
@@ -505,6 +508,7 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
     }
   }
   BTL_Printf("デバッグフラグbit=%04x\n", sp->DebugFlagBit);
+  BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
 }
 
 /**
@@ -2998,7 +3002,7 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
     party->member[ idx1 ] = party->member[ idx2 ];
     party->member[ idx2 ] = tmp;
 
-    BU_Printf(TRUE, "パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
+    BTL_N_PrintfEx(TRUE, DBGSTR_MAIN_SwapPartyMember, idx1, idx2);
   }
 }
 /**
