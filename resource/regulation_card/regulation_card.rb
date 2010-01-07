@@ -271,6 +271,10 @@ class RegulationBin
       num = value.to_i
       outFH.write([num].pack("c"))
       
+      ##ステータスは0
+      num = 0
+      outFH.write([num].pack("c"))
+      
     else
     end
     
@@ -294,7 +298,7 @@ class RegulationBin
 
   def headerplus(outHeader)
     outHeader.puts("//レギュレーションのデータ引き出しラベルです")
-    outHeader.puts("//reguration.rb reguration.xls からの自動生成です")
+    outHeader.puts("//regulation.rb regulation.xls からの自動生成です")
     outHeader.puts("#pragma once")
   end
   
@@ -315,7 +319,7 @@ class RegulationBin
       else
         break
       end
-      outFH = File.new("reguration" + sprintf("%03d",lineindex) + ".bin","wb")
+      outFH = File.new("regulation" + sprintf("%03d",lineindex) + ".bin","wb")
       tabarray = line.split(/\t+/)
       tabarray.each{ |value|
         valuefunc(index, value, outFH)
@@ -357,6 +361,8 @@ class RegulationBin
     gmmread(pokegmm, @HashPokeGmm)
     gmmread(itemgmm, @HashItemGmm)
   end
+  
+  
   
 end
 
