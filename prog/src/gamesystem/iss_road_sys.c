@@ -7,6 +7,7 @@
  */
 //////////////////////////////////////////////////////////////////////////////////
 #include "iss_road_sys.h"
+#include "sound/pm_sndsys.h"
 #include "../field/field_sound.h"
 #include "gamesystem/playerwork.h"
 
@@ -195,6 +196,7 @@ static void BootSystem( ISS_ROAD_SYS* sys )
   // ãNìÆ
 	sys->isActive = TRUE;
 	sys->volume   = MIN_VOLUME;	// âπó Çç≈è¨Ç…ê›íË
+  PMSND_ChangeBGMVolume( TRACKBIT, MIN_VOLUME );
 
   // DEBUG:
   OBATA_Printf( "ISS-R: boot\n" );
