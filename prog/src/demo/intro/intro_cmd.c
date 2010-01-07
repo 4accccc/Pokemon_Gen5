@@ -871,13 +871,31 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
   switch( sdat->seq )
   {
   case 0 :
+
+    if( param[1] )
+    {
+      INTRO_MCSS_SetAlpha( wk->mcss, param[0], 1 ); // alpha値 初期値設定(0だとポリゴンの枠のみ透過されずに見えてしまうので1)
+    }
+    else
+    {
+      INTRO_MCSS_SetAlpha( wk->mcss, param[0], 31 ); // alpha値 初期値設定
+    }
+      
+    // 半透明を使うとDSの仕様で板ポリのプライオリティがずれてしまうので、パレットフェードで誤魔化す。（バトルの真似）
+//    INTRO_MCSS_SetPaletteFade( wk->mcss, param[0], 16, 16, 0, 0 );
+
+    // このコマンドを呼ぶときはVISIBLE_ONで然るべきなので強制設置
+    INTRO_MCSS_SetVisible( wk->mcss, TRUE, param[0] );
+
     sdat->cnt = 31;
     sdat->seq++;
     break;
   case 1 :
-    sdat->cnt--;
+    sdat->cnt -=2;
     if( sdat->cnt <= 0 )
     {
+//      INTRO_MCSS_SetPaletteFade( wk->mcss, param[0], 0, 0, 0, 0 );
+      INTRO_MCSS_SetAlpha( wk->mcss, param[0], 31 ); // alpha値をリセット
       INTRO_MCSS_SetVisible( wk->mcss, param[1], param[0] );
       return TRUE;
     }

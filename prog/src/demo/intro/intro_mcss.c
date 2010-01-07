@@ -320,6 +320,30 @@ void INTRO_MCSS_SetMepachi( INTRO_MCSS_WORK* wk, u8 id, BOOL is_mepachi_flag )
   {
     MCSS_ResetMepachiFlag( wk->mcss_work[id] );
   }
-
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSSパレットフェード
+ *
+ *  @param[in]	id        内部ワーク管理ID
+ *  @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ *  @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
+ *  @param[in]	wait			セットするパラメータ（ウェイト）
+ *  @param[in]	rgb				セットするパラメータ（フェードさせる色）
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_SetPaletteFade( INTRO_MCSS_WORK* wk, u8 id, u8 start_evy, u8 end_evy, u8 wait, u32 rgb )
+{
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->mcss );
+  GF_ASSERT( id < MCSS_ID_MAX );
+  GF_ASSERT( wk->mcss_work[id] );
+
+  MCSS_SetPaletteFade( wk->mcss_work[id], start_evy, end_evy, wait, rgb );
+}
+
+
 
