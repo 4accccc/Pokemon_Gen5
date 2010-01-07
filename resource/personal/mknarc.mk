@@ -29,9 +29,9 @@ TARGETDIR	= $(PROJECT_ARCDIR)personal/
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-PERFILES:=$(wildcard per_*.s)
-WOTFILES:=$(wildcard wot_*.s)
-EVOFILES:=$(wildcard evo_*.s)
+PERFILES:=$(wildcard per_*.bin)
+WOTFILES:=$(wildcard wot_*.bin)
+EVOFILES:=$(wildcard evo_*.bin)
 PMSFILES:=$(wildcard pms_*.bin)
 
 ELF2BIN = ../../tools/elf2bin.exe
@@ -59,38 +59,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .s .bin
 
 #パーソナルデータ生成
-do-build: personal wot evo narc
-
-personal: $(PERFILES:.s=.bin)
-%.bin:%.s
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
-	$(ELF2BIN) $*.elf
-	rm $*.o
-	rm $*.elf
-
-wot: $(WOTFILES:.s=.bin)
-%.bin:%.s
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
-	$(ELF2BIN) $*.elf
-	rm $*.o
-	rm $*.elf
-
-evo: $(EVOFILES:.s=.bin)
-%.bin:%.s
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
-	$(ELF2BIN) $*.elf
-	rm $*.o
-	rm $*.elf
+do-build: narc
 
 narc:
-personal.narc: $(PERFILES:.s=.bin)
+personal.narc: $(PERFILES)
 	nnsarc -c -l -n personal.narc per_*.bin
-wotbl.narc: $(WOTFILES:.s=.bin)
+wotbl.narc: $(WOTFILES)
 	nnsarc -c -l -n wotbl.narc wot_*.bin
-evo.narc: $(EVOFILES:.s=.bin)
+evo.narc: $(EVOFILES)
 	nnsarc -c -l -n evo.narc evo_*.bin
 pms.narc: $(PMSFILES)
 	nnsarc -c -l -n pms.narc pms_*.bin

@@ -22,6 +22,7 @@ SCRFILE = pokegra_wb.scr
 LSTFILE = pokegra_wb.lst
 OTHERFORMFILE = otherform_wb.scr
 OTHERPLTTFILE = otherpltt_wb.scr
+OTHERLSTFILE = otherform_wb.lst
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -50,7 +51,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)*.scr
+LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += *.s $(HEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) *.scr out_end
 endif
@@ -68,7 +69,7 @@ out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
+do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
@@ -93,4 +94,7 @@ $(SCRDIR)$(OTHERFORMFILE):	$(OTHERFORMFILE)
 
 $(SCRDIR)$(OTHERPLTTFILE):	$(OTHERPLTTFILE)
 	$(COPY)	$(OTHERPLTTFILE) $(SCRDIR)
+
+$(LSTDIR)$(OTHERLSTFILE):	$(OTHERLSTFILE)
+	$(COPY)	$(OTHERLSTFILE) $(LSTDIR)
 
