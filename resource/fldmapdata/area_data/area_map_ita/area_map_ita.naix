@@ -15,7 +15,8 @@ enum {
 	NARC_area_map_ita_bcgata02_ita_nsbta = 1,
 	NARC_area_map_ita_bcgata05_ita_nsbta = 2,
 	NARC_area_map_ita_in00_dun_ita_nsbta = 3,
-	NARC_area_map_ita_out04_h01_ita_nsbta = 4
+	NARC_area_map_ita_out04_h01_ita_nsbta = 4,
+	NARC_area_map_ita_out21_h05_ita_nsbta = 5
 };
 
 /* NARC_AREA_MAP_ITA_NAIX_ */
