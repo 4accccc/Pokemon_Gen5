@@ -3,6 +3,10 @@
   require File.dirname(__FILE__) + '/../label_make/label_make'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
+  require File.dirname(__FILE__) + '/../hash/monsno_hash.rb'
+  require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
+  require File.dirname(__FILE__) + '/../hash/item_hash.rb'
+  require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
   require 'date'
 
 =begin
@@ -119,15 +123,15 @@ class PARA
 end
 
   fight_type = {  
-	  "１対１"=>"0",
-	  "２対２"=>"1",
+	  "１対１"=>0,
+	  "２対２"=>1,
   }
 
   data_type = { 
-		"ノーマル"  =>"DATATYPE_NORMAL",
-		"技"        =>"DATATYPE_WAZA",
-		"道具"      =>"DATATYPE_ITEM",
-		"マルチ"    =>"DATATYPE_MULTI",
+		"ノーマル"  =>0,  #DATATYPE_NORMAL
+		"技"        =>1,  #DATATYPE_WAZA
+		"道具"      =>2,  #DATATYPE_ITEM
+		"マルチ"    =>3,  #DATATYPE_MULTI
   }
 
   gender = {  
@@ -178,8 +182,9 @@ end
   fp_trfgra.print "\"trwb_heroine.NCLR\"\n"
 
 	#トレーナーデータファイル生成
-	fp_trdata = open( "trdata_000.s", "w" )
+	fp_trdata = open( "trdata_000.bin", "wb" )
 
+=begin
 	fp_trdata.print "	.text\n"
 	fp_trdata.print "\n"
 	fp_trdata.print "	.include trdata.h\n"
@@ -193,12 +198,19 @@ end
 	fp_trdata.print "	.short	0			//所持アイテム３\n"
 	fp_trdata.print "	.short	0			//所持アイテム４\n"
 	fp_trdata.print "	.long   0			//AI\n"
+=end
+  
+  data = [ 0,0,0,0,0,0,0,0,0 ].pack( "C4 S4 L" )
+	data.size.times{ |c|
+		fp_trdata.printf("%c",data[ c ])
+	}
 
 	fp_trdata.close
 
 	#トレーナー持ちポケモンデータファイル生成
-	fp_trpoke = open( "trpoke_000.s", "w" )
+	fp_trpoke = open( "trpoke_000.bin", "wb" )
 
+=begin
 	fp_trpoke.print "	.text\n"
 	fp_trpoke.print "\n"
 	fp_trpoke.print "	.include trdata.h\n"
@@ -206,6 +218,12 @@ end
 	fp_trpoke.print "	.short	0				//ポケモン１パワー乱数\n"
 	fp_trpoke.print "	.short	0				//ポケモン１レベル\n"
 	fp_trpoke.print "	.short	0				//ポケモン１\n"
+=end
+
+  data = [ 0,0,0 ].pack( "S3" )
+	data.size.times{ |c|
+		fp_trpoke.printf("%c",data[ c ])
+	}
 
 	fp_trpoke.close
 
@@ -273,6 +291,7 @@ end
 
 	trno = 1
   trainer = []
+  tr_type = Hash::new
 
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
@@ -284,13 +303,15 @@ end
     end
 
     #ポケモンデータテーブル
-		name = sprintf( "trpoke_%03d.s", trno )
-		fp_trpoke = open( name, "w" )
+		name = sprintf( "trpoke_%03d.bin", trno )
+		fp_trpoke = open( name, "wb" )
 
+=begin
 		fp_trpoke.print "	.text\n"
 		fp_trpoke.print "\n"
 		fp_trpoke.print "	.include trdata.h\n"
 		fp_trpoke.print "\n"
+=end
 
 		for poke_count in 0..5
       if split_data[ PARA::POKE1_NAME + poke_count ] == nil
@@ -301,19 +322,27 @@ end
 				printf( "TrainerName:%s No:%d\nPOKEPOW NOTHING!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
         exit( 1 )
       end
-			fp_trpoke.printf( "	.short	%s\n", split_data[ PARA::POKE1_POW + poke_count * 4 ] )
+#			fp_trpoke.printf( "	.short	%s\n", split_data[ PARA::POKE1_POW + poke_count * 4 ] )
+      pow = split_data[ PARA::POKE1_POW + poke_count * 4 ].to_i
 
       if split_data[ PARA::POKE1_LV + poke_count * 4 ] == ""
 				printf( "TrainerName:%s No:%d\nPOKELEVEL NOTHING!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
         exit( 1 )
       end
-			fp_trpoke.printf( "	.short	%s\n", split_data[ PARA::POKE1_LV + poke_count * 4 ] )
+#			fp_trpoke.printf( "	.short	%s\n", split_data[ PARA::POKE1_LV + poke_count * 4 ] )
+      lv = split_data[ PARA::POKE1_LV + poke_count * 4 ].to_i
 
-      str = label.make_label( "MONSNO_", split_data[ PARA::POKE1_NAME + poke_count ] )
-			fp_trpoke.printf( "	.short	%s\n", str )
+#     str = label.make_label( "MONSNO_", split_data[ PARA::POKE1_NAME + poke_count ] )
+#			fp_trpoke.printf( "	.short	%s\n", str )
+      mons = $monsno_hash[ split_data[ PARA::POKE1_NAME + poke_count ] ]
+
+      data = [ pow, lv, mons ].pack( "S3" )
+	    data.size.times{ |c|
+		    fp_trpoke.printf("%c",data[ c ])
+	    }
 
       case data_type[ split_data[ PARA::DATA_TYPE ] ]
-      when "DATATYPE_NORMAL"
+      when 0  #DATATYPE_NORMAL
 				if split_data[ PARA::POKE1_ITEM + poke_count ] != ""
 					printf( "TrainerName:%s No:%d\nデータタイプがノーマルなのにアイテムがついています\n",
                     split_data[ PARA::TR_NAME ], poke_count + 1 )
@@ -326,16 +355,22 @@ end
             exit( 1 )
           end
         }
-      when "DATATYPE_WAZA"
+      when 1  #DATATYPE_WAZA
 				wazacnt = 0
 				4.times{ |j|
 					if split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] != ""
-						str = label.make_label( "WAZANO_", split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] )
-						fp_trpoke.printf( "	.short	%s\n", str )
+#						str = label.make_label( "WAZANO_", split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] )
+#						fp_trpoke.printf( "	.short	%s\n", str )
+            waza = $wazano_hash[ split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] ]
 						wazacnt += 1
 					else
-						fp_trpoke.printf( "	.short	0\n" )
+#						fp_trpoke.printf( "	.short	0\n" )
+            waza = 0
           end
+          data = [ waza ].pack( "S" )
+    	    data.size.times{ |c|
+	    	    fp_trpoke.printf("%c",data[ c ])
+	        }
         }
 				if wazacnt==0
 					printf("TrainerName:%s No:%d\nデータタイプが技なのにポケモンに技がついてません\n",
@@ -347,30 +382,48 @@ end
                   split_data[ PARA::TR_NAME ], poke_count + 1 )
           exit( 1 )
         end
-      when "DATATYPE_ITEM"
+      when 2  #DATATYPE_ITEM
 				if split_data[ PARA::POKE1_ITEM + poke_count ] != ""
-					str = label.make_label( "ITEM_", split_data[ PARA::POKE1_ITEM + poke_count ] )
-					fp_trpoke.printf( "	.short	%s\n", str )
+#					str = label.make_label( "ITEM_", split_data[ PARA::POKE1_ITEM + poke_count ] )
+#					fp_trpoke.printf( "	.short	%s\n", str )
+          item = $item_hash[ split_data[ PARA::POKE1_ITEM + poke_count ] ]
 				else
-					fp_trpoke.printf( "	.short	0\n" )
+#					fp_trpoke.printf( "	.short	0\n" )
+          item = 0
         end
-      when "DATATYPE_MULTI"
+        data = [ item ].pack( "S" )
+    	  data.size.times{ |c|
+	    	  fp_trpoke.printf("%c",data[ c ])
+	      }
+      when 3  #DATATYPE_MULTI
 				if split_data[ PARA::POKE1_ITEM + poke_count ] != ""
-					str = label.make_label( "ITEM_", split_data[ PARA::POKE1_ITEM + poke_count ] )
-					fp_trpoke.printf( "	.short	%s\n", str )
+#					str = label.make_label( "ITEM_", split_data[ PARA::POKE1_ITEM + poke_count ] )
+#					fp_trpoke.printf( "	.short	%s\n", str )
+          item = $item_hash[ split_data[ PARA::POKE1_ITEM + poke_count ] ]
 				else
-					fp_trpoke.printf( "	.short	0\n" )
+#					fp_trpoke.printf( "	.short	0\n" )
+          item = 0
         end
+        data = [ item ].pack( "S" )
+    	  data.size.times{ |c|
+	    	  fp_trpoke.printf("%c",data[ c ])
+	      }
 
 				wazacnt = 0
 				4.times { |j|
 					if split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] != ""
-						str = label.make_label( "WAZANO_", split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] )
-						fp_trpoke.printf( "	.short	%s\n", str )
+#						str = label.make_label( "WAZANO_", split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] )
+#						fp_trpoke.printf( "	.short	%s\n", str )
+            waza = $wazano_hash[ split_data[ PARA::POKE1_WAZA1 + poke_count * 4 + j ] ]
 						wazacnt += 1
 					else
-						fp_trpoke.printf( "	.short	0\n" )
+#						fp_trpoke.printf( "	.short	0\n" )
+            waza = 0
           end
+          data = [ waza ].pack( "S" )
+    	    data.size.times{ |c|
+	    	    fp_trpoke.printf("%c",data[ c ])
+	        }
         }
 				if wazacnt==0
 					printf("TrainerName:%s No:%d\nデータタイプがマルチなのにポケモンに技がついてません\n",
@@ -388,15 +441,18 @@ end
 		fp_trpoke.close
 
     #トレーナーデータテーブル
-		name = sprintf( "trdata_%03d.s", trno )
-		fp_trdata = open( name, "w" )
+		name = sprintf( "trdata_%03d.bin", trno )
+		fp_trdata = open( name, "wb" )
 
+=begin
 		fp_trdata.print "	.text\n"
 		fp_trdata.print "\n"
 		fp_trdata.print "	.include trdata.h\n"
 		fp_trdata.print "\n"
+=end
 
-		fp_trdata.printf( "	.byte	%s\n", data_type[ split_data[ PARA::DATA_TYPE ] ] )
+#		fp_trdata.printf( "	.byte	%s\n", data_type[ split_data[ PARA::DATA_TYPE ] ] )
+		type_data = data_type[ split_data[ PARA::DATA_TYPE ] ]
 
 		#unless split_data[ PARA::TR_ID ].to_s =~/^[^ -~｡-ﾟ]*$/
     unless split_data[ PARA::TR_ID ].to_s =~/^[ -~｡-ﾟ]*$/
@@ -417,21 +473,36 @@ end
     }
 		if flag == 0
       trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ] ]
+      tr_type[ str ] = cnt + 2
     end
 
-		fp_trdata.printf( "	.byte	%s\n", str );
-		fp_trdata.printf( "	.byte	%s\n", fight_type[ split_data[ PARA::FIGHT_TYPE ] ] )
-		fp_trdata.printf( "	.byte	%d\n", poke_count )
+#		fp_trdata.printf( "	.byte	%s\n", str );
+#		fp_trdata.printf( "	.byte	%s\n", fight_type[ split_data[ PARA::FIGHT_TYPE ] ] )
+#		fp_trdata.printf( "	.byte	%d\n", poke_count )
+
+    type_tr     = tr_type[ str ]
+    type_fight  = fight_type[ split_data[ PARA::FIGHT_TYPE ] ]
+
+    data = [ type_data, type_tr, type_fight, poke_count ].pack( "C4" )
+	  data.size.times{ |c|
+		  fp_trdata.printf("%c",data[ c ])
+	  }
 
     4.times { |no|
 			if split_data[ PARA::USE_ITEM1 + no ] != ""
-				str = label.make_label( "ITEM_", split_data[ PARA::USE_ITEM1 + no ] )
-				fp_trdata.printf( "	.short	%s\n", str )
+#				str = label.make_label( "ITEM_", split_data[ PARA::USE_ITEM1 + no ] )
+#				fp_trdata.printf( "	.short	%s\n", str )
+        item = $item_hash[ split_data[ PARA::USE_ITEM1 + no ] ]
 			else
-				fp_trdata.print "	.short	0\n"
+#				fp_trdata.print "	.short	0\n"
+        item = 0
       end
+      data = [ item ].pack( "S" )
+	    data.size.times{ |c|
+		    fp_trdata.printf("%c",data[ c ])
+	    }
     }
-
+  
     ai = split_data[ PARA::AI ].split(//)
     aibit = 0
 
@@ -443,7 +514,12 @@ end
       end
       flag = flag << 1
     }
-		fp_trdata.printf( "	.long	0x%08x\n",aibit )
+#		fp_trdata.printf( "	.long	0x%08x\n",aibit )
+
+    data = [ aibit ].pack( "L" )
+	  data.size.times{ |c|
+		  fp_trdata.printf("%c",data[ c ])
+	  }
 
 		fp_trdata.close
 
