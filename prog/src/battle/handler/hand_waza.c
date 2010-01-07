@@ -6398,6 +6398,9 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
     u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
+    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_ROTATION ){
+      ++numCoverPos;
+    }
     if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
     {
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
@@ -6497,6 +6500,9 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
     u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
+    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_ROTATION ){
+      ++numCoverPos;
+    }
     if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
     {
       BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
