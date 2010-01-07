@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T16:21:23"/>
+	<create user="matsumiya" host="W00207" date="2010-01-07T18:07:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -552,9 +552,10 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_intro_06">
+	<row id="msg_intro_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
 		<comment>■
-・続けてmsg_intro_07</comment>
+・続けてmsg_intro_07
+・セーブできていないときはmsg_intro_08</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　いう　なまえ！
 すごく　ステキ　だよね！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　いう　名前！
@@ -587,6 +588,21 @@
 ぜひ　みつけてほしいな！▼
 では　いきましょう！
 ポケットモンスターの　世界へ！▼</language>
+	</row>
+
+	<row id="msg_intro_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>■
+・セーブ処理中</comment>
+		<language name="JPN" width="256">（セーブ中）</language>
+		<language name="JPN_KANJI" width="256">（セーブ中）</language>
+	</row>
+
+	<row id="msg_intro_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>■
+・セーブ終了時
+・続けてmsg_intro_07</comment>
+		<language name="JPN" width="256">（セーブ終了）</language>
+		<language name="JPN_KANJI" width="256">（セーブ終了）</language>
 	</row>
 
 	<row id="msg_intro_report_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
