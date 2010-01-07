@@ -84,9 +84,9 @@ NAIX_BIN_DATA		= buildmodel_info.naix
 #------------------------------------------------------------------------------
 do-build:	subdir bindata
 #	$(MAKE) bindata
-	$(MAKE) arc
-	$(MAKE) index
-	$(MAKE) texset
+	$(MAKE) -j 3 arc
+	$(MAKE) -j 3 index
+	$(MAKE) -j 3 texset
 
 -include $(DEP_LIST_OUTDOOR)
 -include $(DEP_LIST_INDOOR)
@@ -252,6 +252,8 @@ clean:
 	@-rm -f $(OUTPUT)/$(NARC_INDOOR) $(OUTPUT)/$(NAIX_INDOOR)
 	@-rm -f $(TARGETDIR)/$(INDEX_OUTDOOR) $(TARGETDIR)/$(INDEX_INDOOR)
 	@-rm -f $(TARGETDIR)/$(TEXSET_OUTDOOR) $(TARGETDIR)/$(TEXSET_INDOOR)
+	@-rm -f $(OUTPUT)/$(TEXSET_OUTDOOR) $(OUTPUT)/$(TEXSET_OUTDOOR:.narc=.naix)
+	@-rm -f $(OUTPUT)/$(TEXSET_INDOOR) $(OUTPUT)/$(TEXSET_INDOOR:.narc=.naix)
 	@-rm -f $(TARGETDIR)/$(NARC_BIN_DATA)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@-rm -f $(DEP_OUTDOOR) $(DEP_INDOOR)
