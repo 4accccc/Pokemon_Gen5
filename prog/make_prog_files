@@ -729,7 +729,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_calc.c \
 			battle/btl_net.c \
 			battle/btl_string.c \
-			battle/btl_util.c \
 			battle/btl_field.c \
 			battle/btl_pokeselect.c \
 			battle/btl_sick.c \
@@ -738,6 +737,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_deadrec.c \
 			battle/btl_pokeset.c \
 			battle/btl_rec.c \
+			battle/btl_util.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
@@ -761,6 +761,11 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
 			battle/tr_ai/tr_ai.c
+
+# バトル用プリントルーチン＆文字列リテラル
+#===> MCS_EX
+SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
+
 
 # バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE

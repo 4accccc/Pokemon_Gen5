@@ -461,6 +461,9 @@ typedef enum {
   BTL_PRINTTYPE_STANDALONE,
 }BtlPrintType;
 
+extern void BTL_UTIL_PRINTSYS_Init( void );
+extern void BTL_UTIL_PRINTSYS_Quit( void );
+
 //#if defined(DEBUG_ONLY_FOR_taya) | \
 //    defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
 #if defined(DEBUG_ONLY_FOR_taya)

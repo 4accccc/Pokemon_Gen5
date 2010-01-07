@@ -9,10 +9,47 @@
 //=============================================================================================
 
 #include "btl_common.h"
+#include "btl_debug_print.h"
 #include "btl_util.h"
 
-#ifdef BTL_PRINT_SYSTEM_ENABLE
 
+//------------------------------------------------------
+/*
+ *  Overlay ID
+ */
+//------------------------------------------------------
+FS_EXTERN_OVERLAY(battle_print);
+
+/*--------------------------------------------------------------------------*/
+/* Globals                                                                  */
+/*--------------------------------------------------------------------------*/
+static BOOL PrintSysEnableFlag = FALSE;
+
+void BTL_UTIL_PRINTSYS_Init( void )
+{
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER )
+  {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_print) );
+    PrintSysEnableFlag = TRUE;
+
+    BTL_DEBUGPRINT_Init();
+  }
+  else{
+    PrintSysEnableFlag = FALSE;
+  }
+}
+
+void BTL_UTIL_PRINTSYS_Quit( void )
+{
+  if( PrintSysEnableFlag ){
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_print) );
+    PrintSysEnableFlag = FALSE;
+  }
+}
+
+
+
+#ifdef BTL_PRINT_SYSTEM_ENABLE
 static BtlPrintType _PrintType;
 
 static void print_type( void )

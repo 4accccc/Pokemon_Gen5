@@ -208,6 +208,7 @@ const GFL_PROC_DATA BtlProcData = {
   BTL_PROC_Quit,
 };
 
+FS_EXTERN_OVERLAY(battle_print);
 
 
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
