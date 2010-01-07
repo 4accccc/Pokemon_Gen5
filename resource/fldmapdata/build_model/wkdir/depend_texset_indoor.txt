@@ -2336,7 +2336,9 @@ DEP_TEXSET_IMD_INDOOR052 = \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/warp04.imd \
 	$(SRCDIR)/c09_02_yuka.imd \
-	$(SRCDIR)/c09_02_light.imd
+	$(SRCDIR)/c09_02_light.imd \
+	$(SRCDIR)/c09_02_fire01.imd \
+	$(SRCDIR)/c09_02_fire02.imd
 
 texset/indoor052.imd: $(DEP_TEXSET_IMD_INDOOR052) texset/tmp/indoor052.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor052.list
@@ -2426,7 +2428,9 @@ DEP_TEXSET_IMD_INDOOR054 = \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/warp04.imd \
-	$(SRCDIR)/c09_04_sta.imd
+	$(SRCDIR)/c09_04_sta.imd \
+	$(SRCDIR)/c09_04_tenga.imd \
+	$(SRCDIR)/c09_04_obj01.imd
 
 texset/indoor054.imd: $(DEP_TEXSET_IMD_INDOOR054) texset/tmp/indoor054.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor054.list
