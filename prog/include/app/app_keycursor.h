@@ -10,6 +10,8 @@
 //============================================================================
 #pragma once
 
+#include "print/printsys.h"
+
 // •sŠ®‘SŒ^
 typedef struct _APP_KEYCURSOR_WORK APP_KEYCURSOR_WORK;
 
