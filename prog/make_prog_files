@@ -204,6 +204,7 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_system_group.c \
         app/app_menu_common.c \
         app/app_taskmenu.c \
+        app/app_keycursor.c \
         field/field_sound.c \
         tr_tool/tr_tool.c \
         gamesystem/iss_city_sys.c \

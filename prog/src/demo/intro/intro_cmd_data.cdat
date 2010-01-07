@@ -77,8 +77,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_02[] =
 {
-//  { INTRO_CMD_TYPE_BRIGHTNESS_SET, { 16, }, }, // 真っ白
-//  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 6, 0, 16, }, CMD_READ_NEXT }, // ホワイトからフェードイン
+//{ INTRO_CMD_TYPE_BRIGHTNESS_SET, { 16, }, }, // 真っ白
+//{ INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 6, 0, 16, }, CMD_READ_NEXT }, // ホワイトからフェードイン
 
   //@TODO ボールを投げるアニメに変更
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, }, // 博士のアニメをボールなしに変更
@@ -89,7 +89,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
   { INTRO_CMD_TYPE_SE, { SEQ_SE_BOWA2 }, CMD_READ_NEXT }, // ボールから出てくる音
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, TRUE }, CMD_READ_NEXT }, // ポケモン表示
   { INTRO_CMD_TYPE_PARTICLE_MONSTERBALL, { -FX32_CONST(1.2), -FX32_CONST(2.2), 0, }, CMD_READ_NEXT }, // パーティクル モンスターボールを表示
-//  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
+//{ INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
 
   { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_HATTHE }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
