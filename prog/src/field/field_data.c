@@ -424,7 +424,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{0,2},	// 地面アニメーション
 
-			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
