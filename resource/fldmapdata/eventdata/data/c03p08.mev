@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/17 19:42:59
+#save date:2010/01/07 11:56:35
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p08.wms
 #SECTION START:OBJ_EVENT
@@ -67,13 +67,13 @@ DOOR_ID_C03R0601_C03P08_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -24
+-40 0 -8
 #size
-8 1
+6 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C03P08_C03R0501_EXIT01
