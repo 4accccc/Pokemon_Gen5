@@ -7728,10 +7728,11 @@ static int TrayPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 	BOX2OBJ_PokeIconPriChg( syswk->app, syswk->get_pos, BOX2OBJ_POKEICON_PRI_CHG_GET );
 	BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
 	BOX2OBJ_PokeCursorAdd2( syswk, BOX2OBJ_POKEICON_GET_POS );
+//	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 
 	PokeMoveWorkAlloc( syswk );
 
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
@@ -7764,7 +7765,7 @@ static int GetBattleBoxTrayPoke( BOX2_SYS_WORK * syswk, u32 pos )
 
 	PokeMoveWorkAlloc( syswk );
 
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
@@ -7811,7 +7812,7 @@ static int TrayPokeGetPartyIn( BOX2_SYS_WORK * syswk, u32 pos )
 */
 
 	PokeMoveWorkAlloc( syswk );
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
@@ -7882,7 +7883,7 @@ static int PartyPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 */
 
 	PokeMoveWorkAlloc( syswk );
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
@@ -7915,7 +7916,7 @@ static int GetBattleBoxPartyPoke( BOX2_SYS_WORK * syswk, u32 pos )
 	pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, pos-BOX2OBJ_POKEICON_TRAY_MAX );
 
 	PokeMoveWorkAlloc( syswk );
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
@@ -7978,7 +7979,7 @@ static int PartyPokeGetDrop( BOX2_SYS_WORK * syswk, u32 pos )
 */
 
 	PokeMoveWorkAlloc( syswk );
-	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+//	BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );

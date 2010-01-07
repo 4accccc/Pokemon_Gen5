@@ -602,6 +602,27 @@ BOOL BOX2BGWFRM_PokeMenuPutCheck( BGWINFRM_WORK * wk )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンメニュー配置チェック（完全に開いた状態か）
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @retval	"TRUE = 配置済み"
+ * @retval	"FLASE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2BGWFRM_PokeMenuOpenPutCheck( BGWINFRM_WORK * wk )
+{
+	s8	px, py;
+
+	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_MENU1, &px, &py );
+	if( px == WINFRM_MENU_PX ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 //============================================================================================
 //	タッチバー

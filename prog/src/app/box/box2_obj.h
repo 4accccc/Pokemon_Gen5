@@ -800,6 +800,8 @@ extern void BOX2OBJ_PokeCursorAdd2( BOX2_SYS_WORK * syswk, u32 pos );
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg );
 
+extern void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk );
+
 //--------------------------------------------------------------------------------------------
 /**
  * アウトラインカーソル移動

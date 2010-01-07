@@ -2846,6 +2846,27 @@ void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg )
 	}
 }
 
+void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk )
+{
+	int	obj_pri, bg_pri;
+	u32	posID;
+	u32	i;
+
+	posID = syswk->app->pokeicon_id[ syswk->get_pos ];
+	obj_pri = GFL_CLACT_WK_GetSoftPri( syswk->app->clwk[posID] );
+	bg_pri  = GFL_CLACT_WK_GetBgPri( syswk->app->clwk[posID] );
+
+	for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
+		if( syswk->app->clwk[BOX2OBJ_ID_OUTLINE+i] != NULL ){
+			if( syswk->get_pos != BOX2MAIN_GETPOS_NONE ){
+				BOX2OBJ_ObjPriChange( syswk->app, BOX2OBJ_ID_OUTLINE+i, obj_pri+1 );
+				BOX2OBJ_BgPriChange( syswk->app, BOX2OBJ_ID_OUTLINE+i, bg_pri );
+			}
+		}
+	}
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * アウトラインカーソル移動
