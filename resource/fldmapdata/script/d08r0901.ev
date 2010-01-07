@@ -45,14 +45,27 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_01, D08R0901_BOSS_01,WIN_DOWN)
 	_MSGWIN_CLOSE()
-	
+
+/*
+  10.01.07 22:30 SHIN と MU のOBJコード定義がなくなっていてmakeが通らないため
+  暫定で存在するOBJコード名に書き換えてcommitしました
+
+  OBJコード名が解決したら修正してください <by iwasawa 
+
 	//ROMによって、復活するポケモンを変更する
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SHIN, MV_DMY )
 	ELSE
 		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, MU, MV_DMY )
 	ENDIF
-	
+*/
+	//ROMによって、復活するポケモンを変更する
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE19, MV_DMY )
+	ELSE
+		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE20, MV_DMY )
+	ENDIF
+
 	//Nが喋る
 	//
 	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, WIN_DOWN )
