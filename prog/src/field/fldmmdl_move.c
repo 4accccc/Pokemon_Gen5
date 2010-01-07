@@ -1319,6 +1319,164 @@ u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir )
 
 //--------------------------------------------------------------
 /**
+ * 動作モデル同士のヒットチェック用矩形作成
+ * @param mmdl 対象となるMMDL
+ * @param x 始点となるX座標 グリッド
+ * @param z 始点となるZ座標 グリッド
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_CreateHitCheckRect(
+    const MMDL *mmdl, s16 x, s16 z, MMDL_RECT *rect )
+{
+  s16 size;
+  
+  size = (s16)MMDL_GetGridSizeX( mmdl ) - 1; //1origin
+  if( size < 0 ){
+    size = 0;
+  }
+  
+  rect->left = x;
+  rect->right = x + size;
+  
+  size = (s16)MMDL_GetGridSizeZ( mmdl ) - 1; //1origin
+  if( size < 0 ){
+    size = 0;
+  }
+  
+  rect->top = z - size; //始点は左下
+  rect->bottom = z;
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_RECT同士のヒットチェック
+ * @param rect0 チェックするMMDL_RECT
+ * @param rect1 チェックするMMDL_RECT
+ * @retval BOOL TRUE=ヒット
+ */
+//--------------------------------------------------------------
+BOOL MMDL_HitCheckRect( const MMDL_RECT *rect0, const MMDL_RECT *rect1 )
+{
+  s16 size0,size1;
+  MMDL_RECT h0,h1;
+  
+  size0 = rect0->right - rect0->left;
+  if( size0 < 0 ){ size0 = -size0; }
+  size1 = rect1->right - rect1->left;
+  if( size1 < 0 ){ size1 = -size1; }
+  
+  if( size0 > size1 ){
+    h0.left = rect0->left;
+    h0.right = rect0->right;
+    h1.left = rect1->left;
+    h1.right = rect1->right;
+  }else{
+    h0.left = rect1->left;
+    h0.right = rect1->right;
+    h1.left = rect0->left;
+    h1.right = rect0->right;
+  }
+  
+  if( (h0.left <= h1.left && h0.right >= h1.left) ||
+      (h0.left <= h1.right && h0.right >= h1.right) ){
+    size0 = rect0->bottom - rect0->top;
+    if( size0 < 0 ){ size0 = -size0; }
+    size1 = rect1->bottom - rect1->top;
+    if( size1 < 0 ){ size1 = -size1; }
+    
+    if( size0 > size1 ){
+      h0.top = rect0->top;
+      h0.bottom = rect0->bottom;
+      h1.top = rect1->top;
+      h1.bottom = rect1->bottom;
+    }else{
+      h0.top = rect1->top;
+      h0.bottom = rect1->bottom;
+      h1.top = rect0->top;
+      h1.bottom = rect0->bottom;
+    }
+    
+    if( (h0.top <= h1.top && h0.bottom >= h1.top) ||
+        (h0.top <= h1.bottom && h0.bottom >= h1.bottom) ){
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド動作モデル同士の衝突チェック
+ * @param mmdl0 MMDL* 判定元MMDL
+ * @param mmdl1 MMDL* 判定対象MMDL
+ * @param x0  判定する始点X座標  グリッド
+ * @param y0  判定する始点Y座標  グリッド
+ * @param z0  判定する始点Z座標  グリッド
+ * @param old_hit TRUE=mmdl1の過去座標も判定する
+ * @retval  BOOL  TRUE=衝突アリ
+ */
+//--------------------------------------------------------------
+BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
+    s16 x0, s16 y0, s16 z0, BOOL old_hit )
+{
+  int x1,y1,z1,sy;
+  MMDL_RECT rect0,rect1;
+  
+  MMDL_CreateHitCheckRect( mmdl0, x0, z0, &rect0 );
+  
+  if( MMDL_CheckStatusBit(mmdl1,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
+  {
+    x1 = MMDL_GetGridPosX( mmdl1 );
+    z1 = MMDL_GetGridPosZ( mmdl1 );
+    MMDL_CreateHitCheckRect( mmdl1, x1, z1, &rect1 );
+        
+    if( MMDL_HitCheckRect(&rect0,&rect1) )
+    {
+      y1 = MMDL_GetGridPosY( mmdl1 );
+      sy = y0 - y1;
+        
+      if( sy < 0 )
+      {
+        sy = -sy;
+      }
+    
+      if( sy < H_GRID_FELLOW_SIZE )
+      {
+        return( TRUE );
+      }
+    }
+    
+    if( old_hit == TRUE )
+    {
+      x1 = MMDL_GetOldGridPosX( mmdl1 );
+      z1 = MMDL_GetOldGridPosZ( mmdl1 );
+      MMDL_CreateHitCheckRect( mmdl1, x1, z1, &rect1 );
+      
+      if( MMDL_HitCheckRect(&rect0,&rect1) )
+      {
+        y1 = MMDL_GetOldGridPosY( mmdl1 );
+        sy = y0 - y1;
+        
+        if( sy < 0 )
+        {
+          sy = -sy;
+        }
+            
+        if( sy < H_GRID_FELLOW_SIZE )
+        {
+          return( TRUE );
+        }
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * フィールド動作モデル同士の衝突チェック
  * @param  mmdl  MMDL * 
  * @param  x    移動先X座標  グリッド
@@ -1327,6 +1485,24 @@ u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir )
  * @retval  BOOL  TRUE=衝突アリ
  */
 //--------------------------------------------------------------
+BOOL MMDL_HitCheckMoveFellow( const MMDL *mmdl0, s16 x0, s16 y0, s16 z0 )
+{
+  u32 no=0;
+  MMDL *mmdl1;
+  const MMDLSYS *sys = MMDL_GetMMdlSys( mmdl0 );
+  
+  while( MMDLSYS_SearchUseMMdl(sys,&mmdl1,&no) == TRUE ){
+    if( mmdl0 != mmdl1 ){
+      if( MMDL_HitCheckFellow(mmdl0,mmdl1,x0,y0,z0,TRUE) == TRUE ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
+#if 0 //old
 BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
 {
   u32 no=0;
@@ -1351,13 +1527,6 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
             int hy = MMDL_GetGridPosY( cmmdl );
             int sy = hy - y;
             if( sy < 0 ){ sy = -sy; }
-            #ifdef DEBUG_ONLY_FOR_kagaya
-            if( debug ){
-              OS_Printf(
-                "HERO %d, %d, %d NPC %d %d %d\n",
-                x, y, z, hx, hy, hz );
-            }
-            #endif
             if( sy < H_GRID_FELLOW_SIZE ){
               return( TRUE );
             }
@@ -1381,6 +1550,20 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * mmdl, s16 x, s16 y, s16 z )
   
   return( FALSE );
 }
+#endif
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルとX,Z座標のヒットチェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+#if 0
+BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x, s16 z, BOOL old_hit )
+{
+}
+#endif
 
 //--------------------------------------------------------------
 /**

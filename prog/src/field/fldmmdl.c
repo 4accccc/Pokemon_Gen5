@@ -147,6 +147,10 @@ struct _TAG_MMDL
 	u32 now_attr;				///<現在のマップアトリビュート
 	u32 old_attr;				///<過去のマップアトリビュート
 	
+  u8 gx_size; ///<グリッドX方向サイズ
+  u8 gz_size; ///<グリッドZ方向サイズ
+  u8 padding[2]; ///<4byte余り
+  
 	GFL_TCB *pTCB;				///<動作関数TCB*
 	MMDLSYS *pMMdlSys;///<MMDLSYS*
 	
@@ -177,8 +181,11 @@ typedef struct
 	u32 status_bit;			///<ステータスビット
 #if 0 //wb フラグ整理 動作ビットはクリアされる様にした
 	u32 move_bit;				///<動作ビット
-#else //拡張性を考慮しデータ自体は取っておく。
-  u8 padding[4];
+#else
+  //拡張性を考慮しデータ領域自体は残しておく。早速使う
+  u8 padding[2];
+  u8 gx_size;
+  u8 gz_size;
 #endif
   
 	u8 obj_id;        ///<OBJ ID
@@ -239,8 +246,8 @@ static void MMdlSys_DeleteProc( MMDLSYS *fos );
 //MMDL 追加、削除
 static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
     const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev );
-static void MMdl_SetHeaderBefore(
-	MMDL * mmdl, const MMDL_HEADER *head, const EVENTWORK *ev );
+static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
+    const EVENTWORK *ev, const MMDLSYS *mmdlsys );
 static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
 static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
@@ -298,7 +305,7 @@ static void MMdl_ChangeOBJAlies(
 	MMDL * mmdl, int zone_id, const MMDL_HEADER *head );
 
 //OBJCODE_PARAM
-static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys );
+static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID );
 static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
 
 //parts
@@ -339,6 +346,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 	fos->mmdl_max = max;
 	fos->sysHeapID = heapID;
   fos->rockpos = rockpos;
+	MMdlSys_InitOBJCodeParam( fos, heapID );
 	return( fos );
 }
 
@@ -351,6 +359,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 //--------------------------------------------------------------
 void MMDLSYS_FreeSystem( MMDLSYS *fos )
 {
+	MMdlSys_DeleteOBJCodeParam( fos );
 	GFL_HEAP_FreeMemory( fos->pMMdlBuf );
 	GFL_HEAP_FreeMemory( fos );
 }
@@ -376,8 +385,6 @@ void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
 	fos->pG3DMapper = pG3DMapper;
   fos->gdata = gdata;
   fos->fieldMapWork = fieldmap;
-  
-	MMdlSys_InitOBJCodeParam( fos );
 	
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(
 		heapID, GFL_TCB_CalcSystemWorkSize(fos->mmdl_max) );
@@ -399,7 +406,6 @@ void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
 //--------------------------------------------------------------
 static void MMdlSys_DeleteProc( MMDLSYS *fos )
 {
-	MMdlSys_DeleteOBJCodeParam( fos );
 	GFL_TCB_Exit( fos->pTCBSys );
 	GFL_HEAP_FreeMemory( fos->pTCBSysWork );
   GFL_ARC_CloseDataHandle( fos->arcH_res );
@@ -498,7 +504,7 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
 	GF_ASSERT( mmdl != NULL );
 	
 	MMdl_InitWork( mmdl, fos, zone_id );
-	MMdl_SetHeaderBefore( mmdl, head, ev );
+	MMdl_SetHeaderBefore( mmdl, head, ev, fos );
   MMdl_InitDir( mmdl );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
@@ -736,11 +742,15 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
  * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
-static void MMdl_SetHeaderBefore(
-	MMDL * mmdl, const MMDL_HEADER *head, const EVENTWORK *ev )
+static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
+    const EVENTWORK *ev, const MMDLSYS *mmdlsys )
 {
-	MMDL_SetOBJID( mmdl, head->id );
-	MMDL_SetOBJCode( mmdl, WorkOBJCode_GetOBJCode(ev,head->obj_code) );
+  u16 obj_code;
+
+  obj_code = WorkOBJCode_GetOBJCode( ev, head->obj_code );
+	
+  MMDL_SetOBJID( mmdl, head->id );
+	MMDL_SetOBJCode( mmdl, obj_code );
 	MMDL_SetMoveCode( mmdl, head->move_code );
 	MMDL_SetEventType( mmdl, head->event_type );
 	MMDL_SetEventFlag( mmdl, head->event_flag );
@@ -752,7 +762,29 @@ static void MMdl_SetHeaderBefore(
 	MMDL_SetParam( mmdl, head->param2, MMDL_PARAM_2 );
 	MMDL_SetMoveLimitX( mmdl, head->move_limit_x );
 	MMDL_SetMoveLimitZ( mmdl, head->move_limit_z );
-	
+  
+  if( obj_code == STOPPER ){ //サイズ設定。STOPPERはサイズ指定アリ
+    mmdl->gx_size = head->param0;
+    mmdl->gz_size = head->param1;
+    
+    if( mmdl->gx_size == 0 ){
+      mmdl->gx_size++;
+    }
+    
+    if( mmdl->gz_size == 0 ){
+      mmdl->gz_size++;
+    }
+  }else{
+    const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam( mmdlsys, obj_code );
+    #if 0
+    mmdl->gx_size = prm->size_width;
+    mmdl->gz_size = prm->size_height;
+    #else
+    mmdl->gx_size = 1;
+    mmdl->gz_size = 1;
+    #endif
+  }
+  
   // 座標タイプにより、位置の初期化方法を変更
   if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
   {
@@ -1156,6 +1188,8 @@ static void MMdl_SaveData_SaveMMdl(
 {
 	save->status_bit = MMDL_GetStatusBit( mmdl );
 //save->move_bit = MMDL_GetMoveBit( mmdl );
+  save->gx_size = mmdl->gx_size;
+  save->gz_size = mmdl->gz_size;
 	save->obj_id = MMDL_GetOBJID( mmdl );
 	save->zone_id = MMDL_GetZoneID( mmdl );
 	save->obj_code = MMDL_GetOBJCode( mmdl );
@@ -1200,6 +1234,8 @@ static void MMdl_SaveData_LoadMMdl(
 
 	mmdl->status_bit = save->status_bit;
 //	mmdl->move_bit = save->move_bit;
+  mmdl->gx_size = save->gx_size;
+  mmdl->gz_size = save->gz_size;
 	MMDL_SetOBJID( mmdl, save->obj_id );
 	MMDL_SetZoneID( mmdl, save->zone_id );
 	MMDL_SetOBJCode( mmdl, save->obj_code ); 
@@ -3043,6 +3079,30 @@ MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *mmdl )
 	return( MMDLSYS_GetBlActCont((MMDLSYS*)MMDL_GetMMdlSys(mmdl)) );
 }
 
+//--------------------------------------------------------------
+/**
+ * MMDL 横グリッドサイズを取得
+ * @param mmdl MMDL*
+ * @retval u8 グリッドサイズ
+ */
+//--------------------------------------------------------------
+u8 MMDL_GetGridSizeX( const MMDL *mmdl )
+{
+  return( mmdl->gx_size );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL 奥グリッドサイズを取得
+ * @param mmdl MMDL*
+ * @retval u8 グリッドサイズ
+ */
+//--------------------------------------------------------------
+u8 MMDL_GetGridSizeZ( const MMDL *mmdl )
+{
+  return( mmdl->gz_size );
+}
+
 //======================================================================
 //	MMDLSYS ステータス操作
 //======================================================================
@@ -3894,18 +3954,17 @@ BOOL MMDLSYS_SearchUseMMdl(
  * @param	z			検索グリッドZ
  * @param	old_hit		TURE=過去座標も判定する
  * @param array   見つけたMMDLポインタを最大16個分格納する構造体型
- *
  * @return  見つけた配列数 
  */
 //--------------------------------------------------------------
 static int MMDLSYS_SearchGridPosArray(
-	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit ,MMDL_PARRAY* array)
+	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit, MMDL_PARRAY *array )
 {
 	u32 no = 0;
 	MMDL *mmdl;
-
-  MI_CpuClear8(array,sizeof(MMDL_PARRAY));
-
+  
+  MI_CpuClear8( array, sizeof(MMDL_PARRAY) );
+  
 	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
     if(array->count >= MMDL_POST_LAYER_MAX){
       GF_ASSERT_MSG(0,"同一座標OBJ個数オーバー\n"); 
@@ -3947,9 +4006,10 @@ MMDL * MMDLSYS_SearchGridPos(
 
   num = MMDLSYS_SearchGridPosArray(sys, x, z, old_hit , &array);
 	
-  if(num){
+  if( num ){
     return array.mmdl_parray[0];
   }
+
 	return( NULL );
 }
 
@@ -3977,6 +4037,7 @@ MMDL * MMDLSYS_SearchGridPosEx(
   if(num == 0){
     return NULL;
   }
+  
   for(i = 0;i < num;i++){
     fx32 y,diff;
 	  diff = MMDL_GetVectorPosY( array.mmdl_parray[i] ) - height;
@@ -3987,7 +4048,8 @@ MMDL * MMDLSYS_SearchGridPosEx(
       return array.mmdl_parray[i];
     }
   }
-	return( NULL );
+	
+  return( NULL );
 }
 
 //--------------------------------------------------------------
@@ -4248,7 +4310,7 @@ void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 	const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
   
 	MMDL_CallMoveDeleteProc( mmdl );
-  MMdl_SetHeaderBefore( mmdl, head, NULL );
+  MMdl_SetHeaderBefore( mmdl, head, NULL, fos );
 	MMdl_InitCallMoveProcWork( mmdl );
 	MMdl_InitMoveProc( fos, mmdl );
   MMdl_SetHeaderAfter( mmdl, head, NULL );
@@ -4551,11 +4613,10 @@ BOOL MMDL_CheckSameDataIDOnly(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys )
+static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
 {
 	u8 *p = GFL_ARC_LoadDataAlloc( ARCID_MMDL_PARAM, 
-			NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
-			mmdlsys->heapID );
+			NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin, heapID );
 	mmdlsys->pOBJCodeParamBuf = p;
 	mmdlsys->pOBJCodeParamTbl = (const OBJCODE_PARAM*)(&p[OBJCODE_PARAM_TOTAL_NUMBER_SIZE]);
 }

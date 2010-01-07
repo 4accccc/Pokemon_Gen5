@@ -200,7 +200,7 @@ typedef enum
 typedef enum
 {
 	MMDL_MOVEBIT_NON=(0),///<無し
-	MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER=(1<<0),///<動作復帰関数を呼ぶ必要
+	MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER=(1<<0),///<動作復帰関数を呼ぶ必要あり
 	MMDL_MOVEBIT_DRAW_PROC_INIT_COMP=(1<<1),///<描画初期化完了
 	MMDL_MOVEBIT_DRAW_PUSH=(1<<2),///<描画処理を退避
 	MMDL_MOVEBIT_PAUSE_MOVE=(1<<3),///<移動一時停止
@@ -655,6 +655,17 @@ typedef struct
   GFL_BBDACT_ACTUNIT_ID actID; //アクターID
 }MMDL_BLACTWORK_USER;
 
+//--------------------------------------------------------------
+/// MMDL_RECT
+//--------------------------------------------------------------
+typedef struct
+{
+  s16 left;
+  s16 top;
+  s16 right;
+  s16 bottom;
+}MMDL_RECT;
+
 //======================================================================
 //	extern
 //======================================================================
@@ -861,6 +872,8 @@ extern void MMDL_SetVectorAttrDrawOffsetPos(
 		MMDL * mmdl, const VecFx32 *vec );
 extern s16 MMDL_GetHeightGrid( const MMDL * mmdl );
 extern MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *mmdl );
+extern u8 MMDL_GetGridSizeX( const MMDL *mmdl );
+extern u8 MMDL_GetGridSizeZ( const MMDL *mmdl );
 
 extern BOOL MMDLSYS_CheckCompleteDrawInit( const MMDLSYS *mmdlsys );
 extern void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag );
@@ -1033,6 +1046,12 @@ extern u32 MMDL_HitCheckMove( const MMDL *mmdl,
 extern u32 MMDL_HitCheckMoveCurrent(
 	const MMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir );
 extern u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir );
+extern void MMDL_CreateHitCheckRect(
+    const MMDL *mmdl, s16 x, s16 z, MMDL_RECT *rect );
+extern BOOL MMDL_HitCheckRect(
+    const MMDL_RECT *rect0, const MMDL_RECT *rect1 );
+extern BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
+    s16 x0, s16 y0, s16 z0, BOOL old_hit );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern int MMDL_HitCheckMoveLimit(
