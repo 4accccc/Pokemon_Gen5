@@ -121,6 +121,8 @@ FMMDL_RESLIST_NCGIMD = \
 	corn.imd \
 	espm.imd \
 	espw.imd \
+	poke21.imd \
+	danpei.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
