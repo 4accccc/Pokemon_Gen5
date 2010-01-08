@@ -286,6 +286,39 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
 }
 
 /*
+ *  @brief  エフェクトエンカウント　自機位置との距離を返す
+ *
+ *  @retval エフェクトがないときはFALSEを返す
+ */
+BOOL EFFECT_ENC_GetDistanceToPlayer( FIELD_ENCOUNT* enc, u16* o_distance )
+{
+  EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+  
+  if( !ep->valid_f ){
+    *o_distance = 0;
+    return FALSE;
+  }
+  { //座標チェック
+    s16 dx,dz;
+    MMDL_GRIDPOS pos;
+    MMDL* mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( enc->fwork ) );
+    MMDL_GetGridPos( mmdl, &pos );
+
+    dx = ep->gx - pos.gx;
+    if(dx < 0){
+      dx *= -1;
+    }
+    dz = ep->gz - pos.gz;
+    if( dz < 0 ){
+      dz *= -1;
+    }
+    *o_distance = dx+dz;
+  }
+}
+
+/*
  *  @brief  エフェクトエンカウント　フィールド生成時エフェクト復帰強制キャンセル
  */
 void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc )

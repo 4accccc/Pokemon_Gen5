@@ -63,6 +63,13 @@ extern BOOL EFFECT_ENC_CheckEffectPos( const FIELD_ENCOUNT* enc, MMDL_GRIDPOS* p
 extern GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc );
 
 /*
+ *  @brief  エフェクトエンカウント　自機位置との距離を返す
+ *
+ *  @retval エフェクトがないときはFALSEを返す
+ */
+extern BOOL EFFECT_ENC_GetDistanceToPlayer( FIELD_ENCOUNT* enc, u16* o_distance );
+
+/*
  *  @brief  エフェクトエンカウント　フィールド生成時エフェクト復帰強制キャンセル
  */
 extern void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc );

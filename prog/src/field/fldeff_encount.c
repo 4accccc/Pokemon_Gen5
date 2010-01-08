@@ -12,6 +12,7 @@
 #include "fieldmap.h"
 #include "field_effect.h"
 #include "fldmmdl.h"
+#include "effect_encount.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
@@ -156,6 +157,7 @@ static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
 static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, EFFENC_TYPE_ID type );
 static void enc_InitResource( FLDEFF_ENCOUNT* enc, EFFENC_TYPE_ID type );
 static void enc_DeleteResource( FLDEFF_ENCOUNT* enc );
+static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc );
 
 static const FLDEFF_TASK_HEADER DATA_encountTaskHeader;
 
@@ -425,13 +427,8 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   if(work->anm_pause_f || MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
     return;
   }
-  {
-    int frame;
- 	  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
-    if(frame == 0){
-      PMSND_PlaySE( enc->data.se_no);
-    }
-  }
+  sub_PlaySE( work, enc );
+  
   for( i = 0;i < enc->data.anm_num; i++){
     GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
   }
@@ -440,6 +437,30 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
     FLDEFF_TASK_CallDelete( task );
   }
   */
+}
+
+static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc )
+{
+  int frame;
+  u16 dis = 0;
+  FIELDMAP_WORK* fieldWork;
+  static const u8 volume_tbl[] = { 127, 90, 60, 40 };
+ 	  
+  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
+  if(frame != 0){
+    return;
+  }
+
+  fieldWork = FLDEFF_CTRL_GetFieldMapWork( enc->fectrl );
+
+  if( EFFECT_ENC_GetDistanceToPlayer( FIELDMAP_GetEncount(fieldWork), &dis) == FALSE ){
+    return;
+  }
+  dis /= 5;
+  if(dis > 3){
+    dis = 3;
+  }
+  PMSND_PlaySEVolume( enc->data.se_no, volume_tbl[dis]);
 }
 
 //--------------------------------------------------------------
