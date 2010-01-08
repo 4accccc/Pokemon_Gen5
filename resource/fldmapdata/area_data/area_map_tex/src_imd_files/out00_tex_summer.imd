@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-12-18T16:58:03"/>
+	<create user="fuchino" host="W00152" date="2009-12-28T20:32:31"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1979,10 +1979,10 @@
 		path="C:/home/wb_data3d/field/out00/chip/tex/shore01.tga"
 	>
 		<bitmap size="32">
-			fffe 56ff ffe9 55bf ff95 a96b aa55 6a56
-			5555 5555 5555 5555 5555 555a a555 956a
-			a956 a55a a5aa fa96 feab febf 3fef fff0
-			03fc 3fc0 0000 0000 0000 0000 0000 0000
+			fffe afff ffe9 5abf ff95 556b aa55 a956
+			5556 ea55 555a fe95 55ab 3fa5 56ac 03ea
+			aafc 00fe abc0 003f ff00 0003 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="58" name="slamp03"
