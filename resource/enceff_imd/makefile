@@ -91,5 +91,7 @@ $(targetname).narc: $(TARGET_DATA)
 	@nnsarc -i -cl -l -n $(targetname).narc *.nsb* > arc_result.txt
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
+else
+mk_list_txt:
 
 endif
