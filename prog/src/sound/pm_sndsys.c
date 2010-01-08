@@ -1116,7 +1116,66 @@ static BOOL checkEndSoundPlayThread( void )
 	return OS_IsThreadTerminated(&soundLoadThread);
 }
 
+//============================================================================================
+/**
+ *
+ *
+ * @brief	外部音楽データ再生
+ *
+ *
+ */
+//============================================================================================
+BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
+{
+	int i;
 
+	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
 
+	// 事前に波形読み込み
+	if(NNS_SndArcLoadWaveArc(waveNo, PmSndHeapHandle) == FALSE ){
+		return FALSE;		// 波形読み込み失敗
+	}
+	// ダミー音楽のFileIDを入力アドレスに置き換える
+	{
+		u32 bnkFileID = NNS_SndArcGetBankInfo(BANK_MUS_WB_SHINKA)->fileId;
+		u32 seqFileID = NNS_SndArcGetSeqInfo(SEQ_BGM_SHINKA)->fileId;
+
+		NNS_SndArcSetFileAddress(bnkFileID, bnkAdrs); 
+		NNS_SndArcSetFileAddress(seqFileID, seqAdrs); 
+	}
+	SOUNDMAN_LoadHierarchyPlayer_forThread_end(SEQ_BGM_SHINKA);
+	{
+		// 無理やりバンク情報を書き換える
+		NNSSndArcBankInfo* bnkInfo = (NNSSndArcBankInfo*)NNS_SndArcGetBankInfo(BANK_MUS_WB_SHINKA);
+		bnkInfo->waveArcNo[0] = waveNo;
+		bnkInfo->waveArcNo[1] = 0xffff;
+		bnkInfo->waveArcNo[2] = 0xffff;
+		bnkInfo->waveArcNo[3] = 0xffff;
+	}
+	return TRUE;
+}
+
+BOOL  PMDSND_PlayExtraMusic( void )
+{
+	return NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_SHINKA );
+}
+
+void	PMDSND_StopExtraMusic( void )
+{
+	NNS_SndPlayerStopSeq(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0);
+	SOUNDMAN_UnloadHierarchyPlayer();
+}
+
+void  PMDSND_ReleaseExtraMusic( void )
+{
+	// ダミー音楽のFileIDを元に戻す
+	{
+		u32 bnkFileID = NNS_SndArcGetBankInfo(BANK_MUS_WB_SHINKA)->fileId;
+		u32 seqFileID = NNS_SndArcGetSeqInfo(SEQ_BGM_SHINKA)->fileId;
+
+		NNS_SndArcSetFileAddress(bnkFileID, NULL);
+		NNS_SndArcSetFileAddress(seqFileID, NULL);
+	}
+}
 
 

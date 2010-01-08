@@ -221,6 +221,8 @@ enum {
   SNDTEST_TPEV_SE_PLAY,
   SNDTEST_TPEV_SE_STOP,
 
+  SNDTEST_TPEV_VPRESERVE,
+
   SNDTEST_TPEV_EXIT,
 
   SNDTEST_TPEVTRG_MAX,
@@ -244,6 +246,8 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTableTrg[SNDTEST_TPEVTRG_MAX + 1] =
 
   { 0x08*8+0x04, 0x0a*8+0x02, 0x15*8+0x04, 0x17*8+0x02 }, //SNDTEST_TPEV_SE_PLAY
   { 0x08*8+0x04, 0x0a*8+0x02, 0x17*8+0x07, 0x19*8+0x05 }, //SNDTEST_TPEV_SE_STOP
+
+  { 0x15*8+0x01, 0x15*8+0x07, 0x1b*8+0x00, 0x1c*8+0x07 }, //SNDTEST_TPEV_VPRESERVE
 
   { 0x16*8, 0x16*8+15, 0x1d*8, 0x1d*8+23 },       //SNDTEST_TPEV_EXIT
 
@@ -406,6 +410,9 @@ typedef struct {
 
   u16             trackBit;
   BOOL            voiceReserveFlag;
+
+  void*						testSeq;
+  void*						testBank;
 }SOUNDTEST_WORK;
 
 enum {
@@ -414,6 +421,8 @@ enum {
 };
 
 
+static void PlayExBGM(SOUNDTEST_WORK* sw);
+static void StopExBGM(SOUNDTEST_WORK* sw);
 //============================================================================================
 /**
  *
@@ -468,6 +477,9 @@ static void SoundWorkInitialize(SOUNDTEST_WORK* sw)
 
   sw->trackBit = 0;
   sw->voiceReserveFlag = FALSE;
+
+  sw->testSeq = NULL;
+  sw->testBank = NULL;
 }
 
 static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
@@ -491,6 +503,7 @@ static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
   if(sw->voiceReserveFlag == TRUE){
     PMVOICE_PlayerHeapRelease();
   }
+	StopExBGM(sw);
 }
 
 //------------------------------------------------------------------
@@ -591,12 +604,6 @@ static void numberDec(SOUNDTEST_WORK* sw, int idx, int min, int num );
 static void setSelectName(SOUNDTEST_WORK* sw);
 static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
 
-#if 0//#ifdef PM_DEBUG
-static u32  mcsControl(HEAPID heapID);
-static void mcsControlEnd(void);
-static void mcsControlReset(HEAPID heapID);
-static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt);
-#endif
 //------------------------------------------------------------------
 /**
  *
@@ -633,29 +640,15 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
     break;
 
   case 1:
-#if 0//#ifdef PM_DEBUG
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){ 
+			sw->seq++; 
+			break;
+		}
     {
-      u32 result = mcsControl(sw->heapID);
-      switch(result){
-      case 1:
-        // PC->MCS 接続完了
-        mcsControlSetTrackSt(sw->heapID, sw->trackBit);
-        mcsControlReset(sw->heapID);
-        break;
-      }
+			// テスト
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ PlayExBGM(sw); }
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ StopExBGM(sw); }
     }
-#endif
-#if 1
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      if(sw->voiceReserveFlag == FALSE){
-        PMVOICE_PlayerHeapReserve(2, GFL_HEAPID_APP);
-        sw->voiceReserveFlag = TRUE;
-      } else {
-        PMVOICE_PlayerHeapRelease();
-        sw->voiceReserveFlag = FALSE;
-      }
-    }
-#endif
     {
       //soundStatusコントロール設定
       u16 flag;
@@ -670,9 +663,6 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
       u16 trackBit = GFL_SNDVIEWER_GetTrackSt(sw->gflSndViewer);
       if(sw->trackBit != trackBit){
         sw->trackBit = trackBit;
-#if 0//#ifdef PM_DEBUG
-        mcsControlSetTrackSt(sw->heapID, sw->trackBit);
-#endif
       }
     }
 
@@ -685,9 +675,6 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
     break;
 
   case 2:
-#if 0//#ifdef PM_DEBUG
-    mcsControlEnd();
-#endif
     RemoveSoundTestSys(sw);
     return FALSE;
   }
@@ -696,6 +683,44 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
 
 
 
+//============================================================================================
+//
+//	テスト
+//
+//============================================================================================
+#include "mididl.naix"
+
+static void PlayExBGM(SOUNDTEST_WORK* sw)
+{
+	BOOL result;
+
+	StopExBGM(sw);
+
+  sw->testBank = GFL_ARC_LoadDataAlloc
+		(ARCID_MIDI_DOWNLOAD, NARC_mididl_mus_wb_msl_field_sbnk, sw->heapID);
+  sw->testSeq = GFL_ARC_LoadDataAlloc
+		(ARCID_MIDI_DOWNLOAD, NARC_mididl_mus_wb_msl_field_sseq, sw->heapID);
+
+	result = PMDSND_PresetExtraMusic( sw->testSeq, sw->testBank, WAVE_MUS_WB_MSL_FIELD);
+	if(result == FALSE){
+		OS_Printf("セットアップ失敗\n");
+	}
+	result = PMDSND_PlayExtraMusic();
+	if(result == FALSE){
+		OS_Printf("再生失敗\n");
+	}
+}
+
+static void StopExBGM(SOUNDTEST_WORK* sw)
+{
+	PMDSND_StopExtraMusic();
+	PMDSND_ReleaseExtraMusic();
+
+  if(sw->testSeq){ GFL_HEAP_FreeMemory(sw->testSeq); }
+  if(sw->testBank){ GFL_HEAP_FreeMemory(sw->testBank); }
+  sw->testSeq = NULL;
+  sw->testBank = NULL;
+}
 
 
 //============================================================================================
@@ -931,9 +956,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
       PMSND_PauseBGM(FALSE);
       sw->bgmPauseSw = FALSE;
     }
-#if 0//#ifdef PM_DEBUG
-    mcsControlReset(sw->heapID);
-#endif
     break;
 
   case SNDTEST_TPEV_BGM_STOP:
@@ -980,7 +1002,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
   case SNDTEST_TPEV_VOICE_PLAY:
     vpIdx = PMV_PlayVoice(  sw->setNo[NOIDX_VOICENO], 0 );
-    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
@@ -988,13 +1009,11 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
     vpIdx = PMV_PlayVoice_Chorus( sw->setNo[NOIDX_VOICENO], 0,
                     sw->setNo[NOIDX_VOICECHORUSVOL],
                     sw->setNo[NOIDX_VOICECHORUSSPEED] );
-    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
   case SNDTEST_TPEV_VOICE_PLAYREVERSE:
     vpIdx = PMV_PlayVoice_Reverse( sw->setNo[NOIDX_VOICENO], 0 );
-    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
@@ -1005,7 +1024,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
                     sw->setNo[NOIDX_VOICECHORUSVOL],
                     sw->setNo[NOIDX_VOICECHORUSSPEED],
                     TRUE );
-    //PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 		changeVStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
     break;
 
@@ -1028,6 +1046,17 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
     }
     writeButton(sw, 0x07, 0x15, sw->reverbFlag );
     break;
+
+  case SNDTEST_TPEV_VPRESERVE:
+    if(sw->voiceReserveFlag == FALSE){
+      PMVOICE_PlayerHeapReserve(2, GFL_HEAPID_APP);
+      sw->voiceReserveFlag = TRUE;
+    } else {
+      PMVOICE_PlayerHeapRelease();
+      sw->voiceReserveFlag = FALSE;
+    }
+    writeButton(sw, 0x1b, 0x15, sw->voiceReserveFlag );
+		break;
 
   case SNDTEST_TPEV_EXIT:
     sw->seq++;
@@ -1297,49 +1326,3 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
 
 
 
-//============================================================================================
-/**
- *
- *
- *
- *
- *
- * @brief MCS通信処理
- *
- *
- *
- *
- *
- */
-//============================================================================================
-#if 0//#ifdef PM_DEBUG
-static u32 mcsControl(HEAPID heapID)
-{
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-    // MCS接続処理
-    GFL_MCS_SNDVIEWER_Exit();
-    GFL_MCS_SNDVIEWER_Init(heapID);
-  }
-  return GFL_MCS_SNDVIEWER_Main(heapID);
-}
-
-static void mcsControlEnd(void)
-{
-  GFL_MCS_SNDVIEWER_Exit();
-}
-
-static void mcsControlReset(HEAPID heapID)
-{
-  u32 param[PNUM_COMM_PANEL_RESET] = {0};
-
-  MCS_Sound_Send(COMM_PANEL_RESET, param, heapID);
-}
-
-static void mcsControlSetTrackSt(HEAPID heapID, u32 trackSt)
-{
-  u32 param[PNUM_COMM_SET_TRACKST];
-  param[0] = trackSt;
-
-  MCS_Sound_Send(COMM_SET_TRACKST, param, heapID);
-}
-#endif
