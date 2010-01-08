@@ -237,4 +237,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/door_t2_b.nsbmd \
 	$(RESDIR)/door_t2_h.nsbmd \
 	$(RESDIR)/door_c1_school.nsbmd \
+	$(RESDIR)/h05_light.nsbmd \
 

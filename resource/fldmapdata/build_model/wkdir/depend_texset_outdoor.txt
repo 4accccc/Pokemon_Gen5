@@ -803,7 +803,8 @@ DEP_TEXSET_IMD_OUTDOOR021 = \
 	$(SRCDIR)/outwarp03.imd \
 	$(SRCDIR)/h05_elevator.imd \
 	$(SRCDIR)/door_h05.imd \
-	$(SRCDIR)/h05_panel.imd
+	$(SRCDIR)/h05_panel.imd \
+	$(SRCDIR)/h05_light.imd
 
 texset/outdoor021.imd: $(DEP_TEXSET_IMD_OUTDOOR021) texset/tmp/outdoor021.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor021.list

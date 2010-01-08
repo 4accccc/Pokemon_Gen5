@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="tanoue_reiko" host="W00192" date="2010-01-08T12:11:29" source="h05_light_on.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="tanoue_reiko" host="W00192" date="2010-01-08T12:11:29" source="h05_light_on.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="4"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="5" xyz="-3.125000 -0.156006 -0.031250" whd="6.437500 0.811768 0.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="h05_light"
+		width="8" height="32" original_width="8" original_height="32"
+		format="a3i5"
+		palette_name="h05_light_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/h05_light/tex/h05_light.tga"
+	>
+		<bitmap size="128">
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0101 0101 0101 0101 2020 2020 2020 2020
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			6060 6060 6060 6060 6060 6060 6060 6060
+			8181 8181 8181 8181 8181 8181 8181 8181
+			8282 8282 8282 8282 a2a2 a2a2 a2a2 a2a2
+			a3a3 a3a3 a3a3 a3a3 a3a3 a3a3 a3a3 a3a3
+			a4a4 a4a4 a4a4 a4a4 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="h05_light_pl" color_size="8">
+		7bf0 7ff4 7ff9 7ffc 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert82"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="1"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="23 29 31"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="24" polygon_size="12"
+		triangle_size="12" quad_size="0"
+		volume_min="-6.250000 -0.312012 -0.062500"
+		volume_max="6.625000 1.312012 -0.062500"
+		volume_r="6.644043"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="6">
+				<primitive index="0" type="triangle_strip" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="8.000000 -22.125000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_xyz xyz="6.156250 1.312012 -0.062500"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="5.687500 0.500000"/>
+					<tex st="6.687500 -22.125000"/>
+					<pos_xy xy="6.625000 0.500000"/>
+					<tex st="5.312500 -22.125000"/>
+					<pos_xy xy="6.156250 -0.312012"/>
+				</primitive>
+				<primitive index="1" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="6.156250 -0.312012"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="5.687500 0.500000"/>
+					<tex st="4.000000 -22.125000"/>
+					<pos_xy xy="5.218750 -0.312012"/>
+					<tex st="2.687500 -22.125000"/>
+					<pos_xy xy="4.750000 0.500000"/>
+				</primitive>
+				<primitive index="2" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="4.750000 0.500000"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="5.687500 0.500000"/>
+					<tex st="1.312500 -22.125000"/>
+					<pos_xy xy="5.218750 1.312012"/>
+					<tex st="0.000000 -22.125000"/>
+					<pos_xy xy="6.156250 1.312012"/>
+				</primitive>
+				<primitive index="3" type="triangle_strip" vertex_size="4">
+					<tex st="8.000000 -22.125000"/>
+					<pos_xy xy="-4.843750 1.312012"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="-5.312500 0.500000"/>
+					<tex st="6.687500 -22.125000"/>
+					<pos_xy xy="-4.375000 0.500000"/>
+					<tex st="5.312500 -22.125000"/>
+					<pos_xy xy="-4.843750 -0.312012"/>
+				</primitive>
+				<primitive index="4" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="-4.843750 -0.312012"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="-5.312500 0.500000"/>
+					<tex st="4.000000 -22.125000"/>
+					<pos_xy xy="-5.781250 -0.312012"/>
+					<tex st="2.687500 -22.125000"/>
+					<pos_xy xy="-6.250000 0.500000"/>
+				</primitive>
+				<primitive index="5" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="-6.250000 0.500000"/>
+					<tex st="3.875000 -7.125000"/>
+					<pos_xy xy="-5.312500 0.500000"/>
+					<tex st="1.312500 -22.125000"/>
+					<pos_xy xy="-5.781250 1.312012"/>
+					<tex st="0.000000 -22.125000"/>
+					<pos_xy xy="-4.843750 1.312012"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="polySurface793" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="24" polygon_size="12"
+		triangle_size="12" quad_size="0"
+		volume_min="-6.250000 -0.312012 -0.062500"
+		volume_max="6.625000 1.312012 -0.062500"
+		volume_r="6.644043"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="24" polygon_size="12"
+	triangle_size="12" quad_size="0"/>
+
+</body>
+
+</imd>

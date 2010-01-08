@@ -236,3 +236,4 @@
 "nsbmdfiles/door_t2_b.nsbmd"
 "nsbmdfiles/door_t2_h.nsbmd"
 "nsbmdfiles/door_c1_school.nsbmd"
+"nsbmdfiles/h05_light.nsbmd"
