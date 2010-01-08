@@ -1866,6 +1866,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     }
     return 2;
   case BTL_EXPOS_AREA_FRIENDS:
+  case BTL_EXPOS_FULL_FRIENDS:
     dst[0] = BTL_MAIN_GetNextPokePos( wk, basePos );
     return 1;
   case BTL_EXPOS_AREA_ALL:
@@ -1909,15 +1910,24 @@ static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     dst[2] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 2 );
     return 3;
 
+  case BTL_EXPOS_FULL_FRIENDS:
+    {
+      u8 i, cnt;
+      for(i=0, cnt=0; i<3; ++i){
+        if( i == posIdx ){ continue; }
+        dst[cnt++] = BTL_MAINUTIL_GetFriendPokePos( basePos, i );
+      }
+      return cnt;
+    }
+
   case BTL_EXPOS_FULL_ALL:
     dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
     dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
     dst[2] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 2 );
     dst[3] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
     dst[4] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
-    dst[5] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
-    return 3;
-
+    dst[5] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+    return 6;
 
   case BTL_EXPOS_AREA_OTHERS:
     if( fCenter )

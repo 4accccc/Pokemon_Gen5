@@ -101,6 +101,18 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_STR_SetPokeNickname:      return "setPokeNickName ID=%d ....\n";
   case DBGSTR_STR_SetTagWazaName:       return "[TAG] Set WazaName ... waza=%d\n";
   case DBGSTR_STR_SetItemName:          return "set Item Name argIdx=%d, ID=%d ....\n";
+  case DBGSTR_SVFL_ActOrderStart:       return "ポケ[%d =monsno:%d]のアクション実行...\n";
+  case DBGSTR_SVFL_ActOrder_Fight:      return "【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n";
+  case DBGSTR_SVFL_ActOrder_Item:       return "【どうぐ】を処理。アイテム%dを、%d番の相手に。\n";
+  case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
+  case DBGSTR_SVFL_ActOrder_Escape:     return "【にげる】を処理。\n";
+  case DBGSTR_SVFL_CorrectTarget_Info:  return "攻撃ポケ[%d]（位置=%d） -> 狙ったポケ[%d]（位置=%d）死んでいるので補正する\n";
+  case DBGSTR_SVFL_CorrectHitFarOn:     return "ワザ[%d] 遠隔ON の補正対象決定\n";
+  case DBGSTR_SVFL_CorrectHitFarOff:    return "ワザ[%d] 遠隔OFF の補正対象決定\n";
+  case DBGSTR_SVFL_CorrectTargetNum:    return "補正対象数  %d / %d \n";
+  case DBGSTR_SVFL_CorrectTargetDiff:   return "対象候補の距離 Poke[%d]->%d, Poke[%d]->%d\n";
+  case DBGSTR_SVFL_CorrectTargetHP:     return "対象候補の残HP Poke[%d]->%d, Poke[%d]->%d\n";
+  case DBGSTR_SVFL_CorrectResult:       return "補正後の対象ポケモンは 位置=%d, ID=%d\n";
   case DBGSTR_SVFL_AtkPower:            return "攻撃力=%d  (Critical=%d, ratio=%08x\n";
   case DBGSTR_SVFL_DefGuard:            return "防御力=%d  (Critical=%d, ratio=%08x\n";
   case DBGSTR_SVFL_WazaPower:           return "ワザ威力は%d  (ratio=%08x)\n";

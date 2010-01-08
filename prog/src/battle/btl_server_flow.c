@@ -315,8 +315,8 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec );
 static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec );
-static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
-  const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* rec );
+static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, BtlPokePos targetPos, BTL_POKESET* rec );
 static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
@@ -1559,7 +1559,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
     ){
       BTL_ACTION_PARAM action = actOrder->action;
 
-      BTL_Printf("ポケ[%d =monsno:%d]のアクション実行...\n", BPP_GetID(bpp), BPP_GetMonsNo(bpp));
+      BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
 
       switch( action.gen.cmd ){
       case BTL_ACTION_FIGHT:
@@ -1567,24 +1567,23 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
           scproc_BeforeFirstFight( wk );
           FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
         }
-        BTL_Printf("【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n", action.fight.waza, action.fight.targetPos);
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, action.fight.waza, action.fight.targetPos);
         scproc_Fight( wk, bpp, &actOrder->reqWaza, &action );
         break;
       case BTL_ACTION_ITEM:
-        BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action.item.number, action.item.targetIdx);
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
         scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
         break;
       case BTL_ACTION_CHANGE:
-        BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action.change.posIdx, action.change.memberIdx);
+        BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
         scproc_MemberChange( wk, bpp, action.change.memberIdx );
         break;
       case BTL_ACTION_ESCAPE:
-        BTL_Printf("【にげる】を処理。\n");
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
         if( scproc_NigeruCmd( wk, bpp ) )
         {
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
           wk->escapeClientID = actOrder->clientID;
-          BTL_Printf("クライアント[%d]が逃げて終了\n");
         } else {
           //SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
         }
@@ -1593,7 +1592,6 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         scproc_Move( wk, bpp );
         break;
       case BTL_ACTION_SKIP:
-        BTL_Printf("処理をスキップ\n");
         scPut_CantAction( wk, bpp );
         break;
       case BTL_ACTION_NULL:
@@ -3122,7 +3120,9 @@ static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
   }
 
   if( numTarget == 1 ){
-    correctTargetDead( wk, rule, attacker, wazaParam, rec );
+    if( correctTargetDead(wk, rule, attacker, wazaParam, targetPos, rec) == FALSE ){
+      numTarget = 0;
+    }
   }
 
   return numTarget;
@@ -3350,9 +3350,11 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 }
 /**
  *  対象ポケモンが死んでいた時の対象修正
+ *
+ *  @retval   BOOL 補正できたらTRUE／補正対象個所にもポケモンが居ない場合FALSE
  */
-static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
-  const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* rec )
+static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, BtlPokePos targetPos, BTL_POKESET* rec )
 {
   // 戦闘位置が陣営あたり２以上（ダブル、トリプル、ローテ）
   u8 numFrontPos = BTL_RULE_GetNumFrontPos( rule );
@@ -3362,70 +3364,96 @@ static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
     if( BTL_POKESET_GetCount(rec) == 1 )
     {
       // 攻撃ポケの敵で、かつ死んでいる
-      BTL_POKEPARAM* target = BTL_POKESET_Get( rec, 0 );
-      if( BPP_IsDead(target)
-      &&  !BTL_MAINUTIL_IsFriendPokeID( BPP_GetID(attacker), BPP_GetID(target) )
+      BTL_POKEPARAM* defaulTarget = BTL_POKESET_Get( rec, 0 );
+      if( BPP_IsDead(defaulTarget)
+      &&  !BTL_MAINUTIL_IsFriendPokeID( BPP_GetID(attacker), BPP_GetID(defaulTarget) )
       ){
+        u8  nextTargetPos[ BTL_POSIDX_MAX ];
         BTL_POKEPARAM* nextTarget[ BTL_POSIDX_MAX ];
         BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-        BtlPokePos  opPos;
-        u8 i, defTargetIdx=BTL_POSIDX_MAX;
-        BTL_POKESET_Remove( rec, target );  // 元々の対象は死んでるので除外
-        BTL_Printf("攻撃ポケ[%d]が狙おうとしたポケ[%d]が死んでいるので補正する\n",
-          BPP_GetID(attacker), BPP_GetID(target));
-        // 元々の対象が何番目に居たか調べる
-        for(i=0; i<numFrontPos; ++i)
+        BtlExPos    exPos;
+        u8 nextTargetCnt, aliveCnt, i;
+
+        BTL_N_Printf( DBGSTR_SVFL_CorrectTarget_Info,
+          BPP_GetID(attacker), atPos, BPP_GetID(defaulTarget), targetPos);
+
+      // 元々の対象は死んでるので除外しておく
+        BTL_POKESET_Remove( rec, defaulTarget );
+
+      // 元々の対象範囲を列挙
+        if( WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_TripleFar) ){
+          exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, atPos );
+          BTL_N_Printf( DBGSTR_SVFL_CorrectHitFarOn, wazaParam->wazaID);
+        }else{
+          exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, atPos );
+          BTL_N_Printf( DBGSTR_SVFL_CorrectHitFarOff, wazaParam->wazaID);
+        }
+        nextTargetCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, nextTargetPos );
+
+      // 元々の対象範囲から生きてるポケを列挙
+        for(i=0; i<NELEMS(nextTarget); ++i){
+          nextTarget[i] = NULL;
+        }
+        aliveCnt = 0;
+        for(i=0; i<nextTargetCnt; ++i)
         {
-          opPos = BTL_MAINUTIL_GetOpponentPokePos( rule, atPos, i );
-          nextTarget[i] = BTL_POKECON_GetFrontPokeData( wk->pokeCon, opPos );
-          if( BPP_GetID(nextTarget[i]) == BPP_GetID(target) ){
-            defTargetIdx = i;
-            BTL_Printf("狙おうとしたポケの位置Idx-%d\n", i);
+          nextTarget[aliveCnt] = BTL_POKECON_GetFrontPokeData( wk->pokeCon, nextTargetPos[i] );
+          if( !BPP_IsDead(nextTarget[aliveCnt]) ){
+            nextTargetPos[ aliveCnt ] = nextTargetPos[i]; // 位置情報もIndexを揃えておく
+            ++aliveCnt;
           }
         }
-        if( defTargetIdx != BTL_POSIDX_MAX )
-        {
-          // 元々の対象の隣にいる生存ポケをリストアップ
-          u8 refIdx[ BTL_POSIDX_MAX ];
-          u8 refCnt=0;
-          for(i=0; i<numFrontPos; ++i)
-          {
-            if( !BPP_IsDead(nextTarget[i]) && (BTL_CALC_ABS((int)i-(int)defTargetIdx)==1) ){
-              refIdx[ refCnt++ ] = i;
-            }
-          }
-          // 候補が１体以上なら
-          if( refCnt >= 1 )
-          {
-            u8 nextTargetIdx;
 
-            if( refCnt == 1 ){
-              nextTargetIdx = refIdx[0];
-            }
-            else
-            {
-            // 候補が２体（トリプルのみ）ならHPの少ない方
-              u16 hp[2];
-              for(i=0; i<2; ++i){
-                hp[i] = BPP_GetValue( nextTarget[refIdx[i]], BPP_HP );
-              }
-              if( hp[0] < hp[1] ){
-                nextTargetIdx = refIdx[0];
-              }else if( hp[1] < hp[0] ){
-                nextTargetIdx = refIdx[1];
-              }else{
-                u8 rnd = BTL_CALC_GetRand( 2 );
-                nextTargetIdx = refIdx[ rnd ];
-              }
-            }
-            BTL_Printf("補正後の対象ポケモンは 位置idx-%d, ID=%d\n",
-              nextTargetIdx, BPP_GetID(nextTarget[nextTargetIdx]) );
-            BTL_POKESET_Add( rec, nextTarget[ nextTargetIdx ] );
+        BTL_N_Printf( DBGSTR_SVFL_CorrectTargetNum, aliveCnt, nextTargetCnt );
+        if( aliveCnt == 0 ){
+          return FALSE;
+        }
+
+        // 対象が２体じゃなければ１体のハズなので、候補リストの先頭を狙う
+        if( aliveCnt != 2 ){
+          i = 0;
+        }
+        // 候補が２体の場合（トリプルの場合のみ起こりうる）
+        else
+        {
+          // 基本は、元々の対象に近い方を狙う
+          int diff_0 = BTL_CALC_ABS( (int)(nextTargetPos[0]) - (int)targetPos );
+          int diff_1 = BTL_CALC_ABS( (int)(nextTargetPos[1]) - (int)targetPos );
+
+          BTL_N_Printf( DBGSTR_SVFL_CorrectTargetDiff,
+            BPP_GetID(nextTarget[0]), diff_0, BPP_GetID(nextTarget[1]), diff_1);
+
+          // 元々の対象との距離も同じ場合（真ん中を狙った場合のみ起こりうる）、HPの少ない方を狙う
+          if( diff_0 == diff_1 )
+          {
+            diff_0 = BPP_GetValue( nextTarget[0], BPP_HP );
+            diff_1 = BPP_GetValue( nextTarget[1], BPP_HP );
+            BTL_N_Printf( DBGSTR_SVFL_CorrectTargetHP,
+              BPP_GetID(nextTarget[0]), diff_0, BPP_GetID(nextTarget[1]), diff_1);
+
           }
+
+          if( diff_0 < diff_1 ){
+            i = 0;
+          }else if( diff_1 < diff_0 ){
+            i = 1;
+          }else{
+            // HPも同じならランダム
+            i = BTL_CALC_GetRand( 2 );
+          }
+        }
+
+        if( nextTarget[i] != NULL )
+        {
+          BTL_N_Printf( DBGSTR_SVFL_CorrectResult,
+            nextTargetPos[i], BPP_GetID(nextTarget[i]) );
+          BTL_POKESET_Add( rec, nextTarget[ i ] );
+          return TRUE;
         }
       }
     }
   }
+  return FALSE;
 }
 
 
@@ -3730,7 +3758,6 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   if( scEvent_IsExcuseCalcHit(wk, attacker, defender, wazaParam->wazaID) ){
-    BTL_Printf("特殊条件発生で命中率チェックをスキップ。当たったことに。\n");
     return TRUE;
   }
 
