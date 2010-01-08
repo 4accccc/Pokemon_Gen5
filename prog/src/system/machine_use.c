@@ -20,7 +20,7 @@
 //TWLのNITROモードとのHEAPの差分の為確保してあります
 //
 #if !defined(SDK_TWL)
-static u8 dummybufferTWL[0x8d00];
+static u8 dummybufferTWL[0x8000];
 #endif
 
 //VRAM転送マネージャ定義(NNS関数)
