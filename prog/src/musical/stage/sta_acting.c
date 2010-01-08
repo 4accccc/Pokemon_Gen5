@@ -109,6 +109,7 @@ struct _ACTING_WORK
   u16   makuOffset;
   u8    playerIdx;
   BOOL  forceScroll;
+  ARCHANDLE *arcHandle;
   
   ACTING_MAIN_SEQ mainSeq;
   
@@ -157,6 +158,7 @@ struct _ACTING_WORK
   BOOL    isUpdateAttention;
   u8      lightUpPoke;
   u8      attentionPoke;  //カメラの対象
+  u8      pokeRank[MUSICAL_POKE_MAX];
   
   //アイテム使用形
   BOOL    useItemFlg[MUSICAL_POKE_MAX];
@@ -268,6 +270,25 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     work->playerIdx = MUS_COMM_GetSelfMusicalIndex(work->initWork->commWork);
   }
+
+  //順位の計算
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    u8 j;
+    const u16 selfPoint = work->initWork->musPoke[i]->point;
+    work->pokeRank[i] = 0;
+    for( j=0;j<MUSICAL_POKE_MAX;j++ )
+    {
+      if( i != j )
+      {
+        if( work->initWork->musPoke[j]->point > selfPoint )
+        {
+          work->pokeRank[i]++;
+        }
+      }
+    }
+    ARI_TPrintf("Rank[%d][%d]\n",i,work->pokeRank[i]);
+  }
   
   //注目ポケ系初期化
   work->isUpdateAttention = TRUE;
@@ -281,6 +302,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     work->useItemFlg[i] = FALSE;
   }
+
+  work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );
   STA_ACT_SetupMessage( work);
@@ -372,6 +396,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 
   GFL_TCB_DeleteTask( work->vblankFuncTcb );
 
+  GFL_ARC_CloseDataHandle(work->arcHandle);
   GFL_HEAP_FreeMemory( work );
   
 }
@@ -386,7 +411,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     {
       
       //演劇風
-      //STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+      //STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData , FALSE );
       if( work->scriptData != NULL )
       {
         STA_ACT_StartScript( work );
@@ -397,7 +422,12 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   {
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      stopScript = TRUE;
+      stopScript = !stopScript;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle, NARC_stage_gra_sub_script_01_bin , FALSE , work->heapId );
+      STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , 5 );
     }
   }
 #endif
@@ -721,40 +751,38 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 //--------------------------------------------------------------
 static void STA_ACT_SetupBg( ACTING_WORK *work )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
 
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_dark_mask_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , NARC_stage_gra_dark_mask_NCLR , 
                     PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MASK*32 , ACT_PLT_BG_MAIN_MASK*32 , 32 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_dark_mask_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_dark_mask_NCGR ,
                     ACT_FRAME_MAIN_MASK , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_dark_mask_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_stage_gra_dark_mask_NSCR , 
                     ACT_FRAME_MAIN_MASK ,  0 , 0, FALSE , work->heapId );
 
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_maku_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , NARC_stage_gra_maku_NCLR , 
                     PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MAKU*32 , ACT_PLT_BG_MAIN_MAKU*32 , 32 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_maku_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_maku_NCGR ,
                     ACT_FRAME_MAIN_CURTAIN , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_stage_gra_maku_NSCR , 
                     ACT_FRAME_MAIN_CURTAIN ,  0 , 0, FALSE , work->heapId );
 
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_sub_bg_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_stage_gra_sub_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   //背景
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_back_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_sub_back_NCGR ,
                     ACT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_sub_back_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_stage_gra_sub_back_NSCR , 
                     ACT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
   //首
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_audi_neck_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_sub_audi_neck_NCGR ,
                     ACT_FRAME_SUB_AUDI_NECK , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_sub_audi_neck_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_stage_gra_sub_audi_neck_NSCR , 
                     ACT_FRAME_SUB_AUDI_NECK ,  0 , 0, FALSE , work->heapId );
   //顔
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_audi_face_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_sub_audi_face_NCGR ,
                     ACT_FRAME_SUB_AUDI_FACE , 0 , 0, FALSE , work->heapId );
 
-  GFL_ARC_CloseDataHandle(arcHandle);
 
   GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
   GFL_BG_LoadScreenReq(ACT_FRAME_SUB_BG);
@@ -765,17 +793,6 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
 
 void  STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo )
 {
-/*
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg00_NCLR + bgNo, 
-                    PALTYPE_MAIN_BG_EX , 0x6000 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg00_NCGR  + bgNo,
-                    ACT_FRAME_MAIN_MASK , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg00_NSCR  + bgNo, 
-                    ACT_FRAME_MAIN_MASK ,  0 , 0, FALSE , work->heapId );
-  GFL_ARC_CloseDataHandle(arcHandle);
-  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
-*/
   const u8 bgIdx = MUSICAL_PROGRAM_GetBgNo( work->initWork->progWork );
   
   STA_BG_CreateBg( work->bgSys , bgIdx );
@@ -1044,6 +1061,22 @@ static void STA_ACT_StartScript( ACTING_WORK *work )
   }
 }
 
+void STA_ACT_StartAppealScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeNo )
+{
+  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_appeal_script_01_bin + scriptNo , FALSE , work->heapId );
+  const u8 rankScriptNo[4] = {0,1,2,2};
+  
+  ARI_TPrintf("[%d][%d][%d]\n",pokeNo, rankScriptNo[work->pokeRank[pokeNo]] , 1<<pokeNo);
+  STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , rankScriptNo[work->pokeRank[pokeNo]] , 1<<pokeNo );
+  
+}
+void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeTrgBit )
+{
+  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_sub_script_01_bin + scriptNo , FALSE , work->heapId );
+  STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , pokeTrgBit );
+  
+}
+
 #pragma mark [> message func
 //--------------------------------------------------------------
 //  メッセージ関係
@@ -1159,6 +1192,7 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
     else
     {
       u8 maxPoint = 0;
+      /*
       //得点でチェック
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
@@ -1174,7 +1208,15 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
           STA_AUDI_SetAttentionPoke( work->audiSys , i , TRUE );
         }
       }
-      
+      */
+      //ランクチェックに変更
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        if( work->pokeRank[i] == 0 )
+        {
+          STA_AUDI_SetAttentionPoke( work->audiSys , i , TRUE );
+        }
+      }
       work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
     }
     work->isUpdateAttention = FALSE;

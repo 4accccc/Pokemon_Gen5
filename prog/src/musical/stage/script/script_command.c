@@ -93,6 +93,10 @@ static const char* const CommandStr[] = {
                   "メインパートの終了",
                   "トップのポケモンに寄る",
                   "ラベル",
+                  "シーケンスBGM再生",
+                  "シーケンスBGM停止",
+                  "アピールスクリプト",
+                  "サブスクリプト",
                   };
 #else
 #define SCRIPT_PRINT_LABEL(str) 
@@ -987,6 +991,8 @@ SCRIPT_FUNC_DEF( PokeAttentionOn )
   const s32 pokeNo = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(PokeAttentionOn);
 
+  GF_ASSERT_MSG( pokeNo != -1 , "事前設定不可！(ポケモン番号が-1!!)\n" );
+
   STA_ACT_SetLightUpFlg( work->actWork , pokeNo , TRUE );
 
   return SFT_CONTINUE;
@@ -1003,6 +1009,38 @@ SCRIPT_FUNC_DEF( PokeAttentionOff )
   STA_ACT_SetLightUpFlg( work->actWork , 1 , FALSE );
   STA_ACT_SetLightUpFlg( work->actWork , 2 , FALSE );
   STA_ACT_SetLightUpFlg( work->actWork , 3 , FALSE );
+
+  return SFT_CONTINUE;
+}
+
+//アピールスクリプト
+SCRIPT_FUNC_DEF( PokeAppealScript )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNo = ScriptFunc_GetValueS32();
+  const s32 scriptNo = ScriptFunc_GetValueS32();
+  GF_ASSERT_MSG( pokeNo != -1 , "事前設定不可！(ポケモン番号が-1!!)\n" );
+
+  SCRIPT_PRINT_LABEL(PokeAppealScript);
+
+  STA_ACT_StartAppealScript( work->actWork , scriptNo , pokeNo );
+
+  return SFT_CONTINUE;
+}
+
+//サブスクリプト
+SCRIPT_FUNC_DEF( PokeSubScript )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+  const s32 scriptNo = ScriptFunc_GetValueS32();
+  
+  SCRIPT_PRINT_LABEL(PokeSubScript);
+  
+  STA_ACT_StartSubScript( work->actWork , scriptNo , pokeNoBit );
 
   return SFT_CONTINUE;
 }

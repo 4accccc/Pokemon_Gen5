@@ -21,7 +21,7 @@ STREAMING_CONVERT = "waveconv -c "
 MESSAGE_CONVERT = "perl -I ../../message ../../message/msgconv.pl "
 MESSAGE_CONVERT_LANG = "JPN JPN_KANJI"
 #スクリプトコンバータ
-SCRIPT_CONVERT = "ruby eescmk.rb " + ENV['PROJECT_ROOT'] + "/prog/src/musical/stage/script/musical_script_command.h"
+SCRIPT_CONVERT = "ruby ../eescmk.rb " + ENV['PROJECT_ROOT'] + "/prog/src/musical/stage/script/musical_script_command.h"
 SCRIPT_CONVERT_OPT = ENV['PROJECT_ROOT'] + "/ on"
 #スクリプトバイナリ用
 CW_BIN_TOOLS = ENV['CWFOLDER'] + "/ARM_Tools/Command_Line_Tools/"

@@ -66,7 +66,9 @@
 #define SCRIPT_ENUM_Label   (47)
 #define SCRIPT_ENUM_SeqBgmStart  (48)
 #define SCRIPT_ENUM_SeqBgmStop   (49)
-#define SEQ_END             (50)
+#define SCRIPT_ENUM_PokeAppealScript (50)
+#define SCRIPT_ENUM_PokeSubScript (51)
+#define SEQ_END             (52)
 
 #ifndef __C_NO_DEF_
 
@@ -472,6 +474,44 @@
   .short  SCRIPT_ENUM_PokeAttentionOff
   .endm
 
+//======================================================================
+/**
+ * @brief ポケモン：アピールスクリプト実行
+ *
+ * #param_num 2
+ * @param pokeNo ポケモン番号(-1不可)
+ * @param scriptNo スクリプト番号
+ *
+ * #param VALUE_INT pokeNo
+ * #param VALUE_INT scriptNo
+ */
+//======================================================================
+  .macro  ComPokeAppealScript pokeNo scriptNo
+  .short  SCRIPT_ENUM_PokeAppealScript
+  .long   \pokeNo
+  .long   \scriptNo
+  .endm
+
+
+//======================================================================
+/**
+ * @brief ポケモン：サブスクリプト実行
+ *
+ * #param_num 2
+ * @param pokeNo ポケモン番号(-1で事前登録対象)
+ * @param scriptNo スクリプト番号
+ *
+ * #param VALUE_INT pokeNo
+ * #param VALUE_INT scriptNo
+ */
+//======================================================================
+  .macro  ComPokeSubScript pokeNo scriptNo 
+  .short  SCRIPT_ENUM_PokeSubScript
+  .long   \pokeNo
+  .long   \scriptNo
+  .endm
+
+
 #pragma mark [>Pokemon Action Command
 //======================================================================
 /**
@@ -548,6 +588,7 @@
   .long   \autoWait
   .endm
   
+
 #pragma mark [>Pokemon Manage Command
 //======================================================================
 /**

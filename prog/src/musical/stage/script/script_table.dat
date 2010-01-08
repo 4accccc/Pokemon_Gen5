@@ -70,4 +70,6 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )	//1 //トップのポケモンに寄る
 SCRIPT_FUNC_DEF( Label )	//1 //ラベル
 SCRIPT_FUNC_DEF( SeqBgmStart )	//1 //SEQ_BGM開始
 SCRIPT_FUNC_DEF( SeqBgmStop )	//1 //SEQ_BGM開始
+SCRIPT_FUNC_DEF( PokeAppealScript )	//2 //アピールスクリプト
+SCRIPT_FUNC_DEF( PokeSubScript )	//2 //サブスクリプト
 

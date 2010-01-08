@@ -39,9 +39,10 @@ typedef enum
 
 typedef enum
 {
-	SFB_IS_FINISH		= 1<<0,		//終了したか？
-	SFB_IS_TARGET_SYNC	= 1<<1,		//同期待ちの対象にするか？
-	SFB_WAIT_SYNC		= 1<<2,		//同期待ち中か？
+	SFB_IS_FINISH		      = 1<<0,		//終了したか？
+	SFB_IS_TARGET_SYNC	  = 1<<1,		//同期待ちの対象にするか？
+	SFB_WAIT_SYNC		      = 1<<2,		//同期待ち中か？
+	SFB_IS_AUTO_DELETE		= 1<<3,		//終了時にscriptDataを削除するか？
 }SCRIPT_FLAG_BIT;
 
 //======================================================================
@@ -64,7 +65,7 @@ typedef struct
 	VMHANDLE	*vmHandle;
 	
 	void	*scriptData;
-	void	*loadPos;
+	void	*scriptBaseData;
 	
 	u32		frame;
 	u16		waitCnt;
@@ -134,5 +135,7 @@ extern void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const 
 extern void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
 extern const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo );
 extern void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg );
+extern void STA_ACT_StartAppealScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeNo );
+extern void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeTrgBit );
 
 #endif STA_ACT_SCRIPT_DEF_H__

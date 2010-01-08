@@ -87,6 +87,10 @@ void STA_SCRIPT_ExitSystem( STA_SCRIPT_SYS *work )
     {
       VM_End( work->scriptWork[i]->vmHandle );
       VM_Delete( work->scriptWork[i]->vmHandle );
+      if( work->scriptWork[i]->isFlag & SFB_IS_AUTO_DELETE )
+      {
+        GFL_HEAP_FreeMemory( work->scriptWork[i]->scriptBaseData );
+      }
       GFL_HEAP_FreeMemory( work->scriptWork[i] );
       work->scriptWork[i] = NULL;
     }
@@ -172,7 +176,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
   work->befVCount = nowVCount;
 }
 
-void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL isTrgSync )
+void* STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL isTrgSync )
 {
   u8 i;
   for( i=0;i<SCRIPT_NUM;i++ )
@@ -187,7 +191,7 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL 
   
   work->scriptWork[i] = GFL_HEAP_AllocMemory( work->heapId , sizeof( STA_SCRIPT_WORK ) );
   work->scriptWork[i]->scriptData = scriptData;
-  work->scriptWork[i]->loadPos = work->scriptWork[i]->scriptData;
+  work->scriptWork[i]->scriptBaseData = NULL;
   work->scriptWork[i]->waitCnt = 0;
   work->scriptWork[i]->frame = 0;
   work->scriptWork[i]->isFlag = 0;
@@ -202,6 +206,22 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL 
   work->scriptWork[i]->vmHandle = VM_Create( work->heapId , &vm_init );
   VM_Init( work->scriptWork[i]->vmHandle , (void*)work->scriptWork[i] );
   VM_Start( work->scriptWork[i]->vmHandle , work->scriptWork[i]->scriptData );
+  
+  return work->scriptWork[i];
+}
+
+//アピールスクリプト・サブスクリプト読み込み
+void STA_SCRIPT_SetSubScript( STA_SCRIPT_SYS *work , void *scriptBaseData , const u8 scriptNo , const u8 targetPokeBit )
+{
+  STA_SCRIPT_WORK *scriptWork;
+  const u32 *headData = (u32*)scriptBaseData;
+  
+  
+  scriptWork = STA_SCRIPT_SetScript( work , (u8*)scriptBaseData+headData[scriptNo] , FALSE );
+  scriptWork->scriptBaseData = scriptBaseData;
+  scriptWork->isFlag |= SFB_IS_AUTO_DELETE;
+  scriptWork->trgPokeFlg = targetPokeBit;
+
 }
 
 static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scriptWork )
@@ -220,7 +240,10 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
     {
       VM_End( scriptWork->vmHandle );
       VM_Delete( scriptWork->vmHandle );
-      //GFL_HEAP_FreeMemory( scriptWork->scriptData );
+      if( scriptWork->isFlag & SFB_IS_AUTO_DELETE )
+      {
+        GFL_HEAP_FreeMemory( scriptWork->scriptBaseData );
+      }
       return TRUE;
     }
   }

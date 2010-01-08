@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ariizumi_nobuhiko tanoue_reiko
+USERS	= ariizumi_nobuhiko tanoue_reiko iwao_kazumasa
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -21,7 +21,7 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= 
+SUBDIRS	= script
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -36,6 +36,7 @@ icares:=$(wildcard *.ica)
 itares:=$(wildcard *.ita)
 itpres:=$(wildcard *.itp)
 spares:=$(wildcard *.spa)
+esfres:=$(wildcard script/*.esf)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -48,11 +49,12 @@ imdobj2 = $(subst .imd,.nsbmd,$(imdres))
 icaobj = $(subst .ica,.nsbca,$(icares))
 itaobj = $(subst .ita,.nsbta,$(itares))
 itpobj = $(subst .itp,.nsbtp,$(itpres))
+scriptobj = $(subst script/, ,$(subst .esf,.bin,$(esfres)))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .nsbmd .imd .nsbca .ica .nsbta .ita .nsbtp .itp
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .nsbmd .imd .nsbca .ica .nsbta .ita .nsbtp .itp .esf .s .bin
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -98,7 +100,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(imdobj2) $(itaobj) $(itpobj) $(icaobj) $(spares)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(imdobj2) $(itaobj) $(itpobj) $(icaobj) $(spares) $(scriptobj)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -120,6 +122,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.nsbta
 	rm -f *.nsbtp
 	rm -f *.nsbca
+	rm -f *.bin
+	rm -f *.elf
+	rm -f *.o
+	rm -f *.s
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
