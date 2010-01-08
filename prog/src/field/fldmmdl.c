@@ -776,13 +776,8 @@ static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
     }
   }else{
     const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam( mmdlsys, obj_code );
-    #if 0
     mmdl->gx_size = prm->size_width;
-    mmdl->gz_size = prm->size_height;
-    #else
-    mmdl->gx_size = 1;
-    mmdl->gz_size = 1;
-    #endif
+    mmdl->gz_size = prm->size_depth;
   }
   
   // 座標タイプにより、位置の初期化方法を変更

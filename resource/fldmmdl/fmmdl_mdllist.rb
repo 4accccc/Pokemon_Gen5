@@ -17,7 +17,7 @@ load "rbdefine"
 #  0-3 モデル総数
 #  4-  以下総数分のモデルパラメータ
 #
-#  パラメーターフォーマット
+#  モデルパラメタフォーマット
 #  0-1 OBJコード
 #  2  表示タイプ
 #  3  処理関数
@@ -28,9 +28,10 @@ load "rbdefine"
 #  8  テクスチャサイズ
 #  9  アニメID
 #  10 性別
-#
-#  2-3 リソースアーカイブインデックス
-#  13-15 4bit差分用ダミー
+#  11 4バイト境界余り
+#  12 横幅サイズ
+#  13 奥行サイズ
+#  14-27 表示タイプ別データバッファ
 #=======================================================================
 
 #=======================================================================
@@ -505,7 +506,25 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #リソースインデックス 2 (14)
+  #横幅サイズ 1 (13)
+  ret = 0
+  word = str[RBDEF_NUM_BBD_WIDTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+
+  #奥行サイズ 1 (14)
+  ret = 0
+  word = str[RBDEF_NUM_BBD_DEPTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #リソースインデックス 2 (15)
   word = str[RBDEF_NUM_DRAWTYPE]
   
   if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
@@ -539,8 +558,8 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("S*") )
   
-  #４ビット境界用ダミーデータ 14 (28)
-  file_write_filldata( wfile, 14, 0 )
+  #４ビット境界用ダミーデータ 12 (28)
+  file_write_filldata( wfile, 12, 0 )
   
   return RET_TRUE
 end
@@ -634,6 +653,24 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
   
   #４ビット境界用ダミーデータ 1 (12)
   ret = 0
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+
+  #横幅サイズ 1 (13)
+  ret = 0
+  word = str[RBDEF_NUM_MDL_WIDTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+
+  #奥行サイズ 1 (14)
+  ret = 0
+  word = str[RBDEF_NUM_MDL_DEPTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
@@ -731,8 +768,8 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
     end
   end
   
-  #４ビット境界用ダミーデータ 6 (28)
-  file_write_filldata( wfile, 6, 0 )
+  #４ビット境界用ダミーデータ 4 (28)
+  file_write_filldata( wfile, 4, 0 )
   
   return RET_TRUE
 end

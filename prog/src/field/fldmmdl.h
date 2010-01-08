@@ -602,13 +602,15 @@ typedef struct
   u8 sex;         ///<MMDL_OBJCODESEX
   u8 padding00;   ///<4byte境界ダミー
   
-  u8 buf[16];     ///<データバッファ
+  u8 size_width;  ///<横幅サイズ
+  u8 size_depth;  ///<奥行サイズ
+  u8 buf[14];     ///<データバッファ
 }OBJCODE_PARAM;
 
 typedef struct 
 {
 	u16 res_idx;		///<リソースインデックス
-  u8 padding[14];
+  u8 padding[12];
 }OBJCODE_PARAM_BUF_BBD;
 
 typedef struct
@@ -618,7 +620,7 @@ typedef struct
   u16 res_idx_anm0;
   u16 res_idx_anm1;
   u16 res_idx_anm2;
-  u8 padding[6];
+  u8 padding[4];
 }OBJCODE_PARAM_BUF_MDL;
 
 ///外部から生成されるOBJCODE_PARAM配列の要素数の格納サイズ
