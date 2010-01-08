@@ -539,6 +539,12 @@ end
 	fp_trno.print( "#endif __TRNO_DEF_H_\n" )
 	fp_trno.close
 
+  #トレーナータイプHash生成
+  fp_hash = open( "trtype_hash.rb", "w" )
+  fp_hash.printf("#! ruby -Ks\n\n" )
+
+  fp_hash.printf("\t$trtype_hash = {\n" )
+
   #トレーナータイプ名
   no = 2
   trainer.size.times { |i|
@@ -554,6 +560,7 @@ end
     str = "MSG_" + trainer[ i ][ 0 ]
     gmm_type.make_row( str, trainer[ i ][ 1 ] )
 		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ 2 ], trainer[ i ][ 1 ] )
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ 1 ], no )
     no += 1
 	}
 	fp_trtype.printf( "#define	TRTYPE_MAX	( %d )\n", no )
@@ -569,6 +576,9 @@ end
 	fp_trtypesex.print( "};\n" )
 	fp_trtypesex.print( "\n" )
 	fp_trtypesex.close
+
+  fp_hash.printf("\t}\n" )
+  fp_hash.close
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
