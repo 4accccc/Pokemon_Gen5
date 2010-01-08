@@ -58,7 +58,7 @@ endif
 
 
 #コピー実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc 
+$(TARGETDIR)/$(targetname).narc: mk_list_txt $(targetname).narc 
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
 	@$(COPY) $(targetname).naix $(TARGETDIR)
@@ -87,7 +87,7 @@ include	data_list
 dataconv: $(TARGET_DATA)
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: mk_list_txt $(TARGET_DATA)
+$(targetname).narc: $(TARGET_DATA)
 	@nnsarc -i -cl -l -n $(targetname).narc *.nsb* > arc_result.txt
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
