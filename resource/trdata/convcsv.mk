@@ -19,6 +19,7 @@ TYPE_HEADER = trtype_def.h
 GENDER_HEADER = trtype_sex.h
 NAME_GMMFILE = trname.gmm
 TYPE_GMMFILE = trtype.gmm
+HASH = trtype_hash.rb
 SCRFILE = trfgra_wb.scr
 LSTFILE = trfgra_wb.lst
 
@@ -28,6 +29,7 @@ LSTFILE = trfgra_wb.lst
 TARGETDIR	= ../../prog/include/tr_tool/
 GMMDIR	= ../../resource/message/src/
 GRADIR	= ../../resource/trgra/
+HASHDIR	= ../../tools/hash/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -45,9 +47,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE)
+LDIRT_CLEAN = $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(HASHDIR)$(HASH)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.s $(NO_HEADER) $(TYPE_HEADER) $(GENDER_HEADER) $(NAME_GMMFILE) $(TYPE_GMMFILE) *.scr out_end
+LDIRT_CLEAN += *.s $(NO_HEADER) $(TYPE_HEADER) $(GENDER_HEADER) $(NAME_GMMFILE) $(TYPE_GMMFILE) $(HASH) *.scr out_end
 endif
 
 .PHONY:	do-build
@@ -66,7 +68,7 @@ out_end: trainer_wb.csv
 	ruby ../../tools/trdata_conv/file_exist.rb $(LSTFILE) ../../../pokemon_wb_doc/trgra/
 endif
 
-do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE)
+do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE) $(HASHDIR)$(HASH)
 
 $(TARGETDIR)$(NO_HEADER):	$(NO_HEADER)
 	$(COPY)	$(NO_HEADER) $(TARGETDIR)
@@ -85,4 +87,7 @@ $(GMMDIR)$(TYPE_GMMFILE):	$(TYPE_GMMFILE)
 
 $(GRADIR)$(SCRFILE):	$(SCRFILE)
 	$(COPY)	$(SCRFILE) $(GRADIR)
+
+$(HASHDIR)$(HASH):	$(HASH)
+	$(COPY)	$(HASH) $(HASHDIR)
 
