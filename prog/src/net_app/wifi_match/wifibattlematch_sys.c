@@ -18,7 +18,6 @@
 #include "gamesystem/btl_setup.h"
 #include "print/str_tool.h"
 #include "net/network_define.h"
-#include "system/net_err.h"
 #include "poke_tool/poke_regulation.h"
 
 //各プロセス
@@ -149,11 +148,6 @@ static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 
-//-------------------------------------
-///	致命的なエラーをチェック
-//=====================================
-static BOOL ERROR_CheckMain( WIFIBATTLEMATCH_SYS *p_wk );
-
 //=============================================================================
 /**
  *					外部参照
@@ -211,7 +205,7 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
   },
   //SUBPROCID_LOGIN
   { 
-    FS_OVERLAY_ID(wifi_login),
+    FS_OVERLAY_ID( wifi_login ),
     &WiFiLogin_ProcData,
     LOGIN_AllocParam,
     LOGIN_FreeParam,
@@ -256,7 +250,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //データバッファ作成
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
-  //自分のデータ設定( @todo レートとポケパーティはまだ )
+  //自分のデータ設定( @todo レートとPMSはまだ )
   { 
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
 
@@ -276,6 +270,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       p_wifi_histroy    = SaveData_GetWifiHistory(p_sv);
       p_player->nation  = WIFIHISTORY_GetMyNation(p_wifi_histroy); 
       p_player->area    = WIFIHISTORY_GetMyArea(p_wifi_histroy); 
+    }
+    { 
+      PMSDAT_Init( &p_player->pms, PMS_TYPE_BATTLE_READY );
     }
     {
       POKEPARTY *p_temoti;
@@ -413,12 +410,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	case WBM_SYS_SEQ_EXIT:
 		return GFL_PROC_RES_FINISH;
 	}
-
-  //エラー検知
-  if( ERROR_CheckMain( p_wk ) )
-  { 
-		return GFL_PROC_RES_FINISH;
-  }
 
 
 	return GFL_PROC_RES_CONTINUE;
@@ -625,6 +616,10 @@ static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE:
     SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_POKELIST );
     break;
+  
+  case WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN:
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+    break;
   }
 
 	GFL_HEAP_FreeMemory( p_param );
@@ -717,8 +712,19 @@ static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   switch( p_wk->sub_seq )
   { 
   case 0:
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17);
-    p_wk->sub_seq++;
+    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
+    { 
+      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17);
+      p_wk->sub_seq++;
+    }
+    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
+    { 
+
+      GFL_HEAP_FreeMemory( p_param->regulation );
+      SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+      GFL_HEAP_FreeMemory( p_param );
+      p_wk->sub_seq = 0;
+    }
     break;
 
   case 1:
@@ -891,57 +897,4 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
 { 
   GFL_HEAP_FreeMemory( p_wk->p_player_data );
   GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
-}
-//=============================================================================
-/**
- *  致命的なエラーをチェック
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  致命的なエラーをチェック
- *
- *	@param	WIFIBATTLEMATCH_SYS *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static BOOL ERROR_CheckMain( WIFIBATTLEMATCH_SYS *p_wk )
-{
-  if( GFL_NET_IsInit() )
-  { 
-
-    if( NetErr_App_CheckError() )
-    { 
-      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-
-      switch( cp_error->errorType )
-      { 
-      case DWC_ETYPE_LIGHT:
-        /* fallthru */
-      case DWC_ETYPE_SHOW_ERROR:
-        //エラーコードorメッセージを表示するだけ
-        NetErr_DispCallPushPop();
-//        GFL_NET_StateClearWifiError();  //一時コメント
-        break;
-
-      case DWC_ETYPE_SHUTDOWN_FM:
-      case DWC_ETYPE_SHUTDOWN_GHTTP:
-      case DWC_ETYPE_SHUTDOWN_ND:
-        //シャットダウン
-        //NetErr_App_ReqErrorDisp();
-        return TRUE;
-
-      case DWC_ETYPE_DISCONNECT:
-        //切断
-        NetErr_App_ReqErrorDisp();
-        return TRUE;
-
-      case DWC_ETYPE_FATAL:
-        //Fatal
-        break;
-      }
-    }
-
-  }
-
-  return FALSE;
 }

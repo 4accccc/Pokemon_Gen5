@@ -19,6 +19,7 @@
 #include "system/bmp_winframe.h"
 #include "pokeicon/pokeicon.h"
 #include "gamesystem/game_data.h"
+#include "system/net_err.h"
 
 //	アーカイブ
 #include "arc_def.h"
@@ -194,6 +195,11 @@ static BOOL WifiBattleMatch_Random_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATT
 static BOOL WifiBattleMatch_WiFi_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_seq );
 static BOOL WifiBattleMatch_Live_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_seq );
 static BOOL WifiBattleMatch_Debug_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_seq );
+
+//-------------------------------------
+///	不正情報のチェック
+//=====================================
+static void WifiBattleMatch_Darty_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDATA *p_data );
 
 //=============================================================================
 /**
@@ -440,6 +446,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Main( GFL_PROC *p_proc, int *p_
     { 
       p_wk->fade_seq  = SEQ_FADEOUT_START;
     }
+
+    //共通のエラー処理（SC,GDB以外）
+    if( WIFIBATTLEMATCH_NET_CheckError( p_wk->p_net ) )
+    { 
+      p_param->result = WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN;
+      p_wk->fade_seq  = SEQ_FADEOUT_START;
+    }
     break;
 
   case SEQ_FADEOUT_START:
@@ -496,6 +509,8 @@ typedef enum
   WIFIBATTLEMATCH_RND_SUBSEQ_FREE_MATCHING, //フリーマッチング
   WIFIBATTLEMATCH_RND_SUBSEQ_FREE_BTL_END,  //フリーバトル終了後
 
+  WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN,  //ログインまでもどる
+
   WIFIBATTLEMATCH_RND_SUBSEQ_MAX,
   WIFIBATTLEMATCH_RND_SUBSEQ_EXIT = WIFIBATTLEMATCH_RND_SUBSEQ_MAX,
 
@@ -515,6 +530,8 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
 static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_Matching( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_subseq );
 static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_subseq );
 
+static int WIFIBATTLEMATCH_RND_SUBSEQ_Err_ReturnLogin( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_subseq );
+
 //-------------------------------------
 ///	ランダムマッチシーケンス関数テーブル
 //=====================================
@@ -528,6 +545,7 @@ static const WIFIBATTLEMATCH_SUBSEQ_FUNCTION  sc_rnd_subseq[WIFIBATTLEMATCH_RND_
   WIFIBATTLEMATCH_RND_SUBSEQ_Free_Start,
   WIFIBATTLEMATCH_RND_SUBSEQ_Free_Matching,
   WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle,
+  WIFIBATTLEMATCH_RND_SUBSEQ_Err_ReturnLogin,
 };
 
 //----------------------------------------------------------------------------
@@ -641,6 +659,24 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Start( WIFIBATTLEMATCH_WORK *p_wk, WIFIBAT
       if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_save, &error ) )
       { 
         *p_subseq = SEQ_START_RECVDATA_SAKE;
+      }
+      else
+      { 
+        WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE type;
+        type = WIFIBATTLEMATCH_GDB_GetErrorRepairType( error );
+        switch( type )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY:       //もう一度
+          *p_subseq = SEQ_START_INIT;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          return WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+          NetErr_DispCallFatal();
+          break;
+        }
       }
     }
     break;
@@ -822,7 +858,6 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
   case SEQ_WAIT_RECVRATE_SAKE:
     { 
       DWCGdbError result  = DWC_GDB_ERROR_NONE;
-      GF_ASSERT_MSG( result == DWC_GDB_ERROR_NONE, "GdbProcessエラー %d\n", result );
       if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
 
@@ -858,6 +893,24 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Start( WIFIBATTLEMATCH_WORK *p_wk, WI
 
 
         *p_subseq       = SEQ_START_POKECHECK_SERVER;
+      }
+      else
+      { 
+        WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE type;
+        type = WIFIBATTLEMATCH_GDB_GetErrorRepairType( result );
+        switch( type )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY:       //もう一度
+          *p_subseq = SEQ_START_RECVRATE_SAKE;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          return WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+          NetErr_DispCallFatal();
+          break;
+        }
       }
     }
     break;
@@ -960,6 +1013,8 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Matching( WIFIBATTLEMATCH_WORK *p_wk,
     ///	見つかった後の相手の不正チェック
     //=====================================
   case SEQ_START_CHECK_CHEAT:
+
+
     *p_subseq = SEQ_WAIT_CHECK_CHEAT;
     break;
 
@@ -985,6 +1040,8 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_Matching( WIFIBATTLEMATCH_WORK *p_wk,
         GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
         GFL_STD_MemCopy( p_recv_data, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+
+        WifiBattleMatch_Darty_ModifiEnemyData( p_enemy_data );
 
         if( p_wk->p_matchinfo )
         { 
@@ -1151,6 +1208,24 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
         NAGI_Printf( "送ったよ！%d\n", result );
         *p_subseq = SEQ_START_RECVDATA_SAKE;
       }
+      else
+      { 
+        WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE type;
+        type = WIFIBATTLEMATCH_SC_GetErrorRepairType( result );
+        switch( type )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY:       //もう一度
+          *p_subseq = SEQ_START_REPORT_ATLAS;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          return WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+          NetErr_DispCallFatal();
+          break;
+        }
+      }
     }
     break;
 
@@ -1164,7 +1239,6 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
   case SEQ_WAIT_RECVDATA_SAKE:
     { 
       DWCGdbError result  = DWC_GDB_ERROR_NONE;
-      GF_ASSERT_MSG( result == DWC_GDB_ERROR_NONE, "GdbProcessエラー %d\n", result );
       if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
       { 
         PLAYERINFO_RANDOMMATCH_DATA info_setup;
@@ -1197,6 +1271,24 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Rate_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
         }
 
         *p_subseq       = SEQ_START_DISCONNECT;
+      }
+      else
+      { 
+        WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE type;
+        type = WIFIBATTLEMATCH_GDB_GetErrorRepairType( result );
+        switch( type )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY:       //もう一度
+          *p_subseq = SEQ_START_RECVDATA_SAKE;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          return WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+          NetErr_DispCallFatal();
+          break;
+        }
       }
     }
     break;
@@ -1894,10 +1986,26 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Free_EndBattle( WIFIBATTLEMATCH_WORK *p_wk
 
   //今のまま
   return WIFIBATTLEMATCH_RND_SUBSEQ_FREE_BTL_END;
-
-
-
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラーのためログインに戻る
+ *
+ *	@param	WIFIBATTLEMATCH_WORK *p_wk  ワーク
+ *	@param  p_param                     引数
+ *	@param	int *p_subseq               現在のサブシーケンス
+ *
+ *	@return 次のメインシーケンス
+ */
+//-----------------------------------------------------------------------------
+static int WIFIBATTLEMATCH_RND_SUBSEQ_Err_ReturnLogin( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTLEMATCH_CORE_PARAM	*p_param, int *p_subseq )
+{ 
+  p_param->result = WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN;
+  return WIFIBATTLEMATCH_RND_SUBSEQ_EXIT; //終了
+}
+
 //=============================================================================
 /**
  *  メインシーケンス
@@ -2002,10 +2110,105 @@ static BOOL WifiBattleMatch_Debug_MainSeq( WIFIBATTLEMATCH_WORK *p_wk, WIFIBATTL
         NAGI_Printf( "データベースからもらったよ！%d\n", error );
         (*p_seq)  = 2;
       }
-      GF_ASSERT( error == DWC_GDB_ERROR_NONE );
+      else
+      { 
+        WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE type;
+        type = WIFIBATTLEMATCH_GDB_GetErrorRepairType( error );
+        switch( type )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY:       //もう一度
+          (*p_seq)  = 2;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          return WIFIBATTLEMATCH_RND_SUBSEQ_ERR_RETURN_LOGIN;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+          NetErr_DispCallFatal();
+          break;
+        }
+      }
     }
     break;
   }
 
   return  FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦者情報が不正だった場合、無理やり正常値にする
+ *
+ *	@param	WIFIBATTLEMATCH_ENEMYDATA *p_data ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_Darty_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDATA *p_data )
+{
+  //名前が不正
+  { 
+    int i;
+    BOOL is_darty = TRUE;
+    //EOMが入っていれば正常とみなす
+    for( i = 0; i < PERSON_NAME_SIZE+EOM_SIZE; i++ )
+    { 
+      if( p_data->name[i] == GFL_STR_GetEOMCode() )
+      { 
+        is_darty  = FALSE;
+      }
+    }
+
+    if( is_darty )
+    { 
+      STRBUF* p_strbuf;
+      GFL_MSGDATA *p_msg;
+      p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+												NARC_message_wifi_match_dat, HEAPID_WIFIBATTLEMATCH_CORE );
+      p_strbuf  = GFL_MSG_CreateString( p_msg, HEAPID_WIFIBATTLEMATCH_CORE );
+
+      //規定名に変更
+      OS_TPrintf( "対戦者名が不正だったので、無理やり書き換えます\n" );
+      GFL_STR_GetStringCode( p_strbuf, p_data->name, PERSON_NAME_SIZE+EOM_SIZE );
+
+      GFL_STR_DeleteBuffer( p_strbuf );
+      GFL_MSG_Delete( p_msg );
+    }
+  }
+
+  //性別が不正
+  if( p_data->sex != PTL_SEX_MALE && p_data->sex != PTL_SEX_FEMALE )
+  { 
+    OS_TPrintf( "性別が不正だったので、無理やり書き換えます %d\n", p_data->sex );
+    p_data->sex = PTL_SEX_MALE;
+  }
+
+  //トレーナービュー
+  //@todo
+  if( p_data->trainer_view == 0xFFFF )
+  { 
+    OS_TPrintf( "見た目が不正だったので、無理やり書き換えます \n" );
+    p_data->trainer_view  = 0;
+  }
+
+  //場所
+  if( p_data->nation >= WIFI_COUNTRY_GetDataLen() )
+  { 
+    OS_TPrintf( "国が不正だったので、無理やり書き換えます %d %d\n", p_data->nation, p_data->area );
+    p_data->nation  = 0;
+  }
+
+  //エリア
+  { 
+    if( p_data->area >= WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_data->nation ) )
+    {
+      OS_TPrintf( "地域が不正だったので、無理やり書き換えます %d %d\n", p_data->nation, p_data->area );
+      p_data->area  = 0;
+    }
+  }
+
+  //PMS
+  if( !PMSDAT_IsValid( &p_data->pms, HEAPID_WIFIBATTLEMATCH_CORE ) )
+  { 
+    OS_TPrintf( "PMSが不正だったので、無理やり書き換えます\n" );
+    PMSDAT_Init( &p_data->pms, PMS_TYPE_BATTLE_READY ); //何挨拶？ @todo
+  }
 }

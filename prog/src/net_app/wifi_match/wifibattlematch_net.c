@@ -18,6 +18,7 @@
 //  ネットワーク
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
+#include "system/net_err.h"
 
 //  セーブデータ
 #include "savedata/system_data.h"
@@ -331,7 +332,7 @@ static const int sc_default_value[]  =
 //=====================================
 static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
 { 
-  "bt",
+  "rndbt",
   "db",
 };
 //-------------------------------------
@@ -427,6 +428,65 @@ void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DWCのエラーチェック
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *
+ *	@return TRUEエラー発生  FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  if( GFL_NET_IsInit() )
+  { 
+    if( NetErr_App_CheckError() )
+    { 
+      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
+      //GDBとSCの切断とFatalエラー以外は、個別処理とするため、検知しない
+      if( (cp_error->errorRet == DWC_ERROR_GDB_ANY
+            || cp_error->errorRet == DWC_ERROR_SCL_ANY)
+          && (cp_error->errorType != DWC_ETYPE_DISCONNECT
+            && cp_error->errorType != DWC_ETYPE_FATAL) )
+      { 
+        return FALSE;
+      }
+
+      switch( cp_error->errorType )
+      { 
+      case DWC_ETYPE_LIGHT:
+        /* fallthru */
+      case DWC_ETYPE_SHOW_ERROR:
+        //エラーコードorメッセージを表示するだけ
+        NetErr_DispCallPushPop();
+        GFL_NET_StateClearWifiError();
+        break;
+
+      case DWC_ETYPE_SHUTDOWN_FM:
+      case DWC_ETYPE_SHUTDOWN_GHTTP:
+      case DWC_ETYPE_SHUTDOWN_ND:
+        //シャットダウン
+        NetErr_App_ReqErrorDisp();
+        return TRUE;
+
+      case DWC_ETYPE_DISCONNECT:
+        //切断
+        NetErr_App_ReqErrorDisp();
+        return TRUE;
+
+      case DWC_ETYPE_FATAL:
+        //Fatal
+        NetErr_DispCallFatal();
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -870,7 +930,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule
 { 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, btl_rule );
-  STD_TSPrintf( p_wk->filter, "bt=%d And db=%d", btl_rule, MATCHINGKEY );
+  STD_TSPrintf( p_wk->filter, "rndbt=%d And db=%d", btl_rule, MATCHINGKEY );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 }
 
@@ -885,7 +945,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, 0xF );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, 0 );
-  STD_TSPrintf( p_wk->filter, "bt=%d And db=%d", 0, 0xF );
+  STD_TSPrintf( p_wk->filter, "rndbt=%d And db=%d", 0, 0xF );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 }
 
@@ -1075,21 +1135,6 @@ BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_
 void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_stop )
 { 
   p_wk->is_stop_connect = is_stop;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  エラー処理
- *
- *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk   ワーク
- *
- *	@return TRUEでエラー  FALSEで通常
- */
-//-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_IsError( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
-{ 
-  //@todo
-  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1533,6 +1578,76 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  修復タイプ
+ *
+ *	@param	DWCScResult error エラー
+ *
+ *	@return 修理タイプ
+ */
+//-----------------------------------------------------------------------------
+WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SC_GetErrorRepairType( DWCScResult error )
+{ 
+  switch( error )
+  { 
+  case DWC_SC_RESULT_NO_ERROR :              ///< エラーは発生しませんでした
+    return WIFIBATTLEMATCH_NET_ERROR_NONE;
+
+  case DWC_SC_RESULT_NO_AVAILABILITY_CHECK:     ///< 初期化の前に、標準の GameSpy 可用性チェックが実行されませんでした
+    GF_ASSERT(0);
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_INVALID_PARAMETERS:        ///< インターフェース関数に渡されたパラメータが無効です
+    GF_ASSERT(0);
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_NOT_INITIALIZED:           ///< SDK が初期化されませんでした
+    GF_ASSERT(0);
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL;
+
+  case DWC_SC_RESULT_CORE_NOT_INITIALIZED:      ///< コアが初期化されませんでした
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_OUT_OF_MEMORY:             ///< SDK はリソースにメモリを割り当てられませんでした
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_CALLBACK_PENDING:          ///< アプリケーションに対し、操作が保留中であることを伝えます
+    GF_ASSERT( 0 );
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_HTTP_ERROR:                ///< バックエンドが適正な HTTP によるレスポンスに失敗した場合のエラー発生
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_UNKNOWN_RESPONSE:          ///< SDK が結果を理解できない場合のエラー発生
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_RESPONSE_INVALID:          ///< SDK がバックエンドからのレスポンスを読み取れない場合のエラー発生
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  case DWC_SC_RESULT_INVALID_DATATYPE:          ///< 無効なデータタイプ
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_REPORT_INCOMPLETE:         ///< レポートが不完全です
+    GF_ASSERT(0);
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_REPORT_INVALID:            ///< レポートの一部またはすべてが無効です
+    GF_ASSERT(0);
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_SUBMISSION_FAILED:         ///< レポートの送信に失敗しました
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+  case DWC_SC_RESULT_UNKNOWN_ERROR:             ///< SDK が認識できないエラー
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2773,6 +2888,77 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー修正タイプを取得
+ *
+ *	@param	DWCGdbError error   エラー
+ *
+ *	@return エラー修正タイプ
+ */
+//-----------------------------------------------------------------------------
+WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairType( DWCGdbError error )
+{ 
+  OS_TPrintf( "WIFIBATTLEMATCH_GDB_GetErrorRepairType %d\n", error );
+  switch( error )
+  { 
+    case DWC_GDB_ERROR_NONE :                 ///< 正常に終了しました。
+      return WIFIBATTLEMATCH_NET_ERROR_NONE;
+
+    case DWC_GDB_ERROR_OUT_OF_MEMORY :        ///< case DWC_Initで与えたアロケータからメモリを確保できませんでした。
+      GF_ASSERT(0);
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+    case DWC_GDB_ERROR_NOT_AVAILABLE :        ///< 利用可能ではない
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+    case DWC_GDB_ERROR_CORE_SHUTDOWN :        ///< 
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    case DWC_GDB_ERROR_NOT_LOGIN :            ///< WiFiConnectionに正しくログインしていません。
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    case DWC_GDB_ERROR_NOT_AUTHENTICATED :    ///< WiFiConnectionに正しくログインしていません。
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    case DWC_GDB_ERROR_BAD_INPUT :            ///<
+    case DWC_GDB_ERROR_BAD_TABLENAME :        ///<
+    case DWC_GDB_ERROR_BAD_FIELDS :           ///<
+    case DWC_GDB_ERROR_BAD_NUM_FIELDS :       ///<
+    case DWC_GDB_ERROR_BAD_FIELD_NAME :      ///<
+    case DWC_GDB_ERROR_BAD_FIELD_TYPE :      ///<
+    case DWC_GDB_ERROR_BAD_FIELD_VALUE :     ///<
+    case DWC_GDB_ERROR_BAD_OFFSET :          ///<
+    case DWC_GDB_ERROR_BAD_MAX :             ///<
+    case DWC_GDB_ERROR_BAD_RECORDIDS :       ///<
+    case DWC_GDB_ERROR_BAD_NUM_RECORDIDS :   ///<
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+    case DWC_GDB_ERROR_UNKNOWN :             ///<
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+    case DWC_GDB_ERROR_ALREADY_INITIALIZED : ///< 既に初期化されています。
+      GF_ASSERT(0);
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    case DWC_GDB_ERROR_NOT_INITIALIZED :     ///< 初期化が行われていません。
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY;
+
+    case DWC_GDB_ERROR_IN_ASYNC_PROCESS :    ///< 非同期処理中です。
+      return WIFIBATTLEMATCH_NET_ERROR_NONE;
+
+    case DWC_GDB_ERROR_GHTTP :               ///< GHTTPのエラーが発生しました。
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    case DWC_GDB_ERROR_IN_DWC_ERROR :         ///< DWCのエラーが起こっています。エラーの対処を行ってください。
+      return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+
+    default:
+      GF_ASSERT(0);
+      return 0;
+  }
 }
 
 //----------------------------------------------------------------------------

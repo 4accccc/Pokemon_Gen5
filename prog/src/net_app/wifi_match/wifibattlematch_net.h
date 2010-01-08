@@ -108,6 +108,16 @@ typedef struct
   WIFIBATTLEMATCH_NET_RESULT    my;
 } WIFIBATTLEMATCH_NET_ERRORTYPE;
 */
+//エラー解決タイプ
+typedef enum
+{
+  WIFIBATTLEMATCH_NET_ERROR_NONE,               //正常
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY,       //もう一度
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT,  //切断しログインからやり直し
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL,       //電源切断
+} WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE;
+
+
 //-------------------------------------
 ///	ネットモジュール
 //=====================================
@@ -127,19 +137,22 @@ extern void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //-------------------------------------
+///	エラー
+//=====================================
+extern BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk );
+
+//-------------------------------------
 ///	初回処理(必要のない場合は内部で自動的にきる)
 //=====================================
 extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save, DWCGdbError *p_result );
 extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
+
+
 //-------------------------------------
 ///	マッチング
 //=====================================
-
-
-BOOL WIFIBATTLEMATCH_NET_IsError( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
-
 //マッチング
 extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule btl_rule );
 extern BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );
@@ -159,6 +172,7 @@ extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOO
 extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule rule, BtlResult result );
 extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_result );
 
+extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SC_GetErrorRepairType( DWCScResult error );
 
 typedef struct
 {
@@ -212,6 +226,8 @@ extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbE
 
 extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, const void *cp_wk_adrs );
 extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
+
+extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairType( DWCGdbError error );
 
 //-------------------------------------
 ///	相手のデータ受信

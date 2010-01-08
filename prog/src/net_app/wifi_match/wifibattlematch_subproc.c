@@ -14,6 +14,7 @@
 #include "savedata/mystatus.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/net_err.h"
 
 #include "wifibattlematch_subproc.h"
 
@@ -214,6 +215,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
     else
     {
+      p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS;
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -244,7 +246,44 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     procWork->state = IBSS_INIT_POKELIST;
     break;
   }
-  
+
+  //エラー処理
+  if( NetErr_App_CheckError() )
+  { 
+    const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
+    switch( cp_error->errorType )
+    { 
+    case DWC_ETYPE_LIGHT:
+      /* fallthru */
+    case DWC_ETYPE_SHOW_ERROR:
+      //エラーコードorメッセージを表示するだけ
+      NetErr_DispCallPushPop();
+      GFL_NET_StateClearWifiError();
+      break;
+
+    case DWC_ETYPE_SHUTDOWN_FM:
+    case DWC_ETYPE_SHUTDOWN_GHTTP:
+    case DWC_ETYPE_SHUTDOWN_ND:
+      //シャットダウン
+      NetErr_App_ReqErrorDisp();
+      p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
+      return GFL_PROC_RES_FINISH;
+
+    case DWC_ETYPE_DISCONNECT:
+      //切断
+      NetErr_App_ReqErrorDisp();
+      p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
+      return GFL_PROC_RES_FINISH;
+
+    case DWC_ETYPE_FATAL:
+      //Fatal
+      NetErr_DispCallFatal();
+      break;
+    }
+  } 
+
+
   return GFL_PROC_RES_CONTINUE;
 }
 

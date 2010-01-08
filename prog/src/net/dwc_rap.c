@@ -10,6 +10,8 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include <gflib.h>
+#include "sc/dwc_sc.h"
+#include "gdb/dwc_gdb.h"
 #include "net/network_define.h"
 
 #if GFL_NET_WIFI
@@ -1562,7 +1564,18 @@ int mydwc_HandleError(void)
       //以下の各ライブラリ解放関数を必要に応じて呼び出してください。
       //DWC_RnkShutdown関数(汎用ランキングライブラリ)
       //エラーコードを表示してください。
-      
+      //
+      if( ret == DWC_ERROR_GDB_ANY )
+      { 
+        DWC_GdbShutdown();           // 簡易データベースライブラリの終了
+      }
+
+      if( ret == DWC_ERROR_SCL_ANY )
+      { 
+        DWC_ScShutdown();
+        DWC_GdbShutdown();           // 簡易データベースライブラリの終了
+      }
+
       //DWC_RnkShutdown(); //ランキングライブラリは現状使用しないはずなので、呼ばない
       DWC_ClearError();
       break;

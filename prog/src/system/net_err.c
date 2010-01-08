@@ -246,6 +246,34 @@ void NetErr_DispCallPushPop(void)
 	Local_ErrDispExit();
 }
 
+//==================================================================
+/**
+ * Push,Pop有のエラー画面一発呼び出し　※FatalError専用
+ *
+ * エラー画面を表示した場合、電源切断を促すため、この関数内で無限ループします。
+ */
+//==================================================================
+void NetErr_DispCallFatal(void)
+{
+	if(Local_SystemOccCheck() == FALSE){
+		GF_ASSERT(0); //システムが作られていない
+		return;
+	}
+
+	//エラー画面描画
+	Local_ErrDispInit();
+	
+//		OS_SpinWait(10000);
+	
+	while(1){
+		;	//電源切断をまつ
+	}
+	
+	//エラー画面終了
+	Local_ErrDispExit();
+}
+
+
 //--------------------------------------------------------------
 /**
  * @brief   エラーが発生したらこの関数を使用してエラー画面を呼び出す
@@ -314,10 +342,10 @@ void NetErr_DEBUG_ErrorSet(void)
   //WiFi
 #if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi )
   GFL_NET_StateSetWifiError( 1, 1, 1 );
+  NetErr_ErrorSet();
 #endif
   OS_TPrintf( "ユーザーからエラー設定リクエストが発生しました\n" );
 
-	nes->status = NET_ERR_STATUS_ERROR;
 
 }
 #endif  //PM_DEBUG
