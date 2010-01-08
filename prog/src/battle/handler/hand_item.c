@@ -535,7 +535,7 @@ static const struct {
   { ITEM_SIMETUKEBANDO,     HAND_ADD_ITEM_SimetukeBand    },  // しめつけバンド
   { ITEM_KYUUKON,           HAND_ADD_ITEM_Kyuukon         },  // きゅうこん
   { ITEM_ZYUUDENTI,         HAND_ADD_ITEM_Juudenti        },  // じゅうでんち
-  { ITEM_DASYUTUPODDO,      HAND_ADD_ITEM_DassyutuPod     },  // だしゅつポッド
+  { ITEM_DASSYUTUPODDO,     HAND_ADD_ITEM_DassyutuPod     },  // だっしゅつポッド
   { ITEM_HONOONOZYUERU,     HAND_ADD_ITEM_HonooNoJuel     },  // ほのおのジュエル
   { ITEM_MIZUNOZYUERU,      HAND_ADD_ITEM_MizuNoJuel      },  // みずのジュエル
   { ITEM_DENKINOZYUERU,     HAND_ADD_ITEM_DenkiNoJuel     },  // でんきのジュエル
@@ -4374,7 +4374,7 @@ static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     BTL_HANDEX_PARAM_MESSAGE* param;
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Juel );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_STD_Juel );
     HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
   }
