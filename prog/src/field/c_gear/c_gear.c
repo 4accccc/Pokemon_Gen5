@@ -538,27 +538,27 @@ static void _PaletteMake(C_GEAR_WORK* pWork,BOOL rmax,BOOL gmax,BOOL bmax,int ty
 {
   int y=type,x;
   u16 r,g,b;
-  //BOOL rmax=FALSE,gmax=FALSE,bmax=TRUE;
 
+  NET_PRINT("RGBT %d %d %d %d\n",rmax,gmax,bmax,type);
 
-//  for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
-    for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
-      r = pWork->palBase[y][x] & 0x001f;
-      g = pWork->palBase[y][x] & 0x03e0;
-      b = pWork->palBase[y][x] & 0x7c00;
-      if(rmax){
-        r=0x001f;
-      }
-      if(gmax){
-        g=0x03e0;
-      }
-      if(bmax){
-        b=0x7c00;
-      }
-      pWork->palChange[y][x]=r+g+b;
+  for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
+    r = pWork->palBase[y][x] & 0x001f;
+    g = pWork->palBase[y][x] & 0x03e0;
+    b = pWork->palBase[y][x] & 0x7c00;
+    if(rmax){
+      r=0x001f;
     }
-//  }
-
+    if(gmax && !rmax && !bmax){
+      g=0x01e0;
+    }
+    else if(gmax){
+      g=0x03e0;
+    }
+    if(bmax){
+      b=0x7c00;
+    }
+    pWork->palChange[y][x]=r+g+b;
+  }
 }
 
 #endif

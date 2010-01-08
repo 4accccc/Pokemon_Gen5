@@ -14,6 +14,7 @@
 #include "nitroWiFi/ncfg.h"
 #include "nitroWiFi/wcm.h"
 #include "net/net_whpipe.h"
+#include "net/ctvt_beacon.h"
 
 #define _ALLBEACON_MAX (4)
 
@@ -72,7 +73,9 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 
   
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
   IRC_Init(12);  //@todo 12
+#endif
   
   return(pWork);
 }
@@ -90,7 +93,9 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
 
   WHSetWIHDWCBeaconGetFunc(NULL);
 
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
   IRC_Shutdown();
+#endif
   GFL_NET_Align32Free(pWork->ScanMemory);
   GFL_NET_Align32Free(pWork);
   _localWork=NULL;
@@ -107,7 +112,9 @@ void WIH_DWC_Stop(void)
 {
   if(_localWork){
     _localWork->bStop=TRUE;
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
     IRC_Init(12);  //@todo 12
+#endif
   }
 }
 
@@ -121,7 +128,9 @@ void WIH_DWC_Restart(void)
 {
   if(_localWork){
     _localWork->bStop=FALSE;
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
     IRC_Shutdown();
+#endif
   }
 }
 
@@ -178,6 +187,8 @@ void WIH_DWC_MainLoopScanBeaconData(void)
       }
     }
   }
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
+
   {
     int size = IRCi_Read(_localWork->buff);
     if(size>0){
@@ -186,6 +197,7 @@ void WIH_DWC_MainLoopScanBeaconData(void)
     }
   }
   IRC_Move();
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -302,6 +314,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
     return retcode;
   }
 
+#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
   if( _localWork->bIrc == TRUE){
     if(_localWork->timer>0){
       _localWork->timer--;
@@ -311,7 +324,18 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
     }
     retcode |= GAME_COMM_STATUS_BIT_IRC;
   }
+#else
+  retcode |= GAME_COMM_STATUS_BIT_IRC;
+#endif
   
+  if(WIH_DWC_TVTCallCheck()){  //TVTは最優先
+    retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
+  }
+  if(aNetStruct->gsid == WB_NET_PALACE_SERVICEID){  //パレスでつながっている判定
+    if(GFL_NET_GetConnectNum()>1){
+      retcode |= GAME_COMM_STATUS_BIT_WIRELESS;
+    }
+  }
   for( i=0;i < aNetStruct->maxBeaconNum;i++ ){
     if( GFL_NET_GetBeaconData( i ) != NULL ){
       GameServiceID id = GFL_NET_WLGetGameServiceID(i);
@@ -319,14 +343,11 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
       case WB_NET_UNION:
         retcode |= GAME_COMM_STATUS_BIT_WIRELESS_UN;
         break;
-      case WB_NET_FIELDMOVE_SERVICEID:
-      case WB_NET_PALACE_SERVICEID:
-        retcode |= GAME_COMM_STATUS_BIT_WIRELESS;
-        break;
-      case WB_NET_NOP_SERVICEID:
+      case WB_NET_MYSTERY:
+        retcode |= GAME_COMM_STATUS_BIT_WIRELESS_FU;
         break;
       default:
-        retcode |= GAME_COMM_STATUS_BIT_WIRELESS_FU;  //@todo その他は不思議にしてある
+        break;
       }
     }
   }
@@ -372,10 +393,6 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
       }
     }
   }
-/*  if(retcode!=GAME_COMM_STATUS_NULL){
-    return retcode;
-  }
-*/
   for(i=0;i < _localWork->AllBeaconNum;i++){
     _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
     if(pS->timer == 0){
@@ -388,7 +405,6 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
   if(_localWork->AllBeaconNum>0){
     retcode |= GAME_COMM_STATUS_BIT_WIFI_LOCK;
   }
-  ///@todo セキュリティーがかかっているかどうか
   //NAGI_Printf( "ret %d\n", retcode );
   return retcode;
 }
@@ -418,6 +434,7 @@ const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx )
 void WIH_DWC_CreateCFG(HEAPID id)
 {
   GF_ASSERT(_localcfg==NULL);
+
   _localcfg = GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
 }
 
@@ -448,4 +465,27 @@ void WIH_DWC_ReloadCFG(void)
   NCFG_ReadConfig(&_localcfg->compat, NULL);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   TVトランシーバーに呼ばれているかどうか
+ * @retval  呼ばれてたらTRUE
+ */
+//------------------------------------------------------------------------------
+BOOL WIH_DWC_TVTCallCheck(void)
+{
+  u8 selfMacAdr[6];
+  int i,num;
+  GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
 
+  num = pIn->maxBeaconNum;
+  OS_GetMacAddress( selfMacAdr );
+
+  for( i = 0; i < num; i++ ){
+    if(WB_NET_COMM_TVT == GFL_NET_WLGetUserGameServiceId( i )){
+      if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}

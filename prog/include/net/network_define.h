@@ -59,9 +59,11 @@ IRAJ
 
 #endif
 
+/// 分けたかったのですが、CGEARの仕様によりGGIDを統一します
+/// 2010.01.08 k.ohno
 #define SYASHI_NETWORK_GGID  (0x00001380)    //通常はこれ
-#define SYASHI_DOWNLOAD_GGID  (0x00001381)   //映画館配信専用
-#define SYACHI_LEG_GGID (0x00001382)         //大会レギュレーション配信専用
+#define SYASHI_DOWNLOAD_GGID  (0x00001380)   //映画館配信専用
+#define SYACHI_LEG_GGID (0x00001380)         //大会レギュレーション配信専用
 
 #define NET_DREAMWORLD_VER (1)  //ドリームワールド通信バーション（かならず整数）
 

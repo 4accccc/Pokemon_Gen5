@@ -456,12 +456,8 @@ int GameBeacon_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-  if((GameServiceID1 == WB_NET_FIELDMOVE_SERVICEID && GameServiceID2 == WB_NET_PALACE_SERVICEID)
-      || (GameServiceID2==WB_NET_FIELDMOVE_SERVICEID && GameServiceID1==WB_NET_PALACE_SERVICEID)
-      || (GameServiceID1==WB_NET_FIELDMOVE_SERVICEID&&GameServiceID2==WB_NET_COMM_TVT)){
-    return TRUE;
-  }
-  return FALSE;
+  // CGEARで色々なビーコンを取得したいのでTRUEのみにした k.ohno 2010.01.08
+  return TRUE;
 }
 
 //--------------------------------------------------------------

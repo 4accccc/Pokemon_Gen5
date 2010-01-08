@@ -46,3 +46,6 @@ extern const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx );
 extern void WIH_DWC_CreateCFG(HEAPID id);
 extern void WIH_DWC_DeleteCFG(void);
 extern void WIH_DWC_ReloadCFG(void);
+
+//TVT‚ÉŽ©•ª‚ªŒÄ‚Î‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+extern BOOL WIH_DWC_TVTCallCheck(void);
