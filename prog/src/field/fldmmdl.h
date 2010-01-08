@@ -502,7 +502,6 @@ typedef struct {
   s16 side_grid;        ///<サイドレールグリッド座標
 } MMDL_HEADER_RAILPOS;
 
-
 //--------------------------------------------------------------
 ///	MMDL_MOVE_PROC_LIST構造体
 //--------------------------------------------------------------
@@ -572,7 +571,7 @@ typedef struct
 #endif
 
 //--------------------------------------------------------------
-///	OBJCODE_PARAM構造体　外部データと一致
+///	OBJCODE_PARAM構造体　外部データと一致 28byte
 //	0-1 OBJコード
 //	2-3 リソースアーカイブインデックス 
 //	4	表示タイプ
@@ -584,7 +583,6 @@ typedef struct
 //	10	テクスチャサイズ
 //	11	アニメID
 //	12 性別
-//	13-15 4ビット差分ダミー
 //--------------------------------------------------------------
 typedef struct
 {
@@ -600,17 +598,20 @@ typedef struct
 	u8 tex_size;		///<GFL_BBD_TEXSIZDEF... テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
   u8 sex;         ///<MMDL_OBJCODESEX
-  u8 padding00;   ///<4byte境界ダミー
-  
   u8 size_width;  ///<横幅サイズ
+  
   u8 size_depth;  ///<奥行サイズ
-  u8 buf[14];     ///<データバッファ
+  s8 offs_x;      ///<Xオフセット
+  s8 offs_y;      ///<Yオフセット
+  s8 offs_z;      ///<Zオフセット
+  
+  u8 buf[12];     ///<データバッファ
 }OBJCODE_PARAM;
 
 typedef struct 
 {
 	u16 res_idx;		///<リソースインデックス
-  u8 padding[12];
+  u8 padding[10];
 }OBJCODE_PARAM_BUF_BBD;
 
 typedef struct
@@ -620,7 +621,7 @@ typedef struct
   u16 res_idx_anm0;
   u16 res_idx_anm1;
   u16 res_idx_anm2;
-  u8 padding[4];
+  u8 padding[2];
 }OBJCODE_PARAM_BUF_MDL;
 
 ///外部から生成されるOBJCODE_PARAM配列の要素数の格納サイズ

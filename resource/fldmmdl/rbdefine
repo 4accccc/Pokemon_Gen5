@@ -89,6 +89,18 @@ RBDEF_NUM_BBD_WIDTH_SIZE = (18)
 #
 RBDEF_NUM_BBD_DEPTH_SIZE = (19)
 
+#リストファイル列　Xオフセット
+#
+RBDEF_NUM_BBD_OFFSET_X = (20)
+
+#リストファイル列　Yオフセット
+#
+RBDEF_NUM_BBD_OFFSET_Y = (21)
+
+#リストファイル列　Zオフセット
+#
+RBDEF_NUM_BBD_OFFSET_Z = (22)
+
 #-----------------------------------------------
 #エクセル管理表 列番号 モデル
 #-----------------------------------------------
@@ -163,6 +175,18 @@ RBDEF_NUM_MDL_WIDTH_SIZE = (18)
 #リストファイル列　奥行サイズ
 #
 RBDEF_NUM_MDL_DEPTH_SIZE = (19)
+
+#リストファイル列　Xオフセット
+#
+RBDEF_NUM_MDL_OFFSET_X = (20)
+
+#リストファイル列　Yオフセット
+#
+RBDEF_NUM_MDL_OFFSET_Y = (21)
+
+#リストファイル列　Zオフセット
+#
+RBDEF_NUM_MDL_OFFSET_Z = (22)
 
 #-----------------------------------------------
 # 表示タイプ

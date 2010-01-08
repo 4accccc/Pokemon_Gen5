@@ -28,10 +28,12 @@ load "rbdefine"
 #  8  テクスチャサイズ
 #  9  アニメID
 #  10 性別
-#  11 4バイト境界余り
-#  12 横幅サイズ
-#  13 奥行サイズ
-#  14-27 表示タイプ別データバッファ
+#  11 横幅サイズ
+#  12 奥行サイズ
+#  13 オフセットX 
+#  14 オフセットY
+#  15 オフセットZ
+#  16-27 表示タイプ別データバッファ
 #=======================================================================
 
 #=======================================================================
@@ -501,12 +503,7 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #４ビット境界用ダミーデータ 1 (12)
-  ret = 0
-  ary = Array( ret )
-  wfile.write( ary.pack("C*") )
-  
-  #横幅サイズ 1 (13)
+  #横幅サイズ 1 (12)
   ret = 0
   word = str[RBDEF_NUM_BBD_WIDTH_SIZE]
   if( word != nil )
@@ -515,7 +512,7 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
 
-  #奥行サイズ 1 (14)
+  #奥行サイズ 1 (13)
   ret = 0
   word = str[RBDEF_NUM_BBD_DEPTH_SIZE]
   if( word != nil )
@@ -523,8 +520,35 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   end
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
+
+  #オフセットX 1 (14)
+  ret = 0
+  word = str[RBDEF_NUM_BBD_OFFSET_X]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットY 1 (15)
+  ret = 0
+  word = str[RBDEF_NUM_BBD_OFFSET_Y]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットZ 1 (16)
+  ret = 0
+  word = str[RBDEF_NUM_BBD_OFFSET_Z]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
   
-  #リソースインデックス 2 (15)
+  #リソースインデックス 2 (17)
   word = str[RBDEF_NUM_DRAWTYPE]
   
   if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
@@ -558,8 +582,8 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("S*") )
   
-  #４ビット境界用ダミーデータ 12 (28)
-  file_write_filldata( wfile, 12, 0 )
+  #４ビット境界用ダミーデータ 10 (28)
+  file_write_filldata( wfile, 10, 0 )
   
   return RET_TRUE
 end
@@ -651,12 +675,7 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #４ビット境界用ダミーデータ 1 (12)
-  ret = 0
-  ary = Array( ret )
-  wfile.write( ary.pack("C*") )
-
-  #横幅サイズ 1 (13)
+  #横幅サイズ 1 (12)
   ret = 0
   word = str[RBDEF_NUM_MDL_WIDTH_SIZE]
   if( word != nil )
@@ -665,7 +684,7 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
 
-  #奥行サイズ 1 (14)
+  #奥行サイズ 1 (13)
   ret = 0
   word = str[RBDEF_NUM_MDL_DEPTH_SIZE]
   if( word != nil )
@@ -673,8 +692,35 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
   end
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
+
+  #オフセットX 1 (14)
+  ret = 0
+  word = str[RBDEF_NUM_MDL_OFFSET_X]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットY 1 (15)
+  ret = 0
+  word = str[RBDEF_NUM_MDL_OFFSET_Y]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットZ 1 (16)
+  ret = 0
+  word = str[RBDEF_NUM_MDL_OFFSET_Z]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
   
-  #リソースインデックス 各2 (22)
+  #リソースインデックス 各2 (26)
   word = str[RBDEF_NUM_DRAWTYPE]
   
   if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
@@ -768,8 +814,8 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
     end
   end
   
-  #４ビット境界用ダミーデータ 4 (28)
-  file_write_filldata( wfile, 4, 0 )
+  #４ビット境界用ダミーデータ 2 (28)
+  file_write_filldata( wfile, 2, 0 )
   
   return RET_TRUE
 end
