@@ -51,7 +51,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/bsubway_savedata.c \
         savedata/rndmatch_savedata.c \
         savedata/radar_save.c \
-        savedata/symbol_save.c
+        savedata/symbol_save.c \
+        savedata/my_pms_data.c
 
 
 #’ÊM‚Ìí’“

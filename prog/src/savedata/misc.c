@@ -35,8 +35,6 @@ struct _MISC
 	u8  favorite_egg_flag:1;	//お気に入りポケモンのタマゴフラグ
 	u8	namein_mode[NAMEIN_MAX];	//5つ
 
-	PMS_DATA gds_self_introduction;		// GDSプロフィールの自己紹介メッセージ
-	
 	//パルパーク
 	u32 palpark_highscore:28;
 	u32 palpark_finish_state:4;
@@ -200,33 +198,6 @@ void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *e
 	*form_no = misc->favorite_form_no;
 	*egg_flag = misc->favorite_egg_flag;
 }
-
-//--------------------------------------------------------------
-/**
- * @brief   GDS自己紹介メッセージを取得
- *
- * @param   misc		
- * @param   pms			代入先
- */
-//--------------------------------------------------------------
-void MISC_GetGdsSelfIntroduction(const MISC *misc, PMS_DATA *pms)
-{
-	*pms = misc->gds_self_introduction;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   GDS自己紹介メッセージをセットする
- *
- * @param   misc		
- * @param   pms			セットするメッセージ
- */
-//--------------------------------------------------------------
-void MISC_SetGdsSelfIntroduction(MISC *misc, const PMS_DATA *pms)
-{
-	misc->gds_self_introduction = *pms;
-}
-
 
 //--------------------------------------------------------------
 /**

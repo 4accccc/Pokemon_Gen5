@@ -50,6 +50,7 @@
 #include "savedata/rndmatch_savedata.h"
 #include "savedata/radar_save.h"
 #include "savedata/symbol_save.h"
+#include "savedata/my_pms_data.h"
 
 //==============================================================================
 //  定数定義
@@ -398,6 +399,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_SYMBOL,
     (FUNC_GET_SIZE)SymbolSave_GetWorkSize,
     (FUNC_INIT_WORK)SymbolSave_WorkInit,
+  },
+  { //主人公の挨拶文データ
+    GMDATA_ID_MYPMS,
+    (FUNC_GET_SIZE)MYPMS_GetWorkSize,
+    (FUNC_INIT_WORK)MYPMS_Init,
   },
 };
 

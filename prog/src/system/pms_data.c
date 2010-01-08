@@ -610,7 +610,56 @@ void PMSDAT_ClearUnnecessaryWord( PMS_DATA* pms , const HEAPID heapID )
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ内容が不正かをチェック
+ *
+ *	@param	const PMS_DATA *pms   文章型へのポインタ
+ *	@param  HEAPID                テンポラリバッファ作成用ヒープID
+ *
+ *	@return TRUEならば正常  FALSEならば不正
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSDAT_IsValid( const PMS_DATA *pms, HEAPID heapID )
+{ 
+  if( pms->sentence_type < PMS_TYPE_MAX )
+  { 
+    if( pms->sentence_id < PMSDAT_GetSentenceIdMax( pms->sentence_type ) )
+    { 
+      int i;
+      BOOL is_valid;
+      u32 max;
+      max = get_include_word_max( pms->sentence_type, pms->sentence_id, GFL_HEAP_LOWID( heapID ) );
 
+      is_valid  = TRUE;
+      for( i = 0; i < max; i++ )
+      { 
+        if( PMSW_IsDeco(pms->word[i]) )
+        { 
+          PMS_DECO_ID deco_id = PMSW_GetDecoID( pms->word[i]);
+          //デコメならばデコメIDがあっているか
+          if( deco_id >= PMS_DECOID_MAX )
+          { 
+            is_valid  = FALSE;
+          }
+        }
+        else
+        { 
+          u32 wordID;
+          u32 fileID;
+          //単語ならば、単語ナンバーがあっているか
+          if( !GetWordSorceID( pms->word[i], &fileID, &wordID ) )
+          {
+            is_valid  = FALSE;
+          }
+        }
+      }
+      return is_valid;
+    }
+  }
+
+  return FALSE;
+}
 
 
 //==============================================================================================

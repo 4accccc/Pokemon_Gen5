@@ -377,6 +377,18 @@ extern void PMSDAT_SetDeco( PMS_DATA* pms, u32 pos, PMS_DECO_ID deco_id );
 //------------------------------------------------------------------
 extern void PMSDAT_ClearUnnecessaryWord( PMS_DATA* pms , const HEAPID heapID );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ内容が不正かをチェック
+ *
+ *	@param	const PMS_DATA *pms   文章型へのポインタ
+ *	@param  HEAPID                テンポラリバッファ作成用ヒープID
+ *
+ *	@return TRUEならば正常  FALSEならば不正
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PMSDAT_IsValid( const PMS_DATA *pms, HEAPID heapID );
+
 #ifdef PM_DEBUG
 //------------------------------------------------------------------
 /**

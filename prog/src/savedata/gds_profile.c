@@ -16,6 +16,7 @@
 #include "savedata/gds_profile.h"
 #include "savedata/box_savedata.h"
 #include "savedata/misc.h"
+#include "savedata/my_pms_data.h"
 
 #include "gds_profile_types.h"
 
@@ -87,6 +88,7 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	MYSTATUS *my = SaveData_GetMyStatus(sv);
 	WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
 	const MISC * misc = SaveData_GetMiscConst(sv);
+  const MYPMS_DATA * mypms  = SaveData_GetMyPmsDataConst(sv);
 	int monsno, form_no, egg_flag;
 	int i;
 	OSOwnerInfo info;
@@ -110,7 +112,7 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	for(i = 0; i < EVENT_SELF_INTRO; i++){
 		gpp->event_self_introduction[i] = GFL_STR_GetEOMCode();
 	}
-	MISC_GetGdsSelfIntroduction(misc, &gpp->self_introduction);
+	MYPMS_GetPms(mypms, MYPMS_PMS_TYPE_INTRODUCTION, &gpp->self_introduction);
 
 	gpp->birthday_month = info.birthday.month;
 	gpp->trainer_view = UnionView_GetTrainerInfo(
