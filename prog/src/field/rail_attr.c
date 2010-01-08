@@ -325,7 +325,7 @@ BOOL RAIL_ATTR_VALUE_CheckIceSpinR( const MAPATTR_VALUE val )
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckIceJumpL( const MAPATTR_VALUE val )
 {
-  if( (val == 0xa7) )
+  if( (val == MATTR_SLIP_JUMP_LEFT) )
   {
     return TRUE;
   }
@@ -343,7 +343,25 @@ BOOL RAIL_ATTR_VALUE_CheckIceJumpL( const MAPATTR_VALUE val )
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckIceJumpR( const MAPATTR_VALUE val )
 {
-  if( (val == 0xa6) )
+  if( (val == MATTR_SLIP_JUMP_RIGHT) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール上　右を向かせる！
+ *
+ *	@param	val 
+ *
+ *	@retval TRUE FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckTurnR( const MAPATTR_VALUE val )
+{
+  if( (val == MATTR_TURN_RIGHT) )
   {
     return TRUE;
   }
