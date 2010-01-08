@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: enceff_mdl.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-01-08T17:43:32
+ *****************************************************************************/
+
+#ifndef NARC_ENCEFF_MDL_NAIX_
+#define NARC_ENCEFF_MDL_NAIX_
+
+enum {
+	NARC_enceff_mdl_effect1_nsbca = 0,
+	NARC_enceff_mdl_effect1_nsbmd = 1
+};
+
+/* NARC_ENCEFF_MDL_NAIX_ */
+#endif
