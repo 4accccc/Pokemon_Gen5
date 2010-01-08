@@ -153,6 +153,13 @@
 	data.size.times{ |c|
 		fp_w.printf("%c",data[ c ])
 	}
+  
+  if type == TYPE_NCG
+    data = [ "CMNT", 12, 0 ].pack("a* L2")
+	  data.size.times{ |c|
+		  fp_w.printf("%c",data[ c ])
+	  }
+  end
 
 	fp_r.close
 	fp_w.close
