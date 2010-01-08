@@ -158,6 +158,7 @@ struct _ACTING_WORK
   BOOL    isUpdateAttention;
   u8      lightUpPoke;
   u8      attentionPoke;  //カメラの対象
+  u8      attentionLight;  //カメラの対象
   u8      pokeRank[MUSICAL_POKE_MAX];
   
   //アイテム使用形
@@ -294,6 +295,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->isUpdateAttention = TRUE;
   work->lightUpPoke = MUSICAL_POKE_MAX;
   work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
+  work->attentionLight = ACT_LIGHT_MAX; //カメラはデフォルト
   //アイテム使用系初期化
   work->useItemPoke = MUSICAL_POKE_MAX;
   work->useItemCnt = 0;
@@ -932,31 +934,39 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
       VecFx32 pos;
       u8 lookTarget;
       
-      if( work->attentionPoke == MUSICAL_POKE_MAX )
+      if( work->attentionLight == ACT_LIGHT_MAX )
       {
-        lookTarget = work->playerIdx;
+        if( work->attentionPoke == MUSICAL_POKE_MAX )
+        {
+          lookTarget = work->playerIdx;
+        }
+        else
+        {
+          lookTarget = work->attentionPoke;
+        }
+        if( work->pokeWork[lookTarget] != NULL )
+        {
+          STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
+          scroll = FX_FX32_TO_F32( pos.x )-128;
+        }
       }
       else
       {
-        lookTarget = work->attentionPoke;
+        STA_LIGHT_GetPosition( work->lightSys , work->lightWork[work->attentionLight] , &pos );
+        scroll = FX_FX32_TO_F32( pos.x )-128;
       }
       
-      if( work->pokeWork[lookTarget] != NULL )
+      if( scroll > ACT_BG_SCROLL_MAX )
       {
-        STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
-        scroll = FX_FX32_TO_F32( pos.x )-128;
-        if( scroll > ACT_BG_SCROLL_MAX )
-        {
-          scroll = ACT_BG_SCROLL_MAX;
-        }
-        else if( scroll < 0 )
-        {
-          scroll = 0;
-        }
-        if( scroll != work->scrollOffset )
-        {
-          work->scrollOffsetTrget = scroll;
-        }
+        scroll = ACT_BG_SCROLL_MAX;
+      }
+      else if( scroll < 0 )
+      {
+        scroll = 0;
+      }
+      if( scroll != work->scrollOffset )
+      {
+        work->scrollOffsetTrget = scroll;
       }
     }
   }
@@ -1170,9 +1180,24 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
   if( work->isUpdateAttention == TRUE )
   {
     u8 i;
+    u8 lightNum = 0;
+    u8 lightNo;
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
       STA_AUDI_SetAttentionPoke( work->audiSys , i , FALSE );
+    }
+    STA_AUDI_SetAttentionLight( work->audiSys , STA_AUDI_NO_TARGET );
+
+    work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
+    work->attentionLight = ACT_LIGHT_MAX; //カメラはデフォルト
+
+    for( i=0;i<ACT_LIGHT_MAX;i++ )
+    {
+      if( work->lightWork[i] != NULL )
+      {
+        lightNo = i;
+        lightNum++;
+      }
     }
     
     if( work->useItemPoke < MUSICAL_POKE_MAX )
@@ -1187,6 +1212,13 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
       //個人演技中
       work->attentionPoke = work->lightUpPoke;
       STA_AUDI_SetAttentionPoke( work->audiSys , work->lightUpPoke , TRUE );
+    }
+    else
+    if( lightNum == 1 )
+    {
+      //ライトが1個だけ
+      work->attentionLight = lightNo;
+      STA_AUDI_SetAttentionLight( work->audiSys , lightNo );
     }
     else
     {
@@ -1216,7 +1248,6 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
           STA_AUDI_SetAttentionPoke( work->audiSys , i , TRUE );
         }
       }
-      work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
     }
     work->isUpdateAttention = FALSE;
   }
@@ -1234,6 +1265,11 @@ void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL fl
   }
   work->isUpdateAttention = TRUE;
 }
+void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
+{
+  work->isUpdateAttention = TRUE;
+}
+
 #pragma mark [> BGM func
 //--------------------------------------------------------------
 //  BGM関係

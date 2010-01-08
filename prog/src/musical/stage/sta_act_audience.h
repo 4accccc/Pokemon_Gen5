@@ -36,5 +36,6 @@ extern void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work );
 extern void	STA_AUDI_ExitSystem( STA_AUDI_SYS *work );
 
 extern void	STA_AUDI_SetAttentionPoke( STA_AUDI_SYS *work , const u8 trgPoke , const BOOL flg );
+extern void	STA_AUDI_SetAttentionLight( STA_AUDI_SYS *work , const u8 trgLight );
 
 extern void	STA_SUDI_SetScrollOffset( STA_AUDI_SYS *work , const u16 scrOfs );

@@ -132,6 +132,7 @@ extern u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
 extern void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );
 
 extern void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL flg );
+extern void STA_ACT_SetUpdateAttention( ACTING_WORK *work );
 extern void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
 extern const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo );
 extern void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg );

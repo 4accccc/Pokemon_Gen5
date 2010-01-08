@@ -79,6 +79,7 @@ struct _STA_AUDI_SYS
 
   ACTING_WORK *actWork;
   BOOL attentionPokeFlg[MUSICAL_POKE_MAX];
+  u8   attentionLight;
   BOOL isUpdateAttention;
 
 //  GFL_CLUNIT* cellUnit;
@@ -124,6 +125,7 @@ STA_AUDI_SYS* STA_AUDI_InitSystem( HEAPID heapId , ACTING_WORK *actWork , STAGE_
   {
     work->attentionPokeFlg[i] = FALSE;
   }
+  work->attentionLight = STA_AUDI_NO_TARGET;
   
   return work;
 }
@@ -330,7 +332,8 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
   }
   if( audiWork->delay == 0 )
   {
-    if( audiWork->trgPoke == STA_AUDI_NO_TARGET )
+    if( audiWork->trgPoke == STA_AUDI_NO_TARGET &&
+        work->attentionLight == STA_AUDI_NO_TARGET )
     {
       audiWork->lookPos = STA_AUDI_NO_LOOK;
       
@@ -353,15 +356,24 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
     }
     else
     {
-      STA_POKE_SYS *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , audiWork->trgPoke );
+      VecFx32 targetPos;
       const u16 stgOfs = STA_ACT_GetStageScroll( work->actWork );
-      VecFx32 pokePos;
       s16 posOffset;
       //ˆÊ’u‚ð384‚©‚ç512‚Ö•ÏŠ·
       const u16 audiPos = (audiWork->posX*32 - 64)*4/3;
-      STA_POKE_GetPosition( pokeSys , pokeWork , &pokePos );
-      posOffset = (FX_FX32_TO_F32( pokePos.x )) - (audiPos);
+      if( audiWork->trgPoke != STA_AUDI_NO_TARGET )
+      {
+        STA_POKE_SYS *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+        STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , audiWork->trgPoke );
+        STA_POKE_GetPosition( pokeSys , pokeWork , &targetPos );
+      }
+      else
+      {
+        STA_LIGHT_SYS *lightSys = STA_ACT_GetLightSys( work->actWork );
+        STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , work->attentionLight );
+        STA_LIGHT_GetPosition( lightSys , lightWork , &targetPos );
+      }
+      posOffset = (FX_FX32_TO_F32( targetPos.x )) - (audiPos);
       
       if( posOffset < -STA_AUDI_BIG_ANGLE_OFFSET )
       {
@@ -490,6 +502,12 @@ void	STA_AUDI_SetAttentionPoke( STA_AUDI_SYS *work , const u8 trgPoke , const BO
 {
   work->attentionPokeFlg[trgPoke] = flg;
   
+  work->isUpdateAttention = TRUE;
+}
+
+void	STA_AUDI_SetAttentionLight( STA_AUDI_SYS *work , const u8 trgLight )
+{
+  work->attentionLight = trgLight;
   work->isUpdateAttention = TRUE;
 }
 

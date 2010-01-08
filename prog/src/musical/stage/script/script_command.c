@@ -1731,7 +1731,7 @@ SCRIPT_FUNC_DEF( LightShowCircle )
   STA_LIGHT_SetOptionValue( lightSys , lightWork , rad , 0 );
   
   STA_ACT_SetLightWork( work->actWork , lightWork , lightNo );
-  
+  STA_ACT_SetUpdateAttention( work->actWork );
   return SFT_CONTINUE;
 }
 
@@ -1748,6 +1748,7 @@ SCRIPT_FUNC_DEF( LightHide )
   
   STA_LIGHT_DeleteObject( lightSys , lightWork );
   STA_ACT_SetLightWork( work->actWork , NULL , lightNo );
+  STA_ACT_SetUpdateAttention( work->actWork );
 
   return SFT_CONTINUE;
 }
